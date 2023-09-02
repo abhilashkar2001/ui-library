@@ -1,0 +1,14 @@
+<ng-container *ngFor="let faqItem of faqArray; let i = index">
+  <div class="custom_accordin">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="faq_Header">
+          <mat-panel-description class="faq_Header_description">
+            {{ faqItem.question }}</mat-panel-description
+          >
+        </mat-expansion-panel-header>
+        <p>{{ faqItem.answer }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</ng-container>

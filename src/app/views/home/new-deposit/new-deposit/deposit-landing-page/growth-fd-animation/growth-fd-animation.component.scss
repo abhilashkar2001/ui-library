@@ -1,0 +1,48 @@
+.fd_container {
+  background: #f1f3ff;
+  padding: 1% 0%;
+  border-radius: 39px;
+  background-image: url("../../../../../../../assets/images/Rectangle\ 7294.svg");
+}
+.gd_value {
+  font-size: 15px;
+  line-height: 23px;
+  font-weight: 500;
+}
+.vl {
+  border-left: 1px solid;
+  margin: 0 2%;
+}
+.renew_check {
+  margin: 5% 0;
+}
+.fd_container:hover {
+  background-image: url("../../../../../../../assets/images/Group\ 13850.svg") !important;
+  .renew_check {
+    color: #004c97;
+  }
+  .gd_value {
+    color: #004c97;
+    font-weight: 600 !important;
+  }
+  .openFDbtn {
+    display: block !important;
+  }
+}
+.openFDbtn {
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+  display: none;
+  color: white;
+  border-radius: 50px;
+  width: 233px;
+  margin-bottom: 2%;
+}
+.alignCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alignLeft {
+  align-items: inherit !important;
+  padding-left: 10%;
+}

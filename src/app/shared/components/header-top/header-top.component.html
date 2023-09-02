@@ -1,0 +1,74 @@
+<mat-toolbar class="topbar mat-bg-card" style="height: 100px">
+  <div fxLayout="column">
+    <img src="assets/images/Group 5698.svg" alt="" width="100" height="55px" />
+    <div class="toolbar_font" style="font-size: 36px">Demo Bank</div>
+  </div>
+
+  <!-- <div class="ml-16 mt-8">
+    <img src="assets/images/logo.svg" alt="" width="100" height="100" />
+  </div> -->
+
+  <span fxFlex></span>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/createAccount']">
+      <span class="item-name lvl1">Open Account</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/card']">
+      <span class="item-name lvl1">Card</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/deposits']">
+      <span class="item-name lvl1">Deposits</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/loan']">
+      <span class="item-name lvl1">Loan</span>
+    </a>
+  </div>
+  <div class="nav_menu">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item [routerLink]="['/createAccount']">
+        <span class="item-name lvl1">Open Account</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/card']">
+        <span class="item-name lvl1">Card</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/deposits']">
+        <span class="item-name lvl1">Deposits</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/loan']">
+        <span class="item-name lvl1">Loan</span>
+      </a>
+    </mat-menu>
+  </div>
+
+  <!-- Top left user menu -->
+</mat-toolbar>

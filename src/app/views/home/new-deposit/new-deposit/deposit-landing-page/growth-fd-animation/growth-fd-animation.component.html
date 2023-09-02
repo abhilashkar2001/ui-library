@@ -1,0 +1,73 @@
+<div class="row">
+  <div *ngFor="let fdItem of fdArray; let i = index" class="col-md-4 col-12">
+    <div fxLayoutAlign="center center" fxLayout="column" class="fd_container">
+      <div fxLayout="column" class="alignCenter">
+        <div class="maturityAmttitle">Best Interest Rate</div>
+        <div class="maturityTitle">Maturity Ammount</div>
+        <div class="maturityTitle">₹ 1,10,202</div>
+      </div>
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          fxFlex="48"
+          class="alignLeft"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Ammount</div>
+          <div class="gd_value">₹ 12,669</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Interest Rate</div>
+          <div class="gd_value">₹ 12,669</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Interest Payout</div>
+          <div class="gd_value">Cumulative</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Tenure</div>
+          <div class="gd_value">1 year 4 months 4 days</div>
+        </div>
+      </div>
+      <div class="renew_check">
+        <mat-checkbox>Auto renew</mat-checkbox>
+      </div>
+      <div *ngIf="depositName === 'rdCalculator'">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Day of Installment</mat-label>
+          <mat-select>
+            <mat-option value="5th of Month">5th of Month</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <button
+          mat-flat-button
+          class="openFDbtn"
+          (click)="openFD(depositName == 'fdCalculator' ? 'FD' : 'RD')"
+        >
+          Open {{ depositName == "fdCalculator" ? "FD" : "RD" }} Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

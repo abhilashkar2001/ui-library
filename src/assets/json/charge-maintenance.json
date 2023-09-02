@@ -1,0 +1,34 @@
+{
+  "statusCode": 200,
+  "status": "OK",
+  "data": [
+    {
+      "entityCode": "CV",
+      "branchCode": "16264",
+      "bankCode": null,
+      "authStatus": "UTHORIZED",
+      "recordStatus": "OPEN"
+    },
+    {
+      "entityCode": "AB",
+      "branchCode": "16264",
+      "bankCode": null,
+      "authStatus": "AUTHORIZED",
+      "recordStatus": "OPEN"
+    },
+    {
+      "entityCode": "VC",
+      "branchCode": "16264",
+      "bankCode": 8765,
+      "authStatus": "UTHORIZED",
+      "recordStatus": "OPEN"
+    },
+    {
+      "entityCode": "BN",
+      "branchCode": "16264",
+      "bankCode": 8976,
+      "authStatus": "AUTHORIZED",
+      "recordStatus": "OPEN"
+    }
+  ]
+}

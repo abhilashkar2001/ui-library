@@ -1,0 +1,15 @@
+.faq_Header {
+  padding: 2%;
+  .faq_Header_description {
+    color: #1b3c81;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 39px;
+  }
+}
+.custom_accordin {
+  margin: 1% 0%;
+}
+::ng-deep .mat-expansion-panel-header {
+  height: 100% !important;
+}

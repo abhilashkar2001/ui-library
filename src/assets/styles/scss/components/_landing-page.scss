@@ -1,0 +1,106 @@
+.break_word {
+  white-space: pre-wrap !important;
+}
+.account_title {
+  font-size: 60px;
+  color: #06113c;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+}
+.sub_account_title {
+  font-size: 18px;
+  color: #4c5371;
+}
+.applyBtnGrp {
+  margin-top: 3%;
+  .applyBtn {
+    background: #004aa0;
+    color: white;
+    border-radius: 50px;
+    width: 233px;
+  }
+  .learn_more {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    text-decoration: underline;
+    font-size: 20px;
+    line-height: 30px;
+    color: #06113c;
+    font-weight: 600;
+    padding-left: 6%;
+  }
+}
+.childImg_grp {
+  margin-top: 8%;
+}
+.childImg1 {
+  z-index: 99;
+}
+.childImg2 {
+  z-index: 100;
+  margin-left: -30px;
+}
+.childImg3 {
+  z-index: 101;
+  margin-left: -30px;
+}
+.total_users {
+  font-size: 32px;
+  color: #06113c;
+  font-weight: 600;
+}
+.accountOpening {
+  font-size: 48px;
+  font-weight: 600;
+  color: #06113c;
+}
+.openYourAccount {
+  color: #4c5371;
+  font-size: 18px;
+}
+.maturityAmttitle {
+  font-size: 30px;
+  line-height: 45px;
+  font-weight: 600;
+  color: #000000;
+}
+.maturityTitle {
+  font-size: 21px;
+  line-height: 31.7px;
+  font-weight: 500;
+}
+
+//
+.highlight_title {
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  text-align: left;
+  color: #004c97;
+}
+.align_fd {
+  padding: 20px 33px;
+}
+.saveButton {
+  width: 172px !important;
+  color: #ffffff !important;
+  font-size: 15px;
+  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%) !important;
+  height: 40px;
+}
+.backButton {
+  width: 172px !important;
+  color: #000000 !important;
+  font-size: 15px;
+  background: #ffffff !important;
+  height: 40px;
+}
+.legend {
+  float: none !important;
+  font-size: 12px !important;
+  padding-left: 5px !important;
+  width: fit-content;
+}

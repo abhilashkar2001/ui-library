@@ -1,0 +1,162 @@
+[
+
+    {
+      "screenCode": 1,
+      "screenName": "DASHBOARD",
+      "route": "admin/dashboard",
+      "isEnable": true,
+      "type": "link",
+      "children": [
+        {
+          "screenCode": 2,
+          "screenName": "Analytics Card",
+          "isEnable": false,
+          "route": null,
+          "type": "separator",
+          "children": [
+            {
+              "screenCode": 3,
+              "screenName": "Current Till Position",
+              "route": null,
+              "isEnable": true,
+              "type": "separator"
+            },
+            {
+              "screenCode": 4,
+              "screenName": "Demand Draft",
+              "route": null,
+              "isEnable": false,
+              "type": "separator"
+            },
+            {
+              "screenCode": 5,
+              "screenName": "Bankers Cheque",
+              "route": null,
+              "isEnable": true,
+              "type": "separator"
+            },
+            {
+              "screenCode": 6,
+              "screenName": "Total Transaction",
+              "route": null,
+              "isEnable": true,
+              "type": "separator"
+            }
+          ]
+        },
+        {
+          "screenCode": 7,
+          "screenName": "Customer Operations",
+          "route": null,
+          "isEnable": true,
+          "type": "separator",
+          "children": [
+            {
+              "screenCode": 11,
+              "screenName": "KYC screening",
+              "route": "app/kyc",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 18,
+              "screenName": "Customer Onboarding",
+              "route": "app/onboarding",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 181,
+              "screenName": "Create Account",
+              "route": "app/account",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 182,
+              "screenName": "KYC Tasks",
+              "route": "app/kyc/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 183,
+              "screenName": "Customer Onboarding Tasks",
+              "route": "app/onboarding/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 184,
+              "screenName": "Create Account Tasks",
+              "route": "app/onboarding/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 185,
+              "screenName": "Create Loan Account",
+              "route": "app/onboarding/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 186,
+              "screenName": "Card Origination",
+              "route": "app/onboarding/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            },
+            {
+              "screenCode": 187,
+              "screenName": "Card Origination Tasks",
+              "route": "app/onboarding/summary",
+              "isEnable": true,
+              "type": "extLink",
+              "children": []
+            }
+          ]
+        },
+        {
+          "screenCode": 98,
+          "screenName": "Tokens",
+          "isEnable": true,
+          "route": null,
+          "type": "separator",
+          "children": []
+        },
+        {
+          "screenCode": 99,
+          "screenName": "Recent Transactions",
+          "isEnable": true,
+          "route": null,
+          "type": "separator",
+          "children": []
+        },
+        {
+          "screenCode": 100,
+          "screenName": "Cash In Hand",
+          "isEnable": true,
+          "route": null,
+          "type": "separator",
+          "children": []
+        },
+        {
+          "screenCode": 101,
+          "screenName": "Change Currency",
+          "isEnable": false,
+          "route": null,
+          "type": "separator",
+          "children": []
+        }
+      ]
+    }
+  ]

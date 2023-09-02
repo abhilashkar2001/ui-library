@@ -1,0 +1,52 @@
+{
+    "statusCode": 200,
+    "status": "OK",
+    "data": [
+      {
+        "assetName": "CV",
+        "description": "HJj hdns",
+        "status": "Active",
+        "chrgAmmount": "2376",
+        "assetDetail": "Movable/ Intangiable",
+        "dataTime": "3 Apr 2022 | 14:11",
+        "approved":"Unapproved",
+        "activeStatus":"Inactive",
+        "id":11
+      },
+      {
+        "assetName": "wnn",
+        "description": "eio hdns",
+        "status": "Inctive",
+        "chrgAmmount": "8898",
+        "assetDetail": "Movable",
+        "dataTime": "3 Apr 2022 | 14:11",
+        "approved":"Unapproved",
+        "activeStatus":"Inactive",
+        "id":12
+      },
+      {  
+        "assetName": "jhj",
+        "description": "HJj hdns",
+        "status": "Active",
+        "chrgAmmount": "7898",
+        "assetDetail": "Movable/ Intangiable",
+        "dataTime": "10 Mar 2022 | 14:11",
+        "approved":"Unapproved",
+        "activeStatus":"Active",
+        "id":13
+      },
+      {
+        "assetName": "CV",
+        "description": "HJj hdns",
+        "status": "Inctive",
+        "chrgAmmount": "2376",
+        "assetDetail": "Movable/ Intangiable",
+        "dataTime": "3 June 2000 | 02:11",
+        "approved":"Approved",
+        "activeStatus":"Active",
+        "id":14
+      }
+    ],
+    "meta":{"page":1,"size":5,"totalElements":88 ,"totalPages":1}
+  }
+  

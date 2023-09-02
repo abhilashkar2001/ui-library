@@ -1,0 +1,176 @@
+<div fxFlex="row">
+  <div fxFlex="100" fxLayout="column" fxFlex="100">
+    <div class="calculator_container" fxLayout="column" fxFlex="100">
+      <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+        <div fxLayout="column" fxFlex="40">
+          <span class="calculator_subTItle">Scheme</span>
+          <mat-radio-group>
+            <mat-radio-button class="example-margin1" value="primary">
+              Normal
+            </mat-radio-button>
+            <mat-radio-button class="example-margin" value="accent">
+              Tax Saver
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxLayout="column" fxFlex="40">
+          <span class="calculator_subTItle">Ownership</span>
+          <mat-radio-group>
+            <mat-radio-button class="example-margin1" value="primary">
+              Normal
+            </mat-radio-button>
+            <mat-radio-button class="example-margin" value="accent">
+              Tax Saver
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div
+        fxLayout="row wrap"
+        fxFlex="100"
+        fxLayoutAlign="space-between center"
+      >
+        <div class="calculator_subTItle">Deposit Ammount</div>
+        <div>
+          <div fxFlex="100">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label class="custom-mat-label">Ammount</mat-label>
+              <input
+                matInput
+                [formControl]="email"
+                [(ngModel)]="ammountValue"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100">
+        <mat-slider
+          [value]="ammountValue"
+          [max]="max"
+          [min]="min"
+          fxFlex="100"
+          discrete
+        >
+          <input matSliderThumb [(ngModel)]="ammountValue" #slider />
+        </mat-slider>
+      </div>
+      <div
+        fxLayout="row"
+        fxFlex="100"
+        fxLayoutAlign="space-between center"
+        style="margin-top: -2%"
+      >
+        <div>$ {{ min }}</div>
+        <div>$ {{ max }}</div>
+      </div>
+      <div fxLayout="column" fxFlex="100">
+        <div class="calculator_subTItle">Types of Customer</div>
+        <div class="row">
+          <div class="col-md-3 col-12">
+            <mat-checkbox>Normal Customer</mat-checkbox>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-checkbox>Differently Abbled</mat-checkbox>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-checkbox>Sennior Citizen </mat-checkbox>
+          </div>
+          <div class="col-md-3 col-12">
+            <mat-checkbox>Super Senior Citizen</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+        fxLayoutAlign="space-between center"
+        style="margin-top: 27px"
+      >
+        <div class="col-md-4 col-12">
+          <label class="calculator_subTItle">Tenure</label>
+          <fieldset class="yeardrop fieldset">
+            <legend visible="true" class="legend-font legend">
+              Deposit Period
+            </legend>
+            <div fxLayout="row" class="parentYearDiv">
+              <mat-form-field
+                appearance="outline"
+                class="full-width inputSelect"
+              >
+                <input
+                  matInput
+                  name="reEvaluationFrequencyYear"
+                  maxlength="2"
+                  placeholder="Year"
+                />
+              </mat-form-field>
+              <span class="vl"></span>
+              <mat-form-field
+                appearance="outline"
+                class="full-width inputSelect"
+              >
+                <input
+                  matInput
+                  name="reEvaluationFrequencyMonth"
+                  maxlength="2"
+                  placeholder="Month"
+                />
+              </mat-form-field>
+              <span class="vl"></span>
+
+              <mat-form-field
+                appearance="outline"
+                class="full-width inputSelect"
+              >
+                <input
+                  matInput
+                  name="reEvaluationFrequencyDays"
+                  maxlength="2"
+                  placeholder="Day"
+                />
+              </mat-form-field>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-4 col-12">
+          <label class="calculator_subTItle">Interest Payout</label>
+          <mat-form-field
+            appearance="outline"
+            class="full-width field-changedInput"
+          >
+            <mat-label class="custom-mat-label">Payout Type</mat-label>
+            <!-- <input
+              matInput
+              formControlName="currency"
+              [readonly]="readorWrite"
+            /> -->
+            <mat-select name="currencyCode" class="selectOption">
+              <mat-option value="Cumulative"> Cumulative </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-12" *ngIf="fdName == 'rdCalculator'">
+          <label class="calculator_subTItle">Monthly Savings</label>
+          <mat-form-field
+            appearance="outline"
+            class="full-width field-changedInput"
+          >
+            <mat-label class="custom-mat-label">Date of Installment</mat-label>
+
+            <mat-select class="selectOption">
+              <mat-option value="5th of each month">
+                5th of each month
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        This is applicable for resident individuals *Rate of interest depends on
+        the duration of your FD. For Fixed Deposits with tenure below 181 days,
+        interest will be calculated at maturity as simple interest.
+      </div>
+    </div>
+  </div>
+</div>

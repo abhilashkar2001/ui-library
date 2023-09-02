@@ -1,0 +1,32 @@
+<div fxFlex="100" style="margin: 2% 0">
+  <div fxLayout="column">
+    <div fxLayoutAlign="center center">
+      <div class="calculatorbtn_grp">
+        <mat-button-toggle-group
+          class="togglegrp"
+          name="fontStyle"
+          aria-label="Font Style"
+          [(ngModel)]="selectedValue"
+          (change)="onToggleChange($event)"
+        >
+          <mat-button-toggle class="togglebtn" value="fdCalculator"
+            >FD calculator</mat-button-toggle
+          >
+          <mat-button-toggle class="togglebtn" value="rdCalculator"
+            >RD calculator</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <!-- FD calculator starts -->
+    <div class="row mt-36">
+      <div class="col-md-9 col-12">
+        <app-return-calculator [fdName]="selectedValue"></app-return-calculator>
+      </div>
+      <div class="col-md-3 col-12" style="margin-left: -3%">
+        <app-maturity-calculator [fdName]="selectedValue">
+        </app-maturity-calculator>
+      </div>
+    </div>
+  </div>
+</div>

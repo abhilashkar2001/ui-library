@@ -1,0 +1,100 @@
+<div fxLayout="column" *ngIf="!isPaymentEnabled">
+  <div fxLayout="column">
+    <div class="highlight_title">Deposit Details</div>
+    <div class="row">
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Deposit Ammount</div>
+          <div class="field_value">677676</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Deposit Period</div>
+          <div class="field_value"></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Start Date</div>
+          <div class="field_value">21/08/2023</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Maturity Date</div>
+          <div class="field_value">22/08/2034</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Interest Rate</div>
+          <div class="field_value">1.23%</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Maturity Ammount</div>
+          <div class="field_value">₹ 5,00,000</div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Maturity Institution</div>
+          <div class="field_value">HDFC</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Deposit Holder Type</div>
+          <div class="field_value">Single</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="highlight_title">Bank Account</div>
+    <div class="row">
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Bank Account</div>
+          <div class="field_value">126712128923700</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Name</div>
+          <div class="field_value">Rumango</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 field_align">
+        <div class="row">
+          <div class="field_title">Your Pan Cars</div>
+          <div class="field_value">YUWE38932E</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" class="btn_grp">
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        class="saveButton"
+        (click)="proceedFd()"
+      >
+        Book FD
+      </button>
+    </div>
+    &nbsp;&nbsp;
+    <div>
+      <button type="button" mat-raised-button class="backButton">Back</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isPaymentEnabled">
+  <app-payment-method></app-payment-method>
+</div>

@@ -1,0 +1,47 @@
+.header {
+  .active a {
+    left: 9px;
+    top: 0px;
+    position: absolute;
+    color: #06113c;
+    font-size: 18px;
+    font-family: Poppins;
+    font-weight: 600;
+    word-wrap: break-word;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.toolbar_font {
+  color: #06113c;
+}
+.align_top_items {
+  margin-right: 7%;
+  color: #3c4f9a;
+  a {
+    color: unset !important;
+    text-decoration: none !important;
+  }
+}
+.highlight_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  border-bottom: 4px solid;
+  padding: 0% 2%;
+  color: #06113c !important;
+}
+.nav_menu {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .align_top_items {
+    display: none !important ;
+  }
+  .nav_menu {
+    display: block !important;
+    color: black !important;
+  }
+}

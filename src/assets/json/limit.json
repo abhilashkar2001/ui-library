@@ -1,0 +1,51 @@
+{
+    "statusCode": 200,
+    "status": "OK",
+    "data": [
+      {
+        "branch": "CV",
+        "customerNo": "16264",
+        "grpCustomer": "Group 1",
+        "limitName": "UTHORIZED",
+        "limitAmmount": "OPEN",
+        "currency":"INR",
+        "expiryDate": "3 Apr 2022 | 14:11",
+        "approved":"Unapproved",
+        "activeStatus":"Inactive"
+      },
+      {
+        "branch": "NGR",
+        "customerNo": "899009",
+        "grpCustomer":  "Group 2",
+        "limitName": "UTHORIZED",
+        "limitAmmount": "OPEN",
+        "currency":"USD",
+        "expiryDate": "3 Apr 2022 | 14:11",
+        "approved":"Approved",
+        "activeStatus":"Active"
+      },
+      {  "branch": "KGR",
+      "customerNo": "00264",
+      "grpCustomer":  "Group 3",
+      "limitName": "UTHORIZED",
+      "limitAmmount": "OPEN",
+      "currency":"INR",
+      "expiryDate": "3 Apr 2022 | 14:11",
+      "approved":"Unapproved",
+      "activeStatus":"Active"
+      },
+      {
+        "branch": "VGR",
+        "customerNo": "16264",
+        "grpCustomer":  "Group 3",
+        "limitName": "UTHORIZED",
+        "limitAmmount": "OPEN",
+        "currency":"IEURONR",
+        "expiryDate": "3 Apr 2022 | 14:11",
+        "approved":"Approved",
+        "activeStatus":"Active"
+      }
+    ],
+    "meta":{"page":1,"size":5,"totalElements":4,"totalPages":1}
+  }
+  

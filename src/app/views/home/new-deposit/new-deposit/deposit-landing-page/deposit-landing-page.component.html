@@ -1,0 +1,98 @@
+<div fxFlex="100" fxLayout="column" style="padding: 2%">
+  <div fxFlex="100" fxLayout="row">
+    <div
+      fxFlex="48"
+      fxLayout="column"
+      class="deposit_service_txt"
+      style="padding-top: 3%"
+    >
+      <div fxLayout="column" fxFlex="100">
+        <div class="break_word account_title">
+          Secure Your Future with Guaranteed Returns.
+        </div>
+        <div style="width: 65%; margin-top: 2%">
+          <div class="break_word sub_account_title">
+            A safe and accessible solution to manage your finances. Enjoy the
+            convenience of instant access while your money grows securely. Start
+            banking with us today and take control of your financial journey.
+          </div>
+        </div>
+        <div fxLayout="row" class="applyBtnGrp">
+          <div>
+            <button mat-flat-button class="applyBtn">Apply</button>
+          </div>
+          <!-- <div class="learn_more">Learn More</div> -->
+        </div>
+        <div fxLayout="row" class="childImg_grp">
+          <div class="childImg1">
+            <img src="assets/images/Ellipse 6.svg" alt="" />
+          </div>
+          <div class="childImg2">
+            <img src="assets/images/Ellipse 7.svg" alt="" />
+          </div>
+          <div class="childImg3">
+            <img src="assets/images/Ellipse 8.svg" alt="" />
+          </div>
+          <div fxLayout="column">
+            <div class="total_users">4k+</div>
+            <div style="font-size: 18px; color: #06113c">users worldwide</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="48" class="deposit_service_img">
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+        <div>
+          <img src="../../assets/images/Group 13848.svg" alt="Group 13740" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column" style="margin-top: 89px">
+    <div fxLayoutAlign="center center" class="accountOpening">
+      Deposit Services
+    </div>
+    <div fxLayoutAlign="center center" class="openYourAccount">
+      Open your account in a breeze and start banking hassle-free.
+    </div>
+  </div>
+  <div>
+    <app-fd-rd-calculator
+      (customDepositChange)="customDepositChange($event)"
+    ></app-fd-rd-calculator>
+  </div>
+  <div fxLayout="column">
+    <div fxLayoutAlign="center center" class="accountOpening">
+      Instant Growth FD
+    </div>
+    <div fxLayoutAlign="center center" class="openYourAccount">
+      Maximize Your Savings with Fixed Deposit: Earn Guaranteed Returns on Your
+      Investment.
+    </div>
+    <div style="margin: 2% 0%">
+      <app-growth-fd-animation
+        [depositName]="depositName"
+      ></app-growth-fd-animation>
+    </div>
+  </div>
+  <div fxLayout="column" class="mt-70">
+    <div fxLayoutAlign="center center" class="accountOpening">FAQ</div>
+    <div fxLayoutAlign="center center" class="openYourAccount">
+      A ready reckoner for your queries.
+    </div>
+  </div>
+  <div class="mt-28">
+    <app-deposit-faq></app-deposit-faq>
+  </div>
+  <div fxLayout="column" class="mt-70">
+    <div fxLayoutAlign="center center" class="accountOpening">
+      What our happy client say
+    </div>
+    <div fxLayoutAlign="center center" class="openYourAccount">
+      Several selected clients, who already believe in our service.
+    </div>
+  </div>
+  <div class="mt-70">
+    <app-news-letter-slider></app-news-letter-slider>
+  </div>
+</div>

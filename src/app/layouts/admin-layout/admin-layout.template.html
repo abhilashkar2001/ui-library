@@ -1,0 +1,27 @@
+<!-- <mat-sidenav-container
+  [hasBackdrop]="true"
+  class="app-admin-container fixed-topbar"
+>
+  <mat-sidenav
+    class="sidenav"
+    fixedInViewport="true"
+    #mainPanel
+    mode="over"
+    class=""
+    id="panelOne"
+  >
+    <div class="nofication-panel" fxLayout="column">
+      <app-notifications [mainMenuPanel]="mainPanel"></app-notifications>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-header-top [mainMenuPanel]="mainPanel"></app-header-top>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+<app-header-top></app-header-top>
+
+<router-outlet></router-outlet>
+<app-footer></app-footer>

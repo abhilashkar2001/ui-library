@@ -1,0 +1,59 @@
+.togglegrp .mat-button-toggle-checked {
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box !important;
+}
+.togglegrp .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+  color: white !important;
+  border-radius: 7px;
+}
+.togglegrp {
+  border: none !important;
+  padding: 5px;
+  min-width: 100%;
+}
+.customTogglebtn {
+  width: 25% !important;
+  border-left: none !important;
+}
+
+.payment_parent_div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0% 2%;
+}
+.toggle-div {
+  box-shadow: 0px 3px 15px 0px #00000017 !important;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.paymentForm {
+  margin: 4% 0%;
+}
+.btn_grp {
+  margin: 2% 0%;
+}
+
+.parent_net_div {
+  height: 70px;
+  box-shadow: 0px 3px 10px 0px #00000017;
+  align-items: center;
+  padding: 0% 2%;
+}
+.bank_name {
+  font-size: 18px;
+  text-align: center;
+  line-height: 30px;
+}
+.card_name {
+  font-family: Poppins;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding-left: 10px;
+}
