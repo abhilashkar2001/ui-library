@@ -1,0 +1,211 @@
+.loan-emi-calculator {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    left: 5%;
+    border: 3px solid #FFF;
+    width: 100%;
+
+    .calculator-section {
+        background: #F6FAFF;
+        box-shadow: 0px 3px 25px 0px rgba(0, 0, 0, 0.05);
+        width: 70%;
+        border-radius: 22.946px;
+        margin-left: 6%;
+        padding-left: 3%;
+        padding-right: 3%;
+        margin-right: 6%;
+        padding-top: 20px;
+
+        .field-section {
+            display: flex;
+            justify-content: space-between;
+
+            .label {
+                color: #004C97;
+                font-family: Poppins;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            .col {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+            }
+        }
+
+        .tenur-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 30px;
+
+            .tenure {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+            }
+
+            .interest-area {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+            }
+        }
+
+        .custom-mat-label {
+            background: #FFFEFE;
+            stroke-width: 1px;
+            stroke: #CBCBCB;
+        }
+
+        .full-width {
+            width: 80%;
+        }
+
+        label {
+            color: #004C97;
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .mat-slider-card {
+            .mat-slider {
+                width: 90%;
+            }
+
+            .text-field {
+                color: #5A607F;
+                font-family: Poppins;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .selected-value {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    }
+
+
+
+    .emi-result {
+        border-radius: 22.946px;
+        box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        box-sizing: border-box;
+        background: #FFF;
+        position: absolute;
+        margin-left: 67%;
+
+        .result-container {
+            display: flex;
+            flex-direction: row;
+
+            .content-section {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                display: flex;
+                margin-left: 3%;
+
+                .text-field {
+                    color: #004C97;
+                    font-family: Poppins;
+                    font-size: 15.878px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+
+            .cal-vertical-line {
+                position: absolute;
+                z-index: 0;
+                width: 1px;
+                margin-left: 40%;
+                /* left: 44%; */
+                height: 30%;
+                border-left: 2px dotted rgba(0, 0, 0, 0.22);
+
+            }
+        }
+
+        .content-text {
+            color: #000;
+            font-family: Poppins;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .total-amount {
+            color: #004C97;
+            font-family: Poppins;
+            font-size: 55px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        span {
+            display: block;
+            font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 25px;
+        }
+
+        .aply-btn {
+            text-align: center;
+            margin-top: 15%;
+            padding-bottom: 5%;
+        }
+    }
+}
+
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+    .emi-result {
+        width: 376px;
+        ;
+    }
+}
+
+@media (min-width:1025px) {
+
+    /* big landscape tablets, laptops, and desktops */
+    .emi-result {
+        width: 376px;
+        ;
+    }
+
+}
+
+@media (min-width:1281px) {
+
+    /* hi-res laptops and desktops */
+    .emi-result {
+        width: 376px;
+        ;
+    }
+}

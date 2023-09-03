@@ -1,0 +1,46 @@
+<div fxLayout="row">
+  <div fxLayout="column" fxFlex="100">
+    <div fxLayout="row">
+      <div>
+        <div class="deposit_icon">
+          <img src="/assets/images/Group_13675.png" width="65%" />
+        </div>
+        <span class="vertical_line"></span>
+      </div>
+      <div fxLayout="column" style="padding-left: 33px">
+        <div style="font-size: 22px; line-height: 33px; font-weight: 400">
+          Get Your
+        </div>
+        <div style="font-size: 28px; line-height: 48px; font-weight: 600">
+          Title not yet
+        </div>
+        <div style="font-size: 22px; line-height: 33px; font-weight: 400">
+          in 3 simple ways
+        </div>
+        <div class="fd_info_stat" fxLayout="row">
+          <img src="/assets/images/Group.png" />
+          <div class="text-box">
+            On an average, People get their savings account in 15 - 20 min
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-stepper
+      #stepper
+      [linear]="isLinear"
+      [(selectedIndex)]="selectionIndex"
+      (selectionChange)="onStepSelectionChange($event)"
+      orientation="vertical"
+    >
+      <mat-step
+        [stepControl]="customBasicForm"
+        label="Verify Mobile Number"
+      ></mat-step>
+      <mat-step
+        [stepControl]="customPersonalDetails"
+        label="Personal Details"
+      ></mat-step>
+      <mat-step label="Select KYC"></mat-step>
+    </mat-stepper>
+  </div>
+</div>

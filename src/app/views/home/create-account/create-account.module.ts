@@ -5,14 +5,32 @@ import { RouterModule } from "@angular/router";
 import { HomeRoutes } from "./create-account-routing";
 import { LandingPageComponent } from "./create-account/landing-page/landing-page.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatButtonModule } from "@angular/material/button";
+import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
+import { AccountStepperComponent } from "./create-account/account-stepper/account-stepper.component";
+import { PersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
+import { SelectKycComponent } from "./create-account/select-kyc/select-kyc.component";
+import { SharedMaterialModule } from "app/shared/shared-material.module";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CreateAccountLandingPageComponent } from "./create-account/create-account-landing-page/create-account-landing-page.component";
 
 @NgModule({
-  declarations: [CreateAccountComponent, LandingPageComponent],
+  declarations: [
+    CreateAccountComponent,
+    LandingPageComponent,
+    AccountMobileVerificationComponent,
+    PersonalDetailsComponent,
+    SelectKycComponent,
+    AccountStepperComponent,
+    CreateAccountLandingPageComponent,
+  ],
   imports: [
     CommonModule,
+    FormsModule,
+    SharedMaterialModule,
+    HttpClientModule,
     FlexLayoutModule,
-    MatButtonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(HomeRoutes),
   ],
 })

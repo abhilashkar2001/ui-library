@@ -1,0 +1,112 @@
+<div class="loan-emi-calculator">
+    <div class="calculator-section">
+        <div class="tenur-section">
+            <div class="tenure">
+                <label for="tenure"> Tenure</label>
+                <div fxFlex="23">
+                    <fieldset class="tenure-duration full-width fieldinput">
+                        <div style="display: flex; flex-direction: row;">
+                            <mat-form-field appearance="outline" class="full-width inputSelect">
+                                <input matInput name="year" numbersOnly placeholder="Year" [(ngModel)]="year" />
+                            </mat-form-field>
+                            <span class="vl"></span>
+                            <mat-form-field appearance="outline" class="full-width inputSelect">
+                                <input matInput name="month" numbersOnly placeholder="Month" [(ngModel)]="months" />
+                            </mat-form-field>
+                            <span class="vl"></span>
+                            <mat-form-field appearance="outline" class="full-width inputSelect">
+                                <input matInput name="day" numbersOnly placeholder="Day" />
+                            </mat-form-field>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="interest-area">
+                <label for="tenure"> Ornaments</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label class="custom-mat-label">Number is (K)</mat-label>
+                    <input matInput [(ngModel)]="interestRate" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="tenure"> Caret</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label class="custom-mat-label">Grams</mat-label>
+                    <input matInput [(ngModel)]="interestRate" />
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <label for="tenure"> Weight</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label class="custom-mat-label">Number</mat-label>
+                    <input matInput [(ngModel)]="interestRate" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="field-section">
+            <div class="label">
+                Loan Amount
+            </div>
+            <div style="width: 30%;">
+                <mat-form-field appearance="outline" class="custom-field">
+                    <mat-label class="custom-mat-label">Amount</mat-label>
+                    <input matInput [(ngModel)]="amount" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="mat-slider-card">
+            <div class="selected-value">
+                <span class="text-field"> &#8377;{{slider.value}}</span>
+            </div>
+            <mat-slider #slider class="example-margin" (change)="loanCalculation($event)" [max]="100000" [min]="5000"
+                [step]="step" [value]="amount">
+            </mat-slider>
+            <div class="selected-value">
+                <span class="text-field"> &#8377; {{min}}</span>
+                <span class="text-field" style="margin-right: 11%;"> &#8377; {{max}}</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="emi-result">
+        <div class="content-text">Eligible Gold Loan</div>
+        <div class="total-amount">
+            &#8377; {{emiAmount}}
+        </div>
+        <mat-divider></mat-divider>
+        <div class="result-container">
+            <div class="content-section">
+                <div style="margin-top: 20px;">
+                    <span>
+                        Caret in (K)
+                    </span>
+                    <span class="text-field"> {{totalInterest}} </span>
+                    <span>Tenure</span>
+                    <span class="text-field"> &#8377; {{amount}}</span>
+                </div>
+
+            </div>
+            <div class="cal-vertical-line"></div>
+            <div class="content-section">
+                <div style="margin-top: 20px;">
+                    <span>
+                        Weight
+                    </span>
+                    <span class="text-field"> {{interestRate}}</span>
+                    <span>Amount</span>
+                    <span class="text-field"> &#8377; {{totalAmount}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="aply-btn">
+            <button class="confirm-button" mat-raised-button [routerLink]="['/loan/create-loan']">
+                Apply
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="column-2">
+    <div [formGroup]="createDocumentForm">
+        <form formArrayName="otherDocument">
+            <ng-container *ngFor="let control of otherDocumentArray.controls; let indx = index" [formGroupName]="indx">
+                <mat-card class="card-div">
+                    <!-- Rest All will be start from hear -->
+                    <div class="text-header" fxFlex="100">
+                        <div fxFlex="80">Document {{ indx + 1 }}</div>
+                        <div *ngIf="indx > 0" fXFlex="20">
+                            <button class="deleteButton" (click)="deleteForm(indx)">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div fxFlex="100">
+                        <div class="field" fxFlex="50">
+                            <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
+                                <mat-label class="label_input">Document Type</mat-label>
+                                <mat-select appearance="outline" class="mat_selection" formControlName="documentType">
+                                    <mat-option class="option_font" value="Aadhar Card">Aadhar Card</mat-option>
+                                    <mat-option class="option_font" value="Pan Card">Pan Card</mat-option>
+                                    <mat-option class="option_font" value="PassPort">Pass Port</mat-option>
+                                </mat-select>
+                                <mat-error> Please Select Document Type </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="field" fxFlex="50">
+                            <mat-form-field appearance="outline">
+                                <mat-label class="custom-mat-label">Document Number</mat-label>
+                                <input matInput formControlName="documentNumber" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <ng-container>
+                        <mat-card class="card-subdiv">
+                            <div class="doc_upload" fxFlex="100" appDragDrop
+                                (fileDropped)="onFileDropped($event, indx)">
+                                <input type="file" #fileDropRef id="fileDropRef"
+                                    (change)="fileBrowseHandler($event, indx)" />
+                                <div class="drag_drop" fxFlex="90">
+                                    <h3 class="text-header">Upload Document</h3>
+                                    <p>
+                                        On desktop, Simply drag and drop your file in this field.
+                                        acceptable formats: JPEG, JPG or PNG.
+                                    </p>
+                                </div>
+                                <label for="fileDropRef" class="doc_img" fxFlex="10">
+                                    <img src="assets/images/Group 2979.png" />
+                                </label>
+                            </div>
+                            <ng-container *ngFor="let file of getFileInfo(indx); let fileIndx = index">
+                                <div class="upload_img" fxFlex="100">
+                                    <div class="img_box">
+                                        <img [src]="file?.url" />
+                                        <!-- <img src="assets/images/Rectangle 1779.png" /> -->
+                                    </div>
+                                    <div class="img_container">
+                                        <p class="img_name">
+                                            {{ file?.doc?.name }}
+                                        </p>
+                                        <div class="progress-cont">
+                                            <div class="progress" [style.width]="file?.doc?.progress + '%'"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn" *ngIf="file?.doc?.progress === 100"
+                                        (click)="deleteFile(fileIndx)">
+                                        <mat-icon> delete </mat-icon>
+                                    </button>
+                                </div>
+                            </ng-container>
+                        </mat-card>
+                    </ng-container>
+                </mat-card>
+            </ng-container>
+            <button class="add-more-btn" (click)="createNewDocument()">Add another Document</button>
+        </form>
+    </div>
+    <div class="button-section">
+        <button class="submit-button" (click)="onSubmit()">Submit</button>
+        <button class="back-button" (click)="onBack()">Back</button>
+    </div>
+</div>

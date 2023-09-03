@@ -1,0 +1,75 @@
+<div class="text-header">Terms and Conditions</div>
+<div class="basic-details-container">
+    <div class="col-1">
+        <span class="content-header">Name</span>
+        <span class="content">Rashid Husain</span>
+    </div>
+    <div class="col-2">
+        <span class="content-header">CIF Number</span>
+        <span class="content">785645332342</span>
+    </div>
+    <div class="col-3">
+        <span class="content-header">Date and Time of Request</span>
+        <span class="content">05 Jan 2021 09:32:12 AM</span>
+    </div>
+    <div class="col-4">
+        <span class="content-header">Loan Amount</span>
+        <span class="content">123954.60</span>
+    </div>
+</div>
+
+<div class="desc-text">
+    <div>
+        <span class="content">Important Information:</span>
+        <span class="content-header">The Credit Information Companies (CICs) is an initiative of the Government
+            of
+            India
+            and the Reserve Bank of India (RBI) to improve the functionality and stability of the Indian
+            financial
+            system. We wish to inform you that we shall now be reporting the data pertaining to your account
+            with us
+            to the concerned Credit Information Company. This data will be updated on a regular basis for all
+            our
+            customers.</span>
+        <span class="content">Other Information:</span>
+        <span class="content-header">
+            Part Payment is allowed after initial 3 EMIs. Maximum 40% of current
+            Principal Outstanding is allowed as part payment in a financial year, this can be one bullet payment
+            or
+            maximum of 3 payments totaling up to 40% of Principal Outstanding. In case you wish to avail this
+            option, 2% part payment charges is applicable on partial payment. Part payment to be made from
+            customer’s own fund. This facility is allowed only for customers who have opted for Smart Personal
+            Loan.
+        </span>
+        <span class="content-header">
+            Part payment is not allowed for customers who have opted for Simple Personal Loan.
+            Post issuance of the Balance Transfer Demand Draft by IDFC FIRST Bank, if the Demand Draft is not
+            submitted by the customer
+            to the previous financer within 90 days, Demand Draft amount will be adjusted in the Principal
+            Outstanding post 90 days & also resulting to customer bearing both EMIs till adjustment/payment.
+        </span>
+    </div>
+
+    <div style="color: #102245;
+            font-family: Poppins;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal; margin-top: 20px; margin-bottom: 20px;">
+        (Kindly scroll down to proceed futher)
+    </div>
+    <div style="display: flex; flex-direction: row; width: 100%;">
+        <mat-checkbox class="custom-checkbox" class="primary" style="margin-right: 10px;" [(ngModel)]="checked">
+        </mat-checkbox>
+        <span class="standard-font-gray">
+            I authorize DemoBank and it’s representatives to email, call or SMS
+            me. This Consent will override any registration from DNC/NDNC
+        </span>
+    </div>
+</div>
+
+<div class="button-section">
+    <button class="confirm-button" (click)="onConfirm()" [disabled]="isValidated()"
+        [ngClass]="{'disabled-field':isValidated() }">Confirm</button>
+    <button class="back-button" (click)="onBack()">Back</button>
+</div>

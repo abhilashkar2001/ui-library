@@ -1,0 +1,120 @@
+.column-2 {
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        color: #000;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        color: #000;
+        font-family: Poppins;
+        font-size: 32px;
+        font-style: normal;
+        height: 107px;
+        font-weight: 600;
+        line-height: normal;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+    }
+
+    .step-count {
+        color: #000;
+        font-family: Poppins;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 20px;
+        white-space: pre-wrap;
+    }
+
+    .box-container {
+        display: flex;
+        flex-direction: row;
+        width: 376px;
+        height: 85px;
+        flex-shrink: 0;
+        border-radius: 5px;
+        border: 1px solid #bac0d7;
+        background: #e6efff;
+
+        .timer-img {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 20px;
+        }
+
+        .box-text {
+            display: flex;
+            flex-direction: column;
+            color: #004c97;
+            font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            white-space: pre-wrap;
+            justify-content: center;
+            margin-left: 20px;
+        }
+    }
+
+    .unselected-step {
+        margin-top: 65px;
+        color: #004c97;
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.vertical-line {
+    height: 800px;
+    margin-left: 14%;
+    width: 2px;
+    border-right: 2px solid #bac0d7;
+}
+
+
+/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+@media screen and (max-width:320px) {
+    .box-container {
+        display: hidden !important;
+    }
+}
+
+
+/* smartphones, Android phones, landscape iPhone */
+@media screen and (max-width:480px) {
+    .box-container {
+        visibility: hidden !important;
+    }
+}
+
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media screen and (max-width:600px) {
+    .box-container {
+        visibility: hidden !important;
+    }
+}
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {}
+
+@media (min-width:1025px) {
+    /* big landscape tablets, laptops, and desktops */
+}
+
+@media (min-width:1281px) {
+    /* hi-res laptops and desktops */
+}

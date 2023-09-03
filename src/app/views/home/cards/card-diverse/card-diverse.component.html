@@ -1,0 +1,55 @@
+<div class="card-slider">
+  <div class="col1">
+    <div class="keen-slider custom-slider" #sliderRef>
+      <div *ngFor="let image of carowselData">
+        <img
+          [src]="image.image"
+          [alt]="image.header"
+          class="keen-slider__slide"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col2">
+    <div class="card-details">
+      <div class="card-top-section">
+        <div class="card-header">
+          <span>{{ carowselData[initialCount]?.header }}</span>
+        </div>
+        <div class="card-action">
+          <button (click)="onPrevious()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button (click)="onNext()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="card-description">
+        {{ carowselData[initialCount]?.content }}
+      </div>
+      <div class="image-section">
+        <img src="/assets/images/card-steps.png" alt="steps" />
+      </div>
+      <div
+        class="button-section"
+        style="
+          justify-content: space-around;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        "
+      >
+        <button
+          class="confirm-button"
+          [routerLink]="['/card/mobile-verification']"
+          [queryParams]="{ title: carowselData[initialCount]?.header }"
+        >
+          Apply
+        </button>
+        <a class="compare-link" [routerLink]="['/card/card-type']"
+          >Compare Card</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

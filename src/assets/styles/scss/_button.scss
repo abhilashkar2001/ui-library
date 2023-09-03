@@ -1,0 +1,72 @@
+.applyButtonStandard {
+  width: 195px;
+  height: 50px;
+  top: 7px;
+  right: 5px;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0% no-repeat padding-box !important;
+  border-radius: 23px !important;
+  color: #ffffff !important;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  border: none;
+}
+
+.backButtonStandard {
+  width: 172px;
+  height: 49px;
+  top: 7px;
+  right: 5px;
+  box-shadow: 3px 3px 15px 0px #0000000f;
+  background: #ffffff !important;
+  border-radius: 23px !important;
+  color: #000000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  text-decoration: none;
+}
+
+.confirm-button,
+.continue-button,
+.submit-button {
+  @extend .applyButtonStandard;
+}
+
+.edit-button {
+  @extend .applyButtonStandard;
+  background: #ffffff !important;
+  color: #004C97 !important;
+  box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.exit-button {
+  @extend .applyButtonStandard;
+  color: #B20000 !important;
+  background: #ffffff !important;
+  box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.back-button {
+  @extend .backButtonStandard;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

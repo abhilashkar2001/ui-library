@@ -1,0 +1,9 @@
+<div class="column-2">
+    <app-common-mobile-verification (getOTP)="getOTP($event)" (enteredOTP)="enteredOtp($event)"
+        [showOtpSection]="showOtpSection"></app-common-mobile-verification>
+    <div class="button-section" *ngIf="showOtpSection">
+        <button class="confirm-button" [ngClass]="{'disabled-field': isValidated()}" mat-raised-button
+            (click)="onVerify()" [disabled]="isValidated()">Verify</button>
+        <button class="back-button" mat-raised-button (click)="onBack()">Back</button>
+    </div>
+</div>

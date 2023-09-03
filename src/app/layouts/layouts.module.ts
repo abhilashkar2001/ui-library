@@ -4,15 +4,15 @@ import { AdminLayoutComponent } from "./admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from "./auth-layout/auth-layout.component";
 import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { RouterModule } from "@angular/router";
 import { PerfectScrollbarModule } from "app/shared/components/perfect-scrollbar";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [AdminLayoutComponent, AuthLayoutComponent],
   imports: [
     CommonModule,
-    RouterModule,
     SharedModule,
+    RouterModule,
     SharedMaterialModule,
     PerfectScrollbarModule,
   ],

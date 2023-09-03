@@ -1,0 +1,74 @@
+<div class="hand-section">
+  <img src="/assets/images/hand.png" alt="card hand" />
+</div>
+<div class="cards-screen">
+  <div class="top-section">
+    <div class="col-1">
+      <div class="top-header">
+        Innovate Finances, Enrich Lives - Welcome to Demobank Cards!
+      </div>
+      <div class="top-desc">
+        Experience financial empowerment with tailored solutions that meet your
+        needs, exclusively from our bank.
+      </div>
+      <div class="mar-20">
+        <button class="confirm-button" [routerLink]="['/card/card-type']">
+          Apply
+        </button>
+
+        <div style="margin-top: 20px; display: flex">
+          <div>
+            <img
+              src="/assets/images/images.png"
+              alt="Ellipse61965"
+              class="image-upload"
+            />
+          </div>
+          <div>
+            <span class="count-label"> 4K+ </span>
+            <span class="users"> users worldwide </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div style="display: flex; flex-direction: column">
+        <img
+          src="/assets/images/debit-card.png"
+          alt="debit card"
+          class="vertical-move"
+        />
+        <img src="/assets/images/shadow-card.png" alt="shadow card" />
+      </div>
+    </div>
+  </div>
+  <div class="mar-20">
+    <div class="header">Card Diverse</div>
+    <div class="desc">
+      Open your account in a breeze and start banking hassle-free.
+    </div>
+    <app-card-diverse></app-card-diverse>
+  </div>
+
+  <div class="mar-20">
+    <div class="header">Our Top Performing Plans</div>
+    <div class="desc">
+      Select wisely from our plans & invest your money for higher returns
+    </div>
+    <div>
+      <app-top-performing></app-top-performing>
+    </div>
+  </div>
+  <div class="mar-20">
+    <div class="header">What our happy client say</div>
+    <div class="desc">
+      Several selected clients, who already believe in our service.
+    </div>
+    <div>
+      <app-client-review></app-client-review>
+    </div>
+    <div>
+      <app-news-letters></app-news-letters>
+    </div>
+  </div>
+</div>

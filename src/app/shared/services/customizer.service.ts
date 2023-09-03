@@ -141,6 +141,7 @@ export class CustomizerService {
       }
     }
   }
+  
   addClass(el, className) {
     if (!el) return;
     if (!el.length) {
@@ -151,6 +152,7 @@ export class CustomizerService {
       }
     }
   }
+
   findClosest(el, className) {
     if (!el) return;
     while (el) {
@@ -161,12 +163,14 @@ export class CustomizerService {
       el = parent;
     }
   }
+
   hasClass(el, className) {
     if (!el) return;
     return (
       ` ${el.className} `.replace(/[\n\t]/g, " ").indexOf(` ${className} `) > -1
     );
   }
+
   toggleClass(el, className) {
     if (!el) return;
     if (this.hasClass(el, className)) {

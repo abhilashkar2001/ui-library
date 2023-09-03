@@ -1,12 +1,10 @@
 import { Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
-import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
-import { AuthGuard } from "./shared/guards/auth.guard";
 
 export const rootRouterConfig: Routes = [
   {
     path: "",
-    redirectTo: "deposits/home",
+    redirectTo: "account",
     pathMatch: "full",
   },
   {
@@ -14,7 +12,7 @@ export const rootRouterConfig: Routes = [
     component: AdminLayoutComponent,
     children: [
       {
-        path: "createAccount",
+        path: "account",
         loadChildren: () =>
           import("./views/home/create-account/create-account.module").then(
             (m) => m.CreateAccountModule
@@ -24,7 +22,7 @@ export const rootRouterConfig: Routes = [
       {
         path: "card",
         loadChildren: () =>
-          import("./views/home/cards/card.module").then((m) => m.CardModule),
+          import("./views/home/cards/cards.module").then((m) => m.CardsModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
       {
@@ -38,7 +36,7 @@ export const rootRouterConfig: Routes = [
       {
         path: "loan",
         loadChildren: () =>
-          import("./views/home/loans/loan.module").then((m) => m.LoanModule),
+          import("./views/home/loans/loans.module").then((m) => m.LoansModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
     ],

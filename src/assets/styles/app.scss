@@ -1,7 +1,7 @@
-// // Sidebar Scroll
-@import "~bootstrap/dist/css/bootstrap.min.css";
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;900&family=Poppins:wght@200;300;400;500;600&display=swap");
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "perfect-scrollbar/css/perfect-scrollbar.css";
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
 
 * {
   box-sizing: border-box;
@@ -15,14 +15,13 @@ body {
 }
 
 // // Flag icon
-// @import '~flag-icon-css/css/flag-icon.min.css';
-@import "~flag-icons/css/flag-icons.min.css";
+@import "flag-icons/css/flag-icons.min.css";
 
 // // User tour
-@import "~hopscotch/dist/css/hopscotch.min.css";
+@import "hopscotch/dist/css/hopscotch.min.css";
 
 // // Highlightjs theme
-@import "~highlight.js/styles/github.css";
+@import "highlight.js/styles/github.css";
 
 // Main Variables File
 @import "scss/variables";
@@ -46,6 +45,12 @@ body {
 
 // Open _views.scss and remove unnecessary view related files
 @import "scss/views/views";
+
+@import "scss/button";
+@import "scss/accordian";
+@import "scss/calculator";
+@import "scss/loan-flow.scss";
+@import "scss/stepper";
 
 .mat-drawer-content {
   height: 100vh !important;
@@ -116,6 +121,3 @@ body {
     max-width: 175px;
   }
 }
-
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";

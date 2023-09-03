@@ -1,0 +1,66 @@
+<div class="create-loan-account">
+  <app-loan-stepper
+    (customSelectionChange)="getTabDetails($event)"
+    [optionalSteps]="optionalSteps"
+    [accountHolderTYpe]="accountHolderTYpe"
+    [existingUser]="existingUser"
+  ></app-loan-stepper>
+  <div class="col-2-section">
+    <app-create-loan
+      *ngIf="stepsDetails && stepsDetails.isCreateLoanStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+      (checkAccountHolderType)="checkAccountHolderType($event)"
+    ></app-create-loan>
+    <app-mobile-verification
+      *ngIf="stepsDetails && stepsDetails.isMobileVerificationStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+      (checkExistingUserEvent)="existingUserDetails($event)"
+    ></app-mobile-verification>
+    <app-cibil-score-container
+      *ngIf="stepsDetails && stepsDetails.isCIBILScoreStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (isDifferentMobileNumber)="addMoreSteps($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-cibil-score-container>
+    <app-loan-user-select-kyc
+      *ngIf="stepsDetails && stepsDetails.isSelectKYCStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-loan-user-select-kyc>
+    <app-loan-user-personal-details
+      *ngIf="
+        stepsDetails &&
+        stepsDetails.isPersonalDetailsStep &&
+        !stepsDetails.isJointAccount
+      "
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-loan-user-personal-details>
+    <app-personal-details-with-multiple-customer
+      *ngIf="
+        stepsDetails &&
+        stepsDetails.isPersonalDetailsStep &&
+        stepsDetails.isJointAccount
+      "
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-personal-details-with-multiple-customer>
+    <app-loan-document-upload
+      *ngIf="stepsDetails && stepsDetails.isDocumentStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-loan-document-upload>
+    <app-loan-terms-conditions
+      *ngIf="stepsDetails && stepsDetails.isTermsCondtionsStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-loan-terms-conditions>
+    <app-loan-summary
+      *ngIf="stepsDetails && stepsDetails.isloanSummaryStep"
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="onBack($event)"
+    ></app-loan-summary>
+  </div>
+</div>

@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import {
   BrowserModule,
-  HAMMER_GESTURE_CONFIG,
 } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -53,7 +52,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       },
     }),
     RouterModule.forRoot(rootRouterConfig, {
-      useHash: false,
+      useHash: true,
       relativeLinkResolution: "legacy",
     }),
     NgbModule,

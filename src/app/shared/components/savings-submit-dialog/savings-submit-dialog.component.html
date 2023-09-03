@@ -1,0 +1,37 @@
+<div class="main-container">
+  <div class="close-button">
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+  <div class="standard-submitcontent-header">
+    Application is submitted successfully. <br />We will review and get back to
+    you.
+  </div>
+  <div class="alert-image">
+    <img src="assets/images/submited-img.png" alt="..." />
+  </div>
+  <mat-card class="full-width">
+    <div class="dialog-reference-container">
+      <div class="standard-font-dark-blue">Application No:</div>
+      <div class="standard-font-blue">
+        &nbsp;&nbsp;&nbsp;{{ applicationNo }}
+      </div>
+    </div>
+  </mat-card>
+  <div class="standard-note-content">
+    <span class="standard-font-black">Note:</span> Please quote the above
+    reference number in all communications with the bank
+  </div>
+  <div class="button-container">
+    <button class="image-button" mat-raised-button>
+      <img src="assets\images\share.png" />
+      Share
+    </button>
+    <button class="image-button" mat-raised-button>
+      <img src="assets\images\download-button.png" />
+      Download
+    </button>
+  </div>
+  <div class="button-container">
+    <button class="confirm-button" mat-raised-button (click)="done()">Done</button>
+  </div>
+</div>

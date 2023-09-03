@@ -4,8 +4,6 @@ import {
   AfterViewInit,
   ViewChild,
   HostListener,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   ViewContainerRef,
 } from "@angular/core";
 import {

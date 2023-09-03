@@ -18,6 +18,27 @@ import { AppLoaderComponent } from "../services/app-loader/app-loader.component"
 import { ButtonLoadingComponent } from "./button-loading/button-loading.component";
 
 import { FooterComponent } from "./footer/footer.component";
+import { SavingsSubmitDialogComponent } from "./savings-submit-dialog/savings-submit-dialog.component";
+import { ClientReviewComponent } from "./client-review/client-review.component";
+import { NewsLettersComponent } from "./news-letters/news-letters.component";
+import { TopPerformingComponent } from "./top-performing/top-performing.component";
+
+// Import FusionCharts library and chart modules
+import * as Widgets from "fusioncharts/fusioncharts.widgets";
+import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+// Pass the fusioncharts library and chart modules
+import { FusionChartsModule } from "angular-fusioncharts";
+// Import FusionCharts library and chart modules
+import * as FusionCharts from "fusioncharts";
+import * as Charts from "fusioncharts/fusioncharts.charts";
+import { TermsConditionsComponent } from "./terms-conditions/terms-conditions.component";
+import { CommonMobileVerificationComponent } from "./comon-mobile-verification/common-mobile-verification.component";
+import { PersonalDetailsComponent } from "./personal-details/personal-details.component";
+import { CarouselComponent } from "./carousel/carousel.component";
+import { FaqComponent } from "./faq/faq.component";
+
+// Pass the fusioncharts library and chart modules
+FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
 const components = [
   HeaderTopComponent,
@@ -26,6 +47,15 @@ const components = [
   AppLoaderComponent,
   ButtonLoadingComponent,
   FooterComponent,
+  SavingsSubmitDialogComponent,
+  NewsLettersComponent,
+  TopPerformingComponent,
+  ClientReviewComponent,
+  TermsConditionsComponent,
+  CommonMobileVerificationComponent,
+  PersonalDetailsComponent,
+  CarouselComponent,
+  FaqComponent,
 ];
 
 @NgModule({
@@ -35,6 +65,7 @@ const components = [
     RouterModule,
     TranslateModule,
     FlexLayoutModule,
+    FusionChartsModule,
     PerfectScrollbarModule,
     SharedPipesModule,
     SharedDirectivesModule,
