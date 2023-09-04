@@ -20,7 +20,6 @@ import { ButtonLoadingComponent } from "./button-loading/button-loading.componen
 import { FooterComponent } from "./footer/footer.component";
 import { SavingsSubmitDialogComponent } from "./savings-submit-dialog/savings-submit-dialog.component";
 import { ClientReviewComponent } from "./client-review/client-review.component";
-import { NewsLettersComponent } from "./news-letters/news-letters.component";
 import { TopPerformingComponent } from "./top-performing/top-performing.component";
 
 // Import FusionCharts library and chart modules
@@ -41,6 +40,8 @@ import { AccountHeaderComponent } from "./account-header/account-header.componen
 import { CibilScorePoorDialgComponent } from "./cibil-score-poor-dialg/cibil-score-poor-dialg.component";
 import { CibilScoreResultComponent } from "./cibil-score-result/cibil-score-result.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NewsLetterSliderComponent } from "./news-letter-slider/news-letter-slider.component";
+import { NewsLetterComponent } from "./news-letter/news-letter.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -53,7 +54,8 @@ const components = [
   ButtonLoadingComponent,
   FooterComponent,
   SavingsSubmitDialogComponent,
-  NewsLettersComponent,
+  NewsLetterSliderComponent,
+  NewsLetterComponent,
   TopPerformingComponent,
   ClientReviewComponent,
   TermsConditionsComponent,
