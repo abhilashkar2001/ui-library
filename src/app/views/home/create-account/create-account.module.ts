@@ -7,7 +7,7 @@ import { LandingPageComponent } from "./create-account/landing-page/landing-page
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
 import { AccountStepperComponent } from "./create-account/account-stepper/account-stepper.component";
-import { PersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
+import { CreateAccountPersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
 import { SelectKycComponent } from "./create-account/select-kyc/select-kyc.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -20,7 +20,7 @@ import { SharedModule } from "app/shared/shared.module";
     CreateAccountComponent,
     LandingPageComponent,
     AccountMobileVerificationComponent,
-    PersonalDetailsComponent,
+    CreateAccountPersonalDetailsComponent,
     SelectKycComponent,
     AccountStepperComponent,
     CreateAccountLandingPageComponent,
