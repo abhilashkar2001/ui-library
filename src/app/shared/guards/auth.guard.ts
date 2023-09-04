@@ -9,17 +9,17 @@ import { JwtAuthService } from "../services/auth/jwt-auth.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
+  isLoggedIn: boolean = true;
   constructor(private router: Router, private jwtAuth: JwtAuthService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.jwtAuth.isLoggedIn()) {
+    if (this.isLoggedIn) {
       return true;
     } else {
-      this.router.navigate(["/sessions/signin"], {
+      this.router.navigate(["/account"], {
         queryParams: {
-          return: state.url
-        }
+          return: state.url,
+        },
       });
       return false;
     }
