@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
-
+import { Location } from "@angular/common";
 @Component({
   selector: "app-maturity-calculator",
   templateUrl: "./maturity-calculator.component.html",
@@ -9,19 +9,25 @@ import { NewDepositService } from "app/views/home/new-deposit/new-deposit.servic
 })
 export class MaturityCalculatorComponent implements OnInit {
   @Input() fdName;
-  constructor(private router: Router, private showSideBar: NewDepositService) {}
+  constructor(
+    private router: Router,
+    private showSideBar: NewDepositService,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {}
 
-  openFD(fdType) {
-    var path = "";
+  openLink(fdType) {
+    let path;
     if (fdType == "FD") {
-      path = "deposits/home/fdFlow/fdDetails";
+      path = "/deposits/fdFlow/fdDetails";
     } else {
-      console.log(fdType);
-      path = "deposits/home/rdDeposit";
+      path = "/deposits/rdDeposit";
     }
-    const fullUrl = this.router.createUrlTree([path]).toString();
-    window.open(fullUrl, "_blank");
+    const url = this.location.prepareExternalUrl(
+      this.router.serializeUrl(this.router.createUrlTree([path]))
+    );
+
+    window.open(url, "_blank");
   }
 }
