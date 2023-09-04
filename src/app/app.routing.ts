@@ -43,6 +43,6 @@ export const rootRouterConfig: Routes = [
   },
   {
     path: "**",
-    redirectTo: "home",
+    redirectTo: "/account",
   },
 ];

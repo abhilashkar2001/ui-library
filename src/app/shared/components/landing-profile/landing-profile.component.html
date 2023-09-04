@@ -1,0 +1,49 @@
+<div fxFlex="100" fxLayout="row">
+  <div
+    fxFlex="48"
+    fxLayout="column"
+    class="deposit_service_txt"
+    style="padding-top: 3%"
+  >
+    <div fxLayout="column" fxFlex="100">
+      <div class="break_word account_title">
+        {{ profileHeader }}
+      </div>
+      <div style="width: 100%; margin-top: 2%">
+        <div class="break_word sub_account_title">
+          {{ profileHint }}
+        </div>
+      </div>
+      <div fxLayout="row" class="applyBtnGrp">
+        <div>
+          <button mat-flat-button class="applyBtn" (click)="apply()">
+            Apply
+          </button>
+        </div>
+        <!-- <div class="learn_more">Learn More</div> -->
+      </div>
+      <div fxLayout="row" class="childImg_grp">
+        <div class="childImg1">
+          <img src="assets/images/Ellipse 6.svg" alt="" />
+        </div>
+        <div class="childImg2">
+          <img src="assets/images/Ellipse 7.svg" alt="" />
+        </div>
+        <div class="childImg3">
+          <img src="assets/images/Ellipse 8.svg" alt="" />
+        </div>
+        <div fxLayout="column">
+          <div class="total_users">4k+</div>
+          <div style="font-size: 18px; color: #06113c">users worldwide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="48" class="deposit_service_img">
+    <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+      <div>
+        <img [src]="imageUrl" alt="Group 13740" />
+      </div>
+    </div>
+  </div>
+</div>
