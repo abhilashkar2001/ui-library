@@ -1,22 +1,23 @@
-import { EventEmitter, Output } from '@angular/core';
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { EventEmitter, Output } from "@angular/core";
+import { Location } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+} from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
-  selector: 'app-create-account-personal-details',
-  templateUrl: './personal-details.component.html',
-  styleUrls: ['./personal-details.component.scss'],
+  selector: "app-create-account-personal-details",
+  templateUrl: "./personal-details.component.html",
+  styleUrls: ["./personal-details.component.scss"],
 })
 export class PersonalDetailsComponent implements OnInit {
-  @Output() onSubmitPersonalDetailsEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onSubmitPersonalDetailsEvent: EventEmitter<any> =
+    new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   personalDetailsForm: FormGroup | any;
   countries: any = [];
@@ -32,7 +33,7 @@ export class PersonalDetailsComponent implements OnInit {
     private openAccountService: OpenAccountService,
     private activateRoute: ActivatedRoute
   ) {
-    this.accountHeader = this.activateRoute.snapshot['queryParams']['title'];
+    this.accountHeader = this.activateRoute.snapshot["queryParams"]["title"];
   }
 
   ngOnInit(): void {
@@ -70,30 +71,31 @@ export class PersonalDetailsComponent implements OnInit {
 
   initialForm() {
     this.personalDetailsForm = this.fb.group({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      dateOfBirth: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      gender: new FormControl('', [Validators.required]),
-      nationality: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      residentType: new FormControl('', [Validators.required]),
-      country: new FormControl('', [Validators.required]),
-      zipCode: new FormControl('', [Validators.required]),
+      prefix: new FormControl("", [Validators.required]),
+      firstName: new FormControl("", [Validators.required]),
+      lastName: new FormControl("", [Validators.required]),
+      dateOfBirth: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.required, Validators.email]),
+      gender: new FormControl("", [Validators.required]),
+      nationality: new FormControl("", [Validators.required]),
+      city: new FormControl("", [Validators.required]),
+      state: new FormControl("", [Validators.required]),
+      address: new FormControl("", [Validators.required]),
+      residentType: new FormControl("", [Validators.required]),
+      country: new FormControl("", [Validators.required]),
+      zipCode: new FormControl("", [Validators.required]),
     });
   }
 
   createPayLoad() {
     return {
       prefix:
-        this.personalDetailsForm.value.gender.toLowerCase() === 'male'
-          ? 'Mr.'
-          : 'Mrs.',
+        this.personalDetailsForm.value.gender.toLowerCase() === "male"
+          ? "Mr."
+          : "Mrs.",
       firstName: this.personalDetailsForm.value.firstName,
       lastName: this.personalDetailsForm.value.firstName,
-      middleName: '',
+      middleName: "",
       gender: this.personalDetailsForm.value.gender,
       dateOfBirth: this.personalDetailsForm.value.dateOfBirth,
       nationality: this.personalDetailsForm.value.nationality,
@@ -103,7 +105,7 @@ export class PersonalDetailsComponent implements OnInit {
         address: [
           {
             address1: this.personalDetailsForm.value.address,
-            address2: '',
+            address2: "",
             residentType: this.personalDetailsForm.value.residentType,
             cityId: this.personalDetailsForm.value.city,
             country: this.personalDetailsForm.value.country,
@@ -118,8 +120,8 @@ export class PersonalDetailsComponent implements OnInit {
     const payLoad = this.createPayLoad();
     this.openAccountService.savePersonalDetails(payLoad).subscribe(
       (response: any) => {
-        console.log('Response: ', response);
-        localStorage.setItem('customerId', response.data.customerId);
+        console.log("Response: ", response);
+        localStorage.setItem("customerId", response.data.customerId);
         this.onSubmitPersonalDetailsEvent.emit();
       },
       (error: any) => {

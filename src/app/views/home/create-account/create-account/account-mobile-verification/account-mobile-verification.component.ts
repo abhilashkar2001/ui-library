@@ -17,14 +17,20 @@ export class AccountMobileVerificationComponent implements OnInit {
   phone: any;
   otp: any;
   resendLink: boolean = false;
-  otpDigit1: string = "";
-  otpDigit2: string = "";
-  otpDigit3: string = "";
-  otpDigit4: string = "";
-  otpDigit5: string = "";
-  otpDigit6: string = "";
+  yourOtp: any = "";
   agreed: boolean = false;
   accountHeader: string | any;
+  config = {
+    allowNumbersOnly: false,
+    length: 6,
+    isPasswordInput: true,
+    disableAutoFocus: false,
+    placeholder: "",
+    inputStyles: {
+      width: "50px",
+      height: "50px",
+    },
+  };
 
   constructor(
     private router: Router,
@@ -48,9 +54,17 @@ export class AccountMobileVerificationComponent implements OnInit {
 
   onVerify() {
     this.openAccountService
-      .verifyOtp({ mobile: this.phone, otp: this.otp })
+      .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
       .subscribe((response) => {
         this.onVerifyOtpEvent.emit();
+      });
+    this.openAccountService
+      .getExistingCustomer(this.phone)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        if (resp?.statusCode === 200 && resp?.data) {
+          // this.openAccountService.saveCustomerInfo()
+        }
       });
   }
 
@@ -78,14 +92,10 @@ export class AccountMobileVerificationComponent implements OnInit {
     }, 1000);
   }
 
-  otpChange() {
-    this.otp =
-      this.otpDigit1 +
-      this.otpDigit2 +
-      this.otpDigit3 +
-      this.otpDigit4 +
-      this.otpDigit5 +
-      this.otpDigit6;
+  onOtpChange(e) {
+    console.log(e);
+    this.yourOtp = e.toString();
+    console.log(this.yourOtp);
   }
 
   isValidated() {
