@@ -22,6 +22,7 @@ export class MaturityCalculatorComponent implements OnInit {
       path = "deposits/home/rdDeposit";
     }
     const fullUrl = this.router.createUrlTree([path]).toString();
-    window.open(fullUrl, "_blank");
+    // window.open(fullUrl, "_blank");
+    this.router.navigate(["deposits/home/fdFlow/fdDetails"]);
   }
 }

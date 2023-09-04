@@ -95,8 +95,9 @@
           <button
             type="button"
             mat-raised-button
-            [disabled]="isChecked"
+            [disabled]="!isChecked || !yourOtp"
             class="saveButton"
+            matSuffix
             (click)="verify()"
           >
             Verify

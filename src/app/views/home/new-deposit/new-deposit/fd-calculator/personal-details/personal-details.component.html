@@ -184,6 +184,7 @@
                         matInput
                         type="text"
                         formControlName="pincode"
+                        (change)="getCityandStateByZipcode(i)"
                         name="pincode"
                       />
                     </mat-form-field>
@@ -240,7 +241,7 @@
 
   <div>
     <div class="add_applicant" (click)="addCustomer()">
-      Add Another Applicant
+      Add Another Document
     </div>
   </div>
   <div

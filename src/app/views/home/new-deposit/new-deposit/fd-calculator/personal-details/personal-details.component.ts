@@ -11,6 +11,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import * as moment from "moment";
 import { NewDepositService } from "../../../new-deposit.service";
+import { PersonalDetailsService } from "./personal-details.service";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-personal-details",
@@ -37,7 +39,11 @@ export class PersonalDetailsComponent implements OnInit {
 
   customerDetailsForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: NewDepositService) {}
+  constructor(
+    private fb: FormBuilder,
+    private api: NewDepositService,
+    private personalDetailsService: PersonalDetailsService
+  ) {}
 
   panelOpened(index: number) {
     this.panels.forEach((panel, i) => {
@@ -94,19 +100,19 @@ export class PersonalDetailsComponent implements OnInit {
       id: "",
       customerNo: "",
       primaryCustomer: "",
-      prefix: "",
+      prefix: ["", Validators.required],
       firstName: ["", Validators.required],
-      lastName: "",
-      dateOfBirth: "",
-      email: "",
-      gender: "",
-      nationality: "",
-      address1: "",
-      residenceType: "",
-      country: "",
-      pincode: "",
-      state: "",
-      cityId: "",
+      lastName: ["", Validators.required],
+      dateOfBirth: ["", Validators.required],
+      email: ["", Validators.required],
+      gender: ["", Validators.required],
+      nationality: ["", Validators.required],
+      address1: [""],
+      residenceType: ["", Validators.required],
+      country: ["", Validators.required],
+      pincode: ["", Validators.required],
+      state: ["", Validators.required],
+      cityId: ["", Validators.required],
     });
   }
 
@@ -175,5 +181,30 @@ export class PersonalDetailsComponent implements OnInit {
         panel.close();
       }
     });
+  }
+
+  getCityandStateByZipcode(indx) {
+    (<FormGroup>this.customer.controls[indx])
+      .get("pincode")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((value) => {
+        if (value) {
+          console.log(value);
+          if (value.toString().length) {
+            this.personalDetailsService
+              .fetchStateCityByZipcode(value)
+              .subscribe((res: any) => {
+                if (res) {
+                  this.customer.controls[indx]
+                    .get("state")
+                    .setValue(res?.data?.[0]?.state);
+                  this.customer.controls[indx]
+                    .get("city")
+                    .setValue(res?.data?.[0]?.cityId);
+                }
+              });
+          }
+        }
+      });
   }
 }
