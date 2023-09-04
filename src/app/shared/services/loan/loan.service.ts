@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 
-const baseUrl = environment.basePath;
+const baseUrl = environment.microServiceURL;
 
 @Injectable({
   providedIn: "root",

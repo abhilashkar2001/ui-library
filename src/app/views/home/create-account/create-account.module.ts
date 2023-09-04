@@ -13,6 +13,7 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CreateAccountLandingPageComponent } from "./create-account/create-account-landing-page/create-account-landing-page.component";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CreateAccountLandingPageComponent } from "./create-account/create-accou
     CommonModule,
     FormsModule,
     SharedMaterialModule,
+    SharedModule,
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,

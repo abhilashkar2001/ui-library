@@ -13,6 +13,8 @@ import { AppLoaderService } from './services/app-loader/app-loader.service';
 import { SharedComponentsModule } from './components/shared-components.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { SharedDirectivesModule } from './directives/shared-directives.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
     AuthGuard,
     UserRoleGuard,
     AppConfirmService,
-    AppLoaderService
+    AppLoaderService,
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     SharedComponentsModule,

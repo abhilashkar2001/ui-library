@@ -1,0 +1,76 @@
+<div class="cibil-score-result">
+    <div class="graph-section">
+        <fusioncharts width="500" height="250" type="angulargauge" [dataSource]="dataSource">
+        </fusioncharts>
+    </div>
+    <div class="cibil-label">
+        You Credit Bureau Score is
+    </div>
+    <div class="result">{{cibilScoreText()}}
+        <button type="button" class="info-button" placement="bottom" [ngbPopover]="popOver"
+            popoverClass="popover-custom" #popOverRef="ngbPopover" triggers="manual" [autoClose]="false"
+            triggers="mouseenter:mouseleave">
+            <mat-icon>info</mat-icon></button>
+        <!-- triggers="mouseenter:mouseleave" (click)="popOverRef.toggle()" -->
+        <ng-template #popOver>
+            <app-popover></app-popover>
+        </ng-template>
+    </div>
+    <div *ngIf="cibilScore > 681">
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../../assets/images/like.png" alt="shield">
+            </div>
+            <div class="label">
+                You are paying your EMIs/Credit card bill on time
+            </div>
+        </div>
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../../assets/images/like.png" alt="shield">
+            </div>
+            <div class="label">
+                You are not spending over your credit limit
+            </div>
+        </div>
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../../assets/images/like.png" alt="shield">
+            </div>
+            <div class="label">
+                You are not careful with new credit applications
+            </div>
+        </div>
+    </div>
+    <div *ngIf="cibilScore < 681">
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../assets/images/dis-like.png" alt="dis-like">
+            </div>
+            <div class="label">
+                You are paying your EMIs/Credit card bill not in on time
+            </div>
+        </div>
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../assets/images/dis-like.png" alt="dis-like">
+            </div>
+            <div class="label">
+                You are spending over your credit limitYou are not spending over your credit limit
+            </div>
+        </div>
+        <div class="cibil-text-card">
+            <div class="like-icon">
+                <img src="../../../../assets/images/dis-like.png" alt="dis-like">
+            </div>
+            <div class="label">
+                You are not Properly maintaining with new credit applications
+            </div>
+        </div>
+    </div>
+
+    <div class="button-section">
+        <button class="confirm-button" (click)="onContinue()">Continue</button>
+        <button class="back-button" (click)="onBack()">Back</button>
+    </div>
+</div>

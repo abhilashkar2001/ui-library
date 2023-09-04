@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../shared-material.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PerfectScrollbarModule } from "app/shared/components/perfect-scrollbar";
 import { SharedPipesModule } from "../pipes/shared-pipes.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -36,6 +36,11 @@ import { CommonMobileVerificationComponent } from "./comon-mobile-verification/c
 import { PersonalDetailsComponent } from "./personal-details/personal-details.component";
 import { CarouselComponent } from "./carousel/carousel.component";
 import { FaqComponent } from "./faq/faq.component";
+import { ClientsComponent } from "./clients/clients.component";
+import { AccountHeaderComponent } from "./account-header/account-header.component";
+import { CibilScorePoorDialgComponent } from "./cibil-score-poor-dialg/cibil-score-poor-dialg.component";
+import { CibilScoreResultComponent } from "./cibil-score-result/cibil-score-result.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -56,16 +61,22 @@ const components = [
   PersonalDetailsComponent,
   CarouselComponent,
   FaqComponent,
+  CibilScoreResultComponent,
+  CibilScorePoorDialgComponent,
+  AccountHeaderComponent,
+  ClientsComponent,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     TranslateModule,
     FlexLayoutModule,
     FusionChartsModule,
+    NgbModule,
     PerfectScrollbarModule,
     SharedPipesModule,
     SharedDirectivesModule,

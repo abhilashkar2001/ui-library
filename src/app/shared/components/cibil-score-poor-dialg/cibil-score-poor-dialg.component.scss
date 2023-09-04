@@ -1,0 +1,54 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+
+    .close-button {
+        flex-direction: row;
+        cursor: pointer;
+        width: 100%;
+        margin-right: 30px;
+
+        mat-icon {
+            position: relative;
+            float: right;
+        }
+    }
+
+    .headr-text {
+        color: #000000;
+        flex-direction: row;
+        width: 491px;
+        text-align: center;
+        font-family: Poppins;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 20px !important;
+    }
+
+    .note-container {
+        margin-bottom: 20px;
+
+        .note-header {
+            color: #000;
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .note-text {
+            color: #C0C0C0;
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+}

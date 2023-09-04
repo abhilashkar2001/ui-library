@@ -50,4 +50,44 @@
       Open your account in a breeze and start banking hassle-free.
     </div>
   </div>
+  
+  <div fxLayout="row">
+    <div style="margin-top: 20px;">
+      <div class="account-service-header">
+        Account Opening Services
+      </div>
+      <div class="account-service-text">
+        Open your account in a breeze and start banking hassle-free.
+      </div>
+      <div>
+        <app-carousel [carowselData]="data" [flow]="'account'"></app-carousel>
+      </div>
+    </div>
+  
+    <div style="margin-top: 20px;">
+      <div class="top-perfomers-header">
+        Our Top Performing Plans
+      </div>
+      <div class="account-service-text">
+        Select wisely from our plans & invest your money for higher returns
+      </div>
+      <div>
+        <app-top-performing></app-top-performing>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div class="top-perfomers-header">
+        What our happy client say
+      </div>
+      <div class="account-service-text">
+        Several selected clients, who already believe in our service.
+      </div>
+      <div>
+        <app-client-review></app-client-review>
+      </div>
+      <div>
+        <app-news-letters></app-news-letters>
+      </div>
+    </div>
+  </div>
 </div>
