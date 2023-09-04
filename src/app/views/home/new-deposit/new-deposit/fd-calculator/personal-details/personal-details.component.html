@@ -184,7 +184,7 @@
                         matInput
                         type="text"
                         formControlName="pincode"
-                        (change)="getCityandStateByZipcode(i)"
+                        (input)="getCityandStateByZipcode(i)"
                         name="pincode"
                       />
                     </mat-form-field>
@@ -196,7 +196,11 @@
                     >
                       <mat-label>State</mat-label>
                       <mat-select formControlName="state">
-                        <mat-option value="Goa">Goa</mat-option>
+                        <mat-option
+                          *ngFor="let item of listCityState"
+                          [value]="item?.state"
+                          >{{ item?.state }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -207,7 +211,11 @@
                     >
                       <mat-label>City</mat-label>
                       <mat-select formControlName="cityId">
-                        <mat-option value="Panji">Panji</mat-option>
+                        <mat-option
+                          *ngFor="let item of listCityState"
+                          [value]="item?.cityId"
+                          >{{ item?.city }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -241,7 +249,7 @@
 
   <div>
     <div class="add_applicant" (click)="addCustomer()">
-      Add Another Document
+      Add Another Applicant
     </div>
   </div>
   <div

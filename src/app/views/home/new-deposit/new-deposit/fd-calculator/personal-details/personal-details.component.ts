@@ -38,6 +38,7 @@ export class PersonalDetailsComponent implements OnInit {
   countryArray: any;
 
   customerDetailsForm: FormGroup;
+  listCityState: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -64,9 +65,9 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buildCustomerDetailsForm();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
     this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
-    this.buildCustomerDetailsForm();
     this.getCountry();
   }
   getCountry() {
@@ -184,10 +185,14 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   getCityandStateByZipcode(indx) {
+    console.log({ indx });
+
     (<FormGroup>this.customer.controls[indx])
       .get("pincode")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
+        console.log({ value });
+
         if (value) {
           console.log(value);
           if (value.toString().length) {
@@ -195,12 +200,13 @@ export class PersonalDetailsComponent implements OnInit {
               .fetchStateCityByZipcode(value)
               .subscribe((res: any) => {
                 if (res) {
+                  this.listCityState = res?.data;
                   this.customer.controls[indx]
                     .get("state")
-                    .setValue(res?.data?.[0]?.state);
+                    .patchValue(res?.data?.[0]?.state);
                   this.customer.controls[indx]
-                    .get("city")
-                    .setValue(res?.data?.[0]?.cityId);
+                    .get("cityId")
+                    .patchValue(res?.data?.[0]?.cityId);
                 }
               });
           }
