@@ -38,7 +38,7 @@
               <mat-label class="custom-mat-label">Ammount</mat-label>
               <input
                 matInput
-                [formControl]="email"
+                [formControl]="ammount"
                 [(ngModel)]="ammountValue"
               />
             </mat-form-field>
@@ -51,6 +51,8 @@
           [max]="max"
           [min]="min"
           fxFlex="100"
+          [thumbLabel]="thumbLabel"
+          (change)="onSliderChange($event)"
           discrete
         >
           <input matSliderThumb [(ngModel)]="ammountValue" #slider />

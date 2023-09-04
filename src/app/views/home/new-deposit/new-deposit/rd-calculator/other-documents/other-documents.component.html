@@ -102,11 +102,11 @@
                     >
                       <div class="upload_img" fxFlex="100">
                         <div class="img_box">
-                          <img [src]="imageUrl" />
+                          <img [src]="file?.url" />
                           <!-- <img src="assets/images/Rectangle 1779.png" /> -->
                         </div>
                         <div class="img_container">
-                          <p class="img_name">{{ file?.doc?.name }}</p>
+                          <p class="img_name">{{ file?.name }}</p>
                           <div class="progress-cont">
                             <div class="progress" [style.width]="'100%'"></div>
                           </div>
@@ -114,7 +114,7 @@
                         <button
                           mat-icon-button
                           class="btn"
-                          (click)="deleteFile(fileIndx)"
+                          (click)="deleteFile(fileIndx, file)"
                         >
                           <mat-icon color="warn">delete</mat-icon>
                         </button>

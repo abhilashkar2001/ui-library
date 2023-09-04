@@ -25,7 +25,7 @@
                 FD Deposit
               </div>
               <div style="font-size: 22px; line-height: 33px; font-weight: 400">
-                in 3 simple ways
+                in {{ steper_Array?.length }} simple ways
               </div>
               <div class="fd_info_stat" fxLayout="row">
                 <img src="assets/images/Group.svg" />
@@ -39,6 +39,7 @@
             #stepper
             orientation="vertical"
             [linear]="isLinear"
+            class="custom_steppper"
             [(selectedIndex)]="selectedStep"
             (selectionChange)="stepperSelectionChange($event)"
           >
@@ -81,7 +82,11 @@
     </mat-stepper>
   </div> -->
   <!-- for horizantal Allign -->
-  <div class="align_fdForm" fxLayout="column" *ngIf="isFixedDepositDetail">
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Create FD'"
+  >
     <label class="highlight_title">Fixed Deposit Details</label>
     <form [formGroup]="createFdForm" fxLayout="column">
       <div class="row">
@@ -246,27 +251,43 @@
           </button>
         </div>
         <div>
-          <button type="button" mat-raised-button class="cancelButton">
+          <button
+            type="button"
+            mat-raised-button
+            class="cancelButton"
+            (click)="cancel()"
+          >
             Cancel
           </button>
         </div>
       </div>
     </form>
   </div>
-  <div class="align_fdForm" fxLayout="column" *ngIf="isVerifyNumber">
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Verify Mobile Number'"
+  >
     <app-verify-number
       (customSaveVerify)="customSaveVerify($event)"
+      (customVerifyBack)="goBack()"
       (customFormGroupEmit)="customFormGroupEmit($event)"
     ></app-verify-number>
   </div>
-  <div class="align_fdForm" *ngIf="isPersonalDetails">
+  <div class="align_fdForm" fxLayout="column" *ngIf="cuurrentStep == 'Kyc'">
+    <app-other-documents
+      (customSaveDocument)="customSaveDocuments($event)"
+      (customDocumentForm)="customDocumentForm($event)"
+    ></app-other-documents>
+  </div>
+  <div class="align_fdForm" *ngIf="cuurrentStep == 'Personal Details'">
     <app-personal-details
       (customSavePersonal)="submitPersonalDetails($event)"
       (personalBack)="goBack()"
       (customFormGroup)="customFormGroup($event)"
     ></app-personal-details>
   </div>
-  <div class="align_fdForm" *ngIf="isBookFd">
-    <app-book-fd></app-book-fd>
+  <div class="align_fdForm" *ngIf="cuurrentStep == 'Book Fd'">
+    <app-book-fd (customBookFdBack)="goBack()"></app-book-fd>
   </div>
 </div>

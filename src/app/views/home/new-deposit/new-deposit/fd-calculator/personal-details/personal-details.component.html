@@ -166,7 +166,11 @@
                     >
                       <mat-label>Country</mat-label>
                       <mat-select formControlName="country">
-                        <mat-option value="India">India</mat-option>
+                        <mat-option
+                          *ngFor="let countryItem of countryArray"
+                          [value]="countryItem.countryName"
+                          >{{ countryItem.countryName }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>

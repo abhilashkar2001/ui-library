@@ -35,4 +35,25 @@ export class NewDepositService {
     //https://192.168.0.127:8765/auth/verifyOTP
     return this.http.post<any>(`${this.base_url}/auth/verifyOTP`, payload);
   }
+  getCountryDetails() {
+    return this.http.get<any>(
+      `${this.base_url}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
+  getCityDetails() {
+    return this.http.get<any>(
+      `${this.base_url}/city?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
+  getStateDetails() {
+    return this.http.get<any>(
+      `${this.base_url}/state?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
+  uploadDocument(formData) {
+    return this.http.post<any>(`${this.base_url}/upload-document`, formData);
+  }
+  submitAllDocument(payload) {
+    return this.http.post<any>(`${this.base_url}/documents`, payload);
+  }
 }

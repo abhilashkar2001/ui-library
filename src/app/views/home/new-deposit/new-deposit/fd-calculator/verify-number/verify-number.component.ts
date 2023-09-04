@@ -11,6 +11,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class VerifyNumberComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
+  @Output() customVerifyBack = new EventEmitter<{}>();
   verifyNumFirm: FormGroup;
   isShowOtp: boolean = false;
   isResend: boolean = false;
@@ -122,5 +123,9 @@ export class VerifyNumberComponent implements OnInit {
         clearInterval(timer);
       }
     }, 1000);
+  }
+
+  goBack() {
+    this.customVerifyBack.emit();
   }
 }
