@@ -10,6 +10,7 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import * as moment from "moment";
+import { NewDepositService } from "../../../new-deposit.service";
 
 @Component({
   selector: "app-personal-details",
@@ -32,10 +33,11 @@ export class PersonalDetailsComponent implements OnInit {
   isLinear = true;
   holderType: any;
   fixedDepositId: any;
+  countryArray: any;
 
   customerDetailsForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private api: NewDepositService) {}
 
   panelOpened(index: number) {
     this.panels.forEach((panel, i) => {
@@ -59,6 +61,14 @@ export class PersonalDetailsComponent implements OnInit {
     this.holderType = sessionStorage.getItem("holderType") || "Self";
     this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
     this.buildCustomerDetailsForm();
+    this.getCountry();
+  }
+  getCountry() {
+    this.api.getCountryDetails().subscribe((resp) => {
+      if (resp?.statusCode == 200) {
+        this.countryArray = resp.data;
+      }
+    });
   }
 
   buildCustomerDetailsForm() {
@@ -91,7 +101,6 @@ export class PersonalDetailsComponent implements OnInit {
       email: "",
       gender: "",
       nationality: "",
-      // address1
       address1: "",
       residenceType: "",
       country: "",
@@ -151,7 +160,6 @@ export class PersonalDetailsComponent implements OnInit {
     };
 
     return payload;
-    console.log(payload, "payload");
   }
 
   goBack() {

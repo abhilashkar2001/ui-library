@@ -137,6 +137,9 @@
   margin-left: 30px !important;
   height: 40px !important;
 }
+:host ::ng-deep .mat-step-header {
+  overflow: unset !important;
+}
 
 ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon-selected {
   background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);

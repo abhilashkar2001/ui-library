@@ -1,17 +1,21 @@
 <div fxLayout="column" *ngIf="!isPaymentEnabled">
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="depositDetails">
     <div class="highlight_title">Deposit Details</div>
     <div class="row">
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Deposit Ammount</div>
-          <div class="field_value">677676</div>
+          <div class="field_value">{{ depositDetails?.amount }}</div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Deposit Period</div>
-          <div class="field_value"></div>
+          <div class="field_value">
+            {{ depositDetails?.tenureYear }} Year
+            {{ depositDetails?.tenurMonth }} Month
+            {{ depositDetails?.tenureDays }} Days
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
@@ -23,19 +27,19 @@
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Maturity Date</div>
-          <div class="field_value">22/08/2034</div>
+          <div class="field_value">{{ depositDetails?.maturityDate }}</div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Interest Rate</div>
-          <div class="field_value">1.23%</div>
+          <div class="field_value">{{ depositDetails?.intrestRate }}%</div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Maturity Ammount</div>
-          <div class="field_value">₹ 5,00,000</div>
+          <div class="field_value">{{ depositDetails?.maturityAmount }}</div>
         </div>
       </div>
 
@@ -48,31 +52,31 @@
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Deposit Holder Type</div>
-          <div class="field_value">Single</div>
+          <div class="field_value">{{ depositDetails?.ownerShip }}</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="customerDetails">
     <div class="highlight_title">Bank Account</div>
     <div class="row">
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Bank Account</div>
-          <div class="field_value">126712128923700</div>
+          <div class="field_value">{{ customerDetails?.accountNumber }}</div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Name</div>
-          <div class="field_value">Rumango</div>
+          <div class="field_value">{{ customerDetails?.name }}</div>
         </div>
       </div>
       <div class="col-md-4 col-12 field_align">
         <div class="row">
           <div class="field_title">Your Pan Cars</div>
-          <div class="field_value">YUWE38932E</div>
+          <div class="field_value">{{ customerDetails?.panCardNo }}</div>
         </div>
       </div>
     </div>
@@ -90,7 +94,14 @@
     </div>
     &nbsp;&nbsp;
     <div>
-      <button type="button" mat-raised-button class="backButton">Back</button>
+      <button
+        type="button"
+        mat-raised-button
+        class="backButton"
+        (click)="goBack()"
+      >
+        Back
+      </button>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 
 @Component({
@@ -26,6 +26,8 @@ export class BookFdComponent implements OnInit {
     paymentType?: string;
   };
 
+  @Output() customBookFdBack = new EventEmitter<{}>();
+
   constructor(private fdApi: FdCalculatorServiceService) {}
 
   ngOnInit(): void {
@@ -40,5 +42,8 @@ export class BookFdComponent implements OnInit {
   }
   proceedFd() {
     this.isPaymentEnabled = true;
+  }
+  goBack() {
+    this.customBookFdBack.emit();
   }
 }

@@ -17,4 +17,7 @@ export class ReturnCalculatorComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  onSliderChange(e) {
+    this.ammountValue = e.value;
+  }
 }

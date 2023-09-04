@@ -13,6 +13,8 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { NewDepositService } from "../../../new-deposit.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-other-documents",
@@ -30,9 +32,18 @@ export class OtherDocumentsComponent implements OnInit {
   imageUrl: any;
   kycToggle = "kyc";
   files: any[] = [];
+  documentIds = [
+    {
+      docIds: [],
+    },
+  ];
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private api: NewDepositService,
+    private snack: MatSnackBar
+  ) {}
 
   ngAfterViewInit() {}
 
@@ -59,6 +70,7 @@ export class OtherDocumentsComponent implements OnInit {
       documentType: ["", Validators.required],
       documentNumber: "",
       fileInfo: new FormControl([]),
+      docIds: new FormControl([]),
     });
   }
   getFileInfo(indx: any): any[] {
@@ -69,8 +81,9 @@ export class OtherDocumentsComponent implements OnInit {
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number) {
-    console.log(this.otherDocument().controls[index].get("fileInfo")?.value);
+  deleteFile(index: number, doc) {
+    console.log(doc);
+    debugger;
     this.otherDocument()
       .controls[index].get("fileInfo")
       ?.value.splice(index, 1);
@@ -89,8 +102,6 @@ export class OtherDocumentsComponent implements OnInit {
   }
   browseFiles(i) {
     const inputElement = document.createElement("input");
-    // this.fileSelected = true;
-
     inputElement.type = "file";
     inputElement.accept = "image/*";
     inputElement.addEventListener("change", (event: Event) => {
@@ -99,24 +110,57 @@ export class OtherDocumentsComponent implements OnInit {
         const file = target.files[0];
         if (file.type.startsWith("image/")) {
           this.selectedImage = file;
-          this.displayImage(i);
+          this.displayImage(i, file);
+          this.uploadImage(file, i);
         }
         const fReader = new FileReader();
         fReader.readAsDataURL(file);
       }
     });
+
     inputElement.click();
     this.uploadFilesSimulator(0);
   }
+  uploadImage(file, i) {
+    let formData = new FormData();
+    let data = {
+      documentName: this.createDocumentForm.value.otherDocument[i].documentType,
+      documentType: this.createDocumentForm.value.otherDocument[i].documentType,
+      documentNumber:
+        this.createDocumentForm.value.otherDocument[i].documentNumber,
+      documentSide: 1,
+      fileName: file.name,
+      fileType: file.type,
+      verificationType: "kyc",
+    };
 
-  displayImage(indx) {
+    formData.append("data", JSON.stringify(data));
+    formData.append("file", file);
+    formData.append("module", "document");
+    this.api.uploadDocument(formData).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.updateDocId(i).push(resp.data.documentId);
+        this.documentIds.push(this.createDocumentForm.value);
+        this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+          panelClass: "snackbar-error",
+        });
+      }
+    });
+  }
+  updateDocId(indx: any): any[] {
+    return this.otherDocument().controls[indx].get("docIds")?.value;
+  }
+
+  displayImage(indx, file) {
     const reader = new FileReader();
     reader.onload = (event: ProgressEvent<FileReader>) => {
-      console.log(event.target.result);
       this.imageUrl = event.target.result as string;
-      console.log(this.imageUrl);
       this.getFileInfo(indx).push({
         url: this.imageUrl,
+        name: file.name,
       });
     };
     reader.readAsDataURL(this.selectedImage);
@@ -144,6 +188,9 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.customSaveDocument.emit({ status: true });
+    this.customSaveDocument.emit({
+      status: true,
+      documentDetails: this.createDocumentForm.value,
+    });
   }
 }
