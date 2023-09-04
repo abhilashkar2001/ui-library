@@ -40,6 +40,7 @@ import { RdCalculatorComponent } from "./new-deposit/rd-calculator/rd-calculator
 import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-cd.component";
 import { OtherDocumentsComponent } from "./new-deposit/rd-calculator/other-documents/other-documents.component";
 import { NgOtpInputModule } from "ng-otp-input";
+import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { NgOtpInputModule } from "ng-otp-input";
     MatSelectModule,
     SharedMaterialModule,
     SharedDirectivesModule,
+    SharedComponentsModule,
     RouterModule.forChild(NewDepositRoutes),
   ],
 })
