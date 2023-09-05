@@ -26,6 +26,7 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
 import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
+import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
     SharedModule,
     SharedMaterialModule,
     LoansRoutingModule,
+    SharedComponentsModule,
   ],
 })
 export class LoansModule {}
