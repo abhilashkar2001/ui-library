@@ -1,0 +1,118 @@
+.news-letter-container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.base-img {
+  z-index: -1;
+}
+.left-blue {
+  position: absolute;
+  margin-right: 71%;
+  margin-top: 11%;
+  z-index: -2;
+}
+.right-blue {
+  position: absolute;
+  margin-left: 46%;
+}
+.lrg-dot {
+  position: absolute;
+  z-index: -1;
+  float: right;
+  margin-top: 314px;
+  margin-left: 937px;
+}
+.sml-dot {
+  position: absolute;
+  z-index: -1;
+  float: right;
+  margin-top: -247px;
+  margin-left: 1086px;
+}
+
+.text-header {
+  color: var(--dard, #06113c);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  margin-right: 47%;
+  position: absolute;
+  line-height: normal;
+}
+
+.plain-text {
+  color: #757575;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 6%;
+  margin-right: 42%;
+  position: absolute;
+  line-height: 160%;
+}
+.text-box {
+  position: absolute;
+  input {
+    border-radius: 12px;
+    border: 1px solid #f1f1f1;
+    background: #fff;
+    width: 228%;
+    height: 60px;
+    margin-left: 23%;
+    box-shadow: 10px 20px 50px 0px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: -1;
+  }
+  button {
+    display: inline-flex;
+    padding: 13px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    color: #fff;
+    margin-top: -56px;
+    margin-left: 179%;
+    width: 70%;
+    border-radius: 12px;
+    background: #004c97;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .text-header {
+    display: none !important;
+  }
+  .plain-text {
+    display: none !important;
+  }
+  .right-blue {
+    height: 10%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .right-blue {
+    height: 7%;
+  }
+  .lrg-dot {
+    display: none !important;
+  }
+  .sml-dot {
+    display: none !important;
+  }
+  .text-box {
+    margin-right: 20%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .left-blue {
+    display: none !important;
+  }
+  .right-blue {
+    height: 4%;
+  }
+  .text-box {
+    margin-right: 20%;
+  }
+}

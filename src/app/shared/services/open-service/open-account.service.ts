@@ -61,4 +61,12 @@ export class OpenAccountService {
       `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}`
     );
   }
+
+  getExistingCustomer(mobileNo) {
+    return this.http.get(`${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}`);
+  }
+
+  saveCustomerInfo(payload) {
+    return this.http.post<any>(`${baseUrl}/origination-matser/save`, payload);
+  }
 }

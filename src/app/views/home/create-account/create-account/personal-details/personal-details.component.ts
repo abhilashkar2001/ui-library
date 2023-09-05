@@ -15,6 +15,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
   templateUrl: "./personal-details.component.html",
   styleUrls: ["./personal-details.component.scss"],
 })
+
 export class CreateAccountPersonalDetailsComponent implements OnInit {
   @Output() onSubmitPersonalDetailsEvent: EventEmitter<any> =
     new EventEmitter();
@@ -71,6 +72,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   initialForm() {
     this.personalDetailsForm = this.fb.group({
+      prefix: new FormControl("", [Validators.required]),
       firstName: new FormControl("", [Validators.required]),
       lastName: new FormControl("", [Validators.required]),
       dateOfBirth: new FormControl("", [Validators.required]),

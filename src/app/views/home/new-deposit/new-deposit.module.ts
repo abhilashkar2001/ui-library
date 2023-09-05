@@ -22,7 +22,6 @@ import { MaturityCalculatorComponent } from "./new-deposit/deposit-landing-page/
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { GrowthFdAnimationComponent } from "./new-deposit/deposit-landing-page/growth-fd-animation/growth-fd-animation.component";
 import { DepositFaqComponent } from "./new-deposit/deposit-landing-page/deposit-faq/deposit-faq.component";
-import { NewsLetterSliderComponent } from "./new-deposit/deposit-landing-page/news-letter-slider/news-letter-slider.component";
 import {
   NgbCarousel,
   NgbCarouselModule,
@@ -40,6 +39,7 @@ import { RdCalculatorComponent } from "./new-deposit/rd-calculator/rd-calculator
 import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-cd.component";
 import { OtherDocumentsComponent } from "./new-deposit/rd-calculator/other-documents/other-documents.component";
 import { NgOtpInputModule } from "ng-otp-input";
+import { SharedModule } from "app/shared/shared.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/select-kyc.component';
 
@@ -52,7 +52,6 @@ import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/selec
     MaturityCalculatorComponent,
     GrowthFdAnimationComponent,
     DepositFaqComponent,
-    NewsLetterSliderComponent,
     FdCalculatorComponent,
     FixedDepositDetailsComponent,
     VerifyNumberComponent,
@@ -82,6 +81,7 @@ import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/selec
     MatSelectModule,
     SharedMaterialModule,
     SharedDirectivesModule,
+    SharedModule,
     SharedComponentsModule,
     RouterModule.forChild(NewDepositRoutes),
   ],
