@@ -12,15 +12,15 @@ export const NewDepositRoutes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "home",
+        redirectTo: "landing",
         pathMatch: "full",
       },
       {
-        path: "home",
+        path: "landing",
         component: DepositLandingPageComponent,
       },
       {
-        path: "home/fdFlow",
+        path: "fdFlow",
         component: FdCalculatorComponent,
         children: [
           {
@@ -30,7 +30,7 @@ export const NewDepositRoutes: Routes = [
         ],
       },
       {
-        path: "home/rdDeposit",
+        path: "rdDeposit/:id",
         component: RdCalculatorComponent,
       },
     ],

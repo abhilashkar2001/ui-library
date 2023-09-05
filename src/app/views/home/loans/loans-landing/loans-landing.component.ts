@@ -10,8 +10,11 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 })
 export class LoansLandingComponent implements OnInit {
   carowselData = [];
-  imageUrl: string;
-
+  imageUrl = "assets/images/Loan_Gold_img.png";
+  profileHeader = "Achieve Your Dreams with Our Loan Service.";
+  profileHint =
+    " Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.";
+  routeUrl = "loan/loan-type";
   constructor(
     private router: Router,
     private commonService: CommonService,

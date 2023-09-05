@@ -7,23 +7,26 @@ import { LandingPageComponent } from "./create-account/landing-page/landing-page
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
 import { AccountStepperComponent } from "./create-account/account-stepper/account-stepper.component";
-import { PersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
+import { CreateAccountPersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
 import { SelectKycComponent } from "./create-account/select-kyc/select-kyc.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CreateAccountLandingPageComponent } from "./create-account/create-account-landing-page/create-account-landing-page.component";
 import { SharedModule } from "app/shared/shared.module";
+import { NgOtpInputModule } from "ng-otp-input";
+import { OtherDocumentsComponent } from "./create-account/other-documents/other-documents.component";
 
 @NgModule({
   declarations: [
     CreateAccountComponent,
     LandingPageComponent,
     AccountMobileVerificationComponent,
-    PersonalDetailsComponent,
+    CreateAccountPersonalDetailsComponent,
     SelectKycComponent,
     AccountStepperComponent,
     CreateAccountLandingPageComponent,
+    OtherDocumentsComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,7 @@ import { SharedModule } from "app/shared/shared.module";
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    NgOtpInputModule,
     RouterModule.forChild(HomeRoutes),
   ],
 })

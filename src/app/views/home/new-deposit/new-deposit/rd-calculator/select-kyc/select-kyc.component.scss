@@ -1,0 +1,124 @@
+.searchInput {
+  padding: 15px 0px 15px 10px;
+  font-size: large;
+  input {
+    border: none !important;
+    outline: none !important;
+    width: 100% !important;
+  }
+}
+.searchBox {
+  // padding-top: 5px;
+  // padding-bottom: 5px;
+  margin-top: 6px;
+  border-width: thin;
+  border-radius: 17px;
+  border-color: #a5a5a5;
+  // background-color:#ffffff;
+  box-shadow: 0 1px 4px 1px rgb(207, 205, 205);
+  position: relative;
+  z-index: 1;
+  height: 58px;
+}
+
+.getOtp {
+  border-radius: 16px;
+  background: linear-gradient(94.95deg, #06133f -11.9%, #014a9e 109.89%);
+  color: white;
+  height: 50px;
+  margin-right: 3px;
+}
+
+.userInput {
+  input {
+    margin: 10px;
+    height: 80px;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-family: arimo;
+    font-size: 1.2rem;
+    box-shadow: 0px 3px 15px 0px #00000017;
+  }
+}
+.Btn {
+  font-size: 16px;
+  line-height: 22px;
+}
+.timer {
+  display: flex;
+  align-items: center;
+}
+.resnd_otp {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #004c97;
+  text-decoration: underline;
+  border: none;
+  background: none;
+}
+
+.btn_grp {
+  margin: 2% 0%;
+}
+.btnGroup {
+  margin-top: 12px;
+}
+::ng-deep .mobile_field .mat-form-field-underline {
+  display: none;
+}
+.errorTxt {
+  padding-left: 10%;
+  color: red;
+  font-size: 13px;
+}
+.verifyInfo {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #000000;
+}
+.enter_mobile {
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #004c97;
+  margin-top: 21px;
+}
+.enter_otp {
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #004c97;
+  margin-top: 40px;
+}
+:host::ng-deep.otp_field .otp-input {
+  border: none;
+  border-radius: 18px;
+  outline: none;
+}
+.check_font {
+  color: #a1a1a1;
+  font-family: Poppins;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  height: 40px;
+  top: 584px;
+  left: 789.798828125px;
+}

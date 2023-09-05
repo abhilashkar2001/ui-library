@@ -1,6 +1,7 @@
 <div fxLayout="column">
-  <div class="kycToggle row">
+  <div class="kycToggle row" fxFlex="100">
     <button
+      fxFlex="50"
       class="col-md-6"
       [ngClass]="kycToggle == 'kyc' ? 'toggled' : ''"
       (click)="kycToggle = 'kyc'"
@@ -9,6 +10,7 @@
       Select Kyc
     </button>
     <button
+      fxFlex="50"
       class="col-md-6"
       [ngClass]="kycToggle == 'addDoocuent' ? 'toggled' : ''"
       (click)="kycToggle = 'addDoocuent'"
@@ -19,7 +21,9 @@
   </div>
 
   <!--select start here -->
-
+  <div *ngIf="kycToggle == 'kyc'">
+    <app-select-kyc></app-select-kyc>
+  </div>
   <!-- select kyc  ends here -->
 
   <!-- other documents start here -->

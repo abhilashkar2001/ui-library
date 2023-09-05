@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "../../../new-deposit.service";
+import { ActivatedRoute } from "@angular/router";
+import { CreateRdService } from "../create-rd.service";
 
 @Component({
   selector: "app-create-cd",
@@ -15,15 +17,29 @@ export class CreateCdComponent implements OnInit {
   selectedStep: number = 0;
   customBasicForm: any;
   isLinear = true;
-  constructor(private fb: FormBuilder, private fdApi: NewDepositService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fdApi: NewDepositService,
+    private route: ActivatedRoute,
+    private rdApi: CreateRdService
+  ) {}
 
   ngOnInit(): void {
-    this.buildCreateRdForm();
-    if (document.getElementById(".custom_stepper")) {
-      document.getElementById(".custom_stepper").style.width = `${
-        window.screen.width - 100
-      }`;
+    var id = this.route.snapshot.params["id"];
+    // this.buildCreateRdForm();
+    var depositId = parseInt(sessionStorage.getItem("recurringDepositId"));
+    if (id) {
+      this.getRdById(depositId);
+    } else {
+      this.buildCreateRdForm();
+      this.customCreatRdForm.emit(this.createRdForm);
     }
+  }
+  getRdById(id) {
+    console.log(id);
+    this.rdApi.getRdfromId(id).subscribe((resp: any) => {
+      if (resp?.statusCode === 200) this.buildCreateRdForm(resp.data[0]);
+    });
   }
 
   customSelectionChange(event) {
@@ -32,25 +48,31 @@ export class CreateCdComponent implements OnInit {
     // this.isBookFd = event.isBookFd;
   }
 
-  buildCreateRdForm() {
+  buildCreateRdForm(data?) {
     this.createRdForm = this.fb.group({
-      depositAmmount: ["", Validators.required],
-      maturityDate: "",
-      interestRate: "",
-      depositHolderType: "",
-      maturityAmmount: "",
-      customerType: "",
-      payoutType: "",
-      paymentType: "",
-      autoRenew: false,
+      depositAmmount: [data ? data.amount : "", Validators.required],
+      maturityDate: [data ? data.typeOfCustomer : "", Validators.required],
+      interestRate: [data ? data.intrestRate : "", Validators.required],
+      ownerShip: [data ? data.ownerShip : "", Validators.required],
+      maturityAmount: [data ? data.maturityAmount : "", Validators.required],
+      typeOfCustomer: [data ? data.typeOfCustomer : "", Validators.required],
+      intrestPayout: [data ? data.intrestPayout : "", Validators.required],
+      paymentType: [
+        data?.paymentType ? data.paymentType : "",
+        Validators.required,
+      ],
+      autoRenew: [data ? data.autoRenew : false],
+      recurringDepositId: data && data.recurringDepositId,
     });
-    // this.customBasicForm = this.createRdForm;
-    setTimeout(() => {
-      this.customCreatRdForm.emit(this.createRdForm);
-    }, 200);
+    this.customBasicForm = this.createRdForm;
+    // setTimeout(() => {
+    //   this.customCreatRdForm.emit(this.createRdForm);
+    // }, 200);
   }
 
   submitCreateFd() {
+    console.log(this.createRdForm.value);
+    this.customCreatRdForm.emit(this.createRdForm);
     this.customSaveCreate.emit({ satus: true });
   }
 }

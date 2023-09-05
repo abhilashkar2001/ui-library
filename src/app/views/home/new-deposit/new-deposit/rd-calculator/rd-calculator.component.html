@@ -5,7 +5,7 @@
         <div fxLayout="row">
           <div>
             <div class="deposit_icon">
-              <img src="assets/images/Group 13675.svg" width="65%" />
+              <img src="assets/images/Group_13675.svg" width="65%" />
             </div>
             <span class="vertical_line"></span>
           </div>
@@ -31,7 +31,9 @@
           #stepper
           orientation="vertical"
           [linear]="isLinear"
+          class="custom_steppper"
           [(selectedIndex)]="selectedStep"
+          (selectionChange)="stepperSelectionChange($event)"
         >
           <ng-container *ngFor="let item of steper_Array; let i = index">
             <mat-step
@@ -65,31 +67,51 @@
     </mat-stepper>
   </div> -->
 
-  <div class="align_fdForm" fxLayout="column" *ngIf="isFixedDepositDetail">
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    fxFlex="60"
+    *ngIf="cuurrentStep == 'Create RD'"
+  >
     <app-create-cd
       (customCreatRdForm)="customCreatRdForm($event)"
       (customSaveCreate)="customSaveCreate($event)"
     ></app-create-cd>
   </div>
-  <div class="align_fdForm" fxLayout="column" *ngIf="isVerifyNumber">
+  <div
+    class="align_fdForm"
+    fxFlex="60"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Verify Mobile Number'"
+  >
     <app-verify-number
       (customSaveVerify)="customSaveVerify($event)"
+      (customFormGroupEmit)="customFormGroupEmit($event)"
     ></app-verify-number>
   </div>
-  <div class="align_fdForm" *ngIf="isPersonalDetails">
+  <div
+    class="align_fdForm"
+    fxFlex="60"
+    *ngIf="cuurrentStep == 'Personal Details'"
+  >
     <app-personal-details
       (customSavePersonal)="submitPersonalDetails($event)"
       (personalBack)="goBack()"
       (customFormGroup)="customFormGroup($event)"
     ></app-personal-details>
   </div>
-  <div class="align_fdForm" fxLayout="column" *ngIf="isKyc">
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    fxFlex="60"
+    *ngIf="cuurrentStep == 'Select KYC'"
+  >
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
       (customDocumentForm)="customDocumentForm($event)"
     ></app-other-documents>
   </div>
-  <div class="align_fdForm" *ngIf="isBookFd">
+  <div class="align_fdForm" fxFlex="60" *ngIf="cuurrentStep == 'Book RD'">
     <app-book-fd></app-book-fd>
   </div>
 </div>
