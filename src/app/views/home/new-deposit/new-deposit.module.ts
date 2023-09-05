@@ -37,11 +37,9 @@ import { PaymentMethodComponent } from "./new-deposit/fd-calculator/book-fd/paym
 import { SharedDirectivesModule } from "app/shared/directives/shared-directives.module";
 import { RdCalculatorComponent } from "./new-deposit/rd-calculator/rd-calculator.component";
 import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-cd.component";
-import { OtherDocumentsComponent } from "./new-deposit/rd-calculator/other-documents/other-documents.component";
 import { NgOtpInputModule } from "ng-otp-input";
 import { SharedModule } from "app/shared/shared.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
-import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/select-kyc.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +58,6 @@ import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/selec
     PaymentMethodComponent,
     RdCalculatorComponent,
     CreateCdComponent,
-    OtherDocumentsComponent,
-    SelectKycComponent,
   ],
   imports: [
     CommonModule,

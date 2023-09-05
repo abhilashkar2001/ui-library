@@ -8,16 +8,14 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
 import { AccountStepperComponent } from "./create-account/account-stepper/account-stepper.component";
 import { CreateAccountPersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
-import { SelectKycComponent } from "./create-account/select-kyc/select-kyc.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CreateAccountLandingPageComponent } from "./create-account/create-account-landing-page/create-account-landing-page.component";
 import { SharedModule } from "app/shared/shared.module";
 import { NgOtpInputModule } from "ng-otp-input";
-import { OtherDocumentsComponent } from "./create-account/other-documents/other-documents.component";
-import { AccountTypeDetailsComponent } from './create-account/account-type-details/account-type-details.component';
-import { ApplyAccountComponent } from './create-account/apply-account/apply-account.component';
+import { AccountTypeDetailsComponent } from "./create-account/account-type-details/account-type-details.component";
+import { ApplyAccountComponent } from "./create-account/apply-account/apply-account.component";
 
 @NgModule({
   declarations: [
@@ -25,10 +23,8 @@ import { ApplyAccountComponent } from './create-account/apply-account/apply-acco
     LandingPageComponent,
     AccountMobileVerificationComponent,
     CreateAccountPersonalDetailsComponent,
-    SelectKycComponent,
     AccountStepperComponent,
     CreateAccountLandingPageComponent,
-    OtherDocumentsComponent,
     AccountTypeDetailsComponent,
     ApplyAccountComponent,
   ],

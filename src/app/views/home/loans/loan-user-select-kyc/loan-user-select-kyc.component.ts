@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { NewDepositService } from "../../new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-loan-user-select-kyc",
@@ -15,7 +16,8 @@ export class LoanUserSelectKycComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private depositApi: NewDepositService
   ) {
     commonService.isUserUsingDifferentMobile(true);
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
@@ -33,6 +35,26 @@ export class LoanUserSelectKycComponent implements OnInit {
     //   console.log(resp);
     //   this.onVerify();
     // })
+  }
+  customSaveDocuments(e) {
+    var docIds = [];
+    e.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+
+    var payload = {
+      // here customerId need to add
+      customerId: 10056,
+      documentInfo: docIds,
+    };
+    this.depositApi.submitAllDocument(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+      }
+    });
+    console.log(docIds);
   }
 
   onBack() {
