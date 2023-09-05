@@ -3,7 +3,7 @@
     <div fxLayout="row">
       <div>
         <div class="deposit_icon">
-          <img src="/assets/images/Group_13675.png" width="65%" />
+          <img src="/assets/images/Group_13675.svg" width="65%" />
         </div>
         <span class="vertical_line"></span>
       </div>
@@ -33,14 +33,10 @@
       orientation="vertical"
     >
       <mat-step
+        *ngFor="let customStep of screenList"
         [stepControl]="customBasicForm"
-        label="Verify Mobile Number"
+        [label]="customStep.screenName"
       ></mat-step>
-      <mat-step
-        [stepControl]="customPersonalDetails"
-        label="Personal Details"
-      ></mat-step>
-      <mat-step label="Select KYC"></mat-step>
     </mat-stepper>
   </div>
 </div>

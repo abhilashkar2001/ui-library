@@ -3,7 +3,6 @@
     [imageUrl]="imageUrl"
     [profileHeader]="profileHeader"
     [profileHint]="profileHint"
-    [routeUrl]="routeUrl"
   >
   </app-landing-profile>
 
@@ -17,46 +16,52 @@
   </div>
 
   <div style="margin-top: 20px">
-    <!-- <div>
-  <div fxLayout="row">
-    <div style="margin-top: 20px">
-      <div class="account-service-header">Account Opening Services</div>
+    <div>
+      <div fxLayout="column">
+        <div style="margin-top: 20px">
+          <!-- <div class="account-service-header">Account Opening Services</div>
       <div class="account-service-text">
         Open your account in a breeze and start banking hassle-free.
-      </div>
-      <div>
-        <app-carousel [carowselData]="data" [flow]="'account'"></app-carousel>
       </div> -->
-  </div>
+          <div>
+            <app-carousel
+              [carowselData]="data"
+              [flow]="'account'"
+              (customApplyLoan)="customApplyLoan()"
+            ></app-carousel>
+          </div>
+        </div>
 
-  <div fxLayout="column" fxLayoutGap="20px">
-    <div class="accountOpening" fxLayoutAlign="center center">
-      Our Top Performing Plans
-    </div>
-    <div class="openYourAccount" fxLayoutAlign="center center">
-      Select wisely from our plans & invest your money for higher returns
-    </div>
-    <div class="top-performing">
-      <app-top-performing></app-top-performing>
-    </div>
-  </div>
+        <div fxLayout="column" fxLayoutGap="20px">
+          <div class="accountOpening" fxLayoutAlign="center center">
+            Our Top Performing Plans
+          </div>
+          <div class="openYourAccount" fxLayoutAlign="center center">
+            Select wisely from our plans & invest your money for higher returns
+          </div>
+          <div class="top-performing">
+            <app-top-performing></app-top-performing>
+          </div>
+        </div>
 
-  <div
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="20px"
-    class="happy-client"
-  >
-    <div class="accountOpening">What our happy client say</div>
-    <div class="openYourAccount">
-      Several selected clients, who already believe in our service.
-    </div>
-    <div class="mt-70">
-      <app-news-letter-slider></app-news-letter-slider>
-    </div>
-    <div>
-      <app-news-letter></app-news-letter>
-
+        <div
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="20px"
+          class="happy-client"
+        >
+          <div class="accountOpening">What our happy client say</div>
+          <div class="openYourAccount">
+            Several selected clients, who already believe in our service.
+          </div>
+          <div class="mt-70">
+            <app-news-letter-slider></app-news-letter-slider>
+          </div>
+          <div>
+            <app-news-letter></app-news-letter>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

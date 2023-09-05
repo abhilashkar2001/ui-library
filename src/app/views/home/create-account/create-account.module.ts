@@ -16,6 +16,8 @@ import { CreateAccountLandingPageComponent } from "./create-account/create-accou
 import { SharedModule } from "app/shared/shared.module";
 import { NgOtpInputModule } from "ng-otp-input";
 import { OtherDocumentsComponent } from "./create-account/other-documents/other-documents.component";
+import { AccountTypeDetailsComponent } from './create-account/account-type-details/account-type-details.component';
+import { ApplyAccountComponent } from './create-account/apply-account/apply-account.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { OtherDocumentsComponent } from "./create-account/other-documents/other-
     AccountStepperComponent,
     CreateAccountLandingPageComponent,
     OtherDocumentsComponent,
+    AccountTypeDetailsComponent,
+    ApplyAccountComponent,
   ],
   imports: [
     CommonModule,

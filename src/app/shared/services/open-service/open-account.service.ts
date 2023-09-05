@@ -69,4 +69,20 @@ export class OpenAccountService {
   saveCustomerInfo(payload) {
     return this.http.post<any>(`${baseUrl}/origination-matser/save`, payload);
   }
+
+  fetchSubClass() {
+    return this.http.get<any>(
+      `${baseUrl}/details/fetchSubClass?basisClass=Savings Account`
+    );
+  }
+  // https://192.168.0.127:8765/process_stage/screens?id=8503
+
+  getProcessCycle(processName) {
+    return this.http.get<any>(
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}`
+    );
+  }
+  getProcessStages(id) {
+    return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
+  }
 }

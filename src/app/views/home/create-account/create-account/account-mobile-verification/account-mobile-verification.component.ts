@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-account-Mobile-verification-details",
@@ -56,14 +57,36 @@ export class AccountMobileVerificationComponent implements OnInit {
     this.openAccountService
       .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
       .subscribe((response) => {
-        this.onVerifyOtpEvent.emit();
+        this.verifyCustomer();
       });
+  }
+
+  verifyCustomer() {
     this.openAccountService
       .getExistingCustomer(this.phone)
       .subscribe((resp: any) => {
         console.log(resp);
         if (resp?.statusCode === 200 && resp?.data) {
-          // this.openAccountService.saveCustomerInfo()
+          const sessionData = JSON.parse(
+            sessionStorage.getItem("basisDetails")
+          );
+          const payload = {
+            originationModel: {
+              applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+              accountType: sessionData.accountType,
+              basisDetailsId: sessionData.basisDetailsId,
+              branchCode: "BR1",
+            },
+            customerInfo: resp.data,
+          };
+          this.openAccountService
+            .saveCustomerInfo(payload)
+            .subscribe((resp) => {
+              // call success popup instead of routing.
+              this.router.navigate(["account/landing"]);
+            });
+        } else if (resp?.statusCode === 204) {
+          this.onVerifyOtpEvent.emit();
         }
       });
   }

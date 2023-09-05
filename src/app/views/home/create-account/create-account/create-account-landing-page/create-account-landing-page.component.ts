@@ -1,46 +1,59 @@
-import { Component } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonService } from 'app/shared/services/common-service/common.service';
-import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { Component } from "@angular/core";
+import { MatStepper } from "@angular/material/stepper";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CommonService } from "app/shared/services/common-service/common.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
-  selector: 'app-create-account-landing-page',
-  templateUrl: './create-account-landing-page.component.html',
-  styleUrls: ['./create-account-landing-page.component.scss']
+  selector: "app-create-account-landing-page",
+  templateUrl: "./create-account-landing-page.component.html",
+  styleUrls: ["./create-account-landing-page.component.scss"],
 })
 export class CreateAccountLandingPageComponent {
-
-  selectedPhoneCode: string = '+91'
+  selectedPhoneCode: string = "+91";
   displaySecond: any;
   showOTPSection: boolean;
   phone: any;
   otp: any;
   resendLink: boolean = false;
-  otpDigit1: string = '';
-  otpDigit2: string = '';
-  otpDigit3: string = '';
-  otpDigit4: string = '';
-  otpDigit5: string = '';
-  otpDigit6: string = '';
+  otpDigit1: string = "";
+  otpDigit2: string = "";
+  otpDigit3: string = "";
+  otpDigit4: string = "";
+  otpDigit5: string = "";
+  otpDigit6: string = "";
   agreed: boolean = false;
   accountHeader: string | any;
   isMobileVerificationTab: boolean = true;
   isPersonalDetailsTab: boolean;
   isSelectKYCTab: boolean;
-  stepper: MatStepper
+  stepper: MatStepper;
+  screenList: any;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
     private commonService: CommonService
   ) {
-    this.accountHeader = this.activeRoute.snapshot['queryParams']['title'];
+    this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
   }
 
   ngOnInit(): void {
-
+    const sessionData = JSON.parse(sessionStorage.getItem("basisDetails"));
+    this.openAccountService
+      .getProcessCycle(sessionData.processCycleCode)
+      .subscribe((resp) => {
+        this.openAccountService
+          .getProcessStages(resp.data.processStageList[0].id)
+          .subscribe((resp) => {
+            this.screenList = resp.data.screens.sort((s1, s2) => {
+              return s1.sequence - s2.sequence;
+            });
+          });
+      });
+    console.log(this.screenList);
   }
 
   onVerify() {
@@ -51,7 +64,7 @@ export class CreateAccountLandingPageComponent {
   }
 
   onExit() {
-    this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
 
   getTabDetails(tabDetails: any) {
@@ -73,5 +86,4 @@ export class CreateAccountLandingPageComponent {
   onBackOnPreviousStep() {
     this.stepper.previous();
   }
-
 }

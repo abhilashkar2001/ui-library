@@ -8,16 +8,18 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
+} from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatStepper } from "@angular/material/stepper";
 
 @Component({
-  selector: 'app-account-stpper',
-  templateUrl: './account-stepper.component.html',
-  styleUrls: ['./account-stepper.component.scss'],
+  selector: "app-account-stpper",
+  templateUrl: "./account-stepper.component.html",
+  styleUrls: ["./account-stepper.component.scss"],
 })
-export class AccountStepperComponent implements OnInit, OnChanges, AfterViewInit{
+export class AccountStepperComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
   isCreateFdDone: boolean = false;
   isDone = true;
   @Input() customBasicForm: FormGroup;
@@ -26,7 +28,8 @@ export class AccountStepperComponent implements OnInit, OnChanges, AfterViewInit
   @Input() documentDetailsForm: FormGroup;
   @Input() selectionIndex = 0;
   @Output() customSelectionChange = new EventEmitter<{}>();
-  @ViewChild('stepper') private myStepper: MatStepper;
+  @Input() screenList;
+  @ViewChild("stepper") private myStepper: MatStepper;
 
   isLinear = true;
 
@@ -34,9 +37,7 @@ export class AccountStepperComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.onStepSelectionChange();
