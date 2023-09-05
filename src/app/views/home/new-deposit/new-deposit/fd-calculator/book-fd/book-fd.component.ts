@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FdCalculatorServiceService } from "../fd-calculator-service.service";
+import { CreateRdService } from "../../rd-calculator/create-rd.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-book-fd",
@@ -7,6 +9,7 @@ import { FdCalculatorServiceService } from "../fd-calculator-service.service";
   styleUrls: ["./book-fd.component.scss"],
 })
 export class BookFdComponent implements OnInit {
+  @Input("depositType") depositType: any;
   isPaymentEnabled: boolean = false; // should be false initially
   customerDetails: any;
   depositDetails: {
@@ -28,12 +31,25 @@ export class BookFdComponent implements OnInit {
 
   @Output() customBookFdBack = new EventEmitter<{}>();
 
-  constructor(private fdApi: FdCalculatorServiceService) {}
+  constructor(
+    private rdApi: CreateRdService,
+    private fdApi: FdCalculatorServiceService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.fdApi.getCustomerDetails().subscribe((resp) => {
-      this.customerDetails = resp.data;
+      this.customerDetails = resp?.data;
     });
+
+    if (this.depositType && this.depositType === "RD") {
+      var id = this.route.snapshot.params["id"];
+      this.rdApi.getRdfromId(id).subscribe((resp: any) => {
+        this.depositDetails = resp?.data[0];
+      });
+      return;
+    }
+
     this.fdApi
       .getFixedDeposit(parseInt(sessionStorage.getItem("fixedDepositId")))
       .subscribe((resp) => {
