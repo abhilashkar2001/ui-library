@@ -44,6 +44,8 @@ import { NewsLetterSliderComponent } from "./news-letter-slider/news-letter-slid
 import { NewsLetterComponent } from "./news-letter/news-letter.component";
 import { LandingProfileComponent } from "./landing-profile/landing-profile.component";
 
+import { NgOtpInputModule } from "ng-otp-input";
+import { OtherDocumentsComponent } from "./other-documents/other-documents.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -70,6 +72,7 @@ const components = [
   AccountHeaderComponent,
   ClientsComponent,
   LandingProfileComponent,
+  OtherDocumentsComponent,
 ];
 
 @NgModule({
@@ -86,6 +89,7 @@ const components = [
     SharedPipesModule,
     SharedDirectivesModule,
     SharedMaterialModule,
+    NgOtpInputModule,
   ],
   declarations: components,
   exports: components,
