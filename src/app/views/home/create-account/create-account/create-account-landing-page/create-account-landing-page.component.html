@@ -17,7 +17,8 @@
       ></app-create-account-personal-details>
     </div>
     <div *ngIf="isSelectKYCTab">
-      <app-select-kyc (onBackEvent)="onBackOnPreviousStep()"></app-select-kyc>
+      <app-other-documents (customSaveDocument)="customSaveDocuments($event)">
+      </app-other-documents>
     </div>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
@@ -34,7 +36,8 @@ export class CreateAccountLandingPageComponent {
     private router: Router,
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private dialog: MatDialog
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
@@ -85,5 +88,36 @@ export class CreateAccountLandingPageComponent {
 
   onBackOnPreviousStep() {
     this.stepper.previous();
+  }
+
+  customSaveDocuments(e) {
+    var docIds = [];
+    e.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+
+    var payload = {
+      customerId: parseInt(localStorage.getItem("customerId")),
+      documentInfo: docIds,
+    };
+    this.openAccountService
+      .uploadMultipleDocument(payload)
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200 || resp?.statusCode === 201) {
+          this.dialog.open(SuccessPopupComponent, {
+            data: {
+              originationId: resp.data.originationModel.originationId,
+            },
+            width: "750px",
+            disableClose: true,
+            panelClass: "popup-dialog-class",
+            backdropClass: "bdrop",
+          });
+        }
+      });
+    // console.log(docIds);
   }
 }

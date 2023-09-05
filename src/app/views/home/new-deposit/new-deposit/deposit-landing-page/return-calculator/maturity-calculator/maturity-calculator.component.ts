@@ -32,9 +32,6 @@ export class MaturityCalculatorComponent implements OnInit {
     let path;
     if (fdType == "FD") {
       path = "/deposits/fdFlow/fdDetails";
-      this.url = this.location.prepareExternalUrl(
-        this.router.serializeUrl(this.router.createUrlTree([path]))
-      );
     } else {
       var payload = {
         ...this.calculatorValues,

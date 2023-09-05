@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .card-subdiv {
   margin-top: 10px;
   padding: 0;
@@ -29,10 +30,12 @@
       top: 0;
       left: 0;
     }
+
     .drag_drop {
       h3 {
         font-size: 15px;
       }
+
       p {
         font-size: 12px;
         line-height: 1.5;
@@ -53,12 +56,14 @@
       width: 65px;
       border-radius: 10px;
       overflow: hidden;
+
       img {
         height: 100%;
         width: 100%;
         object-fit: cover;
       }
     }
+
     .img_container {
       display: flex;
       flex-direction: column;
@@ -122,6 +127,7 @@ mat-form-field {
   line-height: normal;
   margin-bottom: 9px;
 }
+
 .deleteButton {
   font-family: "Poppins";
   color: #b20000 !important;
@@ -135,6 +141,7 @@ mat-form-field {
   font-weight: bold !important;
   border: none;
 }
+
 .section_div {
   margin-top: 25px;
 }
@@ -158,6 +165,7 @@ mat-form-field {
     transition: 0.5s all;
   }
 }
+
 .kycToggle {
   width: 100%;
   border-radius: 10px;
@@ -173,6 +181,7 @@ mat-form-field {
     height: 50px;
     box-shadow: none;
   }
+
   .toggled {
     background: linear-gradient(92.97deg, #06133f -7.38%, #014a9e 68.11%);
     color: white !important;

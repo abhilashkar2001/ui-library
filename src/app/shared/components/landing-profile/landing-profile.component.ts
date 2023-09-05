@@ -16,6 +16,7 @@ export class LandingProfileComponent implements OnInit {
 
   ngOnInit(): void {}
   apply() {
-    //this.router.navigate([`${this.routeUrl}`]);
+    if (this.profileHeader.toLowerCase().includes("loan"))
+      this.router.navigate([`${this.routeUrl}`]);
   }
 }

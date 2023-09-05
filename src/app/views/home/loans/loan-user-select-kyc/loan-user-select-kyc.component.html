@@ -1,13 +1,5 @@
 <div class="column-2">
-  <div class="kyc-section" fxFlex="48" fxLayout="column">
-    <div>
-      <app-kyc
-        *ngIf="showKyc"
-        (onSubmitEvent)="onVerify($event)"
-        (onBackEvent)="onBack()"
-      ></app-kyc>
-      <app-other-documents></app-other-documents>
-    </div>
-    <div></div>
-  </div>
+  <app-other-documents
+    (customSaveDocument)="customSaveDocuments($event)"
+  ></app-other-documents>
 </div>
