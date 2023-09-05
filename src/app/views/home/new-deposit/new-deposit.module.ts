@@ -41,6 +41,7 @@ import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-
 import { OtherDocumentsComponent } from "./new-deposit/rd-calculator/other-documents/other-documents.component";
 import { NgOtpInputModule } from "ng-otp-input";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { SelectKycComponent } from './new-deposit/rd-calculator/select-kyc/select-kyc.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     RdCalculatorComponent,
     CreateCdComponent,
     OtherDocumentsComponent,
+    SelectKycComponent,
   ],
   imports: [
     CommonModule,
