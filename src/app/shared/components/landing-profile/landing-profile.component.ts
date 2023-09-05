@@ -16,6 +16,6 @@ export class LandingProfileComponent implements OnInit {
 
   ngOnInit(): void {}
   apply() {
-    this.router.navigate([`${this.routeUrl}`]);
+    //this.router.navigate([`${this.routeUrl}`]);
   }
 }

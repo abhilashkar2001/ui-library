@@ -1,16 +1,23 @@
 <div class="create-account">
-    <app-account-stpper (customSelectionChange)="getTabDetails($event)"></app-account-stpper>
-    <div class="col-div2">
-        <div *ngIf="isMobileVerificationTab">
-            <app-account-Mobile-verification-details (onBackEvent)="onBackOnPreviousStep()"
-                (onVerifyOtpEvent)="onVerify()"></app-account-Mobile-verification-details>
-        </div>
-        <div *ngIf="isPersonalDetailsTab">
-            <app-create-account-personal-details (onSubmitPersonalDetailsEvent)="personalDetailsSubmitted()"
-                (onBackEvent)="onBackOnPreviousStep()"></app-create-account-personal-details>
-        </div>
-        <div *ngIf="isSelectKYCTab">
-            <app-select-kyc (onBackEvent)="onBackOnPreviousStep()"></app-select-kyc>
-        </div>
+  <app-account-stpper
+    (customSelectionChange)="getTabDetails($event)"
+    [screenList]="screenList"
+  ></app-account-stpper>
+  <div class="col-div2">
+    <div *ngIf="isMobileVerificationTab">
+      <app-account-Mobile-verification-details
+        (onBackEvent)="onBackOnPreviousStep()"
+        (onVerifyOtpEvent)="onVerify()"
+      ></app-account-Mobile-verification-details>
     </div>
+    <div *ngIf="isPersonalDetailsTab">
+      <app-create-account-personal-details
+        (onSubmitPersonalDetailsEvent)="personalDetailsSubmitted()"
+        (onBackEvent)="onBackOnPreviousStep()"
+      ></app-create-account-personal-details>
+    </div>
+    <div *ngIf="isSelectKYCTab">
+      <app-select-kyc (onBackEvent)="onBackOnPreviousStep()"></app-select-kyc>
+    </div>
+  </div>
 </div>

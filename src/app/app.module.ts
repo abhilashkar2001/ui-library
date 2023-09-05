@@ -1,8 +1,6 @@
 import { NgModule, ErrorHandler } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import {
-  BrowserModule,
-} from "@angular/platform-browser";
+import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import {
@@ -26,6 +24,7 @@ import { ErrorHandlerService } from "./shared/services/error-handler.service";
 import { TokenInterceptor } from "./shared/interceptors/token.interceptor";
 import { LayoutsModule } from "./layouts/layouts.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+//import { SwiperModule } from "swiper/angular";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -43,6 +42,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LayoutsModule,
     SharedModule,
     HttpClientModule,
+    //SwiperModule,
     PerfectScrollbarModule,
     TranslateModule.forRoot({
       loader: {

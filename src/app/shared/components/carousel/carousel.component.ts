@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { interval } from "rxjs";
 
@@ -8,8 +15,9 @@ import { interval } from "rxjs";
   styleUrls: ["./carousel.component.scss"],
 })
 export class CarouselComponent implements OnInit, OnChanges {
-  @Input() carowselData: any;
+  @Input() carowselData: any = {};
   @Input() flow: string;
+  @Output() customApplyLoan = new EventEmitter<any>();
   dynamicList: any = [];
   onLoadImagesLen = 4;
   private autoSlideInterval: any;
@@ -24,7 +32,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     if (this.dynamicList && this.dynamicList.length) {
       this.caroselPayload();
     }
-    console.log("Carowsel: ", this.carowselData);
+    console.log("Carowsel: ", this.dynamicList);
   }
 
   ngOnInit(): void {
@@ -85,14 +93,15 @@ export class CarouselComponent implements OnInit, OnChanges {
   }
 
   moveToSubAccountPage(basisClass: string) {
-    if (this.flow === "account") {
-      this.router.navigate(["/open-account"], {
-        queryParams: { basisClass: basisClass },
-      });
-    } else if (this.flow === "loan") {
-      this.router.navigate(["/loans/loan-type"], {
-        queryParams: { basisClass: basisClass },
-      });
-    }
+    this.customApplyLoan.emit();
+    // if (this.flow === "account") {
+    //   this.router.navigate(["account/landing/applyAccount"], {
+    //     queryParams: { basisClass: basisClass },
+    //   });
+    // } else if (this.flow === "loan") {
+    //   this.router.navigate(["/loans/loan-type"], {
+    //     queryParams: { basisClass: basisClass },
+    //   });
+    // }
   }
 }

@@ -6,6 +6,7 @@
   flex-direction: row;
   display: flex;
   margin-left: 50px;
+  justify-content: center;
 }
 
 .image {
@@ -43,12 +44,12 @@
   border-radius: 12px;
 }
 
-.image_overlay>* {
+.image_overlay > * {
   transition: translateY(20px);
   transition: transform 0.25s;
 }
 
-.image_overlay:hover>* {
+.image_overlay:hover > * {
   transition: translateY(0);
   opacity: 0.8;
 }

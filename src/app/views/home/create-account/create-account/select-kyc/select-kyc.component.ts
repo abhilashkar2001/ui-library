@@ -54,4 +54,23 @@ export class SelectKycComponent implements OnInit {
       this.onVerify();
     });
   }
+  customSaveDocuments(e) {
+    var docIds = [];
+    e.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+
+    var payload = {
+      customerId: parseInt(localStorage.getItem("customerId")),
+      documentInfo: docIds,
+    };
+    this.apiService.uploadMultipleDocument(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+      }
+    });
+    console.log(docIds);
+  }
 }
