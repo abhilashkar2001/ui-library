@@ -1,15 +1,23 @@
 <div class="image-container">
-  <div class="image" *ngFor="let imagesdata of dynamicList" fxLayoutGap="20px">
-    <img class="image_img image_overlay--blur" [src]="imagesdata.documents.fileUrl" alt="Slider Image" />
+  <!-- <div class="image" *ngFor="let imagesdata of dynamicList" fxLayoutGap="20px">
+    <img
+      class="image_img image_overlay--blur"
+      [src]="imagesdata.documents.fileUrl"
+      alt="Slider Image"
+    />
     <div class="image_overlay">
       <div class="image_title">{{ imagesdata?.basisClass }}</div>
       <div class="image_description">{{ imagesdata?.description }}</div>
       <div class="button-container">
-        <a class="applyButtonCarousel" (click)="moveToSubAccountPage(imagesdata.basisClass)">Apply Now</a>
+        <a
+          class="applyButtonCarousel"
+          (click)="moveToSubAccountPage(imagesdata.basisClass)"
+          >Apply Now</a
+        >
       </div>
     </div>
-  </div>
-  <div class="button-control" [ngClass]="carouselArrowDisplay?'pe':'pd'">
+  </div> -->
+  <div class="button-control" [ngClass]="carouselArrowDisplay ? 'pe' : 'pd'">
     <div class="previous">
       <img src="/assets/images/previous.png" (click)="prevImage()" />
     </div>

@@ -14,9 +14,20 @@
           <mat-option value="+141">+141</mat-option>
         </mat-select>
         <div class="vertical-separator"></div>
-        <input matInput type="text" class="inputText" [(ngModel)]="phone" maxlength="10" />
-        <button class="confirm-button" mat-raised-button (click)="getOTP()" [disabled]="isValidated()"
-          [ngClass]="{'disabled-field':isValidated()}">
+        <input
+          matInput
+          type="text"
+          class="inputText"
+          [(ngModel)]="phone"
+          maxlength="10"
+        />
+        <button
+          class="confirm-button"
+          mat-raised-button
+          (click)="getOTP()"
+          [disabled]="isValidated()"
+          [ngClass]="{ 'disabled-field': isValidated() }"
+        >
           Get OTP
         </button>
       </div>
@@ -25,39 +36,57 @@
           Enter OTP to verify
         </div>
         <div class="standard-otp-container-main">
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit1" (change)="otpChange()"
-            appAutoFocus />
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit2" (change)="otpChange()"
-            appAutoFocus />
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit3" (change)="otpChange()"
-            appAutoFocus />
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit4" (change)="otpChange()"
-            appAutoFocus />
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit5" (change)="otpChange()"
-            appAutoFocus />
-          <input matInput class="standard-textbox-small" maxlength="1" [(ngModel)]="otpDigit6" (change)="otpChange()"
-            appAutoFocus />
+          <ng-otp-input
+            #ngOtpInput
+            [config]="config"
+            [formCtrl]="otp"
+          ></ng-otp-input>
         </div>
         <div class="standard-font-black">
-          <span *ngIf="resendLink"><a (click)="getOTP()" class="resend-link"> Resend </a></span> <span
-            *ngIf="!resendLink">Resend the OTP <span class="standard-font-blue">({{displaySecond}} min)</span></span>
+          <span *ngIf="resendLink"
+            ><a (click)="getOTP()" class="resend-link"> Resend </a></span
+          >
+          <span *ngIf="!resendLink"
+            >Resend the OTP
+            <span class="standard-font-blue"
+              >({{ displaySecond }} min)</span
+            ></span
+          >
         </div>
         <div class="standard-auth-checkbox-container">
-          <mat-checkbox class="custom-checkbox" [checked]="agreed" class="primary">
+          <mat-checkbox
+            class="custom-checkbox"
+            [checked]="agreed"
+            class="primary"
+          >
             <span class="standard-font-gray">
-              I authorize DemoBank and it’s representatives to email, call or SMS
-              me. This Consent will override any registration from DNC/NDNC
+              I authorize DemoBank and it’s representatives to email, call or
+              SMS me. This Consent will override any registration from DNC/NDNC
             </span>
           </mat-checkbox>
         </div>
         <div class="button-section">
-          <button class="confirm-button" [ngStyle]="{'cursor': (otp?.length !==6) ? 'not-allowed' : 'pointer'}"
-            mat-raised-button (click)="onVerify()" [disabled]="isValidated() || otp?.length !==6">Verify</button>
-          <button class="back-button" mat-raised-button (click)="onExit()"
-            style="color: #B20000; margin-left: 5px;">Exit</button>
+          <button
+            class="confirm-button"
+            [ngStyle]="{
+              cursor: otp?.length !== 6 ? 'not-allowed' : 'pointer'
+            }"
+            mat-raised-button
+            (click)="onVerify()"
+            [disabled]="isValidated() || otp?.length !== 6"
+          >
+            Verify
+          </button>
+          <button
+            class="back-button"
+            mat-raised-button
+            (click)="onExit()"
+            style="color: #b20000; margin-left: 5px"
+          >
+            Exit
+          </button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
