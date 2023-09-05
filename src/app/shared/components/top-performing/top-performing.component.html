@@ -1,104 +1,120 @@
-<div class="accordian-section">
-    <div class="accordian-item">
-        <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="panel">
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="panel-header">
-                        Money Market <span class="text-place">(54 Found)</span>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">1.67%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase (1).png"><span
-                            class="range-text-red">0.07%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Jarvis Money Market Fund</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">3.19%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Principal Cash Fund</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase (1).png"><span
-                            class="range-text-red">0.01%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Schroder Dana Liquid</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">1.80%</span>
-                    </div>
-
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    <div class="accordian-item">
-        <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="panel">
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="panel-header">
-                        Fixed Income <span class="text-place">(31 Found)</span>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">1.67%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase (1).png"><span
-                            class="range-text-red">0.07%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Jarvis Money Market Fund</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">3.19%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Principal Cash Fund</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase (1).png"><span
-                            class="range-text-red">0.01%</span>
-                    </div>
-
-                </div>
-                <div class="accordian-list">
-                    <div class="accordion-text-list">Schroder Dana Liquid</div>
-                    <div class="accordain-list-img">
-                        <img src="/assets/images/system-uicons_graph-increase.png"><span
-                            class="range-text-green">1.80%</span>
-                    </div>
-
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
+<div fxLayout="column" class="accordian-section">
+  <div class="accordian-item">
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+        class="panel"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title fxLayoutAlign="center center" class="panel-header">
+            Money Market
+            <span class="text-place">(54 Found)</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="accordian-list">
+          <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >1.67%</span
+            >
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
+          <div class="accordain-list-img">
+            <img
+              src="/assets/images/system-uicons_graph-increase (1).png"
+            /><span class="range-text-red">0.07%</span>
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Jarvis Money Market Fund</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >3.19%</span
+            >
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Principal Cash Fund</div>
+          <div class="accordain-list-img">
+            <img
+              src="/assets/images/system-uicons_graph-increase (1).png"
+            /><span class="range-text-red">0.01%</span>
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Schroder Dana Liquid</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >1.80%</span
+            >
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="accordian-item">
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+        class="panel"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title fxLayoutAlign="center center" class="panel-header">
+            Fixed Income
+            <span class="text-place">(31 Found)</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="accordian-list">
+          <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >1.67%</span
+            >
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
+          <div class="accordain-list-img">
+            <img
+              src="/assets/images/system-uicons_graph-increase (1).png"
+            /><span class="range-text-red">0.07%</span>
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Jarvis Money Market Fund</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >3.19%</span
+            >
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Principal Cash Fund</div>
+          <div class="accordain-list-img">
+            <img
+              src="/assets/images/system-uicons_graph-increase (1).png"
+            /><span class="range-text-red">0.01%</span>
+          </div>
+        </div>
+        <div class="accordian-list">
+          <div class="accordion-text-list">Schroder Dana Liquid</div>
+          <div class="accordain-list-img">
+            <img src="/assets/images/system-uicons_graph-increase.png" /><span
+              class="range-text-green"
+              >1.80%</span
+            >
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

@@ -1,20 +1,13 @@
 <div class="column-2">
-    <div class="kyc-section" fxFlex="48" fxLayout="column">
-        <div>
-            <div class="standard-txtField-phone-main slide_toggle_btn">
-                <button class="kyc-button" (click)="showKyc = true" mat-raised-button [ngClass]="{ 'active': showKyc }">
-                    Select KYC
-                </button>
-                <button class="other-button" (click)="showKyc = false" mat-raised-button
-                    [ngClass]="{ active: !showKyc }">
-                    Use other Documents
-                </button>
-            </div>
-            <app-kyc *ngIf="showKyc" (onSubmitEvent)="onVerify($event)" (onBackEvent)="onBack()"></app-kyc>
-            <app-other-documents *ngIf="!showKyc" (onSubmitEvent)="onSubmit($event)"
-                (onBackEvent)="onBack()"></app-other-documents>
-        </div>
-        <div>
-        </div>
+  <div class="kyc-section" fxFlex="48" fxLayout="column">
+    <div>
+      <app-kyc
+        *ngIf="showKyc"
+        (onSubmitEvent)="onVerify($event)"
+        (onBackEvent)="onBack()"
+      ></app-kyc>
+      <app-other-documents></app-other-documents>
     </div>
+    <div></div>
+  </div>
 </div>
