@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
@@ -12,6 +14,7 @@ import * as moment from "moment";
 export class AccountMobileVerificationComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onVerifyOtpEvent: EventEmitter<any> = new EventEmitter();
+  dialogRef: MatDialogRef<SuccessPopupComponent>;
   selectedPhoneCode: string = "+91";
   displaySecond: any;
   showOTPSection: boolean;
@@ -37,7 +40,8 @@ export class AccountMobileVerificationComponent implements OnInit {
     private router: Router,
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
-    private commonService: CommonService
+    private commonService: CommonService,
+    public dialog: MatDialog
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
@@ -82,8 +86,17 @@ export class AccountMobileVerificationComponent implements OnInit {
           this.openAccountService
             .saveCustomerInfo(payload)
             .subscribe((resp) => {
-              // call success popup instead of routing.
-              this.router.navigate(["account/landing"]);
+              if (resp?.statusCode === 200) {
+                this.dialogRef = this.dialog.open(SuccessPopupComponent, {
+                  data: {
+                    originationId: resp.data.originationModel.originationId,
+                  },
+                  width: "750px",
+                  disableClose: true,
+                  panelClass: "popup-dialog-class",
+                  backdropClass: "bdrop",
+                });
+              }
             });
         } else if (resp?.statusCode === 204) {
           this.onVerifyOtpEvent.emit();

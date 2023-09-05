@@ -24,7 +24,7 @@
 .personal-details {
   display: flex;
   flex-direction: row;
-  width: 950px;
+  width: 909px;
 
   .details-section {
     display: flex;
@@ -48,8 +48,8 @@
         margin-bottom: 20px;
 
         .standard-search {
-          position: relative;
-          margin-left: -200px;
+          position: absolute;
+          margin-bottom: 8px;
           cursor: pointer;
         }
 
