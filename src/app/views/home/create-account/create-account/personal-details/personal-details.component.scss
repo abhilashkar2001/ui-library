@@ -24,11 +24,13 @@
 .personal-details {
   display: flex;
   flex-direction: row;
+  width: 950px;
 
   .details-section {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-left: 20px;
 
     .standard-flex {
       display: flex;

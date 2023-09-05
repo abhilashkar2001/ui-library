@@ -17,6 +17,8 @@ import { NewDepositService } from "app/views/home/new-deposit/new-deposit.servic
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-other-documents",
@@ -62,8 +64,10 @@ export class OtherDocumentsComponent implements OnInit {
       docIds: [],
     },
   ];
+  dialogRef: MatDialogRef<SuccessPopupComponent>;
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
+
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -71,6 +75,7 @@ export class OtherDocumentsComponent implements OnInit {
     private router: Router,
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
+    public dialog: MatDialog,
     private commonService: CommonService
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
@@ -224,6 +229,12 @@ export class OtherDocumentsComponent implements OnInit {
       status: true,
       documentDetails: this.createDocumentForm.value,
     });
+    this.dialogRef = this.dialog.open(SuccessPopupComponent, {
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
   }
   getOTP() {
     this.resendLink = false;
@@ -238,6 +249,12 @@ export class OtherDocumentsComponent implements OnInit {
       .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
       .subscribe((response) => {
         this.onVerifyOtpEvent.emit();
+        this.dialogRef = this.dialog.open(SuccessPopupComponent, {
+          width: "750px",
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+          backdropClass: "bdrop",
+        });
       });
   }
 
