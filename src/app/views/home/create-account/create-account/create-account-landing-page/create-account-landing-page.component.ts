@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -107,15 +108,37 @@ export class CreateAccountLandingPageComponent {
       .uploadMultipleDocument(payload)
       .subscribe((resp) => {
         if (resp?.statusCode === 200 || resp?.statusCode === 201) {
-          this.dialog.open(SuccessPopupComponent, {
-            data: {
-              originationId: resp.data.originationModel.originationId,
-            },
-            width: "750px",
-            disableClose: true,
-            panelClass: "popup-dialog-class",
-            backdropClass: "bdrop",
-          });
+          this.openAccountService
+            .getCustomerById(resp.data.customerId)
+            .subscribe((resp) => {
+              const sessionData = JSON.parse(
+                sessionStorage.getItem("basisDetails")
+              );
+              const payload = {
+                originationModel: {
+                  applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+                  accountType: sessionData.accountType,
+                  basisDetailsId: sessionData.basisDetailsId,
+                  branchCode: "BR1",
+                },
+                customerInfo: resp.data,
+              };
+              this.openAccountService
+                .saveCustomerInfo(payload)
+                .subscribe((resp) => {
+                  if (resp?.statusCode === 200) {
+                    this.dialog.open(SuccessPopupComponent, {
+                      data: {
+                        originationId: resp.data.originationModel.originationId,
+                      },
+                      width: "750px",
+                      disableClose: true,
+                      panelClass: "popup-dialog-class",
+                      backdropClass: "bdrop",
+                    });
+                  }
+                });
+            });
         }
       });
     // console.log(docIds);

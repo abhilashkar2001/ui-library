@@ -85,4 +85,7 @@ export class OpenAccountService {
   getProcessStages(id) {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
+  getCustomerById(id) {
+    return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
+  }
 }
