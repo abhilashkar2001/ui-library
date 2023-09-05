@@ -21,10 +21,16 @@
     <!-- FD calculator starts -->
     <div class="row mt-36">
       <div class="col-md-9 col-12">
-        <app-return-calculator [fdName]="selectedValue"></app-return-calculator>
+        <app-return-calculator
+          [fdName]="selectedValue"
+          (customCalculatorValues)="customCalculatorValues($event)"
+        ></app-return-calculator>
       </div>
       <div class="col-md-3 col-12" style="margin-left: -3%">
-        <app-maturity-calculator [fdName]="selectedValue">
+        <app-maturity-calculator
+          [fdName]="selectedValue"
+          [calculatorValues]="calculatorValues"
+        >
         </app-maturity-calculator>
       </div>
     </div>

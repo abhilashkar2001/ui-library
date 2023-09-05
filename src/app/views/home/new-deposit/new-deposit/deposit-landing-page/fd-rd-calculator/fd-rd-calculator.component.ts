@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 export class FdRdCalculatorComponent implements OnInit {
   selectedValue = "fdCalculator";
   @Output() customDepositChange = new EventEmitter<any>();
+  calculatorValues: any = {};
 
   constructor() {}
 
@@ -15,5 +16,8 @@ export class FdRdCalculatorComponent implements OnInit {
   onToggleChange(event) {
     console.log(event);
     this.customDepositChange.emit(event.value);
+  }
+  customCalculatorValues(event) {
+    this.calculatorValues = event;
   }
 }

@@ -15,7 +15,8 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
   templateUrl: "./personal-details.component.html",
   styleUrls: ["./personal-details.component.scss"],
 })
-export class PersonalDetailsComponent implements OnInit {
+
+export class CreateAccountPersonalDetailsComponent implements OnInit {
   @Output() onSubmitPersonalDetailsEvent: EventEmitter<any> =
     new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();

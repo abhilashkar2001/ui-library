@@ -42,6 +42,8 @@ import { CibilScoreResultComponent } from "./cibil-score-result/cibil-score-resu
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NewsLetterSliderComponent } from "./news-letter-slider/news-letter-slider.component";
 import { NewsLetterComponent } from "./news-letter/news-letter.component";
+import { LandingProfileComponent } from "./landing-profile/landing-profile.component";
+
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -67,6 +69,7 @@ const components = [
   CibilScorePoorDialgComponent,
   AccountHeaderComponent,
   ClientsComponent,
+  LandingProfileComponent,
 ];
 
 @NgModule({

@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonService } from 'app/shared/services/common-service/common.service';
-import { LoanService } from 'app/shared/services/loan/loan.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { CommonService } from "app/shared/services/common-service/common.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
-  selector: 'app-loans-landing',
-  templateUrl: './loans-landing.component.html',
-  styleUrls: ['./loans-landing.component.scss']
+  selector: "app-loans-landing",
+  templateUrl: "./loans-landing.component.html",
+  styleUrls: ["./loans-landing.component.scss"],
 })
 export class LoansLandingComponent implements OnInit {
   carowselData = [];
-
-  constructor(private router: Router, 
-    private commonService: CommonService, 
-    private loanService: LoanService) {
-
-  }
+  imageUrl = "assets/images/Loan_Gold_img.png";
+  profileHeader = "Achieve Your Dreams with Our Loan Service.";
+  profileHint =
+    " Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.";
+  routeUrl = "loan/loan-type";
+  constructor(
+    private router: Router,
+    private commonService: CommonService,
+    private loanService: LoanService
+  ) {}
 
   ngOnInit(): void {
     //please dont'remove from here

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { NewDepositService } from "../../new-deposit.service";
 import { FormGroup } from "@angular/forms";
 
@@ -20,21 +20,27 @@ export class RdCalculatorComponent implements OnInit {
   documentDetailsForm: FormGroup;
   steper_Array = [];
   isLinear: boolean = true;
+  cuurrentStep = "Create RD";
 
-  constructor(private showSideBar: NewDepositService) {}
+  constructor(
+    private showSideBar: NewDepositService,
+    private cdref: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.showSideBar.setToken(true);
+    // var sessionStep = parseInt(sessionStorage.getItem("selectedStep"));
+    //if (sessionStep) this.selectedStep = sessionStep;
     this.steper_Array = [
       {
         id: 1,
         stepFormControl: this.customBasicForm,
-        label: "Create FD",
+        label: "Create RD",
       },
       {
         id: 2,
         stepFormControl: this.documentDetailsForm,
-        label: "Document Details",
+        label: "Verify Mobile Number",
       },
       {
         id: 3,
@@ -42,24 +48,13 @@ export class RdCalculatorComponent implements OnInit {
         label: "Personal Details",
       },
     ];
+    this.factory();
   }
-  onStepSelectionChange(e) {
-    console.log(e);
-    if (e.selectedStep.label == "Create FD") {
-      this.isPersonalDetails = false;
-      this.isBookFd = false;
-      this.isFixedDepositDetail = true;
-    } else if (e.selectedStep.label == "Verify Mobile Number") {
-      this.isFixedDepositDetail = false;
-      this.isVerifyNumber = true;
-    } else if (e.selectedStep.label == "Personal Details") {
-      this.isPersonalDetails = true;
-      this.isVerifyNumber = false;
-    } else {
-      this.isPersonalDetails = false;
-      this.isBookFd = true;
-    }
+  factory() {
+    this.cuurrentStep = this.steper_Array[this.selectedStep].label;
   }
+
+  stepperSelectionChange(event) {}
 
   submitPersonalDetails(event) {
     this.updateSelectedIndex();
@@ -71,28 +66,42 @@ export class RdCalculatorComponent implements OnInit {
     this.isKyc = false;
     this.isBookFd = true;
   }
+
   customSaveVerify(e) {
-    this.updateSelectedIndex();
-    this.isVerifyNumber = false;
-    this.isPersonalDetails = true;
+    const num = this.selectedStep + 1;
+    this.selectedStep = num;
+    this.factory();
+    //sessionStorage.setItem("selectedStep", "2");
+    this.cdref.detectChanges();
   }
   goBack() {
     this.isFixedDepositDetail = true;
     this.isPersonalDetails = false;
   }
   customCreatRdForm(event) {
-    this.customBasicForm = event;
+    this.steper_Array[0].stepFormControl = event;
+    this.next();
+    this.cdref.detectChanges();
   }
+
+  next() {
+    const num = this.selectedStep + 1;
+    this.selectedStep = num;
+    this.factory();
+    // for scrolling sidebar and get current state.
+    const el = document.querySelector(".mat-step-label-selected");
+    el.scrollIntoView();
+  }
+
   customSaveCreate(event) {
     console.log(event);
-    this.updateSelectedIndex();
-    this.isFixedDepositDetail = false;
-    this.isVerifyNumber = true;
+    // this.updateSelectedIndex();
+    // this.isFixedDepositDetail = false;
+    // this.isVerifyNumber = true;
   }
 
   updateSelectedIndex() {
     this.selectedStep = this.selectedStep + 1;
-    console.log(this.selectedStep);
   }
 
   customFormGroup(e) {
@@ -101,5 +110,8 @@ export class RdCalculatorComponent implements OnInit {
   customDocumentForm(event) {
     console.log(event);
     this.documentDetailsForm = event;
+  }
+  customFormGroupEmit(event) {
+    this.steper_Array[1].stepFormControl = event;
   }
 }

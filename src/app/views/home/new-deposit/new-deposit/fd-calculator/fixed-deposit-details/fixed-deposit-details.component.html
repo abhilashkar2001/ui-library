@@ -85,7 +85,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Create FD'"
+    *ngIf="cuurrentStep == 'Create FD' && createFdForm"
   >
     <label class="highlight_title">Fixed Deposit Details</label>
     <form [formGroup]="createFdForm" fxLayout="column">

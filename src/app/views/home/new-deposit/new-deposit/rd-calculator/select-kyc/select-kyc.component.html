@@ -1,0 +1,120 @@
+<div>
+  <form [formGroup]="kycForm" fxLayout="column">
+    <div class="enter_mobile">Kindly Provide Your nationalID</div>
+    <div class="row">
+      <div class="col-12">
+        <div
+          fxLayoutAlign="center center"
+          fxFlex="100"
+          fxLayoutGap="space-around"
+          class="searchBox"
+        >
+          <div fxFlex="100" class="" class="searchInput">
+            <mat-form-field class="full-width mobile_field">
+              <input
+                matInput
+                numbersOnly
+                maxlength="12"
+                minlength="10"
+                name="verifyNationalID"
+                formControlName="verifyNationalID"
+              />
+            </mat-form-field>
+          </div>
+          <button
+            (click)="getOtp()"
+            type="button"
+            mat-raised-button
+            [disabled]="!kycForm.get('verifyNationalID').valid"
+            matSuffix
+            class="getOtp"
+          >
+            Get Otp
+          </button>
+        </div>
+      </div>
+      <div
+        class="errorTxt col-12"
+        *ngIf="
+          !kycForm.get('verifyNationalID').valid &&
+          kycForm.get('verifyNationalID').touched
+        "
+      >
+        nationalID is Required!
+      </div>
+    </div>
+    <div class="enter_otp">Enter Otp to verify</div>
+    <div fxLayout="column">
+      <div *ngIf="isShowOtp">
+        <ng-otp-input
+          class="otp_field"
+          [config]="config"
+          (onInputChange)="onOtpChange($event)"
+        >
+        </ng-otp-input>
+      </div>
+
+      <div class="btnGroup" *ngIf="isShowOtp">
+        <span class="timer" fxLayout="row">
+          <div class="Btn" id="ResendBtn">
+            <button
+              [disabled]="display != '00:00'"
+              type="button"
+              class="resnd_otp"
+              (click)="timer(1)"
+            >
+              Resend OTP
+            </button>
+            ({{ display }}min)
+          </div>
+
+          <span id="counter"></span>
+        </span>
+      </div>
+      <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
+        <div
+          style="margin-top: 27px; width: 100%"
+          class="col-12"
+          fxFlex="100"
+          fxLayout="row"
+        >
+          <div fxFlex="5">
+            <mat-checkbox (change)="isChecked = !isChecked"></mat-checkbox>
+          </div>
+          <div fxFlex="95">
+            <span class="check_font"
+              >I confirmed that I don't have any other Account opened by using
+              National ID & OTP based KYC with Demobank</span
+            >
+          </div>
+        </div>
+
+        <div fxLayout="row" class="btn_grp">
+          <div>
+            <button
+              type="button"
+              mat-raised-button
+              [disabled]="!isChecked || !yourOtp"
+              class="saveButton"
+              matSuffix
+              (click)="verify()"
+            >
+              Verify
+            </button>
+          </div>
+          &nbsp;&nbsp;
+          <div>
+            <button
+              type="button"
+              mat-raised-button
+              class="backButton"
+              (click)="goBack()"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

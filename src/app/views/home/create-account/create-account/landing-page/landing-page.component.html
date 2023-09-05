@@ -1,53 +1,12 @@
 <div fxFlex="100" fxLayout="column" style="padding: 2%">
-  <div fxFlex="100" fxLayout="row">
-    <div fxFlex="48" fxLayout="column" style="padding-top: 3%">
-      <div fxLayout="column" fxFlex="100">
-        <div class="break_word account_title">
-          Savings Made Simple: Open Your Account in 3 Easy Steps.
-        </div>
-        <div style="width: 65%; margin-top: 2%">
-          <div class="break_word sub_account_title">
-            Supercharge your savings for a wealthier you. Say hello to financial
-            freedom! Join now and watch your money flourish.
-          </div>
-        </div>
-        <div fxLayout="row" class="applyBtnGrp">
-          <div>
-            <button
-              mat-flat-button
-              class="applyBtn"
-              [routerLink]="['/account/open']"
-            >
-              Apply
-            </button>
-          </div>
-          <div class="learn_more">Learn More</div>
-        </div>
-        <div fxLayout="row" class="childImg_grp">
-          <div class="childImg1">
-            <img src="assets/images/Ellipse 6.svg" alt="" />
-          </div>
-          <div class="childImg2">
-            <img src="assets/images/Ellipse 7.svg" alt="" />
-          </div>
-          <div class="childImg3">
-            <img src="assets/images/Ellipse 8.svg" alt="" />
-          </div>
-          <div fxLayout="column">
-            <div class="total_users">4k+</div>
-            <div style="font-size: 18px; color: #06113c">users worldwide</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div fxFlex="48">
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
-        <div>
-          <img src="../../assets/images/Group 13740.svg" alt="Group 13740" />
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-landing-profile
+    [imageUrl]="imageUrl"
+    [profileHeader]="profileHeader"
+    [profileHint]="profileHint"
+    [routeUrl]="routeUrl"
+  >
+  </app-landing-profile>
+
   <div fxLayout="column">
     <div fxLayoutAlign="center center" class="accountOpening">
       Account Opening Services
@@ -59,6 +18,13 @@
 
   <div style="margin-top: 20px">
     <!-- <div>
+  <div fxLayout="row">
+    <div style="margin-top: 20px">
+      <div class="account-service-header">Account Opening Services</div>
+      <div class="account-service-text">
+        Open your account in a breeze and start banking hassle-free.
+      </div>
+      <div>
         <app-carousel [carowselData]="data" [flow]="'account'"></app-carousel>
       </div> -->
   </div>
@@ -90,6 +56,7 @@
     </div>
     <div>
       <app-news-letter></app-news-letter>
+
     </div>
   </div>
 </div>
