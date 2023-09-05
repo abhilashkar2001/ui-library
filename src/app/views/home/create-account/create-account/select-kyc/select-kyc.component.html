@@ -10,8 +10,20 @@
           mat-raised-button
           [ngClass]="{ active: showKyc }"
         >
+        <button
+          class="kycButton"
+          (click)="showKyc = true"
+          mat-raised-button
+          [ngClass]="{ active: showKyc }"
+        >
           Select KYC
         </button>
+        <button
+          class="otherButton"
+          (click)="showKyc = false"
+          mat-raised-button
+          [ngClass]="{ active: !showKyc }"
+        >
         <button
           class="otherButton"
           (click)="showKyc = false"
@@ -35,7 +47,17 @@
 <!-- <div *ngIf="showKyc">
         <app-other-documents></app-other-documents>
       </div>
+      <app-kyc
+        *ngIf="showKyc"
+        (onSubmitEvent)="onVerify($event)"
+        (onBackEvent)="onBack()"
+      ></app-kyc>
+      <app-other-documents
+        *ngIf="!showKyc"
+        (onSubmitEvent)="onSubmit($event)"
+        (onBackEvent)="onBack()"
+      ></app-other-documents>
     </div>
+    <div></div>
   </div>
 </div> -->
-<app-other-documents></app-other-documents>

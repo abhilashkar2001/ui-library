@@ -16,7 +16,6 @@ export class CardSelectKycComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private apiService: OpenAccountService,
     private commonService: CommonService
   ) {

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-common-mobile-verification",
@@ -9,21 +17,28 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
-
+  otpForm: FormGroup;
   selectedPhoneCode: string = "+91";
   phone: string;
   otp: any;
   agreed: boolean;
   resendLink: boolean;
   displaySecond: string;
-  otpDigit1: string = "";
-  otpDigit2: string = "";
-  otpDigit3: string = "";
-  otpDigit4: string = "";
-  otpDigit5: string = "";
-  otpDigit6: string = "";
 
-  constructor() {}
+  @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
+  config = {
+    allowNumbersOnly: false,
+    length: 5,
+    isPasswordInput: false,
+    disableAutoFocus: false,
+    placeholder: "",
+    inputStyles: {
+      width: "50px",
+      height: "50px",
+    },
+  };
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
@@ -33,21 +48,23 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   otpChange() {
-    this.otp =
-      this.otpDigit1 +
-      this.otpDigit2 +
-      this.otpDigit3 +
-      this.otpDigit4 +
-      this.otpDigit5 +
-      this.otpDigit6;
     this.enteredOTP.emit({ otp: this.otp });
   }
 
+  onOtpChange(otp) {
+    this.otp = otp;
+  }
   isValidated() {
     if (this.phone && this.phone.length === 10) {
       return false;
     }
     return true;
+  }
+
+  buildFormGroup() {
+    this.otpForm = this.fb.group({
+      otp: [],
+    });
   }
 
   otpTimer() {
