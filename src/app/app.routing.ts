@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import { AuthGuard } from "./shared/guards/auth.guard";
 
 export const rootRouterConfig: Routes = [
   {
@@ -8,8 +9,15 @@ export const rootRouterConfig: Routes = [
     pathMatch: "full",
   },
   {
+    path: "home",
+    loadChildren: () =>
+      import("./modules/home/home.module").then((m) => m.HomeModule),
+    data: { title: "Loading" },
+  },
+  {
     path: "",
     component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "account",
@@ -43,6 +51,6 @@ export const rootRouterConfig: Routes = [
   },
   {
     path: "**",
-    redirectTo: "/account",
+    redirectTo: "home/404",
   },
 ];

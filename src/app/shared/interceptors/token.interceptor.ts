@@ -1,34 +1,35 @@
 import { Injectable } from "@angular/core";
 import {
-  HttpEvent,
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
 } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { JwtAuthService } from "../services/auth/jwt-auth.service";
+import { TokenStorageService } from "../token-storage.service";
 
-@Injectable()
-export class TokenInterceptor implements HttpInterceptor {
-  constructor(private jwtAuth: JwtAuthService) {}
+const TOKEN_HEADER_KEY = "Authorization"; // for Spring Boot back-end
+@Injectable({
+  providedIn: "root",
+})
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private token: TokenStorageService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    var token = this.jwtAuth.token || "asasaasasasasasa";
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    let authReq = req;
+    const token = this.token.getToken();
 
-    var changedReq;
-
-    if (token) {
-      changedReq = req.clone({
-        setHeaders: {
-          Authorization: `Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzYWt0aGkiLCJpYXQiOjE2ODU5NDY1NDQsImV4cCI6MjA4NTk0NjU0NH0.QpghhNDwyVVJjQ6M_C_K80CFE3JSFT4t6Zw9HigOkCNj-LTFEVMgLoETwzsHBJUU`,
-        },
-      });
+    if (req.headers.get("Anonymous") == "NOTKN") {
+      let newHeaders = req.headers.delete("Anonymous");
+      newHeaders.delete("Authorization");
+      const newRequest = req.clone({ headers: newHeaders });
+      return next.handle(newRequest);
     } else {
-      changedReq = req;
+      if (token != null) {
+        // for Spring Boot back-end
+        authReq = req.clone({
+          headers: req.headers.set(TOKEN_HEADER_KEY, "Bearer " + token),
+        });
+      }
+      return next.handle(authReq);
     }
-    return next.handle(changedReq);
   }
 }

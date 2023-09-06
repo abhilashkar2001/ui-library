@@ -40,7 +40,8 @@
               "file-saver",
               "jspdf-autotable",
               "sweetalert2",
-              "@tensorflow/tfjs-core"
+              "@tensorflow/tfjs-core",
+              "fusioncharts"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
