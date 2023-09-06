@@ -15,7 +15,7 @@ import {
 import { Router } from "@angular/router";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-other-documents",

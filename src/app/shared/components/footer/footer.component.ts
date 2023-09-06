@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-footer",

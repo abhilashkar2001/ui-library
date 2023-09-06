@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
 import { Location } from "@angular/common";
 import { CreateRdService } from "../../../rd-calculator/create-rd.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 @Component({
   selector: "app-maturity-calculator",
   templateUrl: "./maturity-calculator.component.html",

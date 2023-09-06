@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-select-kyc",

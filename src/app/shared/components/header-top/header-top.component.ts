@@ -5,7 +5,7 @@ import { ThemeService } from "../../../shared/services/theme.service";
 import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-header-top",
