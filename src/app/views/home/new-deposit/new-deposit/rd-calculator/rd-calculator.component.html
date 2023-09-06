@@ -1,5 +1,5 @@
 <div class="align_fd">
-  <div fxFlex="40" class="fdCalculator_parent">
+  <div fxFlex="45" class="fdCalculator_parent">
     <div fxLayout="row">
       <div fxLayout="column" fxFlex="100">
         <div fxLayout="row">
@@ -47,7 +47,7 @@
   </div>
   <div
     class="vertical_divider"
-    style="border-right: 1px solid #cbcbcb; height: 450px"
+    style="border-right: 1px solid #cbcbcb; height: 450px; margin-right: 3%"
   ></div>
 
   <!-- <div class="custom_stepper" id="custom_stepper">
@@ -112,6 +112,10 @@
     ></app-other-documents>
   </div>
   <div class="align_fdForm" fxFlex="60" *ngIf="cuurrentStep == 'Book RD'">
-    <app-book-fd></app-book-fd>
+    <app-book-fd
+      [depositType]="depositType"
+      (customSaveDocument)="customSaveRD($event)"
+      (customDocumentForm)="rdForm($event)"
+    ></app-book-fd>
   </div>
 </div>

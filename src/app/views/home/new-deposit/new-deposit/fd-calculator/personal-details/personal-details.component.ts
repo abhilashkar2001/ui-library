@@ -23,6 +23,7 @@ export class PersonalDetailsComponent implements OnInit {
   @Output() customSavePersonal = new EventEmitter<{}>();
   @Output() personalBack = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
+
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -105,7 +106,7 @@ export class PersonalDetailsComponent implements OnInit {
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       dateOfBirth: ["", Validators.required],
-      email: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
       gender: ["", Validators.required],
       nationality: ["", Validators.required],
       address1: [""],

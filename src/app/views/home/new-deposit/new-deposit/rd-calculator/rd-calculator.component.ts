@@ -18,6 +18,9 @@ export class RdCalculatorComponent implements OnInit {
   @Input() customBasicForm: FormGroup;
   personalDetailsForm: FormGroup;
   documentDetailsForm: FormGroup;
+  kycDetailsForm: FormGroup;
+  rdDetailsForm: FormGroup;
+
   steper_Array = [];
   isLinear: boolean = true;
   cuurrentStep = "Create RD";
@@ -47,6 +50,16 @@ export class RdCalculatorComponent implements OnInit {
         stepFormControl: this.personalDetailsForm,
         label: "Personal Details",
       },
+      {
+        id: 4,
+        stepFormControl: this.kycDetailsForm,
+        label: "Select KYC",
+      },
+      {
+        id: 5,
+        stepFormControl: this.rdDetailsForm,
+        label: "Book RD",
+      },
     ];
     this.factory();
   }
@@ -57,14 +70,22 @@ export class RdCalculatorComponent implements OnInit {
   stepperSelectionChange(event) {}
 
   submitPersonalDetails(event) {
-    this.updateSelectedIndex();
-    this.isPersonalDetails = false;
-    this.isKyc = true;
+    // this.updateSelectedIndex();
+    // this.isPersonalDetails = false;
+    // this.isKyc = true;
+    this.next();
+    this.cdref.detectChanges();
   }
   customSaveDocuments(event) {
-    this.updateSelectedIndex();
-    this.isKyc = false;
-    this.isBookFd = true;
+    // this.updateSelectedIndex();
+    // this.isKyc = false;
+    // this.isBookFd = true;
+    this.next();
+    this.cdref.detectChanges();
+  }
+  customSaveRD(event) {
+    this.next();
+    this.cdref.detectChanges();
   }
 
   customSaveVerify(e) {
@@ -77,11 +98,6 @@ export class RdCalculatorComponent implements OnInit {
   goBack() {
     this.isFixedDepositDetail = true;
     this.isPersonalDetails = false;
-  }
-  customCreatRdForm(event) {
-    this.steper_Array[0].stepFormControl = event;
-    this.next();
-    this.cdref.detectChanges();
   }
 
   next() {
@@ -111,7 +127,27 @@ export class RdCalculatorComponent implements OnInit {
     console.log(event);
     this.documentDetailsForm = event;
   }
+  // kycForm(event) {
+  //   console.log(event);
+  //   this.kycDetailsForm = event;
+  // }
+  rdForm(event) {
+    console.log(event);
+    this.rdDetailsForm = event;
+  }
+  // for verify number
   customFormGroupEmit(event) {
     this.steper_Array[1].stepFormControl = event;
+  }
+  customCreatRdForm(event) {
+    this.steper_Array[0].stepFormControl = event;
+    this.next();
+    this.cdref.detectChanges();
+  }
+  customkycFormGroupEmit(event) {
+    this.steper_Array[4].stepFormControl = event;
+  }
+  customrdFormGroupEmit(event) {
+    this.steper_Array[5].stepFormControl = event;
   }
 }
