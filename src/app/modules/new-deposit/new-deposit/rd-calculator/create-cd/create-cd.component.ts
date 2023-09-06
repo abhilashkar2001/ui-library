@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "../../../new-deposit.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CreateRdService } from "../create-rd.service";
 
 @Component({
@@ -17,11 +17,14 @@ export class CreateCdComponent implements OnInit {
   selectedStep: number = 0;
   customBasicForm: any;
   isLinear = true;
+  isEnabledEdit: boolean = false;
+  saveTheEdit: boolean = false;
   constructor(
     private fb: FormBuilder,
     private fdApi: NewDepositService,
     private route: ActivatedRoute,
-    private rdApi: CreateRdService
+    private rdApi: CreateRdService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -74,5 +77,13 @@ export class CreateCdComponent implements OnInit {
     console.log(this.createRdForm.value);
     this.customCreatRdForm.emit(this.createRdForm);
     this.customSaveCreate.emit({ satus: true });
+  }
+
+  editRecord() {
+    this.isEnabledEdit = true;
+    this.saveTheEdit = true;
+  }
+  onExit() {
+    window.close();
   }
 }
