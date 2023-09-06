@@ -1,6 +1,6 @@
 .card-div {
     margin-top: 10px;
-    padding: 1rem 2.4rem;
+    padding: 1rem 2.0rem;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -21,6 +21,7 @@
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 12px;
 }
 
 .card-subdiv {
@@ -31,7 +32,7 @@
     flex-direction: column;
 
     .doc_upload {
-        border: 1px dashed #aaa;
+        border: 2px dashed #aaa;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -135,4 +136,12 @@ mat-form-field {
 
 .drag.Drop {
     border: #102245;
+}
+
+.submit-button {
+    margin-top: 260px;
+}
+
+.button-section {
+    margin-left: 20px;
 }

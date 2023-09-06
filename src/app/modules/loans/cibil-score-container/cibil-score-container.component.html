@@ -2,6 +2,7 @@
   <div class="title-text">
     Let’s begin with some necessary information and get you started
   </div>
+  &nbsp;
   <app-cibil-score-result
     *ngIf="showCibilScoreResult"
     (onBackEvent)="onBackCIBILScoreResult($event)"
@@ -10,7 +11,7 @@
   <div *ngIf="!showCibilScoreResult">
     <div *ngIf="!isDifferentMobile">
       <div class="mobile-selection-tpl">
-        <div class="sheild-icon">
+        <div class="sheild-icon" fxLayoutAlign="center center">
           <img src="../../../../assets/images/shield.png" alt="shield" />
         </div>
         <div class="card-details">
@@ -30,13 +31,20 @@
           <mat-hint>As Per National Id</mat-hint>
         </mat-form-field>
       </div>
+      &nbsp;
       <div style="margin-top: 20px">
-        <span>Mobile Number</span>
+        <span class="mobile">Mobile Number</span>
         <mat-radio-group [(ngModel)]="selectedOption">
-          <mat-radio-button value="same" (change)="radioChange($event)"
+          <mat-radio-button
+            value="same"
+            class="radioChecked radiobtn"
+            (change)="radioChange($event)"
             >Same</mat-radio-button
           >
-          <mat-radio-button value="different" (change)="radioChange($event)"
+          <mat-radio-button
+            value="different"
+            class="radioChecked radiobtn"
+            (change)="radioChange($event)"
             >Different</mat-radio-button
           >
         </mat-radio-group>
@@ -55,6 +63,7 @@
       </div>
       <div class="button-section">
         <button class="confirm-button" (click)="onContinue()">Continue</button>
+        &nbsp;&nbsp;&nbsp;
         <button class="back-button" (click)="onBack()">Back</button>
       </div>
     </div>

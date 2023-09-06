@@ -1,11 +1,13 @@
-<div class="create-loan-account">
-  <app-loan-stepper
-    (customSelectionChange)="getTabDetails($event)"
-    [optionalSteps]="optionalSteps"
-    [accountHolderTYpe]="accountHolderTYpe"
-    [existingUser]="existingUser"
-  ></app-loan-stepper>
-  <div class="col-2-section">
+<div class="create-loan-account" fxFlex="100">
+  <div fxFlex="40">
+    <app-loan-stepper
+      (customSelectionChange)="getTabDetails($event)"
+      [optionalSteps]="optionalSteps"
+      [accountHolderTYpe]="accountHolderTYpe"
+      [existingUser]="existingUser"
+    ></app-loan-stepper>
+  </div>
+  <div class="col-2-section" fxFlex="60">
     <app-create-loan
       *ngIf="stepsDetails && stepsDetails.isCreateLoanStep"
       (onConfirmEvent)="onConfirm($event)"

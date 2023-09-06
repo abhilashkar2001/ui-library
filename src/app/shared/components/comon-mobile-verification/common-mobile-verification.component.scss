@@ -2,6 +2,16 @@
     margin-top: 5%;
 }
 
+::ng-deep .mat-select-value {
+    color: #CACACA61 !important;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+::ng-deep .egret-navy .mat-select-arrow {
+    color: #CACACA61;
+}
+
 .standard-txtField-phone-main {
     padding-bottom: 4px;
     height: 65px;
@@ -18,7 +28,7 @@
         width: 15%;
         color: #b4b4b4;
         position: relative;
-        padding: 15px 20px 20px 5px;
+        padding: 20px 20px 12px 5px;
         margin-left: 10px;
     }
 
