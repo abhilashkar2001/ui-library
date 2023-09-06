@@ -6,7 +6,6 @@ import { ThemeService } from "./services/theme.service";
 import { NavigationService } from "./services/navigation.service";
 import { RoutePartsService } from "./services/route-parts.service";
 import { AuthGuard } from "./guards/auth.guard";
-import { UserRoleGuard } from "./guards/user-role.guard";
 import { AppConfirmService } from "./services/app-confirm/app-confirm.service";
 import { AppLoaderService } from "./services/app-loader/app-loader.service";
 
@@ -30,7 +29,6 @@ import { NgOtpInputModule } from "ng-otp-input";
     NavigationService,
     RoutePartsService,
     AuthGuard,
-    UserRoleGuard,
     AppConfirmService,
     AppLoaderService,
     ReactiveFormsModule,
