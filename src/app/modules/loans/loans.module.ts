@@ -27,6 +27,7 @@ import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
 import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     SharedMaterialModule,
     LoansRoutingModule,
     SharedComponentsModule,
+    FlexLayoutModule,
   ],
 })
 export class LoansModule {}
