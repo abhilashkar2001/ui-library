@@ -1,71 +1,70 @@
 .button-section {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
-::ng-deep .mat-select-value {
-    color: #CACACA61 !important;
-    font-weight: 600;
-    font-size: 20px;
-}
+// ::ng-deep .mat-select-value {
+//     color: #CACACA61 !important;
+//     font-weight: 600;
+//     font-size: 20px;
+// }
 
-::ng-deep .egret-navy .mat-select-arrow {
-    color: #CACACA61;
-}
+// ::ng-deep .egret-navy .mat-select-arrow {
+//     color: #CACACA61;
+// }
 
 .standard-txtField-phone-main {
-    padding-bottom: 4px;
-    height: 65px;
+  padding-bottom: 4px;
+  height: 65px;
+  position: relative;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000017;
+  border: none;
+  border-radius: 12px;
+  opacity: 1;
+  display: flex;
+  flex-direction: row;
+
+  .selector-input {
+    width: 15%;
+    color: #b4b4b4;
     position: relative;
-    background: #fffefe 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 10px #00000017;
+    padding: 20px 20px 12px 5px;
+    margin-left: 10px;
+  }
+
+  .vertical-separator {
+    height: auto;
+    width: 1px;
+    border: #cacaca61 1px solid;
+    position: relative;
+  }
+
+  .inputText {
+    position: relative;
+    outline: none;
     border: none;
-    border-radius: 12px;
-    opacity: 1;
-    display: flex;
-    flex-direction: row;
+    width: 50%;
+    padding: 20px 20px 20px 10px;
+  }
 
-    .selector-input {
-        width: 15%;
-        color: #b4b4b4;
-        position: relative;
-        padding: 20px 20px 12px 5px;
-        margin-left: 10px;
-    }
-
-    .vertical-separator {
-        height: auto;
-        width: 1px;
-        border: #cacaca61 1px solid;
-        position: relative;
-    }
-
-    .inputText {
-        position: relative;
-        outline: none;
-        border: none;
-        width: 50%;
-        padding: 20px 20px 20px 10px;
-    }
-
-    .disabled-field {
-        cursor: not-allowed !important;
-    }
-
+  .disabled-field {
+    cursor: not-allowed !important;
+  }
 }
 
 .standard-otp-container-main {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 35px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 35px;
 
-    .standard-textbox-small {
-        width: 90px;
-        height: 80px;
-        box-shadow: 0px 3px 15px 0px #00000017;
-        background: #fffefe 0% 0% no-repeat padding-box;
-        border-radius: 12px;
-        border: none;
-        margin-right: 20px;
-        text-align: center;
-    }
+  .standard-textbox-small {
+    width: 90px;
+    height: 80px;
+    box-shadow: 0px 3px 15px 0px #00000017;
+    background: #fffefe 0% 0% no-repeat padding-box;
+    border-radius: 12px;
+    border: none;
+    margin-right: 20px;
+    text-align: center;
+  }
 }

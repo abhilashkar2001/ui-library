@@ -6,6 +6,7 @@ import {
   CreateLoanLandingPageComponent,
 } from ".";
 import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
+import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
 
 const routes: Routes = [
   {
@@ -25,9 +26,13 @@ const routes: Routes = [
         path: "loan-type",
         component: LoanAccountTypeComponent,
       },
+      // {
+      //   path: "create-loan",
+      //   component: CreateLoanLandingPageComponent,
+      // },
       {
         path: "create-loan",
-        component: CreateLoanLandingPageComponent,
+        component: LoanFlowComponent,
       },
     ],
   },

@@ -16,7 +16,7 @@ export class CibilScoreResultComponent implements OnInit {
   @Input() isDifferentMobile: boolean;
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
   cibilScore: number = 600;
   dataSource: any;
 
@@ -102,26 +102,28 @@ export class CibilScoreResultComponent implements OnInit {
   }
 
   onContinue() {
-    if (this.cibilScore < 600) {
-      this.dialogsaveRef = this.dialog.open(CibilScorePoorDialgComponent, {
-        data: {
-          applicationNo: 746764326432,
-        },
-        width: "700px",
-        height: "500px",
-        disableClose: true,
-        panelClass: "popup-dialog-class",
-        backdropClass: "bdrop",
-      });
-      this.dialogsaveRef.componentInstance.submitClicked.subscribe((result) => {
-        // for different mobile resetting flag
-        this.commonService.isUserUsingDifferentMobile(false);
-        this.router.navigate(["/"]);
-      });
-    } else if (this.flow === "cards") {
-      this.onConfirmEvent.emit();
-    } else {
-      this.onConfirmEvent.emit();
-    }
+    console.log(this.cibilScore);
+    this.onCibilConfirmEvent.emit();
+    // if (this.cibilScore < 600) {
+    //   this.dialogsaveRef = this.dialog.open(CibilScorePoorDialgComponent, {
+    //     data: {
+    //       applicationNo: 746764326432,
+    //     },
+    //     width: "700px",
+    //     height: "500px",
+    //     disableClose: true,
+    //     panelClass: "popup-dialog-class",
+    //     backdropClass: "bdrop",
+    //   });
+    //   this.dialogsaveRef.componentInstance.submitClicked.subscribe((result) => {
+    //     // for different mobile resetting flag
+    //     this.commonService.isUserUsingDifferentMobile(false);
+    //     this.router.navigate(["/"]);
+    //   });
+    // } else if (this.flow === "cards") {
+    //   this.onConfirmEvent.emit();
+    // } else {
+    //   this.onConfirmEvent.emit();
+    // }
   }
 }

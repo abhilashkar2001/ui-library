@@ -47,6 +47,8 @@ import { LandingProfileComponent } from "./landing-profile/landing-profile.compo
 import { NgOtpInputModule } from "ng-otp-input";
 import { OtherDocumentsComponent } from "./other-documents/other-documents.component";
 import { SelectKycComponent } from "./select-kyc/select-kyc.component";
+import { CustomSwiperComponent } from "./custom-swiper/custom-swiper.component";
+import { SwiperModule } from "swiper/angular";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -75,6 +77,7 @@ const components = [
   LandingProfileComponent,
   OtherDocumentsComponent,
   SelectKycComponent,
+  CustomSwiperComponent,
 ];
 
 @NgModule({
@@ -92,6 +95,7 @@ const components = [
     SharedDirectivesModule,
     SharedMaterialModule,
     NgOtpInputModule,
+    SwiperModule,
   ],
   declarations: components,
   exports: components,

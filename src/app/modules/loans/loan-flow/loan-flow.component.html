@@ -1,0 +1,130 @@
+<div class="align_fd">
+  <div fxFlex="40" class="fdCalculator_parent">
+    <div fxFlex="100">
+      <div fxLayout="row">
+        <div fxLayout="column" fxFlex="100">
+          <div fxLayout="row">
+            <div>
+              <div class="deposit_icon">
+                <img src="assets/images/Group_13675.svg" width="65%" />
+              </div>
+              <span class="vertical_line"></span>
+            </div>
+            <div fxLayout="column" style="padding-left: 33px">
+              <div style="font-size: 22px; line-height: 33px; font-weight: 400">
+                Get Your
+              </div>
+              <div style="font-size: 28px; line-height: 48px; font-weight: 600">
+                FD Deposit
+              </div>
+              <div style="font-size: 22px; line-height: 33px; font-weight: 400">
+                in {{ steper_Array?.length }} simple ways
+              </div>
+              <div class="fd_info_stat" fxLayout="row">
+                <img src="assets/images/Group.svg" />
+                <div>
+                  On an average, People get their savings account in 15 - 20 min
+                </div>
+              </div>
+            </div>
+          </div>
+          <mat-stepper
+            #stepper
+            orientation="vertical"
+            [linear]="isLinear"
+            class="custom_steppper"
+            [(selectedIndex)]="selectedStep"
+            (selectionChange)="stepperSelectionChange($event)"
+          >
+            <ng-container *ngFor="let item of screenList; let i = index">
+              <mat-step
+                [label]="item.screenName"
+                [stepControl]="item.stepFormControl"
+              ></mat-step>
+              <!--  [stepControl]="item.stepFormControl" need to update once -->
+            </ng-container>
+          </mat-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="vertical_divider"
+    style="border-right: 1px solid #cbcbcb; height: 450px"
+  ></div>
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Create Loan'"
+  >
+    <app-create-loan (onSaveCreateLoan)="onSaveCreateLoan($event)">
+    </app-create-loan>
+  </div>
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Verify Mobile Number'"
+  >
+    <app-mobile-verification
+      (checkExistingUserEvent)="checkExistingUserEvent($event)"
+      (onBackEvent)="goBack()"
+    >
+    </app-mobile-verification>
+  </div>
+  <!-- cibil score starts here -->
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'CIBIL Score'"
+  >
+    <app-cibil-score-container
+      (onCustomCibilDetail)="onCustomCibilDetail()"
+      (onBackEvent)="goBack()"
+    ></app-cibil-score-container>
+  </div>
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Personal Details'"
+  >
+    <app-custom-personal-details
+      (customSavePersonal)="customSavePersonal($event)"
+      (personalBack)="goBack()"
+    >
+    </app-custom-personal-details>
+  </div>
+  <!-- KYC starts here -->
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Select KYC'"
+  >
+    <app-other-documents
+      (customSaveDocument)="customSaveDocuments($event)"
+      (customgoBack)="goBack()"
+    >
+    </app-other-documents>
+  </div>
+  <!-- KYC ends here -->
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="cuurrentStep == 'Document'"
+  >
+    <app-loan-document-upload
+      (onConfirmEvent)="onConfirm($event)"
+      (onBackEvent)="goBack()"
+    >
+    </app-loan-document-upload>
+  </div>
+  <div class="align_fdForm" fxLayout="column" *ngIf="cuurrentStep == 'terms'">
+    <app-loan-terms-conditions
+      (onConfirmEvent)="onTCAccepted($event)"
+      (onBackEvent)="goBack()"
+    >
+    </app-loan-terms-conditions>
+  </div>
+  <div *ngIf="cuurrentStep == 'summary'" class="align_fdForm" fxLayout="column">
+    <app-loan-summary (onConfirmEvent)="onFlowDone()"></app-loan-summary>
+  </div>
+</div>
