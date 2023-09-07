@@ -1,12 +1,12 @@
 <div class="personal-loan-details">
-  <form [formGroup]="personalLoanDetailsForm">
+  <form *ngIf="personalLoanDetailsForm" [formGroup]="personalLoanDetailsForm">
     <div class="column-2" fxFlex="100" fxLayout="column" fxLayoutGap="25px">
       <div class="text-header">Personal Loan Details</div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
         <div fxFlex="46">
           <mat-form-field appearance="outline" class="full-width custom-field">
             <mat-label class="custom-mat-label">Loan Amount</mat-label>
-            <input matInput formControlName="loanAmount" />
+            <input matInput name="loanAmount" formControlName="loanAmount" />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm.get('loanAmount')?.hasError('required')
@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="46" class="MislaniousClass">
+        <div fxFlex="46" class="MiscellaneousClass">
           <fieldset [ngClass]="{ 'mat-form-field-disabled': isDisabledMode }">
             <legend>Tenure</legend>
             <div style="display: flex; flex-direction: row">
