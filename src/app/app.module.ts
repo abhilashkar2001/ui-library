@@ -24,7 +24,7 @@ import { ErrorHandlerService } from "./shared/services/error-handler.service";
 import { LayoutsModule } from "./layouts/layouts.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { InterceptorProviders } from "./shared/interceptors/interceptors";
-import { SwiperModule } from 'swiper/angular';
+import { SwiperModule } from "swiper/angular";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {

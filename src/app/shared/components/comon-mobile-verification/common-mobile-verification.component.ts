@@ -27,14 +27,14 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
   config = {
-    allowNumbersOnly: false,
-    length: 5,
-    isPasswordInput: false,
+    allowNumbersOnly: true,
+    length: 6,
+    isPasswordInput: true,
     disableAutoFocus: false,
     placeholder: "",
     inputStyles: {
-      width: "50px",
-      height: "50px",
+      width: "80px",
+      height: "80px",
     },
   };
 
@@ -47,12 +47,12 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.otpTimer();
   }
 
-  otpChange() {
-    this.enteredOTP.emit({ otp: this.otp });
-  }
+  otpChange() {}
 
   onOtpChange(otp) {
+    console.log(otp);
     this.otp = otp;
+    this.enteredOTP.emit({ otp: this.otp });
   }
   isValidated() {
     if (this.phone && this.phone.length === 10) {

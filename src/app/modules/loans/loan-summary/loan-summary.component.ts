@@ -39,20 +39,7 @@ export class LoanSummaryComponent implements OnInit {
   }
 
   onVerify() {
-    this.dialogsaveRef = this.dialog.open(SavingsSubmitDialogComponent, {
-      data: {
-        applicationNo: 746764326432,
-        flow: "loans",
-      },
-      width: "885px",
-      height: "676px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-    this.dialogsaveRef.componentInstance.submitClicked.subscribe((result) => {
-      this.router.navigate(["/"]);
-    });
+    this.onConfirmEvent.emit();
   }
 
   onBack() {

@@ -14,7 +14,11 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-create-loan",
@@ -23,7 +27,7 @@ import { CommonService } from "app/shared/services/common-service/common.service
 })
 export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
   @Output() checkAccountHolderType: EventEmitter<any> = new EventEmitter();
 
   personalLoanDetailsForm: FormGroup | any;
@@ -31,85 +35,69 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   disbursementType: string;
   loanDetails: any;
   isDisabledMode: boolean = true;
+  submitedLoan: any;
 
   constructor(
     private fb: FormBuilder,
     private location: Location,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private route: ActivatedRoute,
+    private loanApi: LoanService,
+    private snack: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
-    this.initialForm();
+    this.route.queryParamMap.subscribe((params: any) => {
+      var id = parseInt(params.get("id"));
+      if (id) this.getLoanById(id);
+      else this.initialForm();
+    });
+  }
+  getLoanById(id) {
+    this.loanApi.getLoanById(id).subscribe((resp) => {
+      if (resp.statusCode === 200) {
+        this.initialForm(resp?.data[0]);
+      } else {
+        this.initialForm();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     this.commonService.$calculatorsData.subscribe((response: any) => {
-      this.setValues(response);
+      //  this.setValues(response);
     });
   }
 
-  setValues(basicLoanDetails: any) {
-    if (basicLoanDetails) {
-      this.personalLoanDetailsForm.patchValue({
-        loanAmount: basicLoanDetails.principlAmount,
-        tenureYear: basicLoanDetails.tenure.years,
-        tenureMonths: basicLoanDetails.tenure.months,
-        tenureDay: basicLoanDetails.tenure.days,
-        emiAmount: basicLoanDetails.emiAmount,
-        interestRate: basicLoanDetails.interestRate,
-        interestPayable: basicLoanDetails.totalInterestPayble,
-        principlAmount: basicLoanDetails.principlAmount,
-        totalPayableAmount: basicLoanDetails.totalPayableAmount,
-      });
-    }
-  }
-
-  initialForm() {
+  initialForm(data?) {
     this.personalLoanDetailsForm = this.fb.group({
-      loanAmount: new FormControl({ value: "", disabled: true }, [
+      loanAmount: [data ? data.loanAmount : "", Validators.required],
+      tenureYear: [data ? data?.tenureYear : ""],
+      tenureMonths: [data ? data?.tenureYear : ""],
+      tenureDay: [data ? data?.tenureYear : ""],
+      emiStartDate: [data ? data?.emiStartDate : "", Validators.required],
+      emiAmount: [
+        data ? data?.emiAmount : "",
+        [Validators.required, Validators.email],
+      ],
+      interestRate: [data ? data.interestRate : "", Validators.required],
+      interestPayable: [data ? data.interestPayable : "", Validators.required],
+      principlAmount: [data ? data.principalAmount : "", Validators.required],
+      holderType: [data ? data?.tenureYear : "", Validators.required],
+      totalPayableAmount: [
+        data ? data.totalPayableAmount : "",
         Validators.required,
-      ]),
-      tenureYear: new FormControl({ value: "", disabled: true }, [
+      ],
+      disbursementType: [
+        data ? data?.disbursementType : "",
         Validators.required,
-      ]),
-      tenureMonths: new FormControl({ value: "", disabled: true }),
-      tenureDay: new FormControl({ value: "", disabled: true }),
-      emaiPaymentStartDate: new FormControl("", [Validators.required]),
-      emiAmount: new FormControl({ value: "", disabled: true }, [
-        Validators.required,
-        Validators.email,
-      ]),
-      interestRate: new FormControl({ value: "", disabled: true }, [
-        Validators.required,
-      ]),
-      interestPayable: new FormControl({ value: "", disabled: true }, [
-        Validators.required,
-      ]),
-      principlAmount: new FormControl({ value: "", disabled: true }, [
-        Validators.required,
-      ]),
-      holderType: new FormControl("", [Validators.required]),
-      totalPayableAmount: new FormControl({ value: "", disabled: true }, [
-        Validators.required,
-      ]),
-      disbursementType: new FormControl("", [Validators.required]),
-      accountNumber: new FormControl("", [Validators.required]),
+      ],
+      accountNumber: [data ? data?.accountNumber : "", Validators.required],
+      id: data?.id,
     });
-  }
-
-  onEdit() {
-    this.personalLoanDetailsForm.get("loanAmount").enable(); // To enable
-    this.personalLoanDetailsForm.get("tenureYear").enable(); // To enable
-    this.personalLoanDetailsForm.get("tenureMonths").enable();
-    this.personalLoanDetailsForm.get("tenureDay").enable(); // To enable
-    this.personalLoanDetailsForm.get("emiAmount").enable(); // To enable
-    this.personalLoanDetailsForm.get("interestPayable").enable();
-    this.personalLoanDetailsForm.get("principlAmount").enable(); // To enable
-    this.personalLoanDetailsForm.get("interestRate").enable();
-    this.personalLoanDetailsForm.get("totalPayableAmount").enable(); // To enable
-    this.isDisabledMode = false;
   }
 
   accountHolderSelectionChanged() {
@@ -126,11 +114,44 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onConfirm() {
-    console.log(this.personalLoanDetailsForm.value);
-    this.onConfirmEvent.emit();
+    this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
+      if (resp?.statusCode === 201) {
+        this.snack.open(`Create Loan Details Saved` + " !", "OK", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+        });
+        sessionStorage.setItem("loanDisburseId", resp.data.id);
+        this.onSaveCreateLoan.emit(this.personalLoanDetailsForm);
+      }
+    });
+  }
+  calculatePayload() {
+    var payload: any = {
+      emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
+      interestRate: parseInt(this.personalLoanDetailsForm.value.interestRate),
+      interestPayable: parseInt(
+        this.personalLoanDetailsForm.value.principlAmount
+      ),
+      principalAmount: parseInt(
+        this.personalLoanDetailsForm.value.principlAmount
+      ),
+      totalPayableAmount: parseInt(
+        this.personalLoanDetailsForm.value.totalPayableAmount
+      ),
+      disbursementType: this.personalLoanDetailsForm.value.disbursementType,
+      accountNumber: this.personalLoanDetailsForm.value.accountNumber,
+      emiStartDate: moment(
+        this.personalLoanDetailsForm.value.emiStartDate
+      ).format(),
+    };
+    if (this.personalLoanDetailsForm.value?.id) {
+      payload.id = this.personalLoanDetailsForm.value?.id;
+    }
+    return payload;
   }
 
   onExit() {
-    this.location.back();
+    this.router.navigate(["loan/landing"]);
   }
 }

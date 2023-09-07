@@ -36,6 +36,23 @@ export class LoanService {
   }
 
   getLoanSummary(loanId: any): Observable<any> | any {
-    return this.http.get(`${baseUrl}/webSummary?loanId=${loanId}`);
+    return this.http.get(`${baseUrl}/webSummary?originationId=${loanId}`);
+  }
+
+  submitLoanDetail(payload) {
+    return this.http.post<any>(`${baseUrl}/webDisbursement`, payload);
+  }
+  getLoanById(id) {
+    return this.http.get<any>(`${baseUrl}/webDisbursement?id=${id}`);
+  }
+  saveLoanPersonal(loanDetails: any): Observable<any> | any {
+    return this.http.post(`${baseUrl}/customer/customer-info`, loanDetails);
+  }
+
+  getProcessStage(processCode) {
+    // https://192.168.0.127:8765/process_cycle/stages?processCycleCode
+    return this.http.get<any>(
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processCode}`
+    );
   }
 }

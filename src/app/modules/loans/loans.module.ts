@@ -28,6 +28,9 @@ import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
+import { CommonEmiCalculatorComponent } from "./loan-calculator/common-emi-calculator/common-emi-calculator.component";
+import { PersonalCustomDetailsComponent } from "./personal-details/personal-details.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     CreateLoanLandingPageComponent,
     PersonalDetailsWithMultipleCustomerComponent,
     LoansLandingComponent,
+    LoanFlowComponent,
+    CommonEmiCalculatorComponent,
+    PersonalCustomDetailsComponent,
   ],
   imports: [
     CommonModule,
