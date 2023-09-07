@@ -236,17 +236,25 @@ export class LoanFlowComponent implements OnInit {
       const sessionData = JSON.parse(
         sessionStorage.getItem("loanBasisDetails")
       );
+      const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
       const payload = {
         originationModel: {
           applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
           accountType: sessionData.basisName,
           basisDetailsId: sessionData.basisId,
+          loanAmount: parseInt(loanData.loanAmount),
+          loanTenure: loanData.loanTenure,
           branchCode: "BR1",
         },
         customerInfo: resp.data,
       };
       this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
         if (resp?.statusCode === 200) {
+          var mapPayload = {
+            id: parseInt(sessionStorage.getItem("loanDisburseId")),
+            originationId: resp.data.originationModel.originationId,
+          };
+          this.loanApi.updateOrigination(mapPayload).subscribe((data) => {});
           this.originationId = resp.data.originationModel.originationId;
           this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {
             this.next();
