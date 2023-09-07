@@ -11,19 +11,30 @@ export class ReturnCalculatorComponent implements OnInit {
   min = 1000;
   ammountValue = 0;
   depositForm: FormGroup;
+  @Input() rdFdValue;
   @Input() fdName;
   @Output() customCalculatorValues = new EventEmitter<any>();
+
   amount = new FormControl("");
   email = new FormControl("");
   thumbLabel: boolean = true;
+  name = "Angular 5";
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildForm();
+    console.log(this.rdFdValue);
+  }
+  ngOnChanges(): void {
+    console.log(this.rdFdValue);
+    if (this.rdFdValue) {
+      this.depositForm.reset();
+    }
   }
   onSliderChange(e) {
     this.ammountValue = e.value;
-    this.depositForm.get("ammount").setValue(e.value);
+    this.depositForm.get("amount").setValue(e.value);
     console.log(this.depositForm.value);
   }
   buildForm() {
@@ -33,14 +44,17 @@ export class ReturnCalculatorComponent implements OnInit {
       tenureMonth: "",
       tenureDays: "",
       scheme: "",
-      ownerShip: "Self",
+      ownerShip: "",
       intrestPayout: "",
-      typeOfCustomer: "Normal Customer",
+      typeOfCustomer: "",
       dateOfInstalment: "",
     });
   }
   updateDeposit() {
-    this.customCalculatorValues.emit(this.depositForm.value);
     console.log(this.depositForm.value);
+    this.customCalculatorValues.emit(this.depositForm.value);
+  }
+  resetform() {
+    this.depositForm.reset();
   }
 }

@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "../../../new-deposit.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { SuccessPopupComponent } from "../success-popup/success-popup.component";
 
 @Component({
   selector: "app-verify-number",
@@ -12,6 +15,7 @@ export class VerifyNumberComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
   @Output() customVerifyBack = new EventEmitter<{}>();
+  dialogRef: MatDialogRef<SuccessPopupComponent>;
   verifyNumFirm: FormGroup;
   isShowOtp: boolean = false;
   isResend: boolean = false;
@@ -30,11 +34,14 @@ export class VerifyNumberComponent implements OnInit {
   isChecked: boolean = false;
   yourOtp: any = "";
   display: any;
+  phone: any;
 
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private openAccountService: OpenAccountService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -77,11 +84,32 @@ export class VerifyNumberComponent implements OnInit {
           horizontalPosition: "right",
           panelClass: "snackbar-error",
         });
-        this.customSaveVerify.emit(true);
-        this.customFormGroupEmit.emit(this.verifyNumFirm);
+        this.verifyCustomer();
       }
     });
   }
+
+  verifyCustomer() {
+    this.openAccountService
+      .getExistingCustomer(this.verifyNumFirm.value.verifyMobile)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        if (resp?.statusCode === 200 && resp?.data) {
+          if (resp?.statusCode === 200) {
+            this.dialogRef = this.dialog.open(SuccessPopupComponent, {
+              width: "750px",
+              disableClose: true,
+              panelClass: "popup-dialog-class",
+              backdropClass: "bdrop",
+            });
+          }
+        } else if (resp?.statusCode === 204) {
+          this.customSaveVerify.emit(true);
+          this.customFormGroupEmit.emit(this.verifyNumFirm);
+        }
+      });
+  }
+
   getOtp() {
     this.api.getOtp(this.verifyNumFirm.value.verifyMobile).subscribe((resp) => {
       if (resp?.statusCode === 200) {
