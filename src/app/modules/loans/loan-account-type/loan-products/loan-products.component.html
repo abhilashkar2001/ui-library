@@ -1,0 +1,39 @@
+<div *ngFor="let subAccount of subLoanList; let index = index">
+  <div
+    class="loan-container"
+    [ngStyle]="{
+      'flex-direction': index % 2 !== 0 ? 'row-reverse' : 'row',
+      padding: index % 2 !== 0 ? '20px' : ''
+    }"
+    fxFlex="100"
+  >
+    <div class="img-section" fxFlex="50">
+      <img
+        [src]="getFileUrl(subAccount.fileUrl)"
+        width="399"
+        height="333"
+        alt="subAccountType"
+      />
+    </div>
+    <div class="loan-main-text" fxFlex="50">
+      <div class="standard-content-title-header">
+        <div class="content-circle"></div>
+        {{ subAccount?.subClass }} {{ subAccount?.basisName }}
+      </div>
+      <div class="standard-content">
+        {{ subAccount?.subClassDesc }} {{ subAccount?.featureDescription }}
+      </div>
+
+      <div class="mb-10">
+        <button
+          class="confirm-button"
+          mat-raised-button
+          (click)="goForCalculator(subAccount)"
+        >
+          Apply
+        </button>
+        <!-- <a class="standard-link-less">View Less</a> -->
+      </div>
+    </div>
+  </div>
+</div>

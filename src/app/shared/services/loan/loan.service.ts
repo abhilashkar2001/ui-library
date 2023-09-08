@@ -43,7 +43,7 @@ export class LoanService {
     return this.http.post<any>(`${baseUrl}/webDisbursement`, payload);
   }
   getLoanById(id) {
-    return this.http.get<any>(`${baseUrl}/webDisbursement?id=${id}`);
+    return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
   }
   saveLoanPersonal(loanDetails: any): Observable<any> | any {
     return this.http.post(`${baseUrl}/customer/customer-info`, loanDetails);

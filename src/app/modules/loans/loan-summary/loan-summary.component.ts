@@ -1,8 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-loan-summary",
@@ -15,6 +24,8 @@ export class LoanSummaryComponent implements OnInit {
   dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
   stepperTitle: any;
   loanSummaryDetails: any;
+  @Input() loanSummary;
+  endPoints = environment.microServiceURL;
 
   constructor(
     private dialog: MatDialog,
@@ -24,7 +35,9 @@ export class LoanSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getLoanSummary();
+    this.loanSummaryDetails = this.loanSummary;
   }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   getLoanSummary() {
     this.loanService.getLoanSummary(12334567).subscribe(
@@ -44,5 +57,12 @@ export class LoanSummaryComponent implements OnInit {
 
   onBack() {
     this.onBackEvent.emit();
+  }
+  getFileUrl(url) {
+    if (url.includes("https")) {
+      return "assets/images/account-img1.png";
+    } else {
+      return `${this.endPoints}${url}`;
+    }
   }
 }

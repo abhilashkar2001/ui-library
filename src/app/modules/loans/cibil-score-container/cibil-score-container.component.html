@@ -35,16 +35,10 @@
       <div style="margin-top: 20px">
         <span class="mobile">Mobile Number</span>
         <mat-radio-group [(ngModel)]="selectedOption">
-          <mat-radio-button
-            value="same"
-            class="radioChecked radiobtn"
-            (change)="radioChange($event)"
+          <mat-radio-button value="same" class="radioChecked radiobtn"
             >Same</mat-radio-button
           >
-          <mat-radio-button
-            value="different"
-            class="radioChecked radiobtn"
-            (change)="radioChange($event)"
+          <mat-radio-button value="different" class="radioChecked radiobtn"
             >Different</mat-radio-button
           >
         </mat-radio-group>

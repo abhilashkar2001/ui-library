@@ -125,6 +125,9 @@
     </app-loan-terms-conditions>
   </div>
   <div *ngIf="cuurrentStep == 'summary'" class="align_fdForm" fxLayout="column">
-    <app-loan-summary (onConfirmEvent)="onFlowDone()"></app-loan-summary>
+    <app-loan-summary
+      (onConfirmEvent)="onFlowDone()"
+      [loanSummary]="loanSummary"
+    ></app-loan-summary>
   </div>
 </div>
