@@ -10,7 +10,7 @@
         <div fxFlex="46">
           <mat-form-field appearance="outline" class="full-width custom-field">
             <mat-label class="custom-mat-label">Loan Amount</mat-label>
-            <input matInput formControlName="loanAmount" />
+            <input matInput name="loanAmount" formControlName="loanAmount" />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm.get('loanAmount')?.hasError('required')
@@ -20,7 +20,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="46" class="MislaniousClass">
+        <div fxFlex="46" class="MiscellaneousClass">
           <fieldset [ngClass]="{ 'mat-form-field-disabled': isDisabledMode }">
             <legend>Tenure</legend>
             <div style="display: flex; flex-direction: row">

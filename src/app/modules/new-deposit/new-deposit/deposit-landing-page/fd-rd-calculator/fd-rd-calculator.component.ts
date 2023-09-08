@@ -9,12 +9,15 @@ export class FdRdCalculatorComponent implements OnInit {
   selectedValue = "fdCalculator";
   @Output() customDepositChange = new EventEmitter<any>();
   calculatorValues: any = {};
+  @Input() customform;
+  rdFdValue: any;
 
   constructor() {}
 
   ngOnInit(): void {}
   onToggleChange(event) {
     console.log(event);
+    this.rdFdValue = event.value;
     this.customDepositChange.emit(event.value);
   }
   customCalculatorValues(event) {

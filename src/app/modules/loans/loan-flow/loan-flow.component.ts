@@ -168,6 +168,13 @@ export class LoanFlowComponent implements OnInit {
   }
 
   onSaveCreateLoan(event) {
+    Object.assign(this.customerData, event?.value);
+    this.customerData = {
+      ...this.customerData,
+      ...{ requestDate: new Date() },
+    };
+    localStorage.setItem("customerData", JSON.stringify(this.customerData));
+
     this.next();
     console.log(event);
   }
@@ -191,10 +198,19 @@ export class LoanFlowComponent implements OnInit {
   // on Personal details saved
   customSavePersonal(event) {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+
     this.loanApi
       .saveLoanPersonal(event.personalDetails[0])
       .subscribe((response: any) => {
         if (response?.statusCode === 201) {
+          this.customerData = {
+            ...this.customerData,
+            ...response?.data,
+          };
+          localStorage.setItem(
+            "customerData",
+            JSON.stringify(this.customerData)
+          );
           this.snack.open(`Personal Details Saved` + " !", "OK", {
             duration: 4000,
             verticalPosition: "top",
