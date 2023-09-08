@@ -29,6 +29,7 @@ export class LoanFlowComponent implements OnInit {
   screenList: any = [];
   originationId: any;
   loanSummary: any;
+  customerData: any;
 
   constructor(
     private loanApi: LoanService,
