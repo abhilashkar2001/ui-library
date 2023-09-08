@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { NewDepositConstant } from "app/views/home/new-deposit/new-deposit/new-deposit.constant";
+import { NewDepositConstant } from "app/modules/new-deposit/new-deposit/new-deposit.constant";
 
 @Component({
   selector: "app-news-letter-slider",

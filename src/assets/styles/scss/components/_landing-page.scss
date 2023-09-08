@@ -1,6 +1,3 @@
-.break_word {
-  white-space: pre-wrap !important;
-}
 .account_title {
   font-size: 60px;
   color: #06113c;
@@ -23,7 +20,7 @@
   .learn_more {
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
     text-decoration: underline;
     font-size: 20px;
     line-height: 30px;

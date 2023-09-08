@@ -21,10 +21,10 @@ import {
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ErrorHandlerService } from "./shared/services/error-handler.service";
-import { TokenInterceptor } from "./shared/interceptors/token.interceptor";
 import { LayoutsModule } from "./layouts/layouts.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-//import { SwiperModule } from "swiper/angular";
+import { InterceptorProviders } from "./shared/interceptors/interceptors";
+import { SwiperModule } from "swiper/angular";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -42,7 +42,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LayoutsModule,
     SharedModule,
     HttpClientModule,
-    //SwiperModule,
+    SwiperModule,
     PerfectScrollbarModule,
     TranslateModule.forRoot({
       loader: {
@@ -66,11 +66,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     // REQUIRED IF YOU USE JWT AUTHENTICATION
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
+    InterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import { AuthGuard } from "./shared/guards/auth.guard";
 
 export const rootRouterConfig: Routes = [
   {
@@ -8,13 +9,20 @@ export const rootRouterConfig: Routes = [
     pathMatch: "full",
   },
   {
+    path: "home",
+    loadChildren: () =>
+      import("./modules/home/home.module").then((m) => m.HomeModule),
+    data: { title: "Loading" },
+  },
+  {
     path: "",
     component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "account",
         loadChildren: () =>
-          import("./views/home/create-account/create-account.module").then(
+          import("./modules/create-account/create-account.module").then(
             (m) => m.CreateAccountModule
           ),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
@@ -22,13 +30,13 @@ export const rootRouterConfig: Routes = [
       {
         path: "card",
         loadChildren: () =>
-          import("./views/home/cards/cards.module").then((m) => m.CardsModule),
+          import("./modules/cards/cards.module").then((m) => m.CardsModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
       {
         path: "deposits",
         loadChildren: () =>
-          import("./views/home/new-deposit/new-deposit.module").then(
+          import("./modules/new-deposit/new-deposit.module").then(
             (m) => m.NewDepositModule
           ),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
@@ -36,13 +44,13 @@ export const rootRouterConfig: Routes = [
       {
         path: "loan",
         loadChildren: () =>
-          import("./views/home/loans/loans.module").then((m) => m.LoansModule),
+          import("./modules/loans/loans.module").then((m) => m.LoansModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
     ],
   },
   {
     path: "**",
-    redirectTo: "/account",
+    redirectTo: "home/404",
   },
 ];

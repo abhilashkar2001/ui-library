@@ -5,22 +5,20 @@ import {
   RouterStateSnapshot,
   Router,
 } from "@angular/router";
-import { JwtAuthService } from "../services/auth/jwt-auth.service";
+import { TokenStorageService } from "../token-storage.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  isLoggedIn: boolean = true;
-  constructor(private router: Router, private jwtAuth: JwtAuthService) {}
+  constructor(
+    private router: Router,
+    private tokenService: TokenStorageService
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.isLoggedIn) {
+    if (this.tokenService.isLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(["/account"], {
-        queryParams: {
-          return: state.url,
-        },
-      });
+      this.router.navigate(["/home/401"]);
       return false;
     }
   }

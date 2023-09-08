@@ -1,0 +1,120 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border: none !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    border: none !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border: none !important;
+}
+
+::ng-deep .mat-form-field {
+    box-shadow: 0px 3px 10px 0px #00000017;
+    border-radius: 12px;
+    height: 60px;
+}
+
+.pb-25 {
+    padding-bottom: 25px;
+}
+
+.create-loan-account {
+    display: flex;
+    flex-direction: row;
+    margin: 35px 25px 0px 60px;
+
+    .col-1-section {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+
+    .col-2-section {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        .standard-flex {
+            display: flex;
+
+            mat-form-field.custom-field {
+                width: 300px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+            mat-form-field.custom-field-80 {
+                position: absolute;
+                width: 622px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+
+                .standard-search {
+                    position: relative;
+                    margin-left: -200px;
+                    cursor: pointer;
+                }
+
+                .vertical-separator {
+                    height: 43px;
+                    width: 1px;
+                    border: #b4b4b466 1px solid;
+                    margin: 0px 10px;
+                    position: relative;
+                    top: -33px;
+                    float: right;
+                    right: 139px;
+                }
+
+                .locate-container {
+                    display: flex;
+                    flex-direction: row;
+                    position: relative;
+                    float: right;
+                    top: -28px;
+                    right: 0px;
+
+                    .locate {
+                        display: inline-flex;
+                        justify-content: space-around;
+                        text-decoration: none;
+                        cursor: pointer;
+                        background: white;
+                        color: #004c97;
+                        font-family: Poppins;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}
+
+fieldset {
+    legend {
+        color: rgba(16, 34, 69, 0.43);
+        font-family: Poppins;
+        font-size: 13.438px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        float: none;
+    }
+
+    padding: 5px;
+    border: solid 1px #C6C6C6;
+    border-radius: 8px;
+
+    .mat-form-field {
+        padding: 10px 0;
+    }
+
+    input {
+        padding: 5px 5px;
+    }
+}

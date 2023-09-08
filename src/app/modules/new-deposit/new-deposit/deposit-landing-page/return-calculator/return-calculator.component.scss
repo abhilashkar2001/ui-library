@@ -1,0 +1,115 @@
+.calculator_container {
+  background-color: #f6faff;
+  padding: 2%;
+  margin-top: 2%;
+  border-radius: 16px;
+  max-width: 99% !important;
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
+.example-margin1 {
+  margin-right: 10%;
+  padding: 2%;
+}
+.yeardrop {
+  // background-color: white;
+  // border: none !important;
+  // box-shadow: 0px 3px 10px #00000017;
+  // border-radius: 8px;
+  height: 66px !important;
+  margin-bottom: 25px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.0901960784) !important;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  border-radius: 8px;
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+}
+::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0px;
+  margin-top: -4px !important;
+}
+
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
+}
+.inputSelect {
+  width: 33% !important;
+  height: 22px;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  opacity: 1;
+  margin-top: 0px;
+  display: flow-root;
+}
+.vl {
+  border-left: 1px solid black;
+}
+.calculator_subTItle {
+  color: #004c97;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Poppins";
+}
+
+:host ::ng-deep .mat-slider-thumb {
+  background: unset !important;
+  background-image: url("/assets/images/Ellipse_169.svg") !important;
+  background-repeat: no-repeat !important;
+  width: 25px !important;
+  height: 26px !important;
+  bottom: -13px !important;
+  right: -10px !important;
+}
+:host ::ng-deep .mat-slider-thumb {
+  transform: scale(1) !important;
+}
+:host ::ng-deep .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  background-color: unset !important;
+}
+:host ::ng-deep .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
+:host ::ng-deep .mat-slider-track-background {
+  height: 8px !important;
+}
+:host ::ng-deep .mat-slider-track-wrapper {
+  height: 8px !important;
+  border-radius: 10px !important;
+}
+:host ::ng-deep .mat-slider-track-fill {
+  height: 8px !important;
+  background: linear-gradient(
+    270deg,
+    #051a2d -11.9%,
+    #014589 28.35%,
+    #01478e 68.71%,
+    #004c97 96.3%
+  ) !important;
+}
+
+:host :ng-deep .mat-slider-thumb {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: #3498db !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+}
+.category {
+  display: flex;
+}
+.value_check {
+  margin-right: 30px;
+  margin-left: 10px;
+}
+.rdfdform {
+  background-color: #fdfcfc;
+  border-radius: 16px;
+}

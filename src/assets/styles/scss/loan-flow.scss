@@ -34,6 +34,7 @@
     @extend .standard-font;
     color: #004c97;
     font-size: 18px;
+    margin-top: 10px;
 }
 
 .standard-font-black {
@@ -51,11 +52,11 @@
 }
 
 .text-header {
-    color: #004c97;
     font-family: Poppins;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-bottom: 9px;
+    color: #004C97;
 }

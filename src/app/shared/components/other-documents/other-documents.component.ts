@@ -15,7 +15,7 @@ import {
 import { Router } from "@angular/router";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { NewDepositService } from "app/views/home/new-deposit/new-deposit.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-other-documents",
@@ -40,6 +40,7 @@ export class OtherDocumentsComponent implements OnInit {
   ];
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
+  @Output() customgoBack = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -84,7 +85,6 @@ export class OtherDocumentsComponent implements OnInit {
    */
   deleteFile(index: number, doc) {
     console.log(doc);
-    debugger;
     this.otherDocument()
       .controls[index].get("fileInfo")
       ?.value.splice(index, 1);
@@ -193,5 +193,8 @@ export class OtherDocumentsComponent implements OnInit {
       status: true,
       documentDetails: this.createDocumentForm.value,
     });
+  }
+  goBack() {
+    this.customgoBack.emit();
   }
 }

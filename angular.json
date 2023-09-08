@@ -40,7 +40,8 @@
               "file-saver",
               "jspdf-autotable",
               "sweetalert2",
-              "@tensorflow/tfjs-core"
+              "@tensorflow/tfjs-core",
+              "fusioncharts"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
@@ -63,12 +64,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "6mb"
+                  "maximumError": "9mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kb",
-                  "maximumError": "6mb"
+                  "maximumError": "9mb"
                 }
               ],
               "fileReplacements": [
@@ -84,12 +85,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "6mb"
+                  "maximumError": "9mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kb",
-                  "maximumError": "6mb"
+                  "maximumError": "9mb"
                 }
               ],
               "fileReplacements": [

@@ -1,0 +1,47 @@
+<div class="loan-screen">
+  <app-landing-profile
+    [imageUrl]="imageUrl"
+    [profileHeader]="profileHeader"
+    [profileHint]="profileHint"
+    [routeUrl]="routeUrl"
+  >
+  </app-landing-profile>
+
+  <div class="mar-20">
+    <div class="header">Loan Opening Services</div>
+    <div class="desc">
+      Open your account in a breeze and start banking hassle-free.
+    </div>
+    <!-- <div>
+      <app-carousel
+        [carowselData]="carowselData"
+        [flow]="'loan'"
+      ></app-carousel>
+    </div> -->
+    <div>
+      <app-custom-swiper [carowselData]="carowselData"> </app-custom-swiper>
+    </div>
+  </div>
+
+  <div class="mar-20">
+    <div class="header">Our Top Performing Plans</div>
+    <div class="desc">
+      Select wisely from our plans & invest your money for higher returns
+    </div>
+    <div>
+      <app-top-performing></app-top-performing>
+    </div>
+  </div>
+  <div class="mar-20">
+    <div class="header">What our happy client say</div>
+    <div class="desc">
+      Several selected clients, who already believe in our service.
+    </div>
+    <div>
+      <app-client-review></app-client-review>
+    </div>
+    <div>
+      <!-- <app-news-letters></app-news-letters> -->
+    </div>
+  </div>
+</div>
