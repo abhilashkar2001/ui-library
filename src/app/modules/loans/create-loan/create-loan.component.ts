@@ -59,7 +59,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   getLoanById(id) {
     this.loanApi.getLoanById(id).subscribe((resp) => {
       if (resp.statusCode === 200) {
-        this.initialForm(resp?.data[0]);
+        // this.initialForm(resp?.data[0]); // once fetchById api working then use this
+        this.initialForm();
       } else {
         this.initialForm();
       }
@@ -74,7 +75,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
 
   initialForm(data?) {
     this.personalLoanDetailsForm = this.fb.group({
-      loanAmount: [data ? data.loanAmount : "", Validators.required],
+      loanAmount: [data ? data?.loanAmount : "", Validators.required],
       tenureYear: [data ? data?.tenureYear : ""],
       tenureMonths: [data ? data?.tenureYear : ""],
       tenureDay: [data ? data?.tenureYear : ""],
@@ -114,6 +115,12 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onConfirm() {
+    console.log(this.personalLoanDetailsForm.value);
+    const loanAmmount = JSON.stringify({
+      loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
+      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonths} months ${this.personalLoanDetailsForm.value.tenureDay} Days`,
+    });
+    sessionStorage.setItem("loanAmmount", loanAmmount);
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         this.snack.open(`Create Loan Details Saved` + " !", "OK", {

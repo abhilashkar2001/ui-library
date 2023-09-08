@@ -23,7 +23,7 @@ export class LoanSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getLoanSummary();
+    // this.getLoanSummary();
   }
 
   getLoanSummary() {

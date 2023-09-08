@@ -55,4 +55,7 @@ export class LoanService {
       `${baseUrl}/process_cycle/stages?processCycleCode=${processCode}`
     );
   }
+  updateOrigination(data) {
+    return this.http.put<any>(`${baseUrl}/webDisbursement`, data);
+  }
 }
