@@ -32,6 +32,10 @@ export class MaturityCalculatorComponent implements OnInit {
     let path;
     if (fdType == "FD") {
       path = "/deposits/fdFlow/fdDetails";
+      this.url = this.location.prepareExternalUrl(
+        this.router.serializeUrl(this.router.createUrlTree([path]))
+      );
+      window.open(`${this.url}`, "_blank");
     } else {
       var payload = {
         ...this.calculatorValues,
@@ -53,9 +57,9 @@ export class MaturityCalculatorComponent implements OnInit {
             this.router.serializeUrl(this.router.createUrlTree([path]))
           );
           this.url = `${this.url}/${id}`;
+          window.open(`${this.url}`, "_blank");
         }
       });
     }
-    window.open(`${this.url}`, "_blank");
   }
 }
