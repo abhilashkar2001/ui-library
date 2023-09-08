@@ -8,181 +8,212 @@
       [formGroup]="personalDetailsForm"
       (ngSubmit)="onConfirm()"
     >
-      <div fxLayout="column" fxLayoutGap="20">
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width fieldinput"
-          >
-            <mat-label class="custom-mat-label">Pre fix</mat-label>
-            <input
-              matInput
-              [formControl]="personalDetailsForm.controls['prefix']"
-            />
-            <mat-error
-              *ngIf="personalDetailsForm.get('prefix')?.hasError('required')"
-            >
-              Pre fix is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+      <!-- <div fxLayout="column" fxLayoutGap="20px"> -->
+      <div formArrayName="personalInfoArray">
+        <div *ngFor="let customer of personalInfoArray.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="custom_accordin">
+              <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpened(i)">
+                  <mat-expansion-panel-header class="customer_Header">
+                    <mat-panel-description class="customer_Header_description">
+                      Applicant {{ i + 1 }}</mat-panel-description
+                    >
+                  </mat-expansion-panel-header>
+                  <div fxLayout="column" fxLayoutGap="2%">
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width fieldinput mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Pre fix</mat-label>
+                        <mat-select formControlName="prefix">
+                          <mat-option value="Mr">Mr</mat-option>
+                          <mat-option value="Mrs">Mrs</mat-option>
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['prefix'].hasError('required') &&
+                            customer.controls['prefix'].touched
+                          "
+                        >
+                          Pre fix is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width fieldinput"
-          >
-            <mat-label class="custom-mat-label">First Name</mat-label>
-            <input
-              matInput
-              [formControl]="personalDetailsForm.controls['firstName']"
-            />
-            <mat-error
-              *ngIf="personalDetailsForm.get('firstName')?.hasError('required')"
-            >
-              First Name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width fieldinput"
-          >
-            <mat-label class="custom-mat-label">Last Name</mat-label>
-            <input
-              matInput
-              [formControl]="personalDetailsForm.controls['lastName']"
-            />
-            <mat-error
-              *ngIf="personalDetailsForm.get('lastName')?.hasError('required')"
-            >
-              Last Name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width fieldinput mt-2"
+                      >
+                        <mat-label class="custom-mat-label"
+                          >First Name</mat-label
+                        >
+                        <input matInput formControlName="firstName" />
+                        <mat-error
+                          *ngIf="
+                            customer.controls['firstName'].hasError(
+                              'required'
+                            ) && customer.controls['firstName'].touched
+                          "
+                        >
+                          First Name is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width fieldinput mt-2"
+                      >
+                        <mat-label class="custom-mat-label"
+                          >Last Name</mat-label
+                        >
+                        <input matInput formControlName="lastName" />
+                        <mat-error
+                          *ngIf="
+                            customer.controls['lastName'].hasError(
+                              'required'
+                            ) && customer.controls['lastName'].touched
+                          "
+                        >
+                          Last Name is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Date of Birth</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              [formControl]="personalDetailsForm.controls['dateOfBirth']"
-              [min]="todayDate"
-            />
-            <mat-error
-              *ngIf="
-                personalDetailsForm.get('dateOfBirth')?.hasError('required')
-              "
-            >
-              Date Of Birth is <strong>required</strong>
-            </mat-error>
-            <mat-datepicker-toggle matSuffix [for]="picker">
-              <mat-icon matDatepickerToggleIcon>
-                <img
-                  _ngcontent-vqa-c346=""
-                  src="assets/images/calendar.png"
-                  class="pb-25"
-                />
-              </mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label"
+                          >Date of Birth</mat-label
+                        >
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          formControlName="dateOfBirth"
+                          [min]="todayDate"
+                        />
+                        <mat-error
+                          *ngIf="
+                            customer.controls['dateOfBirth'].hasError(
+                              'required'
+                            ) && customer.controls['dateOfBirth'].touched
+                          "
+                        >
+                          Date Of Birth is <strong>required</strong>
+                        </mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                          <mat-icon matDatepickerToggleIcon>
+                            <img
+                              _ngcontent-vqa-c346=""
+                              src="assets/images/calendar.png"
+                              class="pb-25"
+                            />
+                          </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Email</mat-label>
-            <input
-              matInput
-              [formControl]="personalDetailsForm.controls['email']"
-            />
-            <mat-error
-              *ngIf="
-                personalDetailsForm.get('email')?.hasError('email') &&
-                !personalDetailsForm.get('email')?.hasError('required')
-              "
-            >
-              Please enter a valid email address
-            </mat-error>
-            <mat-error
-              *ngIf="personalDetailsForm.get('email')?.hasError('required')"
-            >
-              Email is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Email</mat-label>
+                        <input matInput formControlName="email" />
 
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Gender</mat-label>
-            <mat-select [formControl]="personalDetailsForm.controls['gender']">
-              <mat-option value="Male">Male</mat-option>
-              <mat-option value="Female">Female</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="personalDetailsForm.get('email')?.hasError('required')"
-            >
-              Gender is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['email'].hasError('required') &&
+                            customer.controls['email'].touched
+                          "
+                        >
+                          Email is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Nationality</mat-label>
-            <mat-select
-              [formControl]="personalDetailsForm.controls['nationality']"
-            >
-              <mat-option
-                *ngFor="let country of countries"
-                [value]="country?.countryName"
-                >{{ country?.countryName }}</mat-option
-              >
-            </mat-select>
-            <mat-error
-              *ngIf="
-                personalDetailsForm.get('nationality')?.hasError('required')
-              "
-            >
-              Nationality is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="text-header">Address Details</div>
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="93"
-            appearance="outline"
-            class="full-width custom-field-80"
-          >
-            <mat-label class="custom-mat-label">Address</mat-label>
-            <input
-              matInput
-              [formControl]="personalDetailsForm.controls['address']"
-            />
-            <mat-icon matSuffix>my_location</mat-icon>
-            <mat-error
-              *ngIf="personalDetailsForm.get('address')?.hasError('required')"
-            >
-              Address is <strong>required</strong>
-            </mat-error>
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Gender</mat-label>
+                        <mat-select formControlName="gender">
+                          <mat-option value="Male">Male</mat-option>
+                          <mat-option value="Female">Female</mat-option>
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['gender'].hasError('required') &&
+                            customer.controls['gender'].touched
+                          "
+                        >
+                          Gender is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
 
-            <!-- <div class="vertical-separator"></div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label"
+                          >Nationality</mat-label
+                        >
+                        <mat-select formControlName="nationality">
+                          <mat-option
+                            *ngFor="let country of countries"
+                            [value]="country?.countryName"
+                            >{{ country?.countryName }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['nationality'].hasError(
+                              'required'
+                            ) && customer.controls['nationality'].touched
+                          "
+                        >
+                          Nationality is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="text-header">Address Details</div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="100"
+                        appearance="outline"
+                        class="full-width custom-field-80 mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Address</mat-label>
+                        <input matInput formControlName="address" />
+                        <mat-icon matSuffix>my_location</mat-icon>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['address'].hasError('required') &&
+                            customer.controls['address'].touched
+                          "
+                        >
+                          Address is <strong>required</strong>
+                        </mat-error>
+
+                        <!-- <div class="vertical-separator"></div>
             <div class="locate-container">
               <button class="locate">
                 <mat-icon>gps_fixed</mat-icon>
@@ -191,146 +222,190 @@
                 >
               </button>
             </div> -->
-          </mat-form-field>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Residence Type</mat-label>
-            <mat-select
-              [formControl]="personalDetailsForm.controls['residentType']"
-            >
-              <mat-option value="Home">Home</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="
-                personalDetailsForm.get('residentType')?.hasError('required')
-              "
-            >
-              Resident Type is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Country</mat-label>
-            <mat-select
-              [formControl]="personalDetailsForm.controls['country']"
-              (selectionChange)="onCountrySelect()"
-            >
-              <mat-option
-                *ngFor="let country of countries"
-                [value]="country?.countryName"
-                >{{ country?.countryName }}</mat-option
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label"
+                          >Residence Type</mat-label
+                        >
+                        <mat-select formControlName="residentType">
+                          <mat-option value="Home">Home</mat-option>
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['residentType'].hasError(
+                              'required'
+                            ) && customer.controls['residentType'].touched
+                          "
+                        >
+                          Resident Type is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Country</mat-label>
+                        <mat-select
+                          formControlName="country"
+                          (selectionChange)="onCountrySelect()"
+                        >
+                          <mat-option
+                            *ngFor="let country of countries"
+                            [value]="country?.countryName"
+                            >{{ country?.countryName }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['country'].hasError('required') &&
+                            customer.controls['country'].touched
+                          "
+                        >
+                          Country is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">Zip Code</mat-label>
+                        <div
+                          fxLayout="row"
+                          fxLayoutAlign="space-between center"
+                        >
+                          <input
+                            matInput
+                            numbersOnly
+                            [maxlength]="6"
+                            formControlName="zipCode"
+                            (input)="getCityandStateByZipcode(i)"
+                          />
+                          <img
+                            matSuf
+                            fix
+                            src="assets/images/search.png"
+                            class="standard-search"
+                          />
+                        </div>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['zipCode'].hasError('required') &&
+                            customer.controls['zipCode'].touched
+                          "
+                        >
+                          Zip Code is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">State</mat-label>
+                        <mat-select formControlName="state">
+                          <mat-option
+                            *ngFor="let item of listCityState"
+                            [value]="item?.state"
+                            >{{ item?.state }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['state'].hasError('required') &&
+                            customer.controls['state'].touched
+                          "
+                        >
+                          State is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <mat-form-field
+                        fxFlex="100"
+                        fxFlex.gt-sm="49"
+                        appearance="outline"
+                        class="full-width custom-field mt-2"
+                      >
+                        <mat-label class="custom-mat-label">City</mat-label>
+
+                        <mat-select formControlName="cityId">
+                          <mat-option
+                            *ngFor="let item of listCityState"
+                            [value]="item?.cityId"
+                            >{{ item?.city }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['city'].hasError('required') &&
+                            customer.controls['city'].touched
+                          "
+                        >
+                          City is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <button
+                        type="button"
+                        [disabled]="!personalInfoArray.valid"
+                        mat-raised-button
+                        class="saveButton"
+                        (click)="saveCustomer(i)"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </mat-expansion-panel></mat-accordion
               >
-            </mat-select>
-            <mat-error
-              *ngIf="personalDetailsForm.get('country')?.hasError('required')"
-            >
-              Country is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">Zip Code</mat-label>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-              <input
-                matInput
-                numbersOnly
-                [maxlength]="6"
-                [formControl]="personalDetailsForm.controls['zipCode']"
-              />
-              <img
-                matSuf
-                fix
-                src="assets/images/search.png"
-                class="standard-search"
-              />
             </div>
-            <mat-error
-              *ngIf="personalDetailsForm.get('zipCode')?.hasError('required')"
-            >
-              Zip Code is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">State</mat-label>
-            <mat-select
-              [formControl]="personalDetailsForm.controls['state']"
-              (selectionChange)="onSelectState()"
-            >
-              <mat-option
-                *ngFor="let state of stateList"
-                [value]="state?.stateId"
-              >
-                {{ state?.stateName }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="personalDetailsForm.get('state')?.hasError('required')"
-            >
-              State is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <mat-form-field
-            fxFlex="45"
-            appearance="outline"
-            class="full-width custom-field"
-          >
-            <mat-label class="custom-mat-label">City</mat-label>
-            <mat-select [formControl]="personalDetailsForm.controls['city']">
-              <mat-option
-                [value]="city.cityId"
-                *ngFor="let city of cityList"
-                (onSelectionChange)="onSelectCity($event, city)"
-              >
-                {{ city?.cityName }}</mat-option
-              >
-            </mat-select>
-            <mat-error
-              *ngIf="personalDetailsForm.get('city')?.hasError('required')"
-            >
-              City is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div fxLayout="row wrap" fxLayoutGap="20px">
-          <button
-            class="confirm-button"
-            type="submit"
-            mat-raised-button
-            [disabled]="personalDetailsForm.status === 'INVALID'"
-          >
-            Confirm
-          </button>
-          <button
-            class="back-button"
-            mat-raised-button
-            (click)="onBack()"
-            type="button"
-          >
-            Back
-          </button>
+          </div>
         </div>
       </div>
     </form>
+
+    <div>
+      <div class="add_applicant" (click)="addCustomer()">
+        Add Another Applicant
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="20px" class="mb-16">
+      <button
+        class="confirm-button"
+        type="submit"
+        mat-raised-button
+        [disabled]="!personalDetailsForm.valid"
+        (click)="onConfirm()"
+      >
+        Confirm
+      </button>
+      <button
+        class="back-button"
+        mat-raised-button
+        (click)="onBack()"
+        type="button"
+      >
+        Back
+      </button>
+    </div>
+    <!-- </div> -->
   </div>
 </div>
