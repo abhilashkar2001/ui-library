@@ -28,6 +28,7 @@ export class LoanFlowComponent implements OnInit {
   cuurrentStep: string;
   screenList: any = [];
   originationId: any;
+  loanSummary: any;
 
   constructor(
     private loanApi: LoanService,
@@ -150,7 +151,9 @@ export class LoanFlowComponent implements OnInit {
     });
     console.log(this.screenList);
   }
-  stepperSelectionChange(event) {}
+  stepperSelectionChange(event) {
+    this.cuurrentStep = this.steper_Array[event.selectedIndex].label;
+  }
   factory() {
     this.cuurrentStep = this.steper_Array[this.selectedStep].label;
   }
@@ -237,6 +240,8 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.getItem("loanBasisDetails")
       );
       const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+      var custResp = resp.data;
+      custResp[0].primaryCustomer = true;
       const payload = {
         originationModel: {
           applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -246,18 +251,22 @@ export class LoanFlowComponent implements OnInit {
           loanTenure: loanData.loanTenure,
           branchCode: "BR1",
         },
-        customerInfo: resp.data,
+        customerInfo: custResp,
       };
       this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
         if (resp?.statusCode === 200) {
+          this.originationId = resp.data.originationModel.originationId;
           var mapPayload = {
             id: parseInt(sessionStorage.getItem("loanDisburseId")),
             originationId: resp.data.originationModel.originationId,
           };
-          this.loanApi.updateOrigination(mapPayload).subscribe((data) => {});
-          this.originationId = resp.data.originationModel.originationId;
-          this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {
-            this.next();
+          this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+            this.loanApi
+              .getLoanSummary(this.originationId)
+              .subscribe((resp) => {
+                this.loanSummary = resp.data;
+                this.next();
+              });
           });
         }
       });
@@ -282,6 +291,7 @@ export class LoanFlowComponent implements OnInit {
       sessionStorage.removeItem("loanDisburseId");
       sessionStorage.removeItem("loanstep");
       sessionStorage.removeItem("isExistingCustomer");
+      sessionStorage.removeItem("loanAmmount");
       this.router.navigate(["loan/landing"]);
     });
   }

@@ -31,6 +31,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
 import { CommonEmiCalculatorComponent } from "./loan-calculator/common-emi-calculator/common-emi-calculator.component";
 import { PersonalCustomDetailsComponent } from "./personal-details/personal-details.component";
+import { LoanProductsComponent } from "./loan-account-type/loan-products/loan-products.component";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PersonalCustomDetailsComponent } from "./personal-details/personal-deta
     LoanFlowComponent,
     CommonEmiCalculatorComponent,
     PersonalCustomDetailsComponent,
+    LoanProductsComponent,
   ],
   imports: [
     CommonModule,

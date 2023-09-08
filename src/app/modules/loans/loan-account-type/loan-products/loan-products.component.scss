@@ -1,0 +1,122 @@
+@media screen and (max-width: 768px) {
+  .img-section {
+    display: none !important;
+  }
+  .loan-container {
+    justify-content: center !important;
+  }
+  .loan-main-text {
+    max-width: 100% !important;
+    justify-content: center !important  ;
+    align-items: center !important;
+  }
+}
+
+.loan-container {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+
+  .img-section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+    img {
+      margin-left: 20px;
+    }
+  }
+
+  .loan-main-text {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding-left: 10%;
+
+    .standard-content-title-header {
+      position: relative;
+      display: inline-flex;
+      color: #004c97;
+      font-family: Arial;
+      font-size: 33px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 56px;
+      margin-bottom: 33px;
+
+      .content-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: #dbecffd6;
+        width: 85px;
+        height: 85px;
+        margin-left: -34px;
+        margin-top: -12px;
+        z-index: -1;
+      }
+    }
+
+    .standard-content {
+      color: #424545;
+      font-family: Poppins;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 177.5%;
+    }
+
+    .blue-bullets {
+      list-style: inside;
+    }
+
+    .blue-bullets li {
+      list-style-type: disc;
+      margin: 10px 0px 10px -35px;
+      color: #1b3c81;
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 42.5px;
+    }
+
+    .confirm-button {
+      width: 233px;
+      height: 58px;
+      background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%)
+        0% 0% no-repeat padding-box !important;
+      border-radius: 23px !important;
+      color: #ffffff !important;
+      text-align: center;
+      font-family: Poppins;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: normal;
+      text-decoration: none;
+    }
+
+    .standard-link-less {
+      color: #06113c;
+      text-align: center;
+      font-family: Poppins;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      text-decoration-line: underline;
+      margin: 15%;
+    }
+  }
+}
+
+.emi-calculator-header {
+  margin-top: 30px;
+  color: var(--dard, #06113c);
+  text-align: center;
+  font-family: Arial Rounded MT Bold;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 74.097px;
+  letter-spacing: -0.24px;
+}

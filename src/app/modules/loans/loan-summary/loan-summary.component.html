@@ -4,35 +4,51 @@
     <div class="loan-details">
       <div class="col-1">
         <span class="content-header">Loan Amount</span>
-        <span class="content">1200000.5</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.loanAmount
+        }}</span>
       </div>
       <div class="col-2">
         <span class="content-header">Tenure</span>
-        <span class="content">1 Year</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.loanTenure
+        }}</span>
       </div>
       <div class="col-3">
         <span class="content-header">EMI Amount</span>
-        <span class="content">12000.009</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.emiAmount
+        }}</span>
       </div>
       <div class="col-4">
         <span class="content-header">Interest Rate</span>
-        <span class="content">10%</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.interestRate
+        }}</span>
       </div>
       <div class="col-2">
         <span class="content-header">Interest Payable</span>
-        <span class="content">12.5%</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.interestPayable
+        }}</span>
       </div>
       <div class="col-3">
         <span class="content-header">Principle Amount</span>
-        <span class="content">3100230</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.principalAmount
+        }}</span>
       </div>
       <div class="col-4">
         <span class="content-header">Total Payable Amount</span>
-        <span class="content">123954.60</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.totalPayableAmount
+        }}</span>
       </div>
       <div class="col-3">
         <span class="content-header">Holder Type</span>
-        <span class="content">Self</span>
+        <span class="content">{{
+          loanSummaryDetails?.loanDetails?.holderType
+        }}</span>
       </div>
     </div>
     <div class="nominee-details">
@@ -51,19 +67,27 @@
     <div class="disbursement-details">
       <div class="col-1">
         <span class="content-header">Type</span>
-        <span class="content">Account </span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.disbursementType
+        }}</span>
       </div>
       <div class="col-2">
         <span class="content-header">Account Number</span>
-        <span class="content">10102323234134</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.accountNo
+        }}</span>
       </div>
       <div class="col-3">
         <span class="content-header">Name</span>
-        <span class="content">Rashid Husain</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.name
+        }}</span>
       </div>
       <div class="col-3">
         <span class="content-header">EMI Payment Start Date</span>
-        <span class="content">10 Jan 2023</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.emiStartDate
+        }}</span>
       </div>
     </div>
   </div>
@@ -72,37 +96,44 @@
     <div class="disbursement-details">
       <div class="col-1">
         <span class="content-header">Your Account</span>
-        <span class="content">129232323132 </span>
+        <span class="content"
+          >{{ loanSummaryDetails?.bankAccount?.yourAccount }}
+        </span>
       </div>
       <div class="col-1">
         <span class="content-header">Name</span>
-        <span class="content">Rashid Husain</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.bankAccount?.name }}
+        </span>
       </div>
       <div class="col-1">
         <span class="content-header">Your PAN Card</span>
-        <span class="content">AYJPH4341M</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.bankAccount?.yourPan }}
+        </span>
       </div>
     </div>
   </div>
   <div class="uploaded-documents-summary">
     <div class="text-header">Documents</div>
-    <div class="bank-account-details">
-      <div class="col-1">
-        <span class="content-header">Document type</span>
-        <span class="content">payslip </span>
-      </div>
-      <div class="uploaded-images-section">
-        <div class="uploaded-images">
-          <!-- <mat-icon>check_circle</mat-icon> -->
-          <img src="../../../../assets/images/account-img1.png" alt="" />
-          <!-- <mat-icon>delete</mat-icon> -->
+    <div
+      class="bank-account-details"
+      *ngIf="loanSummaryDetails?.docs?.length > 0"
+    >
+      <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
+        <div class="col-1">
+          <span class="content-header">Document type</span>
+          <span class="content">{{ doc?.documentType }} </span>
         </div>
-        <div class="uploaded-images">
-          <!-- <mat-icon>check_circle</mat-icon> -->
-          <img src="../../../../assets/images/account-img2.png" alt="" />
-          <!-- <mat-icon>delete</mat-icon> -->
+        <div class="uploaded-images-section">
+          <div class="uploaded-images">
+            <!-- <mat-icon>check_circle</mat-icon> -->
+            <!-- <img src="../../../../assets/images/account-img1.png" alt="" /> -->
+            <img [src]="getFileUrl(doc.fileUrl)" alt="" />
+            <!-- <mat-icon>delete</mat-icon> -->
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
   <div class="pb-24">

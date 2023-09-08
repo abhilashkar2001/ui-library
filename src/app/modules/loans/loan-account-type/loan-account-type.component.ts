@@ -62,6 +62,13 @@ export class LoanAccountTypeComponent implements OnInit {
     }
   }
 
+  customApply(event) {
+    console.log(event, ".....");
+    this.subLoanList = event?.selectedLoan?.productDetails;
+    this.isShowCalculator = event.isShowCalculator;
+    this.basisClass = event.subClass;
+  }
+
   goForCalculator(subAccount) {
     this.isShowCalculator = true;
     this.selectedLoan = subAccount;
@@ -74,6 +81,7 @@ export class LoanAccountTypeComponent implements OnInit {
     sessionStorage.setItem("loanBasisDetails", payload);
   }
   customCalculatorValues(event) {
+    this.selectedLoan = event;
     console.log(event);
     console.log(this.selectedLoan);
     const payload = {

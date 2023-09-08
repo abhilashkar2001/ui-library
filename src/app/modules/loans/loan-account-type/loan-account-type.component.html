@@ -6,7 +6,7 @@
         This is a process, how you can get loan for your self.
       </div>
     </div>
-    <div *ngFor="let subAccount of subLoanList; let index = index">
+    <!-- <div *ngFor="let subAccount of subLoanList; let index = index">
       <div
         class="loan-container"
         [ngStyle]="{
@@ -40,65 +40,26 @@
             >
               Apply
             </button>
-            <!-- <a class="standard-link-less">View Less</a> -->
+           
           </div>
         </div>
       </div>
-    </div>
-    <!-- 
-    <div *ngIf="!subLoanList.length" style="text-align: center">
-      Sub-class not available
-    </div>
-    <div>
-      <div class="emi-calculator-header">
-        {{ loanType }} Loan EMI Calculator
-      </div>
-      <div *ngIf="loanType === 'Home'">
-        <div class="standard-txtField-phone-main">
-          <div class="slide_toggle_btn">
-            <button
-              (click)="onSelect()"
-              mat-raised-button
-              [ngClass]="{ active: !selectedCalculator }"
-            >
-              Home Loan
-            </button>
-            <button
-              (click)="onSelect()"
-              mat-raised-button
-              [ngClass]="{ active: selectedCalculator }"
-            >
-              HL Balance Transfer
-            </button>
-          </div>
-        </div>
-        <div class="home-loan">
-          <app-normal-loan-emi-calculator
-            *ngIf="!selectedCalculator"
-          ></app-normal-loan-emi-calculator>
-          <app-hl-loan-emi-calculator
-            *ngIf="selectedCalculator"
-          ></app-hl-loan-emi-calculator>
-        </div>
-      </div>
-      <div *ngIf="loanType === 'Gold'">
-        <app-gold-loan-emi-calculator></app-gold-loan-emi-calculator>
-      </div>
-
-      <div
-        *ngIf="loanType !== 'Gold' && loanType !== 'Home'"
-        class="personal-loan"
-      >
-        <app-normal-loan-emi-calculator
-          (loanAmountDetailsEvent)="loanCalculatorsData($event)"
-        ></app-normal-loan-emi-calculator>
-      </div>
-
-
     </div> -->
+    <app-loan-products
+      [subLoanList]="subLoanList"
+      (customApply)="customApply($event)"
+    >
+    </app-loan-products>
   </div>
 
-  <div *ngIf="isShowCalculator">
+  <div *ngIf="isShowCalculator" fxLayout="column">
+    <div fxLayoutAlign="center center" fxLayout="column">
+      <div class="account-type-header">{{ basisClass }} EMI Calculator</div>
+      <div class="standard-content-title mb-30">
+        Maximize Your Savings with Fixed Deposit: Earn Guaranteed Returns on
+        Your Investment.
+      </div>
+    </div>
     <app-common-emi-calculator
       (customCalculatorValues)="customCalculatorValues($event)"
     ></app-common-emi-calculator>
