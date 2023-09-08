@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { CreateRdService } from "../../../rd-calculator/create-rd.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { MatDialog } from "@angular/material/dialog";
+import { InfoPopupComponent } from "../info-popup/info-popup.component";
 @Component({
   selector: "app-maturity-calculator",
   templateUrl: "./maturity-calculator.component.html",
@@ -23,11 +25,18 @@ export class MaturityCalculatorComponent implements OnInit {
     private router: Router,
     private showSideBar: NewDepositService,
     private location: Location,
-    private rdApi: CreateRdService
+    private rdApi: CreateRdService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(InfoPopupComponent, {
+      width: "700px",
+      height: "400px",
+    });
+  }
   openLink(fdType) {
     let path;
     if (fdType == "FD") {

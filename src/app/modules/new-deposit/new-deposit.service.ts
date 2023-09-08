@@ -31,6 +31,9 @@ export class NewDepositService {
       `${this.base_url}/auth/generateOTP?mobile=${mobile}`
     );
   }
+  getInterestDetails() {
+    return this.http.get<any>(`assets/json/deposit.json`);
+  }
   verifyOtp(payload) {
     //https://192.168.0.127:8765/auth/verifyOTP
     return this.http.post<any>(`${this.base_url}/auth/verifyOTP`, payload);
