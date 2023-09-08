@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { debounceTime } from "rxjs/operators";
-import { PersonalDetailsService } from "app/views/home/new-deposit/new-deposit/fd-calculator/personal-details/personal-details.service";
+import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 
 @Component({
   selector: "app-create-account-personal-details",
