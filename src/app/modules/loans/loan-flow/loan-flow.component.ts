@@ -169,11 +169,11 @@ export class LoanFlowComponent implements OnInit {
   }
 
   onSaveCreateLoan(event) {
-    Object.assign(this.customerData, event?.value);
-    this.customerData = {
-      ...this.customerData,
-      ...{ requestDate: new Date() },
-    };
+    // Object.assign(this.customerData, event?.value);
+    // this.customerData = {
+    //   ...this.customerData,
+    //   ...{ requestDate: new Date() },
+    // };
     localStorage.setItem("customerData", JSON.stringify(this.customerData));
 
     this.next();
