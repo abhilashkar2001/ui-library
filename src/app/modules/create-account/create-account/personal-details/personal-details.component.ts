@@ -1,7 +1,14 @@
-import { EventEmitter, Output } from "@angular/core";
+import {
+  EventEmitter,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
 import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -9,37 +16,146 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
+import { debounceTime } from "rxjs/operators";
+import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 
 @Component({
   selector: "app-create-account-personal-details",
   templateUrl: "./personal-details.component.html",
   styleUrls: ["./personal-details.component.scss"],
 })
-
 export class CreateAccountPersonalDetailsComponent implements OnInit {
   @Output() onSubmitPersonalDetailsEvent: EventEmitter<any> =
     new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
+  @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   personalDetailsForm: FormGroup | any;
   countries: any = [];
   stateList: any = [];
   cityList: any = [];
   accountHeader: string;
   todayDate: Date = new Date();
+  listCityState: any = [];
 
   constructor(
     private router: Router,
     private _location: Location,
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private personalDetailsService: PersonalDetailsService
   ) {
     this.accountHeader = this.activateRoute.snapshot["queryParams"]["title"];
   }
 
   ngOnInit(): void {
-    this.initialForm();
+    this.builtPersonalFOrm();
     this.getCountry();
+  }
+
+  builtPersonalFOrm() {
+    this.personalDetailsForm = this.fb.group({
+      personalInfoArray: this.fb.array([]),
+    });
+    this.addCustomer();
+  }
+
+  get personalInfoArray(): FormArray {
+    return this.personalDetailsForm.get("personalInfoArray") as FormArray;
+  }
+
+  initialForm(): FormGroup {
+    return this.fb.group({
+      prefix: ["", Validators.required],
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      dateOfBirth: ["", Validators.required],
+      email: ["", Validators.required],
+      gender: ["", Validators.required],
+      nationality: ["", Validators.required],
+      city: [""],
+      cityId: [""],
+      state: ["", Validators.required],
+      address: ["", Validators.required],
+      residentType: ["", Validators.required],
+      country: ["", Validators.required],
+      zipCode: ["", Validators.required],
+    });
+  }
+
+  addCustomer() {
+    this.personalInfoArray.push(this.initialForm());
+  }
+
+  panelOpened(index: number) {
+    this.panels.forEach((panel, i) => {
+      if (i !== index) {
+        panel.close();
+      }
+    });
+  }
+
+  saveCustomer(i) {
+    this.closePanel(i);
+    console.log(this.personalDetailsForm.value);
+  }
+  closePanel(index) {
+    this.panels.forEach((panel, i) => {
+      if (i == index) {
+        panel.close();
+      }
+    });
+  }
+
+  createPayLoad() {
+    var customer = [];
+    this.personalDetailsForm.value.personalInfoArray.forEach((element) => {
+      var details = {
+        prefix: element.prefix,
+        firstName: element.firstName,
+        lastName: element.lastName,
+        middleName: null,
+        gender: element.gender,
+        dateOfBirth: element.dateOfBirth,
+        nationality: element.nationality,
+        contact: {
+          mobile: element.mobile,
+          email: element.email,
+          address: [
+            {
+              address1: element.address,
+              address2: "",
+              residenceType: element.residentType,
+              cityId: element.cityId,
+              countryName: element.country,
+              pincode: element.zipCode,
+              stateName: element.state,
+            },
+          ],
+        },
+      };
+      customer.push(details);
+    });
+    const pld = {
+      customer: customer,
+    };
+    return pld;
+  }
+
+  onConfirm() {
+    const payLoad = this.createPayLoad();
+    this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
+      (response: any) => {
+        console.log("Response: ", response);
+        sessionStorage.setItem("customerId", response.data.customerId);
+        this.onSubmitPersonalDetailsEvent.emit();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   getCountry() {
@@ -66,69 +182,39 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   onSelectCity(event: any, cityObj: any) {
     this.personalDetailsForm.patchValue({
-      zipCode: cityObj.pincode,
+      zipCode: cityObj.pincozipC,
     });
   }
 
-  initialForm() {
-    this.personalDetailsForm = this.fb.group({
-      prefix: new FormControl("", [Validators.required]),
-      firstName: new FormControl("", [Validators.required]),
-      lastName: new FormControl("", [Validators.required]),
-      dateOfBirth: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      gender: new FormControl("", [Validators.required]),
-      nationality: new FormControl("", [Validators.required]),
-      city: new FormControl("", [Validators.required]),
-      state: new FormControl("", [Validators.required]),
-      address: new FormControl("", [Validators.required]),
-      residentType: new FormControl("", [Validators.required]),
-      country: new FormControl("", [Validators.required]),
-      zipCode: new FormControl("", [Validators.required]),
-    });
-  }
+  getCityandStateByZipcode(indx) {
+    console.log({ indx });
 
-  createPayLoad() {
-    return {
-      prefix:
-        this.personalDetailsForm.value.gender.toLowerCase() === "male"
-          ? "Mr."
-          : "Mrs.",
-      firstName: this.personalDetailsForm.value.firstName,
-      lastName: this.personalDetailsForm.value.firstName,
-      middleName: "",
-      gender: this.personalDetailsForm.value.gender,
-      dateOfBirth: this.personalDetailsForm.value.dateOfBirth,
-      nationality: this.personalDetailsForm.value.nationality,
-      contact: {
-        mobile: this.personalDetailsForm.value.mobile,
-        email: this.personalDetailsForm.value.email,
-        address: [
-          {
-            address1: this.personalDetailsForm.value.address,
-            address2: "",
-            residentType: this.personalDetailsForm.value.residentType,
-            cityId: this.personalDetailsForm.value.city,
-            country: this.personalDetailsForm.value.country,
-            zipCode: this.personalDetailsForm.value.zipCode,
-          },
-        ],
-      },
-    };
-  }
+    (<FormGroup>this.personalInfoArray.controls[indx])
+      .get("zipCode")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((value) => {
+        console.log({ value });
 
-  onConfirm() {
-    const payLoad = this.createPayLoad();
-    this.openAccountService.savePersonalDetails(payLoad).subscribe(
-      (response: any) => {
-        console.log("Response: ", response);
-        localStorage.setItem("customerId", response.data.customerId);
-        this.onSubmitPersonalDetailsEvent.emit();
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+        if (value) {
+          console.log(value);
+          if (value.toString().length) {
+            this.personalDetailsService
+              .fetchStateCityByZipcode(value)
+              .subscribe((res: any) => {
+                if (res) {
+                  this.listCityState = res?.data;
+                  this.personalInfoArray.controls[indx]
+                    .get("state")
+                    .patchValue(res?.data?.[0]?.state);
+
+                  this.personalInfoArray.controls[indx]
+                    .get("cityId")
+                    .patchValue(res?.data?.[0]?.cityId);
+                }
+              });
+          }
+        }
+      });
   }
 
   onBack() {

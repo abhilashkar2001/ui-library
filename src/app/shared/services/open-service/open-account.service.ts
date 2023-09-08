@@ -23,7 +23,7 @@ export class OpenAccountService {
   }
 
   savePersonalDetails(personalDetails: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/customer/customer-info`, personalDetails);
+    return this.http.post(`${baseUrl}/customer/joint`, personalDetails);
   }
 
   uploadDocument(documentObjects: any): Observable<any> | any {
@@ -75,7 +75,6 @@ export class OpenAccountService {
       `${baseUrl}/details/fetchSubClass?basisClass=Savings Account`
     );
   }
-  // https://192.168.0.127:8765/process_stage/screens?id=8503
 
   getProcessCycle(processName) {
     return this.http.get<any>(
@@ -87,5 +86,9 @@ export class OpenAccountService {
   }
   getCustomerById(id) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
+  }
+
+  fetchStateCityByZipcode(pincode) {
+    return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
   }
 }
