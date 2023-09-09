@@ -18,7 +18,10 @@
     <div class="vl"></div>
     <div fxFlex="48" fxLayout="column" style="padding-left: 3%">
       <div fxLayout="column">
-        <div class="maturityTitle">Interest Rate</div>
+        <div class="maturityTitle" fxLayout="row">
+          Interest Rate
+          <mat-icon class="icon" (click)="openDialog()">info</mat-icon>
+        </div>
         <div class="maturityValue">7.10%*p.a.</div>
       </div>
       <div>

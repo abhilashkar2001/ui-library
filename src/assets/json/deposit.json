@@ -1,0 +1,49 @@
+[
+  {
+    "periodOfDeposit": "7 days to 14 days",
+    "interestRate": "3.50%",
+    "seniorCitizenInterestRatePa": "4.00%"
+  },
+
+  {
+    "periodOfDeposit": "15 days to 45 days",
+    "interestRate": "4.00%",
+    "seniorCitizenInterestRatePa": "4.50%"
+  },
+
+  {
+    "periodOfDeposit": "46 days to 90 days",
+    "interestRate": "4.50%",
+    "seniorCitizenInterestRatePa": "5.00%"
+  },
+
+  {
+    "periodOfDeposit": "91 days to 180 days",
+    "interestRate": "4.75%",
+    "seniorCitizenInterestRatePa": "5.25%"
+  },
+
+  {
+    "periodOfDeposit": "181 days to 240 days",
+    "interestRate": "5.50%",
+    "seniorCitizenInterestRatePa": "6.00%"
+  },
+
+  {
+    "periodOfDeposit": "241 days to 364 days",
+    "interestRate": "6.05%",
+    "seniorCitizenInterestRatePa": "6.55%"
+  },
+
+  {
+    "periodOfDeposit": "365 days to 452 days(12 months to less than 15 months)",
+    "interestRate": "7.00%",
+    "seniorCitizenInterestRatePa": "7.50%"
+  },
+
+  {
+    "periodOfDeposit": "453 days to 459 days(15 months)",
+    "interestRate": "7.80%",
+    "seniorCitizenInterestRatePa": "8.30%"
+  }
+]

@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatDialogModule } from "@angular/material/dialog";
+import { InfoPopupComponent } from "./modules/new-deposit/new-deposit/deposit-landing-page/return-calculator/info-popup/info-popup.component";
 
 import {
   PerfectScrollbarModule,
@@ -56,6 +58,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       relativeLinkResolution: "legacy",
     }),
     NgbModule,
+    MatDialogModule,
   ],
   declarations: [AppComponent],
   providers: [
@@ -68,6 +71,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // REQUIRED IF YOU USE JWT AUTHENTICATION
     InterceptorProviders,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, InfoPopupComponent],
 })
 export class AppModule {}

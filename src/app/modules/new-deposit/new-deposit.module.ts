@@ -40,6 +40,7 @@ import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-
 import { NgOtpInputModule } from "ng-otp-input";
 import { SharedModule } from "app/shared/shared.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { InfoPopupComponent } from './new-deposit/deposit-landing-page/return-calculator/info-popup/info-popup.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     PaymentMethodComponent,
     RdCalculatorComponent,
     CreateCdComponent,
+    InfoPopupComponent,
   ],
   imports: [
     CommonModule,
