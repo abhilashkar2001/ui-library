@@ -36,6 +36,12 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   loanDetails: any;
   isDisabledMode: boolean = true;
   submitedLoan: any;
+  staticData = {
+    HOLDERTYPE: [],
+    DISBURSEMENTTYPE: [],
+  };
+  holderTypeArray: string[] = [];
+  disbursementArray: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -50,12 +56,25 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.route.queryParamMap.subscribe((params: any) => {
       var id = parseInt(params.get("id"));
       if (id) this.getLoanById(id);
       else this.initialForm();
     });
   }
+
+  getGenericDetails() {
+    this.loanApi
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.holderTypeArray = resp.data["HOLDERTYPE"];
+          this.disbursementArray = resp.data["DISBURSEMENTTYPE"];
+        }
+      });
+  }
+
   getLoanById(id) {
     this.loanApi.getLoanById(id).subscribe(
       (resp) => {
