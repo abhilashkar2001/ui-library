@@ -129,6 +129,10 @@ export class LoanFlowComponent implements OnInit {
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
+        sessionStorage.setItem(
+          "currentStage",
+          resp.data.processStageList[0].id
+        );
         this.openAccountService
           .getProcessStages(resp.data.processStageList[0].id)
           .subscribe((resp) => {
@@ -253,44 +257,103 @@ export class LoanFlowComponent implements OnInit {
     var id = sessionStorage.getItem("loanCustomerId");
 
     this.openAccountService.getCustomerById(parseInt(id)).subscribe((resp) => {
-      const sessionData = JSON.parse(
-        sessionStorage.getItem("loanBasisDetails")
-      );
-      const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-      var custResp = resp.data;
-      custResp[0].primaryCustomer = true;
-      const payload = {
-        originationModel: {
-          applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
-          accountType: sessionData.basisName,
-          basisDetailsId: sessionData.basisId,
-          loanAmount: parseInt(loanData.loanAmount),
-          loanTenure: loanData.loanTenure,
-          branchCode: "BR1",
-        },
-        customerInfo: custResp,
-      };
-      this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          this.originationId = resp.data.originationModel.originationId;
-          var mapPayload = {
-            id: parseInt(sessionStorage.getItem("loanDisburseId")),
-            originationId: resp.data.originationModel.originationId,
-          };
-          this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
-            this.loanApi
-              .getLoanSummary(this.originationId)
-              .subscribe((resp) => {
-                this.loanSummary = resp.data;
-                this.next();
-              });
-          });
-        }
-      });
+      this.saveCustomerInfo(resp);
     });
 
     //   this.next();
   }
+
+  saveCustomerInfo(resp) {
+    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    var custResp: any = resp.data;
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      item.documnentsInfo?.documents.forEach((item2, j) =>
+        item2?.docs.forEach((item3) => {
+          var docId = [];
+          docId.push(item3?.documentId);
+          var doc = {
+            docIds: docId,
+          };
+          custResp[i].documentId.push(doc);
+        })
+      );
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+    });
+
+    custResp[0].primaryCustomer = true;
+    const payload = {
+      originationModel: {
+        applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+        accountType: sessionData.basisName,
+        basisDetailsId: sessionData.basisId,
+        loanAmount: parseInt(loanData.loanAmount),
+        loanTenure: loanData.loanTenure,
+        branchCode: "BR1",
+      },
+      customerInfo: custResp,
+    };
+    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.originationId = resp.data.originationModel.originationId;
+        var mapPayload = {
+          id: parseInt(sessionStorage.getItem("loanDisburseId")),
+          originationId: resp.data.originationModel.originationId,
+        };
+        this.verifyWorkFlow();
+
+        this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+          this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {
+            this.loanSummary = resp.data;
+            this.next();
+          });
+        });
+      }
+    });
+  }
+
+  verifyWorkFlow() {
+    const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const loanPayload = {
+      loanAmount: loanAmmount.loanAmount,
+      estimatedCost: "09876",
+      downPayment: null,
+      moratariumPeriod: "",
+      gender: "",
+      nationality: "",
+      residenceType: "",
+      screenCode: 1701,
+    };
+    this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
+      this.saveApprovalConfig(resp);
+      // sessionStorage.setItem("verifyWork", JSON.stringify(resp));
+    });
+  }
+
+  saveApprovalConfig(resp) {
+    const loanBasisDetails = JSON.parse(
+      sessionStorage.getItem("loanBasisDetails")
+    );
+    const payload = {
+      originationId: this.originationId,
+      autoAction: resp?.autoAction,
+      approvalConfigId: [parseInt(resp?.approval)],
+      basisId: loanBasisDetails?.basisId,
+      processCycleCode: loanBasisDetails?.processCycleCode,
+      currentStage: parseInt(sessionStorage.getItem("currentStage")),
+      targetStage: parseInt(resp?.targetStage),
+      currentScreen: parseInt(resp?.screenCode),
+      targetScreen: parseInt(resp?.targetScreen),
+    };
+    this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.onFlowDone("");
+      }
+    });
+  }
+
   onFlowDone(e) {
     const dialogRef = this.dialog.open(SuccessPopupComponent, {
       data: {
@@ -309,6 +372,8 @@ export class LoanFlowComponent implements OnInit {
       sessionStorage.removeItem("loanstep");
       sessionStorage.removeItem("isExistingCustomer");
       sessionStorage.removeItem("loanAmmount");
+      sessionStorage.removeItem("currentStage");
+      sessionStorage.removeItem("verifyWork");
       this.router.navigate(["loan/landing"]);
     });
   }

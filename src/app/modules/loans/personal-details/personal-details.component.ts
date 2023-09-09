@@ -14,6 +14,7 @@ import * as moment from "moment";
 import { PersonalDetailsService } from "./personal-details.service";
 import { debounceTime } from "rxjs/operators";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-custom-personal-details",
@@ -41,11 +42,20 @@ export class PersonalCustomDetailsComponent implements OnInit {
   countryArray: any;
 
   listCityState: any = [];
+  staticData = {
+    RESIDENCETYE: [],
+    GENDER: [],
+    PREFIX: [],
+  };
+  genderArray: any[] = [];
+  prefixArray: any[] = [];
+  residenceTypeArray: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
-    private personalDetailsService: PersonalDetailsService
+    private personalDetailsService: PersonalDetailsService,
+    private loanApi: LoanService
   ) {}
 
   panelOpened(index: number) {
@@ -67,10 +77,23 @@ export class PersonalCustomDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.buildCustomerDetailsForm();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
     this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
     this.getCountry();
+  }
+
+  getGenericDetails() {
+    this.loanApi
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.genderArray = resp.data["GENDER"];
+          this.prefixArray = resp.data["PREFIX"];
+          this.residenceTypeArray = resp.data["RESIDENCETYE"];
+        }
+      });
   }
   getCountry() {
     this.api.getCountryDetails().subscribe((resp) => {

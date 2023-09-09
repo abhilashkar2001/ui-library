@@ -119,8 +119,11 @@
               formControlName="holderType"
               (selectionChange)="accountHolderSelectionChanged()"
             >
-              <mat-option value="joint">Joint</mat-option>
-              <mat-option value="individual">Individual</mat-option>
+              <mat-option
+                *ngFor="let holderItem of holderTypeArray"
+                [value]="holderItem"
+                >{{ holderItem }}</mat-option
+              >
             </mat-select>
             <mat-error
               *ngIf="
@@ -155,9 +158,11 @@
               formControlName="disbursementType"
               (selectionChange)="onDisbursementSelectionChanged()"
             >
-              <mat-option value="account">Account</mat-option>
-              <mat-option value="cheque">Cheque</mat-option>
-              <mat-option value="cash">Cash</mat-option>
+              <mat-option
+                *ngFor="let disburse of disbursementArray"
+                [value]="disburse"
+                >{{ disburse }}</mat-option
+              >
             </mat-select>
             <mat-error
               *ngIf="

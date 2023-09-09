@@ -58,4 +58,21 @@ export class LoanService {
   updateOrigination(data) {
     return this.http.put<any>(`${baseUrl}/webDisbursement`, data);
   }
+
+  verifyWorkFlow(flowData) {
+    return this.http.post<any>(`${baseUrl}/workflow/verify`, flowData);
+  }
+
+  saveLoanApprovalConfig(approvalDetails) {
+    return this.http.post<any>(
+      `${baseUrl}/loan-account/saveLoanApprovalConfig`,
+      approvalDetails
+    );
+  }
+
+  genericValue(screenName: string, genericName: string[]) {
+    return this.http.get<any>(
+      `${baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
+    );
+  }
 }

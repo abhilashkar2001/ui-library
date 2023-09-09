@@ -28,7 +28,7 @@ export class TermsConditionsComponent implements OnInit {
     this.customerData = JSON.parse(localStorage.getItem("customerData"));
     this.customerName =
       this.customerData?.firstName + " " + this.customerData?.lastName;
-    this.requestDate = this.customerData?.requestDate.replace(/[a-zA-Z]/g, " ");
+    //this.requestDate = this.customerData?.requestDate.replace(/[a-zA-Z]/g, " ");
   }
 
   isValidated() {

@@ -44,7 +44,11 @@
                       <mat-label>Prefix</mat-label>
 
                       <mat-select formControlName="prefix">
-                        <mat-option value="mr.">Mr.</mat-option>
+                        <mat-option
+                          *ngFor="let prefixItem of prefixArray"
+                          [value]="prefixItem"
+                          >{{ prefixItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -119,7 +123,11 @@
                     >
                       <mat-label>Gender</mat-label>
                       <mat-select formControlName="gender">
-                        <mat-option value="Male">Male</mat-option>
+                        <mat-option
+                          *ngFor="let genderItem of genderArray"
+                          [value]="genderItem"
+                          >{{ genderItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -130,7 +138,11 @@
                     >
                       <mat-label>Nationality</mat-label>
                       <mat-select formControlName="nationality">
-                        <mat-option value="India">India</mat-option>
+                        <mat-option
+                          *ngFor="let country of countryArray"
+                          [value]="country.countryName"
+                          >{{ country.countryName }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -156,7 +168,11 @@
                     >
                       <mat-label>Residence Type</mat-label>
                       <mat-select formControlName="residenceType">
-                        <mat-option value="Citizen">Citizen</mat-option>
+                        <mat-option
+                          *ngFor="let residenceItem of residenceTypeArray"
+                          [value]="residenceItem"
+                          >{{ residenceItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
