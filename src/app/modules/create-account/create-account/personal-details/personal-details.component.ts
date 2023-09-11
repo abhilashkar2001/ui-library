@@ -19,6 +19,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { debounceTime } from "rxjs/operators";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-create-account-personal-details",
@@ -38,21 +39,43 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   accountHeader: string;
   todayDate: Date = new Date();
   listCityState: any = [];
+  staticData = {
+    RESIDENCETYE: [],
+    GENDER: [],
+    PREFIX: [],
+  };
+  genderArray: string[] = [];
+  prefixArray: string[] = [];
+  residenceTypeArray: string[] = [];
 
   constructor(
-    private router: Router,
-    private _location: Location,
+    // private router: Router,
+    // private _location: Location,
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
     private activateRoute: ActivatedRoute,
-    private personalDetailsService: PersonalDetailsService
+    private personalDetailsService: PersonalDetailsService,
+    private loanApi: LoanService
   ) {
     this.accountHeader = this.activateRoute.snapshot["queryParams"]["title"];
   }
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.builtPersonalFOrm();
     this.getCountry();
+  }
+
+  getGenericDetails() {
+    this.loanApi
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.genderArray = resp.data["GENDER"];
+          this.prefixArray = resp.data["PREFIX"];
+          this.residenceTypeArray = resp.data["RESIDENCETYE"];
+        }
+      });
   }
 
   builtPersonalFOrm() {

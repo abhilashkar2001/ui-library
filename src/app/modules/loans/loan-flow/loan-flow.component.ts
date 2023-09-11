@@ -154,7 +154,6 @@ export class LoanFlowComponent implements OnInit {
         }
       });
     });
-    console.log(this.screenList);
   }
   stepperSelectionChange(event) {
     this.cuurrentStep = this.steper_Array[event.selectedIndex].label;
@@ -307,7 +306,7 @@ export class LoanFlowComponent implements OnInit {
         this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
           this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {
             this.loanSummary = resp.data;
-            this.next();
+            // this.next();
           });
         });
       }
@@ -315,6 +314,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   verifyWorkFlow() {
+    console.log(this.screenList);
     const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const loanPayload = {
       loanAmount: loanAmmount.loanAmount,
@@ -324,10 +324,11 @@ export class LoanFlowComponent implements OnInit {
       gender: "",
       nationality: "",
       residenceType: "",
-      screenCode: 1701,
+      screenCode: this.screenList[this.selectedStep].screenCode,
     };
     this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
-      this.saveApprovalConfig(resp);
+      if (resp?.autoAction) this.saveApprovalConfig(resp);
+      else this.next();
       // sessionStorage.setItem("verifyWork", JSON.stringify(resp));
     });
   }

@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { SharedService } from "app/shared/shared.service";
 import * as moment from "moment";
 
 @Component({
@@ -35,13 +37,15 @@ export class AccountMobileVerificationComponent implements OnInit {
       height: "50px",
     },
   };
+  isGetOtp: boolean = false;
 
   constructor(
     private router: Router,
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snack: MatSnackBar //  private sharedApi: SharedService //
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
@@ -52,6 +56,13 @@ export class AccountMobileVerificationComponent implements OnInit {
   getOTP() {
     this.resendLink = false;
     this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
+      this.snack.open(`Otp sent Successfully !`, "", {
+        duration: 4000,
+        verticalPosition: "top",
+        horizontalPosition: "right",
+        panelClass: "success",
+      });
+      // this.sharedApi.showSuccess("Otp sent Successfully!", "Ok");
       this.showOTPSection = true;
       this.timer();
     });

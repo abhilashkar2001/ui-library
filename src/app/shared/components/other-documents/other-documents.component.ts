@@ -16,6 +16,7 @@ import { Router } from "@angular/router";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-other-documents",
@@ -41,16 +42,32 @@ export class OtherDocumentsComponent implements OnInit {
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Output() customgoBack = new EventEmitter<any>();
+  staticData = {
+    DOCUMENTTYPE: [],
+  };
+  documentTypeArray: string[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private sharedService: SharedService
   ) {}
 
   ngAfterViewInit() {}
 
   ngOnInit() {
+    this.getGenericDetails();
     this.buildForm({});
+  }
+
+  getGenericDetails() {
+    this.sharedService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
+        }
+      });
   }
 
   buildForm(data?) {

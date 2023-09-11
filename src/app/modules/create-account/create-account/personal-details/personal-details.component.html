@@ -30,8 +30,11 @@
                       >
                         <mat-label class="custom-mat-label">Pre fix</mat-label>
                         <mat-select formControlName="prefix">
-                          <mat-option value="Mr">Mr</mat-option>
-                          <mat-option value="Mrs">Mrs</mat-option>
+                          <mat-option
+                            *ngFor="let prefixItem of prefixArray"
+                            [value]="prefixItem"
+                            >{{ prefixItem }}</mat-option
+                          >
                         </mat-select>
                         <mat-error
                           *ngIf="
@@ -151,8 +154,11 @@
                       >
                         <mat-label class="custom-mat-label">Gender</mat-label>
                         <mat-select formControlName="gender">
-                          <mat-option value="Male">Male</mat-option>
-                          <mat-option value="Female">Female</mat-option>
+                          <mat-option
+                            *ngFor="let genderItem of genderArray"
+                            [value]="genderItem"
+                            >{{ genderItem }}</mat-option
+                          >
                         </mat-select>
                         <mat-error
                           *ngIf="
@@ -235,7 +241,11 @@
                           >Residence Type</mat-label
                         >
                         <mat-select formControlName="residentType">
-                          <mat-option value="Home">Home</mat-option>
+                          <mat-option
+                            *ngFor="let residence of residenceTypeArray"
+                            [value]="residence"
+                            >{{ residence }}</mat-option
+                          >
                         </mat-select>
                         <mat-error
                           *ngIf="

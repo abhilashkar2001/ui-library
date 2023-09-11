@@ -37,7 +37,9 @@ export class LoanSummaryComponent implements OnInit {
     // this.getLoanSummary();
     this.loanSummaryDetails = this.loanSummary;
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loanSummaryDetails = changes.loanSummary.currentValue;
+  }
 
   getLoanSummary() {
     this.loanService.getLoanSummary(12334567).subscribe(

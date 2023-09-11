@@ -1,0 +1,18 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "environments/environment";
+
+@Injectable({
+  providedIn: "root",
+})
+export class SharedService {
+  protected baseUrl = environment.microServiceURL;
+
+  constructor(private http: HttpClient) {}
+
+  genericValue(screenName: string, genericName: string[]) {
+    return this.http.get<any>(
+      `${this.baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
+    );
+  }
+}

@@ -59,14 +59,11 @@
                         class="mat_selection"
                         formControlName="documentType"
                       >
-                        <mat-option class="option_font" value="Aadhar Card"
-                          >Aadhar Card</mat-option
-                        >
-                        <mat-option class="option_font" value="Pan Card"
-                          >Pan Card</mat-option
-                        >
-                        <mat-option class="option_font" value="PassPort"
-                          >Pass Port</mat-option
+                        <mat-option
+                          *ngFor="let documentTypeItem of documentTypeArray"
+                          class="option_font"
+                          value="documentTypeItem"
+                          >{{ documentTypeItem }}</mat-option
                         >
                       </mat-select>
                       <mat-error> Please Select Document Type </mat-error>

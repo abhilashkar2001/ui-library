@@ -4,13 +4,22 @@
     [formGroup]="personalLoanDetailsForm"
     fxFlex="100"
   >
-    <div class="column-2" fxFlex="100" fxLayout="column" fxLayoutGap="25px">
+    <div class="column-2" fxFlex="100" fxLayout="column">
       <div class="text-header">Personal Loan Details</div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly == true && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">Loan Amount</mat-label>
-            <input matInput name="loanAmount" formControlName="loanAmount" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              name="loanAmount"
+              formControlName="loanAmount"
+            />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm.get('loanAmount')?.hasError('required')
@@ -58,15 +67,31 @@
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">EMI Amount</mat-label>
-            <input matInput formControlName="emiAmount" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              formControlName="emiAmount"
+            />
           </mat-form-field>
         </div>
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">Interest Rate</mat-label>
-            <input matInput formControlName="interestRate" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              formControlName="interestRate"
+            />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm
@@ -81,9 +106,17 @@
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">Interest Payable</mat-label>
-            <input matInput formControlName="interestPayable" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              formControlName="interestPayable"
+            />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm
@@ -96,9 +129,17 @@
           </mat-form-field>
         </div>
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">Principle Amount</mat-label>
-            <input matInput formControlName="principlAmount" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              formControlName="principlAmount"
+            />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm
@@ -135,9 +176,17 @@
           </mat-form-field>
         </div>
         <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isReadOnly && 'disable-field'"
+          >
             <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
-            <input matInput formControlName="totalPayableAmount" />
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              formControlName="totalPayableAmount"
+            />
             <mat-error
               *ngIf="
                 personalLoanDetailsForm
@@ -156,7 +205,7 @@
             <mat-label class="custom-mat-label">Disbursement Type</mat-label>
             <mat-select
               formControlName="disbursementType"
-              (selectionChange)="onDisbursementSelectionChanged()"
+              (selectionChange)="onDisbursementSelectionChanged($event.value)"
             >
               <mat-option
                 *ngFor="let disburse of disbursementArray"
@@ -255,11 +304,12 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
-        ;
       </div>
       <div class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
-        >&nbsp;&nbsp; <button class="edit-button">Edit</button>&nbsp;&nbsp;
+        >&nbsp;&nbsp;
+        <button class="edit-button" (click)="editRecord()">Edit</button
+        >&nbsp;&nbsp;
         <button class="exit-button" (click)="onExit()">Exit</button>&nbsp;&nbsp;
       </div>
     </div>
