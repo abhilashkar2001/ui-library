@@ -101,7 +101,7 @@ export class CreateAccountLandingPageComponent {
     });
 
     var payload = {
-      customerId: parseInt(localStorage.getItem("customerId")),
+      customerId: parseInt(sessionStorage.getItem("customerId")),
       documentInfo: docIds,
     };
     this.openAccountService
