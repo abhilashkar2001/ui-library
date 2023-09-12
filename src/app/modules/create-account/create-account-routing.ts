@@ -23,7 +23,7 @@ export const HomeRoutes: Routes = [
         component: CreateAccountLandingPageComponent,
       },
       {
-        path: "applyAccount",
+        path: "applyAccount/:id",
         component: ApplyAccountComponent,
       },
     ],

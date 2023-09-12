@@ -45,44 +45,10 @@
   align-items: center;
 }
 
-.fd_info_stat {
-  background: #e6efff;
-  border: 1px solid #bac0d7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  padding: 0 2%;
-  margin-top: 10px;
-  width: 61%;
-
-  .text-box {
-    display: flex;
-    flex-direction: column;
-    color: #004c97;
-    font-family: Poppins;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    justify-content: center;
-    margin-left: 20px;
-  }
-}
-
 @media only screen and (min-width: 768px) and (max-width: 910px) {
   .fd_info_stat {
     display: none !important;
   }
-}
-
-.flow_done {
-  border: 1px solid #008461;
-  color: #008461;
-  width: 60px;
-  border-radius: 10px;
-  font-size: 24px;
-  height: 60px;
 }
 
 /*----------------------------------------------------------------------------------------*/

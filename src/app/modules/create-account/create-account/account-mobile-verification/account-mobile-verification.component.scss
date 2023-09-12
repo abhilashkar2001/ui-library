@@ -5,7 +5,7 @@
   .col-div2 {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 100%;
 
     .title-text {
       color: #000;
@@ -130,6 +130,18 @@
   border: none !important;
 }
 
-::ng-deep .ng-otp-input-wrapper {
+:host ::ng-deep ng-otp-input .wrapper {
   display: flex !important;
+}
+
+::ng-deep .success.mat-snack-bar-container {
+  background: green !important;
+  display: flex !important;
+  min-height: 70px !important;
+  align-items: center !important;
+  .mat-simple-snack-bar-content {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: white !important;
+  }
 }

@@ -24,8 +24,8 @@ export class LandingPageComponent implements OnInit {
       this.data = response.data;
     });
   }
-  customApplyLoan() {
+  customApplyLoan(event) {
     console.log("....");
-    this.router.navigate(["account/applyAccount"]);
+    this.router.navigate(["account/applyAccount", event]);
   }
 }

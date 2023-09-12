@@ -42,6 +42,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   };
   holderTypeArray: string[] = [];
   disbursementArray: string[] = [];
+  isReadOnly: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -104,10 +105,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       tenureMonths: [data ? data?.tenureYear : ""],
       tenureDay: [data ? data?.tenureYear : ""],
       emiStartDate: [data ? data?.emiStartDate : "", Validators.required],
-      emiAmount: [
-        data ? data?.emiAmount : "",
-        [Validators.required, Validators.email],
-      ],
+      emiAmount: [data ? data?.emiAmount : "", [Validators.required]],
       interestRate: [data ? data.interestRate : "", Validators.required],
       interestPayable: [data ? data.interestPayable : "", Validators.required],
       principlAmount: [data ? data.principalAmount : "", Validators.required],
@@ -120,7 +118,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
         data ? data?.disbursementType : "",
         Validators.required,
       ],
-      accountNumber: [data ? data?.accountNumber : "", Validators.required],
+      accountNumber: [data ? data?.accountNumber : ""],
       id: data?.id,
     });
   }
@@ -131,15 +129,28 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     );
   }
 
-  onDisbursementSelectionChanged() {
+  onDisbursementSelectionChanged(event) {
     this.disbursementType =
       this.personalLoanDetailsForm.controls[
         "disbursementType"
       ].value.toLowerCase();
+    if (event.toLowerCase().includes("account")) {
+      this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
+        Validators.required,
+      ]);
+    } else {
+      this.personalLoanDetailsForm.controls["accountNumber"].clearValidators();
+    }
+
+    this.personalLoanDetailsForm.controls[
+      "accountNumber"
+    ].updateValueAndValidity();
   }
 
   onConfirm() {
-    console.log(this.personalLoanDetailsForm.value);
+    if (this.personalLoanDetailsForm.invalid) {
+      return;
+    }
     const loanAmmount = JSON.stringify({
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonths} months ${this.personalLoanDetailsForm.value.tenureDay} Days`,
@@ -184,5 +195,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
 
   onExit() {
     this.router.navigate(["loan/landing"]);
+  }
+  editRecord() {
+    this.isReadOnly = false;
   }
 }

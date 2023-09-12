@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-account-type-details",
@@ -8,7 +8,10 @@ import { Router } from "@angular/router";
 })
 export class AccountTypeDetailsComponent implements OnInit {
   @Input() subClass;
-  constructor(private router: Router) {}
+  basisClass: any = "";
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.basisClass = this.route.snapshot.params["id"];
+  }
 
   ngOnInit(): void {}
   apply(clasDetails) {

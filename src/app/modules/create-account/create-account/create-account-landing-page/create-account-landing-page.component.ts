@@ -114,6 +114,7 @@ export class CreateAccountLandingPageComponent {
               const sessionData = JSON.parse(
                 sessionStorage.getItem("basisDetails")
               );
+              var custResp = this.factoryCustomer(resp.data);
               const payload = {
                 originationModel: {
                   applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -122,7 +123,7 @@ export class CreateAccountLandingPageComponent {
                   branchCode: "BR1",
                   source: "Web Site",
                 },
-                customerInfo: resp.data,
+                customerInfo: custResp,
               };
               this.openAccountService
                 .saveCustomerInfo(payload)
@@ -143,5 +144,25 @@ export class CreateAccountLandingPageComponent {
         }
       });
     // console.log(docIds);
+  }
+
+  factoryCustomer(resp) {
+    var custResp = resp;
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      item.documnentsInfo?.documents.forEach((item2, j) =>
+        item2?.docs.forEach((item3) => {
+          var docId = [];
+          docId.push(item3?.documentId);
+          var doc = {
+            docIds: docId,
+          };
+          custResp[i].documentId.push(doc);
+        })
+      );
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+    });
+    return custResp;
   }
 }

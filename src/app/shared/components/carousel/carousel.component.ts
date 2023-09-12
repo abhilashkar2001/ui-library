@@ -93,15 +93,6 @@ export class CarouselComponent implements OnInit, OnChanges {
   }
 
   moveToSubAccountPage(basisClass: string) {
-    this.customApplyLoan.emit();
-    // if (this.flow === "account") {
-    //   this.router.navigate(["account/landing/applyAccount"], {
-    //     queryParams: { basisClass: basisClass },
-    //   });
-    // } else if (this.flow === "loan") {
-    //   this.router.navigate(["/loans/loan-type"], {
-    //     queryParams: { basisClass: basisClass },
-    //   });
-    // }
+    this.customApplyLoan.emit(basisClass);
   }
 }

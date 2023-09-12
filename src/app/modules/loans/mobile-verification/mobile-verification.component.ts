@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
@@ -20,7 +21,8 @@ export class MobileVerificationComponent implements OnInit {
 
   constructor(
     private openAccountService: OpenAccountService,
-    private loanService: LoanService
+    private loanService: LoanService,
+    private snack: MatSnackBar
   ) {}
 
   ngOnInit(): void {}
@@ -28,6 +30,12 @@ export class MobileVerificationComponent implements OnInit {
   getOTP(event: any) {
     this.phone = event.phone;
     this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
+      this.snack.open(`Otp sent Successfully !`, "", {
+        duration: 4000,
+        verticalPosition: "top",
+        horizontalPosition: "right",
+        panelClass: "success",
+      });
       this.showOtpSection = true;
     });
   }

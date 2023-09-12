@@ -1,0 +1,11 @@
+::ng-deep .success.mat-snack-bar-container {
+  background: green !important;
+  display: flex !important;
+  min-height: 70px !important;
+  align-items: center !important;
+  .mat-simple-snack-bar-content {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: white !important;
+  }
+}
