@@ -61,9 +61,20 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var customerId = parseInt(sessionStorage.getItem("customerId"));
     this.getGenericDetails();
-    this.builtPersonalFOrm();
+    // this.builtPersonalFOrm();
     this.getCountry();
+    if (customerId) this.getCustomerById(customerId);
+    else this.builtPersonalFOrm();
+  }
+
+  getCustomerById(customerId) {
+    this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.builtPersonalFOrm(resp.data);
+      } else this.builtPersonalFOrm();
+    });
   }
 
   getGenericDetails() {
@@ -78,38 +89,58 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       });
   }
 
-  builtPersonalFOrm() {
+  builtPersonalFOrm(data?) {
     this.personalDetailsForm = this.fb.group({
       personalInfoArray: this.fb.array([]),
     });
-    this.addCustomer();
+    if (data) {
+      data.forEach((item) => {
+        this.addCustomer(item);
+      });
+    } else this.addCustomer();
   }
 
   get personalInfoArray(): FormArray {
     return this.personalDetailsForm.get("personalInfoArray") as FormArray;
   }
 
-  initialForm(): FormGroup {
+  initialForm(data?): FormGroup {
     return this.fb.group({
-      prefix: ["", Validators.required],
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
-      dateOfBirth: ["", Validators.required],
-      email: ["", Validators.required],
-      gender: ["", Validators.required],
-      nationality: ["", Validators.required],
+      prefix: [data ? data.prefix : "", Validators.required],
+      firstName: [data ? data.firstName : "", Validators.required],
+      lastName: [data ? data.lastName : "", Validators.required],
+      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
+      email: [data ? data.contact.email : "", Validators.required],
+      gender: [data ? data.gender : "", Validators.required],
+      nationality: [data ? data.nationality : "", Validators.required],
       city: [""],
-      cityId: [""],
-      state: ["", Validators.required],
-      address: ["", Validators.required],
-      residentType: ["", Validators.required],
-      country: ["", Validators.required],
-      zipCode: ["", Validators.required],
+      cityId: [data ? data.contact.address[0]?.cityId : ""],
+      state: [
+        data ? data.contact.address[0]?.stateName : "",
+        Validators.required,
+      ],
+      address: [
+        data ? data.contact.address[0]?.address1 : "",
+        Validators.required,
+      ],
+      residentType: [
+        data ? data.contact.address[0]?.residenceType : "",
+        Validators.required,
+      ],
+      country: [
+        data ? data.contact.address[0]?.countryName : "",
+        Validators.required,
+      ],
+      zipCode: [
+        data ? data.contact.address[0]?.pincode : "",
+        Validators.required,
+      ],
+      customerId: data?.customerId,
     });
   }
 
-  addCustomer() {
-    this.personalInfoArray.push(this.initialForm());
+  addCustomer(data?) {
+    this.personalInfoArray.push(this.initialForm(data));
   }
 
   panelOpened(index: number) {
@@ -140,6 +171,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
         firstName: element.firstName,
         lastName: element.lastName,
         middleName: null,
+        customerId: element?.customerId,
         gender: element.gender,
         dateOfBirth: element.dateOfBirth,
         nationality: element.nationality,
