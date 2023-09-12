@@ -301,12 +301,12 @@ export class LoanFlowComponent implements OnInit {
           id: parseInt(sessionStorage.getItem("loanDisburseId")),
           originationId: resp.data.originationModel.originationId,
         };
-        this.verifyWorkFlow();
+        // this.verifyWorkFlow();
 
         this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
           this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {
             this.loanSummary = resp.data;
-            // this.next();
+            this.next();
           });
         });
       }
@@ -328,7 +328,7 @@ export class LoanFlowComponent implements OnInit {
     };
     this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
       if (resp?.autoAction) this.saveApprovalConfig(resp);
-      else this.next();
+      else this.onFlowDone();
       // sessionStorage.setItem("verifyWork", JSON.stringify(resp));
     });
   }
@@ -350,12 +350,12 @@ export class LoanFlowComponent implements OnInit {
     };
     this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        this.onFlowDone("");
-      }
+        this.onFlowDone();
+      } else if (resp?.statusCode === 204) this.onFlowDone();
     });
   }
 
-  onFlowDone(e) {
+  onFlowDone() {
     const dialogRef = this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originationId,

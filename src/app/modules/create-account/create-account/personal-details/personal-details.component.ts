@@ -169,6 +169,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   onConfirm() {
     const payLoad = this.createPayLoad();
+    payLoad.customer[0].contact.mobile = sessionStorage.getItem("mobileNo");
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {
         console.log("Response: ", response);

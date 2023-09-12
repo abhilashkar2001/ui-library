@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -38,14 +39,16 @@ export class CreateAccountLandingPageComponent {
     private openAccountService: OpenAccountService,
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private showSideBar: NewDepositService
   ) {
+    this.showSideBar.setToken(true);
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
   }
 
   ngOnInit(): void {
-    const sessionData = JSON.parse(sessionStorage.getItem("basisDetails"));
+    const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
@@ -112,7 +115,7 @@ export class CreateAccountLandingPageComponent {
             .getCustomerById(resp.data.customerId)
             .subscribe((resp) => {
               const sessionData = JSON.parse(
-                sessionStorage.getItem("basisDetails")
+                localStorage.getItem("basisDetails")
               );
               var custResp = this.factoryCustomer(resp.data);
               const payload = {

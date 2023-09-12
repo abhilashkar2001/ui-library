@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-account-type-details",
@@ -9,7 +10,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AccountTypeDetailsComponent implements OnInit {
   @Input() subClass;
   basisClass: any = "";
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {
     this.basisClass = this.route.snapshot.params["id"];
   }
 
@@ -20,7 +25,10 @@ export class AccountTypeDetailsComponent implements OnInit {
       basisDetailsId: clasDetails.basisId,
       processCycleCode: clasDetails.processCycleCode,
     });
-    sessionStorage.setItem("basisDetails", payload);
-    this.router.navigate(["/account/open"]);
+    localStorage.setItem("basisDetails", payload);
+    const url = this.location.prepareExternalUrl(
+      this.router.serializeUrl(this.router.createUrlTree(["/account/open"]))
+    );
+    window.open(`${url}`, "_blank");
   }
 }

@@ -82,9 +82,7 @@ export class AccountMobileVerificationComponent implements OnInit {
       .subscribe((resp: any) => {
         console.log(resp);
         if (resp?.statusCode === 200 && resp?.data) {
-          const sessionData = JSON.parse(
-            sessionStorage.getItem("basisDetails")
-          );
+          const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
           const payload = {
             originationModel: {
               applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -111,6 +109,7 @@ export class AccountMobileVerificationComponent implements OnInit {
               }
             });
         } else if (resp?.statusCode === 204) {
+          sessionStorage.setItem("mobileNo", this.phone);
           this.onVerifyOtpEvent.emit();
         }
       });
