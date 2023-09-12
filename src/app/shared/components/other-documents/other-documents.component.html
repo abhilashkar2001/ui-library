@@ -62,7 +62,7 @@
                         <mat-option
                           *ngFor="let documentTypeItem of documentTypeArray"
                           class="option_font"
-                          value="documentTypeItem"
+                          [value]="documentTypeItem"
                           >{{ documentTypeItem }}</mat-option
                         >
                       </mat-select>
