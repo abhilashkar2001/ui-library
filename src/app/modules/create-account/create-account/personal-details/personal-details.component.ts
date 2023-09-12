@@ -172,7 +172,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {
         console.log("Response: ", response);
-        sessionStorage.setItem("customerId", response.data.customerId);
+        sessionStorage.setItem("customerId", response.data[0].customerId);
         this.onSubmitPersonalDetailsEvent.emit();
       },
       (error: any) => {
