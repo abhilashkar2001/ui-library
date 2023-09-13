@@ -29,6 +29,7 @@ export class MobileVerificationComponent implements OnInit {
 
   getOTP(event: any) {
     this.phone = event.phone;
+    sessionStorage.setItem("loanPhone", this.phone);
     this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
       this.snack.open(`Otp sent Successfully !`, "", {
         duration: 4000,

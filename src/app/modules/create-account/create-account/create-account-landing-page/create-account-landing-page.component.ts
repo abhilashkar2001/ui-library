@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
 
@@ -40,7 +41,8 @@ export class CreateAccountLandingPageComponent {
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     private dialog: MatDialog,
-    private showSideBar: NewDepositService
+    private showSideBar: NewDepositService,
+    private loanApi: LoanService
   ) {
     this.showSideBar.setToken(true);
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
@@ -118,6 +120,7 @@ export class CreateAccountLandingPageComponent {
                 localStorage.getItem("basisDetails")
               );
               var custResp = this.factoryCustomer(resp.data);
+              custResp[0].primaryCustomer = true;
               const payload = {
                 originationModel: {
                   applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -132,6 +135,13 @@ export class CreateAccountLandingPageComponent {
                 .saveCustomerInfo(payload)
                 .subscribe((resp) => {
                   if (resp?.statusCode === 200) {
+                    var accountPayload = {
+                      gender: "Male",
+                      screenCode: 1696,
+                    };
+                    this.loanApi
+                      .verifyWorkFlow(accountPayload)
+                      .subscribe((resp) => {});
                     this.dialog.open(SuccessPopupComponent, {
                       data: {
                         originationId: resp.data.originationModel.originationId,

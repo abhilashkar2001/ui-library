@@ -25,6 +25,7 @@ import SwiperCore, {
 import { BehaviorSubject } from "rxjs";
 import Swiper from "swiper/types/swiper-class";
 import { Router } from "@angular/router";
+import { environment } from "environments/environment";
 
 // install Swiper components
 SwiperCore.use([
@@ -52,6 +53,7 @@ export class CustomSwiperComponent implements OnInit {
   show: boolean;
   thumbs: any;
   slides$ = new BehaviorSubject<string[]>([""]);
+  protected baseUrl = environment.microServiceURL;
   constructor(private router: Router) {}
   ngOnInit() {}
   ngOnChanges() {
@@ -131,5 +133,14 @@ export class CustomSwiperComponent implements OnInit {
       queryParams: { subClass: imagesdata.basisClass },
     });
     this.customApplyLoan.emit(imagesdata);
+  }
+
+  mapUrl(data) {
+    if (
+      data.documents.fileUrl &&
+      !data.documents.fileUrl.toLowerCase().includes("https")
+    )
+      return `${this.baseUrl}${data.documents.fileUrl}`;
+    else return `assets/images/Frame 5.svg`;
   }
 }

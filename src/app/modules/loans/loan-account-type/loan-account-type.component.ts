@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { environment } from "environments/environment";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-loan-account-type",
@@ -22,7 +23,8 @@ export class LoanAccountTypeComponent implements OnInit {
     private router: Router,
     private commonService: CommonService,
     private loanService: LoanService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     //   this.basisClass = this.activatedRoute.snapshot["queryParams"]["basisClass"];
   }
@@ -96,10 +98,16 @@ export class LoanAccountTypeComponent implements OnInit {
       // originationId: 9821,
     };
     this.loanService.submitLoanDetail(payload).subscribe((resp) => {
-      if (resp?.statusCode === 201)
-        this.router.navigate([`/loan/create-loan`], {
-          queryParams: { id: resp?.data.id },
-        });
+      if (resp?.statusCode === 201) {
+        sessionStorage.removeItem("loanstep");
+        sessionStorage.setItem("loanDisburseId", resp?.data.id);
+        const url = this.location.prepareExternalUrl(
+          this.router.serializeUrl(
+            this.router.createUrlTree(["/loan/create-loan"])
+          )
+        );
+        window.open(`${url}`, "_blank");
+      }
     });
   }
 }

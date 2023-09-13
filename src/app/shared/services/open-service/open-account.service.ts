@@ -31,7 +31,10 @@ export class OpenAccountService {
   }
 
   uploadMultipleDocument(documentObjects: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/documents`, documentObjects);
+    return this.http.post(
+      `${baseUrl}/documents?source=web Site`,
+      documentObjects
+    );
   }
 
   verifyKYC() {}
