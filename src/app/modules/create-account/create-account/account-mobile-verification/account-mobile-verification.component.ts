@@ -80,7 +80,6 @@ export class AccountMobileVerificationComponent implements OnInit {
     this.openAccountService
       .getExistingCustomer(this.phone)
       .subscribe((resp: any) => {
-        console.log(resp);
         if (resp?.statusCode === 200 && resp?.data) {
           if (resp?.data[0]?.kycStatus) {
             const sessionData = JSON.parse(
