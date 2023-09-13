@@ -19,8 +19,8 @@ export class SuccessPopupComponent implements OnInit {
     this.originationId = this.data.originationId;
   }
   done() {
+    localStorage.removeItem("basisDetails");
     this.dialogRef.close();
-    this.router.navigate(["account/landing"]);
-    //window.close();
+    window.close();
   }
 }

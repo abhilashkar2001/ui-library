@@ -397,7 +397,12 @@
       </div>
     </div>
 
-    <div fxLayout="row wrap" fxLayoutGap="20px" class="mb-16">
+    <div
+      fxLayout="row wrap"
+      fxLayoutGap="20px"
+      class="mb-16"
+      *ngIf="personalDetailsForm"
+    >
       <button
         class="confirm-button"
         type="submit"

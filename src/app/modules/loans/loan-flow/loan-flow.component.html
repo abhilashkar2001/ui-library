@@ -126,7 +126,7 @@
   </div>
   <div *ngIf="cuurrentStep == 'summary'" class="align_fdForm" fxLayout="column">
     <app-loan-summary
-      (onConfirmEvent)="onFlowDone()"
+      (onConfirmEvent)="verifyWorkFlow()"
       [loanSummary]="loanSummary"
     ></app-loan-summary>
   </div>
