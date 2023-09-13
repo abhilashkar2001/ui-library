@@ -80,34 +80,42 @@ export class AccountMobileVerificationComponent implements OnInit {
     this.openAccountService
       .getExistingCustomer(this.phone)
       .subscribe((resp: any) => {
-        console.log(resp);
         if (resp?.statusCode === 200 && resp?.data) {
-          const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
-          const payload = {
-            originationModel: {
-              applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
-              accountType: sessionData.accountType,
-              basisDetailsId: sessionData.basisDetailsId,
-              branchCode: "BR1",
-              source: "Web Site",
-            },
-            customerInfo: resp.data,
-          };
-          this.openAccountService
-            .saveCustomerInfo(payload)
-            .subscribe((resp) => {
-              if (resp?.statusCode === 200) {
-                this.dialogRef = this.dialog.open(SuccessPopupComponent, {
-                  data: {
-                    originationId: resp.data.originationModel.originationId,
-                  },
-                  width: "750px",
-                  disableClose: true,
-                  panelClass: "popup-dialog-class",
-                  backdropClass: "bdrop",
-                });
-              }
-            });
+          if (resp?.data[0]?.kycStatus) {
+            const sessionData = JSON.parse(
+              localStorage.getItem("basisDetails")
+            );
+            const payload = {
+              originationModel: {
+                applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+                accountType: sessionData.accountType,
+                basisDetailsId: sessionData.basisDetailsId,
+                branchCode: "BR1",
+                source: "Web Site",
+              },
+              customerInfo: resp.data,
+            };
+            this.openAccountService
+              .saveCustomerInfo(payload)
+              .subscribe((response) => {
+                if (response?.statusCode === 200) {
+                  this.dialogRef = this.dialog.open(SuccessPopupComponent, {
+                    data: {
+                      originationId:
+                        response.data.originationModel.originationId,
+                    },
+                    width: "750px",
+                    disableClose: true,
+                    panelClass: "popup-dialog-class",
+                    backdropClass: "bdrop",
+                  });
+                }
+              });
+          } else {
+            sessionStorage.setItem("mobileNo", this.phone);
+            sessionStorage.setItem("customerId", resp.data[0].customerId);
+            this.onVerifyOtpEvent.emit();
+          }
         } else if (resp?.statusCode === 204) {
           sessionStorage.setItem("mobileNo", this.phone);
           this.onVerifyOtpEvent.emit();
