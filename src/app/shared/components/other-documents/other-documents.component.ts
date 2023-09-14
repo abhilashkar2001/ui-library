@@ -2,8 +2,11 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from "@angular/core";
 import {
   FormArray,
@@ -17,6 +20,8 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";
+import { environment } from "environments/environment";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-other-documents",
@@ -42,22 +47,41 @@ export class OtherDocumentsComponent implements OnInit {
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Output() customgoBack = new EventEmitter<any>();
+  documentControls: FormGroup;
   staticData = {
     DOCUMENTTYPE: [],
   };
+  baseUrl = environment.microServiceURL;
+  documentList;
   documentTypeArray: string[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
     private snack: MatSnackBar,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private openAccountService: OpenAccountService
   ) {}
 
   ngAfterViewInit() {}
 
   ngOnInit() {
     this.getGenericDetails();
-    this.buildForm({});
+    var loanCustomerId = parseInt(sessionStorage.getItem("loanCustomerId"));
+    if (loanCustomerId) this.getCustomerId(loanCustomerId);
+    else this.buildForm();
+  }
+
+  getCustomerId(id) {
+    this.openAccountService.getCustomerById(id).subscribe((resp) => {
+      if (resp.statusCode == 200) {
+        this.documentList = resp.data;
+        if (this.documentList[0].documnentsInfo?.documents?.length > 0) {
+          this.buildForm(this.documentList[0].documnentsInfo?.documents);
+        } else {
+          this.buildForm();
+        }
+      }
+    });
   }
 
   getGenericDetails() {
@@ -74,24 +98,67 @@ export class OtherDocumentsComponent implements OnInit {
     this.createDocumentForm = this.fb.group({
       otherDocument: this.fb.array([]),
     });
-    setTimeout(() => {
-      this.addDocument();
-      this.customDocumentForm.emit(this.createDocumentForm);
-    }, 200);
+    if (data?.length > 0) {
+      data.forEach((item, i) => {
+        this.showDocument(item?.docs, i);
+        this.customDocumentForm.emit(this.createDocumentForm);
+      });
+    } else {
+      {
+        this.addDocument();
+        this.customDocumentForm.emit(this.createDocumentForm);
+      }
+    }
   }
 
   otherDocument(): FormArray {
     return this.createDocumentForm.get("otherDocument") as FormArray;
   }
 
+  showDocument(data, i) {
+    this.documentControls = this.fb.group({
+      documentNumber: [data ? data[0].documentNumber : "", Validators.required],
+      documentType: [data ? data[0].documentName : "", Validators.required],
+      fileInfo: new FormControl([]),
+      docIds: new FormControl([]),
+    });
+    this.otherDocument().push(this.documentControls);
+    if (data) {
+      this.otherDocument()
+        .controls[i].get("fileInfo")
+        .setValue(this.calculateDoc(data, i));
+    }
+  }
+
+  calculateDoc(data, i) {
+    var docArr = [];
+    var docIds = [];
+    data.forEach((item, ind) => {
+      console.log(item, ind);
+      var docItem = {
+        progress: 100,
+        name: item.fileName,
+      };
+      docArr.push({
+        docId: item.documentId,
+        doc: docItem,
+        url: this.mapEndPoints(item.fileUrl),
+      });
+      docIds.push(item.documentId);
+    });
+    this.otherDocument().controls[i].get("docIds").setValue(docIds);
+    return docArr;
+  }
+
   newDenom(data?): FormGroup {
     return this.fb.group({
+      documentNumber: ["", Validators.required],
       documentType: ["", Validators.required],
-      documentNumber: "",
       fileInfo: new FormControl([]),
       docIds: new FormControl([]),
     });
   }
+
   getFileInfo(indx: any): any[] {
     return this.otherDocument().controls[indx].get("fileInfo")?.value;
   }
@@ -111,6 +178,9 @@ export class OtherDocumentsComponent implements OnInit {
     this.otherDocument().push(this.newDenom(data));
   }
 
+  mapEndPoints(url) {
+    return `${this.baseUrl}${url}`;
+  }
   removeCurrency(i: number) {
     this.otherDocument().removeAt(i);
   }

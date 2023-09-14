@@ -58,11 +58,9 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.getGenericDetails();
-    this.route.queryParamMap.subscribe((params: any) => {
-      var id = parseInt(params.get("id"));
-      if (id) this.getLoanById(id);
-      else this.initialForm();
-    });
+    var id = parseInt(sessionStorage.getItem("loanDisburseId"));
+    if (id) this.getLoanById(id);
+    else this.initialForm();
   }
 
   getGenericDetails() {

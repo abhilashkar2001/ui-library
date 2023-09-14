@@ -90,6 +90,7 @@ export class LoanFlowComponent implements OnInit {
         key: "summary",
       },
     ];
+    this.depositApi.setToken(true);
   }
 
   ngOnInit(): void {

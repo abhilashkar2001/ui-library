@@ -57,6 +57,9 @@ export class NewDepositService {
     return this.http.post<any>(`${this.base_url}/upload-document`, formData);
   }
   submitAllDocument(payload) {
-    return this.http.post<any>(`${this.base_url}/documents`, payload);
+    return this.http.post<any>(
+      `${this.base_url}/documents?source=web Site`,
+      payload
+    );
   }
 }

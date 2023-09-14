@@ -152,6 +152,8 @@ export class PersonalCustomDetailsComponent implements OnInit {
     }
     const customer = this.createPayload();
     console.log(customer);
+    customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
+    customer[0].kycStatus = "UNDER_PROCESS";
     this.customSavePersonal.emit({
       status: true,
       personalDetails: customer,

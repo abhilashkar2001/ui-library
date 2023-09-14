@@ -202,6 +202,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   onConfirm() {
     const payLoad = this.createPayLoad();
     payLoad.customer[0].contact.mobile = sessionStorage.getItem("mobileNo");
+    payLoad.customer[0].kycStatus = "UNDER_PROCESS";
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {
         console.log("Response: ", response);
