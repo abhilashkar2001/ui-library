@@ -1,5 +1,11 @@
 <div fxFlex="row" fxFlex="100%">
-  <div fxFlex="70" fxLayout="column" fxFlex="100" *ngIf="loanForm">
+  <div
+    fxFlex="70"
+    fxLayout="column"
+    fxFlex="100"
+    *ngIf="loanForm"
+    class="loanForm"
+  >
     <form [formGroup]="loanForm" fxFlex="100">
       <div class="calculator_container" fxLayout="column" fxFlex="100">
         <div

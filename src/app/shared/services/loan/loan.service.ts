@@ -46,7 +46,7 @@ export class LoanService {
     return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
   }
   saveLoanPersonal(loanDetails: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/customer/customer-info`, loanDetails);
+    return this.http.post(`${baseUrl}/customer/joint`, loanDetails);
   }
 
   getProcessStage(processCode) {

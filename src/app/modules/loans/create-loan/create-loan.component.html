@@ -30,8 +30,11 @@
           </mat-form-field>
         </div>
         <div fxFlex="46" class="MiscellaneousClass">
-          <fieldset [ngClass]="{ 'mat-form-field-disabled': isDisabledMode }">
-            <legend>Tenure</legend>
+          <fieldset
+            class="mt-6"
+            [ngClass]="isReadOnly == true && 'disable-fieldset'"
+          >
+            <legend style="width: fit-content">Tenure</legend>
             <div style="display: flex; flex-direction: row">
               <input
                 matInput
@@ -39,6 +42,7 @@
                 numbersOnly
                 placeholder="Year"
                 formControlName="tenureYear"
+                [readonly]="isReadOnly"
               />
               <input
                 matInput
@@ -46,6 +50,7 @@
                 numbersOnly
                 placeholder="Month"
                 formControlName="tenureMonths"
+                [readonly]="isReadOnly"
                 style="
                   border-left: #c6c6c6 1px solid;
                   border-right: #c6c6c6 1px solid;
@@ -57,6 +62,7 @@
                 numbersOnly
                 placeholder="Day"
                 formControlName="tenureDay"
+                [readonly]="isReadOnly"
               />
             </div>
           </fieldset>
@@ -308,9 +314,12 @@
       <div class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
         >&nbsp;&nbsp;
-        <button class="edit-button" (click)="editRecord()">Edit</button
+        <button class="edit-button" type="button" (click)="editRecord()">
+          Edit</button
         >&nbsp;&nbsp;
-        <button class="exit-button" (click)="onExit()">Exit</button>&nbsp;&nbsp;
+        <button class="exit-button" type="button" (click)="onExit()">
+          Exit</button
+        >&nbsp;&nbsp;
       </div>
     </div>
   </form>

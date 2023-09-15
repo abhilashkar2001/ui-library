@@ -7,6 +7,8 @@ import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { SessionService } from "app/shared/session.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
@@ -37,7 +39,8 @@ export class LoanFlowComponent implements OnInit {
     private snack: MatSnackBar,
     private depositApi: NewDepositService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private tokenStore: TokenStorageService
   ) {
     this.steper_Array = [
       {
@@ -205,12 +208,12 @@ export class LoanFlowComponent implements OnInit {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
 
     this.loanApi
-      .saveLoanPersonal(event.personalDetails[0])
+      .saveLoanPersonal(event.personalDetails)
       .subscribe((response: any) => {
-        if (response?.statusCode === 201) {
+        if (response?.statusCode === 200) {
           this.customerData = {
             ...this.customerData,
-            ...response?.data,
+            ...response?.data[0],
           };
           localStorage.setItem(
             "customerData",
@@ -221,7 +224,7 @@ export class LoanFlowComponent implements OnInit {
             verticalPosition: "top",
             horizontalPosition: "right",
           });
-          sessionStorage.setItem("loanCustomerId", response.data.customerId);
+          sessionStorage.setItem("loanCustomerId", response.data[0].customerId);
           this.next();
         }
       });
@@ -290,8 +293,11 @@ export class LoanFlowComponent implements OnInit {
         accountType: sessionData.basisName,
         basisDetailsId: sessionData.basisId,
         loanAmount: parseInt(loanData.loanAmount),
-        loanTenure: loanData.loanTenure,
-        branchCode: "BR1",
+        // loanTenure: loanData.loanTenure,
+        loanTenureDay: "",
+        loanTenureMonth: "",
+        loanTenureYear: "",
+        branchCode: this.tokenStore.getUser().branchCode,
       },
       customerInfo: custResp,
     };

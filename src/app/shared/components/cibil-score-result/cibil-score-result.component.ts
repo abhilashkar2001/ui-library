@@ -19,6 +19,28 @@ export class CibilScoreResultComponent implements OnInit {
   @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
   cibilScore: number = 600;
   dataSource: any;
+  cibilScoreList = [
+    {
+      score: "Below 681",
+      description: "Need Help",
+    },
+    {
+      score: "681 - 730",
+      description: "Average",
+    },
+    {
+      score: "771 - 770",
+      description: "Fair",
+    },
+    {
+      score: "771 - 790",
+      description: "Good",
+    },
+    {
+      score: "Above 791",
+      description: "Excellent",
+    },
+  ];
 
   constructor(
     private router: Router,
