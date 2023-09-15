@@ -119,21 +119,26 @@
     <div
       class="bank-account-details"
       *ngIf="loanSummaryDetails?.docs?.length > 0"
+      fxLayout="column"
     >
-      <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
-        <div class="col-1">
-          <span class="content-header">Document type</span>
-          <span class="content">{{ doc?.documentType }} </span>
-        </div>
-        <div class="uploaded-images-section">
-          <div class="uploaded-images">
-            <!-- <mat-icon>check_circle</mat-icon> -->
-            <!-- <img src="../../../../assets/images/account-img1.png" alt="" /> -->
-            <img [src]="getFileUrl(doc.fileUrl)" alt="" />
-            <!-- <mat-icon>delete</mat-icon> -->
+      <div class="col-1">
+        <span class="content-header">Document type</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.docs[0]?.documentType }}
+        </span>
+      </div>
+      <div fxLayout="row">
+        <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
+          <div class="uploaded-images-section">
+            <div class="uploaded-images">
+              <!-- <mat-icon>check_circle</mat-icon> -->
+              <!-- <img src="../../../../assets/images/account-img1.png" alt="" /> -->
+              <img [src]="getFileUrl(doc.fileUrl)" alt="" />
+              <!-- <mat-icon>delete</mat-icon> -->
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </div>
   <div class="pb-24">

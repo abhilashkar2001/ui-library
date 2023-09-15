@@ -24,4 +24,7 @@ export class SuccessPopupComponent implements OnInit {
     this.dialogRef.close();
     window.close();
   }
+  close() {
+    this.dialogRef.close();
+  }
 }

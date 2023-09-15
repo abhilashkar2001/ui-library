@@ -73,9 +73,9 @@ export class OpenAccountService {
     return this.http.post<any>(`${baseUrl}/origination-matser/save`, payload);
   }
 
-  fetchSubClass() {
+  fetchSubClass(subClass) {
     return this.http.get<any>(
-      `${baseUrl}/details/fetchSubClass?basisClass=Savings Account`
+      `${baseUrl}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
 
