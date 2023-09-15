@@ -3,7 +3,8 @@
   height: 50px;
   top: 7px;
   right: 5px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0% no-repeat padding-box !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box;
   border-radius: 23px !important;
   color: #ffffff !important;
   text-align: center;
@@ -41,8 +42,8 @@
 
 .edit-button {
   @extend .applyButtonStandard;
-  background: #ffffff !important;
-  color: #004C97 !important;
+  background: #ffffff;
+  color: #004c97;
   box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
   font-family: Poppins;
   font-size: 16px;
@@ -53,7 +54,7 @@
 
 .exit-button {
   @extend .applyButtonStandard;
-  color: #B20000 !important;
+  color: #b20000 !important;
   background: #ffffff !important;
   box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
   font-family: Poppins;
@@ -69,4 +70,8 @@
 
 button:disabled {
   cursor: not-allowed;
+}
+
+.mat-button-disabled {
+  background: #b4b4b4 !important;
 }
