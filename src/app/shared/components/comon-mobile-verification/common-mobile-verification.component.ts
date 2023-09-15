@@ -24,7 +24,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   agreed: boolean;
   resendLink: boolean;
   displaySecond: string;
-
+  getOtpBtn: boolean = true;
   @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
   config = {
     allowNumbersOnly: true,
@@ -44,6 +44,8 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   onGetOTP() {
     this.getOTP.emit({ phone: this.phone });
+    this.getOtpBtn = false;
+    this.resendLink = false;
     this.otpTimer();
   }
 
@@ -55,7 +57,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.enteredOTP.emit({ otp: this.otp });
   }
   isValidated() {
-    if (this.phone && this.phone.length === 10) {
+    if (this.phone?.length === 10 && this.getOtpBtn) {
       return false;
     }
     return true;

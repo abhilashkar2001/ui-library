@@ -49,6 +49,8 @@ import { OtherDocumentsComponent } from "./other-documents/other-documents.compo
 import { SelectKycComponent } from "./select-kyc/select-kyc.component";
 import { CustomSwiperComponent } from "./custom-swiper/custom-swiper.component";
 import { SwiperModule } from "swiper/angular";
+import { MatIconModule } from "@angular/material/icon";
+import { SuccessPopupComponent } from "./success-popup/success-popup.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -77,6 +79,7 @@ const components = [
   LandingProfileComponent,
   OtherDocumentsComponent,
   SelectKycComponent,
+  SuccessPopupComponent,
   CustomSwiperComponent,
 ];
 
@@ -96,6 +99,7 @@ const components = [
     SharedMaterialModule,
     NgOtpInputModule,
     SwiperModule,
+    MatIconModule,
   ],
   declarations: components,
   exports: components,

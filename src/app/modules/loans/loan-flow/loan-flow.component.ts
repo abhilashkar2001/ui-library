@@ -181,6 +181,7 @@ export class LoanFlowComponent implements OnInit {
     //   ...this.customerData,
     //   ...{ requestDate: new Date() },
     // };
+    //this.customerData
     localStorage.setItem("customerData", JSON.stringify(this.customerData));
 
     this.next();
@@ -373,16 +374,17 @@ export class LoanFlowComponent implements OnInit {
       backdropClass: "bdrop",
     });
     dialogRef.afterClosed().subscribe((resp) => {
-      console.log("...");
-      sessionStorage.removeItem("loanBasisDetails");
-      sessionStorage.removeItem("loanCustomerId");
-      sessionStorage.removeItem("loanDisburseId");
-      sessionStorage.removeItem("loanstep");
-      sessionStorage.removeItem("isExistingCustomer");
-      sessionStorage.removeItem("loanAmmount");
-      sessionStorage.removeItem("currentStage");
-      sessionStorage.removeItem("verifyWork");
-      this.router.navigate(["loan/landing"]);
+      if (resp === true) {
+        sessionStorage.removeItem("loanBasisDetails");
+        sessionStorage.removeItem("loanCustomerId");
+        sessionStorage.removeItem("loanDisburseId");
+        sessionStorage.removeItem("loanstep");
+        sessionStorage.removeItem("isExistingCustomer");
+        sessionStorage.removeItem("loanAmmount");
+        sessionStorage.removeItem("currentStage");
+        sessionStorage.removeItem("verifyWork");
+        this.router.navigate(["loan/landing"]);
+      }
     });
   }
   goBack() {

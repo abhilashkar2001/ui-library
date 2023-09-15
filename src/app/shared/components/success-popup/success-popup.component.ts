@@ -21,10 +21,10 @@ export class SuccessPopupComponent implements OnInit {
   done() {
     localStorage.removeItem("basisDetails");
     sessionStorage.removeItem("customerId");
-    this.dialogRef.close();
+    this.dialogRef.close(true);
     window.close();
   }
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }
