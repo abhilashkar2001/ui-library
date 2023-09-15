@@ -30,6 +30,7 @@ export class SelectKycComponent implements OnInit {
   isChecked: boolean = false;
   yourOtp: any = "";
   display: any;
+  getOtpBtn: boolean = true;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -95,6 +96,15 @@ export class SelectKycComponent implements OnInit {
     //   }
     // });
     this.isShowOtp = true;
+    this.getOtpBtn = false;
+  }
+
+  isvalid() {
+    if (this.kycForm.get("verifyNationalID").valid && this.getOtpBtn) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   timer(minute) {

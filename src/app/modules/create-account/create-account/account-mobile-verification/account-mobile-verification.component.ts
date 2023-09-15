@@ -38,6 +38,7 @@ export class AccountMobileVerificationComponent implements OnInit {
     },
   };
   isGetOtp: boolean = false;
+  getOtpBtn: boolean = true;
 
   constructor(
     private router: Router,
@@ -55,6 +56,7 @@ export class AccountMobileVerificationComponent implements OnInit {
 
   getOTP() {
     this.resendLink = false;
+    this.getOtpBtn = false;
     this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
       this.snack.open(`Otp sent Successfully !`, "", {
         duration: 4000,
@@ -154,10 +156,9 @@ export class AccountMobileVerificationComponent implements OnInit {
   }
 
   isValidated() {
-    if (this.phone && this.phone.length === 10) {
+    if (this.phone?.length === 10 && this.getOtpBtn) {
       return false;
     }
-
     return true;
   }
 
