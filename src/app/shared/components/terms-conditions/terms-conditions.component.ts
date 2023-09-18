@@ -26,6 +26,7 @@ export class TermsConditionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerData = JSON.parse(localStorage.getItem("customerData"));
+    console.log(this.customerData);
     this.customerName =
       this.customerData?.firstName + " " + this.customerData?.lastName;
     //this.requestDate = this.customerData?.requestDate.replace(/[a-zA-Z]/g, " ");

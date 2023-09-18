@@ -7,6 +7,7 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
@@ -42,7 +43,8 @@ export class CreateAccountLandingPageComponent {
     private commonService: CommonService,
     private dialog: MatDialog,
     private showSideBar: NewDepositService,
-    private loanApi: LoanService
+    private loanApi: LoanService,
+    private tokenStore: TokenStorageService
   ) {
     this.showSideBar.setToken(true);
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
@@ -126,7 +128,7 @@ export class CreateAccountLandingPageComponent {
                   applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
                   accountType: sessionData.accountType,
                   basisDetailsId: sessionData.basisDetailsId,
-                  branchCode: "BR1",
+                  branchCode: this.tokenStore.getUser().branchCode,
                   source: "Web Site",
                 },
                 customerInfo: custResp,
@@ -137,20 +139,14 @@ export class CreateAccountLandingPageComponent {
                   if (resp?.statusCode === 200) {
                     var accountPayload = {
                       gender: "Male",
-                      screenCode: 1696,
+                      screenCode: this.screenList[2].screenCode,
                     };
                     this.loanApi
                       .verifyWorkFlow(accountPayload)
-                      .subscribe((resp) => {});
-                    this.dialog.open(SuccessPopupComponent, {
-                      data: {
-                        originationId: resp.data.originationModel.originationId,
-                      },
-                      width: "750px",
-                      disableClose: true,
-                      panelClass: "popup-dialog-class",
-                      backdropClass: "bdrop",
-                    });
+                      .subscribe((workres) => {
+                        if (workres?.autoAction) this.saveCofig(workres);
+                        else this.done(resp);
+                      });
                   }
                 });
             });
@@ -158,6 +154,20 @@ export class CreateAccountLandingPageComponent {
       });
     // console.log(docIds);
   }
+
+  done(resp) {
+    this.dialog.open(SuccessPopupComponent, {
+      data: {
+        originationId: resp.data.originationModel.originationId,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+  }
+
+  saveCofig(res) {}
 
   factoryCustomer(resp) {
     var custResp = resp;

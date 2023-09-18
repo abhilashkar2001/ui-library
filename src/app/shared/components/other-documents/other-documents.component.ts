@@ -167,11 +167,9 @@ export class OtherDocumentsComponent implements OnInit {
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number, doc) {
-    console.log(doc);
-    this.otherDocument()
-      .controls[index].get("fileInfo")
-      ?.value.splice(index, 1);
+  deleteFile(index: number, i, doc) {
+    this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
+    console.log(this.documentIds);
   }
 
   addDocument(data?) {

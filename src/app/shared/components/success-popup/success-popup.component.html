@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="25px">
-  <div style="float: right">
-    <img (click)="close()" src="assets/images/close.svg" />
+  <div fxLayoutAlign="end center">
+    <mat-icon (click)="close()">close</mat-icon>
   </div>
   <div class="alertText">
     <div>Application is submitted successfully.</div>
@@ -39,6 +39,15 @@
       Download
     </button>
   </div> -->
+  <div fxLayout="row" style="margin-bottom: 5%">
+    <button type="button" class="shareBtn" mat-raised-button>
+      <mat-icon>share</mat-icon>Share
+    </button>
+    &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+    <button type="button" class="shareBtn" mat-raised-button>
+      <mat-icon>download</mat-icon>Download
+    </button>
+  </div>
   <div>
     <button
       type="button"

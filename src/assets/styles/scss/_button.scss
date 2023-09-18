@@ -43,7 +43,7 @@
 .edit-button {
   @extend .applyButtonStandard;
   background: #ffffff;
-  color: #004c97;
+  color: #004c97 !important;
   box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
   font-family: Poppins;
   font-size: 16px;
