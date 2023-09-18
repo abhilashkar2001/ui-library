@@ -6,39 +6,43 @@
     </div>
   </div>
 
-  <div fxFlex="100" fxLayout="row" style="margin: 0% 4%">
-    <div
-      fxFlex="48"
-      fxLayout="column"
-      class="deposit_service_txt"
-      style="padding-top: 3%"
-    >
-      <div fxLayout="column" fxFlex="100">
-        <div class="break_word accountTitle">{{ subClass?.basisName }}</div>
-        <div style="width: 100%; margin-top: 2%">
-          <div class="break_word sub_account_title">
-            The Regular Savings Account is a standard banking product available
-            to individuals for securely storing and growing their money. It
-            allows customers to deposit and withdraw funds easily, while earning
-            a modest interest rate on their savings. This account typically has
-            lower fees and provides a basic set of banking features for everyday
-            financial needs.
+  <div *ngFor="let subAccount of subClassList; let index = index">
+    <div fxFlex="100" fxLayout="row" style="margin: 0% 4%">
+      <div
+        class="loan-container"
+        [ngStyle]="{
+          'flex-direction': index % 2 !== 0 ? 'row-reverse' : 'row',
+          padding: index % 2 !== 0 ? '20px' : ''
+        }"
+        fxFlex="100"
+      >
+        <div fxFlex="100">
+          <div class="break_word accountTitle">{{ subAccount?.basisName }}</div>
+          <div style="width: 100%; margin-top: 2%">
+            <div class="break_word sub_account_title">
+              {{ subAccount?.featureDescription }}
+            </div>
+          </div>
+          <div fxLayout="row" class="applyBtnGrp">
+            <div>
+              <button
+                mat-flat-button
+                class="applyBtn"
+                (click)="apply(subAccount)"
+              >
+                Apply
+              </button>
+            </div>
+            <!-- <div class="learn_more">Learn More</div> -->
           </div>
         </div>
-        <div fxLayout="row" class="applyBtnGrp">
-          <div>
-            <button mat-flat-button class="applyBtn" (click)="apply(subClass)">
-              Apply
-            </button>
-          </div>
-          <!-- <div class="learn_more">Learn More</div> -->
-        </div>
-      </div>
-    </div>
-    <div fxFlex="48" class="deposit_service_img">
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
-        <div>
-          <img src="assets/images/womenSaving.svg" alt="Group 13740" />
+        <div fxFlex="48" class="deposit_service_img">
+          <img
+            [src]="getFileUrl(subAccount?.fileUrl)"
+            width="399"
+            height="333"
+            alt="subAccountType"
+          />
         </div>
       </div>
     </div>

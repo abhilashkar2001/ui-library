@@ -1,15 +1,23 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-account-type-details",
   templateUrl: "./account-type-details.component.html",
   styleUrls: ["./account-type-details.component.scss"],
 })
-export class AccountTypeDetailsComponent implements OnInit {
-  @Input() subClass;
+export class AccountTypeDetailsComponent implements OnChanges, OnInit {
+  @Input() subClassList;
   basisClass: any = "";
+  endPoints = environment.microServiceURL;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -19,6 +27,10 @@ export class AccountTypeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.subClassList = changes?.subClassList?.currentValue;
+  }
+
   apply(clasDetails) {
     const payload = JSON.stringify({
       accountType: clasDetails.basisName,
@@ -30,5 +42,12 @@ export class AccountTypeDetailsComponent implements OnInit {
       this.router.serializeUrl(this.router.createUrlTree(["/account/open"]))
     );
     window.open(`${url}`, "_blank");
+  }
+  getFileUrl(url) {
+    if (url.includes("https")) {
+      return "assets/images/normal_loan.svg";
+    } else {
+      return `${this.endPoints}${url}`;
+    }
   }
 }
