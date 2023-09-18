@@ -160,7 +160,7 @@ export class LoanFlowComponent implements OnInit {
     });
   }
   stepperSelectionChange(event) {
-    this.cuurrentStep = this.steper_Array[event.selectedIndex].label;
+    this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
   }
   factory() {
     this.cuurrentStep = this.steper_Array[this.selectedStep].label;
@@ -391,5 +391,10 @@ export class LoanFlowComponent implements OnInit {
     const num = this.selectedStep - 1;
     this.selectedStep = num;
     this.factory();
+  }
+
+  verfyStep(verifyStep, currentStep) {
+    if (currentStep?.toLowerCase().includes(verifyStep)) return true;
+    else return false;
   }
 }

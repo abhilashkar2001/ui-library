@@ -50,6 +50,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
   genderArray: any[] = [];
   prefixArray: any[] = [];
   residenceTypeArray: any[] = [];
+  todayDate: Date = new Date();
 
   constructor(
     private fb: FormBuilder,

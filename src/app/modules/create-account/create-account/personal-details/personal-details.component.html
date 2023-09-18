@@ -102,7 +102,7 @@
                           matInput
                           [matDatepicker]="picker"
                           formControlName="dateOfBirth"
-                          [min]="todayDate"
+                          [max]="todayDate"
                         />
                         <mat-error
                           *ngIf="

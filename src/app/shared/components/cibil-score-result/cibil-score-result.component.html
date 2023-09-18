@@ -11,21 +11,10 @@
   <div class="cibil-label">You Credit Bureau Score is</div>
   <div class="result">
     {{ cibilScoreText() }}
-    <button
-      type="button"
-      class="info-button"
-      placement="bottom"
-      [ngbPopover]="popOver"
-      popoverClass="popover-custom"
-      #popOverRef="ngbPopover"
-      triggers="manual"
-      [autoClose]="false"
-      triggers="mouseenter:mouseleave"
-    >
+    <button type="button" class="info-button" placement="bottom">
       <mat-icon>info</mat-icon>
     </button>
-    <!-- triggers="mouseenter:mouseleave" (click)="popOverRef.toggle()" -->
-    <ng-template class="jk" #popOver>
+    <div class="jk">
       <div fxLayout="column">
         <div class="parentCibil">Understnd CIBIL Score</div>
         <div class="cibilInfo">
@@ -45,8 +34,10 @@
           <div class="cibil_score">{{ cibil?.description }}</div>
         </div>
       </div>
-    </ng-template>
+    </div>
+    <!-- triggers="mouseenter:mouseleave" (click)="popOverRef.toggle()" -->
   </div>
+
   <div *ngIf="cibilScore > 681">
     <div class="cibil-text-card">
       <div class="like-icon">
