@@ -55,7 +55,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Create Loan'"
+    *ngIf="verfyStep('create', cuurrentStep)"
   >
     <app-create-loan (onSaveCreateLoan)="onSaveCreateLoan($event)">
     </app-create-loan>
@@ -63,7 +63,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Verify Mobile Number'"
+    *ngIf="verfyStep('mobile', cuurrentStep)"
   >
     <app-mobile-verification
       (checkExistingUserEvent)="checkExistingUserEvent($event)"
@@ -75,7 +75,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'CIBIL Score'"
+    *ngIf="verfyStep('cibil', cuurrentStep)"
   >
     <app-cibil-score-container
       (onCustomCibilDetail)="onCustomCibilDetail()"
@@ -85,7 +85,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Personal Details'"
+    *ngIf="verfyStep('personal', cuurrentStep)"
   >
     <app-custom-personal-details
       (customSavePersonal)="customSavePersonal($event)"
@@ -97,7 +97,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Select KYC'"
+    *ngIf="verfyStep('kyc', cuurrentStep)"
   >
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
@@ -109,7 +109,7 @@
   <div
     class="align_fdForm"
     fxLayout="column"
-    *ngIf="cuurrentStep == 'Document'"
+    *ngIf="verfyStep('document', cuurrentStep)"
   >
     <app-loan-document-upload
       (onConfirmEvent)="onConfirm($event)"
@@ -117,14 +117,22 @@
     >
     </app-loan-document-upload>
   </div>
-  <div class="align_fdForm" fxLayout="column" *ngIf="cuurrentStep == 'terms'">
+  <div
+    class="align_fdForm"
+    fxLayout="column"
+    *ngIf="verfyStep('term', cuurrentStep)"
+  >
     <app-loan-terms-conditions
       (onConfirmEvent)="onTCAccepted($event)"
       (onBackEvent)="goBack()"
     >
     </app-loan-terms-conditions>
   </div>
-  <div *ngIf="cuurrentStep == 'summary'" class="align_fdForm" fxLayout="column">
+  <div
+    *ngIf="verfyStep('summary', cuurrentStep)"
+    class="align_fdForm"
+    fxLayout="column"
+  >
     <app-loan-summary
       (onConfirmEvent)="verifyWorkFlow()"
       [loanSummary]="loanSummary"

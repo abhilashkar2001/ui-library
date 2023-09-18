@@ -92,6 +92,7 @@
                         formControlName="dateOfBirth"
                         name="dateOfBirth"
                         [matDatepicker]="picker"
+                        [max]="todayDate"
                         readonly
                       />
                       <mat-datepicker-toggle matSuffix [for]="picker">

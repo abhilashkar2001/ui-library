@@ -94,7 +94,18 @@
   color: #000;
 }
 .jk {
-  width: 250px;
+  display: none;
   background: #e6efff;
   padding: -1%;
+  width: 350px;
+  background: #e6efff;
+  padding: -1%;
+  padding: 2%;
+  float: right;
+}
+.info-button:hover + .jk {
+  z-index: 110 !important;
+  display: flex !important;
+  position: absolute;
+  margin-top: 53px;
 }
