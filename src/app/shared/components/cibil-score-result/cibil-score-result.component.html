@@ -28,7 +28,11 @@
           class="mt-6"
         >
           <div fxLayout="row" fxLayoutAlign="center center">
-            <div class="circle"></div>
+            <div
+              class="circle"
+              [ngStyle]="{ color: cibil?.colorCode }"
+              [style.background-color]="cibil?.colorCode"
+            ></div>
             <div class="cibil_score pl-4">{{ cibil?.score }}</div>
           </div>
           <div class="cibil_score">{{ cibil?.description }}</div>

@@ -17,7 +17,7 @@ $lenghts: (
   200: 200px,
   240: 240px,
   260: 260px,
-  300: 300px
+  300: 300px,
 );
 
 @each $name, $value in $lenghts {
@@ -30,13 +30,13 @@ $lenghts: (
 }
 
 .w-full {
-  width: 100%;
+  width: 100% !important;
 }
 .w-full-screen {
   width: 100vh;
 }
 // View height classes
-.h-full{
+.h-full {
   height: 100%;
 }
 .h-full-screen {
