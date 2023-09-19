@@ -39,6 +39,8 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   accountHeader: string;
   todayDate: Date = new Date();
   listCityState: any = [];
+  listCity: any = [];
+
   staticData = {
     RESIDENCETYE: [],
     GENDER: [],
@@ -65,8 +67,25 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     this.getGenericDetails();
     // this.builtPersonalFOrm();
     this.getCountry();
+    this.getState();
+    this.getCity();
     if (customerId) this.getCustomerById(customerId);
     else this.builtPersonalFOrm();
+  }
+
+  getState() {
+    this.openAccountService.getAllState().subscribe((resp: any) => {
+      if (resp?.statusCode == 200) {
+        this.listCityState = resp.data;
+      }
+    });
+  }
+  getCity() {
+    this.openAccountService.getAllCity().subscribe((resp: any) => {
+      if (resp?.statusCode == 200) {
+        this.listCity = resp.data;
+      }
+    });
   }
 
   getCustomerById(customerId) {
@@ -259,7 +278,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
               .fetchStateCityByZipcode(value)
               .subscribe((res: any) => {
                 if (res) {
-                  this.listCityState = res?.data;
                   this.personalInfoArray.controls[indx]
                     .get("state")
                     .patchValue(res?.data?.[0]?.state);
