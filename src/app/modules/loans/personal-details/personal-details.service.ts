@@ -14,4 +14,8 @@ export class PersonalDetailsService {
       `${this.baseUrl}/city/fetchByPinCode?pincode=${pincode}`
     );
   }
+
+  getCustomerByCif(id) {
+    return this.http.get<any>(`${this.baseUrl}/customer-api?customerNo=${id}`);
+  }
 }

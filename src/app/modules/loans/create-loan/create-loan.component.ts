@@ -97,6 +97,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   initialForm(data?) {
+    var holderType = sessionStorage.getItem("loanHolderType");
     this.personalLoanDetailsForm = this.fb.group({
       loanAmount: [data ? data?.emiAmount : "", Validators.required],
       tenureYear: [data ? data?.tenureYear : ""],
@@ -107,7 +108,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       interestRate: [data ? data.interestRate : "", Validators.required],
       interestPayable: [data ? data.interestPayable : "", Validators.required],
       principlAmount: [data ? data.principalAmount : "", Validators.required],
-      holderType: [data ? data?.tenureYear : "", Validators.required],
+      holderType: [holderType ? holderType : "", Validators.required],
       totalPayableAmount: [
         data ? data.totalPayableAmount : "",
         Validators.required,
@@ -154,6 +155,10 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonths} months ${this.personalLoanDetailsForm.value.tenureDay} Days`,
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
+    sessionStorage.setItem(
+      "loanHolderType",
+      this.personalLoanDetailsForm.value.holderType
+    );
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         this.snack.open(`Create Loan Details Saved` + " !", "OK", {
