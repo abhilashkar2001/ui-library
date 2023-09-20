@@ -1,6 +1,6 @@
 <div class="align_fd">
   <div fxFlex="40" class="fdCalculator_parent">
-    <div fxFlex="100">
+    <!-- <div fxFlex="100">
       <div fxLayout="row">
         <div fxLayout="column" fxFlex="100">
           <div fxLayout="row">
@@ -41,12 +41,17 @@
                 [label]="item.screenName"
                 [stepControl]="item.stepFormControl"
               ></mat-step>
-              <!--  [stepControl]="item.stepFormControl" need to update once -->
+              <!--  [stepControl]="item.stepFormControl" need to update once 
             </ng-container>
           </mat-stepper>
         </div>
       </div>
-    </div>
+    </div> -->
+    <app-commmon-steeper
+      [screenList]="screenList"
+      [screenIndex]="selectedStep"
+      (customSelectionChange)="stepperSelectionChange($event)"
+    ></app-commmon-steeper>
   </div>
   <div
     class="vertical_divider"
@@ -136,6 +141,7 @@
     <app-loan-summary
       (onConfirmEvent)="verifyWorkFlow()"
       [loanSummary]="loanSummary"
+      (onBackEvent)="goBack()"
     ></app-loan-summary>
   </div>
 </div>

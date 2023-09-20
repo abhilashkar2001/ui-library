@@ -161,9 +161,10 @@ export class LoanFlowComponent implements OnInit {
   }
   stepperSelectionChange(event) {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
+    sessionStorage.setItem("loanstep", event.selectedIndex);
   }
   factory() {
-    this.cuurrentStep = this.steper_Array[this.selectedStep].label;
+    this.cuurrentStep = this.screenList[this.selectedStep].screenName;
   }
   next() {
     const num = this.selectedStep + 1;
@@ -367,6 +368,7 @@ export class LoanFlowComponent implements OnInit {
     const dialogRef = this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originationId,
+        loanSummary: this.loanSummary,
       },
       width: "750px",
       disableClose: true,
@@ -383,14 +385,18 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.removeItem("loanAmmount");
         sessionStorage.removeItem("currentStage");
         sessionStorage.removeItem("verifyWork");
+        sessionStorage.removeItem("loanHolderType");
         this.router.navigate(["loan/landing"]);
       }
     });
   }
   goBack() {
     const num = this.selectedStep - 1;
-    this.selectedStep = num;
-    this.factory();
+    this.cuurrentStep = this.screenList[num].screenName;
+    setTimeout(() => {
+      this.selectedStep = num;
+    }, 200);
+    //this.selectedStep = num;
   }
 
   verfyStep(verifyStep, currentStep) {

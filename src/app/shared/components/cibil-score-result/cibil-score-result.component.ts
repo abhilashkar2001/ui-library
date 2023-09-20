@@ -23,22 +23,27 @@ export class CibilScoreResultComponent implements OnInit {
     {
       score: "Below 681",
       description: "Need Help",
+      colorCode: "#D57066",
     },
     {
       score: "681 - 730",
       description: "Average",
+      colorCode: "#DF9690",
     },
     {
       score: "771 - 770",
       description: "Fair",
+      colorCode: "#E4A037",
     },
     {
       score: "771 - 790",
       description: "Good",
+      colorCode: "#62BB69",
     },
     {
       score: "Above 791",
       description: "Excellent",
+      colorCode: "#D57066",
     },
   ];
 

@@ -239,4 +239,41 @@ export class PersonalCustomDetailsComponent implements OnInit {
         }
       });
   }
+  getByCifNumber(i) {
+    this.customer.controls[i]
+      .get("customerNo")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.personalDetailsService
+          .getCustomerByCif(value)
+          .subscribe((resp) => {
+            if (resp.statusCode === 200) {
+              this.customer.controls[i].patchValue(
+                this.FactoryPopulate(resp.data[0])
+              );
+            }
+          });
+        console.log(value);
+      });
+  }
+  FactoryPopulate(resp) {
+    return {
+      id: "",
+      customerNo: resp.customerId,
+      primaryCustomer: "",
+      prefix: resp.prefix,
+      firstName: resp.firstName,
+      lastName: resp.lastName,
+      dateOfBirth: resp.dateOfBirth,
+      email: resp.contact.email,
+      gender: resp.gender,
+      nationality: resp.nationality,
+      address1: resp.contact.address[0].address1,
+      residenceType: resp.contact.address[0].residenceType,
+      country: resp.contact.address[0].cityName,
+      pincode: resp.contact.address[0].pincode,
+      state: resp.contact.address[0].stateName,
+      cityId: resp.contact.address[0].cityId,
+    };
+  }
 }

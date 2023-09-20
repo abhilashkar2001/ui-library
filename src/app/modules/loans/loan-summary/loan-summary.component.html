@@ -1,7 +1,7 @@
 <div class="column-2">
   <div class="loan-summary">
     <div class="text-header">Loan Details</div>
-    <div class="loan-details">
+    <div class="loan-details w-full">
       <div class="col-1">
         <span class="content-header">Loan Amount</span>
         <span class="content">{{
@@ -64,7 +64,7 @@
   </div>
   <div class="disbursement-summary">
     <div class="text-header">Disbursement Details</div>
-    <div class="disbursement-details">
+    <div class="disbursement-details w-full">
       <div class="col-1">
         <span class="content-header">Type</span>
         <span class="content">{{
@@ -93,7 +93,7 @@
   </div>
   <div class="bank-account-summary">
     <div class="text-header">Bank Account</div>
-    <div class="disbursement-details">
+    <div class="disbursement-details w-full">
       <div class="col-1">
         <span class="content-header">Your Account</span>
         <span class="content"
@@ -117,7 +117,7 @@
   <div class="uploaded-documents-summary">
     <div class="text-header">Documents</div>
     <div
-      class="bank-account-details"
+      class="bank-account-details w-full"
       *ngIf="loanSummaryDetails?.docs?.length > 0"
       fxLayout="column"
     >

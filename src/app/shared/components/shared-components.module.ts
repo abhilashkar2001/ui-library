@@ -51,6 +51,7 @@ import { CustomSwiperComponent } from "./custom-swiper/custom-swiper.component";
 import { SwiperModule } from "swiper/angular";
 import { MatIconModule } from "@angular/material/icon";
 import { SuccessPopupComponent } from "./success-popup/success-popup.component";
+import { CommmonSteeperComponent } from "./commmon-steeper/commmon-steeper.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -81,6 +82,7 @@ const components = [
   SelectKycComponent,
   SuccessPopupComponent,
   CustomSwiperComponent,
+  CommmonSteeperComponent,
 ];
 
 @NgModule({

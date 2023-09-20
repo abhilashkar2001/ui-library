@@ -93,7 +93,7 @@ export class LoanAccountTypeComponent implements OnInit {
       principalAmount: 7000,
       totalPayableAmount: 12500,
       disbursementType: "",
-      accountNumber: "",
+      accountNumber: null,
       emiStartDate: "2022-03-14T16:53:01.000Z",
       // originationId: 9821,
     };
