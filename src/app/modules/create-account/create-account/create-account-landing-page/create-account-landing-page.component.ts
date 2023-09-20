@@ -35,6 +35,10 @@ export class CreateAccountLandingPageComponent {
   isSelectKYCTab: boolean;
   stepper: MatStepper;
   screenList: any;
+  screenTitle = "Savings Resident Account";
+  selectedStep: number = 0;
+  currentStep: string;
+  originationId: any;
 
   constructor(
     private router: Router,
@@ -52,26 +56,48 @@ export class CreateAccountLandingPageComponent {
   }
 
   ngOnInit(): void {
+    var sessionStep = sessionStorage.getItem("accountstep");
+    if (sessionStep) this.selectedStep = parseInt(sessionStep);
     const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
         this.openAccountService
           .getProcessStages(resp.data.processStageList[0].id)
-          .subscribe((resp) => {
-            this.screenList = resp.data.screens.sort((s1, s2) => {
+          .subscribe((response) => {
+            this.screenList = response.data.screens.sort((s1, s2) => {
               return s1.sequence - s2.sequence;
             });
+            sessionStorage.setItem(
+              "currentAccountStage",
+              resp.data.processStageList[0].id
+            );
+            this.factory();
           });
       });
     console.log(this.screenList);
   }
 
+  factory() {
+    this.currentStep = this.screenList[this.selectedStep].screenName;
+  }
+
+  next() {
+    const num = this.selectedStep + 1;
+    this.selectedStep = num;
+    sessionStorage.setItem("accountstep", String(this.selectedStep));
+    this.factory();
+    // for scrolling sidebar and get current state.
+    // const el = document.querySelector(".mat-step-label-selected");
+    // // el.scrollIntoView();
+  }
+
   onVerify() {
-    this.isPersonalDetailsTab = true;
-    this.isMobileVerificationTab = false;
-    this.isSelectKYCTab = false;
-    this.stepper.next();
+    // this.isPersonalDetailsTab = true;
+    // this.isMobileVerificationTab = false;
+    // this.isSelectKYCTab = false;
+    // this.stepper.next();
+    this.next();
   }
 
   onExit() {
@@ -79,19 +105,20 @@ export class CreateAccountLandingPageComponent {
   }
 
   getTabDetails(tabDetails: any) {
-    if (tabDetails) {
-      this.isMobileVerificationTab = tabDetails.isMobileVerification;
-      this.isPersonalDetailsTab = tabDetails.isPersonalDetails;
-      this.isSelectKYCTab = tabDetails.isSelectKYC;
-      this.stepper = tabDetails.stepper;
-    }
+    console.log(tabDetails);
+
+    this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
+    sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
+    // if (tabDetails) {
+    //   this.isMobileVerificationTab = tabDetails.isMobileVerification;
+    //   this.isPersonalDetailsTab = tabDetails.isPersonalDetails;
+    //   this.isSelectKYCTab = tabDetails.isSelectKYC;
+    //   this.stepper = tabDetails.stepper;
+    // }
   }
 
   personalDetailsSubmitted() {
-    this.isPersonalDetailsTab = false;
-    this.isMobileVerificationTab = false;
-    this.isSelectKYCTab = true;
-    this.stepper.next();
+    this.next();
   }
 
   onBackOnPreviousStep() {
@@ -123,6 +150,8 @@ export class CreateAccountLandingPageComponent {
               );
               var custResp = this.factoryCustomer(resp.data);
               custResp[0].primaryCustomer = true;
+              custResp[0].isphoneNumVerified = true;
+              custResp[0].isEmailVerified = true;
               const payload = {
                 originationModel: {
                   applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -137,6 +166,8 @@ export class CreateAccountLandingPageComponent {
                 .saveCustomerInfo(payload)
                 .subscribe((resp) => {
                   if (resp?.statusCode === 200) {
+                    this.originationId =
+                      resp.data.originationModel.originationId;
                     var accountPayload = {
                       gender: "Male",
                       screenCode: this.screenList[2].screenCode,
@@ -155,19 +186,63 @@ export class CreateAccountLandingPageComponent {
     // console.log(docIds);
   }
 
-  done(resp) {
-    this.dialog.open(SuccessPopupComponent, {
+  done(resp?) {
+    const dialogRef = this.dialog.open(SuccessPopupComponent, {
       data: {
-        originationId: resp.data.originationModel.originationId,
+        originationId: this.originationId,
       },
       width: "750px",
       disableClose: true,
       panelClass: "popup-dialog-class",
       backdropClass: "bdrop",
     });
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp === true) {
+        sessionStorage.removeItem("loanBasisDetails");
+        sessionStorage.removeItem("customerId");
+        sessionStorage.removeItem("loanDisburseId");
+        sessionStorage.removeItem("loanstep");
+        sessionStorage.removeItem("isExistingCustomer");
+        sessionStorage.removeItem("loanAmmount");
+        sessionStorage.removeItem("currentAccountStage");
+        sessionStorage.removeItem("verifyWork");
+        sessionStorage.removeItem("loanHolderType");
+        this.router.navigate(["account/applyAccount"]);
+      }
+    });
   }
 
-  saveCofig(res) {}
+  goBack() {
+    const num = this.selectedStep - 1;
+    this.currentStep = this.screenList[num].screenName;
+    setTimeout(() => {
+      this.selectedStep = num;
+    }, 200);
+    //this.selectedStep = num;
+  }
+
+  saveCofig(resp) {
+    const accountBasisDetails = JSON.parse(
+      localStorage.getItem("basisDetails")
+    );
+    const payload = {
+      originationId: this.originationId,
+      autoAction: resp?.autoAction,
+      approvalConfigId: [parseInt(resp?.approval)],
+      basisId: accountBasisDetails?.basisDetailsId,
+      processCycleCode: accountBasisDetails?.processCycleCode,
+      currentStage: parseInt(sessionStorage.getItem("currentAccountStage")),
+      targetStage: parseInt(resp?.targetStage),
+      currentScreen: parseInt(resp?.screenCode),
+      targetScreen: parseInt(resp?.targetScreen),
+    };
+
+    this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.done();
+      } else if (resp?.statusCode === 204) this.done();
+    });
+  }
 
   factoryCustomer(resp) {
     var custResp = resp;
@@ -187,5 +262,9 @@ export class CreateAccountLandingPageComponent {
       delete custResp[i].documnentsInfo;
     });
     return custResp;
+  }
+  verfyStep(verifyStep, currentStep) {
+    if (currentStep?.toLowerCase().includes(verifyStep)) return true;
+    else return false;
   }
 }
