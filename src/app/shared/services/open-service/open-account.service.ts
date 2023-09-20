@@ -94,4 +94,11 @@ export class OpenAccountService {
   fetchStateCityByZipcode(pincode) {
     return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
   }
+
+  getAllState() {
+    return this.http.get(`${baseUrl}/state`);
+  }
+  getAllCity() {
+    return this.http.get(`${baseUrl}/city`);
+  }
 }

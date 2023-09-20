@@ -14,6 +14,7 @@ import {
 import { EgretHighlightDirective } from "./egret-highlight.directive";
 import { AutoFocusDirective } from "./auto-focus.directive";
 import { NumberDirective } from "./number-only.directive";
+import { AlphabetOnlyDirective } from "./alphabet-only.directive";
 
 const directives = [
   AutoFocusDirective,
@@ -27,6 +28,7 @@ const directives = [
   EgretSidenavTogglerDirective,
   EgretHighlightDirective,
   NumberDirective,
+  AlphabetOnlyDirective,
 ];
 
 @NgModule({

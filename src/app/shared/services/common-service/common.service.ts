@@ -34,4 +34,8 @@ export class CommonService {
   loanCalculatorsDataSave(calcData: any) {
     this.calCulatorsDataSource.next(calcData);
   }
+
+  deleteDocument(documentId) {
+    return this.http.delete(`${baseUrl}/upload-document/${documentId}`);
+  }
 }

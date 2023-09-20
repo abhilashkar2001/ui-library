@@ -55,7 +55,11 @@
                         <mat-label class="custom-mat-label"
                           >First Name</mat-label
                         >
-                        <input matInput formControlName="firstName" />
+                        <input
+                          appAlphabetOnly
+                          matInput
+                          formControlName="firstName"
+                        />
                         <mat-error
                           *ngIf="
                             customer.controls['firstName'].hasError(
@@ -77,7 +81,11 @@
                         <mat-label class="custom-mat-label"
                           >Last Name</mat-label
                         >
-                        <input matInput formControlName="lastName" />
+                        <input
+                          matInput
+                          appAlphabetOnly
+                          formControlName="lastName"
+                        />
                         <mat-error
                           *ngIf="
                             customer.controls['lastName'].hasError(
@@ -209,7 +217,7 @@
                       >
                         <mat-label class="custom-mat-label">Address</mat-label>
                         <input matInput formControlName="address" />
-                        <mat-icon matSuffix>my_location</mat-icon>
+                        <!-- <mat-icon matSuffix>my_location</mat-icon> -->
                         <mat-error
                           *ngIf="
                             customer.controls['address'].hasError('required') &&
@@ -331,8 +339,8 @@
                         <mat-select formControlName="state">
                           <mat-option
                             *ngFor="let item of listCityState"
-                            [value]="item?.state"
-                            >{{ item?.state }}</mat-option
+                            [value]="item?.stateName"
+                            >{{ item?.stateName }}</mat-option
                           >
                         </mat-select>
                         <mat-error
@@ -356,9 +364,9 @@
 
                         <mat-select formControlName="cityId">
                           <mat-option
-                            *ngFor="let item of listCityState"
+                            *ngFor="let item of listCity"
                             [value]="item?.cityId"
-                            >{{ item?.city }}</mat-option
+                            >{{ item?.cityName }}</mat-option
                           >
                         </mat-select>
                         <mat-error

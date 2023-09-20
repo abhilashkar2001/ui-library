@@ -22,6 +22,7 @@ import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { CommonService } from "app/shared/services/common-service/common.service";
 
 @Component({
   selector: "app-other-documents",
@@ -59,7 +60,8 @@ export class OtherDocumentsComponent implements OnInit {
     private api: NewDepositService,
     private snack: MatSnackBar,
     private sharedService: SharedService,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
+    private CommonService: CommonService
   ) {}
 
   ngAfterViewInit() {}
@@ -168,8 +170,15 @@ export class OtherDocumentsComponent implements OnInit {
    * @param index (File index)
    */
   deleteFile(index: number, i, doc) {
+    let documentId =
+      this.createDocumentForm.value.otherDocument[i].docIds[index];
+    this.CommonService.deleteDocument(documentId).subscribe((res) => {
+      if (res) {
+        console.log("Document deleted Successfully..");
+        this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
+      }
+    });
     this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
-    console.log(this.documentIds);
   }
 
   addDocument(data?) {
