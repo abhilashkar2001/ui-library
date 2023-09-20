@@ -29,6 +29,7 @@ export class LoanFlowComponent implements OnInit {
   isLinear = true;
   cuurrentStep: string;
   screenList: any = [];
+  screenTitle = "Personal Loan";
   originationId: any;
   loanSummary: any;
   customerData: any;

@@ -6,6 +6,7 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { SharedService } from "app/shared/shared.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
@@ -46,7 +47,8 @@ export class AccountMobileVerificationComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     public dialog: MatDialog,
-    public snack: MatSnackBar //  private sharedApi: SharedService //
+    public snack: MatSnackBar, //  private sharedApi: SharedService //
+    private tokenStore: TokenStorageService
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
@@ -92,7 +94,7 @@ export class AccountMobileVerificationComponent implements OnInit {
                 applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
                 accountType: sessionData.accountType,
                 basisDetailsId: sessionData.basisDetailsId,
-                branchCode: "BR1",
+                branchCode: this.tokenStore.getUser().branchCode,
                 source: "Web Site",
               },
               customerInfo: resp.data,

@@ -1,23 +1,34 @@
 <div class="create-account">
-  <app-account-stpper
-    (customSelectionChange)="getTabDetails($event)"
-    [screenList]="screenList"
-  ></app-account-stpper>
+  <div class="stepper" fxFlex="40">
+    <app-commmon-steeper
+      [screenTitle]="screenTitle"
+      [screenList]="screenList"
+      [screenIndex]="selectedStep"
+      (customSelectionChange)="getTabDetails($event)"
+    ></app-commmon-steeper>
+  </div>
+  <div
+    class="vertical_divider"
+    style="border-right: 1px solid #cbcbcb; height: 550px"
+  ></div>
   <div class="col-div2">
-    <div *ngIf="isMobileVerificationTab">
+    <div *ngIf="verfyStep('mobile', currentStep)">
       <app-account-Mobile-verification-details
         (onBackEvent)="onBackOnPreviousStep()"
         (onVerifyOtpEvent)="onVerify()"
       ></app-account-Mobile-verification-details>
     </div>
-    <div *ngIf="isPersonalDetailsTab">
+    <div *ngIf="verfyStep('personal', currentStep)">
       <app-create-account-personal-details
         (onSubmitPersonalDetailsEvent)="personalDetailsSubmitted()"
-        (onBackEvent)="onBackOnPreviousStep()"
+        (onBackEvent)="goBack()"
       ></app-create-account-personal-details>
     </div>
-    <div *ngIf="isSelectKYCTab">
-      <app-other-documents (customSaveDocument)="customSaveDocuments($event)">
+    <div *ngIf="verfyStep('kyc', currentStep)">
+      <app-other-documents
+        (customSaveDocument)="customSaveDocuments($event)"
+        (customgoBack)="goBack()"
+      >
       </app-other-documents>
     </div>
   </div>

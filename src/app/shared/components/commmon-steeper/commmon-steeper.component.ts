@@ -17,6 +17,7 @@ import { MatStepper } from "@angular/material/stepper";
 })
 export class CommmonSteeperComponent implements OnChanges, OnInit {
   @Input() screenList;
+  @Input() screenTitle;
   @Input() screenIndex = 0;
   isLinear = true;
   @ViewChild("stepper") myStepper: MatStepper;

@@ -3,7 +3,10 @@
   flex-direction: row;
 
   justify-content: space-between;
-
+  .stepper {
+    margin: 3%;
+    margin-right: 0%;
+  }
   .col-div2 {
     display: flex;
     flex-direction: column;
