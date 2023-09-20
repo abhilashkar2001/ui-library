@@ -20,7 +20,7 @@ export class ApplyAccountComponent implements OnInit {
     console.log(this.route.snapshot.params);
     this.api.fetchSubClass(this.subClass).subscribe((resp) => {
       if (resp?.statusCode === 200)
-        this.subClassList = resp.data[0]?.productDetails;
+        this.subClassList = resp.data[1]?.productDetails;
     });
   }
 }
