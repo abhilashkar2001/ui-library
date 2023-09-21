@@ -160,6 +160,36 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   addCustomer(data?) {
     this.personalInfoArray.push(this.initialForm(data));
+    this.debounceZipCode();
+  }
+  debounceZipCode() {
+    for (let i = 0; i < this.personalInfoArray.value?.length; i++) {
+      this.fetchStateCity(i);
+    }
+  }
+
+  fetchStateCity(i) {
+    this.personalInfoArray.controls[i]
+      .get("zipCode")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((value) => {
+        if (value) {
+          if (value.toString().length) {
+            this.personalDetailsService
+              .fetchStateCityByZipcode(value)
+              .subscribe((res: any) => {
+                if (res?.statusCode === 200) {
+                  this.personalInfoArray.controls[i]
+                    .get("state")
+                    .patchValue(res?.data?.[0]?.state);
+                  this.personalInfoArray.controls[i]
+                    .get("cityId")
+                    .patchValue(res?.data?.[0]?.cityId);
+                }
+              });
+          }
+        }
+      });
   }
 
   panelOpened(index: number) {
@@ -240,9 +270,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     });
   }
 
-  onCountrySelect() {
+  onCountrySelect(countryCode) {
     this.openAccountService
-      .getState(this.personalDetailsForm.value.nationality)
+      .getState(countryCode)
       .subscribe((statelist: any) => {
         this.stateList = statelist.data;
       });
@@ -260,36 +290,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     this.personalDetailsForm.patchValue({
       zipCode: cityObj.pincozipC,
     });
-  }
-
-  getCityandStateByZipcode(indx) {
-    console.log({ indx });
-
-    (<FormGroup>this.personalInfoArray.controls[indx])
-      .get("zipCode")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((value) => {
-        console.log({ value });
-
-        if (value) {
-          console.log(value);
-          if (value.toString().length) {
-            this.personalDetailsService
-              .fetchStateCityByZipcode(value)
-              .subscribe((res: any) => {
-                if (res) {
-                  this.personalInfoArray.controls[indx]
-                    .get("state")
-                    .patchValue(res?.data?.[0]?.state);
-
-                  this.personalInfoArray.controls[indx]
-                    .get("cityId")
-                    .patchValue(res?.data?.[0]?.cityId);
-                }
-              });
-          }
-        }
-      });
   }
 
   onBack() {

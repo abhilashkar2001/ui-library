@@ -12,7 +12,7 @@ import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import * as moment from "moment";
 
 import { PersonalDetailsService } from "./personal-details.service";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -155,7 +155,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
   newCustomer(data?): FormGroup {
     return this.fb.group({
       customerId: data && data.customerId,
-      customerNo: [data ? data.customerId : ""],
+      customerNo: [data ? data.customerNo : ""],
       primaryCustomer: "",
       prefix: [data ? data.prefix : "", Validators.required],
       firstName: [data ? data.firstName : "", Validators.required],
@@ -190,6 +190,53 @@ export class PersonalCustomDetailsComponent implements OnInit {
 
   addCustomer(data?) {
     this.customer.push(this.newCustomer(data));
+    this.debounceZipCodeAndCif();
+  }
+  debounceZipCodeAndCif() {
+    for (let i = 0; i < this.customer.value?.length; i++) {
+      this.fetchStateCity(i);
+      this.getCustomerByCif(i);
+    }
+  }
+
+  fetchStateCity(i) {
+    this.customer.controls[i]
+      .get("pincode")
+      .valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        if (value) {
+          if (value.toString().length) {
+            this.personalDetailsService
+              .fetchStateCityByZipcode(value)
+              .subscribe((res: any) => {
+                if (res?.statusCode === 200) {
+                  this.customer.controls[i]
+                    .get("state")
+                    .patchValue(res?.data?.[0]?.state);
+                  this.customer.controls[i]
+                    .get("cityId")
+                    .patchValue(res?.data?.[0]?.cityId);
+                }
+              });
+          }
+        }
+      });
+  }
+  getCustomerByCif(i) {
+    this.customer.controls[i]
+      .get("customerNo")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.personalDetailsService
+          .getCustomerByCif(value)
+          .subscribe((resp) => {
+            if (resp?.statusCode === 200) {
+              this.customer.controls[i].patchValue(
+                this.FactoryPopulate(resp.data[0])
+              );
+            }
+          });
+      });
   }
 
   confirmCustomer() {
@@ -258,57 +305,9 @@ export class PersonalCustomDetailsComponent implements OnInit {
     });
   }
 
-  getCityandStateByZipcode(indx) {
-    console.log({ indx });
-
-    (<FormGroup>this.customer.controls[indx])
-      .get("pincode")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((value) => {
-        console.log({ value });
-
-        if (value) {
-          console.log(value);
-          if (value.toString().length) {
-            this.personalDetailsService
-              .fetchStateCityByZipcode(value)
-              .subscribe((res: any) => {
-                if (res) {
-                  this.customer.controls[indx]
-                    .get("state")
-                    .patchValue(res?.data?.[0]?.state);
-                  this.customer.controls[indx]
-                    .get("cityId")
-                    .patchValue(res?.data?.[0]?.cityId);
-                }
-              });
-          }
-        }
-      });
-  }
-
-  getByCifNumber(i) {
-    this.customer.controls[i]
-      .get("customerNo")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((value) => {
-        this.personalDetailsService
-          .getCustomerByCif(value)
-          .subscribe((resp) => {
-            if (resp.statusCode === 200) {
-              console.log(this.FactoryPopulate(resp.data[0]));
-
-              this.customer.controls[i].patchValue(
-                this.FactoryPopulate(resp.data[0])
-              );
-            }
-          });
-        console.log(value);
-      });
-  }
   FactoryPopulate(resp) {
     return {
-      id: "",
+      customerId: resp?.customerId,
       primaryCustomer: "",
       prefix: resp.prefix,
       firstName: resp.firstName,
