@@ -387,6 +387,9 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.removeItem("currentStage");
         sessionStorage.removeItem("verifyWork");
         sessionStorage.removeItem("loanHolderType");
+        sessionStorage.removeItem("tenureDays");
+        sessionStorage.removeItem("tenureMonth");
+        sessionStorage.removeItem("tenureYear");
         this.router.navigate(["loan/landing"]);
       }
     });
