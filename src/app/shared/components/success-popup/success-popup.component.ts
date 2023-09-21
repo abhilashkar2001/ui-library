@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { PdfDownloadServiceService } from "app/shared/services/pdf-download-service.service";
 
 @Component({
   selector: "app-success-popup",
@@ -12,11 +12,11 @@ export class SuccessPopupComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private router: Router
+    private pdfDownload: PdfDownloadServiceService
   ) {}
 
   ngOnInit(): void {
-    this.originationId = this.data.originationId;
+    this.originationId = this.data?.originationId;
   }
   done() {
     localStorage.removeItem("basisDetails");
@@ -26,5 +26,14 @@ export class SuccessPopupComponent implements OnInit {
   }
   close() {
     this.dialogRef.close(false);
+  }
+  download(actionType) {
+    if (this.data?.type === "loan")
+      this.pdfDownload.Excel(
+        this.data,
+        "loan Account",
+        this.data.customHeader,
+        actionType
+      );
   }
 }

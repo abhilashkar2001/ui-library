@@ -1,52 +1,5 @@
 <div class="align_fd">
   <div fxFlex="40" class="fdCalculator_parent">
-    <!-- <div fxFlex="100">
-      <div fxLayout="row">
-        <div fxLayout="column" fxFlex="100">
-          <div fxLayout="row">
-            <div>
-              <div class="deposit_icon">
-                <img src="assets/images/Group_13675.svg" width="65%" />
-              </div>
-              <span class="vertical_line"></span>
-            </div>
-            <div fxLayout="column" style="padding-left: 33px">
-              <div style="font-size: 22px; line-height: 33px; font-weight: 400">
-                Get Your
-              </div>
-              <div style="font-size: 28px; line-height: 48px; font-weight: 600">
-                FD Deposit
-              </div>
-              <div style="font-size: 22px; line-height: 33px; font-weight: 400">
-                in {{ steper_Array?.length }} simple ways
-              </div>
-              <div class="fd_info_stat" fxLayout="row">
-                <img src="assets/images/Group.svg" />
-                <div>
-                  On an average, People get their savings account in 15 - 20 min
-                </div>
-              </div>
-            </div>
-          </div>
-          <mat-stepper
-            #stepper
-            orientation="vertical"
-            [linear]="isLinear"
-            class="custom_steppper"
-            [(selectedIndex)]="selectedStep"
-            (selectionChange)="stepperSelectionChange($event)"
-          >
-            <ng-container *ngFor="let item of screenList; let i = index">
-              <mat-step
-                [label]="item.screenName"
-                [stepControl]="item.stepFormControl"
-              ></mat-step>
-              <!--  [stepControl]="item.stepFormControl" need to update once 
-            </ng-container>
-          </mat-stepper>
-        </div>
-      </div>
-    </div> -->
     <app-commmon-steeper
       [screenList]="screenList"
       [screenIndex]="selectedStep"

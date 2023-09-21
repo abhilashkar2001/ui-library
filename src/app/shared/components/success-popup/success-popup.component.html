@@ -40,11 +40,21 @@
     </button>
   </div> -->
   <div fxLayout="row" style="margin-bottom: 5%">
-    <button type="button" class="shareBtn" mat-raised-button>
+    <button
+      type="button"
+      class="shareBtn"
+      mat-raised-button
+      (click)="download('share')"
+    >
       <mat-icon>share</mat-icon>Share
     </button>
     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-    <button type="button" class="shareBtn" mat-raised-button>
+    <button
+      type="button"
+      class="shareBtn"
+      mat-raised-button
+      (click)="download('download')"
+    >
       <mat-icon>download</mat-icon>Download
     </button>
   </div>

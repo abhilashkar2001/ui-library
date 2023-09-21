@@ -75,4 +75,19 @@ export class LoanService {
       `${baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
     );
   }
+  triggerloanDetailsEmail(formdata) {
+    return this.http.post(`${baseUrl}/email`, formdata, {
+      responseType: "text",
+    });
+  }
+  getAllState() {
+    return this.http.get(
+      `${baseUrl}/state?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
+  getAllCity() {
+    return this.http.get(
+      `${baseUrl}/city?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
 }

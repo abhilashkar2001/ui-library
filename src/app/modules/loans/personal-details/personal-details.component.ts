@@ -15,6 +15,7 @@ import { PersonalDetailsService } from "./personal-details.service";
 import { debounceTime } from "rxjs/operators";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-custom-personal-details",
@@ -38,7 +39,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
   });
   isLinear = true;
   holderType: any;
-  fixedDepositId: any;
+  loanCustomerId: any;
   countryArray: any;
 
   listCityState: any = [];
@@ -51,12 +52,13 @@ export class PersonalCustomDetailsComponent implements OnInit {
   prefixArray: any[] = [];
   residenceTypeArray: any[] = [];
   todayDate: Date = new Date();
-
+  listCity: any = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
     private personalDetailsService: PersonalDetailsService,
-    private loanApi: LoanService
+    private loanApi: LoanService,
+    private openApi: OpenAccountService
   ) {}
 
   panelOpened(index: number) {
@@ -79,10 +81,38 @@ export class PersonalCustomDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGenericDetails();
-    this.buildCustomerDetailsForm();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
-    this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
+    this.loanCustomerId = sessionStorage.getItem("loanCustomerId");
+    if (this.loanCustomerId) this.getCustomerById();
+    else this.buildCustomerDetailsForm();
     this.getCountry();
+    this.getState();
+    this.getCity();
+  }
+
+  getState() {
+    this.loanApi.getAllState().subscribe((resp: any) => {
+      if (resp?.statusCode == 200) {
+        this.listCityState = resp.data;
+      }
+    });
+  }
+  getCity() {
+    this.loanApi.getAllCity().subscribe((resp: any) => {
+      if (resp?.statusCode == 200) {
+        this.listCity = resp.data;
+      }
+    });
+  }
+
+  getCustomerById() {
+    this.openApi
+      .getCustomerById(parseInt(this.loanCustomerId))
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200)
+          this.buildCustomerDetailsForm(resp.data[0]);
+        else this.buildCustomerDetailsForm();
+      });
   }
 
   getGenericDetails() {
@@ -104,15 +134,15 @@ export class PersonalCustomDetailsComponent implements OnInit {
     });
   }
 
-  buildCustomerDetailsForm() {
+  buildCustomerDetailsForm(data?) {
     this.customerDetailsForm = this.fb.group({
-      fixedDepositId: "",
+      loanCustomerId: "",
       customer: this.fb.array([]),
     });
     setTimeout(() => {
-      if (this.holderType == "Self") this.addCustomer();
+      if (this.holderType == "Self") this.addCustomer(data);
       else if (this.holderType == "Joint") {
-        for (let i = 0; i <= 1; i++) this.addCustomer();
+        for (let i = 0; i <= 1; i++) this.addCustomer(data);
       }
       this.customFormGroup.emit(this.customerDetailsForm);
     }, 200);
@@ -122,29 +152,44 @@ export class PersonalCustomDetailsComponent implements OnInit {
     return this.customerDetailsForm.get("customer") as FormArray;
   }
 
-  newCustomer(): FormGroup {
+  newCustomer(data?): FormGroup {
     return this.fb.group({
-      id: "",
-      customerNo: "",
+      customerId: data && data.customerId,
+      customerNo: [data ? data.customerId : ""],
       primaryCustomer: "",
-      prefix: ["", Validators.required],
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
-      dateOfBirth: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      gender: ["", Validators.required],
-      nationality: ["", Validators.required],
-      address1: [""],
-      residenceType: ["", Validators.required],
-      country: ["", Validators.required],
-      pincode: ["", Validators.required],
-      state: ["", Validators.required],
-      cityId: ["", Validators.required],
+      prefix: [data ? data.prefix : "", Validators.required],
+      firstName: [data ? data.firstName : "", Validators.required],
+      lastName: [data ? data.lastName : "", Validators.required],
+      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
+      email: [
+        data?.contact ? data?.contact.email : "",
+        [Validators.required, Validators.email],
+      ],
+      gender: [data ? data.gender : "", Validators.required],
+      nationality: [data ? data.nationality : "", Validators.required],
+      address1: [data ? data.contact.address[0].address1 : ""],
+      residenceType: [
+        data ? data.contact.address[0].residenceType : "",
+        Validators.required,
+      ],
+      country: [
+        data ? data.contact.address[0].countryName : "",
+        Validators.required,
+      ],
+      pincode: [
+        data ? data.contact.address[0].pincode : "",
+        Validators.required,
+      ],
+      state: [
+        data ? data.contact.address[0].stateName : "",
+        Validators.required,
+      ],
+      cityId: [data ? data.contact.address[0].cityId : "", Validators.required],
     });
   }
 
-  addCustomer() {
-    this.customer.push(this.newCustomer());
+  addCustomer(data?) {
+    this.customer.push(this.newCustomer(data));
   }
 
   confirmCustomer() {
@@ -171,6 +216,9 @@ export class PersonalCustomDetailsComponent implements OnInit {
         customerId: element?.customerId,
         middleName: "",
         gender: element.gender,
+        jointCustomerInfo: [],
+        isphoneNumVerified: true,
+        isEmailVerified: true,
         dateOfBirth: moment(element.dateOfBirth).format(),
         nationality: element.nationality,
         contact: {
@@ -180,7 +228,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
             {
               address1: element.address1,
               address2: "",
-              residentType: element.residentType,
+              residenceType: element.residenceType,
               cityId: element.cityId,
               countryName: element.country,
               pincode: element.zipCode,
@@ -226,7 +274,6 @@ export class PersonalCustomDetailsComponent implements OnInit {
               .fetchStateCityByZipcode(value)
               .subscribe((res: any) => {
                 if (res) {
-                  this.listCityState = res?.data;
                   this.customer.controls[indx]
                     .get("state")
                     .patchValue(res?.data?.[0]?.state);
