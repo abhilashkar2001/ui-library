@@ -273,13 +273,11 @@
                         class="full-width custom-field mt-2"
                       >
                         <mat-label class="custom-mat-label">Country</mat-label>
-                        <mat-select
-                          formControlName="country"
-                          (selectionChange)="onCountrySelect()"
-                        >
+                        <mat-select formControlName="country">
                           <mat-option
                             *ngFor="let country of countries"
                             [value]="country?.countryName"
+                            (click)="onCountrySelect(country?.countryCode)"
                             >{{ country?.countryName }}</mat-option
                           >
                         </mat-select>
@@ -310,7 +308,6 @@
                             numbersOnly
                             [maxlength]="6"
                             formControlName="zipCode"
-                            (input)="getCityandStateByZipcode(i)"
                           />
                           <img
                             matSuf
