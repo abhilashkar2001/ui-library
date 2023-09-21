@@ -7,6 +7,7 @@ import {
   EventEmitter,
 } from "@angular/core";
 import { Router } from "@angular/router";
+import { environment } from "environments/environment";
 import { interval } from "rxjs";
 
 @Component({
@@ -24,6 +25,7 @@ export class CarouselComponent implements OnInit, OnChanges {
   selectedIndex: number;
   totalListCount: number;
   carouselArrowDisplay: boolean = false;
+  protected baseUrl = environment.microServiceURL;
 
   constructor(private router: Router) {}
 
@@ -94,5 +96,13 @@ export class CarouselComponent implements OnInit, OnChanges {
 
   moveToSubAccountPage(basisClass: string) {
     this.customApplyLoan.emit(basisClass);
+  }
+  mapUrl(data) {
+    if (
+      data.documents.fileUrl &&
+      !data.documents.fileUrl.toLowerCase().includes("https")
+    )
+      return `${this.baseUrl}${data.documents.fileUrl}`;
+    else return `assets/images/Frame 5.svg`;
   }
 }

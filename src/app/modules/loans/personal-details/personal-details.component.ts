@@ -286,6 +286,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
         }
       });
   }
+
   getByCifNumber(i) {
     this.customer.controls[i]
       .get("customerNo")
@@ -295,6 +296,8 @@ export class PersonalCustomDetailsComponent implements OnInit {
           .getCustomerByCif(value)
           .subscribe((resp) => {
             if (resp.statusCode === 200) {
+              console.log(this.FactoryPopulate(resp.data[0]));
+
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
@@ -306,7 +309,6 @@ export class PersonalCustomDetailsComponent implements OnInit {
   FactoryPopulate(resp) {
     return {
       id: "",
-      customerNo: resp.customerId,
       primaryCustomer: "",
       prefix: resp.prefix,
       firstName: resp.firstName,
@@ -317,7 +319,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
       nationality: resp.nationality,
       address1: resp.contact.address[0].address1,
       residenceType: resp.contact.address[0].residenceType,
-      country: resp.contact.address[0].cityName,
+      country: resp.contact.address[0].countryName,
       pincode: resp.contact.address[0].pincode,
       state: resp.contact.address[0].stateName,
       cityId: resp.contact.address[0].cityId,

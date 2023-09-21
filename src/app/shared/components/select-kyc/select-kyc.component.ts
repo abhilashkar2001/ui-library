@@ -11,7 +11,7 @@ import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 export class SelectKycComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
-  @Output() customVerifyBack = new EventEmitter<{}>();
+  @Output() customgoBack = new EventEmitter<{}>();
   kycForm: FormGroup;
   isShowOtp: boolean = false;
   isResend: boolean = false;
@@ -135,6 +135,6 @@ export class SelectKycComponent implements OnInit {
   }
 
   goBack() {
-    this.customVerifyBack.emit();
+    this.customgoBack.emit();
   }
 }

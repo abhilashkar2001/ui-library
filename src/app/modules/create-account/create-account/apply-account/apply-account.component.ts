@@ -13,14 +13,17 @@ export class ApplyAccountComponent implements OnInit {
   constructor(private api: OpenAccountService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    //this.route.queryParamMap.subscribe((params) => {
-    //  console.log(params);
     console.log(this.route);
     this.subClass = this.route.snapshot.params["id"];
     console.log(this.route.snapshot.params);
     this.api.fetchSubClass(this.subClass).subscribe((resp) => {
       if (resp?.statusCode === 200)
-        this.subClassList = resp.data[1]?.productDetails;
+        // this.subClassList = resp.data[1]?.productDetails;
+        this.subClassList = resp.data;
     });
+  }
+  customApply(event) {
+    this.subClassList = event?.clasDetails?.productDetails;
+    this.subClass = event.subClass;
   }
 }

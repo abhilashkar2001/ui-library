@@ -1,6 +1,6 @@
-<!-- <ng-container *ngFor="let subClass of subClassList; let i = index"> -->
 <app-account-type-details
   [subClassList]="subClassList"
+  (customApply)="customApply($event)"
 ></app-account-type-details>
-<!-- </ng-container> -->
+
 <app-faq></app-faq>

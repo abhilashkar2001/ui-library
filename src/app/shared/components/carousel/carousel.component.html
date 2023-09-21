@@ -2,7 +2,7 @@
   <div class="image" *ngFor="let imagesdata of dynamicList" fxLayoutGap="20px">
     <img
       class="image_img image_overlay--blur"
-      src="assets/images/Frame 5.svg"
+      [src]="mapUrl(imagesdata)"
       alt="Slider Image"
     />
     <div class="image_overlay">

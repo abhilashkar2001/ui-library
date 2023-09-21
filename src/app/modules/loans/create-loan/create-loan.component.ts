@@ -80,6 +80,14 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
         if (resp.statusCode === 200) {
           this.initialForm(resp?.data); // once fetchById api working then use this
           //this.initialForm();
+          const tenureDays = sessionStorage.getItem("tenureDays");
+          const tenureYear = sessionStorage.getItem("tenureYear");
+          const tenureMonth = sessionStorage.getItem("tenureMonth");
+          this.personalLoanDetailsForm.controls.tenureDays.setValue(tenureDays);
+          this.personalLoanDetailsForm.controls.tenureYear.setValue(tenureYear);
+          this.personalLoanDetailsForm.controls.tenureMonth.setValue(
+            tenureMonth
+          );
         } else {
           this.initialForm();
         }
@@ -101,8 +109,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     this.personalLoanDetailsForm = this.fb.group({
       loanAmount: [data ? data?.emiAmount : "", Validators.required],
       tenureYear: [data ? data?.tenureYear : ""],
-      tenureMonths: [data ? data?.tenureYear : ""],
-      tenureDay: [data ? data?.tenureYear : ""],
+      tenureMonth: [data ? data?.tenureMonth : ""],
+      tenureDays: [data ? data?.tenureDays : ""],
       emiStartDate: [data ? data?.emiStartDate : "", Validators.required],
       emiAmount: [data ? data?.emiAmount : "", [Validators.required]],
       interestRate: [data ? data.interestRate : "", Validators.required],
