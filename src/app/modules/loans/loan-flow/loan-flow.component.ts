@@ -10,6 +10,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
+import { LoanFlowConstants } from "./loan-flow.constant";
 
 @Component({
   selector: "app-loan-flow",
@@ -33,6 +34,7 @@ export class LoanFlowComponent implements OnInit {
   originationId: any;
   loanSummary: any;
   customerData: any;
+  customHeader = LoanFlowConstants.CUSTOM_HEADER;
 
   constructor(
     private loanApi: LoanService,
@@ -163,9 +165,10 @@ export class LoanFlowComponent implements OnInit {
   stepperSelectionChange(event) {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
+    this.selectedStep = event.selectedIndex;
   }
   factory() {
-    this.cuurrentStep = this.screenList[this.selectedStep].screenName;
+    this.cuurrentStep = this.screenList[this.selectedStep]?.screenName;
   }
   next() {
     const num = this.selectedStep + 1;
@@ -178,16 +181,8 @@ export class LoanFlowComponent implements OnInit {
   }
 
   onSaveCreateLoan(event) {
-    // Object.assign(this.customerData, event?.value);
-    // this.customerData = {
-    //   ...this.customerData,
-    //   ...{ requestDate: new Date() },
-    // };
-    //this.customerData
     localStorage.setItem("customerData", JSON.stringify(this.customerData));
-
     this.next();
-    console.log(event);
   }
 
   checkExistingUserEvent(event) {
@@ -275,21 +270,25 @@ export class LoanFlowComponent implements OnInit {
     var custResp: any = resp.data;
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
-      item.documnentsInfo?.documents.forEach((item2, j) =>
-        item2?.docs.forEach((item3) => {
-          var docId = [];
-          docId.push(item3?.documentId);
-          var doc = {
-            docIds: docId,
-          };
-          custResp[i].documentId.push(doc);
-        })
-      );
+      (custResp[i].jointCustomerInfo = []),
+        (custResp[i].isphoneNumVerified = true),
+        (custResp[i].isEmailVerified = true),
+        item.documnentsInfo?.documents.forEach((item2, j) =>
+          item2?.docs.forEach((item3) => {
+            var docId = [];
+            docId.push(item3?.documentId);
+            var doc = {
+              docIds: docId,
+            };
+            custResp[i].documentId.push(doc);
+          })
+        );
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
     });
 
     custResp[0].primaryCustomer = true;
+
     const payload = {
       originationModel: {
         applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
@@ -339,7 +338,6 @@ export class LoanFlowComponent implements OnInit {
     this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
       if (resp?.autoAction) this.saveApprovalConfig(resp);
       else this.onFlowDone();
-      // sessionStorage.setItem("verifyWork", JSON.stringify(resp));
     });
   }
 
@@ -370,6 +368,8 @@ export class LoanFlowComponent implements OnInit {
       data: {
         originationId: this.originationId,
         loanSummary: this.loanSummary,
+        customHeader: this.customHeader,
+        type: "loan",
       },
       width: "750px",
       disableClose: true,
@@ -397,7 +397,6 @@ export class LoanFlowComponent implements OnInit {
     setTimeout(() => {
       this.selectedStep = num;
     }, 200);
-    //this.selectedStep = num;
   }
 
   verfyStep(verifyStep, currentStep) {

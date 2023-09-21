@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" *ngIf="customerDetailsForm">
   <form [formGroup]="customerDetailsForm">
     <div class="highlight_title">Personal Details</div>
     <div formArrayName="customer">
@@ -220,8 +220,8 @@
                       <mat-select formControlName="state">
                         <mat-option
                           *ngFor="let item of listCityState"
-                          [value]="item?.state"
-                          >{{ item?.state }}</mat-option
+                          [value]="item?.stateName"
+                          >{{ item?.stateName }}</mat-option
                         >
                       </mat-select>
                     </mat-form-field>
@@ -234,9 +234,9 @@
                       <mat-label>City</mat-label>
                       <mat-select formControlName="cityId">
                         <mat-option
-                          *ngFor="let item of listCityState"
+                          *ngFor="let item of listCity"
                           [value]="item?.cityId"
-                          >{{ item?.city }}</mat-option
+                          >{{ item?.cityName }}</mat-option
                         >
                       </mat-select>
                     </mat-form-field>
