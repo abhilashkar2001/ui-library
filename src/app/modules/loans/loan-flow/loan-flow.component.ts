@@ -35,6 +35,7 @@ export class LoanFlowComponent implements OnInit {
   loanSummary: any;
   customerData: any;
   customHeader = LoanFlowConstants.CUSTOM_HEADER;
+  originalScreenList: any = [];
 
   constructor(
     private loanApi: LoanService,
@@ -106,6 +107,7 @@ export class LoanFlowComponent implements OnInit {
   }
   updateStep() {
     var isExistingCustomer = sessionStorage.getItem("isExistingCustomer");
+    this.originalScreenList = this.screenList;
     console.log(this.screenList);
     if (isExistingCustomer) {
       var pk = this.screenList;
@@ -186,13 +188,14 @@ export class LoanFlowComponent implements OnInit {
   }
 
   checkExistingUserEvent(event) {
-    console.log(event);
     if (event?.statusCode === 200) {
       sessionStorage.setItem("loanCustomerId", event.data[0].customerId);
       sessionStorage.setItem("isExistingCustomer", "Yes");
+      localStorage.setItem("customerData", JSON.stringify(event.data[0]));
       this.updateStep();
       this.next();
     } else if (event?.statusCode === 204) {
+      this.screenList = this.originalScreenList;
       this.next();
     }
   }
