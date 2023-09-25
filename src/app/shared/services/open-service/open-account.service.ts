@@ -1,13 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
   providedIn: "root",
 })
 export class OpenAccountService {
+  private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) {}
 
   getOtp(phoneNumber: number): Observable<any> | any {
@@ -100,5 +101,12 @@ export class OpenAccountService {
   }
   getAllCity() {
     return this.http.get(`${baseUrl}/city`);
+  }
+  setData(data: any) {
+    this.dataSubject.next(data);
+  }
+
+  getData(): Observable<any> {
+    return this.dataSubject.asObservable();
   }
 }
