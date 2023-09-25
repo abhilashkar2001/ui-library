@@ -71,14 +71,7 @@ export class HomeLoanCalculatorComponent implements OnInit {
       outstandingAmount: 0,
     });
   }
-  updateDeposit() {
-    console.log(this.loanForm.value);
-  }
   applyForLoan() {
-    console.log(this.loanForm.value);
-    sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
-    sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
-    sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
     this.customCalculatorValues.emit(this.loanForm.value);
   }
 }
