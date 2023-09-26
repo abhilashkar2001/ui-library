@@ -18,7 +18,6 @@ export class SuccessPopupComponent implements OnInit {
     "Loan Amount",
     "Emi Amount",
     "Interest Payable",
-    "Interest Rate",
   ];
   email: any;
   loanSummaryDetails: any;
@@ -41,37 +40,53 @@ export class SuccessPopupComponent implements OnInit {
     console.log(this.loanSummaryDetails);
   }
   download(actionType) {
-    // if (this.data?.type === "loan")
-    //   this.pdfDownload.Excel(
-    //     this.data,
-    //     "loan Account",
-    //     this.data.customHeader,
-    //     actionType
-    //   );
-    if (localStorage.getItem("customerData")) {
-      // var downloadBody = [];
-      // var row = [];
-      // row.push(this.originationId);
-      // row.push(this.loanSummaryDetails.loanDetails.loanAmount);
-      // row.push(this.loanSummaryDetails.loanDetails.emiAmount);
-      // row.push(this.loanSummaryDetails.loanDetails.interestPayable);
-      // row.push(this.loanSummaryDetails.loanDetails.interestRate);
-      // downloadBody.push(row);
-      // this.downloadService.downloadFiles(
-      //   this.suiteHeader,
-      //   downloadBody,
-      //   "Loan Details"
-      // );
-      this.downloadService
-        .downloadDetailDoc(this.originationId)
-        .subscribe((resp: any) => {
-          console.log(resp);
-        });
-    } else if (localStorage.getItem("basisDetails")) {
-    }
+    this.downloadService
+      .downloadDetailDoc(this.originationId)
+      .subscribe((resp: ArrayBuffer) => {
+        const blob = new Blob([resp], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "document.pdf";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
   sendEmail() {
     if (localStorage.getItem("customerData")) {
+      let doc = new jsPDF();
+      const head: any = [this.suiteHeader];
+      const body = [];
+      var row = [];
+      row.push(this.originationId);
+      row.push(this.loanSummaryDetails.loanDetails.loanAmount);
+      row.push(this.loanSummaryDetails.loanDetails.emiAmount);
+      row.push(this.loanSummaryDetails.loanDetails.interestPayable);
+      body.push(row);
+      autoTable(doc, {
+        head: head,
+        body: body,
+        didDrawCell: (prepare) => {},
+      });
+
+      const formData = new FormData();
+      formData.append("subject", "Loan Details Slip");
+      formData.append(
+        "body",
+        "Automatic Generated Loan Details. Find below attach"
+      );
+      formData.append("to", this.email);
+      const pdfBlob = doc.output("blob");
+      const pdfFile = new File([pdfBlob], "Loan Details.pdf", {
+        type: "application/pdf",
+      });
+      formData.append("filePath", pdfFile, pdfFile.name);
+      console.log(formData);
+      this.emaiService
+        .triggerTransactionEmail(formData)
+        .subscribe((res) => console.log(res));
+    } else {
       let doc = new jsPDF();
       const head: any = [this.suiteHeader];
       const body = [];
@@ -100,8 +115,6 @@ export class SuccessPopupComponent implements OnInit {
       this.emaiService
         .triggerTransactionEmail(formData)
         .subscribe((res) => console.log(res));
-    } else if (localStorage.getItem("basisDetails")) {
-      console.log("This is for Create account");
     }
   }
 

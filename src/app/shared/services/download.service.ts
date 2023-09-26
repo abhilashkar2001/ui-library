@@ -25,7 +25,8 @@ export class DownloadService {
 
   downloadDetailDoc(originationId) {
     return this.http.get(
-      `${this.baseUrl}/webSummary/Download?originationId=${originationId}`
+      `${this.baseUrl}/webSummary/Download?originationId=${originationId}`,
+      { responseType: "arraybuffer" }
     );
   }
 }
