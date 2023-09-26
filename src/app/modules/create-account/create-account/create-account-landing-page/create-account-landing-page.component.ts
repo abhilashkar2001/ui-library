@@ -158,7 +158,7 @@ export class CreateAccountLandingPageComponent {
                   accountType: sessionData.accountType,
                   basisDetailsId: sessionData.basisDetailsId,
                   branchCode: this.tokenStore.getUser().branchCode,
-                  source: "Web Site",
+                  source: "Website",
                 },
                 customerInfo: custResp,
               };
