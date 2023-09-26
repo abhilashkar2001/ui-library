@@ -1,0 +1,21 @@
+.LoanToggle {
+  width: 50%;
+  border-radius: 10px;
+  padding: 1%;
+  background: #fffefe;
+  box-shadow: 0px 3px 15px 0px #00000017;
+
+  button {
+    border-radius: 10px;
+    color: #004c97;
+    font-size: 15px;
+    line-height: 22.5px;
+    height: 50px;
+    box-shadow: none;
+  }
+
+  .toggled {
+    background: linear-gradient(92.97deg, #06133f -7.38%, #014a9e 68.11%);
+    color: white !important;
+  }
+}

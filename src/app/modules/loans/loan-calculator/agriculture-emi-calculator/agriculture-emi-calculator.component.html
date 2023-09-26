@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="LoanToggle row" fxFlex="50">
+    <button
+      fxFlex="50"
+      class="col-md-6"
+      [ngClass]="LoanToggle == 'landLoan' ? 'toggled' : ''"
+      (click)="LoanToggle = 'landLoan'"
+      mat-raised-button
+    >
+      Land Loan
+    </button>
+    <button
+      fxFlex="50"
+      class="col-md-6"
+      [ngClass]="LoanToggle == 'goldLoan' ? 'toggled' : ''"
+      (click)="LoanToggle = 'goldLoan'"
+      mat-raised-button
+    >
+      Gold Loan
+    </button>
+  </div>
+</div>
+<div *ngIf="LoanToggle == 'landLoan'">
+  <app-common-emi-calculator></app-common-emi-calculator>
+</div>
+<div *ngIf="LoanToggle == 'goldLoan'">
+  <app-gold-loan-emi-calculator></app-gold-loan-emi-calculator>
+</div>

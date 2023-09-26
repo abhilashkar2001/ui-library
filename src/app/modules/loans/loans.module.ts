@@ -30,6 +30,7 @@ import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
 import { CommonEmiCalculatorComponent } from "./loan-calculator/common-emi-calculator/common-emi-calculator.component";
 import { PersonalCustomDetailsComponent } from "./personal-details/personal-details.component";
 import { LoanProductsComponent } from "./loan-account-type/loan-products/loan-products.component";
+import { AgricultureEmiCalculatorComponent } from './loan-calculator/agriculture-emi-calculator/agriculture-emi-calculator.component';
 import { HomeLoanCalculatorComponent } from './loan-calculator/home-loan-calculator/home-loan-calculator.component';
 
 @NgModule({
@@ -54,6 +55,7 @@ import { HomeLoanCalculatorComponent } from './loan-calculator/home-loan-calcula
     CommonEmiCalculatorComponent,
     PersonalCustomDetailsComponent,
     LoanProductsComponent,
+    AgricultureEmiCalculatorComponent,
     HomeLoanCalculatorComponent,
   ],
   imports: [
