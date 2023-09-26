@@ -73,9 +73,6 @@ export class PersonalCustomDetailsComponent implements OnInit {
     // Set up initial expansion state
     this.panels.forEach((panel, i) => {
       console.log(i, "........");
-      // panel.expandedChange.subscribe((expanded) => {
-      //   this.items[i].expanded = expanded;
-      // });
     });
   }
 
@@ -185,6 +182,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
         Validators.required,
       ],
       cityId: [data ? data.contact.address[0].cityId : "", Validators.required],
+      source: data?.source ? data.source : "Website",
     });
   }
 
@@ -266,6 +264,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
         jointCustomerInfo: [],
         isphoneNumVerified: true,
         isEmailVerified: true,
+        source: element.source,
         dateOfBirth: moment(element.dateOfBirth).format(),
         nationality: element.nationality,
         contact: {
@@ -322,6 +321,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
       pincode: resp.contact.address[0].pincode,
       state: resp.contact.address[0].stateName,
       cityId: resp.contact.address[0].cityId,
+      source: resp.source,
     };
   }
 }
