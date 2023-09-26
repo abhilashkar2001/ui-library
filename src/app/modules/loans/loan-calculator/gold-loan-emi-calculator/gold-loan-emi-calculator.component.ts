@@ -1,28 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 @Component({
-  selector: 'app-gold-loan-emi-calculator',
-  templateUrl: './gold-loan-emi-calculator.component.html',
-  styleUrls: ['./gold-loan-emi-calculator.component.scss']
+  selector: "app-gold-loan-emi-calculator",
+  templateUrl: "./gold-loan-emi-calculator.component.html",
+  styleUrls: ["./gold-loan-emi-calculator.component.scss"],
 })
 export class GoldLoanEmiCalculatorComponent implements OnInit {
-  amount: number = 5000;
-  min: number = 5000;
-  max: number = 100000;
-  step: number = 5;
-  year: number = 1;
-  months: number = 1;
-  interestRate: number = 2.0;
-  emiAmount: number = 0;
-  totalAmount: number = 0;
-  totalInterest: number = 0;
+  max = 100000;
+  min = 1000;
+  ammountValue = 0;
+  loanForm: FormGroup;
+  amount = new FormControl("");
+  email = new FormControl("");
+  thumbLabel: boolean = true;
+  @Input() fdName = "rdCalculator";
+  @Output() customCalculatorValues = new EventEmitter<any>();
+  constructor(private fb: FormBuilder) {}
+  // amount: number = 5000;
+  // min: number = 5000;
+  // max: number = 100000;
+  // step: number = 5;
+  // year: number = 1;
+  // months: number = 1;
+  // interestRate: number = 2.0;
+  // emiAmount: number = 0;
+  // totalAmount: number = 0;
+  // totalInterest: number = 0;
 
   ngOnInit(): void {
-
+    this.buildForm();
   }
-
-  loanCalculation(event: any) {
-
+  onSliderChange(e) {
+    console.log(e);
+    this.ammountValue = e.value;
+    this.loanForm.get("amount").setValue(e.value);
+    console.log(this.loanForm.value);
   }
-
+  buildForm() {
+    this.loanForm = this.fb.group({
+      amount: 0,
+      tenureYear: "",
+      tenureMonth: "",
+      tenureDays: "",
+      ornaments: "",
+      carat: "",
+      weight: "",
+    });
+  }
+  applyForLoan() {
+    console.log(this.loanForm.value);
+    sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
+    sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
+    sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
+    this.customCalculatorValues.emit(this.loanForm.value);
+  }
 }
