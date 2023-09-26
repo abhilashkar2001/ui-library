@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -30,7 +31,8 @@ export class LoanSummaryComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private loanService: LoanService
+    private loanService: LoanService,
+    private openAccountService: OpenAccountService
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,7 @@ export class LoanSummaryComponent implements OnInit {
 
   onVerify() {
     this.onConfirmEvent.emit();
+    this.openAccountService.setData(this.loanSummaryDetails);
   }
 
   onBack() {

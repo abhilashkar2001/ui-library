@@ -95,7 +95,7 @@ export class AccountMobileVerificationComponent implements OnInit {
                 accountType: sessionData.accountType,
                 basisDetailsId: sessionData.basisDetailsId,
                 branchCode: this.tokenStore.getUser().branchCode,
-                source: "Web Site",
+                source: "Website",
               },
               customerInfo: resp.data,
             };

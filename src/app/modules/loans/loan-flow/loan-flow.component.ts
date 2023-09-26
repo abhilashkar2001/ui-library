@@ -298,11 +298,11 @@ export class LoanFlowComponent implements OnInit {
         accountType: sessionData.basisName,
         basisDetailsId: sessionData.basisId,
         loanAmount: parseInt(loanData.loanAmount),
-        // loanTenure: loanData.loanTenure,
         loanTenureDay: "",
         loanTenureMonth: "",
         loanTenureYear: "",
         branchCode: this.tokenStore.getUser().branchCode,
+        source: "Website",
       },
       customerInfo: custResp,
     };
