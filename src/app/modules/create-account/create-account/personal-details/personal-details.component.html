@@ -29,7 +29,10 @@
                         class="full-width fieldinput mt-2"
                       >
                         <mat-label class="custom-mat-label">Pre fix</mat-label>
-                        <mat-select formControlName="prefix">
+                        <mat-select
+                          formControlName="prefix"
+                          (selectionChange)="CheckGenderandPrefix(i)"
+                        >
                           <mat-option
                             *ngFor="let prefixItem of prefixArray"
                             [value]="prefixItem"
@@ -161,7 +164,10 @@
                         class="full-width custom-field mt-2"
                       >
                         <mat-label class="custom-mat-label">Gender</mat-label>
-                        <mat-select formControlName="gender">
+                        <mat-select
+                          formControlName="gender"
+                          (selectionChange)="CheckGenderandPrefix(i)"
+                        >
                           <mat-option
                             *ngFor="let genderItem of genderArray"
                             [value]="genderItem"

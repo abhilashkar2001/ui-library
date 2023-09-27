@@ -25,6 +25,7 @@ export class AccountMobileVerificationComponent implements OnInit {
   otp: any;
   resendLink: boolean = false;
   yourOtp: any = "";
+  otpAvailable: boolean = false;
   agreed: boolean = false;
   accountHeader: string | any;
   config = {
@@ -89,33 +90,6 @@ export class AccountMobileVerificationComponent implements OnInit {
             const sessionData = JSON.parse(
               localStorage.getItem("basisDetails")
             );
-            const payload = {
-              originationModel: {
-                applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
-                accountType: sessionData.accountType,
-                basisDetailsId: sessionData.basisDetailsId,
-                branchCode: this.tokenStore.getUser().branchCode,
-                source: "Website",
-              },
-              customerInfo: resp.data,
-            };
-            this.openAccountService
-              .saveCustomerInfo(payload)
-              .subscribe((response) => {
-                if (response?.statusCode === 200) {
-                  this.dialogRef = this.dialog.open(SuccessPopupComponent, {
-                    data: {
-                      originationId:
-                        response.data.originationModel.originationId,
-                    },
-                    width: "750px",
-                    disableClose: true,
-                    panelClass: "popup-dialog-class",
-                    backdropClass: "bdrop",
-                  });
-                }
-              });
-          } else {
             sessionStorage.setItem("mobileNo", this.phone);
             sessionStorage.setItem("customerId", resp.data[0].customerId);
             this.onVerifyOtpEvent.emit();
@@ -155,6 +129,8 @@ export class AccountMobileVerificationComponent implements OnInit {
     console.log(e);
     this.yourOtp = e.toString();
     console.log(this.yourOtp);
+    this.otpAvailable =
+      this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }
 
   isValidated() {

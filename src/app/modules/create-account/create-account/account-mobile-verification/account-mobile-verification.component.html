@@ -63,6 +63,7 @@
               <mat-checkbox
                 class="custom-checkbox"
                 [checked]="agreed"
+                [(ngModel)]="agreed"
                 class="primary"
               >
                 <span class="standard-font-gray">
@@ -76,6 +77,7 @@
               <button
                 class="confirm-button"
                 mat-raised-button
+                [disabled]="!(otpAvailable && agreed)"
                 (click)="onVerify()"
               >
                 Verify
