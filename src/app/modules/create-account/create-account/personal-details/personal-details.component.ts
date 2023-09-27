@@ -20,6 +20,7 @@ import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { debounceTime } from "rxjs/operators";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-create-account-personal-details",
@@ -49,7 +50,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   genderArray: string[] = [];
   prefixArray: string[] = [];
   residenceTypeArray: string[] = [];
-
   constructor(
     // private router: Router,
     // private _location: Location,
@@ -57,7 +57,8 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     private openAccountService: OpenAccountService,
     private activateRoute: ActivatedRoute,
     private personalDetailsService: PersonalDetailsService,
-    private loanApi: LoanService
+    private loanApi: LoanService,
+    private snack: MatSnackBar
   ) {
     this.accountHeader = this.activateRoute.snapshot["queryParams"]["title"];
   }
@@ -165,6 +166,31 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   debounceZipCode() {
     for (let i = 0; i < this.personalInfoArray.value?.length; i++) {
       this.fetchStateCity(i);
+    }
+  }
+
+  CheckGenderandPrefix(index: number) {
+    const personalInfoGroup = this.personalInfoArray.at(index);
+    const prefix = personalInfoGroup.get("prefix").value;
+    const gender = personalInfoGroup.get("gender").value;
+    if (prefix && gender) {
+      if (
+        (prefix.toLowerCase().includes("mr") &&
+          gender.toLowerCase() === "male") ||
+        ((prefix.toLowerCase().includes("ms") ||
+          prefix.toLowerCase().includes("mrs")) &&
+          gender.toLowerCase() === "female")
+      ) {
+        console.log("Prefix and Gender match!");
+      } else {
+        personalInfoGroup.get("prefix").patchValue("");
+        personalInfoGroup.get("gender").patchValue("");
+        this.snack.open("Prefix and Gender do not match!", "OK", {
+          duration: 2000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+        });
+      }
     }
   }
 
