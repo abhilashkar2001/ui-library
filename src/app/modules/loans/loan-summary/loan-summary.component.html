@@ -51,16 +51,6 @@
         }}</span>
       </div>
     </div>
-    <div class="nominee-details">
-      <mat-form-field
-        appearance="outline"
-        class="custom-field"
-        style="width: 100%"
-      >
-        <mat-label class="custom-mat-label">Nominee</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
   </div>
   <div class="disbursement-summary">
     <div class="text-header">Disbursement Details</div>
@@ -71,7 +61,7 @@
           loanSummaryDetails?.disbursementDetails?.disbursementType
         }}</span>
       </div>
-      <div class="col-2">
+      <div class="col-2" *ngIf="checkDisbursementType()">
         <span class="content-header">Account Number</span>
         <span class="content">{{
           loanSummaryDetails?.disbursementDetails?.accountNo

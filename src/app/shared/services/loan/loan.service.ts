@@ -90,4 +90,10 @@ export class LoanService {
       `${baseUrl}/city?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
+
+  getAccountList(customerNumber) {
+    return this.http.get<any>(
+      `${baseUrl}/customer/accountInfo?customerNo=${customerNumber}`
+    );
+  }
 }

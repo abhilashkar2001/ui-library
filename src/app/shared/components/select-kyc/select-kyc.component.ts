@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-select-kyc",
@@ -31,10 +32,15 @@ export class SelectKycComponent implements OnInit {
   yourOtp: any = "";
   display: any;
   getOtpBtn: boolean = true;
+  documentTypeArray: any;
+  staticData = {
+    DOCUMENTTYPE: [],
+  };
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +48,16 @@ export class SelectKycComponent implements OnInit {
     setTimeout(() => {
       this.customFormGroupEmit.emit(this.kycForm);
     }, 200);
+  }
+
+  getGenericDetails() {
+    this.sharedService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
+        }
+      });
   }
   onOtpChange(e) {
     console.log(e);

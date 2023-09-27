@@ -4,313 +4,373 @@
     [formGroup]="personalLoanDetailsForm"
     fxFlex="100"
   >
-    <div class="column-2" fxFlex="100" fxLayout="column">
+    <div class="row">
       <div class="text-header">Personal Loan Details</div>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly == true && 'disable-field'"
+
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly == true && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">Loan Amount</mat-label>
+          <input
+            matInput
+            [readonly]="isReadOnly"
+            name="loanAmount"
+            formControlName="loanAmount"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('loanAmount')?.hasError('required')
+            "
           >
-            <mat-label class="custom-mat-label">Loan Amount</mat-label>
+            Loan Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="MiscellaneousClass col-md-6 col-12">
+        <fieldset
+          class="mt-6"
+          [ngClass]="isReadOnly == true && 'disable-fieldset'"
+        >
+          <legend style="width: fit-content">Tenure</legend>
+          <div style="display: flex; flex-direction: row">
             <input
               matInput
+              name="year"
+              numbersOnly
+              placeholder="Year"
+              formControlName="tenureYear"
               [readonly]="isReadOnly"
-              name="loanAmount"
-              formControlName="loanAmount"
             />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm.get('loanAmount')?.hasError('required')
+            <input
+              matInput
+              name="month"
+              numbersOnly
+              placeholder="Month"
+              formControlName="tenureMonth"
+              [readonly]="isReadOnly"
+              style="
+                border-left: #c6c6c6 1px solid;
+                border-right: #c6c6c6 1px solid;
               "
-            >
-              Loan Amount is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="46" class="MiscellaneousClass">
-          <fieldset
-            class="mt-6"
-            [ngClass]="isReadOnly == true && 'disable-fieldset'"
-          >
-            <legend style="width: fit-content">Tenure</legend>
-            <div style="display: flex; flex-direction: row">
-              <input
-                matInput
-                name="year"
-                numbersOnly
-                placeholder="Year"
-                formControlName="tenureYear"
-                [readonly]="isReadOnly"
-              />
-              <input
-                matInput
-                name="month"
-                numbersOnly
-                placeholder="Month"
-                formControlName="tenureMonth"
-                [readonly]="isReadOnly"
-                style="
-                  border-left: #c6c6c6 1px solid;
-                  border-right: #c6c6c6 1px solid;
-                "
-              />
-              <input
-                matInput
-                name="day"
-                numbersOnly
-                placeholder="Day"
-                formControlName="tenureDays"
-                [readonly]="isReadOnly"
-              />
-            </div>
-          </fieldset>
-          <!-- <mat-error *ngIf="personalLoanDetailsForm.get('tenureYear')?.hasError('required')">
+            />
+            <input
+              matInput
+              name="day"
+              numbersOnly
+              placeholder="Day"
+              formControlName="tenureDays"
+              [readonly]="isReadOnly"
+            />
+          </div>
+        </fieldset>
+        <!-- <mat-error *ngIf="personalLoanDetailsForm.get('tenureYear')?.hasError('required')">
                     Tenure Year is <strong>required</strong>
                 </mat-error> -->
-        </div>
       </div>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly && 'disable-field'"
-          >
-            <mat-label class="custom-mat-label">EMI Amount</mat-label>
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              formControlName="emiAmount"
-            />
-          </mat-form-field>
-        </div>
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly && 'disable-field'"
-          >
-            <mat-label class="custom-mat-label">Interest Rate</mat-label>
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              formControlName="interestRate"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('interestRate')
-                  ?.hasError('required')
-              "
-            >
-              Interest Rate is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly && 'disable-field'"
-          >
-            <mat-label class="custom-mat-label">Interest Payable</mat-label>
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              formControlName="interestPayable"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('interestPayable')
-                  ?.hasError('required')
-              "
-            >
-              Interest Payable is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly && 'disable-field'"
-          >
-            <mat-label class="custom-mat-label">Principle Amount</mat-label>
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              formControlName="principlAmount"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('principlAmount')
-                  ?.hasError('required')
-              "
-            >
-              Principle Amount is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
-        <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
-            <mat-label class="custom-mat-label">Holder Type</mat-label>
-            <mat-select
-              formControlName="holderType"
-              (selectionChange)="accountHolderSelectionChanged()"
-            >
-              <mat-option
-                *ngFor="let holderItem of holderTypeArray"
-                [value]="holderItem"
-                >{{ holderItem }}</mat-option
-              >
-            </mat-select>
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm.get('holderType')?.hasError('required')
-              "
-            >
-              Holder Type is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="46">
-          <mat-form-field
-            appearance="outline"
-            class="full-width"
-            [ngClass]="isReadOnly && 'disable-field'"
-          >
-            <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              formControlName="totalPayableAmount"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('totalPayableAmount')
-                  ?.hasError('required')
-              "
-            >
-              Total Payable Amount is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="18px">
-        <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
-            <mat-label class="custom-mat-label">Disbursement Type</mat-label>
-            <mat-select
-              formControlName="disbursementType"
-              (selectionChange)="onDisbursementSelectionChanged($event.value)"
-            >
-              <mat-option
-                *ngFor="let disburse of disbursementArray"
-                [value]="disburse"
-                >{{ disburse }}</mat-option
-              >
-            </mat-select>
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('disbursementType')
-                  ?.hasError('required')
-              "
-            >
-              Disbursement Type is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="46" *ngIf="disbursementType === 'account'">
-          <mat-form-field appearance="outline" class="full-width custom-field">
-            <mat-label class="custom-mat-label">Account Number</mat-label>
-            <input matInput formControlName="accountNumber" />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('accountNumber')
-                  ?.hasError('required')
-              "
-            >
-              Account Number is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
 
-        <div fxFlex="46" *ngIf="disbursementType !== 'account'">
-          <mat-form-field appearance="outline" class="full-width custom-field">
-            <mat-label class="custom-mat-label"
-              >EMI Payment Start Date</mat-label
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">EMI Amount</mat-label>
+          <input matInput [readonly]="isReadOnly" formControlName="emiAmount" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">Interest Rate</mat-label>
+          <input
+            matInput
+            [readonly]="isReadOnly"
+            formControlName="interestRate"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('interestRate')?.hasError('required')
+            "
+          >
+            Interest Rate is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">Interest Payable</mat-label>
+          <input
+            matInput
+            [readonly]="isReadOnly"
+            formControlName="interestPayable"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('interestPayable')
+                ?.hasError('required')
+            "
+          >
+            Interest Payable is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">Principle Amount</mat-label>
+          <input
+            matInput
+            [readonly]="isReadOnly"
+            formControlName="principlAmount"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('principlAmount')
+                ?.hasError('required')
+            "
+          >
+            Principle Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Holder Type</mat-label>
+          <mat-select
+            formControlName="holderType"
+            (selectionChange)="accountHolderSelectionChanged()"
+          >
+            <mat-option
+              *ngFor="let holderItem of holderTypeArray"
+              [value]="holderItem"
+              >{{ holderItem }}</mat-option
             >
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="emiStartDate"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('emiStartDate')
-                  ?.hasError('required')
-              "
+          </mat-select>
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('holderType')?.hasError('required')
+            "
+          >
+            Holder Type is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isReadOnly && 'disable-field'"
+        >
+          <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
+          <input
+            matInput
+            [readonly]="isReadOnly"
+            formControlName="totalPayableAmount"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('totalPayableAmount')
+                ?.hasError('required')
+            "
+          >
+            Total Payable Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Disbursement Type</mat-label>
+          <mat-select
+            formControlName="disbursementType"
+            (selectionChange)="onDisbursementSelectionChanged($event.value)"
+          >
+            <mat-option
+              *ngFor="let disburse of disbursementArray"
+              [value]="disburse"
+              >{{ disburse }}</mat-option
             >
-              EMI Payment Start Date is <strong>required</strong>
-            </mat-error>
-            <mat-datepicker-toggle matSuffix [for]="picker">
-              <mat-icon matDatepickerToggleIcon>
-                <img src="/assets/images/calendar.png" class="pb-25" />
-              </mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('disbursementType')
+                ?.hasError('required')
+            "
+          >
+            Disbursement Type is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12 pt-20" *ngIf="disbursementType === 'account'">
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="accountType"
+          (change)="onChange()"
+        >
+          <mat-radio-button value="internal">Internal Account</mat-radio-button
+          >&nbsp;&nbsp;
+          <mat-radio-button value="external">External Account</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div
+        class="col-md-6 col-12"
+        *ngIf="
+          personalLoanDetailsForm?.value.accountType === 'external' &&
+          disbursementType === 'account'
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Bank Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
+        </mat-form-field>
       </div>
       <div
-        fxFlex="100"
-        fxLayout="row wrap"
-        fxLayoutGap="18px"
-        *ngIf="disbursementType === 'account'"
+        class="col-md-6 col-12"
+        *ngIf="
+          personalLoanDetailsForm?.value.accountType === 'external' &&
+          disbursementType === 'account'
+        "
       >
-        <div fxFlex="46">
-          <mat-form-field appearance="outline" class="full-width custom-field">
-            <mat-label class="custom-mat-label"
-              >EMI Payment Start Date</mat-label
-            >
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="emiStartDate"
-            />
-            <mat-error
-              *ngIf="
-                personalLoanDetailsForm
-                  .get('emiStartDate')
-                  ?.hasError('required')
-              "
-            >
-              EMI Payment Start Date is <strong>required</strong>
-            </mat-error>
-            <mat-datepicker-toggle matSuffix [for]="picker">
-              <mat-icon matDatepickerToggleIcon>
-                <img
-                  src="../../../../assets/images/calendar.png"
-                  class="pb-25"
-                />
-              </mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Branch Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
+        </mat-form-field>
       </div>
+      <div
+        class="col-md-6 col-12"
+        *ngIf="
+          personalLoanDetailsForm?.value.accountType === 'external' &&
+          disbursementType === 'account'
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">IFSC Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12" *ngIf="disbursementType === 'account'">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Account Number</mat-label>
+          <input
+            *ngIf="
+              personalLoanDetailsForm?.value.accountType === 'external' ||
+              !accountList?.length
+            "
+            matInput
+            numbersOnly
+            formControlName="accountNumber"
+          />
+          <mat-select
+            *ngIf="
+              personalLoanDetailsForm?.value.accountType === 'internal' &&
+              accountList?.length > 0
+            "
+            formControlName="accountNumber"
+            (selectionChange)="accountHolderSelectionChanged()"
+          >
+            <mat-option
+              *ngFor="let account of accountList"
+              [value]="account.originationAccNo"
+              >{{ account.originationAccNo }}</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('accountNumber')?.hasError('required')
+            "
+          >
+            Account Number is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-6 col-12"
+        *ngIf="
+          personalLoanDetailsForm?.value.accountType === 'external' &&
+          disbursementType === 'account'
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
+          <input matInput numbersOnly formControlName="accountNumber" />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('accountNumber')?.hasError('required')
+            "
+          >
+            Account Number is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 col-12" *ngIf="disbursementType !== 'account'">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="emiStartDate"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('emiStartDate')?.hasError('required')
+            "
+          >
+            EMI Payment Start Date is <strong>required</strong>
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img src="/assets/images/calendar.png" class="pb-25" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 col-12" *ngIf="disbursementType === 'account'">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="emiStartDate"
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('emiStartDate')?.hasError('required')
+            "
+          >
+            EMI Payment Start Date is <strong>required</strong>
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img src="../../../../assets/images/calendar.png" class="pb-25" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
       <div class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
         >&nbsp;&nbsp;

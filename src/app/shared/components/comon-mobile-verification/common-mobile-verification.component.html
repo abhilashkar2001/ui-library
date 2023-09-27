@@ -46,16 +46,11 @@
     >
   </div>
   <div class="standard-auth-checkbox-container">
-    <mat-checkbox class="custom-checkbox" [checked]="agreed" class="primary">
+    <mat-checkbox class="custom-checkbox" class="primary" (click)="onAgreed()">
       <span class="standard-font-gray">
         I authorize DemoBank and it’s representatives to email, call or SMS me.
         This Consent will override any registration from DNC/NDNC
       </span>
     </mat-checkbox>
   </div>
-  <!-- <div class="button-section">
-        <button class="confirm-button" [ngStyle]="{'cursor': (otp?.length !==6) ? 'not-allowed' : 'pointer'}"
-            mat-raised-button (click)="onVerify()">Verify</button>
-        <button class="back-button" mat-raised-button (click)="onBack()">Back</button>
-    </div> -->
 </div>

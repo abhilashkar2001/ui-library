@@ -6,7 +6,7 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-common-mobile-verification",
@@ -21,7 +21,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   selectedPhoneCode: string = "+91";
   phone: string;
   otp: any;
-  agreed: boolean;
+  agreed: boolean = false;
   resendLink: boolean;
   displaySecond: string;
   getOtpBtn: boolean = true;
@@ -54,13 +54,21 @@ export class CommonMobileVerificationComponent implements OnInit {
   onOtpChange(otp) {
     console.log(otp);
     this.otp = otp;
-    this.enteredOTP.emit({ otp: this.otp });
+    this.enteredOTP.emit({ otp: this.otp, agreed: this.agreed });
   }
   isValidated() {
     if (this.phone?.length === 10 && this.getOtpBtn) {
       return false;
     }
     return true;
+  }
+
+  onAgreed() {
+    this.agreed = !this.agreed;
+    this.enteredOTP.emit({
+      otp: this.otp,
+      agreed: this.agreed,
+    });
   }
 
   buildFormGroup() {

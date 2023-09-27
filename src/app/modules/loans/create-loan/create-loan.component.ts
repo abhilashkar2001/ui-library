@@ -18,6 +18,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
 
 @Component({
@@ -43,6 +44,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   holderTypeArray: string[] = [];
   disbursementArray: string[] = [];
   isReadOnly: boolean = true;
+  loanCustomerId: string;
+  accountList: any;
 
   constructor(
     private fb: FormBuilder,
@@ -51,16 +54,37 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     private route: ActivatedRoute,
     private loanApi: LoanService,
     private snack: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private openApi: OpenAccountService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.getGenericDetails();
+    this.loanCustomerId = sessionStorage.getItem("loanCustomerId");
+    if (this.loanCustomerId) this.getCustomerById();
     var id = parseInt(sessionStorage.getItem("loanDisburseId"));
     if (id) this.getLoanById(id);
     else this.initialForm();
+  }
+  getCustomerById() {
+    this.openApi
+      .getCustomerById(parseInt(this.loanCustomerId))
+      .subscribe((resp) => {
+        if (resp?.statusCode == 200) {
+          if (resp?.data[0]?.customerNo) {
+            this.getAccountList(resp?.data[0]?.customerNo);
+          }
+        }
+      });
+  }
+  getAccountList(customerNo) {
+    this.loanApi.getAccountList(customerNo).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.accountList = resp.data.accountInfo;
+      }
+    });
   }
 
   getGenericDetails() {
@@ -127,7 +151,16 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       ],
       accountNumber: [data ? data?.accountNumber : ""],
       id: data?.id,
+      bankCode: "",
+      accountType: "internal",
+      ifscCode: "",
+      branchCode: "",
     });
+    if (data) this.disbursementType = data?.disbursementType.toLowerCase();
+  }
+
+  onChange() {
+    console.log(this.personalLoanDetailsForm.value);
   }
 
   accountHolderSelectionChanged() {

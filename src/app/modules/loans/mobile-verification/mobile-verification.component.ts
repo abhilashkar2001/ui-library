@@ -18,6 +18,8 @@ export class MobileVerificationComponent implements OnInit {
   otp: any;
   showOtpSection: boolean;
   stepperTitle: string;
+  agreed: boolean = false;
+  isOtpAllowed: boolean = false;
 
   constructor(
     private openAccountService: OpenAccountService,
@@ -43,6 +45,8 @@ export class MobileVerificationComponent implements OnInit {
 
   enteredOtp(event: any) {
     this.otp = event.otp;
+    this.agreed = event?.agreed;
+    this.isOtpAllowed = this.otp && this.otp?.length >= 6 ? true : false;
   }
 
   isValidated() {
