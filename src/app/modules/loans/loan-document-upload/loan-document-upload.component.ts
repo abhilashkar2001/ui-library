@@ -9,6 +9,7 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-loan-document-upload",
@@ -25,17 +26,23 @@ export class LoanDocumentUploadComponent implements OnInit {
   uploadedDocResponse: any = [];
   docIds: any[] = [];
   stepperTitle: any;
+  documentTypeArray: any;
+  staticData = {
+    OTHERDOCUMENT: [],
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private apiService: OpenAccountService,
     private location: Location,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sharedService: SharedService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
   }
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.buildDocumentForm();
     console.log("other document", this.otherDocumentArray);
     this.custId = localStorage.getItem("customerId");
@@ -44,6 +51,16 @@ export class LoanDocumentUploadComponent implements OnInit {
 
     // this.customerData = JSON.parse(custId)
     // Initialize any other logic you need when the component is initialized
+  }
+
+  getGenericDetails() {
+    this.sharedService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.documentTypeArray = resp.data["OTHERDOCUMENT"];
+        }
+      });
   }
 
   buildDocumentForm() {

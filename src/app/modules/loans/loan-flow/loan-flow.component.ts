@@ -36,6 +36,7 @@ export class LoanFlowComponent implements OnInit {
   customerData: any;
   customHeader = LoanFlowConstants.CUSTOM_HEADER;
   originalScreenList: any = [];
+  createLoanAccountNumber: any;
 
   constructor(
     private loanApi: LoanService,
@@ -145,13 +146,12 @@ export class LoanFlowComponent implements OnInit {
         this.openAccountService
           .getProcessStages(resp.data.processStageList[0].id)
           .subscribe((resp) => {
-            this.screenList = resp.data.screens;
+            this.screenList = resp.data.screens.sort((s1, s2) => {
+              return s1.sequence - s2.sequence;
+            });
             this.updateFormGroup();
-            this.updateStep();
+            //this.updateStep();
             this.factory();
-            // .sort((s1, s2) => {
-            //   return s1.sequence - s2.sequence;
-            // });
           });
       });
   }
@@ -192,13 +192,13 @@ export class LoanFlowComponent implements OnInit {
       sessionStorage.setItem("loanCustomerId", event.data[0].customerId);
       sessionStorage.setItem("isExistingCustomer", "Yes");
       localStorage.setItem("customerData", JSON.stringify(event.data[0]));
-      this.updateStep();
       this.next();
     } else if (event?.statusCode === 204) {
       this.screenList = this.originalScreenList;
       this.next();
     }
   }
+
   onCustomCibilDetail() {
     console.log("onCustomCibilDetail");
     this.next();
@@ -298,9 +298,9 @@ export class LoanFlowComponent implements OnInit {
         accountType: sessionData.basisName,
         basisDetailsId: sessionData.basisId,
         loanAmount: parseInt(loanData.loanAmount),
-        loanTenureDay: "",
-        loanTenureMonth: "",
-        loanTenureYear: "",
+        loanTenureDay: sessionStorage.getItem("tenureDays"),
+        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+        loanTenureYear: sessionStorage.getItem("tenureYear"),
         branchCode: this.tokenStore.getUser().branchCode,
         source: "Website",
       },

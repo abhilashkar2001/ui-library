@@ -8,6 +8,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from "@angular/core";
+import * as moment from "moment";
 
 @Component({
   selector: "app-terms-conditions",
@@ -21,6 +22,7 @@ export class TermsConditionsComponent implements OnInit {
   customerName: any;
   customerData: any;
   requestDate: any;
+  loamAmount: any;
 
   constructor(private _location: Location) {}
 
@@ -29,7 +31,10 @@ export class TermsConditionsComponent implements OnInit {
     console.log(this.customerData);
     this.customerName =
       this.customerData?.firstName + " " + this.customerData?.lastName;
-    //this.requestDate = this.customerData?.requestDate.replace(/[a-zA-Z]/g, " ");
+    this.loamAmount = JSON.parse(
+      sessionStorage.getItem("loanAmmount")
+    )?.loanAmount;
+    this.requestDate = moment(new Date()).format();
   }
 
   isValidated() {

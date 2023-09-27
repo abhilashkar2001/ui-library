@@ -1,5 +1,5 @@
 import { Location } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 
@@ -13,6 +13,7 @@ export class CibilScoreContainerComponent implements OnInit {
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
   @Output() onCustomCibilDetail = new EventEmitter<any>();
+  @Input() createLoanAccountNumber;
 
   isDifferentMobile: boolean = false;
   showCibilScoreResult: boolean = false;

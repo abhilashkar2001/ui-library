@@ -70,4 +70,14 @@ export class LoanSummaryComponent implements OnInit {
       return `${this.endPoints}${url}`;
     }
   }
+
+  checkDisbursementType() {
+    if (
+      this.loanSummaryDetails?.disbursementDetails?.disbursementType
+        .toLowerCase()
+        .includes("account")
+    )
+      return true;
+    else return false;
+  }
 }

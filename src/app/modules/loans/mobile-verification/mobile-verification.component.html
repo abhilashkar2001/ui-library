@@ -10,6 +10,7 @@
       [ngClass]="{ 'disabled-field': isValidated() }"
       mat-raised-button
       (click)="onVerify()"
+      [disabled]="!(isOtpAllowed && agreed)"
     >
       Verify
     </button>
