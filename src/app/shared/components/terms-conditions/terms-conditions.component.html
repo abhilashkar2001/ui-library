@@ -82,10 +82,10 @@
 
 <div class="button-section">
   <button
+    mat-flat-button
     class="confirm-button"
     (click)="onConfirm()"
-    [disabled]="isValidated()"
-    [ngClass]="{ 'disabled-field': isValidated() }"
+    [disabled]="!checked"
   >
     Confirm</button
   >&nbsp;&nbsp;

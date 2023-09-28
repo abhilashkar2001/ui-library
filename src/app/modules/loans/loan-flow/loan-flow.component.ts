@@ -183,6 +183,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   onSaveCreateLoan(event) {
+    this.createLoanAccountNumber = event.value.accountNumber;
     localStorage.setItem("customerData", JSON.stringify(this.customerData));
     this.next();
   }
@@ -195,6 +196,8 @@ export class LoanFlowComponent implements OnInit {
       this.next();
     } else if (event?.statusCode === 204) {
       this.screenList = this.originalScreenList;
+      this.next();
+    } else {
       this.next();
     }
   }

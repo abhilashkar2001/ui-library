@@ -18,7 +18,7 @@ import * as moment from "moment";
 export class TermsConditionsComponent implements OnInit {
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  checked = false;
+  checked: boolean = false;
   customerName: any;
   customerData: any;
   requestDate: any;

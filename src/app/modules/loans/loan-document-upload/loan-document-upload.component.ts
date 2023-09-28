@@ -30,6 +30,8 @@ export class LoanDocumentUploadComponent implements OnInit {
   staticData = {
     OTHERDOCUMENT: [],
   };
+  selectedImage: Blob;
+  imageUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -108,15 +110,49 @@ export class LoanDocumentUploadComponent implements OnInit {
    * handle file from browsing
    */
   fileBrowseHandler(event: any, indx: number) {
-    this.prepareFilesList(event.target.files, indx);
+    this.browseFiles(indx);
+  }
+  browseFiles(i) {
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.accept = "image/*";
+    inputElement.addEventListener("change", (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files.length > 0) {
+        const file = target.files[0];
+        if (file.type.startsWith("image/")) {
+          this.selectedImage = file;
+          this.displayImage(i, file);
+        }
+        const fReader = new FileReader();
+        fReader.readAsDataURL(file);
+      }
+    });
+
+    inputElement.click();
+    this.uploadFilesSimulator(0);
+  }
+
+  displayImage(indx, file) {
+    const reader = new FileReader();
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      this.imageUrl = event.target.result as string;
+      console.log(this.imageUrl);
+      this.getFileInfo(indx).push({
+        url: this.imageUrl,
+        name: file.name,
+      });
+    };
+    reader.readAsDataURL(this.selectedImage);
   }
 
   /**
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number) {
-    this.files.splice(index, 1);
+  deleteFile(index: number, i, doc) {
+    console.log(this.createDocumentForm.get("otherDocument"));
+    this.otherDocumentArray.controls[0].get("fileInfo")?.value.splice(index, 1);
   }
 
   /**
