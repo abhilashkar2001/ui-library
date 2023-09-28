@@ -10,7 +10,11 @@
           <div class="text-header" fxFlex="100">
             <div fxFlex="80">Document {{ indx + 1 }}</div>
             <div *ngIf="indx > 0" fXFlex="20">
-              <button class="deleteButton" (click)="deleteForm(indx)">
+              <button
+                class="deleteButton"
+                type="button"
+                (click)="deleteForm(indx)"
+              >
                 Delete
               </button>
             </div>
@@ -50,15 +54,9 @@
               <div
                 class="doc_upload"
                 fxFlex="100"
-                appDragDrop
-                (fileDropped)="onFileDropped($event, indx)"
+                #fileInput
+                (click)="fileBrowseHandler($event, indx)"
               >
-                <input
-                  type="file"
-                  #fileDropRef
-                  id="fileDropRef"
-                  (change)="fileBrowseHandler($event, indx)"
-                />
                 <div class="drag_drop" fxFlex="90">
                   <h3 class="text-header">Upload Document</h3>
                   <p>
@@ -67,7 +65,7 @@
                   </p>
                 </div>
                 <label for="fileDropRef" class="doc_img" fxFlex="10">
-                  <img src="assets/images/Group 2979.png" />
+                  <img src="assets/images/Group 2979.svg" />
                 </label>
               </div>
               <ng-container
@@ -79,22 +77,18 @@
                     <!-- <img src="assets/images/Rectangle 1779.png" /> -->
                   </div>
                   <div class="img_container">
-                    <p class="img_name">
-                      {{ file?.doc?.name }}
-                    </p>
+                    <p class="img_name">{{ file?.name }}</p>
                     <div class="progress-cont">
-                      <div
-                        class="progress"
-                        [style.width]="file?.doc?.progress + '%'"
-                      ></div>
+                      <div class="progress" [style.width]="'100%'"></div>
                     </div>
                   </div>
                   <button
+                    mat-icon-button
+                    type="button"
                     class="btn"
-                    *ngIf="file?.doc?.progress === 100"
-                    (click)="deleteFile(fileIndx)"
+                    (click)="deleteFile(fileIndx, indx, file)"
                   >
-                    <mat-icon> delete </mat-icon>
+                    <mat-icon color="warn">delete</mat-icon>
                   </button>
                 </div>
               </ng-container>
@@ -102,14 +96,15 @@
           </ng-container>
         </mat-card>
       </ng-container>
-      <button class="add-more-btn" (click)="createNewDocument()">
+      <button type="button" class="add-more-btn" (click)="createNewDocument()">
         Add another Document
       </button>
     </form>
   </div>
   <div class="button-section">
-    <button class="submit-button" (click)="onSubmit()">Submit</button
+    <button class="submit-button" type="button" (click)="onSubmit()">
+      Submit</button
     >&nbsp;&nbsp;&nbsp;
-    <button class="back-button" (click)="onBack()">Back</button>
+    <button class="back-button" type="button" (click)="onBack()">Back</button>
   </div>
 </div>

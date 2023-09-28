@@ -68,10 +68,6 @@
   @extend .backButtonStandard;
 }
 
-button:disabled {
-  cursor: not-allowed;
-}
-
 .mat-button-disabled {
   background: #b4b4b4 !important;
 }
