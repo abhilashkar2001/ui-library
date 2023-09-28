@@ -97,6 +97,9 @@ export class AccountMobileVerificationComponent implements OnInit {
         } else if (resp?.statusCode === 204) {
           sessionStorage.setItem("mobileNo", this.phone);
           this.onVerifyOtpEvent.emit();
+        } else {
+          sessionStorage.setItem("mobileNo", this.phone);
+          this.onVerifyOtpEvent.emit();
         }
       });
   }

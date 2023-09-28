@@ -15,51 +15,87 @@ export class SuccessPopupComponent implements OnInit {
   originationId: any;
   suiteHeader = [
     "Application No",
+    "Name",
     "Loan Amount",
     "Emi Amount",
     "Interest Payable",
   ];
+  accountHeader = [
+    "Application No",
+    "First Name",
+    "Last Name",
+    "Mobile",
+    "KYC Status",
+  ];
   email: any;
   loanSummaryDetails: any;
+  accountData: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     @Inject(MAT_DIALOG_DATA) public screenData: any,
-    private pdfDownload: PdfDownloadServiceService,
     private emaiService: EmailService,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService
   ) {}
   ngOnInit(): void {
     this.originationId = this.data?.originationId;
-    this.email = sessionStorage.getItem("email");
-    console.log(this.email);
-    this.openAccountService.getData().subscribe((resp: any) => {
-      this.loanSummaryDetails = resp;
-    });
-    console.log(this.loanSummaryDetails);
-  }
-  download(actionType) {
-    this.downloadService
-      .downloadDetailDoc(this.originationId)
-      .subscribe((resp: ArrayBuffer) => {
-        const blob = new Blob([resp], { type: "application/pdf" });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "document.pdf";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
+    if (localStorage.getItem("customerData")) {
+      this.openAccountService.getData().subscribe((resp: any) => {
+        if (resp) {
+          this.loanSummaryDetails = resp;
+          this.email = resp.email;
+        }
       });
+    } else {
+      this.openAccountService.getData().subscribe((res: any) => {
+        if (res) {
+          this.accountData = res;
+          this.email = this.accountData.contact.email;
+        }
+      });
+    }
+    console.log("Loan Data", this.loanSummaryDetails);
+    console.log("Account Data", this.accountData);
+    console.log("DOB", this.accountData.dateOfBirth);
+  }
+  download() {
+    if (this.loanSummaryDetails) {
+      this.downloadService
+        .downloadloanDetailDoc(this.originationId)
+        .subscribe((resp: ArrayBuffer) => {
+          const blob = new Blob([resp], { type: "application/pdf" });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "document.pdf";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        });
+    } else {
+      this.downloadService
+        .downloadAccountDetailDoc(this.originationId)
+        .subscribe((resp: ArrayBuffer) => {
+          const blob = new Blob([resp], { type: "application/pdf" });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "document.pdf";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        });
+    }
   }
   sendEmail() {
-    if (localStorage.getItem("customerData")) {
+    if (this.loanSummaryDetails) {
       let doc = new jsPDF();
       const head: any = [this.suiteHeader];
       const body = [];
       var row = [];
       row.push(this.originationId);
+      row.push(this.loanSummaryDetails.bankAccount.name);
       row.push(this.loanSummaryDetails.loanDetails.loanAmount);
       row.push(this.loanSummaryDetails.loanDetails.emiAmount);
       row.push(this.loanSummaryDetails.loanDetails.interestPayable);
@@ -88,10 +124,14 @@ export class SuccessPopupComponent implements OnInit {
         .subscribe((res) => console.log(res));
     } else {
       let doc = new jsPDF();
-      const head: any = [this.suiteHeader];
+      const head: any = [this.accountHeader];
       const body = [];
       var row = [];
       row.push(this.originationId);
+      row.push(this.accountData.firstName);
+      row.push(this.accountData.lastName);
+      row.push(sessionStorage.getItem("mobileNo"));
+      row.push(this.accountData.kycStatus);
       body.push(row);
       autoTable(doc, {
         head: head,
@@ -121,12 +161,6 @@ export class SuccessPopupComponent implements OnInit {
   done() {
     localStorage.removeItem("basisDetails");
     localStorage.removeItem("customerData");
-    sessionStorage.removeItem("customerId");
-    sessionStorage.removeItem("loanBasisDetails");
-    sessionStorage.removeItem("tenureDays");
-    sessionStorage.removeItem("tenureMonth");
-    sessionStorage.removeItem("tenureYear");
-    sessionStorage.removeItem("loanDisburseId");
     this.dialogRef.close(true);
     window.close();
   }

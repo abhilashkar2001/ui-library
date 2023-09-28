@@ -151,10 +151,10 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       ],
       accountNumber: [data ? data?.accountNumber : ""],
       id: data?.id,
-      bankCode: "",
+      bankCode: [data ? data?.bankCode : ""],
       accountType: "internal",
-      ifscCode: "",
-      branchCode: "",
+      ifscCode: [data ? data?.ifscCode : ""],
+      branchCode: [data ? data?.branchCode : ""],
     });
     if (data) this.disbursementType = data?.disbursementType.toLowerCase();
   }
@@ -188,6 +188,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onConfirm() {
+    console.log(this.personalLoanDetailsForm.value);
     if (this.personalLoanDetailsForm.invalid) {
       return;
     }
@@ -226,13 +227,29 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
         this.personalLoanDetailsForm.value.totalPayableAmount
       ),
       disbursementType: this.personalLoanDetailsForm.value.disbursementType,
-      accountNumber: this.personalLoanDetailsForm.value.accountNumber,
       emiStartDate: moment(
         this.personalLoanDetailsForm.value.emiStartDate
       ).format(),
+      bankCode: this.personalLoanDetailsForm.value.bankCode,
+      branchCode: this.personalLoanDetailsForm.value.branchCode,
+      ifscCode: this.personalLoanDetailsForm.value.ifscCode,
     };
     if (this.personalLoanDetailsForm.value?.id) {
       payload.id = this.personalLoanDetailsForm.value?.id;
+    }
+    if (
+      this.personalLoanDetailsForm.value?.disbursementType
+        .toLowerCase()
+        .includes("account") &&
+      this.personalLoanDetailsForm.value?.accountType === "external"
+    ) {
+      payload.otherAccNo = this.personalLoanDetailsForm.value.accountNumber;
+      payload.accountNumber = null;
+      payload.external = true;
+    } else {
+      payload.otherAccNo = "";
+      payload.accountNumber = this.personalLoanDetailsForm.value.accountNumber;
+      payload.external = false;
     }
     return payload;
   }

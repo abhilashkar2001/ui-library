@@ -63,9 +63,12 @@
       </div>
       <div class="col-2" *ngIf="checkDisbursementType()">
         <span class="content-header">Account Number</span>
-        <span class="content">{{
-          loanSummaryDetails?.disbursementDetails?.accountNo
-        }}</span>
+        <span class="content"
+          >{{
+            loanSummaryDetails?.disbursementDetails?.otherAccNo ||
+              loanSummaryDetails?.disbursementDetails?.accountNo
+          }}
+        </span>
       </div>
       <div class="col-3">
         <span class="content-header">Name</span>
@@ -73,7 +76,43 @@
           loanSummaryDetails?.disbursementDetails?.name
         }}</span>
       </div>
-      <div class="col-3">
+      <div
+        class="col-3"
+        *ngIf="
+          checkDisbursementType() &&
+          loanSummaryDetails?.disbursementDetails?.external === true
+        "
+      >
+        <span class="content-header">Bank Code</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.bankCode
+        }}</span>
+      </div>
+      <div
+        class="col-4"
+        *ngIf="
+          checkDisbursementType() &&
+          loanSummaryDetails?.disbursementDetails?.external === true
+        "
+      >
+        <span class="content-header">Branch Code</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.branchCode
+        }}</span>
+      </div>
+      <div
+        class="col-4"
+        *ngIf="
+          checkDisbursementType() &&
+          loanSummaryDetails?.disbursementDetails?.external === true
+        "
+      >
+        <span class="content-header">IFSC Code</span>
+        <span class="content">{{
+          loanSummaryDetails?.disbursementDetails?.ifscCode
+        }}</span>
+      </div>
+      <div class="col-4">
         <span class="content-header">EMI Payment Start Date</span>
         <span class="content">{{
           loanSummaryDetails?.disbursementDetails?.emiStartDate
