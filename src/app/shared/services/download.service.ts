@@ -10,9 +10,15 @@ import autoTable from "jspdf-autotable";
 export class DownloadService {
   baseUrl = environment.microServiceURL;
   constructor(private http: HttpClient) {}
-  downloadDetailDoc(originationId) {
+  downloadloanDetailDoc(originationId) {
     return this.http.get(
       `${this.baseUrl}/webSummary/Download?originationId=${originationId}`,
+      { responseType: "arraybuffer" }
+    );
+  }
+  downloadAccountDetailDoc(originationId) {
+    return this.http.get(
+      `${this.baseUrl}/webSummary/loan-account-info/Download?originationId=${originationId}`,
       { responseType: "arraybuffer" }
     );
   }
