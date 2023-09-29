@@ -5,9 +5,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { SharedService } from "app/shared/shared.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
 
 @Component({
   selector: "app-account-Mobile-verification-details",
@@ -19,15 +16,15 @@ export class AccountMobileVerificationComponent implements OnInit {
   @Output() onVerifyOtpEvent: EventEmitter<any> = new EventEmitter();
   dialogRef: MatDialogRef<SuccessPopupComponent>;
   selectedPhoneCode: string = "+91";
-  displaySecond: any;
+  displaySecond: string;
   showOTPSection: boolean;
   phone: any;
-  otp: any;
   resendLink: boolean = false;
   yourOtp: any = "";
   otpAvailable: boolean = false;
   agreed: boolean = false;
   accountHeader: string | any;
+  getOtpBtn: boolean = true;
   config = {
     allowNumbersOnly: false,
     length: 6,
@@ -39,8 +36,6 @@ export class AccountMobileVerificationComponent implements OnInit {
       height: "50px",
     },
   };
-  isGetOtp: boolean = false;
-  getOtpBtn: boolean = true;
 
   constructor(
     private router: Router,
@@ -48,8 +43,7 @@ export class AccountMobileVerificationComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     public dialog: MatDialog,
-    public snack: MatSnackBar, //  private sharedApi: SharedService //
-    private tokenStore: TokenStorageService
+    public snack: MatSnackBar
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
@@ -67,7 +61,6 @@ export class AccountMobileVerificationComponent implements OnInit {
         horizontalPosition: "right",
         panelClass: "success",
       });
-      // this.sharedApi.showSuccess("Otp sent Successfully!", "Ok");
       this.showOTPSection = true;
       this.timer();
     });
@@ -114,13 +107,10 @@ export class AccountMobileVerificationComponent implements OnInit {
       seconds--;
       if (statSec != 0) statSec--;
       else statSec = 59;
-
       if (statSec < 10) {
         textSec = "0" + statSec;
       } else textSec = statSec;
-
       this.displaySecond = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-
       if (seconds == 0) {
         this.resendLink = true;
         clearInterval(timer);
@@ -129,9 +119,7 @@ export class AccountMobileVerificationComponent implements OnInit {
   }
 
   onOtpChange(e) {
-    console.log(e);
     this.yourOtp = e.toString();
-    console.log(this.yourOtp);
     this.otpAvailable =
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }

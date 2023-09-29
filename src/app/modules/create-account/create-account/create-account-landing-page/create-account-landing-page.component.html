@@ -1,4 +1,5 @@
 <div class="create-account">
+  <!-- Left hand side steps starts here -->
   <div class="stepper" fxFlex="40">
     <app-commmon-steeper
       [screenTitle]="screenTitle"
@@ -7,23 +8,31 @@
       (customSelectionChange)="getTabDetails($event)"
     ></app-commmon-steeper>
   </div>
+  <!-- Left hand side steps ends here -->
   <div
     class="vertical_divider"
     style="border-right: 1px solid #cbcbcb; height: 550px"
   ></div>
   <div class="col-div2">
+    <!-- Mobile verification part starts here -->
     <div *ngIf="verfyStep('mobile', currentStep)">
       <app-account-Mobile-verification-details
         (onBackEvent)="onBackOnPreviousStep()"
         (onVerifyOtpEvent)="onVerify()"
       ></app-account-Mobile-verification-details>
     </div>
+    <!-- Mobile verification part ends here -->
+
+    <!-- Personal details part starts here  -->
     <div *ngIf="verfyStep('personal', currentStep)">
       <app-create-account-personal-details
         (onSubmitPersonalDetailsEvent)="personalDetailsSubmitted()"
         (onBackEvent)="goBack()"
       ></app-create-account-personal-details>
     </div>
+    <!-- Personal details part starts here  -->
+
+    <!-- Select kyc & other document starts here  -->
     <div *ngIf="verfyStep('kyc', currentStep)">
       <app-other-documents
         (customSaveDocument)="customSaveDocuments($event)"
@@ -31,5 +40,6 @@
       >
       </app-other-documents>
     </div>
+    <!-- Select kyc & other document ends here  -->
   </div>
 </div>

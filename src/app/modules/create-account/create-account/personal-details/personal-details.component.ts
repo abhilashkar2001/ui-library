@@ -5,16 +5,9 @@ import {
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { debounceTime } from "rxjs/operators";
@@ -41,7 +34,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   todayDate: Date = new Date();
   listCityState: any = [];
   listCity: any = [];
-
   staticData = {
     RESIDENCETYE: [],
     GENDER: [],
@@ -51,8 +43,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   prefixArray: string[] = [];
   residenceTypeArray: string[] = [];
   constructor(
-    // private router: Router,
-    // private _location: Location,
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
     private activateRoute: ActivatedRoute,
@@ -66,12 +56,12 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   ngOnInit(): void {
     var customerId = parseInt(sessionStorage.getItem("customerId"));
     this.getGenericDetails();
-    // this.builtPersonalFOrm();
     this.getCountry();
     this.getState();
     this.getCity();
-    if (customerId) this.getCustomerById(customerId);
-    else this.builtPersonalFOrm();
+    if (customerId) {
+      this.getCustomerById(customerId);
+    } else this.builtPersonalFOrm();
   }
 
   getState() {
@@ -81,6 +71,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       }
     });
   }
+
   getCity() {
     this.openAccountService.getAllCity().subscribe((resp: any) => {
       if (resp?.statusCode == 200) {
@@ -163,6 +154,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     this.personalInfoArray.push(this.initialForm(data));
     this.debounceZipCode();
   }
+
   debounceZipCode() {
     for (let i = 0; i < this.personalInfoArray.value?.length; i++) {
       this.fetchStateCity(i);
@@ -228,8 +220,8 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   saveCustomer(i) {
     this.closePanel(i);
-    console.log(this.personalDetailsForm.value);
   }
+
   closePanel(index) {
     this.panels.forEach((panel, i) => {
       if (i == index) {
@@ -281,7 +273,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     this.openAccountService.setData(payLoad.customer[0]);
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {
-        console.log("Response: ", response);
         sessionStorage.setItem("customerId", response.data[0].customerId);
         this.onSubmitPersonalDetailsEvent.emit();
       },

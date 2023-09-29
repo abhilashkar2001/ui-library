@@ -27,11 +27,8 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.screenIndex) {
       this.screenIndex = changes?.screenIndex?.currentValue;
-      console.log(changes.screenIndex);
-
       setTimeout(() => {
         this.next();
       }, 200);
@@ -52,18 +49,11 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
       for (let i = 0; i < this.screenIndex; i++) {
         this.screenList[i].completed = true;
         this.screenList[i].isEditable = true;
-        // this.myStepper.next();
       }
       this.myStepper["_selectedIndex"] = this.screenIndex;
     }
-    // this.selectStep = 1;
-
-    // var num = this.screenIndex + 1;
-    // this.myStepper.selectedIndex = num;
-    //this.myStepper.next();
   }
   stepperSelectionChange(event) {
-    console.log(event);
     this.customSelectionChange.emit(event);
   }
 }

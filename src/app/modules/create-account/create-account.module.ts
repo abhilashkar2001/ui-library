@@ -6,7 +6,6 @@ import { HomeRoutes } from "./create-account-routing";
 import { LandingPageComponent } from "./create-account/landing-page/landing-page.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
-import { AccountStepperComponent } from "./create-account/account-stepper/account-stepper.component";
 import { CreateAccountPersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -23,7 +22,6 @@ import { ApplyAccountComponent } from "./create-account/apply-account/apply-acco
     LandingPageComponent,
     AccountMobileVerificationComponent,
     CreateAccountPersonalDetailsComponent,
-    AccountStepperComponent,
     CreateAccountLandingPageComponent,
     AccountTypeDetailsComponent,
     ApplyAccountComponent,
