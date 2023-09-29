@@ -183,6 +183,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
       ],
       cityId: [data ? data.contact.address[0].cityId : "", Validators.required],
       source: data?.source ? data.source : "Website",
+      kycStatus: data?.kycStatus && data.kycStatus,
     });
   }
 
@@ -242,9 +243,10 @@ export class PersonalCustomDetailsComponent implements OnInit {
       return;
     }
     const customer = this.createPayload();
-    console.log(customer);
     customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
-    customer[0].kycStatus = "UNDER_PROCESS";
+    if (this.customerDetailsForm.value.customer[0].kycStatus)
+      customer[0].kycStatus =
+        this.customerDetailsForm.value.customer[0].kycStatus;
     this.customSavePersonal.emit({
       status: true,
       personalDetails: customer,
@@ -322,6 +324,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
       state: resp.contact.address[0].stateName,
       cityId: resp.contact.address[0].cityId,
       source: resp.source,
+      kycStatus: resp.kycStatus,
     };
   }
 }

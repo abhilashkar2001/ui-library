@@ -1,0 +1,220 @@
+.calculator_container {
+  background-color: #f6faff;
+  padding: 2%;
+  margin-top: 2%;
+  width: 80%;
+}
+// .loanForm {
+//   background-image: url("/assets/images/Group 13944.svg") !important;
+// }
+.example-margin {
+  margin-right: 2%;
+}
+.yeardrop {
+  // background-color: white;
+  // border: none !important;
+  // box-shadow: 0px 3px 10px #00000017;
+  // border-radius: 8px;
+  height: 66px !important;
+  margin-bottom: 25px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.0901960784) !important;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  border-radius: 8px;
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+}
+
+.inputSelect {
+  width: 30% !important;
+  height: 22px;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  opacity: 1;
+  margin-top: 0px;
+  display: flow-root;
+}
+.vl {
+  border-left: 1px solid black;
+}
+.calculator_subTItle {
+  color: #004c97;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Poppins";
+}
+
+// /
+.fd_container {
+  box-shadow: 0px 6.1189799308776855px 30.594900131225586px 0px #0000000d;
+  padding: 1% 0%;
+  border-radius: 39px;
+  height: fit-content;
+}
+.gd_value {
+  font-size: 15px;
+  line-height: 23px;
+  font-weight: 500;
+  color: #004c97;
+}
+.vl {
+  border-left: 1px solid;
+  margin: 0 2%;
+}
+.renew_check {
+  margin: 5% 0;
+}
+.confirmtn {
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+  color: white;
+  border-radius: 50px;
+  margin-bottom: 2%;
+}
+.backBtn {
+  background: #ffffff !important;
+  border-radius: 23px !important;
+  color: #000000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+}
+.alignCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alignLeft {
+  align-items: inherit !important;
+  padding-left: 5%;
+}
+.designImg {
+  position: absolute;
+  width: 180px;
+  left: -30px;
+  top: 250px;
+}
+.designImg-1 {
+  position: absolute;
+  margin-top: 20%;
+  margin-left: 18%;
+  transform: rotate(180deg);
+}
+
+mat-slider {
+  width: 600px;
+}
+
+.range-slider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.heighlightInBlue {
+  font-weight: 600;
+  color: #004c97;
+}
+.mat_card {
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.0901960784);
+  border-radius: 12px;
+  width: 100%;
+  background: white;
+  padding: 1%;
+}
+.heighlightInBlack {
+  font-weight: 600;
+  color: #000000;
+}
+.heighlightInGray {
+  color: gray;
+  font-size: 14px;
+}
+
+.gauge {
+  width: 100%;
+  max-width: 250px;
+  background: black;
+  padding: 8px 8px 0px 8px;
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+}
+
+.gauge__body {
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  background: #a1aee3;
+  position: relative;
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+  overflow: hidden;
+}
+
+.gauge__fill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: inherit;
+  height: 100%;
+  background: #004aa0;
+  transform-origin: center top;
+  transform: rotate(0.25turn);
+  transition: transform 0.2s ease-out;
+}
+
+.gauge__cover {
+  width: 60%;
+  height: 150%;
+  background: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 25%;
+  box-sizing: border-box;
+}
+.totalExpenses {
+  background: #06113c;
+  width: 10px;
+  height: 10px;
+}
+.tutionFee {
+  background: #004aa0;
+  width: 10px;
+  height: 10px;
+}
+.costofLiving {
+  background: #a1aee3;
+  width: 10px;
+  height: 10px;
+}
+
+::ng-deep .ngx-slider .ngx-slider-pointer {
+  background-image: url("/assets/images/Ellipse_169.svg") !important;
+  background-repeat: no-repeat !important;
+  border-radius: 0px !important;
+  background-color: unset !important;
+  top: -8px !important;
+}
+::ng-deep .ngx-slider .ngx-slider-selection {
+  background: #004a9f !important;
+  height: 8px !important;
+}
+::ng-deep .ngx-slider-pointer:after {
+  display: none !important;
+}
+::ng-deep .ngx-slider-full-bar .ngx-slider-bar {
+  height: 8px !important;
+  box-shadow: 0px 3px 6px 0px #0000001f !important;
+  background: #ffffff !important;
+}
+::ng-deep .ngx-slider-bubble.ngx-slider-limit {
+  display: none !important;
+}

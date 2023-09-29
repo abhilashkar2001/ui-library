@@ -10,9 +10,11 @@
       </div>
       <div class="col-2">
         <span class="content-header">Tenure</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.loanTenure
-        }}</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.loanDetails?.loanTenureYear || 0 }} Year
+          {{ loanSummaryDetails?.loanDetails?.loanTenureMonth || 0 }} Months
+          {{ loanSummaryDetails?.loanDetails?.loanTenureDay || 0 }} Days</span
+        >
       </div>
       <div class="col-3">
         <span class="content-header">EMI Amount</span>

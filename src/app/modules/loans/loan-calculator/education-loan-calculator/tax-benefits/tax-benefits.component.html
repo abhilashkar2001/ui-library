@@ -1,0 +1,230 @@
+<div fxFlex="row" fxFlex="100%">
+  <div
+    fxFlex="70"
+    fxLayout="column"
+    fxFlex="100"
+    *ngIf="loanForm"
+    class="loanForm"
+  >
+    <form [formGroup]="loanForm" fxFlex="100">
+      <img class="designImg" src="assets/images/Mask Group.svg" />
+      <div class="calculator_container" fxLayout="column" fxFlex="100">
+        <div
+          fxLayout="row wrap"
+          fxFlex="100"
+          fxLayoutAlign="space-between center"
+        >
+          <div class="calculator_subTItle">Income Slab</div>
+          <div fxFlex="33">
+            <div fxFlex="100">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label class="custom-mat-label">Amount</mat-label>
+                <input matInput formControlName="amount" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ngx-slider
+            [(value)]="value"
+            [(highValue)]="highValue"
+            [options]="options"
+            (userChange)="onValueChange($event)"
+          ></ngx-slider>
+        </div>
+
+        <div
+          fxLayout="row wrap"
+          fxFlex="100"
+          fxLayoutAlign="space-between center"
+        >
+          <div fxLayout="row">
+            <span>Do you want to use FD as a collateral</span>&nbsp;&nbsp;
+            <mat-slide-toggle></mat-slide-toggle>
+          </div>
+          <div fxLayout="column" fxFlex="33">
+            <div class="calculator_subTItle">Interest Rate</div>
+            <div fxFlex="100">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label class="custom-mat-label">Percentage</mat-label>
+                <input matInput formControlName="interestRate" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="column">
+          <div
+            fxLayout="row wrap"
+            fxFlex="100"
+            fxLayoutAlign="space-between center"
+          >
+            <div class="calculator_subTItle">Loan Required</div>
+            <div fxFlex="33">
+              <div fxFlex="100">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label class="custom-mat-label">Amount</mat-label>
+                  <input matInput readonly formControlName="requiredLoan" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="100">
+            <mat-slider
+              [value]="loanForm.value.requiredLoan"
+              [max]="max"
+              [min]="min"
+              fxFlex="100"
+              [thumbLabel]="thumbLabel"
+              (change)="onSliderChange($event)"
+              [displayWith]="formatLoanLabel"
+              discrete
+            >
+              <input matSliderThumb #slider />
+            </mat-slider>
+          </div>
+          <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+            <div>₹ {{ min }}</div>
+            <div>₹ {{ max }}</div>
+          </div>
+        </div>
+
+        <div fxFlex="100" class="mat_card" fxLayout="column">
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="2%">
+            <div fxLayout="row" fxLayoutGap="2%">
+              <div fxFlex="48" fxLayout="column">
+                <div fxFlex="100" fxLayoutAlign="space-between center">
+                  <span class="heighlightInBlue">EMI</span>
+                  <span class="heighlightInBlue">₹ 60,557*</span>
+                </div>
+              </div>
+              <div fxFlex="48" fxLayout="column">
+                <div fxFlex="100" fxLayoutAlign="space-between center">
+                  <span class="heighlightInBlue"
+                    >Tax Benefit(under old tax regime)</span
+                  >
+                  <span class="heighlightInBlue">₹ 60,000*</span>
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="2%">
+              <div fxFlex="48" fxLayout="column">
+                <div fxLayout="column" class="mat_card">
+                  <div fxFlex="100" fxLayoutAlign="space-between center">
+                    <span class="heighlightInGray">Interest rate</span>
+                    <span class="heighlightInBlack">10.6%</span>
+                  </div>
+                  <div fxFlex="100" fxLayoutAlign="space-between center">
+                    <span class="heighlightInGray">Loan Amount</span>
+                    <span class="heighlightInBlack">238723</span>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="48" fxLayout="column">
+                <div fxLayout="column" class="mat_card" style="height: 100%">
+                  <div fxFlex="100" fxLayoutAlign="space-between start">
+                    <span class="heighlightInGray">Effective Loan ROI</span>
+                    <span class="heighlightInBlack">7.46%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              fxFlex="100"
+              class="mat_card"
+              fxLayout="row"
+              fxLayoutGap="1%"
+              style="margin-bottom: 1%; width: 98%"
+            >
+              <div fxFlex="48" fxLayoutAlign="space-between center">
+                <span class="heighlightInGray"
+                  >Interest on FD(Given as Collateral)</span
+                >
+                <span class="heighlightInBlack">6.90%</span>
+              </div>
+              <div style="border-right: 1px solid gray"></div>
+              <div fxFlex="48" fxLayoutAlign="space-between center">
+                <span class="heighlightInGray">Net ROI</span>
+                <span class="heighlightInBlack">6.90%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div
+    fxFlex="30"
+    style="background-color: white; margin-left: -1%; margin-top: 10%"
+  >
+    <div
+      fxFlex="80"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      class="fd_container"
+    >
+      <!-- <div class="parentgauage"> -->
+      <div class="gauge">
+        <div class="gauge__body">
+          <div class="gauge__fill"></div>
+          <div class="gauge__cover"></div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          fxFlex="48"
+          class="alignLeft"
+          fxLayoutAlign="space-around center"
+        >
+          <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="totalExpenses"></div>
+            &nbsp;&nbsp;
+            <div>Total Expenses</div>
+          </div>
+          <div class="gd_value">
+            ₹ {{ expenseDetails?.tutionFee + expenseDetails?.costOfLiving }}
+          </div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="tutionFee"></div>
+            &nbsp;&nbsp;
+            <div>Tution Fees</div>
+          </div>
+          <div class="gd_value">₹ {{ expenseDetails?.tutionFee }}</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="costofLiving"></div>
+            &nbsp;&nbsp;
+            <div>Cost of Living</div>
+          </div>
+          <div class="gd_value">₹ {{ expenseDetails?.costOfLiving }}</div>
+        </div>
+        <div class="vl"></div>
+      </div>
+      <div>
+        <button mat-flat-button class="confirmtn" (click)="applyForLoan()">
+          Apply
+        </button>
+        <button mat-flat-button class="backBtn" (click)="onBack()">Back</button>
+      </div>
+      <img class="designImg-1" src="assets/images/Mask Group.svg" />
+    </div>
+  </div>
+</div>

@@ -35,6 +35,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { NgxSliderModule } from "@angular-slider/ngx-slider";
 
 @NgModule({
   exports: [
@@ -75,6 +76,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
     MatBadgeModule,
     MatBottomSheetModule,
     MatDividerModule,
+    NgxSliderModule,
   ],
 })
 export class SharedMaterialModule {}
