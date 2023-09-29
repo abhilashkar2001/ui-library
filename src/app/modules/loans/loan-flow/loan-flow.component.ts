@@ -195,9 +195,6 @@ export class LoanFlowComponent implements OnInit {
       localStorage.setItem("customerData", JSON.stringify(event.data[0]));
       this.next();
     } else if (event?.statusCode === 204) {
-      this.screenList = this.originalScreenList;
-      this.next();
-    } else {
       this.next();
     }
   }
