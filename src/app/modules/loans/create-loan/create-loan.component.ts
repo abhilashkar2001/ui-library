@@ -155,6 +155,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       accountType: "internal",
       ifscCode: [data ? data?.ifscCode : ""],
       branchCode: [data ? data?.branchCode : ""],
+      confirmAccountNumber: "",
     });
     if (data) this.disbursementType = data?.disbursementType.toLowerCase();
   }

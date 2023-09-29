@@ -312,15 +312,18 @@
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
-          <input matInput numbersOnly formControlName="accountNumber" />
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm.get('accountNumber')?.hasError('required')
-            "
-          >
-            Account Number is <strong>required</strong>
-          </mat-error>
+          <input matInput numbersOnly formControlName="confirmAccountNumber" />
         </mat-form-field>
+        <mat-error
+          class="custom-error"
+          *ngIf="
+            personalLoanDetailsForm?.value.confirmAccountNumber !=
+              personalLoanDetailsForm?.value.accountNumber &&
+            personalLoanDetailsForm.get('confirmAccountNumber').touched
+          "
+        >
+          Account Number is not matching
+        </mat-error>
       </div>
 
       <div class="col-md-6 col-12" *ngIf="disbursementType !== 'account'">
