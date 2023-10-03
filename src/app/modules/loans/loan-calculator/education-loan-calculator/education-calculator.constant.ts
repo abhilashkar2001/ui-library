@@ -11,4 +11,24 @@ export class EducationLoan {
     minLoan: 5000,
     maxLoan: 100000,
   };
+  static readonly EDUCATION_STEEPER = [
+    {
+      name: "Expense Details",
+      imageUrl: "assets/images/education.svg",
+      fxFlexPercentage: 33,
+      isCompleted: true,
+    },
+    {
+      name: "EMI Ammount",
+      imageUrl: "assets/images/education_emi.svg",
+      fxFlexPercentage: 33,
+      isCompleted: false,
+    },
+    {
+      name: "Tax Benefits",
+      imageUrl: "assets/images/education_tax.svg",
+      fxFlexPercentage: 17,
+      isCompleted: false,
+    },
+  ];
 }

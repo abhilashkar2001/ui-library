@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { EducationLoan } from "../education-calculator.constant";
+import { EducationCalculatorService } from "../education-calculator.service";
 
 @Component({
   selector: "app-know-your-emi",
@@ -16,10 +17,19 @@ export class KnowYourEmiComponent implements OnInit {
   @Output() customBack = new EventEmitter<any>();
 
   thumbLabel: boolean = true;
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private educationApi: EducationCalculatorService
+  ) {}
 
   ngOnInit(): void {
-    this.buildForm();
+    this.educationApi.getEmiDetails().subscribe((resp) => {
+      if (resp?.amount) {
+        this.buildForm(resp);
+      } else {
+        this.buildForm();
+      }
+    });
   }
   onSliderChange(e) {
     console.log(e);
@@ -27,24 +37,21 @@ export class KnowYourEmiComponent implements OnInit {
     this.loanForm.get("amount").setValue(e.value);
     console.log(this.loanForm.value);
   }
-  buildForm() {
+  buildForm(data?) {
     this.loanForm = this.fb.group({
-      amount: 0,
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      interestRate: "",
-      repaymentOption: "Complete Moratorium",
+      amount: [data ? data?.amount : 0],
+      tenureYear: [data ? data?.tenureYear : 0],
+      tenureMonth: [data ? data?.tenureMonth : 0],
+      tenureDays: [data ? data?.tenureDays : 0],
+      interestRate: [data ? data?.interestRate : 0],
+      repaymentOption: [data ? data?.repaymentOption : "Complete Moratorium"],
     });
   }
   updateDeposit() {
     console.log(this.loanForm.value);
   }
   applyForLoan() {
-    console.log(this.loanForm.value);
-    sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
-    sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
-    sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
+    this.educationApi.setEmiDetails(this.loanForm.value);
     this.customCalculatorValues.emit(this.loanForm.value);
   }
   formatLoanLabel(value) {

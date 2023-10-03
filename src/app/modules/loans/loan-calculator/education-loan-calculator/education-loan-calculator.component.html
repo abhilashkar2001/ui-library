@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" style="padding: 0% 5%">
   <div fxLayout="row" fxFlex="100" style="justify-content: center">
     <ng-container *ngFor="let educationStep of educationSteeper; let i = index">
       <div
@@ -29,17 +29,18 @@
       </div>
     </ng-container>
   </div>
-  <app-expense-details
-    *ngIf="educationIndex == 0"
-    (customCalculatorValues)="customExpenseDetails($event)"
-  ></app-expense-details>
-  <app-know-your-emi
-    *ngIf="educationIndex == 1"
-    (customCalculatorValues)="customEmiDetails($event)"
-    (customBack)="back()"
-  ></app-know-your-emi>
-  <app-tax-benefits
-    *ngIf="educationIndex == 2"
-    (customBack)="back()"
-  ></app-tax-benefits>
+  <div *ngIf="educationIndex == 0">
+    <app-expense-details
+      (customCalculatorValues)="customExpenseDetails($event)"
+    ></app-expense-details>
+  </div>
+  <div *ngIf="educationIndex == 1">
+    <app-know-your-emi
+      (customCalculatorValues)="customEmiDetails($event)"
+      (customBack)="back()"
+    ></app-know-your-emi>
+  </div>
+  <div *ngIf="educationIndex == 2">
+    <app-tax-benefits (customBack)="back()"></app-tax-benefits>
+  </div>
 </div>

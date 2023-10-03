@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { EducationLoan } from "./education-calculator.constant";
 
 @Component({
   selector: "app-education-loan-calculator",
@@ -6,27 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./education-loan-calculator.component.scss"],
 })
 export class EducationLoanCalculatorComponent implements OnInit {
-  educationSteeper = [
-    {
-      name: "Expense Details",
-      imageUrl: "assets/images/education.svg",
-      fxFlexPercentage: 33,
-      isCompleted: true,
-    },
-    {
-      name: "EMI Ammount",
-      imageUrl: "assets/images/education_emi.svg",
-      fxFlexPercentage: 33,
-      isCompleted: false,
-    },
-    {
-      name: "Tac Benefits",
-      imageUrl: "assets/images/education_tax.svg",
-      fxFlexPercentage: 17,
-      isCompleted: false,
-    },
-  ];
-
+  educationSteeper = EducationLoan.EDUCATION_STEEPER;
   educationIndex = 0;
 
   constructor() {}

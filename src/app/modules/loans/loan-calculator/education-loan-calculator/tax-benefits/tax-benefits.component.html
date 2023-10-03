@@ -19,7 +19,7 @@
             <div fxFlex="100">
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label class="custom-mat-label">Amount</mat-label>
-                <input matInput formControlName="amount" />
+                <input matInput readonly formControlName="amount" />
               </mat-form-field>
             </div>
           </div>
@@ -63,7 +63,7 @@
               <div fxFlex="100">
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label class="custom-mat-label">Amount</mat-label>
-                  <input matInput readonly formControlName="requiredLoan" />
+                  <input matInput formControlName="requiredLoan" />
                 </mat-form-field>
               </div>
             </div>
@@ -224,7 +224,6 @@
         </button>
         <button mat-flat-button class="backBtn" (click)="onBack()">Back</button>
       </div>
-      <img class="designImg-1" src="assets/images/Mask Group.svg" />
     </div>
   </div>
 </div>

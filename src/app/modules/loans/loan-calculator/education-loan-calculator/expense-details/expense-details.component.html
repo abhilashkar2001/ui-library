@@ -5,7 +5,6 @@
     fxFlex="100"
     *ngIf="loanForm"
     class="loanForm"
-    style="margin-left: 5%"
   >
     <form [formGroup]="loanForm" fxFlex="100">
       <div class="calculator_container" fxLayout="column" fxFlex="100">
@@ -87,8 +86,8 @@
             </mat-slider>
           </div>
           <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-            <div>₹ {{ minMonth }} Months</div>
-            <div>₹ {{ maxMonth }} Months</div>
+            <div>{{ minMonth }} Months</div>
+            <div>{{ maxMonth }} Months</div>
           </div>
         </div>
         <!-- Tution Fees-->
