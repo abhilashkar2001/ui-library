@@ -147,6 +147,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
         Validators.required,
       ],
       customerId: data?.customerId,
+      kycStatus: data?.kycStatus,
     });
   }
 
@@ -269,7 +270,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   onConfirm() {
     const payLoad = this.createPayLoad();
     payLoad.customer[0].contact.mobile = sessionStorage.getItem("mobileNo");
-    payLoad.customer[0].kycStatus = "UNDER_PROCESS";
+    if (this.personalDetailsForm.value.personalInfoArray[0].kycStatus)
+      payLoad.customer[0].kycStatus =
+        this.personalDetailsForm.value.personalInfoArray[0].kycStatus;
     this.openAccountService.setData(payLoad.customer[0]);
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {

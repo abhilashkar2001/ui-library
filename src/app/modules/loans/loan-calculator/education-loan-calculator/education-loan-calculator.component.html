@@ -1,0 +1,46 @@
+<div fxLayout="column" style="padding: 0% 5%">
+  <div fxLayout="row" fxFlex="100" style="justify-content: center">
+    <ng-container *ngFor="let educationStep of educationSteeper; let i = index">
+      <div
+        [ngClass]="educationStep.isCompleted == false ? 'grayStep' : ''"
+        fxFlex="{{ educationStep.fxFlexPercentage }}"
+        fxLayout="row"
+      >
+        <div class="stepButton">
+          <button mat-flat-button>
+            <img [src]="educationStep.imageUrl" />
+            <span class="stepTitle">{{ educationStep.name }}</span>
+          </button>
+        </div>
+        <div
+          *ngIf="i != 2"
+          [ngClass]="educationStep.isCompleted == true ? 'circleDot' : ''"
+        ></div>
+        <div
+          *ngIf="i != 2"
+          [ngClass]="educationStep.isCompleted == false ? 'grayStep' : ''"
+          class="horizantalLine"
+        ></div>
+        <div
+          *ngIf="i != 2"
+          [ngClass]="educationStep.isCompleted == true ? 'circleDot' : ''"
+          style="margin-left: 0px; margin-right: -3px"
+        ></div>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="educationIndex == 0">
+    <app-expense-details
+      (customCalculatorValues)="customExpenseDetails($event)"
+    ></app-expense-details>
+  </div>
+  <div *ngIf="educationIndex == 1">
+    <app-know-your-emi
+      (customCalculatorValues)="customEmiDetails($event)"
+      (customBack)="back()"
+    ></app-know-your-emi>
+  </div>
+  <div *ngIf="educationIndex == 2">
+    <app-tax-benefits (customBack)="back()"></app-tax-benefits>
+  </div>
+</div>

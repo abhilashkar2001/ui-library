@@ -1,0 +1,124 @@
+.stepButton {
+  box-shadow: 0px 4px 15px 0px #00000017;
+  border-radius: 12px;
+  width: 100%;
+  button {
+    width: 100%;
+  }
+}
+.stepTitle {
+  color: #06113c;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 15px;
+}
+.horizantalLine {
+  border-top: 2px dotted #004c97;
+  width: 70%;
+  margin-top: 19px;
+}
+
+::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0px;
+  margin-top: -4px !important;
+}
+
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
+}
+::ng-deep .mat-slider-thumb {
+  background: unset !important;
+  background-image: url("/assets/images/Ellipse_169.svg") !important;
+  background-repeat: no-repeat !important;
+  width: 25px !important;
+  height: 26px !important;
+  bottom: -13px !important;
+  right: -10px !important;
+}
+::ng-deep .mat-slider-thumb {
+  transform: scale(1) !important;
+}
+::ng-deep .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  background-color: unset !important;
+  width: fit-content !important;
+}
+::ng-deep .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
+::ng-deep .mat-slider-track-background {
+  height: 8px !important;
+}
+::ng-deep .mat-slider-track-wrapper {
+  height: 8px !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 3px 6px 0px #0000001f;
+  .mat-slider-track-background {
+    background-color: #fff !important;
+  }
+}
+
+::ng-deep .mat-slider-track-fill {
+  height: 8px !important;
+  background: linear-gradient(
+    270deg,
+    #051a2d -11.9%,
+    #014589 28.35%,
+    #01478e 68.71%,
+    #004c97 96.3%
+  ) !important;
+}
+
+:ng-deep .mat-slider-thumb {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: #3498db !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+}
+.confirmtn {
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+  color: white;
+  border-radius: 50px;
+  margin-bottom: 2%;
+}
+.backBtn {
+  background: #ffffff !important;
+  border-radius: 23px !important;
+  color: #000000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.grayStep {
+  filter: grayscale(1);
+}
+.circleDot {
+  background: #004c97;
+  width: 10px;
+  height: 6px;
+  border-radius: 100%;
+  margin-top: 17px;
+  z-index: 100;
+  margin-left: -3px;
+}
+::ng-deep .mat-form-field .mat-form-field-flex .mat-form-field-outline {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  &-start,
+  &-gap,
+  &-end {
+    border: none;
+  }
+}
+::ng-deep .mat-form-field-wrapper {
+  margin: 0px !important;
+}
