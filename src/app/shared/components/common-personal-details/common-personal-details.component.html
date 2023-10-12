@@ -1,0 +1,304 @@
+<div fxLayout="column" *ngIf="customerDetailsForm">
+  <form [formGroup]="customerDetailsForm">
+    <div class="highlight_title">Personal Details</div>
+    <div formArrayName="customer">
+      <div *ngFor="let customer of customer.controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="custom_accordin">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpened(i)">
+                <mat-expansion-panel-header class="customer_Header">
+                  <mat-panel-description class="customer_Header_description">
+                    Applicant {{ i + 1 }}</mat-panel-description
+                  >
+                </mat-expansion-panel-header>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>CIF Number</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="customerNo"
+                        name="customerNo"
+                        numbersOnly
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    Is this applicant a primary customer?
+                    <mat-slide-toggle
+                      color="primary"
+                      formControlName="primaryCustomer"
+                    >
+                    </mat-slide-toggle>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Prefix</mat-label>
+
+                      <mat-select formControlName="prefix">
+                        <mat-option
+                          *ngFor="let prefixItem of prefixArray"
+                          [value]="prefixItem"
+                          >{{ prefixItem }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>First Name</mat-label>
+                      <input
+                        matInput
+                        appAlphabetOnly
+                        type="text"
+                        formControlName="firstName"
+                        name="firstName"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Last Name</mat-label>
+                      <input
+                        matInput
+                        appAlphabetOnly
+                        type="text"
+                        formControlName="lastName"
+                        name="lastName"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Date Of Birth</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="dateOfBirth"
+                        name="dateOfBirth"
+                        [matDatepicker]="picker"
+                        [max]="todayDate"
+                        readonly
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon
+                          >calendar_today</mat-icon
+                        >
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Email</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="email"
+                        name="email"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Gender</mat-label>
+                      <mat-select formControlName="gender">
+                        <mat-option
+                          *ngFor="let genderItem of genderArray"
+                          [value]="genderItem"
+                          >{{ genderItem }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Nationality</mat-label>
+                      <mat-select formControlName="nationality">
+                        <mat-option
+                          *ngFor="let country of countryArray"
+                          [value]="country.countryName"
+                          >{{ country.countryName }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="highlight_title">Address Details</div>
+                  <div class="col-md-12 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Address</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="address1"
+                        name="address1"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Residence Type</mat-label>
+                      <mat-select formControlName="residenceType">
+                        <mat-option
+                          *ngFor="let residenceItem of residenceTypeArray"
+                          [value]="residenceItem"
+                          >{{ residenceItem }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Country</mat-label>
+                      <mat-select formControlName="country">
+                        <mat-option
+                          *ngFor="let countryItem of countryArray"
+                          [value]="countryItem.countryName"
+                          >{{ countryItem.countryName }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Zip Code</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="pincode"
+                        name="pincode"
+                        numbersOnly
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>State</mat-label>
+                      <mat-select formControlName="state">
+                        <mat-option
+                          *ngFor="let item of listCityState"
+                          [value]="item?.stateName"
+                          >{{ item?.stateName }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>City</mat-label>
+                      <mat-select formControlName="cityId">
+                        <mat-option
+                          *ngFor="let item of listCity"
+                          [value]="item?.cityId"
+                          >{{ item?.cityName }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div
+                    fxFlex="100"
+                    fxLayout="row"
+                    fxLayoutGap="2%"
+                    style="margin-top: 50px"
+                    class="col-12"
+                  >
+                    <div>
+                      <button
+                        type="button"
+                        [disabled]="!customer.valid"
+                        mat-raised-button
+                        class="saveButton"
+                        (click)="saveCustomer(i)"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div>
+    <div class="add_applicant" (click)="addCustomer()">
+      Add Another Applicant
+    </div>
+  </div>
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutGap="2%"
+    style="margin-top: 50px"
+    class="row"
+  >
+    <div class="col-md-4 col-12">
+      <button
+        type="button"
+        mat-raised-button
+        class="saveButton"
+        [disabled]="!customerDetailsForm.valid"
+        (click)="confirmCustomer()"
+      >
+        Confirm
+      </button>
+    </div>
+    <div class="col-md-4 col-12">
+      <button
+        type="button"
+        mat-raised-button
+        class="backButton"
+        (click)="goBack()"
+      >
+        Back
+      </button>
+    </div>
+  </div>
+</div>
