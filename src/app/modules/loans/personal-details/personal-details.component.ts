@@ -79,7 +79,7 @@ export class PersonalCustomDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getGenericDetails();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
-    this.loanCustomerId = sessionStorage.getItem("loanCustomerId");
+    this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
     else this.buildCustomerDetailsForm();
     this.getCountry();

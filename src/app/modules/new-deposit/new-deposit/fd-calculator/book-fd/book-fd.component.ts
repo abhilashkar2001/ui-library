@@ -38,23 +38,28 @@ export class BookFdComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fdApi.getCustomerDetails().subscribe((resp) => {
-      this.customerDetails = resp?.data;
-    });
+   let idDepositId = (sessionStorage.getItem('depositOriginationId'))
+    // this.fdApi.getCustomerDetails().subscribe((resp) => {
+    //   this.customerDetails = resp?.data;
+    // });
 
-    if (this.depositType && this.depositType === "RD") {
-      var id = this.route.snapshot.params["id"];
-      this.rdApi.getRdfromId(id).subscribe((resp: any) => {
-        this.depositDetails = resp?.data[0];
-      });
-      return;
+    if ( this.depositType === "RD") {
+      this.rdApi.getRdOriginationSummary(idDepositId).subscribe((resp) => {
+        this.depositDetails = resp.data;
+      })
+      // console.log('.///////////////////////////////////////////////////')
+      // var id = this.route.snapshot.params["id"];
+      // this.rdApi.getRdfromId(id).subscribe((resp: any) => {
+      //   this.depositDetails = resp?.data[0];
+      // });
+      // return;
     }
 
-    this.fdApi
-      .getFixedDeposit(parseInt(sessionStorage.getItem("fixedDepositId")))
-      .subscribe((resp) => {
-        this.depositDetails = resp.data[0];
-      });
+    // this.fdApi
+    //   .getFixedDeposit(parseInt(sessionStorage.getItem("fixedDepositId")))
+    //   .subscribe((resp) => {
+    //     this.depositDetails = resp.data[0];
+    //   });
   }
   proceedFd() {
     this.isPaymentEnabled = true;

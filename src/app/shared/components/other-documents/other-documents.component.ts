@@ -68,7 +68,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.getGenericDetails();
-    var loanCustomerId = parseInt(sessionStorage.getItem("loanCustomerId"));
+    var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
     if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }

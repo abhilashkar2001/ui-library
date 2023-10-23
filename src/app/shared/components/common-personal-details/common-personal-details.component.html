@@ -9,7 +9,11 @@
               <mat-expansion-panel (opened)="panelOpened(i)">
                 <mat-expansion-panel-header class="customer_Header">
                   <mat-panel-description class="customer_Header_description">
-                    Applicant {{ i + 1 }}</mat-panel-description
+                    <div fxLayout="row">
+                      <img *ngIf="customer.valid" src="assets/images/done_icon.svg"/>
+                      <spna style="margin-left: 10px;">Applicant {{ i + 1 }}</spna>
+                    </div>
+                    </mat-panel-description
                   >
                 </mat-expansion-panel-header>
                 <div class="row">

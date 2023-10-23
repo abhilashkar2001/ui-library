@@ -17,8 +17,8 @@ export class FdRdCalculatorComponent implements OnInit {
   ngOnInit(): void {}
   onToggleChange(event) {
     console.log(event);
-    this.rdFdValue = event.value;
-    this.customDepositChange.emit(event.value);
+   this.rdFdValue = event.value;
+    // this.customDepositChange.emit(event.value);
   }
   customCalculatorValues(event) {
     this.calculatorValues = event;

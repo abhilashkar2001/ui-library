@@ -47,11 +47,11 @@
     fxLayout="column"
     *ngIf="verfyStep('personal', cuurrentStep)"
   >
-    <app-custom-personal-details
+    <app-common-personal-details
       (customSavePersonal)="customSavePersonal($event)"
       (personalBack)="goBack()"
     >
-    </app-custom-personal-details>
+    </app-common-personal-details>
   </div>
   <!-- KYC starts here -->
   <div

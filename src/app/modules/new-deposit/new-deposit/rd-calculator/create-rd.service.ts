@@ -18,4 +18,37 @@ export class CreateRdService {
       `${this.baseUrl}/reccuringDeposite?recurringDepositId=${id}`
     );
   }
+  getBusinessSuite(business) {
+    return this.http.get<any>(`${this.baseUrl}/basis-class?businessSuite=${business}`)
+  }
+  getBasisClass(subClass) {
+    return this.http.get<any>(
+      `${this.baseUrl}/details/fetchSubClass?basisClass=${subClass}`
+    );
+  }
+  saveRdOriginationMaster(payload) { 
+    return this.http.post<any>(`${this.baseUrl}/origination-matser/save`,payload)
+  }
+
+  getOriginationMaster(id) {
+    return this.http.get<any>(`${this.baseUrl}/origination-matser?originationId=${id}`)
+  }
+
+  getRdDetails(id) {
+    return this.http.get<any>(`${this.baseUrl}/origination-matser/fdRdFetch?fdRdMasterId=${id}`)
+  }
+  getProcessCycle(processName) {
+    return this.http.get<any>(
+      `${this.baseUrl}/process_cycle/stages?processCycleCode=${processName}`
+    );
+  }
+   getProcessStages(id) {
+    return this.http.get<any>(`${this.baseUrl}/process_stage/screens?id=${id}`);
+  }
+   getCustomerById(id) {
+    return this.http.get<any>(`${this.baseUrl}/customer-api?customerId=${id}`);
+  }
+  getRdOriginationSummary(id) {
+    return this.http.get<any>(`${this.baseUrl}/webSummary/fetchFdAndRdSummary?originationId=${id}`);
+  }
 }

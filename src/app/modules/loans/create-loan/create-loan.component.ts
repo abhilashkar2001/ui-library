@@ -62,7 +62,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.getGenericDetails();
-    this.loanCustomerId = sessionStorage.getItem("loanCustomerId");
+    this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
     var id = parseInt(sessionStorage.getItem("loanDisburseId"));
     if (id) this.getLoanById(id);
