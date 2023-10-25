@@ -32,7 +32,6 @@ import * as FusionCharts from "fusioncharts";
 import * as Charts from "fusioncharts/fusioncharts.charts";
 import { TermsConditionsComponent } from "./terms-conditions/terms-conditions.component";
 import { CommonMobileVerificationComponent } from "./comon-mobile-verification/common-mobile-verification.component";
-import { PersonalDetailsComponent } from "./personal-details/personal-details.component";
 import { CarouselComponent } from "./carousel/carousel.component";
 import { FaqComponent } from "./faq/faq.component";
 import { ClientsComponent } from "./clients/clients.component";
@@ -52,6 +51,7 @@ import { SwiperModule } from "swiper/angular";
 import { MatIconModule } from "@angular/material/icon";
 import { SuccessPopupComponent } from "./success-popup/success-popup.component";
 import { CommmonSteeperComponent } from "./commmon-steeper/commmon-steeper.component";
+import { CommonPersonalDetailsComponent } from "./common-personal-details/common-personal-details.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -70,7 +70,6 @@ const components = [
   ClientReviewComponent,
   TermsConditionsComponent,
   CommonMobileVerificationComponent,
-  PersonalDetailsComponent,
   CarouselComponent,
   FaqComponent,
   CibilScoreResultComponent,
@@ -83,6 +82,7 @@ const components = [
   SuccessPopupComponent,
   CustomSwiperComponent,
   CommmonSteeperComponent,
+  CommonPersonalDetailsComponent
 ];
 
 @NgModule({
