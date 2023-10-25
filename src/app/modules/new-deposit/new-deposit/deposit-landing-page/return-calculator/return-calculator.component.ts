@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter } from "rxjs/operators";
 import {
   Component,
   EventEmitter,
@@ -15,6 +15,7 @@ import { CreateRdService } from "../../rd-calculator/create-rd.service";
 import { Location } from "@angular/common";
 import * as moment from "moment";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { FdCalculatorServiceService } from "../../fd-calculator/fd-calculator-service.service";
 
 @Component({
   selector: "app-return-calculator",
@@ -44,7 +45,10 @@ export class ReturnCalculatorComponent implements OnInit {
   };
   url: string = "";
   rdBasisId: any;
+  fdBasisId: any;
   isAutoRenew: boolean = false;
+  basisId: any;
+  depositeType: any;
 
   constructor(
     private fb: FormBuilder,
@@ -52,11 +56,13 @@ export class ReturnCalculatorComponent implements OnInit {
     private router: Router,
     private location: Location,
     private rdApi: CreateRdService,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private newDepositeService: FdCalculatorServiceService
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
+    this.fdFlowData();
     console.log(this.rdFdValue, this.fdName);
   }
   ngOnChanges(changes: SimpleChanges) {
@@ -69,32 +75,61 @@ export class ReturnCalculatorComponent implements OnInit {
           if (resp?.statusCode === 200) {
             this.getSubClass(resp.data).then((val) => {
               this.rdBasisId = val[0].productDetails[0]?.basisId;
-        localStorage.setItem("rdBasisId", val[0].productDetails[0]?.basisId);
-        localStorage.setItem('rdBasisDetails', JSON.stringify(val[0].productDetails[0]));
-             })
-         
+              localStorage.setItem(
+                "rdBasisId",
+                val[0].productDetails[0]?.basisId
+              );
+              localStorage.setItem(
+                "rdBasisDetails",
+                JSON.stringify(val[0].productDetails[0])
+              );
+            });
           }
         });
-      else if (this.rdFdValue === "fdCalculator") return;
+      else if (this.rdFdValue === "fdCalculator") {
+        this.fdFlowData();
+      }
       if (this.depositForm) this.depositForm.reset();
     }
   }
 
   // getSub Class list
-getSubClass(data) {
-  return new Promise((resolve, reject) => {
-    const rdClass = data.filter((item) => item.basisClass.toLowerCase().includes('rd'));
-    let rdResp = {};
-    
-    this.rdApi.getBasisClass(rdClass[0].basisClass).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        rdResp = resp.data;
-        resolve(rdResp);
-      } else {
+  getSubClass(data) {
+    return new Promise((resolve, reject) => {
+      const rdClass = data.filter((item) =>
+        item.basisClass.toLowerCase().includes("rd")
+      );
+      let rdResp = {};
+      this.rdApi.getBasisClass(rdClass[0].basisClass).subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          rdResp = resp.data;
+          resolve(rdResp);
+        } else {
+        }
+      });
+    });
+  }
+
+  fdFlowData() {
+    this.newDepositeService.getFdTypes().subscribe((resp) => {
+      if (resp?.statusCode == 200) {
+        this.newDepositeService
+          .fetchSubClass(resp?.data[0]?.basisClass)
+          .subscribe((resp) => {
+            if (resp?.statusCode == 200) {
+              this.fdBasisId = resp?.data[0]?.productDetails[0]?.basisId;
+              const localStoragePayload = JSON.stringify({
+                basisId: resp?.data[0]?.productDetails[0]?.basisId,
+                basisName: resp?.data[0]?.productDetails[0]?.basisName,
+                processCycleCode:
+                  resp?.data[0]?.productDetails[0]?.processCycleCode,
+              });
+              localStorage.setItem("FdDetails", localStoragePayload);
+            }
+          });
       }
     });
-  });
-}
+  }
 
   onSliderChange(e) {
     this.ammountValue = e.value;
@@ -131,27 +166,37 @@ getSubClass(data) {
 
   openLink(fdType) {
     let path;
+    this.depositeType = fdType;
     if (fdType == "FD") {
-      path = "/deposits/fdFlow/fdDetails";
-      this.url = this.location.prepareExternalUrl(
-        this.router.serializeUrl(this.router.createUrlTree([path]))
-      );
-      window.open(`${this.url}`, "_blank");
-    } else {
-      const payload = this.originationModel(this.rdBasisId);
+      const payload = this.originationModel(this.fdBasisId);
       const finalPayload = {
         originationModel: payload,
-         customerInfo: [],
-      }
-
-      this.rdApi.saveRdOriginationMaster(finalPayload).subscribe((resp) => {
-         path = `/deposits/rdDeposit`;
+        customerInfo: [],
+      };
+      this.newDepositeService
+        .saveFdOriginationMaster(finalPayload)
+        .subscribe((resp) => {
+          path = "/deposits/fdFlow/fdDetails";
           this.url = this.location.prepareExternalUrl(
             this.router.serializeUrl(this.router.createUrlTree([path]))
           );
           this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}`;
           window.open(`${this.url}`, "_blank");
-      })
+        });
+    } else {
+      const payload = this.originationModel(this.rdBasisId);
+      const finalPayload = {
+        originationModel: payload,
+        customerInfo: [],
+      };
+      this.rdApi.saveRdOriginationMaster(finalPayload).subscribe((resp) => {
+        path = `/deposits/rdDeposit`;
+        this.url = this.location.prepareExternalUrl(
+          this.router.serializeUrl(this.router.createUrlTree([path]))
+        );
+        this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}`;
+        window.open(`${this.url}`, "_blank");
+      });
     }
   }
 
@@ -161,14 +206,14 @@ getSubClass(data) {
       basisDetailsId: basisId,
       applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
       branchCode: this.tokenStore.getUser().branchCode,
-      depositeType: "FD Deposite",
-      autoRenew:this.isAutoRenew,
+      depositeType: this.depositeType,
+      autoRenew: this.isAutoRenew,
       amount: parseInt(this.depositForm.value.amount),
       maturityAmount: 3778, //need to change once flexCube data avilable.
       maturityDate: moment(this.depositForm.value.maturityDate).format(
         "YYYY-MMM-DD"
       ),
-      typeOfCustomer: '',
+      typeOfCustomer: "",
       intrestRate: 677, //need to change once flexCube data avilable.
       scheme: "Normal or Tax saver",
     };

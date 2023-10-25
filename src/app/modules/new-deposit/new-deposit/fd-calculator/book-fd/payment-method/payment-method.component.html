@@ -23,6 +23,7 @@
       </mat-button-toggle-group>
     </div>
   </div>
+
   <div *ngIf="paymentMethod?.value === 'Card'">
     <form class="paymentForm">
       <div class="row">
@@ -57,9 +58,29 @@
         <div class="col-md-6 col-12 cvvField">
           <mat-form-field appearance="outline" class="full-width disable-field">
             <mat-label>CVV</mat-label>
-            <input matInput type="password" name="firstName" />
-            <div matSuffix class="cvv_Img">
-              <img src="assets/images/help-circle.svg" />
+            <input matInput type="password" name="firstName" numbersOnly />
+            <div matSuffix class="Tooltip">
+              <div class="cvv_Img">
+                <img src="assets/images/help-circle.svg" />
+              </div>
+              <div class="Tooltiptext">
+                <div fxLayout="column" fxLayoutGap="2%">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <img src="assets/images/cvv-image.svg" />
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <div class="child">What is CVV?</div>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                      <div class="sub-child">
+                        CVV number is the last three digits
+                      </div>
+                      <div class="sub-child">on the back of your card.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </mat-form-field>
         </div>

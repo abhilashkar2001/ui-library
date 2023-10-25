@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   QueryList,
@@ -20,6 +21,7 @@ import { debounceTime } from "rxjs/operators";
   styleUrls: ["./personal-details.component.scss"],
 })
 export class PersonalDetailsComponent implements OnInit {
+  @Input() existingCustomer: any;
   @Output() customSavePersonal = new EventEmitter<{}>();
   @Output() personalBack = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
@@ -66,7 +68,11 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buildCustomerDetailsForm();
+    if (this.existingCustomer) {
+      this.buildCustomerDetailsForm(this.existingCustomer);
+    } else {
+      this.buildCustomerDetailsForm();
+    }
     this.holderType = sessionStorage.getItem("holderType") || "Self";
     this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
     this.getCountry();
@@ -79,15 +85,21 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-  buildCustomerDetailsForm() {
+  buildCustomerDetailsForm(data?) {
     this.customerDetailsForm = this.fb.group({
       fixedDepositId: "",
       customer: this.fb.array([]),
     });
     setTimeout(() => {
-      if (this.holderType == "Self") this.addCustomer();
+      if (this.holderType == "Self") this.addCustomer(data);
       else if (this.holderType == "Joint") {
-        for (let i = 0; i <= 1; i++) this.addCustomer();
+        for (let i = 0; i <= 1; i++) {
+          if (i == 0) {
+            this.addCustomer(data);
+          } else {
+            this.addCustomer();
+          }
+        }
       }
       this.customFormGroup.emit(this.customerDetailsForm);
     }, 200);
@@ -97,29 +109,29 @@ export class PersonalDetailsComponent implements OnInit {
     return this.customerDetailsForm.get("customer") as FormArray;
   }
 
-  newCustomer(): FormGroup {
+  newCustomer(data?): FormGroup {
     return this.fb.group({
-      id: "",
-      customerNo: "",
-      primaryCustomer: "",
-      prefix: ["", Validators.required],
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
-      dateOfBirth: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      gender: ["", Validators.required],
-      nationality: ["", Validators.required],
-      address1: [""],
-      residenceType: ["", Validators.required],
-      country: ["", Validators.required],
-      pincode: ["", Validators.required],
-      state: ["", Validators.required],
-      cityId: ["", Validators.required],
+      customerId: [data ? data.customerId : ""],
+      customerNo: [data ? data.customerNo : ""],
+      primaryCustomer: [data ? data.primaryCustomer : ""],
+      prefix: [data ? data.prefix : "", Validators.required],
+      firstName: [data ? data.firstName : "", Validators.required],
+      lastName: [data ? data.lastName : "", Validators.required],
+      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
+      email: [data ? data.email : "", [Validators.required, Validators.email]],
+      gender: [data ? data.gender : "", Validators.required],
+      nationality: [data ? data.nationality : "", Validators.required],
+      address1: [data ? data.address1 : ""],
+      residenceType: [data ? data.residenceType : "", Validators.required],
+      countryName: [data ? data.countryName : "", Validators.required],
+      pincode: [data ? data.pincode : "", Validators.required],
+      stateName: [data ? data.stateName : "", Validators.required],
+      cityId: [data ? data.cityId : "", Validators.required],
     });
   }
 
-  addCustomer() {
-    this.customer.push(this.newCustomer());
+  addCustomer(data?) {
+    this.customer.push(this.newCustomer(data));
   }
 
   confirmCustomer() {
@@ -139,9 +151,11 @@ export class PersonalDetailsComponent implements OnInit {
     this.customerDetailsForm.value.customer.forEach((element) => {
       const address = {
         address1: element.address1,
+        address2: "",
         residenceType: element.residenceType,
-        pincode: element.pincode,
-        cityId: 30,
+        countryName: element.countryName,
+        stateName: element.stateName,
+        cityId: element.cityId,
         // parseInt(element.cityId),
       };
       contact = {
@@ -175,7 +189,6 @@ export class PersonalDetailsComponent implements OnInit {
   }
   saveCustomer(i) {
     this.closePanel(i);
-    console.log(this.customerDetailsForm);
   }
   closePanel(index) {
     this.panels.forEach((panel, i) => {
@@ -186,16 +199,11 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   getCityandStateByZipcode(indx) {
-    console.log({ indx });
-
     (<FormGroup>this.customer.controls[indx])
       .get("pincode")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
-        console.log({ value });
-
         if (value) {
-          console.log(value);
           if (value.toString().length) {
             this.personalDetailsService
               .fetchStateCityByZipcode(value)
@@ -203,7 +211,7 @@ export class PersonalDetailsComponent implements OnInit {
                 if (res) {
                   this.listCityState = res?.data;
                   this.customer.controls[indx]
-                    .get("state")
+                    .get("stateName")
                     .patchValue(res?.data?.[0]?.state);
                   this.customer.controls[indx]
                     .get("cityId")

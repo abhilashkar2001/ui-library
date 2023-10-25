@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { SuccessPopupComponent } from "../../success-popup/success-popup.component";
 import { FdCalculatorServiceService } from "../../fd-calculator-service.service";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 
 @Component({
   selector: "app-payment-method",
@@ -15,6 +15,7 @@ export class PaymentMethodComponent implements OnInit {
   netBankPaymentForm: FormGroup;
   tansferPaymentForm: FormGroup;
   isTransferProceed: boolean = false;
+  originId: string;
 
   constructor(
     private dialog: MatDialog,
@@ -55,9 +56,20 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   continuePayment() {
+    if (sessionStorage.getItem("depositOriginationId")) {
+      this.originId = sessionStorage.getItem("depositOriginationId");
+    } else {
+      this.originId = sessionStorage.getItem("originationId");
+    }
     this.dialog.open(SuccessPopupComponent, {
+      data: {
+        originationId: this.originId,
+        type: "Fd",
+      },
+      width: "750px",
       disableClose: true,
-      width: "50%",
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
     });
   }
 }

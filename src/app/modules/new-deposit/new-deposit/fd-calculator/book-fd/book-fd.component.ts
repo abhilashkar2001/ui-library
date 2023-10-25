@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 import { CreateRdService } from "../../rd-calculator/create-rd.service";
-import { ActivatedRoute } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 
 @Component({
   selector: "app-book-fd",
@@ -28,41 +29,60 @@ export class BookFdComponent implements OnInit {
     autoRenew: boolean;
     paymentType?: string;
   };
+  originId: any;
 
   @Output() customBookFdBack = new EventEmitter<{}>();
 
   constructor(
     private rdApi: CreateRdService,
-    private fdApi: FdCalculatorServiceService,
-    private route: ActivatedRoute
+    private summaryService: FdCalculatorServiceService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-   let idDepositId = (sessionStorage.getItem('depositOriginationId'))
-    // this.fdApi.getCustomerDetails().subscribe((resp) => {
-    //   this.customerDetails = resp?.data;
-    // });
+    let idDepositId = sessionStorage.getItem("depositOriginationId");
 
-    if ( this.depositType === "RD") {
+    if (this.depositType === "RD") {
       this.rdApi.getRdOriginationSummary(idDepositId).subscribe((resp) => {
         this.depositDetails = resp.data;
-      })
-      // console.log('.///////////////////////////////////////////////////')
-      // var id = this.route.snapshot.params["id"];
-      // this.rdApi.getRdfromId(id).subscribe((resp: any) => {
-      //   this.depositDetails = resp?.data[0];
-      // });
-      // return;
+      });
+    } else {
+      this.summaryService
+        .fetchFdSummary(sessionStorage.getItem("originationId"))
+        .subscribe((resp: any) => {
+          this.depositDetails = resp.data;
+        });
     }
-
-    // this.fdApi
-    //   .getFixedDeposit(parseInt(sessionStorage.getItem("fixedDepositId")))
-    //   .subscribe((resp) => {
-    //     this.depositDetails = resp.data[0];
-    //   });
   }
   proceedFd() {
-    this.isPaymentEnabled = true;
+    if (sessionStorage.getItem("paymentType") == "Account") {
+      this.isPaymentEnabled = true;
+    } else {
+      if (this.depositType == "RD") {
+        this.originId = sessionStorage.getItem("depositOriginationId");
+      } else {
+        this.originId = sessionStorage.getItem("originationId");
+      }
+      const dialogRef = this.dialog.open(SuccessPopupComponent, {
+        data: {
+          originationId: this.originId,
+          type: "Fd",
+        },
+        width: "750px",
+        disableClose: true,
+        panelClass: "popup-dialog-class",
+        backdropClass: "bdrop",
+      });
+      dialogRef.afterClosed().subscribe((resp: any) => {
+        if (resp === true) {
+          sessionStorage.removeItem("holderType");
+          sessionStorage.removeItem("originationId");
+          sessionStorage.removeItem("selectedStep");
+          localStorage.removeItem("FdDetails");
+          localStorage.removeItem("basisDetails");
+        }
+      });
+    }
   }
   goBack() {
     this.customBookFdBack.emit();
