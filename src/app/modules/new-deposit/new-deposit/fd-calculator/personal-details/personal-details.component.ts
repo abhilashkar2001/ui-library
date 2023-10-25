@@ -60,7 +60,6 @@ export class PersonalDetailsComponent implements OnInit {
   ngAfterViewInit() {
     // Set up initial expansion state
     this.panels.forEach((panel, i) => {
-      console.log(i, "........");
       // panel.expandedChange.subscribe((expanded) => {
       //   this.items[i].expanded = expanded;
       // });
