@@ -49,6 +49,7 @@ export class ReturnCalculatorComponent implements OnInit {
   isAutoRenew: boolean = false;
   basisId: any;
   depositeType: any;
+  processCycleCode: any;
 
   constructor(
     private fb: FormBuilder,
@@ -118,13 +119,8 @@ export class ReturnCalculatorComponent implements OnInit {
           .subscribe((resp) => {
             if (resp?.statusCode == 200) {
               this.fdBasisId = resp?.data[0]?.productDetails[0]?.basisId;
-              const localStoragePayload = JSON.stringify({
-                basisId: resp?.data[0]?.productDetails[0]?.basisId,
-                basisName: resp?.data[0]?.productDetails[0]?.basisName,
-                processCycleCode:
-                  resp?.data[0]?.productDetails[0]?.processCycleCode,
-              });
-              localStorage.setItem("FdDetails", localStoragePayload);
+              this.processCycleCode =
+                resp?.data[0]?.productDetails[0]?.processCycleCode;
             }
           });
       }
@@ -180,7 +176,7 @@ export class ReturnCalculatorComponent implements OnInit {
           this.url = this.location.prepareExternalUrl(
             this.router.serializeUrl(this.router.createUrlTree([path]))
           );
-          this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}`;
+          this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.processCycleCode}`;
           window.open(`${this.url}`, "_blank");
         });
     } else {

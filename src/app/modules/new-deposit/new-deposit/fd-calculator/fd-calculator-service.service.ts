@@ -43,7 +43,7 @@ export class FdCalculatorServiceService {
       `${this.base_url}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
-  fetchFdSummary(originationId) {
+  fetchDepositeSummary(originationId) {
     return this.http.get(
       `${this.base_url}/webSummary/fetchFdAndRdSummary?originationId=${originationId}`
     );

@@ -56,11 +56,8 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   continuePayment() {
-    if (sessionStorage.getItem("depositOriginationId")) {
+    if (sessionStorage.getItem("depositOriginationId"))
       this.originId = sessionStorage.getItem("depositOriginationId");
-    } else {
-      this.originId = sessionStorage.getItem("originationId");
-    }
     this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originId,

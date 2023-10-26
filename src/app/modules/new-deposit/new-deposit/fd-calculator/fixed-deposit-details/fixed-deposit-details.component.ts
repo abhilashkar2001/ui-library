@@ -53,32 +53,27 @@ export class FixedDepositDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.newDepositeService.setToken(true);
     this.currentUserBranch = this.tokenStorageService.getUser().branchCode;
-    var sessionStep = sessionStorage.getItem("fdStep");
+    let sessionStep = sessionStorage.getItem("fdStep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    var id = this.route.snapshot.params["id"];
+    let id = this.route.snapshot.params["id"];
     if (id) this.dataByMasterId(parseInt(id));
     else this.buildCreateFdForm();
-    this.getAllFdStep();
+    let processCycleCode = this.route.snapshot.params["code"];
+    if (processCycleCode) this.getAllFdStep(processCycleCode);
   }
 
-  getAllFdStep() {
-    const sessionData = JSON.parse(localStorage.getItem("FdDetails"));
-    this.fdApi
-      .getProcessCycle(sessionData.processCycleCode)
-      .subscribe((resp) => {
-        sessionStorage.setItem(
-          "currentStage",
-          resp.data.processStageList[0].id
-        );
-        this.fdApi
-          .getProcessStages(resp.data.processStageList[0].id)
-          .subscribe((resp) => {
-            this.screenList = resp.data.screens.sort((s1, s2) => {
-              return s1.sequence - s2.sequence;
-            });
-            this.factory();
+  getAllFdStep(processCycleCode) {
+    this.fdApi.getProcessCycle(processCycleCode).subscribe((resp) => {
+      sessionStorage.setItem("currentStage", resp.data.processStageList[0].id);
+      this.fdApi
+        .getProcessStages(resp.data.processStageList[0].id)
+        .subscribe((resp) => {
+          this.screenList = resp.data.screens.sort((s1, s2) => {
+            return s1.sequence - s2.sequence;
           });
-      });
+          this.factory();
+        });
+    });
   }
 
   dataByMasterId(fdMasterId) {
@@ -148,14 +143,14 @@ export class FixedDepositDetailsComponent implements OnInit {
           this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
             if (resp?.statusCode === 200) {
               sessionStorage.setItem(
-                "originationId",
+                "depositOriginationId",
                 resp.data.originationModel.originationId
               );
               sessionStorage.setItem(
                 "fdRdMasterId",
                 resp.data.fdRdMasterModel.fdRdMasterId
               );
-              this.snack.open(`Fixed Deposit Details Saved` + " !", "OK", {
+              this.snack.open(`Fixed Deposit Details Saved`, "!", {
                 duration: 4000,
                 verticalPosition: "top",
                 horizontalPosition: "right",

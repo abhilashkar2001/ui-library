@@ -29,9 +29,9 @@ export class BookFdComponent implements OnInit {
     autoRenew: boolean;
     paymentType?: string;
   };
-  originId: any;
 
   @Output() customBookFdBack = new EventEmitter<{}>();
+  idDepositId: any;
 
   constructor(
     private rdApi: CreateRdService,
@@ -40,32 +40,22 @@ export class BookFdComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let idDepositId = sessionStorage.getItem("depositOriginationId");
-
-    if (this.depositType === "RD") {
-      this.rdApi.getRdOriginationSummary(idDepositId).subscribe((resp) => {
-        this.depositDetails = resp.data;
-      });
-    } else {
+    this.idDepositId = sessionStorage.getItem("depositOriginationId");
+    if (this.idDepositId) {
       this.summaryService
-        .fetchFdSummary(sessionStorage.getItem("originationId"))
+        .fetchDepositeSummary(this.idDepositId)
         .subscribe((resp: any) => {
           this.depositDetails = resp.data;
         });
     }
   }
   proceedFd() {
-    if (sessionStorage.getItem("paymentType") == "Account") {
+    if (sessionStorage.getItem("paymentType") == "Account")
       this.isPaymentEnabled = true;
-    } else {
-      if (this.depositType == "RD") {
-        this.originId = sessionStorage.getItem("depositOriginationId");
-      } else {
-        this.originId = sessionStorage.getItem("originationId");
-      }
+    else {
       const dialogRef = this.dialog.open(SuccessPopupComponent, {
         data: {
-          originationId: this.originId,
+          originationId: this.idDepositId,
           type: "Fd",
         },
         width: "750px",
@@ -76,9 +66,8 @@ export class BookFdComponent implements OnInit {
       dialogRef.afterClosed().subscribe((resp: any) => {
         if (resp === true) {
           sessionStorage.removeItem("holderType");
-          sessionStorage.removeItem("originationId");
+          sessionStorage.removeItem("depositOriginationId");
           sessionStorage.removeItem("selectedStep");
-          localStorage.removeItem("FdDetails");
           localStorage.removeItem("basisDetails");
         }
       });

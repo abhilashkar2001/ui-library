@@ -69,7 +69,14 @@
     </div>
   </div>
 
-  <div fxLayout="column" *ngIf="depositDetails?.bankDetails">
+  <div
+    fxLayout="column"
+    *ngIf="
+      depositDetails?.bankDetails?.yourAccount ||
+      depositDetails?.bankDetails?.name ||
+      depositDetails?.bankDetails?.nationalId
+    "
+  >
     <div class="highlight_title">Bank Account</div>
     <div class="row">
       <div class="col-md-4 col-12 field_align">
