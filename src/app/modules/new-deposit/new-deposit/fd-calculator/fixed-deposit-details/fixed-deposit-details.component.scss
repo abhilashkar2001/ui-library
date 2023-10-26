@@ -224,16 +224,11 @@
 
 //
 .yeardrop {
-  // background-color: white;
-  // border: none !important;
-  // box-shadow: 0px 3px 10px #00000017;
-  // border-radius: 8px;
-  // height: 46px;
-  background-color: white;
+  background-color: #f3f3f3;
   border: 1px solid rgba(0, 0, 0, 0.0901960784) !important;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
-  border-radius: 8px;
-  height: 60px !important;
+  border-radius: 5px;
+  height: 68px !important;
 }
 :host
   ::ng-deep
@@ -264,4 +259,76 @@
   font-size: 18px;
   font-weight: 600;
   font-family: "Poppins";
+}
+.autoRenew {
+  padding: 2%;
+}
+:host
+  ::ng-deep
+  .mat-form-field-should-float.disable-field
+  .mat-form-field-outline {
+  background-color: #f3f3f3 !important;
+  border-radius: 5px;
+}
+.disable-fieldset {
+  background: #f3f3f3;
+  background: #f3f3f3;
+  height: 108%;
+  border-radius: 7px;
+}
+
+.vertical-separator {
+  height: 30px;
+  width: 1px;
+  border: #b4b4b466 1px solid;
+  margin: 16px 10px;
+  position: relative;
+}
+.fieldset-title {
+  font: 10px Poppins;
+  color: #102245;
+  font-weight: 500;
+  opacity: 0.5;
+  margin-left: 4%;
+  margin-top: -2%;
+  position: absolute;
+}
+.field-set {
+  padding-bottom: 4px;
+  height: 50px;
+  position: relative;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000017;
+  border: none;
+  border-radius: 8px;
+  opacity: 1;
+}
+.fieldset-input {
+  position: relative;
+  top: -4px;
+  font-family: Poppins;
+  color: #102245 !important;
+  opacity: 100%;
+  letter-spacing: -0.26px;
+  font-weight: 600;
+}
+.selector-input {
+  width: 65px;
+}
+.field-type {
+  top: 6px;
+  padding-bottom: 4px;
+  height: 61px;
+  position: relative;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000017;
+  border: 1px solid #b4b4b466;
+  border-radius: 8px;
+  opacity: 1;
+}
+.depositePeriodInput {
+  margin-left: 10%;
+}
+.mat-button-disabled {
+  background: none !important;
 }
