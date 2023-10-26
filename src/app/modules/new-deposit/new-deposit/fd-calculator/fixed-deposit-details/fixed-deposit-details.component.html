@@ -18,7 +18,11 @@
     <form [formGroup]="createFdForm" fxLayout="column">
       <div class="row">
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Deposit Ammount</mat-label>
             <input
               matInput
@@ -31,61 +35,51 @@
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12" style="margin-top: -4px">
-          <fieldset class="yeardrop fieldset">
-            <legend visible="true" class="legend-font legend">
-              Deposit Period
-            </legend>
-            <div fxLayout="row" class="parentYearDiv">
-              <mat-form-field
-                appearance="outline"
-                class="full-width inputSelect"
-              >
-                <input
-                  matInput
-                  name="tenureYear"
-                  formControlName="tenureYear"
-                  numbersOnly
-                  maxlength="2"
-                  placeholder="Year"
-                  [readonly]="!isEnabledEdit"
-                />
-              </mat-form-field>
-              <span class="vl"></span>
-              <mat-form-field
-                appearance="outline"
-                class="full-width inputSelect"
-              >
-                <input
-                  matInput
-                  name="tenureMonth"
-                  formControlName="tenureMonth"
-                  numbersOnly
-                  maxlength="2"
-                  placeholder="Month"
-                  [readonly]="!isEnabledEdit"
-                />
-              </mat-form-field>
-              <span class="vl"></span>
-
-              <mat-form-field
-                appearance="outline"
-                class="full-width inputSelect"
-              >
-                <input
-                  matInput
-                  name="tenureDays"
-                  formControlName="tenureDays"
-                  numbersOnly
-                  maxlength="2"
-                  placeholder="Day"
-                  [readonly]="!isEnabledEdit"
-                />
-              </mat-form-field>
+          <fieldset class="field-type">
+            <legend class="fieldset-title">Deposit Period</legend>
+            <div
+              fxLayout="row"
+              [ngClass]="isEnabledEdit == false && 'disable-fieldset'"
+            >
+              <input
+                matInput
+                name="tenureYear"
+                formControlName="tenureYear"
+                numbersOnly
+                maxlength="2"
+                placeholder="Year"
+                [readonly]="!isEnabledEdit"
+                class="depositePeriodInput"
+              />
+              <div class="vertical-separator"></div>
+              <input
+                matInput
+                name="tenureMonth"
+                formControlName="tenureMonth"
+                numbersOnly
+                maxlength="2"
+                placeholder="Month"
+                [readonly]="!isEnabledEdit"
+              />
+              <div class="vertical-separator"></div>
+              <input
+                matInput
+                name="tenureDays"
+                formControlName="tenureDays"
+                numbersOnly
+                maxlength="2"
+                placeholder="Day"
+                [readonly]="!isEnabledEdit"
+              />
             </div>
           </fieldset>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Maturity Date</mat-label>
             <input
               matInput
@@ -94,16 +88,24 @@
               name="maturityDate"
               [matDatepicker]="picker"
               readonly
-              [disabled]="!isEnabledEdit"
+              [readonly]="!isEnabledEdit"
             />
-            <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+              [ngStyle]="!isEnabledEdit && { 'pointer-events': 'none' }"
+            >
               <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Interest Rate</mat-label>
             <input
               matInput
@@ -116,7 +118,11 @@
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Maturity Ammount</mat-label>
             <input
               matInput
@@ -129,7 +135,11 @@
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Deposit Holder Type</mat-label>
             <mat-select
               formControlName="ownership"
@@ -142,7 +152,11 @@
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Customer Type</mat-label>
             <mat-select
               formControlName="typeOfCustomer"
@@ -153,7 +167,11 @@
           </mat-form-field>
         </div>
         <div class="col-md-6 col-12">
-          <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+            [ngClass]="isEnabledEdit == false && 'disable-field'"
+          >
             <mat-label>Payout Type</mat-label>
             <mat-select
               formControlName="intrestPayout"
@@ -175,7 +193,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 autoRenew">
           <mat-checkbox formControlName="autoRenew">Auto Renew</mat-checkbox>
         </div>
       </div>
