@@ -15,6 +15,7 @@ export class VerifyNumberComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
   @Output() customVerifyBack = new EventEmitter<{}>();
+  @Output() customExistingData = new EventEmitter<{}>();
   dialogRef: MatDialogRef<SuccessPopupComponent>;
   verifyNumFirm: FormGroup;
   isShowOtp: boolean = false;
@@ -51,9 +52,7 @@ export class VerifyNumberComponent implements OnInit {
     }, 200);
   }
   onOtpChange(e) {
-    console.log(e);
     this.yourOtp = e.toString();
-    console.log(this.yourOtp);
   }
 
   buildVerifyNumForm() {
@@ -68,7 +67,6 @@ export class VerifyNumberComponent implements OnInit {
       ],
     });
     this.customFormGroupEmit.emit(this.verifyNumFirm);
-    console.log(this.verifyNumFirm);
   }
 
   verify() {
@@ -77,7 +75,7 @@ export class VerifyNumberComponent implements OnInit {
       otp: this.yourOtp,
     };
     this.api.verifyOtp(payload).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+      if (resp?.statusCode == 200 || resp) {
         this.snack.open(`Mobile Number verified successfully`, "OK", {
           duration: 4000,
           verticalPosition: "top",
@@ -93,16 +91,12 @@ export class VerifyNumberComponent implements OnInit {
     this.openAccountService
       .getExistingCustomer(this.verifyNumFirm.value.verifyMobile)
       .subscribe((resp: any) => {
-        console.log(resp);
         if (resp?.statusCode === 200 && resp?.data) {
-          if (resp?.statusCode === 200) {
-            this.dialogRef = this.dialog.open(SuccessPopupComponent, {
-              width: "750px",
-              disableClose: true,
-              panelClass: "popup-dialog-class",
-              backdropClass: "bdrop",
-            });
-          }
+          this.customExistingData.emit({
+            customerInfo: resp.data[0],
+          });
+          this.customSaveVerify.emit(true);
+          // this.customFormGroupEmit.emit(this.verifyNumFirm);
         } else if (resp?.statusCode === 204) {
           this.customSaveVerify.emit(true);
           this.customFormGroupEmit.emit(this.verifyNumFirm);
@@ -127,7 +121,6 @@ export class VerifyNumberComponent implements OnInit {
   }
 
   timer(minute) {
-    console.log(minute, ",");
     // let minute = 1;
     let seconds: number = minute * 60;
     let textSec: any = "0";

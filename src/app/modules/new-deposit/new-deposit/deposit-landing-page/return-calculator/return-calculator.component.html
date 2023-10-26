@@ -16,7 +16,7 @@
           </div>
           <div fxLayout="column" fxFlex="40">
             <span class="calculator_subTItle">Ownership</span>
-            <mat-radio-group formControlName="ownerShip">
+            <mat-radio-group formControlName="ownership">
               <mat-radio-button class="example-margin1" value="Self">
                 Self
               </mat-radio-button>
@@ -37,7 +37,7 @@
             <div fxFlex="100">
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label class="custom-mat-label">Ammount</mat-label>
-                <input matInput formControlName="amount" />
+                <input matInput numbersOnly formControlName="amount" />
               </mat-form-field>
             </div>
           </div>
@@ -51,6 +51,7 @@
             [thumbLabel]="thumbLabel"
             (change)="onSliderChange($event)"
             discrete
+            [displayWith]="formatLoanLabel"
           >
             <input matSliderThumb #slider />
           </mat-slider>
@@ -103,6 +104,7 @@
                     maxlength="2"
                     formControlName="tenureYear"
                     placeholder="Year"
+                    numbersOnly
                   />
                 </mat-form-field>
                 <span class="vl"></span>
@@ -116,6 +118,7 @@
                     maxlength="2"
                     formControlName="tenureMonth"
                     placeholder="Month"
+                    numbersOnly
                   />
                 </mat-form-field>
                 <span class="vl"></span>
@@ -130,6 +133,7 @@
                     maxlength="2"
                     formControlName="tenureDays"
                     placeholder="Day"
+                    numbersOnly
                   />
                 </mat-form-field>
               </div>
@@ -151,6 +155,7 @@
                 name="currencyCode"
                 class="selectOption"
                 formControlName="intrestPayout"
+                (selectionChange)="fdName == 'fdCalculator' && updateDeposit()"
               >
                 <mat-option value="Cumulative"> Cumulative </mat-option>
               </mat-select>
@@ -168,7 +173,7 @@
 
               <mat-select
                 class="selectOption"
-                formControlName="dateOfInstalment"
+                formControlName="monthlySavings"
                 (selectionChange)="fdName == 'rdCalculator' && updateDeposit()"
               >
                 <mat-option value="5th of each month">
@@ -185,5 +190,77 @@
         </div>
       </div>
     </form>
+  </div>
+  <div
+    fxFlex="30"
+    style="background-color: white; margin-left: -1%; margin-top: 10%"
+  >
+    <div
+      fxFlex="80"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      class="fd_container"
+    >
+      <div fxLayout="column" class="alignCenter">
+        <div class="maturityTitle">Maturity Ammount</div>
+        <div class="maturityTitle" style="color: #004c97">₹ 1,10,202</div>
+      </div>
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          fxFlex="48"
+          class="alignLeft"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Interest Ammount</div>
+          <div class="gd_value">₹ 12,669</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div fxLayout="row">
+            <div class="maturityTitle">Interest Rate</div>
+            <mat-icon class="icon" (click)="openInterestDialog()"
+              >info</mat-icon
+            >
+          </div>
+          <div class="gd_value">₹ 12,669</div>
+        </div>
+      </div>
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <div class="maturityTitle">Maturity Date</div>
+          <div class="gd_value">02 Aug 2025</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="space-around center"
+        >
+          <mat-checkbox [(ngModel)]="isAutoRenew">Auto Renew </mat-checkbox>
+        </div>
+      </div>
+      <div>
+        <button
+          mat-flat-button
+          class="openFDbtn"
+          (click)="openLink(fdName == 'fdCalculator' ? 'FD' : 'RD')"
+        >
+          Open {{ fdName == "fdCalculator" ? "FD" : "RD" }} Now
+        </button>
+      </div>
+      <img class="designImg-1" src="assets/images/Mask Group.svg" />
+    </div>
   </div>
 </div>

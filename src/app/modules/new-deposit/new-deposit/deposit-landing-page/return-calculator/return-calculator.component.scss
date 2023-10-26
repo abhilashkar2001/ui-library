@@ -55,53 +55,6 @@
   font-family: "Poppins";
 }
 
-:host ::ng-deep .mat-slider-thumb {
-  background: unset !important;
-  background-image: url("/assets/images/Ellipse_169.svg") !important;
-  background-repeat: no-repeat !important;
-  width: 25px !important;
-  height: 26px !important;
-  bottom: -13px !important;
-  right: -10px !important;
-}
-:host ::ng-deep .mat-slider-thumb {
-  transform: scale(1) !important;
-}
-:host ::ng-deep .mat-slider-thumb-label {
-  transform: rotate(45deg) !important;
-  background-color: unset !important;
-}
-:host ::ng-deep .mat-slider-thumb-label-text {
-  opacity: 1 !important;
-}
-:host ::ng-deep .mat-slider-track-background {
-  height: 8px !important;
-}
-:host ::ng-deep .mat-slider-track-wrapper {
-  height: 8px !important;
-  border-radius: 10px !important;
-}
-:host ::ng-deep .mat-slider-track-fill {
-  height: 8px !important;
-  background: linear-gradient(
-    270deg,
-    #051a2d -11.9%,
-    #014589 28.35%,
-    #01478e 68.71%,
-    #004c97 96.3%
-  ) !important;
-}
-
-:host :ng-deep .mat-slider-thumb {
-  width: 30px !important;
-  height: 30px !important;
-  background-color: #3498db !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  position: relative !important;
-}
 .category {
   display: flex;
 }
@@ -112,4 +65,97 @@
 .rdfdform {
   background-color: #fdfcfc;
   border-radius: 16px;
+}
+.fd_container {
+  box-shadow: 0px 6.1189799308776855px 30.594900131225586px 0px #0000000d;
+  padding: 1% 0%;
+  border-radius: 39px;
+  max-height: 80%;
+}
+.alignCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alignLeft {
+  align-items: inherit !important;
+  padding-left: 5%;
+}
+.designImg {
+  position: absolute;
+  width: 180px;
+  left: -30px;
+  top: 250px;
+}
+.designImg-1 {
+  position: absolute;
+  margin-top: 20%;
+  margin-left: 18%;
+  transform: rotate(180deg);
+}
+.openFDbtn {
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+
+  color: white;
+  border-radius: 50px;
+  width: 153px;
+  margin-bottom: 2%;
+}
+.icon {
+  color: grey;
+  margin-top: 5px
+}
+
+::ng-deep .mat-slider-thumb {
+  background: unset !important;
+  background-image: url("/assets/images/Ellipse_169.svg") !important;
+  background-repeat: no-repeat !important;
+  width: 25px !important;
+  height: 26px !important;
+  bottom: -13px !important;
+  right: -10px !important;
+}
+::ng-deep .mat-slider-thumb {
+  transform: scale(1) !important;
+}
+::ng-deep .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  background-color: unset !important;
+  width: fit-content !important;
+}
+::ng-deep .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
+::ng-deep .mat-slider-track-background {
+  height: 8px !important;
+}
+::ng-deep .mat-slider-track-wrapper {
+  height: 8px !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 3px 6px 0px #0000001f;
+  .mat-slider-track-background {
+    background-color: #fff !important;
+  }
+}
+
+::ng-deep .mat-slider-track-fill {
+  height: 8px !important;
+  background: linear-gradient(
+    270deg,
+    #051a2d -11.9%,
+    #014589 28.35%,
+    #01478e 68.71%,
+    #004c97 96.3%
+  ) !important;
+}
+
+:ng-deep .mat-slider-thumb {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: #3498db !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
 }

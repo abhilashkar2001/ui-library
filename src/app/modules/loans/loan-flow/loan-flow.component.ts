@@ -190,7 +190,7 @@ export class LoanFlowComponent implements OnInit {
 
   checkExistingUserEvent(event) {
     if (event?.statusCode === 200) {
-      sessionStorage.setItem("loanCustomerId", event.data[0].customerId);
+      sessionStorage.setItem("customerId", event.data[0].customerId);
       sessionStorage.setItem("isExistingCustomer", "Yes");
       localStorage.setItem("customerData", JSON.stringify(event.data[0]));
       this.next();
@@ -206,30 +206,70 @@ export class LoanFlowComponent implements OnInit {
 
   // on Personal details saved
   customSavePersonal(event) {
+    console.log(event);
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const customer = this.createPayload(event.personalDetails);
+    customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
+    if (event.personalDetails[0].kycStatus)
+      customer[0].kycStatus = event.personalDetails[0].kycStatus;
 
-    this.loanApi
-      .saveLoanPersonal(event.personalDetails)
-      .subscribe((response: any) => {
-        if (response?.statusCode === 200) {
-          this.customerData = {
-            ...this.customerData,
-            ...response?.data[0],
-          };
-          localStorage.setItem(
-            "customerData",
-            JSON.stringify(this.customerData)
-          );
-          this.snack.open(`Personal Details Saved` + " !", "OK", {
-            duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-          });
-          sessionStorage.setItem("loanCustomerId", response.data[0].customerId);
-          this.next();
-        }
-      });
+    this.loanApi.saveLoanPersonal(customer).subscribe((response: any) => {
+      if (response?.statusCode === 200) {
+        this.customerData = {
+          ...this.customerData,
+          ...response?.data[0],
+        };
+        localStorage.setItem("customerData", JSON.stringify(this.customerData));
+        this.snack.open(`Personal Details Saved` + " !", "OK", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+        });
+        sessionStorage.setItem("customerId", response.data[0].customerId);
+        this.next();
+      }
+    });
   }
+
+  createPayload(event) {
+    var customer = [];
+    event.forEach((element) => {
+      console.log(element);
+      const cus = {
+        prefix: element.prefix,
+        firstName: element.firstName,
+        lastName: element.lastName,
+        customerId: element?.customerId,
+        middleName: "",
+        gender: element.gender,
+        jointCustomerInfo: [],
+        isphoneNumVerified: true,
+        isEmailVerified: true,
+        source: element.source,
+        dateOfBirth: moment(element.dateOfBirth).format(),
+        nationality: element.nationality,
+        contact: {
+          mobile: element.mobile,
+          email: element.email,
+          address: [
+            {
+              address1: element.address1,
+              address2: "",
+              residenceType: element.residenceType,
+              cityId: element.cityId,
+              countryName: element.country,
+              pincode: element.zipCode,
+              stateName: element.state,
+            },
+          ],
+        },
+      };
+      customer.push(cus);
+    });
+
+    return customer;
+  }
+
   customSaveDocuments(e) {
     var docIds = [];
     e.documentDetails.otherDocument.forEach((element) => {
@@ -238,7 +278,7 @@ export class LoanFlowComponent implements OnInit {
       };
       docIds.push(docId);
     });
-    var id = sessionStorage.getItem("loanCustomerId");
+    var id = sessionStorage.getItem("customerId");
     console.log(id);
     var payload = {
       customerId: parseInt(id),
@@ -258,7 +298,7 @@ export class LoanFlowComponent implements OnInit {
     this.next();
   }
   onTCAccepted(event) {
-    var id = sessionStorage.getItem("loanCustomerId");
+    var id = sessionStorage.getItem("customerId");
 
     this.openAccountService.getCustomerById(parseInt(id)).subscribe((resp) => {
       this.saveCustomerInfo(resp);
@@ -382,7 +422,7 @@ export class LoanFlowComponent implements OnInit {
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp === true) {
         sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("loanCustomerId");
+        sessionStorage.removeItem("customerId");
         sessionStorage.removeItem("loanDisburseId");
         sessionStorage.removeItem("loanstep");
         sessionStorage.removeItem("isExistingCustomer");

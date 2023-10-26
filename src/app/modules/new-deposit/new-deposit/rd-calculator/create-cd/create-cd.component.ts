@@ -28,11 +28,13 @@ export class CreateCdComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.route.snapshot);
     var id = this.route.snapshot.params["id"];
+    console.log(id);
     // this.buildCreateRdForm();
-    var depositId = parseInt(sessionStorage.getItem("recurringDepositId"));
+    id = parseInt(id);
     if (id) {
-      this.getRdById(depositId);
+      this.getRdById(id);
     } else {
       this.buildCreateRdForm();
       this.customCreatRdForm.emit(this.createRdForm);
@@ -40,8 +42,10 @@ export class CreateCdComponent implements OnInit {
   }
   getRdById(id) {
     console.log(id);
-    this.rdApi.getRdfromId(id).subscribe((resp: any) => {
-      if (resp?.statusCode === 200) this.buildCreateRdForm(resp.data[0]);
+    this.rdApi.getRdDetails(id).subscribe((resp: any) => {
+      if (resp?.statusCode === 200) {
+        this.buildCreateRdForm(resp.data[0]);
+      }
     });
   }
 
@@ -53,10 +57,13 @@ export class CreateCdComponent implements OnInit {
 
   buildCreateRdForm(data?) {
     this.createRdForm = this.fb.group({
-      depositAmmount: [data ? data.amount : "", Validators.required],
-      maturityDate: [data ? data.typeOfCustomer : "", Validators.required],
-      interestRate: [data ? data.intrestRate : "", Validators.required],
-      ownerShip: [data ? data.ownerShip : "", Validators.required],
+      amount: [data ? data.amount : "", Validators.required],
+      maturityDate: [
+        data ? new Date(data.maturityDate) : "",
+        Validators.required,
+      ],
+      intrestRate: [data ? data.intrestRate : "", Validators.required],
+      ownership: [data ? data.ownership : "", Validators.required],
       maturityAmount: [data ? data.maturityAmount : "", Validators.required],
       typeOfCustomer: [data ? data.typeOfCustomer : "", Validators.required],
       intrestPayout: [data ? data.intrestPayout : "", Validators.required],
@@ -65,7 +72,8 @@ export class CreateCdComponent implements OnInit {
         Validators.required,
       ],
       autoRenew: [data ? data.autoRenew : false],
-      recurringDepositId: data && data.recurringDepositId,
+      fdRdMasterId: data && data.fdRdMasterId,
+      basisDetailsId: data && data.basisDetailsId,
     });
     this.customBasicForm = this.createRdForm;
     // setTimeout(() => {
@@ -76,7 +84,10 @@ export class CreateCdComponent implements OnInit {
   submitCreateFd() {
     console.log(this.createRdForm.value);
     this.customCreatRdForm.emit(this.createRdForm);
-    this.customSaveCreate.emit({ satus: true });
+    this.customSaveCreate.emit({
+      satus: true,
+      rdData: this.createRdForm.value,
+    });
   }
 
   editRecord() {
@@ -85,5 +96,8 @@ export class CreateCdComponent implements OnInit {
   }
   onExit() {
     window.close();
+  }
+  onPaymentTypeChange(e) {
+    sessionStorage.setItem("paymentType", e);
   }
 }

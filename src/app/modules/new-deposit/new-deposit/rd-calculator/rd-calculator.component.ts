@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { NewDepositService } from "../../new-deposit.service";
 import { FormGroup } from "@angular/forms";
+import * as moment from "moment";
+import { ActivatedRoute } from "@angular/router";
+import { CreateRdService } from "./create-rd.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-rd-calculator",
@@ -9,7 +13,7 @@ import { FormGroup } from "@angular/forms";
 })
 export class RdCalculatorComponent implements OnInit {
   depositType = "RD";
-  selectedStep = 0;
+  selectedStep = 0; // should be 0
   isFixedDepositDetail: boolean = true; // should be true
   isPersonalDetails: boolean = false;
   isBookFd: boolean = false;
@@ -23,101 +27,184 @@ export class RdCalculatorComponent implements OnInit {
 
   steper_Array = [];
   isLinear: boolean = true;
-  cuurrentStep = "Create RD";
+  cuurrentStep = "create";
+  // CONST KEY & VALUES
+  REPORT_TITLE = "Recurring Deposit";
+  rdDetails: any;
+  screenList: any=[];
+  docIds: any[]=[];
 
   constructor(
     private showSideBar: NewDepositService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private rdApi: CreateRdService,
+    private tokenStore: TokenStorageService
   ) {}
 
   ngOnInit(): void {
     this.showSideBar.setToken(true);
+     var sessionStep = sessionStorage.getItem("rdStep");
+    if (sessionStep) this.selectedStep = parseInt(sessionStep);
+    var id = this.route.snapshot.params["id"]
+    if(id) this.getRdById(parseInt(id))
     // var sessionStep = parseInt(sessionStorage.getItem("selectedStep"));
     //if (sessionStep) this.selectedStep = sessionStep;
-    this.steper_Array = [
-      {
-        id: 1,
-        stepFormControl: this.customBasicForm,
-        label: "Create RD",
-      },
-      {
-        id: 2,
-        stepFormControl: this.documentDetailsForm,
-        label: "Verify Mobile Number",
-      },
-      {
-        id: 3,
-        stepFormControl: this.personalDetailsForm,
-        label: "Personal Details",
-      },
-      {
-        id: 4,
-        stepFormControl: this.kycDetailsForm,
-        label: "Select KYC",
-      },
-      {
-        id: 5,
-        stepFormControl: this.rdDetailsForm,
-        label: "Book RD",
-      },
-    ];
-    this.factory();
+    this.getAllRdStep();
+  //  this.factory();
   }
-  factory() {
-    this.cuurrentStep = this.steper_Array[this.selectedStep].label;
+   getAllRdStep() {
+     const sessionData = JSON.parse(localStorage.getItem("rdBasisDetails"));
+     console.log(sessionData)
+    this.rdApi
+      .getProcessCycle(sessionData.processCycleCode)
+      .subscribe((resp) => {
+        sessionStorage.setItem(
+          "currentStage",
+          resp.data.processStageList[0].id
+        );
+        this.rdApi
+          .getProcessStages(resp.data.processStageList[0].id)
+          .subscribe((resp) => {
+            this.screenList = resp.data.screens.sort((s1, s2) => {
+              return s1.sequence - s2.sequence;
+            });
+            // this.updateFormGroup();
+            //this.updateStep();
+            this.factory();
+          });
+      });
+  }
+ getRdById(id) {
+    this.rdApi.getRdDetails(id).subscribe((resp: any) => {
+      if (resp?.statusCode === 200) {
+        this.rdDetails= resp.data
+      };
+    });
   }
 
-  stepperSelectionChange(event) {}
+  factory() {
+    this.cuurrentStep = this.screenList[this.selectedStep].screenName;
+    console.log(this.cuurrentStep);
+  }
+
+  verifyStep(stepVerify) {
+    return this.cuurrentStep.toLowerCase().includes(stepVerify) ? true : false;
+  }
+
+  stepperSelectionChange(event) {
+    this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
+    sessionStorage.setItem("loanstep", event.selectedIndex);
+    this.selectedStep = event.selectedIndex;
+  }
 
   submitPersonalDetails(event) {
-    // this.updateSelectedIndex();
-    // this.isPersonalDetails = false;
-    // this.isKyc = true;
     this.next();
     this.cdref.detectChanges();
   }
-  customSaveDocuments(event) {
-    // this.updateSelectedIndex();
-    // this.isKyc = false;
-    // this.isBookFd = true;
-    this.next();
-    this.cdref.detectChanges();
+
+   customSaveDocuments(e) {
+    var docIds = [];
+    e.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+     this.docIds= docIds
+    var id = sessionStorage.getItem("customerId");
+    
+    this.rdApi.getCustomerById(parseInt(id)).subscribe((resp) => {
+      this.saveCustomerInfo(resp,docIds);
+    });
+     
+    // // this.depositApi.submitAllDocument(payload).subscribe((resp) => {
+    // //   if (resp?.statusCode === 200) { 
+    // //     // this.next();
+    // //   }
+    // // });
+    // console.log(docIds);
   }
+  saveCustomerInfo(resp,docIds) {
+    var custResp: any = resp.data;
+    console.log(docIds)
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      (custResp[i].jointCustomerInfo = []),
+        (custResp[i].isphoneNumVerified = true),
+        (custResp[i].isEmailVerified = true),
+       custResp[i].documentId = docIds;
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+    });
+
+    custResp[0].primaryCustomer = true;
+  let rdData = this.rdDetails[0]
+    delete rdData.fdRdMasterId;
+    console.log(rdData);
+    rdData = {
+      ...rdData
+    }
+    const payload = {
+      originationModel: rdData,
+      customerInfo: custResp,
+    };
+    this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
+      sessionStorage.setItem('depositOriginationId', resp.data.originationModel.originationId);
+      this.next();
+    })
+   
+  }
+
   customSaveRD(event) {
     this.next();
     this.cdref.detectChanges();
   }
 
   customSaveVerify(e) {
-    const num = this.selectedStep + 1;
-    this.selectedStep = num;
-    this.factory();
-    //sessionStorage.setItem("selectedStep", "2");
-    this.cdref.detectChanges();
+    this.next()
   }
-  goBack() {
-    this.isFixedDepositDetail = true;
-    this.isPersonalDetails = false;
+   goBack() {
+    const num = this.selectedStep - 1;
+    this.cuurrentStep = this.screenList[num].screenName;
+    setTimeout(() => {
+      this.selectedStep = num;
+    }, 200);
   }
 
   next() {
     const num = this.selectedStep + 1;
     this.selectedStep = num;
+    sessionStorage.setItem("rdStep", String(this.selectedStep));
     this.factory();
-    // for scrolling sidebar and get current state.
-    const el = document.querySelector(".mat-step-label-selected");
-    el.scrollIntoView();
+    // for scrolling ssequenceebar and get current state.
+    // const el = document.querySelector(".mat-step-label-selected");
+    // el.scrollIntoView();
   }
 
   customSaveCreate(event) {
-    console.log(event);
+    sessionStorage.setItem('holderType',event.rdData.ownership)
+    let jk={...this.rdDetails[0], ...event.rdData, maturityDate: moment(event.rdData.maturityDate).format('YYYY-MMM-DD') }
+    
+    this.rdApi.getOriginationMaster(this.rdDetails[0].originationId).subscribe((data) => {
+      if (data.statusCode === 200) {
+        const payload = { originationModel: jk, customerInfo: data.data[0].customerInfo }
+        this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => { 
+       
+       })
+      }
+      
+       
+    })
+   
+    this.next();
     // this.updateSelectedIndex();
     // this.isFixedDepositDetail = false;
     // this.isVerifyNumber = true;
   }
 
   updateSelectedIndex() {
-    this.selectedStep = this.selectedStep + 1;
+   // this.selectedStep = this.selectedStep + 1;
   }
 
   customFormGroup(e) {
@@ -127,10 +214,7 @@ export class RdCalculatorComponent implements OnInit {
     console.log(event);
     this.documentDetailsForm = event;
   }
-  // kycForm(event) {
-  //   console.log(event);
-  //   this.kycDetailsForm = event;
-  // }
+
   rdForm(event) {
     console.log(event);
     this.rdDetailsForm = event;
@@ -139,15 +223,73 @@ export class RdCalculatorComponent implements OnInit {
   customFormGroupEmit(event) {
     this.steper_Array[1].stepFormControl = event;
   }
-  customCreatRdForm(event) {
-    this.steper_Array[0].stepFormControl = event;
-    this.next();
-    this.cdref.detectChanges();
-  }
+  
   customkycFormGroupEmit(event) {
     this.steper_Array[4].stepFormControl = event;
   }
   customrdFormGroupEmit(event) {
     this.steper_Array[5].stepFormControl = event;
+  }
+
+  customSavePersonal(event) {
+    console.log(this.rdDetails);
+    let rdData = this.rdDetails[0]
+    delete rdData.fdRdMasterId;
+    console.log(rdData);
+    rdData = {
+      ...rdData,
+    }
+    
+    const customer = this.createPayload(event.personalDetails);
+    const payload = {
+      originationModel: rdData,
+      customerInfo: customer
+    }
+    console.log(payload);
+    this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        sessionStorage.setItem('customerId', resp.data.customerInfo[0].customerId);
+        this.next();
+      }
+    })
+  }
+  createPayload(event) {
+    var customer = [];
+    event.value.customer.forEach((element) => {
+      console.log(element);
+      const cus = {
+        prefix: element.prefix,
+        firstName: element.firstName,
+        lastName: element.lastName,
+        customerId: element?.customerId,
+        middleName: "",
+        gender: element.gender,
+        jointCustomerInfo: [],
+        documentId: [],
+        isphoneNumVerified: true,
+        isEmailVerified: true,
+        source: element.source,
+        dateOfBirth: moment(element.dateOfBirth).format(),
+        nationality: element.nationality,
+        contact: {
+          mobile: element.mobile,
+          email: element.email,
+          address: [
+            {
+              address1: element.address1,
+              address2: "",
+              residenceType: element.residenceType,
+              cityId: element.cityId,
+              countryName: element.country,
+              pincode: element.zipCode,
+              stateName: element.state,
+            },
+          ],
+        },
+      };
+      customer.push(cus);
+    });
+
+    return customer;
   }
 }

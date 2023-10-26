@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" *ngIf="customerDetailsForm">
   <form [formGroup]="customerDetailsForm">
     <div class="highlight_title">Personal Details</div>
     <div formArrayName="customer">
@@ -9,7 +9,11 @@
               <mat-expansion-panel (opened)="panelOpened(i)">
                 <mat-expansion-panel-header class="customer_Header">
                   <mat-panel-description class="customer_Header_description">
-                    Applicant {{ i + 1 }}</mat-panel-description
+                    <div fxLayout="row">
+                      <img *ngIf="customer.valid" src="assets/images/done_icon.svg"/>
+                      <spna style="margin-left: 10px;">Applicant {{ i + 1 }}</spna>
+                    </div>
+                    </mat-panel-description
                   >
                 </mat-expansion-panel-header>
                 <div class="row">
@@ -44,7 +48,11 @@
                       <mat-label>Prefix</mat-label>
 
                       <mat-select formControlName="prefix">
-                        <mat-option value="mr.">Mr.</mat-option>
+                        <mat-option
+                          *ngFor="let prefixItem of prefixArray"
+                          [value]="prefixItem"
+                          >{{ prefixItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -56,6 +64,7 @@
                       <mat-label>First Name</mat-label>
                       <input
                         matInput
+                        appAlphabetOnly
                         type="text"
                         formControlName="firstName"
                         name="firstName"
@@ -70,6 +79,7 @@
                       <mat-label>Last Name</mat-label>
                       <input
                         matInput
+                        appAlphabetOnly
                         type="text"
                         formControlName="lastName"
                         name="lastName"
@@ -88,6 +98,7 @@
                         formControlName="dateOfBirth"
                         name="dateOfBirth"
                         [matDatepicker]="picker"
+                        [max]="todayDate"
                         readonly
                       />
                       <mat-datepicker-toggle matSuffix [for]="picker">
@@ -119,7 +130,11 @@
                     >
                       <mat-label>Gender</mat-label>
                       <mat-select formControlName="gender">
-                        <mat-option value="Male">Male</mat-option>
+                        <mat-option
+                          *ngFor="let genderItem of genderArray"
+                          [value]="genderItem"
+                          >{{ genderItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -130,7 +145,11 @@
                     >
                       <mat-label>Nationality</mat-label>
                       <mat-select formControlName="nationality">
-                        <mat-option value="India">India</mat-option>
+                        <mat-option
+                          *ngFor="let country of countryArray"
+                          [value]="country.countryName"
+                          >{{ country.countryName }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -156,7 +175,11 @@
                     >
                       <mat-label>Residence Type</mat-label>
                       <mat-select formControlName="residenceType">
-                        <mat-option value="Citizen">Citizen</mat-option>
+                        <mat-option
+                          *ngFor="let residenceItem of residenceTypeArray"
+                          [value]="residenceItem"
+                          >{{ residenceItem }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -166,7 +189,7 @@
                       class="full-width disable-field"
                     >
                       <mat-label>Country</mat-label>
-                      <mat-select formControlName="countryName">
+                      <mat-select formControlName="country">
                         <mat-option
                           *ngFor="let countryItem of countryArray"
                           [value]="countryItem.countryName"
@@ -185,7 +208,6 @@
                         matInput
                         type="text"
                         formControlName="pincode"
-                        (input)="getCityandStateByZipcode(i)"
                         name="pincode"
                         numbersOnly
                       />
@@ -197,11 +219,11 @@
                       class="full-width disable-field"
                     >
                       <mat-label>State</mat-label>
-                      <mat-select formControlName="stateName">
+                      <mat-select formControlName="state">
                         <mat-option
                           *ngFor="let item of listCityState"
-                          [value]="item?.state"
-                          >{{ item?.state }}</mat-option
+                          [value]="item?.stateName"
+                          >{{ item?.stateName }}</mat-option
                         >
                       </mat-select>
                     </mat-form-field>
@@ -214,9 +236,9 @@
                       <mat-label>City</mat-label>
                       <mat-select formControlName="cityId">
                         <mat-option
-                          *ngFor="let item of listCityState"
+                          *ngFor="let item of listCity"
                           [value]="item?.cityId"
-                          >{{ item?.city }}</mat-option
+                          >{{ item?.cityName }}</mat-option
                         >
                       </mat-select>
                     </mat-form-field>
@@ -228,7 +250,7 @@
                     style="margin-top: 50px"
                     class="col-12"
                   >
-                    <div *ngIf="this.holderType != 'Self'">
+                    <div>
                       <button
                         type="button"
                         [disabled]="!customer.valid"
@@ -249,7 +271,7 @@
     </div>
   </form>
 
-  <div *ngIf="this.holderType != 'Self'">
+  <div>
     <div class="add_applicant" (click)="addCustomer()">
       Add Another Applicant
     </div>

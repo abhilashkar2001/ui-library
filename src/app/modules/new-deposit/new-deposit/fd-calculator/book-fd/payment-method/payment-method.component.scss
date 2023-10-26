@@ -57,3 +57,53 @@
   text-align: center;
   padding-left: 10px;
 }
+
+.info-tool {
+  .cvv_Img {
+    position: relative;
+    top: -8px;
+  }
+  .info-tool-text {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    align-items: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    margin-left: -156px;
+    margin-top: 4px;
+    transform: translateX(-50%);
+    padding: 15px;
+    padding-top: 0px;
+    min-width: 376px;
+  }
+
+  .info-tool-text::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    right: 0%;
+    border-width: 16px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+  }
+}
+
+.info-tool:hover .info-tool-text {
+  .child {
+    font: normal normal 18px/30px Poppins;
+    font-weight: bold;
+    color: #000000;
+    opacity: 1;
+  }
+  .sub-child {
+    color: #a5a5a5;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  visibility: visible;
+}

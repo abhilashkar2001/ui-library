@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 import { CreateRdService } from "../../rd-calculator/create-rd.service";
-import { ActivatedRoute } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 
 @Component({
   selector: "app-book-fd",
@@ -30,34 +31,47 @@ export class BookFdComponent implements OnInit {
   };
 
   @Output() customBookFdBack = new EventEmitter<{}>();
+  idDepositId: any;
 
   constructor(
     private rdApi: CreateRdService,
-    private fdApi: FdCalculatorServiceService,
-    private route: ActivatedRoute
+    private summaryService: FdCalculatorServiceService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.fdApi.getCustomerDetails().subscribe((resp) => {
-      this.customerDetails = resp?.data;
-    });
-
-    if (this.depositType && this.depositType === "RD") {
-      var id = this.route.snapshot.params["id"];
-      this.rdApi.getRdfromId(id).subscribe((resp: any) => {
-        this.depositDetails = resp?.data[0];
-      });
-      return;
+    this.idDepositId = sessionStorage.getItem("depositOriginationId");
+    if (this.idDepositId) {
+      this.summaryService
+        .fetchDepositeSummary(this.idDepositId)
+        .subscribe((resp: any) => {
+          this.depositDetails = resp.data;
+        });
     }
-
-    this.fdApi
-      .getFixedDeposit(parseInt(sessionStorage.getItem("fixedDepositId")))
-      .subscribe((resp) => {
-        this.depositDetails = resp.data[0];
-      });
   }
   proceedFd() {
-    this.isPaymentEnabled = true;
+    if (sessionStorage.getItem("paymentType") == "Account")
+      this.isPaymentEnabled = true;
+    else {
+      const dialogRef = this.dialog.open(SuccessPopupComponent, {
+        data: {
+          originationId: this.idDepositId,
+          type: "Fd",
+        },
+        width: "750px",
+        disableClose: true,
+        panelClass: "popup-dialog-class",
+        backdropClass: "bdrop",
+      });
+      dialogRef.afterClosed().subscribe((resp: any) => {
+        if (resp === true) {
+          sessionStorage.removeItem("holderType");
+          sessionStorage.removeItem("depositOriginationId");
+          sessionStorage.removeItem("selectedStep");
+          localStorage.removeItem("basisDetails");
+        }
+      });
+    }
   }
   goBack() {
     this.customBookFdBack.emit();

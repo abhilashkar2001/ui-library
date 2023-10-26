@@ -9,20 +9,20 @@ import {
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
-import * as moment from "moment";
-
-import { PersonalDetailsService } from "./personal-details.service";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import * as moment from "moment";
+
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
-  selector: "app-custom-personal-details",
-  templateUrl: "./personal-details.component.html",
-  styleUrls: ["./personal-details.component.scss"],
+  selector: "app-common-personal-details",
+  templateUrl: "./common-personal-details.component.html",
+  styleUrls: ["./common-personal-details.component.scss"],
 })
-export class PersonalCustomDetailsComponent implements OnInit {
+export class CommonPersonalDetailsComponent implements OnInit {
   customerDetailsForm: FormGroup;
   @Output() customSavePersonal = new EventEmitter<{}>();
   @Output() personalBack = new EventEmitter<{}>();
@@ -136,10 +136,13 @@ export class PersonalCustomDetailsComponent implements OnInit {
       loanCustomerId: "",
       customer: this.fb.array([]),
     });
+
+    console.log(data)
     setTimeout(() => {
       if (this.holderType == "Self") this.addCustomer(data);
       else if (this.holderType == "Joint") {
-        for (let i = 0; i <= 1; i++) this.addCustomer(data);
+        for (let i = 0; i <= 1; i++)
+          i==0 ?  this.addCustomer(data) :  this.addCustomer();
       }
       this.customFormGroup.emit(this.customerDetailsForm);
     }, 200);
@@ -242,53 +245,10 @@ export class PersonalCustomDetailsComponent implements OnInit {
     if (this.customerDetailsForm.invalid) {
       return;
     }
-    const customer = this.createPayload();
-    customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
-    if (this.customerDetailsForm.value.customer[0].kycStatus)
-      customer[0].kycStatus =
-        this.customerDetailsForm.value.customer[0].kycStatus;
     this.customSavePersonal.emit({
       status: true,
-      personalDetails: customer,
+      personalDetails: this.customerDetailsForm,
     });
-  }
-  createPayload() {
-    var customer = [];
-    this.customerDetailsForm.value.customer.forEach((element) => {
-      console.log(element);
-      const cus = {
-        prefix: element.prefix,
-        firstName: element.firstName,
-        lastName: element.lastName,
-        customerId: element?.customerId,
-        middleName: "",
-        gender: element.gender,
-        jointCustomerInfo: [],
-        isphoneNumVerified: true,
-        isEmailVerified: true,
-        source: element.source,
-        dateOfBirth: moment(element.dateOfBirth).format(),
-        nationality: element.nationality,
-        contact: {
-          mobile: element.mobile,
-          email: element.email,
-          address: [
-            {
-              address1: element.address1,
-              address2: "",
-              residenceType: element.residenceType,
-              cityId: element.cityId,
-              countryName: element.country,
-              pincode: element.zipCode,
-              stateName: element.state,
-            },
-          ],
-        },
-      };
-      customer.push(cus);
-    });
-
-    return customer;
   }
 
   goBack() {
