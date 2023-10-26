@@ -155,6 +155,7 @@
                 name="currencyCode"
                 class="selectOption"
                 formControlName="intrestPayout"
+                (selectionChange)="fdName == 'fdCalculator' && updateDeposit()"
               >
                 <mat-option value="Cumulative"> Cumulative </mat-option>
               </mat-select>
@@ -211,7 +212,7 @@
           class="alignLeft"
           fxLayoutAlign="space-around center"
         >
-            <div class="maturityTitle">Interest Ammount</div>
+          <div class="maturityTitle">Interest Ammount</div>
           <div class="gd_value">₹ 12,669</div>
         </div>
         <div class="vl"></div>
@@ -221,10 +222,12 @@
           fxFlex="48"
           fxLayoutAlign="space-around center"
         >
-<div fxLayout="row">
+          <div fxLayout="row">
             <div class="maturityTitle">Interest Rate</div>
-           <mat-icon class="icon" (click)="openInterestDialog()">info</mat-icon>
-</div>
+            <mat-icon class="icon" (click)="openInterestDialog()"
+              >info</mat-icon
+            >
+          </div>
           <div class="gd_value">₹ 12,669</div>
         </div>
       </div>
@@ -245,12 +248,16 @@
           fxFlex="48"
           fxLayoutAlign="space-around center"
         >
-          <mat-checkbox  [(ngModel)]="isAutoRenew">Auto Renew </mat-checkbox>
+          <mat-checkbox [(ngModel)]="isAutoRenew">Auto Renew </mat-checkbox>
         </div>
       </div>
       <div>
-        <button mat-flat-button class="openFDbtn" (click)="openLink(fdName=='fdCalculator' ? 'FD': 'RD')">
-          Open {{fdName=='fdCalculator' ? 'FD': 'RD'}} Now
+        <button
+          mat-flat-button
+          class="openFDbtn"
+          (click)="openLink(fdName == 'fdCalculator' ? 'FD' : 'RD')"
+        >
+          Open {{ fdName == "fdCalculator" ? "FD" : "RD" }} Now
         </button>
       </div>
       <img class="designImg-1" src="assets/images/Mask Group.svg" />

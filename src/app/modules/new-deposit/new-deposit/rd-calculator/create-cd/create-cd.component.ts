@@ -28,9 +28,9 @@ export class CreateCdComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot)
+    console.log(this.route.snapshot);
     var id = this.route.snapshot.params["id"];
-    console.log(id)
+    console.log(id);
     // this.buildCreateRdForm();
     id = parseInt(id);
     if (id) {
@@ -44,8 +44,8 @@ export class CreateCdComponent implements OnInit {
     console.log(id);
     this.rdApi.getRdDetails(id).subscribe((resp: any) => {
       if (resp?.statusCode === 200) {
-        this.buildCreateRdForm(resp.data[0])
-      };
+        this.buildCreateRdForm(resp.data[0]);
+      }
     });
   }
 
@@ -58,7 +58,10 @@ export class CreateCdComponent implements OnInit {
   buildCreateRdForm(data?) {
     this.createRdForm = this.fb.group({
       amount: [data ? data.amount : "", Validators.required],
-      maturityDate: [data ? new Date(data.maturityDate) : "", Validators.required],
+      maturityDate: [
+        data ? new Date(data.maturityDate) : "",
+        Validators.required,
+      ],
       intrestRate: [data ? data.intrestRate : "", Validators.required],
       ownership: [data ? data.ownership : "", Validators.required],
       maturityAmount: [data ? data.maturityAmount : "", Validators.required],
@@ -70,7 +73,7 @@ export class CreateCdComponent implements OnInit {
       ],
       autoRenew: [data ? data.autoRenew : false],
       fdRdMasterId: data && data.fdRdMasterId,
-      basisDetailsId:data && data.basisDetailsId,
+      basisDetailsId: data && data.basisDetailsId,
     });
     this.customBasicForm = this.createRdForm;
     // setTimeout(() => {
@@ -81,7 +84,10 @@ export class CreateCdComponent implements OnInit {
   submitCreateFd() {
     console.log(this.createRdForm.value);
     this.customCreatRdForm.emit(this.createRdForm);
-    this.customSaveCreate.emit({ satus: true, rdData:this.createRdForm.value });
+    this.customSaveCreate.emit({
+      satus: true,
+      rdData: this.createRdForm.value,
+    });
   }
 
   editRecord() {
@@ -90,5 +96,8 @@ export class CreateCdComponent implements OnInit {
   }
   onExit() {
     window.close();
+  }
+  onPaymentTypeChange(e) {
+    sessionStorage.setItem("paymentType", e);
   }
 }
