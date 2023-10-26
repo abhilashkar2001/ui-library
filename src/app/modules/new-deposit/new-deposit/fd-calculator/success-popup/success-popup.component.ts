@@ -14,7 +14,7 @@ export class SuccessPopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.depositId = parseInt(sessionStorage.getItem("recurringDepositId"));
+    this.depositId = parseInt(sessionStorage.getItem("depositOriginationId"));
   }
   done() {
     this.dialogRef.close();

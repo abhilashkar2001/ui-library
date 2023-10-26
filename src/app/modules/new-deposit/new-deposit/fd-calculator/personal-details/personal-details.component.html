@@ -166,7 +166,7 @@
                       class="full-width disable-field"
                     >
                       <mat-label>Country</mat-label>
-                      <mat-select formControlName="country">
+                      <mat-select formControlName="countryName">
                         <mat-option
                           *ngFor="let countryItem of countryArray"
                           [value]="countryItem.countryName"
@@ -197,7 +197,7 @@
                       class="full-width disable-field"
                     >
                       <mat-label>State</mat-label>
-                      <mat-select formControlName="state">
+                      <mat-select formControlName="stateName">
                         <mat-option
                           *ngFor="let item of listCityState"
                           [value]="item?.state"
@@ -228,7 +228,7 @@
                     style="margin-top: 50px"
                     class="col-12"
                   >
-                    <div>
+                    <div *ngIf="this.holderType != 'Self'">
                       <button
                         type="button"
                         [disabled]="!customer.valid"
@@ -249,7 +249,7 @@
     </div>
   </form>
 
-  <div>
+  <div *ngIf="this.holderType != 'Self'">
     <div class="add_applicant" (click)="addCustomer()">
       Add Another Applicant
     </div>

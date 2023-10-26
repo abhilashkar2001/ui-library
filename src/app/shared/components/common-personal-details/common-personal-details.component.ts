@@ -79,7 +79,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getGenericDetails();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
-    this.loanCustomerId = sessionStorage.getItem("loanCustomerId");
+    this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
     else this.buildCustomerDetailsForm();
     this.getCountry();
@@ -136,10 +136,13 @@ export class CommonPersonalDetailsComponent implements OnInit {
       loanCustomerId: "",
       customer: this.fb.array([]),
     });
+
+    console.log(data)
     setTimeout(() => {
       if (this.holderType == "Self") this.addCustomer(data);
       else if (this.holderType == "Joint") {
-        for (let i = 0; i <= 1; i++) this.addCustomer(data);
+        for (let i = 0; i <= 1; i++)
+          i==0 ?  this.addCustomer(data) :  this.addCustomer();
       }
       this.customFormGroup.emit(this.customerDetailsForm);
     }, 200);

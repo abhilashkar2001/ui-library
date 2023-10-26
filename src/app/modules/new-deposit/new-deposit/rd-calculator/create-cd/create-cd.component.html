@@ -8,7 +8,7 @@
           <input
             matInput
             type="text"
-            formControlName="depositAmmount"
+            formControlName="amount"
             name="depositAmmount"
             [readonly]="!isEnabledEdit"
           />
@@ -75,11 +75,7 @@
             [matDatepicker]="picker"
             readonly
           />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-            [disabled]="!isEnabledEdit"
-          >
+          <mat-datepicker-toggle matSuffix [for]="picker">
             <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -91,8 +87,8 @@
           <input
             matInput
             type="text"
-            formControlName="interestRate"
-            name="interestRate"
+            formControlName="intrestRate"
+            name="intrestRate"
             [readonly]="!isEnabledEdit"
           />
         </mat-form-field>
@@ -112,7 +108,7 @@
       <div class="col-md-6 col-12">
         <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label>Deposit Holder Type</mat-label>
-          <mat-select formControlName="ownerShip" [disabled]="!isEnabledEdit">
+          <mat-select formControlName="ownership" [disabled]="!isEnabledEdit">
             <mat-option value="Self">Self</mat-option>
             <mat-option value="Joint">Joint</mat-option>
           </mat-select>
@@ -143,8 +139,12 @@
       <div class="col-md-6 col-12">
         <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label>Payment Type</mat-label>
-          <mat-select formControlName="paymentType" [disabled]="!isEnabledEdit">
-            <mat-option value="account">Account</mat-option>
+          <mat-select
+            formControlName="paymentType"
+            (selectionChange)="onPaymentTypeChange($event.value)"
+          >
+            <mat-option value="Account">Account</mat-option>
+            <mat-option value="Cash">Cash</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

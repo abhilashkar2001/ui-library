@@ -24,7 +24,7 @@ export const NewDepositRoutes: Routes = [
         component: FdCalculatorComponent,
         children: [
           {
-            path: "fdDetails",
+            path: "fdDetails/:id/:code",
             component: FixedDepositDetailsComponent,
           },
         ],

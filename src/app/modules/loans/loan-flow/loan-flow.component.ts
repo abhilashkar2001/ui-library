@@ -190,7 +190,7 @@ export class LoanFlowComponent implements OnInit {
 
   checkExistingUserEvent(event) {
     if (event?.statusCode === 200) {
-      sessionStorage.setItem("loanCustomerId", event.data[0].customerId);
+      sessionStorage.setItem("customerId", event.data[0].customerId);
       sessionStorage.setItem("isExistingCustomer", "Yes");
       localStorage.setItem("customerData", JSON.stringify(event.data[0]));
       this.next();
@@ -225,7 +225,7 @@ export class LoanFlowComponent implements OnInit {
           verticalPosition: "top",
           horizontalPosition: "right",
         });
-        sessionStorage.setItem("loanCustomerId", response.data[0].customerId);
+        sessionStorage.setItem("customerId", response.data[0].customerId);
         this.next();
       }
     });
@@ -278,7 +278,7 @@ export class LoanFlowComponent implements OnInit {
       };
       docIds.push(docId);
     });
-    var id = sessionStorage.getItem("loanCustomerId");
+    var id = sessionStorage.getItem("customerId");
     console.log(id);
     var payload = {
       customerId: parseInt(id),
@@ -298,7 +298,7 @@ export class LoanFlowComponent implements OnInit {
     this.next();
   }
   onTCAccepted(event) {
-    var id = sessionStorage.getItem("loanCustomerId");
+    var id = sessionStorage.getItem("customerId");
 
     this.openAccountService.getCustomerById(parseInt(id)).subscribe((resp) => {
       this.saveCustomerInfo(resp);
@@ -422,7 +422,7 @@ export class LoanFlowComponent implements OnInit {
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp === true) {
         sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("loanCustomerId");
+        sessionStorage.removeItem("customerId");
         sessionStorage.removeItem("loanDisburseId");
         sessionStorage.removeItem("loanstep");
         sessionStorage.removeItem("isExistingCustomer");
