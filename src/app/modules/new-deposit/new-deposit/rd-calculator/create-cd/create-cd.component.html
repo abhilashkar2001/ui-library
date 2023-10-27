@@ -3,7 +3,11 @@
   <form [formGroup]="createRdForm" fxLayout="column">
     <div class="row">
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Deposit Ammount</mat-label>
           <input
             matInput
@@ -65,7 +69,11 @@
         </fieldset>
       </div> -->
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Maturity Date</mat-label>
           <input
             matInput
@@ -82,7 +90,11 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Interest Rate</mat-label>
           <input
             matInput
@@ -94,7 +106,11 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Maturity Ammount</mat-label>
           <input
             matInput
@@ -106,7 +122,11 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Deposit Holder Type</mat-label>
           <mat-select formControlName="ownership" [disabled]="!isEnabledEdit">
             <mat-option value="Self">Self</mat-option>
@@ -115,7 +135,11 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Customer Type</mat-label>
           <mat-select
             formControlName="typeOfCustomer"
@@ -126,7 +150,11 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Payout Type</mat-label>
           <mat-select
             formControlName="intrestPayout"
@@ -137,11 +165,16 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+          [ngClass]="isEnabledEdit == false && 'disableField'"
+        >
           <mat-label>Payment Type</mat-label>
           <mat-select
             formControlName="paymentType"
             (selectionChange)="onPaymentTypeChange($event.value)"
+            [disabled]="!isEnabledEdit"
           >
             <mat-option value="Account">Account</mat-option>
             <mat-option value="Cash">Cash</mat-option>

@@ -24,3 +24,16 @@
   height: 40px;
   border-radius: 16px;
 }
+:host
+  ::ng-deep
+  .mat-form-field-should-float.disableField
+  .mat-form-field-outline {
+  background-color: #f3f3f3 !important;
+  border-radius: 5px;
+}
+
+.disable-fieldset {
+  background: #f3f3f3;
+  height: 108%;
+  border-radius: 7px;
+}

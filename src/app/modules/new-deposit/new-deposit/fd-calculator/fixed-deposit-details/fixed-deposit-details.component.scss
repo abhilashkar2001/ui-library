@@ -8,13 +8,6 @@
     margin: 2% 0%;
   }
 }
-.saveButton {
-  width: 172px;
-  color: #ffffff;
-  font-size: 15px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
-  height: 40px;
-}
 .cancelButton {
   width: 172px;
   color: #b20000;
@@ -265,13 +258,13 @@
 }
 :host
   ::ng-deep
-  .mat-form-field-should-float.disable-field
+  .mat-form-field-should-float.disableField
   .mat-form-field-outline {
   background-color: #f3f3f3 !important;
   border-radius: 5px;
 }
+
 .disable-fieldset {
-  background: #f3f3f3;
   background: #f3f3f3;
   height: 108%;
   border-radius: 7px;
@@ -328,7 +321,4 @@
 }
 .depositePeriodInput {
   margin-left: 10%;
-}
-.mat-button-disabled {
-  background: none !important;
 }
