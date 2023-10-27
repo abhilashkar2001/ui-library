@@ -50,6 +50,7 @@ export class ReturnCalculatorComponent implements OnInit {
   basisId: any;
   depositeType: any;
   processCycleCode: any;
+  rdProcessCycleCode: any;
 
   constructor(
     private fb: FormBuilder,
@@ -75,15 +76,8 @@ export class ReturnCalculatorComponent implements OnInit {
         this.rdApi.getBusinessSuite("Deposit Service").subscribe((resp) => {
           if (resp?.statusCode === 200) {
             this.getSubClass(resp.data).then((val) => {
-              this.rdBasisId = val[0].productDetails[0]?.basisId;
-              localStorage.setItem(
-                "rdBasisId",
-                val[0].productDetails[0]?.basisId
-              );
-              localStorage.setItem(
-                "rdBasisDetails",
-                JSON.stringify(val[0].productDetails[0])
-              );
+              this.rdBasisId = val[0].productDetails[0].basisId;
+              this.rdProcessCycleCode=val[0].productDetails[0].processCycleCode
             });
           }
         });
@@ -190,7 +184,7 @@ export class ReturnCalculatorComponent implements OnInit {
         this.url = this.location.prepareExternalUrl(
           this.router.serializeUrl(this.router.createUrlTree([path]))
         );
-        this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}`;
+        this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.rdProcessCycleCode}`;
         window.open(`${this.url}`, "_blank");
       });
     }

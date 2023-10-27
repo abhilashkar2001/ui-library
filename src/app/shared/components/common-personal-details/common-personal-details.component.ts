@@ -1,9 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   QueryList,
+  SimpleChanges,
   ViewChild,
   ViewChildren,
 } from "@angular/core";
@@ -11,6 +14,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { CreateRdService } from "app/modules/new-deposit/new-deposit/rd-calculator/create-rd.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
@@ -32,6 +36,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
+  @Input() customerInfo
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
@@ -58,7 +63,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private api: NewDepositService,
     private personalDetailsService: PersonalDetailsService,
     private loanApi: LoanService,
-    private openApi: OpenAccountService
+    private openApi: OpenAccountService, private cd: ChangeDetectorRef,
+    private rdApi:CreateRdService
   ) {}
 
   panelOpened(index: number) {
@@ -75,11 +81,20 @@ export class CommonPersonalDetailsComponent implements OnInit {
       console.log(i, "........");
     });
   }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   console.log(changes)
+  //   if (changes.customerInfo.currentValue.length > 0) {
+  //     this.buildCustomerDetailsForm(changes.customerInfo.currentValue);
+  //   }
+  //   else {
+  //     this.buildCustomerDetailsForm()
+  //   }
+  // }
 
   ngOnInit(): void {
     this.getGenericDetails();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
-    this.loanCustomerId = sessionStorage.getItem("customerId");
+    this.loanCustomerId = sessionStorage.getItem("originationId");
     if (this.loanCustomerId) this.getCustomerById();
     else this.buildCustomerDetailsForm();
     this.getCountry();
@@ -103,11 +118,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   getCustomerById() {
-    this.openApi
-      .getCustomerById(parseInt(this.loanCustomerId))
+    this.rdApi.getOriginationMaster(parseInt(this.loanCustomerId))
       .subscribe((resp) => {
-        if (resp?.statusCode === 200)
-          this.buildCustomerDetailsForm(resp.data[0]);
+        if (resp?.statusCode === 200) {
+          let customerDetails = resp.data[0].customerInfo
+            this.buildCustomerDetailsForm(customerDetails);
+        }
         else this.buildCustomerDetailsForm();
       });
   }
@@ -139,12 +155,13 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
     console.log(data)
     setTimeout(() => {
-      if (this.holderType == "Self") this.addCustomer(data);
+      if (this.holderType == "Self") this.addCustomer(data && data[0]);
       else if (this.holderType == "Joint") {
-        for (let i = 0; i <= 1; i++)
-          i==0 ?  this.addCustomer(data) :  this.addCustomer();
+        for (let i = 0; i < data?.length; i++)
+          this.addCustomer(data[i]);
+        this.cd.detectChanges();
       }
-      this.customFormGroup.emit(this.customerDetailsForm);
+      // this.customFormGroup.emit(this.customerDetailsForm);
     }, 200);
   }
 
@@ -153,10 +170,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   newCustomer(data?): FormGroup {
+    console.log(data)
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
-      primaryCustomer: "",
+      primaryCustomer: [data ? data.primaryCustomer : false],
       prefix: [data ? data.prefix : "", Validators.required],
       firstName: [data ? data.firstName : "", Validators.required],
       lastName: [data ? data.lastName : "", Validators.required],
@@ -167,7 +185,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       ],
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
-      address1: [data ? data.contact.address[0].address1 : ""],
+      address1: [data ? data.contact?.address[0].address1 : ""],
       residenceType: [
         data ? data.contact.address[0].residenceType : "",
         Validators.required,
@@ -187,7 +205,22 @@ export class CommonPersonalDetailsComponent implements OnInit {
       cityId: [data ? data.contact.address[0].cityId : "", Validators.required],
       source: data?.source ? data.source : "Website",
       kycStatus: data?.kycStatus && data.kycStatus,
+      documentId: this.calculateId(data)
     });
+  }
+  calculateId(data) {
+    var docIds = [];
+    data?.documnentsInfo?.documents.forEach(item => {
+      let docItemId = [];
+      item.docs.forEach((docItem) => {
+        docItemId.push(docItem.documentId)
+      })
+      const docId = {
+        docIds: docItemId,
+      };
+      docIds.push(docId);
+    });
+    return docIds
   }
 
   addCustomer(data?) {

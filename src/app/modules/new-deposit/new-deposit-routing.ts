@@ -30,7 +30,7 @@ export const NewDepositRoutes: Routes = [
         ],
       },
       {
-        path: "rdDeposit/:id",
+        path: "rdDeposit/:id/:processCode",
         component: RdCalculatorComponent,
       },
     ],

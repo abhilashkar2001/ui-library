@@ -69,4 +69,7 @@ export class FdCalculatorServiceService {
       `${this.base_url}/process_stage/screens?id=${id}`
     );
   }
+   getOriginationMaster(id) {
+    return this.http.get<any>(`${this.base_url}/origination-matser?originationId=${id}`)
+  }
 }
