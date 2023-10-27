@@ -194,14 +194,14 @@ export class ReturnCalculatorComponent implements OnInit {
     return {
       ...this.depositForm.value,
       basisDetailsId: basisId,
-      applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
       branchCode: this.tokenStore.getUser().branchCode,
       depositeType: this.depositeType,
       autoRenew: this.isAutoRenew,
       amount: parseInt(this.depositForm.value.amount),
       maturityAmount: 3778, //need to change once flexCube data avilable.
       maturityDate: moment(this.depositForm.value.maturityDate).format(
-        "YYYY-MMM-DD"
+        "DD-MMM-YYYY"
       ),
       typeOfCustomer: "",
       intrestRate: 677, //need to change once flexCube data avilable.

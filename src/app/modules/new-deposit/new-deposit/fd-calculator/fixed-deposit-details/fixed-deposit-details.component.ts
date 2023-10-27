@@ -136,11 +136,19 @@ export class FixedDepositDetailsComponent implements OnInit {
   }
 
   submitCreateFd() {
+    delete this.fdDetails.intrestRate;
+    delete this.fdDetails.amount;
+    delete this.fdDetails.maturityDate;
+    delete this.fdDetails.tenureDays;
+    delete this.fdDetails.tenureMonth;
+    delete this.fdDetails.tenureYear;
+    delete this.fdDetails.ownership;
+
     let details = {
       ...this.fdDetails,
       ...this.createFdForm.value,
       maturityDate: moment(this.createFdForm.value.maturityDate).format(
-        "YYYY-MMM-DD"
+        "DD-MMM-YYYY"
       ),
     };
     sessionStorage.setItem("originationId", this.fdDetails.originationId);
