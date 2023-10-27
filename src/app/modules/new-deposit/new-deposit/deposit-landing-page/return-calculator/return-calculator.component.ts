@@ -78,14 +78,6 @@ export class ReturnCalculatorComponent implements OnInit {
             this.getSubClass(resp.data).then((val) => {
               this.rdBasisId = val[0].productDetails[0].basisId;
               this.rdProcessCycleCode=val[0].productDetails[0].processCycleCode
-              // localStorage.setItem(
-              //   "rdBasisId",
-              //   val[0].productDetails[0]?.basisId
-              // );
-              // localStorage.setItem(
-              //   "rdBasisDetails",
-              //   JSON.stringify(val[0].productDetails[0])
-              // );
             });
           }
         });
