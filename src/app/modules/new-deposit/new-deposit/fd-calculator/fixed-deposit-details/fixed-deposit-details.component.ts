@@ -39,6 +39,7 @@ export class FixedDepositDetailsComponent implements OnInit {
   existingCustomer: any;
   isEnabledEdit: boolean = false;
   saveTheEdit: boolean = false;
+  docIds: any[] = [];
   constructor(
     private fb: FormBuilder,
     private depositApi: NewDepositService,
@@ -80,9 +81,19 @@ export class FixedDepositDetailsComponent implements OnInit {
     this.fdApi.getOriginationMasterDetails(fdMasterId).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.fdDetails = resp.data[0];
+        this.getOriginationMaster();
         this.buildCreateFdForm(resp.data[0]);
       }
     });
+  }
+  getOriginationMaster() {
+    this.fdApi
+      .getOriginationMaster(this.fdDetails.originationId)
+      .subscribe((data) => {
+        if (data.statusCode === 200) {
+          this.customerInfo = data.data[0].customerInfo;
+        }
+      });
   }
 
   stepperSelectionChange(event) {
@@ -132,42 +143,50 @@ export class FixedDepositDetailsComponent implements OnInit {
         "YYYY-MMM-DD"
       ),
     };
-    this.fdApi
-      .getOriginationMasterDetails(this.fdDetails.fdRdMasterId)
-      .subscribe((data) => {
-        if (data.statusCode === 200) {
-          const payload = {
-            originationModel: details,
-            customerInfo: [],
-          };
-          this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
-            if (resp?.statusCode === 200) {
-              sessionStorage.setItem(
-                "depositOriginationId",
-                resp.data.originationModel.originationId
-              );
-              sessionStorage.setItem(
-                "fdRdMasterId",
-                resp.data.fdRdMasterModel.fdRdMasterId
-              );
-              this.snack.open(`Fixed Deposit Details Saved`, "!", {
-                duration: 4000,
-                verticalPosition: "top",
-                horizontalPosition: "right",
-                panelClass: "snackbar-error",
-              });
-              this.next();
-              this.isFixedDepositDetail = false;
-              this.isVerifyNumber = true;
-            }
-          });
-        }
-      });
+    sessionStorage.setItem("originationId", this.fdDetails.originationId);
+    const payload = {
+      originationModel: details,
+      customerInfo: this.createPayload(this.customerInfo),
+    };
+    this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        sessionStorage.setItem(
+          "fdRdMasterId",
+          resp.data.fdRdMasterModel.fdRdMasterId
+        );
+        this.snack.open(`Fixed Deposit Details Saved`, "!", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+          panelClass: "snackbar-error",
+        });
+        this.next();
+        this.isFixedDepositDetail = false;
+        this.isVerifyNumber = true;
+      }
+    });
+
+    // });
   }
 
   createPayload(event) {
     var customer = [];
-    event.value.customer.forEach((element) => {
+    event.forEach((element, i) => {
+      var docIds = [];
+      if (element?.documentId) {
+        docIds.push(element.documentId);
+      } else {
+        element?.documnentsInfo?.documents.forEach((item) => {
+          let docItemId = [];
+          item.docs.forEach((docItem) => {
+            docItemId.push(docItem.documentId);
+          });
+          const docId = {
+            docIds: docItemId,
+          };
+          docIds.push(docId);
+        });
+      }
       const cus = {
         prefix: element.prefix,
         firstName: element.firstName,
@@ -176,9 +195,10 @@ export class FixedDepositDetailsComponent implements OnInit {
         middleName: "",
         gender: element.gender,
         jointCustomerInfo: [],
-        documentId: [],
+        documentId: element.primaryCustomer ? docIds : [],
         isphoneNumVerified: true,
         isEmailVerified: true,
+        primaryCustomer: element.primaryCustomer ?? false,
         source: element.source,
         dateOfBirth: moment(element.dateOfBirth).format(),
         nationality: element.nationality,
@@ -187,13 +207,18 @@ export class FixedDepositDetailsComponent implements OnInit {
           email: element.email,
           address: [
             {
-              address1: element.address1,
+              address1:
+                element?.contact?.address[0].address1 ?? element.address1,
               address2: "",
-              residenceType: element.residenceType,
-              cityId: element.cityId,
-              countryName: element.country,
-              pincode: element.zipCode,
-              stateName: element.state,
+              residenceType:
+                element?.contact?.address[0].residenceType ??
+                element.residenceType,
+              cityId: element?.contact?.address[0].cityId ?? element.cityId,
+              countryName:
+                element?.contact?.address[0].countryName ?? element.country,
+              pincode: element?.contact?.address[0].pincode ?? element.zipCode,
+              stateName:
+                element?.contact?.address[0].stateName ?? element.state,
             },
           ],
         },
@@ -205,27 +230,28 @@ export class FixedDepositDetailsComponent implements OnInit {
   }
 
   customSavePersonal(event) {
-    const customer = this.createPayload(event.personalDetails);
     let fdData = {
       ...this.fdDetails,
     };
     delete fdData.fdRdMasterId;
+    const customer = this.createPayload(event.personalDetails.value.customer);
     this.globalPayload = {
       originationModel: fdData,
       customerInfo: customer,
     };
     this.fdApi.saveFdOriginationMaster(this.globalPayload).subscribe((resp) => {
       if (resp.statusCode == 200 && resp.data) {
-        sessionStorage.setItem(
-          "customerId",
-          resp.data.customerInfo[0].customerId
-        );
+        resp.data?.customerInfo?.forEach((item, i) => {
+          if (item.primaryCustomer)
+            sessionStorage.setItem("customerId", item.customerId);
+        });
         this.snack.open(`Personal Details Saved` + " !", "OK", {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
           panelClass: "snackbar-error",
         });
+        this.customerInfo = resp.data?.customerInfo;
         this.next();
       }
     });
@@ -255,9 +281,7 @@ export class FixedDepositDetailsComponent implements OnInit {
   customFormGroup(e) {
     this.personalDetailsForm = e;
   }
-  customFormGroupEmit(event) {
-    this.steper_Array[1].stepFormControl = event;
-  }
+
   onHolderTypeChange(e) {
     sessionStorage.setItem("holderType", e);
     this.holderType = e;
@@ -282,17 +306,35 @@ export class FixedDepositDetailsComponent implements OnInit {
       };
       docIds.push(docId);
     });
-
-    var payload = {
-      customerId: parseInt(sessionStorage.getItem("customerId")),
-      documentInfo: docIds,
+    this.docIds = docIds;
+    this.saveCustomerInfo(this.customerInfo, this.docIds);
+  }
+  saveCustomerInfo(resp, docIds) {
+    var custResp: any = resp;
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+    });
+    let fdData = this.fdDetails;
+    delete fdData.fdRdMassterId;
+    fdData = {
+      ...fdData,
     };
-    this.depositApi.submitAllDocument(payload).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.next();
-      }
+    const payload = {
+      originationModel: fdData,
+      customerInfo: custResp,
+    };
+    this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
+      sessionStorage.setItem(
+        "depositOriginationId",
+        resp.data.originationModel.originationId
+      );
+      this.next();
     });
   }
+
   customDocumentForm(e) {}
 
   submitDocument() {}

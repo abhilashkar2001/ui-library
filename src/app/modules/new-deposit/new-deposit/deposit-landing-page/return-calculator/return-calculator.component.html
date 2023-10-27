@@ -67,7 +67,7 @@
         </div>
         <div fxLayout="column" fxFlex="100">
           <div class="calculator_subTItle">Types of Customer</div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-3 col-12">
               <mat-checkbox>Normal Customer</mat-checkbox>
             </div>
@@ -80,7 +80,21 @@
             <div class="col-md-3 col-12">
               <mat-checkbox>Super Senior Citizen</mat-checkbox>
             </div>
-          </div>
+          </div> -->
+           <mat-radio-group formControlName="typeOfCustomer" class="row">
+              <mat-radio-button class="example-margin col-md-3 col-12" value="Normal Customer">
+                Normal Customer
+              </mat-radio-button>
+              <mat-radio-button class="example-margin col-md-3 col-12" value="Differently Abbled">
+                Differently Abbled
+              </mat-radio-button>
+               <mat-radio-button class="example-margin col-md-3 col-12" value="Senior Citizen">
+                Senior Citizen
+              </mat-radio-button>
+               <mat-radio-button class="example-margin col-md-3 col-12" value="Super Senior Citizen">
+                Super Senior Citizen
+              </mat-radio-button>
+            </mat-radio-group>
         </div>
         <div
           class="row"
