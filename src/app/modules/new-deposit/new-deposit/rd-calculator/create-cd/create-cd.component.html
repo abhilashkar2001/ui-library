@@ -192,6 +192,7 @@
           mat-raised-button
           class="saveButton"
           (click)="submitCreateFd()"
+          [disabled]="!createRdForm.valid"
         >
           Save
         </button>

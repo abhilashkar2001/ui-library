@@ -77,7 +77,8 @@ export class ReturnCalculatorComponent implements OnInit {
           if (resp?.statusCode === 200) {
             this.getSubClass(resp.data).then((val) => {
               this.rdBasisId = val[0].productDetails[0].basisId;
-              this.rdProcessCycleCode=val[0].productDetails[0].processCycleCode
+              this.rdProcessCycleCode =
+                val[0].productDetails[0].processCycleCode;
             });
           }
         });
@@ -203,7 +204,7 @@ export class ReturnCalculatorComponent implements OnInit {
       maturityDate: moment(this.depositForm.value.maturityDate).format(
         "DD-MMM-YYYY"
       ),
-      typeOfCustomer: "",
+      typeOfCustomer: this.depositForm.value.typeOfCustomer,
       intrestRate: 677, //need to change once flexCube data avilable.
       scheme: "Normal or Tax saver",
     };
