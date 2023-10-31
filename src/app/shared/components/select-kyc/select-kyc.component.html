@@ -16,25 +16,15 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <div
-          fxLayoutAlign="center center"
-          fxFlex="100"
-          fxLayoutGap="space-around"
-          class="searchBox"
-        >
-          <div fxFlex="100" class="" class="searchInput">
-            <mat-form-field class="full-width mobile_field">
-              <input
-                matInput
-                numbersOnly
-                maxlength="12"
-                minlength="10"
-                name="verifyNationalID"
-                formControlName="verifyNationalID"
-              />
-            </mat-form-field>
-          </div>
-
+        <mat-form-field class="full-width" appearance="outline">
+          <input
+            matInput
+            numbersOnly
+            maxlength="12"
+            minlength="10"
+            name="verifyNationalID"
+            formControlName="verifyNationalID"
+          />
           <button
             (click)="getOtp()"
             type="button"
@@ -45,16 +35,15 @@
           >
             Get Otp
           </button>
-        </div>
-      </div>
-      <div
-        class="errorTxt col-12"
-        *ngIf="
-          !kycForm.get('verifyNationalID').valid &&
-          kycForm.get('verifyNationalID').touched
-        "
-      >
-        nationalID is Required!
+          <mat-error
+            *ngIf="
+              !kycForm.get('verifyNationalID').valid &&
+              kycForm.get('verifyNationalID').touched
+            "
+          >
+            National Id is Required!
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
     <div class="enter_otp">Enter Otp to verify</div>
