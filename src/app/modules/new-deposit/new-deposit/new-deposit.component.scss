@@ -1,3 +1,8 @@
+@mixin bold-font {
+  color: #333 !important;
+  font-weight: 600 !important;
+}
+
 ::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
   padding: 0px;
   margin-top: -4px !important;
@@ -20,4 +25,32 @@
 
 .vl {
   border-left: 1px solid black;
+}
+
+::ng-deep .mat-form-field-appearance-outline {
+  & .mat-form-field-outline {
+    color: white !important;
+  }
+  & .mat-form-field-outline.mat-form-field-outline-thick {
+    background: #ffffff !important;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784) !important;
+    border-radius: 12px;
+    opacity: 1;
+  }
+  & .mat-form-field-infix {
+    padding: 12px 0px 12px 0px !important;
+  }
+  & .mat-input-element,
+  .mat-select-value-text {
+    @include bold-font;
+  }
+}
+:host
+  ::ng-deep
+  .mat-form-field-should-float.disableField
+  .mat-form-field-outline {
+  color: #f3f3f3 !important;
+}
+:host ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #008461 !important;
 }

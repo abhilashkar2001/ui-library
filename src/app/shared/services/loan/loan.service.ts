@@ -96,4 +96,9 @@ export class LoanService {
       `${baseUrl}/customer/accountInfo?customerNo=${customerNumber}`
     );
   }
+  getOriginationMaster(id) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser?originationId=${id}`
+    );
+  }
 }

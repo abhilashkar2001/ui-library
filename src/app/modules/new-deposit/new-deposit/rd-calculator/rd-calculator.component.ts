@@ -57,7 +57,6 @@ export class RdCalculatorComponent implements OnInit {
     // var sessionStep = parseInt(sessionStorage.getItem("selectedStep"));
     //if (sessionStep) this.selectedStep = sessionStep;
     this.getAllRdStep();
-    //  this.factory();
   }
   getAllRdStep() {
     this.rdApi.getProcessCycle(this.processCycleCode).subscribe((resp) => {
@@ -67,8 +66,6 @@ export class RdCalculatorComponent implements OnInit {
           this.screenList = resp.data.screens.sort((s1, s2) => {
             return s1.sequence - s2.sequence;
           });
-          // this.updateFormGroup();
-          //this.updateStep();
           this.factory();
         });
     });

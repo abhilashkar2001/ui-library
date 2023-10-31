@@ -25,8 +25,8 @@
   border-radius: 16px;
   background: linear-gradient(94.95deg, #06133f -11.9%, #014a9e 109.89%);
   color: white;
-  height: 50px;
-  margin-right: 3px;
+  height: 40px;
+  width: 100px;
 }
 
 .userInput {
@@ -121,4 +121,8 @@
   height: 40px;
   top: 584px;
   left: 789.798828125px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: -5px !important;
 }
