@@ -225,7 +225,6 @@ export class LoanFlowComponent implements OnInit {
     customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
     if (event.personalDetails.value.customer[0].kycStatus)
       customer[0].kycStatus = event.personalDetails.value.customer[0].kycStatus;
-
     const payload = {
       originationModel: this.getOriginationModel(),
       customerInfo: customer,
