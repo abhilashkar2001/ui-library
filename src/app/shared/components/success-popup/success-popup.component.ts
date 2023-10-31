@@ -58,27 +58,30 @@ export class SuccessPopupComponent implements OnInit {
     const formData = new FormData();
     let report;
     let downloadServiceMethod;
+    let pdfFileName;
 
     if (this.loanSummaryDetails) {
       downloadServiceMethod = this.downloadService.downloadloanDetailDoc(
         this.originationId
       );
+      pdfFileName = "Loan Details.pdf";
     } else if (this.accountData) {
       downloadServiceMethod = this.downloadService.downloadAccountDetailDoc(
         this.originationId
       );
+      pdfFileName = "Account Details.pdf";
     } else if (this.fdRdDetails) {
       downloadServiceMethod = this.downloadService.downloadFdRdDetailDoc(
         this.originationId
       );
+      pdfFileName =
+        this.depositType == "FD"
+          ? "Fixed Deposit Details"
+          : "Reccuring Deposit Details";
     }
 
     downloadServiceMethod.subscribe((resp: ArrayBuffer) => {
       const blob = new Blob([resp], { type: "application/pdf" });
-
-      const pdfFileName = this.loanSummaryDetails
-        ? "Loan Details.pdf"
-        : "Account Details.pdf";
 
       report = new File([blob], pdfFileName, {
         type: "application/pdf",
