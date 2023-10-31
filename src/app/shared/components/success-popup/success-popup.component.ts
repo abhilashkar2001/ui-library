@@ -3,21 +3,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { DownloadService } from "app/shared/services/download.service";
 import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
-import { SuccessPopupConstants } from "./success-popup.constant";
 @Component({
   selector: "app-success-popup",
   templateUrl: "./success-popup.component.html",
   styleUrls: ["./success-popup.component.scss"],
 })
 export class SuccessPopupComponent implements OnInit {
+  depositType: any;
   originationId: any;
-  accountHeader = SuccessPopupConstants.ACCOUNT_HEADER;
-  suiteHeader = SuccessPopupConstants.SUIT_HEADER;
   email: any;
   loanSummaryDetails: any;
   accountData: any;
+  fdRdDetails: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -27,6 +24,7 @@ export class SuccessPopupComponent implements OnInit {
     private openAccountService: OpenAccountService
   ) {}
   ngOnInit(): void {
+    this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
     if (localStorage.getItem("customerData")) {
       this.openAccountService.getData().subscribe((resp: any) => {
@@ -35,83 +33,77 @@ export class SuccessPopupComponent implements OnInit {
           this.email = resp.email;
         }
       });
-    } else {
+    } else if (localStorage.getItem("basisDetails")) {
       this.openAccountService.getData().subscribe((res: any) => {
         if (res) {
           this.accountData = res;
           this.email = this.accountData.contact.email;
         }
       });
+    } else if (this.depositType) {
+      this.openAccountService.getData().subscribe((res: any) => {
+        if (res) {
+          this.fdRdDetails = res[0];
+          this.email = res[0].contact.email;
+        }
+      });
     }
   }
-  download() {
-    const downloadServiceMethod = this.loanSummaryDetails
-      ? this.downloadService.downloadloanDetailDoc(this.originationId)
-      : this.downloadService.downloadAccountDetailDoc(this.originationId);
-    downloadServiceMethod.subscribe((resp: ArrayBuffer) => {
-      this.downloadPdf(resp);
-    });
-  }
-  private downloadPdf(data: ArrayBuffer) {
-    const blob = new Blob([data], { type: "application/pdf" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "document.pdf";
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
+
+  onClickAction(type, operation) {
+    this.shareOrDownload({ type: type, operation: operation });
   }
 
-  sendEmail() {
-    const doc = new jsPDF();
-    const head = this.loanSummaryDetails
-      ? [this.suiteHeader]
-      : [this.accountHeader];
-    const body = [];
-    const row = [];
-    row.push(this.originationId);
+  shareOrDownload(event) {
+    const formData = new FormData();
+    let report;
+    let downloadServiceMethod;
 
     if (this.loanSummaryDetails) {
-      const loanDetails = this.loanSummaryDetails.loanDetails;
-      row.push(this.loanSummaryDetails.bankAccount.name);
-      row.push(loanDetails.loanAmount);
-      row.push(loanDetails.emiAmount);
-      row.push(loanDetails.interestPayable);
-    } else {
-      row.push(this.accountData.firstName);
-      row.push(this.accountData.lastName);
-      row.push(sessionStorage.getItem("mobileNo"));
-      row.push(this.accountData.kycStatus);
+      downloadServiceMethod = this.downloadService.downloadloanDetailDoc(
+        this.originationId
+      );
+    } else if (this.accountData) {
+      downloadServiceMethod = this.downloadService.downloadAccountDetailDoc(
+        this.originationId
+      );
+    } else if (this.fdRdDetails) {
+      downloadServiceMethod = this.downloadService.downloadFdRdDetailDoc(
+        this.originationId
+      );
     }
 
-    body.push(row);
-    autoTable(doc, {
-      head: head,
-      body: body,
-      didDrawCell: (prepare) => {},
-    });
+    downloadServiceMethod.subscribe((resp: ArrayBuffer) => {
+      const blob = new Blob([resp], { type: "application/pdf" });
 
-    const formData = new FormData();
-    const subject = this.loanSummaryDetails
-      ? "Loan Details Slip"
-      : "Account Details Slip";
-    formData.append("subject", subject);
-    formData.append(
-      "body",
-      `Automatic Generated ${subject}. Find below attach`
-    );
-    formData.append("to", this.email);
-    const pdfBlob = doc.output("blob");
-    const pdfFileName = this.loanSummaryDetails
-      ? "Loan Details.pdf"
-      : "Account Details.pdf";
-    const pdfFile = new File([pdfBlob], pdfFileName, {
-      type: "application/pdf",
-    });
-    formData.append("filePath", pdfFile, pdfFileName);
-    this.emaiService.triggerTransactionEmail(formData).subscribe((res) => {
-      console.log(res);
+      const pdfFileName = this.loanSummaryDetails
+        ? "Loan Details.pdf"
+        : "Account Details.pdf";
+
+      report = new File([blob], pdfFileName, {
+        type: "application/pdf",
+      });
+
+      if (event.operation == "Share") {
+        formData.append("filePath", report, report.name);
+        formData.append("subject", pdfFileName);
+        formData.append(
+          "body",
+          `Automatic Generated ${pdfFileName}. Find below attach`
+        );
+        formData.append("to", this.email);
+        this.emaiService
+          .triggerTransactionEmail(formData)
+          .subscribe((res) => console.log(res));
+      } else {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = pdfFileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
     });
   }
 

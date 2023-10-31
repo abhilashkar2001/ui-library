@@ -22,4 +22,7 @@ export class DownloadService {
       { responseType: "arraybuffer" }
     );
   }
+  downloadFdRdDetailDoc(originationId) {
+    //Once api will ready, then have to add
+  }
 }
