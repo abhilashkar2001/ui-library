@@ -250,23 +250,6 @@ export class LoanFlowComponent implements OnInit {
         this.next();
       }
     });
-
-    // this.loanApi.saveLoanPersonal(customer).subscribe((response: any) => {
-    //   if (response?.statusCode === 200) {
-    //     this.customerData = {
-    //       ...this.customerData,
-    //       ...response?.data[0],
-    //     };
-    //     localStorage.setItem("customerData", JSON.stringify(this.customerData));
-    //     this.snack.open(`Personal Details Saved` + " !", "OK", {
-    //       duration: 4000,
-    //       verticalPosition: "top",
-    //       horizontalPosition: "right",
-    //     });
-    //     sessionStorage.setItem("customerId", response.data[0].customerId);
-    //     this.next();
-    //   }
-    // });
   }
 
   createPayload(event) {
