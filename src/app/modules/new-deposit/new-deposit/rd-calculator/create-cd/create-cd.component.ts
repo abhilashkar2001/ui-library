@@ -19,18 +19,28 @@ export class CreateCdComponent implements OnInit {
   isLinear = true;
   isEnabledEdit: boolean = false;
   saveTheEdit: boolean = false;
+  staticData = {
+    TYPESOFCUSTOMER: [],
+    INTERESTPAYOUT: [],
+    OWNERSHIP: [],
+    PAYMENTTYPE: [],
+  };
+  typesOfCustomer: any[] = [];
+  interestPayout: any[] = [];
+  ownership: any[] = [];
+  paymentType: any[] = [];
   constructor(
     private fb: FormBuilder,
     private fdApi: NewDepositService,
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
-    private router: Router
+    private router: Router,
+    private newDepositeService: NewDepositService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot);
+    this.getGenericDetails();
     var id = this.route.snapshot.params["id"];
-    console.log(id);
     // this.buildCreateRdForm();
     id = parseInt(id);
     if (id) {
@@ -40,6 +50,20 @@ export class CreateCdComponent implements OnInit {
       this.customCreatRdForm.emit(this.createRdForm);
     }
   }
+
+  getGenericDetails() {
+    this.newDepositeService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
+          this.interestPayout = resp.data["INTERESTPAYOUT"];
+          this.ownership = resp.data["OWNERSHIP"];
+          this.paymentType = resp.data["PAYMENTTYPE"];
+        }
+      });
+  }
+
   getRdById(id) {
     console.log(id);
     this.rdApi.getRdDetails(id).subscribe((resp: any) => {

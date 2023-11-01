@@ -146,8 +146,11 @@
               (selectionChange)="onHolderTypeChange($event.value)"
               [disabled]="!isEnabledEdit"
             >
-              <mat-option value="Self">Self</mat-option>
-              <mat-option value="Joint">Joint</mat-option>
+              <mat-option
+                *ngFor="let ownership of ownership"
+                [value]="ownership"
+                >{{ ownership }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
@@ -162,7 +165,11 @@
               formControlName="typeOfCustomer"
               [disabled]="!isEnabledEdit"
             >
-              <mat-option value="Regular">Regular</mat-option>
+              <mat-option
+                *ngFor="let typesOfCustomer of typesOfCustomer"
+                [value]="typesOfCustomer"
+                >{{ typesOfCustomer }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
@@ -177,7 +184,11 @@
               formControlName="intrestPayout"
               [disabled]="!isEnabledEdit"
             >
-              <mat-option value="Cumulative">Cumulative</mat-option>
+              <mat-option
+                *ngFor="let interestPayout of interestPayout"
+                [value]="interestPayout"
+                >{{ interestPayout }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
@@ -193,8 +204,11 @@
               (selectionChange)="onPaymentTypeChange($event.value)"
               [disabled]="!isEnabledEdit"
             >
-              <mat-option value="Account">Account</mat-option>
-              <mat-option value="Cash">Cash</mat-option>
+              <mat-option
+                *ngFor="let paymentType of paymentType"
+                [value]="paymentType"
+                >{{ paymentType }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
