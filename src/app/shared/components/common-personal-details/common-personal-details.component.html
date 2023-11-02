@@ -10,16 +10,11 @@
                 <mat-expansion-panel-header class="customer_Header">
                   <mat-panel-description class="customer_Header_description">
                     <div fxLayout="row">
-                      <img
-                        *ngIf="customer.valid"
-                        src="assets/images/done_icon.svg"
-                        alt="Done Icon"
-                      />
-                      <spna style="margin-left: 10px"
-                        >Applicant {{ i + 1 }}</spna
-                      >
+                      <img *ngIf="customer.valid" src="assets/images/done_icon.svg"/>
+                      <spna style="margin-left: 10px;">Applicant {{ i + 1 }}</spna>
                     </div>
-                  </mat-panel-description>
+                    </mat-panel-description
+                  >
                 </mat-expansion-panel-header>
                 <div class="row">
                   <div class="col-md-6 col-12">
@@ -277,7 +272,7 @@
   </form>
 
   <div>
-    <div class="add_applicant" (click)="holderType == 'Joint' && addCustomer()">
+    <div class="add_applicant" (click)=" holderType == 'Joint' && addCustomer()">
       Add Another Applicant
     </div>
   </div>

@@ -42,16 +42,6 @@ export class FixedDepositDetailsComponent implements OnInit {
   isEnabledEdit: boolean = false;
   saveTheEdit: boolean = false;
   docIds: any[] = [];
-  staticData = {
-    TYPESOFCUSTOMER: [],
-    INTERESTPAYOUT: [],
-    OWNERSHIP: [],
-    PAYMENTTYPE: [],
-  };
-  typesOfCustomer: any[] = [];
-  interestPayout: any[] = [];
-  ownership: any[] = [];
-  paymentType: any[] = [];
   constructor(
     private fb: FormBuilder,
     private depositApi: NewDepositService,
@@ -65,7 +55,6 @@ export class FixedDepositDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getGenericDetails();
     this.newDepositeService.setToken(true);
     this.currentUserBranch = this.tokenStorageService.getUser().branchCode;
     let sessionStep = sessionStorage.getItem("fdStep");
@@ -75,19 +64,6 @@ export class FixedDepositDetailsComponent implements OnInit {
     else this.buildCreateFdForm();
     let processCycleCode = this.route.snapshot.params["code"];
     if (processCycleCode) this.getAllFdStep(processCycleCode);
-  }
-
-  getGenericDetails() {
-    this.newDepositeService
-      .genericValue("website", Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
-          this.interestPayout = resp.data["INTERESTPAYOUT"];
-          this.ownership = resp.data["OWNERSHIP"];
-          this.paymentType = resp.data["PAYMENTTYPE"];
-        }
-      });
   }
 
   getAllFdStep(processCycleCode) {

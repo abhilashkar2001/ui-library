@@ -25,9 +25,9 @@ export class PaymentMethodComponent implements OnInit {
   ) {}
 
   cardType = [
-    { bankLogo: "assets/images/axis_Bank_Logo.svg", bankName: "Axis Bank" },
-    { bankLogo: "assets/images/hdfc_Bank_Logo.svg", bankName: "HDFC Bank" },
-    { bankLogo: "assets/images/icici_Bank_Logo.svg", bankName: "ICICI Bank" },
+    { bankLogo: "assets/images/image 6.svg", bankName: "Axis Bank" },
+    { bankLogo: "assets/images/image 7.svg", bankName: "HDFC Bank" },
+    { bankLogo: "assets/images/image 8.svg", bankName: "ICIC Bank" },
   ];
   paymentMethod = new FormControl("Card");
   config = {
