@@ -10,7 +10,7 @@ import { FdCalculatorServiceService } from "../fd-calculator-service.service";
   styleUrls: ["./book-fd.component.scss"],
 })
 export class BookFdComponent implements OnInit {
-  @Input() depositType: any;
+  @Input("depositType") depositType: any;
   isPaymentEnabled: boolean = false; // should be false initially
   customerDetails: any;
   depositDetails: {
@@ -56,7 +56,7 @@ export class BookFdComponent implements OnInit {
       const dialogRef = this.dialog.open(SuccessPopupComponent, {
         data: {
           originationId: this.idDepositId,
-          type: this.depositType,
+          type: "Fd",
         },
         width: "750px",
         disableClose: true,

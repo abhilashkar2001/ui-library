@@ -44,7 +44,7 @@
       type="button"
       class="shareBtn"
       mat-raised-button
-      (click)="onClickAction('Pdf', 'Share')"
+      (click)="sendEmail()"
     >
       <mat-icon>share</mat-icon>Share
     </button>
@@ -53,7 +53,7 @@
       type="button"
       class="shareBtn"
       mat-raised-button
-      (click)="onClickAction('Pdf', 'Download')"
+      (click)="download()"
     >
       <mat-icon>download</mat-icon>Download
     </button>
