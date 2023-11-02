@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { FdCalculatorServiceService } from "../../fd-calculator-service.service";
@@ -10,7 +10,6 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
   styleUrls: ["./payment-method.component.scss"],
 })
 export class PaymentMethodComponent implements OnInit {
-  @Input() depositType: any;
   paymentForm: FormGroup;
   upiPaymentForm: FormGroup;
   netBankPaymentForm: FormGroup;
@@ -62,7 +61,7 @@ export class PaymentMethodComponent implements OnInit {
     this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originId,
-        type: this.depositType,
+        type: "Fd",
       },
       width: "750px",
       disableClose: true,

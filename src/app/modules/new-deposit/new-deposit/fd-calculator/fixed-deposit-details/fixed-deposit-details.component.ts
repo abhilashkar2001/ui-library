@@ -6,7 +6,6 @@ import * as moment from "moment";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { ActivatedRoute } from "@angular/router";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-fixed-deposit-details",
@@ -15,7 +14,6 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 })
 export class FixedDepositDetailsComponent implements OnInit {
   REPORT_TITLE = "Fixed Deposit";
-  depositType = "FD";
   createFdForm: FormGroup;
   personalDetailsForm: FormGroup;
   customVerifyNumber: FormGroup;
@@ -50,8 +48,7 @@ export class FixedDepositDetailsComponent implements OnInit {
     private cdref: ChangeDetectorRef,
     private newDepositeService: NewDepositService,
     private tokenStorageService: TokenStorageService,
-    private route: ActivatedRoute,
-    private openAccountService: OpenAccountService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -250,7 +247,6 @@ export class FixedDepositDetailsComponent implements OnInit {
       originationModel: fdData,
       customerInfo: customer,
     };
-    this.openAccountService.setData(this.globalPayload.customerInfo);
     this.fdApi.saveFdOriginationMaster(this.globalPayload).subscribe((resp) => {
       if (resp.statusCode == 200 && resp.data) {
         resp.data?.customerInfo?.forEach((item, i) => {

@@ -269,9 +269,6 @@
   </div>
 
   <div class="align_fdForm" *ngIf="verifyStep('book')">
-    <app-book-fd
-      [depositType]="depositType"
-      (customBookFdBack)="goBack()"
-    ></app-book-fd>
+    <app-book-fd (customBookFdBack)="goBack()"></app-book-fd>
   </div>
 </div>
