@@ -62,9 +62,4 @@ export class NewDepositService {
       payload
     );
   }
-  genericValue(screenName: string, genericName: string[]) {
-    return this.http.get<any>(
-      `${this.base_url}/generic-value?screenName=${screenName}&genericName=${genericName}`
-    );
-  }
 }
