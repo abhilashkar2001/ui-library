@@ -52,6 +52,8 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
       }
       this.myStepper["_selectedIndex"] = this.screenIndex;
     }
+    // const el = document.querySelector(".mat-step-label-selected");
+    // if (el) el.scrollIntoView();
   }
   stepperSelectionChange(event) {
     this.customSelectionChange.emit(event);

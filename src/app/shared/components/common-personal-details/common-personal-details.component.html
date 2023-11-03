@@ -32,11 +32,13 @@
                       />
                     </mat-form-field>
                   </div>
-                  <div class="col-md-6 col-12">
+                  <div class="col-md-6 col-12 default-toggle-slide">
                     Is this applicant a primary customer?
                     <mat-slide-toggle
-                      color="primary"
                       formControlName="primaryCustomer"
+                      [disabled]="
+                        checkPrimaryCustomer() && primaryCustIndex != i
+                      "
                     >
                     </mat-slide-toggle>
                   </div>

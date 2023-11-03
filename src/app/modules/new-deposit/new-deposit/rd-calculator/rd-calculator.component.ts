@@ -134,10 +134,12 @@ export class RdCalculatorComponent implements OnInit {
   saveCustomerInfo(resp, docIds) {
     var custResp: any = resp;
     custResp.forEach((item, i) => {
+      console.log(custResp[i]);
       custResp[i].documentId = [];
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
+      console.log(custResp);
     });
     let rdData = this.rdDetails[0];
     delete rdData.fdRdMassterId;
