@@ -37,7 +37,9 @@ export class HomeComponent implements OnInit {
         /* get profile info */
         this.getProfile();
       },
-      (err) => {}
+      (err) => {
+        this.router.navigate(["/home/401"]);
+      }
     );
   }
 
