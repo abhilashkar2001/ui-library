@@ -22,4 +22,10 @@ export class DownloadService {
       { responseType: "arraybuffer" }
     );
   }
+  downloadFdRdDetailDoc(originationId) {
+    return this.http.get(
+      `${this.baseUrl}/webSummary/FdAndRd/Download?originationId=${originationId}`,
+      { responseType: "arraybuffer" }
+    );
+  }
 }

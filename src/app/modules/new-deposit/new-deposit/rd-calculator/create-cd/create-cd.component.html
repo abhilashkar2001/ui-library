@@ -8,7 +8,7 @@
           class="full-width"
           [ngClass]="isEnabledEdit == false && 'disableField'"
         >
-          <mat-label>Deposit Ammount</mat-label>
+          <mat-label>Deposit Amount</mat-label>
           <input
             matInput
             type="text"
@@ -16,6 +16,14 @@
             name="depositAmmount"
             [readonly]="!isEnabledEdit"
           />
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.amount.hasError('required') &&
+              this.createRdForm.controls.amount.touched
+            "
+          >
+            Deposit Amount is required
+          </mat-error>
         </mat-form-field>
       </div>
       <!-- <div class="col-md-6 col-12">
@@ -87,6 +95,14 @@
             <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.maturityDate.hasError('required') &&
+              this.createRdForm.controls.maturityDate.touched
+            "
+          >
+            Maturity Date is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -103,6 +119,14 @@
             name="intrestRate"
             [readonly]="!isEnabledEdit"
           />
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.intrestRate.hasError('required') &&
+              this.createRdForm.controls.intrestRate.touched
+            "
+          >
+            Intrest Rate is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -119,6 +143,14 @@
             name="maturityAmount"
             [readonly]="!isEnabledEdit"
           />
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.maturityAmount.hasError('required') &&
+              this.createRdForm.controls.maturityAmount.touched
+            "
+          >
+            Maturity Amount is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -129,9 +161,20 @@
         >
           <mat-label>Deposit Holder Type</mat-label>
           <mat-select formControlName="ownership" [disabled]="!isEnabledEdit">
-            <mat-option value="Self">Self</mat-option>
-            <mat-option value="Joint">Joint</mat-option>
+            <mat-option
+              *ngFor="let ownership of ownership"
+              [value]="ownership"
+              >{{ ownership }}</mat-option
+            >
           </mat-select>
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.ownership.hasError('required') &&
+              this.createRdForm.controls.ownership.touched
+            "
+          >
+            Deposit Holder Type is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -145,8 +188,20 @@
             formControlName="typeOfCustomer"
             [disabled]="!isEnabledEdit"
           >
-            <mat-option value="Normal Customer">Normal Customer</mat-option>
+            <mat-option
+              *ngFor="let typesOfCustomer of typesOfCustomer"
+              [value]="typesOfCustomer"
+              >{{ typesOfCustomer }}</mat-option
+            >
           </mat-select>
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.typeOfCustomer.hasError('required') &&
+              this.createRdForm.controls.typeOfCustomer.touched
+            "
+          >
+            Customer Type is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -160,8 +215,20 @@
             formControlName="intrestPayout"
             [disabled]="!isEnabledEdit"
           >
-            <mat-option value="Cumulative">Cumulative</mat-option>
+            <mat-option
+              *ngFor="let interestPayout of interestPayout"
+              [value]="interestPayout"
+              >{{ interestPayout }}</mat-option
+            >
           </mat-select>
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.intrestPayout.hasError('required') &&
+              this.createRdForm.controls.intrestPayout.touched
+            "
+          >
+            Payout Type is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -176,9 +243,20 @@
             (selectionChange)="onPaymentTypeChange($event.value)"
             [disabled]="!isEnabledEdit"
           >
-            <mat-option value="Account">Account</mat-option>
-            <mat-option value="Cash">Cash</mat-option>
+            <mat-option
+              *ngFor="let paymentType of paymentType"
+              [value]="paymentType"
+              >{{ paymentType }}</mat-option
+            >
           </mat-select>
+          <mat-error
+            *ngIf="
+              this.createRdForm.controls.paymentType.hasError('required') &&
+              this.createRdForm.controls.paymentType.touched
+            "
+          >
+            Payment Type is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
@@ -192,6 +270,7 @@
           mat-raised-button
           class="saveButton"
           (click)="submitCreateFd()"
+          [disabled]="!createRdForm.valid"
         >
           Save
         </button>
