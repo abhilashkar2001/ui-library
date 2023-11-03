@@ -55,6 +55,7 @@ export class OtherDocumentsComponent implements OnInit {
   baseUrl = environment.microServiceURL;
   documentList;
   documentTypeArray: string[] = [];
+  hideSelect: string[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -102,6 +103,7 @@ export class OtherDocumentsComponent implements OnInit {
     });
     if (data?.length > 0) {
       data.forEach((item, i) => {
+        this.hideSelect.push(item?.docs[0].documentName);
         this.showDocument(item?.docs, i);
         this.customDocumentForm.emit(this.createDocumentForm);
       });
@@ -190,6 +192,7 @@ export class OtherDocumentsComponent implements OnInit {
   }
   removeCurrency(i: number) {
     this.otherDocument().removeAt(i);
+    this.hideSelect.splice(i, 1);
   }
 
   fileBrowseHandler(event: any, indx: number) {
@@ -203,6 +206,7 @@ export class OtherDocumentsComponent implements OnInit {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file = target.files[0];
+        console.log(file, "file");
         if (file.type.startsWith("image/")) {
           this.selectedImage = file;
           this.displayImage(i, file);
@@ -290,5 +294,35 @@ export class OtherDocumentsComponent implements OnInit {
   }
   goBack() {
     this.customgoBack.emit();
+  }
+
+  onDocumentSelection(event, index) {
+    if (!this.hideSelect.hasOwnProperty(index)) {
+      if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
+    } else this.hideSelect[index] = event;
+  }
+
+  isDocumentOptionDisabled2(item) {
+    return this.hideSelect.includes(item);
+  }
+
+  checkValidity() {
+    return Math.abs(this.documentTypeArray?.length - this?.hideSelect?.length) <
+      1 ||
+      this.documentTypeArray?.length ==
+        this.createDocumentForm.value.otherDocument.length
+      ? true
+      : false;
+  }
+
+  onFileDropped(event, i) {
+    console.log(event);
+    if (event.files.type.startsWith("image/")) {
+      this.selectedImage = event.files;
+      this.displayImage(i, event.files);
+      this.uploadImage(event.files, i);
+    }
+    const fReader = new FileReader();
+    fReader.readAsDataURL(event.files);
   }
 }

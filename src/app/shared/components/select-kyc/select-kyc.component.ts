@@ -44,6 +44,7 @@ export class SelectKycComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.buildKycForm();
     setTimeout(() => {
       this.customFormGroupEmit.emit(this.kycForm);

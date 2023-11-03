@@ -8,7 +8,7 @@ import { HomeService } from "app/shared/services/home-service/home.service";
 })
 export class LandingPageComponent implements OnInit {
   data: [] = [];
-  imageUrl = "assets/images/Group 13740.svg";
+  imageUrl = "assets/images/account-landing-image.svg";
   profileHeader = "Savings Made Simple: Open Your Account in 3 Easy Steps.";
   profileHint =
     "Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.";

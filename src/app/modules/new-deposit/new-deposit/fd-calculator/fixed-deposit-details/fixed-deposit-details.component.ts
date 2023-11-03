@@ -168,6 +168,7 @@ export class FixedDepositDetailsComponent implements OnInit {
           horizontalPosition: "right",
           panelClass: "snackbar-error",
         });
+        this.isEnabledEdit = false;
         this.next();
         this.isFixedDepositDetail = false;
         this.isVerifyNumber = true;

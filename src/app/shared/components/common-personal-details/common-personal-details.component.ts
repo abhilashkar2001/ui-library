@@ -36,7 +36,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
-  @Input() customerInfo
+  @Input() customerInfo;
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
@@ -58,13 +58,15 @@ export class CommonPersonalDetailsComponent implements OnInit {
   residenceTypeArray: any[] = [];
   todayDate: Date = new Date();
   listCity: any = [];
+  primaryCustIndex: number = 0;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
     private personalDetailsService: PersonalDetailsService,
     private loanApi: LoanService,
-    private openApi: OpenAccountService, private cd: ChangeDetectorRef,
-    private rdApi:CreateRdService
+    private openApi: OpenAccountService,
+    private cd: ChangeDetectorRef,
+    private rdApi: CreateRdService
   ) {}
 
   panelOpened(index: number) {
@@ -118,13 +120,13 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   getCustomerById() {
-    this.rdApi.getOriginationMaster(parseInt(this.loanCustomerId))
+    this.rdApi
+      .getOriginationMaster(parseInt(this.loanCustomerId))
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
-          let customerDetails = resp.data[0].customerInfo
-            this.buildCustomerDetailsForm(customerDetails);
-        }
-        else this.buildCustomerDetailsForm();
+          let customerDetails = resp.data[0].customerInfo;
+          this.buildCustomerDetailsForm(customerDetails);
+        } else this.buildCustomerDetailsForm();
       });
   }
 
@@ -153,16 +155,24 @@ export class CommonPersonalDetailsComponent implements OnInit {
       customer: this.fb.array([]),
     });
 
-    console.log(data)
-    setTimeout(() => {
-      if (this.holderType == "Self") this.addCustomer(data && data[0]);
-      else if (this.holderType == "Joint") {
-        for (let i = 0; i < data?.length; i++)
-          this.addCustomer(data[i]);
-        this.cd.detectChanges();
-      }
-      // this.customFormGroup.emit(this.customerDetailsForm);
-    }, 200);
+    if (data?.length > 0) {
+      setTimeout(() => {
+        if (this.holderType == "Self") this.addCustomer(data && data[0]);
+        else if (this.holderType == "Joint") {
+          this.renderApplicant(data, data?.length);
+          this.cd.detectChanges();
+        }
+      }, 200);
+    } else {
+      if (this.holderType == "Self") {
+        this.renderApplicant(data, 1);
+      } else if (this.holderType == "Joint") this.renderApplicant(data, 2);
+      this.cd.detectChanges();
+    }
+  }
+
+  renderApplicant(data, applicantLength) {
+    for (let i = 0; i < applicantLength; i++) this.addCustomer(data[i]);
   }
 
   get customer(): FormArray {
@@ -170,7 +180,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   newCustomer(data?): FormGroup {
-    console.log(data)
+    console.log(data);
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
@@ -205,22 +215,22 @@ export class CommonPersonalDetailsComponent implements OnInit {
       cityId: [data ? data.contact.address[0].cityId : "", Validators.required],
       source: data?.source ? data.source : "Website",
       kycStatus: data?.kycStatus && data.kycStatus,
-      documentId: this.calculateId(data)
+      documentId: this.calculateId(data),
     });
   }
   calculateId(data) {
     var docIds = [];
-    data?.documnentsInfo?.documents.forEach(item => {
+    data?.documnentsInfo?.documents.forEach((item) => {
       let docItemId = [];
       item.docs.forEach((docItem) => {
-        docItemId.push(docItem.documentId)
-      })
+        docItemId.push(docItem.documentId);
+      });
       const docId = {
         docIds: docItemId,
       };
       docIds.push(docId);
     });
-    return docIds
+    return docIds;
   }
 
   addCustomer(data?) {
@@ -319,5 +329,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
       source: resp.source,
       kycStatus: resp.kycStatus,
     };
+  }
+  checkPrimaryCustomer() {
+    return this.customerDetailsForm.value.customer.some((item, i) => {
+      console.log(i);
+      if (item.primaryCustomer) {
+        this.primaryCustIndex = i;
+        return item.primaryCustomer;
+      } else return false;
+    });
   }
 }

@@ -35,7 +35,10 @@
           <div class="calculator_subTItle">Deposit Ammount</div>
           <div>
             <div fxFlex="100">
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field
+                appearance="outline"
+                class="full-width deposit--ammount--field"
+              >
                 <mat-label class="custom-mat-label">Ammount</mat-label>
                 <input matInput numbersOnly formControlName="amount" />
               </mat-form-field>
@@ -62,8 +65,8 @@
           fxLayoutAlign="space-between center"
           style="margin-top: -2%"
         >
-          <div>$ {{ min }}</div>
-          <div>$ {{ max }}</div>
+          <div>₹ {{ min }}</div>
+          <div>₹ {{ max }}</div>
         </div>
         <div fxLayout="column" fxFlex="100">
           <div class="calculator_subTItle">Types of Customer</div>
@@ -110,7 +113,7 @@
               <div fxLayout="row" class="parentYearDiv">
                 <mat-form-field
                   appearance="outline"
-                  class="full-width inputSelect"
+                  class="full-width inputSelect parentYearDiv--child"
                 >
                   <input
                     matInput
@@ -124,7 +127,7 @@
                 <span class="vl"></span>
                 <mat-form-field
                   appearance="outline"
-                  class="full-width inputSelect"
+                  class="full-width inputSelect parentYearDiv--child"
                 >
                   <input
                     matInput
@@ -139,7 +142,7 @@
 
                 <mat-form-field
                   appearance="outline"
-                  class="full-width inputSelect"
+                  class="full-width inputSelect parentYearDiv--child"
                 >
                   <input
                     matInput
@@ -197,10 +200,11 @@
             </mat-form-field>
           </div>
         </div>
-        <div>
-          This is applicable for resident individuals *Rate of interest depends
-          on the duration of your FD. For Fixed Deposits with tenure below 181
-          days, interest will be calculated at maturity as simple interest.
+        <div style="font-size: 14px; line-height: 22px">
+          This is applicable for resident individuals <br />
+          *Rate of interest depends on the duration of your FD.<br />
+          For Fixed Deposits with tenure below 181 days, interest will be
+          calculated at maturity as simple interest.
         </div>
       </div>
     </form>
