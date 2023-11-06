@@ -43,7 +43,7 @@ export class BookFdComponent implements OnInit {
     this.idDepositId = sessionStorage.getItem("depositOriginationId");
     if (this.idDepositId) {
       this.summaryService
-        .fetchDepositeSummary(this.idDepositId)
+        .fetchDepositeSummary(this.idDepositId, this.depositType)
         .subscribe((resp: any) => {
           this.depositDetails = resp.data;
         });

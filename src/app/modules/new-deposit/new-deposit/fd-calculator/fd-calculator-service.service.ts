@@ -43,9 +43,9 @@ export class FdCalculatorServiceService {
       `${this.base_url}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
-  fetchDepositeSummary(originationId) {
+  fetchDepositeSummary(originationId, depositType) {
     return this.http.get(
-      `${this.base_url}/webSummary/fetchFdAndRdSummary?originationId=${originationId}`
+      `${this.base_url}/webSummary/fetchFdAndRdSummary?originationId=${originationId}&screenName=Book ${depositType}&genericName=DOCUMENTTYPE`
     );
   }
   getOriginationMasterDetails(id) {
@@ -69,7 +69,9 @@ export class FdCalculatorServiceService {
       `${this.base_url}/process_stage/screens?id=${id}`
     );
   }
-   getOriginationMaster(id) {
-    return this.http.get<any>(`${this.base_url}/origination-matser?originationId=${id}`)
+  getOriginationMaster(id) {
+    return this.http.get<any>(
+      `${this.base_url}/origination-matser?originationId=${id}`
+    );
   }
 }
