@@ -89,9 +89,24 @@
 }
 .designImg-1 {
   position: absolute;
-  margin-top: 20%;
+  margin-top: -13%;
   margin-left: 18%;
-  transform: rotate(180deg);
+  transform: rotate(90deg);
+}
+.designImg-2 {
+  position: absolute;
+  margin-top: 24.5%;
+  margin-left: -2%;
+  transform: rotate(270deg);
+}
+
+.sub-child {
+  color: #a5a5a5;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .openFDbtn {
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);

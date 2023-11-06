@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 })
 export class DepositLandingPageComponent implements OnInit {
   depositName = "fdCalculator";
+  fdRdName = "FD";
+  fdRdFullName = "Fixed";
   title = "My first AGM project";
   lat = 51.678418;
   lng = 7.809007;
@@ -21,5 +23,12 @@ export class DepositLandingPageComponent implements OnInit {
   ngOnInit(): void {}
   customDepositChange(event) {
     this.depositName = event;
+    if (this.depositName == "rdCalculator") {
+      this.fdRdName = "RD";
+      this.fdRdFullName = "Recurring";
+    } else {
+      this.fdRdName = "FD";
+      this.fdRdFullName = "Fixed ";
+    }
   }
 }
