@@ -16,6 +16,7 @@ import { Location } from "@angular/common";
 import * as moment from "moment";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { FdCalculatorServiceService } from "../../fd-calculator/fd-calculator-service.service";
+import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({
   selector: "app-return-calculator",
@@ -51,7 +52,18 @@ export class ReturnCalculatorComponent implements OnInit {
   depositeType: any;
   processCycleCode: any;
   rdProcessCycleCode: any;
-
+  staticData = {
+    TYPESOFCUSTOMER: [],
+    INTERESTPAYOUT: [],
+    MONTHLYSAVINGS: [],
+    OWNERSHIP: [],
+    SCHEME: [],
+  };
+  typesOfCustomer: string[];
+  interestPayout: string[];
+  monthlySavings: string[];
+  ownership: string[];
+  scheme: string[];
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -59,13 +71,28 @@ export class ReturnCalculatorComponent implements OnInit {
     private location: Location,
     private rdApi: CreateRdService,
     private tokenStore: TokenStorageService,
-    private newDepositeService: FdCalculatorServiceService
+    private FdCalculatorServiceService: FdCalculatorServiceService,
+    private newDepositeService: NewDepositService
   ) {}
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.buildForm();
     this.fdFlowData();
     console.log(this.rdFdValue, this.fdName);
+  }
+  getGenericDetails() {
+    this.newDepositeService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
+          this.interestPayout = resp.data["INTERESTPAYOUT"];
+          this.monthlySavings = resp.data["MONTHLYSAVINGS"];
+          this.ownership = resp.data["OWNERSHIP"];
+          this.scheme = resp.data["SCHEME"];
+        }
+      });
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.rdFdValue) {
@@ -77,7 +104,8 @@ export class ReturnCalculatorComponent implements OnInit {
           if (resp?.statusCode === 200) {
             this.getSubClass(resp.data).then((val) => {
               this.rdBasisId = val[0].productDetails[0].basisId;
-              this.rdProcessCycleCode=val[0].productDetails[0].processCycleCode
+              this.rdProcessCycleCode =
+                val[0].productDetails[0].processCycleCode;
             });
           }
         });
@@ -106,17 +134,17 @@ export class ReturnCalculatorComponent implements OnInit {
   }
 
   fdFlowData() {
-    this.newDepositeService.getFdTypes().subscribe((resp) => {
+    this.FdCalculatorServiceService.getFdTypes().subscribe((resp) => {
       if (resp?.statusCode == 200) {
-        this.newDepositeService
-          .fetchSubClass(resp?.data[0]?.basisClass)
-          .subscribe((resp) => {
-            if (resp?.statusCode == 200) {
-              this.fdBasisId = resp?.data[0]?.productDetails[0]?.basisId;
-              this.processCycleCode =
-                resp?.data[0]?.productDetails[0]?.processCycleCode;
-            }
-          });
+        this.FdCalculatorServiceService.fetchSubClass(
+          resp?.data[0]?.basisClass
+        ).subscribe((resp) => {
+          if (resp?.statusCode == 200) {
+            this.fdBasisId = resp?.data[0]?.productDetails[0]?.basisId;
+            this.processCycleCode =
+              resp?.data[0]?.productDetails[0]?.processCycleCode;
+          }
+        });
       }
     });
   }
@@ -163,16 +191,16 @@ export class ReturnCalculatorComponent implements OnInit {
         originationModel: payload,
         customerInfo: [],
       };
-      this.newDepositeService
-        .saveFdOriginationMaster(finalPayload)
-        .subscribe((resp) => {
-          path = "/deposits/fdFlow/fdDetails";
-          this.url = this.location.prepareExternalUrl(
-            this.router.serializeUrl(this.router.createUrlTree([path]))
-          );
-          this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.processCycleCode}`;
-          window.open(`${this.url}`, "_blank");
-        });
+      this.FdCalculatorServiceService.saveFdOriginationMaster(
+        finalPayload
+      ).subscribe((resp) => {
+        path = "/deposits/fdFlow/fdDetails";
+        this.url = this.location.prepareExternalUrl(
+          this.router.serializeUrl(this.router.createUrlTree([path]))
+        );
+        this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.processCycleCode}`;
+        window.open(`${this.url}`, "_blank");
+      });
     } else {
       const payload = this.originationModel(this.rdBasisId);
       const finalPayload = {
@@ -203,7 +231,7 @@ export class ReturnCalculatorComponent implements OnInit {
       maturityDate: moment(this.depositForm.value.maturityDate).format(
         "DD-MMM-YYYY"
       ),
-      typeOfCustomer: "",
+      typeOfCustomer: this.depositForm.value.typeOfCustomer,
       intrestRate: 677, //need to change once flexCube data avilable.
       scheme: "Normal or Tax saver",
     };

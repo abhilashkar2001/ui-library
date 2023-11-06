@@ -6,22 +6,22 @@
           <div fxLayout="column" fxFlex="40">
             <span class="calculator_subTItle">Scheme</span>
             <mat-radio-group formControlName="scheme">
-              <mat-radio-button class="example-margin1" value="Normal">
-                Normal
-              </mat-radio-button>
-              <mat-radio-button class="example-margin" value=" Tax Saver">
-                Tax Saver
+              <mat-radio-button
+                class="example-margin col-md-3 col-12"
+                *ngFor="let scheme of scheme"
+                [value]="scheme"
+                >{{ scheme }}
               </mat-radio-button>
             </mat-radio-group>
           </div>
           <div fxLayout="column" fxFlex="40">
             <span class="calculator_subTItle">Ownership</span>
             <mat-radio-group formControlName="ownership">
-              <mat-radio-button class="example-margin1" value="Self">
-                Self
-              </mat-radio-button>
-              <mat-radio-button class="example-margin" value="Joint">
-                Joint
+              <mat-radio-button
+                class="example-margin col-md-3 col-12"
+                *ngFor="let ownership of ownership"
+                [value]="ownership"
+                >{{ ownership }}
               </mat-radio-button>
             </mat-radio-group>
           </div>
@@ -84,20 +84,14 @@
               <mat-checkbox>Super Senior Citizen</mat-checkbox>
             </div>
           </div> -->
-           <mat-radio-group formControlName="typeOfCustomer" class="row">
-              <mat-radio-button class="example-margin col-md-3 col-12" value="Normal Customer">
-                Normal Customer
-              </mat-radio-button>
-              <mat-radio-button class="example-margin col-md-3 col-12" value="Differently Abbled">
-                Differently Abbled
-              </mat-radio-button>
-               <mat-radio-button class="example-margin col-md-3 col-12" value="Senior Citizen">
-                Senior Citizen
-              </mat-radio-button>
-               <mat-radio-button class="example-margin col-md-3 col-12" value="Super Senior Citizen">
-                Super Senior Citizen
-              </mat-radio-button>
-            </mat-radio-group>
+          <mat-radio-group formControlName="typeOfCustomer" class="row">
+            <mat-radio-button
+              class="example-margin col-md-3 col-12"
+              *ngFor="let typesOfCustomer of typesOfCustomer"
+              [value]="typesOfCustomer"
+              >{{ typesOfCustomer }}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
         <div
           class="row"
@@ -174,7 +168,11 @@
                 formControlName="intrestPayout"
                 (selectionChange)="fdName == 'fdCalculator' && updateDeposit()"
               >
-                <mat-option value="Cumulative"> Cumulative </mat-option>
+                <mat-option
+                  *ngFor="let interestPayout of interestPayout"
+                  [value]="interestPayout"
+                  >{{ interestPayout }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
@@ -193,9 +191,11 @@
                 formControlName="monthlySavings"
                 (selectionChange)="fdName == 'rdCalculator' && updateDeposit()"
               >
-                <mat-option value="5th of each month">
-                  5th of each month
-                </mat-option>
+                <mat-option
+                  *ngFor="let monthlySavings of monthlySavings"
+                  [value]="monthlySavings"
+                  >{{ monthlySavings }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>

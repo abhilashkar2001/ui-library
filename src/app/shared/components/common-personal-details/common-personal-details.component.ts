@@ -332,7 +332,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
   checkPrimaryCustomer() {
     return this.customerDetailsForm.value.customer.some((item, i) => {
-      console.log(i);
       if (item.primaryCustomer) {
         this.primaryCustIndex = i;
         return item.primaryCustomer;

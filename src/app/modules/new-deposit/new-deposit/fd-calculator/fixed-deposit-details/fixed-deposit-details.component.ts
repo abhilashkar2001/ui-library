@@ -6,6 +6,7 @@ import * as moment from "moment";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { ActivatedRoute } from "@angular/router";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-fixed-deposit-details",
@@ -14,6 +15,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class FixedDepositDetailsComponent implements OnInit {
   REPORT_TITLE = "Fixed Deposit";
+  depositType = "FD";
   createFdForm: FormGroup;
   personalDetailsForm: FormGroup;
   customVerifyNumber: FormGroup;
@@ -40,18 +42,29 @@ export class FixedDepositDetailsComponent implements OnInit {
   isEnabledEdit: boolean = false;
   saveTheEdit: boolean = false;
   docIds: any[] = [];
+  staticData = {
+    TYPESOFCUSTOMER: [],
+    INTERESTPAYOUT: [],
+    OWNERSHIP: [],
+    PAYMENTTYPE: [],
+  };
+  typesOfCustomer: string[];
+  interestPayout: string[];
+  ownership: string[];
+  paymentType: string[];
   constructor(
     private fb: FormBuilder,
-    private depositApi: NewDepositService,
     private fdApi: FdCalculatorServiceService,
     private snack: MatSnackBar,
     private cdref: ChangeDetectorRef,
     private newDepositeService: NewDepositService,
     private tokenStorageService: TokenStorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private openAccountService: OpenAccountService
   ) {}
 
   ngOnInit(): void {
+    this.getGenericDetails();
     this.newDepositeService.setToken(true);
     this.currentUserBranch = this.tokenStorageService.getUser().branchCode;
     let sessionStep = sessionStorage.getItem("fdStep");
@@ -61,6 +74,19 @@ export class FixedDepositDetailsComponent implements OnInit {
     else this.buildCreateFdForm();
     let processCycleCode = this.route.snapshot.params["code"];
     if (processCycleCode) this.getAllFdStep(processCycleCode);
+  }
+
+  getGenericDetails() {
+    this.newDepositeService
+      .genericValue("website", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
+          this.interestPayout = resp.data["INTERESTPAYOUT"];
+          this.ownership = resp.data["OWNERSHIP"];
+          this.paymentType = resp.data["PAYMENTTYPE"];
+        }
+      });
   }
 
   getAllFdStep(processCycleCode) {
@@ -152,6 +178,7 @@ export class FixedDepositDetailsComponent implements OnInit {
       ),
     };
     sessionStorage.setItem("originationId", this.fdDetails.originationId);
+    sessionStorage.setItem("holderType", this.createFdForm.value.ownership);
     const payload = {
       originationModel: details,
       customerInfo: this.createPayload(this.customerInfo),
@@ -248,6 +275,7 @@ export class FixedDepositDetailsComponent implements OnInit {
       originationModel: fdData,
       customerInfo: customer,
     };
+    this.openAccountService.setData(this.globalPayload.customerInfo[0]);
     this.fdApi.saveFdOriginationMaster(this.globalPayload).subscribe((resp) => {
       if (resp.statusCode == 200 && resp.data) {
         resp.data?.customerInfo?.forEach((item, i) => {

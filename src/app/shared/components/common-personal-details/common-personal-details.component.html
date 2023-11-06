@@ -10,11 +10,15 @@
                 <mat-expansion-panel-header class="customer_Header">
                   <mat-panel-description class="customer_Header_description">
                     <div fxLayout="row">
-                      <img *ngIf="customer.valid" src="assets/images/done_icon.svg"/>
-                      <spna style="margin-left: 10px;">Applicant {{ i + 1 }}</spna>
+                      <img
+                        *ngIf="customer.valid"
+                        src="assets/images/done_icon.svg"
+                      />
+                      <span style="margin-left: 10px"
+                        >Applicant {{ i + 1 }}</span
+                      >
                     </div>
-                    </mat-panel-description
-                  >
+                  </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="row">
                   <div class="col-md-6 col-12">
@@ -56,6 +60,14 @@
                           >{{ prefixItem }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.prefix.touched &&
+                          this.customer.controls.prefix.hasError('required')
+                        "
+                      >
+                        Prefix is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -71,6 +83,14 @@
                         formControlName="firstName"
                         name="firstName"
                       />
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.firstName.touched &&
+                          this.customer.controls.firstName.hasError('required')
+                        "
+                      >
+                        First Name is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -86,6 +106,14 @@
                         formControlName="lastName"
                         name="lastName"
                       />
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.lastName.touched &&
+                          this.customer.controls.lastName.hasError('required')
+                        "
+                      >
+                        Last Name is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -109,6 +137,16 @@
                         >
                       </mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.dateOfBirth.touched &&
+                          this.customer.controls.dateOfBirth.hasError(
+                            'required'
+                          )
+                        "
+                      >
+                        Date Of Birth is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -123,6 +161,14 @@
                         formControlName="email"
                         name="email"
                       />
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.email.touched &&
+                          this.customer.controls.email.hasError('required')
+                        "
+                      >
+                        Email is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -138,6 +184,14 @@
                           >{{ genderItem }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.gender.touched &&
+                          this.customer.controls.gender.hasError('required')
+                        "
+                      >
+                        Gender is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -153,6 +207,16 @@
                           >{{ country.countryName }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.nationality.touched &&
+                          this.customer.controls.nationality.hasError(
+                            'required'
+                          )
+                        "
+                      >
+                        Nationality is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="highlight_title">Address Details</div>
@@ -183,6 +247,16 @@
                           >{{ residenceItem }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.residenceType.touched &&
+                          this.customer.controls.residenceType.hasError(
+                            'required'
+                          )
+                        "
+                      >
+                        Residence Type is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -198,6 +272,14 @@
                           >{{ countryItem.countryName }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.country.touched &&
+                          this.customer.controls.country.hasError('required')
+                        "
+                      >
+                        Country is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -213,6 +295,14 @@
                         name="pincode"
                         numbersOnly
                       />
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.pincode.touched &&
+                          this.customer.controls.pincode.hasError('required')
+                        "
+                      >
+                        Zip Code is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -228,6 +318,14 @@
                           >{{ item?.stateName }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.state.touched &&
+                          this.customer.controls.state.hasError('required')
+                        "
+                      >
+                        State is required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -243,6 +341,14 @@
                           >{{ item?.cityName }}</mat-option
                         >
                       </mat-select>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.cityId.touched &&
+                          this.customer.controls.cityId.hasError('required')
+                        "
+                      >
+                        City required
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div
@@ -274,18 +380,12 @@
   </form>
 
   <div>
-    <div class="add_applicant" (click)=" holderType == 'Joint' && addCustomer()">
+    <div class="add_applicant" (click)="holderType == 'Joint' && addCustomer()">
       Add Another Applicant
     </div>
   </div>
-  <div
-    fxFlex="100"
-    fxLayout="row"
-    fxLayoutGap="2%"
-    style="margin-top: 50px"
-    class="row"
-  >
-    <div class="col-md-4 col-12">
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="2%" style="margin-top: 50px">
+    <div>
       <button
         type="button"
         mat-raised-button
@@ -296,7 +396,7 @@
         Confirm
       </button>
     </div>
-    <div class="col-md-4 col-12">
+    <div>
       <button
         type="button"
         mat-raised-button

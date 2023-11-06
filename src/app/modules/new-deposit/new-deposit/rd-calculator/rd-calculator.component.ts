@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { CreateRdService } from "./create-rd.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-rd-calculator",
@@ -43,7 +44,8 @@ export class RdCalculatorComponent implements OnInit {
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
     private tokenStore: TokenStorageService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private openAccountService: OpenAccountService
   ) {}
 
   ngOnInit(): void {
@@ -151,6 +153,7 @@ export class RdCalculatorComponent implements OnInit {
       originationModel: rdData,
       customerInfo: custResp,
     };
+    this.openAccountService.setData(payload.customerInfo[0]);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
       sessionStorage.setItem(
         "depositOriginationId",

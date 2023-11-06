@@ -67,6 +67,7 @@
               type="button"
               class="resnd_otp"
               (click)="timer(1)"
+              [ngClass]="{ 'gray-button': display != '00:00' }"
             >
               Resend
             </button>
