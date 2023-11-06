@@ -59,11 +59,11 @@ export class ReturnCalculatorComponent implements OnInit {
     OWNERSHIP: [],
     SCHEME: [],
   };
-  typesOfCustomer: any[] = [];
-  interestPayout: any[] = [];
-  monthlySavings: any[] = [];
-  ownership: any[] = [];
-  scheme: any[] = [];
+  typesOfCustomer: string[];
+  interestPayout: string[];
+  monthlySavings: string[];
+  ownership: string[];
+  scheme: string[];
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,

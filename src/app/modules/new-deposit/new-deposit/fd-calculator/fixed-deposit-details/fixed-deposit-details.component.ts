@@ -48,13 +48,12 @@ export class FixedDepositDetailsComponent implements OnInit {
     OWNERSHIP: [],
     PAYMENTTYPE: [],
   };
-  typesOfCustomer: any[] = [];
-  interestPayout: any[] = [];
-  ownership: any[] = [];
-  paymentType: any[] = [];
+  typesOfCustomer: string[];
+  interestPayout: string[];
+  ownership: string[];
+  paymentType: string[];
   constructor(
     private fb: FormBuilder,
-    private depositApi: NewDepositService,
     private fdApi: FdCalculatorServiceService,
     private snack: MatSnackBar,
     private cdref: ChangeDetectorRef,

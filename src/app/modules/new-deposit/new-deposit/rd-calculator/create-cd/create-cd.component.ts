@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "../../../new-deposit.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { CreateRdService } from "../create-rd.service";
 
 @Component({
@@ -25,16 +25,14 @@ export class CreateCdComponent implements OnInit {
     OWNERSHIP: [],
     PAYMENTTYPE: [],
   };
-  typesOfCustomer: any[] = [];
-  interestPayout: any[] = [];
-  ownership: any[] = [];
-  paymentType: any[] = [];
+  typesOfCustomer: string[];
+  interestPayout: string[];
+  ownership: string[];
+  paymentType: string[];
   constructor(
     private fb: FormBuilder,
-    private fdApi: NewDepositService,
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
-    private router: Router,
     private newDepositeService: NewDepositService
   ) {}
 
