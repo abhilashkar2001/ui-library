@@ -19,13 +19,14 @@ export class SuccessPopupComponent implements OnInit {
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     @Inject(MAT_DIALOG_DATA) public screenData: any,
-    private emaiService: EmailService,
+    private emailService: EmailService,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService
   ) {}
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
+    this.email = this.data?.email;
     if (sessionStorage.getItem("loanBasisDetails")) {
       this.openAccountService.getData().subscribe((resp: any) => {
         if (resp) {
@@ -38,13 +39,6 @@ export class SuccessPopupComponent implements OnInit {
         if (res) {
           this.accountData = res;
           this.email = this.accountData.contact.email;
-        }
-      });
-    } else if (this.depositType) {
-      this.openAccountService.getData().subscribe((res: any) => {
-        if (res) {
-          this.fdRdDetails = res;
-          this.email = res.contact.email;
         }
       });
     }
@@ -70,18 +64,18 @@ export class SuccessPopupComponent implements OnInit {
         this.originationId
       );
       pdfFileName = "Account Details.pdf";
-    } else if (this.fdRdDetails) {
+    } else if (this.depositType) {
       downloadServiceMethod = this.downloadService.downloadFdRdDetailDoc(
         this.originationId
       );
       pdfFileName =
         this.depositType == "FD"
-          ? "Fixed Deposit Details"
-          : "Reccuring Deposit Details";
+          ? "Fixed Deposit Details.pdf"
+          : "Reccuring Deposit Details.pdf";
     }
 
-    downloadServiceMethod.subscribe((resp: ArrayBuffer) => {
-      const blob = new Blob([resp], { type: "application/pdf" });
+    downloadServiceMethod.subscribe((resp: any) => {
+      const blob = new Blob([resp?.body], { type: "application/pdf" });
 
       report = new File([blob], pdfFileName, {
         type: "application/pdf",
@@ -92,14 +86,14 @@ export class SuccessPopupComponent implements OnInit {
         formData.append("subject", pdfFileName);
         formData.append(
           "body",
-          `Automatic Generated ${pdfFileName}. Find below attach`
+          `Automatic Generated ${pdfFileName}. Find above attach`
         );
         formData.append("to", this.email);
-        this.emaiService
+        this.emailService
           .triggerTransactionEmail(formData)
           .subscribe((res) => console.log(res));
       } else {
-        const url = window.URL.createObjectURL(blob);
+        const url = window.URL.createObjectURL(report);
         const a = document.createElement("a");
         a.href = url;
         a.download = pdfFileName;

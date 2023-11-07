@@ -138,5 +138,8 @@
 </div>
 
 <div *ngIf="isPaymentEnabled">
-  <app-payment-method [depositType]="depositType"></app-payment-method>
+  <app-payment-method
+    [depositType]="depositType"
+    [email]="email"
+  ></app-payment-method>
 </div>

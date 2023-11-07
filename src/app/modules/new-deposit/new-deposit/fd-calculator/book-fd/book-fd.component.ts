@@ -28,10 +28,12 @@ export class BookFdComponent implements OnInit {
     maturityDate: string;
     autoRenew: boolean;
     paymentType?: string;
+    email: string;
   };
 
   @Output() customBookFdBack = new EventEmitter<{}>();
   idDepositId: any;
+  email: any;
 
   constructor(
     private rdApi: CreateRdService,
@@ -46,6 +48,7 @@ export class BookFdComponent implements OnInit {
         .fetchDepositeSummary(this.idDepositId, this.depositType)
         .subscribe((resp: any) => {
           this.depositDetails = resp.data;
+          this.email = resp.data.email;
         });
     }
   }
@@ -57,6 +60,7 @@ export class BookFdComponent implements OnInit {
         data: {
           originationId: this.idDepositId,
           type: this.depositType,
+          email: this.email,
         },
         width: "750px",
         disableClose: true,
