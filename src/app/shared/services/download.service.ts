@@ -25,7 +25,7 @@ export class DownloadService {
   downloadFdRdDetailDoc(originationId) {
     return this.http.get(
       `${this.baseUrl}/webSummary/FdAndRd/Download?originationId=${originationId}`,
-      { responseType: "arraybuffer" }
+      { responseType: "blob", observe: "response" }
     );
   }
 }

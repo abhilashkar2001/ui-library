@@ -10,7 +10,8 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
   styleUrls: ["./payment-method.component.scss"],
 })
 export class PaymentMethodComponent implements OnInit {
-  @Input() depositType: any;
+  @Input() depositType: string;
+  @Input() email: string;
   paymentForm: FormGroup;
   upiPaymentForm: FormGroup;
   netBankPaymentForm: FormGroup;
@@ -63,6 +64,7 @@ export class PaymentMethodComponent implements OnInit {
       data: {
         originationId: this.originId,
         type: this.depositType,
+        email: this.email,
       },
       width: "750px",
       disableClose: true,
