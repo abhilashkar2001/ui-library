@@ -226,6 +226,7 @@ export class CreateAccountLandingPageComponent {
       );
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
+      delete custResp[i].signatureInfo;
     });
     return custResp;
   }
