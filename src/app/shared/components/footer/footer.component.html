@@ -34,19 +34,19 @@
       and is suitable for daily transactions and short-term savings.
     </div>
     <div class="col-md-2 col-12 column" style="line-height: 30px">
-      <div>Open Account</div>
-      <div>Loan Account</div>
-      <div>Card</div>
-      <div>Deposit</div>
+      <a [routerLink]="['/account']"><div>Open Account</div></a>
+      <a [routerLink]="['/loan']"><div>Loan Account</div></a>
+      <a [routerLink]="['/card']"><div>Card</div></a>
+      <a [routerLink]="['/deposits']"><div>Deposit</div></a>
     </div>
     <div class="col-md-2 col-12 column" style="line-height: 30px">
       <div>Support</div>
-      <div>Loan Account</div>
-      <div>Card</div>
-      <div>Deposit</div>
+      <div>Terms & Condittion</div>
+      <div>Privacy Policy</div>
+      <div>FAQ</div>
     </div>
     <div class="col-md-2 col-12 socialMedia">
-      <a [href]="social?.path" *ngFor="let social of socialMedia">
+      <a (click)="opened(social?.path)" *ngFor="let social of socialMedia">
         <img [src]="social.imgUrl"
       /></a>
     </div>

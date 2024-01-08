@@ -20,7 +20,9 @@ export class DepositLandingPageComponent implements OnInit {
   routeUrl = "";
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+  }
   customDepositChange(event) {
     this.depositName = event;
     if (this.depositName == "rdCalculator") {

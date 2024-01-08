@@ -23,6 +23,7 @@ export class LoansLandingComponent implements OnInit {
 
   ngOnInit(): void {
     //please dont'remove from here
+    window.scrollTo(0, 0);
     this.updateCurrentRoute();
     this.getLoanServices();
   }

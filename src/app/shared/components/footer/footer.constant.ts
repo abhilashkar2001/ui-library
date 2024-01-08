@@ -8,12 +8,12 @@ export class FooterConstant {
     {
       name: "instagram",
       imgUrl: "assets/images/i.svg",
-      path: "#",
+      path: "",
     },
     {
       name: "twitter",
       imgUrl: "assets/images/t.svg",
-      path: "#",
+      path: "",
     },
   ];
 }

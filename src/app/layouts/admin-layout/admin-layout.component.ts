@@ -18,4 +18,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   ngOnDestroy() {}
+
+  scrollToTop(e) {
+    window.scrollTo(0, 0);
+  }
 }

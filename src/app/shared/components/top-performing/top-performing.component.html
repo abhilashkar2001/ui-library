@@ -9,51 +9,35 @@
         <mat-expansion-panel-header>
           <mat-panel-title fxLayoutAlign="center center" class="panel-header">
             Money Market
-            <span class="text-place">(54 Found)</span>
+            <span class="text-place">({{ moneyMarket?.length }} Found)</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="accordian-list">
-          <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >1.67%</span
-            >
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
+        <div
+          class="accordian-list"
+          *ngFor="
+            let market of !isMoneyMarketReadMore
+              ? moneyMarket?.slice(0, 5)
+              : moneyMarket
+          "
+        >
+          <div class="accordion-text-list">{{ market?.name }}</div>
           <div class="accordain-list-img">
             <img
-              src="/assets/images/system-uicons_graph-increase (1).png"
-            /><span class="range-text-red">0.07%</span>
+              [src]="
+                market?.increased
+                  ? '/assets/images/system-uicons_graph-increase.png'
+                  : '/assets/images/system-uicons_graph-increase (1).png'
+              "
+            /><span class="range-text-green">{{ market?.value }}</span>
           </div>
         </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Jarvis Money Market Fund</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >3.19%</span
-            >
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Principal Cash Fund</div>
-          <div class="accordain-list-img">
-            <img
-              src="/assets/images/system-uicons_graph-increase (1).png"
-            /><span class="range-text-red">0.01%</span>
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Schroder Dana Liquid</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >1.80%</span
-            >
-          </div>
+        <div
+          class="read-text"
+          (click)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
+          fxLayoutAlign="center center"
+        >
+          View
+          {{ isMoneyMarketReadMore ? "Less" : "All" }}
         </div>
       </mat-expansion-panel>
     </mat-accordion>
@@ -67,52 +51,34 @@
       >
         <mat-expansion-panel-header>
           <mat-panel-title fxLayoutAlign="center center" class="panel-header">
-            Fixed Income
-            <span class="text-place">(31 Found)</span>
+            Stocks
+            <span class="text-place">( {{ stocks?.length }} Found)</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="accordian-list">
-          <div class="accordion-text-list">BNP Paribas Rupiah Plus</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >1.67%</span
-            >
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Danareksa Seruni Pasar Uang II</div>
+        <div
+          class="accordian-list"
+          *ngFor="
+            let stock of !isStocksIsReadMore ? stocks?.slice(0, 5) : stocks
+          "
+        >
+          <div class="accordion-text-list">{{ stock?.stock }}</div>
           <div class="accordain-list-img">
             <img
-              src="/assets/images/system-uicons_graph-increase (1).png"
-            /><span class="range-text-red">0.07%</span>
+              [src]="
+                stock?.increased
+                  ? '/assets/images/system-uicons_graph-increase.png'
+                  : '/assets/images/system-uicons_graph-increase (1).png'
+              "
+            /><span class="range-text-green">{{ stock?.value }}</span>
           </div>
         </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Jarvis Money Market Fund</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >3.19%</span
-            >
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Principal Cash Fund</div>
-          <div class="accordain-list-img">
-            <img
-              src="/assets/images/system-uicons_graph-increase (1).png"
-            /><span class="range-text-red">0.01%</span>
-          </div>
-        </div>
-        <div class="accordian-list">
-          <div class="accordion-text-list">Schroder Dana Liquid</div>
-          <div class="accordain-list-img">
-            <img src="/assets/images/system-uicons_graph-increase.png" /><span
-              class="range-text-green"
-              >1.80%</span
-            >
-          </div>
+        <div
+          class="read-text"
+          (click)="isStocksIsReadMore = !isStocksIsReadMore"
+          fxLayoutAlign="center center"
+        >
+          View
+          {{ isStocksIsReadMore ? "Less" : "All" }}
         </div>
       </mat-expansion-panel>
     </mat-accordion>
