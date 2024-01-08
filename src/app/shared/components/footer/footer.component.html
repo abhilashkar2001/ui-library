@@ -13,7 +13,7 @@
         color: #004c97;
       "
     >
-      Demo Bank
+      {{ userDetails?.bankName ?? "Demo Bank" }}
     </div>
     <div class="col-md-2 col-12">Pages</div>
     <div class="col-md-2 col-12">Help</div>
@@ -46,9 +46,9 @@
       <div>Deposit</div>
     </div>
     <div class="col-md-2 col-12 socialMedia">
-      <img src="assets/images/f.svg" />
-      <img src="assets/images/i.svg" />
-      <img src="assets/images/t.svg" />
+      <a [href]="social?.path" *ngFor="let social of socialMedia">
+        <img [src]="social.imgUrl"
+      /></a>
     </div>
   </div>
 

@@ -1,7 +1,9 @@
 <mat-toolbar class="topbar mat-bg-card" style="height: 100px">
   <div fxLayout="column">
     <img src="assets/images/Group 5698.svg" alt="" width="100" height="55px" />
-    <div class="toolbar_font" style="font-size: 36px">Demo Bank</div>
+    <div class="toolbar_font" style="font-size: 36px">
+      {{ userDetails?.bankName ?? "Demo Bank" }}
+    </div>
   </div>
 
   <span fxFlex></span>

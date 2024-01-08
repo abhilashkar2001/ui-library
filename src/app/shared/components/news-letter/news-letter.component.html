@@ -1,18 +1,39 @@
-<div class="news-letter-container" fxLayoutAlign="center center">
-  <img class="base-img" src="assets/images/Rectangle 30.svg" />
-
-  <div class="text-header">Subscribe Newsletters</div>
-  <div class="plain-text">
-    I will update good news and promotion service not spam
-  </div>
-
-  <img class="right-blue" src="assets/images/Rectangle 31.svg" />
-  <div class="text-box">
-    <input matInput placeholder="Enter your email address.." />
-    <button class="contact-button">Contact Now</button>
-  </div>
-
-  <img class="left-blue" src="assets/images/Rectangle 32.svg" />
-  <img class="lrg-dot" src="assets/images/Group 75.svg" />
-  <img class="sml-dot" src="assets/images/Group 73.svg" />
-</div>
+<section class="newsletter">
+  <form [formGroup]="emailForm">
+    <div class="container">
+      <div class="row newsletter_container">
+        <div class="col-12 col-md-6 d-flex justify-content-center">
+          <div class="newsletter_text">
+            <h2>Subscribe Newsletter</h2>
+            <p>I will update good news and promotion service not spam</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="input_box">
+            <input
+              type="text"
+              placeholder="Enter your email address.."
+              formControlName="email"
+            />
+            <button type="button">Contact Now</button>
+          </div>
+          <div
+            class="custom_error"
+            *ngIf="
+              emailForm.get('email').invalid && emailForm.get('email').touched
+            "
+          >
+            <p class="error_message">Invalid email address</p>
+          </div>
+        </div>
+        <img class="blue_rect" src="assets/images/Rectangle 31.svg" />
+        <img
+          class="dots_img dots_top"
+          style="height: 50%"
+          src="assets/images/Group 75.svg"
+        />
+        <img class="dots_img dots_bottom" src="assets/images/Group 73.svg" />
+      </div>
+    </div>
+  </form>
+</section>

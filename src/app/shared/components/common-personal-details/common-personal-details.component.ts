@@ -97,7 +97,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     this.getGenericDetails();
     this.holderType = sessionStorage.getItem("holderType") || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
-    if (this.loanCustomerId) this.getCustomerById();
+    if (this.loanCustomerId != null) this.getCustomerById();
     else this.buildCustomerDetailsForm();
     this.getCountry();
     this.getState();
@@ -165,8 +165,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
       }, 200);
     } else {
       if (this.holderType == "Self") {
-        this.renderApplicant(data, 1);
-      } else if (this.holderType == "Joint") this.renderApplicant(data, 2);
+        this.addCustomer();
+      } else if (this.holderType == "Joint")
+        for (let i = 0; i < 2; i++) this.addCustomer();
       this.cd.detectChanges();
     }
   }
