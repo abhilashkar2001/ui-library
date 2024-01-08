@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class NewsLetterComponent implements OnInit {
   emailForm: FormGroup;
+
   constructor(private fb: FormBuilder) {
     this.emailForm = this.fb.group({
       email: [
