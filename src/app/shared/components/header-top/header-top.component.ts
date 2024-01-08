@@ -6,6 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-header-top",
@@ -35,6 +36,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   @Input() notificPanel;
   @Input() mainMenuPanel;
+  userDetails: any;
 
   constructor(
     private layout: LayoutService,
@@ -43,10 +45,12 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     private renderer: Renderer2,
     public jwtAuth: JwtAuthService,
-    private showSideBar: NewDepositService
+    private showSideBar: NewDepositService,
+    private store: TokenStorageService
   ) {}
 
   ngOnInit() {
+    this.userDetails = this.store.getUser();
     this.layoutConf = this.layout.layoutConf;
     this.egretThemes = this.themeService.egretThemes;
     this.menuItemSub = this.navService.menuItems$.subscribe((res) => {

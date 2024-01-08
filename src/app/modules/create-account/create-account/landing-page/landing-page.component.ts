@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 import { HomeService } from "app/shared/services/home-service/home.service";
 @Component({
   selector: "app-landing-page",
@@ -16,6 +16,7 @@ export class LandingPageComponent implements OnInit {
   constructor(private homeService: HomeService, private router: Router) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.getAccountTypes();
   }
 

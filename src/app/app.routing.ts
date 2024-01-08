@@ -5,7 +5,7 @@ import { AuthGuard } from "./shared/guards/auth.guard";
 export const rootRouterConfig: Routes = [
   {
     path: "",
-    redirectTo: "account",
+    redirectTo: "home",
     pathMatch: "full",
   },
   {

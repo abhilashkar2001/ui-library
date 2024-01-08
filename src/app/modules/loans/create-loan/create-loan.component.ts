@@ -199,7 +199,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
     sessionStorage.setItem(
-      "loanHolderType",
+      "holderType",
       this.personalLoanDetailsForm.value.holderType
     );
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
