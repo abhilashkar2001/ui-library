@@ -17,6 +17,7 @@ import { NumberDirective } from "./number-only.directive";
 import { AlphabetOnlyDirective } from "./alphabet-only.directive";
 import { AlphaNumericDirective } from "./alphaNumeric.directive";
 import { DragDropDirective } from "./drag-drop.directive";
+import { AlphaBetSpaceDirective } from "./alphabet-space-directive";
 
 const directives = [
   AutoFocusDirective,
@@ -33,6 +34,7 @@ const directives = [
   AlphabetOnlyDirective,
   AlphaNumericDirective,
   DragDropDirective,
+  AlphaBetSpaceDirective,
 ];
 
 @NgModule({
