@@ -165,7 +165,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe((resp) => {
         if (resp) {
           this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
-            if (data) {
+            if (!data) {
               this.personalLoanDetailsForm
                 .get("accountNumber")
                 .setErrors({ invalidAccount: true });
