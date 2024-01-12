@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { FaqConstant } from "./faq.constant";
 
 @Component({
-  selector: 'app-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss']
+  selector: "app-faq",
+  templateUrl: "./faq.component.html",
+  styleUrls: ["./faq.component.scss"],
 })
 export class FaqComponent {
   panelOpenState: boolean = false;
   closeOthers: boolean = false;
-
+  faqList = FaqConstant.FAQ_LIST;
+  isFaqMore: boolean = false;
 }

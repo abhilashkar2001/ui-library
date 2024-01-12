@@ -301,6 +301,15 @@
           >
             Account Number is <strong>required</strong>
           </mat-error>
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('accountNumber')
+                ?.hasError('invalidAccount')
+            "
+          >
+            Account Number is not valid
+          </mat-error>
         </mat-form-field>
       </div>
       <div

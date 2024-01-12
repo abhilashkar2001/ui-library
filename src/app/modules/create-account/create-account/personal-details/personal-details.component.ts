@@ -14,6 +14,7 @@ import { debounceTime } from "rxjs/operators";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import * as moment from "moment";
 
 @Component({
   selector: "app-create-account-personal-details",
@@ -42,6 +43,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   genderArray: string[] = [];
   prefixArray: string[] = [];
   residenceTypeArray: string[] = [];
+  boundaries: any;
   constructor(
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
@@ -56,6 +58,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   ngOnInit(): void {
     var customerId = parseInt(sessionStorage.getItem("customerId"));
     this.getGenericDetails();
+    this.fetchBoundaries();
     this.getCountry();
     this.getState();
     this.getCity();
@@ -70,6 +73,45 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
         this.listCityState = resp.data;
       }
     });
+  }
+  fetchBoundaries() {
+    const basisId = JSON.parse(
+      localStorage.getItem("basisDetails")
+    ).basisDetailsId;
+    this.openAccountService.fetchBoundariesDetails(basisId).subscribe((res) => {
+      if (res?.statusCode === 200 && res?.data) {
+        this.boundaries = res.data[0];
+      }
+    });
+  }
+
+  dateOfBirthSelected() {
+    let dateOfBirth = moment(
+      this.personalDetailsForm.value.personalInfoArray[0].dateOfBirth
+    ).format("YYYY-MMM-DD");
+    console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
+    if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
+      this.showAgeValidation("Min", this.boundaries?.maximumAge);
+    } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
+      this.showAgeValidation("Max", this.boundaries?.maximumAge);
+    }
+  }
+  showAgeValidation(type, age) {
+    this.snack.open(`${type} age should be ${age}`, "OK", {
+      duration: 2000,
+      verticalPosition: "top",
+      horizontalPosition: "right",
+    });
+
+    setTimeout(() => {
+      this.personalDetailsForm
+        .get("personalInfoArray")
+        ["controls"][0].get("dateOfBirth")
+        .setValue(null);
+    }, 200);
+  }
+  calculateAge(dateOfBirth) {
+    return moment().diff(dateOfBirth, "years");
   }
 
   getCity() {
@@ -204,6 +246,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
                   this.personalInfoArray.controls[i]
                     .get("cityId")
                     .patchValue(res?.data?.[0]?.cityId);
+                  this.personalInfoArray.controls[i]
+                    .get("country")
+                    .patchValue(res?.data?.[0]?.countryName);
                 }
               });
           }

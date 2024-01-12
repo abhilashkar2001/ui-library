@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { CreateRdService } from "app/modules/new-deposit/new-deposit/rd-calculator/create-rd.service";
@@ -59,6 +60,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   todayDate: Date = new Date();
   listCity: any = [];
   primaryCustIndex: number = 0;
+  boundaries: any;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -66,7 +68,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private cd: ChangeDetectorRef,
-    private rdApi: CreateRdService
+    private rdApi: CreateRdService,
+    private snack: MatSnackBar
   ) {}
 
   panelOpened(index: number) {
@@ -95,6 +98,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGenericDetails();
+    this.fetchBoundaries();
     this.holderType = sessionStorage.getItem("loanHolderType") || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
     if (this.loanCustomerId != null) this.getCustomerById();
@@ -126,6 +130,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         if (resp?.statusCode === 200) {
           let customerDetails = resp.data[0].customerInfo;
           this.buildCustomerDetailsForm(customerDetails);
+          // this.dateOfBirthValidationHandle(customerDetails);
         } else this.buildCustomerDetailsForm();
       });
   }
@@ -262,6 +267,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   this.customer.controls[i]
                     .get("cityId")
                     .patchValue(res?.data?.[0]?.cityId);
+                  this.customer.controls[i]
+                    .get("country")
+                    .patchValue(res?.data?.[0]?.countryName);
                 }
               });
           }
@@ -280,6 +288,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
+              this.dateOfBirthSelected(resp.data[0], i);
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][i].get("dateOfBirth")
+                .markAllAsTouched();
             }
           });
       });
@@ -338,5 +351,42 @@ export class CommonPersonalDetailsComponent implements OnInit {
         return item.primaryCustomer;
       } else return false;
     });
+  }
+  fetchBoundaries() {
+    const basisId = JSON.parse(
+      sessionStorage.getItem("loanBasisDetails")
+    ).basisId;
+    this.openApi.fetchBoundariesDetails(basisId).subscribe((res) => {
+      if (res?.statusCode === 200 && res?.data) {
+        this.boundaries = res.data[0];
+      }
+    });
+  }
+
+  dateOfBirthSelected(selectedDate, i) {
+    let dateOfBirth = moment(selectedDate).format("YYYY-MMM-DD");
+    console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
+    if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
+      this.showAgeValidation("Min", this.boundaries?.maximumAge, i);
+    } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
+      this.showAgeValidation("Max", this.boundaries?.maximumAge, i);
+    }
+  }
+  showAgeValidation(type, age, i) {
+    this.snack.open(`${type} age should be ${age}`, "OK", {
+      duration: 2000,
+      verticalPosition: "top",
+      horizontalPosition: "right",
+    });
+
+    setTimeout(() => {
+      this.customerDetailsForm
+        .get("customer")
+        ["controls"][i].get("dateOfBirth")
+        .setValue(null);
+    }, 100);
+  }
+  calculateAge(dateOfBirth) {
+    return moment().diff(dateOfBirth, "years");
   }
 }

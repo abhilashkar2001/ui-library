@@ -113,6 +113,7 @@
                           [matDatepicker]="picker"
                           formControlName="dateOfBirth"
                           [max]="todayDate"
+                          (dateChange)="dateOfBirthSelected()"
                         />
                         <mat-error
                           *ngIf="
@@ -391,11 +392,11 @@
       </div>
     </form>
 
-    <div>
+    <!-- <div>
       <div class="add_applicant" (click)="addCustomer()">
         Add Another Applicant
       </div>
-    </div>
+    </div> -->
 
     <div
       fxLayout="row wrap"

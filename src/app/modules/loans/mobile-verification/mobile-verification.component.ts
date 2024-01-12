@@ -73,8 +73,16 @@ export class MobileVerificationComponent implements OnInit {
   onVerify() {
     this.openAccountService
       .verifyOtp({ mobile: this.phone, otp: this.otp })
-      .subscribe((response) => {
-        this.getExistingUserDetails();
+      .subscribe((response: any) => {
+        if (response.statusCode === 401) {
+          this.snack.open(`Invalid OTP entered!`, "", {
+            duration: 4000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+          });
+        } else if (response.statusCode === 200) {
+          this.getExistingUserDetails();
+        }
       });
   }
 }

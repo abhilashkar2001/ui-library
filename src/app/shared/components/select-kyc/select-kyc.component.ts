@@ -36,6 +36,8 @@ export class SelectKycComponent implements OnInit {
   staticData = {
     DOCUMENTTYPE: [],
   };
+  displaySecond: string;
+  resendLink: boolean;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -111,6 +113,31 @@ export class SelectKycComponent implements OnInit {
     // });
     this.isShowOtp = true;
     this.getOtpBtn = false;
+    this.otpTimer();
+  }
+
+  otpTimer() {
+    let minute = 1;
+    let seconds: number = minute * 60;
+    let textSec: any = "0";
+    let statSec: number = 60;
+    const prefix = minute < 10 ? "0" : "";
+    const timer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+
+      this.displaySecond = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        this.resendLink = true;
+        clearInterval(timer);
+      }
+    }, 1000);
   }
 
   isvalid() {
