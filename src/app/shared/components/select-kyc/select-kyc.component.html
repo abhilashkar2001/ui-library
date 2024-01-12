@@ -2,48 +2,26 @@
   <form [formGroup]="kycForm" fxLayout="column">
     <div class="enter_mobile">Kindly Provide Your nationalID</div>
     <div class="row">
-      <div class="col-md-6 col-12">
-        <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
-          <mat-label class="label_input">Document Type</mat-label>
-          <mat-select appearance="outline" class="mat_selection">
-            <mat-option
-              *ngFor="let documentTypeItem of documentTypeArray"
-              class="option_font"
-              [value]="documentTypeItem"
-              >{{ documentTypeItem }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-6 col-12">
-        <mat-form-field class="full-width" appearance="outline">
-          <input
-            matInput
-            numbersOnly
-            maxlength="12"
-            minlength="10"
-            name="verifyNationalID"
-            formControlName="verifyNationalID"
-          />
-          <button
-            (click)="getOtp()"
-            type="button"
-            mat-raised-button
-            [disabled]="isvalid()"
-            matSuffix
-            class="getOtp"
-          >
-            Get Otp
-          </button>
-          <mat-error
-            *ngIf="
-              !kycForm.get('verifyNationalID').valid &&
-              kycForm.get('verifyNationalID').touched
-            "
-          >
-            National Id is Required!
-          </mat-error>
-        </mat-form-field>
+      <div
+        class="standard-txtField-phone-main"
+        fxLayoutAlign="space-between center"
+      >
+        <input
+          matInput
+          type="text"
+          class="inputText"
+          formControlName="verifyNationalID"
+          numbersOnly
+          maxlength="12"
+        />
+        <button
+          class="confirm-button"
+          mat-raised-button
+          (click)="getOtp()"
+          [disabled]="isvalid()"
+        >
+          Get OTP
+        </button>
       </div>
     </div>
     <div class="enter_otp">Enter Otp to verify</div>
@@ -57,7 +35,7 @@
         </ng-otp-input>
       </div>
 
-      <div class="btnGroup" *ngIf="isShowOtp">
+      <!-- <div class="btnGroup" *ngIf="isShowOtp">
         <span class="timer" fxLayout="row">
           <div class="Btn" id="ResendBtn">
             <button
@@ -73,6 +51,17 @@
 
           <span id="counter"></span>
         </span>
+      </div> -->
+      <div class="standard-font-black">
+        <span *ngIf="resendLink"
+          ><div (click)="otpTimer()" class="resend-link">Resend</div></span
+        >
+        <span *ngIf="!resendLink"
+          >Resend the OTP
+          <span class="standard-font-blue"
+            >({{ displaySecond }} min)</span
+          ></span
+        >
       </div>
       <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
         <div

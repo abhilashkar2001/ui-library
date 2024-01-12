@@ -130,6 +130,12 @@
                         [matDatepicker]="picker"
                         [max]="todayDate"
                         readonly
+                        (dateChange)="
+                          dateOfBirthSelected(
+                            customerDetailsForm.value.customer[0].dateOfBirth,
+                            i
+                          )
+                        "
                       />
                       <mat-datepicker-toggle matSuffix [for]="picker">
                         <mat-icon matDatepickerToggleIcon

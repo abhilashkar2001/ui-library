@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-account-Mobile-verification-details",
@@ -36,6 +38,9 @@ export class AccountMobileVerificationComponent implements OnInit {
       height: "50px",
     },
   };
+  invalidOtp: boolean = false;
+  otpForm: FormGroup;
+  validNumber: boolean = true;
 
   constructor(
     private router: Router,
@@ -43,34 +48,50 @@ export class AccountMobileVerificationComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     public dialog: MatDialog,
-    public snack: MatSnackBar
+    public snack: MatSnackBar,
+    private fb: FormBuilder
   ) {
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.buildFormGroup();
+  }
 
   getOTP() {
     this.resendLink = false;
-    this.getOtpBtn = false;
-    this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
-      this.snack.open(`Otp sent Successfully !`, "", {
-        duration: 4000,
-        verticalPosition: "top",
-        horizontalPosition: "right",
-        panelClass: "success",
+    this.getOtpBtn = true;
+    this.validNumber = true;
+    this.openAccountService
+      .getOtp(this.otpForm.value.phone)
+      .subscribe((response: any) => {
+        this.snack.open(`Otp sent Successfully !`, "", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+          panelClass: "success",
+        });
+        this.showOTPSection = true;
+        this.timer();
       });
-      this.showOTPSection = true;
-      this.timer();
-    });
   }
 
   onVerify() {
     this.openAccountService
-      .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
-      .subscribe((response) => {
-        this.verifyCustomer();
+      .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
+      .subscribe((response: any) => {
+        if (response.statusCode === 401) {
+          this.invalidOtp = true;
+          this.snack.open(`Invalid OTP entered!`, "", {
+            duration: 4000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+          });
+        } else if (response.statusCode === 200) {
+          this.invalidOtp = false;
+          this.verifyCustomer();
+        }
       });
   }
 
@@ -93,6 +114,22 @@ export class AccountMobileVerificationComponent implements OnInit {
         } else {
           sessionStorage.setItem("mobileNo", this.phone);
           this.onVerifyOtpEvent.emit();
+        }
+      });
+  }
+
+  buildFormGroup() {
+    this.otpForm = this.fb.group({
+      phone: [],
+    });
+    this.otpForm
+      .get("phone")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        if (resp?.length == 10) {
+          this.validNumber = false;
+        } else {
+          this.validNumber = true;
         }
       });
   }

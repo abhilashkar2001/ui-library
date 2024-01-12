@@ -29,7 +29,7 @@
 
     .standard-txtField-phone-main {
       padding-bottom: 4px;
-      width: 40%;
+      width: 50%;
       height: 65px;
       position: relative;
       background: #fffefe 0% 0% no-repeat padding-box;
@@ -40,9 +40,10 @@
       display: flex;
       flex-direction: row;
       position: absolute;
+      justify-content: space-between;
 
       .selector-input {
-        width: 15%;
+        width: 11%;
         color: #b4b4b4;
         position: relative;
         padding: 15px 20px 20px 5px;

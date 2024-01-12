@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-common-mobile-verification",
@@ -37,14 +38,18 @@ export class CommonMobileVerificationComponent implements OnInit {
       height: "80px",
     },
   };
+  validNumber: boolean = true;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.buildFormGroup();
+  }
 
   ngOnInit(): void {}
 
   onGetOTP() {
-    this.getOTP.emit({ phone: this.phone });
-    this.getOtpBtn = false;
+    this.getOTP.emit({ phone: this.otpForm.value.phone });
+    this.getOtpBtn = true;
+    this.validNumber = true;
     this.resendLink = false;
     this.otpTimer();
   }
@@ -57,7 +62,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.enteredOTP.emit({ otp: this.otp, agreed: this.agreed });
   }
   isValidated() {
-    if (this.phone?.length === 10 && this.getOtpBtn) {
+    if (this.otpForm.value.phone?.length === 10 && this.getOtpBtn) {
       return false;
     }
     return true;
@@ -73,8 +78,18 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   buildFormGroup() {
     this.otpForm = this.fb.group({
-      otp: [],
+      phone: [],
     });
+    this.otpForm
+      .get("phone")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        if (resp?.length == 10) {
+          this.validNumber = false;
+        } else {
+          this.validNumber = true;
+        }
+      });
   }
 
   otpTimer() {

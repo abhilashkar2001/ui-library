@@ -20,6 +20,7 @@ import { CommonService } from "app/shared/services/common-service/common.service
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-create-loan",
@@ -158,6 +159,22 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       confirmAccountNumber: "",
     });
     if (data) this.disbursementType = data?.disbursementType.toLowerCase();
+    this.personalLoanDetailsForm
+      .get("accountNumber")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        if (resp) {
+          this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
+            if (data) {
+              this.personalLoanDetailsForm
+                .get("accountNumber")
+                .setErrors({ invalidAccount: true });
+            } else {
+              this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
+            }
+          });
+        }
+      });
   }
 
   onChange() {

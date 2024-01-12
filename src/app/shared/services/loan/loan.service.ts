@@ -101,4 +101,10 @@ export class LoanService {
       `${baseUrl}/origination-matser?originationId=${id}`
     );
   }
+
+  checkAccountNumberAvilable(accountNumber) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser/accountNumber?accountNumber=${accountNumber}`
+    );
+  }
 }
