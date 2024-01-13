@@ -150,6 +150,7 @@
     </button>
     <div>
       <button
+        [disabled]="this.createDocumentForm.invalid"
         type="button"
         mat-raised-button
         class="saveButton"
