@@ -4,10 +4,12 @@
   </div>
   <div class="standard-font-blue">Enter Mobile Number for Instant Login</div>
   <div class="standard-txtField-phone-main">
-    <mat-select class="selector-input" [(value)]="selectedPhoneCode">
-      <mat-option value="+91">+91</mat-option>
-      <mat-option value="+11">+11</mat-option>
-      <mat-option value="+141">+141</mat-option>
+    <mat-select class="selector-input" [(value)]="selectedIsdCode">
+      <ng-container *ngFor="let isdCode of countriesIsdCodes">
+        <mat-option *ngIf="isdCode" [value]="isdCode"
+          >+{{ isdCode }}</mat-option
+        >
+      </ng-container>
     </mat-select>
     <div class="vertical-separator"></div>
     <input

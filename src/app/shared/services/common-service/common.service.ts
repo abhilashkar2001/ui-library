@@ -38,4 +38,10 @@ export class CommonService {
   deleteDocument(documentId) {
     return this.http.delete(`${baseUrl}/upload-document/${documentId}`);
   }
+
+  getAllCountries() {
+    return this.http.get<any>(
+      `${baseUrl}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
+    );
+  }
 }

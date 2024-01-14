@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -24,7 +25,8 @@ export class MobileVerificationComponent implements OnInit {
   constructor(
     private openAccountService: OpenAccountService,
     private loanService: LoanService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private location: Location
   ) {}
 
   ngOnInit(): void {}
@@ -58,6 +60,7 @@ export class MobileVerificationComponent implements OnInit {
 
   onBack() {
     this.onBackEvent.emit();
+    this.location.back();
   }
 
   getExistingUserDetails() {
