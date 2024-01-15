@@ -15,6 +15,14 @@ export const rootRouterConfig: Routes = [
     data: { title: "Loading" },
   },
   {
+    path: "origination",
+    loadChildren: () =>
+      import(
+        "./modules/origination-external-callback/origination-external-callback.module"
+      ).then((m) => m.OriginationExternalCallbackModule),
+    data: { preload: false, title: "Home", breadcrumb: "Home" },
+  },
+  {
     path: "",
     component: AdminLayoutComponent,
     canActivate: [AuthGuard],

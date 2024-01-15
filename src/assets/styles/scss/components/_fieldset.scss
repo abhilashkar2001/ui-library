@@ -1,0 +1,41 @@
+.vertical-separator {
+  height: 30px;
+  width: 1px;
+  border: #b4b4b466 1px solid;
+  margin: 0px 10px;
+  position: relative;
+  top: -5px;
+}
+.fieldset-title {
+  font: 10px Poppins;
+  color: #102245;
+  margin-bottom: 4px;
+  font-weight: 600;
+  opacity: 0.5;
+  float: none !important;
+  padding-left: 10px;
+}
+.field-set {
+  padding-bottom: 4px;
+  height: 52px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000017;
+  border: 1px solid #b4b4b466;
+  border-radius: 8px;
+  opacity: 1;
+}
+.fieldset-input {
+  position: relative;
+  top: -4px;
+  font-family: Poppins;
+  color: #102245 !important;
+  opacity: 100%;
+  letter-spacing: -0.26px;
+  font-weight: 600;
+  margin-left: 10px !important;
+}
+
+.disabled-fieldset {
+  background: #f5f5f5 0% 0% no-repeat padding-box !important;
+  box-shadow: none !important;
+}
