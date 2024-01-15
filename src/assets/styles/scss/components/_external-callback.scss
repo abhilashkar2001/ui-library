@@ -1,0 +1,258 @@
+@mixin default-container {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 3px 3px 15px #0000000f;
+  border-radius: 15px;
+}
+.main_page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("../../../images/white-background.png");
+  .ng_otp_field .otp-input {
+    width: 60px;
+    height: 60px;
+    border: none;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 20px #0000000d;
+    border-radius: 10px;
+    opacity: 1;
+    color: #004c97 !important;
+    &:focus {
+      outline-color: #004c97;
+    }
+  }
+
+  .submit-btn {
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    color: white !important;
+    width: 40% !important;
+    max-width: none;
+  }
+  .reset-btn {
+    background: #fffefe 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 3px 15px #00000017;
+    color: #004c97;
+    max-width: none;
+  }
+  .subhead_container {
+    flex-grow: 1;
+    padding: 0 200px;
+  }
+  .head_container {
+    padding: 50px 0 20px 150px;
+  }
+  .bank-title {
+    font-family: "Big Caslon";
+    color: #004b94;
+  }
+  .toggle-card {
+    @include default-container();
+    border: 1px solid #58657d65;
+    color: #b4b4b4;
+  }
+  .selected-card {
+    @include default-container();
+    color: #004c97;
+  }
+
+  .text-area {
+    @include default-container();
+    border: 1px solid #58657d65;
+  }
+
+  .otp-btn {
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    border: 1px solid #00000000;
+    opacity: 1;
+    border-radius: 15px !important;
+    height: 45px;
+    top: -4px;
+    left: 10px;
+    color: white;
+  }
+  .gray-div {
+    background: #f3f3f3 0% 0% no-repeat padding-box;
+    border-radius: 12px;
+  }
+  .horizontal-bar {
+    border: 1px solid #ececec;
+    margin: 20px 0px;
+  }
+  .status_btn {
+    background: #fff7e3 0% 0% no-repeat padding-box;
+    border: 1px solid #d68c00;
+    border-radius: 4px;
+    opacity: 1;
+    color: #d68c00;
+    font-family: "Poppins";
+  }
+
+  .mat-raised-button,
+  .mat-stroked-button,
+  .mat-button-toggle-group {
+    border-radius: 26px !important;
+    width: 150px;
+    max-width: 150px;
+    height: 45px;
+    font-family: "Poppins", sans-serif;
+
+    .mat-button-ripple {
+      border-radius: 36px !important;
+      width: fit-content;
+      max-width: 175px;
+    }
+  }
+  .title-text {
+    font-family: "Poppins";
+    color: #004c97;
+    font-weight: 600;
+  }
+  .text-highlighted {
+    color: #004c97;
+    font-family: "Poppins";
+  }
+  .text-normal {
+    color: #00000f;
+    font-family: "Poppins";
+  }
+
+  .sub-heading {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #102245;
+    opacity: 1;
+    padding: 14px 5px;
+  }
+  .text-gray {
+    color: #00000f;
+    opacity: 70%;
+    font-family: Poppins;
+    font-weight: 600;
+  }
+  .text-label {
+    color: #102245 !important;
+    font-family: "Poppins";
+    // font-weight: 600;
+  }
+  .text-light {
+    color: #00000f;
+    font-family: "Poppins";
+    opacity: 70%;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .default-card {
+    background: #fffefe 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 3px 15px #00000017 !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+  }
+
+  .gray-card {
+    background: #f7f7f7 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 3px 10px #00000000 !important;
+    border: 1px solid #b7b5b56e;
+    border-radius: 12px !important;
+  }
+
+  .letter-card {
+    min-height: 70vh;
+  }
+
+  //mat-form for application
+  mat-form-field {
+    width: 100% !important;
+    ::placeholder,
+    mat-label,
+    mat-option {
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      color: rgb(16, 34, 69);
+      opacity: 0.5;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    background: #fffefe 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    box-shadow: 0px 3px 10px #00000017;
+    border: none;
+  }
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end,
+  .mat-form-field-outline-gap {
+    border: none !important;
+    // border-radius: 16px !important;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 12px 0px 12px 0px;
+  }
+  .mat-form-field-infix {
+    border-top: 8px solid transparent;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 54px;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0.5375em;
+  }
+  .mat-form-field-label-wrapper {
+    top: -0.65em;
+    padding-top: 0.84375em;
+  }
+  .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: translateY(10%) !important;
+  }
+
+  .mat-select-value {
+    font-family: Poppins;
+    color: #102245 !important;
+    opacity: 100%;
+    letter-spacing: -0.26px;
+    font-weight: 600;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.54375em !important;
+    margin-top: 0;
+    letter-spacing: 0;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+    position: relative !important;
+  }
+  input {
+    font-family: Poppins !important;
+    color: #102245 !important;
+    letter-spacing: -0.26px;
+    font-weight: 600 !important;
+  }
+
+  .mat-option {
+    font: 14px "Poppins";
+    font-weight: 600;
+  }
+  .mat-error {
+    color: #ff3d57;
+    font-weight: bold;
+    font-family: "Poppins";
+    font-size: 10px;
+  }
+  .mat-select-panel-wrap {
+    position: relative !important;
+    top: 30px !important;
+  }
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled),
+  .mat-option.mat-active {
+    color: #004b9c !important;
+    background: #d8e3f0 0% 0% no-repeat padding-box !important;
+  }
+}
+
+.white-background {
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+}

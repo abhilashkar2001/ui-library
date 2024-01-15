@@ -6,9 +6,10 @@ import { HomeComponent } from "./home.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ErrorCode401Component } from "./error/error-code-401/error-code-401.component";
+import { CallbackComponent } from "./callback/callback.component";
 
 @NgModule({
-  declarations: [HomeComponent, ErrorCode401Component],
+  declarations: [HomeComponent, ErrorCode401Component, CallbackComponent],
   imports: [
     CommonModule,
     SharedMaterialModule,
