@@ -27,10 +27,7 @@ export class TermsConditionsComponent implements OnInit {
   constructor(private _location: Location) {}
 
   ngOnInit(): void {
-    this.customerData = JSON.parse(localStorage.getItem("customerData"));
-    console.log(this.customerData);
-    this.customerName =
-      this.customerData?.firstName + " " + this.customerData?.lastName;
+    this.customerData = JSON.parse(sessionStorage.getItem("customerData"));
     this.loamAmount = JSON.parse(
       sessionStorage.getItem("loanAmmount")
     )?.loanAmount;

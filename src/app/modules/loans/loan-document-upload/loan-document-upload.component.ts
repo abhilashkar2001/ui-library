@@ -123,6 +123,7 @@ export class LoanDocumentUploadComponent implements OnInit {
         if (file.type.startsWith("image/")) {
           this.selectedImage = file;
           this.displayImage(i, file);
+          this.uploadDocument(file, i);
         }
         const fReader = new FileReader();
         fReader.readAsDataURL(file);
@@ -183,8 +184,8 @@ export class LoanDocumentUploadComponent implements OnInit {
     for (const item of files) {
       const docId = await this.uploadDocument(
         item,
-        indx,
-        this.createDocumentForm.get("otherDocument")?.value[indx]
+        indx
+        // this.createDocumentForm.get("otherDocument")?.value[indx]
       );
       item.progress = 0;
       this.files.push({ doc: item, url: this.fileUrl(item) });
@@ -201,17 +202,13 @@ export class LoanDocumentUploadComponent implements OnInit {
     return URL.createObjectURL(file);
   }
 
-  uploadDocument(
-    file: any,
-    indx: number,
-    formValue: any
-  ): Promise<string | null> {
+  uploadDocument(file: any, indx: number): Promise<string | null> {
     return new Promise<string | null>((resolve, reject) => {
       let formData = new FormData();
       let data = {
         documentName: file?.name,
-        documentType: formValue?.documentType,
-        documentNumber: formValue?.documentNumber,
+        documentType: this.otherDocumentArray.value[indx].documentType,
+        documentNumber: this.otherDocumentArray.value[indx]?.documentNumber,
         documentSide: indx + 1,
         fileName: file.name,
         fileType: file.type,
@@ -223,13 +220,14 @@ export class LoanDocumentUploadComponent implements OnInit {
       formData.append("module", "document");
       this.apiService.uploadDocument(formData).subscribe(
         (resp: any) => {
-          console.log("upload doc resp---- ", resp);
+          this.mapDocumentId(indx, resp?.data?.documentId);
+          // this.otherDocumentArray.value[indx].fileInfo[
+          //   this.otherDocumentArray.value[indx].fileInfo?.length - 1
+          // ].id = resp?.data?.documentId;
           this.uploadedDocResponse = [
             ...this.uploadedDocResponse,
             resp?.data?.documentId,
           ];
-
-          console.log(this.uploadedDocResponse);
 
           resolve(resp?.data?.documentId);
         },
@@ -239,6 +237,12 @@ export class LoanDocumentUploadComponent implements OnInit {
         }
       );
     });
+  }
+
+  mapDocumentId(indx, id) {
+    this.otherDocumentArray.value[indx].fileInfo[
+      this.otherDocumentArray.value[indx].fileInfo?.length - 1
+    ].id = id;
   }
 
   deleteForm(indx: number) {
@@ -254,7 +258,8 @@ export class LoanDocumentUploadComponent implements OnInit {
           docIds: document.fileInfo.map((item: any) => item?.docId),
         })),
     };
-    this.onConfirmEvent.emit();
+    console.log(payload);
+    this.onConfirmEvent.emit(this.otherDocumentArray.value);
     // this.onSubmitEvent.emit(payload)
   }
 

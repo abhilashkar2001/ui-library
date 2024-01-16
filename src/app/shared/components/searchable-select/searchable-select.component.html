@@ -1,0 +1,71 @@
+<mat-form-field
+  appearance="outline"
+  class="full-width fieldinput {{ customInputHeight }} {{ customClass }}"
+>
+  <mat-label *ngIf="!skipLabel">{{ inputLabel | translate }}</mat-label>
+  <mat-select
+    [multiple]="multiple"
+    [formControl]="control"
+    [placeholder]="inputLabel"
+    [disabled]="readonly"
+    (selectionChange)="selectionChange.emit($event.value)"
+    (focus)="filterFormControl.setValue('')"
+    panelClass="sticky_panel {{ customDocOptionWidth }}"
+    disableOptionCentering
+  >
+    <div class="search_container">
+      <mat-form-field
+        [floatLabel]="'never'"
+        fxFill
+        appearance="outline"
+        class="full-width fieldinput search_field mt-16"
+      >
+        <input
+          matInput
+          [placeholder]="searchPlaceholder"
+          [formControl]="filterFormControl"
+          (keydown.space)="$event.stopPropagation()"
+          maxlength="30"
+        />
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="company"
+          (click)="filterFormControl.setValue('')"
+          class="l-16"
+        >
+          <mat-icon *ngIf="filterFormControl.value">clear</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <mat-select-trigger
+      *ngIf="displayLabel"
+      (keydown.space)="$event.stopPropagation()"
+    >
+      <span class="example-additional-selection">
+        {{ control.value }}
+      </span>
+    </mat-select-trigger>
+    <mat-option
+      *ngFor="let item of items | searchOptions : filterFormControl.value"
+      [value]="item?.value"
+      [disabled]="item?.disabled"
+      [ngClass]="item?.label == 'No data found' && 'hide-checkbox'"
+      [ngStyle]="{
+        display: item?.label != 'No data found' && item?.disabled ? 'none' : ''
+      }"
+    >
+      {{ item?.label }}
+      <!-- <span *ngIf="displayLabel && item?.label != 'No data found'">
+        ({{ item?.display }})</span
+      > -->
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="control.hasError('required') && control.touched">
+    <!-- Please Select {{ inputLabel }} -->
+    {{ inputLabel }} is Required!
+  </mat-error>
+  <mat-hint class="text-red-600" *ngIf="duplicateValue">
+    <small>This Combination is already present</small>
+  </mat-hint>
+</mat-form-field>

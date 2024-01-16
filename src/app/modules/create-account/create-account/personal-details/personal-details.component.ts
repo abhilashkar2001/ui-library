@@ -210,17 +210,15 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     const gender = personalInfoGroup.get("gender").value;
     if (prefix && gender) {
       if (
-        (prefix.toLowerCase().includes("mr") &&
-          gender.toLowerCase() === "male") ||
-        ((prefix.toLowerCase().includes("ms") ||
-          prefix.toLowerCase().includes("mrs")) &&
+        (prefix.toLowerCase() === "mr" && gender.toLowerCase() === "male") ||
+        ((prefix.toLowerCase() === "ms" || prefix.toLowerCase() === "mrs") &&
           gender.toLowerCase() === "female")
       ) {
         console.log("Prefix and Gender match!");
       } else {
         personalInfoGroup.get("prefix").patchValue("");
         personalInfoGroup.get("gender").patchValue("");
-        this.snack.open("Prefix and Gender do not match!", "OK", {
+        this.snack.open("Prefix and Gender does not match!", "OK", {
           duration: 2000,
           verticalPosition: "top",
           horizontalPosition: "right",

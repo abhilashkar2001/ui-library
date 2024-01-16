@@ -1,0 +1,50 @@
+.mt-16 {
+  margin-top: 16px;
+}
+
+.l-16 {
+  left: 16px;
+}
+
+::ng-deep .egret-navy .cdk-overlay-pane {
+  transform: translateX(-16px) translateY(-13px) !important;
+}
+
+::ng-deep .hide-checkbox .mat-pseudo-checkbox {
+  display: none;
+}
+
+::ng-deep .sticky_panel {
+  position: relative !important;
+  min-width: calc(100% + 20px) !important;
+  transform-origin: 50% 20.875px 0px !important;
+  margin-left: 0 !important;
+  // padding-left: 6px;
+  padding: 0 6px;
+  overflow-x: hidden;
+  // overflow-y: auto;
+  overflow-y: scroll;
+
+  &.custom_doc_select {
+    min-width: 85% !important;
+    max-width: 85% !important;
+  }
+  
+  .search_container{
+    padding: 10px 0 13px 5px;
+    background: #fff;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    .search_field {
+      position: relative !important;
+      background: white !important;
+      height: 50px !important;
+      min-width: 100% !important;
+      width: 100% !important;
+      margin: 0 auto;
+    }
+  }
+}

@@ -52,6 +52,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { SuccessPopupComponent } from "./success-popup/success-popup.component";
 import { CommmonSteeperComponent } from "./commmon-steeper/commmon-steeper.component";
 import { CommonPersonalDetailsComponent } from "./common-personal-details/common-personal-details.component";
+import { SearchableSelectComponent } from "./searchable-select/searchable-select.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -82,7 +83,8 @@ const components = [
   SuccessPopupComponent,
   CustomSwiperComponent,
   CommmonSteeperComponent,
-  CommonPersonalDetailsComponent
+  CommonPersonalDetailsComponent,
+  SearchableSelectComponent,
 ];
 
 @NgModule({

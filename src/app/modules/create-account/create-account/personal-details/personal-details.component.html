@@ -188,32 +188,15 @@
                     </div>
 
                     <div fxLayout="row wrap" fxLayoutGap="2%">
-                      <mat-form-field
-                        fxFlex="100"
-                        fxFlex.gt-sm="49"
-                        appearance="outline"
-                        class="full-width custom-field mt-2"
-                      >
-                        <mat-label class="custom-mat-label"
-                          >Nationality</mat-label
-                        >
-                        <mat-select formControlName="nationality">
-                          <mat-option
-                            *ngFor="let country of countries"
-                            [value]="country?.countryName"
-                            >{{ country?.countryName }}</mat-option
-                          >
-                        </mat-select>
-                        <mat-error
-                          *ngIf="
-                            customer.controls['nationality'].hasError(
-                              'required'
-                            ) && customer.controls['nationality'].touched
-                          "
-                        >
-                          Nationality is <strong>required</strong>
-                        </mat-error>
-                      </mat-form-field>
+                      <div fxFlex="100" fxFlex.gt-sm="49">
+                        <app-searchable-select
+                          [items]="countries"
+                          inputLabel="Nationality"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          [control]="customer.get('nationality')"
+                        ></app-searchable-select>
+                      </div>
                     </div>
                     <div class="text-header">Address Details</div>
                     <div fxLayout="row wrap" fxLayoutGap="2%">

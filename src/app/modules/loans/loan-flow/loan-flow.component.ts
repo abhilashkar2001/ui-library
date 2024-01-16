@@ -39,6 +39,7 @@ export class LoanFlowComponent implements OnInit {
   createLoanAccountNumber: any;
   customerInfo: any;
   docIds: any[];
+  originationModel: any;
 
   constructor(
     private loanApi: LoanService,
@@ -116,6 +117,7 @@ export class LoanFlowComponent implements OnInit {
       if (resp?.statusCode === 200) {
         this.customerInfo = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
+        this.originationModel = resp.data[0]?.originationModel;
       }
       console.log(this.customerInfo);
     });
@@ -255,6 +257,15 @@ export class LoanFlowComponent implements OnInit {
   createPayload(event) {
     var customer = [];
     event.forEach((element, i) => {
+      if (element.primaryCustomer) {
+        sessionStorage.setItem(
+          "customerData",
+          JSON.stringify({
+            name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
+            cifNumber: element.customerId,
+          })
+        );
+      }
       console.log(element);
       var docIds = [];
       if (element?.documentId) {
@@ -337,13 +348,17 @@ export class LoanFlowComponent implements OnInit {
       originationModel: this.getOriginationModel(),
       customerInfo: custResp,
     };
-    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-      this.next();
-    });
+    this.getMasterSave(payload);
   }
 
   onConfirm(event) {
     this.next();
+  }
+
+  getMasterSave(payload) {
+    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
+      this.next();
+    });
   }
 
   onTCAccepted(event) {
@@ -461,6 +476,7 @@ export class LoanFlowComponent implements OnInit {
       loanTenureYear: sessionStorage.getItem("tenureYear"),
       branchCode: this.tokenStore.getUser().branchCode,
       source: "Website",
+      ownership: sessionStorage.getItem("loanHolderType"),
     };
   }
 }

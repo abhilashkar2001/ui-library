@@ -389,4 +389,27 @@ export class CommonPersonalDetailsComponent implements OnInit {
   calculateAge(dateOfBirth) {
     return moment().diff(dateOfBirth, "years");
   }
+
+  CheckGenderandPrefix(index: number) {
+    const personalInfoGroup = this.customer.at(index);
+    const prefix = personalInfoGroup.get("prefix").value;
+    const gender = personalInfoGroup.get("gender").value;
+    if (prefix && gender) {
+      if (
+        (prefix.toLowerCase() === "mr" && gender.toLowerCase() === "male") ||
+        ((prefix.toLowerCase() === "ms" || prefix.toLowerCase() === "mrs") &&
+          gender.toLowerCase() === "female")
+      ) {
+        console.log("Prefix and Gender match!");
+      } else {
+        personalInfoGroup.get("prefix").patchValue("");
+        personalInfoGroup.get("gender").patchValue("");
+        this.snack.open("Prefix and Gender does not match!", "OK", {
+          duration: 2000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+        });
+      }
+    }
+  }
 }

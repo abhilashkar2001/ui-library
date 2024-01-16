@@ -342,6 +342,7 @@
             matInput
             [matDatepicker]="picker"
             formControlName="emiStartDate"
+            [min]="currentDate"
           />
           <mat-error
             *ngIf="

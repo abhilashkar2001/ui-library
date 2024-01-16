@@ -55,31 +55,27 @@ export class AccountMobileVerificationComponent implements OnInit {
     commonService.updateData(router.url);
   }
 
-  ngOnInit(): void {
-    this.buildFormGroup();
-  }
+  ngOnInit(): void {}
 
-  getOTP() {
+  getOTP(event) {
     this.resendLink = false;
     this.getOtpBtn = true;
     this.validNumber = true;
-    this.openAccountService
-      .getOtp(this.otpForm.value.phone)
-      .subscribe((response: any) => {
-        this.snack.open(`Otp sent Successfully !`, "", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "success",
-        });
-        this.showOTPSection = true;
-        this.timer();
+    this.phone = event.phone;
+    this.openAccountService.getOtp(event.phone).subscribe((response: any) => {
+      this.snack.open(`Otp sent Successfully !`, "", {
+        duration: 4000,
+        verticalPosition: "top",
+        horizontalPosition: "right",
+        panelClass: "success",
       });
+      this.showOTPSection = true;
+    });
   }
 
   onVerify() {
     this.openAccountService
-      .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
+      .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
       .subscribe((response: any) => {
         if (response.statusCode === 401) {
           this.invalidOtp = true;
@@ -118,54 +114,11 @@ export class AccountMobileVerificationComponent implements OnInit {
       });
   }
 
-  buildFormGroup() {
-    this.otpForm = this.fb.group({
-      phone: [],
-    });
-    this.otpForm
-      .get("phone")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((resp) => {
-        if (resp?.length == 10) {
-          this.validNumber = false;
-        } else {
-          this.validNumber = true;
-        }
-      });
-  }
-
-  timer() {
-    let minute = 1;
-    let seconds: number = minute * 60;
-    let textSec: any = "0";
-    let statSec: number = 60;
-    const prefix = minute < 10 ? "0" : "";
-    const timer = setInterval(() => {
-      seconds--;
-      if (statSec != 0) statSec--;
-      else statSec = 59;
-      if (statSec < 10) {
-        textSec = "0" + statSec;
-      } else textSec = statSec;
-      this.displaySecond = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-      if (seconds == 0) {
-        this.resendLink = true;
-        clearInterval(timer);
-      }
-    }, 1000);
-  }
-
-  onOtpChange(e) {
-    this.yourOtp = e.toString();
+  onOtpChange(event: any) {
+    this.yourOtp = event.otp.toString();
+    this.agreed = event?.agreed;
     this.otpAvailable =
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
-  }
-
-  isValidated() {
-    if (this.phone?.length === 10 && this.getOtpBtn) {
-      return false;
-    }
-    return true;
   }
 
   onExit() {

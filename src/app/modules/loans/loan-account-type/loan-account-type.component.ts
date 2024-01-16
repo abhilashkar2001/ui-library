@@ -4,6 +4,7 @@ import { CommonService } from "app/shared/services/common-service/common.service
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { environment } from "environments/environment";
 import { Location } from "@angular/common";
+import * as moment from "moment";
 
 @Component({
   selector: "app-loan-account-type",
@@ -94,7 +95,7 @@ export class LoanAccountTypeComponent implements OnInit {
       totalPayableAmount: 12500,
       disbursementType: "",
       accountNumber: null,
-      emiStartDate: "2022-03-14T16:53:01.000Z",
+      emiStartDate: moment(new Date()).format(),
       // originationId: 9821,
     };
     this.loanService.submitLoanDetail(payload).subscribe((resp) => {
