@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { CommonService } from "app/shared/services/common-service/common.service";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
@@ -19,7 +20,6 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   otpForm: FormGroup;
-  selectedPhoneCode: string = "+91";
   phone: string;
   otp: any;
   agreed: boolean = false;
@@ -39,12 +39,16 @@ export class CommonMobileVerificationComponent implements OnInit {
     },
   };
   validNumber: boolean = true;
+  countriesIsdCodes: any = [];
+  selectedIsdCode: any = "";
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private commonService: CommonService) {
     this.buildFormGroup();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadCountries();
+  }
 
   onGetOTP() {
     this.getOTP.emit({ phone: this.otpForm.value.phone });
@@ -55,6 +59,18 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   otpChange() {}
+
+  loadCountries() {
+    this.commonService.getAllCountries().subscribe(
+      (resp: any) => {
+        if (resp?.data) {
+          this.countriesIsdCodes = resp?.data.map((i) => i?.countryTelIsdCode);
+          this.selectedIsdCode = this.countriesIsdCodes[0];
+        }
+      },
+      (err) => console.error("Error: ", err)
+    );
+  }
 
   onOtpChange(otp) {
     console.log(otp);
