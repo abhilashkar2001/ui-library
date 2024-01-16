@@ -1,0 +1,26 @@
+.canvas_container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+  margin-top: 30px;
+
+  canvas {
+    display: block;
+    border: 1px solid rgb(243 243 243);
+    background-color: #fff;
+    width: 100%;
+  }
+
+  button {
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    &:active {
+      background-color: #f4f3f3;
+    }
+  }
+}

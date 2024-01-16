@@ -9,7 +9,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { NgOtpInputModule } from "ng-otp-input";
-import { SignLaterComponent } from './sign-later/sign-later.component';
+import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.component";
+import { SignNowPopupComponent } from "./digital-sign/sign-now-popup/sign-now-popup.component";
+import { SignPadComponent } from "./digital-sign/sign-pad/sign-pad.component";
+import { SuccessModalComponent } from "./digital-sign/success-modal/success-modal.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { SignLaterComponent } from './sign-later/sign-later.component';
     OfferLetterComponent,
     ProcessOfferLetterComponent,
     SignLaterComponent,
+    SignNowPopupComponent,
+    SignPadComponent,
+    SuccessModalComponent,
   ],
   imports: [
     CommonModule,

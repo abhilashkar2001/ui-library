@@ -1,0 +1,81 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "environments/environment";
+import { catchError, map } from "rxjs/operators";
+import { BehaviorSubject, Observable } from "rxjs";
+const MICROSERVICE_URL = environment.microServiceURL;
+@Injectable({
+  providedIn: "root",
+})
+export class BranchService {
+  private sendSign = new BehaviorSubject("");
+
+  constructor(private httpClient: HttpClient) {}
+  getEditSign = this.sendSign.asObservable();
+  private uploadSign = new BehaviorSubject<any>(null);
+
+  setUploadSign(value: any) {
+    this.uploadSign.next(value);
+  }
+
+  getUploadSign() {
+    console.log("get value", this.uploadSign.asObservable());
+    return this.uploadSign.asObservable();
+  }
+
+  // SIMULATE
+  /**
+   * uploadandProgress Method
+   * @param file
+   * @returns
+   */
+  uploadAndProgress(file: File) {
+    console.log(file);
+    var formData = new FormData();
+    formData.append("file", file);
+    return this.httpClient.post("https://file.io", formData, {
+      reportProgress: true,
+      observe: "events",
+    });
+  }
+  saveUploadSignature(payload) {
+    return this.httpClient.post(`${MICROSERVICE_URL}/upload-document`, payload);
+  }
+  saveDigitalSignDetails(payload: any): Observable<any> {
+    return this.httpClient.post(
+      `${MICROSERVICE_URL}/origination-matser/saveDigitalSign`,
+      payload
+    );
+  }
+
+  saveSignLater(id) {
+    return this.httpClient.get<any>(
+      `${MICROSERVICE_URL}/signLaterSendEmail?originationId=${id}`
+    );
+  }
+  fetchApproveDetailsService(id) {
+    return this.httpClient.get<any>(
+      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/approvalStageSummary?originationId=${id}`
+    );
+  }
+  fetchSignImage(id) {
+    return this.httpClient.get<any>(
+      `${MICROSERVICE_URL}/origination-matser/fetchDigitalSign?originationId=${id}`
+    );
+  }
+  sendEditsign(signid) {
+    this.sendSign.next(signid);
+  }
+}
+
+//  const formData: FormData = new FormData();
+//  formData.append("subject", "Digital Sign Link");
+//  formData.append(
+//    "body",
+//    `Please find the below link to continue with digital sign.
+//           ${environment.websiteUrl}?originationId=${
+//      this.originationId
+//    }&code=${this.tokenStorageService.getToken()}&route=digital-sign
+//           `
+//  );
+//  formData.append("to");
