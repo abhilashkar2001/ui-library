@@ -53,6 +53,8 @@ import { SuccessPopupComponent } from "./success-popup/success-popup.component";
 import { CommmonSteeperComponent } from "./commmon-steeper/commmon-steeper.component";
 import { CommonPersonalDetailsComponent } from "./common-personal-details/common-personal-details.component";
 import { SearchableSelectComponent } from "./searchable-select/searchable-select.component";
+import { ReusablePincodePopupComponent } from "./reusable-pincode-popup/reusable-pincode-popup.component";
+import { CustomPaginationComponent } from "./custom-pagination/custom-pagination.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -85,6 +87,8 @@ const components = [
   CommmonSteeperComponent,
   CommonPersonalDetailsComponent,
   SearchableSelectComponent,
+  ReusablePincodePopupComponent,
+  CustomPaginationComponent,
 ];
 
 @NgModule({

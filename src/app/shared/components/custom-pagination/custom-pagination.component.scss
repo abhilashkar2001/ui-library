@@ -1,0 +1,123 @@
+.paginationOuter {
+  background: transparent 0% 0% no-repeat padding-box;
+  // margin: 2% 0.5% 2% 0.7%;
+  margin: 1% 0.5% 2% 0.7%;
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    border: 1px solid #ededed;
+    border-radius: 6px;
+    opacity: 1;
+
+    button {
+      border: none;
+      border-radius: 2px;
+      // background-color: darkorange;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: normal;
+      font-size: 12px;
+      letter-spacing: 0px;
+      color: #6e6e6e;
+      cursor: pointer;
+
+      &[disabled] {
+        background-color: lightgray;
+        cursor: not-allowed;
+      }
+
+      &.selected {
+        font-size: 17px !important;
+        letter-spacing: 0px;
+        color: #004b96 !important;
+        font-weight: 700 !important;
+      }
+
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+.size {
+  line-height: 2em !important;
+}
+
+egret-navy .mat-select-panel,
+.egret-navy div[role="listbox"] {
+  min-width: calc(100% + 20px) !important;
+  transform: translate(5px, 35px) !important;
+  //  margin-left: 25px !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &.custom_doc_select {
+    min-width: 85% !important;
+    max-width: 85% !important;
+  }
+}
+
+select {
+  display: block;
+  border: 1px solid darkslategrey;
+  border-radius: 2px;
+  width: 38px;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.preNextBtn {
+  width: 80px !important;
+  height: 35px !important;
+  border-radius: 6px !important;
+  background-color: white !important;
+  font-weight: 700 !important;
+  letter-spacing: 0px;
+  color: #6e6e6e;
+  // box-shadow: $inputBoxShadow;
+  font-family: "Poppins", sans-serif;
+}
+
+.pagebtn {
+  width: fit-content !important;
+  background: transparent !important;
+  font-family: "Poppins";
+  margin: 0 5px;
+}
+
+.pageLabel {
+  font-size: 13px;
+  font-family: "Poppins";
+  font-weight: 600;
+}
+
+.pageLabelValue {
+  font-size: 13px;
+  font-family: "Poppins";
+}
+
+.pageSize {
+  width: 60px;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px #00000017;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 3%;
+  border-radius: 6px;
+}
+
+.selectPage {
+  margin-right: 14%;
+  align-items: center;
+}
+
+.highlightAction {
+  color: #004c97 !important;
+}

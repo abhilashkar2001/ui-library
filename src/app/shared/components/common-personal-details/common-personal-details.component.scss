@@ -22,3 +22,8 @@
   align-items: center;
   border-radius: 10px;
 }
+
+::ng-deep .zipCode_field .mat-form-field-suffix {
+  top: 0px !important;
+  right: 5px !important;
+}

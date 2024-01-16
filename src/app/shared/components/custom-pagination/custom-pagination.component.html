@@ -1,0 +1,71 @@
+<div
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-between center"
+  class="paginationOuter"
+>
+  <div fxLayout="row" class="selectPage">
+    <label class="pageLabel">{{ "Items Per Page:" | translate }}</label
+    >&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="pageSize">
+      <mat-select
+        [ngModel]="value.pageSize"
+        (selectionChange)="selectPageSize($event)"
+        disableOptionCentering
+      >
+        <mat-option
+          *ngFor="let size of pageSizes"
+          [value]="size"
+          class="size"
+          >{{ size }}</mat-option
+        >
+      </mat-select>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="pageLabelValue">
+      {{ firstRecord }} - {{ lastrecord }} of {{ totalRecords }}
+    </div>
+  </div>
+  <div class="pagination">
+    <!-- <button [disabled]="value.page === 1" (click)="selectPage(1)"><<</button> -->
+    <button
+      class="preNextBtn"
+      [ngClass]="value.page != 1 ? 'highlightAction' : ''"
+      [disabled]="value.page === 1"
+      (click)="selectPage(value.page - 1, 'prev')"
+    >
+      <div
+        [ngClass]="pageAction == 'prev' ? 'highlightAction upArrow' : 'upArrow'"
+      ></div>
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      &nbsp;Prev
+    </button>
+    <button
+      *ngFor="let page of visiblePages"
+      class="pagebtn"
+      [ngClass]="value.page === page && 'selected'"
+      (click)="page != '...' && selectPage(page, '')"
+    >
+      {{ page }}
+    </button>
+    <button
+      class="preNextBtn"
+      [ngClass]="value.page < totalPages ? 'highlightAction' : ''"
+      [disabled]="value.page === totalPages"
+      (click)="selectPage(value.page + 1, 'next')"
+    >
+      {{ "Next" | translate }} &nbsp; <mat-icon>keyboard_arrow_right</mat-icon>
+      <div
+        [ngClass]="
+          pageAction == 'next' ? 'customIcon highlightAction' : 'customIcon'
+        "
+      ></div>
+    </button>
+    <!-- <button
+          [disabled]="value.page === totalPages"
+          (click)="selectPage(totalPages)"
+        >
+          >>
+        </button> -->
+  </div>
+</div>
