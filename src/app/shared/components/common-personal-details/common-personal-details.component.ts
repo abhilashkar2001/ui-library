@@ -11,6 +11,7 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { PersonalDetailsService } from "app/modules/loans/personal-details/personal-details.service";
@@ -21,6 +22,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import * as moment from "moment";
 
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { ReusablePincodePopupComponent } from "../reusable-pincode-popup/reusable-pincode-popup.component";
 
 @Component({
   selector: "app-common-personal-details",
@@ -69,7 +71,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private openApi: OpenAccountService,
     private cd: ChangeDetectorRef,
     private rdApi: CreateRdService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   panelOpened(index: number) {
@@ -266,7 +269,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
                     .patchValue(res?.data?.[0]?.state);
                   this.customer.controls[i]
                     .get("cityId")
-                    .patchValue(res?.data?.[0]?.cityId);
+                    .patchValue(res?.data?.[0]?.city);
                   this.customer.controls[i]
                     .get("country")
                     .patchValue(res?.data?.[0]?.countryName);
@@ -288,7 +291,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
-              this.dateOfBirthSelected(resp.data[0], i);
+              // this.dateOfBirthSelected(resp.data[0], i);
               this.customerDetailsForm
                 .get("customer")
                 ["controls"][i].get("dateOfBirth")
@@ -296,6 +299,34 @@ export class CommonPersonalDetailsComponent implements OnInit {
             }
           });
       });
+  }
+  pincodeExpansion(i) {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: "60%",
+      disableClose: true,
+      panelClass: "dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        console.log(res);
+        this.customerDetailsForm
+          .get("customer")
+          ["controls"][i].get("state")
+          .patchValue(res.stateName);
+        this.customerDetailsForm
+          .get("customer")
+          ["controls"][i].get("cityId")
+          .patchValue(res.cityName);
+        this.customerDetailsForm
+          .get("customer")
+          ["controls"][i].get("pincode")
+          .patchValue(res.pincode);
+        this.customerDetailsForm
+          .get("customer")
+          ["controls"][i].get("country")
+          .patchValue(res.countryName);
+      }
+    });
   }
 
   confirmCustomer() {

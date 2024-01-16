@@ -1,0 +1,193 @@
+<div class="search_pincode_container">
+  <div fxLayout="row" class="w-100" fxLayoutAlign="space-between center">
+    <h2>Search</h2>
+    <div>
+      <mat-icon (click)="close()">close</mat-icon>
+    </div>
+  </div>
+
+  <form [formGroup]="pincodeForm">
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxFlex="24.5">
+        <app-searchable-select
+          [customInputHeight]="'height_45'"
+          [items]="countries"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryId"
+          [control]="pincodeForm.get('countryId')"
+          (selectionChange)="fetchStateByCountry($event)"
+        ></app-searchable-select>
+      </div>
+
+      <div fxFlex="24.5">
+        <mat-form-field
+          appearance="outline"
+          class="full-width fieldinput height_45"
+        >
+          <mat-label>Pincode</mat-label>
+          <input
+            matInput
+            type="text"
+            name="pincode"
+            placeholder="pincode"
+            formControlName="pincode"
+            (input)="checkNumberOnly($event)"
+          />
+          <mat-error
+            *ngIf="
+              pincodeForm.get('pincode').hasError('touched') ||
+              pincodeForm.get('pincode').hasError('required')
+            "
+          >
+            <small>Pincode is Required</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="24.5">
+        <mat-form-field
+          appearance="outline"
+          class="full-width fieldinput height_45"
+        >
+          <mat-label>State</mat-label>
+          <mat-select
+            formControlName="stateId"
+            (selectionChange)="fetchCityByState($event.value)"
+            disableOptionCentering
+          >
+            <mat-option *ngFor="let state of states" [value]="state.stateId">{{
+              state.stateName
+            }}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              pincodeForm.get('stateId').hasError('touched') ||
+              pincodeForm.get('stateId').hasError('required')
+            "
+          >
+            <small>State is Required</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="24.5">
+        <mat-form-field
+          appearance="outline"
+          class="full-width fieldinput height_45"
+        >
+          <mat-label>City</mat-label>
+          <mat-select
+            formControlName="cityId"
+            (selectionChange)="populateStateCountryByCity($event.value)"
+            disableOptionCentering
+          >
+            <mat-option *ngFor="let city of cities" [value]="city.cityId">{{
+              city.cityName
+            }}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              pincodeForm.get('cityId').hasError('touched') ||
+              pincodeForm.get('cityId').hasError('required')
+            "
+          >
+            <small>City is Required</small>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div fxLayout="row" class="search">
+        <span *ngIf="dataSource">Search Results</span>
+      </div>
+      <div></div>
+      <button class="saveButton" mat-raised-button (click)="fetchResultArray()">
+        Fetch
+      </button>
+    </div>
+
+    <ng-container *ngIf="dataSource">
+      <!-- <div fxLayout="row" class="search">
+        <span>{{ "Search Results" | translate }}</span>
+      </div> -->
+      <div class="table_container">
+        <mat-table
+          class="mat-elevation-z8 data_table pincode_table"
+          matSort
+          [dataSource]="
+            dataSource?.data?.length > 0 && dataSource?.filteredData?.length > 0
+              ? dataSource
+              : emptyData
+          "
+          matSortDisableClear="true"
+          matSortDisabled="true"
+        >
+          <ng-container
+            *ngFor="let column of columns; let i = index"
+            [matColumnDef]="column?.columnDef"
+          >
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              ><b>{{ column.header }}</b>
+              <div fxLayout="column" class="arrow-wrapper">
+                <div
+                  [ngClass]="
+                    sortValue == column?.columnDef && orderBy == 'asc'
+                      ? 'higlightSort upArrow'
+                      : 'upArrow'
+                  "
+                ></div>
+                <div
+                  [ngClass]="
+                    sortValue == column?.columnDef && orderBy == 'desc'
+                      ? 'higlightSort customIcon'
+                      : 'customIcon'
+                  "
+                ></div>
+              </div>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row"
+              (click)="i == 0 && populateItem(row)"
+            >
+              <div [ngClass]="i == 0 ? 'higlightColumn' : 'tableCell'">
+                <span>
+                  {{
+                    column?.cell(row) == "null" ||
+                    column?.cell(row) == "undefined"
+                      ? ""
+                      : column?.cell(row)
+                  }}
+                </span>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="empty-row">
+            <mat-cell *matCellDef="let element" class="no_data"
+              >No Data Found</mat-cell
+            >
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row
+            *matRowDef="
+              let row;
+              columns: dataSource?.data?.length > 0 &&
+              dataSource?.filteredData?.length > 0
+                ? displayedColumns
+                : ['empty-row']
+            "
+          ></mat-row>
+        </mat-table>
+      </div>
+      <app-custom-pagination
+        [total]="totalLength"
+        (customPageEvent)="handlePageEvent($event)"
+        [filterValue]="filterValue"
+      >
+      </app-custom-pagination>
+    </ng-container>
+  </form>
+</div>

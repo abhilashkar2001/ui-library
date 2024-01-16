@@ -1,0 +1,88 @@
+$primaryTextColor: #004c97;
+$activeBg: #ddf8f1;
+$activeText: #008461;
+$inactiveBg: #ffe7e8;
+$inactiveText: #bc2020;
+$unapprovedText: #d68c00;
+$approvedText: #008461;
+$authBtnColor: #0049a1;
+
+.search {
+  padding-left: 10px;
+  //   padding-top: 14px;
+  font-size: 17px !important;
+  font-weight: 800;
+}
+
+.search_pincode_container {
+  .saveButton {
+    height: 40px;
+    width: 140px;
+    margin: 5px 0 !important;
+  }
+}
+mat-header-cell,
+mat-cell {
+  font-weight: 600 !important;
+  word-break: break-word;
+  font-family: "Poppins", sans-serif;
+  padding: 0 10px;
+  cursor: pointer;
+  &.mat-cell:not(.no_data):first-of-type {
+    padding-left: 3%;
+  }
+  &.mat-cell:not(.no_data):last-of-type {
+    max-width: 11%;
+    padding-left: 15px;
+  }
+
+  .higlightColumn {
+    color: $primaryTextColor !important;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .processStageCell {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &.tableCell {
+    &.mat-column-recordStatus {
+      justify-content: center;
+    }
+    &.higlightUnapprove {
+      letter-spacing: 0px !important;
+      color: $unapprovedText !important;
+    }
+    &.higlightApprove {
+      letter-spacing: 0px !important;
+      color: $approvedText !important;
+    }
+    &.higlightInactive {
+      width: 111px;
+      min-height: 32px;
+      background-color: $inactiveBg !important;
+      border-radius: 17px !important;
+      color: $inactiveText !important;
+    }
+    &.higlightActive {
+      min-height: 32px;
+      background-color: $activeBg !important;
+      border-radius: 17px !important;
+      color: $activeText !important;
+    }
+  }
+  &.no_data {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .summaryIcon {
+    width: 40px;
+    height: 40px;
+    margin-right: 17px;
+  }
+}
