@@ -352,28 +352,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   onConfirm(event) {
-    // console.log(this.createPayload(this.customerInfo));
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-
-    const customer = this.createPayload(this.customerInfo);
-    const payload = {
-      originationModel: {
-        applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
-        accountType: this.originationModel?.accountType,
-        basisDetailsId: sessionData.basisId,
-        loanAmount: parseInt(loanData.loanAmount),
-        loanTenureDay: sessionStorage.getItem("tenureDays"),
-        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-        loanTenureYear: sessionStorage.getItem("tenureYear"),
-        branchCode: this.originationModel?.branchCode,
-        source: "Website",
-        ownership: sessionStorage.getItem("loanHolderType"),
-        docIds: [112984],
-      },
-      customerInfo: customer,
-    };
-    this.getMasterSave(payload);
+    this.next();
   }
 
   getMasterSave(payload) {
