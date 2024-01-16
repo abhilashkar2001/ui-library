@@ -287,6 +287,9 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.createDocumentForm.invalid) {
+      return;
+    }
     this.customSaveDocument.emit({
       status: true,
       documentDetails: this.createDocumentForm.value,
