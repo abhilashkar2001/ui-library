@@ -69,3 +69,45 @@
     text-align: center;
   }
 }
+
+.yeardrop {
+  height: 66px !important;
+  margin-bottom: 25px;
+  background-color: white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  border-radius: 8px;
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+}
+::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0px;
+  margin-top: -4px !important;
+}
+
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
+}
+.vl {
+  border-left: 2px solid #cacaca;
+  margin: 2px 0px;
+}
+
+:host ::ng-deep .mob_field .mat-form-field-wrapper {
+  margin-top: 15px !important;
+}
+:host ::ng-deep .isdSelect .mat-form-field-wrapper {
+  margin-top: 20px;
+}
+
+::ng-deep .mat-form-field-suffix {
+  top: -10px !important;
+  right: -10px !important;
+}
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
+}

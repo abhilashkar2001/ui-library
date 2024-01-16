@@ -47,6 +47,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   isReadOnly: boolean = true;
   loanCustomerId: string;
   accountList: any;
+  currentDate = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -216,7 +217,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
     sessionStorage.setItem(
-      "holderType",
+      "loanHolderType",
       this.personalLoanDetailsForm.value.holderType
     );
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {

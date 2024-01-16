@@ -3,32 +3,50 @@
     Let’s begin with some necessary information and get you started
   </div>
   <div class="standard-font-blue">Enter Mobile Number for Instant Login</div>
-  <div class="standard-txtField-phone-main">
-    <mat-select class="selector-input" [(value)]="selectedIsdCode">
-      <ng-container *ngFor="let isdCode of countriesIsdCodes">
-        <mat-option *ngIf="isdCode" [value]="isdCode"
-          >+{{ isdCode }}</mat-option
+  <div>
+    <fieldset class="yeardrop fieldset">
+      <div fxLayout="row" class="parentYearDiv" fxFlex="100">
+        <mat-form-field
+          appearance="outline"
+          class="full-width inputSelect isdSelect"
+          fxFlex="10"
         >
-      </ng-container>
-    </mat-select>
-    <div class="vertical-separator"></div>
-    <input
-      matInput
-      type="text"
-      class="inputText"
-      formControlName="phone"
-      numbersOnly
-      maxlength="10"
-    />
-    <button
-      class="confirm-button"
-      mat-raised-button
-      (click)="onGetOTP()"
-      [disabled]="validNumber && getOtpBtn"
-    >
-      Get OTP
-    </button>
+          <mat-select class="selector-input" [(value)]="selectedIsdCode">
+            <ng-container *ngFor="let isdCode of countriesIsdCodes">
+              <mat-option *ngIf="isdCode" [value]="isdCode"
+                >+{{ isdCode }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <span class="vl"></span>
+        <mat-form-field
+          appearance="outline"
+          class="full-width inputSelect mob_field"
+          fxFlex="100"
+        >
+          <input
+            matInput
+            type="text"
+            class="inputText"
+            formControlName="phone"
+            numbersOnly
+            maxlength="10"
+          />
+          <button
+            class="confirm-button"
+            matSuffix
+            mat-raised-button
+            (click)="onGetOTP()"
+            [disabled]="validNumber && getOtpBtn"
+          >
+            Get OTP
+          </button>
+        </mat-form-field>
+      </div>
+    </fieldset>
   </div>
+
   <div *ngIf="showOtpSection" style="margin-top: 30px">
     <div class="standard-font-blue full-width mt-125">Enter OTP to verify</div>
     <div class="standard-otp-container-main">

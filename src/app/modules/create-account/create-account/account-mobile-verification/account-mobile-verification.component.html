@@ -1,99 +1,35 @@
 <div class="account-mobile-verification">
   <div class="col-div2">
-    <form [formGroup]="otpForm">
-      <div>
-        <div class="title-text">
-          Let’s begin with some necessary information and get you started
-        </div>
-        <div class="standard-font-blue">
-          Enter Mobile Number for Instant Login
-        </div>
-        <div class="standard-txtField-phone-main">
-          <mat-select class="selector-input" [(value)]="selectedPhoneCode">
-            <mat-option value="+91">+91</mat-option>
-            <mat-option value="+11">+11</mat-option>
-            <mat-option value="+141">+141</mat-option>
-          </mat-select>
-          <div class="vertical-separator"></div>
-          <input
-            matInput
-            type="text"
-            class="inputText"
-            formControlName="phone"
-            maxlength="10"
-            numbersOnly
-          />
-          <button
-            class="confirm-button"
-            mat-raised-button
-            (click)="getOTP()"
-            [disabled]="validNumber && getOtpBtn"
-          >
-            Get OTP
-          </button>
-        </div>
-
-        <div *ngIf="showOTPSection">
-          <div class="standard-font-blue full-width mt-125">
-            Enter OTP to verify
-          </div>
-
-          <div fxLayout="column">
-            <div class="otp_field">
-              <ng-otp-input
-                [config]="config"
-                (onInputChange)="onOtpChange($event)"
+    <div>
+      <app-common-mobile-verification
+        (getOTP)="getOTP($event)"
+        (enteredOTP)="onOtpChange($event)"
+        [showOtpSection]="showOTPSection"
+      ></app-common-mobile-verification>
+      <div *ngIf="showOTPSection">
+        <div fxLayout="column">
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
+            <div fxLayout="row" fxLayoutGap="30px" class="button-section">
+              <button
+                class="confirm-button"
+                mat-raised-button
+                [disabled]="!(otpAvailable && agreed)"
+                (click)="onVerify()"
               >
-              </ng-otp-input>
-            </div>
-
-            <div class="standard-font-black">
-              <span *ngIf="resendLink"
-                ><a (click)="getOTP()" class="resend-link"> Resend </a></span
+                Verify
+              </button>
+              <button
+                class="back-button"
+                mat-raised-button
+                (click)="onExit()"
+                style="color: #b20000; margin-left: 5px"
               >
-              <span *ngIf="!resendLink"
-                >Resend the OTP
-                <span class="standard-font-blue"
-                  >({{ displaySecond }} min)</span
-                ></span
-              >
-            </div>
-            <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
-              <div class="standard-auth-checkbox-container">
-                <mat-checkbox
-                  class="custom-checkbox"
-                  class="primary"
-                  (click)="agreed = !agreed"
-                >
-                  <span class="standard-font-gray">
-                    I authorize DemoBank and it’s representatives to email, call
-                    or SMS me. This Consent will override any registration from
-                    DNC/NDNC
-                  </span>
-                </mat-checkbox>
-              </div>
-              <div fxLayout="row" fxLayoutGap="30px" class="button-section">
-                <button
-                  class="confirm-button"
-                  mat-raised-button
-                  [disabled]="!(otpAvailable && agreed)"
-                  (click)="onVerify()"
-                >
-                  Verify
-                </button>
-                <button
-                  class="back-button"
-                  mat-raised-button
-                  (click)="onExit()"
-                  style="color: #b20000; margin-left: 5px"
-                >
-                  Exit
-                </button>
-              </div>
+                Exit
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
