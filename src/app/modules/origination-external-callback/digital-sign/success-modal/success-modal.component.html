@@ -1,0 +1,40 @@
+<div
+  class="success-modal"
+  fxLayout="column"
+  fxLayoutAlign="space-between center"
+>
+  <div class="full-width mb-12" fxLayoutAlign="end stretch">
+    <mat-icon mat-dialog-close>close</mat-icon>
+  </div>
+  <ng-container
+    *ngIf="screenType !== 'Sign Later' && screenType != 'Flow Complete'"
+  >
+    <h2 class="text-center text-title">{{ screenData?.title }}</h2>
+  </ng-container>
+  <div fxLayoutAlign="center center" class="full-width">
+    <img
+      [src]="screenData?.imgUrl ?? 'assets/images/success.svg'"
+      class="main-img"
+    />
+  </div>
+
+  <div fxLayout="column" class="text-center mt-12">
+    <ng-container *ngIf="screenType == 'Sign Later'">
+      <h2 class="text-title">{{ screenData?.title }}</h2>
+      <mat-hint class="text-desc">{{ screenData?.desc }}</mat-hint>
+    </ng-container>
+    <ng-container *ngIf="screenType == 'Flow Complete'">
+      <mat-hint class="text-desc"
+        >{{ screenData?.desc
+        }}<span class="focused-text">{{
+          screenData?.originationId
+        }}</span></mat-hint
+      >
+    </ng-container>
+  </div>
+  <div class="full-width mt-24 mb-12" fxLayoutAlign="center">
+    <button mat-raised-button type="button" color="primary" mat-dialog-close>
+      Done
+    </button>
+  </div>
+</div>

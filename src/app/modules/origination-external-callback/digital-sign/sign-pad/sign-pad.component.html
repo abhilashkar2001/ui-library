@@ -1,0 +1,15 @@
+<div style="text-align: center; margin-top: 30px" class="canvas_container">
+  <div>
+    <canvas
+      height="150"
+      width="740"
+      #signPadCanvas
+      (touchstart)="startSignPadDrawing($event)"
+      (touchmove)="movedFinger($event)"
+      (touchend)="saveSignPad()"
+    ></canvas>
+  </div>
+  <button type="button" title="Reset Sign" (click)="clearSignPad()">
+    <img src="assets/images/reload.svg" alt="reload" />
+  </button>
+</div>
