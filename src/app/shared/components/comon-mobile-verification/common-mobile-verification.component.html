@@ -38,16 +38,22 @@
             matSuffix
             mat-raised-button
             (click)="onGetOTP()"
-            [disabled]="validNumber && getOtpBtn"
+            [disabled]="(validNumber && getOtpBtn) || isValidMobile"
           >
             Get OTP
           </button>
         </mat-form-field>
       </div>
     </fieldset>
+    <mat-error class="custom-mat-error" *ngIf="isValidMobile"
+      >Mobile Number should not contain only numbers
+    </mat-error>
   </div>
 
-  <div *ngIf="showOtpSection" style="margin-top: 30px">
+  <div
+    [ngStyle]="{ visibility: showOtpSection ? 'visible' : 'hidden' }"
+    style="margin-top: 30px"
+  >
     <div class="standard-font-blue full-width mt-125">Enter OTP to verify</div>
     <div class="standard-otp-container-main">
       <ng-otp-input

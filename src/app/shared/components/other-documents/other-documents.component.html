@@ -144,6 +144,7 @@
     <button
       class="text-doc card-div"
       [disabled]="checkValidity()"
+      [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : '#004c97' }"
       (click)="addDocument()"
     >
       Add another Document

@@ -89,15 +89,14 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     let dateOfBirth = moment(
       this.personalDetailsForm.value.personalInfoArray[0].dateOfBirth
     ).format("YYYY-MMM-DD");
-    console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation("Min", this.boundaries?.maximumAge);
+      this.showAgeValidation("Min", this.boundaries?.minimumAge);
     } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
       this.showAgeValidation("Max", this.boundaries?.maximumAge);
     }
   }
   showAgeValidation(type, age) {
-    this.snack.open(`${type} age should be ${age}`, "OK", {
+    this.snack.open(`${type} age should be ${age} year`, "OK", {
       duration: 2000,
       verticalPosition: "top",
       horizontalPosition: "right",

@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import SignaturePad from "signature_pad";
 
 @Component({
   selector: "app-sign-pad",
@@ -23,7 +22,7 @@ export class SignPadComponent {
   constructor(private snack: MatSnackBar) {}
 
   ngAfterViewInit() {
-    this.signPad = new SignaturePad(this.signaturePadElement.nativeElement);
+    // this.signPad = new SignaturePad(this.signaturePadElement.nativeElement);
     console.log(this.signPad);
   }
   /*It's work in devices*/

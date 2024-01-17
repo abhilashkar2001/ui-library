@@ -6,11 +6,12 @@
         (enteredOTP)="onOtpChange($event)"
         [showOtpSection]="showOTPSection"
       ></app-common-mobile-verification>
-      <div *ngIf="showOTPSection">
+      <div>
         <div fxLayout="column">
           <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
             <div fxLayout="row" fxLayoutGap="30px" class="button-section">
               <button
+                *ngIf="showOTPSection"
                 class="confirm-button"
                 mat-raised-button
                 [disabled]="!(otpAvailable && agreed)"

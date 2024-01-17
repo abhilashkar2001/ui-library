@@ -41,6 +41,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   validNumber: boolean = true;
   countriesIsdCodes: any = [];
   selectedIsdCode: any = "";
+  isValidMobile: boolean = false;
 
   constructor(private fb: FormBuilder, private commonService: CommonService) {
     this.buildFormGroup();
@@ -94,15 +95,18 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   buildFormGroup() {
     this.otpForm = this.fb.group({
-      phone: [],
+      phone: [""],
     });
     this.otpForm
       .get("phone")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
+        const regExp = /^[0]+$/;
         if (resp?.length == 10) {
+          this.isValidMobile = regExp.test(resp);
           this.validNumber = false;
         } else {
+          this.isValidMobile = false;
           this.validNumber = true;
         }
       });
