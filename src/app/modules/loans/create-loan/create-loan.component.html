@@ -10,10 +10,13 @@
       <div class="col-md-6 col-12">
         <mat-form-field
           appearance="outline"
-          class="full-width"
+          class="full-width currency_field"
           [ngClass]="isReadOnly == true && 'disable-field'"
         >
           <mat-label class="custom-mat-label">Loan Amount</mat-label>
+          <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
+            currencySymboll
+          }}</span>
           <input
             matInput
             [readonly]="isReadOnly"
@@ -43,7 +46,15 @@
               placeholder="Year"
               formControlName="tenureYear"
               [readonly]="isReadOnly"
+              maxlength="2"
             />
+            <span
+              class="suffixLabel"
+              *ngIf="personalLoanDetailsForm.value.tenureYear"
+              >Year</span
+            >
+
+            <span class="vertical-seperator"></span>
             <input
               matInput
               name="month"
@@ -51,11 +62,14 @@
               placeholder="Month"
               formControlName="tenureMonth"
               [readonly]="isReadOnly"
-              style="
-                border-left: #c6c6c6 1px solid;
-                border-right: #c6c6c6 1px solid;
-              "
+              maxlength="2"
             />
+            <span
+              class="suffixLabel"
+              *ngIf="personalLoanDetailsForm.value.tenureMonth"
+              >Month</span
+            >
+            <span class="vertical-seperator"></span>
             <input
               matInput
               name="day"
@@ -63,7 +77,13 @@
               placeholder="Day"
               formControlName="tenureDays"
               [readonly]="isReadOnly"
+              maxlength="2"
             />
+            <span
+              class="suffixLabel"
+              *ngIf="personalLoanDetailsForm.value.tenureDays"
+              >Day</span
+            >
           </div>
         </fieldset>
         <!-- <mat-error *ngIf="personalLoanDetailsForm.get('tenureYear')?.hasError('required')">
@@ -74,25 +94,19 @@
       <div class="col-md-6 col-12">
         <mat-form-field
           appearance="outline"
-          class="full-width"
-          [ngClass]="isReadOnly && 'disable-field'"
+          class="full-width disable-field currency_field"
         >
           <mat-label class="custom-mat-label">EMI Amount</mat-label>
-          <input matInput [readonly]="isReadOnly" formControlName="emiAmount" />
+          <span matPrefix *ngIf="personalLoanDetailsForm.value.emiAmount">{{
+            currencySymboll
+          }}</span>
+          <input matInput readonly formControlName="emiAmount" />
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width"
-          [ngClass]="isReadOnly && 'disable-field'"
-        >
+        <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label class="custom-mat-label">Interest Rate</mat-label>
-          <input
-            matInput
-            [readonly]="isReadOnly"
-            formControlName="interestRate"
-          />
+          <input matInput readonly formControlName="interestRate" />
           <mat-error
             *ngIf="
               personalLoanDetailsForm.get('interestRate')?.hasError('required')
@@ -106,15 +120,13 @@
       <div class="col-md-6 col-12">
         <mat-form-field
           appearance="outline"
-          class="full-width"
-          [ngClass]="isReadOnly && 'disable-field'"
+          class="full-width disable-field currency_field"
         >
           <mat-label class="custom-mat-label">Interest Payable</mat-label>
-          <input
-            matInput
-            [readonly]="isReadOnly"
-            formControlName="interestPayable"
-          />
+          <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
+            currencySymboll
+          }}</span>
+          <input matInput readonly formControlName="interestPayable" />
           <mat-error
             *ngIf="
               personalLoanDetailsForm
@@ -129,15 +141,15 @@
       <div class="col-md-6 col-12">
         <mat-form-field
           appearance="outline"
-          class="full-width"
-          [ngClass]="isReadOnly && 'disable-field'"
+          class="full-width disable-field currency_field"
         >
           <mat-label class="custom-mat-label">Principle Amount</mat-label>
-          <input
-            matInput
-            [readonly]="isReadOnly"
-            formControlName="principlAmount"
-          />
+          <span
+            matPrefix
+            *ngIf="personalLoanDetailsForm.value.principlAmount"
+            >{{ currencySymboll }}</span
+          >
+          <input matInput readonly formControlName="principlAmount" />
           <mat-error
             *ngIf="
               personalLoanDetailsForm
@@ -175,15 +187,15 @@
       <div class="col-md-6 col-12">
         <mat-form-field
           appearance="outline"
-          class="full-width"
-          [ngClass]="isReadOnly && 'disable-field'"
+          class="full-width disable-field currency_field"
         >
           <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
-          <input
-            matInput
-            [readonly]="isReadOnly"
-            formControlName="totalPayableAmount"
-          />
+          <span
+            matPrefix
+            *ngIf="personalLoanDetailsForm.value.totalPayableAmount"
+            >{{ currencySymboll }}</span
+          >
+          <input matInput readonly formControlName="totalPayableAmount" />
           <mat-error
             *ngIf="
               personalLoanDetailsForm
@@ -387,7 +399,12 @@
       <div class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
         >&nbsp;&nbsp;
-        <button class="edit-button" type="button" (click)="editRecord()">
+        <button
+          class="edit-button"
+          type="button"
+          (click)="editRecord()"
+          *ngIf="isReadOnly"
+        >
           Edit</button
         >&nbsp;&nbsp;
         <button class="exit-button" type="button" (click)="onExit()">

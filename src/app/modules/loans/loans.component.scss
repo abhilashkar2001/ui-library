@@ -9,3 +9,17 @@
     color: white !important;
   }
 }
+
+::ng-deep .currency_field {
+  .mat-form-field-prefix {
+    top: 0px !important;
+    span {
+      font-size: 14px !important;
+      color: #102245 !important;
+      font-weight: 600 !important;
+    }
+  }
+  .mat-input-element {
+    padding-left: 6px !important;
+  }
+}

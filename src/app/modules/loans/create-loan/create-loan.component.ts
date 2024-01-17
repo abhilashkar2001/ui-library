@@ -48,6 +48,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   loanCustomerId: string;
   accountList: any;
   currentDate = new Date();
+  currencySymboll = "₹";
 
   constructor(
     private fb: FormBuilder,
