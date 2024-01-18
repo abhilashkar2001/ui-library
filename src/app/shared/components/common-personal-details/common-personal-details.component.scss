@@ -27,3 +27,10 @@
   top: 0px !important;
   right: 5px !important;
 }
+
+::ng-deep .hide-select-arrow {
+  pointer-events: none !important;
+  .mat-select-arrow-wrapper {
+    display: none !important;
+  }
+}

@@ -248,6 +248,7 @@ export class LoanFlowComponent implements OnInit {
           horizontalPosition: "right",
           panelClass: "snackbar-error",
         });
+        this.originationModel = resp.data?.originationModel;
         this.customerInfo = resp.data?.customerInfo;
         this.next();
       }
@@ -351,8 +352,43 @@ export class LoanFlowComponent implements OnInit {
     this.getMasterSave(payload);
   }
 
+  /**
+   * Here creating payload and calling getMasterSave method and move to next screen.
+   * @param event is getting all uploaded document info.
+   */
   onConfirm(event) {
-    this.next();
+    var docIds = [];
+    event.forEach((element) => {
+      let docItemId = [];
+      element.fileInfo.forEach((documents) => {
+        docItemId.push(documents.id);
+      });
+      const docId = {
+        docIds: docItemId,
+      };
+      docIds.push(docId);
+    });
+    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const customer = this.createPayload(this.customerInfo);
+    const payload = {
+      originationModel: {
+        applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+        accountType: this.originationModel?.accountType,
+        basisDetailsId: sessionData.basisId,
+        loanAmount: parseInt(loanData.loanAmount),
+        loanTenureDay: sessionStorage.getItem("tenureDays"),
+        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+        loanTenureYear: sessionStorage.getItem("tenureYear"),
+        branchCode: this.originationModel?.branchCode,
+        source: "Website",
+        ownership: sessionStorage.getItem("loanHolderType"),
+        otherDocsInfo: docIds,
+        originationId: this.originationModel?.originationId,
+      },
+      customerInfo: customer,
+    };
+    this.getMasterSave(payload);
   }
 
   getMasterSave(payload) {

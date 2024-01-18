@@ -269,7 +269,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
                     .patchValue(res?.data?.[0]?.state);
                   this.customer.controls[i]
                     .get("cityId")
-                    .patchValue(res?.data?.[0]?.city);
+                    .patchValue(res?.data?.[0]?.cityId);
                   this.customer.controls[i]
                     .get("country")
                     .patchValue(res?.data?.[0]?.countryName);
@@ -316,7 +316,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         this.customerDetailsForm
           .get("customer")
           ["controls"][i].get("cityId")
-          .patchValue(res.cityName);
+          .patchValue(res.cityId);
         this.customerDetailsForm
           .get("customer")
           ["controls"][i].get("pincode")
@@ -330,13 +330,34 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   confirmCustomer() {
-    if (this.customerDetailsForm.invalid) {
+    if (this.customerDetailsForm.invalid || this.isAnyPrimaryCustomer()) {
       return;
     }
     this.customSavePersonal.emit({
       status: true,
       personalDetails: this.customerDetailsForm,
     });
+  }
+
+  /**
+   * checking any one customer should be primary customer .If not then it will show message and return.
+   * @returns is any customer primary or not.
+   */
+  isAnyPrimaryCustomer() {
+    if (
+      this.customerDetailsForm.value.customer.some(
+        (item) => item?.primaryCustomer == true
+      )
+    ) {
+      return false;
+    } else {
+      this.snack.open(`Please select primary customer`, "OK", {
+        duration: 2000,
+        verticalPosition: "top",
+        horizontalPosition: "right",
+      });
+      return true;
+    }
   }
 
   goBack() {

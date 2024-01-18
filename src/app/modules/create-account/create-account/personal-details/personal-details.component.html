@@ -219,7 +219,11 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div fxLayout="row wrap" fxLayoutGap="2%">
+                    <div
+                      fxLayout="row wrap"
+                      fxLayoutGap="2%"
+                      fxLayoutAlign="center end"
+                    >
                       <mat-form-field
                         fxFlex="100"
                         fxFlex.gt-sm="49"
@@ -247,30 +251,15 @@
                         </mat-error>
                       </mat-form-field>
 
-                      <mat-form-field
-                        fxFlex="100"
-                        fxFlex.gt-sm="49"
-                        appearance="outline"
-                        class="full-width custom-field mt-2"
-                      >
-                        <mat-label class="custom-mat-label">Country</mat-label>
-                        <mat-select formControlName="country">
-                          <mat-option
-                            *ngFor="let country of countries"
-                            [value]="country?.countryName"
-                            (click)="onCountrySelect(country?.countryCode)"
-                            >{{ country?.countryName }}</mat-option
-                          >
-                        </mat-select>
-                        <mat-error
-                          *ngIf="
-                            customer.controls['country'].hasError('required') &&
-                            customer.controls['country'].touched
-                          "
-                        >
-                          Country is <strong>required</strong>
-                        </mat-error>
-                      </mat-form-field>
+                      <div fxFlex="100" fxFlex.gt-sm="49">
+                        <app-searchable-select
+                          [items]="countries"
+                          inputLabel="Country"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          [control]="customer.get('country')"
+                        ></app-searchable-select>
+                      </div>
                     </div>
                     <div fxLayout="row wrap" fxLayoutGap="2%">
                       <mat-form-field
@@ -356,17 +345,6 @@
                           City is <strong>required</strong>
                         </mat-error>
                       </mat-form-field>
-                    </div>
-                    <div fxLayout="row wrap" fxLayoutGap="2%">
-                      <button
-                        type="button"
-                        [disabled]="!personalInfoArray.valid"
-                        mat-raised-button
-                        class="saveButton"
-                        (click)="saveCustomer(i)"
-                      >
-                        Save
-                      </button>
                     </div>
                   </div>
                 </mat-expansion-panel></mat-accordion

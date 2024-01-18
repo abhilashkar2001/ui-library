@@ -328,4 +328,15 @@ export class OtherDocumentsComponent implements OnInit {
     const fReader = new FileReader();
     fReader.readAsDataURL(event.files);
   }
+
+  /**
+   * checking form is valid or not and insuring for opened card  document  is uploaded.
+   * @returns true false depending upon above codition.
+   */
+  checkDocValidity() {
+    let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+      (docItem) => docItem.fileInfo?.length > 0
+    );
+    return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
+  }
 }
