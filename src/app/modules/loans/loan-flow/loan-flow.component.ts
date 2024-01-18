@@ -353,7 +353,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   /**
-   * here creating payload and calling getMasterSave method and move to next screen.
+   * Here creating payload and calling getMasterSave method and move to next screen.
    * @param event is getting all uploaded document info.
    */
   onConfirm(event) {
