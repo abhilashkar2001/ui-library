@@ -384,6 +384,7 @@ export class LoanFlowComponent implements OnInit {
         source: "Website",
         ownership: sessionStorage.getItem("loanHolderType"),
         otherDocsInfo: docIds,
+        originationId: this.originationModel?.originationId,
       },
       customerInfo: customer,
     };
