@@ -1,8 +1,8 @@
 /*-------------- Loading buttons --------------*/
 .button-loading {
   .mat-button-wrapper {
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
   }
 }
 .btn-spinner {
@@ -12,11 +12,37 @@
   border-radius: 50%;
   margin: 0 16px 0 0;
   border: 2px solid transparent;
-  animation: btn-glow 1s ease infinite;;
+  animation: btn-glow 1s ease infinite;
 }
 
 @keyframes btn-glow {
-  0% { box-shadow: 0 0 0 .4em darken(#777676, 10%), 0 0 0 .1em darken(#777676, 10%); transform:rotate(360deg); }
-  50% { border-top-color: #777676;}
-  100% { box-shadow: 0 0 0 .4em darken(#777676, 10%), 0 0 0 3.6em transparent; }
+  0% {
+    box-shadow: 0 0 0 0.4em darken(#777676, 10%),
+      0 0 0 0.1em darken(#777676, 10%);
+    transform: rotate(360deg);
+  }
+  50% {
+    border-top-color: #777676;
+  }
+  100% {
+    box-shadow: 0 0 0 0.4em darken(#777676, 10%), 0 0 0 3.6em transparent;
+  }
+}
+.button {
+  height: 50px;
+  border-radius: 23px !important;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+}
+.submit_button {
+  height: 50px;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box;
+  color: #ffffff !important;
+}
+.back_button {
+  box-shadow: 3px 3px 15px 0px rgba(0, 0, 0, 0.0588235294);
+  background: #ffffff !important;
+  color: #000000 !important;
 }

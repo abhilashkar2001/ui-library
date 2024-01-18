@@ -65,7 +65,7 @@
                   </p>
                 </div>
                 <label for="fileDropRef" class="doc_img" fxFlex="10">
-                  <img src="assets/images/Group 2979.svg" />
+                  <img src="assets/images/upload-logo.svg" />
                 </label>
               </div>
               <ng-container
@@ -102,9 +102,22 @@
     </form>
   </div>
   <div class="button-section">
-    <button class="submit-button" type="button" (click)="onSubmit()">
+    <button
+      mat-raised-button
+      class="button submit_button"
+      [disabled]="checkDocValidity()"
+      type="submit"
+      (click)="onSubmit()"
+    >
       Submit</button
     >&nbsp;&nbsp;&nbsp;
-    <button class="back-button" type="button" (click)="onBack()">Back</button>
+    <button
+      class="button back_button"
+      mat-raised-button
+      type="button"
+      (click)="onBack()"
+    >
+      Back
+    </button>
   </div>
 </div>

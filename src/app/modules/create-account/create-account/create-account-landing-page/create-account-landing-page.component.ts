@@ -104,7 +104,7 @@ export class CreateAccountLandingPageComponent {
 
     var payload = {
       customerId: parseInt(sessionStorage.getItem("customerId")),
-      documentInfo: docIds,
+      documentInfo: docIds[0].docIds?.length > 0 ? docIds : [],
     };
     this.openAccountService
       .uploadMultipleDocument(payload)

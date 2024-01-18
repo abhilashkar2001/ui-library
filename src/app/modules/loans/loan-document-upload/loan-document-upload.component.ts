@@ -49,10 +49,6 @@ export class LoanDocumentUploadComponent implements OnInit {
     console.log("other document", this.otherDocumentArray);
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
-    console.log(this.custId);
-
-    // this.customerData = JSON.parse(custId)
-    // Initialize any other logic you need when the component is initialized
   }
 
   getGenericDetails() {
@@ -265,5 +261,16 @@ export class LoanDocumentUploadComponent implements OnInit {
 
   onBack() {
     this.onBackEvent.emit();
+  }
+
+  /**
+   * checking form is valid or not and insuring for opened card  document  is uploaded.
+   * @returns true false depending upon above codition.
+   */
+  checkDocValidity() {
+    let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+      (docItem) => docItem.fileInfo?.length > 0
+    );
+    return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
   }
 }
