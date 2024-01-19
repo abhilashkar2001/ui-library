@@ -117,24 +117,12 @@
   color: #004c97;
 }
 .vl {
-  border-left: 1px solid;
-  margin: 0 2%;
+  border-left: #c6c6c6 1px solid;
+  margin-top: -18px;
 }
 .renew_check {
   margin: 5% 0;
 }
-// .fd_container:hover {
-//   .renew_check {
-//     color: #004c97;
-//   }
-//   .gd_value {
-//     color: #004c97;
-//     font-weight: 600 !important;
-//   }
-//   .openFDbtn {
-//     display: block !important;
-//   }
-// }
 .openFDbtn {
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
   color: white;
@@ -162,4 +150,22 @@
   margin-top: 20%;
   margin-left: 18%;
   transform: rotate(180deg);
+}
+.suffixLabel {
+  position: relative;
+  font-size: 16px;
+  color: #b4b4b4;
+}
+
+::ng-deep .suffix-field {
+  .mat-form-field-suffix {
+    right: 52%;
+    top: 0em !important;
+  }
+}
+::ng-deep .month-suffix-field {
+  .mat-form-field-suffix {
+    right: 42% !important;
+    top: 0em !important;
+  }
 }

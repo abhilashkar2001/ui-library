@@ -53,46 +53,74 @@
               <legend visible="true" class="legend-font legend">
                 Loan Period
               </legend>
-              <div fxLayout="row" class="parentYearDiv">
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect"
-                >
-                  <input
-                    matInput
-                    name="tenureYear"
-                    maxlength="2"
-                    formControlName="tenureYear"
-                    placeholder="Year"
-                  />
-                </mat-form-field>
-                <span class="vl"></span>
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect"
-                >
-                  <input
-                    matInput
-                    name="tenureMonth"
-                    maxlength="2"
-                    formControlName="tenureMonth"
-                    placeholder="Month"
-                  />
-                </mat-form-field>
-                <span class="vl"></span>
+              <div class="parentYearDiv" fxFlex="100">
+                <div fxLayout="row" fxFlex="33.33">
+                  <mat-form-field
+                    appearance="outline"
+                    fxFlex="99"
+                    class="full-width inputSelect suffix-field"
+                  >
+                    <input
+                      matInput
+                      name="tenureYear"
+                      maxlength="2"
+                      formControlName="tenureYear"
+                      placeholder="Year"
+                    />
+                    <span
+                      class="suffixLabel"
+                      matSuffix
+                      *ngIf="loanForm.value.tenureYear"
+                      >Year</span
+                    >
+                  </mat-form-field>
+                  <span class="vl"></span>
+                </div>
 
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect"
-                >
-                  <input
-                    matInput
-                    name="tenureDays"
-                    maxlength="2"
-                    formControlName="tenureDays"
-                    placeholder="Day"
-                  />
-                </mat-form-field>
+                <div fxLayout="row" fxFlex="33.33">
+                  <mat-form-field
+                    appearance="outline"
+                    class="full-width inputSelect month-suffix-field"
+                    fxFlex="99"
+                  >
+                    <input
+                      matInput
+                      name="tenureMonth"
+                      maxlength="2"
+                      formControlName="tenureMonth"
+                      placeholder="Month"
+                    />
+                    <div
+                      class="suffixLabel"
+                      matSuffix
+                      *ngIf="loanForm.value.tenureMonth"
+                    >
+                      Month
+                    </div>
+                  </mat-form-field>
+                  <span class="vl"></span>
+                </div>
+
+                <div fxLayout="row" fxFlex="33.33">
+                  <mat-form-field
+                    appearance="outline"
+                    class="full-width inputSelect suffix-field"
+                    fxFlex="99"
+                  >
+                    <input
+                      matInput
+                      name="tenureDays"
+                      maxlength="2"
+                      formControlName="tenureDays"
+                      placeholder="Day"
+                    /><span
+                      class="suffixLabel"
+                      matSuffix
+                      *ngIf="loanForm.value.tenureDays"
+                      >Day</span
+                    >
+                  </mat-form-field>
+                </div>
               </div>
             </fieldset>
           </div>
