@@ -60,3 +60,11 @@
   width: 140px;
   border-radius: 25px;
 }
+.button-container {
+  margin: 3% 0%;
+  width: 384px;
+}
+::ng-deep .bdrop {
+  background-color: rgb(0 0 0 / 0.3);
+  backdrop-filter: blur(8px) !important;
+}
