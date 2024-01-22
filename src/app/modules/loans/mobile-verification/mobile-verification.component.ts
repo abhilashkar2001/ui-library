@@ -88,4 +88,7 @@ export class MobileVerificationComponent implements OnInit {
         }
       });
   }
+  onExit() {
+    window.close();
+  }
 }
