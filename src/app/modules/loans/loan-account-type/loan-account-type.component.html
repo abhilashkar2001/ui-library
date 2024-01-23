@@ -1,58 +1,20 @@
 <div fxLayout="column">
-  <div class="loan-account-type" *ngIf="!isShowCalculator">
+  <div class="loan-account-type">
     <div fxLayout="column" fxLayoutAlign="center center">
       <div class="account-type-header mb-10">{{ basisClass }}</div>
-      <div class="standard-content-title mb-30">
+      <div class="standard-content-title">
         This is a process, how you can get loan for your self.
       </div>
     </div>
-    <!-- <div *ngFor="let subAccount of subLoanList; let index = index">
-      <div
-        class="loan-container"
-        [ngStyle]="{
-          'flex-direction': index % 2 !== 0 ? 'row-reverse' : 'row',
-          padding: index % 2 !== 0 ? '20px' : ''
-        }"
-        fxFlex="100"
-      >
-        <div class="img-section" fxFlex="50">
-          <img
-            [src]="getFileUrl(subAccount.fileUrl)"
-            width="399"
-            height="333"
-            alt="subAccountType"
-          />
-        </div>
-        <div class="loan-main-text" fxFlex="50">
-          <div class="standard-content-title-header">
-            <div class="content-circle"></div>
-            {{ subAccount?.subClass }}
-          </div>
-          <div class="standard-content">
-            {{ subAccount?.subClassDesc }}
-          </div>
-
-          <div class="mb-10">
-            <button
-              class="confirm-button"
-              mat-raised-button
-              (click)="goForCalculator(subAccount)"
-            >
-              Apply
-            </button>
-           
-          </div>
-        </div>
-      </div>
-    </div> -->
     <app-loan-products
       [subLoanList]="subLoanList"
       (customApply)="customApply($event)"
+      (isShowCalculator)="showCalculator($event)"
     >
     </app-loan-products>
   </div>
 
-  <div *ngIf="isShowCalculator" fxLayout="column">
+  <div *ngIf="isShowCalculator" fxLayout="column" id="loanCalculator">
     <div fxLayoutAlign="center center" fxLayout="column">
       <div class="account-type-header">{{ basisClass }} EMI Calculator</div>
       <div class="standard-content-title mb-30">
@@ -60,9 +22,11 @@
         Your Investment.
       </div>
     </div>
-    <app-common-emi-calculator
-      (customCalculatorValues)="customCalculatorValues($event)"
-    ></app-common-emi-calculator>
+    <div style="margin: 35px">
+      <app-common-emi-calculator
+        (customCalculatorValues)="customCalculatorValues($event)"
+      ></app-common-emi-calculator>
+    </div>
   </div>
   <div>
     <app-faq></app-faq>

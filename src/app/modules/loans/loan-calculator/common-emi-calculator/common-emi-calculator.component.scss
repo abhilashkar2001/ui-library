@@ -103,11 +103,10 @@
   position: relative !important;
 }
 
-// /
 .fd_container {
   box-shadow: 0px 6.1189799308776855px 30.594900131225586px 0px #0000000d;
   padding: 1% 0%;
-  border-radius: 39px;
+  border-radius: 20px;
   max-height: 80%;
 }
 .gd_value {
@@ -147,8 +146,10 @@
 }
 .designImg-1 {
   position: absolute;
-  margin-top: 20%;
-  margin-left: 18%;
+  margin-top: 17%;
+  margin-left: 19.5%;
+
+  height: 4%;
   transform: rotate(180deg);
 }
 .suffixLabel {

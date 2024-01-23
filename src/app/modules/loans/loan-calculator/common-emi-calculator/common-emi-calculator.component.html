@@ -20,6 +20,13 @@
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label class="custom-mat-label">Amount</mat-label>
                 <input matInput formControlName="amount" />
+                <mat-error
+                  *ngIf="
+                    loanForm.controls['amount'].hasError('required') &&
+                    loanForm.controls['amount'].touched
+                  "
+                  >Loan Amount is required</mat-error
+                >
               </mat-form-field>
             </div>
           </div>
@@ -137,11 +144,23 @@
                 formControlName="interestRate"
                 maxlength="2"
               />
+              <mat-error
+                *ngIf="
+                  loanForm.controls['interestRate'].hasError('required') &&
+                  loanForm.controls['interestRate'].touched
+                "
+              >
+                Interest Rate is required
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
         <div class="downImage">
-          <img src="assets/images/Group 13767.svg" />
+          <img
+            src="assets/images/Group 13767.svg"
+            height="161px"
+            width="100%"
+          />
         </div>
       </div>
     </form>

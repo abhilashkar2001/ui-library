@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -29,17 +34,21 @@ export class CommonEmiCalculatorComponent implements OnInit {
   }
   buildForm() {
     this.loanForm = this.fb.group({
-      amount: 0,
+      amount: [0, [Validators.required]],
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: "",
+      interestRate: ["", [Validators.required]],
     });
   }
   updateDeposit() {
     console.log(this.loanForm.value);
   }
   applyForLoan() {
+    if (this.loanForm.invalid) {
+      this.loanForm.markAllAsTouched();
+      return;
+    }
     console.log(this.loanForm.value);
     sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
     sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);

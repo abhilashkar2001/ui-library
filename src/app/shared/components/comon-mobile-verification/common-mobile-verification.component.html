@@ -11,10 +11,13 @@
           class="full-width inputSelect isdSelect"
           fxFlex="10"
         >
-          <mat-select class="selector-input" [(value)]="selectedIsdCode">
+          <mat-select class="selector-input" formControlName="isdCode">
             <ng-container *ngFor="let isdCode of countriesIsdCodes">
-              <mat-option *ngIf="isdCode" [value]="isdCode"
-                >+{{ isdCode }}</mat-option
+              <mat-option
+                *ngIf="isdCode"
+                [value]="isdCode?.countryIsoCodeNum"
+                (click)="onIsdCodeSelected(isdCode)"
+                >+{{ isdCode?.countryIsoCodeNum }}</mat-option
               >
             </ng-container>
           </mat-select>

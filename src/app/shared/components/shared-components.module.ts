@@ -55,6 +55,7 @@ import { CommonPersonalDetailsComponent } from "./common-personal-details/common
 import { SearchableSelectComponent } from "./searchable-select/searchable-select.component";
 import { ReusablePincodePopupComponent } from "./reusable-pincode-popup/reusable-pincode-popup.component";
 import { CustomPaginationComponent } from "./custom-pagination/custom-pagination.component";
+import { CommonProductComponent } from "./common-product/common-product.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -89,6 +90,7 @@ const components = [
   SearchableSelectComponent,
   ReusablePincodePopupComponent,
   CustomPaginationComponent,
+  CommonProductComponent,
 ];
 
 @NgModule({

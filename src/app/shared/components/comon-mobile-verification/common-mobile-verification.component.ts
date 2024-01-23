@@ -42,6 +42,8 @@ export class CommonMobileVerificationComponent implements OnInit {
   countriesIsdCodes: any = [];
   selectedIsdCode: any = "";
   isValidMobile: boolean = false;
+  timer: NodeJS.Timer;
+  selectedIsd: any;
 
   constructor(private fb: FormBuilder, private commonService: CommonService) {
     this.buildFormGroup();
@@ -65,7 +67,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.commonService.getAllCountries().subscribe(
       (resp: any) => {
         if (resp?.data) {
-          this.countriesIsdCodes = resp?.data.map((i) => i?.countryTelIsdCode);
+          this.countriesIsdCodes = resp?.data;
           this.selectedIsdCode = this.countriesIsdCodes[0];
         }
       },
@@ -96,6 +98,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   buildFormGroup() {
     this.otpForm = this.fb.group({
       phone: [""],
+      isdCode: [""],
     });
     this.otpForm
       .get("phone")
@@ -113,12 +116,13 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   otpTimer() {
+    clearInterval(this.timer);
     let minute = 1;
     let seconds: number = minute * 60;
     let textSec: any = "0";
     let statSec: number = 60;
     const prefix = minute < 10 ? "0" : "";
-    const timer = setInterval(() => {
+    this.timer = setInterval(() => {
       seconds--;
       if (statSec != 0) statSec--;
       else statSec = 59;
@@ -131,8 +135,11 @@ export class CommonMobileVerificationComponent implements OnInit {
 
       if (seconds == 0) {
         this.resendLink = true;
-        clearInterval(timer);
+        clearInterval(this.timer);
       }
     }, 1000);
+  }
+  onIsdCodeSelected(isdCode) {
+    this.selectedIsd = isdCode;
   }
 }

@@ -28,7 +28,7 @@ import { debounceTime } from "rxjs/operators";
   styleUrls: ["./create-loan.component.scss"],
 })
 export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
+  @Output() customgoBack: EventEmitter<any> = new EventEmitter();
   @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
   @Output() checkAccountHolderType: EventEmitter<any> = new EventEmitter();
 
@@ -165,22 +165,43 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       .get("accountNumber")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
-        if (resp) {
-          this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
-            if (!data) {
-              this.personalLoanDetailsForm
-                .get("accountNumber")
-                .setErrors({ invalidAccount: true });
-            } else {
-              this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
-            }
-          });
+        if (
+          resp &&
+          this.personalLoanDetailsForm.value.accountType === "internal"
+        ) {
+          this.validateAccountNumber(resp);
         }
       });
   }
 
+  /**
+   * api call for account number validation.
+   */
+
+  validateAccountNumber(resp) {
+    this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
+      if (!data) {
+        this.personalLoanDetailsForm
+          .get("accountNumber")
+          .setErrors({ invalidAccount: true });
+      } else {
+        this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
+      }
+    });
+  }
+
+  /**
+   * account number validation.
+   */
   onChange() {
-    console.log(this.personalLoanDetailsForm.value);
+    if (
+      this.personalLoanDetailsForm.value.accountNumber &&
+      this.personalLoanDetailsForm.value.accountType === "internal"
+    ) {
+      this.validateAccountNumber(
+        this.personalLoanDetailsForm.value.accountNumber
+      );
+    } else this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
   }
 
   accountHolderSelectionChanged() {
@@ -194,7 +215,10 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       this.personalLoanDetailsForm.controls[
         "disbursementType"
       ].value.toLowerCase();
-    if (event.toLowerCase().includes("account")) {
+    if (
+      event.toLowerCase().includes("account") &&
+      this.personalLoanDetailsForm.value.accountType === "internal"
+    ) {
       this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
         Validators.required,
       ]);
@@ -271,11 +295,19 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       payload.accountNumber = this.personalLoanDetailsForm.value.accountNumber;
       payload.external = false;
     }
+    payload.disbursementAccInfo = {
+      accountNo: this.personalLoanDetailsForm.value.accountNumber,
+      bankCode: this.personalLoanDetailsForm.value.bankCode,
+      branchCode: this.personalLoanDetailsForm.value.branchCode,
+    };
     return payload;
   }
 
-  onExit() {
-    this.router.navigate(["loan/landing"]);
+  /**
+   * navigating back screen.
+   */
+  onBack() {
+    this.customgoBack.emit();
   }
   editRecord() {
     this.isReadOnly = false;

@@ -284,21 +284,53 @@ export class CommonPersonalDetailsComponent implements OnInit {
       .get("customerNo")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
-        this.personalDetailsService
-          .getCustomerByCif(value)
-          .subscribe((resp) => {
-            if (resp?.statusCode === 200) {
-              this.customer.controls[i].patchValue(
-                this.FactoryPopulate(resp.data[0])
-              );
-              // this.dateOfBirthSelected(resp.data[0], i);
-              this.customerDetailsForm
-                .get("customer")
-                ["controls"][i].get("dateOfBirth")
-                .markAllAsTouched();
-            }
-          });
+        if (value) {
+          this.personalDetailsService
+            .getCustomerByCif(value)
+            .subscribe((resp) => {
+              console.log(this.customer);
+              if (resp && resp?.statusCode === 200) {
+                this.customer.controls[i].patchValue(
+                  this.FactoryPopulate(resp.data[0])
+                );
+                const nationality = this.countryArray.filter(
+                  (item) => item.countryName === item.nationality
+                );
+                this.customer.controls[i]
+                  .get("nationality")
+                  .patchValue(
+                    nationality?.length > 0 ? nationality.countryName : ""
+                  );
+                this.customerDetailsForm.markAllAsTouched();
+              } else {
+                this.resetExceptCif(i);
+              }
+            });
+        } else {
+          this.resetExceptCif(i);
+        }
       });
+  }
+
+  resetExceptCif(i) {
+    this.customerDetailsForm.get("customer")["controls"][i].patchValue({
+      primaryCustomer: false,
+      prefix: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      email: "",
+      gender: "",
+      nationality: "",
+      address1: "",
+      residenceType: "",
+      country: "",
+      pincode: "",
+      state: "",
+      cityId: "",
+      source: "",
+      kycStatus: "",
+    });
   }
   pincodeExpansion(i) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
@@ -385,7 +417,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: resp.dateOfBirth,
       email: resp.contact.email,
       gender: resp.gender,
-      nationality: resp.nationality,
+      // nationality: resp.nationality,
       address1: resp.contact.address[0].address1,
       residenceType: resp.contact.address[0].residenceType,
       country: resp.contact.address[0].countryName,
@@ -419,7 +451,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     let dateOfBirth = moment(selectedDate).format("YYYY-MMM-DD");
     console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation("Min", this.boundaries?.maximumAge, i);
+      this.showAgeValidation("Min", this.boundaries?.minimumAge, i);
     } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
       this.showAgeValidation("Max", this.boundaries?.maximumAge, i);
     }
