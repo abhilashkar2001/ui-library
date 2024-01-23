@@ -263,7 +263,8 @@ export class LoanFlowComponent implements OnInit {
           "customerData",
           JSON.stringify({
             name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
-            cifNumber: element.customerId,
+            cifNumber:
+              element.kycStatus === "APPROVED" ? element.customerId : "",
           })
         );
       }
@@ -397,11 +398,17 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
+  /**
+   * api call to update Origination.
+   */
   onTCAccepted(event) {
-    var id = sessionStorage.getItem("customerId");
+    var customerId = this.customerInfo.filter(
+      (item) => item?.primaryCustomer
+    )[0]?.customerId;
     var mapPayload = {
       id: parseInt(sessionStorage.getItem("loanDisburseId")),
       originationId: this.originationId,
+      customerId: customerId,
     };
     this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
       this.loanApi.getLoanSummary(this.originationId).subscribe((resp) => {

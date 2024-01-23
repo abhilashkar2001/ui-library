@@ -16,7 +16,10 @@
     fxLayout="column"
     *ngIf="verfyStep('create', cuurrentStep)"
   >
-    <app-create-loan (onSaveCreateLoan)="onSaveCreateLoan($event)">
+    <app-create-loan
+      (onSaveCreateLoan)="onSaveCreateLoan($event)"
+      (customgoBack)="goBack()"
+    >
     </app-create-loan>
   </div>
   <div

@@ -47,13 +47,10 @@ export class SearchableSelectComponent implements OnInit, OnChanges {
         .sort((a, b) => {
           const labelA = String(a.label);
           const labelB = String(b.label);
-  
           return labelA.localeCompare(labelB);
         });
     }
   }
-  
-
   ngOnInit(): void {}
 
   trimWhitespaces(value) {

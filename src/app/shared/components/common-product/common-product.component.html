@@ -1,0 +1,56 @@
+<div
+  class="product-container"
+  [ngStyle]="{
+    'flex-direction': productIndex % 2 !== 0 ? 'row-reverse' : 'row',
+    padding: productIndex % 2 !== 0 ? '20px' : ''
+  }"
+>
+  <div class="img-section" fxFlex="50">
+    <img
+      [src]="getFileUrl(subAccount.fileUrl)"
+      width="399"
+      height="333"
+      alt="subAccountType"
+    />
+  </div>
+  <div class="loan-main-text" fxFlex="50">
+    <div class="standard-content-title-header">
+      <div class="content-circle"></div>
+      {{ subAccount?.subClass }} {{ subAccount?.basisName }}
+    </div>
+    <div class="standard-content">
+      {{ subAccount?.subClassDesc }} {{ subAccount?.basisStory }}
+    </div>
+    <ng-container
+      *ngFor="
+        let feature of !subAccount.isReadMore
+          ? subAccount?.featureInfo?.slice(0, 1)
+          : subAccount?.featureInfo
+      "
+    >
+      <p class="feature_name">{{ feature?.featureName }}</p>
+      <ul class="desc-list">
+        <li
+          *ngFor="let childFeature of feature?.feature"
+          class="show-hyperLink"
+        >
+          {{ childFeature?.featureDescription }}
+        </li>
+      </ul>
+    </ng-container>
+
+    <div class="mb-10" fxLayout="row" fxLayoutAlign="start center">
+      <button
+        class="confirm-button"
+        mat-raised-button
+        (click)="goForCalculator(subAccount)"
+      >
+        Apply
+      </button>
+
+      <a class="more-less-text" (click)="readMoreLess(subAccount)"
+        >View {{ subAccount?.isReadMore ? "Less" : "More" }}</a
+      >
+    </div>
+  </div>
+</div>

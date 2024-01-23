@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -25,7 +25,8 @@ export class LoanAccountTypeComponent implements OnInit {
     private commonService: CommonService,
     private loanService: LoanService,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private el: ElementRef
   ) {
     //   this.basisClass = this.activatedRoute.snapshot["queryParams"]["basisClass"];
   }
@@ -36,6 +37,9 @@ export class LoanAccountTypeComponent implements OnInit {
     });
     this.updateCurrentRoute();
     this.getLoanSubTypes();
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 200);
   }
 
   getLoanSubTypes() {
@@ -66,10 +70,26 @@ export class LoanAccountTypeComponent implements OnInit {
   }
 
   customApply(event) {
-    console.log(event, ".....");
-    this.subLoanList = event?.selectedLoan?.productDetails;
-    this.isShowCalculator = event.isShowCalculator;
-    this.basisClass = event.subClass;
+    if (event?.selectedLoan?.productDetails)
+      this.subLoanList = event?.selectedLoan?.productDetails;
+    else {
+      this.isShowCalculator = event.isShowCalculator;
+      this.basisClass = event.subClass;
+      setTimeout(() => {
+        this.scrollToCalculator();
+      }, 200);
+    }
+  }
+
+  /**
+   * once product apply click then scrolling to calculator.
+   */
+  scrollToCalculator() {
+    const targetElement =
+      this.el.nativeElement.querySelector("#loanCalculator");
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   goForCalculator(subAccount) {
@@ -110,5 +130,9 @@ export class LoanAccountTypeComponent implements OnInit {
         window.open(`${url}`, "_blank");
       }
     });
+  }
+  showCalculator(event) {
+    console.log(event);
+    // this.isShowCalculator = event;
   }
 }

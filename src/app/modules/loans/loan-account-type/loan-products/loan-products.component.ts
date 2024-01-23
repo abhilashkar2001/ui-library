@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -19,21 +20,29 @@ import { environment } from "environments/environment";
 export class LoanProductsComponent implements OnInit {
   @Input() subLoanList;
   @Output() customApply = new EventEmitter<any>();
+  @Output() isShowCalculator = new EventEmitter<any>();
   selectedLoan: any;
   endPoints = environment.microServiceURL;
 
-  constructor(private route: Router) {}
+  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log(this.selectedLoan);
+    this.scrollToTop();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     this.subLoanList = changes.subLoanList.currentValue;
+    // this.subLoanList.forEach((item) => {
+    //   item.isReadMore = false;
+    // });
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
 
   goForCalculator(subAccount) {
+    console.log(subAccount);
     this.selectedLoan = subAccount;
     console.log(this.selectedLoan);
     if (this.selectedLoan?.productDetails?.length > 1) {
@@ -56,7 +65,6 @@ export class LoanProductsComponent implements OnInit {
         isShowCalculator: true,
       });
     } else {
-      console.log(".,");
       const payload = JSON.stringify({
         processCycleCode: this.selectedLoan?.processCycleCode,
         basisName: this.selectedLoan?.basisName,
@@ -76,5 +84,22 @@ export class LoanProductsComponent implements OnInit {
     } else {
       return `${this.endPoints}${url}`;
     }
+  }
+
+  readMoreLess(card, i) {
+    console.log(this.subLoanList);
+    this.subLoanList.forEach((otherCard) => {
+      if (otherCard !== card) {
+        otherCard.isReadMore = false;
+      }
+    });
+    this.subLoanList[i].isReadMore = !this.subLoanList[i].isReadMore;
+    this.cdr.detectChanges();
+  }
+  customClassApply(event) {
+    this.subLoanList = event?.clasDetails?.productDetails;
+    this.scrollToTop();
+    // this.isShowCalculator.emit(event);
+    // this.subClass = event.subClass;
   }
 }
