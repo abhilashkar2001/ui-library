@@ -35,8 +35,10 @@ export class LoanService {
     return this.http.post(`${baseUrl}/loan-account/save`, loanDetails);
   }
 
-  getLoanSummary(loanId: any): Observable<any> | any {
-    return this.http.get(`${baseUrl}/webSummary?originationId=${loanId}`);
+  getLoanSummary(originationId: any): Observable<any> | any {
+    return this.http.get(
+      `${baseUrl}/webSummary?originationId=${originationId}`
+    );
   }
 
   submitLoanDetail(payload) {

@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -12,8 +13,8 @@ import {
   styleUrls: ["./common-emi-calculator.component.scss"],
 })
 export class CommonEmiCalculatorComponent implements OnInit {
-  max = 100000;
-  min = 1000;
+  max = 1000000;
+  min = 10000;
   ammountValue = 0;
   loanForm: FormGroup;
   @Input() fdName = "rdCalculator";
@@ -21,6 +22,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
   amount = new FormControl("");
   email = new FormControl("");
   thumbLabel: boolean = true;
+  currencySymboll = "₹";
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -34,12 +36,22 @@ export class CommonEmiCalculatorComponent implements OnInit {
   }
   buildForm() {
     this.loanForm = this.fb.group({
-      amount: [0, [Validators.required]],
+      amount: [this.min],
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
       interestRate: ["", [Validators.required]],
     });
+
+    this.loanForm
+      .get("amount")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        console.log(resp);
+        if (parseInt(resp) == 0 || resp < this.min) {
+          this.loanForm.get("amount").setValue(this.min);
+        }
+      });
   }
   updateDeposit() {
     console.log(this.loanForm.value);

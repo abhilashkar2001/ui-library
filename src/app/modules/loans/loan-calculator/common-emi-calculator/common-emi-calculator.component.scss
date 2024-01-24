@@ -170,3 +170,27 @@
     top: 0em !important;
   }
 }
+
+:host ::ng-deep .mat-slider-track-wrapper {
+  height: 8px !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 3px 6px 0px #0000001f;
+  .mat-slider-track-background {
+    background-color: #fff !important;
+  }
+}
+:host ::ng-deep .background-white.mat-form-field {
+  .mat-input-element {
+    padding-left: 5px !important;
+  }
+  .mat-form-field-flex .mat-form-field-outline {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+    &-start,
+    &-gap,
+    &-end {
+      border: none;
+    }
+  }
+}

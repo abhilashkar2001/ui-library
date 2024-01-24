@@ -38,21 +38,19 @@ export class LoanSummaryComponent implements OnInit {
   ngOnInit(): void {
     // this.getLoanSummary();
     this.loanSummaryDetails = this.loanSummary;
+    this.getLoanSummary();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes.loanSummary.currentValue;
   }
 
   getLoanSummary() {
-    this.loanService.getLoanSummary(12334567).subscribe(
-      (response: any) => {
+    var originationId = sessionStorage.getItem("originationId");
+    this.loanService
+      .getLoanSummary(originationId)
+      .subscribe((response: any) => {
         this.loanSummaryDetails = response.data;
-        console.log("Loan Summary Response: ", response);
-      },
-      (error: any) => {
-        console.log("Loan Summary API Failed", error);
-      }
-    );
+      });
   }
 
   onVerify() {
