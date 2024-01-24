@@ -36,47 +36,50 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     this.subClassList = changes?.subClassList?.currentValue;
   }
 
-  apply(clasDetails) {
-    if (clasDetails?.productDetails === null) {
-      this.snackBar.open("No Products Available", "Ok", {
-        duration: 3000,
-        verticalPosition: "top",
-        horizontalPosition: "right",
-      });
-    } else if (clasDetails?.productDetails?.length > 1) {
-      this.customApply.emit({
-        clasDetails: clasDetails,
-        subClass: clasDetails?.subClass,
-      });
-    } else if (clasDetails?.productDetails?.length == 1) {
-      const payload = JSON.stringify({
-        accountType: clasDetails?.productDetails[0].basisName,
-        basisDetailsId: clasDetails?.productDetails[0].basisId,
-        processCycleCode: clasDetails?.productDetails[0].processCycleCode,
-      });
-      localStorage.setItem("basisDetails", payload);
-      this.customApply.emit({
-        clasDetails: clasDetails,
-        subClass: clasDetails?.subClass,
-      });
-    } else {
-      const payload = JSON.stringify({
-        accountType: clasDetails.basisName,
-        basisDetailsId: clasDetails.basisId,
-        processCycleCode: clasDetails.processCycleCode,
-      });
-      localStorage.setItem("basisDetails", payload);
-      const url = this.location.prepareExternalUrl(
-        this.router.serializeUrl(this.router.createUrlTree(["/account/open"]))
-      );
-      window.open(`${url}`, "_blank");
-    }
-  }
   getFileUrl(url) {
     if (url.includes("https")) {
       return "assets/images/normal_loan.svg";
     } else {
       return `${this.endPoints}${url}`;
     }
+  }
+
+  checkProduct(event) {
+    if (event?.basisId) {
+      this.applyForAccount(event);
+    } else if (event?.productDetails === null) {
+      this.snackBar.open("No Products Available", "Ok", {
+        duration: 3000,
+        verticalPosition: "top",
+        horizontalPosition: "right",
+      });
+    } else if (event?.productDetails?.length > 1) {
+      this.customApply.emit({
+        classDetails: event,
+        subClass: event?.subClass,
+      });
+    } else if (event?.clasDetails.productDetails?.length == 1) {
+      this.customApply.emit({
+        classDetails: event.clasDetails,
+        subClass: event?.subClass,
+      });
+    }
+  }
+
+  applyForAccount(event) {
+    const payload = JSON.stringify({
+      accountType: event.basisName,
+      basisDetailsId: event.basisId,
+      processCycleCode: event.processCycleCode,
+    });
+    localStorage.setItem("basisDetails", payload);
+    const url = this.location.prepareExternalUrl(
+      this.router.serializeUrl(this.router.createUrlTree(["/account/open"]))
+    );
+    window.open(`${url}`, "_blank");
+  }
+
+  apply(event) {
+    this.checkProduct(event);
   }
 }

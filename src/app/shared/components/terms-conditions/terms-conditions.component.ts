@@ -23,6 +23,7 @@ export class TermsConditionsComponent implements OnInit {
   customerData: any;
   requestDate: any;
   loamAmount: any;
+  currencySymboll = "₹";
 
   constructor(private _location: Location) {}
 
