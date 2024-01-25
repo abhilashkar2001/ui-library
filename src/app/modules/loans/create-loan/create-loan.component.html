@@ -4,15 +4,17 @@
     [formGroup]="personalLoanDetailsForm"
     fxFlex="100"
   >
-    <div class="row">
-      <div class="text-header">Personal Loan Details</div>
+    <div fxLayout="row wrap" fxLayoutGap="10">
+      <div class="text-header" fxFlex="100" fxLayoutAlign="start center">
+        Personal Loan Details
+      </div>
 
-      <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width currency_field"
-          [ngClass]="isReadOnly == true && 'disable-field'"
-        >
+      <div
+        class=""
+        fxFlex="45"
+        [ngClass]="isReadOnly == true && 'disable-mat-form-field'"
+      >
+        <mat-form-field appearance="outline" class="full-width currency_field">
           <mat-label class="custom-mat-label">Loan Amount</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
             currencySymboll
@@ -32,11 +34,9 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="MiscellaneousClass col-md-6 col-12">
-        <fieldset
-          class="mt-6"
-          [ngClass]="isReadOnly == true && 'disable-fieldset'"
-        >
+
+      <div fxFlex="45" class="MiscellaneousClass">
+        <fieldset [ngClass]="isReadOnly == true && 'disable-fieldset'">
           <legend style="width: fit-content">Tenure</legend>
           <div style="display: flex; flex-direction: row">
             <input
@@ -91,11 +91,8 @@
                 </mat-error> -->
       </div>
 
-      <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width disable-field currency_field"
-        >
+      <div fxFlex="45" class="disable-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width currency_field">
           <mat-label class="custom-mat-label">EMI Amount</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.emiAmount">{{
             currencySymboll
@@ -103,8 +100,9 @@
           <input matInput readonly formControlName="emiAmount" />
         </mat-form-field>
       </div>
-      <div class="col-md-6 col-12">
-        <mat-form-field appearance="outline" class="full-width disable-field">
+
+      <div fxFlex="45" class="disable-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label class="custom-mat-label">Interest Rate</mat-label>
           <input matInput readonly formControlName="interestRate" />
           <mat-error
@@ -117,11 +115,8 @@
         </mat-form-field>
       </div>
 
-      <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width disable-field currency_field"
-        >
+      <div fxFlex="45" class="disable-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width currency_field">
           <mat-label class="custom-mat-label">Interest Payable</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
             currencySymboll
@@ -138,11 +133,9 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width disable-field currency_field"
-        >
+
+      <div fxFlex="45" class="disable-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width currency_field">
           <mat-label class="custom-mat-label">Principle Amount</mat-label>
           <span
             matPrefix
@@ -162,7 +155,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-md-6 col-12">
+      <div fxFlex="45" class="">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Holder Type</mat-label>
           <mat-select
@@ -184,11 +177,9 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-6 col-12">
-        <mat-form-field
-          appearance="outline"
-          class="full-width disable-field currency_field"
-        >
+
+      <div fxFlex="45" class="disable-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width currency_field">
           <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
           <span
             matPrefix
@@ -208,7 +199,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-md-6 col-12">
+      <div fxFlex="45" class="">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Disbursement Type</mat-label>
           <mat-select
@@ -232,7 +223,8 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-6 col-12 pt-20" *ngIf="disbursementType === 'account'">
+
+      <div fxFlex="45" *ngIf="disbursementType === 'account'">
         <mat-radio-group
           aria-label="Select an option"
           formControlName="accountType"
@@ -245,7 +237,8 @@
       </div>
 
       <div
-        class="col-md-6 col-12"
+        fxFlex="45"
+        class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === 'external' &&
           disbursementType === 'account'
@@ -256,8 +249,10 @@
           <input matInput specialIsAlphaNumeric formControlName="bankCode" />
         </mat-form-field>
       </div>
+
       <div
-        class="col-md-6 col-12"
+        fxFlex="45"
+        class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === 'external' &&
           disbursementType === 'account'
@@ -268,8 +263,10 @@
           <input matInput specialIsAlphaNumeric formControlName="branchCode" />
         </mat-form-field>
       </div>
+
       <div
-        class="col-md-6 col-12"
+        fxFlex="45"
+        class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === 'external' &&
           disbursementType === 'account'
@@ -280,7 +277,8 @@
           <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
         </mat-form-field>
       </div>
-      <div class="col-md-6 col-12" *ngIf="disbursementType === 'account'">
+
+      <div class="" fxFlex="45" *ngIf="disbursementType === 'account'">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Account Number</mat-label>
           <input
@@ -324,8 +322,10 @@
           </mat-error>
         </mat-form-field>
       </div>
+
       <div
-        class="col-md-6 col-12"
+        fxFlex="45"
+        class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === 'external' &&
           disbursementType === 'account'
@@ -347,7 +347,7 @@
         </mat-error>
       </div>
 
-      <div class="col-md-6 col-12">
+      <div fxFlex="45" class="">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
           <input
@@ -372,7 +372,7 @@
         </mat-form-field>
       </div>
 
-      <div class="button-section">
+      <div fxFlex="100" class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
         >&nbsp;&nbsp;
         <button

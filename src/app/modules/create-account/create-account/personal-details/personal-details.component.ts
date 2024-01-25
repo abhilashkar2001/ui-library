@@ -162,7 +162,15 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       firstName: [data ? data.firstName : "", Validators.required],
       lastName: [data ? data.lastName : "", Validators.required],
       dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
-      email: [data ? data.contact.email : "", Validators.required],
+      email: [
+        data ? data.contact.email : "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+          ),
+        ],
+      ],
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
       city: [""],
