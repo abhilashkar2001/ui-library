@@ -17,14 +17,21 @@
             />
             <button type="button">Contact Now</button>
           </div>
-          <div
+          <mat-error
             class="custom_error"
-            *ngIf="
-              emailForm.get('email').invalid && emailForm.get('email').touched
-            "
+            *ngIf="emailForm.get('email').hasError('pattern')"
           >
             <p class="error_message">Invalid email address</p>
-          </div>
+          </mat-error>
+          <mat-error
+            class="custom_error"
+            *ngIf="
+              emailForm.get('email').touched &&
+              emailForm.get('email').hasError('required')
+            "
+          >
+            <p class="error_message">Email address is required</p>
+          </mat-error>
         </div>
         <img class="blue_rect" src="assets/images/Rectangle 31.svg" />
         <img

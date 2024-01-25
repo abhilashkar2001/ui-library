@@ -178,6 +178,11 @@
                       >
                         Email is required
                       </mat-error>
+                      <mat-error
+                        *ngIf="this.customer.controls.email.hasError('pattern')"
+                      >
+                        Please enter Valid Email
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">

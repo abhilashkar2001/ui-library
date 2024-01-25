@@ -81,7 +81,18 @@
                       <mat-label class="custom-mat-label"
                         >Document Number</mat-label
                       >
-                      <input matInput formControlName="documentNumber" />
+                      <input
+                        matInput
+                        numbersOnly
+                        formControlName="documentNumber"
+                      />
+                      <mat-error
+                        *ngIf="
+                          otherDocument().controls[i].get('documentNumber')
+                            .touched
+                        "
+                        >Document Number is Required</mat-error
+                      >
                     </mat-form-field>
                   </div>
                 </div>
@@ -147,7 +158,7 @@
       [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : '#004c97' }"
       (click)="addDocument()"
     >
-      Add another Document
+      Add Another Document
     </button>
     <div>
       <button

@@ -200,7 +200,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
       email: [
         data?.contact ? data?.contact.email : "",
-        [Validators.required, Validators.email],
+        [
+          Validators.required,
+          Validators.pattern(
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+          ),
+        ],
       ],
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
