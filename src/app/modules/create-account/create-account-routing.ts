@@ -19,7 +19,7 @@ export const HomeRoutes: Routes = [
         component: LandingPageComponent,
       },
       {
-        path: "open",
+        path: "open/:id",
         component: CreateAccountLandingPageComponent,
       },
       {

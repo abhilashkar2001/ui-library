@@ -19,6 +19,7 @@ export class LoanAccountTypeComponent implements OnInit {
   isShowCalculator: boolean = false;
   endPoints = environment.microServiceURL;
   selectedLoan: any;
+  basisId: any;
 
   constructor(
     private router: Router,
@@ -75,6 +76,7 @@ export class LoanAccountTypeComponent implements OnInit {
     else {
       this.isShowCalculator = event.isShowCalculator;
       this.basisClass = event.subClass;
+      this.basisId = event.selectedLoan.basisId;
       setTimeout(() => {
         this.scrollToCalculator();
       }, 200);
@@ -124,7 +126,7 @@ export class LoanAccountTypeComponent implements OnInit {
         sessionStorage.setItem("loanDisburseId", resp?.data.id);
         const url = this.location.prepareExternalUrl(
           this.router.serializeUrl(
-            this.router.createUrlTree(["/loan/create-loan"])
+            this.router.createUrlTree([`/loan/create-loan/${this.basisId}`])
           )
         );
         window.open(`${url}`, "_blank");

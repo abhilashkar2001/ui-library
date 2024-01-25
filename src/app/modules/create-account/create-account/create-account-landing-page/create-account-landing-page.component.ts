@@ -23,6 +23,8 @@ export class CreateAccountLandingPageComponent {
   selectedStep: number = 0;
   currentStep: string;
   originationId: any;
+  basisId: any;
+  productDetails: any;
 
   constructor(
     private router: Router,
@@ -32,7 +34,8 @@ export class CreateAccountLandingPageComponent {
     private dialog: MatDialog,
     private showSideBar: NewDepositService,
     private loanApi: LoanService,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private route: ActivatedRoute
   ) {
     this.showSideBar.setToken(true);
     this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
@@ -40,6 +43,8 @@ export class CreateAccountLandingPageComponent {
   }
 
   ngOnInit(): void {
+    this.basisId = this.route.snapshot.params["id"];
+    this.getProductDetails();
     var sessionStep = sessionStorage.getItem("accountstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
@@ -58,6 +63,17 @@ export class CreateAccountLandingPageComponent {
             );
             this.factory();
           });
+      });
+  }
+
+  /**
+   * api call for getting product details by basisId
+   */
+  getProductDetails() {
+    this.openAccountService
+      .getProductDetails(this.basisId)
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) this.productDetails = resp.data[0];
       });
   }
 
@@ -127,6 +143,8 @@ export class CreateAccountLandingPageComponent {
                   basisDetailsId: sessionData.basisDetailsId,
                   branchCode: this.tokenStore.getUser().branchCode,
                   source: "Website",
+                  businessProductName: this.productDetails.basisName,
+                  productDescription: this.productDetails.basisDetailStory,
                 },
                 customerInfo: custResp,
               };

@@ -109,4 +109,8 @@ export class LoanService {
       `${baseUrl}/origination-matser/accountNumber?accountNumber=${accountNumber}`
     );
   }
+
+  getProductDetails(basisId) {
+    return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
+  }
 }

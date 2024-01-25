@@ -42,10 +42,6 @@
   border-radius: 10px;
 }
 
-.pb-25 {
-  padding-bottom: 25px;
-}
-
 .personal-details {
   display: flex;
   flex-direction: row;
@@ -137,4 +133,7 @@
 .mr-5 {
   margin-right: 5px;
   margin-top: -1px;
+}
+:host ::ng-deep .mat-datepicker-toggle img {
+  vertical-align: 0px !important;
 }

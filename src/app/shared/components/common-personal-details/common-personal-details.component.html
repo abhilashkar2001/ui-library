@@ -37,7 +37,7 @@
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12 default-toggle-slide">
-                    Is this applicant a primary customer?
+                    <span>Is this applicant a primary customer?</span>
                     <mat-slide-toggle
                       formControlName="primaryCustomer"
                       [disabled]="
@@ -283,6 +283,7 @@
                         formControlName="pincode"
                         name="pincode"
                         numbersOnly
+                        maxlength="10"
                       />
                       <mat-icon
                         matSuffix

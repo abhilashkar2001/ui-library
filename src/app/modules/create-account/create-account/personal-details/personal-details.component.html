@@ -44,7 +44,7 @@
                             customer.controls['prefix'].touched
                           "
                         >
-                          Prefix is <strong>required</strong>
+                          Prefix is required
                         </mat-error>
                       </mat-form-field>
 
@@ -70,7 +70,7 @@
                             ) && customer.controls['firstName'].touched
                           "
                         >
-                          First Name is <strong>required</strong>
+                          First Name is required
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -97,7 +97,7 @@
                             ) && customer.controls['lastName'].touched
                           "
                         >
-                          Last Name is <strong>required</strong>
+                          Last Name is required
                         </mat-error>
                       </mat-form-field>
 
@@ -124,7 +124,7 @@
                             ) && customer.controls['dateOfBirth'].touched
                           "
                         >
-                          Date Of Birth is <strong>required</strong>
+                          Date Of Birth is required
                         </mat-error>
                         <mat-datepicker-toggle matSuffix [for]="picker">
                           <mat-icon matDatepickerToggleIcon>
@@ -155,7 +155,7 @@
                             customer.controls['email'].touched
                           "
                         >
-                          Email is <strong>required</strong>
+                          Email is required
                         </mat-error>
                         <mat-error
                           *ngIf="customer.controls['email'].hasError('pattern')"
@@ -187,7 +187,7 @@
                             customer.controls['gender'].touched
                           "
                         >
-                          Gender is <strong>required</strong>
+                          Gender is required
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -212,7 +212,11 @@
                         class="full-width custom-field-80 mt-2"
                       >
                         <mat-label class="custom-mat-label">Address</mat-label>
-                        <input matInput formControlName="address" />
+                        <input
+                          matInput
+                          formControlName="address"
+                          maxlength="1000"
+                        />
                         <!-- <mat-icon matSuffix>my_location</mat-icon> -->
                         <mat-error
                           *ngIf="
@@ -220,7 +224,16 @@
                             customer.controls['address'].touched
                           "
                         >
-                          Address is <strong>required</strong>
+                          Address is required
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            customer.controls['address'].hasError(
+                              'invalidAddress'
+                            )
+                          "
+                        >
+                          Address should not be only special character.
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -252,7 +265,7 @@
                             ) && customer.controls['residentType'].touched
                           "
                         >
-                          Resident Type is <strong>required</strong>
+                          Resident Type is required
                         </mat-error>
                       </mat-form-field>
 
@@ -297,7 +310,7 @@
                             customer.controls['zipCode'].touched
                           "
                         >
-                          Zip Code is <strong>required</strong>
+                          Zip Code is required
                         </mat-error>
                       </mat-form-field>
 
@@ -321,7 +334,7 @@
                             customer.controls['state'].touched
                           "
                         >
-                          State is <strong>required</strong>
+                          State is required
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -347,7 +360,7 @@
                             customer.controls['city'].touched
                           "
                         >
-                          City is <strong>required</strong>
+                          City is required
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -368,7 +381,7 @@
 
     <div
       fxLayout="row wrap"
-      fxLayoutGap="20px"
+      fxLayoutGap="50px"
       class="mb-16"
       *ngIf="personalDetailsForm"
     >

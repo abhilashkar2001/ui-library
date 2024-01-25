@@ -74,7 +74,9 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     });
     localStorage.setItem("basisDetails", payload);
     const url = this.location.prepareExternalUrl(
-      this.router.serializeUrl(this.router.createUrlTree(["/account/open"]))
+      this.router.serializeUrl(
+        this.router.createUrlTree([`/account/open/${event.basisId}`])
+      )
     );
     window.open(`${url}`, "_blank");
   }
