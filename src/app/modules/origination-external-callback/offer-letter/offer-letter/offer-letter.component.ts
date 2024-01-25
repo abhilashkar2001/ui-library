@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
-import { User } from "app/shared/models/user.model";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";

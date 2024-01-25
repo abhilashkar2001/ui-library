@@ -4,6 +4,7 @@ import { OfferLetterComponent } from "./offer-letter/offer-letter/offer-letter.c
 import { ProcessOfferLetterComponent } from "./offer-letter/process-offer-letter/process-offer-letter.component";
 import { OtpComponent } from "./otp/otp.component";
 import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.component";
+import { DocumentUploadComponent } from "./document-upload/document-upload.component";
 
 const routes: Routes = [
   {
@@ -37,6 +38,13 @@ const routes: Routes = [
     component: SignLaterComponent,
     data: {
       title: "Digital Sign",
+    },
+  },
+  {
+    path: "document-upload",
+    component: DocumentUploadComponent,
+    data: {
+      title: "Document Upload",
     },
   },
 ];

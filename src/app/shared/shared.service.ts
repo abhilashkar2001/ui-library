@@ -15,4 +15,11 @@ export class SharedService {
       `${this.baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
     );
   }
+
+  uploadDocument(formData) {
+    return this.http.post<any>(`${this.baseUrl}/upload-document`, formData, {
+      reportProgress: true,
+      observe: "events",
+    });
+  }
 }
