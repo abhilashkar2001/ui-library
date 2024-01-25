@@ -31,7 +31,7 @@ const routes: Routes = [
       //   component: CreateLoanLandingPageComponent,
       // },
       {
-        path: "create-loan",
+        path: "create-loan/:id",
         component: LoanFlowComponent,
       },
     ],

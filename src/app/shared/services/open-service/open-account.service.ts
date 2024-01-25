@@ -112,4 +112,8 @@ export class OpenAccountService {
   fetchBoundariesDetails(basisId: number) {
     return this.http.get<any>(`${baseUrl}/boundaries?basisDetailId=${basisId}`);
   }
+
+  getProductDetails(basisId) {
+    return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
+  }
 }

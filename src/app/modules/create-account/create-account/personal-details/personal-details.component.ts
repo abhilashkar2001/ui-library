@@ -91,7 +91,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     ).format("YYYY-MMM-DD");
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
       this.showAgeValidation("Min", this.boundaries?.minimumAge);
-    } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
+    } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
       this.showAgeValidation("Max", this.boundaries?.maximumAge);
     }
   }
@@ -200,7 +200,23 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   debounceZipCode() {
     for (let i = 0; i < this.personalInfoArray.value?.length; i++) {
       this.fetchStateCity(i);
+      this.checkAddressValidity(i);
     }
+  }
+
+  checkAddressValidity(i) {
+    this.personalInfoArray.controls[i]
+      .get("address")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        var regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        const addressField = this.personalInfoArray.controls[i].get("address");
+        if (regex.test(resp)) {
+          addressField.setErrors({ invalidAddress: true });
+        } else {
+          addressField.setErrors(null);
+        }
+      });
   }
 
   CheckGenderandPrefix(index: number) {

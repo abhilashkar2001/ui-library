@@ -452,7 +452,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
       this.showAgeValidation("Min", this.boundaries?.minimumAge, i);
-    } else if (this.calculateAge(dateOfBirth) > this.boundaries.minimumAge) {
+    } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
       this.showAgeValidation("Max", this.boundaries?.maximumAge, i);
     }
   }

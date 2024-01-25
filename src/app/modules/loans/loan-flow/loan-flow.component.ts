@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Form, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -40,6 +40,8 @@ export class LoanFlowComponent implements OnInit {
   customerInfo: any;
   docIds: any[];
   originationModel: any;
+  basisId: any;
+  productDetails: any;
 
   constructor(
     private loanApi: LoanService,
@@ -48,7 +50,8 @@ export class LoanFlowComponent implements OnInit {
     private depositApi: NewDepositService,
     private dialog: MatDialog,
     private router: Router,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private route: ActivatedRoute
   ) {
     this.steper_Array = [
       {
@@ -105,11 +108,22 @@ export class LoanFlowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.basisId = this.route.snapshot.params["id"];
     this.getAllLoanStep();
+    this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     var originationId = sessionStorage.getItem("originationId");
     if (originationId) this.getOriginationMaster(parseInt(originationId));
+  }
+
+  /**
+   * api call for getting product details by basisId
+   */
+  getProductDetails() {
+    this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200) this.productDetails = resp.data[0];
+    });
   }
 
   getOriginationMaster(id) {
@@ -228,7 +242,11 @@ export class LoanFlowComponent implements OnInit {
     if (event.personalDetails.value.customer[0].kycStatus)
       customer[0].kycStatus = event.personalDetails.value.customer[0].kycStatus;
     const payload = {
-      originationModel: this.getOriginationModel(),
+      originationModel: {
+        ...this.getOriginationModel(),
+        businessProductName: this.productDetails.basisName,
+        productDescription: this.productDetails.basisDetailStory,
+      },
       customerInfo: customer,
     };
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
@@ -347,7 +365,11 @@ export class LoanFlowComponent implements OnInit {
       delete custResp[i].documnentsInfo;
     });
     const payload = {
-      originationModel: this.getOriginationModel(),
+      originationModel: {
+        ...this.getOriginationModel(),
+        businessProductName: this.productDetails.basisName,
+        productDescription: this.productDetails.basisDetailStory,
+      },
       customerInfo: custResp,
     };
     this.getMasterSave(payload);
@@ -386,6 +408,8 @@ export class LoanFlowComponent implements OnInit {
         ownership: sessionStorage.getItem("loanHolderType"),
         otherDocsInfo: docIds,
         originationId: this.originationModel?.originationId,
+        businessProductName: this.productDetails.basisName,
+        productDescription: this.productDetails.basisDetailStory,
       },
       customerInfo: customer,
     };

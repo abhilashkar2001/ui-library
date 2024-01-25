@@ -22,6 +22,11 @@
             [readonly]="isReadOnly"
             name="loanAmount"
             formControlName="loanAmount"
+            maxlength="22"
+            appNoLeadingSpace
+            decimalinput
+            [numLength]="18"
+            [allowedDecimalIndex]="3"
           />
           <mat-error
             *ngIf="
