@@ -52,4 +52,21 @@ export class OfferIssueService {
       payload
     );
   }
+
+  fetchOriginationDetails(originationId) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/origination-matser?originationId=${originationId}`
+    );
+  }
+
+  saveDetails(payload: any) {
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/origination-matser/save`,
+      payload
+    );
+  }
+
+  public saveCustomeDocuments(data) {
+    return this.http.post<any>(`${MICROSERVICE_URL}/documents`, data);
+  }
 }

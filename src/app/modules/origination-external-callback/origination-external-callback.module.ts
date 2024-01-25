@@ -13,6 +13,7 @@ import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.compone
 import { SignNowPopupComponent } from "./digital-sign/sign-now-popup/sign-now-popup.component";
 import { SignPadComponent } from "./digital-sign/sign-pad/sign-pad.component";
 import { SuccessModalComponent } from "./digital-sign/success-modal/success-modal.component";
+import { DocumentUploadComponent } from "./document-upload/document-upload.component";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SuccessModalComponent } from "./digital-sign/success-modal/success-moda
     SignNowPopupComponent,
     SignPadComponent,
     SuccessModalComponent,
+    DocumentUploadComponent,
   ],
   imports: [
     CommonModule,
