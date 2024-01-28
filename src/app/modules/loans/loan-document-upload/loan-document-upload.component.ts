@@ -8,8 +8,10 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { SharedService } from "app/shared/shared.service";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-loan-document-upload",
@@ -32,23 +34,45 @@ export class LoanDocumentUploadComponent implements OnInit {
   };
   selectedImage: Blob;
   imageUrl: string;
+  baseUrl = environment.microServiceURL;
 
   constructor(
     private formBuilder: FormBuilder,
     private apiService: OpenAccountService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private loanApi: LoanService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
+    // this.buildDocumentForm();
   }
 
   ngOnInit(): void {
+    var originationId = sessionStorage.getItem("originationId");
     this.getGenericDetails();
-    this.buildDocumentForm();
-    console.log("other document", this.otherDocumentArray);
+    if (originationId) this.getOrigination(originationId);
+    else this.buildDocumentForm();
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
+  }
+
+  getOrigination(originationId) {
+    this.loanApi
+      .getOriginationMaster(parseInt(originationId))
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          if (
+            resp.data[0].loanAccountInfo.documnentsInfo.documents?.length > 0
+          ) {
+            this.buildDocumentForm(
+              resp.data[0].loanAccountInfo.documnentsInfo.documents
+            );
+          } else {
+            this.buildDocumentForm();
+          }
+        }
+      });
   }
 
   getGenericDetails() {
@@ -61,22 +85,61 @@ export class LoanDocumentUploadComponent implements OnInit {
       });
   }
 
-  buildDocumentForm() {
+  buildDocumentForm(data?) {
     this.createDocumentForm = this.formBuilder.group({
       otherDocument: this.formBuilder.array([]),
     });
-    this.pushDocumentControls();
+    if (data) {
+      data.forEach((item, i) => {
+        console.log(item);
+        this.pushDocumentControls(item);
+        this.otherDocumentArray.controls[i]
+          .get("fileInfo")
+          ?.setValue(this.calculateDoc(item, i));
+      });
+    } else this.pushDocumentControls();
   }
 
   get otherDocumentArray() {
     return this.createDocumentForm.get("otherDocument") as FormArray;
   }
 
-  pushDocumentControls() {
+  calculateDoc(data, i) {
+    var docArr = [];
+    var docIds = [];
+    data.docs.forEach((item, ind) => {
+      console.log(item, ind);
+      var docItem = {
+        progress: 100,
+        name: item.fileName,
+      };
+      docArr.push({
+        docId: item.documentId,
+        doc: docItem,
+        url: this.mapEndPoints(item.fileUrl),
+      });
+      docIds.push(item.documentId);
+    });
+    this.otherDocumentArray.controls[i].get("docIds").setValue(docIds);
+    return docArr;
+  }
+
+  mapEndPoints(url) {
+    return `${this.baseUrl}${url}`;
+  }
+
+  pushDocumentControls(data?) {
     this.documentControls = this.formBuilder.group({
-      documentNumber: ["", Validators.required],
-      documentType: ["", Validators.required],
+      documentNumber: [
+        data ? data.docs[0].documentNumber : "",
+        Validators.required,
+      ],
+      documentType: [
+        data ? data.docs[0].documentType : "",
+        Validators.required,
+      ],
       fileInfo: new FormControl([]),
+      docIds: new FormControl([]),
     });
     this.otherDocumentArray.push(this.documentControls);
   }
@@ -148,7 +211,7 @@ export class LoanDocumentUploadComponent implements OnInit {
    * @param index (File index)
    */
   deleteFile(index: number, i, doc) {
-    console.log(this.createDocumentForm.get("otherDocument"));
+    this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
     this.otherDocumentArray.controls[0].get("fileInfo")?.value.splice(index, 1);
   }
 
@@ -250,13 +313,13 @@ export class LoanDocumentUploadComponent implements OnInit {
       customerId: this.custId,
       documentInfo: this.createDocumentForm
         .get("otherDocument")
-        ?.value.map((document: any) => ({
-          docIds: document.fileInfo.map((item: any) => item?.docId),
-        })),
+        ?.value.map((document: any) => {
+          return {
+            docIds: document.fileInfo.map((item: any) => item?.id),
+          };
+        }),
     };
-    console.log(payload);
     this.onConfirmEvent.emit(this.otherDocumentArray.value);
-    // this.onSubmitEvent.emit(payload)
   }
 
   onBack() {
@@ -268,9 +331,11 @@ export class LoanDocumentUploadComponent implements OnInit {
    * @returns true false depending upon above codition.
    */
   checkDocValidity() {
-    let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-      (docItem) => docItem.fileInfo?.length > 0
-    );
-    return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
+    if (this.createDocumentForm) {
+      let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+        (docItem) => docItem.fileInfo?.length > 0
+      );
+      return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
+    }
   }
 }

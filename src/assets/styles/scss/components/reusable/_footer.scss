@@ -1,0 +1,61 @@
+footer {
+  box-shadow: $footer_shadow;
+  padding: 3rem 0;
+
+  .footer_logo {
+    color: $text_blue;
+    font-size: 2rem;
+    font-family: "Poppins";
+    font-weight: 800;
+  }
+  .footer_desc {
+    width: 85%;
+    color: $text_dark_blue;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+  }
+
+  h4 {
+    color: $text_dark_blue;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  ul.footer_links {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li a {
+      color: $text_dark_blue !important;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: "Poppins", sans-serif;
+      margin: 10px 0;
+      transition: color 0.32s;
+      &:hover {
+        color: $text_blue !important;
+      }
+    }
+  }
+
+  .social_img_wrapper {
+    img {
+      width: 40px;
+      margin: 7px;
+    }
+  }
+
+  #horizontal_line {
+    height: 1px;
+    width: 100%;
+    background-color: #52515187;
+    margin: 3rem 0;
+  }
+}
+
+.chat_icon {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  height: 50px;
+  z-index: 999;
+}

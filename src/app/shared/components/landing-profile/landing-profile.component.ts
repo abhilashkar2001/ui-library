@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -11,6 +11,7 @@ export class LandingProfileComponent implements OnInit {
   @Input() profileHint;
   @Input() profileHeader;
   @Input() routeUrl;
+  @Output() customApply = new EventEmitter<any>();
 
   constructor(private router: Router) {}
 
@@ -18,5 +19,9 @@ export class LandingProfileComponent implements OnInit {
   apply() {
     if (this.profileHeader.toLowerCase().includes("loan"))
       this.router.navigate([`${this.routeUrl}`]);
+  }
+
+  onApply(e) {
+    this.customApply.emit(e);
   }
 }

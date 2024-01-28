@@ -1,114 +1,138 @@
-.account_title {
-  font-size: 60px;
-  color: #06113c;
-  font-weight: 500;
-  line-height: 1.2;
-  text-align: left;
-}
-.sub_account_title {
-  font-size: 18px;
-  color: #4c5371;
-}
-.applyBtnGrp {
-  margin-top: 3%;
-  .applyBtn {
-    background: #004aa0;
-    color: white;
-    border-radius: 50px;
-    width: 233px;
+$dark_blue: #06113c;
+$text_blue: #3c4f9a;
+$text_dark_blue: #212353;
+$gradient_bg: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+
+// Shadows
+$navbar_shadow: 3px 3px 20px #0000000f;
+$footer_shadow: 3px -3px 20px #0000000f;
+
+// Breakpoints
+$mobile: 576px;
+$tablet: 768px;
+$laptop: 1200px;
+
+section.hero_section {
+  min-height: 90vh;
+
+  &.custom_container {
+    margin-left: 5.5rem;
+    padding: 2rem 0;
+    overflow-x: hidden;
   }
-  .learn_more {
+
+  .hero_title {
+    font-size: 60px;
+    font-weight: bold;
+    font-family: "Nunito", sans-serif;
+    color: $dark_blue;
+    @media screen and (max-width: $mobile) {
+      font-size: 2rem;
+    }
+  }
+  .hero_subtitle {
+    width: 65%;
+    font-size: 17px;
+    font-family: "Poppins", sans-serif;
+    margin: 1.5rem 0;
+    color: #4c5371;
+    @media screen and (max-width: $laptop) {
+      width: 90%;
+    }
+    @media screen and (max-width: $mobile) {
+      width: 100%;
+    }
+  }
+  .apply_div {
+    margin: 2rem 0;
+    .apply_btn {
+      @include custom_round_btn;
+    }
+  }
+  .stacked_imgs_div {
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    text-decoration: underline;
-    font-size: 20px;
-    line-height: 30px;
-    color: #06113c;
-    font-weight: 600;
-    padding-left: 6%;
+    align-items: center;
+    margin-top: 1.4rem;
+    .img_wrapper {
+      position: relative;
+      width: 130px;
+      height: 60px;
+      display: flex;
+      img.stacked_images {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        &:nth-child(2) {
+          left: 25%;
+        }
+        &:last-child {
+          left: 50%;
+        }
+      }
+    }
+    .stacked_div_text {
+      margin-left: 1rem;
+      h2,
+      p {
+        color: $dark_blue;
+        font-family: "Nunito", sans-serif;
+        margin: 0;
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+    }
   }
-}
-.childImg_grp {
-  margin-top: 8%;
-}
-.childImg1 {
-  z-index: 99;
-}
-.childImg2 {
-  z-index: 100;
-  margin-left: -30px;
-}
-.childImg3 {
-  z-index: 101;
-  margin-left: -30px;
-}
-.total_users {
-  font-size: 32px;
-  color: #06113c;
-  font-weight: 600;
-}
-.accountOpening {
-  font-size: 48px;
-  font-weight: 600;
-  color: #06113c;
-}
-.openYourAccount {
-  color: #4c5371;
-  font-size: 18px;
-}
-.maturityAmttitle {
-  font-size: 30px;
-  line-height: 45px;
-  font-weight: 600;
-  color: #000000;
-}
-.maturityTitle {
-  font-size: 21px;
-  line-height: 31.7px;
-  font-weight: 500;
+
+  .hero_image_container {
+    .card_hero_image {
+      position: absolute;
+      &.debit_card {
+        position: relative;
+        width: 90%;
+        left: 60%;
+        top: 5%;
+        transform: translateX(-50%);
+        // width: 400px;
+        z-index: 2;
+        filter: drop-shadow(0 2px 15px #0162c241);
+        animation: card_animation 2s cubic-bezier(0, 0, 0.79, 0.24) infinite
+          alternate;
+      }
+      &.card_shadow {
+        position: relative;
+        top: 0;
+        left: 2%;
+        z-index: 1;
+      }
+      &.hand {
+        position: absolute;
+        right: 0;
+        top: 20%;
+        width: 25%;
+      }
+      @media screen and (max-width: $laptop) {
+        &.debit_card {
+          width: 60%;
+        }
+        &.card_shadow {
+          left: 5%;
+        }
+        &.hand {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
-//
-.highlight_title {
-  font-family: Poppins;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 27px;
-  text-align: left;
-  color: #004c97;
-}
-.align_fd {
-  padding: 20px 33px;
-}
-.saveButton {
-  width: 172px !important;
-  color: #ffffff !important;
-  font-size: 15px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%) !important;
-  height: 47px;
-  border-radius: 25px !important;
-}
-.backButton {
-  width: 172px !important;
-  color: #000000 !important;
-  font-size: 15px;
-  background: #ffffff !important;
-  height: 47px;
-  border-radius: 25px !important;
-}
-.legend {
-  float: none !important;
-  font-size: 12px !important;
-  padding-left: 5px !important;
-  width: fit-content;
-}
-.account-type-header {
-  color: #06113c;
-  font-size: 48px;
-  font-weight: 600;
-}
-.standard-content-title {
-  font-size: 18px;
-  margin: 15px 0px 65px 0px;
+@keyframes card_animation {
+  0% {
+    top: 5%;
+  }
+  100% {
+    top: 10%;
+  }
 }

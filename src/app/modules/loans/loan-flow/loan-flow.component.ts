@@ -384,7 +384,7 @@ export class LoanFlowComponent implements OnInit {
     event.forEach((element) => {
       let docItemId = [];
       element.fileInfo.forEach((documents) => {
-        docItemId.push(documents.id);
+        docItemId.push(documents.docId);
       });
       const docId = {
         docIds: docItemId,
@@ -406,7 +406,7 @@ export class LoanFlowComponent implements OnInit {
         branchCode: this.originationModel?.branchCode,
         source: "Website",
         ownership: sessionStorage.getItem("loanHolderType"),
-        otherDocsInfo: docIds,
+        documentId: docIds,
         originationId: this.originationModel?.originationId,
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,

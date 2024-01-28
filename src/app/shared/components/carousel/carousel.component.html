@@ -1,28 +1,36 @@
-<div class="image-container">
-  <div class="image" *ngFor="let imagesdata of dynamicList" fxLayoutGap="20px">
-    <img
-      class="image_img image_overlay--blur"
-      [src]="mapUrl(imagesdata)"
-      alt="Slider Image"
-    />
-    <div class="image_overlay">
-      <div class="image_title">{{ imagesdata?.basisClass }}</div>
-      <div class="image_description">{{ imagesdata?.description }}</div>
-      <div class="button-container">
-        <a
-          class="applyButtonCarousel"
-          (click)="moveToSubAccountPage(imagesdata.basisClass)"
-          >Apply Now</a
-        >
-      </div>
-    </div>
+<section class="carousel py-5 py-md-0">
+  <div class="px-3">
+    <h1 class="section_heading">{{ businessSuiteName }}</h1>
+    <p class="section_subHeading">
+      Open your account in a breeze and start banking hassle-free.
+    </p>
   </div>
-  <!-- <div class="button-control" [ngClass]="carouselArrowDisplay ? 'pe' : 'pd'">
-    <div class="previous">
-      <img src="/assets/images/previous.png" (click)="prevImage()" />
-    </div>
-    <div class="next">
-      <img src="/assets/images/next.png" (click)="nextImage()" />
-    </div>
-  </div> -->
-</div>
+
+  <div class="carousel_section">
+    <div class="ellipse"></div>
+    <swiper [config]="swiperConfig" [navigation]="true">
+      <ng-template swiperSlide *ngFor="let imagesdata of dynamicList">
+        <div class="single_card" [ngStyle]="getbackgroundImage(imagesdata)">
+          <div class="card_overlay">
+            <div>
+              <div class="card_title">{{ imagesdata?.basisClass }}</div>
+              <div class="card_description">
+                {{ imagesdata?.description }}
+              </div>
+            </div>
+            <div class="button-container">
+              <button
+                type="button"
+                class="btn"
+                (click)="moveToSubAccountPage(imagesdata.basisClass)"
+              >
+                Apply now
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+    <div class="convex"></div>
+  </div>
+</section>

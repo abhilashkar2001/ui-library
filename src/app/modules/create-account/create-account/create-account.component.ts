@@ -5,7 +5,11 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./create-account.component.scss"],
 })
 export class CreateAccountComponent implements OnInit {
-  constructor() {}
+  constructor() {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
+  }
 
   ngOnInit(): void {}
 }

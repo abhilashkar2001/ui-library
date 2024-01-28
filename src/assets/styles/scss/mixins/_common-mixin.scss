@@ -1,0 +1,12 @@
+@mixin custom_round_btn {
+  width: 200px;
+  height: 50px;
+  border-radius: 40px !important;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.4px;
+  color: #fff;
+  background: $gradient_bg;
+}

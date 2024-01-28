@@ -37,4 +37,10 @@ export class LoansLandingComponent implements OnInit {
       this.carowselData = response.data;
     });
   }
+
+  customApplyLoan(e) {
+    this.router.navigate(["/loan/loan-type"], {
+      queryParams: { subClass: e },
+    });
+  }
 }

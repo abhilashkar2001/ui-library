@@ -134,7 +134,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   initialForm(data?) {
     var holderType = sessionStorage.getItem("loanHolderType");
     this.personalLoanDetailsForm = this.fb.group({
-      loanAmount: [data ? data?.emiAmount : "", Validators.required],
+      loanAmount: [data ? data.principalAmount : "", Validators.required],
       tenureYear: [data ? data?.tenureYear : ""],
       tenureMonth: [data ? data?.tenureMonth : ""],
       tenureDays: [data ? data?.tenureDays : ""],
@@ -170,6 +170,14 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
           this.personalLoanDetailsForm.value.accountType === "internal"
         ) {
           this.validateAccountNumber(resp);
+        }
+      });
+    this.personalLoanDetailsForm
+      .get("loanAmount")
+      .valueChanges.pipe(debounceTime(200))
+      .subscribe((resp) => {
+        if (resp) {
+          this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
         }
       });
   }
