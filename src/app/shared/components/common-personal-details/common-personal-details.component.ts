@@ -89,15 +89,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
       console.log(i, "........");
     });
   }
-  // ngOnChanges(changes: SimpleChanges) {
-  //   console.log(changes)
-  //   if (changes.customerInfo.currentValue.length > 0) {
-  //     this.buildCustomerDetailsForm(changes.customerInfo.currentValue);
-  //   }
-  //   else {
-  //     this.buildCustomerDetailsForm()
-  //   }
-  // }
 
   ngOnInit(): void {
     this.getGenericDetails();
