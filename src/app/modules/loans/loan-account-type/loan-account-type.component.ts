@@ -113,7 +113,7 @@ export class LoanAccountTypeComponent implements OnInit {
       emiAmount: parseInt(this.selectedLoan.amount),
       interestRate: parseInt(this.selectedLoan.interestRate),
       interestPayable: 5500,
-      principalAmount: 7000,
+      principalAmount: this.selectedLoan.amount,
       totalPayableAmount: 12500,
       disbursementType: "",
       accountNumber: null,

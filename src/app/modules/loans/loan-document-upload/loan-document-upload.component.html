@@ -1,5 +1,5 @@
 <div class="column-2">
-  <div [formGroup]="createDocumentForm">
+  <div *ngIf="createDocumentForm" [formGroup]="createDocumentForm">
     <form formArrayName="otherDocument">
       <ng-container
         *ngFor="let control of otherDocumentArray.controls; let indx = index"

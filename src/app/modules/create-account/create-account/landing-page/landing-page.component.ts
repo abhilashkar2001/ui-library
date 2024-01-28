@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { HomeService } from "app/shared/services/home-service/home.service";
 @Component({
@@ -13,7 +13,11 @@ export class LandingPageComponent implements OnInit {
   profileHint =
     "Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.";
   routeUrl = "/account/open";
-  constructor(private homeService: HomeService, private router: Router) {}
+  constructor(
+    private homeService: HomeService,
+    private router: Router,
+    private el: ElementRef
+  ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -27,5 +31,20 @@ export class LandingPageComponent implements OnInit {
   }
   customApplyLoan(event) {
     this.router.navigate(["account/applyAccount", event]);
+  }
+  customApply(e) {
+    const targetElement =
+      this.el.nativeElement.querySelector("#custom-carousel");
+    const targetPosition = targetElement.getBoundingClientRect().top;
+    const scrollPosition =
+      targetPosition > 200 ? targetPosition - 120 : targetPosition;
+    if (targetElement) {
+      // targetElement.scrollIntoView({
+      //   top: scrollPosition,
+      //   behavior: "smooth",
+      //   block: "start",
+      // });
+      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+    }
   }
 }

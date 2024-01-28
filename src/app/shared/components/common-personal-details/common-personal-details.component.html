@@ -32,12 +32,18 @@
                         type="text"
                         formControlName="customerNo"
                         name="customerNo"
-                        numbersOnly
+                        specialIsAlphaNumeric
+                        maxlength="20"
                       />
                     </mat-form-field>
                   </div>
-                  <div class="col-md-6 col-12 default-toggle-slide">
-                    <span>Is this applicant a primary customer?</span>
+                  <div
+                    class="col-md-6 col-12 default-toggle-slide pb-12"
+                    fxLayoutAlign="end center"
+                  >
+                    <span style="padding-right: 10px"
+                      >Is this applicant a primary customer? *</span
+                    >
                     <mat-slide-toggle
                       formControlName="primaryCustomer"
                       [disabled]="
@@ -367,7 +373,7 @@
                         type="button"
                         [disabled]="!customer.valid"
                         mat-raised-button
-                        class="saveButton"
+                        class="button submit_button"
                         (click)="saveCustomer(i)"
                       >
                         Save
@@ -393,7 +399,7 @@
       <button
         type="button"
         mat-raised-button
-        class="saveButton"
+        class="button submit_button"
         [disabled]="!customerDetailsForm.valid"
         (click)="confirmCustomer()"
       >
@@ -404,7 +410,7 @@
       <button
         type="button"
         mat-raised-button
-        class="backButton"
+        class="button back_button"
         (click)="goBack()"
       >
         Back

@@ -1,56 +1,41 @@
-<div fxFlex="100" fxLayout="row">
-  <div
-    fxFlex="48"
-    fxLayout="column"
-    class="deposit_service_txt"
-    style="padding-top: 3%"
-  >
-    <div fxLayout="column" fxFlex="100">
-      <div class="break_word account_title">
-        {{ profileHeader }}
+<section class="container hero_section">
+  <div class="row align-items-center">
+    <div class="col-12 col-lg-7 py-3 py-md-5 order-1 order-lg-0">
+      <h1 class="hero_title">{{ profileHeader }}</h1>
+      <p class="hero_subtitle">{{ profileHint }}</p>
+      <div class="apply_div">
+        <button type="button" class="apply_btn" (click)="onApply($event)">
+          Apply
+        </button>
       </div>
-      <div style="width: 100%; margin-top: 2%">
-        <div class="break_word sub_account_title">
-          {{ profileHint }}
-        </div>
-      </div>
-      <div fxLayout="row" class="applyBtnGrp">
-        <div>
-          <button mat-flat-button class="applyBtn">Apply</button>
-        </div>
-        <!-- <div class="learn_more">Learn More</div> -->
-      </div>
-      <div fxLayout="row" class="childImg_grp">
-        <div class="childImg1">
+      <div class="stacked_imgs_div">
+        <div class="img_wrapper">
           <img
             src="assets/images/user-profile-pic-1.svg"
-            alt="User Profile Pic"
+            alt=""
+            class="stacked_images"
           />
-        </div>
-        <div class="childImg2">
           <img
             src="assets/images/user-profile-pic-2.svg"
-            alt="User Profile Pic"
+            alt=""
+            class="stacked_images"
           />
-        </div>
-        <div class="childImg3">
           <img
             src="assets/images/user-profile-pic-3.svg"
-            alt="User Profile Pic"
+            alt=""
+            class="stacked_images"
           />
         </div>
-        <div fxLayout="column">
-          <div class="total_users">4k+</div>
-          <div style="font-size: 18px; color: #06113c">users worldwide</div>
+        <div class="stacked_div_text">
+          <h2>4K+</h2>
+          <p>users worldwide</p>
         </div>
       </div>
     </div>
-  </div>
-  <div fxFlex="48" class="deposit_service_img">
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
-      <div>
-        <img [src]="imageUrl" alt="Group 13740" style="max-height: 450px" />
-      </div>
+    <div
+      class="col-12 col-lg-5 order-0 order-lg-1 d-flex justify-content-center align-items-center"
+    >
+      <img [src]="imageUrl" alt="hero image" class="img-fluid" />
     </div>
   </div>
-</div>
+</section>

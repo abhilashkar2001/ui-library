@@ -173,7 +173,7 @@
     </form>
   </div>
 
-  <div fxFlex="30" class="parentCalculator">
+  <div fxFlex="30" class="parentCalculator" *ngIf="loanForm">
     <div
       fxFlex="80"
       fxLayoutAlign="center center"
@@ -213,7 +213,7 @@
           fxLayoutAlign="space-around center"
         >
           <div class="maturityLabels">Principal Amount</div>
-          <div class="gd_value">₹ 12,669</div>
+          <div class="gd_value">₹ {{ loanForm.value?.amount }}</div>
         </div>
         <div class="emiVl"></div>
         <div

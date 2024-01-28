@@ -5,36 +5,52 @@ import {
   OnChanges,
   Output,
   EventEmitter,
+  ViewEncapsulation,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "environments/environment";
 import { interval } from "rxjs";
 
+// import Swiper core and required modules
+import SwiperCore, { Navigation } from "swiper";
+// install Swiper modules
+SwiperCore.use([Navigation]);
+
 @Component({
   selector: "app-carousel",
   templateUrl: "./carousel.component.html",
   styleUrls: ["./carousel.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CarouselComponent implements OnInit, OnChanges {
   @Input() carowselData: any = {};
   @Input() flow: string;
   @Output() customApplyLoan = new EventEmitter<any>();
+  @Input() businessSuiteName: any = "";
   dynamicList: any = [];
   onLoadImagesLen = 4;
   private autoSlideInterval: any;
   selectedIndex: number;
   totalListCount: number;
   carouselArrowDisplay: boolean = false;
+  swiperConfig: any = {
+    slidesPerView: "auto",
+    spaceBetween: 20,
+    breakpoints: {
+      768: {
+        slidesPerView: 5,
+      },
+      576: {
+        slidesPerView: 1,
+      },
+    },
+  };
   protected baseUrl = environment.microServiceURL;
 
   constructor(private router: Router) {}
 
   ngOnChanges() {
     this.dynamicList = this.carowselData;
-    if (this.dynamicList && this.dynamicList.length) {
-      this.caroselPayload();
-    }
-    console.log("Carowsel: ", this.dynamicList);
   }
 
   ngOnInit(): void {
@@ -104,5 +120,17 @@ export class CarouselComponent implements OnInit, OnChanges {
     )
       return `${this.baseUrl}${data.documents.fileUrl}`;
     else return `assets/images/Frame 5.svg`;
+  }
+
+  getbackgroundImage(data) {
+    let url = "";
+    if (
+      data.documents.fileUrl &&
+      !data.documents.fileUrl.toLowerCase().includes("https")
+    )
+      url = `${this.baseUrl}${data.documents.fileUrl}`;
+    else url = `assets/images/Frame 5.svg`;
+
+    return { "background-image": "url(" + url + ")" };
   }
 }

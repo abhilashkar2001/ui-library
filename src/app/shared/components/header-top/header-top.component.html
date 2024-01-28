@@ -1,4 +1,4 @@
-<mat-toolbar class="topbar mat-bg-card" style="height: 100px">
+<!-- <mat-toolbar class="topbar mat-bg-card" style="height: 100px">
   <div fxLayout="column">
     <img src="assets/images/Group 5698.svg" alt="" width="100" height="55px" />
     <div class="toolbar_font" style="font-size: 36px">
@@ -68,5 +68,65 @@
     </mat-menu>
   </div>
 
-  <!-- Top left user menu -->
-</mat-toolbar>
+ 
+</mat-toolbar> -->
+
+<header class="navbar">
+  <div class="container">
+    <div class="row w-100 d-flex align-items-center">
+      <div class="col-10 col-md-6">
+        <div class="logo">
+          <img src="assets/images/Group 5698.svg" alt="logo" />
+          <p class="logo_text">DemoBank</p>
+        </div>
+      </div>
+      <nav
+        class="col-2 col-md-6 d-md-flex justify-content-md-center align-items-md-center"
+        *ngIf="!hideNavItem"
+      >
+        <!-- <ul class="d-none d-md-flex"> -->
+        <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
+          <li>
+            <a
+              [routerLink]="['/account']"
+              (click)="animateUnderline($event.target)"
+              routerLinkActive="highlight_label"
+              >Open Account</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/card']"
+              (click)="animateUnderline($event.target)"
+              routerLinkActive="highlight_label"
+              >Card</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/deposits']"
+              (click)="animateUnderline($event.target)"
+              routerLinkActive="highlight_label"
+              >Deposits</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['/loan']"
+              (click)="animateUnderline($event.target)"
+              routerLinkActive="highlight_label"
+              >Loan</a
+            >
+          </li>
+        </ul>
+        <mat-icon
+          role="button"
+          class="d-flex d-md-none"
+          (click)="toggleMobileNavMenu()"
+          >menu</mat-icon
+        >
+      </nav>
+    </div>
+  </div>
+  <div id="underline"></div>
+</header>

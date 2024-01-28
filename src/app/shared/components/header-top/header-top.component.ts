@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, Renderer2 } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  Renderer2,
+  ElementRef,
+} from "@angular/core";
 import { NavigationService } from "../../../shared/services/navigation.service";
 import { Subscription } from "rxjs";
 import { ThemeService } from "../../../shared/services/theme.service";
@@ -6,7 +13,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-header-top",
@@ -19,6 +25,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   menuItemSub: Subscription;
   egretThemes: any[] = [];
   hideNavItem: boolean = false;
+  showMobilemenu: boolean = false;
 
   public availableLangs = [
     {
@@ -36,21 +43,25 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   @Input() notificPanel;
   @Input() mainMenuPanel;
-  userDetails: any;
 
   constructor(
     private layout: LayoutService,
     private navService: NavigationService,
     public themeService: ThemeService,
     public translate: TranslateService,
-    private renderer: Renderer2,
     public jwtAuth: JwtAuthService,
     private showSideBar: NewDepositService,
-    private store: TokenStorageService
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
 
   ngOnInit() {
-    this.userDetails = this.store.getUser();
+    setTimeout(() => {
+      this.animateUnderline(
+        this.el.nativeElement.querySelector(".highlight_label")
+      );
+    }, 100);
+
     this.layoutConf = this.layout.layoutConf;
     this.egretThemes = this.themeService.egretThemes;
     this.menuItemSub = this.navService.menuItems$.subscribe((res) => {
@@ -80,6 +91,23 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.menuItemSub.unsubscribe();
   }
+
+  toggleMobileNavMenu() {
+    this.showMobilemenu = !this.showMobilemenu;
+  }
+
+  // animate the nav link underline
+  animateUnderline(elem: any) {
+    if (elem) {
+      const underlineElem = this.el.nativeElement.querySelector("#underline");
+      const { left, width } = elem.getBoundingClientRect();
+      this.renderer.setStyle(underlineElem, "left", left + "px");
+      this.renderer.setStyle(underlineElem, "width", width + "px");
+      this.showMobilemenu = false;
+      window.scrollTo(0, 0);
+    }
+  }
+
   setLang(lng) {
     this.currentLang = lng;
     this.translate.use(lng.code);

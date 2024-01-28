@@ -3,65 +3,24 @@
     [imageUrl]="imageUrl"
     [profileHeader]="profileHeader"
     [profileHint]="profileHint"
+    (customApply)="customApply($event)"
   >
   </app-landing-profile>
-
-  <div fxLayout="column">
-    <div fxLayoutAlign="center center" class="accountOpening">
-      Account Opening Services
-    </div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
-      Open your account in a breeze and start banking hassle-free.
-    </div>
+  <div id="custom-carousel">
+    <app-carousel
+      businessSuiteName="Account Opening Services"
+      [carowselData]="data"
+      [flow]="'account'"
+      (customApplyLoan)="customApplyLoan($event)"
+    ></app-carousel>
   </div>
 
-  <div style="margin-top: 20px">
-    <div>
-      <div fxLayout="column">
-        <div style="margin-top: 20px">
-          <!-- <div class="account-service-header">Account Opening Services</div>
-      <div class="account-service-text">
-        Open your account in a breeze and start banking hassle-free.
-      </div> -->
-          <div>
-            <app-carousel
-              [carowselData]="data"
-              [flow]="'account'"
-              (customApplyLoan)="customApplyLoan($event)"
-            ></app-carousel>
-          </div>
-        </div>
-
-        <div fxLayout="column" fxLayoutGap="20px">
-          <div class="accountOpening" fxLayoutAlign="center center">
-            Our Top Performing Plans
-          </div>
-          <div class="openYourAccount" fxLayoutAlign="center center">
-            Select wisely from our plans & invest your money for higher returns
-          </div>
-          <div class="top-performing">
-            <app-top-performing></app-top-performing>
-          </div>
-        </div>
-
-        <div
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxLayoutGap="20px"
-          class="happy-client"
-        >
-          <div class="accountOpening">What our happy client say</div>
-          <div class="openYourAccount">
-            Several selected clients, who already believe in our service.
-          </div>
-          <div class="mt-70">
-            <app-news-letter-slider></app-news-letter-slider>
-          </div>
-          <div>
-            <app-news-letter></app-news-letter>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="top-performing">
+    <app-top-performing></app-top-performing>
   </div>
+
+  <div style="margin-top: 15px">
+    <app-news-letter-slider></app-news-letter-slider>
+  </div>
+  <app-news-letter></app-news-letter>
 </div>

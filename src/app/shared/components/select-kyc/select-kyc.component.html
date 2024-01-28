@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="kycForm" fxLayout="column">
     <div class="enter_mobile">Kindly Provide Your nationalID</div>
-    <div class="row">
+    <div class="row full-width">
       <div
         class="standard-txtField-phone-main"
         fxLayoutAlign="space-between center"
@@ -87,7 +87,7 @@
               type="button"
               mat-raised-button
               [disabled]="!isChecked || !yourOtp"
-              class="saveButton"
+              class="button submit_button"
               matSuffix
               (click)="verify()"
             >
@@ -98,7 +98,7 @@
             <button
               type="button"
               mat-raised-button
-              class="backButton"
+              class="button back_button"
               (click)="goBack()"
             >
               Back
