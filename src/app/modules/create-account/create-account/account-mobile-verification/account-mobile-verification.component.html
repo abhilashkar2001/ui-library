@@ -5,20 +5,22 @@
         (getOTP)="getOTP($event)"
         (enteredOTP)="onOtpChange($event)"
         [showOtpSection]="showOTPSection"
+        (OTPTimer)="otpTimer($event)"
       ></app-common-mobile-verification>
       <div>
         <div fxLayout="column">
           <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
             <div fxLayout="row" fxLayoutGap="30px" class="button-section">
-              <button
+              <button-loading
                 *ngIf="showOTPSection"
-                class="confirm-button"
-                mat-raised-button
-                [disabled]="!(otpAvailable && agreed)"
+                [loadingText]="loadingBtnText"
+                [type]="'submit'"
+                [disable]="!(otpAvailable && !isLoading && agreed)"
+                [loading]="isLoading"
                 (click)="onVerify()"
               >
-                Verify
-              </button>
+                Confirm
+              </button-loading>
               <button
                 class="back-button"
                 mat-raised-button

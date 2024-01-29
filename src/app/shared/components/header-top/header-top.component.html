@@ -86,38 +86,16 @@
       >
         <!-- <ul class="d-none d-md-flex"> -->
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
-          <li>
-            <a
-              [routerLink]="['/account']"
-              (click)="animateUnderline($event.target)"
-              routerLinkActive="highlight_label"
-              >Open Account</a
-            >
-          </li>
-          <li>
-            <a
-              [routerLink]="['/card']"
-              (click)="animateUnderline($event.target)"
-              routerLinkActive="highlight_label"
-              >Card</a
-            >
-          </li>
-          <li>
-            <a
-              [routerLink]="['/deposits']"
-              (click)="animateUnderline($event.target)"
-              routerLinkActive="highlight_label"
-              >Deposits</a
-            >
-          </li>
-          <li>
-            <a
-              [routerLink]="['/loan']"
-              (click)="animateUnderline($event.target)"
-              routerLinkActive="highlight_label"
-              >Loan</a
-            >
-          </li>
+          <ng-container *ngFor="let item of items">
+            <li>
+              <a
+                [routerLink]="[item.route]"
+                routerLinkActive="highlight_label"
+                #element
+                >{{ item?.label }}</a
+              >
+            </li>
+          </ng-container>
         </ul>
         <mat-icon
           role="button"

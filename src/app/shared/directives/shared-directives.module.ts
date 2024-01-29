@@ -20,6 +20,7 @@ import { DragDropDirective } from "./drag-drop.directive";
 import { AlphaBetSpaceDirective } from "./alphabet-space-directive";
 import { NoLeadingSpaceDirective } from "./no-leading-space.directive";
 import { DecimalInputDirective } from "./decimal-input.directive";
+import { NoInitialSpecialCharactersDirective } from "./no-initial-space.directive";
 
 const directives = [
   AutoFocusDirective,
@@ -39,6 +40,7 @@ const directives = [
   AlphaBetSpaceDirective,
   NoLeadingSpaceDirective,
   DecimalInputDirective,
+  NoInitialSpecialCharactersDirective,
 ];
 
 @NgModule({

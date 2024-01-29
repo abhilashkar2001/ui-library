@@ -75,7 +75,7 @@ export class SuccessPopupComponent implements OnInit {
     }
 
     downloadServiceMethod.subscribe((resp: any) => {
-      const blob = new Blob([resp?.body], { type: "application/pdf" });
+      const blob = new Blob([resp], { type: "application/pdf" });
 
       report = new File([blob], pdfFileName, {
         type: "application/pdf",

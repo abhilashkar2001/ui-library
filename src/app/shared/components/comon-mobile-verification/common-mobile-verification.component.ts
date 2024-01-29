@@ -18,6 +18,7 @@ import { debounceTime } from "rxjs/operators";
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
+  @Output() OTPTimer: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   otpForm: FormGroup;
   phone: string;
@@ -137,6 +138,7 @@ export class CommonMobileVerificationComponent implements OnInit {
         this.resendLink = true;
         clearInterval(this.timer);
       }
+      this.OTPTimer.emit({ seconds: this.displaySecond });
     }, 1000);
   }
   onIsdCodeSelected(isdCode) {

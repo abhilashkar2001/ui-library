@@ -67,12 +67,12 @@
     </div>
     <div class="standard-font-black">
       <span *ngIf="resendLink"
-        ><a (click)="onGetOTP()" class="resend-link"> Resend </a></span
+        ><a
+          ><u (click)="onGetOTP()" class="standard-font-blue"> Resend OTP</u></a
+        ></span
       >
-      <span *ngIf="!resendLink"
-        >Resend OTP
-        <span class="standard-font-blue">({{ displaySecond }} min)</span></span
-      >
+      <span *ngIf="!resendLink" class="standard-font-blue">Resend OTP</span
+      ><span *ngIf="!resendLink">({{ displaySecond }} min)</span>
     </div>
     <div class="standard-auth-checkbox-container">
       <mat-checkbox

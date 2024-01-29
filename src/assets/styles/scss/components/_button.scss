@@ -3,6 +3,7 @@
   .mat-button-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 }
 .btn-spinner {
@@ -10,15 +11,21 @@
   height: 1em;
   background: transparent;
   border-radius: 50%;
-  margin: 0 16px 0 0;
   border: 2px solid transparent;
   animation: btn-glow 1s ease infinite;
+  margin-left: 24px;
+}
+
+.loadingText {
+  margin-top: -24px;
+  position: absolute;
+  margin-left: -10px;
 }
 
 @keyframes btn-glow {
   0% {
-    box-shadow: 0 0 0 0.4em darken(#777676, 10%),
-      0 0 0 0.1em darken(#777676, 10%);
+    // box-shadow: 0 0 0 0.4em darken(#777676, 10%),
+    //   0 0 0 0.1em darken(#777676, 10%);
     transform: rotate(360deg);
   }
   50% {
@@ -34,6 +41,14 @@
   text-align: center;
   font-family: Poppins;
   font-size: 14px;
+}
+.loading_submit {
+  height: 50px;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box;
+  color: #ffffff !important;
+  border-radius: 25px !important;
+  margin-top: 8px !important;
 }
 .submit_button {
   height: 50px;

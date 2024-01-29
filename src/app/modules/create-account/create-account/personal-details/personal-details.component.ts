@@ -44,6 +44,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   prefixArray: string[] = [];
   residenceTypeArray: string[] = [];
   boundaries: any;
+  // SAVE BUTTON PROPERTIES
+  isLoading: boolean = false;
+  loadingBtnText: string = "Saving...";
   constructor(
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
@@ -340,8 +343,12 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       payLoad.customer[0].kycStatus =
         this.personalDetailsForm.value.personalInfoArray[0].kycStatus;
     this.openAccountService.setData(payLoad.customer[0]);
+    this.isLoading = true;
+    this.loadingBtnText = "Saving...";
     this.openAccountService.savePersonalDetails(payLoad.customer).subscribe(
       (response: any) => {
+        this.loadingBtnText = "Saved";
+        this.isLoading = false;
         sessionStorage.setItem("customerId", response.data[0].customerId);
         this.onSubmitPersonalDetailsEvent.emit();
       },
