@@ -6,6 +6,8 @@
         (enteredOTP)="onOtpChange($event)"
         [showOtpSection]="showOTPSection"
         (OTPTimer)="otpTimer($event)"
+        [invalidOtp]="invalidOtp"
+        [otpSent]="otpSent"
       ></app-common-mobile-verification>
       <div>
         <div fxLayout="column">

@@ -1,9 +1,18 @@
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
+import { identifierName } from "@angular/compiler";
+import {
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
@@ -14,12 +23,25 @@ import { debounceTime } from "rxjs/operators";
   selector: "app-common-mobile-verification",
   templateUrl: "./common-mobile-verification.component.html",
   styleUrls: ["./common-mobile-verification.component.scss"],
+  animations: [
+    trigger("fadeInOut", [
+      state(
+        "void",
+        style({
+          opacity: 0,
+        })
+      ),
+      transition("void <=> *", animate(1000)),
+    ]),
+  ],
 })
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Output() OTPTimer: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
+  @Input() invalidOtp: boolean;
+  @Input() otpSent: boolean;
   otpForm: FormGroup;
   phone: string;
   otp: any;
@@ -45,6 +67,9 @@ export class CommonMobileVerificationComponent implements OnInit {
   isValidMobile: boolean = false;
   timer: NodeJS.Timer;
   selectedIsd: any;
+  defaultIsdCodeValue: any;
+  resendOtp: number = 0;
+  maxMobileLength: number;
 
   constructor(private fb: FormBuilder, private commonService: CommonService) {
     this.buildFormGroup();
@@ -54,12 +79,19 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.loadCountries();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.otpSent) {
+      this.otpTimer();
+    }
+  }
+
   onGetOTP() {
     this.getOTP.emit({ phone: this.otpForm.value.phone });
     this.getOtpBtn = true;
     this.validNumber = true;
     this.resendLink = false;
-    this.otpTimer();
+    this.resendOtp += 1;
+    clearInterval(this.timer);
   }
 
   otpChange() {}
@@ -69,7 +101,17 @@ export class CommonMobileVerificationComponent implements OnInit {
       (resp: any) => {
         if (resp?.data) {
           this.countriesIsdCodes = resp?.data;
-          this.selectedIsdCode = this.countriesIsdCodes[0];
+          const indiaIsdCode = this.countriesIsdCodes.find(
+            (item) => item?.countryName.toLowerCase() == "india"
+          );
+          if (indiaIsdCode) {
+            this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
+            this.maxMobileLength = indiaIsdCode?.mobileLength;
+          } else {
+            this.defaultIsdCodeValue =
+              this.countriesIsdCodes[0].countryTelIsdCode;
+            this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
+          }
         }
       },
       (err) => console.error("Error: ", err)
@@ -77,7 +119,6 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onOtpChange(otp) {
-    console.log(otp);
     this.otp = otp;
     this.enteredOTP.emit({ otp: this.otp, agreed: this.agreed });
   }
@@ -106,7 +147,7 @@ export class CommonMobileVerificationComponent implements OnInit {
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         const regExp = /^[0]+$/;
-        if (resp?.length == 10) {
+        if (resp?.length == this.maxMobileLength) {
           this.isValidMobile = regExp.test(resp);
           this.validNumber = false;
         } else {
@@ -143,5 +184,16 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
   onIsdCodeSelected(isdCode) {
     this.selectedIsd = isdCode;
+  }
+  setMobileLength() {
+    if (this.otpForm.get("isdCode")) {
+      const countryRecord = this.countriesIsdCodes.find(
+        (item) => item.countryTelIsdCode == this.otpForm.get("isdCode").value
+      );
+      this.maxMobileLength = countryRecord.mobileLength;
+    }
+  }
+  getMobilePattern(): string {
+    return `^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{${this.maxMobileLength}}$`;
   }
 }

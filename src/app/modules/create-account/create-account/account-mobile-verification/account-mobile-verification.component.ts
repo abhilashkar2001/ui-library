@@ -39,6 +39,7 @@ export class AccountMobileVerificationComponent implements OnInit {
     },
   };
   invalidOtp: boolean = false;
+  otpSent: boolean = false;
   otpForm: FormGroup;
   validNumber: boolean = true;
   // SAVE BUTTON PROPERTIES
@@ -65,6 +66,7 @@ export class AccountMobileVerificationComponent implements OnInit {
     this.getOtpBtn = true;
     this.validNumber = true;
     this.phone = event.phone;
+    this.showOTPSection = true;
     this.openAccountService.getOtp(event.phone).subscribe((response: any) => {
       // this.snack.open(`Otp sent Successfully !`, "", {
       //   duration: 4000,
@@ -72,7 +74,10 @@ export class AccountMobileVerificationComponent implements OnInit {
       //   horizontalPosition: "right",
       //   panelClass: "success",
       // });
-      this.showOTPSection = true;
+      this.otpSent = true;
+      setTimeout(() => {
+        this.otpSent = false;
+      }, 5000);
     });
   }
 
@@ -92,11 +97,11 @@ export class AccountMobileVerificationComponent implements OnInit {
         if (response.statusCode === 401) {
           this.invalidOtp = true;
           this.isLoading = false;
-          this.snack.open(`Invalid OTP entered!`, "", {
-            duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-          });
+          // this.snack.open(`Invalid OTP entered!`, "", {
+          //   duration: 4000,
+          //   verticalPosition: "top",
+          //   horizontalPosition: "right",
+          // });
         } else if (response.statusCode === 200) {
           this.loadingBtnText = "Saved";
           this.isLoading = false;

@@ -3,6 +3,9 @@
     (getOTP)="getOTP($event)"
     (enteredOTP)="enteredOtp($event)"
     [showOtpSection]="showOtpSection"
+    (OTPTimer)="otpTimer($event)"
+    [invalidOtp]="invalidOtp"
+    [otpSent]="otpSent"
   ></app-common-mobile-verification>
   <div class="button-section" *ngIf="showOtpSection">
     <button

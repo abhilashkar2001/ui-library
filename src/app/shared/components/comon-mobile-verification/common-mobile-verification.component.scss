@@ -11,7 +11,16 @@
 // ::ng-deep .egret-navy .mat-select-arrow {
 //     color: #CACACA61;
 // }
-
+.successfully-Otp {
+  color: green;
+  font-weight: 500;
+  margin-top: -18px;
+  margin-left: 42%;
+  position: absolute;
+}
+.mobileLength-error {
+  margin-top: 23px;
+}
 .standard-txtField-phone-main {
   padding-bottom: 4px;
   height: 65px;
