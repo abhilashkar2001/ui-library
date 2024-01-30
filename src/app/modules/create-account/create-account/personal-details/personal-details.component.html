@@ -147,7 +147,11 @@
                         class="full-width custom-field mt-2"
                       >
                         <mat-label class="custom-mat-label">Email</mat-label>
-                        <input matInput formControlName="email" />
+                        <input
+                          matInput
+                          noInitialSpecialCharacters
+                          formControlName="email"
+                        />
 
                         <mat-error
                           *ngIf="
@@ -386,15 +390,15 @@
       class="mb-16"
       *ngIf="personalDetailsForm"
     >
-      <button
-        class="confirm-button"
-        type="submit"
-        mat-raised-button
-        [disabled]="!personalDetailsForm.valid"
+      <button-loading
+        [loadingText]="loadingBtnText"
+        [type]="'submit'"
+        [disable]="!personalDetailsForm.valid && isLoading"
+        [loading]="isLoading"
         (click)="onConfirm()"
       >
         Confirm
-      </button>
+      </button-loading>
       <button
         class="back-button"
         mat-raised-button

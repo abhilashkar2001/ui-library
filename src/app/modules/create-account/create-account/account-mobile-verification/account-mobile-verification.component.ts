@@ -41,6 +41,9 @@ export class AccountMobileVerificationComponent implements OnInit {
   invalidOtp: boolean = false;
   otpForm: FormGroup;
   validNumber: boolean = true;
+  // SAVE BUTTON PROPERTIES
+  isLoading: boolean = false;
+  loadingBtnText: string = "Saving...";
 
   constructor(
     private router: Router,
@@ -63,28 +66,40 @@ export class AccountMobileVerificationComponent implements OnInit {
     this.validNumber = true;
     this.phone = event.phone;
     this.openAccountService.getOtp(event.phone).subscribe((response: any) => {
-      this.snack.open(`Otp sent Successfully !`, "", {
-        duration: 4000,
-        verticalPosition: "top",
-        horizontalPosition: "right",
-        panelClass: "success",
-      });
+      // this.snack.open(`Otp sent Successfully !`, "", {
+      //   duration: 4000,
+      //   verticalPosition: "top",
+      //   horizontalPosition: "right",
+      //   panelClass: "success",
+      // });
       this.showOTPSection = true;
     });
   }
 
+  otpTimer(event) {
+    if (event.seconds == "00:00") {
+      this.isLoading = false;
+      this.otpAvailable = false;
+    }
+  }
+
   onVerify() {
+    this.isLoading = true;
+    this.loadingBtnText = "Saving...";
     this.openAccountService
       .verifyOtp({ mobile: this.phone, otp: this.yourOtp })
       .subscribe((response: any) => {
         if (response.statusCode === 401) {
           this.invalidOtp = true;
+          this.isLoading = false;
           this.snack.open(`Invalid OTP entered!`, "", {
             duration: 4000,
             verticalPosition: "top",
             horizontalPosition: "right",
           });
         } else if (response.statusCode === 200) {
+          this.loadingBtnText = "Saved";
+          this.isLoading = false;
           this.invalidOtp = false;
           this.verifyCustomer();
         }

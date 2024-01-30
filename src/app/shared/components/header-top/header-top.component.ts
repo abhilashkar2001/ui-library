@@ -5,6 +5,9 @@ import {
   OnDestroy,
   Renderer2,
   ElementRef,
+  SimpleChanges,
+  QueryList,
+  ViewChildren,
 } from "@angular/core";
 import { NavigationService } from "../../../shared/services/navigation.service";
 import { Subscription } from "rxjs";
@@ -13,6 +16,13 @@ import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import {
+  ActivatedRoute,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from "@angular/router";
 
 @Component({
   selector: "app-header-top",
@@ -43,6 +53,27 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   @Input() notificPanel;
   @Input() mainMenuPanel;
+  headerType: any;
+
+  items = [
+    {
+      label: "Open Account",
+      route: "/account",
+    },
+    {
+      label: "Card",
+      route: "/card",
+    },
+    {
+      label: "Deposits",
+      route: "/deposits",
+    },
+    {
+      label: "Loan",
+      route: "/loan",
+    },
+  ];
+  @ViewChildren("element") elReference: QueryList<ElementRef>;
 
   constructor(
     private layout: LayoutService,
@@ -52,16 +83,19 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     public jwtAuth: JwtAuthService,
     private showSideBar: NewDepositService,
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
     setTimeout(() => {
-      this.animateUnderline(
-        this.el.nativeElement.querySelector(".highlight_label")
-      );
+      this.onNavigation(this.router.url);
     }, 100);
-
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.onNavigation(event.url);
+      }
+    });
     this.layoutConf = this.layout.layoutConf;
     this.egretThemes = this.themeService.egretThemes;
     this.menuItemSub = this.navService.menuItems$.subscribe((res) => {
@@ -88,6 +122,14 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       this.hideNavItem = resp;
     });
   }
+
+  onNavigation(route) {
+    const item = this.items.findIndex((i) => route.includes(i?.route));
+    this.animateUnderline(
+      this.elReference.find((element, index) => index === item)?.nativeElement
+    );
+  }
+
   ngOnDestroy() {
     this.menuItemSub.unsubscribe();
   }

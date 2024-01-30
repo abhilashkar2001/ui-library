@@ -56,6 +56,9 @@ export class OtherDocumentsComponent implements OnInit {
   documentList;
   documentTypeArray: string[] = [];
   hideSelect: string[] = [];
+  // SAVE BUTTON PROPERTIES
+  isLoading: boolean = false;
+  loadingBtnText: string = "Saving...";
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -290,10 +293,14 @@ export class OtherDocumentsComponent implements OnInit {
     if (this.createDocumentForm.invalid) {
       return;
     }
+    this.isLoading = true;
+    this.loadingBtnText = "Saving...";
     this.customSaveDocument.emit({
       status: true,
       documentDetails: this.createDocumentForm.value,
     });
+    this.loadingBtnText = "Saved";
+    this.isLoading = false;
   }
   goBack() {
     this.customgoBack.emit();

@@ -161,15 +161,15 @@
       Add Another Document
     </button>
     <div fxLayoutGap="50px">
-      <button
-        [disabled]="checkDocValidity()"
-        type="button"
-        mat-raised-button
-        class="button submit_button"
+      <button-loading
+        [loadingText]="loadingBtnText"
+        [type]="'submit'"
+        [disable]="isLoading && checkDocValidity()"
+        [loading]="isLoading"
         (click)="onSubmit()"
       >
         Submit
-      </button>
+      </button-loading>
       <button
         type="button"
         mat-raised-button
