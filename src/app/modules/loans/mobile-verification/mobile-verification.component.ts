@@ -21,6 +21,8 @@ export class MobileVerificationComponent implements OnInit {
   stepperTitle: string;
   agreed: boolean = false;
   isOtpAllowed: boolean = false;
+  invalidOtp: boolean = false;
+  otpSent: boolean = false;
 
   constructor(
     private openAccountService: OpenAccountService,
@@ -34,6 +36,7 @@ export class MobileVerificationComponent implements OnInit {
   getOTP(event: any) {
     this.phone = event.phone;
     sessionStorage.setItem("loanPhone", this.phone);
+    this.showOtpSection = true;
     this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
       // this.snack.open(`Otp sent Successfully !`, "", {
       //   duration: 4000,
@@ -41,8 +44,17 @@ export class MobileVerificationComponent implements OnInit {
       //   horizontalPosition: "right",
       //   panelClass: "success",
       // });
-      this.showOtpSection = true;
+      this.otpSent = true;
+      setTimeout(() => {
+        this.otpSent = false;
+      }, 5000);
     });
+  }
+
+  otpTimer(event) {
+    if (event.seconds == "00:00") {
+      this.isOtpAllowed = false;
+    }
   }
 
   enteredOtp(event: any) {
@@ -78,12 +90,14 @@ export class MobileVerificationComponent implements OnInit {
       .verifyOtp({ mobile: this.phone, otp: this.otp })
       .subscribe((response: any) => {
         if (response.statusCode === 401) {
-          this.snack.open(`Invalid OTP entered!`, "", {
-            duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-          });
+          // this.snack.open(`Invalid OTP entered!`, "", {
+          //   duration: 4000,
+          //   verticalPosition: "top",
+          //   horizontalPosition: "right",
+          // });
+          this.invalidOtp = true;
         } else if (response.statusCode === 200) {
+          this.invalidOtp = false;
           this.getExistingUserDetails();
         }
       });

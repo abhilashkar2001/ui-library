@@ -160,7 +160,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="">
+      <div fxFlex="45" class="enabled-mat-form-field">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Holder Type</mat-label>
           <mat-select
@@ -204,7 +204,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="">
+      <div fxFlex="45" class="enabled-mat-form-field">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Disbursement Type</mat-label>
           <mat-select
@@ -283,7 +283,11 @@
         </mat-form-field>
       </div>
 
-      <div class="" fxFlex="45" *ngIf="disbursementType === 'account'">
+      <div
+        class="enabled-mat-form-field"
+        fxFlex="45"
+        *ngIf="disbursementType === 'account'"
+      >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Account Number</mat-label>
           <input
@@ -352,7 +356,7 @@
         </mat-error>
       </div>
 
-      <div fxFlex="45" class="">
+      <div fxFlex="45" class="enabled-mat-form-field">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
           <input
