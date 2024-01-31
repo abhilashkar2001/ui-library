@@ -6,26 +6,26 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
-  selector: "app-process-offer-letter",
-  templateUrl: "./process-offer-letter.component.html",
-  styleUrls: ["./process-offer-letter.component.scss"],
+  selector: "app-remark",
+  templateUrl: "./remark.component.html",
+  styleUrls: ["./remark.component.scss"],
 })
-export class ProcessOfferLetterComponent implements OnInit {
-  currentUser: any;
-  currentTab: any;
-  revisiteForm: FormGroup;
+export class RemarkComponent implements OnInit {
+  currentuser: any;
   originationId: any;
+  revisiteForm: FormGroup;
+
   constructor(
     private tokenStorageService: TokenStorageService,
-    private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
+    private fb: FormBuilder,
     private route: Router
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
-    this.buildRevisiteForm();
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.currentuser = this.tokenStorageService.getUser();
+    this.buildRevisiteForm();
     this.fetchOfferDetails();
   }
 
@@ -46,6 +46,16 @@ export class ProcessOfferLetterComponent implements OnInit {
     });
   }
 
+  fetchOfferDetails() {
+    this.offerIssueService
+      .fetchOfferIssueSummary(this.originationId)
+      .subscribe((res: any) => {
+        if (res?.statusCode == 200 && res?.data) {
+          this.buildRevisiteForm(res?.data[0]);
+        }
+      });
+  }
+
   saveCustomerRequest() {
     const formValue = this.revisiteForm.value;
     const payload: any = {};
@@ -63,15 +73,5 @@ export class ProcessOfferLetterComponent implements OnInit {
         this.route.navigate(["home"]);
       }
     });
-  }
-
-  fetchOfferDetails() {
-    this.offerIssueService
-      .fetchOfferIssueSummary(this.originationId)
-      .subscribe((res: any) => {
-        if (res?.statusCode == 200 && res?.data) {
-          this.buildRevisiteForm(res?.data[0]);
-        }
-      });
   }
 }

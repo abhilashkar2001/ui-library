@@ -1,0 +1,33 @@
+<div class="main_page" *ngIf="revisiteForm" [formGroup]="revisiteForm">
+  <div class="head_container bank-title">
+    <h1>{{ currentuser?.bankName | titlecase }}</h1>
+  </div>
+
+  <div
+    class="subhead_container"
+    fxLayout="column"
+    fxLayoutAlign="space-between start"
+  >
+    <div>
+      <h3 class="text-label mb-16">Remarks</h3>
+
+      <textarea
+        name=""
+        id=""
+        cols="100"
+        rows="15"
+        class="toggle-card"
+        formControlName="remark"
+      ></textarea>
+    </div>
+    <div
+      class="w-100"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="20px"
+    >
+      <button mat-raised-button class="reset-btn" fxFlex="40">Reset</button>
+      <button mat-raised-button class="submit-btn" fxFlex="60">Submit</button>
+    </div>
+  </div>
+</div>

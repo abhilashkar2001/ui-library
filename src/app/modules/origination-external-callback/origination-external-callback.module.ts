@@ -14,6 +14,7 @@ import { SignNowPopupComponent } from "./digital-sign/sign-now-popup/sign-now-po
 import { SignPadComponent } from "./digital-sign/sign-pad/sign-pad.component";
 import { SuccessModalComponent } from "./digital-sign/success-modal/success-modal.component";
 import { DocumentUploadComponent } from "./document-upload/document-upload.component";
+import { RemarkComponent } from './offer-letter/remark/remark.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { DocumentUploadComponent } from "./document-upload/document-upload.compo
     SignPadComponent,
     SuccessModalComponent,
     DocumentUploadComponent,
+    RemarkComponent,
   ],
   imports: [
     CommonModule,
