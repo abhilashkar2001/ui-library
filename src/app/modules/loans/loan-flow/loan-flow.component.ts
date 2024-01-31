@@ -383,8 +383,8 @@ export class LoanFlowComponent implements OnInit {
     var docIds = [];
     event.forEach((element) => {
       let docItemId = [];
-      element.fileInfo.forEach((documents) => {
-        docItemId.push(documents.docId);
+      element.fileInfo.forEach((documents: any) => {
+        docItemId.push(documents.docId ?? documents.id);
       });
       const docId = {
         docIds: docItemId,

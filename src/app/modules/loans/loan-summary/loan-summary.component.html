@@ -146,7 +146,7 @@
     </div>
   </div>
   <div class="uploaded-documents-summary">
-    <div class="text-header">Documents</div>
+    <div class="text-header">Select KYC</div>
     <div
       class="bank-account-details w-full"
       *ngIf="loanSummaryDetails?.docs?.length > 0"
@@ -158,16 +158,33 @@
           >{{ loanSummaryDetails?.docs[0]?.documentType }}
         </span>
       </div>
-      <div fxLayout="row">
+      <div fxLayout="row" fxLayoutGap="20px">
         <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
-          <div class="uploaded-images-section">
-            <div class="uploaded-images">
-              <!-- <mat-icon>check_circle</mat-icon> -->
-              <!-- <img src="../../../../assets/images/account-img1.png" alt="" /> -->
-              <img [src]="getFileUrl(doc.fileUrl)" alt="" />
-              <!-- <mat-icon>delete</mat-icon> -->
-            </div>
-          </div>
+          <app-show-document [document]="doc"> </app-show-document>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngFor="
+      let item of loanSummaryDetails.documnentsInfo.documents;
+      let i = index
+    "
+    class="uploaded-documents-summary"
+  >
+    <div class="text-header">Loan Document</div>
+    <div
+      class="bank-account-details w-full"
+      *ngIf="loanSummaryDetails?.documnentsInfo?.documents?.length > 0"
+      fxLayout="column"
+    >
+      <div class="col-1">
+        <span class="content-header">Document type</span>
+        <span class="content">{{ item?.docs[0].documentType }} </span>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <ng-container *ngFor="let doc of item.docs">
+          <app-show-document [document]="doc"> </app-show-document>
         </ng-container>
       </div>
     </div>

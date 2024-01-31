@@ -1,0 +1,39 @@
+::ng-deep .imageViewDialog .mat-dialog-container {
+  padding: 0px;
+}
+.imageDisplayDiv {
+  padding: 2px;
+  background-color: #f3f3f3;
+  border: 3px solid #ffffff;
+  border-radius: 18px;
+  opacity: 1;
+  height: 100%;
+}
+.imgName {
+  font-family: Poppins;
+  font-size: 24px;
+  letter-spacing: 0px;
+  color: #004c97;
+  opacity: 1;
+}
+.imageNameDisplayDiv {
+  margin-top: 5px;
+  padding: 0% 3%;
+  img {
+    height: 50px !important;
+  }
+}
+mat-icon {
+  background-color: #ffffff;
+  color: #004c97;
+  border-radius: 8px;
+  cursor: pointer;
+}
+::ng-deep .imageView img {
+  border-radius: 18px;
+  margin-top: 5px;
+}
+.expanded_view {
+  width: 900px !important;
+  height: 491px !important;
+}
