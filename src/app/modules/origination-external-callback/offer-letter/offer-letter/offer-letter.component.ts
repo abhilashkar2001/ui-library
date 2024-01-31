@@ -50,7 +50,10 @@ export class OfferLetterComponent implements OnInit {
       .postOfferAcceptRejectDetails(payload)
       .subscribe((res) => {
         if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
-          this.route.navigate(["/origination/otp"]);
+          if (response == "Accept") this.route.navigate(["/origination/otp"]);
+          else if (response == "Reject")
+            this.route.navigate(["/origination/remark"]);
+          else this.route.navigate(["/origination/process-offer"]);
         }
       });
   }

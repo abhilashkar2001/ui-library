@@ -59,7 +59,7 @@ export class OtpComponent implements OnInit {
   verifyOtp() {
     this.otpService.verifyOTP(this.otpForm.value).subscribe((res) => {
       if (res?.accessToken) {
-        this.route.navigate(["/origination/process-offer"]);
+        this.route.navigate(["/home"]);
       }
     });
   }

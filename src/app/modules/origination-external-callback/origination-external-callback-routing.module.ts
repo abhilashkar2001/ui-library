@@ -5,6 +5,7 @@ import { ProcessOfferLetterComponent } from "./offer-letter/process-offer-letter
 import { OtpComponent } from "./otp/otp.component";
 import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.component";
 import { DocumentUploadComponent } from "./document-upload/document-upload.component";
+import { RemarkComponent } from "./offer-letter/remark/remark.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,13 @@ const routes: Routes = [
     component: OtpComponent,
     data: {
       title: "OTP",
+    },
+  },
+  {
+    path: "remark",
+    component: RemarkComponent,
+    data: {
+      title: "Remark",
     },
   },
   {
