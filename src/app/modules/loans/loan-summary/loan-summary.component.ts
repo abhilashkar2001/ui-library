@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { ImageDialogComponent } from "app/shared/components/image-dialog/image-dialog.component";
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -77,5 +78,18 @@ export class LoanSummaryComponent implements OnInit {
     )
       return true;
     else return false;
+  }
+
+  viewFiles(imageUrl: any, imageName: any): void {
+    console.log(imageName);
+    const dialogRef = this.dialog.open(ImageDialogComponent, {
+      data: {
+        imageUrl,
+        imageName: imageName.fileName,
+      },
+      width: "900px",
+      height: "560px",
+      panelClass: "imageViewDialog",
+    });
   }
 }
