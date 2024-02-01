@@ -45,7 +45,12 @@
             <div class="field" fxFlex="50">
               <mat-form-field appearance="outline">
                 <mat-label class="custom-mat-label">Document Number</mat-label>
-                <input matInput formControlName="documentNumber" />
+                <input
+                  matInput
+                  appNoLeadingSpace
+                  maxlength="30"
+                  formControlName="documentNumber"
+                />
               </mat-form-field>
             </div>
           </div>

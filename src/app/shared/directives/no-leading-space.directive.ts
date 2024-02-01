@@ -4,7 +4,7 @@ import { Directive, ElementRef, HostListener } from "@angular/core";
   selector: "[appNoLeadingSpace]",
 })
 export class NoLeadingSpaceDirective {
-  regexStr = "^[a-zA-Z0-9_]*$";
+  regexStr = "^[a-zA-Z0-9]*$";
   constructor(private el: ElementRef) {}
 
   @HostListener("input", ["$event"]) onInput(event: InputEvent) {

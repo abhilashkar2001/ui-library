@@ -34,14 +34,13 @@ export class CarouselComponent implements OnInit, OnChanges {
   totalListCount: number;
   carouselArrowDisplay: boolean = false;
   swiperConfig: any = {
-    slidesPerView: "auto",
     spaceBetween: 20,
     breakpoints: {
       768: {
-        slidesPerView: 5,
+        slidesPerView: 6,
       },
       576: {
-        slidesPerView: 1,
+        slidesPerView: 0,
       },
     },
   };
@@ -54,7 +53,17 @@ export class CarouselComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("Rest: ", this.carowselData);
+    setTimeout(() => {
+      const nextIcon = document.getElementsByClassName("swiper-button-next")[0];
+      const prevIcon = document.getElementsByClassName("swiper-button-prev")[0];
+      if (this.dynamicList?.length <= 5) {
+        var swiperwrapper: any =
+          document.getElementsByClassName("swiper-wrapper")[0];
+        swiperwrapper.style.justifyContent = "center";
+      }
+      nextIcon.innerHTML = `<img src="assets/images/next_icon.svg" />`;
+      prevIcon.innerHTML = `<img src="assets/images/prev_icon.svg" />`;
+    }, 200);
   }
 
   caroselPayload() {

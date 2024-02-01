@@ -29,8 +29,7 @@
           <mat-hint>As Per National Id</mat-hint>
         </mat-form-field>
       </div>
-      &nbsp;
-      <div style="margin-top: 20px">
+      <div style="margin-top: 10px">
         <span class="mobile">Mobile Number</span>
         <mat-radio-group [(ngModel)]="selectedOption">
           <mat-radio-button value="same" class="radioChecked radiobtn"
@@ -41,7 +40,21 @@
           >
         </mat-radio-group>
       </div>
-      <div style="display: flex; flex-direction: row; width: 100%">
+      <div *ngIf="selectedOption === 'different'">
+        <app-common-mobile-verification
+          [hideInfo]="hideInfo"
+          (getOTP)="getOTP($event)"
+          [showOtpSection]="showOtpSection"
+          [otpSent]="otpSent"
+          [invalidOtp]="invalidOtp"
+          (enteredOTP)="enteredOtp($event)"
+          (OTPTimer)="otpTimer($event)"
+        ></app-common-mobile-verification>
+      </div>
+      <div
+        style="display: flex; flex-direction: row; width: 100%"
+        *ngIf="selectedOption === 'same'"
+      >
         <mat-checkbox
           class="custom-checkbox"
           class="primary"
@@ -54,9 +67,18 @@
         </span>
       </div>
       <div class="button-section" fxLayoutGap="50px">
-        <button class="confirm-button" (click)="onContinue()">Continue</button>
+        <button
+          mat-raised-button
+          class="confirm-button"
+          [disabled]="checkCobilConfim()"
+          (click)="onContinue()"
+        >
+          Continue
+        </button>
 
-        <button class="back-button" (click)="onBack()">Back</button>
+        <button mat-raised-button class="back-button" (click)="onBack()">
+          Back
+        </button>
       </div>
     </div>
 
