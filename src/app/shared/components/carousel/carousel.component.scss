@@ -18,16 +18,15 @@
   position: relative;
   z-index: 100;
 }
-.swiper-wrapper {
-  display: flex;
-  justify-content: center;
-}
+
 .image_img {
   display: block;
   width: 100%;
   height: 100%;
 }
-.swiper-button-next,
-.swiper-button-prev {
-  display: none !important;
+.swiper-button-next::after {
+  content: none !important;
+}
+.swiper-button-prev::after {
+  content: none !important;
 }

@@ -42,6 +42,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
+  @Input() hideInfo = false;
   otpForm: FormGroup;
   phone: string;
   otp: any;
@@ -83,6 +84,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     if (this.otpSent) {
       this.otpTimer();
     }
+    if (changes.hideInfo) this.hideInfo = changes.hideInfo.currentValue;
   }
 
   onGetOTP() {

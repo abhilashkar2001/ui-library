@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -18,7 +18,8 @@ export class LoansLandingComponent implements OnInit {
   constructor(
     private router: Router,
     private commonService: CommonService,
-    private loanService: LoanService
+    private loanService: LoanService,
+    private el: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -42,5 +43,20 @@ export class LoansLandingComponent implements OnInit {
     this.router.navigate(["/loan/loan-type"], {
       queryParams: { subClass: e },
     });
+  }
+  customApply(e) {
+    const targetElement =
+      this.el.nativeElement.querySelector("#custom-carousel");
+    const targetPosition = targetElement.getBoundingClientRect().top;
+    const scrollPosition =
+      targetPosition > 200 ? targetPosition - 120 : targetPosition;
+    if (targetElement) {
+      // targetElement.scrollIntoView({
+      //   top: scrollPosition,
+      //   behavior: "smooth",
+      //   block: "start",
+      // });
+      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+    }
   }
 }

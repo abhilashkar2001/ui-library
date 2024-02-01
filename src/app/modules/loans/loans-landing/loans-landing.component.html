@@ -4,24 +4,18 @@
     [profileHeader]="profileHeader"
     [profileHint]="profileHint"
     [routeUrl]="routeUrl"
+    (customApply)="customApply($event)"
   >
   </app-landing-profile>
 
   <div class="mar-20">
-    <!-- <div>
-      <app-carousel
-        [carowselData]="carowselData"
-        [flow]="'loan'"
-      ></app-carousel>
-    </div> -->
-    <div>
+    <div id="custom-carousel">
       <app-carousel
         businessSuiteName="Loan Opening Services"
         [carowselData]="carowselData"
         (customApplyLoan)="customApplyLoan($event)"
       >
       </app-carousel>
-      <!-- <app-custom-swiper [carowselData]="carowselData"> </app-custom-swiper> -->
     </div>
   </div>
 

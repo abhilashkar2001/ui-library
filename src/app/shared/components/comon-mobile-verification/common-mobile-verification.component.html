@@ -1,8 +1,10 @@
 <form [formGroup]="otpForm">
-  <div class="title-text">
+  <div class="title-text" *ngIf="!hideInfo">
     Let’s begin with some necessary information and get you started
   </div>
-  <div class="standard-font-blue">Enter Mobile Number for Instant Login</div>
+  <div class="standard-font-blue" *ngIf="!hideInfo">
+    Enter Mobile Number for Instant Login
+  </div>
   <div>
     <fieldset class="yeardrop fieldset">
       <div fxLayout="row" class="parentYearDiv" fxFlex="100">
@@ -67,7 +69,7 @@
   </div>
 
   <div
-    [ngStyle]="{ visibility: showOtpSection ? 'visible' : 'hidden' }"
+    [ngStyle]="{ display: showOtpSection ? 'block' : 'none' }"
     style="margin-top: 30px"
   >
     <div class="standard-font-blue full-width mt-125">Enter OTP to verify</div>
