@@ -42,7 +42,6 @@
             formControlName="phone"
             numbersOnly
             [maxlength]="maxMobileLength"
-            [pattern]="getMobilePattern()"
           />
           <button
             class="confirm-button"
@@ -53,7 +52,12 @@
           >
             Get OTP
           </button>
-          <mat-error class="mobileLength-error"
+          <mat-error
+            *ngIf="
+              otpForm.get('phone').touched &&
+              otpForm.get('phone').hasError('invalidLength')
+            "
+            class="mobileLength-error"
             >Mobile length should be {{ maxMobileLength }}</mat-error
           >
         </mat-form-field>

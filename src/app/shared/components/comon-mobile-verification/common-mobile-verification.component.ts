@@ -155,6 +155,7 @@ export class CommonMobileVerificationComponent implements OnInit {
         } else {
           this.isValidMobile = false;
           this.validNumber = true;
+          this.otpForm.get("phone").setErrors({ invalidLength: true });
         }
       });
   }
@@ -194,8 +195,5 @@ export class CommonMobileVerificationComponent implements OnInit {
       );
       this.maxMobileLength = countryRecord.mobileLength;
     }
-  }
-  getMobilePattern(): string {
-    return `^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{${this.maxMobileLength}}$`;
   }
 }
