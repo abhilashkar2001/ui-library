@@ -11,6 +11,7 @@ import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { LoanFlowConstants } from "./loan-flow.constant";
+import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 
 @Component({
   selector: "app-loan-flow",
@@ -220,14 +221,42 @@ export class LoanFlowComponent implements OnInit {
   }
 
   checkExistingUserEvent(event) {
-    if (event?.statusCode === 200) {
-      sessionStorage.setItem("customerId", event.data[0].customerId);
-      sessionStorage.setItem("isExistingCustomer", "Yes");
-      localStorage.setItem("customerData", JSON.stringify(event.data[0]));
-      this.next();
-    } else if (event?.statusCode === 204) {
-      this.next();
-    }
+    this.loanApi
+      .checkMobileAndProduct(this.productDetails.basisName, event.phone, "Loan")
+      .subscribe((resp) => {
+        if (resp) {
+          this.allreadyProduct();
+        } else {
+          if (event.response?.statusCode === 200) {
+            sessionStorage.setItem(
+              "customerId",
+              event.response.data[0].customerId
+            );
+            sessionStorage.setItem("isExistingCustomer", "Yes");
+            localStorage.setItem(
+              "customerData",
+              JSON.stringify(event.response.data[0])
+            );
+            this.next();
+          } else if (event.response?.statusCode === 204) {
+            this.next();
+          }
+        }
+      });
+  }
+
+  allreadyProduct() {
+    this.dialog.open(ErrorNotifierPopupComponent, {
+      data: {
+        errorMessage:
+          "We have found similar loan application in our record on your Mobile Number",
+        errorMessageHint: "Please visit bank for more information.",
+      },
+      width: "650px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
   }
 
   onCustomCibilDetail() {

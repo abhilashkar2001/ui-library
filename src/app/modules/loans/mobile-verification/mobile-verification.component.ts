@@ -80,7 +80,10 @@ export class MobileVerificationComponent implements OnInit {
       .getExistingUserDetails(this.phone)
       .subscribe((response: any) => {
         console.log("Existing user: ", response);
-        this.checkExistingUserEvent.emit(response);
+        this.checkExistingUserEvent.emit({
+          response: response,
+          phone: this.phone,
+        });
         this.onConfirmEvent.emit();
       });
   }

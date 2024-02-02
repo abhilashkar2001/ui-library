@@ -23,6 +23,7 @@ import * as moment from "moment";
 
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { ReusablePincodePopupComponent } from "../reusable-pincode-popup/reusable-pincode-popup.component";
+import { ErrorNotifierPopupComponent } from "../error-notifier-popup/error-notifier-popup.component";
 
 @Component({
   selector: "app-common-personal-details",
@@ -184,7 +185,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
-      primaryCustomer: [data ? data.primaryCustomer : false],
+      primaryCustomer: [
+        data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
+      ],
       prefix: [data ? data.prefix : "", Validators.required],
       firstName: [data ? data.firstName : "", Validators.required],
       lastName: [data ? data.lastName : "", Validators.required],
@@ -379,10 +382,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
     ) {
       return false;
     } else {
-      this.snack.open(`Please select primary customer`, "OK", {
-        duration: 2000,
-        verticalPosition: "top",
-        horizontalPosition: "right",
+      this.dialog.open(ErrorNotifierPopupComponent, {
+        data: {
+          errorMessage: "Please select primary customer",
+        },
+        width: "650px",
+        disableClose: true,
+        panelClass: "popup-dialog-class",
+        backdropClass: "bdrop",
       });
       return true;
     }
