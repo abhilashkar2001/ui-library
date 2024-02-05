@@ -97,7 +97,7 @@ export class CreateAccountLandingPageComponent {
         "Account"
       )
       .subscribe((resp) => {
-        if (resp) {
+        if (!resp) {
           this.allreadyProduct();
         } else {
           this.openAccountService
