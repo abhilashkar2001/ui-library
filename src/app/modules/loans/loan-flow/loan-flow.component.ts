@@ -425,7 +425,7 @@ export class LoanFlowComponent implements OnInit {
     const customer = this.createPayload(this.customerInfo);
     const payload = {
       originationModel: {
-        applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+        applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
         accountType: this.originationModel?.accountType,
         basisDetailsId: sessionData.basisId,
         loanAmount: parseInt(loanData.loanAmount),
@@ -563,7 +563,7 @@ export class LoanFlowComponent implements OnInit {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     return {
-      applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
       accountType: sessionData.basisName,
       basisDetailsId: sessionData.basisId,
       loanAmount: parseInt(loanData.loanAmount),
