@@ -29,7 +29,6 @@ export class CommonEmiCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     const basisId = sessionStorage.getItem("loanBasisDetails");
-    // console.log("basisId", JSON.parse(basisId).basisId);
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.buildForm();
   }
