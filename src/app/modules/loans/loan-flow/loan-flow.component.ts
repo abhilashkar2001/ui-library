@@ -224,7 +224,7 @@ export class LoanFlowComponent implements OnInit {
     this.loanApi
       .checkMobileAndProduct(this.productDetails.basisName, event.phone, "Loan")
       .subscribe((resp) => {
-        if (resp) {
+        if (!resp) {
           this.allreadyProduct();
         } else {
           if (event.response?.statusCode === 200) {
