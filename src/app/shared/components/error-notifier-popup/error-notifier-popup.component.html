@@ -1,0 +1,23 @@
+<div fxLayout="column">
+  <div fxLayout="column">
+    <div class="alertText">
+      {{ errorMessage }}
+    </div>
+    <div class="alertText_hint" *ngIf="errorMessageHint">
+      {{ errorMessageHint }}
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <img class="summaryIcon" src="assets/images/error-icon.svg" />
+  </div>
+  <div fxLayoutAlign="center center">
+    <button
+      type="button"
+      mat-raised-button
+      class="saveButton done_btn"
+      (click)="closeDialog()"
+    >
+      Ok
+    </button>
+  </div>
+</div>

@@ -68,10 +68,11 @@ export class CibilScoreContainerComponent implements OnInit {
         .verifyOtp({ mobile: this.phone, otp: this.otp })
         .subscribe((response: any) => {
           if (response.statusCode === 401) {
+            this.showCibilScoreResult = false;
             this.invalidOtp = true;
           } else if (response.statusCode === 200) {
             this.invalidOtp = false;
-            this.showCibilScoreResult = false;
+            this.showCibilScoreResult = true;
           }
         });
     } else this.showCibilScoreResult = true;

@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -88,8 +89,49 @@ export class CreateAccountLandingPageComponent {
     this.factory();
   }
 
-  onVerify() {
-    this.next();
+  onVerify(event) {
+    this.openAccountService
+      .checkMobileAndProduct(
+        this.productDetails.basisName,
+        event.phone,
+        "Account"
+      )
+      .subscribe((resp) => {
+        if (!resp) {
+          this.allreadyProduct();
+        } else {
+          this.openAccountService
+            .getExistingCustomer(event.phone)
+            .subscribe((resp: any) => {
+              if (resp?.statusCode === 200 && resp?.data) {
+                if (resp?.data[0]?.kycStatus) {
+                  sessionStorage.setItem("mobileNo", event.phone);
+                  sessionStorage.setItem("customerId", resp.data[0].customerId);
+                  this.next();
+                }
+              } else if (resp?.statusCode === 204) {
+                sessionStorage.setItem("mobileNo", event.phone);
+                this.next();
+              } else {
+                sessionStorage.setItem("mobileNo", event.phone);
+                this.next();
+              }
+            });
+        }
+      });
+  }
+  allreadyProduct() {
+    this.dialog.open(ErrorNotifierPopupComponent, {
+      data: {
+        errorMessage:
+          "We have found similar account application in our record on your Mobile Number",
+        errorMessageHint: "Please visit bank for more information.",
+      },
+      width: "650px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
   }
 
   onExit() {

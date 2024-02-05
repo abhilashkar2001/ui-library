@@ -97,16 +97,12 @@ export class AccountMobileVerificationComponent implements OnInit {
         if (response.statusCode === 401) {
           this.invalidOtp = true;
           this.isLoading = false;
-          // this.snack.open(`Invalid OTP entered!`, "", {
-          //   duration: 4000,
-          //   verticalPosition: "top",
-          //   horizontalPosition: "right",
-          // });
         } else if (response.statusCode === 200) {
           this.loadingBtnText = "Saved";
           this.isLoading = false;
           this.invalidOtp = false;
-          this.verifyCustomer();
+          this.onVerifyOtpEvent.emit({ phone: this.phone });
+          // this.verifyCustomer();
         }
       });
   }

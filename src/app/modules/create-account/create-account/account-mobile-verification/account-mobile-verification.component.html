@@ -12,9 +12,13 @@
       <div>
         <div fxLayout="column">
           <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
-            <div fxLayout="row" fxLayoutGap="30px" class="button-section">
+            <div
+              fxLayout="row"
+              fxLayoutGap="30px"
+              class="button-section"
+              *ngIf="showOTPSection"
+            >
               <button-loading
-                *ngIf="showOTPSection"
                 [loadingText]="loadingBtnText"
                 [type]="'submit'"
                 [disable]="!(otpAvailable && !isLoading && agreed)"

@@ -58,6 +58,7 @@ import { CustomPaginationComponent } from "./custom-pagination/custom-pagination
 import { CommonProductComponent } from "./common-product/common-product.component";
 import { ImageDialogComponent } from "./image-dialog/image-dialog.component";
 import { ShowDocumentComponent } from "./show-document/show-document.component";
+import { ErrorNotifierPopupComponent } from "./error-notifier-popup/error-notifier-popup.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -95,6 +96,7 @@ const components = [
   CommonProductComponent,
   ImageDialogComponent,
   ShowDocumentComponent,
+  ErrorNotifierPopupComponent,
 ];
 
 @NgModule({

@@ -18,7 +18,7 @@
     <div *ngIf="verfyStep('mobile', currentStep)">
       <app-account-Mobile-verification-details
         (onBackEvent)="onBackOnPreviousStep()"
-        (onVerifyOtpEvent)="onVerify()"
+        (onVerifyOtpEvent)="onVerify($event)"
       ></app-account-Mobile-verification-details>
     </div>
     <!-- Mobile verification part ends here -->
