@@ -137,6 +137,34 @@
                 </div>
               </div>
             </fieldset>
+            <mat-error
+              class="mat-error small-error mt-12"
+              *ngIf="
+                validateTenure &&
+                (loanForm.controls['tenureYear'].value ||
+                  loanForm.controls['tenureMonth'].value ||
+                  loanForm.controls['tenureDays'].value)
+              "
+            >
+              Loan Period should be less than
+              {{ productDetails?.maximumTenorYear }} Years
+              {{ productDetails?.maximumTenorMonth }} Months
+              {{ productDetails?.maximumTenorDay }} Days
+            </mat-error>
+            <mat-error
+              class="mat-error small-error mt-12"
+              *ngIf="
+                validateMinimumTenure &&
+                (loanForm.controls['tenureYear'].value ||
+                  loanForm.controls['tenureMonth'].value ||
+                  loanForm.controls['tenureDays'].value)
+              "
+            >
+              Loan Period should be greater than
+              {{ productDetails?.minimumTenorYear }} Years
+              {{ productDetails?.minimumTenorMonth }} Months
+              {{ productDetails?.minimumTenorDay }} Days
+            </mat-error>
           </div>
           <div class="col-md-6 col-12">
             <label class="calculator_subTItle">Interest Rate</label>
