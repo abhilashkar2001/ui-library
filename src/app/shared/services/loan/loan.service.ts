@@ -114,6 +114,12 @@ export class LoanService {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
 
+  getProductAspectDetails(basisId) {
+    return this.http.get<any>(
+      `${baseUrl}/aspects-lending?basisDetailId=${basisId}`
+    );
+  }
+
   checkMobileAndProduct(productCode, mobileNo, accountType) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`

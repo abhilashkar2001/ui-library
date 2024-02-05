@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
@@ -23,10 +24,20 @@ export class CommonEmiCalculatorComponent implements OnInit {
   email = new FormControl("");
   thumbLabel: boolean = true;
   currencySymboll = "₹";
-  constructor(private fb: FormBuilder) {}
+  productDetails: any;
+  constructor(private fb: FormBuilder, private loanApi: LoanService) {}
 
   ngOnInit(): void {
+    const basisId = sessionStorage.getItem("loanBasisDetails");
+    // console.log("basisId", JSON.parse(basisId).basisId);
+    this.getProductDetails(JSON.parse(basisId).basisId);
     this.buildForm();
+  }
+  getProductDetails(basisId) {
+    this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200)
+        this.productDetails = resp.data[0].lendingParameters[0];
+    });
   }
   onSliderChange(e) {
     console.log(e);
@@ -66,5 +77,37 @@ export class CommonEmiCalculatorComponent implements OnInit {
     sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
     sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
     this.customCalculatorValues.emit(this.loanForm.value);
+  }
+
+  calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {
+    const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
+    return d;
+  }
+
+  get validateMinimumTenure() {
+    let totalDays = this.calculateTotalDays(
+      this.loanForm.value.tenureYear || 0,
+      this.loanForm.value.tenureMonth || 0,
+      this.loanForm.value.tenureDays || 0
+    );
+    let MinimumAllowedDays = this.calculateTotalDays(
+      this.productDetails?.minimumTenorYear || 0,
+      this.productDetails?.minimumTenorMonth || 0,
+      this.productDetails?.minimumTenorDay || 0
+    );
+    return totalDays <= MinimumAllowedDays;
+  }
+  get validateTenure() {
+    let totalDays = this.calculateTotalDays(
+      this.loanForm.value.tenureYear || 0,
+      this.loanForm.value.tenureMonth || 0,
+      this.loanForm.value.tenureDays || 0
+    );
+    let totalAllowedDays = this.calculateTotalDays(
+      this.productDetails?.maximumTenorYear || 0,
+      this.productDetails?.maximumTenorMonth || 0,
+      this.productDetails?.maximumTenorDay || 0
+    );
+    return totalDays >= totalAllowedDays;
   }
 }

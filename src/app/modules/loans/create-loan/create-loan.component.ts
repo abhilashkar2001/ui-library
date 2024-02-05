@@ -59,7 +59,9 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     private snack: MatSnackBar,
     private router: Router,
     private openApi: OpenAccountService
-  ) {}
+  ) {
+    this.currentDate.setDate(new Date().getDate() + 1);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {}
 

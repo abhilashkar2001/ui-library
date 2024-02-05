@@ -28,6 +28,7 @@ export class LoanSummaryComponent implements OnInit {
   loanSummaryDetails: any;
   @Input() loanSummary;
   endPoints = environment.microServiceURL;
+  currencySymboll = "₹";
 
   constructor(
     private dialog: MatDialog,
