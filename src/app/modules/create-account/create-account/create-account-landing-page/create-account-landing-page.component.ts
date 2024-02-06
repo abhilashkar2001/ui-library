@@ -180,7 +180,7 @@ export class CreateAccountLandingPageComponent {
               custResp[0].isEmailVerified = true;
               const payload = {
                 originationModel: {
-                  applicationDate: moment(new Date()).format("YYYY-MMM-DD"),
+                  applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
                   accountType: sessionData.accountType,
                   basisDetailsId: sessionData.basisDetailsId,
                   branchCode: this.tokenStore.getUser().branchCode,
