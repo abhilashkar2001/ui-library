@@ -9,7 +9,7 @@ const baseUrl = environment.microServiceURL;
 export class HomeService {
   constructor(private http: HttpClient) {}
 
-  getAccountTypes(newAccount: string = "Account Opening Service") {
+  getAccountTypes(newAccount) {
     return this.http.get(`${baseUrl}/basis-class?businessSuite=${newAccount}`);
   }
 }
