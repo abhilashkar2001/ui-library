@@ -22,6 +22,7 @@ import { UploadImage } from "../origination-external-callback.store";
 import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
 import { Route, Router } from "@angular/router";
+import { CustomerServiceService } from "app/shared/services/customer-service.service";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
   selector: "app-document-upload",
@@ -45,24 +46,27 @@ export class DocumentUploadComponent implements OnInit {
   @ViewChild("fileInput") fileInput: ElementRef;
   customerDetails: any;
   originationId: any;
+  customerId:any;
 
   constructor(
     private fb: FormBuilder,
-    private loader: AppLoaderService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
-    private route: Router
+    private route: Router,
+    private customerService:CustomerServiceService
   ) {}
 
   ngOnInit(): void {
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.customerId = sessionStorage.getItem("customerId");
     this.getDocumentName();
     this.buildDocumentUploadForm();
     this.initialFormLoading();
     if (this.originationId) this.fetchOriginationDetails();
+    if(this.customerId) this.getCustomerData()
   }
 
   initialFormLoading() {
@@ -506,6 +510,22 @@ export class DocumentUploadComponent implements OnInit {
       });
   }
 
+  getCustomerData(){
+    this.customerService.fetchCustomerData(this.customerId).subscribe(res=>{
+      if(res?.statusCode == 200 || res?.statusCode == 201){
+
+      }else{
+        this.snack.open("No customer id found to upload document", "ok", {
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          duration: 2000,
+        });
+        setTimeout(()=>{
+          this.route.navigate(["home"]);
+        },4000)
+      }
+    })
+  }
   saveDocument() {
     if (!this.customerDetails?.originationId) {
       this.snack.open("No customer id found to upload document", "ok", {
@@ -517,9 +537,9 @@ export class DocumentUploadComponent implements OnInit {
     const documentId = this.documentUploadForm.value.documents.map((item) => ({
       docIds: item?.pages?.map((page) => page?.id)?.filter((page) => page),
     }));
-
+    
     const payload: any = {};
-    payload.customerId = this.customerDetails?.customerInfo[0]?.customerId;
+    payload.customerId = this.originationId ? this.customerDetails?.customerInfo[0]?.customerId : this.customerId;
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {

@@ -34,6 +34,7 @@ export class CallbackComponent implements OnInit {
     this.sessionService.getProfileInfo().subscribe(
       (res) => {
         this.tokenService.saveUser(res);
+        sessionStorage.setItem("customerId", this.getParameterByName("customerId"))
         sessionStorage.setItem(
           "originationId",
           JSON.stringify(this.getParameterByName("originationId"))
