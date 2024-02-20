@@ -203,8 +203,11 @@ export class CreateAccountLandingPageComponent {
                     this.loanApi
                       .verifyWorkFlow(accountPayload)
                       .subscribe((workres) => {
-                        if (workres?.autoAction) this.saveCofig(workres);
-                        else this.done(resp);
+                        if (workres?.autoAction) {
+                          e.loadingBtnText = "Saved";
+                          e.isLoading = false;
+                          this.saveCofig(workres);
+                        } else this.done(resp);
                       });
                   }
                 });

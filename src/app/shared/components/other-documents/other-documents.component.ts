@@ -296,11 +296,11 @@ export class OtherDocumentsComponent implements OnInit {
     this.isLoading = true;
     this.loadingBtnText = "Saving...";
     this.customSaveDocument.emit({
+      isLoading: this.isLoading,
+      loadingBtnText: this.loadingBtnText,
       status: true,
       documentDetails: this.createDocumentForm.value,
     });
-    this.loadingBtnText = "Saved";
-    this.isLoading = false;
   }
   goBack() {
     this.customgoBack.emit();
