@@ -58,7 +58,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: ["", [Validators.required]],
+      interestRate: [0, [Validators.required]],
     });
 
     this.loanForm

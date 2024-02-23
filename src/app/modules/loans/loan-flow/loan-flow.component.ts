@@ -442,6 +442,9 @@ export class LoanFlowComponent implements OnInit {
       },
       customerInfo: customer,
     };
+    payload.customerInfo.forEach((cust) => {
+      cust.documentId = docIds;
+    });
     this.getMasterSave(payload);
   }
 
