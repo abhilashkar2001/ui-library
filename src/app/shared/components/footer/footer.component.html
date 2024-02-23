@@ -1,4 +1,4 @@
-<footer *ngIf="!hideNavItem">
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-11 mx-auto">
@@ -19,12 +19,20 @@
           >
             <div>
               <h4>Pages</h4>
-              <div class="footer_links">
-                <a [routerLink]="['/account']"><div>Open Account</div></a>
-                <a [routerLink]="['/loan']"><div>Loan Account</div></a>
-                <a [routerLink]="['/card']"><div>Card</div></a>
-                <a [routerLink]="['/deposits']"><div>Deposit</div></a>
-              </div>
+              <ul class="footer_links">
+                <li>
+                  <a [routerLink]="['/account']">Open Account</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/loan']">Loan Account</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/card']">Card</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/deposits']">Deposit</a>
+                </li>
+              </ul>
             </div>
           </div>
           <div

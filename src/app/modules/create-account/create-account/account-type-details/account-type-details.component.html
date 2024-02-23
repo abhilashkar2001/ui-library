@@ -10,7 +10,10 @@
     </div>
   </div>
 
-  <div *ngFor="let subAccount of subClassList; let index = index">
+  <div
+    *ngFor="let subAccount of subClassList; let index = index"
+    class="container"
+  >
     <app-common-product
       [subAccount]="subAccount"
       [productIndex]="index"

@@ -1,26 +1,24 @@
-<div fxFlex="100" fxLayout="column" style="padding: 2%">
-  <app-landing-profile
-    [imageUrl]="imageUrl"
-    [profileHeader]="profileHeader"
-    [profileHint]="profileHint"
-    (customApply)="customApply($event)"
-  >
-  </app-landing-profile>
-  <div id="custom-carousel">
-    <app-carousel
-      businessSuiteName="Account Opening Services"
-      [carowselData]="data"
-      [flow]="'account'"
-      (customApplyLoan)="customApplyLoan($event)"
-    ></app-carousel>
-  </div>
-
-  <div class="top-performing">
-    <app-top-performing></app-top-performing>
-  </div>
-
-  <div style="margin-top: 15px">
-    <app-news-letter-slider></app-news-letter-slider>
-  </div>
-  <app-news-letter></app-news-letter>
+<app-landing-profile
+  [imageUrl]="imageUrl"
+  [profileHeader]="profileHeader"
+  [profileHint]="profileHint"
+  (customApply)="customApply($event)"
+>
+</app-landing-profile>
+<div id="custom-carousel">
+  <app-carousel
+    businessSuiteName="Account Opening Services"
+    [carowselData]="data"
+    [flow]="'account'"
+    (customApplyLoan)="customApplyLoan($event)"
+  ></app-carousel>
 </div>
+
+<div class="top-performing">
+  <app-top-performing></app-top-performing>
+</div>
+
+<div style="margin-top: 15px">
+  <app-news-letter-slider></app-news-letter-slider>
+</div>
+<app-news-letter></app-news-letter>

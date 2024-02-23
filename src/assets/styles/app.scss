@@ -1,7 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;900&family=Poppins:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap");
 @import "perfect-scrollbar/css/perfect-scrollbar.css";
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
+@import "aos/dist/aos.css";
+
+@font-face {
+  font-family: "ArialRoundedMT";
+  src: local("ArialRoundedMT")
+    url("/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "BellMT";
+  src: local("BellMT") url("/assets/fonts/Bell-MT/Bell MT.ttf")
+    format("truetype");
+}
 
 * {
   box-sizing: border-box;
@@ -12,6 +26,20 @@ body {
   width: 100%;
   min-height: 100vh;
   font-family: "M PLUS Rounded 1c", Arial, Helvetica, sans-serif;
+  position: relative;
+  &::-webkit-scrollbar {
+    width: 7px;
+    &-thumb {
+      background-color: #ccc;
+      border-radius: 30px;
+      &:hover {
+        background-color: #999;
+      }
+      &:active {
+        background-color: gray;
+      }
+    }
+  }
 }
 
 // // Flag icon
@@ -47,10 +75,10 @@ body {
 @import "scss/views/views";
 
 @import "scss/button";
-@import "scss/accordian";
 @import "scss/calculator";
 @import "scss/loan-flow.scss";
 @import "scss/stepper";
+@import "./scss/accordian";
 
 .mat-drawer-content {
   height: 100vh !important;

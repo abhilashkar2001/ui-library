@@ -1,73 +1,65 @@
-<div class="hand-section">
-  <img src="/assets/images/hand.png" alt="card hand" />
-</div>
-<div class="cards-screen">
-  <div class="top-section">
-    <div class="col-1">
-      <div class="top-header">
-        Innovate Finances, Enrich Lives - Welcome to Demobank Cards!
-      </div>
-      <div class="top-desc">
+<section class="container hero_section">
+  <div class="row">
+    <div class="col-12 col-lg-7 py-3 py-md-5 order-1 order-lg-0">
+      <h1 class="hero_title">
+        Innovate Finances,<br />
+        Enrich Lives - <br />Welcome to <br />Demobank Cards!
+      </h1>
+      <p class="hero_subtitle">
         Experience financial empowerment with tailored solutions that meet your
         needs, exclusively from our bank.
-      </div>
-      <div class="mar-20">
-        <button class="confirm-button" [routerLink]="['/card/card-type']">
+      </p>
+      <div class="apply_div">
+        <button
+          type="button"
+          class="apply_btn"
+          [routerLink]="['/card/card-type']"
+        >
           Apply
         </button>
 
-        <div style="margin-top: 20px; display: flex">
-          <div>
+        <div class="stacked_imgs_div">
+          <div class="img_wrapper">
             <img
               src="/assets/images/images.png"
               alt="Ellipse61965"
               class="image-upload"
             />
           </div>
-          <div>
-            <span class="count-label"> 4K+ </span>
-            <span class="users"> users worldwide </span>
+          <div class="stacked_div_text">
+            <h2>4K+</h2>
+            <p>users worldwide</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-2">
-      <div style="display: flex; flex-direction: column">
-        <img
-          src="/assets/images/debit-card.png"
-          alt="debit card"
-          class="vertical-move"
-        />
-        <img src="/assets/images/shadow-card.png" alt="shadow card" />
-      </div>
+    <div class="col-12 col-lg-5 order-0 order-lg-1 hero_image_container">
+      <img
+        src="assets/images/debit-card.png"
+        alt="debit card"
+        class="card_hero_image debit_card"
+      />
+      <img
+        src="assets/images/card-shadow.svg"
+        alt="debit card"
+        class="card_hero_image card_shadow"
+      />
+      <img
+        src="assets/images/hand.png"
+        alt="debit card"
+        class="card_hero_image hand"
+      />
     </div>
   </div>
-  <div class="mar-20">
-    <div class="header">Card Diverse</div>
-    <div class="desc">
-      Open your account in a breeze and start banking hassle-free.
-    </div>
-    <app-card-diverse></app-card-diverse>
-  </div>
+</section>
+<div class="mar-20">
+  <app-card-diverse></app-card-diverse>
+</div>
 
-  <div class="mar-20">
-    <div class="header">Our Top Performing Pl ans</div>
-    <div class="desc">
-      Select wisely from our plans & invest your money for higher returns
-    </div>
-    <div>
-      <app-top-performing></app-top-performing>
-    </div>
-  </div>
-  <div fxLayout="column" class="mt-70">
-    <div fxLayoutAlign="center center" class="accountOpening">
-      What our happy client say
-    </div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
-      Several selected clients, who already believe in our service.
-    </div>
-  </div>
-  <div class="mt-70">
-    <app-news-letter-slider></app-news-letter-slider>
-  </div>
+<div class="mar-20">
+  <app-top-performing></app-top-performing>
+</div>
+
+<div class="mar-20">
+  <app-news-letter-slider></app-news-letter-slider>
 </div>

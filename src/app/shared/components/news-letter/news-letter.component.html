@@ -1,46 +1,46 @@
 <section class="newsletter">
-  <form [formGroup]="emailForm">
-    <div class="container">
-      <div class="row newsletter_container">
-        <div class="col-12 col-md-6 d-flex justify-content-center">
-          <div class="newsletter_text">
-            <h2>Subscribe Newsletter</h2>
-            <p>I will update good news and promotion service not spam</p>
-          </div>
+  <div [formGroup]="emailForm" class="container">
+    <div class="row newsletter_container">
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <div class="newsletter_text">
+          <h2>Subscribe Newsletter</h2>
+          <p>I will update good news and promotion service not spam</p>
         </div>
-        <div class="col-12 col-md-6">
-          <div class="input_box">
-            <input
-              type="text"
-              placeholder="Enter your email address.."
-              formControlName="email"
-            />
-            <button type="button">Contact Now</button>
-          </div>
-          <mat-error
-            class="custom_error"
-            *ngIf="emailForm.get('email').hasError('pattern')"
-          >
-            <p class="error_message">Invalid email address</p>
-          </mat-error>
-          <mat-error
-            class="custom_error"
-            *ngIf="
-              emailForm.get('email').touched &&
-              emailForm.get('email').hasError('required')
-            "
-          >
-            <p class="error_message">Email address is required</p>
-          </mat-error>
-        </div>
-        <img class="blue_rect" src="assets/images/Rectangle 31.svg" />
-        <img
-          class="dots_img dots_top"
-          style="height: 50%"
-          src="assets/images/Group 75.svg"
-        />
-        <img class="dots_img dots_bottom" src="assets/images/Group 73.svg" />
       </div>
+      <div class="col-12 col-md-6">
+        <div
+          class="input_box"
+          data-aos="fade-right"
+          data-aos-anchor-placement="center-bottom"
+          data-aos-delay="200"
+          data-aos-duration="500"
+        >
+          <input
+            type="text"
+            placeholder="Enter your email address.."
+            formControlName="email"
+          />
+          <button type="button">Contact Now</button>
+        </div>
+        <mat-error
+          class="custom_error"
+          *ngIf="emailForm.get('email').hasError('pattern')"
+        >
+          <p class="error_message">Invalid email address</p>
+        </mat-error>
+        <mat-error
+          class="custom_error"
+          *ngIf="
+            emailForm.get('email').touched &&
+            emailForm.get('email').hasError('required')
+          "
+        >
+          <p class="error_message">Email address is required</p>
+        </mat-error>
+      </div>
+      <img class="blue_rect" src="assets/images/Rectangle 31.svg" />
+      <img class="dots_img dots_top" src="assets/images/Group 75.svg" />
+      <img class="dots_img dots_bottom" src="assets/images/Group 73.svg" />
     </div>
-  </form>
+  </div>
 </section>

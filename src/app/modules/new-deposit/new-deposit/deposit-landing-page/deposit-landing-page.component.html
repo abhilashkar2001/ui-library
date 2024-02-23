@@ -6,24 +6,16 @@
     [routeUrl]="routeUrl"
   >
   </app-landing-profile>
-  <div fxLayout="column" style="margin-top: 89px">
-    <div fxLayoutAlign="center center" class="accountOpening">
-      Deposit Services
-    </div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
-      Open your account in a breeze and start banking hassle-free.
-    </div>
-  </div>
   <div>
     <app-fd-rd-calculator
       (customDepositChange)="customDepositChange($event)"
     ></app-fd-rd-calculator>
   </div>
   <div fxLayout="column">
-    <div fxLayoutAlign="center center" class="accountOpening">
+    <div fxLayoutAlign="center center" class="section_heading">
       Instant Growth {{ fdRdName }}
     </div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
+    <div fxLayoutAlign="center center" class="section_subHeading">
       Maximize Your Savings with {{ fdRdFullName }} Deposit: Earn Guaranteed
       Returns on Your Investment.
     </div>
@@ -33,22 +25,8 @@
       ></app-growth-fd-animation>
     </div>
   </div>
-  <div fxLayout="column" class="mt-70">
-    <div fxLayoutAlign="center center" class="accountOpening">FAQ</div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
-      A ready reckoner for your queries.
-    </div>
-  </div>
   <div class="mt-28">
     <app-deposit-faq></app-deposit-faq>
-  </div>
-  <div fxLayout="column" class="mt-70">
-    <div fxLayoutAlign="center center" class="accountOpening">
-      What our happy client say
-    </div>
-    <div fxLayoutAlign="center center" class="openYourAccount">
-      Several selected clients, who already believe in our service.
-    </div>
   </div>
   <div class="mt-70">
     <app-news-letter-slider></app-news-letter-slider>
