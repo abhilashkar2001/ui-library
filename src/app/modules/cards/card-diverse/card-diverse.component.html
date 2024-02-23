@@ -1,55 +1,60 @@
-<div class="card-slider">
-  <div class="col1">
-    <div class="keen-slider custom-slider" #sliderRef>
-      <div *ngFor="let image of carowselData">
-        <img
-          [src]="image.image"
-          [alt]="image.header"
-          class="keen-slider__slide"
-        />
+<section class="card_diverse">
+  <div class="container-fluid">
+    <div class="row">
+      <h1 class="section_heading">Card Diverse</h1>
+      <p class="section_subHeading">
+        Open your account in a breeze and start banking hassle-free.
+      </p>
+    </div>
+    <div class="row px-3 px-md-5">
+      <div class="card-slider">
+        <div class="col1_card_images">
+          <div class="keen-slider custom-slider" #sliderRef>
+            <div class="slider_image_div" *ngFor="let image of carowselData">
+              <img
+                [src]="image.image"
+                [alt]="image.header"
+                class="keen-slider__slide"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col2_card_contents">
+          <div class="card-details">
+            <div class="card-top-section">
+              <div class="card-header">
+                <span>{{ carowselData[initialCount]?.header }}</span>
+              </div>
+              <div class="card-action">
+                <button (click)="onPrevious()">
+                  <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <button (click)="onNext()">
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="card-description">
+              {{ carowselData[initialCount]?.content }}
+            </div>
+            <div class="image-section">
+              <img src="/assets/images/card-steps.png" alt="steps" />
+            </div>
+            <div class="justify-content-around my-5">
+              <button
+                class="confirm-button mb-mb-3 mb-0"
+                [routerLink]="['/card/mobile-verification']"
+                [queryParams]="{ title: carowselData[initialCount]?.header }"
+              >
+                Apply
+              </button>
+              <a class="compare-link" [routerLink]="['/card/card-type']"
+                >Compare Card</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col2">
-    <div class="card-details">
-      <div class="card-top-section">
-        <div class="card-header">
-          <span>{{ carowselData[initialCount]?.header }}</span>
-        </div>
-        <div class="card-action">
-          <button (click)="onPrevious()">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-          </button>
-          <button (click)="onNext()">
-            <mat-icon>keyboard_arrow_right</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="card-description">
-        {{ carowselData[initialCount]?.content }}
-      </div>
-      <div class="image-section">
-        <img src="/assets/images/card-steps.png" alt="steps" />
-      </div>
-      <div
-        class="button-section"
-        style="
-          justify-content: space-around;
-          margin-top: 20px;
-          margin-bottom: 20px;
-        "
-      >
-        <button
-          class="confirm-button"
-          [routerLink]="['/card/mobile-verification']"
-          [queryParams]="{ title: carowselData[initialCount]?.header }"
-        >
-          Apply
-        </button>
-        <a class="compare-link" [routerLink]="['/card/card-type']"
-          >Compare Card</a
-        >
-      </div>
-    </div>
-  </div>
-</div>
+</section>

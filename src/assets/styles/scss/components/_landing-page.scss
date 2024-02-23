@@ -95,11 +95,9 @@ section.hero_section {
         left: 60%;
         top: 5%;
         transform: translateX(-50%);
-        // width: 400px;
         z-index: 2;
-        filter: drop-shadow(0 2px 15px #0162c241);
-        animation: card_animation 2s cubic-bezier(0, 0, 0.79, 0.24) infinite
-          alternate;
+        /* filter: drop-shadow(0 2px 15px rgba(1, 98, 194, 0.2549019608)); */
+        animation: card_animation 1.5s ease-in-out infinite alternate;
       }
       &.card_shadow {
         position: relative;

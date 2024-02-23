@@ -1,32 +1,35 @@
-<div fxFlex="100" style="margin: 2% 0">
-  <div fxLayout="column" fxFlex="100">
-    <div fxLayoutAlign="center center">
-      <div class="calculatorbtn_grp">
-        <mat-button-toggle-group
-          class="togglegrp"
-          name="fontStyle"
-          aria-label="Font Style"
-          [(ngModel)]="selectedValue"
-          (change)="onToggleChange($event)"
-        >
-          <mat-button-toggle class="togglebtn" value="fdCalculator"
-            >FD calculator</mat-button-toggle
-          >
-          <mat-button-toggle class="togglebtn" value="rdCalculator"
-            >RD calculator</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </div>
-    </div>
-    <!-- FD calculator starts -->
-    <div class="row mt-36" fxFlex="100">
-      <div class="col-md-9 col-12" fxFlex="100">
-        <app-return-calculator
-          [fdName]="selectedValue"
-          [rdFdValue]="rdFdValue"
-          (customCalculatorValues)="customCalculatorValues($event)"
-        ></app-return-calculator>
-      </div>
+<section class="rd_fd_calculator">
+  <div class="pt-3 pb-5">
+    <h2 class="section_heading">Deposit Services</h2>
+    <p class="section_subHeading">
+      Open your account in a breeze and start banking hassle-free.
+    </p>
+  </div>
+  <div class="calculatorbtn_grp">
+    <mat-button-toggle-group
+      class="togglegrp"
+      name="fontStyle"
+      aria-label="Font Style"
+      [(ngModel)]="selectedValue"
+      (change)="onToggleChange($event)"
+    >
+      <mat-button-toggle class="togglebtn" value="fdCalculator"
+        >FD calculator</mat-button-toggle
+      >
+      <mat-button-toggle class="togglebtn" value="rdCalculator"
+        >RD calculator</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- FD calculator starts -->
+  <div class="calculator_section">
+    <div class="return_calculator" class="full-width">
+      <app-return-calculator
+        [fdName]="selectedValue"
+        [rdFdValue]="rdFdValue"
+        (customCalculatorValues)="customCalculatorValues($event)"
+      ></app-return-calculator>
     </div>
   </div>
-</div>
+</section>

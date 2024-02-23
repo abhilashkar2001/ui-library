@@ -8,12 +8,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="icon" type="image/x-icon" href="favicon2.ico" />
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap"
       rel="stylesheet"
     />
+    <!-- Include AOS CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+    />
 
+    <!-- Include AOS JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Initialize AOS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init();
+      });
+    </script>
     <style>
       .app-loader {
         height: 100vh !important;
@@ -72,8 +89,14 @@
     <app-root>
       <div class="app-loader">
         <div class="spinner">
-          <div class="double-bounce1 mat-bg-primary" style="background: #fcc02e"></div>
-          <div class="double-bounce2 mat-bg-accent" style="background: #03a9f4"></div>
+          <div
+            class="double-bounce1 mat-bg-primary"
+            style="background: #fcc02e"
+          ></div>
+          <div
+            class="double-bounce2 mat-bg-accent"
+            style="background: #03a9f4"
+          ></div>
         </div>
       </div>
     </app-root>
