@@ -73,7 +73,7 @@ export class SignNowPopupComponent implements OnInit {
 
   saveDigitalSign() {
     if (this.signPadComponent) {
-      this.signPadComponent.saveSignPad();
+      this.signPadComponent.saveSignature();
     }
   }
   saveSignUpload() {
@@ -105,7 +105,7 @@ export class SignNowPopupComponent implements OnInit {
   }
 
   closeDialog() {
-    if (this.signPadComponent) this.signPadComponent.clearSignPad();
+    if (this.signPadComponent) this.signPadComponent.clearCanvas();
     this.deleteFile();
     this.dialogRef.close(false);
   }

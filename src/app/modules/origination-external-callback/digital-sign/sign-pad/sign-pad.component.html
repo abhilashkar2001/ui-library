@@ -1,15 +1,15 @@
 <div style="text-align: center; margin-top: 30px" class="canvas_container">
-  <div>
-    <canvas
-      height="150"
-      width="740"
-      #signPadCanvas
-      (touchstart)="startSignPadDrawing($event)"
-      (touchmove)="movedFinger($event)"
-      (touchend)="saveSignPad()"
-    ></canvas>
-  </div>
-  <button type="button" title="Reset Sign" (click)="clearSignPad()">
-    <img src="assets/images/reload.svg" alt="reload" />
+  <canvas
+    #canvas
+    (mousedown)="handleMouseDown($event)"
+    (mousemove)="handleMouseMove($event)"
+    (mouseup)="handleMouseUp()"
+    (mouseleave)="handleMouseUp()"
+    width="740"
+    height="150"
+  >
+  </canvas>
+  <button mat-icon-button (click)="clearCanvas()">
+    <mat-icon svgIcon="reload-icon"></mat-icon>
   </button>
 </div>
