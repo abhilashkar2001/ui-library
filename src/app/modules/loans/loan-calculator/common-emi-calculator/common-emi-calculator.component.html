@@ -210,7 +210,7 @@
     >
       <div fxLayout="column" class="emiTitle alignCenter">
         <div class="maturityTitle">EMI Amount</div>
-        <div class="emiAmount">₹ 1,10,202</div>
+        <div class="emiAmount">₹ {{ emiAmount }}</div>
       </div>
       <div fxLayout="row" fxFlex="100" style="width: 100%">
         <div
@@ -220,7 +220,7 @@
           fxLayoutAlign="space-around center"
         >
           <div class="maturityLabels">Interest Payable</div>
-          <div class="gd_value">₹ 12,669</div>
+          <div class="gd_value">₹ {{ interestPayble }}</div>
         </div>
         <div class="emiVl"></div>
         <div
@@ -251,7 +251,7 @@
           fxLayoutAlign="space-around center"
         >
           <div class="maturityLabels">Total Amount Payable</div>
-          <div class="gd_value">₹ 12,669</div>
+          <div class="gd_value">₹ {{ totalPayableAmmount }}</div>
         </div>
       </div>
       <div>

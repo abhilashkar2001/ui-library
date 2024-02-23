@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
+import { LoanCalulationService } from "../loan-calculation.service";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -25,7 +26,14 @@ export class CommonEmiCalculatorComponent implements OnInit {
   thumbLabel: boolean = true;
   currencySymboll = "₹";
   productDetails: any;
-  constructor(private fb: FormBuilder, private loanApi: LoanService) {}
+  interestPayble: number = 0;
+  totalPayableAmmount: number = 0;
+  emiAmount: any = 0;
+  constructor(
+    private fb: FormBuilder,
+    private loanApi: LoanService,
+    private loanCalcService: LoanCalulationService
+  ) {}
 
   ngOnInit(): void {
     const basisId = sessionStorage.getItem("loanBasisDetails");
@@ -62,6 +70,36 @@ export class CommonEmiCalculatorComponent implements OnInit {
           this.loanForm.get("amount").setValue(this.min);
         }
       });
+
+    this.loanForm.valueChanges.pipe(debounceTime(500)).subscribe((_) => {
+      if (
+        this.loanForm.value.interestRate &&
+        this.loanForm.value.amount &&
+        (this.loanForm.value.tenureYear ||
+          this.loanForm.value.tenureMonth ||
+          this.loanForm.value.tenureDays)
+      ) {
+        this.loanCalcService
+          .calculateAmortize(
+            parseInt(this.loanForm.value.amount),
+            parseInt(this.loanForm.value.interestRate),
+            parseInt(this.loanForm.value.tenureYear) || 0,
+            parseInt(this.loanForm.value.tenureMonth) || 0,
+            parseInt(this.loanForm.value.tenureDays) || 0
+          )
+          .then((value) => {
+            const finalInterest = value.monthlyInterestArr[0].interestComponent
+              .toFixed(2)
+              .split(".");
+
+            this.interestPayble = parseFloat(
+              finalInterest[0] + "." + finalInterest[1].slice(0, 3)
+            );
+            this.totalPayableAmmount = value.totalPayableAmount;
+            this.emiAmount = Math.round(value.emiAmount);
+          });
+      }
+    });
   }
   updateDeposit() {
     console.log(this.loanForm.value);
