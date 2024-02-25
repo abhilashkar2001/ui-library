@@ -21,6 +21,7 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
 import { debounceTime } from "rxjs/operators";
+import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
 
 @Component({
   selector: "app-create-loan",
@@ -58,7 +59,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     private loanApi: LoanService,
     private snack: MatSnackBar,
     private router: Router,
-    private openApi: OpenAccountService
+    private openApi: OpenAccountService,
+    private loanCalcService: LoanCalulationService
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
@@ -180,6 +182,47 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe((resp) => {
         if (resp) {
           this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
+        }
+      });
+
+    this.personalLoanDetailsForm.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((_) => {
+        if (
+          this.personalLoanDetailsForm.value.interestRate &&
+          this.personalLoanDetailsForm.value.loanAmount &&
+          (this.personalLoanDetailsForm.value.tenureYear ||
+            this.personalLoanDetailsForm.value.tenureMonth ||
+            this.personalLoanDetailsForm.value.tenureDays)
+        ) {
+          this.loanCalcService
+            .calculateAmortize(
+              parseInt(this.personalLoanDetailsForm.value.loanAmount),
+              parseInt(this.personalLoanDetailsForm.value.interestRate),
+              parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
+              parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
+              parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
+            )
+            .then((value) => {
+              const finalInterest =
+                value.monthlyInterestArr[0].interestComponent
+                  .toFixed(2)
+                  .split(".");
+
+              this.personalLoanDetailsForm
+                .get("interestPayable")
+                .setValue(
+                  parseFloat(
+                    finalInterest[0] + "." + finalInterest[1].slice(0, 3)
+                  )
+                );
+              this.personalLoanDetailsForm
+                .get("totalPayableAmount")
+                .setValue(value.totalPayableAmount);
+              this.personalLoanDetailsForm
+                .get("emiAmount")
+                .setValue(Math.round(value.emiAmount));
+            });
         }
       });
   }
