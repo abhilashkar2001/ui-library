@@ -107,8 +107,8 @@ export class LoanAccountTypeComponent implements OnInit {
   }
   customCalculatorValues(event) {
     this.selectedLoan = event;
-    console.log(event);
-    console.log(this.selectedLoan);
+    let emiStartDate = new Date();
+    emiStartDate.setDate(emiStartDate.getDate() + 1);
     const payload = {
       emiAmount: parseInt(this.selectedLoan.emiAmount),
       interestRate: parseInt(this.selectedLoan.interestRate),
@@ -117,7 +117,7 @@ export class LoanAccountTypeComponent implements OnInit {
       totalPayableAmount: parseInt(this.selectedLoan.totalPayableAmount),
       disbursementType: "",
       accountNumber: null,
-      emiStartDate: moment(new Date()).format(),
+      emiStartDate: moment(emiStartDate).format(),
       // originationId: 9821,
     };
     this.loanService.submitLoanDetail(payload).subscribe((resp) => {
