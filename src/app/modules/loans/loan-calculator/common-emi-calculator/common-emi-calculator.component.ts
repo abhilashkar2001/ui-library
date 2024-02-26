@@ -113,7 +113,13 @@ export class CommonEmiCalculatorComponent implements OnInit {
     sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
     sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
     sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
-    this.customCalculatorValues.emit(this.loanForm.value);
+    const obj = {
+      ...this.loanForm.value,
+      interestPayable: this.interestPayble,
+      totalPayableAmount: this.totalPayableAmmount,
+      emiAmount: this.emiAmount,
+    };
+    this.customCalculatorValues.emit(obj);
   }
 
   calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {
