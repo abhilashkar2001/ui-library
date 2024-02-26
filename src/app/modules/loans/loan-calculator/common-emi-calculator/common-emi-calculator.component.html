@@ -147,9 +147,9 @@
               "
             >
               Loan Period should be less than
-              {{ productDetails?.maximumTenorYear }} Years
-              {{ productDetails?.maximumTenorMonth }} Months
-              {{ productDetails?.maximumTenorDay }} Days
+              {{ productDetails?.maximumTenorYear || 0 }} Years
+              {{ productDetails?.maximumTenorMonth || 0 }} Months
+              {{ productDetails?.maximumTenorDay || 0 }} Days
             </mat-error>
             <mat-error
               class="mat-error small-error mt-12"
@@ -210,7 +210,9 @@
     >
       <div fxLayout="column" class="emiTitle alignCenter">
         <div class="maturityTitle">EMI Amount</div>
-        <div class="emiAmount">₹ {{ emiAmount }}</div>
+        <div class="emiAmount">
+          {{ emiAmount | currency : "INR" : true : "1.2-2" }}
+        </div>
       </div>
       <div fxLayout="row" fxFlex="100" style="width: 100%">
         <div
@@ -219,8 +221,10 @@
           class="alignLeft"
           fxLayoutAlign="space-around center"
         >
-          <div class="maturityLabels">Interest Payable</div>
-          <div class="gd_value">₹ {{ interestPayble }}</div>
+          <div class="maturityLabels">Total Interest Payable</div>
+          <div class="gd_value">
+            {{ interestPayble | currency : "INR" : true : "1.2-2" }}
+          </div>
         </div>
         <div class="emiVl"></div>
         <div
@@ -241,7 +245,9 @@
           fxLayoutAlign="space-around center"
         >
           <div class="maturityLabels">Principal Amount</div>
-          <div class="gd_value">₹ {{ loanForm.value?.amount }}</div>
+          <div class="gd_value">
+            {{ loanForm.value?.amount | currency : "INR" : true : "1.2-2" }}
+          </div>
         </div>
         <div class="emiVl"></div>
         <div
@@ -251,7 +257,9 @@
           fxLayoutAlign="space-around center"
         >
           <div class="maturityLabels">Total Amount Payable</div>
-          <div class="gd_value">₹ {{ totalPayableAmmount }}</div>
+          <div class="gd_value">
+            {{ totalPayableAmmount | currency : "INR" : true : "1.2-2" }}
+          </div>
         </div>
       </div>
       <div>

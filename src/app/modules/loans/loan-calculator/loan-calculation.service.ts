@@ -39,7 +39,6 @@ export class LoanCalulationService {
 
         // calculating total payable amount.
         this.totalPayableAmount = Math.ceil(EMI * val.finalTenure);
-        console.log(this.totalPayableAmount);
 
         obj = {
           monthlyInterestArr: this.monthlyInterestArr,
@@ -95,7 +94,6 @@ export class LoanCalulationService {
    */
   calculateEMI(P, R, n) {
     var EMI = (P * R * Math.pow(1 + R, n)) / (Math.pow(1 + R, n) - 1);
-    console.log(EMI);
     return EMI;
   }
 
@@ -117,11 +115,9 @@ export class LoanCalulationService {
     days,
     tenureType = "Month" //this should be dynamic , later on will add.
   ) {
-    console.log(principal, rateOfInterest, years, months, days, "jdkdsj");
     let finalInterest: any;
     await this.calculateTenure(years, months, days, tenureType).then(
       (val: any) => {
-        console.log(val);
         const interest = this.calculateCompoundInterest(
           principal,
           rateOfInterest,
@@ -157,9 +153,7 @@ export class LoanCalulationService {
     return new Promise((resolve, reject) => {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
-      console.log(daysInMonth, days, totalMonths, ".........");
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
-      console.log(totalMonthsIncludingDays);
       resolve(this.getFinalTenure(tenureType, totalMonthsIncludingDays));
     });
   }
@@ -201,7 +195,6 @@ export class LoanCalulationService {
    */
   calculateCompoundInterest(principal, rateOfInterest, tenure, NoOf) {
     rateOfInterest = rateOfInterest / (NoOf * 100);
-    console.log(rateOfInterest);
     return principal * Math.pow(1 + rateOfInterest, tenure) - principal;
   }
 }

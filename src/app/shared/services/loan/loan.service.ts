@@ -125,4 +125,10 @@ export class LoanService {
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
     );
   }
+
+  getProductInterestDetails(basisId) {
+    return this.http.get<any>(
+      `${baseUrl}/interestDetail/formulaElement?basisId=${basisId}`
+    );
+  }
 }

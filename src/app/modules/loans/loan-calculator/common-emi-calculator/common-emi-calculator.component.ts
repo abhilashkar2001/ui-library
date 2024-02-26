@@ -29,6 +29,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
   interestPayble: number = 0;
   totalPayableAmmount: number = 0;
   emiAmount: any = 0;
+  interestDetails: any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -44,6 +45,15 @@ export class CommonEmiCalculatorComponent implements OnInit {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200)
         this.productDetails = resp.data[0].lendingParameters[0];
+    });
+    this.loanApi.getProductInterestDetails(basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        resp.data.forEach((item) => {
+          if (item?.isPrimary) {
+            this.interestDetails = item;
+          }
+        });
+      }
     });
   }
   onSliderChange(e) {
@@ -92,8 +102,8 @@ export class CommonEmiCalculatorComponent implements OnInit {
               .toFixed(2)
               .split(".");
 
-            this.interestPayble = parseFloat(
-              finalInterest[0] + "." + finalInterest[1].slice(0, 3)
+            this.interestPayble = Math.abs(
+              value.totalPayableAmount - this.loanForm.value.amount
             );
             this.totalPayableAmmount = value.totalPayableAmount;
             this.emiAmount = Math.round(value.emiAmount);
