@@ -56,31 +56,35 @@
   .infoDropdown {
     position: relative;
   }
-
-  .label {
-    font-size: 13px;
-    color: #a3a3a3;
-  }
-
-  .labelVal {
-    font-weight: 600;
-    font-size: 14px;
-    color: #000000;
-  }
 }
+.label {
+  font-size: 13px;
+  color: #a3a3a3;
+}
+
+.labelVal {
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+}
+
+.hl {
+  width: 100%;
+  height: 1px;
+  border-top: 1px solid #707070;
+  opacity: 0.45;
+  margin-top: 10px;
+}
+
 ::ng-deep.infoDropdown.mat-menu-panel {
   width: 480px !important;
+  left: 20px;
   overflow-y: auto;
-  top: 12px;
+  top: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   opacity: 1;
-  border-radius: 16px;
-  padding: 2px;
-}
-
-::ng-deep .mat-menu-content {
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
+  border-radius: 8px;
+  padding: 12px;
 }
 
 ::ng-deep.mat-menu-panel {
