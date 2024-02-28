@@ -65,6 +65,9 @@ import { CreatedDurationModelComponent } from "./created-duration-model/created-
 import { NewReusableFilterComponent } from "./new-reusable-filter/new-reusable-filter.component";
 import { NewReusableMatTableComponent } from "./new-reusable-mat-table/new-reusable-mat-table.component";
 
+import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
+
+
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
@@ -107,6 +110,7 @@ const components = [
   CreatedDurationModelComponent,
   CalendarHeaderComponent,
   AllInOnePopupComponent,
+  UserHeaderTopComponent,
 ];
 
 @NgModule({
