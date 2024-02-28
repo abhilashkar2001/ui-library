@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 export function getIndexBy(array: Array<{}>, { name, value }): number {
   for (let i = 0; i < array.length; i++) {
     if (array[i][name] === value) {
@@ -51,7 +53,7 @@ export function scrollTo(selector) {
   if (stopY > startY) {
     for (var i = startY; i < stopY; i += step) {
       setTimeout(
-        (function(leapY) {
+        (function (leapY) {
           return () => {
             window.scrollTo(0, leapY);
           };
@@ -66,7 +68,7 @@ export function scrollTo(selector) {
   }
   for (let i = startY; i > stopY; i -= step) {
     setTimeout(
-      (function(leapY) {
+      (function (leapY) {
         return () => {
           window.scrollTo(0, leapY);
         };
@@ -78,4 +80,13 @@ export function scrollTo(selector) {
     timer++;
   }
   return false;
+}
+export const DEFAULT_LOCALE = {
+  country: "United States",
+  dateFormat: "MM/DD/YYYY",
+  locale: "en-US",
+  currency: "USD",
+};
+export function pluckOnlyDate(date: any) {
+  return moment(date).format("YYYY-MM-DD");
 }
