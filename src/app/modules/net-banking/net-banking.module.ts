@@ -11,10 +11,16 @@ import { CalendarHeaderComponent } from "app/shared/components/calendar-header/c
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
-import { AddBulkUploadComponent } from './bulk-upload/add-bulk-upload/add-bulk-upload.component';
+import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
+import { AddBulkUploadComponent } from "./bulk-upload/add-bulk-upload/add-bulk-upload.component";
+import { UploadBulkUploadComponent } from "./bulk-upload/upload-bulk-upload/upload-bulk-upload.component";
 @NgModule({
-  declarations: [NetBankingHomeComponent, BulkUploadComponent, AddBulkUploadComponent],
+  declarations: [
+    NetBankingHomeComponent,
+    BulkUploadComponent,
+    AddBulkUploadComponent,
+    UploadBulkUploadComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
