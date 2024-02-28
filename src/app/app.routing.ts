@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthGuard } from "./shared/guards/auth.guard";
+import { UserLayoutComponent } from "./layouts/user-layout/user-layout.component";
 
 export const rootRouterConfig: Routes = [
   {
@@ -21,6 +22,10 @@ export const rootRouterConfig: Routes = [
         "./modules/origination-external-callback/origination-external-callback.module"
       ).then((m) => m.OriginationExternalCallbackModule),
     data: { preload: false, title: "Home", breadcrumb: "Home" },
+  },
+  {
+    path: "user",
+    component: UserLayoutComponent,
   },
   {
     path: "",
