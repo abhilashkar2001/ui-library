@@ -9,6 +9,8 @@ import { NewReusableFilterComponent } from "app/shared/components/new-reusable-f
 import { CreatedDurationModelComponent } from "app/shared/components/created-duration-model/created-duration-model.component";
 import { CalendarHeaderComponent } from "app/shared/components/calendar-header/calendar-header.component";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { SharedMaterialModule } from "app/shared/shared-material.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
 @NgModule({
   declarations: [NetBankingHomeComponent],
   imports: [
@@ -17,6 +19,8 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     ReactiveFormsModule,
     NetBankingRoutingModule,
     SharedComponentsModule,
+    SharedMaterialModule,
+    FlexLayoutModule,
   ],
 })
 export class NetBankingModule {}
