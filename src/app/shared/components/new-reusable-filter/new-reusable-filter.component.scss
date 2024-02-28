@@ -136,3 +136,14 @@
     font-size: 14px;
   }
 }
+::ng-deep .downloadBtn {
+  mat-icon,
+  svg {
+    vertical-align: unset;
+  }
+  .mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

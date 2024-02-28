@@ -17,7 +17,7 @@
               : levelItem?.status == 'Rejected'
               ? 'assets/images/level_rejected.svg'
               : levelItem?.status == 'Pending'
-              ? 'assets/images/pending.svg'
+              ? 'assets/images/level_pending.svg'
               : ''
           "
           width="41px"
@@ -36,10 +36,10 @@
           >
           <div class="approved_history_container">
             <ng-container>
-              <div fxLayout="column">
+              <div fxLayout="column" class="user_info">
                 <div class="list_body">
                   <p class="list_name">
-                    {{ levelItem.user }} <span>{{ levelItem?.id }}</span>
+                    {{ levelItem.user }} <span>({{ levelItem?.id }})</span>
                   </p>
                   <p
                     class="level_status"
@@ -52,7 +52,7 @@
                   </p>
                 </div>
                 <div class="remark">
-                  <p><span>Remark</span> {{ levelItem?.remark }}</p>
+                  <p><span>Remark :</span> {{ levelItem?.remark }}</p>
                 </div>
               </div>
             </ng-container>
@@ -64,18 +64,29 @@
         fxLayoutAlign="center center"
         *ngIf="i != approvalList?.length - 1"
       >
-        <div
-          class="progress_fill"
-          [ngClass]="[
-            i < approvalList?.length - 1 &&
-            approvalList[i + 1].status == 'Rejected'
-              ? 'returnRed'
-              : '',
-            levelItem?.status == 'Approved' ? 'bgGreen' : '',
-            levelItem?.status == 'Rejected' ? 'bgRed' : ''
-          ]"
-          fxFlex="100"
-        ></div>
+        <div class="progress_fill" fxFlex="100">
+          <div
+            class="progress_fill"
+            [ngClass]="[
+              i < approvalList?.length - 1 &&
+              approvalList[i + 1].status == 'Rejected'
+                ? 'returnRed'
+                : '',
+              i < approvalList?.length - 1 &&
+              approvalList[i + 1].status == 'Pending'
+                ? 'returnPending'
+                : '',
+              levelItem?.status == 'Approved' ? 'bgGreen' : '',
+              levelItem?.status == 'Rejected' ? 'bgRed' : ''
+            ]"
+            [fxFlex]="
+              i < approvalList?.length - 1 &&
+              approvalList[i + 1].status == 'Pending'
+                ? 75
+                : 100
+            "
+          ></div>
+        </div>
       </div>
     </div>
   </ng-container>
