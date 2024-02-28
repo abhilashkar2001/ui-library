@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { NetBankingHomeComponent } from "./net-banking-home.component";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
 import { AddBulkUploadComponent } from "./bulk-upload/add-bulk-upload/add-bulk-upload.component";
+import { UploadBulkUploadComponent } from "./bulk-upload/upload-bulk-upload/upload-bulk-upload.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
+      },
+      {
+        path: "add-bulk-upload",
+        component: UploadBulkUploadComponent,
       },
     ],
   },

@@ -271,6 +271,9 @@ export class NewReusableMatTableComponent implements OnInit {
       delete this.filterValue.page;
     }
   }
+  bulkUpload() {
+    this.router.navigate(["/net-banking/add-bulk-upload"]);
+  }
 
   calculatePageIndex() {
     return this.totalPages === this.pageIndex ? 1 : this.pageIndex;

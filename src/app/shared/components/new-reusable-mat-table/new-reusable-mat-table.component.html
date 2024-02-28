@@ -27,7 +27,7 @@
     *ngIf="CountryModule === false"
   >
     <ng-container>
-      <button mat-flat-button class="addNewButton">
+      <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
         <mat-icon class="text-white text-xl">add</mat-icon>
         {{ "Upload" | translate }}
       </button>
