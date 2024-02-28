@@ -1,0 +1,114 @@
+.level {
+  letter-spacing: 0px;
+  color: #535353;
+  font-size: 12px;
+  font-weight: 400;
+}
+.level_status {
+  letter-spacing: 0px;
+  //   color: #008461;
+  background: transparent !important;
+  font-weight: 600;
+}
+.progress_fill {
+  height: 7px;
+  border-radius: 5px;
+  background-color: #008461;
+}
+
+.bgGreen {
+  background: #008461 0% 0% no-repeat padding-box;
+  color: #008461;
+}
+
+.bgRed {
+  background: #b10000 0% 0% no-repeat padding-box;
+  color: #b10000;
+}
+
+.returnRed {
+  background: #b10000 0% 0% no-repeat padding-box !important;
+}
+.info_icon_container {
+  position: relative;
+  &:hover .approved_history_container {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.approved_history_container {
+  position: absolute;
+  top: calc(100% + 15px) !important;
+  left: 0px !important;
+  transform: translateX(-75%);
+  height: max-content;
+  width: 200px;
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  border: 3px solid #004c972e;
+  border-radius: 8px;
+  transition: all 0.24s linear;
+  z-index: 999;
+  transform: translateX(-40%) translateY(20%) !important;
+  top: 0 !important;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 1%;
+    right: 17%;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border-radius: 2px;
+    border-left: 3px solid rgba(0, 76, 151, 0.1803921569);
+    border-top: 3px solid rgba(0, 76, 151, 0.1803921569);
+    transform: rotate(45deg) translate(-50%, -50%);
+  }
+  span.vertical_line {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    transform: translateX(-50%);
+    background-color: #008461;
+    height: calc(100% - 60px);
+    width: 2px;
+    border-radius: 40px;
+  }
+
+  p {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .list_body {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p.list_name {
+      color: #000000 !important;
+      font-size: 17px;
+      span {
+        color: #adadad;
+        font-size: 12px;
+      }
+    }
+    p.emp_id {
+      color: #b4b4b4;
+      font-size: 11px;
+    }
+  }
+  .remark {
+    p {
+      color: #707070;
+      font-size: 12px;
+      span {
+        text-decoration: underline;
+        color: #004c97;
+      }
+    }
+  }
+}
