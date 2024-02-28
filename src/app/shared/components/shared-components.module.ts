@@ -68,6 +68,7 @@ import { AduitLogDetailsComponent } from "./audit-log/aduit-log-details/aduit-lo
 import { AuditLogTableComponent } from "./audit-log/audit-log-table/audit-log-table.component";
 import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-popup.component";
 import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
+import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -115,6 +116,7 @@ const components = [
   AduitLogDetailsComponent,
   AuditLogPopupComponent,
   NewAuditlogButtonGroupComponent,
+  UserHeaderTopComponent,
 ];
 
 @NgModule({
