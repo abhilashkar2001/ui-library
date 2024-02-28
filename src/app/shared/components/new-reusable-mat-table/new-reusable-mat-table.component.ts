@@ -20,6 +20,7 @@ import { Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
 import { NewReusableFilterComponent } from "../new-reusable-filter/new-reusable-filter.component";
 import { TableService } from "app/shared/services/table-service/table-service";
+import { SelectionModel } from "@angular/cdk/collections";
 
 @Component({
   selector: "app-new-reusable-mat-table",
@@ -94,6 +95,7 @@ export class NewReusableMatTableComponent implements OnInit {
   // STATIC SETUP FOR TELLER TEMPORARY
   staticBreadCrump = SCREENLIST.staticBreadCrump;
   summaryInfoResp: any[] = [];
+  selection = new SelectionModel<any>(true, []);
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -166,7 +168,10 @@ export class NewReusableMatTableComponent implements OnInit {
     this.currentUser = this.tokenStorageService.getUser();
 
     this.displayedColumns = this.columns.map((c) => c.columnDef);
-    this.displayedColumns.push("action");
+    if (this.componentName != "Bulk Upload")
+      this.displayedColumns.push("action");
+    if (this.componentName == "Bulk Upload")
+      this.displayedColumns.unshift("checkBox");
     this.customUpdateTable(
       null,
       null,
@@ -533,5 +538,20 @@ export class NewReusableMatTableComponent implements OnInit {
 
   updateActionBy() {
     this.childComponent.getCreatedBy();
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  isAllSelected() {
+    console.log(this.selection.selected, "all selected values");
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 }

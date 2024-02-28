@@ -64,6 +64,11 @@ import { CalendarHeaderComponent } from "./calendar-header/calendar-header.compo
 import { CreatedDurationModelComponent } from "./created-duration-model/created-duration-model.component";
 import { NewReusableFilterComponent } from "./new-reusable-filter/new-reusable-filter.component";
 import { NewReusableMatTableComponent } from "./new-reusable-mat-table/new-reusable-mat-table.component";
+import { CommonLevelStatusComponent } from "./common-level-status/common-level-status.component";
+import { AduitLogDetailsComponent } from "./audit-log/aduit-log-details/aduit-log-details.component";
+import { AuditLogTableComponent } from "./audit-log/audit-log-table/audit-log-table.component";
+import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-popup.component";
+import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
 
 import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
 
@@ -110,6 +115,11 @@ const components = [
   CreatedDurationModelComponent,
   CalendarHeaderComponent,
   AllInOnePopupComponent,
+  CommonLevelStatusComponent,
+  AuditLogTableComponent,
+  AduitLogDetailsComponent,
+  AuditLogPopupComponent,
+  NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
 ];
 
