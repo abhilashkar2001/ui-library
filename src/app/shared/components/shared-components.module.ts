@@ -59,6 +59,10 @@ import { CommonProductComponent } from "./common-product/common-product.componen
 import { ImageDialogComponent } from "./image-dialog/image-dialog.component";
 import { ShowDocumentComponent } from "./show-document/show-document.component";
 import { ErrorNotifierPopupComponent } from "./error-notifier-popup/error-notifier-popup.component";
+import { NewReusableMatTableComponent } from "./new-reusable-mat-table/new-reusable-mat-table.component";
+import { NewReusableFilterComponent } from "./new-reusable-filter/new-reusable-filter.component";
+import { CreatedDurationModelComponent } from "./created-duration-model/created-duration-model.component";
+import { CalendarHeaderComponent } from "./calendar-header/calendar-header.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -97,6 +101,10 @@ const components = [
   ImageDialogComponent,
   ShowDocumentComponent,
   ErrorNotifierPopupComponent,
+  NewReusableMatTableComponent,
+  NewReusableFilterComponent,
+  CreatedDurationModelComponent,
+  CalendarHeaderComponent,
 ];
 
 @NgModule({

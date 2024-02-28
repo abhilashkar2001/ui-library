@@ -75,4 +75,12 @@ export class TokenStorageService {
   getJwtUser() {
     return JSON.parse(this.sessionStore.getItem(JWT_USER));
   }
+  getLogedCountry() {
+    let userInfo = this.sessionStore.getItem("userInfo");
+    if (userInfo) {
+      return JSON.parse(userInfo);
+    } else {
+      return null;
+    }
+  }
 }
