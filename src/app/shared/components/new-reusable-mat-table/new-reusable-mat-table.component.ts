@@ -33,7 +33,7 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() newFilter;
   @Input() maintenanceTitle;
   @Input() subTitle;
-  @Input() CountryModule;
+  @Input() CountryModule = false;
   @Input() SecurityModule;
   @Input() countryModuleFilter;
   @Input() stateModuleFilter;
