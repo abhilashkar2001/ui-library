@@ -11,8 +11,11 @@ import { CalendarHeaderComponent } from "app/shared/components/calendar-header/c
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.component";
+import { SharedModule } from "app/shared/shared.module";
+import { MatMenuModule } from "@angular/material/menu";
 @NgModule({
-  declarations: [NetBankingHomeComponent],
+  declarations: [NetBankingHomeComponent, NetBankingDashboardComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,6 +24,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     SharedComponentsModule,
     SharedMaterialModule,
     FlexLayoutModule,
+    SharedModule,
+    MatMenuModule,
   ],
 })
 export class NetBankingModule {}
