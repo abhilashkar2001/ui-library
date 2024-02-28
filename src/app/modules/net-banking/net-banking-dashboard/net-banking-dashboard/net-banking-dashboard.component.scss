@@ -1,8 +1,12 @@
 .parent-div {
   padding: 10px 70px 0px 70px;
+  .searchDiv {
+    height: 62px;
+  }
   .overView {
-    padding-top: 5px;
     font-weight: 700;
+    padding: 10px;
+    font-size: 20px;
   }
   .selected-account-Card {
     background: transparent linear-gradient(0deg, #051a2d 0%, #004c97 100%) 0%

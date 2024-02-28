@@ -14,6 +14,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.component";
 import { SharedModule } from "app/shared/shared.module";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatToolbarModule } from "@angular/material/toolbar";
 @NgModule({
   declarations: [NetBankingHomeComponent, NetBankingDashboardComponent],
   imports: [
@@ -26,6 +27,7 @@ import { MatMenuModule } from "@angular/material/menu";
     FlexLayoutModule,
     SharedModule,
     MatMenuModule,
+    MatToolbarModule,
   ],
 })
 export class NetBankingModule {}
