@@ -1,0 +1,27 @@
+.level {
+  letter-spacing: 0px;
+  color: #535353;
+  font-size: 12px;
+  font-weight: 400;
+}
+.level_status {
+  letter-spacing: 0px;
+  //   color: #008461;
+  background: transparent !important;
+  font-weight: 600;
+}
+.progress_fill {
+  height: 7px;
+  border-radius: 5px;
+  background-color: #008461;
+}
+
+.bgGreen {
+  background: #008461 0% 0% no-repeat padding-box;
+  color: #008461;
+}
+
+.bgRed {
+  background: #b10000 0% 0% no-repeat padding-box;
+  color: #b10000;
+}

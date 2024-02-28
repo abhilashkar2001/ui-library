@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-net-banking-home",
@@ -6,18 +7,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./net-banking-home.component.scss"],
 })
 export class NetBankingHomeComponent implements OnInit {
-  genericScreenName: any = "Pending for approval";
-  columns = [
-    {
-      columnDef: "version",
-      header: "Version",
-      cell: (element: any) => `${element?.version}`,
-    },
-    {
-      columnDef: "lastUpdatedBy",
-      header: "Action By",
-      cell: (element: any) => `${element.lastUpdatedBy}`,
-    },
+  public approvalForm: FormGroup;
+
+  approvalList = [
+    { level: "Level 0", user: "Abhilash", status: "Approved" },
+    { level: "Level 1", user: "Abhilash", status: "Approved" },
+    { level: "Level 2", user: "Abhilash", status: "Rejected" },
   ];
 
   constructor() {}

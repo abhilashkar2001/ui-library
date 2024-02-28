@@ -63,6 +63,11 @@ import { NewReusableMatTableComponent } from "./new-reusable-mat-table/new-reusa
 import { NewReusableFilterComponent } from "./new-reusable-filter/new-reusable-filter.component";
 import { CreatedDurationModelComponent } from "./created-duration-model/created-duration-model.component";
 import { CalendarHeaderComponent } from "./calendar-header/calendar-header.component";
+import { CommonLevelStatusComponent } from "./common-level-status/common-level-status.component";
+import { AduitLogDetailsComponent } from "./audit-log/aduit-log-details/aduit-log-details.component";
+import { AuditLogTableComponent } from "./audit-log/audit-log-table/audit-log-table.component";
+import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-popup.component";
+import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -105,6 +110,11 @@ const components = [
   NewReusableFilterComponent,
   CreatedDurationModelComponent,
   CalendarHeaderComponent,
+  CommonLevelStatusComponent,
+  AuditLogTableComponent,
+  AduitLogDetailsComponent,
+  AuditLogPopupComponent,
+  NewAuditlogButtonGroupComponent,
 ];
 
 @NgModule({
