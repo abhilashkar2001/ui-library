@@ -55,6 +55,18 @@ export const rootRouterConfig: Routes = [
           import("./modules/loans/loans.module").then((m) => m.LoansModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
+      {
+        path: "net-banking",
+        loadChildren: () =>
+          import("./modules/net-banking/net-banking.module").then(
+            (m) => m.NetBankingModule
+          ),
+        data: {
+          preload: false,
+          title: "Net Banking",
+          breadcrumb: "net-banking",
+        },
+      },
     ],
   },
   {
