@@ -1,0 +1,169 @@
+::ng-deep.profile-menu.mat-menu-panel {
+  width: 480px !important;
+  overflow-y: auto;
+  top: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  border-radius: 16px;
+  padding: 2px;
+}
+
+.profile-box {
+  background: #fafafa 0% 0% no-repeat padding-box;
+  padding: 0px 3px 0px 3px;
+  border-radius: 18px;
+}
+
+.user-headline {
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 18px;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  // text-transform: capitalize;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.last-session {
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 13px;
+  letter-spacing: 0px;
+  color: #838383;
+  opacity: 1;
+}
+
+.lang-title {
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 19px;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.lang-text {
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 12px;
+  letter-spacing: -0.26px;
+  opacity: 1;
+}
+
+::ng-deep .mat-menu-content {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+::ng-deep.mat-menu-panel {
+  min-width: 150px !important;
+  max-width: 400px !important;
+  max-height: 350px; /* Set the maximum height of the menu */
+  overflow-y: auto;
+  left: 0;
+  background: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep.mat-menu-item {
+  display: flex;
+  align-items: center;
+  font-size: small;
+}
+// ::ng-deep.mat-icon {
+//   // margin-right: 8px;
+// }
+.profile-image {
+  height: 60px;
+  width: 60px;
+  margin-right: 12px;
+  // padding-left: 10px;
+  border-radius: 50%;
+}
+.profile-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  // border-bottom: 1px solid #ccc;
+}
+.profileImg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50% 50%;
+  padding: 10px;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+.profile-name {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.profile-line {
+  margin: 4px auto; /* Center the line horizontally and provide some spacing */
+  width: 90%;
+  height: 1px;
+  background-color: #ccc;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.profile-image-container {
+  display: flex;
+  align-items: center;
+  width: 92px;
+  height: 92px;
+  padding: 20px;
+}
+
+.img-icon {
+  border-radius: 50px 50px;
+}
+
+.edit-icon {
+  height: 60px;
+  width: 60px;
+  margin-left: -40px;
+  margin-bottom: -50px;
+  cursor: pointer;
+}
+
+.popup-panel {
+  width: 350px;
+  padding: 16px;
+  align-items: center;
+  text-align: center;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 7px 20px #00000029;
+  border-radius: 8px;
+  opacity: 1;
+}
+
+.mat-menu-item.sub-mat-menu {
+  padding: 0 6px !important;
+}
+.mat-menu-item:hover {
+  color: #004c97;
+  opacity: 100;
+  .mat-icon-no-color {
+    color: #004c97 !important;
+    opacity: 100;
+  }
+}
+
+.mat-menu-item.sub-mat-menu {
+  line-height: 16px !important;
+  height: 36px !important;
+}
+
+.active-item {
+  color: #004c97 !important;
+  opacity: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
