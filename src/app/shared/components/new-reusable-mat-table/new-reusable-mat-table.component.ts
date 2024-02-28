@@ -144,7 +144,13 @@ export class NewReusableMatTableComponent implements OnInit {
     this.matIconRegistry.addSvgIcon(
       `close-enabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/Group 3180.svg"
+        "assets/images/close_enabled.svg"
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      `transaction`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/transaction.svg"
       )
     );
   }
