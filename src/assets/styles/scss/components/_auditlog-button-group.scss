@@ -1,0 +1,17 @@
+$btnHeight: 40px;
+
+.approveButton {
+  @include action_button(#fff, $gradientBg, $btnHeight);
+}
+.editButton {
+  @include action_button(#000, #fff, $btnHeight);
+}
+.deactivateButton {
+  @include action_button(#d68c00, #fff, $btnHeight);
+}
+.deleteButton {
+  @include action_button($textRed, #fff, $btnHeight);
+}
+.exitButton {
+  @include action_button($textRed, #fff, $btnHeight);
+}

@@ -17,4 +17,23 @@ export class DataService {
   doRefresh(data) {
     this.refresh.next(data);
   }
+  private subject = new Subject<any>();
+
+  sendClickEvent() {
+    this.subject.next();
+  }
+
+  getClickEvent(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  private auditLogData: any = {};
+
+  setAuditLogData(data) {
+    this.auditLogData = data;
+  }
+
+  getAuditLogData() {
+    return this.auditLogData;
+  }
 }
