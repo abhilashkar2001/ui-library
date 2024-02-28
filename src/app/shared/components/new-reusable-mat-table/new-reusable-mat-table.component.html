@@ -1,12 +1,3 @@
-<!-- <section *ngIf="CountryModule === false">
-  <p class="breadcrumb">
-    <a (click)="customroute()">{{ "Home" | translate }}</a> &gt;
-    <a (click)="customroute()"> {{ "Maintenance Summary" | translate }}</a>
-    &gt;
-    {{ maintenanceTitle }}
-  </p>
-</section> -->
-
 <section
   fxLayout="row"
   fxLayout.xs="column"
@@ -475,21 +466,14 @@
           ><b>{{ "Action" | translate }}</b></mat-header-cell
         >
         <mat-cell *matCellDef="let element">
-          <div
-            class="action_btn_wrapper"
-            *ngIf="!tellerOps || currentUser?.username != element?.createdBy"
-          >
+          <div class="action_btn_wrapper">
             <div
               class="action_btn"
               title="Approve"
-              (click)="updateRecord('Authorize', element.id, element)"
-              *ngIf="
-                element.authStatus == 'UNAUTHORIZED' &&
-                maintenanceTitle !== 'Open Or Close Till / Vault'
-              "
+              (click)="updateRecord('Transaction', element.id, element)"
             >
               <!-- Enabled -->
-              <mat-icon class="summaryIcon" svgIcon="auth-enabled"></mat-icon>
+              <mat-icon class="summaryIcon" svgIcon="transaction"></mat-icon>
             </div>
             <div
               class="action_btn"
@@ -536,12 +520,6 @@
             <mat-icon class="summaryIcon" svgIcon="reopen-enabled"></mat-icon>
           </div>
           <div
-            *ngIf="
-              element.oneTimeAuth === 'Y' &&
-              element.recordStatus == 'OPEN' &&
-              !hideClose &&
-              maintenanceTitle !== 'Open Or Close Till / Vault'
-            "
             (click)="updateRecord('Close', element.id, element)"
             class="action_btn"
             title="Deactivate"
