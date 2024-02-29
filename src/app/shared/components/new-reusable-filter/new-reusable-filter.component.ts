@@ -88,6 +88,7 @@ export class NewReusableFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.componentName, "dsjjj");
     this.fxFlexForCol1 = this.newFilter ? 25 : 40;
     this.buildFormItem();
     this.getCreatedBy();
@@ -102,6 +103,9 @@ export class NewReusableFilterComponent implements OnInit {
       newFilter: "",
       authStatus: "",
       recordStatus: "",
+      status: "",
+      fromDate: "",
+      toDate: "",
     });
     this.filterFormControl.valueChanges
       .pipe(debounceTime(500))

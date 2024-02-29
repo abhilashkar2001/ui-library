@@ -1,0 +1,33 @@
+<div fxLayout="column">
+  <header class="pl-20 pr-20">
+    <div fxLayoutAlign="space-between center">
+      <div fxLayout="column">
+        <h1><mat-icon>keyboard_backspace</mat-icon> Bulk Upload</h1>
+      </div>
+      <div fxLayout="column" class="no_block">
+        <span>Refrence No</span>
+        <span>{{ Id }}</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <app-common-level-status [approvalList]="approvalList">
+    </app-common-level-status>
+  </section>
+
+  <section>
+    <app-new-reusable-mat-table
+      [columns]="columns"
+      [MaintenanceUpdatedData]="staticData"
+      [componentName]="'Bulk Upload'"
+    ></app-new-reusable-mat-table>
+  </section>
+  <app-new-auditlog-button-group
+    [auditLogData]="auditLogObject"
+    [isEdit]="isEdit"
+  >
+  </app-new-auditlog-button-group
+  ><br />
+  <app-audit-log-table [dummyData]="auditLogObject"> </app-audit-log-table>
+</div>

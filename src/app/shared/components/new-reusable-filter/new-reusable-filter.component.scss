@@ -128,3 +128,22 @@
     }
   }
 }
+.bulkUpload_url {
+  span {
+    margin-left: 26px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+::ng-deep .downloadBtn {
+  mat-icon,
+  svg {
+    vertical-align: unset;
+  }
+  .mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

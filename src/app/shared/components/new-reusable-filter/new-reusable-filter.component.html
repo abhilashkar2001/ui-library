@@ -25,156 +25,102 @@
         >
       </mat-select>
     </mat-form-field> -->
-
-    <!-- Approved -->
-    <mat-form-field
-      appearance="outline"
-      [fxFlex]="componentName === 'securityPolicy' ? 18 : 13"
-      fxFlex.sm="22"
-      fxFlex.xs="45"
-      class="fieldinput reuseFilterField"
+    <!-- upload file -->
+    <div
+      fxLayout="row"
+      fxFlex="72"
+      *ngIf="componentName == 'Bulk Upload'"
+      class="bulkUpload_url"
     >
-      <mat-label>{{ "Approved" | translate }}</mat-label>
-      <mat-select
-        formControlName="authStatus"
-        (selectionChange)="getFilterValue($event.value)"
-        disableOptionCentering
+      <img src="assets/images/xls_logo.svg" width="57px" height="57px" />
+      <span fxLayoutAlign="center center"
+        >sklsjsdskj hdb shjsdbyudsssd.xlsx</span
       >
-        <mat-option value="">{{ "Both" | translate }}</mat-option>
-        <mat-option value="AUTHORIZED">{{ "Approved" | translate }}</mat-option>
-        <mat-option value="UNAUTHORIZED">{{
-          "Unapproved" | translate
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- Active Status -->
+    </div>
+
+    <!-- search box -->
     <mat-form-field
-      *ngIf="componentName !== 'securityPolicy'"
       appearance="outline"
-      class="fieldinput reuseFilterField"
+      class="fieldinput customArrow"
+      fxFlex="{{ fxFlexForCol1 }}"
+      *ngIf="componentName != 'Bulk Upload'"
+    >
+      <mat-label>Refrence Number</mat-label>
+      <input
+        matInput
+        type="text"
+        #searchVal
+        appNoInitialSpace
+        placeholder="Refrence Number"
+        formControlName="searchValue"
+        class="searchInput"
+        notAllowFirstSpace
+      />
+
+      <mat-icon matSuffix class="searchIcon">search</mat-icon>
+    </mat-form-field>
+    <!-- Status -->
+    <mat-form-field
+      appearance="outline"
+      class="fieldinput customArrow"
       fxFlex="13"
       fxFlex.sm="22"
       fxFlex.xs="45"
     >
-      <mat-label>{{ "Active Status" | translate }}</mat-label>
-      <mat-select
-        formControlName="recordStatus"
-        (selectionChange)="getFilterValue($event.value)"
-        disableOptionCentering
-      >
-        <mat-option value="">{{ "Both" | translate }}</mat-option>
-        <mat-option value="OPEN">{{ "Active" | translate }}</mat-option>
-        <mat-option value="CLOSE">{{ "Inactive" | translate }}</mat-option>
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" disableOptionCentering>
+        <mat-option
+          *ngFor="let option of statusOptions"
+          [value]="option.recordStatus"
+          (click)="getFilterValue(option.recordStatus)"
+        >
+          {{ option.authStatus }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- Action By -->
-    <mat-form-field
-      appearance="outline"
-      class="fieldinput customArrow"
-      [fxFlex]="componentName === 'securityPolicy' ? 18 : 13"
-      fxFlex.sm="22"
-      fxFlex.xs="45"
-    >
-      <mat-label>{{ "Action By" | translate }}</mat-label>
-      <mat-select
-        formControlName="lastUpdatedBy"
-        (selectionChange)="getFilterValue($event.value)"
-        disableOptionCentering
-        panelClass="sticky_panel"
-      >
-        <div class="search_container">
-          <mat-form-field
-            [floatLabel]="'never'"
-            fxFill
-            appearance="outline"
-            class="full-width search_field"
-          >
-            <input
-              matInput
-              placeholder="Search"
-              [formControl]="filterFormControl"
-              (keydown.space)="$event.stopPropagation()"
-              maxlength="30"
-              (blur)="clear()"
-            />
-            <button
-              matSuffix
-              mat-icon-button
-              aria-label="company"
-              class="l-16 close-btn"
-              (click)="clear()"
-            >
-              <mat-icon *ngIf="filterFormControl.value">clear</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <mat-select-trigger
-          >{{ filterForm.get("lastUpdatedBy").value }}
-        </mat-select-trigger>
 
-        <mat-option
-          *ngFor="let item of filteredOptions$; let i = index"
-          [value]="item.username"
-        >
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex="30">
-              <ng-container
-                *ngIf="item?.profileUrl !== 'NOT_EXIST'; else showInitialAvatar"
-              >
-                <img
-                  [src]="item.profileUrl"
-                  [src-fallback]="userImage"
-                  (loaded)="onLoaded($event, i)"
-                  class="avatar-2x"
-                />
-              </ng-container>
-              <ng-template #showInitialAvatar>
-                <div class="circle">
-                  <span class="initials">
-                    {{ item.username[0][0]?.toUpperCase()
-                    }}{{ item.username[1][0]?.toUpperCase() }}</span
-                  >
-                </div>
-              </ng-template>
-            </div>
-            <div fxFlex="70" fxLayout="column">
-              <span class="h-7">
-                <b>
-                  {{ item.username }}
-                </b>
-              </span>
-              <h6 *ngIf="item.empId !== null" class="empColor">
-                EMP #{{ item.empId }}
-              </h6>
-            </div>
-          </div>
-        </mat-option>
-        <mat-option
-          class="hide-role-checkbox"
-          *ngIf="filteredOptions$?.length < 1"
-        >
-          No Data Found
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- Action Date -->
     <mat-form-field
       appearance="outline"
       class="fieldinput customArrow"
-      [fxFlex]="componentName === 'securityPolicy' ? 18 : 13"
-      fxFlex.sm="22"
-      fxFlex.xs="45"
+      fxFlex="13"
+      *ngIf="componentName != 'Bulk Upload'"
     >
-      <mat-label>{{ "Action Date" | translate }}</mat-label>
-      <mat-select formControlName="createdDate" disableOptionCentering>
-        <mat-option
-          *ngFor="let option of actionDateOptions"
-          [value]="option.value"
-          (click)="getFilterValue(option.value)"
-        >
-          {{ option.label | translate }}
-        </mat-option>
-      </mat-select>
+      <mat-label>From Date</mat-label>
+      <mat-datepicker-toggle
+        class="date-toggle"
+        matSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <input
+        matInput
+        readonly
+        [matDatepicker]="picker1"
+        class="date-picker"
+        formControlName="fromDate"
+      />
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      class="fieldinput customArrow"
+      fxFlex="13"
+      *ngIf="componentName != 'Bulk Upload'"
+    >
+      <mat-label>To Date</mat-label>
+      <mat-datepicker-toggle
+        class="date-toggle"
+        matSuffix
+        [for]="picker2"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+      <input
+        matInput
+        readonly
+        [matDatepicker]="picker2"
+        class="date-picker"
+        formControlName="toDate"
+        required
+      />
     </mat-form-field>
     <!-- Any new filter section -->
     <mat-form-field
@@ -220,31 +166,12 @@
         >
       </mat-select>
     </mat-form-field>
-    <!-- Refresh icon -->
-    <div class="refreshIcon" (click)="clearFilter()" title="Reset">
-      <mat-icon svgIcon="refresh-icon" class="autornewIcon"></mat-icon>
-    </div>
-    <!-- search box -->
-    <div
-      fxLayoutAlign="center center"
-      fxFlex="{{ fxFlexForCol1 }}"
-      class="searchBox"
-    >
-      <div fxFlex="90" fxLayoutAlign="start center">
-        <input
-          matInput
-          type="text"
-          #searchVal
-          appNoInitialSpace
-          placeholder="Search"
-          formControlName="searchValue"
-          class="searchInput"
-          notAllowFirstSpace
-        />
-      </div>
-      <div fxFlex="10" fxLayoutAlign="center center">
-        <mat-icon matSuffix class="searchIcon">search</mat-icon>
-      </div>
+
+    <div fxFlex="13">
+      <button mat-flat-button class="downloadBtn full-width">
+        <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon>
+        {{ "Upload" | translate }}
+      </button>
     </div>
   </form>
 </div>
