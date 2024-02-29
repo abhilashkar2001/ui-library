@@ -34,9 +34,9 @@
             <mat-label>{{ "Login Id" | translate }}</mat-label>
             <input
               matInput
-              formControlName="loginId"
+              formControlName="username"
               type="text"
-              name="loginId"
+              name="username"
               class="alignCred"
               placeholder="Login Id"
               maxlength="30"
@@ -46,7 +46,7 @@
             <!-- (keypress)="onKeyPress($event)" -->
             <!-- oninput="this.value = this.value.toUpperCase()" -->
             <mat-error
-              *ngIf="signinForm.get('loginId').hasError('required')"
+              *ngIf="signinForm.get('username').hasError('required')"
               class=""
             >
               {{ "Please enter user Name" | translate }}

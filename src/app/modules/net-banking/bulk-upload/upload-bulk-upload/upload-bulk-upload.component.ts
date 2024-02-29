@@ -31,7 +31,7 @@ export class UploadBulkUploadComponent implements OnInit {
     this.fetchAllScreens();
   }
   goBack() {
-    this.router.navigate(["/net-banking/bulk-upload"]);
+    this.router.navigate(["/user/dashboard/bulk-upload"]);
   }
   droppedFiles(evt) {
     this.file = evt.target?.files[0];
