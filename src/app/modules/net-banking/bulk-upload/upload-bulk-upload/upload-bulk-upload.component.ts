@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload";
+import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
 
 @Component({
   selector: "app-upload-bulk-upload",
