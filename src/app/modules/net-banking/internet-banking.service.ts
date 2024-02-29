@@ -11,4 +11,8 @@ export class InternetBankingService {
   getDashboardInfo() {
     return this.http.get<any>(`assets/json/net-banking-dashboardInfo.json`);
   }
+
+  getActivityLogData() {
+    return this.http.get<any>(`assets/json/net-banking-activityLog.json`);
+  }
 }

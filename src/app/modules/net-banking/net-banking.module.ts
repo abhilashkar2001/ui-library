@@ -14,6 +14,7 @@ import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-bankin
 import { SharedModule } from "app/shared/shared.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { PendingForApprovalComponent } from './pending-for-approval/pending-for-approval.component';
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -21,6 +22,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     AddBulkUploadComponent,
     UploadBulkUploadComponent,
     NetBankingDashboardComponent,
+    PendingForApprovalComponent,
   ],
   imports: [
     CommonModule,

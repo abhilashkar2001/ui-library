@@ -272,7 +272,7 @@ export class NewReusableMatTableComponent implements OnInit {
     }
   }
   bulkUpload() {
-    this.router.navigate(["/net-banking/add-bulk-upload"]);
+    this.router.navigate(["/user/dashboard/add-bulk-upload"]);
   }
 
   calculatePageIndex() {

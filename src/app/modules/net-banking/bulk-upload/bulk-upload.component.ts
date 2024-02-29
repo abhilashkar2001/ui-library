@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BulkUploadConstant } from "./add-bulk-upload/bulk.upload.constant";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-bulk-upload",
@@ -20,7 +21,11 @@ export class BulkUploadComponent implements OnInit {
     status: "OK",
   };
 
-  constructor() {}
+  constructor(private route: Router) {}
 
   ngOnInit(): void {}
+
+  customGoBack() {
+    this.route.navigate(["/user/dashboard/bulk-upload"]);
+  }
 }

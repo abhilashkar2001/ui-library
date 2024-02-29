@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { InternetBankingService } from "../../internet-banking.service";
+import { Router } from "@angular/router";
+import { NETBANKING } from "./net-banking-dashboard.constant";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -9,9 +11,16 @@ import { InternetBankingService } from "../../internet-banking.service";
 export class NetBankingDashboardComponent implements OnInit {
   dashboardInfo: any;
   Object = Object;
+  transferType = NETBANKING.transferType;
+  dummyHeader = NETBANKING.dummyHeader;
+  colorCode = NETBANKING.colorCode;
+  navigationItems = NETBANKING.navigationItems;
+  dummyResponse = NETBANKING.dummyResponse;
   selectedKey: string | null = null;
   availableBalance: number[];
   genericScreenName: any = "Pending for approval";
+  currentIndex = 1;
+  transferArray = NETBANKING.transferType[0].types;
   columns = [
     {
       columnDef: "version",
@@ -24,43 +33,19 @@ export class NetBankingDashboardComponent implements OnInit {
       cell: (element: any) => `${element.lastUpdatedBy}`,
     },
   ];
-  navigationItems = [
-    {
-      label: "Home",
-      icon: "/assets/images/net-banking-nav-bar/Home_Icon.svg",
-      link: "/home",
-    },
-    {
-      label: "Fund Transfer",
-      icon: "/assets/images/net-banking-nav-bar/Fund-Transfer_Icon.svg",
-      link: "/fund-transfer",
-    },
-    {
-      label: "Deposit",
-      icon: "/assets/images/net-banking-nav-bar/Deposit_Icon.svg",
-      link: "/deposit",
-    },
-    {
-      label: "Cards",
-      icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg",
-      link: "/cards",
-    },
-    {
-      label: "Loan",
-      icon: "/assets/images/net-banking-nav-bar/Loan_Icon.svg",
-      link: "/loan",
-    },
-    {
-      label: "Summary",
-      icon: "/assets/images/net-banking-nav-bar/Summary_Icon.svg",
-      link: "/summary",
-    },
-  ];
 
-  constructor(private netBankingService: InternetBankingService) {}
+  activityLogData: any;
+  displayActivityLog: any[];
+  selectedActivityLog: string = "financial";
+
+  constructor(
+    private netBankingService: InternetBankingService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getDashboardInfo();
+    this.getActivityLogData();
   }
 
   getDashboardInfo() {
@@ -81,5 +66,57 @@ export class NetBankingDashboardComponent implements OnInit {
 
   cardDetails(key: string) {
     this.selectedKey = key;
+  }
+  openPendingForApprovalSummary() {
+    this.router.navigate(["/user/dashboard/pending-for-approval"]);
+  }
+  viewPendingRecord() {
+    this.router.navigate(["/user/dashboard/bulk-upload/1234"]);
+  }
+  getActiveTransferType(transfer) {
+    this.currentIndex = transfer.sequence;
+    this.transferArray = transfer.types;
+  }
+  onDropdownChange(event) {
+    this.displayActivityLog = [];
+    if (event === "financial") {
+      this.displayActivityLog = this.activityLogData.financial;
+      this.displayActivityLog.forEach((element) => {
+        element.total = element.pending + element.processed + element.rejected;
+      });
+    } else {
+      this.displayActivityLog = this.activityLogData.nonfinancial;
+      this.displayActivityLog.forEach((element) => {
+        element.total = element.pending + element.processed + element.rejected;
+      });
+    }
+  }
+
+  transformLabel(label: string): string {
+    if (/[A-Z]/.test(label)) {
+      return label
+        .replace(/[A-Z]/g, (match, offset) => (offset === 0 ? "" : " ") + match)
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    } else {
+      return label.charAt(0).toUpperCase() + label.slice(1);
+    }
+  }
+  getActivityLogData() {
+    this.netBankingService.getActivityLogData().subscribe((res: any) => {
+      if (res.statusCode == 200) {
+        this.activityLogData = res?.data;
+        this.displayActivityLog = this.activityLogData.financial;
+        this.displayActivityLog.forEach((element) => {
+          element.total =
+            element.pending + element.processed + element.rejected;
+        });
+      }
+    });
+  }
+
+  openTransfer(transfer) {
+    this.router.navigate([transfer.route]);
   }
 }
