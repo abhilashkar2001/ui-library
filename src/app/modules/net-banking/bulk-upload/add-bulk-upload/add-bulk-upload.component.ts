@@ -30,7 +30,7 @@ export class AddBulkUploadComponent implements OnInit {
     {
       level: "Level 2",
       user: "Abhilash",
-      status: "Rejected",
+      status: "Pending",
       id: 399,
       remark: "dkldnds jsd dskj s ds sjsd sd sd sd ds ",
     },
