@@ -24,10 +24,7 @@ export const rootRouterConfig: Routes = [
       ).then((m) => m.OriginationExternalCallbackModule),
     data: { preload: false, title: "Home", breadcrumb: "Home" },
   },
-  {
-    path: "user",
-    component: UserLayoutComponent,
-  },
+
   {
     path: "",
     component: AuthLayoutComponent,
@@ -37,6 +34,19 @@ export const rootRouterConfig: Routes = [
         loadChildren: () =>
           import("./modules/sessions/sessions.module").then(
             (m) => m.SessionsModule
+          ),
+      },
+    ],
+  },
+  {
+    path: "user",
+    component: UserLayoutComponent,
+    children: [
+      {
+        path: "dashboard",
+        loadChildren: () =>
+          import("./modules/net-banking/net-banking.module").then(
+            (m) => m.NetBankingModule
           ),
       },
     ],

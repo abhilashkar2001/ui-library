@@ -20,7 +20,6 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     BulkUploadComponent,
     AddBulkUploadComponent,
     UploadBulkUploadComponent,
-    ,
     NetBankingDashboardComponent,
   ],
   imports: [
