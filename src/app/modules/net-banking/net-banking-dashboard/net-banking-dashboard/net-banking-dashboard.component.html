@@ -26,6 +26,7 @@
     fxLayout="row"
     fxLayoutAlign="space-between"
     fxLayoutGap="8px"
+    fxFlex="100"
   >
     <ng-container *ngFor="let key of Object.keys(dashboardInfo); let i = index">
       <mat-card
@@ -36,10 +37,16 @@
           'selected-account-Card': selectedKey === key
         }"
         (click)="cardDetails(key)"
+        fxFlex="33"
       >
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="178px">
+        <div
+          fxLayout="row"
+          fxFlex="100"
+          fxLayoutAlign="space-between"
+          fxLayoutGap="25%"
+        >
           <div class="infoLength">{{ dashboardInfo[key].length }}</div>
-          <div fxLayout="row">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="space-around end">
               <div class="cardType">{{ transformLabel(key) }}</div>
               <div class="availableTag">Available Balance</div>
@@ -47,7 +54,7 @@
                 ₹ <span>{{ availableBalance[i] }}</span>
               </div>
             </div>
-            <div class="downArrow">
+            <div>
               <mat-icon>keyboard_arrow_down</mat-icon>
             </div>
           </div>
@@ -205,7 +212,7 @@
                 <mat-option value="nonfinancial">Non-Financial</mat-option>
               </mat-select>
             </mat-form-field>
-            <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutGap="15px">
               <ng-container *ngFor="let key of colorCode">
                 <mat-accordion>
                   <mat-expansion-panel class="panel">
@@ -231,58 +238,60 @@
                         </div>
                       </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <ng-container *ngFor="let obj of displayActivityLog">
-                      <div
-                        class="contentBg"
-                        [style.background-color]="key.bgColor"
-                        *ngIf="obj.label == key.label"
-                      >
-                        <div fxLayout="column" fxLayoutGap="5px">
-                          <div
-                            fxLayout="row"
-                            fxLayoutAlign="space-between center"
-                          >
+                    <mat-expansion-panel-body>
+                      <ng-container *ngFor="let obj of displayActivityLog">
+                        <div
+                          class="contentBg"
+                          [style.background-color]="key.bgColor"
+                          *ngIf="obj.label == key.label"
+                        >
+                          <div fxLayout="column" fxLayoutGap="5px">
                             <div
-                              class="processedName"
-                              [style.color]="key.valColor"
+                              fxLayout="row"
+                              fxLayoutAlign="space-between center"
                             >
-                              Processed
+                              <div
+                                class="processedName"
+                                [style.color]="key.valColor"
+                              >
+                                Processed
+                              </div>
+                              <div class="processedName">
+                                {{ obj.processed || 0 }}
+                              </div>
                             </div>
-                            <div class="processedName">
-                              {{ obj.processed || 0 }}
-                            </div>
-                          </div>
-                          <div
-                            fxLayout="row"
-                            fxLayoutAlign="space-between center"
-                          >
                             <div
-                              class="processedName"
-                              [style.color]="key.valColor"
+                              fxLayout="row"
+                              fxLayoutAlign="space-between center"
                             >
-                              Pending
+                              <div
+                                class="processedName"
+                                [style.color]="key.valColor"
+                              >
+                                Pending
+                              </div>
+                              <div class="processedName">
+                                {{ obj.pending || 0 }}
+                              </div>
                             </div>
-                            <div class="processedName">
-                              {{ obj.pending || 0 }}
-                            </div>
-                          </div>
-                          <div
-                            fxLayout="row"
-                            fxLayoutAlign="space-between center"
-                          >
                             <div
-                              class="processedName"
-                              [style.color]="key.valColor"
+                              fxLayout="row"
+                              fxLayoutAlign="space-between center"
                             >
-                              Rejected
-                            </div>
-                            <div class="processedName">
-                              {{ obj.rejected || 0 }}
+                              <div
+                                class="processedName"
+                                [style.color]="key.valColor"
+                              >
+                                Rejected
+                              </div>
+                              <div class="processedName">
+                                {{ obj.rejected || 0 }}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </ng-container>
+                      </ng-container>
+                    </mat-expansion-panel-body>
                   </mat-expansion-panel>
                 </mat-accordion>
               </ng-container>

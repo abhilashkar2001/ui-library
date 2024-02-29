@@ -12,14 +12,12 @@
   .selected-account-Card {
     background: transparent linear-gradient(0deg, #051a2d 0%, #004c97 100%) 0%
       0% no-repeat padding-box;
-    width: 450px;
     height: 145px;
     border-radius: 10px;
     color: #ffffff;
     padding: 18px 40px 0px 40px;
   }
   .account-Card-btn {
-    width: 450px;
     height: 145px;
     background: #f3f3f3;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784);
@@ -52,12 +50,6 @@
   .balanceAmount {
     font-weight: 700;
     font-size: 25px;
-  }
-
-  .downArrow {
-    position: absolute;
-    margin-left: 33%;
-    margin-top: 9%;
   }
 
   .infoDropdown {
@@ -135,7 +127,7 @@
 .totalVal {
   font-size: 20px;
   font-weight: 600;
-  padding-left: 13px;
+  padding-left: 8px;
 }
 
 .arrow {
@@ -145,7 +137,7 @@
 
 .processedName {
   font: normal normal 15px/18px Poppins;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .contentBg {
@@ -153,7 +145,7 @@
 }
 
 .panel {
-  border-radius: 8px;
+  border-radius: 8px !important;
 }
 
 .panelHeader {
@@ -297,8 +289,6 @@
 }
 
 ::ng-deep.infoDropdown.mat-menu-panel {
-  width: 480px !important;
-  left: 20px;
   overflow-y: auto;
   top: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -316,4 +306,8 @@
   background: #ffffff !important;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep.mat-expansion-panel-body {
+  padding: 0px !important;
 }
