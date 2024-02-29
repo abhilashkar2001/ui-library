@@ -1,4 +1,16 @@
 <div class="parent-div" fxLayout="column">
+  <mat-toolbar class="nav-bar">
+    <div fxFlex="100" fxLayoutAlign="space-between center">
+      <button
+        mat-button
+        *ngFor="let item of navigationItems"
+        [routerLink]="item.link"
+      >
+        <img [src]="item.icon" />
+      </button>
+    </div>
+  </mat-toolbar>
+
   <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
     <div class="overView">Account Overview</div>
     <div>

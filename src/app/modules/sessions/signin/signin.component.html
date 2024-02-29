@@ -120,7 +120,7 @@
           </button>
 
           <div fxLayout="row" class="auth_button_wrapper" fxLayoutGap="2">
-            <button class="saveButton" fxFlex="40">
+            <button class="saveButton" fxFlex="40" (click)="onVerify()">
               {{ "Verify" | translate }}
             </button>
             <button fxFlex="40" class="exitButton" (click)="goBack()">

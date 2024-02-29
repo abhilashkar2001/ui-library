@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApplicationData, SessionsConstants } from "../session.constant";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-signin",
@@ -23,7 +24,7 @@ export class SigninComponent implements OnInit {
     },
   };
   authType: string = "signIn";
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.initform();
@@ -43,5 +44,8 @@ export class SigninComponent implements OnInit {
 
   goBack() {
     this.authType = "signIn";
+  }
+  onVerify() {
+    this.router.navigate(["/user/dashboard/home"]);
   }
 }

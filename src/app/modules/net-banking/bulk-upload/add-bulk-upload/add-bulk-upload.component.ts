@@ -30,7 +30,7 @@ export class AddBulkUploadComponent implements OnInit {
     {
       level: "Level 2",
       user: "Abhilash",
-      status: "Rejected",
+      status: "Pending",
       id: 399,
       remark: "dkldnds jsd dskj s ds sjsd sd sd sd ds ",
     },
@@ -52,7 +52,7 @@ export class AddBulkUploadComponent implements OnInit {
     kioskId: 319857,
     kioskSystemCode: "12347",
     kioskSystemName: "Raghul",
-    passcode: "$2a$10$c08JOwq1GujQoKp1XF5Ybuwsete1VVULGqZLA.wzJkTsLLhEahxpy",
+    passcode: "$2a$10$32778233278.wzJkTsLLhEahxpy",
     logoutCode: "$2a$10$UCTj/AjY5X4AA2k9bLyl5OdaMAloO.O5bWrty6uPEMpeQo00rbCra",
     kioskSystemEnable: true,
     entityCode: "SN1",
