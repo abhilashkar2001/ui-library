@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ApplicationData, SessionsConstants } from "../session.constant";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { LoginService } from "../login.service";
 
 @Component({
   selector: "app-signin",
@@ -24,7 +25,11 @@ export class SigninComponent implements OnInit {
     },
   };
   authType: string = "signIn";
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private login: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.initform();
@@ -33,13 +38,17 @@ export class SigninComponent implements OnInit {
   initform() {
     this.signinForm = this.fb.group({
       corporateId: ["", Validators.required],
-      loginId: ["", Validators.required],
+      username: ["", Validators.required],
       password: ["", Validators.required],
+      otpRequired: [true],
     });
   }
 
   submit() {
-    this.authType = "otp";
+    let payload = this.signinForm.value;
+    this.login.getProfile(payload).subscribe((res: any) => {
+      if (res?.status == 200) this.authType = "otp";
+    });
   }
 
   goBack() {
