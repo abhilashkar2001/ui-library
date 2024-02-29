@@ -39,28 +39,26 @@
     </div>
 
     <!-- search box -->
-    <div
-      fxLayoutAlign="center center"
+    <mat-form-field
+      appearance="outline"
+      class="fieldinput customArrow"
       fxFlex="{{ fxFlexForCol1 }}"
-      class="searchBox"
       *ngIf="componentName != 'Bulk Upload'"
     >
-      <div fxFlex="90" fxLayoutAlign="start center">
-        <input
-          matInput
-          type="text"
-          #searchVal
-          appNoInitialSpace
-          placeholder="Search"
-          formControlName="searchValue"
-          class="searchInput"
-          notAllowFirstSpace
-        />
-      </div>
-      <div fxFlex="10" fxLayoutAlign="center center">
-        <mat-icon matSuffix class="searchIcon">search</mat-icon>
-      </div>
-    </div>
+      <mat-label>Refrence Number</mat-label>
+      <input
+        matInput
+        type="text"
+        #searchVal
+        appNoInitialSpace
+        placeholder="Refrence Number"
+        formControlName="searchValue"
+        class="searchInput"
+        notAllowFirstSpace
+      />
+
+      <mat-icon matSuffix class="searchIcon">search</mat-icon>
+    </mat-form-field>
     <!-- Status -->
     <mat-form-field
       appearance="outline"
@@ -80,24 +78,49 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- Action Date -->
+
     <mat-form-field
       appearance="outline"
       class="fieldinput customArrow"
       fxFlex="13"
-      fxFlex.sm="22"
-      fxFlex.xs="45"
+      *ngIf="componentName != 'Bulk Upload'"
     >
-      <mat-label>{{ "Action Date" | translate }}</mat-label>
-      <mat-select formControlName="createdDate" disableOptionCentering>
-        <mat-option
-          *ngFor="let option of actionDateOptions"
-          [value]="option.value"
-          (click)="getFilterValue(option.value)"
-        >
-          {{ option.label | translate }}
-        </mat-option>
-      </mat-select>
+      <mat-label>From Date</mat-label>
+      <mat-datepicker-toggle
+        class="date-toggle"
+        matSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <input
+        matInput
+        readonly
+        [matDatepicker]="picker1"
+        class="date-picker"
+        formControlName="fromDate"
+      />
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      class="fieldinput customArrow"
+      fxFlex="13"
+      *ngIf="componentName != 'Bulk Upload'"
+    >
+      <mat-label>To Date</mat-label>
+      <mat-datepicker-toggle
+        class="date-toggle"
+        matSuffix
+        [for]="picker2"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+      <input
+        matInput
+        readonly
+        [matDatepicker]="picker2"
+        class="date-picker"
+        formControlName="toDate"
+        required
+      />
     </mat-form-field>
     <!-- Any new filter section -->
     <mat-form-field
@@ -143,5 +166,12 @@
         >
       </mat-select>
     </mat-form-field>
+
+    <div fxFlex="13">
+      <button mat-flat-button class="downloadBtn full-width">
+        <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon>
+        {{ "Upload" | translate }}
+      </button>
+    </div>
   </form>
 </div>

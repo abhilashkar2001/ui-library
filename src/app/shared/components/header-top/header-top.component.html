@@ -43,6 +43,46 @@
       <span class="item-name lvl1">Loan</span>
     </a>
   </div>
+  <div
+    fxLayout="column"
+    *ngIf="!hideNavItem"
+    class="align_top_items dropdown pr-16 position-relative"
+    routerLinkActive="highlight_label"
+  >
+    <button class="login">
+      Log In
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <div class="dropdown-content" fxLayout="column">
+      <div fxLayout="column" class="plr-20">
+        <span
+          class="flex-spaceAround-center cursor-pointer"
+          (click)="openDropdown(1)"
+        >
+          Net Banking
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </span>
+        <span *ngIf="expand == 1" fxLayout="column">
+          <span class="flex-spaceAround-center plr-20 cursor-pointer">
+            Personal
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </span>
+          <span class="flex-spaceAround-center plr-20 cursor-pointer">
+            Corporate
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </span>
+        </span>
+      </div>
+      <span class="flex-spaceAround-center plr-20 cursor-pointer">
+        Cards
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </span>
+      <span class="flex-spaceAround-center plr-20 cursor-pointer">
+        Remit Money
+      </span>
+    </div>
+  </div>
+
   <div class="nav_menu">
     <button
       mat-icon-button
@@ -103,6 +143,53 @@
           (click)="toggleMobileNavMenu()"
           >menu</mat-icon
         >
+        <div
+          fxLayout="column"
+          class="align_top_items dropdown pr-16 position-relative"
+        >
+          <button class="login" fxLayoutAlign="space-evenly center">
+            Log In
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <div class="dropdown-content" fxLayout="column">
+            <div fxLayout="column" class="bg-color plr-20">
+              <span
+                class="flex-spaceAround-center h-50 cursor-pointer"
+                (click)="openDropdown(1)"
+                [class.active-button]="expand == 1"
+              >
+                Net Banking
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </span>
+              <span *ngIf="expand == 1" fxLayout="column" class="sub-value">
+                <span
+                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                >
+                  Personal
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </span>
+                <span
+                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                  (click)="redirectToSignIn()"
+                >
+                  Corporate
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </span>
+              </span>
+            </div>
+            <span
+              class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
+            >
+              Cards
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </span>
+            <span
+              class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
+            >
+              Remit Money
+            </span>
+          </div>
+        </div>
       </nav>
     </div>
   </div>

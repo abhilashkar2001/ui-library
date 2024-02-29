@@ -104,6 +104,8 @@ export class NewReusableFilterComponent implements OnInit {
       authStatus: "",
       recordStatus: "",
       status: "",
+      fromDate: "",
+      toDate: "",
     });
     this.filterFormControl.valueChanges
       .pipe(debounceTime(500))

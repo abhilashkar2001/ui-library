@@ -1,0 +1,72 @@
+<div class="parent-div" fxLayout="column">
+  <mat-toolbar class="nav-bar">
+    <div fxFlex="100" fxLayoutAlign="space-between center">
+      <button
+        mat-button
+        *ngFor="let item of navigationItems"
+        [routerLink]="item.link"
+      >
+        <img [src]="item.icon" />
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
+    <div class="overView">Account Overview</div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-label class="custom-mat-label">search</mat-label>
+        <input matInput />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="dashboardInfo" fxLayout="row" fxLayoutAlign="space-between">
+    <ng-container *ngFor="let key of Object.keys(dashboardInfo); let i = index">
+      <mat-card
+        [matMenuTriggerFor]="accountMenu"
+        #clickHoverMenuTrigger="matMenuTrigger"
+        [ngClass]="{
+          'account-Card-btn': selectedKey !== key,
+          'selected-account-Card': selectedKey === key
+        }"
+        (click)="cardDetails(key)"
+      >
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="178px">
+          <div class="infoLength">{{ dashboardInfo[key].length }}</div>
+          <div fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="space-around end">
+              <div class="cardType">{{ key }}</div>
+              <div class="availableTag">Available Balance</div>
+              <div class="balanceAmount" fxLayout="row">
+                ₹ <span>{{ availableBalance[i] }}</span>
+              </div>
+            </div>
+            <div class="downArrow">
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <mat-menu #accountMenu="matMenu" class="infoDropdown">
+        <ng-container *ngFor="let info of dashboardInfo[key]">
+          <div fxLayout="row" fxLayoutGap="60px">
+            <div fxLayout="column" fxLayoutGap="2px">
+              <div class="label">Account Number</div>
+              <div class="labelVal">{{ info.accountNumber }}</div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="2px">
+              <div class="label">Type</div>
+              <div class="labelVal">{{ info.type }}</div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="2px">
+              <div class="label">Balance</div>
+              <div class="labelVal">{{ info.balance }}</div>
+            </div>
+          </div>
+          <div class="hl"></div>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  </div>
+</div>

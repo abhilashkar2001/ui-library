@@ -1,18 +1,10 @@
-<!-- <section *ngIf="CountryModule === false">
-  <p class="breadcrumb">
-    <a (click)="customroute()">{{ "Home" | translate }}</a> &gt;
-    <a (click)="customroute()"> {{ "Maintenance Summary" | translate }}</a>
-    &gt;
-    {{ maintenanceTitle }}
-  </p>
-</section> -->
-
 <section
   fxLayout="row"
   fxLayout.xs="column"
   fxLayoutAlign="space-between center"
   fxLayoutGap="10px"
   class="mb-2 mx-2"
+  *ngIf="componentName != 'Bulk Upload'"
 >
   <div
     fxLayout="row"
@@ -24,7 +16,7 @@
       <mat-icon>arrow_back</mat-icon>
     </div>
     <div>
-      <label class="text-large">{{ maintenanceTitle }}</label>
+      <h1>{{ maintenanceTitle }}</h1>
     </div>
   </div>
 
@@ -34,77 +26,12 @@
     fxLayoutGap="16px"
     *ngIf="CountryModule === false"
   >
-    <div
-      fxLayout="column"
-      class="dropdown pr-16 position-relative"
-      *ngIf="maintenanceData?.data.length || instrumentStatus?.data.length"
-    >
-      <button mat-flat-button class="downloadBtn">
-        <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon> &nbsp;
-        {{ "Download" | translate }}
-      </button>
-      <div class="dropdown-content">
-        <span class="menu_btn" mat-menu-item (click)="downloadSummary('PDF')">
-          PDF
-        </span>
-        <span
-          class="menu_btn pt-2"
-          mat-menu-item
-          (click)="downloadSummary('xlsx')"
-        >
-          Excel
-        </span>
-      </div>
-    </div>
-
-    <ng-container *ngIf="isUpload && isUpload === true; else showAddNew">
-      <button
-        mat-flat-button
-        class="uploadButton"
-        (click)="openPopUp('Upload')"
-      >
-        <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon>
+    <ng-container>
+      <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
+        <mat-icon class="text-white text-xl">add</mat-icon>
         {{ "Upload" | translate }}
       </button>
     </ng-container>
-
-    <ng-template #showAddNew>
-      <div
-        fxLayout="column"
-        class="dropdown position-relative"
-        *ngIf="
-          maintenanceTitle !== 'Instrument Status Maintenance' &&
-          maintenanceTitle !== 'Security Policy'
-        "
-      >
-        <button mat-flat-button class="addNewButton">
-          <mat-icon class="text-white text-xl">add</mat-icon>
-          {{ "Add New" | translate }}
-        </button>
-
-        <div class="dropdown-content">
-          <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
-            {{ "Create" | translate }}
-          </span>
-          <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
-            {{ "Bulk Upload" | translate }}
-          </span>
-        </div>
-      </div>
-      <div *ngIf="maintenanceTitle == 'Security Policy'">
-        <button
-          mat-flat-button
-          [ngClass]="
-            maintenanceTitle == 'Security Policy' && columns.length > 1
-              ? 'disabledAddNew disableSelect'
-              : 'addNewButton'
-          "
-          (click)="openPopUp('addNew')"
-        >
-          {{ "Add New" | translate }}
-        </button>
-      </div>
-    </ng-template>
   </div>
 </section>
 
@@ -475,21 +402,14 @@
           ><b>{{ "Action" | translate }}</b></mat-header-cell
         >
         <mat-cell *matCellDef="let element">
-          <div
-            class="action_btn_wrapper"
-            *ngIf="!tellerOps || currentUser?.username != element?.createdBy"
-          >
+          <div class="action_btn_wrapper">
             <div
               class="action_btn"
               title="Approve"
-              (click)="updateRecord('Authorize', element.id, element)"
-              *ngIf="
-                element.authStatus == 'UNAUTHORIZED' &&
-                maintenanceTitle !== 'Open Or Close Till / Vault'
-              "
+              (click)="updateRecord('Transaction', element.id, element)"
             >
               <!-- Enabled -->
-              <mat-icon class="summaryIcon" svgIcon="auth-enabled"></mat-icon>
+              <mat-icon class="summaryIcon" svgIcon="transaction"></mat-icon>
             </div>
             <div
               class="action_btn"
@@ -536,12 +456,6 @@
             <mat-icon class="summaryIcon" svgIcon="reopen-enabled"></mat-icon>
           </div>
           <div
-            *ngIf="
-              element.oneTimeAuth === 'Y' &&
-              element.recordStatus == 'OPEN' &&
-              !hideClose &&
-              maintenanceTitle !== 'Open Or Close Till / Vault'
-            "
             (click)="updateRecord('Close', element.id, element)"
             class="action_btn"
             title="Deactivate"
