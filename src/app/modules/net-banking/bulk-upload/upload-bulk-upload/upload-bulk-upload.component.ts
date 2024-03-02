@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
@@ -16,6 +16,7 @@ export class UploadBulkUploadComponent implements OnInit {
   screenList: any;
   uploadData: any;
   uploadKey: any;
+  @Output() customSaveBulkUpload = new EventEmitter<any>();
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -71,10 +72,16 @@ export class UploadBulkUploadComponent implements OnInit {
     this.uploadFileArrlrngth.removeAt(index);
   }
   goToScreen() {
-    this.router.navigate(["/maintenance/dashboard/maintenanceUpload"]);
     const formData = new FormData();
     formData.append("file", this.file);
-    this.bulkservice.uploadExcel(formData).subscribe((res) => {});
+    this.bulkservice.uploadExcel(formData).subscribe((res: any) => {
+      if (res?.statusCode === 200) {
+        //emit an uploaded id
+        this.customSaveBulkUpload.emit(234);
+      }
+    });
+    // add this custom emit when above api call success and pass a uploaded Id.
+    this.customSaveBulkUpload.emit(345);
   }
 
   downloadTemplate(event: Event) {

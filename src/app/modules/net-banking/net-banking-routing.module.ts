@@ -33,10 +33,10 @@ const routes: Routes = [
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
       },
-      {
-        path: "add-bulk-upload",
-        component: UploadBulkUploadComponent,
-      },
+      // {
+      //   path: "add-bulk-upload",
+      //   component: UploadBulkUploadComponent,
+      // },
     ],
   },
 ];

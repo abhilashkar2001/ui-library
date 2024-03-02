@@ -28,7 +28,8 @@
           class="level_status info_icon_container"
           [ngClass]="[
             levelItem?.status == 'Approved' ? 'bgGreen' : '',
-            levelItem?.status == 'Rejected' ? 'bgRed' : ''
+            levelItem?.status == 'Rejected' ? 'bgRed' : '',
+            levelItem?.status == 'Pending' ? 'bgBlue' : ''
           ]"
         >
           <span fxLayoutAlign="center center"
