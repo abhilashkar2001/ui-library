@@ -26,6 +26,18 @@ export class BulkUploadComponent implements OnInit {
   ngOnInit(): void {}
 
   customGoBack() {
-    this.route.navigate(["/user/dashboard/bulk-upload"]);
+    this.route.navigate(["/user/dashboard"]);
+  }
+
+  navigateToBulkUpload(id) {
+    this.route.navigate(["user/dashboard/bulk-upload", id]);
+  }
+
+  bulkUpload() {
+    this.navigateToBulkUpload("addNew");
+  }
+  editRecord(element) {
+    // update id correctly once api works,
+    this.navigateToBulkUpload(element.element.refNumber);
   }
 }
