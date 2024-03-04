@@ -46,6 +46,7 @@ export class NetBankingDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getDashboardInfo();
     this.getActivityLogData();
+    this.getDataByPage();
   }
 
   getDashboardInfo() {
@@ -62,6 +63,13 @@ export class NetBankingDashboardComponent implements OnInit {
         });
       }
     });
+  }
+  getDataByPage() {
+    this.netBankingService
+      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking")
+      .subscribe((res: any) => {
+        this.dummyResponse = res?.data.slice(0, 3);
+      });
   }
 
   cardDetails(key: string) {
