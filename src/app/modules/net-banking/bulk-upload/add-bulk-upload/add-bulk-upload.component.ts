@@ -91,6 +91,7 @@ export class AddBulkUploadComponent implements OnInit {
     userDetais: {},
   };
   actionType: any;
+  transactionIds: any[] = [];
   // BulkUploadConstant.staticData;
 
   constructor(
@@ -135,16 +136,15 @@ export class AddBulkUploadComponent implements OnInit {
   customUpdateRecord(event) {
     console.log(event, "button action", this.transactionDetails);
     this.actionType = event.operation;
-    let transactionIds = [];
+    this.transactionIds = [];
     this.transactionDetails.forEach((transaction) => {
-      transactionIds.push({
+      this.transactionIds.push({
         ids: transaction.multiJournalId,
         status: event.operation === "Authorize" ? "APPROVED" : "REJECTED",
       });
     });
-    this.api.processBulkTransaction(transactionIds).subscribe((resp) => {
-      this.openRemark();
-    });
+
+    this.openRemark();
   }
 
   openRemark() {
@@ -157,14 +157,16 @@ export class AddBulkUploadComponent implements OnInit {
       panelClass: "popup-dialog-class",
     });
     dialogRef.afterClosed().subscribe((resp) => {
-      console.log(resp);
-      const obj = {
-        excelId: this.bulkId,
-        remarks: resp,
-        status: this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
-      };
-      this.openConfirmationPopup();
-      this.api.updateRemark(obj).subscribe((resp) => {});
+      if (resp) {
+        const obj = {
+          excelId: this.bulkId,
+          remarks: resp,
+          status: this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
+        };
+        this.api.updateRemark(obj).subscribe((resp) => {
+          if (resp?.statusCode === 200) this.openConfirmationPopup();
+        });
+      }
     });
   }
 
@@ -178,20 +180,31 @@ export class AddBulkUploadComponent implements OnInit {
       panelClass: "popup-dialog-class",
     });
     dialogRef.afterClosed().subscribe((resp) => {
-      const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
-        data: {
-          // referenceNo: this.data.referenceNo,
-          isNetBanking: true,
-          actionType: this.actionType,
-        },
-        width: "750px",
-        disableClose: true,
-        panelClass: "popup-dialog-class",
-        backdropClass: "bdrop",
-      });
-      dialogRefrence.afterClosed().subscribe((res) => {
-        console.log("........");
-      });
+      if (resp) {
+        this.api
+          .processBulkTransaction(this.transactionIds)
+          .subscribe((resp) => {
+            if (resp?.statusCode === 200) this.openSuccessDialog(resp);
+          });
+      }
+    });
+  }
+
+  openSuccessDialog(resp) {
+    const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
+      data: {
+        // referenceNo: this.data.referenceNo,
+        isNetBanking: true,
+        actionType: this.actionType,
+        refrenceNo: resp.data,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRefrence.afterClosed().subscribe((res) => {
+      console.log("........");
     });
   }
 

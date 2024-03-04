@@ -6,6 +6,7 @@
       fxLayout="column"
       fxLayoutAlign="space-between"
     >
+      <!-- for confirmation -->
       <ng-container *ngIf="confirmationForm" [formGroup]="confirmationForm">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div fxFlex="48%">
@@ -36,19 +37,11 @@
               <input
                 matInput
                 formControlName="oneTimePassword"
-                [type]="hide ? 'password' : 'text'"
                 name="password"
                 placeholder="********"
                 autocomplete="off"
                 class="alignCred"
               />
-              <mat-icon
-                class="opacity-25"
-                matSuffix
-                (click)="hide = !hide"
-                style="cursor: pointer"
-                >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
-              >
             </mat-form-field>
           </div>
         </div>
@@ -67,12 +60,15 @@
           mat-raised-button
           class="exitButton"
           mat-dialog-close
+          (click)="closeDialog()"
         >
           Cancel
         </button>
       </div>
     </div>
   </ng-container>
+
+  <!-- for remark -->
   <ng-container *ngIf="data.recordStatus">
     <div class="alertImage">
       <img
@@ -109,7 +105,14 @@
       >
         Yes
       </button>
-      <button type="button" mat-raised-button class="exitButton">No</button>
+      <button
+        type="button"
+        mat-raised-button
+        class="exitButton"
+        (click)="closeDialog()"
+      >
+        No
+      </button>
     </div>
   </ng-container>
 </div>

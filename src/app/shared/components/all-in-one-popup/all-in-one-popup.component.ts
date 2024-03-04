@@ -21,7 +21,7 @@ import { SuccessPopupComponent } from "../success-popup/success-popup.component"
   styleUrls: ["./all-in-one-popup.component.scss"],
 })
 export class AllInOnePopupComponent implements OnInit {
-  hide = true;
+  hide: boolean = true;
   confirmationForm: FormGroup;
   remark: any = "";
 
@@ -61,7 +61,7 @@ export class AllInOnePopupComponent implements OnInit {
     //   panelClass: "popup-dialog-class",
     //   backdropClass: "bdrop",
     // });
-    this.dialogRef.close();
+    this.dialogRef.close("verified");
     // } else {
     //   this.snack.open(res.message, "OK", {
     //     duration: 4000,
@@ -74,5 +74,9 @@ export class AllInOnePopupComponent implements OnInit {
 
   onRemarkConfirm() {
     this.dialogRef.close(this.remark);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

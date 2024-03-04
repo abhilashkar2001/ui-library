@@ -39,8 +39,8 @@ export class InternetBankingService {
     const pagination = `page=${page}&size=${size}`;
 
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
-    const payload = `?module=${moduleName}`;
-    // ?${pagination}
+
+    const payload = `?module=${moduleName}&${pagination}`;
     return this.http.get(`${MICROSERVICE_URL}/corporate-net-banking${payload}`);
   }
 }
