@@ -96,12 +96,19 @@
           class="full-width remarkTextArea"
           maxlength="50"
           name="remark"
-          formControlName="remark"
+          [(ngModel)]="remark"
         ></textarea>
       </div>
     </div>
     <div class="footer">
-      <button type="button" mat-raised-button class="submitButton">Yes</button>
+      <button
+        type="button"
+        mat-raised-button
+        class="submitButton"
+        (click)="onRemarkConfirm()"
+      >
+        Yes
+      </button>
       <button type="button" mat-raised-button class="exitButton">No</button>
     </div>
   </ng-container>

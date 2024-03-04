@@ -101,6 +101,7 @@ export class NewReusableMatTableComponent implements OnInit {
   staticBreadCrump = SCREENLIST.staticBreadCrump;
   summaryInfoResp: any[] = [];
   selection = new SelectionModel<any>(true, []);
+  bulkUploadFileName: any = "";
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -134,12 +135,12 @@ export class NewReusableMatTableComponent implements OnInit {
         "assets/images/Authorize-disabled.svg"
       )
     );
-    this.matIconRegistry.addSvgIcon(
-      `delete-enabled`,
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/Group 4089.svg"
-      )
-    );
+    // this.matIconRegistry.addSvgIcon(
+    //   `delete-enabled`,
+    //   this.domSanitizer.bypassSecurityTrustResourceUrl(
+    //     "assets/images/Group 4089.svg"
+    //   )
+    // );
     this.matIconRegistry.addSvgIcon(
       `reopen-enabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -333,10 +334,17 @@ export class NewReusableMatTableComponent implements OnInit {
    * reading maintenance api resp from respective maintenance screen.
    */
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
     this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
+    this.bulkUploadFileName = this.maintenanceData.data[0].templateName;
     if (this.maintenanceData?.statusCode === 200) {
-      this.updateTable(this.maintenanceData.data, this.maintenanceData.meta);
+      this.updateTable(
+        this.componentName == "Bulk Upload"
+          ? this.maintenanceData.data[0].coprateNetBankingBulkUploadInfo
+          : this.maintenanceData.data,
+        this.maintenanceData.meta
+      );
     } else if (this.instrumentStatus?.statusCode === 200) {
       this.updateTable([], {});
     } else if (this.maintenanceData?.statusCode === 204) {
@@ -344,6 +352,8 @@ export class NewReusableMatTableComponent implements OnInit {
     } else if (this.maintenanceData == "" || this.maintenanceData == null) {
       this.updateTable([], {});
     }
+
+    console.log(this.maintenanceData, "this.maintenanceData ");
   }
 
   /**

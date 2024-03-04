@@ -18,6 +18,7 @@ export class SuccessPopupComponent implements OnInit {
   depositType: any;
   isNetBanking: false;
   referenceNo: any;
+  actionType: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -28,6 +29,7 @@ export class SuccessPopupComponent implements OnInit {
     private router: Router
   ) {
     this.isNetBanking = data.isNetBanking || false;
+    this.actionType = data.actionType;
   }
   ngOnInit(): void {
     this.depositType = this.data?.type;

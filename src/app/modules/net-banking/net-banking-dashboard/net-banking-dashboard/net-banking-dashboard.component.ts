@@ -70,7 +70,8 @@ export class NetBankingDashboardComponent implements OnInit {
   openPendingForApprovalSummary() {
     this.router.navigate(["/user/dashboard/pending-for-approval"]);
   }
-  viewPendingRecord() {
+  viewPendingRecord(element) {
+    console.log(element, "...........");
     this.router.navigate(["/user/dashboard/bulk-upload/1234"]);
   }
   getActiveTransferType(transfer) {

@@ -32,6 +32,7 @@ export class SigninComponent implements OnInit {
   otp: any;
   profileRes: any;
   currentUser: any;
+  netBankUser: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -79,6 +80,7 @@ export class SigninComponent implements OnInit {
     };
     this.commonService.verifyOTP(payload).subscribe((res: any) => {
       if (res.data !== "Invalid OTP") {
+        this.tokenService.saveNetBankingUser(this.netBankUser);
         this.router.navigate(["/user/dashboard/home"]);
       } else {
         this.snack.open(res.message, "OK", {
@@ -93,7 +95,7 @@ export class SigninComponent implements OnInit {
     this.sessionService.getProfileInfo().subscribe(
       (res) => {
         this.profileRes = res;
-        this.tokenService.saveUser(this.profileRes);
+        this.netBankUser = res;
       },
       (err) => {}
     );

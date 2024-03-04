@@ -10,50 +10,59 @@
         [fxFlex]="i == approvalList?.length - 1 ? '100%' : '20%'"
         fxLayoutAlign="center center"
       >
+        <!-- for CREATED action need to update src path -->
         <img
           [src]="
-            levelItem?.status == 'Approved'
+            levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
               ? 'assets/images/level_complete.svg'
-              : levelItem?.status == 'Rejected'
+              : levelItem?.action == 'REJECTED'
               ? 'assets/images/level_rejected.svg'
-              : levelItem?.status == 'Pending'
+              : levelItem?.action == 'PENDING'
               ? 'assets/images/level_pending.svg'
-              : ''
+              : 'assets/images/level_pending.svg'
           "
           width="41px"
           height="41px"
         />
-        <div class="level">{{ levelItem.level }}</div>
+        <div class="level">level {{ i + 1 }}</div>
         <div
           class="level_status info_icon_container"
           [ngClass]="[
-            levelItem?.status == 'Approved' ? 'bgGreen' : '',
-            levelItem?.status == 'Rejected' ? 'bgRed' : '',
-            levelItem?.status == 'Pending' ? 'bgBlue' : ''
+            levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
+              ? 'bgGreen'
+              : '',
+            levelItem?.action == 'REJECTED' ? 'bgRed' : '',
+            levelItem?.action == 'PENDING' ? 'bgBlue' : ''
           ]"
         >
           <span fxLayoutAlign="center center"
-            >{{ levelItem.status }} <mat-icon class="">info</mat-icon></span
+            >{{ levelItem.action }} <mat-icon class="">info</mat-icon></span
           >
           <div class="approved_history_container">
             <ng-container>
               <div fxLayout="column" class="user_info">
                 <div class="list_body">
                   <p class="list_name">
-                    {{ levelItem.user }} <span>({{ levelItem?.id }})</span>
+                    {{ levelItem?.userDetais?.userName }}
+                    <span>({{ levelItem?.userDetais?.empId }})</span>
                   </p>
                   <p
                     class="level_status"
                     [ngClass]="[
-                      levelItem?.status == 'Approved' ? 'bgGreen' : '',
-                      levelItem?.status == 'Rejected' ? 'bgRed' : ''
+                      levelItem?.action == 'APPROVED' ||
+                      levelItem?.action === 'CREATED'
+                        ? 'bgGreen'
+                        : '',
+                      levelItem?.action == 'Rejected' ? 'bgRed' : ''
                     ]"
                   >
-                    {{ levelItem.status }}
+                    {{ levelItem.action }}
                   </p>
                 </div>
                 <div class="remark">
-                  <p><span>Remark :</span> {{ levelItem?.remark }}</p>
+                  <p>
+                    <span>Remark :</span> {{ levelItem?.userDetais?.remarks }}
+                  </p>
                 </div>
               </div>
             </ng-container>
@@ -70,19 +79,22 @@
             class="progress_fill"
             [ngClass]="[
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].status == 'Rejected'
+              approvalList[i + 1].action == 'REJECTED'
                 ? 'returnRed'
                 : '',
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].status == 'Pending'
+              approvalList[i + 1].action == 'PENDING'
                 ? 'returnPending'
                 : '',
-              levelItem?.status == 'Approved' ? 'bgGreen' : '',
-              levelItem?.status == 'Rejected' ? 'bgRed' : ''
+              levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
+                ? 'bgGreen'
+                : '',
+              levelItem?.action == 'REJECTED' ? 'bgRed' : '',
+              levelItem?.action == 'CREATED' ? 'bgRed' : ''
             ]"
             [fxFlex]="
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].status == 'Pending'
+              approvalList[i + 1].action == 'PENDING'
                 ? 75
                 : 100
             "

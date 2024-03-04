@@ -23,7 +23,7 @@ import { SuccessPopupComponent } from "../success-popup/success-popup.component"
 export class AllInOnePopupComponent implements OnInit {
   hide = true;
   confirmationForm: FormGroup;
-  remark: AbstractControl = new FormControl("");
+  remark: any = "";
 
   constructor(
     private dialogRef: MatDialogRef<AllInOnePopupComponent>,
@@ -49,26 +49,30 @@ export class AllInOnePopupComponent implements OnInit {
       mobile: this.data.mobile,
       otp: this.confirmationForm.value.oneTimePassword,
     };
-    this.commonService.verifyOTP(payload).subscribe((res: any) => {
-      if (res.data !== "Invalid OTP") {
-        const dialogRef = this.dialog.open(SuccessPopupComponent, {
-          data: {
-            referenceNo: this.data.referenceNo,
-            isNetBanking: true,
-          },
-          width: "750px",
-          disableClose: true,
-          panelClass: "popup-dialog-class",
-          backdropClass: "bdrop",
-        });
-        this.dialogRef.close();
-      } else {
-        this.snack.open(res.message, "OK", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-        });
-      }
-    });
+    // this.commonService.verifyOTP(payload).subscribe((res: any) => {
+    //   if (res.data !== "Invalid OTP") {
+    // const dialogRef = this.dialog.open(SuccessPopupComponent, {
+    //   data: {
+    //     referenceNo: this.data.referenceNo,
+    //     isNetBanking: true,
+    //   },
+    //   width: "750px",
+    //   disableClose: true,
+    //   panelClass: "popup-dialog-class",
+    //   backdropClass: "bdrop",
+    // });
+    this.dialogRef.close();
+    // } else {
+    //   this.snack.open(res.message, "OK", {
+    //     duration: 4000,
+    //     verticalPosition: "top",
+    //     horizontalPosition: "right",
+    //   });
+    // }
+    // });
+  }
+
+  onRemarkConfirm() {
+    this.dialogRef.close(this.remark);
   }
 }
