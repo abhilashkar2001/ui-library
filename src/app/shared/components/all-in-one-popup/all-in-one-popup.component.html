@@ -6,6 +6,7 @@
       fxLayout="column"
       fxLayoutAlign="space-between"
     >
+      <!-- for confirmation -->
       <ng-container *ngIf="confirmationForm" [formGroup]="confirmationForm">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div fxFlex="48%">
@@ -66,6 +67,8 @@
       </div>
     </div>
   </ng-container>
+
+  <!-- for remark -->
   <ng-container *ngIf="data.recordStatus">
     <div class="alertImage">
       <img

@@ -21,7 +21,7 @@ import { SuccessPopupComponent } from "../success-popup/success-popup.component"
   styleUrls: ["./all-in-one-popup.component.scss"],
 })
 export class AllInOnePopupComponent implements OnInit {
-  hide = true;
+  hide: boolean = true;
   confirmationForm: FormGroup;
   remark: any = "";
 
