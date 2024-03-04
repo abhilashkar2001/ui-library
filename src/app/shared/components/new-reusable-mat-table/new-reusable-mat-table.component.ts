@@ -40,6 +40,8 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() columns;
   @Input() filterByOption;
   @Input() MaintenanceUpdatedData;
+  @Input() UpdatedData;
+
   @Input() InstrumentStatusUpdatedData;
   @Input() createdBy;
   @Input() profileImage;
@@ -64,6 +66,7 @@ export class NewReusableMatTableComponent implements OnInit {
     size: number;
     sort: string;
     direction: string;
+    module: string;
   }>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -184,7 +187,8 @@ export class NewReusableMatTableComponent implements OnInit {
       this.pageIndex,
       this.pagesize,
       null,
-      null
+      null,
+      "coprateNetBanking"
     );
 
     this.sortValue = "lastUpdated";
@@ -236,14 +240,14 @@ export class NewReusableMatTableComponent implements OnInit {
       delete this.filterValue.page;
     }
 
-    this.customUpdateTable(
-      this.filterValue,
-      this.filterValue,
-      this.calculatePageIndex(),
-      this.pagesize,
-      this.sortValue,
-      this.orderBy
-    );
+    // this.customUpdateTable(
+    //   this.filterValue,
+    //   this.filterValue,
+    //   this.calculatePageIndex(),
+    //   this.pagesize,
+    //   this.sortValue,
+    //   this.orderBy
+    // );
   }
 
   filterDataPayload(event) {
@@ -300,7 +304,15 @@ export class NewReusableMatTableComponent implements OnInit {
   /**
    * Call a customEvent in parent component.
    */
-  customUpdateTable(selectedFilterBy, value, page, size, sortName, direction) {
+  customUpdateTable(
+    selectedFilterBy,
+    value,
+    page,
+    size,
+    sortName,
+    direction,
+    module
+  ) {
     if (sortName == "SC2") {
       sortName = "stateCode2";
     }
@@ -311,6 +323,7 @@ export class NewReusableMatTableComponent implements OnInit {
       size: size,
       sort: sortName,
       direction: direction,
+      module: module,
     });
   }
 
@@ -318,7 +331,7 @@ export class NewReusableMatTableComponent implements OnInit {
    * reading maintenance api resp from respective maintenance screen.
    */
   ngOnChanges(changes: SimpleChanges) {
-    this.maintenanceData = changes?.MaintenanceUpdatedData?.currentValue;
+    this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
     if (this.maintenanceData?.statusCode === 200) {
       this.updateTable(this.maintenanceData.data, this.maintenanceData.meta);
@@ -379,14 +392,14 @@ export class NewReusableMatTableComponent implements OnInit {
     ) {
       this.pagesize = event?.value?.pageSize | event.pageSize;
       this.pageIndex = event?.value?.page | event?.page;
-      this.customUpdateTable(
-        null,
-        this.filterValue,
-        event?.value?.page,
-        event?.value?.pageSize,
-        this.sortValue,
-        this.orderBy
-      );
+      // this.customUpdateTable(
+      //   null,
+      //   this.filterValue,
+      //   event?.value?.page,
+      //   event?.value?.pageSize,
+      //   this.sortValue,
+      //   this.orderBy
+      // );
     }
   }
 
@@ -406,14 +419,14 @@ export class NewReusableMatTableComponent implements OnInit {
     this.dataSource.filter = "";
     this.selectedFilterIndex = 0;
     this.filterValue = "";
-    this.customUpdateTable(
-      null,
-      null,
-      1,
-      this.pagesize,
-      this.sortValue,
-      this.orderBy
-    );
+    // this.customUpdateTable(
+    //   null,
+    //   null,
+    //   1,
+    //   this.pagesize,
+    //   this.sortValue,
+    //   this.orderBy
+    // );
   }
 
   /**
@@ -483,14 +496,14 @@ export class NewReusableMatTableComponent implements OnInit {
   announceSortChange(sortState: Sort) {
     this.sortValue = sortState.active;
     this.orderBy = sortState.direction === "asc" ? "ASC" : "DESC";
-    this.customUpdateTable(
-      this.selectedFilterIndex != 0 ? this.selectedFilterIndex : null,
-      this.filterValue,
-      this.pageIndex,
-      this.pagesize,
-      sortState.active,
-      this.orderBy
-    );
+    // this.customUpdateTable(
+    //   this.selectedFilterIndex != 0 ? this.selectedFilterIndex : null,
+    //   this.filterValue,
+    //   this.pageIndex,
+    //   this.pagesize,
+    //   sortState.active,
+    //   this.orderBy
+    // );
   }
   updateRecord(operation, id, obj) {
     this.customupdateRecord.emit({ operation, id, obj });
@@ -511,14 +524,14 @@ export class NewReusableMatTableComponent implements OnInit {
     this.sortValue = sortValue;
     this.orderBy = direction.toUpperCase();
 
-    this.customUpdateTable(
-      this.filterValue,
-      this.filterValue,
-      this.pageIndex,
-      this.pagesize,
-      this.sortValue,
-      this.orderBy
-    );
+    // this.customUpdateTable(
+    //   this.filterValue,
+    //   this.filterValue,
+    //   this.pageIndex,
+    //   this.pagesize,
+    //   this.sortValue,
+    //   this.orderBy
+    // );
   }
   goBack() {
     this.customGoBack.emit({});

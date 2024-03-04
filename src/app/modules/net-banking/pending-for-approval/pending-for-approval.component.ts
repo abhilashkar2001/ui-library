@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { PendingForApprovalConstant } from "./pending-for-approval.constant";
 import { Router } from "@angular/router";
+import { FilterBy } from "app/shared/helpers/utils";
+import { InternetBankingService } from "../internet-banking.service";
 
 @Component({
   selector: "app-pending-for-approval",
@@ -9,6 +11,15 @@ import { Router } from "@angular/router";
 })
 export class PendingForApprovalComponent implements OnInit {
   columns: any = PendingForApprovalConstant.UPLOAD_SUMMARY;
+  sort: any;
+  size: number = 5;
+  sortOrder: any;
+  page: number = 1;
+  pageSize: number = 5;
+  sortValue = "";
+  sortDirection = "";
+  filterBy: FilterBy;
+  module: any;
   staticData: any = {
     data: PendingForApprovalConstant.STATIC_SUMMARY,
     meta: {
@@ -21,11 +32,33 @@ export class PendingForApprovalComponent implements OnInit {
     status: "OK",
   };
 
-  constructor(private route: Router) {}
+  constructor(
+    private route: Router,
+    private bulkService: InternetBankingService
+  ) {}
 
   ngOnInit(): void {}
 
   CustomGoBack(data) {
     this.route.navigate(["/user/dashboard/home"]);
+  }
+  getDataByPage(event) {
+    this.page = event.page;
+    this.pageSize = event.size;
+    this.sortDirection = event.direction;
+    this.sortValue = event.sort;
+    this.filterBy = event.filterBy;
+    this.module = event.module;
+    this.bulkService
+      .getSummary(
+        event.filterBy,
+        event.filterValue,
+        event.page,
+        event.size,
+        this.sortValue,
+        event.direction,
+        this.module
+      )
+      .subscribe((res) => {});
   }
 }

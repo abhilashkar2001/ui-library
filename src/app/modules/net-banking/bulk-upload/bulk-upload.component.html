@@ -1,7 +1,8 @@
 <app-new-reusable-mat-table
   [columns]="columns"
-  [MaintenanceUpdatedData]="staticData"
   [componentName]="'Bulk Upload Summary'"
   [maintenanceTitle]="'Bulk Upload'"
   (customGoBack)="customGoBack()"
+  (customGetDataByPage)="getDataByPage($event)"
+  [UpdatedData]="bulkUploadData"
 ></app-new-reusable-mat-table>

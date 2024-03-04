@@ -120,12 +120,17 @@ export class BulkUploadConstant {
     {
       columnDef: "refNumber",
       header: "Ref Number",
-      cell: (element: any) => element.refNumber,
+      cell: (element: any) => element.transactionReferenceNo,
     },
     {
       columnDef: "fileName",
       header: "File Name",
-      cell: (element: any) => element.fileName,
+      cell: (element: any) => element.templateName,
+    },
+    {
+      columnDef: "totalAmount",
+      header: "Total Amount",
+      cell: (element: any) => element.totalAmount,
     },
     {
       columnDef: "actionBy",
@@ -133,14 +138,15 @@ export class BulkUploadConstant {
       cell: (element: any) => element.lastUpdatedBy,
     },
     {
-      columnDef: "lastupdated",
+      columnDef: "lastUpdated",
       header: "Date & Time",
-      cell: (element: any) => `${element?.lastupdated}`,
+      cell: (element: any) => element.lastUpdated,
     },
+
     {
-      columnDef: "authStatus",
+      columnDef: "status",
       header: "Approved",
-      cell: (element: any) => `${element?.authStatus}`,
+      cell: (element: any) => `${element?.status}`,
     },
   ];
 }
