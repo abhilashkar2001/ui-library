@@ -155,31 +155,25 @@
                         class="col labelValRef text-bold"
                         (click)="viewPendingRecord()"
                       >
-                        {{ auditLogDataObject?.refNo }}
+                        {{ auditLogDataObject?.transactionReferenceNo }}
                       </td>
                       <td class="col labelVal">
                         {{ auditLogDataObject?.productType }}
                       </td>
 
                       <td class="col labelVal">
-                        {{ auditLogDataObject?.dateAndTime }}
+                        {{ auditLogDataObject?.lastUpdated }}
                       </td>
 
                       <td class="col labelVal">
-                        {{ auditLogDataObject?.Amount }}
+                        {{ auditLogDataObject?.totalAmount }}
                       </td>
-                      <div style="display: flex; flex-direction: column">
-                        <td class="col labelVal">
-                          {{ auditLogDataObject?.InitiatedBy }}
-                        </td>
-                        <div>
-                          <td class="col label">
-                            <span>Cif No.</span>
-                            {{ auditLogDataObject?.cifNumber }}
-                          </td>
-                        </div>
-                      </div>
-                      <td style="position: relative; left: 5%; cursor: pointer">
+                      <td class="col labelVal">
+                        {{ auditLogDataObject?.lastUpdatedBy }}
+                      </td>
+                      <td
+                        style="position: relative; right: 6.5%; cursor: pointer"
+                      >
                         <mat-icon (click)="viewPendingRecord()">
                           chevron_right
                         </mat-icon>
