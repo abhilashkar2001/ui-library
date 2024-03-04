@@ -10,9 +10,9 @@ export class BulkUpload {
   protected basePath = environment.microServiceURL;
 
   constructor(private http: HttpClient) {}
-  uploadExcel(formData, type: string, processingDate) {
+  uploadExcel(formData, userName, type: string, processingDate) {
     return this.http.post(
-      `${this.basePath}/corporate-net-banking/upload`,
+      `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}`,
       formData
     );
   }

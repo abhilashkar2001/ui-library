@@ -87,6 +87,7 @@ export class UploadBulkUploadComponent implements OnInit {
     this.bulkservice
       .uploadExcel(
         formData,
+        this.currentUser.username,
         this.maintTemplateUpload.value.productType,
         this.maintTemplateUpload.value.processingDate
       )
