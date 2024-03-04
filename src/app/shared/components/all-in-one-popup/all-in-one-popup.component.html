@@ -6,58 +6,68 @@
       fxLayout="column"
       fxLayoutAlign="space-between"
     >
-      <!-- <form *ngIf="confirmationForm" [formGroup]="confirmationForm"> -->
-      <div fxLayout="row" fxLayoutAlign="space-between">
-        <div fxFlex="48%">
-          <mat-form-field class="full-width mt-2" appearance="outline">
-            <mat-label>{{ "Transaction Password" | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="transactionPassword"
-              [type]="hide ? 'password' : 'text'"
-              name="password"
-              placeholder="********"
-              autocomplete="off"
-              class="alignCred"
-            />
-            <mat-icon
-              class="opacity-25"
-              matSuffix
-              (click)="hide = !hide"
-              style="cursor: pointer"
-              >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
-            >
-          </mat-form-field>
-        </div>
+      <ng-container *ngIf="confirmationForm" [formGroup]="confirmationForm">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="48%">
+            <mat-form-field class="full-width mt-2" appearance="outline">
+              <mat-label>{{ "Transaction Password" | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="transactionPassword"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                placeholder="********"
+                autocomplete="off"
+                class="alignCred"
+              />
+              <mat-icon
+                class="opacity-25"
+                matSuffix
+                (click)="hide = !hide"
+                style="cursor: pointer"
+                >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
+              >
+            </mat-form-field>
+          </div>
 
-        <div fxFlex="48%">
-          <mat-form-field class="full-width mt-2" appearance="outline">
-            <mat-label>{{ "One Time Password" | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="oneTimePassword"
-              [type]="hide ? 'password' : 'text'"
-              name="password"
-              placeholder="********"
-              autocomplete="off"
-              class="alignCred"
-            />
-            <mat-icon
-              class="opacity-25"
-              matSuffix
-              (click)="hide = !hide"
-              style="cursor: pointer"
-              >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
-            >
-          </mat-form-field>
+          <div fxFlex="48%">
+            <mat-form-field class="full-width mt-2" appearance="outline">
+              <mat-label>{{ "One Time Password" | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="oneTimePassword"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                placeholder="********"
+                autocomplete="off"
+                class="alignCred"
+              />
+              <mat-icon
+                class="opacity-25"
+                matSuffix
+                (click)="hide = !hide"
+                style="cursor: pointer"
+                >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
+              >
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-      <!-- </form> -->
+      </ng-container>
       <div class="footer">
-        <button type="button" mat-raised-button class="submitButton">
+        <button
+          type="button"
+          mat-raised-button
+          class="submitButton"
+          (click)="submit()"
+        >
           Submit
         </button>
-        <button type="button" mat-raised-button class="exitButton">
+        <button
+          type="button"
+          mat-raised-button
+          class="exitButton"
+          mat-dialog-close
+        >
           Cancel
         </button>
       </div>
@@ -86,12 +96,19 @@
           class="full-width remarkTextArea"
           maxlength="50"
           name="remark"
-          formControlName="remark"
+          [(ngModel)]="remark"
         ></textarea>
       </div>
     </div>
     <div class="footer">
-      <button type="button" mat-raised-button class="submitButton">Yes</button>
+      <button
+        type="button"
+        mat-raised-button
+        class="submitButton"
+        (click)="onRemarkConfirm()"
+      >
+        Yes
+      </button>
       <button type="button" mat-raised-button class="exitButton">No</button>
     </div>
   </ng-container>

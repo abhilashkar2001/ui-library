@@ -1,19 +1,19 @@
 export class BulkUploadConstant {
   static readonly GENERIC_COLUMNS = [
     {
-      columnDef: "screenNumber",
-      header: "Sr.No",
-      cell: (element: any) => element.screenNumber,
+      columnDef: "icustReffNo",
+      header: "Ref No.",
+      cell: (element: any) => element.icustReffNo,
     },
-    {
-      columnDef: "status",
-      header: "Status",
-      cell: (element: any) => element.status,
-    },
+    // {
+    //   columnDef: "status",
+    //   header: "Beneficiary Name",
+    //   cell: (element: any) => element.authStatus,
+    // },
     {
       columnDef: "soucrceAccount",
       header: "Soucrce Account",
-      cell: (element: any) => element.soucrceAccount,
+      cell: (element: any) => element.sourceAccount,
     },
     {
       columnDef: "destinationAccount",
@@ -21,24 +21,29 @@ export class BulkUploadConstant {
       cell: (element: any) => `${element?.destinationAccount}`,
     },
     {
-      columnDef: "addressLine1",
-      header: "Address Line 1",
-      cell: (element: any) => `${element?.addressLine1}`,
+      columnDef: "customerName",
+      header: "Beneficiary Name",
+      cell: (element: any) => `${element?.customerName}`,
     },
     {
-      columnDef: "addressLine2",
-      header: "Address Line 2",
-      cell: (element: any) => `${element?.addressLine2}`,
+      columnDef: "transferMode",
+      header: "Transfer Mode",
+      cell: (element: any) => `${element?.transferMode}`,
     },
     {
-      columnDef: "country ",
-      header: "Country",
-      cell: (element: any) => `${element?.country}`,
+      columnDef: "transferType ",
+      header: "Transfer Type",
+      cell: (element: any) => `${element?.transferType}`,
     },
     {
-      columnDef: "pinCode",
-      header: "Pin Code",
-      cell: (element: any) => `${element?.pinCode}`,
+      columnDef: "ifcsCode",
+      header: "IFSC Code",
+      cell: (element: any) => `${element?.ifcsCode}`,
+    },
+    {
+      columnDef: "transactionAmount",
+      header: "Ammount",
+      cell: (element: any) => `${element?.transactionAmount}`,
     },
   ];
 

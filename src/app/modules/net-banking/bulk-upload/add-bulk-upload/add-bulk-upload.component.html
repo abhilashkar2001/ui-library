@@ -27,9 +27,10 @@
     <section>
       <app-new-reusable-mat-table
         [columns]="columns"
-        [MaintenanceUpdatedData]="staticData"
+        [UpdatedData]="bulkUploadDetails"
         [componentName]="'Bulk Upload'"
         (customAllSelectionRecord)="processTransaction($event)"
+        (customGetDataByPage)="getDataByPage($event)"
       ></app-new-reusable-mat-table>
     </section>
     <app-new-auditlog-button-group

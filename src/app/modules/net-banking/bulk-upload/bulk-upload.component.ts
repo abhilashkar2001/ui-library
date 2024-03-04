@@ -51,10 +51,11 @@ export class BulkUploadComponent implements OnInit {
   bulkUpload() {
     this.navigateToBulkUpload("addNew");
   }
-  editRecord(element) {
-    // update id correctly once api works,
-    this.navigateToBulkUpload(element.element.refNumber);
-  }
+  // editRecord(element) {
+  //   console.log(element);
+  //   // update id correctly once api works,
+  //   this.navigateToBulkUpload(element.element.id);
+  // }
   getDataByPage(event) {
     this.page = event.page;
     this.pageSize = event.size;

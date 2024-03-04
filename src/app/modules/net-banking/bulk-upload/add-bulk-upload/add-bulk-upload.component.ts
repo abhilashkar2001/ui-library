@@ -3,7 +3,9 @@ import { FormGroup } from "@angular/forms";
 import { BulkUploadConstant } from "./bulk.upload.constant";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BulkUploadServiceService } from "../bulk-upload-service.service";
-import { LoanService } from "app/shared/services/loan/loan.service";
+import { MatDialog } from "@angular/material/dialog";
+import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 
 @Component({
   selector: "app-add-bulk-upload",
@@ -14,29 +16,7 @@ export class AddBulkUploadComponent implements OnInit {
   public approvalForm: FormGroup;
   isEdit = false;
 
-  approvalList = [
-    {
-      level: "Level 0",
-      user: "Abhilash",
-      status: "Approved",
-      id: 3444,
-      remark: "eiowniuwe oe c ewh wo w",
-    },
-    {
-      level: "Level 1",
-      user: "Abhilash",
-      status: "Approved",
-      id: 330,
-      remark: "dkln  nwnewncineic ei cw",
-    },
-    {
-      level: "Level 2",
-      user: "Abhilash",
-      status: "Pending",
-      id: 399,
-      remark: "dkldnds jsd dskj s ds sjsd sd sd sd ds ",
-    },
-  ];
+  approvalList = [];
 
   columns = BulkUploadConstant.GENERIC_COLUMNS;
   staticData = {
@@ -100,39 +80,123 @@ export class AddBulkUploadComponent implements OnInit {
   };
   bulkId: any;
   transactionDetails: any;
+  templateFileList: any = [];
+  bulkUploadDetails: any;
+  page: any;
+  pageSize: any;
+  filterBy: any;
+
+  pendingLevel = {
+    action: "PENDING",
+    userDetais: {},
+  };
+  actionType: any;
   // BulkUploadConstant.staticData;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private api: BulkUploadServiceService,
-    private loanService: LoanService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.isEdit = true;
     this.bulkId = this.route.snapshot.params["id"];
+    if (this.bulkId != "addNew") {
+      this.getTransactionLevelStatus();
+    }
+  }
+
+  getTransactionLevelStatus() {
+    this.api.getLevelApprovalStatus(this.bulkId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.approvalList = resp.data;
+        if (this.approvalList?.length === 1) {
+          this.approvalList.push(this.pendingLevel);
+        }
+      }
+    });
+  }
+
+  getBulkUploadDetailsById(filter) {
+    this.api.getBulkUploadRecords(this.bulkId, filter).subscribe((resp) => {
+      this.bulkUploadDetails = resp;
+    });
+  }
+
+  getDataByPage(filters) {
+    this.page = filters?.page || 1;
+    this.pageSize = filters?.size || 5;
+    this.filterBy = filters.filterBy;
+    this.getBulkUploadDetailsById(filters);
   }
 
   customUpdateRecord(event) {
     console.log(event, "button action", this.transactionDetails);
+    this.actionType = event.operation;
     let transactionIds = [];
     this.transactionDetails.forEach((transaction) => {
       transactionIds.push({
-        id: transaction.multiJournalId,
+        ids: transaction.multiJournalId,
         status: event.operation === "Authorize" ? "APPROVED" : "REJECTED",
       });
     });
     this.api.processBulkTransaction(transactionIds).subscribe((resp) => {
-      this.goBack();
+      this.openRemark();
     });
+  }
 
-    // remove once api avilable
-    this.goBack();
+  openRemark() {
+    const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+      data: {
+        recordStatus: "Approved",
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      console.log(resp);
+      const obj = {
+        excelId: this.bulkId,
+        remarks: resp,
+        status: this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
+      };
+      this.openConfirmationPopup();
+      this.api.updateRemark(obj).subscribe((resp) => {});
+    });
+  }
+
+  openConfirmationPopup() {
+    const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+      data: {
+        remark: true,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
+        data: {
+          // referenceNo: this.data.referenceNo,
+          isNetBanking: true,
+          actionType: this.actionType,
+        },
+        width: "750px",
+        disableClose: true,
+        panelClass: "popup-dialog-class",
+        backdropClass: "bdrop",
+      });
+      dialogRefrence.afterClosed().subscribe((res) => {
+        console.log("........");
+      });
+    });
   }
 
   goBack() {
-    this.router.navigate(["user/dashboard/bulk-upload"]);
+    this.router.navigate(["user/dashboard"]);
   }
 
   processTransaction(event) {

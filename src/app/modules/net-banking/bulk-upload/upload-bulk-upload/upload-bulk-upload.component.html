@@ -17,8 +17,7 @@
                   formControlName="productType"
                   placeholder="Product Type"
                 >
-                  <mat-option>Type 1 </mat-option>
-                  <mat-option>Type 2 </mat-option>
+                  <mat-option value="salaryAccount">Salary Account</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -27,11 +26,11 @@
                 appearance="outline"
                 class="full-width fieldinput"
               >
-                <mat-label class="custom-mat-label">Date of Birth</mat-label>
+                <mat-label class="custom-mat-label">Processing Date</mat-label>
                 <input
                   matInput
                   [matDatepicker]="picker"
-                  formControlName="dateOfBirth"
+                  formControlName="processingDate"
                 />
 
                 <mat-datepicker-toggle matSuffix [for]="picker">
@@ -66,7 +65,11 @@
           appDragDrop
           (onFileDropped)="droppedFiles($event)"
         >
-          <img src="assets/images/svg/upload.svg" alt="" />
+          <img
+            src="assets/images/upload-logo.svg"
+            alt=""
+            (click)="file.click()"
+          />
           <span class="HeadingForUpload"
             >{{ "Drag and Drop files here or" }}
             <span class="chooseFiles" (click)="file.click()">{{
@@ -80,7 +83,7 @@
             [multiple]="false"
             (change)="Onfilechange($event)"
             style="display: none"
-            accept=".xls, .xlsx"
+            accept=".xls, .xlsx,.csv"
           />
         </div>
 
@@ -121,14 +124,14 @@
             type="button"
             (click)="goToScreen()"
           >
-            {{ "Save" }}
+            {{ "Continue" }}
           </button>
           &nbsp;&nbsp;
         </div>
 
         <div>
           <button class="exitButton" mat-raised-button (click)="goBack()">
-            {{ "Exit" }}
+            {{ "Cancel" }}
           </button>
         </div>
       </div>

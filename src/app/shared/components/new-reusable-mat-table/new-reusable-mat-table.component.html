@@ -45,6 +45,7 @@
     [module]="module"
     [className]="className"
     [componentName]="componentName"
+    [bulkUploadFileName]="bulkUploadFileName"
   >
   </app-new-reusable-filter>
 
@@ -425,7 +426,7 @@
             /> -->
             </div>
           </div>
-          <div
+          <!-- <div
             *ngIf="
               element.oneTimeAuth === 'N' &&
               element.authStatus != 'REJECTED' &&
@@ -439,9 +440,9 @@
             (click)="updateRecord('Delete', element.id, element)"
             title="Delete"
           >
-            <!-- Enabled -->
+           
             <mat-icon class="summaryIcon" svgIcon="delete-enabled"></mat-icon>
-          </div>
+          </div> -->
           <div
             *ngIf="
               element.oneTimeAuth === 'Y' &&
