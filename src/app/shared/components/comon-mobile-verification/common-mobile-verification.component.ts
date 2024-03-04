@@ -66,7 +66,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   countriesIsdCodes: any = [];
   selectedIsdCode: any = "";
   isValidMobile: boolean = false;
-  timer: NodeJS.Timer;
+  timer: any;
   selectedIsd: any;
   defaultIsdCodeValue: any;
   resendOtp: number = 0;
