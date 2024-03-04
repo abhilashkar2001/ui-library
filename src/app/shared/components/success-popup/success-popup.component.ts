@@ -31,11 +31,11 @@ export class SuccessPopupComponent implements OnInit {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
     this.referenceNo = data.refrenceNo;
+    console.log(this.referenceNo);
   }
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
-    this.referenceNo = this.data?.referenceNo;
     this.email = this.data?.email;
     if (sessionStorage.getItem("loanBasisDetails")) {
       this.openAccountService.getData().subscribe((resp: any) => {
@@ -116,7 +116,7 @@ export class SuccessPopupComponent implements OnInit {
 
   done() {
     if (this.isNetBanking) {
-      this.router.navigate(["/user/dashboard/bulk-upload"]);
+      this.router.navigate([`/user/dashboard/${this.data.route}`]);
       this.dialogRef.close();
     } else {
       localStorage.removeItem("basisDetails");
