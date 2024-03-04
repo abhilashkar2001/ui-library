@@ -110,6 +110,7 @@
           <ng-container>
             <ng-otp-input
               class="ng_otp_input"
+              (onInputChange)="onOtpChange($event)"
               #ngOtpInput
               [config]="config"
             ></ng-otp-input>

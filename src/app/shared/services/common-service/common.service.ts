@@ -44,4 +44,11 @@ export class CommonService {
       `${baseUrl}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
+  generateOTP(mobile) {
+    return this.http.get<any>(`${baseUrl}/auth/generateOTP?mobile=${mobile}`);
+  }
+
+  verifyOTP(payload: any) {
+    return this.http.post<any>(`${baseUrl}/auth/verifyOTP`, payload);
+  }
 }
