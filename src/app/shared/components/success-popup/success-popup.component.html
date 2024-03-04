@@ -4,7 +4,8 @@
   </div> -->
   <ng-container *ngIf="isNetBanking; else showTemplate">
     <div class="alertText">
-      <div>Data saved successfully.</div>
+      <div *ngIf="actionType != 'Reject'">Data saved successfully.</div>
+      <div *ngIf="actionType == 'Reject'">Rejected successfully!</div>
     </div>
   </ng-container>
   <ng-template #showTemplate

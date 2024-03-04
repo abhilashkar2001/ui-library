@@ -30,6 +30,7 @@ export class NewReusableFilterComponent implements OnInit {
   @Input() createdBy;
   @Input() countryModuleFilter;
   @Input() stateModuleFilter;
+  @Input() bulkUploadFileName;
   @Input() componentName: string = "";
   @Output() customDataByPage = new EventEmitter<{
     filterValue;

@@ -64,4 +64,8 @@ export class PendingForApprovalComponent implements OnInit {
         this.pendingForApprovalUpdatedData = res;
       });
   }
+
+  editRecord(element) {
+    this.route.navigate(["user/dashboard/bulk-upload", element.element.id]);
+  }
 }
