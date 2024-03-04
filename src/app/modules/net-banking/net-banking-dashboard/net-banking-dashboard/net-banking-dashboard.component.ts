@@ -80,7 +80,7 @@ export class NetBankingDashboardComponent implements OnInit {
   }
   viewPendingRecord(element) {
     console.log(element, "...........");
-    this.router.navigate(["/user/dashboard/bulk-upload/1234"]);
+    this.router.navigate(["/user/dashboard/bulk-upload", element.id]);
   }
   getActiveTransferType(transfer) {
     this.currentIndex = transfer.sequence;

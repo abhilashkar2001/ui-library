@@ -36,19 +36,11 @@
               <input
                 matInput
                 formControlName="oneTimePassword"
-                [type]="hide ? 'password' : 'text'"
                 name="password"
                 placeholder="********"
                 autocomplete="off"
                 class="alignCred"
               />
-              <mat-icon
-                class="opacity-25"
-                matSuffix
-                (click)="hide = !hide"
-                style="cursor: pointer"
-                >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
-              >
             </mat-form-field>
           </div>
         </div>
@@ -67,6 +59,7 @@
           mat-raised-button
           class="exitButton"
           mat-dialog-close
+          (click)="closeDialog()"
         >
           Cancel
         </button>
@@ -109,7 +102,14 @@
       >
         Yes
       </button>
-      <button type="button" mat-raised-button class="exitButton">No</button>
+      <button
+        type="button"
+        mat-raised-button
+        class="exitButton"
+        (click)="closeDialog()"
+      >
+        No
+      </button>
     </div>
   </ng-container>
 </div>
