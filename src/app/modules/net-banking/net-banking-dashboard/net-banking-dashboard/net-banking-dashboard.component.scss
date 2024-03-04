@@ -1,5 +1,9 @@
 .parent-div {
-  padding: 10px 70px 0px 70px;
+  padding: 0 1%;
+  .nav-bar {
+    background: transparent linear-gradient(270deg, #030c14 0%, #002240 100%) 0%
+      0% no-repeat padding-box;
+  }
   .searchDiv {
     height: 62px;
   }
@@ -245,6 +249,7 @@
     font-weight: bold;
     font-size: 13px;
     color: #000000;
+    box-sizing: border-box;
     &:nth-child(4) {
       margin-right: 0;
     }

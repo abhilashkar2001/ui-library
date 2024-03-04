@@ -68,6 +68,8 @@ export class NewReusableMatTableComponent implements OnInit {
     direction: string;
     module: string;
   }>();
+  @Output() customAllSelectionRecord = new EventEmitter<any>();
+  @Output() customBulkUpload = new EventEmitter<any>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -276,7 +278,7 @@ export class NewReusableMatTableComponent implements OnInit {
     }
   }
   bulkUpload() {
-    this.router.navigate(["/user/dashboard/add-bulk-upload"]);
+    this.customBulkUpload.emit();
   }
 
   calculatePageIndex() {
@@ -571,7 +573,7 @@ export class NewReusableMatTableComponent implements OnInit {
   }
 
   isAllSelected() {
-    console.log(this.selection.selected, "all selected values");
+    this.customAllSelectionRecord.emit(this.selection.selected);
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;

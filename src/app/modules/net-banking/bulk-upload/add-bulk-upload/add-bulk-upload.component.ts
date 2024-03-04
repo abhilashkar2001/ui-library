@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { BulkUploadConstant } from "./bulk.upload.constant";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { BulkUploadServiceService } from "../bulk-upload-service.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-add-bulk-upload",
@@ -96,13 +98,50 @@ export class AddBulkUploadComponent implements OnInit {
     mobileNo: "8778588300",
     mobtCode: "",
   };
-  Id: any;
+  bulkId: any;
+  transactionDetails: any;
   // BulkUploadConstant.staticData;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private api: BulkUploadServiceService,
+    private loanService: LoanService
+  ) {}
 
   ngOnInit(): void {
     this.isEdit = true;
-    this.Id = this.route.snapshot.params["id"];
+    this.bulkId = this.route.snapshot.params["id"];
+  }
+
+  customUpdateRecord(event) {
+    console.log(event, "button action", this.transactionDetails);
+    let transactionIds = [];
+    this.transactionDetails.forEach((transaction) => {
+      transactionIds.push({
+        id: transaction.multiJournalId,
+        status: event.operation === "Authorize" ? "APPROVED" : "REJECTED",
+      });
+    });
+    this.api.processBulkTransaction(transactionIds).subscribe((resp) => {
+      this.goBack();
+    });
+
+    // remove once api avilable
+    this.goBack();
+  }
+
+  goBack() {
+    this.router.navigate(["user/dashboard/bulk-upload"]);
+  }
+
+  processTransaction(event) {
+    this.transactionDetails = event;
+  }
+
+  customSaveBulkUpload(event) {
+    this.bulkId = event;
+    this.router.navigate(["user/dashboard/bulk-upload", event]);
+    // this.bulkId = event;
   }
 }

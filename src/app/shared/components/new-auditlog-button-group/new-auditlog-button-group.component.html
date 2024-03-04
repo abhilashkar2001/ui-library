@@ -8,12 +8,6 @@
   <button
     type="button"
     mat-raised-button
-    *ngIf="
-      !hideApprove &&
-      isEdit &&
-      auditLogData?.authStatus === 'UNAUTHORIZED' &&
-      maintTitle !== 'Open or Close Till / Vault'
-    "
     class="approveButton"
     (click)="updateRecord('Authorize')"
   >
@@ -24,9 +18,6 @@
   <button
     type="button"
     mat-raised-button
-    *ngIf="
-      !hideApprove && tellerOps && auditLogData?.authStatus === 'UNAUTHORIZED'
-    "
     class="exitButton"
     (click)="updateRecord('Reject')"
   >
@@ -34,7 +25,7 @@
   </button>
 
   <!-- Reverse Button-->
-  <button
+  <!-- <button
     type="button"
     mat-raised-button
     *ngIf="
@@ -47,10 +38,10 @@
     (click)="reverseTransaction()"
   >
     {{ "Reverse" | translate }}
-  </button>
+  </button> -->
 
   <!-- Edit Button -->
-  <button
+  <!-- <button
     *ngIf="
       isEdit &&
       auditLogData?.recordStatus === 'OPEN' &&
@@ -64,10 +55,10 @@
     class="editButton"
   >
     {{ "Edit" | translate }}
-  </button>
+  </button> -->
 
   <!-- Activate Button -->
-  <button
+  <!-- <button
     type="button"
     mat-raised-button
     *ngIf="
@@ -80,10 +71,10 @@
     (click)="updateRecord('Reopen')"
   >
     {{ "Activate" | translate }}
-  </button>
+  </button> -->
 
   <!-- Deactivate Button -->
-  <button
+  <!-- <button
     type="button"
     mat-raised-button
     *ngIf="
@@ -97,10 +88,10 @@
     (click)="updateRecord('Close')"
   >
     {{ "Deactivate" | translate }}
-  </button>
+  </button> -->
 
   <!-- Delete Button -->
-  <button
+  <!-- <button
     *ngIf="
       isEdit &&
       !hideDelete &&
@@ -113,7 +104,7 @@
     (click)="updateRecord('Delete')"
   >
     {{ "Delete" | translate }}
-  </button>
+  </button> -->
 
   <!-- Exit Button -->
   <button class="exitButton" mat-raised-button (click)="goBack()">
