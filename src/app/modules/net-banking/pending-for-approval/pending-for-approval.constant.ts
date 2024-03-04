@@ -65,7 +65,7 @@ export class PendingForApprovalConstant {
         let approvedCount = 0;
         let rejectedCount = 0;
         element.coprateNetBankingBulkUploadInfo.forEach((element) => {
-          switch (element.status) {
+          switch (element.uploadstatus) {
             case null:
             case "PENDING":
               pendingCount++;
