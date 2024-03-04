@@ -26,6 +26,74 @@ export class PendingForApprovalConstant {
       cell: (element: any) => `${element?.authStatus}`,
     },
   ];
+  static readonly PENDING_SUMMARY = [
+    {
+      columnDef: "transactionReferenceNo",
+      header: "Ref Number",
+      cell: (element: any) => element.transactionReferenceNo,
+    },
+    {
+      columnDef: "productType",
+      header: "Produt Type",
+      cell: (element: any) => element.productType,
+    },
+    {
+      columnDef: "lastUpdated",
+      header: "Date & Time",
+      cell: (element: any) => element.lastUpdated,
+    },
+    {
+      columnDef: "totalAmount",
+      header: "Amount",
+      cell: (element: any) => `${element?.totalAmount}`,
+    },
+    {
+      columnDef: "lastUpdatedBy",
+      header: "Initiated By",
+      cell: (element: any) => `${element?.lastUpdatedBy}`,
+    },
+    {
+      columnDef: "templateName",
+      header: "File Name",
+      cell: (element: any) => `${element?.templateName}`,
+    },
+    {
+      columnDef: "status",
+      header: "Status",
+      cell: (element: any) => {
+        let pendingCount = 0;
+        let approvedCount = 0;
+        let rejectedCount = 0;
+        element.coprateNetBankingBulkUploadInfo.forEach((element) => {
+          switch (element.status) {
+            case null:
+            case "PENDING":
+              pendingCount++;
+              break;
+            case "APPROVED":
+              approvedCount++;
+              break;
+            case "REJECTED":
+              rejectedCount++;
+              break;
+          }
+        });
+        if (pendingCount === element.coprateNetBankingBulkUploadInfo.length) {
+          return "Pending";
+        } else if (
+          approvedCount === element.coprateNetBankingBulkUploadInfo.length
+        ) {
+          return "Approved";
+        } else if (
+          rejectedCount === element.coprateNetBankingBulkUploadInfo.length
+        ) {
+          return "Rejected";
+        } else {
+          return "Pending";
+        }
+      },
+    },
+  ];
   static readonly staticData = [
     {
       screenNumber: 1,
