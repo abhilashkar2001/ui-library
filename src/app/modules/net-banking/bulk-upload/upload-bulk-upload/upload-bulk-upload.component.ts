@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
+import { CommonService } from "app/shared/services/common-service/common.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-upload-bulk-upload",
@@ -17,14 +21,20 @@ export class UploadBulkUploadComponent implements OnInit {
   uploadData: any;
   uploadKey: any;
   @Output() customSaveBulkUpload = new EventEmitter<any>();
+  currentUser: any;
+  otp: any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private bulkservice: BulkUpload
+    private bulkservice: BulkUpload,
+    private dialog: MatDialog,
+    private commonService: CommonService,
+    private tokenStorage: TokenStorageService
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.tokenStorage.getUser();
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;
     });
@@ -51,7 +61,7 @@ export class UploadBulkUploadComponent implements OnInit {
   buildMaintTemplateForm() {
     this.maintTemplateUpload = this.fb.group({
       productType: [""],
-      dateOfBirth: [""],
+      processingDate: [""],
       uplodedFileArray: this.fb.array([]),
     });
     this.maintTemplateUpload.valueChanges.subscribe((res) => {});
@@ -73,36 +83,44 @@ export class UploadBulkUploadComponent implements OnInit {
   }
   goToScreen() {
     const formData = new FormData();
-    formData.append("file", this.file);
-    this.bulkservice.uploadExcel(formData).subscribe((res: any) => {
-      if (res?.statusCode === 200) {
+    formData.append("fileName", this.file);
+    this.bulkservice
+      .uploadExcel(
+        formData,
+        this.maintTemplateUpload.value.productType,
+        this.maintTemplateUpload.value.processingDate
+      )
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200) {
+          this.commonService
+            .generateOTP(this.currentUser.mobile)
+            .subscribe((resp: any) => {
+              this.otp = resp?.data;
+            });
+          const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+            data: {
+              remark: true,
+              mobile: this.currentUser.mobile,
+              referenceNo: res?.data?.reffNo,
+            },
+            width: "750px",
+            disableClose: true,
+            panelClass: "popup-dialog-class",
+          });
+        }
         //emit an uploaded id
-        this.customSaveBulkUpload.emit(234);
-      }
-    });
-    // add this custom emit when above api call success and pass a uploaded Id.
-    this.customSaveBulkUpload.emit(345);
+        // this.customSaveBulkUpload.emit(res?.data?.id);
+      });
   }
 
   downloadTemplate(event: Event) {
     event.stopPropagation();
-    this.bulkservice
-      .downloadTemplate(this.maintTemplateUpload.value.selectMaintenance)
-      .subscribe((res: any) => {
-        this.saveFile(res);
-      });
-  }
-
-  private saveFile(response: any): void {
-    const blob = new Blob([response.body], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    this.bulkservice.downloadTemplate().subscribe((blob: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "Upload.csv";
+      link.click();
     });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${this.maintTemplateUpload.value.selectMaintenance}_excel_file.xlsx`;
-    a.click();
-    window.URL.revokeObjectURL(url);
   }
 
   fetchAllScreens() {
