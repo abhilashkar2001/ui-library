@@ -10,7 +10,7 @@ import { InternetBankingService } from "../internet-banking.service";
   styleUrls: ["./pending-for-approval.component.scss"],
 })
 export class PendingForApprovalComponent implements OnInit {
-  columns: any = PendingForApprovalConstant.UPLOAD_SUMMARY;
+  columns: any = PendingForApprovalConstant.PENDING_SUMMARY;
   sort: any;
   size: number = 5;
   sortOrder: any;
@@ -20,6 +20,7 @@ export class PendingForApprovalComponent implements OnInit {
   sortDirection = "";
   filterBy: FilterBy;
   module: any;
+  pendingForApprovalUpdatedData: any;
   staticData: any = {
     data: PendingForApprovalConstant.STATIC_SUMMARY,
     meta: {
@@ -59,6 +60,8 @@ export class PendingForApprovalComponent implements OnInit {
         event.direction,
         this.module
       )
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        this.pendingForApprovalUpdatedData = res;
+      });
   }
 }
