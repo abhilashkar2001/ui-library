@@ -91,7 +91,7 @@ export class NewReusableFilterComponent implements OnInit {
     console.log(this.componentName, "dsjjj");
     this.fxFlexForCol1 = this.newFilter ? 25 : 40;
     this.buildFormItem();
-    this.getCreatedBy();
+    // this.getCreatedBy();
   }
 
   buildFormItem() {

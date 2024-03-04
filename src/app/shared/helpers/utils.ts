@@ -90,3 +90,11 @@ export const DEFAULT_LOCALE = {
 export function pluckOnlyDate(date: any) {
   return moment(date).format("YYYY-MM-DD");
 }
+export interface FilterBy {
+  createdBy: string;
+  createdDate: string;
+  searchValue: string;
+  newFilter: string;
+  authStatus: string;
+  recordStatus: string;
+}

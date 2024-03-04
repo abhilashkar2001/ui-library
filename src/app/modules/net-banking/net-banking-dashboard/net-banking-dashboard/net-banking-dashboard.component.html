@@ -203,7 +203,7 @@
             <div class="availableTag">Most liked by demo bank user</div>
           </div>
           <div fxLayout="column" fxLayoutGap="5px">
-            <mat-form-field appearance="outline" class="type-Dropdown">
+            <mat-form-field appearance="outline">
               <mat-select
                 [(ngModel)]="selectedActivityLog"
                 (selectionChange)="onDropdownChange($event.value)"
@@ -212,7 +212,7 @@
                 <mat-option value="nonfinancial">Non-Financial</mat-option>
               </mat-select>
             </mat-form-field>
-            <div fxLayout="column" fxLayoutGap="15px">
+            <div fxLayout="column" fxLayoutGap="12px">
               <ng-container *ngFor="let key of colorCode">
                 <mat-accordion>
                   <mat-expansion-panel class="panel">
