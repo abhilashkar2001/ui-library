@@ -10,23 +10,18 @@ export class BulkUpload {
   protected basePath = environment.microServiceURL;
 
   constructor(private http: HttpClient) {}
-  uploadExcel(formData) {
+  uploadExcel(formData, type: string, processingDate) {
     return this.http.post(
-      `${this.basePath}/maintBulkUpload/uploadDoc`,
+      `${this.basePath}/corporate-net-banking/upload`,
       formData
     );
   }
 
-  downloadTemplate(screenName: string): Observable<HttpResponse<Blob>> {
-    const headers = new HttpHeaders({
-      "Content-Type": "assets/json/maintenance-upload.json",
-    });
+  downloadTemplate() {
     return this.http.get(
-      `${this.basePath}/maintBulkUpload/downloadTemplate?screenName=${screenName}`,
+      `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
       {
-        headers: headers,
         responseType: "blob",
-        observe: "response",
       }
     );
   }
