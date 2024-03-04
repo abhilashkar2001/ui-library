@@ -6,6 +6,8 @@ import { BulkUploadServiceService } from "../bulk-upload-service.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { TokenStorageService } from "app/shared/token-storage.service";
+import { CommonService } from "app/shared/services/common-service/common.service";
 
 @Component({
   selector: "app-add-bulk-upload",
@@ -92,16 +94,22 @@ export class AddBulkUploadComponent implements OnInit {
   };
   actionType: any;
   transactionIds: any[] = [];
+  currentUser: any;
+  otp: any;
+  referenceNo: any;
   // BulkUploadConstant.staticData;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private api: BulkUploadServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private tokenStorage: TokenStorageService,
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.tokenStorage.getUser();
     this.isEdit = true;
     this.bulkId = this.route.snapshot.params["id"];
     if (this.bulkId != "addNew") {
@@ -171,9 +179,15 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   openConfirmationPopup() {
+    this.commonService
+      .generateOTP(this.currentUser.mobile)
+      .subscribe((resp: any) => {
+        this.otp = resp?.data;
+      });
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
+        mobile: this.currentUser.mobile,
       },
       width: "750px",
       disableClose: true,
@@ -197,6 +211,7 @@ export class AddBulkUploadComponent implements OnInit {
         isNetBanking: true,
         actionType: this.actionType,
         refrenceNo: resp.data,
+        route: "pending-for-approval",
       },
       width: "750px",
       disableClose: true,

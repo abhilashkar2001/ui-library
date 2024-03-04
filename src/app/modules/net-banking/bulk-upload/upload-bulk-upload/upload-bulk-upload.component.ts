@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
@@ -102,11 +103,26 @@ export class UploadBulkUploadComponent implements OnInit {
             data: {
               remark: true,
               mobile: this.currentUser.mobile,
-              referenceNo: res?.data?.reffNo,
             },
             width: "750px",
             disableClose: true,
             panelClass: "popup-dialog-class",
+          });
+          dialogRef.afterClosed().subscribe((resp) => {
+            const dialogRef = this.dialog.open(SuccessPopupComponent, {
+              data: {
+                refrenceNo: res?.data?.reffNo,
+                isNetBanking: true,
+                route: "bulk-upload",
+              },
+              width: "750px",
+              disableClose: true,
+              panelClass: "popup-dialog-class",
+              backdropClass: "bdrop",
+            });
+            dialogRef.afterClosed().subscribe((res) => {
+              console.log("........");
+            });
           });
         }
         //emit an uploaded id
