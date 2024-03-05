@@ -32,54 +32,7 @@ export class AddBulkUploadComponent implements OnInit {
     statusCode: 200,
     status: "OK",
   };
-  auditLogObject = {
-    kioskId: 319857,
-    kioskSystemCode: "12347",
-    kioskSystemName: "Raghul",
-    passcode: "$2a$10$32778233278.wzJkTsLLhEahxpy",
-    logoutCode: "$2a$10$UCTj/AjY5X4AA2k9bLyl5OdaMAloO.O5bWrty6uPEMpeQo00rbCra",
-    kioskSystemEnable: true,
-    entityCode: "SN1",
-    bankCode: "HSB",
-    branchCode: "HS1",
-    branchName: "HSB",
-    bankName: "hsb",
-    kioskStatus: null,
-    countryCode: "INR",
-    countryTelIsdCode: 91,
-    mobileLength: 10,
-    oneTimeAuth: "Y",
-    recordStatus: "OPEN",
-    authStatus: "UNAUTHORIZED",
-    created: "2024-02-26 17:45:07",
-    createdBy: "PREMCREATOR",
-    authBy: null,
-    authorizedDate: null,
-    lastUpdated: "2024-02-28 10:31:03",
-    empId: null,
-    lastUpdatedBy: "PREMAPP",
-    version: 3,
-    contact: [
-      {
-        contactId: 328182,
-        telephone: null,
-        mobile: "8778588300",
-        mobtCode: "",
-        email: null,
-        whatsappNo: null,
-        waptCode: null,
-        alternativeNumber: null,
-        altCode: null,
-        fax: null,
-        residencePhone: null,
-        officePhone: null,
-        address: [],
-      },
-    ],
-    email: null,
-    mobileNo: "8778588300",
-    mobtCode: "",
-  };
+  auditLogObject: any = {};
   bulkId: any;
   transactionDetails: any;
   templateFileList: any = [];
@@ -130,7 +83,10 @@ export class AddBulkUploadComponent implements OnInit {
 
   getBulkUploadDetailsById(filter) {
     this.api.getBulkUploadRecords(this.bulkId, filter).subscribe((resp) => {
-      this.bulkUploadDetails = resp;
+      if (resp?.statusCode === 200) {
+        this.bulkUploadDetails = resp;
+        this.auditLogObject = resp.data[0];
+      }
     });
   }
 
@@ -235,5 +191,10 @@ export class AddBulkUploadComponent implements OnInit {
     this.bulkId = event;
     this.router.navigate(["user/dashboard/bulk-upload", event]);
     // this.bulkId = event;
+  }
+
+  downloadRecord() {
+    console.log("..........");
+    this.api.downloadBulkUpload(this.bulkId).subscribe((_) => {});
   }
 }

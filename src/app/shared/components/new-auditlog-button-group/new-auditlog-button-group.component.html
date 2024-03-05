@@ -6,6 +6,9 @@
 >
   <!-- Approve Button -->
   <button
+    *ngIf="
+      auditLogData.status != 'APPROVED' && auditLogData.status != 'REJECTED'
+    "
     type="button"
     mat-raised-button
     class="approveButton"
@@ -16,6 +19,9 @@
 
   <!-- Reject Button-->
   <button
+    *ngIf="
+      auditLogData.status != 'APPROVED' && auditLogData.status != 'REJECTED'
+    "
     type="button"
     mat-raised-button
     class="exitButton"

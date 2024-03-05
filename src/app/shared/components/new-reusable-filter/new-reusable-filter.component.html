@@ -166,7 +166,11 @@
     </mat-form-field>
 
     <div fxFlex="13">
-      <button mat-flat-button class="downloadBtn full-width">
+      <button
+        mat-flat-button
+        class="downloadBtn full-width"
+        (click)="downloadRecord()"
+      >
         <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon>
         {{ "Download" | translate }}
       </button>

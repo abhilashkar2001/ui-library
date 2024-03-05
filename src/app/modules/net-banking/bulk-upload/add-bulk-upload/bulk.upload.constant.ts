@@ -5,11 +5,21 @@ export class BulkUploadConstant {
       header: "Ref No.",
       cell: (element: any) => element.icustReffNo,
     },
-    // {
-    //   columnDef: "status",
-    //   header: "Beneficiary Name",
-    //   cell: (element: any) => element.authStatus,
-    // },
+    {
+      columnDef: "uploadstatus",
+      header: "Status",
+      cell: (element: any) => {
+        switch (element?.uploadstatus) {
+          case "APPROVED":
+            return "Approved";
+            break;
+          case "REJECTED":
+            return "Rejected";
+          default:
+            return "Pending";
+        }
+      },
+    },
     {
       columnDef: "soucrceAccount",
       header: "Soucrce Account",

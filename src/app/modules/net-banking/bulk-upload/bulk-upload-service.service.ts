@@ -54,4 +54,10 @@ export class BulkUploadServiceService {
       remarkData
     );
   }
+
+  downloadBulkUpload(id) {
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking/download?id=${id}`
+    );
+  }
 }

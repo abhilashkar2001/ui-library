@@ -102,6 +102,7 @@ export class NewReusableMatTableComponent implements OnInit {
   summaryInfoResp: any[] = [];
   selection = new SelectionModel<any>(true, []);
   bulkUploadFileName: any = "";
+  @Output() customDownloadRecord = new EventEmitter<any>();
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -243,14 +244,15 @@ export class NewReusableMatTableComponent implements OnInit {
       delete this.filterValue.page;
     }
 
-    // this.customUpdateTable(
-    //   this.filterValue,
-    //   this.filterValue,
-    //   this.calculatePageIndex(),
-    //   this.pagesize,
-    //   this.sortValue,
-    //   this.orderBy
-    // );
+    this.customUpdateTable(
+      this.filterValue,
+      this.filterValue,
+      this.calculatePageIndex(),
+      this.pagesize,
+      this.sortValue,
+      this.orderBy,
+      "coprateNetBanking"
+    );
   }
 
   filterDataPayload(event) {
@@ -337,7 +339,7 @@ export class NewReusableMatTableComponent implements OnInit {
     console.log(changes);
     this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
-    this.bulkUploadFileName = this.maintenanceData.data[0].templateName;
+    this.bulkUploadFileName = this.maintenanceData?.data[0].templateName;
     if (this.maintenanceData?.statusCode === 200) {
       this.updateTable(
         this.componentName == "Bulk Upload"
@@ -404,14 +406,15 @@ export class NewReusableMatTableComponent implements OnInit {
     ) {
       this.pagesize = event?.value?.pageSize | event.pageSize;
       this.pageIndex = event?.value?.page | event?.page;
-      // this.customUpdateTable(
-      //   null,
-      //   this.filterValue,
-      //   event?.value?.page,
-      //   event?.value?.pageSize,
-      //   this.sortValue,
-      //   this.orderBy
-      // );
+      this.customUpdateTable(
+        null,
+        this.filterValue,
+        event?.value?.page,
+        event?.value?.pageSize,
+        this.sortValue,
+        this.orderBy,
+        "coprateNetBanking"
+      );
     }
   }
 
@@ -431,14 +434,15 @@ export class NewReusableMatTableComponent implements OnInit {
     this.dataSource.filter = "";
     this.selectedFilterIndex = 0;
     this.filterValue = "";
-    // this.customUpdateTable(
-    //   null,
-    //   null,
-    //   1,
-    //   this.pagesize,
-    //   this.sortValue,
-    //   this.orderBy
-    // );
+    this.customUpdateTable(
+      null,
+      null,
+      1,
+      this.pagesize,
+      this.sortValue,
+      this.orderBy,
+      "coprateNetBanking"
+    );
   }
 
   /**
@@ -508,14 +512,15 @@ export class NewReusableMatTableComponent implements OnInit {
   announceSortChange(sortState: Sort) {
     this.sortValue = sortState.active;
     this.orderBy = sortState.direction === "asc" ? "ASC" : "DESC";
-    // this.customUpdateTable(
-    //   this.selectedFilterIndex != 0 ? this.selectedFilterIndex : null,
-    //   this.filterValue,
-    //   this.pageIndex,
-    //   this.pagesize,
-    //   sortState.active,
-    //   this.orderBy
-    // );
+    this.customUpdateTable(
+      this.selectedFilterIndex != 0 ? this.selectedFilterIndex : null,
+      this.filterValue,
+      this.pageIndex,
+      this.pagesize,
+      sortState.active,
+      this.orderBy,
+      "coprateNetBanking"
+    );
   }
   updateRecord(operation, id, obj) {
     this.customupdateRecord.emit({ operation, id, obj });
@@ -536,14 +541,15 @@ export class NewReusableMatTableComponent implements OnInit {
     this.sortValue = sortValue;
     this.orderBy = direction.toUpperCase();
 
-    // this.customUpdateTable(
-    //   this.filterValue,
-    //   this.filterValue,
-    //   this.pageIndex,
-    //   this.pagesize,
-    //   this.sortValue,
-    //   this.orderBy
-    // );
+    this.customUpdateTable(
+      this.filterValue,
+      this.filterValue,
+      this.pageIndex,
+      this.pagesize,
+      this.sortValue,
+      this.orderBy,
+      "coprateNetBanking"
+    );
   }
   goBack() {
     this.customGoBack.emit({});
@@ -587,5 +593,9 @@ export class NewReusableMatTableComponent implements OnInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
+  }
+
+  downloadRecord(event) {
+    this.customDownloadRecord.emit();
   }
 }

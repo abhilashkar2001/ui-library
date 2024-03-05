@@ -89,8 +89,7 @@
               levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
                 ? 'bgGreen'
                 : '',
-              levelItem?.action == 'REJECTED' ? 'bgRed' : '',
-              levelItem?.action == 'CREATED' ? 'bgRed' : ''
+              levelItem?.action == 'REJECTED' ? 'bgRed' : ''
             ]"
             [fxFlex]="
               i < approvalList?.length - 1 &&

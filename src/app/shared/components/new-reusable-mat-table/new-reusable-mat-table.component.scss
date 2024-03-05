@@ -210,6 +210,14 @@
 .higlightReject {
   color: #bc2020;
 }
+.higlightApprove {
+  letter-spacing: 0px !important;
+  color: #008461 !important;
+}
+
+.highlightPending {
+  color: #0049a1 !important;
+}
 
 ::-webkit-scrollbar {
   width: 7px;
