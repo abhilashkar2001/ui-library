@@ -50,6 +50,8 @@ export class AddBulkUploadComponent implements OnInit {
   currentUser: any;
   otp: any;
   referenceNo: any;
+  remarks: string = "";
+  isTransactionActionDone: boolean = false;
   // BulkUploadConstant.staticData;
 
   constructor(
@@ -67,7 +69,18 @@ export class AddBulkUploadComponent implements OnInit {
     this.bulkId = this.route.snapshot.params["id"];
     if (this.bulkId != "addNew") {
       this.getTransactionLevelStatus();
+      // for Demo purpose adding, need to handle from backend
+      this.tansactionAction();
     }
+  }
+
+  tansactionAction() {
+    this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
+      const data = resp.data[0].coprateNetBankingBulkUploadInfo;
+      this.isTransactionActionDone =
+        data.every((item) => item.uploadstatus === "APPROVED") ||
+        data.every((item) => item.uploadstatus === "REJECTED");
+    });
   }
 
   getTransactionLevelStatus() {
@@ -121,16 +134,8 @@ export class AddBulkUploadComponent implements OnInit {
       panelClass: "popup-dialog-class",
     });
     dialogRef.afterClosed().subscribe((resp) => {
-      if (resp) {
-        const obj = {
-          excelId: this.bulkId,
-          remarks: resp,
-          status: this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
-        };
-        this.api.updateRemark(obj).subscribe((resp) => {
-          if (resp?.statusCode === 200) this.openConfirmationPopup();
-        });
-      }
+      this.remarks = resp;
+      if (resp) this.openConfirmationPopup();
     });
   }
 
@@ -154,7 +159,20 @@ export class AddBulkUploadComponent implements OnInit {
         this.api
           .processBulkTransaction(this.transactionIds)
           .subscribe((resp) => {
-            if (resp?.statusCode === 200) this.openSuccessDialog(resp);
+            if (resp?.statusCode === 200) {
+              if (resp) {
+                const obj = {
+                  excelId: this.bulkId,
+                  remarks: this.remarks,
+                  status:
+                    this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
+                };
+                this.api.updateRemark(obj).subscribe((response) => {
+                  if (response?.statusCode === 200)
+                    this.openSuccessDialog(resp);
+                });
+              }
+            }
           });
       }
     });

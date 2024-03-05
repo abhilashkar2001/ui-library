@@ -17,7 +17,9 @@
                   formControlName="productType"
                   placeholder="Product Type"
                 >
-                  <mat-option value="salaryAccount">Salary Account</mat-option>
+                  <mat-option value="internal">Internal</mat-option>
+                  <mat-option value="external">External</mat-option>
+                  <mat-option value="mixed">Mixed</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -31,6 +33,8 @@
                   matInput
                   [matDatepicker]="picker"
                   formControlName="processingDate"
+                  [min]="currentDate"
+                  readonly
                 />
 
                 <mat-datepicker-toggle matSuffix [for]="picker">

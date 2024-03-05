@@ -24,6 +24,7 @@ export class UploadBulkUploadComponent implements OnInit {
   @Output() customSaveBulkUpload = new EventEmitter<any>();
   currentUser: any;
   otp: any;
+  currentDate = new Date();
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -62,7 +63,7 @@ export class UploadBulkUploadComponent implements OnInit {
   buildMaintTemplateForm() {
     this.maintTemplateUpload = this.fb.group({
       productType: [""],
-      processingDate: [""],
+      processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });
     this.maintTemplateUpload.valueChanges.subscribe((res) => {});

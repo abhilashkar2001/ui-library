@@ -27,6 +27,7 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   @Input() hideApprove: boolean = false;
   @Input() tellerOps: boolean = false;
   @Input() isDisabledEditBtn: boolean = false;
+  @Input() isTransactionActionDone: boolean = false;
   @Output()
   customeditRecord = new EventEmitter<{}>();
   @Output() customgoBack = new EventEmitter<{}>();
