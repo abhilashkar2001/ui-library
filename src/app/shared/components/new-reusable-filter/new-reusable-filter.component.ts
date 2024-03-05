@@ -35,6 +35,8 @@ export class NewReusableFilterComponent implements OnInit {
   @Output() customDataByPage = new EventEmitter<{
     filterValue;
   }>();
+
+  @Output() customDownloadRecord = new EventEmitter<any>();
   filterFormControl: FormControl = new FormControl("");
 
   status: FormControl = new FormControl();
@@ -300,5 +302,9 @@ export class NewReusableFilterComponent implements OnInit {
 
   clear() {
     this.filterFormControl.setValue("");
+  }
+
+  downloadRecord() {
+    this.customDownloadRecord.emit();
   }
 }

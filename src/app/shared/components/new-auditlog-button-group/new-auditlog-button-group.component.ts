@@ -58,6 +58,7 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.auditLogData?.currentValue) {
       this.auditLogData = changes.auditLogData.currentValue;
+      console.log(this.auditLogData, "auditLogData");
     }
   }
 

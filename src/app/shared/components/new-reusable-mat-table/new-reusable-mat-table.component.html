@@ -46,6 +46,7 @@
     [className]="className"
     [componentName]="componentName"
     [bulkUploadFileName]="bulkUploadFileName"
+    (customDownloadRecord)="downloadRecord($event)"
   >
   </app-new-reusable-filter>
 
@@ -67,6 +68,11 @@
             (change)="$event ? toggleAllRows() : null"
             [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [disabled]="
+              (maintenanceData?.data?.length > 0 &&
+                maintenanceData?.data[0]?.status == 'APPROVED') ||
+              maintenanceData?.data[0]?.status == 'REJECTED'
+            "
           >
           </mat-checkbox
         ></mat-header-cell>
@@ -75,6 +81,10 @@
             (click)="$event.stopPropagation()"
             (change)="$event ? selection.toggle(element) : null"
             [checked]="selection.isSelected(element)"
+            [disabled]="
+              element?.uploadstatus == 'APPROVED' ||
+              maintenanceData?.data[0]?.status == 'REJECTED'
+            "
           >
           </mat-checkbox
         ></mat-cell>
@@ -124,13 +134,13 @@
               i == 0 && maintenanceTitle == 'User Maintenance'
                 ? 'align-left'
                 : '',
-              (column.header == 'Approved' && column.cell(row)) == 'Unapproved'
-                ? 'higlightUnapprove'
+              (column.header == 'Status' && column.cell(row)) == 'Pending'
+                ? 'highlightPending'
                 : '',
-              (column.header == 'Approved' && column.cell(row)) == 'Approved'
+              (column.header == 'Status' && column.cell(row)) == 'Approved'
                 ? 'higlightApprove'
                 : '',
-              (column.header == 'Approved' && column.cell(row)) == 'Rejected'
+              (column.header == 'Status' && column.cell(row)) == 'Rejected'
                 ? 'higlightReject'
                 : '',
               (column.header == 'Active Status' && column.cell(row)) ==

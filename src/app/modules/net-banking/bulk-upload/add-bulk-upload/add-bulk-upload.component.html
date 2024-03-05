@@ -31,6 +31,7 @@
         [componentName]="'Bulk Upload'"
         (customAllSelectionRecord)="processTransaction($event)"
         (customGetDataByPage)="getDataByPage($event)"
+        (customDownloadRecord)="downloadRecord($event)"
       ></app-new-reusable-mat-table>
     </section>
     <app-new-auditlog-button-group
@@ -41,7 +42,6 @@
     >
     </app-new-auditlog-button-group
     ><br />
-    <app-audit-log-table [dummyData]="auditLogObject"> </app-audit-log-table>
   </div>
 
   <app-upload-bulk-upload
