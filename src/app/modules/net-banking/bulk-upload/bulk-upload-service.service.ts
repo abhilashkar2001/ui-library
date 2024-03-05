@@ -41,7 +41,7 @@ export class BulkUploadServiceService {
       : "";
     var filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
     if (!filters) filterEndpoint = "";
-    // }
+
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}${filterEndpoint}`
     );
