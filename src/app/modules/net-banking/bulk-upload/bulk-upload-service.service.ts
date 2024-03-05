@@ -23,28 +23,27 @@ export class BulkUploadServiceService {
     );
   }
 
-  getBulkUploadRecords(id, filters) {
+  getBulkUploadRecords(id, filters?) {
     var filterBy = "";
-    if (filters.filterBy) {
+    if (filters?.filterBy) {
       const keys = Object.keys(filters.filterBy);
       keys.forEach((key) => {
         if (filters.filterBy[key])
           filterBy = filterBy + `${key}=${filters.filterBy[key]}&`;
       });
     }
-    const page = filters.page
+    const page = filters?.page
       ? `page=${filters?.page}&size=${filters?.size}`
       : "";
-    const sort = filters.sort ? `&sort=${filters?.sort}` : "";
-    const direction = filters.direction
+    const sort = filters?.sort ? `&sort=${filters?.sort}` : "";
+    const direction = filters?.direction
       ? `&sortOrder=${filters?.direction}`
       : "";
-    var filterEndpoint = `${filterBy}${page}${sort}${direction}`;
+    var filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
+    if (!filters) filterEndpoint = "";
 
-    console.log(filterEndpoint);
-    // }
     return this.http.get<any>(
-      `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}&${filterEndpoint}`
+      `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}${filterEndpoint}`
     );
   }
 
