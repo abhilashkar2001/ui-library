@@ -3,6 +3,7 @@ import { BulkUploadConstant } from "./add-bulk-upload/bulk.upload.constant";
 import { Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
 import { InternetBankingService } from "../internet-banking.service";
+import { BulkUploadServiceService } from "./bulk-upload-service.service";
 
 @Component({
   selector: "app-bulk-upload",
@@ -35,7 +36,8 @@ export class BulkUploadComponent implements OnInit {
 
   constructor(
     private route: Router,
-    private bulkService: InternetBankingService
+    private bulkService: InternetBankingService,
+    private bulkuploadService: BulkUploadServiceService
   ) {}
 
   ngOnInit(): void {}
@@ -75,6 +77,20 @@ export class BulkUploadComponent implements OnInit {
       )
       .subscribe((res) => {
         this.bulkUploadData = res;
+      });
+  }
+
+  customDownloadRecord() {
+    this.bulkuploadService
+      .downloadBulkuploadParentSummary()
+      .subscribe((data) => {
+        let blob = new Blob([data], { type: "application/octet-stream" });
+
+        var downloadURL = window.URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = downloadURL;
+        link.download = "report.xlsx";
+        link.click();
       });
   }
 }
