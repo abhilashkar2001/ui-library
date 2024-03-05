@@ -213,6 +213,14 @@ export class AddBulkUploadComponent implements OnInit {
 
   downloadRecord() {
     console.log("..........");
-    this.api.downloadBulkUpload(this.bulkId).subscribe((_) => {});
+    this.api.downloadBulkUpload(this.bulkId).subscribe((data) => {
+      let blob = new Blob([data], { type: "application/octet-stream" });
+
+      var downloadURL = window.URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.href = downloadURL;
+      link.download = "report.xlsx";
+      link.click();
+    });
   }
 }

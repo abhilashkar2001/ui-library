@@ -56,7 +56,15 @@ export class BulkUploadServiceService {
 
   downloadBulkUpload(id) {
     return this.http.get<any>(
-      `${this.basePath}/corporate-net-banking/download?id=${id}`
+      `${this.basePath}/corporate-net-banking/download?id=${id}`,
+      { responseType: "blob" as "json" }
+    );
+  }
+
+  downloadBulkuploadParentSummary() {
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking/downloadBulk`,
+      { responseType: "blob" as "json" }
     );
   }
 }
