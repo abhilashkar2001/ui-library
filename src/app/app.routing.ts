@@ -42,7 +42,7 @@ export const rootRouterConfig: Routes = [
   {
     path: "user",
     component: UserLayoutComponent,
-    // canActivate: [NetBankUserGaurd],
+    canActivate: [NetBankUserGaurd],
     children: [
       {
         path: "dashboard",
