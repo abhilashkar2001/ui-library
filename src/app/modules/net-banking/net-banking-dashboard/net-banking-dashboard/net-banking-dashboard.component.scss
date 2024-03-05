@@ -3,6 +3,18 @@
   .nav-bar {
     background: transparent linear-gradient(270deg, #030c14 0%, #002240 100%) 0%
       0% no-repeat padding-box;
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    transform: translateX(-63px);
+    min-height: 80px;
+    button {
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
   }
   .searchDiv {
     height: 62px;
@@ -290,6 +302,8 @@
   opacity: 1;
   border-radius: 8px;
   padding: 12px;
+  max-width: 96% !important;
+  left: 0;
 }
 
 ::ng-deep.mat-menu-panel {
