@@ -550,6 +550,8 @@ export class DocumentUploadComponent implements OnInit {
         });
         setTimeout(() => {
           this.route.navigate(["home"]);
+          sessionStorage.removeItem("mobile");
+          sessionStorage.removeItem("customerId");
         }, 5000);
       }
     });
