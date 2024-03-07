@@ -34,14 +34,16 @@ export class CallbackComponent implements OnInit {
     this.sessionService.getProfileInfo().subscribe(
       (res) => {
         this.tokenService.saveUser(res);
-        sessionStorage.setItem("customerId", this.getParameterByName("customerId"))
-        sessionStorage.setItem(
+        sessionStorage.setItem("customerId", this.getParameterByName("customerId"));
+        sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+        if( this.getParameterByName("customerId") != null && this.getParameterByName("mobile") != null  ){ this.router.navigate([`/origination/otp`],{queryParams: {type:`${this.getParameterByName("screen")}`}})}
+        else{sessionStorage.setItem(
           "originationId",
           JSON.stringify(this.getParameterByName("originationId"))
         );
         this.router.navigate([
           `/origination/${this.getParameterByName("route")}`,
-        ]);
+        ]);}
       },
       (err) => {
         // TODO error hanndler
