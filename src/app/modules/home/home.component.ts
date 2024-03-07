@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   onInit() {
     /* send username and password to get Access Token */
     let payload = {
-      username: "CREATOR",
+      username: "website",
       password: "Newuser@1",
     };
     let isRememberMe = true;
