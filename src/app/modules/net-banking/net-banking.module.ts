@@ -14,8 +14,11 @@ import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-bankin
 import { SharedModule } from "app/shared/shared.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { PendingForApprovalComponent } from './pending-for-approval/pending-for-approval.component';
-import { ApplicantsInfoComponent } from './new-reusable-components/applicants-info/applicants-info.component';
+import { PendingForApprovalComponent } from "./pending-for-approval/pending-for-approval.component";
+import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
+import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
+import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
+import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -25,6 +28,9 @@ import { ApplicantsInfoComponent } from './new-reusable-components/applicants-in
     NetBankingDashboardComponent,
     PendingForApprovalComponent,
     ApplicantsInfoComponent,
+    BeneficiarySummaryComponent,
+    AddEditBenificiaryComponent,
+    TradeFlowComponent,
   ],
   imports: [
     CommonModule,
