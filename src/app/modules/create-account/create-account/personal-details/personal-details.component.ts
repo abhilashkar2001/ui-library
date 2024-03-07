@@ -47,6 +47,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   // SAVE BUTTON PROPERTIES
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
+  countriesIsdCodes: any;
+  defaultIsdCodeValue: any;
+  maxMobileLength: any;
   constructor(
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
@@ -200,6 +203,11 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       ],
       customerId: data?.customerId,
       kycStatus: data?.kycStatus,
+      mobile: [data ? data.contact.mobile : "", Validators.required],
+      mobtCode: [
+        data ? parseInt(data.contact.mobtCode) : "",
+        Validators.required,
+      ],
     });
   }
 
@@ -212,7 +220,21 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     for (let i = 0; i < this.personalInfoArray.value?.length; i++) {
       this.fetchStateCity(i);
       this.checkAddressValidity(i);
+      this.checkMobileValidtiy(i);
     }
+  }
+
+  checkMobileValidtiy(i) {
+    this.personalInfoArray.controls[i]
+      .get("mobile")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        if (resp?.length != this.maxMobileLength) {
+          this.personalInfoArray.controls[i]
+            .get("mobile")
+            .setErrors({ invalidLength: true });
+        }
+      });
   }
 
   checkAddressValidity(i) {
@@ -314,6 +336,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
         nationality: element.nationality,
         contact: {
           mobile: element.mobile,
+          mobtCode: element.mobtCode,
           email: element.email,
           address: [
             {
@@ -338,7 +361,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   onConfirm() {
     const payLoad = this.createPayLoad();
-    payLoad.customer[0].contact.mobile = sessionStorage.getItem("mobileNo");
+    // payLoad.customer[0].contact.mobile = sessionStorage.getItem("mobileNo");
     if (this.personalDetailsForm.value.personalInfoArray[0].kycStatus)
       payLoad.customer[0].kycStatus =
         this.personalDetailsForm.value.personalInfoArray[0].kycStatus;
@@ -360,9 +383,26 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   getCountry() {
     this.openAccountService.getCountryList().subscribe((Countrylist: any) => {
-      this.countries = Countrylist.data;
+      if (Countrylist?.statusCode == 200) {
+        if (Countrylist?.data) {
+          this.countries = Countrylist.data;
+          this.countriesIsdCodes = Countrylist?.data;
+          const indiaIsdCode = this.countriesIsdCodes.find(
+            (item) => item?.countryName.toLowerCase() == "india"
+          );
+          if (indiaIsdCode) {
+            this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
+            this.maxMobileLength = indiaIsdCode?.mobileLength;
+          } else {
+            this.defaultIsdCodeValue =
+              this.countriesIsdCodes[0].countryTelIsdCode;
+            this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
+          }
+        }
+      }
     });
   }
+  onIsdCodeSelected(isdCode) {}
 
   onCountrySelect(countryCode) {
     this.openAccountService

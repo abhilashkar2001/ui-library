@@ -1,0 +1,87 @@
+<mat-card class="full-width" fxLayout="column">
+  <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Transaction Info</h2>
+  </div>
+  <div [formGroup]="transactionInfoForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="type"> type </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Open Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker1"
+          class="date-picker"
+          formControlName="openDate"
+        />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>BG Effective Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker"
+          class="date-picker"
+          formControlName="bgEffectiveDate"
+        />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="Category 1"> Category 1 </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Amount</mat-label>
+        <input matInput type="text" formControlName="amount" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="73"
+      >
+        <mat-label>Purpose</mat-label>
+        <input matInput type="text" formControlName="purpose" />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-card>
