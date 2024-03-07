@@ -19,6 +19,7 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
+import { BeneficiaryBulkUploadComponent } from './trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component';
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -31,6 +32,7 @@ import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
     BeneficiarySummaryComponent,
     AddEditBenificiaryComponent,
     TradeFlowComponent,
+    BeneficiaryBulkUploadComponent,
   ],
   imports: [
     CommonModule,

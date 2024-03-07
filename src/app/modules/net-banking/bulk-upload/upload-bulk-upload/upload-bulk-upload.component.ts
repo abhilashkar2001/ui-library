@@ -15,16 +15,21 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 })
 export class UploadBulkUploadComponent implements OnInit {
   @Input() screenName: string;
+  @Input() showNewBeneficiary: boolean = false;
+  @Input() showProductType: boolean = true;
+
+  @Output() customSaveBulkUpload = new EventEmitter<any>();
+
   maintTemplateUpload: FormGroup;
   fileFormat: string[] = ["Excel"];
   file: any;
   screenList: any;
   uploadData: any;
   uploadKey: any;
-  @Output() customSaveBulkUpload = new EventEmitter<any>();
   currentUser: any;
   otp: any;
   currentDate = new Date();
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -63,6 +68,7 @@ export class UploadBulkUploadComponent implements OnInit {
   buildMaintTemplateForm() {
     this.maintTemplateUpload = this.fb.group({
       productType: [""],
+      beneficiary: [""],
       processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });

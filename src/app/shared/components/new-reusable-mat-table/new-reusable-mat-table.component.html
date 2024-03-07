@@ -24,7 +24,9 @@
     fxLayout="row"
     fxLayout.xs="column"
     fxLayoutGap="16px"
-    *ngIf="CountryModule === false"
+    *ngIf="
+      CountryModule === false && maintenanceTitle !== 'Beneficiary Maintenance'
+    "
   >
     <ng-container>
       <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
@@ -33,22 +35,44 @@
       </button>
     </ng-container>
   </div>
+
+  <div
+    fxLayout="column"
+    class="dropdown position-relative"
+    *ngIf="maintenanceTitle == 'Beneficiary Maintenance'"
+  >
+    <button mat-flat-button class="addNewButton">
+      <mat-icon class="text-white text-xl">add</mat-icon>
+      {{ "Add New" | translate }}
+    </button>
+
+    <div class="dropdown-content">
+      <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
+        {{ "Create" | translate }}
+      </span>
+      <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
+        {{ "Bulk Upload" | translate }}
+      </span>
+    </div>
+  </div>
 </section>
 
 <mat-card>
-  <app-new-reusable-filter
-    (customDataByPage)="customSearch($event)"
-    [newFilter]="newFilter"
-    [countryModuleFilter]="countryModuleFilter"
-    [stateModuleFilter]="stateModuleFilter"
-    [createdBy]="createdBy"
-    [module]="module"
-    [className]="className"
-    [componentName]="componentName"
-    [bulkUploadFileName]="bulkUploadFileName"
-    (customDownloadRecord)="downloadRecord($event)"
-  >
-  </app-new-reusable-filter>
+  <ng-container *ngIf="!hideFilters">
+    <app-new-reusable-filter
+      (customDataByPage)="customSearch($event)"
+      [newFilter]="newFilter"
+      [countryModuleFilter]="countryModuleFilter"
+      [stateModuleFilter]="stateModuleFilter"
+      [createdBy]="createdBy"
+      [module]="module"
+      [className]="className"
+      [componentName]="componentName"
+      [bulkUploadFileName]="bulkUploadFileName"
+      (customDownloadRecord)="downloadRecord($event)"
+    >
+    </app-new-reusable-filter>
+  </ng-container>
 
   <div class="table_container" id="customtable">
     <mat-table
