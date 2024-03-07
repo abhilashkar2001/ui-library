@@ -21,7 +21,7 @@ import { environment } from "environments/environment";
 import { UploadImage } from "../origination-external-callback.store";
 import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { Route, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { CustomerServiceService } from "app/shared/services/customer-service.service";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
@@ -550,6 +550,8 @@ export class DocumentUploadComponent implements OnInit {
         });
         setTimeout(() => {
           this.route.navigate(["home"]);
+          sessionStorage.removeItem("mobile");
+          sessionStorage.removeItem("customerId");
         }, 5000);
       }
     });
