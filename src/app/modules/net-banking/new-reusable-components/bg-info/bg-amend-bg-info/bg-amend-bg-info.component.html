@@ -1,0 +1,92 @@
+<div class="full-width" fxLayout="column">
+  <form [formGroup]="bgAmendBgInfoForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>BG Number</mat-label>
+        <input matInput type="text" formControlName="bgNumber" />
+        <mat-icon matSuffix class="searchIcon">search</mat-icon>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Applicant</mat-label>
+        <input matInput type="text" formControlName="applicant" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Customer Code</mat-label>
+        <input matInput type="text" formControlName="customerCode" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="48"
+      >
+        <mat-label>New Address line 1</mat-label>
+        <input matInput type="text" formControlName="address1" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="48"
+      >
+        <mat-label>New Address line 2</mat-label>
+        <input matInput type="text" formControlName="address2" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country">
+          <mat-option value="India"> India </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Pin Code</mat-label>
+        <input matInput type="text" formControlName="pinCode" />
+        <mat-icon matSuffix class="searchIcon">search</mat-icon>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>State</mat-label>
+        <mat-select formControlName="state">
+          <mat-option value="Karnataka"> Karnataka </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>City</mat-label>
+        <mat-select formControlName="city">
+          <mat-option value="Banglore"> Banglore </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

@@ -92,6 +92,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.getOtpBtn = true;
     this.validNumber = true;
     this.resendLink = false;
+    this.invalidOtp = false;
     this.resendOtp += 1;
     clearInterval(this.timer);
   }

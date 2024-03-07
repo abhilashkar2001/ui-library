@@ -1,0 +1,172 @@
+<form
+  class="mt-5"
+  *ngIf="otherInfoForm"
+  [formGroup]="otherInfoForm"
+  appFormInvalidControlScroll
+>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Issuance'">
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Specify Counter Guarantee </mat-label>
+        <input
+          matInput
+          name="specifyCounter"
+          formControlName="specifyCounter"
+        />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> SWIFT Code </mat-label>
+        <input matInput name="swiftCode" formControlName="swiftCode" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Bank name</mat-label>
+        <input matInput name="bankName" formControlName="bankName" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Branch Name </mat-label>
+        <input matInput name="branchName" formControlName="branchName" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Amendment'">
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Counter Guarantee Issuing Bank </mat-label>
+        <input
+          matInput
+          name="counterGuarantee"
+          formControlName="counterGuarantee"
+        />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Branch Name </mat-label>
+        <input matInput name="branchName" formControlName="branchName" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Delivery Mode</mat-label>
+        <input matInput name="deliveryMode" formControlName="deliveryMode" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Delivery Branch </mat-label>
+        <input
+          matInput
+          name="deliveryBranch"
+          formControlName="deliveryBranch"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px">
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Address line 1 </mat-label>
+        <input matInput name="address1" formControlName="address1" required />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Address line 2</mat-label>
+        <input matInput name="address2" formControlName="address2" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px">
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Country </mat-label>
+        <mat-select formControlName="country" name="country">
+          <mat-option [value]="india">india</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Pincode </mat-label>
+        <input matInput name="pinCode" formControlName="pinCode" required />
+        <mat-icon matSuffix class="searchIcon">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> State </mat-label>
+        <input matInput name="state" formControlName="state" required />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> City </mat-label>
+        <input matInput name="city" formControlName="city" required />
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Issuance'">
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Textual Description(77C) </mat-label>
+        <input matInput name="textualDesc" formControlName="textualDesc" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label>
+          Instruction to Demobank(Not to form part of Gurantee Terms)
+        </mat-label>
+        <input
+          matInput
+          name="instructDemoBank"
+          formControlName="instructDemoBank"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Amendment'">
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Instruction for delivery </mat-label>
+        <input
+          matInput
+          name="instructDelivery"
+          formControlName="instructDelivery"
+        />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label> Margin %</mat-label>
+        <input matInput name="margin" formControlName="margin" />
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="24">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label>Fee Account </mat-label>
+        <mat-select formControlName="feeAccount" name="feeAccount">
+          <mat-option [value]="978653456">978653456</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Issuance'">
+    <div fxFlex="100" fxFlex.gt-xs="48.5">
+      <mat-form-field appearance="outline" class="custom-field">
+        <mat-label>Instruction for delivery </mat-label>
+        <input
+          matInput
+          name="instructDelivery"
+          formControlName="instructDelivery"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</form>

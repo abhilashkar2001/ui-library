@@ -137,3 +137,22 @@
 :host ::ng-deep .mat-datepicker-toggle img {
   vertical-align: 0px !important;
 }
+.yeardrop {
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.0901960784);
+  border-radius: 12px;
+  height: 60px;
+  margin-top: 0.5rem;
+}
+::ng-deep .inputSelect.mat-form-field {
+  box-shadow: none !important;
+}
+.vl {
+  border-left: 2px solid #cacaca;
+  margin: 10px 0px;
+}
+.custom-error {
+  font-size: 12px;
+  padding-left: 20%;
+  opacity: 1;
+  transform: translateY(0%);
+}
