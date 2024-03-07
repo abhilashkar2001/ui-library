@@ -19,6 +19,11 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
+import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/benificiary-details/benificiary-details.component";
+import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
+import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
+import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -31,6 +36,11 @@ import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
     BeneficiarySummaryComponent,
     AddEditBenificiaryComponent,
     TradeFlowComponent,
+    BgInfoComponent,
+    BenificiaryDetailsComponent,
+    TransactionInfoComponent,
+    BgAmendBgInfoComponent,
+    BgIssuanceBgInfoComponent,
   ],
   imports: [
     CommonModule,

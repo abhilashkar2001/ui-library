@@ -1,0 +1,116 @@
+<div *ngIf="benificiaryDetailsForm">
+  <mat-card class="full-width" fxLayout="column">
+    <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+      <h2>Beneficiary Details</h2>
+      <button
+        mat-raised-button
+        class="confirm-button"
+        (click)="onSave()"
+        *ngIf="componentName != 'BG Issuance'"
+      >
+        Save
+      </button>
+    </div>
+    <div [formGroup]="benificiaryDetailsForm" fxLayout="column">
+      <div fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>Beneficiary</mat-label>
+          <input matInput type="text" formControlName="beneficiary" />
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="73"
+          *ngIf="componentName == 'BG Issuance'"
+        >
+          <mat-label>Purpose</mat-label>
+          <input matInput type="text" formControlName="purpose" />
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="48"
+        >
+          <mat-label>New Address line 1</mat-label>
+          <input matInput type="text" formControlName="address1" />
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="48"
+        >
+          <mat-label>New Address line 2</mat-label>
+          <input matInput type="text" formControlName="address2" />
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country">
+            <mat-option value="India"> India </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>Pin Code</mat-label>
+          <input matInput type="text" formControlName="pinCode" />
+          <mat-icon matSuffix class="searchIcon">search</mat-icon>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option value="Karnataka"> Karnataka </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option value="Banglore"> Banglore </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>Email Id</mat-label>
+          <input matInput type="text" formControlName="email" />
+        </mat-form-field>
+        <div fxFlex="23" fxLayoutAlign="start center">
+          <mat-slide-toggle formControlName="notifyBenificary">
+          </mat-slide-toggle>
+          <span style="padding-left: 10px"
+            >Notify Beneficiary on transaction Completeion</span
+          >
+        </div>
+      </div>
+    </div>
+    <span class="note-text" *ngIf="componentName != 'BG Issuance'"
+      >Note: The bank has the discretion to modify the limit, Margin %, Margin
+      type details provided as the part of the request</span
+    >
+  </mat-card>
+</div>
