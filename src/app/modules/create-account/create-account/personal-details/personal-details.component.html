@@ -169,35 +169,107 @@
                         </mat-error>
                       </mat-form-field>
 
-                      <mat-form-field
-                        fxFlex="100"
-                        fxFlex.gt-sm="49"
-                        appearance="outline"
-                        class="full-width custom-field mt-2"
-                      >
-                        <mat-label class="custom-mat-label">Gender</mat-label>
-                        <mat-select
-                          formControlName="gender"
-                          (selectionChange)="CheckGenderandPrefix(i)"
-                        >
-                          <mat-option
-                            *ngFor="let genderItem of genderArray"
-                            [value]="genderItem"
-                            >{{ genderItem }}</mat-option
+                      <div fxFlex="100" fxFlex.gt-sm="49" fxLayout="column">
+                        <fieldset class="yeardrop fieldset" fxFlex="100">
+                          <div
+                            fxLayout="row"
+                            class="parentYearDiv"
+                            fxFlex="100"
                           >
-                        </mat-select>
+                            <mat-form-field
+                              appearance="outline"
+                              class="full-width inputSelect isdSelect"
+                              fxFlex="20"
+                            >
+                              <mat-select
+                                class="selector-input"
+                                formControlName="mobtCode"
+                              >
+                                <ng-container
+                                  *ngFor="let isdCode of countriesIsdCodes"
+                                >
+                                  <mat-option
+                                    *ngIf="isdCode?.countryTelIsdCode"
+                                    [value]="isdCode?.countryTelIsdCode"
+                                    (click)="onIsdCodeSelected(isdCode)"
+                                    >+{{
+                                      isdCode?.countryTelIsdCode
+                                    }}</mat-option
+                                  >
+                                </ng-container>
+                              </mat-select>
+                            </mat-form-field>
+                            <span class="vl"></span>
+                            <mat-form-field
+                              appearance="outline"
+                              class="full-width inputSelect mob_field"
+                              fxFlex="80"
+                            >
+                              <mat-label>Mobile Number</mat-label>
+                              <input
+                                matInput
+                                type="text"
+                                class="inputText"
+                                formControlName="mobile"
+                                numbersOnly
+                                [maxlength]="maxMobileLength"
+                                placeholder="Mobile Number"
+                              />
+                            </mat-form-field>
+                          </div>
+                        </fieldset>
                         <mat-error
+                          class="custom-error"
                           *ngIf="
-                            customer.controls['gender'].hasError('required') &&
-                            customer.controls['gender'].touched
+                            customer.controls['mobile'].hasError('required') &&
+                            customer.controls['mobile'].touched
                           "
                         >
-                          Gender is required
+                          Mobile Number is required
                         </mat-error>
-                      </mat-form-field>
+                        <mat-error
+                          class="custom-error"
+                          *ngIf="
+                            customer.controls['mobile'].touched &&
+                            customer.controls['mobile'].hasError(
+                              'invalidLength'
+                            )
+                          "
+                          >Mobile length should be
+                          {{ maxMobileLength }}</mat-error
+                        >
+                      </div>
                     </div>
 
                     <div fxLayout="row wrap" fxLayoutGap="2%">
+                      <div fxFlex="100" fxFlex.gt-sm="49">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width custom-field"
+                        >
+                          <mat-label class="custom-mat-label">Gender</mat-label>
+                          <mat-select
+                            formControlName="gender"
+                            (selectionChange)="CheckGenderandPrefix(i)"
+                          >
+                            <mat-option
+                              *ngFor="let genderItem of genderArray"
+                              [value]="genderItem"
+                              >{{ genderItem }}</mat-option
+                            >
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              customer.controls['gender'].hasError(
+                                'required'
+                              ) && customer.controls['gender'].touched
+                            "
+                          >
+                            Gender is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
                       <div fxFlex="100" fxFlex.gt-sm="49">
                         <app-searchable-select
                           [items]="countries"
