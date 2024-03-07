@@ -6,9 +6,10 @@ import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { PerfectScrollbarModule } from "app/shared/components/perfect-scrollbar";
 import { RouterModule } from "@angular/router";
+import { UserLayoutComponent } from './user-layout/user-layout.component';
 
 @NgModule({
-  declarations: [AdminLayoutComponent, AuthLayoutComponent],
+  declarations: [AdminLayoutComponent, AuthLayoutComponent, UserLayoutComponent],
   imports: [
     CommonModule,
     SharedModule,

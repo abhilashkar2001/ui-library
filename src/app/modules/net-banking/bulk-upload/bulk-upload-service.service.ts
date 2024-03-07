@@ -1,0 +1,70 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "environments/environment";
+
+@Injectable({
+  providedIn: "root",
+})
+export class BulkUploadServiceService {
+  basePath = environment.microServiceURL;
+
+  constructor(private http: HttpClient) {}
+
+  processBulkTransaction(payload) {
+    return this.http.post<any>(
+      `${this.basePath}/corporate-net-banking/approve-fund-transfer-bulk-upload-data`,
+      payload
+    );
+  }
+
+  getLevelApprovalStatus(bulkTransactionId) {
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=IcCoprateNetBankingBulkUpload&id=${bulkTransactionId}`
+    );
+  }
+
+  getBulkUploadRecords(id, filters?) {
+    var filterBy = "";
+    if (filters?.filterBy) {
+      const keys = Object.keys(filters.filterBy);
+      keys.forEach((key) => {
+        if (filters.filterBy[key])
+          filterBy = filterBy + `${key}=${filters.filterBy[key]}&`;
+      });
+    }
+    const page = filters?.page
+      ? `page=${filters?.page}&size=${filters?.size}`
+      : "";
+    const sort = filters?.sort ? `&sort=${filters?.sort}` : "";
+    const direction = filters?.direction
+      ? `&sortOrder=${filters?.direction}`
+      : "";
+    var filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
+    if (!filters) filterEndpoint = "";
+
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}${filterEndpoint}`
+    );
+  }
+
+  updateRemark(remarkData) {
+    return this.http.put<any>(
+      `${this.basePath}/corporate-net-banking/updateStatusAndRemark`,
+      remarkData
+    );
+  }
+
+  downloadBulkUpload(id) {
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking/download?id=${id}`,
+      { responseType: "blob" as "json" }
+    );
+  }
+
+  downloadBulkuploadParentSummary() {
+    return this.http.get<any>(
+      `${this.basePath}/corporate-net-banking/downloadBulk`,
+      { responseType: "blob" as "json" }
+    );
+  }
+}

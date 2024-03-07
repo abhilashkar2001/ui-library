@@ -1,0 +1,92 @@
+<mat-card
+  class="matCard-align table_container"
+  [ngClass]="isShowCancel ? 'dialogAuditLogCard' : 'auditLogCard'"
+>
+  <table class="auditTable">
+    <thead>
+      <tr>
+        <th
+          [style.width]="calculateWidth(columns)"
+          class="col"
+          *ngFor="let item of columns"
+        >
+          {{ item.header }}
+        </th>
+        <th class="col" *ngIf="!isShowCancel && totalLength > 2">
+          <img
+            (click)="openDialog('dialog')"
+            src="assets/images/expandIcon.svg"
+            class="auditIcon"
+          />
+        </th>
+        <th class="col" *ngIf="isShowCancel">
+          <img
+            (click)="openDialog('close')"
+            src="assets/images/cancelIcon.svg"
+            class="auditIcon"
+          />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let auditLogDataObject of dummyData">
+        <td class="col text-bold">{{ auditLogDataObject?.audEmpId }}</td>
+        <td class="col">{{ auditLogDataObject?.lastUpdatedBy }}</td>
+
+        <td class="col">
+          {{ auditLogDataObject?.lastUpdated | date : "dd MMM yyyy | HH:mm" }}
+        </td>
+        <td class="col">{{ auditLogDataObject?.action }}</td>
+        <td
+          [ngClass]="[
+            auditLogDataObject?.authStatus == 'AUTHORIZED'
+              ? 'higlightApprove'
+              : '',
+            auditLogDataObject?.authStatus == 'UNAUTHORIZED'
+              ? 'higlightUnapprove'
+              : ''
+          ]"
+        >
+          {{
+            auditLogDataObject?.authStatus === "AUTHORIZED"
+              ? "Approved"
+              : "Unapproved"
+          }}
+        </td>
+        <td class="col">
+          <div
+            [ngClass]="[
+              auditLogDataObject?.recordStatus == 'OPEN'
+                ? 'higlightActive alignStatus'
+                : '',
+
+              auditLogDataObject?.recordStatus == 'CLOSE'
+                ? 'higlightInactive alignStatus'
+                : ''
+            ]"
+          >
+            {{
+              auditLogDataObject?.recordStatus === "OPEN"
+                ? "Active"
+                : "Inactive"
+            }}
+          </div>
+        </td>
+        <td class="col">
+          {{ auditLogDataObject?.oneTimeAuth == "Y" ? "Yes" : "No" }}
+        </td>
+        <td class="col">{{ auditLogDataObject?.revisionNumber }}</td>
+        <td class="col" *ngIf="auditlogHistory?.length > 2"></td>
+      </tr>
+    </tbody>
+    <br />
+  </table>
+</mat-card>
+<ng-container *ngIf="isShowCancel">
+  <mat-divider class="audit-divider"></mat-divider>
+  <app-custom-pagination
+    [total]="totalLength"
+    (customPageEvent)="handlePageEvent($event)"
+  >
+  </app-custom-pagination>
+</ng-container>

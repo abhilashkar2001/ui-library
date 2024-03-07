@@ -4,6 +4,7 @@ const TOKEN_KEY = "auth-token";
 const USER_KEY = "auth-user";
 const JWT_USER = "jwt-user";
 const IS_REMEMBER = "isRemember";
+const NEW_BANK_USER_KEY = "netBank-auth-user";
 
 @Injectable({
   providedIn: "root",
@@ -74,5 +75,26 @@ export class TokenStorageService {
 
   getJwtUser() {
     return JSON.parse(this.sessionStore.getItem(JWT_USER));
+  }
+  getLogedCountry() {
+    let userInfo = this.sessionStore.getItem("userInfo");
+    if (userInfo) {
+      return JSON.parse(userInfo);
+    } else {
+      return null;
+    }
+  }
+
+  public saveNetBankingUser(user) {
+    this.sessionStore.removeItem(NEW_BANK_USER_KEY);
+    this.sessionStore.setItem(NEW_BANK_USER_KEY, JSON.stringify(user));
+  }
+
+  public isNetBankingUser(): boolean {
+    return !!this.getNetBankingUserStatus();
+  }
+
+  private getNetBankingUserStatus() {
+    return this.sessionStore.getItem(NEW_BANK_USER_KEY) !== null;
   }
 }

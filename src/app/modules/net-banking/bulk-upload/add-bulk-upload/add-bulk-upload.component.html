@@ -1,0 +1,53 @@
+<div fxLayout="column">
+  <header class="pl-20 pr-20">
+    <div fxLayoutAlign="space-between center" class="upload-bulk">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        class="w-full"
+        fxLayoutGap="10px"
+      >
+        <button mat-icon-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <label class="header">{{ "Bulk Upload" }}</label>
+      </div>
+      <div fxLayout="column" class="no_block" *ngIf="bulkId != 'addNew'">
+        <span>Reference Number</span>
+        <span>{{ bulkId }}</span>
+      </div>
+    </div>
+  </header>
+  <div fxLayout="column" *ngIf="bulkId != 'addNew'">
+    <section>
+      <app-common-level-status [approvalList]="approvalList">
+      </app-common-level-status>
+    </section>
+
+    <section>
+      <app-new-reusable-mat-table
+        [columns]="columns"
+        [UpdatedData]="bulkUploadDetails"
+        [componentName]="'Bulk Upload'"
+        (customAllSelectionRecord)="processTransaction($event)"
+        (customGetDataByPage)="getDataByPage($event)"
+        (customDownloadRecord)="downloadRecord($event)"
+      ></app-new-reusable-mat-table>
+    </section>
+    <app-new-auditlog-button-group
+      [auditLogData]="auditLogObject"
+      [isEdit]="isEdit"
+      (customUpdateRecord)="customUpdateRecord($event)"
+      (customgoBack)="goBack()"
+      [isTransactionActionDone]="isTransactionActionDone"
+    >
+    </app-new-auditlog-button-group
+    ><br />
+  </div>
+
+  <app-upload-bulk-upload
+    *ngIf="bulkId === 'addNew'"
+    (customSaveBulkUpload)="customSaveBulkUpload($event)"
+  >
+  </app-upload-bulk-upload>
+</div>

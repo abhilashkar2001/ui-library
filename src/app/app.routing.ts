@@ -1,6 +1,9 @@
 import { Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthGuard } from "./shared/guards/auth.guard";
+import { UserLayoutComponent } from "./layouts/user-layout/user-layout.component";
+import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
+import { NetBankUserGaurd } from "./shared/guards/netBankUserAuth.gaurd";
 
 export const rootRouterConfig: Routes = [
   {
@@ -21,6 +24,34 @@ export const rootRouterConfig: Routes = [
         "./modules/origination-external-callback/origination-external-callback.module"
       ).then((m) => m.OriginationExternalCallbackModule),
     data: { preload: false, title: "Home", breadcrumb: "Home" },
+  },
+
+  {
+    path: "",
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: "sessions",
+        loadChildren: () =>
+          import("./modules/sessions/sessions.module").then(
+            (m) => m.SessionsModule
+          ),
+      },
+    ],
+  },
+  {
+    path: "user",
+    component: UserLayoutComponent,
+    // canActivate: [NetBankUserGaurd],
+    children: [
+      {
+        path: "dashboard",
+        loadChildren: () =>
+          import("./modules/net-banking/net-banking.module").then(
+            (m) => m.NetBankingModule
+          ),
+      },
+    ],
   },
   {
     path: "",
@@ -54,6 +85,18 @@ export const rootRouterConfig: Routes = [
         loadChildren: () =>
           import("./modules/loans/loans.module").then((m) => m.LoansModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
+      },
+      {
+        path: "net-banking",
+        loadChildren: () =>
+          import("./modules/net-banking/net-banking.module").then(
+            (m) => m.NetBankingModule
+          ),
+        data: {
+          preload: false,
+          title: "Net Banking",
+          breadcrumb: "net-banking",
+        },
       },
     ],
   },
