@@ -25,6 +25,7 @@ import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/b
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
+import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -43,6 +44,7 @@ import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-
     TransactionInfoComponent,
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
+    AttachmentsComponent,
   ],
   imports: [
     CommonModule,
