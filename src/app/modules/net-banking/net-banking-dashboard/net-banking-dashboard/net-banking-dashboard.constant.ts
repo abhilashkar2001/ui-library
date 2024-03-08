@@ -128,6 +128,11 @@ export class NETBANKING {
       link: "/fund-transfer",
     },
     {
+      label: "Trade on Net",
+      icon: "/assets/images/trade_icon.svg",
+      link: "/user/dashboard/trade/dashboard",
+    },
+    {
       label: "Deposit",
       icon: "/assets/images/net-banking-nav-bar/Deposit_Icon.svg",
       link: "/deposit",

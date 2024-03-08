@@ -67,12 +67,5 @@ export class BgInfoComponent implements OnInit {
         state: ["", Validators.required],
       }),
     });
-
-    this.benificiaryDetailsForm = this.bgIssuanceForm.get(
-      "bgIssuanceBgInfo"
-    ) as FormGroup;
-    this.bgIssuanceBgInfoForm = this.bgIssuanceForm.get(
-      "benificiaryDetails"
-    ) as FormGroup;
   }
 }

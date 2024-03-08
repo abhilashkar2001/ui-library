@@ -48,7 +48,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "benificiary",
+        redirectTo: "dashboard",
         pathMatch: "full",
       },
       {

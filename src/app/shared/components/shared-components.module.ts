@@ -71,7 +71,7 @@ import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-po
 import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
 
 import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
-
+import { SubNavBarComponent } from "./sub-nav-bar/sub-nav-bar.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -121,6 +121,7 @@ const components = [
   AuditLogPopupComponent,
   NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
+  SubNavBarComponent,
 ];
 
 @NgModule({
