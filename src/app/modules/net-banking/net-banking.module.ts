@@ -19,13 +19,20 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
-import { OthersInfoComponent } from './new-reusable-components/others-info/others-info.component';
+import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
+import { ReusableFooterComponent } from "./new-reusable-components/reusable-footer/reusable-footer.component";
+import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
+import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
+import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/benificiary-details/benificiary-details.component";
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
 import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
+import { LayoutsModule } from "app/layouts/layouts.module";
+import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
+
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -38,6 +45,10 @@ import { AttachmentsComponent } from './new-reusable-components/attachments/atta
     BeneficiarySummaryComponent,
     AddEditBenificiaryComponent,
     TradeFlowComponent,
+    TradeDashboardComponent,
+    ReusableFooterComponent,
+    AmendementInfoComponent,
+    BeneficiaryBulkUploadComponent,
     OthersInfoComponent,
     BgInfoComponent,
     BenificiaryDetailsComponent,
@@ -45,6 +56,9 @@ import { AttachmentsComponent } from './new-reusable-components/attachments/atta
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
     AttachmentsComponent,
+    CustomDrawerComponent,
+    TradeDashboardComponent,
+
   ],
   imports: [
     CommonModule,
@@ -57,6 +71,7 @@ import { AttachmentsComponent } from './new-reusable-components/attachments/atta
     SharedModule,
     MatMenuModule,
     MatToolbarModule,
+    LayoutsModule,
   ],
 })
 export class NetBankingModule {}

@@ -4,7 +4,7 @@
       <div class="card">
         <div fxLayoutGap="20px">
           <div fxFlex="53" class="pb-1" fxLayoutAlign="space-between">
-            <div fxFlex="35">
+            <div fxFlex="35" *ngIf="showProductType">
               <mat-form-field
                 appearance="outline"
                 class="full-width fieldinput"
@@ -23,10 +23,30 @@
                 </mat-select>
               </mat-form-field>
             </div>
+
+            <div fxFlex="35" *ngIf="showNewBeneficiary">
+              <mat-form-field
+                appearance="outline"
+                class="full-width fieldinput custom-field"
+              >
+                <mat-label class="custom-mat-label">
+                  {{ "Add Beneficiary" }}
+                </mat-label>
+                <mat-select
+                  name="Add Beneficiary"
+                  formControlName="beneficiary"
+                  placeholder="Add Beneficiary"
+                >
+                  <mat-option value="internal">Internal</mat-option>
+                  <mat-option value="external">External</mat-option>
+                  <mat-option value="mixed">Mixed</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
             <div fxFlex="35">
               <mat-form-field
                 appearance="outline"
-                class="full-width fieldinput"
+                class="full-width fieldinput custom-field"
               >
                 <mat-label class="custom-mat-label">Processing Date</mat-label>
                 <input

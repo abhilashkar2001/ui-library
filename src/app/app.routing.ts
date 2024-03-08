@@ -3,7 +3,6 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { AuthGuard } from "./shared/guards/auth.guard";
 import { UserLayoutComponent } from "./layouts/user-layout/user-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
-import { NetBankUserGaurd } from "./shared/guards/netBankUserAuth.gaurd";
 
 export const rootRouterConfig: Routes = [
   {
@@ -42,7 +41,7 @@ export const rootRouterConfig: Routes = [
   {
     path: "user",
     component: UserLayoutComponent,
-    // canActivate: [NetBankUserGaurd],
+    canActivate: [AuthGuard],
     children: [
       {
         path: "dashboard",

@@ -1,0 +1,62 @@
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer
+    #drawer
+    class="example-sidenav"
+    mode="side"
+    style="min-width: 20%"
+  >
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      style="padding: 0% 5%"
+    >
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node
+        *matTreeNodeDef="let node"
+        matTreeNodePadding
+        [ngClass]="currentItem == node.name && 'active-node'"
+      >
+        <!-- use a disabled button to provide padding for tree leaf -->
+
+        <div [class]="node.roleName" (click)="currentItem = node.name">
+          {{ node.name }}
+        </div>
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-tree-node
+        *matTreeNodeDef="let node; when: hasChild; index: index"
+        matTreeNodePadding
+        fxLayoutAlign="space-between center"
+        style="padding: 0%"
+        [ngClass]="currentItem == node.name && 'active-node'"
+      >
+        <div [class]="node.roleName" (click)="currentItem = node.name">
+          {{ node.name }}
+        </div>
+        <button
+          mat-icon-button
+          matTreeNodeToggle
+          [attr.aria-label]="'Toggle ' + node.name"
+        >
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          </mat-icon>
+        </button>
+      </mat-tree-node>
+    </mat-tree>
+  </mat-drawer>
+
+  <!-- <div class="example-sidenav-content">
+    <!-- <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button> 
+    
+  </div> -->
+  <button mat-flat-button (click)="drawer.toggle()" class="icon-button">
+    <mat-icon svgIcon="sidenav-icon" class="btn_icon"></mat-icon>
+  </button>
+
+  <div style="margin: 0% 3%">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

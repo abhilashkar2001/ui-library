@@ -41,6 +41,7 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() filterByOption;
   @Input() MaintenanceUpdatedData;
   @Input() UpdatedData;
+  @Input() hideFilters: boolean = false;
 
   @Input() InstrumentStatusUpdatedData;
   @Input() createdBy;
@@ -293,7 +294,7 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   openPopUp(element) {
     this.tableservice.setEditingStatus(false);
-    if (element != "bulk") this.customEditForm.emit({ element });
+    this.customEditForm.emit({ element });
   }
   openPopUpInstrument(element) {
     this.customEditForm.emit({ element });

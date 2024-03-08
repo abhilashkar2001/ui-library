@@ -1,1 +1,44 @@
-<p>trade-dashboard works!</p>
+
+<div fxLayout="column">
+  <h2>Transaction Grid</h2>
+  <mat-card fxLayout="column" class="transaction-grid-card">
+    <div fxFlex="100" class="header-container">
+      <div
+        fxFlex="25"
+        *ngFor="let item of tradeHeader"
+        fxLayoutAlign="center center"
+        class="customtable-cell"
+      >
+        {{ item.name }}
+      </div>
+    </div>
+    <ng-container *ngFor="let transaction of transactionGridData">
+      <mat-expansion-panel class="custom-expansion-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-description class="">
+            {{ transaction.transactionName }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let trxn of transaction.childItems" fxLayout="column">
+          <div fxLayout="row">
+            <div
+              fxFlex="25"
+              fxLayoutAlign="center center"
+              class="customtable-cell row-cell"
+              *ngFor="let item of tradeHeader"
+            >
+              {{ trxn[item.value] }}
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-card>
+  <span class="note_text">Note:</span>
+  <span class="note_text">
+    Initiator column contains request to be acted upon by initiators.
+    Authorizers column contain requests to be acted upon by corporate
+    authorizers. Bank column contains requests to be acted upon Bank.</span
+  >
+</div>
+

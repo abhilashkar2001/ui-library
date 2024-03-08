@@ -1,11 +1,10 @@
-<!-- <app-new-reusable-mat-table
+<app-new-reusable-mat-table
   [columns]="columns"
-  [MaintenanceUpdatedData]="staticData"
   [componentName]="'Benificiary Summary'"
-  [maintenanceTitle]="'Pending For Approval'"
+  [maintenanceTitle]="'Beneficiary Maintenance'"
   (customGoBack)="CustomGoBack($event)"
   (customGetDataByPage)="getDataByPage($event)"
-  [UpdatedData]="pendingForApprovalUpdatedData"
-  (customEditForm)="editRecord($event)"
-></app-new-reusable-mat-table> -->
-<p>Benificiary</p>
+  [UpdatedData]="staticData"
+  (customEditForm)="openPopUp($event)"
+  [hideFilters]="true"
+></app-new-reusable-mat-table>
