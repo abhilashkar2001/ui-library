@@ -13,12 +13,15 @@
   }
 }
 
-mat-tree-node[aria-expanded="true"] {
-}
 .parent-node {
   color: #102245;
   font-size: 18px;
   font-weight: 600;
+}
+.align-node {
+  & .parent-node {
+    padding-left: 5%;
+  }
 }
 .child-node {
   color: #014b94;
@@ -31,4 +34,9 @@ mat-tree-node[aria-expanded="true"] {
   .child-node {
     color: #ffffff !important;
   }
+}
+
+.highlight_blue {
+  background: #014588 0% 0% no-repeat padding-box;
+  color: #ffffff !important;
 }

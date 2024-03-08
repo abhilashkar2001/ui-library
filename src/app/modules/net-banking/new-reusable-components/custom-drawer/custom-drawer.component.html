@@ -5,32 +5,39 @@
     mode="side"
     style="min-width: 20%"
   >
-    <mat-tree
-      [dataSource]="dataSource"
-      [treeControl]="treeControl"
-      style="padding: 0% 5%"
-    >
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node
         *matTreeNodeDef="let node"
         matTreeNodePadding
-        [ngClass]="currentItem == node.name && 'active-node'"
+        class="custom-tree-node"
+        [ngClass]="[
+          currentMenu == node.name ? 'active-node highlight_blue' : '',
+          node.roleName == 'parent-node' ? 'align-node' : ''
+        ]"
       >
         <!-- use a disabled button to provide padding for tree leaf -->
 
-        <div [class]="node.roleName" (click)="currentItem = node.name">
+        <div [class]="node.roleName" (click)="getNode(node)">
           {{ node.name }}
         </div>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node
-        *matTreeNodeDef="let node; when: hasChild; index: index"
+        *matTreeNodeDef="let node; when: hasChild"
         matTreeNodePadding
         fxLayoutAlign="space-between center"
         style="padding: 0%"
-        [ngClass]="currentItem == node.name && 'active-node'"
+        [ngClass]="[
+          currentMenu == node.name &&
+          node.roleName != 'parent-node' &&
+          node.roleName != 'child-node'
+            ? 'active-node'
+            : '',
+          node.roleName == 'parent-node' ? 'align-node' : ''
+        ]"
       >
-        <div [class]="node.roleName" (click)="currentItem = node.name">
+        <div [class]="node.roleName" (click)="currentMenu = node.name">
           {{ node.name }}
         </div>
         <button
@@ -46,12 +53,6 @@
     </mat-tree>
   </mat-drawer>
 
-  <!-- <div class="example-sidenav-content">
-    <!-- <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button> 
-    
-  </div> -->
   <button mat-flat-button (click)="drawer.toggle()" class="icon-button">
     <mat-icon svgIcon="sidenav-icon" class="btn_icon"></mat-icon>
   </button>

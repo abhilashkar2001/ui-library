@@ -2,8 +2,9 @@
   <div fxFlex="100" fxLayoutAlign="space-between center">
     <button
       mat-button
+      routerLinkActive="open"
       *ngFor="let item of navigationItems"
-      [routerLink]="item.link"
+      (click)="navigateByUrl(item)"
     >
       <img [src]="item.icon" />
     </button>
