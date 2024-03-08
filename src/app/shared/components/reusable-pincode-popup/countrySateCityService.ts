@@ -215,7 +215,7 @@ export class countryStateService {
   }
 
   fetchAuthCountry() {
-    return this.httpClient.get(
+    return this.httpClient.get<any>(
       `${this.basePath}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }

@@ -86,6 +86,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
 
   signOut() {
     this.tokenStorageService.signOut();
+    this.router.navigate(["sessions/signin"]);
   }
 
   ngOnDestroy() {}

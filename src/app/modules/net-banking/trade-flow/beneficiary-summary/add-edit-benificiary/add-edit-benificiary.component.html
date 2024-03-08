@@ -1,1 +1,125 @@
-<p>add-edit-benificiary works!</p>
+<div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    class="w-full"
+    fxLayoutGap="10px"
+  >
+    <button mat-icon-button>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <label class="text-large">{{ "Benificiary Maintenance" }}</label>
+  </div>
+</div>
+
+<mat-card>
+  <!-- <ng-container [formGroup]="benificiaryDetailsForm"> -->
+  <form [formGroup]="benificiaryDetailsForm">
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Account Number</mat-label>
+        <input matInput type="text" formControlName="accountNumber" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Confirm Account Number</mat-label>
+        <input matInput type="text" formControlName="confirmAccountNumber" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Nickname</mat-label>
+        <input matInput type="text" formControlName="nickName" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="2%">
+      <div fxFlex="22">
+        <div
+          fxLayout="column"
+          class="middleAlign"
+          fxLayoutAlign="space-between start"
+        >
+          <h4 class="mb-1 toggleText">{{ "Account" }}</h4>
+          <mat-radio-group
+            aria-label="Select an option"
+            formControlName="account"
+          >
+            <mat-radio-button
+              [value]="true"
+              [checked]="true"
+              class="radioChecked radiobtn"
+            >
+              Internal
+            </mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button [value]="false" class="radioChecked radiobtn"
+              >External</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+        *ngIf="benificiaryDetailsForm.get('account').value === false"
+      >
+        <mat-label>Bank Code</mat-label>
+        <input matInput type="text" formControlName="bankCode" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Country</mat-label>
+        <!-- <input matInput type="text" formControlName="bankCode" /> -->
+        <mat-select formControlName="country">
+          <mat-option> kjhg </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="22"
+      >
+        <mat-label>Visibilty</mat-label>
+        <!-- <input matInput type="text" /> -->
+        <mat-select formControlName="visibility">
+          <mat-option value="Private"> Private </mat-option>
+          <mat-option value="Public"> Public </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- </ng-container> -->
+  </form>
+</mat-card>
+
+<div fxLayout="row wrap" fxLayout.lt-sm="column">
+  <div fxFlex="100" fxLayoutAlign="end center">
+    <button-loading> {{ "Save" }}</button-loading
+    >&nbsp;&nbsp;
+    <div>
+      <button class="exitButton" type="button" mat-raised-button>
+        {{ "Cancel" }}
+      </button>
+    </div>
+  </div>
+</div>

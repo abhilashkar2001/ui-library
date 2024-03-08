@@ -30,17 +30,15 @@ export class SigninComponent implements OnInit {
   };
   authType: string = "signIn";
   otp: any;
-  profileRes: any;
   currentUser: any;
-  netBankUser: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private login: LoginService,
+    private loginService: LoginService,
     private commonService: CommonService,
     private snack: MatSnackBar,
-    private sessionService: SessionService,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    private sessionService: SessionService
   ) {}
 
   ngOnInit(): void {
@@ -59,10 +57,9 @@ export class SigninComponent implements OnInit {
 
   submit() {
     let payload = this.signinForm.value;
-    this.login.getProfile(payload).subscribe((res: any) => {
+    this.loginService.corporateLogin(payload).subscribe((res: any) => {
       if (res?.status == 200) {
         this.authType = "otp";
-        this.getProfile();
       }
     });
   }
@@ -73,15 +70,16 @@ export class SigninComponent implements OnInit {
   goBack() {
     this.authType = "signIn";
   }
+
   onVerify() {
     let payload = {
-      email: this.currentUser.email,
+      username: this.signinForm.value.username,
       otp: this.otp,
     };
     this.commonService.verifyOTP(payload).subscribe((res: any) => {
       if (res.data !== "Invalid OTP") {
-        this.tokenService.saveNetBankingUser(this.netBankUser);
-        this.router.navigate(["/user/dashboard/home"]);
+        this.tokenService.saveToken(res?.accessToken);
+        this.getProfile();
       } else {
         this.snack.open(res.message, "OK", {
           duration: 4000,
@@ -91,11 +89,14 @@ export class SigninComponent implements OnInit {
       }
     });
   }
+
   getProfile() {
     this.sessionService.getProfileInfo().subscribe(
       (res) => {
-        this.profileRes = res;
-        this.netBankUser = res;
+        if (res) {
+          this.tokenService.saveUser(res);
+          this.router.navigate(["/user/dashboard/home"]);
+        }
       },
       (err) => {}
     );
