@@ -21,7 +21,7 @@ import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/ad
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
 import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
 import { ReusableFooterComponent } from "./new-reusable-components/reusable-footer/reusable-footer.component";
-import { AmendementInfoComponent } from './new-reusable-components/amendement-info/amendement-info.component';
+import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
 import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
@@ -31,7 +31,6 @@ import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-ame
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
-import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
