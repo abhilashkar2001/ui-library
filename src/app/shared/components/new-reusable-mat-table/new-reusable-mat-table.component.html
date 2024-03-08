@@ -31,7 +31,7 @@
     <ng-container>
       <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
         <mat-icon class="text-white text-xl">add</mat-icon>
-        {{ "Upload" | translate }}
+        {{ "Upload" }}
       </button>
     </ng-container>
   </div>
@@ -43,15 +43,15 @@
   >
     <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
-      {{ "Add New" | translate }}
+      {{ "Add New" }}
     </button>
 
     <div class="dropdown-content">
       <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
-        {{ "Create" | translate }}
+        {{ "Create" }}
       </span>
       <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
-        {{ "Bulk Upload" | translate }}
+        {{ "Bulk Upload" }}
       </span>
     </div>
   </div>
