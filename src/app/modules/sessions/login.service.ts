@@ -10,7 +10,7 @@ const MICROSERVICE_URL = environment.microServiceURL;
 export class LoginService {
   constructor(private http: HttpClient) {}
 
-  getProfile(payload) {
+  corporateLogin(payload) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/loginApi/coprLogin`,
       payload

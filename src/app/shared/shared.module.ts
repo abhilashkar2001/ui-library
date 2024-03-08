@@ -15,7 +15,6 @@ import { SharedDirectivesModule } from "./directives/shared-directives.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgOtpInputModule } from "ng-otp-input";
-import { NetBankUserGaurd } from "./guards/netBankUserAuth.gaurd";
 
 @NgModule({
   imports: [
@@ -34,7 +33,6 @@ import { NetBankUserGaurd } from "./guards/netBankUserAuth.gaurd";
     AppLoaderService,
     ReactiveFormsModule,
     NgbModule,
-    NetBankUserGaurd,
   ],
   exports: [SharedComponentsModule, SharedPipesModule, SharedDirectivesModule],
 })
