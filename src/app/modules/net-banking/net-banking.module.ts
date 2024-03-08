@@ -19,6 +19,9 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
+import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
+import { ReusableFooterComponent } from "./new-reusable-components/reusable-footer/reusable-footer.component";
+import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
 import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
@@ -27,6 +30,11 @@ import { TransactionInfoComponent } from "./new-reusable-components/bg-info/tran
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
 import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component';
+import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
+import { LayoutsModule } from "app/layouts/layouts.module";
+import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
+
+
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -39,6 +47,9 @@ import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component
     BeneficiarySummaryComponent,
     AddEditBenificiaryComponent,
     TradeFlowComponent,
+    TradeDashboardComponent,
+    ReusableFooterComponent,
+    AmendementInfoComponent,
     BeneficiaryBulkUploadComponent,
     OthersInfoComponent,
     BgInfoComponent,
@@ -47,6 +58,10 @@ import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
     BgSummaryComponent,
+    AttachmentsComponent,
+    CustomDrawerComponent,
+    TradeDashboardComponent,
+
   ],
   imports: [
     CommonModule,
@@ -59,6 +74,7 @@ import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component
     SharedModule,
     MatMenuModule,
     MatToolbarModule,
+    LayoutsModule,
   ],
 })
 export class NetBankingModule {}

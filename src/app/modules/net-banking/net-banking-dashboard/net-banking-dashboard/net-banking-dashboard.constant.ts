@@ -119,33 +119,38 @@ export class NETBANKING {
   static readonly navigationItems = [
     {
       label: "Home",
-      icon: "/assets/images/net-banking-nav-bar/Home_Icon.svg",
-      link: "/home",
+      icon: "/assets/images/home_icon.svg",
+      link: "/user/dashboard/home",
     },
     {
       label: "Fund Transfer",
       icon: "/assets/images/net-banking-nav-bar/Fund-Transfer_Icon.svg",
-      link: "/fund-transfer",
+      link: "",
+    },
+    {
+      label: "Trade on Net",
+      icon: "/assets/images/trade_icon.svg",
+      link: "/user/dashboard/trade/dashboard",
     },
     {
       label: "Deposit",
       icon: "/assets/images/net-banking-nav-bar/Deposit_Icon.svg",
-      link: "/deposit",
+      link: "",
     },
     {
       label: "Cards",
       icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg",
-      link: "/cards",
+      link: "",
     },
     {
       label: "Loan",
       icon: "/assets/images/net-banking-nav-bar/Loan_Icon.svg",
-      link: "/loan",
+      link: "",
     },
     {
       label: "Summary",
       icon: "/assets/images/net-banking-nav-bar/Summary_Icon.svg",
-      link: "/summary",
+      link: "",
     },
   ];
 

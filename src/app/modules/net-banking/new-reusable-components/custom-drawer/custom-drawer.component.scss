@@ -1,0 +1,42 @@
+.drawer-container {
+  left: -3.1%;
+}
+
+.icon-button {
+  padding: 0px;
+  width: fit-content;
+  background-color: unset !important;
+  left: -14px;
+  .btn_icon {
+    width: 42px;
+    height: 30px;
+  }
+}
+
+.parent-node {
+  color: #102245;
+  font-size: 18px;
+  font-weight: 600;
+}
+.align-node {
+  & .parent-node {
+    padding-left: 5%;
+  }
+}
+.child-node {
+  color: #014b94;
+  font-size: 13px;
+  font-weight: 600;
+}
+.active-node {
+  background: #014588 0% 0% no-repeat padding-box;
+  & .parent-node,
+  .child-node {
+    color: #ffffff !important;
+  }
+}
+
+.highlight_blue {
+  background: #014588 0% 0% no-repeat padding-box;
+  color: #ffffff !important;
+}

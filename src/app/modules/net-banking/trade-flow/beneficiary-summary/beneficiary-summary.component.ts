@@ -32,6 +32,7 @@ export class BeneficiarySummaryComponent implements OnInit {
     statusCode: 200,
     status: "OK",
   };
+
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,

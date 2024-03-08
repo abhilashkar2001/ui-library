@@ -69,9 +69,14 @@ import { AduitLogDetailsComponent } from "./audit-log/aduit-log-details/aduit-lo
 import { AuditLogTableComponent } from "./audit-log/audit-log-table/audit-log-table.component";
 import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-popup.component";
 import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
-
 import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
 import { AddNewPopupComponent } from "./add-new-popup/add-new-popup.component";
+import { SubNavBarComponent } from "./sub-nav-bar/sub-nav-bar.component";
+import { InputDatePickerComponent } from "./input-date-picker/input-date-picker.component";
+import { CustomDateAdapter } from "../services/date-time/customDateAdapter";
+import { DateAdapter } from "@angular/material/core";
+import { InputMaskModule } from "../directives/input-mask/input-mask.module";
+
 
 
 // Pass the fusioncharts library and chart modules
@@ -122,7 +127,10 @@ const components = [
   AuditLogPopupComponent,
   NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
-  AddNewPopupComponent
+  AddNewPopupComponent,
+  SubNavBarComponent,
+  InputDatePickerComponent,
+
 ];
 
 @NgModule({
@@ -142,8 +150,13 @@ const components = [
     NgOtpInputModule,
     SwiperModule,
     MatIconModule,
+    InputMaskModule
   ],
   declarations: components,
   exports: components,
+  providers:[
+    CustomDateAdapter,
+    {provide:DateAdapter , useClass:CustomDateAdapter }
+  ]
 })
 export class SharedComponentsModule { }

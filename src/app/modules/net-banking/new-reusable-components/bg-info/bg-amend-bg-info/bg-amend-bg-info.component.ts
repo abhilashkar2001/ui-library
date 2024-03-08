@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
+import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
 
 @Component({
   selector: "app-bg-amend-bg-info",
@@ -8,8 +11,38 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class BgAmendBgInfoComponent implements OnInit {
   @Input() bgAmendBgInfoForm: FormGroup;
+  countries: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private countryService: countryStateService,
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllCountry();
+  }
+
+  getAllCountry() {
+    this.countryService.getAllCountry().subscribe((resp) => {
+      this.countries = resp?.data;
+    });
+  }
+
+  populatePincodeData() {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: "60%",
+      disableClose: true,
+      panelClass: "dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        console.log(res, "res");
+        this.bgAmendBgInfoForm.get("country").setValue(res.countryName);
+        this.bgAmendBgInfoForm.get("state").setValue(res.stateName);
+        this.bgAmendBgInfoForm.get("city").setValue(res.cityName);
+        this.bgAmendBgInfoForm.get("pincode").setValue(res.cityName);
+      }
+    });
+  }
 }

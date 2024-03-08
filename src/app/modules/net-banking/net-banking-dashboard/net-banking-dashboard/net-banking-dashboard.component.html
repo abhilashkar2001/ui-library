@@ -1,15 +1,5 @@
 <div class="parent-div" fxLayout="column">
-  <mat-toolbar class="nav-bar">
-    <div fxFlex="100" fxLayoutAlign="space-between center">
-      <button
-        mat-button
-        *ngFor="let item of navigationItems"
-        [routerLink]="item.link"
-      >
-        <img [src]="item.icon" />
-      </button>
-    </div>
-  </mat-toolbar>
+  <app-sub-nav-bar></app-sub-nav-bar>
 
   <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
     <div class="overView">Account Overview</div>
@@ -174,7 +164,9 @@
                       <td
                         style="position: relative; right: 6.5%; cursor: pointer"
                       >
-                        <mat-icon  (click)="viewPendingRecord(auditLogDataObject)">
+                        <mat-icon
+                          (click)="viewPendingRecord(auditLogDataObject)"
+                        >
                           chevron_right
                         </mat-icon>
                       </td>

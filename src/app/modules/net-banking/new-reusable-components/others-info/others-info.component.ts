@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { countryStateService } from 'app/shared/components/reusable-pincode-popup/countrySateCityService';
+import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 
 @Component({
   selector: 'app-others-info',
@@ -9,12 +12,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class OthersInfoComponent implements OnInit {
   @Input("bgType") bgType: any = "BG Amendment";// 'BG Issuance' - Dynamically both names it should be work
   otherInfoForm: FormGroup;
+  countries: any;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private countryService: countryStateService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.buildOtherInfoForm({})
+    this.getAllCountry();
+    this.buildOtherInfoForm({});
   }
 
   buildOtherInfoForm(item) {
@@ -23,12 +30,17 @@ export class OthersInfoComponent implements OnInit {
       swiftCode: [item.swiftCode ? item.swiftCode : ""],
       bankName: [item.bankName ? item.bankName : ""],
       branchName: [item.branchName ? item.branchName : ""],
-      address1: [item.address1 ? item.address1 : "", Validators.required],
-      address2: [item.address2 ? item.address2 : ""],
-      country: [item.country ? item.country : "", Validators.required],
-      pinCode: [item.pinCode ? item.pinCode : "", Validators.required],
-      state: [item.state ? item.state : "", Validators.required],
-      city: [item.city ? item.city : "", Validators.required],
+      address: this.fb.array([
+        this.fb.group({
+          address1: [item.contact?.address[0]?.address1 ? item.contact?.address[0]?.address1 : "", Validators.required],
+          address2: [item.contact?.address[0]?.address2 ? item.contact?.address[0]?.address2 : ""],
+          countryName: [item.contact?.address[0]?.countryName ? item.contact?.address[0]?.countryName : "", Validators.required],
+          pincode: [item.contact?.address[0]?.pincode ? item.contact?.address[0]?.pincode : "", Validators.required],
+          stateName: [item.contact?.address[0]?.stateName ? item.contact?.address[0]?.stateName : "", Validators.required],
+          cityName: [item.contact?.address[0]?.cityName ? item.contact?.address[0]?.cityName : "", Validators.required],
+          cityId: [item?.contact?.address[0]?.cityId ?? "", [Validators.required],],
+        })
+      ]),
       textualDesc: [item.textualDesc ? item.textualDesc : ""],
       instructDemoBank: [item.instructDemoBank ? item.instructDemoBank : ""],
       instructDelivery: [item.instructDelivery ? item.instructDelivery : ""],
@@ -38,6 +50,28 @@ export class OthersInfoComponent implements OnInit {
       margin: [item.margin ? item.margin : ""],
       feeAccount: [item.feeAccount ? item.feeAccount : ""],
     });
+  }
 
+  get addressControl(): FormArray {
+    return this.otherInfoForm.get("address") as FormArray;
+  }
+
+  getAllCountry() {
+    this.countryService.getAllCountry().subscribe(resp => {
+      this.countries = resp?.data;
+    })
+  }
+
+  populatePincodeData(i) {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: "60%",
+      disableClose: true,
+      panelClass: "dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.addressControl.at(i).patchValue(res);
+      }
+    });
   }
 }
