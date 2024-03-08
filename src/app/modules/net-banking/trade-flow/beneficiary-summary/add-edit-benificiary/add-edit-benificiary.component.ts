@@ -24,6 +24,7 @@ export class AddEditBenificiaryComponent implements OnInit {
       country: ["", Validators.required],
       visibility: ["", Validators.required],
       account: [""],
+      beneficiaryStatus: [""],
     });
   }
 }

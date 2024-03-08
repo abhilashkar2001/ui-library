@@ -32,6 +32,9 @@ export class NewReusableFilterComponent implements OnInit {
   @Input() stateModuleFilter;
   @Input() bulkUploadFileName;
   @Input() componentName: string = "";
+  @Input() showOnlySearchTitle: string;
+  @Input() requiredSpecialFields;
+
   @Output() customDataByPage = new EventEmitter<{
     filterValue;
   }>();
@@ -109,6 +112,10 @@ export class NewReusableFilterComponent implements OnInit {
       status: "",
       fromDate: "",
       toDate: "",
+      Auditstatus: "",
+      savedData: "",
+      requestAssignedTo: "",
+      transactionStatus: "",
     });
     this.filterFormControl.valueChanges
       .pipe(debounceTime(500))

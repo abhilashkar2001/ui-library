@@ -5,3 +5,14 @@
 .save-btn {
   height: 40px;
 }
+
+.radiobtn {
+  color: #707070;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+
+  &.mat-radio-checked {
+    color: #004c97;
+  }
+}
