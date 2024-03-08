@@ -1,0 +1,285 @@
+.attachments-main {
+  .top-div {
+    height: 90vh;
+  }
+
+  mat-card {
+    background-color: #fffefe !important;
+    border-radius: 12px !important;
+    box-shadow: 0px 3px 15px #00000017;
+    padding: 10px 10px 10px 30px !important;
+  }
+
+  .title-head {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 16px;
+    color: #00000f;
+    opacity: 100;
+    margin: 10px;
+  }
+  mat-label.label_input {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 13px;
+    color: #102245 !important;
+    opacity: 50%;
+    letter-spacing: -0.26px;
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #004a9a !important;
+  }
+
+  .fileddown {
+    width: 440px;
+    position: relative;
+    left: 18px;
+    top: 16px;
+  }
+
+  .categoryDiv {
+    margin-top: 20px;
+  }
+  .addbtndiv {
+    z-index: 0;
+    background-color: #e9ecf5;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    height: 52px;
+    margin-top: 5px;
+  }
+  .selection_left {
+    overflow: visible;
+    position: relative;
+    right: -4px;
+    z-index: 5 !important;
+  }
+  .charge_cat_div {
+    left: 4px;
+  }
+
+  .addbtn {
+    padding-left: 5px;
+    font-size: xxx-large;
+    color: #004c97;
+    cursor: pointer;
+    z-index: 0;
+    height: 100%;
+  }
+  .back {
+    background-color: #ffffff;
+    height: 50px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 15px #00000017;
+    position: relative;
+    margin-top: 4px;
+  }
+  .chooseFile {
+    padding: 10px 10px;
+    font-family: Poppins;
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    position: absolute;
+    color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    top: 3px;
+    right: 4px;
+    width: 137px;
+    line-height: 1.7;
+  }
+  .hide_file {
+    position: absolute;
+    z-index: 1000;
+    opacity: 0;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    height: 100%;
+    font-size: 24px;
+    width: 100%;
+    color: #004a9a !important;
+  }
+
+  .textLink {
+    color: #004a9a;
+    text-decoration: underline;
+    font-family: manrope;
+    cursor: pointer;
+  }
+  .btn-div {
+    padding: 20px;
+  }
+  .Nextbtn {
+    padding: 2px;
+    color: white;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+  }
+  .Backbtn {
+    padding: 2px;
+    background-color: white !important;
+  }
+
+  // Apply border radius for mat-form-field
+  .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 8px 0 0 8px;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 8px 8px 0;
+  }
+  .mat-form-field {
+    line-height: 1.225;
+    letter-spacing: 0px;
+    border: 3px !important;
+  }
+  .custCategory mat-label {
+    font: medium poppins;
+    color: #102245;
+    opacity: 50%;
+    padding-left: 10px;
+  }
+
+  // status bar for image upload
+
+  mat-progress-bar {
+    border-radius: 8px;
+    height: 11px;
+  }
+  ::ng-deep .egret-blue .mat-progress-bar-buffer {
+    background-color: #e8e8e8;
+    border-radius: 8px;
+  }
+  ::ng-deep .egret-blue .mat-progress-bar-fill::after {
+    background: linear-gradient(90deg, #051a2d, #004c97);
+    border-radius: 28px !important;
+  }
+  .image_status_bar {
+    padding: 10px 20px 10px 20px;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    opacity: 100%;
+  }
+
+  .fileName {
+    font: medium Poppins;
+    opacity: 70%;
+  }
+  :host ::ng-deep .mat-select {
+    font: medium Poppins !important;
+    opacity: 50% !important;
+  }
+  .crossIcon {
+    color: #051a2d;
+    size: 2px;
+  }
+  .hiding {
+    visibility: hidden;
+  }
+  :host ::ng-deep mat-label {
+    margin-right: 0%;
+  }
+
+  .option_font {
+    color: #000000;
+    opacity: 100%;
+    font: "medium", "Poppins";
+  }
+  .egret-navy .mat-select-value {
+    font-weight: bold;
+    color: #000000;
+    opacity: 100%;
+  }
+
+  .addbtndiv mat-icon {
+    margin-top: 5px !important;
+    width: 31px !important;
+  }
+  .mat_selection mat-select-arrow {
+    margin: 4px 4px 0px 4px !important;
+  }
+  .Select_add {
+    position: relative;
+  }
+
+  .uploaded_file {
+    font-size: medium;
+    font-family: "Poppins";
+    color: #004a9a;
+    opacity: 100%;
+    flex: none !important;
+    display: flex;
+    font-weight: 600;
+  }
+
+  .scroll_name {
+    width: 420px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fil {
+    position: absolute;
+    top: 28%;
+    left: 15px;
+    // max-width: 57%;
+  }
+  .fill webkit-scrollbar-button {
+    height: 100px; /* vertical scrollbar height */
+  }
+  .wrapper::-webkit-scrollbar {
+    height: 220px;
+  }
+  .label_input {
+    font-family: "Poppins";
+    font-weight: normal;
+    font-size: medium;
+    color: #102245 !important;
+    opacity: 70%;
+  }
+  .egret-navy .mat-form-field-label {
+    color: #102245 !important;
+    opacity: 50% !important;
+    top: 26px;
+  }
+  .borderColor {
+    overflow: visible;
+    z-index: 1;
+  }
+  .fileUploaded {
+    font: medium Poppins;
+    font-weight: bold;
+    color: #0b0b0b;
+    opacity: 70%;
+    font-size: 14px;
+  }
+
+  .mat-select-value-text {
+    font: medium poppins;
+    color: #000000;
+    opacity: 100%;
+    font-weight: bolder;
+    padding-left: 13px;
+  }
+  // To move the outline starting point
+  mat-form-field-outline-start {
+    width: 21.5px;
+  }
+  // To move wraper text to right
+  .mat-form-field-label-wrapper {
+    left: 13px;
+  }
+}
+.mat-option-text {
+  color: #00346c;
+  font-family: Poppins;
+  font-weight: 600;
+}
+.egret-navy .mat-select-panel {
+  background: white;
+  margin-top: 13px;
+}
