@@ -9,6 +9,8 @@ import { PendingForApprovalComponent } from "./pending-for-approval/pending-for-
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
 import { BeneficiarySummaryComponent } from "./trade-flow/beneficiary-summary/beneficiary-summary.component";
 import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
+import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
+import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 
 const routes: Routes = [
   {
@@ -48,12 +50,25 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "benificiary",
+        redirectTo: "dashboard",
         pathMatch: "full",
       },
       {
         path: "dashboard",
         component: TradeDashboardComponent,
+      },
+
+      {
+        path: "beneficiary",
+        component: BeneficiarySummaryComponent,
+      },
+      {
+        path: "add-edit-beneficiary",
+        component: AddEditBenificiaryComponent,
+      },
+      {
+        path: "beneficiary-bulkUpload",
+        component: BeneficiaryBulkUploadComponent,
       },
     ],
   },
