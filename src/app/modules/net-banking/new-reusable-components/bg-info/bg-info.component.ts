@@ -42,8 +42,13 @@ export class BgInfoComponent implements OnInit {
         country: ["", Validators.required],
         state: ["", Validators.required],
         city: ["", Validators.required],
-        pinCode: ["", Validators.required],
-        email: [""],
+        pincode: ["", Validators.required],
+        email: [
+          "",
+          Validators.pattern(
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+          ),
+        ],
         notifyBenificary: [true],
         purpose: [""],
       }),
@@ -62,7 +67,7 @@ export class BgInfoComponent implements OnInit {
         address1: ["", Validators.required],
         address2: [""],
         city: ["", Validators.required],
-        pinCode: ["", Validators.required],
+        pincode: ["", Validators.required],
         country: ["", Validators.required],
         state: ["", Validators.required],
       }),

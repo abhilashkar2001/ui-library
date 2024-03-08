@@ -1,5 +1,5 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import {
   MatTreeFlatDataSource,
@@ -7,6 +7,8 @@ import {
   MatTreeModule,
 } from "@angular/material/tree";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Router } from "@angular/router";
+import { DrawerConstant } from "./custom-drawer.constant";
 
 @Component({
   selector: "app-custom-drawer",
@@ -14,44 +16,14 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./custom-drawer.component.scss"],
 })
 export class CustomDrawerComponent implements OnInit {
-  TREE_DATA: any[] = [
-    {
-      name: "Transaction",
-      path: "",
-      roleName: "parent-node",
-      children: [
-        {
-          name: "BG Issuance",
-          path: "",
-          roleName: "child-node",
-          children: [
-            { name: "BG Issuance", path: "" },
-            { name: "BG Amendment", path: "" },
-            { name: "BG Physical Amedment", path: "" },
-          ],
-        },
-        { name: "LETTER OF CREDIT", path: "", roleName: "child-node" },
-        { name: "REMITTANCE", path: "", roleName: "child-node" },
-        { name: "BILLS PROCESSING", path: "", roleName: "child-node" },
-        { name: "EXPORTS PROCESSING", path: "", roleName: "child-node" },
-        { name: "BUYERS CREDIT", path: "", roleName: "child-node" },
-        { name: "EXPORT BILL DISPATCH", path: "", roleName: "child-node" },
-        { name: "EXPORT S/W BILL LODGEMENT", path: "", roleName: "child-node" },
-        { name: "EEFC", path: "", roleName: "child-node" },
-      ],
-    },
-    {
-      name: "Beneficiary Maintenance",
-      path: "",
-      roleName: "parent-node",
-    },
-  ];
-
-  currentItem = "";
+  TREE_DATA: any[] = DrawerConstant.DRAWER_MENU;
+  currentMenu = "";
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.dataSource.data = this.TREE_DATA;
     this.matIconRegistry.addSvgIcon(
@@ -90,7 +62,9 @@ export class CustomDrawerComponent implements OnInit {
 
   hasChild = (_: number, node: any) => node.expandable;
 
-  showNode(n) {
-    console.log(n, "..........");
+  getNode(node) {
+    this.currentMenu = node.name;
+    this.cdr.detectChanges();
+    if (node.path) this.router.navigate([`user/dashboard/trade/${node.path}`]);
   }
 }

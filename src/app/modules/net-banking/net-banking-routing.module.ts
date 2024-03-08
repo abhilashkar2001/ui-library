@@ -14,6 +14,7 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
+import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "dashboard",
+        redirectTo: "bgInfo",
         pathMatch: "full",
       },
       {
@@ -76,6 +77,10 @@ const routes: Routes = [
       {
         path: "amendment",
         component: AmendementInfoComponent,
+      },
+      {
+        path: "bgInfo",
+        component: BgInfoComponent,
       },
     ],
   },
