@@ -179,5 +179,12 @@ export class CustomizerService {
       this.addClass(el, className);
     }
   }
-
+  getLogedCountry() {
+    let userInfo = sessionStorage.getItem("userInfo");
+    if (userInfo) {
+      return JSON.parse(userInfo);
+    } else {
+      return null;
+    }
+  }
 }

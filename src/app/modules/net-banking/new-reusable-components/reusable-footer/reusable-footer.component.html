@@ -1,0 +1,43 @@
+<div
+  fxLayout="row wrap"
+  fxLayout.lt-sm="column"
+  fxLayoutAlign="end center"
+  fxLayoutGap="10px"
+>
+<button
+    type="button"
+    mat-raised-button
+    
+    class="saveTempletButton"
+    (click)="saveAsTemplet()"
+  >
+    {{ "Save Template" }}
+  </button>
+<button
+    type="button"
+    mat-raised-button
+    
+    class="saveandSubmit"
+    (click)="updateRecord('SubmitLater')"
+  >
+    {{ "Save and Submit Later" }}
+  </button>
+<button
+    type="button"
+    mat-raised-button
+    
+    class="submit"
+    (click)="updateRecord('Submit')"
+  >
+    {{ "Submit" }}
+  </button>
+<button
+    type="button"
+    mat-raised-button
+    
+    class="resetbtn"
+    (click)="updateRecord('ResetForm')"
+  >
+    {{ "Reset" }}
+  </button>
+</div>
