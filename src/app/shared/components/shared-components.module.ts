@@ -71,6 +71,7 @@ import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-po
 import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
 
 import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
+import { SubNavBarComponent } from "./sub-nav-bar/sub-nav-bar.component";
 import { InputDatePickerComponent } from "./input-date-picker/input-date-picker.component";
 import { CustomDateAdapter } from "../services/date-time/customDateAdapter";
 import { DateAdapter } from "@angular/material/core";
@@ -125,6 +126,7 @@ const components = [
   AuditLogPopupComponent,
   NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
+  SubNavBarComponent,
   InputDatePickerComponent
 ];
 

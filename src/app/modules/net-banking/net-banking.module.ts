@@ -29,6 +29,9 @@ import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/b
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
+import { LayoutsModule } from "app/layouts/layouts.module";
+import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
+import { TradeDashboardComponent } from "./trade-flow/trade-dashboard/trade-dashboard.component";
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -51,6 +54,8 @@ import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-
     TransactionInfoComponent,
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
+    CustomDrawerComponent,
+    TradeDashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +68,7 @@ import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-
     SharedModule,
     MatMenuModule,
     MatToolbarModule,
+    LayoutsModule,
   ],
 })
 export class NetBankingModule {}
