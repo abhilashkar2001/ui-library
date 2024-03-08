@@ -71,6 +71,7 @@ import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-po
 import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
 
 import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
+import { AddNewPopupComponent } from "./add-new-popup/add-new-popup.component";
 
 
 // Pass the fusioncharts library and chart modules
@@ -121,6 +122,7 @@ const components = [
   AuditLogPopupComponent,
   NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
+  AddNewPopupComponent
 ];
 
 @NgModule({
@@ -144,4 +146,4 @@ const components = [
   declarations: components,
   exports: components,
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }

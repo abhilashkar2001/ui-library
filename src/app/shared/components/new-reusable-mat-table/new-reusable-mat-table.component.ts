@@ -182,7 +182,7 @@ export class NewReusableMatTableComponent implements OnInit {
     this.currentUser = this.tokenStorageService.getUser();
 
     this.displayedColumns = this.columns.map((c) => c.columnDef);
-    if (this.componentName != "Bulk Upload")
+    if (this.componentName != "Bulk Upload" && this.componentName != "BG Template")
       this.displayedColumns.push("action");
     if (this.componentName == "Bulk Upload")
       this.displayedColumns.unshift("checkBox");
