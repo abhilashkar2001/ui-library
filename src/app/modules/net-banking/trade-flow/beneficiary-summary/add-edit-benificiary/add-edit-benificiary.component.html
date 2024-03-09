@@ -6,7 +6,7 @@
     fxLayoutGap="10px"
   >
     <button mat-icon-button>
-      <mat-icon>arrow_back</mat-icon>
+      <mat-icon (click)="goBack()">arrow_back</mat-icon>
     </button>
     <label class="text-large">{{ "Benificiary Maintenance" }}</label>
   </div>
@@ -38,7 +38,7 @@
         fxFlex="22"
       >
         <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name" />
+        <input matInput type="text" formControlName="payeeName" />
       </mat-form-field>
       <mat-form-field
         appearance="outline"
@@ -88,17 +88,16 @@
         <mat-label>Bank Code</mat-label>
         <input matInput type="text" formControlName="bankCode" />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="22"
-      >
-        <mat-label>Country</mat-label>
-        <!-- <input matInput type="text" formControlName="bankCode" /> -->
-        <mat-select formControlName="country">
-          <mat-option> kjhg </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div fxFlex="22">
+        <app-searchable-select
+          [items]="countryValue"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryCode"
+          [control]="benificiaryDetailsForm.get('countryName')"
+          customClass="fieldinput"
+        ></app-searchable-select>
+      </div>
       <mat-form-field
         appearance="outline"
         class="fieldinput custom-field"
@@ -152,7 +151,12 @@
   <div fxFlex="100" fxLayoutAlign="end center">
     <button-loading (click)="onSubmit()"> Save</button-loading>&nbsp;&nbsp;
     <div>
-      <button class="exitButton" type="button" mat-raised-button>
+      <button
+        class="exitButton"
+        type="button"
+        (click)="goBack()"
+        mat-raised-button
+      >
         {{ "Cancel" }}
       </button>
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { BeneficiaryService } from "../beneficiary.service";
 
 @Component({
   selector: "app-add-edit-benificiary",
@@ -9,27 +10,52 @@ import { Router } from "@angular/router";
 })
 export class AddEditBenificiaryComponent implements OnInit {
   benificiaryDetailsForm: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router) {}
+  countryValue: any;
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private benificiaryApi: BeneficiaryService
+  ) {}
 
   ngOnInit(): void {
-    this.buildForm();
+    this.getAllCountry();
+    this.buildForm({});
   }
 
-  buildForm() {
+  buildForm(item?) {
     this.benificiaryDetailsForm = this.fb.group({
       accountNumber: ["", Validators.required],
       confirmAccountNumber: ["", Validators.required],
-      name: ["", Validators.required],
+      payeeName: ["", Validators.required],
       nickName: ["", Validators.required],
-      bankCode: ["", Validators.required],
-      country: ["", Validators.required],
+      bankCode: [""],
+      countryName: ["", Validators.required],
       visibility: ["", Validators.required],
-      account: [""],
-      beneficiaryStatus: [""],
+      account: [item?.account ?? true],
+      beneficiaryStatus: [item?.beneficiaryStatus ?? true],
+    });
+  }
+
+  getAllCountry() {
+    this.benificiaryApi.getAllCountry().subscribe((resp) => {
+      this.countryValue = resp?.data;
     });
   }
 
   onSubmit() {
-    this.router.navigate(["/user/dashboard/trade/beneficiary"]);
+    if (this.benificiaryDetailsForm.invalid) {
+      this.benificiaryDetailsForm.markAllAsTouched();
+      return;
+    }
+    let payload: any = {
+      ...this.benificiaryDetailsForm.value,
+    };
+    this.benificiaryApi.saveBeneficiary(payload).subscribe((resp: any) => {
+      console.log("resp-----", resp);
+      this.router.navigate(["/user/dashboard/trade/beneficiary"]);
+    });
+  }
+  goBack() {
+    this.router.navigate([`/user/dashboard/trade/beneficiary`]);
   }
 }
