@@ -20,6 +20,13 @@
         >
           <mat-label>Beneficiary</mat-label>
           <input matInput type="text" formControlName="beneficiary" />
+          <mat-error
+            *ngIf="
+              benificiaryDetailsForm.get('beneficiary').touched &&
+              benificiaryDetailsForm.get('beneficiary').hasError('required')
+            "
+            >Beneficiary is required!</mat-error
+          >
         </mat-form-field>
         <mat-form-field
           appearance="outline"
@@ -39,6 +46,13 @@
         >
           <mat-label>New Address line 1</mat-label>
           <input matInput type="text" formControlName="address1" />
+          <mat-error
+            *ngIf="
+              benificiaryDetailsForm.get('address1').touched &&
+              benificiaryDetailsForm.get('address1').hasError('required')
+            "
+            >New Address line 1 is required!</mat-error
+          >
         </mat-form-field>
         <mat-form-field
           appearance="outline"
@@ -50,24 +64,26 @@
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutGap="2%">
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
+        <app-searchable-select
           fxFlex="23"
-        >
-          <mat-label>Country</mat-label>
-          <mat-select formControlName="country">
-            <mat-option value="India"> India </mat-option>
-          </mat-select>
-        </mat-form-field>
+          [items]="countries"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryName"
+          [control]="benificiaryDetailsForm.get('country')"
+          customClass="custom-field"
+        ></app-searchable-select>
+
         <mat-form-field
           appearance="outline"
           class="fieldinput custom-field"
           fxFlex="23"
         >
           <mat-label>Pin Code</mat-label>
-          <input matInput type="text" formControlName="pinCode" />
-          <mat-icon matSuffix class="searchIcon">search</mat-icon>
+          <input matInput type="text" formControlName="pincode" />
+          <mat-icon matSuffix class="searchIcon" (click)="populatePincodeData()"
+            >search</mat-icon
+          >
         </mat-form-field>
         <mat-form-field
           appearance="outline"
@@ -75,9 +91,14 @@
           fxFlex="23"
         >
           <mat-label>State</mat-label>
-          <mat-select formControlName="state">
-            <mat-option value="Karnataka"> Karnataka </mat-option>
-          </mat-select>
+          <input matInput type="state" formControlName="state" readonly />
+          <mat-error
+            *ngIf="
+              benificiaryDetailsForm.get('state').touched &&
+              benificiaryDetailsForm.get('state').hasError('required')
+            "
+            >State is required!</mat-error
+          >
         </mat-form-field>
         <mat-form-field
           appearance="outline"
@@ -85,9 +106,14 @@
           fxFlex="23"
         >
           <mat-label>City</mat-label>
-          <mat-select formControlName="city">
-            <mat-option value="Banglore"> Banglore </mat-option>
-          </mat-select>
+          <input matInput type="city" formControlName="city" readonly />
+          <mat-error
+            *ngIf="
+              benificiaryDetailsForm.get('city').touched &&
+              benificiaryDetailsForm.get('city').hasError('required')
+            "
+            >City is required!</mat-error
+          >
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayoutGap="2%">
@@ -97,7 +123,19 @@
           fxFlex="23"
         >
           <mat-label>Email Id</mat-label>
-          <input matInput type="text" formControlName="email" />
+          <input
+            matInput
+            type="text"
+            noInitialSpecialCharacters
+            noSpace
+            formControlName="email"
+          />
+
+          <mat-error
+            *ngIf="benificiaryDetailsForm.get('email').hasError('pattern')"
+          >
+            Please enter Valid Email
+          </mat-error>
         </mat-form-field>
         <div fxFlex="23" fxLayoutAlign="start center">
           <mat-slide-toggle formControlName="notifyBenificary">

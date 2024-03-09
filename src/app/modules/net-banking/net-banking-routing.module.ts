@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { NetBankingHomeComponent } from "./net-banking-home.component";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
 import { AddBulkUploadComponent } from "./bulk-upload/add-bulk-upload/add-bulk-upload.component";
-import { UploadBulkUploadComponent } from "./bulk-upload/upload-bulk-upload/upload-bulk-upload.component";
+import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.component";
 import { PendingForApprovalComponent } from "./pending-for-approval/pending-for-approval.component";
 import { TradeFlowComponent } from "./trade-flow/trade-flow.component";
@@ -15,6 +15,9 @@ import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/ad
 import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
 import { GenericBgComponentComponent } from "./new-reusable-components/generic-bg-component/generic-bg-component.component";
+import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
+
 
 const routes: Routes = [
   {
@@ -54,7 +57,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "dashboard",
+        redirectTo: "bgInfo",
         pathMatch: "full",
       },
       {
@@ -71,12 +74,20 @@ const routes: Routes = [
         component: AddEditBenificiaryComponent,
       },
       {
-        path: "beneficiary-bulkUpload",
+        path: "bulk-upload/:id",
         component: BeneficiaryBulkUploadComponent,
+      },
+      {
+        path: "bulk-upload",
+        component: BenificiaryBulkUploadSummaryComponent,
       },
       {
         path: "amendment",
         component: GenericBgComponentComponent,
+      },
+      {
+        path: "bgInfo",
+        component: BgInfoComponent,
       },
     ],
   },

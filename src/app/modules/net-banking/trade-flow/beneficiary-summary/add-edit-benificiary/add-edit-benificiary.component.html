@@ -15,7 +15,7 @@
 <mat-card>
   <!-- <ng-container [formGroup]="benificiaryDetailsForm"> -->
   <form [formGroup]="benificiaryDetailsForm">
-    <div fxLayout="row" fxLayoutGap="2%">
+    <div fxLayout="row wrap" fxLayoutGap="2%">
       <mat-form-field
         appearance="outline"
         class="fieldinput custom-field"
@@ -48,8 +48,6 @@
         <mat-label>Nickname</mat-label>
         <input matInput type="text" formControlName="nickName" />
       </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutGap="2%">
       <div fxFlex="22">
         <div
           fxLayout="column"
@@ -58,18 +56,24 @@
         >
           <h4 class="mb-1 toggleText">{{ "Account" }}</h4>
           <mat-radio-group
+            class="full-width"
+            fxLayout="row"
+            fxLayoutGap="10%"
             aria-label="Select an option"
             formControlName="account"
           >
             <mat-radio-button
+              fxFlex="40"
               [value]="true"
               [checked]="true"
               class="radioChecked radiobtn"
             >
               Internal
             </mat-radio-button>
-            &nbsp;&nbsp;
-            <mat-radio-button [value]="false" class="radioChecked radiobtn"
+            <mat-radio-button
+              fxFlex="40"
+              [value]="false"
+              class="radioChecked radiobtn"
               >External</mat-radio-button
             >
           </mat-radio-group>
@@ -107,6 +111,38 @@
           <mat-option value="Public"> Public </mat-option>
         </mat-select>
       </mat-form-field>
+      <div fxFlex="22">
+        <div
+          fxLayout="column"
+          class="middleAlign"
+          fxLayoutAlign="space-between start"
+        >
+          <h4 class="mb-1 toggleText">{{ "Benificiary Status" }}</h4>
+          <mat-radio-group
+            class="full-width"
+            fxLayout="row"
+            fxLayoutGap="10%"
+            aria-label="Select an option"
+            formControlName="beneficiaryStatus"
+          >
+            <mat-radio-button
+              fxFlex="40"
+              [value]="true"
+              [checked]="true"
+              class="radioChecked radiobtn"
+            >
+              Enable
+            </mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button
+              fxFlex="40"
+              [value]="false"
+              class="radioChecked radiobtn"
+              >Disable</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
     </div>
     <!-- </ng-container> -->
   </form>
@@ -114,8 +150,7 @@
 
 <div fxLayout="row wrap" fxLayout.lt-sm="column">
   <div fxFlex="100" fxLayoutAlign="end center">
-    <button-loading> {{ "Save" }}</button-loading
-    >&nbsp;&nbsp;
+    <button-loading (click)="onSubmit()"> Save</button-loading>&nbsp;&nbsp;
     <div>
       <button class="exitButton" type="button" mat-raised-button>
         {{ "Cancel" }}

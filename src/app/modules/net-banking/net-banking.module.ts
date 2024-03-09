@@ -9,7 +9,7 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
 import { AddBulkUploadComponent } from "./bulk-upload/add-bulk-upload/add-bulk-upload.component";
-import { UploadBulkUploadComponent } from "./bulk-upload/upload-bulk-upload/upload-bulk-upload.component";
+import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.component";
 import { SharedModule } from "app/shared/shared.module";
 import { MatMenuModule } from "@angular/material/menu";
@@ -30,8 +30,13 @@ import { TransactionInfoComponent } from "./new-reusable-components/bg-info/tran
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
 import { GenericBgComponentComponent } from './new-reusable-components/generic-bg-component/generic-bg-component.component';
+import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component';
+import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
+import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
+
+
 @NgModule({
   declarations: [
     NetBankingHomeComponent,
@@ -55,8 +60,11 @@ import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/c
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
     GenericBgComponentComponent,
+    BgSummaryComponent,
+    AttachmentsComponent,
     CustomDrawerComponent,
     TradeDashboardComponent,
+    BenificiaryBulkUploadSummaryComponent,
   ],
   imports: [
     CommonModule,

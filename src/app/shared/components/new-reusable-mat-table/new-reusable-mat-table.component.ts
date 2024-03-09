@@ -42,6 +42,8 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() MaintenanceUpdatedData;
   @Input() UpdatedData;
   @Input() hideFilters: boolean = false;
+  @Input() showOnlySearchTitle;
+  @Input() requiredSpecialFields;
 
   @Input() InstrumentStatusUpdatedData;
   @Input() createdBy;
@@ -164,6 +166,8 @@ export class NewReusableMatTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("requiredSpecialFields", this.requiredSpecialFields);
+
     if (this.holidayTitle.toLowerCase().includes("branch")) {
       this.holidayType.setValue("branch");
     } else if (this.holidayTitle.toLowerCase().includes("currency")) {
@@ -182,7 +186,7 @@ export class NewReusableMatTableComponent implements OnInit {
     this.currentUser = this.tokenStorageService.getUser();
 
     this.displayedColumns = this.columns.map((c) => c.columnDef);
-    if (this.componentName != "Bulk Upload")
+    if (this.componentName != "Bulk Upload" && this.componentName != "BG Template")
       this.displayedColumns.push("action");
     if (this.componentName == "Bulk Upload")
       this.displayedColumns.unshift("checkBox");

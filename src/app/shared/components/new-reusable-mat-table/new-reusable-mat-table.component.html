@@ -25,7 +25,12 @@
     fxLayout.xs="column"
     fxLayoutGap="16px"
     *ngIf="
-      CountryModule === false && maintenanceTitle !== 'Beneficiary Maintenance'
+      CountryModule === false &&
+      maintenanceTitle !== 'Beneficiary Maintenance' &&
+      maintenanceTitle !== 'BG Issuance Maintenance' &&
+      maintenanceTitle !== 'BG Amendment Maintenance' &&
+      maintenanceTitle !== 'BG Physical Maintenance' &&
+      maintenanceTitle !== 'BG Template Maintenance'
     "
   >
     <ng-container>
@@ -39,7 +44,13 @@
   <div
     fxLayout="column"
     class="dropdown position-relative"
-    *ngIf="maintenanceTitle == 'Beneficiary Maintenance'"
+    *ngIf="
+      maintenanceTitle == 'Beneficiary Maintenance' ||
+      maintenanceTitle == 'BG Issuance Maintenance' ||
+      maintenanceTitle == 'BG Amendment Maintenance' ||
+      maintenanceTitle == 'BG Physical Maintenance' ||
+      maintenanceTitle == 'BG Template Maintenance'
+    "
   >
     <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
@@ -70,6 +81,8 @@
       [componentName]="componentName"
       [bulkUploadFileName]="bulkUploadFileName"
       (customDownloadRecord)="downloadRecord($event)"
+      [showOnlySearchTitle]="showOnlySearchTitle"
+      [requiredSpecialFields]="requiredSpecialFields"
     >
     </app-new-reusable-filter>
   </ng-container>

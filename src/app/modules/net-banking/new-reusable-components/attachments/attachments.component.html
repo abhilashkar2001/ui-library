@@ -1,0 +1,106 @@
+<p>attachments works!</p>
+
+<div
+  class="attachments-main"
+  fxLayout="column wrap"
+  fxLayoutAlign="space-between"
+  [formGroup]="attachementInfoForm"
+>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between"
+    fxFlex="100"
+    *ngFor="let title of titleCategory.controls; let i = index"
+    [formGroup]="title"
+  >
+    <div fxFlex="33" fxLayout="row" class="Select_add">
+      <div fxFlex="85" fxLayout="row" class="selection_left">
+        <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
+          <mat-label class="label_input">{{ "Title" }}</mat-label>
+          <mat-select
+            (selectionChange)="titleChange($event)"
+            appearance="outline"
+            formControlName="titleId"
+            class="mat_selection"
+          >
+            <mat-option *ngFor="let title of titles" [value]="title">{{
+              title
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="title.controls['titleId'].hasError('titleError')">
+            {{ "Title is already present" }}</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div fxFlex="15" class="addbtndiv" fxLayoutAlign="center center">
+        <mat-icon
+          fxFlex="100"
+          *ngIf="i == 0; else removeBtn"
+          class="addbtn"
+          (click)="addTitleCategory(i)"
+          >add
+        </mat-icon>
+        <ng-template #removeBtn>
+          <mat-icon fxFlex="100" class="addbtn" (click)="removeTitleCategoty(i)"
+            >remove</mat-icon
+          >
+        </ng-template>
+      </div>
+    </div>
+
+    <div fxFlex="33" fxLayout="row" class="Select_add">
+      <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
+        <mat-label class="label_input">{{ "Title Description" }}</mat-label>
+        <input matInput formControlName="titledesc" />
+      </mat-form-field>
+    </div>
+
+    <div class="back" fxFlex="33">
+      <ng-container>
+        <div fxFlex="row" fxFlex="80">
+          <div fxFlex="72" class="fil">
+            <div
+              class="scroll_name"
+              *ngIf="
+                title.get('fileUplodedArray').controls.length != 0;
+                else showDefault
+              "
+            >
+              <span
+                *ngFor="
+                  let control of title.get('fileUplodedArray')?.controls;
+                  let j = index
+                "
+                fxFlex="100"
+                class="uploaded_file"
+                >{{
+                  control.get("fileName").value
+                    ? control.get("fileName").value.split("_")[1]
+                    : ""
+                }}</span
+              >
+            </div>
+            <ng-template #showDefault>
+              <span class="fileName" class="fileUploaded">{{
+                "File Upload(Max file size 3MB)"
+              }}</span>
+            </ng-template>
+          </div>
+
+          <div fxFlex="20" class="chooseFile">
+            Choose
+            <input
+              #myfile
+              type="file"
+              multiple="multiple"
+              class="hide_file"
+              id="file"
+              (change)="fileName($event, i)"
+              accept="application/pdf,image/*"
+            />
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

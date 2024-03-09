@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubNavBarComponent } from './sub-nav-bar.component';
+import { BgSummaryComponent } from './bg-summary.component';
 
-describe('SubNavBarComponent', () => {
-  let component: SubNavBarComponent;
-  let fixture: ComponentFixture<SubNavBarComponent>;
+describe('BgSummaryComponent', () => {
+  let component: BgSummaryComponent;
+  let fixture: ComponentFixture<BgSummaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubNavBarComponent ]
+      declarations: [ BgSummaryComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SubNavBarComponent);
+    fixture = TestBed.createComponent(BgSummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
