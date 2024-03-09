@@ -14,7 +14,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
   styleUrls: ["./upload-bulk-upload.component.scss"],
 })
 export class UploadBulkUploadComponent implements OnInit {
-  @Input() screenName: string;
+  @Input('screenName') screenName: any = "";
   @Input() showNewBeneficiary: boolean = false;
   @Input() showProductType: boolean = true;
 
@@ -38,7 +38,7 @@ export class UploadBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private commonService: CommonService,
     private tokenStorage: TokenStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -72,7 +72,7 @@ export class UploadBulkUploadComponent implements OnInit {
       processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });
-    this.maintTemplateUpload.valueChanges.subscribe((res) => {});
+    this.maintTemplateUpload.valueChanges.subscribe((res) => { });
   }
 
   get uploadFileArrlrngth() {
@@ -92,13 +92,12 @@ export class UploadBulkUploadComponent implements OnInit {
   goToScreen() {
     const formData = new FormData();
     formData.append("fileName", this.file);
-    this.bulkservice
-      .uploadExcel(
-        formData,
-        this.currentUser.username,
-        this.maintTemplateUpload.value.productType,
-        this.maintTemplateUpload.value.processingDate
-      )
+    const userName = this.currentUser.userName;
+    const productType = this.maintTemplateUpload.value.productType;
+    const processingDate = this.maintTemplateUpload.value.processingDate;
+    const screenName = this.screenName;
+    this.bulkservice.
+      upload(formData, userName, productType, processingDate, screenName)
       .subscribe((res: any) => {
         if (res?.statusCode === 200) {
           this.commonService
@@ -137,12 +136,12 @@ export class UploadBulkUploadComponent implements OnInit {
       });
 
     // this emit should be remove after trade api intigeration done
-    this.customSaveBulkUpload.emit("");
+
   }
 
   downloadTemplate(event: Event) {
     event.stopPropagation();
-    this.bulkservice.downloadTemplate().subscribe((blob: any) => {
+    this.bulkservice.downLoadTemplateforBulk(this.screenName).subscribe((blob: any) => {
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = "Upload.csv";
