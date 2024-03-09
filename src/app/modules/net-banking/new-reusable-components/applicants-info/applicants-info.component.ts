@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { countryStateService } from 'app/shared/components/reusable-pincode-popup/countrySateCityService';
@@ -13,6 +13,10 @@ export class ApplicantsInfoComponent implements OnInit {
   applicantForm:FormGroup
   //list of country state and city
   countryArr: any[]=[];
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   feeAccArray:any[] = ["dummy Option 1" , "dummy Option 2"]
   constructor(private fb:FormBuilder , private cntStService:countryStateService, private dialog :MatDialog) { }
 
@@ -41,6 +45,12 @@ export class ApplicantsInfoComponent implements OnInit {
       })
     })
     this.addUserAddress()
+    this.applicantForm.valueChanges.subscribe(res=>{
+      this.updateParentModel(res , this.checkForm())
+    })
+  }
+  checkForm(){
+    return this.applicantForm.valid;
   }
 
   get Contact() {
