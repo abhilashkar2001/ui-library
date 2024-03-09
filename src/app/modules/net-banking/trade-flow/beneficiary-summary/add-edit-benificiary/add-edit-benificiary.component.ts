@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-edit-benificiary",
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class AddEditBenificiaryComponent implements OnInit {
   benificiaryDetailsForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -26,5 +27,9 @@ export class AddEditBenificiaryComponent implements OnInit {
       account: [""],
       beneficiaryStatus: [""],
     });
+  }
+
+  onSubmit() {
+    this.router.navigate(["/user/dashboard/trade/beneficiary"]);
   }
 }

@@ -9,7 +9,7 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
 import { AddBulkUploadComponent } from "./bulk-upload/add-bulk-upload/add-bulk-upload.component";
-import { UploadBulkUploadComponent } from "./bulk-upload/upload-bulk-upload/upload-bulk-upload.component";
+import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 import { NetBankingDashboardComponent } from "./net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.component";
 import { SharedModule } from "app/shared/shared.module";
 import { MatMenuModule } from "@angular/material/menu";
@@ -29,9 +29,10 @@ import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/b
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
-import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
+import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
+import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/c
     AttachmentsComponent,
     CustomDrawerComponent,
     TradeDashboardComponent,
-
+    BenificiaryBulkUploadSummaryComponent,
   ],
   imports: [
     CommonModule,

@@ -125,7 +125,6 @@ export class NETBANKING {
     {
       label: "Fund Transfer",
       icon: "/assets/images/net-banking-nav-bar/Fund-Transfer_Icon.svg",
-      link: "",
     },
     {
       label: "Trade on Net",
@@ -135,22 +134,18 @@ export class NETBANKING {
     {
       label: "Deposit",
       icon: "/assets/images/net-banking-nav-bar/Deposit_Icon.svg",
-      link: "",
     },
     {
       label: "Cards",
       icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg",
-      link: "",
     },
     {
       label: "Loan",
       icon: "/assets/images/net-banking-nav-bar/Loan_Icon.svg",
-      link: "",
     },
     {
       label: "Summary",
       icon: "/assets/images/net-banking-nav-bar/Summary_Icon.svg",
-      link: "",
     },
   ];
 
