@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChange,
 } from "@angular/core";
-import {  FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 import {
   MatCalendarCellClassFunction,
   MatDatepickerInputEvent,
@@ -85,7 +85,7 @@ export class InputDatePickerComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
     this.populateDate();
-    this.getYearlyHolidays(this.selectedYear);
+    // this.getYearlyHolidays(this.selectedYear);
   }
 
   initEvents(): void {
