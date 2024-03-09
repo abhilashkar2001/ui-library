@@ -87,7 +87,7 @@
         fxFlex="23"
       >
         <mat-label>Currency</mat-label>
-        <input matInput type="text" formControlName="currency" />
+        <input matInput type="text" formControlName="currencyCode" />
         <mat-icon matSuffix class="searchIcon">search</mat-icon>
       </mat-form-field>
       <mat-form-field
@@ -115,7 +115,7 @@
           readonly
           [matDatepicker]="picker4"
           class="date-picker"
-          formControlName="expiryDate"
+          formControlName="dueDate"
         />
       </mat-form-field>
     </div>
@@ -127,7 +127,7 @@
         fxFlex="23"
       >
         <mat-label>BG Tenure(in Days)</mat-label>
-        <input matInput type="text" formControlName="bgInsurance" />
+        <input matInput type="text" formControlName="bgTenureInDays" />
       </mat-form-field>
       <mat-form-field
         appearance="outline"
@@ -154,7 +154,7 @@
           readonly
           [matDatepicker]="picker5"
           class="date-picker"
-          formControlName="claimPeriodExpiryDate"
+          formControlName="expiryDateIncClaimPeriod"
         />
       </mat-form-field>
     </div>

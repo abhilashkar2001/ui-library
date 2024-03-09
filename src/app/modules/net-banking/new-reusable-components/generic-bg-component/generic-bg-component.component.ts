@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { tabsClass } from "app/modules/net-banking/tabs.model";
+import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { Webhost } from "app/shared/directives/appHost.directive";
 import { BehaviorSubject } from "rxjs";
+import { GenericBgServiceService } from "./generic-bg-service.service";
 
 @Component({
   selector: "app-generic-bg-component",
@@ -21,7 +24,11 @@ export class GenericBgComponentComponent implements OnInit {
   host!: Webhost;
   componentRef: any;
   bgType: any;
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private api: GenericBgServiceService
+  ) {
     // console.log(this.componentName);
     // this.tabs = tabsClass[this.componentName];
     // this.bgType = this.tabs[0].type;
@@ -80,4 +87,38 @@ export class GenericBgComponentComponent implements OnInit {
     this.account$.next(updatedAccount);
     this.isCurrentFormValid$.next(isFormValid);
   };
+
+  saveTemplet(event) {
+    const dialogRef = this.dialog.open(AddNewPopupComponent, {
+      data: {
+        isSaveTemplate: true,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      console.log(resp, "........");
+      console.log(this.account$.value);
+      this.saveTemplate(resp.templateName);
+    });
+  }
+
+  saveTemplate(templateName) {
+    const payload = {
+      applicantModel: {
+        ...this.account$.value.applicantInfo,
+        saveTemplate: true,
+        templateName: templateName,
+      },
+      bgInfoModel: null,
+      otherInfoModel: null,
+      attachmentModel: null,
+    };
+    this.api.saveTemplate(payload).subscribe((resp) => {});
+  }
+
+  updateRecord(event) {
+    console.log(event, "........");
+  }
 }

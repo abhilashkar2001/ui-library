@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject, Input, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-add-new-popup",
@@ -9,9 +9,15 @@ import { MatDialogRef } from "@angular/material/dialog";
 export class AddNewPopupComponent implements OnInit {
   checkToggle: boolean = false;
   templateName: string = "";
-  constructor(private dialogRef: MatDialogRef<AddNewPopupComponent>) {}
+  isSaveTemplate: boolean = false;
+  constructor(
+    private dialogRef: MatDialogRef<AddNewPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isSaveTemplate = this.data?.isSaveTemplate;
+  }
   customerToggle(event) {
     this.checkToggle = event;
   }
