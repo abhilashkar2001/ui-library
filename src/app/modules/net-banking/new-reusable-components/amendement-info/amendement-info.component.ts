@@ -8,6 +8,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class AmendementInfoComponent implements OnInit {
   @Input() amendmentType:any = "BG Physical Amendment";
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   // @Input() amendmentType:any = "BG Amendment";
   today = new Date();
   amountArray:any[] = ["300", "23443", "987"];
@@ -49,6 +53,13 @@ export class AmendementInfoComponent implements OnInit {
       currentExpireIncDate:[item?.currentExpireIncDate ?? ""],
       amountChnage:[item?.amountChnage??""]
     })
+    this.amdmentFormGroup.valueChanges.subscribe((res)=>{
+      this.updateParentModel(res , this.checkValue())
+    })
   }
+  checkValue(){
+    return this.amdmentFormGroup.valid;
+  }
+
 
 }
