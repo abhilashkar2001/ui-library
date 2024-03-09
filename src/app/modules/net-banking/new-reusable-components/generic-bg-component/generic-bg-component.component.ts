@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { tabsClass } from "app/modules/net-banking/tabs.model";
@@ -27,7 +33,8 @@ export class GenericBgComponentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private api: GenericBgServiceService
+    private api: GenericBgServiceService,
+    private cdr: ChangeDetectorRef
   ) {
     // console.log(this.componentName);
     // this.tabs = tabsClass[this.componentName];
@@ -72,6 +79,7 @@ export class GenericBgComponentComponent implements OnInit {
       this.componentRef = view.createComponent(
         this.currentStep$.value.componrnt
       );
+      this.componentRef.instance.bgType = this.bgType;
       this.componentRef.instance.updateParentModel = this.updateAccount;
       this.componentRef.instance.amendmentType = this.currentStep$.value?.type;
     }

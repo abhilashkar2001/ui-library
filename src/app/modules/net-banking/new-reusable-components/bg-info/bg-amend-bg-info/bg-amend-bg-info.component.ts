@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
@@ -44,5 +44,11 @@ export class BgAmendBgInfoComponent implements OnInit {
         this.bgAmendBgInfoForm.get("pincode").setValue(res.cityName);
       }
     });
+  }
+  get addressControle() {
+    return this.Contact.get("address") as FormArray;
+  }
+  get Contact() {
+    return this.bgAmendBgInfoForm.get("contactInfo") as FormGroup;
   }
 }
