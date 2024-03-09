@@ -150,8 +150,7 @@
 
 <div fxLayout="row wrap" fxLayout.lt-sm="column">
   <div fxFlex="100" fxLayoutAlign="end center">
-    <button-loading> {{ "Save" }}</button-loading
-    >&nbsp;&nbsp;
+    <button-loading (click)="onSubmit()"> Save</button-loading>&nbsp;&nbsp;
     <div>
       <button class="exitButton" type="button" mat-raised-button>
         {{ "Cancel" }}

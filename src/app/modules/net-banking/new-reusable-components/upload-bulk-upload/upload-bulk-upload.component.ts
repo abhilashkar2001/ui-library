@@ -133,8 +133,11 @@ export class UploadBulkUploadComponent implements OnInit {
           });
         }
         //emit an uploaded id
-        // this.customSaveBulkUpload.emit(res?.data?.id);
+        this.customSaveBulkUpload.emit(res?.data?.id);
       });
+
+    // this emit should be remove after trade api intigeration done
+    this.customSaveBulkUpload.emit("");
   }
 
   downloadTemplate(event: Event) {
