@@ -29,6 +29,7 @@ import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/b
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
+import { GenericBgComponentComponent } from './new-reusable-components/generic-bg-component/generic-bg-component.component';
 import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component';
 import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
 import { LayoutsModule } from "app/layouts/layouts.module";
@@ -58,6 +59,7 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
     TransactionInfoComponent,
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
+    GenericBgComponentComponent,
     BgSummaryComponent,
     AttachmentsComponent,
     CustomDrawerComponent,

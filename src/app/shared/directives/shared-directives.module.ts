@@ -24,6 +24,7 @@ import { NoInitialSpecialCharactersDirective } from "./no-initial-space.directiv
 import { NoSpaceDirective } from "./noSpace.directive";
 import { IcImgFallbackDirective } from "./ic-img-fallback.directive";
 import { InputMaskModule } from "./input-mask/input-mask.module";
+import { Webhost } from "./appHost.directive";
 
 const directives = [
   AutoFocusDirective,
@@ -45,6 +46,7 @@ const directives = [
   DecimalInputDirective,
   NoInitialSpecialCharactersDirective,
   NoSpaceDirective,
+  Webhost,
   IcImgFallbackDirective,
 ];
 

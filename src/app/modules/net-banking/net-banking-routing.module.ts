@@ -14,8 +14,10 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { AddEditBenificiaryComponent } from "./trade-flow/beneficiary-summary/add-edit-benificiary/add-edit-benificiary.component";
 import { BeneficiaryBulkUploadComponent } from "./trade-flow/beneficiary-summary/beneficiary-bulk-upload/beneficiary-bulk-upload.component";
 import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
+import { GenericBgComponentComponent } from "./new-reusable-components/generic-bg-component/generic-bg-component.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
+
 
 const routes: Routes = [
   {
@@ -81,7 +83,7 @@ const routes: Routes = [
       },
       {
         path: "amendment",
-        component: AmendementInfoComponent,
+        component: GenericBgComponentComponent,
       },
       {
         path: "bgInfo",
