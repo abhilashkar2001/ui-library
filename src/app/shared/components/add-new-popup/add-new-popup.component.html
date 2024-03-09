@@ -31,10 +31,8 @@
         </div>
         <div *ngIf="!checkToggle">
           <mat-form-field appearance="outline" class="custom-field">
-            <mat-label class="autolabel">{{
-              "Document Name" | translate
-            }}</mat-label>
-            <mat-select>
+            <mat-label class="autolabel">Template Name</mat-label>
+            <mat-select [(ngModel)]="templateName">
               <mat-option value="Aadhar">Aadhar</mat-option>
             </mat-select>
           </mat-form-field>
