@@ -41,7 +41,7 @@ export class BeneficiarySummaryComponent implements OnInit {
 
   ngOnInit(): void {}
   CustomGoBack(data) {
-    this.route.navigate(["/user/dashboard"]);
+    this.route.navigate(["/user/dashboard/trade/dashboard"]);
   }
   getDataByPage(event) {
     this.page = event.page;
@@ -73,9 +73,7 @@ export class BeneficiarySummaryComponent implements OnInit {
       });
     }
     if (id === "bulk") {
-      this.route.navigate([`../beneficiary-bulkUpload`], {
-        relativeTo: this.activatedRoute,
-      });
+      this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);
     }
   }
 }
