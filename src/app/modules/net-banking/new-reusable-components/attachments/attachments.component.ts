@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from 'app/shared/services/common-service/common.service';
@@ -12,6 +12,10 @@ const MICROSERVICE_URL = environment.microServiceURL;
   styleUrls: ['./attachments.component.scss']
 })
 export class AttachmentsComponent implements OnInit {
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   attachementInfoForm: FormGroup
   titles: any[] = ["BG Text", "Contract Copy", "Declaration", "Approvals", "Others"];
   fileNamelength: number;
@@ -34,8 +38,14 @@ export class AttachmentsComponent implements OnInit {
     this.attachementInfoForm = this.formBuilder.group({
       titleCategory: this.formBuilder.array([]),
     });
+    this.attachementInfoForm.valueChanges.subscribe((res)=>{
+      this.updateParentModel(res , this.checkform())
+    })
   }
 
+  checkform(){
+    return this.attachementInfoForm.valid;
+  }
   public get titleCategory(): FormArray {
     return this.attachementInfoForm?.get("titleCategory") as FormArray;
   }
