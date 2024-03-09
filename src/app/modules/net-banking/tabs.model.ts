@@ -1,5 +1,6 @@
 import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component"
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component"
+import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component"
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component"
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component"
 
@@ -28,7 +29,7 @@ export class tabsClass{
         id: 4,
         title: "Attachemnts",
         type: "BG Issuance",
-        componrnt: OthersInfoComponent
+        componrnt: AttachmentsComponent
      }
     ]
     public static Bg_Amendment:any[] = [
@@ -54,7 +55,7 @@ export class tabsClass{
             id: 4,
             title: "Attachemnts",
             type: "BG Amendment",
-            componrnt: OthersInfoComponent
+            componrnt: AttachmentsComponent
          }
     ]
     public Bg_PhysicalAmendment:any[] =[
@@ -68,7 +69,7 @@ export class tabsClass{
             id: 2,
             title: "Attachemnts",
             type: "BG Physical Amendment",
-            componrnt: OthersInfoComponent
+            componrnt: AttachmentsComponent
          }
     ]
 }

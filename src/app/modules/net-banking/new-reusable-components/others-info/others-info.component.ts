@@ -11,6 +11,10 @@ import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pi
 })
 export class OthersInfoComponent implements OnInit {
   @Input("bgType") bgType: any = "BG Amendment";// 'BG Issuance' - Dynamically both names it should be work
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   otherInfoForm: FormGroup;
   countries: any;
   constructor(
@@ -50,6 +54,12 @@ export class OthersInfoComponent implements OnInit {
       margin: [item.margin ? item.margin : ""],
       feeAccount: [item.feeAccount ? item.feeAccount : ""],
     });
+    this.otherInfoForm.valueChanges.subscribe((res)=>{
+      this.updateParentModel(res , this.checkform())
+    })
+  }
+  checkform(){
+    return this.otherInfoForm.valid;
   }
 
   get addressControl(): FormArray {

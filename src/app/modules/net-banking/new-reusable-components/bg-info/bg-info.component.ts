@@ -8,6 +8,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class BgInfoComponent implements OnInit {
   @Input() componentName = "BG Issuance";
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   bgIssuanceForm: FormGroup;
   benificiaryDetailsForm: FormGroup<any>;
   bgIssuanceBgInfoForm: FormGroup<any>;
@@ -72,5 +76,13 @@ export class BgInfoComponent implements OnInit {
         state: ["", Validators.required],
       }),
     });
+
+    this.bgIssuanceForm.valueChanges.subscribe((res)=>{
+      this.updateParentModel(res , this.checkForm());
+    })
+  }
+
+  checkForm(){
+    return this.bgIssuanceForm.valid;
   }
 }

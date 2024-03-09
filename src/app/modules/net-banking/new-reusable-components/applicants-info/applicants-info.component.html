@@ -26,12 +26,12 @@
             <mat-label>Address line 2</mat-label>
             <input matInput type="text" formControlName="address2">
         </mat-form-field>
-        <div fxFlex="23" appearance="outline" class="full-width custom-field mt-2">
+        <div fxFlex="23" appearance="outline" class="full-width custom-field   mt-2 ">
             <app-searchable-select [items]="countryArr" inputLabel="Country" bindLabelKey="countryName"
-                bindValueKey="countryName" [control]="address.get('countryName')"
+                bindValueKey="countryName" [control]="address.get('countryName')" 
                 (selectionChange)="onChangeCountry(i)"></app-searchable-select>
         </div>
-        <mat-form-field appearance="outline" fxFlex="23" class="full-width disable-field zipCode_field">
+        <mat-form-field appearance="outline" fxFlex="23" class="full-width disable-field zipCode_field  mt-2">
             <mat-label>Pin Code</mat-label>
             <input matInput type="text" formControlName="pincode" name="pincode" numbersOnly maxlength="10" />
             <mat-icon matSuffix class="searchIcon-main"
