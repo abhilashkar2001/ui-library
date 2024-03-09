@@ -5,6 +5,7 @@ import { FilterBy } from "app/shared/helpers/utils";
 import { bgConstant } from "./bg-summary.constant";
 import { MatDialog } from "@angular/material/dialog";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
+import { BgSummaryServiceService } from "./bg-summary-service.service";
 
 @Component({
   selector: "app-bg-summary",
@@ -40,7 +41,7 @@ export class BgSummaryComponent implements OnInit {
   componentName: any;
   constructor(
     private route: Router,
-    private bulkService: InternetBankingService,
+    private bulkService: BgSummaryServiceService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog
   ) {}
@@ -75,14 +76,14 @@ export class BgSummaryComponent implements OnInit {
     this.filterBy = event.filterBy;
     this.module = event.module;
     this.bulkService
-      .getSummary(
+      .getSummaryDetails(
         event.filterBy,
         event.filterValue,
         event.page,
         event.size,
         this.sortValue,
         event.direction,
-        this.module
+        this.bgType
       )
       .subscribe((res) => {
         this.bgData = res;
@@ -91,7 +92,7 @@ export class BgSummaryComponent implements OnInit {
 
   openPopUp(event) {
     console.log(event, "event..........");
-    const id = event.element;
+    const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
         width: "50%",
@@ -104,8 +105,9 @@ export class BgSummaryComponent implements OnInit {
         }
         this.getBGType(this.bgType);
       });
-    }
-    if (id === "bulk") {
+    } else if (id === "bulk") {
+    } else {
+      console.log("having a id");
     }
   }
 

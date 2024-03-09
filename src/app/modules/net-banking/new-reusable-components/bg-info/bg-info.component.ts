@@ -30,12 +30,12 @@ export class BgInfoComponent implements OnInit {
         effectiveDate: [""],
         type: ["Domestic BG"],
         category: [""],
-        currency: [""],
+        currencyCode: [""],
         amount: [""],
-        expiryDate: [""],
-        bgInsurance: [""],
+        dueDate: [""],
+        bgTenureInDays: [""],
         claimPeriod: [""],
-        claimPeriodExpiryDate: [""],
+        expiryDateIncClaimPeriod: [""],
       }),
 
       benificiaryDetails: this.fb.group({
@@ -77,12 +77,12 @@ export class BgInfoComponent implements OnInit {
       }),
     });
 
-    this.bgIssuanceForm.valueChanges.subscribe((res)=>{
-      this.updateParentModel(res , this.checkForm());
-    })
+    this.bgIssuanceForm.valueChanges.subscribe((res) => {
+      this.updateParentModel(res, this.checkForm());
+    });
   }
 
-  checkForm(){
+  checkForm() {
     return this.bgIssuanceForm.valid;
   }
 }

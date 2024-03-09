@@ -1,9 +1,9 @@
 export class bgConstant {
   static readonly BGTYPE_SUMMARY = [
     {
-      columnDef: "name",
+      columnDef: "applicant",
       header: "Applicant",
-      cell: (element: any) => element.name,
+      cell: (element: any) => element.applicant,
     },
     {
       columnDef: "invoiceNo",
@@ -11,9 +11,9 @@ export class bgConstant {
       cell: (element: any) => element.invoiceNo,
     },
     {
-      columnDef: "submitted",
+      columnDef: "submittedOn",
       header: "Submitted on",
-      cell: (element: any) => element.submitted,
+      cell: (element: any) => element.submittedOn,
     },
     {
       columnDef: "billId",
@@ -31,9 +31,9 @@ export class bgConstant {
       cell: (element: any) => element.dueDate,
     },
     {
-      columnDef: "transStatus",
+      columnDef: "status",
       header: "Transaction Status",
-      cell: (element: any) => element.transStatus,
+      cell: (element: any) => element.status,
     },
     {
       columnDef: "requestAssignedTo",
@@ -77,7 +77,7 @@ export class bgConstant {
       columnDef: "requestAssignedTo",
       header: "Request Assigned to",
       cell: (element: any) => element.requestAssignedTo,
-    }
+    },
   ];
 
   static readonly bgStaticData = [
@@ -90,7 +90,7 @@ export class bgConstant {
       dueDate: "09-03-2024",
       transStatus: "Pending",
       requestAssignedTo: "jghg",
-      audit: "Unapproved"
+      audit: "Unapproved",
     },
     {
       name: 2,
@@ -101,7 +101,7 @@ export class bgConstant {
       dueDate: "09-03-2024",
       transStatus: "Completed",
       requestAssignedTo: "jghg",
-      audit: "Approved"
+      audit: "Approved",
     },
   ];
 
