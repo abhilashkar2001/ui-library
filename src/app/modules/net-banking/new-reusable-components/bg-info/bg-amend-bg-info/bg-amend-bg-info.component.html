@@ -97,11 +97,11 @@
           fxFlex="23"
         >
           <mat-label>City</mat-label>
-          <input matInput type="cityId" formControlName="cityId" readonly />
+          <input matInput type="cityName" formControlName="cityName" readonly />
           <mat-error
             *ngIf="
-              address.get('cityId').touched &&
-              address.get('cityId').hasError('required')
+              address.get('cityName').touched &&
+              address.get('cityName').hasError('required')
             "
             >City is required!</mat-error
           >

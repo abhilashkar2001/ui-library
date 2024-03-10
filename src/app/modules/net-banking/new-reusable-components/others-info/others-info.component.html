@@ -10,18 +10,18 @@
         <mat-label> Specify Counter Guarantee </mat-label>
         <input
           matInput
-          name="specifyCounter"
-          formControlName="specifyCounter"
+          name="specifyCounterGuarantee"
+          formControlName="specifyCounterGuarantee"
         />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType === 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> SWIFT Code </mat-label>
         <input matInput name="swiftCode" formControlName="swiftCode" />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType === 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Bank name</mat-label>
         <input matInput name="bankName" formControlName="bankName" />
@@ -34,7 +34,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Amendment'">
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType != 'BG Issuance'">
     <div fxFlex="100" fxFlex.gt-xs="24">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Counter Guarantee Issuing Bank </mat-label>
@@ -51,13 +51,13 @@
         <input matInput name="branchName" formControlName="branchName" />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType != 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Delivery Mode</mat-label>
         <input matInput name="deliveryMode" formControlName="deliveryMode" />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType != 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Delivery Branch </mat-label>
         <input
@@ -69,10 +69,9 @@
     </div>
   </div>
   <ng-container
-    formArrayName="address"
     *ngFor="let addressData of addressControl.controls; let i = index"
   >
-    <div [formGroupName]="i" class="full-width">
+    <div [formGroup]="addressData" class="full-width">
       <div fxLayout="row wrap" fxLayoutGap="10px">
         <div fxFlex="100" fxFlex.gt-xs="48.5">
           <mat-form-field appearance="outline" class="custom-field">
@@ -144,40 +143,40 @@
     <div fxFlex="100" fxFlex.gt-xs="48.5">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Textual Description(77C) </mat-label>
-        <input matInput name="textualDesc" formControlName="textualDesc" />
+        <input
+          matInput
+          name="textualDescription"
+          formControlName="textualDescription"
+        />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="48.5">
+    <div fxFlex="100" fxFlex.gt-xs="48.5" *ngIf="bgType === 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label>
           Instruction to Demobank(Not to form part of Gurantee Terms)
         </mat-label>
-        <input
-          matInput
-          name="instructDemoBank"
-          formControlName="instructDemoBank"
-        />
+        <input matInput name="introToBank" formControlName="introToBank" />
       </mat-form-field>
     </div>
   </div>
-  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType === 'BG Amendment'">
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="bgType != 'BG Issuance'">
     <div fxFlex="100" fxFlex.gt-xs="48.5">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Instruction for delivery </mat-label>
         <input
           matInput
-          name="instructDelivery"
-          formControlName="instructDelivery"
+          name="deliveryInstruction"
+          formControlName="deliveryInstruction"
         />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType != 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label> Margin %</mat-label>
         <input matInput name="margin" formControlName="margin" />
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-xs="24">
+    <div fxFlex="100" fxFlex.gt-xs="24" *ngIf="bgType != 'BG Issuance'">
       <mat-form-field appearance="outline" class="custom-field">
         <mat-label>Fee Account </mat-label>
         <mat-select formControlName="feeAccount" name="feeAccount">
@@ -192,8 +191,8 @@
         <mat-label>Instruction for delivery </mat-label>
         <input
           matInput
-          name="instructDelivery"
-          formControlName="instructDelivery"
+          name="deliveryInstruction"
+          formControlName="deliveryInstruction"
         />
       </mat-form-field>
     </div>
