@@ -9,7 +9,7 @@
 
       <div class="login_form" fxLayout="column" *ngIf="authType == 'signIn'">
         <form [formGroup]="signinForm">
-          <mat-form-field class="full-width custom-field" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>{{ "Corporate Id" | translate }}</mat-label>
             <input
               matInput
@@ -30,7 +30,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width custom-field" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>{{ "Login Id" | translate }}</mat-label>
             <input
               matInput

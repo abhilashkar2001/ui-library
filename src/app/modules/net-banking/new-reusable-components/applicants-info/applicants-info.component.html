@@ -3,38 +3,22 @@
   fxLayout="row wrap"
   fxLayoutAlign="space Between"
   fxLayoutGap="10px"
-  class="applicantsInfo customMatfield"
+  class="applicantsInfo"
   [formGroup]="applicantForm"
 >
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Applicant</mat-label>
     <input matInput type="text" formControlName="applicant" />
   </mat-form-field>
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Issuing Branch</mat-label>
     <input matInput type="text" formControlName="issuingBranchCode" />
   </mat-form-field>
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Delivery Branch</mat-label>
     <input matInput type="text" formControlName="deliveryBranchCode" />
   </mat-form-field>
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Applicant References</mat-label>
     <input matInput type="text" formControlName="applicantReferences" />
   </mat-form-field>
@@ -45,23 +29,15 @@
     *ngFor="let address of addressControle.controls; let i = index"
     [formGroup]="address"
   >
-    <mat-form-field
-      fxFlex="47"
-      appearance="outline"
-      class="full-width custom-field mt-2"
-    >
+    <mat-form-field fxFlex="47">
       <mat-label>Address line 1</mat-label>
       <input matInput type="text" formControlName="address2" />
     </mat-form-field>
-    <mat-form-field
-      fxFlex="47"
-      appearance="outline"
-      class="full-width custom-field mt-2"
-    >
+    <mat-form-field fxFlex="47">
       <mat-label>Address line 2</mat-label>
       <input matInput type="text" formControlName="address2" />
     </mat-form-field>
-    <div fxFlex="23" appearance="outline" class="full-width custom-field mt-2">
+    <div fxFlex="23">
       <app-searchable-select
         [items]="countryArr"
         inputLabel="Country"
@@ -72,7 +48,6 @@
       ></app-searchable-select>
     </div>
     <mat-form-field
-      appearance="outline"
       fxFlex="23"
       class="full-width disable-field zipCode_field mt-2"
     >
@@ -92,36 +67,20 @@
         >search</mat-icon
       >
     </mat-form-field>
-    <mat-form-field
-      fxFlex="23"
-      appearance="outline"
-      class="full-width custom-field mt-2"
-    >
+    <mat-form-field fxFlex="23">
       <mat-label>State</mat-label>
       <input matInput type="text" formControlName="stateName" />
     </mat-form-field>
-    <mat-form-field
-      fxFlex="23"
-      appearance="outline"
-      class="full-width custom-field mt-2"
-    >
+    <mat-form-field fxFlex="23">
       <mat-label>City</mat-label>
       <input matInput type="text" formControlName="cityName" />
     </mat-form-field>
   </div>
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Delivery Mode</mat-label>
     <input matInput type="text" formControlName="deliveryMode" />
   </mat-form-field>
-  <mat-form-field
-    fxFlex="23"
-    appearance="outline"
-    class="full-width custom-field mt-2"
-  >
+  <mat-form-field fxFlex="23">
     <mat-label>Fee Account</mat-label>
     <mat-select formControlName="feeAccount">
       <mat-option *ngFor="let item of feeAccArray" [value]="item">{{
