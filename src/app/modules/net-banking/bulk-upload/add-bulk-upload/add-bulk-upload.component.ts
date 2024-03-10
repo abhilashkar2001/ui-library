@@ -61,7 +61,7 @@ export class AddBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -206,9 +206,54 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   customSaveBulkUpload(event) {
-    this.bulkId = event;
-    this.router.navigate(["user/dashboard/bulk-upload", event]);
-    // this.bulkId = event;
+    this.commonService
+      .generateOTP(this.currentUser.mobile)
+      .subscribe((resp: any) => {
+        this.otp = resp?.data;
+        this.callAllInOnePopup(event)
+      });
+
+  }
+
+  callAllInOnePopup(event) {
+    const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+      data: {
+        remark: true,
+        mobile: this.currentUser.mobile,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp) {
+        this.api.
+          uploadExcel(event.formData, event.userName, event.productType, event.processingDatee)
+          .subscribe((res: any) => {
+            if (res?.statusCode === 200) {
+              this.callSuccessPopup(res);
+            }
+          });
+      }
+    });
+  }
+
+  callSuccessPopup(res) {
+    const dialogRef = this.dialog.open(SuccessPopupComponent, {
+      data: {
+        refrenceNo: res?.data?.reffNo,
+        isNetBanking: true,
+        route: "bulk-upload",
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.bulkId = res?.data?.id;
+      this.router.navigate(["user/dashboard/bulk-upload", this.bulkId]);
+    });
   }
 
   downloadRecord() {

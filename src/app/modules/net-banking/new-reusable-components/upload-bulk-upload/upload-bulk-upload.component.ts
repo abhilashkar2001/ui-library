@@ -96,44 +96,8 @@ export class UploadBulkUploadComponent implements OnInit {
     const productType = this.maintTemplateUpload.value.productType;
     const processingDate = this.maintTemplateUpload.value.processingDate;
     const screenName = this.screenName;
-    this.bulkservice.
-      upload(formData, userName, productType, processingDate, screenName)
-      .subscribe((res: any) => {
-        if (res?.statusCode === 200) {
-          this.commonService
-            .generateOTP(this.currentUser.mobile)
-            .subscribe((resp: any) => {
-              this.otp = resp?.data;
-            });
-          const dialogRef = this.dialog.open(AllInOnePopupComponent, {
-            data: {
-              remark: true,
-              mobile: this.currentUser.mobile,
-            },
-            width: "750px",
-            disableClose: true,
-            panelClass: "popup-dialog-class",
-          });
-          dialogRef.afterClosed().subscribe((resp) => {
-            const dialogRef = this.dialog.open(SuccessPopupComponent, {
-              data: {
-                refrenceNo: res?.data?.reffNo,
-                isNetBanking: true,
-                route: "bulk-upload",
-              },
-              width: "750px",
-              disableClose: true,
-              panelClass: "popup-dialog-class",
-              backdropClass: "bdrop",
-            });
-            dialogRef.afterClosed().subscribe((res) => {
-              console.log("........");
-            });
-          });
-        }
-        //emit an uploaded id
-        this.customSaveBulkUpload.emit(res?.data?.id);
-      });
+    this.customSaveBulkUpload.emit({ formData, userName, productType, processingDate });
+
 
     // this emit should be remove after trade api intigeration done
 

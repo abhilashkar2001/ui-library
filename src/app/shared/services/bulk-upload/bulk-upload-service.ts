@@ -11,24 +11,7 @@ export class BulkUpload {
 
   constructor(private http: HttpClient) { }
 
-  upload(formData, userName, type: string, processingDate, screenName: string) {
-    if (screenName === 'beneficiary') {
-      return this.uploadBenificiaryExcel(formData);
-    } else {
-      return this.uploadExcel(formData, userName, type, processingDate);
-    }
-  }
 
-  uploadBenificiaryExcel(formData) {
-    return this.http.post(`${this.basePath}/benieficiary/uploadBeneficiary`, formData);
-  }
-
-  uploadExcel(formData, userName, type: string, processingDate) {
-    return this.http.post(
-      `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}`,
-      formData
-    );
-  }
 
   downLoadTemplateforBulk(screenName: string) {
     if (screenName === 'beneficiary') {
