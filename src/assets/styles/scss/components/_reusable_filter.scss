@@ -24,38 +24,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-.reuseFilterField {
-  &.mat-form-field {
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 0px 2px !important;
-  }
-  &.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-    .mat-form-field-label {
-    width: fit-content;
-    background: white;
-  }
-  .mat-select-arrow {
-    transform: rotate(45deg) !important;
-    width: 9px !important;
-    height: 9px !important;
-    border-right: 2px solid #b4b4b4 !important;
-    border-bottom: 2px solid #b4b4b4 !important;
-    border-left: 0 !important;
-    border-top: 0 !important;
-  }
-}
-
-.customArrow {
-  .mat-select-arrow {
-    transform: rotate(45deg) !important;
-    width: 9px !important;
-    height: 9px !important;
-    border-right: 2px solid #b4b4b4 !important;
-    border-bottom: 2px solid #b4b4b4 !important;
-    border-left: 0 !important;
-    border-top: 0 !important;
-  }
-}
-
 .filter_form {
   margin-top: 0; // -5px
   padding: 0 0.4%;
@@ -71,18 +39,6 @@
   padding-left: 0px !important;
   // margin-bottom: -18px;
   padding: 8px 0;
-  mat-form-field {
-    background: #fffefe 0% 0% no-repeat padding-box;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.0901960784);
-    border-radius: 8px;
-    margin-bottom: 0; // 10px
-    width: 98.5%;
-    height: 45px;
-  }
-  .fieldinput {
-    position: relative;
-    font-family: "Poppins", sans-serif !important;
-  }
   .searchBox {
     border-radius: 12px;
     background: white;
