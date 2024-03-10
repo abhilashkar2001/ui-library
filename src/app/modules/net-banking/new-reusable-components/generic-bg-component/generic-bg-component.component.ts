@@ -106,8 +106,6 @@ export class GenericBgComponentComponent implements OnInit {
       panelClass: "popup-dialog-class",
     });
     dialogRef.afterClosed().subscribe((resp) => {
-      console.log(resp, "........");
-      console.log(this.account$.value);
       this.saveTemplate(resp.templateName);
     });
   }
@@ -119,9 +117,9 @@ export class GenericBgComponentComponent implements OnInit {
         saveTemplate: true,
         templateName: templateName,
       },
-      bgInfoModel: null,
-      otherInfoModel: null,
-      attachmentModel: null,
+      bgInfoModel: this.account$.value?.benificiaryDetails ?? null,
+      otherInfoModel: this.account$.value?.otherInfoModel ?? null,
+      attachmentModel: this.account$.value?.attachMentModel ?? null,
     };
     this.api.saveTemplate(payload).subscribe((resp) => {});
   }

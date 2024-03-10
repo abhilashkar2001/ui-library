@@ -38,7 +38,7 @@ export class BgInfoComponent implements OnInit {
         valueDate: [""],
         requestDate: [""],
         effectiveDate: [""],
-        type: ["Domestic BG"],
+        isDomesticBg: [true],
         category: [""],
         currencyCode: [""],
         amount: [""],
