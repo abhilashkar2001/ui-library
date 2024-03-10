@@ -21,19 +21,9 @@ export class BeneficiarySummaryComponent implements OnInit {
   sortDirection = "";
   filterBy: FilterBy;
   filterValue = "";
+  searchValue = "";
   module: any;
   beneficiaryData: Object;
-  // staticData: any = {
-  //   data: beneficiaryConstant.staticData,
-  //   meta: {
-  //     page: 1,
-  //     size: 5,
-  //     totalElements: 562,
-  //     totalPages: 113,
-  //   },
-  //   statusCode: 200,
-  //   status: "OK",
-  // };
 
   constructor(
     private route: Router,
@@ -52,6 +42,7 @@ export class BeneficiarySummaryComponent implements OnInit {
     this.sortDirection = event.direction;
     this.sortValue = event.sort;
     this.filterBy = event.filterBy;
+    this.searchValue = event.searchValue;
     this.benificiaryApi
       .getDataByPage(
         event.filterBy,
@@ -86,12 +77,12 @@ export class BeneficiarySummaryComponent implements OnInit {
       });
     } else {
       const id = event.element;
-      console.log(id);
 
       this.route.navigate([`../add-edit-beneficiary`], {
         relativeTo: this.activatedRoute,
         queryParams: { isEdit: "Yes", id: id.benificiaryId },
       });
+      console.log(id?.benificiaryId);
     }
     if (id === "bulk") {
       this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);

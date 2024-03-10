@@ -17,6 +17,11 @@ export class BeneficiaryService {
     return this.http.post<any>(`${this.basePath}/benieficiary`, payload);
   }
 
+  getBeneficiaryById(id) {
+    return this.http.get<any>(
+      `${this.basePath}/benieficiary?benificiaryId=${id}`
+    );
+  }
   getDataByPage(filterBy, filterValue, page, size, sortName, direction) {
     const filter = `${filterBy}=${filterValue}`;
     const pagination = `size=${size}&page=${page}`;
