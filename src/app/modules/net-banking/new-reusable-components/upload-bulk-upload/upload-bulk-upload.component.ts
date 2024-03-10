@@ -19,7 +19,7 @@ export class UploadBulkUploadComponent implements OnInit {
   @Input() showProductType: boolean = true;
 
   @Output() customSaveBulkUpload = new EventEmitter<any>();
-
+  @Output() downloadBulkUpload = new EventEmitter<any>();
   maintTemplateUpload: FormGroup;
   fileFormat: string[] = ["Excel"];
   file: any;
@@ -97,20 +97,12 @@ export class UploadBulkUploadComponent implements OnInit {
     const processingDate = this.maintTemplateUpload.value.processingDate;
     const screenName = this.screenName;
     this.customSaveBulkUpload.emit({ formData, userName, productType, processingDate });
-
-
     // this emit should be remove after trade api intigeration done
-
   }
 
   downloadTemplate(event: Event) {
     event.stopPropagation();
-    this.bulkservice.downLoadTemplateforBulk(this.screenName).subscribe((blob: any) => {
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "Upload.csv";
-      link.click();
-    });
+    this.downloadBulkUpload.emit("");
   }
 
   fetchAllScreens() {

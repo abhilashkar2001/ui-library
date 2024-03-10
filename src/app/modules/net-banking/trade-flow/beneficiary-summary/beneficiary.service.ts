@@ -62,6 +62,15 @@ export class BeneficiaryService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?${pagination}`;
-    return this.http.get(`${MICROSERVICE_URL}/benieficiary/fetchMasterById${payload}`);
+    return this.http.get(`${MICROSERVICE_URL}/benieficiary/fetchMasterInfo${payload}`);
+  }
+
+  downloadBenificiaryTemplate() {
+    return this.http.get(
+      `${MICROSERVICE_URL}/benieficiary/downloadTemplate?filename=Upload`,
+      {
+        responseType: "blob",
+      }
+    );
   }
 }

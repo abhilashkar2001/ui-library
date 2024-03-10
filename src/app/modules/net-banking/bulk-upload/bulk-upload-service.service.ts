@@ -74,4 +74,13 @@ export class BulkUploadServiceService {
       { responseType: "blob" as "json" }
     );
   }
+
+  downloadTemplate() {
+    return this.http.get(
+      `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
+      {
+        responseType: "blob",
+      }
+    );
+  }
 }

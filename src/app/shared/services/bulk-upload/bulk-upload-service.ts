@@ -12,30 +12,4 @@ export class BulkUpload {
   constructor(private http: HttpClient) { }
 
 
-
-  downLoadTemplateforBulk(screenName: string) {
-    if (screenName === 'beneficiary') {
-      return this.downloadBenificiaryTemplate();
-    } else {
-      return this.downloadTemplate();
-    }
-  }
-
-  downloadBenificiaryTemplate() {
-    return this.http.get(
-      `${this.basePath}/benieficiary/downloadTemplate?filename=Upload`,
-      {
-        responseType: "blob",
-      }
-    );
-  }
-
-  downloadTemplate() {
-    return this.http.get(
-      `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
-      {
-        responseType: "blob",
-      }
-    );
-  }
 }

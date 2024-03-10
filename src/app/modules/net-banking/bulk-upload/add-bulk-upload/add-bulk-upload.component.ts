@@ -268,4 +268,13 @@ export class AddBulkUploadComponent implements OnInit {
       link.click();
     });
   }
+
+  DownloadBulkUpload(event) {
+    this.api.downloadTemplate().subscribe((blob: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "Upload.csv";
+      link.click();
+    });
+  }
 }

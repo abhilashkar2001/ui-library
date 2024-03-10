@@ -265,6 +265,15 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     });
   }
 
+  DownloadBulkUpload(event) {
+    this.benificiaryService.downloadBenificiaryTemplate().subscribe((blob: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "Upload.csv";
+      link.click();
+    });
+  }
+
   downloadRecord() {
     console.log("..........");
     this.api.downloadBulkUpload(this.bulkId).subscribe((data) => {
