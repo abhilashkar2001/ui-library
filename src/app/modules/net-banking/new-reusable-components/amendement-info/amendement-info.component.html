@@ -1,148 +1,156 @@
-<div class="amendmentClaas customMatfield" [formGroup]="amdmentFormGroup" fxFlex="100" fxLayoutGap="20px" fxLayout="row wrap">
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="Date Of Birth"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['valueDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['bgNumber']">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>BG Number</mat-label>
-            <input matInput type="text" formControlName="bgNumber">
-            <mat-icon matSuffix class="searchIcon-main"
-            >search</mat-icon>
-        </mat-form-field>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="Request date"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['requestDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['effectiveDate']">
-        <app-input-date-picker
-        inputLabel="Effective Date"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['effectiveDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['amendmentNumber']">
-        <mat-form-field  appearance="outline" class="full-width">
-            <mat-label>Amendment Number</mat-label>
-            <input matInput type="text" formControlName="amendmentNumber">
-        </mat-form-field>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="New Expiry date"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['newExpireDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="Current Expiry date"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['currentExpireDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="New Claim Period (MM/DD)"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['newClaimPeriod']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="Current Claim Period (MM/DD)"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['currentClaimPeriod']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="New Expiry Date(INC. Claim Period)"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['newExpireIncDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23">
-        <app-input-date-picker
-        inputLabel="Current Expiry Date(INC. Claim Period)"
-        [maxDate]="today"
-        maxDateDesc="Date can not be future dates"
-        [control]="amdmentFormGroup.controls['currentExpireIncDate']"
-        mandatory=""
-      ></app-input-date-picker>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['currentAmount']">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Current Amount</mat-label>
-            <input matInput type="text" formControlName="currentAmount">
-        </mat-form-field>
-</div>
-    <div fxFlex="23">
-        <mat-form-field  appearance="outline" class="full-width">
-            <mat-select formControlName="amountChnage">
-                <mat-option *ngFor="let item of amountArray" [value]="item">{{item}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['issueBrranch']">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Issuing Branch</mat-label>
-                <input matInput type="text" formControlName="issueBrranch">
-            </mat-form-field>
-    </div>
-    <div fxFlex="47" *ngIf="amdmentFormGroup.controls['bankGuarenteeamendment']">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Bank Guarantee Amendment Details</mat-label>
-                <input matInput type="text" formControlName="bankGuarenteeamendment">
-            </mat-form-field>
-    </div>
-    <div fxFlex="47" *ngIf="amdmentFormGroup.controls['additionalInfo']">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Additional Information(If Any)</mat-label>
-                <input matInput type="text" formControlName="additionalInfo">
-            </mat-form-field>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['amendAmount']">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Amend Amount</mat-label>
-                <input matInput type="text" formControlName="amendAmount">
-            </mat-form-field>
-    </div>
-    <div fxFlex="47" *ngIf="amdmentFormGroup.controls['commentstoBank']">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Comments to Bank</mat-label>
-                <input matInput type="text" formControlName="commentstoBank">
-            </mat-form-field>
-    </div>
-    <div fxFlex="23" *ngIf="amdmentFormGroup.controls['feeAmount']">
-        <mat-form-field  appearance="outline" class="full-width">
-            <mat-select formControlName="feeAmount">
-                <mat-option *ngFor="let item of feeAmountArray" [value]="item">{{item}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-</div>
+<mat-card
+  class="amendmentClaas customMatfield default-card mx-0"
+  [formGroup]="amdmentFormGroup"
+  fxFlex="100"
+  fxLayoutGap="20px"
+  fxLayout="row wrap"
+>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="Date Of Birth"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['valueDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['bgNumber']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>BG Number</mat-label>
+      <input matInput type="text" formControlName="bgNumber" />
+      <mat-icon matSuffix class="searchIcon-main">search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="Request date"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['requestDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['effectiveDate']">
+    <app-input-date-picker
+      inputLabel="Effective Date"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['effectiveDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['amendmentNumber']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Amendment Number</mat-label>
+      <input matInput type="text" formControlName="amendmentNumber" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="New Expiry date"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['newExpireDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="Current Expiry date"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['currentExpireDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="New Claim Period (MM/DD)"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['newClaimPeriod']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="Current Claim Period (MM/DD)"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['currentClaimPeriod']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="New Expiry Date(INC. Claim Period)"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['newExpireIncDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23">
+    <app-input-date-picker
+      inputLabel="Current Expiry Date(INC. Claim Period)"
+      [maxDate]="today"
+      maxDateDesc="Date can not be future dates"
+      [control]="amdmentFormGroup.controls['currentExpireIncDate']"
+      mandatory=""
+    ></app-input-date-picker>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['currentAmount']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Current Amount</mat-label>
+      <input matInput type="text" formControlName="currentAmount" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="23">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-select formControlName="amountChnage">
+        <mat-option *ngFor="let item of amountArray" [value]="item">{{
+          item
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['issueBrranch']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Issuing Branch</mat-label>
+      <input matInput type="text" formControlName="issueBrranch" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="47" *ngIf="amdmentFormGroup.controls['bankGuarenteeamendment']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Bank Guarantee Amendment Details</mat-label>
+      <input matInput type="text" formControlName="bankGuarenteeamendment" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="47" *ngIf="amdmentFormGroup.controls['additionalInfo']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Additional Information(If Any)</mat-label>
+      <input matInput type="text" formControlName="additionalInfo" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['amendAmount']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Amend Amount</mat-label>
+      <input matInput type="text" formControlName="amendAmount" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="47" *ngIf="amdmentFormGroup.controls['commentstoBank']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Comments to Bank</mat-label>
+      <input matInput type="text" formControlName="commentstoBank" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="23" *ngIf="amdmentFormGroup.controls['feeAmount']">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-select formControlName="feeAmount">
+        <mat-option *ngFor="let item of feeAmountArray" [value]="item">{{
+          item
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-card>
