@@ -46,7 +46,7 @@
     background-color: #e9ecf5;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    height: 52px;
+    height: 44px;
     margin-top: 5px;
   }
   .selection_left {
@@ -60,7 +60,7 @@
   }
 
   .addbtn {
-    padding-left: 5px;
+    padding-left: 8px;
     font-size: xxx-large;
     color: #004c97;
     cursor: pointer;
@@ -194,7 +194,6 @@
   }
 
   .addbtndiv mat-icon {
-    margin-top: 5px !important;
     width: 31px !important;
   }
   .mat_selection mat-select-arrow {
