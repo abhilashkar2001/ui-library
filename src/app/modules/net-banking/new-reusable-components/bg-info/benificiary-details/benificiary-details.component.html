@@ -1,5 +1,5 @@
 <div *ngIf="benificiaryDetailsForm">
-  <mat-card class="full-width" fxLayout="column">
+  <mat-card class="full-width default-card mx-0" fxLayout="column">
     <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
       <h2>Beneficiary Details</h2>
       <button
@@ -38,85 +38,107 @@
           <input matInput type="text" formControlName="purpose" />
         </mat-form-field>
       </div>
-      <div fxLayout="row" fxLayoutGap="2%">
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="48"
-        >
-          <mat-label>New Address line 1</mat-label>
-          <input matInput type="text" formControlName="address1" />
-          <mat-error
-            *ngIf="
-              benificiaryDetailsForm.get('address1').touched &&
-              benificiaryDetailsForm.get('address1').hasError('required')
-            "
-            >New Address line 1 is required!</mat-error
+      <ng-container
+        *ngFor="let address of addressControle.controls; let i = index"
+        [formGroup]="address"
+      >
+        <div fxLayout="row" fxLayoutGap="2%">
+          <mat-form-field
+            appearance="outline"
+            class="fieldinput custom-field"
+            fxFlex="48"
           >
-        </mat-form-field>
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="48"
-        >
-          <mat-label>New Address line 2</mat-label>
-          <input matInput type="text" formControlName="address2" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutGap="2%">
-        <app-searchable-select
-          fxFlex="23"
-          [items]="countries"
-          inputLabel="Country"
-          bindLabelKey="countryName"
-          bindValueKey="countryName"
-          [control]="benificiaryDetailsForm.get('country')"
-          customClass="custom-field"
-        ></app-searchable-select>
+            <mat-label>New Address line 1</mat-label>
+            <input matInput type="text" formControlName="address1" />
+            <mat-error
+              *ngIf="
+                address.get('address1').touched &&
+                address.get('address1').hasError('required')
+              "
+              >New Address line 1 is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="fieldinput custom-field"
+            fxFlex="48"
+          >
+            <mat-label>New Address line 2</mat-label>
+            <input matInput type="text" formControlName="address2" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="2%">
+          <app-searchable-select
+            fxFlex="23"
+            [items]="countries"
+            inputLabel="Country"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+          ></app-searchable-select>
 
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="23"
-        >
-          <mat-label>Pin Code</mat-label>
-          <input matInput type="text" formControlName="pincode" />
-          <mat-icon matSuffix class="searchIcon" (click)="populatePincodeData()"
-            >search</mat-icon
+          <mat-form-field
+            appearance="outline"
+            class="fieldinput custom-field"
+            fxFlex="23"
           >
-        </mat-form-field>
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="23"
-        >
-          <mat-label>State</mat-label>
-          <input matInput type="state" formControlName="state" readonly />
-          <mat-error
-            *ngIf="
-              benificiaryDetailsForm.get('state').touched &&
-              benificiaryDetailsForm.get('state').hasError('required')
-            "
-            >State is required!</mat-error
+            <mat-label>Pin Code</mat-label>
+            <input matInput type="text" formControlName="pincode" />
+            <mat-icon
+              matSuffix
+              class="searchIcon"
+              (click)="populatePincodeData()"
+              >search</mat-icon
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="fieldinput custom-field"
+            fxFlex="23"
           >
-        </mat-form-field>
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="23"
-        >
-          <mat-label>City</mat-label>
-          <input matInput type="city" formControlName="city" readonly />
-          <mat-error
-            *ngIf="
-              benificiaryDetailsForm.get('city').touched &&
-              benificiaryDetailsForm.get('city').hasError('required')
-            "
-            >City is required!</mat-error
+            <mat-label>State</mat-label>
+            <input
+              matInput
+              type="stateName"
+              formControlName="stateName"
+              readonly
+            />
+            <mat-error
+              *ngIf="
+                address.get('stateName').touched &&
+                address.get('stateName').hasError('required')
+              "
+              >State is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="fieldinput custom-field"
+            fxFlex="23"
           >
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutGap="2%">
+            <mat-label>City</mat-label>
+            <input
+              matInput
+              type="cityName"
+              formControlName="cityName"
+              readonly
+            />
+            <mat-error
+              *ngIf="
+                address.get('cityName').touched &&
+                address.get('cityName').hasError('required')
+              "
+              >City is required!</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <div
+        fxLayout="row"
+        fxLayoutGap="2%"
+        *ngIf="componentName != 'BG Issuance'"
+      >
         <mat-form-field
           appearance="outline"
           class="fieldinput custom-field"
@@ -146,7 +168,7 @@
         </div>
       </div>
     </div>
-    <span class="note-text" *ngIf="componentName != 'BG Issuance'"
+    <span class="note-text" *ngIf="componentName == 'BG Issuance'"
       >Note: The bank has the discretion to modify the limit, Margin %, Margin
       type details provided as the part of the request</span
     >

@@ -5,7 +5,7 @@
     class="w-full"
     fxLayoutGap="10px"
   >
-    <button mat-icon-button>
+    <button (click)="goBack()" mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </button>
     <label class="text-large">{{ "Benificiary Maintenance" }}</label>
@@ -22,7 +22,12 @@
         fxFlex="22"
       >
         <mat-label>Account Number</mat-label>
-        <input matInput type="text" formControlName="accountNumber" />
+        <input
+          matInput
+          type="text"
+          formControlName="accountNumber"
+          [readonly]="readorWrite"
+        />
       </mat-form-field>
       <mat-form-field
         appearance="outline"
@@ -30,7 +35,12 @@
         fxFlex="22"
       >
         <mat-label>Confirm Account Number</mat-label>
-        <input matInput type="text" formControlName="confirmAccountNumber" />
+        <input
+          matInput
+          type="text"
+          formControlName="confirmAccountNumber"
+          [readonly]="readorWrite"
+        />
       </mat-form-field>
       <mat-form-field
         appearance="outline"
@@ -38,7 +48,12 @@
         fxFlex="22"
       >
         <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name" />
+        <input
+          matInput
+          type="text"
+          formControlName="payeeName"
+          [readonly]="readorWrite"
+        />
       </mat-form-field>
       <mat-form-field
         appearance="outline"
@@ -46,7 +61,12 @@
         fxFlex="22"
       >
         <mat-label>Nickname</mat-label>
-        <input matInput type="text" formControlName="nickName" />
+        <input
+          matInput
+          type="text"
+          formControlName="nickName"
+          [readonly]="readorWrite"
+        />
       </mat-form-field>
       <div fxFlex="22">
         <div
@@ -61,6 +81,7 @@
             fxLayoutGap="10%"
             aria-label="Select an option"
             formControlName="account"
+            [disabled]="readorWrite"
           >
             <mat-radio-button
               fxFlex="40"
@@ -86,19 +107,24 @@
         *ngIf="benificiaryDetailsForm.get('account').value === false"
       >
         <mat-label>Bank Code</mat-label>
-        <input matInput type="text" formControlName="bankCode" />
+        <input
+          matInput
+          type="text"
+          formControlName="bankCode"
+          [readonly]="readorWrite"
+        />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="22"
-      >
-        <mat-label>Country</mat-label>
-        <!-- <input matInput type="text" formControlName="bankCode" /> -->
-        <mat-select formControlName="country">
-          <mat-option> kjhg </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div fxFlex="22">
+        <app-searchable-select
+          [items]="countryValue"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryCode"
+          [control]="benificiaryDetailsForm.get('countryCode')"
+          customClass="fieldinput"
+          [readonly]="readorWrite"
+        ></app-searchable-select>
+      </div>
       <mat-form-field
         appearance="outline"
         class="fieldinput custom-field"
@@ -106,7 +132,7 @@
       >
         <mat-label>Visibilty</mat-label>
         <!-- <input matInput type="text" /> -->
-        <mat-select formControlName="visibility">
+        <mat-select formControlName="visibility" disabled>
           <mat-option value="Private"> Private </mat-option>
           <mat-option value="Public"> Public </mat-option>
         </mat-select>
@@ -124,6 +150,7 @@
             fxLayoutGap="10%"
             aria-label="Select an option"
             formControlName="beneficiaryStatus"
+            [disabled]="readorWrite"
           >
             <mat-radio-button
               fxFlex="40"
@@ -150,9 +177,25 @@
 
 <div fxLayout="row wrap" fxLayout.lt-sm="column">
   <div fxFlex="100" fxLayoutAlign="end center">
+    <div>
+      <button
+        class="exitButton"
+        type="button"
+        (click)="editRecord()"
+        *ngIf="isEdit && !saveTheEdit"
+        mat-raised-button
+      >
+        {{ "Edit" }}
+      </button>
+    </div>
     <button-loading (click)="onSubmit()"> Save</button-loading>&nbsp;&nbsp;
     <div>
-      <button class="exitButton" type="button" mat-raised-button>
+      <button
+        class="exitButton"
+        type="button"
+        (click)="goBack()"
+        mat-raised-button
+      >
         {{ "Cancel" }}
       </button>
     </div>

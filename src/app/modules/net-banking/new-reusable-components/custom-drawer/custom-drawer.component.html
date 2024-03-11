@@ -18,7 +18,7 @@
       >
         <!-- use a disabled button to provide padding for tree leaf -->
 
-        <div [class]="node.roleName" (click)="getNode(node)">
+        <div [class]="node.roleName" (click)="getNode(node); drawer.toggle()">
           {{ node.name }}
         </div>
       </mat-tree-node>
@@ -57,7 +57,7 @@
     <mat-icon svgIcon="sidenav-icon" class="btn_icon"></mat-icon>
   </button>
 
-  <div style="margin: -32px 0 0 3%;">
+  <div style="margin: -32px 0 0 3%">
     <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>

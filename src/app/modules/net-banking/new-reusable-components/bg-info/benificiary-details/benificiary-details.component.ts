@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
@@ -41,12 +41,19 @@ export class BenificiaryDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res, "res");
-        this.benificiaryDetailsForm.get("country").setValue(res.countryName);
-        this.benificiaryDetailsForm.get("state").setValue(res.stateName);
-        this.benificiaryDetailsForm.get("city").setValue(res.cityName);
-        this.benificiaryDetailsForm.get("pincode").setValue(res.cityName);
+        const control = this.addressControle["controls"][0];
+        control.get("countryName").setValue(res.countryName);
+        control.get("stateName").setValue(res.stateName);
+        control.get("cityId").setValue(res.cityId);
+        control.get("cityName").patchValue(res?.cityName);
+        control.get("pincode").setValue(res.pincode);
       }
     });
+  }
+  get addressControle() {
+    return this.Contact.get("address") as FormArray;
+  }
+  get Contact() {
+    return this.benificiaryDetailsForm.get("contactInfo") as FormGroup;
   }
 }

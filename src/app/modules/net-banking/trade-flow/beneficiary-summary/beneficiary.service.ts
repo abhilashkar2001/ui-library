@@ -1,16 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
-const MICROSERVICE_URL = environment.microServiceURL;
+
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "environments/environment";
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class BeneficiaryService {
+  protected basePath = environment.microServiceURL;
+  constructor(private http: HttpClient) {}
 
   constructor(private http: HttpClient) { }
 
   uploadBenificiaryExcel(formData) {
-    return this.http.post(`${MICROSERVICE_URL}/benieficiary/uploadBeneficiary`, formData);
+    return this.http.post(`${this.basePath}/benieficiary/uploadBeneficiary`, formData);
   }
 
   getBulkUploadRecords(refNumber, filters?) {
@@ -33,7 +36,7 @@ export class BeneficiaryService {
     if (!filters) filterEndpoint = "";
 
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/benieficiary?refNumber=${refNumber}${filterEndpoint}`
+      `${this.basePath}/benieficiary?refNumber=${refNumber}${filterEndpoint}`
     );
   }
 
@@ -62,15 +65,44 @@ export class BeneficiaryService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?${pagination}`;
-    return this.http.get(`${MICROSERVICE_URL}/benieficiary/fetchMasterInfo${payload}`);
+    return this.http.get(`${this.basePath}/benieficiary/fetchMasterInfo${payload}`);
   }
 
   downloadBenificiaryTemplate() {
     return this.http.get(
-      `${MICROSERVICE_URL}/benieficiary/downloadTemplate?filename=Upload`,
+      `${this.basePath}/benieficiary/downloadTemplate?filename=Upload`,
       {
         responseType: "blob",
       }
     );
+
+  getAllCountry() {
+    return this.http.get<any>(`${this.basePath}/country`);
+  }
+
+  saveBeneficiary(payload) {
+    return this.http.post<any>(`${this.basePath}/benieficiary`, payload);
+  }
+
+  getBeneficiaryById(id) {
+    return this.http.get<any>(
+      `${this.basePath}/benieficiary?benificiaryId=${id}`
+    );
+  }
+  getDataByPage(filterBy, filterValue, page, size, sortName, direction) {
+    const filter = `${filterBy}=${filterValue}`;
+    const pagination = `size=${size}&page=${page}`;
+    const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
+    const payload =
+      sortName && filterBy
+        ? `?${filter}&${sortOperation}&${pagination}`
+        : sortName
+        ? `?${sortOperation}&${pagination}`
+        : page && size
+        ? filterBy
+          ? `?${filter}&${pagination}`
+          : `?${pagination}`
+        : "";
+    return this.http.get<any>(`${this.basePath}/benieficiary${payload}`);
   }
 }

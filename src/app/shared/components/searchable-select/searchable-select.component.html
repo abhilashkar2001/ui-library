@@ -1,6 +1,8 @@
 <mat-form-field
   appearance="outline"
-  class="full-width fieldinput {{ customInputHeight }} {{ customClass }}"
+  class="full-width fieldinput {{ customInputHeight }} {{
+    customClass
+  }} custom-field"
 >
   <mat-label *ngIf="!skipLabel">{{ inputLabel | translate }}</mat-label>
   <mat-select

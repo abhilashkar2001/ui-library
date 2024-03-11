@@ -10,9 +10,13 @@ export class DrawerConstant {
           path: "",
           roleName: "child-node",
           children: [
-            { name: "BG Issuance", path: "" },
-            { name: "BG Amendment", path: "" },
-            { name: "BG Physical Amedment", path: "" },
+            { name: "BG Issuance", path: "bgSummary", id: "BG Issuance" },
+            { name: "BG Amendment", path: "bgSummary", id: "BG Amendment" },
+            {
+              name: "BG Physical Amedment",
+              path: "bgSummary",
+              id: "BG Physical",
+            },
           ],
         },
         { name: "LETTER OF CREDIT", path: "", roleName: "child-node" },

@@ -43,6 +43,7 @@ export class CustomDrawerComponent implements OnInit {
       level: level,
       roleName: node.roleName,
       path: node.path,
+      id: node?.id,
     };
   };
 
@@ -64,7 +65,11 @@ export class CustomDrawerComponent implements OnInit {
 
   getNode(node) {
     this.currentMenu = node.name;
+    if (node.path) {
+      this.router.navigate([`user/dashboard/trade/${node.path}`], {
+        queryParams: { type: node.id },
+      });
+    }
     this.cdr.detectChanges();
-    if (node.path) this.router.navigate([`user/dashboard/trade/${node.path}`]);
   }
 }

@@ -1,5 +1,3 @@
-<p>attachments works!</p>
-
 <div
   class="attachments-main"
   fxLayout="column wrap"
@@ -10,7 +8,7 @@
     fxLayout="row"
     fxLayoutAlign="space-between"
     fxFlex="100"
-    *ngFor="let title of titleCategory.controls; let i = index"
+    *ngFor="let title of attachMentModel.controls; let i = index"
     [formGroup]="title"
   >
     <div fxFlex="33" fxLayout="row" class="Select_add">
@@ -20,14 +18,14 @@
           <mat-select
             (selectionChange)="titleChange($event)"
             appearance="outline"
-            formControlName="titleId"
+            formControlName="title"
             class="mat_selection"
           >
             <mat-option *ngFor="let title of titles" [value]="title">{{
               title
             }}</mat-option>
           </mat-select>
-          <mat-error *ngIf="title.controls['titleId'].hasError('titleError')">
+          <mat-error *ngIf="title.controls['title'].hasError('titleError')">
             {{ "Title is already present" }}</mat-error
           >
         </mat-form-field>
@@ -51,7 +49,7 @@
     <div fxFlex="33" fxLayout="row" class="Select_add">
       <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
         <mat-label class="label_input">{{ "Title Description" }}</mat-label>
-        <input matInput formControlName="titledesc" />
+        <input matInput formControlName="titleDescription" />
       </mat-form-field>
     </div>
 
