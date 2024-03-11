@@ -48,6 +48,7 @@
   <app-upload-bulk-upload
     *ngIf="bulkId === 'addNew'"
     (customSaveBulkUpload)="customSaveBulkUpload($event)"
+    (downloadBulkUpload)="DownloadBulkUpload($event)"
   >
   </app-upload-bulk-upload>
 </div>

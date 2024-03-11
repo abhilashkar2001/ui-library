@@ -8,7 +8,7 @@ import { environment } from "environments/environment";
 export class BulkUploadServiceService {
   basePath = environment.microServiceURL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   processBulkTransaction(payload) {
     return this.http.post<any>(
@@ -61,10 +61,26 @@ export class BulkUploadServiceService {
     );
   }
 
+  uploadExcel(formData, userName, type: string, processingDate) {
+    return this.http.post(
+      `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}`,
+      formData
+    );
+  }
+
   downloadBulkuploadParentSummary() {
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking/downloadBulk`,
       { responseType: "blob" as "json" }
+    );
+  }
+
+  downloadTemplate() {
+    return this.http.get(
+      `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
+      {
+        responseType: "blob",
+      }
     );
   }
 }

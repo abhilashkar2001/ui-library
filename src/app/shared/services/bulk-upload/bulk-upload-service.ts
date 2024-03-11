@@ -9,20 +9,7 @@ import { Observable } from "rxjs";
 export class BulkUpload {
   protected basePath = environment.microServiceURL;
 
-  constructor(private http: HttpClient) {}
-  uploadExcel(formData, userName, type: string, processingDate) {
-    return this.http.post(
-      `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}`,
-      formData
-    );
-  }
+  constructor(private http: HttpClient) { }
 
-  downloadTemplate() {
-    return this.http.get(
-      `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
-      {
-        responseType: "blob",
-      }
-    );
-  }
+
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BulkUploadConstant } from "app/modules/net-banking/bulk-upload/add-bulk-upload/bulk.upload.constant";
 import { BulkUploadServiceService } from "app/modules/net-banking/bulk-upload/bulk-upload-service.service";
 import { InternetBankingService } from "app/modules/net-banking/internet-banking.service";
+import { BeneficiaryBulkUploadConstant } from "../beneficiary-bulk-upload/benificiary-bulk-upload.constant";
+import { BeneficiaryService } from "../beneficiary.service";
 
 @Component({
   selector: "app-benificiary-bulk-upload-summary",
@@ -10,7 +11,7 @@ import { InternetBankingService } from "app/modules/net-banking/internet-banking
   styleUrls: ["./benificiary-bulk-upload-summary.component.scss"],
 })
 export class BenificiaryBulkUploadSummaryComponent implements OnInit {
-  columns: any = BulkUploadConstant.UPLOAD_SUMMARY;
+  columns: any = BeneficiaryBulkUploadConstant.UPLOAD_SUMMARY;
   sort: any;
   size: number = 5;
   sortOrder: any;
@@ -22,7 +23,7 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
   module: any;
   bulkUploadData: any;
   staticData: any = {
-    data: BulkUploadConstant.STATIC_SUMMARY,
+    data: BeneficiaryBulkUploadConstant.STATIC_SUMMARY,
     meta: {
       page: 1,
       size: 5,
@@ -38,10 +39,11 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
     private route: Router,
     private bulkService: InternetBankingService,
     private bulkuploadService: BulkUploadServiceService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private benificiaryService: BeneficiaryService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   customGoBack() {
     this.route.navigate(["/user/dashboard"]);
@@ -55,7 +57,7 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
     this.navigateToBulkUpload("addNew");
   }
   editRecord(element) {
-    this.navigateToBulkUpload(element.element.id);
+    this.navigateToBulkUpload(element.element.refNumber);
   }
   getDataByPage(event) {
     this.page = event.page;
@@ -64,7 +66,7 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
     this.sortValue = event.sort;
     this.filterBy = event.filterBy;
     this.module = event.module;
-    this.bulkService
+    this.benificiaryService
       .getSummary(
         event.filterBy,
         event.filterValue,
@@ -84,7 +86,6 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
       .downloadBulkuploadParentSummary()
       .subscribe((data) => {
         let blob = new Blob([data], { type: "application/octet-stream" });
-
         var downloadURL = window.URL.createObjectURL(blob);
         var link = document.createElement("a");
         link.href = downloadURL;

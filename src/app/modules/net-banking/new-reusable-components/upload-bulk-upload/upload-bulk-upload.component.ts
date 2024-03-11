@@ -14,12 +14,12 @@ import { TokenStorageService } from "app/shared/token-storage.service";
   styleUrls: ["./upload-bulk-upload.component.scss"],
 })
 export class UploadBulkUploadComponent implements OnInit {
-  @Input() screenName: string;
+  @Input('screenName') screenName: any = "";
   @Input() showNewBeneficiary: boolean = false;
   @Input() showProductType: boolean = true;
 
   @Output() customSaveBulkUpload = new EventEmitter<any>();
-
+  @Output() downloadBulkUpload = new EventEmitter<any>();
   maintTemplateUpload: FormGroup;
   fileFormat: string[] = ["Excel"];
   file: any;
@@ -38,7 +38,7 @@ export class UploadBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private commonService: CommonService,
     private tokenStorage: TokenStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -72,7 +72,7 @@ export class UploadBulkUploadComponent implements OnInit {
       processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });
-    this.maintTemplateUpload.valueChanges.subscribe((res) => {});
+    this.maintTemplateUpload.valueChanges.subscribe((res) => { });
   }
 
   get uploadFileArrlrngth() {
@@ -92,62 +92,17 @@ export class UploadBulkUploadComponent implements OnInit {
   goToScreen() {
     const formData = new FormData();
     formData.append("fileName", this.file);
-    this.bulkservice
-      .uploadExcel(
-        formData,
-        this.currentUser.username,
-        this.maintTemplateUpload.value.productType,
-        this.maintTemplateUpload.value.processingDate
-      )
-      .subscribe((res: any) => {
-        if (res?.statusCode === 200) {
-          this.commonService
-            .generateOTP(this.currentUser.mobile)
-            .subscribe((resp: any) => {
-              this.otp = resp?.data;
-            });
-          const dialogRef = this.dialog.open(AllInOnePopupComponent, {
-            data: {
-              remark: true,
-              mobile: this.currentUser.mobile,
-            },
-            width: "750px",
-            disableClose: true,
-            panelClass: "popup-dialog-class",
-          });
-          dialogRef.afterClosed().subscribe((resp) => {
-            const dialogRef = this.dialog.open(SuccessPopupComponent, {
-              data: {
-                refrenceNo: res?.data?.reffNo,
-                isNetBanking: true,
-                route: "bulk-upload",
-              },
-              width: "750px",
-              disableClose: true,
-              panelClass: "popup-dialog-class",
-              backdropClass: "bdrop",
-            });
-            dialogRef.afterClosed().subscribe((res) => {
-              console.log("........");
-            });
-          });
-        }
-        //emit an uploaded id
-        this.customSaveBulkUpload.emit(res?.data?.id);
-      });
-
+    const userName = this.currentUser.userName;
+    const productType = this.maintTemplateUpload.value.productType;
+    const processingDate = this.maintTemplateUpload.value.processingDate;
+    const screenName = this.screenName;
+    this.customSaveBulkUpload.emit({ formData, userName, productType, processingDate });
     // this emit should be remove after trade api intigeration done
-    this.customSaveBulkUpload.emit("");
   }
 
   downloadTemplate(event: Event) {
     event.stopPropagation();
-    this.bulkservice.downloadTemplate().subscribe((blob: any) => {
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "Upload.csv";
-      link.click();
-    });
+    this.downloadBulkUpload.emit("");
   }
 
   fetchAllScreens() {

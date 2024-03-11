@@ -8,6 +8,7 @@ import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/a
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { BeneficiaryService } from "../beneficiary.service";
 
 @Component({
   selector: "app-beneficiary-bulk-upload",
@@ -61,43 +62,44 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     private api: BulkUploadServiceService,
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
-    private commonService: CommonService
-  ) {}
+    private commonService: CommonService,
+    private benificiaryService: BeneficiaryService
+  ) { }
 
   ngOnInit(): void {
     console.log();
     this.currentUser = this.tokenStorage.getUser();
     this.isEdit = true;
-    this.bulkId = this.route.snapshot.params["id"];
-    console.log(this.bulkId, "this.bulkId");
+    this.referenceNo = this.route.snapshot.params["id"];
+    console.log(this.referenceNo, "this.bulkId");
     if (this.bulkId != "addNew") {
-      this.getTransactionLevelStatus();
-      this.tansactionAction();
+      // this.getTransactionLevelStatus();
+      // this.tansactionAction();
     }
   }
 
-  tansactionAction() {
-    this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
-      const data = resp.data[0].coprateNetBankingBulkUploadInfo;
-      this.isTransactionActionDone =
-        data.every((item) => item.uploadstatus === "APPROVED") ||
-        data.every((item) => item.uploadstatus === "REJECTED");
-    });
-  }
+  // tansactionAction() {
+  //   this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
+  //     const data = resp.data[0].coprateNetBankingBulkUploadInfo;
+  //     this.isTransactionActionDone =
+  //       data.every((item) => item.uploadstatus === "APPROVED") ||
+  //       data.every((item) => item.uploadstatus === "REJECTED");
+  //   });
+  // }
 
-  getTransactionLevelStatus() {
-    this.api.getLevelApprovalStatus(this.bulkId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.approvalList = resp.data;
-        if (this.approvalList?.length === 1) {
-          this.approvalList.push(this.pendingLevel);
-        }
-      }
-    });
-  }
+  // getTransactionLevelStatus() {
+  //   this.api.getLevelApprovalStatus(this.bulkId).subscribe((resp) => {
+  //     if (resp?.statusCode === 200) {
+  //       this.approvalList = resp.data;
+  //       if (this.approvalList?.length === 1) {
+  //         this.approvalList.push(this.pendingLevel);
+  //       }
+  //     }
+  //   });
+  // }
 
   getBulkUploadDetailsById(filter) {
-    this.api.getBulkUploadRecords(this.bulkId, filter).subscribe((resp) => {
+    this.benificiaryService.getBulkUploadRecords(this.referenceNo, filter).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.bulkUploadDetails = resp;
         this.auditLogObject = resp.data[0];
@@ -209,11 +211,67 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   }
 
   customSaveBulkUpload(event) {
-    this.bulkId = event;
-    console.log(event);
-    console.log(this.bulkUploadType);
-    this.router.navigate(["user/dashboard/trade/bulk-upload"]);
-    // this.bulkId = event;
+    this.commonService
+      .generateOTP(this.currentUser.mobile)
+      .subscribe((resp: any) => {
+        this.otp = resp?.data;
+        this.callAllInOnePopup(event)
+      });
+
+  }
+
+  callAllInOnePopup(event) {
+    const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+      data: {
+        remark: true,
+        mobile: this.currentUser.mobile,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp) {
+        this.benificiaryService.
+          uploadBenificiaryExcel(event.formData)
+          .subscribe((res: any) => {
+            if (res?.statusCode === 200) {
+              this.callSuccessPopup(res);
+
+            }
+
+          });
+      }
+    });
+  }
+
+
+  callSuccessPopup(res) {
+    const dialogRef = this.dialog.open(SuccessPopupComponent, {
+      data: {
+        refrenceNo: res?.data?.reffNo,
+        isNetBanking: true,
+        route: "trade/bulk-upload",
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.bulkId = res?.data?.id;
+      this.referenceNo = res?.data?.reffNo;
+      this.router.navigate(["user/dashboard/trade/bulk-upload", this.bulkId]);
+    });
+  }
+
+  DownloadBulkUpload(event) {
+    this.benificiaryService.downloadBenificiaryTemplate().subscribe((blob: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "Upload.csv";
+      link.click();
+    });
   }
 
   downloadRecord() {
