@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
 import { InternetBankingService } from "../../internet-banking.service";
 import { beneficiaryConstant } from "./beneficiary.constant";
+import { BeneficiaryService } from "./beneficiary.service";
 
 @Component({
   selector: "app-beneficiary-summary",
@@ -19,24 +20,16 @@ export class BeneficiarySummaryComponent implements OnInit {
   sortValue = "";
   sortDirection = "";
   filterBy: FilterBy;
+  filterValue = "";
+  searchValue = "";
   module: any;
   beneficiaryData: Object;
-  staticData: any = {
-    data: beneficiaryConstant.staticData,
-    meta: {
-      page: 1,
-      size: 5,
-      totalElements: 562,
-      totalPages: 113,
-    },
-    statusCode: 200,
-    status: "OK",
-  };
 
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private bulkService: InternetBankingService
+    private bulkService: InternetBankingService,
+    private benificiaryApi: BeneficiaryService
   ) {}
 
   ngOnInit(): void {}
@@ -49,20 +42,31 @@ export class BeneficiarySummaryComponent implements OnInit {
     this.sortDirection = event.direction;
     this.sortValue = event.sort;
     this.filterBy = event.filterBy;
-    this.module = event.module;
-    this.bulkService
-      .getSummary(
+    this.searchValue = event.searchValue;
+    this.benificiaryApi
+      .getDataByPage(
         event.filterBy,
         event.filterValue,
         event.page,
         event.size,
         this.sortValue,
-        event.direction,
-        this.module
+        event.direction
       )
       .subscribe((res) => {
         this.beneficiaryData = res;
       });
+  }
+
+  getBenediciaryDataByage() {
+    const payload = {
+      filterBy: this.filterBy,
+      filterValue: this.filterValue,
+      page: this.page,
+      size: this.pageSize,
+      sort: this.sortValue,
+      direction: this.sortDirection,
+    };
+    this.getDataByPage(payload);
   }
 
   openPopUp(event) {
@@ -71,6 +75,14 @@ export class BeneficiarySummaryComponent implements OnInit {
       this.route.navigate([`../add-edit-beneficiary`], {
         relativeTo: this.activatedRoute,
       });
+    } else {
+      const id = event.element;
+
+      this.route.navigate([`../add-edit-beneficiary`], {
+        relativeTo: this.activatedRoute,
+        queryParams: { isEdit: "Yes", id: id.benificiaryId },
+      });
+      console.log(id?.benificiaryId);
     }
     if (id === "bulk") {
       this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);

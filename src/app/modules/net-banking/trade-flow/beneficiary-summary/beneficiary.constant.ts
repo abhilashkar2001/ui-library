@@ -1,14 +1,14 @@
 export class beneficiaryConstant {
   static readonly BENEFICIARY_SUMMARY = [
     {
-      columnDef: "name",
+      columnDef: "payeeName",
       header: "Name",
-      cell: (element: any) => element.name,
+      cell: (element: any) => element.payeeName,
     },
     {
-      columnDef: "AccountNo",
+      columnDef: "accountNumber",
       header: "Account Number",
-      cell: (element: any) => element.AccountNo,
+      cell: (element: any) => element.accountNumber,
     },
     {
       columnDef: "account",
@@ -16,9 +16,9 @@ export class beneficiaryConstant {
       cell: (element: any) => element.account,
     },
     {
-      columnDef: "country",
+      columnDef: "countryName",
       header: "Country",
-      cell: (element: any) => element.country,
+      cell: (element: any) => element.countryName,
     },
     {
       columnDef: "createdBy",
@@ -26,35 +26,14 @@ export class beneficiaryConstant {
       cell: (element: any) => element.createdBy,
     },
     {
-      columnDef: "createdOn",
+      columnDef: "created",
       header: "Created on",
-      cell: (element: any) => element.createdOn,
+      cell: (element: any) => element.created,
     },
     {
       columnDef: "enableAndDisable",
       header: "Enable/Disable",
       cell: (element: any) => element.enableAndDisable,
-    },
-  ];
-
-  static readonly staticData = [
-    {
-      name: 1,
-      AccountNo: "Unapproved",
-      account: "India",
-      country: 36776,
-      createdBy: "ewnewoind",
-      createdOn: "ekmd",
-      enableAndDisable: 3322,
-    },
-    {
-      name: 1,
-      AccountNo: "Unapproved",
-      account: "India",
-      country: 36776,
-      createdBy: "ewnewoind",
-      createdOn: "ekmd",
-      enableAndDisable: 3322,
     },
   ];
 }
