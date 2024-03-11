@@ -55,7 +55,6 @@ export class UserActiveState {
 
   getUserActivity() {
     this.userLoginValidInSecs = this.tokenStorageService.getValidityInSecs();
-    this.userLoginValidInSecs = 10;
     this.startTimer();
     if (this.userLoginValidInSecs) {
       this.userLoginValid = setTimeout(() => {
