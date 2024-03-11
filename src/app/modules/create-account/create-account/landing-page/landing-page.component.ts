@@ -29,7 +29,7 @@ export class LandingPageComponent implements OnInit {
     this.homeService
       .getAccountTypes(this.businessSuiteName)
       .subscribe((response: any) => {
-        this.data = response.data;
+        if (response) this.data = response.data;
       });
   }
   customApplyLoan(event) {
