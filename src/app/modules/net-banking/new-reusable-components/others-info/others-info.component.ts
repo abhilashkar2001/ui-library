@@ -21,7 +21,7 @@ export class OthersInfoComponent implements OnInit {
     private fb: FormBuilder,
     private countryService: countryStateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllCountry();
@@ -83,20 +83,20 @@ export class OthersInfoComponent implements OnInit {
       }),
       ...(this.bgType === "BG Issuance"
         ? {
-            textualDescription: [
-              item.textualDescription ? item.textualDescription : "",
-            ],
-            introToBank: [item.introToBank ? item.introToBank : ""],
-          }
+          textualDescription: [
+            item.textualDescription ? item.textualDescription : "",
+          ],
+          introToBank: [item.introToBank ? item.introToBank : ""],
+        }
         : {
-            counterGuarantee: [
-              item.counterGuarantee ? item.counterGuarantee : "",
-            ],
-            deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
-            deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
-            margin: [item.margin ? item.margin : ""],
-            feeAccount: [item.feeAccount ? item.feeAccount : ""],
-          }),
+          counterGuarantee: [
+            item.counterGuarantee ? item.counterGuarantee : "",
+          ],
+          deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
+          deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
+          margin: [item.margin ? item.margin : ""],
+          feeAccount: [item.feeAccount ? item.feeAccount : ""],
+        }),
       branchName: [item.branchName ? item.branchName : ""],
       deliveryInstruction: [
         item.deliveryInstruction ? item.deliveryInstruction : "",
@@ -104,7 +104,7 @@ export class OthersInfoComponent implements OnInit {
     });
     this.otherInfoForm.valueChanges.subscribe((res) => {
       this.updateParentModel(
-        { otherInfoModel: this.otherInfoForm.value },
+        { otherInfoModel: this.otherInfoForm.value, contactInfo: !this.otherInfoForm.value.contactInfo.address[0].cityId ? null : this.otherInfoForm.value.contactInfo },
         this.checkform()
       );
     });

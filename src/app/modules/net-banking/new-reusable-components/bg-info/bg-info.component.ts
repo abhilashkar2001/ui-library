@@ -52,17 +52,17 @@ export class BgInfoComponent implements OnInit {
         beneficiary: ["", Validators.required],
         ...(this.bgType === "BG Issuance"
           ? {
-              purpose: [""],
-            }
+            purpose: [""],
+          }
           : {
-              email: [
-                "",
-                Validators.pattern(
-                  "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-                ),
-              ],
-              notifyBenificary: [true],
-            }),
+            email: [
+              "",
+              Validators.pattern(
+                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+              ),
+            ],
+            notifyBenificary: [true],
+          }),
         contactInfo: this.fb.group({
           address: this.fb.array([]),
         }),
@@ -92,6 +92,7 @@ export class BgInfoComponent implements OnInit {
         payload = {
           ...this.bgIssuanceForm.value.bgIssuanceBgInfo,
           ...this.bgIssuanceForm.value.benificiaryDetails,
+          contactInfo: !this.bgIssuanceForm.value.benificiaryDetails.contactInfo.address[0].cityId ? null : this.bgIssuanceForm.value.benificiaryDetails.contactInfo
         };
 
         this.updateParentModel(

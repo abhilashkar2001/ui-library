@@ -22,7 +22,7 @@ export class ApplicantsInfoComponent implements OnInit {
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getStaticData();
@@ -49,7 +49,8 @@ export class ApplicantsInfoComponent implements OnInit {
     });
     this.addUserAddress();
     this.applicantForm.valueChanges.subscribe((res) => {
-      this.updateParentModel({ applicantInfo: res }, this.checkForm());
+
+      this.updateParentModel({ applicantInfo: { ...res, contactInfo: !this.applicantForm.value.contactInfo.address[0].cityId ? null : this.applicantForm.value.contactInfo } }, this.checkForm());
     });
   }
   checkForm() {
