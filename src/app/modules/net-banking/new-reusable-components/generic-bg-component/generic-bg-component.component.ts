@@ -97,7 +97,6 @@ export class GenericBgComponentComponent implements OnInit {
   };
 
   saveTemplet(event) {
-    console.log(this.account$.value, ".........")
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
       data: {
         isSaveTemplate: true,
