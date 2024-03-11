@@ -1,4 +1,3 @@
-
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
@@ -10,10 +9,11 @@ export class BeneficiaryService {
   protected basePath = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
   uploadBenificiaryExcel(formData) {
-    return this.http.post(`${this.basePath}/benieficiary/uploadBeneficiary`, formData);
+    return this.http.post(
+      `${this.basePath}/benieficiary/uploadBeneficiary`,
+      formData
+    );
   }
 
   getBulkUploadRecords(refNumber, filters?) {
@@ -65,7 +65,9 @@ export class BeneficiaryService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?${pagination}`;
-    return this.http.get(`${this.basePath}/benieficiary/fetchMasterInfo${payload}`);
+    return this.http.get(
+      `${this.basePath}/benieficiary/fetchMasterInfo${payload}`
+    );
   }
 
   downloadBenificiaryTemplate() {
@@ -75,6 +77,7 @@ export class BeneficiaryService {
         responseType: "blob",
       }
     );
+  }
 
   getAllCountry() {
     return this.http.get<any>(`${this.basePath}/country`);
