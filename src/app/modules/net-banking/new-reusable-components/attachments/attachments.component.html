@@ -1,5 +1,5 @@
-<div
-  class="attachments-main"
+<mat-card
+  class="attachments-main full-width default-card mx-0"
   fxLayout="column wrap"
   fxLayoutAlign="space-between"
   [formGroup]="attachementInfoForm"
@@ -10,8 +10,9 @@
     fxFlex="100"
     *ngFor="let title of attachMentModel.controls; let i = index"
     [formGroup]="title"
+    fxLayoutGap="1%"
   >
-    <div fxFlex="33" fxLayout="row" class="Select_add">
+    <div fxFlex="32.33" fxLayout="row" class="Select_add">
       <div fxFlex="85" fxLayout="row" class="selection_left">
         <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
           <mat-label class="label_input">{{ "Title" }}</mat-label>
@@ -46,14 +47,14 @@
       </div>
     </div>
 
-    <div fxFlex="33" fxLayout="row" class="Select_add">
+    <div fxFlex="32.33" fxLayout="row" class="Select_add">
       <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
         <mat-label class="label_input">{{ "Title Description" }}</mat-label>
         <input matInput formControlName="titleDescription" />
       </mat-form-field>
     </div>
 
-    <div class="back" fxFlex="33">
+    <div class="back" fxFlex="32.33">
       <ng-container>
         <div fxFlex="row" fxFlex="80">
           <div fxFlex="72" class="fil">
@@ -101,4 +102,4 @@
       </ng-container>
     </div>
   </div>
-</div>
+</mat-card>
