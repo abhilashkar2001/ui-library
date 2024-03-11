@@ -121,7 +121,7 @@ export class GenericBgComponentComponent implements OnInit {
       otherInfoModel: this.account$.value?.otherInfoModel ?? null,
       attachmentModel: this.account$.value?.attachMentModel ?? null,
     };
-    this.api.saveTemplate(payload).subscribe((resp) => {});
+    this.api.saveTemplate(payload).subscribe((resp) => { });
   }
 
   updateRecord(event) {
