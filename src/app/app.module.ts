@@ -25,6 +25,7 @@ import { LayoutsModule } from "./layouts/layouts.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { InterceptorProviders } from "./shared/interceptors/interceptors";
 import { SwiperModule } from "swiper/angular";
+import { ToastrModule } from "ngx-toastr";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -57,6 +58,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }),
     NgbModule,
     MatDialogModule,
+    ToastrModule.forRoot({
+      progressAnimation: "decreasing",
+      progressBar: true,
+      positionClass: "toast-top-right",
+      timeOut: 3000,
+      preventDuplicates: true,
+    }),
   ],
   declarations: [AppComponent],
   providers: [
