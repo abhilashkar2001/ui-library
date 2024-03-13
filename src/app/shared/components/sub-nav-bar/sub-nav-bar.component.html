@@ -1,0 +1,12 @@
+<mat-toolbar class="nav-bar">
+  <div fxFlex="100" fxLayoutAlign="space-between center">
+    <div
+      class="nav_item"
+      routerLinkActive="open"
+      *ngFor="let item of navigationItems"
+      [routerLink]="item?.link"
+    >
+      <img [src]="item.icon" />
+    </div>
+  </div>
+</mat-toolbar>

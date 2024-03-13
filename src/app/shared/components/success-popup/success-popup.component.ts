@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import { DownloadService } from "app/shared/services/download.service";
 import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -15,14 +16,23 @@ export class SuccessPopupComponent implements OnInit {
   accountData: any;
   fdRdDetails: any;
   depositType: any;
+  isNetBanking: false;
+  referenceNo: any = "";
+  actionType: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     @Inject(MAT_DIALOG_DATA) public screenData: any,
     private emailService: EmailService,
     private downloadService: DownloadService,
-    private openAccountService: OpenAccountService
-  ) {}
+    private openAccountService: OpenAccountService,
+    private router: Router
+  ) {
+    this.isNetBanking = data.isNetBanking || false;
+    this.actionType = data.actionType;
+    this.referenceNo = data.refrenceNo;
+    console.log(this.referenceNo);
+  }
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
@@ -105,11 +115,16 @@ export class SuccessPopupComponent implements OnInit {
   }
 
   done() {
-    localStorage.removeItem("basisDetails");
-    localStorage.removeItem("customerData");
-    sessionStorage.removeItem("loanBasisDetails");
-    this.dialogRef.close(true);
-    window.close();
+    if (this.isNetBanking) {
+      this.router.navigate([`/user/dashboard/${this.data.route}`]);
+      this.dialogRef.close();
+    } else {
+      localStorage.removeItem("basisDetails");
+      localStorage.removeItem("customerData");
+      sessionStorage.removeItem("loanBasisDetails");
+      this.dialogRef.close(true);
+      window.close();
+    }
   }
   close() {
     this.dialogRef.close(false);

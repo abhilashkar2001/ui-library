@@ -1,0 +1,151 @@
+.upload-bulk {
+  .main-head {
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+  }
+
+  .small-head {
+    font-size: 10px;
+    color: rgb(143, 140, 140);
+  }
+
+  .file-upload {
+    padding: 2rem 1rem;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='13' ry='13' stroke='black' stroke-width='4' stroke-dasharray='9' stroke-dashoffset='13' stroke-linecap='round'/%3e%3c/svg%3e");
+    border-radius: 13px;
+    color: #707070;
+  }
+
+  .HeadingForUpload {
+    padding-top: 10px;
+    text-align: left;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: medium;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+    font-family: poppins;
+    letter-spacing: 0px;
+    color: #000000;
+  }
+
+  .chooseFiles {
+    font-style: normal;
+    font-variant: normal;
+    font-weight: medium;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+    font-family: poppins;
+    letter-spacing: 0px;
+    color: #004a9a;
+    cursor: pointer;
+  }
+
+  .sizeAlert {
+    font-style: normal;
+    font-variant: normal;
+    font-weight: medium;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+    font-family: poppins;
+    letter-spacing: 0px;
+    color: #b4b4b4;
+  }
+
+  .verify-disabled {
+    background: #e3e3e3;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: poppins, "Medium";
+    letter-spacing: 0px;
+  }
+
+  .verify-btn {
+    position: relative;
+    width: 100px;
+    height: 45px;
+    color: #ffffff;
+    border-radius: 8px;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    font-size: 14px;
+    font-family: Poppins, "Medium";
+    font-weight: 600;
+    border: none;
+  }
+
+  .verifyDiv {
+    margin-top: -3%;
+  }
+
+  .uploadedFile {
+    background: #fffefe 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 10px #00000017;
+    border-radius: 12px;
+    opacity: 1;
+  }
+
+  .icon-delete {
+    padding-top: 2%;
+    color: red;
+  }
+
+  .paddingtop {
+    padding-top: 6%;
+  }
+
+  .submitButton {
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    color: #fff !important;
+    border-radius: 20px !important;
+    width: 154px !important;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600 !important;
+    letter-spacing: 0.4px;
+    margin: 0 0.5rem !important;
+    box-shadow: 3px 3px 15px #0000000f !important;
+  }
+  .header {
+    color: #000;
+    font-family: Poppins;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .card {
+    border: 8px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    opacity: 1;
+    margin-bottom: 1%;
+    padding: 10px;
+    width: 100%;
+    box-shadow: rgba(159, 159, 159, 0.3) 14px 1px 18px 5px;
+  }
+  .buttons {
+    margin-top: 3%;
+  }
+
+  .exitButton {
+    width: 154px !important;
+    height: 40px;
+    color: #b20000 !important;
+    background: #fff;
+    border-radius: 35px !important;
+    font-family: Poppins, sans-serif;
+    font-size: 13px;
+    font-weight: 600 !important;
+    letter-spacing: 0.4px;
+    margin: 0 0.5rem !important;
+    box-shadow: 3px 3px 15px #0000000f !important;
+  }
+}

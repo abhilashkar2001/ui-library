@@ -1,0 +1,124 @@
+<div class="download-main-div">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    class="w-full mt-4 pb-10 pl-2"
+    fxLayoutGap="10px"
+  >
+    <div>&nbsp;</div>
+    <label class="text-large">{{ "Select Date Range" | translate }}</label>
+  </div>
+  <mat-card class="matCard-align custom-mat" fxLayout="column">
+    <div fxLayout="row wrap" fxLayoutGap="10px">
+      <div fxFlex="48" fxFlex.lt-md="100">
+        <mat-form-field
+          appearance="outline"
+          class="full-width fieldinput"
+          tabindex="0"
+        >
+          <mat-label>{{ "From Date" | translate }}</mat-label>
+
+          <mat-date-range-input>
+            <input
+              class="date-algn"
+              matStartDate
+              matInput
+              (dateInput)="onToDateChange($event.value)"
+              [(ngModel)]="fromDate"
+              (dateChange)="dateDispatchEventFrom('fromDate', $event)"
+              readonly
+            />
+            <input matInput matEndDate />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            panelClass="myCustomClass"
+            [for]="picker"
+            ><mat-icon matDatepickerToggleIcon svgIcon="calendar-icon">
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <div fxFlexAlign="center">
+            <mat-date-range-picker
+              [calendarHeaderComponent]="calendarHeaderComponent"
+              #picker
+              panelClass="customdateRange"
+            ></mat-date-range-picker>
+          </div>
+        </mat-form-field>
+      </div>
+      <div fxFlex="48" fxFlex.lt-md="100">
+        <mat-form-field appearance="outline" class="full-width fieldinput">
+          <mat-label>{{ "To Date" | translate }}</mat-label>
+
+          <mat-date-range-input [min]="fromDate">
+            <input
+              class="date-algn"
+              matInput
+              matStartDate
+              [(ngModel)]="toDate"
+              (dateInput)="onToDateChange($event.value)"
+              (dateChange)="dateDispatchEventTo('toDate', $event)"
+              readonly
+            />
+            <input matInput matEndDate />
+          </mat-date-range-input>
+
+          <mat-datepicker-toggle
+            matSuffix
+            panelClass="myCustomClass"
+            [for]="picker1"
+            ><mat-icon matDatepickerToggleIcon svgIcon="calendar-icon">
+            </mat-icon>
+          </mat-datepicker-toggle>
+
+          <mat-date-range-picker
+            [calendarHeaderComponent]="calendarHeaderComponent"
+            #picker1
+            panelClass="customdateRange"
+          ></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <mat-date-range-input
+        [rangePicker]="picker"
+        class="invisible"
+        [max]="todayDate"
+      >
+        <input
+          matStartDate
+          [(ngModel)]="fromDate"
+          readonly
+          (dateInput)="onToDateChange($event.value)"
+          (dateChange)="dateDispatchEventFrom('fromDate', $event)"
+        />
+        <input matEndDate [(ngModel)]="toDate" />
+      </mat-date-range-input>
+      <mat-date-range-input
+        [rangePicker]="picker1"
+        class="invisible"
+        [max]="todayDate"
+        [min]="fromDate"
+      >
+        <input
+          matStartDate
+          [(ngModel)]="toDate"
+          (dateInput)="onToDateChange($event.value)"
+          (dateChange)="dateDispatchEventFrom('toDate', $event)"
+          readonly
+        />
+        <input matEndDate [(ngModel)]="toDate" />
+      </mat-date-range-input>
+    </div>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column">
+      <div fxFlex="100" fxLayoutAlign="center center">
+        <button class="saveButton" mat-raised-button (click)="close()">
+          {{ "Done" | translate }}</button
+        >&nbsp;&nbsp;
+        <div>
+          <button class="exitButton" mat-raised-button (click)="goBack()">
+            {{ "Back" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
