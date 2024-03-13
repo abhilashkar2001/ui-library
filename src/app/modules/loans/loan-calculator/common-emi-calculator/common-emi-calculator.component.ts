@@ -129,6 +129,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       totalPayableAmount: this.totalPayableAmmount,
       emiAmount: this.emiAmount,
     };
+    this.loanForm.reset();
     this.customCalculatorValues.emit(obj);
   }
 

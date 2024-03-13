@@ -25,6 +25,7 @@ export class SessionService {
       .pipe(
         map((res) => {
           if (res?.accessToken) {
+            this.tokenService.setValidityInSecs(res?.validityInSecs);
             return this.tokenService.saveToken(res?.accessToken);
           }
         })

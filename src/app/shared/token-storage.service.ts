@@ -5,6 +5,8 @@ const USER_KEY = "auth-user";
 const JWT_USER = "jwt-user";
 const IS_REMEMBER = "isRemember";
 
+export const VALIDITY_IN_SECS = "validityInSecs";
+
 @Injectable({
   providedIn: "root",
 })
@@ -82,5 +84,22 @@ export class TokenStorageService {
     } else {
       return null;
     }
+  }
+  setValidityInSecs(validityInSecs) {
+    this.sessionStore.removeItem(VALIDITY_IN_SECS);
+    this.sessionStore.setItem(VALIDITY_IN_SECS, validityInSecs);
+  }
+
+  getValidityInSecs() {
+    return this.sessionStore.getItem(VALIDITY_IN_SECS);
+  }
+
+  setRememberMe(rememberMe) {
+    this.sessionStore.removeItem(IS_REMEMBER);
+    this.sessionStore.setItem(IS_REMEMBER, rememberMe);
+  }
+
+  getRememberMe() {
+    return JSON.parse(this.sessionStore.getItem(IS_REMEMBER));
   }
 }
