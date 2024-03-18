@@ -12,7 +12,7 @@ export class LoanService {
   constructor(private http: HttpClient) {}
 
   getLoanTypes(
-    loanServices: string = "Loan Opening Services"
+    loanServices: string = "LOANOPENINGSERVICES"
   ): Observable<any> | any {
     return this.http.get(
       `${baseUrl}/basis-class?businessSuite=${loanServices}`

@@ -13,7 +13,7 @@ export class LandingPageComponent implements OnInit {
   profileHint =
     "Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.";
   routeUrl = "/account/open";
-  businessSuiteName: string = "Account Opening Services";
+  businessSuiteName: string = "ACCOUNTOPENINGSERVICES";
   constructor(
     private homeService: HomeService,
     private router: Router,
