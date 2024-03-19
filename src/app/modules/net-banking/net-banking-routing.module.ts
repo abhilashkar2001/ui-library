@@ -34,6 +34,46 @@ const routes: Routes = [
         component: NetBankingDashboardComponent,
       },
       {
+        path: "trade",
+        component: TradeFlowComponent,
+        children: [
+          {
+            path: "",
+            redirectTo: "bgInfo",
+            pathMatch: "full",
+          },
+          {
+            path: "dashboard",
+            component: TradeDashboardComponent,
+          },
+
+          {
+            path: "beneficiary",
+            component: BeneficiarySummaryComponent,
+          },
+          {
+            path: "add-edit-beneficiary",
+            component: AddEditBenificiaryComponent,
+          },
+          {
+            path: "bulk-upload/:id",
+            component: BeneficiaryBulkUploadComponent,
+          },
+          {
+            path: "bulk-upload",
+            component: BenificiaryBulkUploadSummaryComponent,
+          },
+          {
+            path: "genericBg",
+            component: GenericBgComponentComponent,
+          },
+          {
+            path: "bgSummary",
+            component: BgSummaryComponent,
+          },
+        ],
+      },
+      {
         path: "bulk-upload",
         component: BulkUploadComponent,
       },
@@ -49,46 +89,6 @@ const routes: Routes = [
       //   path: "add-bulk-upload",
       //   component: UploadBulkUploadComponent,
       // },
-    ],
-  },
-  {
-    path: "trade",
-    component: TradeFlowComponent,
-    children: [
-      {
-        path: "",
-        redirectTo: "bgInfo",
-        pathMatch: "full",
-      },
-      {
-        path: "dashboard",
-        component: TradeDashboardComponent,
-      },
-
-      {
-        path: "beneficiary",
-        component: BeneficiarySummaryComponent,
-      },
-      {
-        path: "add-edit-beneficiary",
-        component: AddEditBenificiaryComponent,
-      },
-      {
-        path: "bulk-upload/:id",
-        component: BeneficiaryBulkUploadComponent,
-      },
-      {
-        path: "bulk-upload",
-        component: BenificiaryBulkUploadSummaryComponent,
-      },
-      {
-        path: "genericBg",
-        component: GenericBgComponentComponent,
-      },
-      {
-        path: "bgSummary",
-        component: BgSummaryComponent,
-      },
     ],
   },
 ];
