@@ -30,11 +30,12 @@ export class LoanDocumentUploadComponent implements OnInit {
   stepperTitle: any;
   documentTypeArray: any;
   staticData = {
-    OTHERDOCUMENT: [],
+    DOCUMENTNAME: [],
   };
   selectedImage: Blob;
   imageUrl: string;
   baseUrl = environment.microServiceURL;
+  screenName: string = "Loan Document";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,10 +78,10 @@ export class LoanDocumentUploadComponent implements OnInit {
 
   getGenericDetails() {
     this.sharedService
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["OTHERDOCUMENT"];
+          this.documentTypeArray = resp.data["DOCUMENTNAME"];
         }
       });
   }

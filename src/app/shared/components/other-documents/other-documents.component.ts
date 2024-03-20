@@ -59,6 +59,7 @@ export class OtherDocumentsComponent implements OnInit {
   // SAVE BUTTON PROPERTIES
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
+  screenName: string = "Select KYC";
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -92,7 +93,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   getGenericDetails() {
     this.sharedService
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data["DOCUMENTTYPE"];
@@ -345,5 +346,14 @@ export class OtherDocumentsComponent implements OnInit {
       (docItem) => docItem.fileInfo?.length > 0
     );
     return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
+  }
+
+  /**
+   * trackBy function for Document Type dropdown.
+   * @param documentTypeItem
+   * @returns
+   */
+  documentTypeTrackByFun(documentTypeItem) {
+    return documentTypeItem;
   }
 }

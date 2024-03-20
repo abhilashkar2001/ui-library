@@ -43,6 +43,9 @@ footer {
       width: 40px;
       margin: 7px;
     }
+    & img:hover {
+      transform: scale(1.5);
+    }
   }
 
   #horizontal_line {
