@@ -50,6 +50,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   accountList: any;
   currentDate = new Date();
   currencySymboll = "₹";
+  screenName: string = "Create Loan";
 
   constructor(
     private fb: FormBuilder,
@@ -96,7 +97,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
 
   getGenericDetails() {
     this.loanApi
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.holderTypeArray = resp.data["HOLDERTYPE"];

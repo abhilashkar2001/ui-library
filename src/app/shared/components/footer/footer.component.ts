@@ -10,6 +10,8 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 })
 export class FooterComponent implements OnInit {
   socialMedia = FooterConstant.SOCIAL_MEDIA;
+  footerPages = FooterConstant.FOOTER_PAGES;
+  helpSection = FooterConstant.FOOTER_HELP_SECTION;
   hideNavItem: boolean = false;
   userDetails: any;
   @Output() scrollToTop = new EventEmitter<any>();

@@ -16,6 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
     const token = this.token.getToken();
+    // language should be handle dynamically.
+    const language = "English";
 
     if (req.headers.get("Anonymous") == "NOTKN") {
       let newHeaders = req.headers.delete("Anonymous");
@@ -26,7 +28,9 @@ export class AuthInterceptor implements HttpInterceptor {
       if (token != null) {
         // for Spring Boot back-end
         authReq = req.clone({
-          headers: req.headers.set(TOKEN_HEADER_KEY, "Bearer " + token),
+          headers: req.headers
+            .set(TOKEN_HEADER_KEY, "Bearer " + token)
+            .set("language", language),
         });
       }
       return next.handle(authReq);

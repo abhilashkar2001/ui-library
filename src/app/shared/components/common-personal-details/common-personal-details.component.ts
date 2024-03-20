@@ -53,7 +53,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   listCityState: any = [];
   staticData = {
-    RESIDENCETYE: [],
+    RESIDENCETYPE: [],
     GENDER: [],
     PREFIX: [],
   };
@@ -64,6 +64,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   listCity: any = [];
   primaryCustIndex: number = 0;
   boundaries: any;
+  screenName: string = "Personal Details";
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -132,12 +133,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   getGenericDetails() {
     this.loanApi
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genderArray = resp.data["GENDER"];
           this.prefixArray = resp.data["PREFIX"];
-          this.residenceTypeArray = resp.data["RESIDENCETYE"];
+          this.residenceTypeArray = resp.data["RESIDENCETYPE"];
         }
       });
   }

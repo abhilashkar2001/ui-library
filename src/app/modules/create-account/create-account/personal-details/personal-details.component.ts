@@ -36,7 +36,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   listCityState: any = [];
   listCity: any = [];
   staticData = {
-    RESIDENCETYE: [],
+    RESIDENCETYPE: [],
     GENDER: [],
     PREFIX: [],
   };
@@ -50,6 +50,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
+  screenName: string = "Personal Details";
   constructor(
     private fb: FormBuilder,
     private openAccountService: OpenAccountService,
@@ -137,12 +138,12 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   getGenericDetails() {
     this.loanApi
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genderArray = resp.data["GENDER"];
           this.prefixArray = resp.data["PREFIX"];
-          this.residenceTypeArray = resp.data["RESIDENCETYE"];
+          this.residenceTypeArray = resp.data["RESIDENCETYPE"];
         }
       });
   }
