@@ -26,6 +26,7 @@ export class CreateAccountLandingPageComponent {
   originationId: any;
   basisId: any;
   productDetails: any;
+  processDetails: { processCycleCode: string; processStageId: number };
 
   constructor(
     private router: Router,
@@ -52,18 +53,27 @@ export class CreateAccountLandingPageComponent {
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
-        this.openAccountService
-          .getProcessStages(resp.data.processStageList[0].id)
-          .subscribe((response) => {
-            this.screenList = response.data.screens.sort((s1, s2) => {
-              return s1.sequence - s2.sequence;
-            });
-            sessionStorage.setItem(
-              "currentAccountStage",
-              resp.data.processStageList[0].id
-            );
-            this.factory();
-          });
+        this.processDetails = {
+          processCycleCode: resp.data.processCycleCode,
+          processStageId: resp.data.processStageList[0]?.id,
+        };
+
+        this.getScreenDetails(resp);
+      });
+  }
+
+  getScreenDetails(resp) {
+    this.openAccountService
+      .getProcessStages(resp.data.processStageList[0].id)
+      .subscribe((response) => {
+        this.screenList = response.data.screens.sort((s1, s2) => {
+          return s1.sequence - s2.sequence;
+        });
+        sessionStorage.setItem(
+          "currentAccountStage",
+          resp.data.processStageList[0].id
+        );
+        this.factory();
       });
   }
 
@@ -190,30 +200,47 @@ export class CreateAccountLandingPageComponent {
                 },
                 customerInfo: custResp,
               };
-              this.openAccountService
-                .saveCustomerInfo(payload)
-                .subscribe((resp) => {
-                  if (resp?.statusCode === 200) {
-                    this.originationId =
-                      resp.data.originationModel.originationId;
-                    var accountPayload = {
-                      gender: "Male",
-                      screenCode: this.screenList[2].screenCode,
-                    };
-                    this.loanApi
-                      .verifyWorkFlow(accountPayload)
-                      .subscribe((workres) => {
-                        if (workres?.autoAction) {
-                          e.loadingBtnText = "Saved";
-                          e.isLoading = false;
-                          this.saveCofig(workres);
-                        } else this.done(resp);
-                      });
-                  }
-                });
+              this.masterSave(payload, e);
             });
         }
       });
+  }
+
+  /**
+   * api call for master save in originatin.
+   * @param payload
+   * @param e
+   */
+  masterSave(payload, e) {
+    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.originationId = resp.data.originationModel.originationId;
+        //Note:- properties should be update once complete forumulla list recieves.
+        var accountPayload = {
+          properties: {},
+          screenCode: this.screenList[2].screenCode,
+          processStageId: this.processDetails.processStageId,
+          processCycleCode: this.processDetails.processCycleCode,
+        };
+        this.workFlowVerify(accountPayload, resp, e);
+      }
+    });
+  }
+
+  /**
+   * api call for workflow api.
+   * @param accountPayload
+   * @param resp
+   * @param e
+   */
+  workFlowVerify(accountPayload, resp, e) {
+    this.loanApi.verifyWorkFlow(accountPayload).subscribe((workres) => {
+      if (workres?.autoAction) {
+        e.loadingBtnText = "Saved";
+        e.isLoading = false;
+        this.saveCofig(workres);
+      } else this.done(resp);
+    });
   }
 
   done(resp?) {

@@ -64,7 +64,8 @@
                         <mat-option
                           *ngFor="
                             let documentTypeItem of documentTypeArray;
-                            let docIndex = index
+                            let docIndex = index;
+                            trackBy: documentTypeTrackByFun
                           "
                           [hidden]="isDocumentOptionDisabled2(documentTypeItem)"
                           class="option_font"

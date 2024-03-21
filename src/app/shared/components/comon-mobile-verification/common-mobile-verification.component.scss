@@ -89,7 +89,10 @@
     padding-bottom: 0px !important;
   }
 }
-::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+::ng-deep
+  .mobile-verify
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-infix {
   padding: 0px;
   margin-top: -4px !important;
 }

@@ -5,7 +5,6 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { identifierName } from "@angular/compiler";
 import {
   Component,
   EventEmitter,
@@ -15,7 +14,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { debounceTime } from "rxjs/operators";
 
@@ -66,11 +65,11 @@ export class CommonMobileVerificationComponent implements OnInit {
   countriesIsdCodes: any = [];
   selectedIsdCode: any = "";
   isValidMobile: boolean = false;
-  timer: any;
   selectedIsd: any;
   defaultIsdCodeValue: any;
   resendOtp: number = 0;
   maxMobileLength: number;
+  intervalId: any;
 
   constructor(private fb: FormBuilder, private commonService: CommonService) {
     this.buildFormGroup();
@@ -94,7 +93,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.resendLink = false;
     this.invalidOtp = false;
     this.resendOtp += 1;
-    clearInterval(this.timer);
+    this.stopInterval();
   }
 
   otpChange() {}
@@ -162,13 +161,13 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   otpTimer() {
-    clearInterval(this.timer);
+    this.stopInterval();
     let minute = 1;
     let seconds: number = minute * 60;
     let textSec: any = "0";
     let statSec: number = 60;
     const prefix = minute < 10 ? "0" : "";
-    this.timer = setInterval(() => {
+    this.intervalId = setInterval(() => {
       seconds--;
       if (statSec != 0) statSec--;
       else statSec = 59;
@@ -181,7 +180,7 @@ export class CommonMobileVerificationComponent implements OnInit {
 
       if (seconds == 0) {
         this.resendLink = true;
-        clearInterval(this.timer);
+        this.stopInterval();
       }
       this.OTPTimer.emit({ seconds: this.displaySecond });
     }, 1000);
@@ -196,5 +195,12 @@ export class CommonMobileVerificationComponent implements OnInit {
       );
       this.maxMobileLength = countryRecord.mobileLength;
     }
+  }
+
+  /**
+   * TO clear the timer interval.
+   */
+  stopInterval() {
+    clearInterval(this.intervalId);
   }
 }
