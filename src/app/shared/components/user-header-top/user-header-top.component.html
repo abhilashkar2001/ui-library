@@ -1,0 +1,90 @@
+<mat-toolbar class="topbar mat-bg-card">
+  <div class="avatar align-self-center">
+    <div class="avatar-title rounded bg-soft-primary">
+      <button mat-icon-button (click)="toggleMenu()">
+        <mat-icon svgIcon="custom-menu-icon" class="m-0"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="roleName?.startsWith('SCB'); else showTextLogo">
+    <div class="branding" (click)="goToHome()">
+      <img
+        src="assets/images/logos/scb-transparent-logo.svg"
+        alt=""
+        class="app-logo"
+      />
+      <span class="app-logo-text"
+        >{{ currentUser?.branchName ?? "" }}({{
+          currentUser?.branchCode ?? ""
+        }})</span
+      >
+    </div>
+  </ng-container>
+  <ng-template #showTextLogo>
+    <div class="ml-16">
+      <a (click)="goToHome()">&nbsp; {{ currentUser?.bankName }}</a>
+    </div>
+  </ng-template>
+
+  <span fxFlex></span>
+
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
+  </button>
+  <!-- Notification toggle button -->
+  <button
+    mat-icon-button
+    matTooltip="Notifications"
+    [style.overflow]="'visible'"
+  >
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+  <button mat-icon-button class="topbar-button-right">
+    <mat-icon>settings</mat-icon>
+  </button>
+
+  <!-- Top left user menu -->
+  <div
+    fxLayout="row"
+    class="user-account"
+    [matMenuTriggerFor]="accountMenu"
+    #clickHoverMenuTrigger="matMenuTrigger"
+  >
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button mat-icon-button class="topbar-button-right img-button">
+        <img [src]="fileUrl" [src-fallback]="userImage" />
+      </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <span class="user-headline text-white">{{ currentUser?.username }}</span>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </div>
+  </div>
+
+  <mat-menu #accountMenu="matMenu" class="profile-menu">
+    <div class="profile-box" (click)="$event.stopPropagation()">
+      <div class="profile-header">
+        <div class="profile-image-container">
+          <img class="img-icon" [src]="fileUrl" [src-fallback]="userImage" />
+        </div>
+
+        <div class="profile-info">
+          <div class="profile-name user-headline">
+            {{ currentUser?.username }}
+          </div>
+          <span class="profile-label last-session"
+            >Last-Login - {{ lastLoginTime | date : "short" }}</span
+          >
+        </div>
+      </div>
+      <hr class="profile-line" />
+      <button mat-menu-item (click)="signOut()" class="lang-title">
+        <mat-icon>exit_to_app</mat-icon> Sign Out
+      </button>
+    </div>
+  </mat-menu>
+</mat-toolbar>

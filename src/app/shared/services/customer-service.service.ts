@@ -13,4 +13,9 @@ export class CustomerServiceService {
       `${MICROSERVICE_URL}/customer-api?customerId=${customerID}`
     );
   }
+  getHolidayDates(branchCode, year) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/holiday/fetchBranchDataAndYear?branchCode=${branchCode}&year=${year}`
+    );
+  }
 }

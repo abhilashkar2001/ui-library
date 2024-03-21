@@ -1,0 +1,169 @@
+<mat-card
+  class="full-width default-card mx-0"
+  fxLayout="column"
+  *ngIf="bgIssuanceBgInfoForm"
+>
+  <div [formGroup]="bgIssuanceBgInfoForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Value Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker"
+          class="date-picker"
+          formControlName="valueDate"
+        />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Request Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker1"
+          class="date-picker"
+          formControlName="requestDate"
+        />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Effective Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker3"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker3"
+          class="date-picker"
+          formControlName="effectiveDate"
+        />
+      </mat-form-field>
+      <div fxLayout="column" fxFlex="20">
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="isDomesticBg"
+        >
+          <mat-radio-button value="Domestic BG">Domestic BG</mat-radio-button>
+          &nbsp;&nbsp;
+          <mat-radio-button value="Foreign BG">Foreign BG</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="Category1"> Category1 </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Currency</mat-label>
+        <input matInput type="text" formControlName="currencyCode" />
+        <mat-icon matSuffix class="searchIcon">search</mat-icon>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Amount</mat-label>
+        <input matInput type="text" formControlName="amount" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Effective Date</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker4"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker4"
+          class="date-picker"
+          formControlName="dueDate"
+        />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>BG Tenure(in Days)</mat-label>
+        <input matInput type="text" formControlName="bgTenureInDays" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Claim Period (MM/DD)</mat-label>
+        <input matInput type="text" formControlName="claimPeriod" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Expiry Date(INC. Claim Period)</mat-label>
+        <mat-datepicker-toggle
+          class="date-toggle"
+          matSuffix
+          [for]="picker5"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker5></mat-datepicker>
+        <input
+          matInput
+          readonly
+          [matDatepicker]="picker5"
+          class="date-picker"
+          formControlName="expiryDateIncClaimPeriod"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,112 @@
+<mat-card class="full-width default-card mx-0" fxLayout="column">
+  <form [formGroup]="bgAmendBgInfoForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="2%">
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>BG Number</mat-label>
+        <input matInput type="text" formControlName="bgNumber" />
+        <mat-icon matSuffix class="searchIcon">search</mat-icon>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Applicant</mat-label>
+        <input matInput type="text" formControlName="applicant" />
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline"
+        class="fieldinput custom-field"
+        fxFlex="23"
+      >
+        <mat-label>Customer Code</mat-label>
+        <input matInput type="text" formControlName="customerCode" />
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngFor="let address of addressControle.controls; let i = index"
+      [formGroup]="address"
+    >
+      <div fxLayout="row" fxLayoutGap="2%">
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="48"
+        >
+          <mat-label>New Address line 1</mat-label>
+          <input matInput type="text" formControlName="address1" />
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="48"
+        >
+          <mat-label>New Address line 2</mat-label>
+          <input matInput type="text" formControlName="address2" />
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="2%">
+        <app-searchable-select
+          fxFlex="23"
+          [items]="countries"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryName"
+          [control]="address.get('countryName')"
+          customClass="custom-field"
+        ></app-searchable-select>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>Pin Code</mat-label>
+          <input matInput type="text" formControlName="pincode" />
+          <mat-icon matSuffix class="searchIcon" (click)="populatePincodeData()"
+            >search</mat-icon
+          >
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>State</mat-label>
+          <input
+            matInput
+            type="stateName"
+            formControlName="stateName"
+            readonly
+          />
+          <mat-error
+            *ngIf="
+              address.get('stateName').touched &&
+              address.get('stateName').hasError('required')
+            "
+            >State is required!</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="fieldinput custom-field"
+          fxFlex="23"
+        >
+          <mat-label>City</mat-label>
+          <input matInput type="cityName" formControlName="cityName" readonly />
+          <mat-error
+            *ngIf="
+              address.get('cityName').touched &&
+              address.get('cityName').hasError('required')
+            "
+            >City is required!</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </form>
+</mat-card>

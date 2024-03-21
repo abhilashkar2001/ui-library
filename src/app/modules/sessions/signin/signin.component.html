@@ -1,0 +1,139 @@
+<div fxLayoutAlign="center center">
+  <div class="login_container">
+    <div class="login_content">
+      <h1 class="login_heading">{{ appData?.title }}</h1>
+
+      <h2 class="login_subtitle" *ngIf="authType == 'signIn'">
+        {{ appData?.greeting }}
+      </h2>
+
+      <div class="login_form" fxLayout="column" *ngIf="authType == 'signIn'">
+        <form [formGroup]="signinForm">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ "Corporate Id" | translate }}</mat-label>
+            <input
+              matInput
+              formControlName="corporateId"
+              type="text"
+              name="corporateId"
+              class="alignCred"
+              placeholder="Corporate Id"
+              maxlength="30"
+              autocomplete="off"
+              oninput="this.value = this.value.toUpperCase()"
+            />
+            <mat-error
+              *ngIf="signinForm.get('corporateId').hasError('required')"
+              class=""
+            >
+              {{ "Please enter user Name" | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ "Login Id" | translate }}</mat-label>
+            <input
+              matInput
+              formControlName="username"
+              type="text"
+              name="username"
+              class="alignCred"
+              placeholder="Login Id"
+              maxlength="30"
+              autocomplete="off"
+              oninput="this.value = this.value.toUpperCase()"
+            />
+            <!-- (keypress)="onKeyPress($event)" -->
+            <!-- oninput="this.value = this.value.toUpperCase()" -->
+            <mat-error
+              *ngIf="signinForm.get('username').hasError('required')"
+              class=""
+            >
+              {{ "Please enter user Name" | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            class="full-width mt-2 custom-field"
+            appearance="outline"
+          >
+            <mat-label>{{ "Password" | translate }}</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hide ? 'password' : 'text'"
+              name="password"
+              placeholder="********"
+              autocomplete="off"
+              class="alignCred"
+            />
+            <mat-icon
+              class="opacity-25"
+              matSuffix
+              (click)="hide = !hide"
+              style="cursor: pointer"
+              >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
+            >
+            <mat-error
+              *ngIf="signinForm.get('password').hasError('required')"
+              class=""
+            >
+              {{ "Please enter Password" | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
+            <div fxFlex="100" class="pb-16 text-right">
+              <a class="forget">
+                {{ "Forgot Password?" | translate }}
+              </a>
+            </div>
+          </div>
+
+          <button class="login_sigin" (click)="submit()">
+            {{ "Sign In" }}
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="authType == 'otp'">
+        <div fxLayout="column" fxLayoutGap="20px">
+          <div fxLayout="row" class="mt-24">
+            <div fxFlex="80">
+              <h2 class="auth_title">{{ "OTP Authentication" }}</h2>
+              <p class="auth_subtitle">
+                An authentication code has been sent to<br />
+                registered Email.
+              </p>
+            </div>
+          </div>
+
+          <ng-container>
+            <ng-otp-input
+              class="ng_otp_input"
+              (onInputChange)="onOtpChange($event)"
+              #ngOtpInput
+              [config]="config"
+            ></ng-otp-input>
+          </ng-container>
+
+          <button class="forget" fxFlex="50" fxLayoutAlign="flex-start">
+            {{ "Resend OTP" | translate }}
+          </button>
+
+          <div fxLayout="row" class="auth_button_wrapper" fxLayoutGap="2">
+            <button class="saveButton" fxFlex="40" (click)="onVerify()">
+              {{ "Verify" | translate }}
+            </button>
+            <button fxFlex="40" class="exitButton" (click)="goBack()">
+              {{ "Exit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="login_image">
+      <!-- <img src="/assets/images/login-image.png" /> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+.new-popup {
+  .title-div {
+    margin: 12px 24px;
+    text-align: center;
+    font-size: 20px;
+    font-family: Poppins, "Medium";
+    letter-spacing: 0px;
+    color: #00000f;
+    opacity: 0.7;
+    font-weight: 600;
+  }
+
+  .verification-card {
+    background: #f3f3f3 0% 0% no-repeat padding-box;
+    border: 8px solid #ffffff;
+    border-radius: 21px !important;
+    opacity: 1;
+    width: 100%;
+    margin: 0px;
+    padding: 8px !important;
+
+    .customer-type {
+      height: 80px;
+      font-size: 20px;
+      font-family: Poppins, "Medium";
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 0px;
+    }
+
+    .customer-type-selected {
+      border-radius: 8px;
+      border: solid 1px #004c97;
+      background-color: #d6dbea;
+    }
+  }
+
+  .submit {
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    border-radius: 20px;
+    color: #ffffff !important;
+    letter-spacing: -0.3px;
+    font-size: 15px;
+    font-family: Poppins;
+    opacity: 1;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .skipbtn {
+    background-color: #ffffff;
+    border-radius: 20px;
+    color: #000000;
+    letter-spacing: -0.3px;
+    box-shadow: 3px 3px 15px #0000000f;
+    font-size: 15px;
+    font-family: Poppins;
+    opacity: 1;
+    font-weight: 600 !important;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}

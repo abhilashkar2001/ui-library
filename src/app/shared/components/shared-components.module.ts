@@ -59,6 +59,25 @@ import { CommonProductComponent } from "./common-product/common-product.componen
 import { ImageDialogComponent } from "./image-dialog/image-dialog.component";
 import { ShowDocumentComponent } from "./show-document/show-document.component";
 import { ErrorNotifierPopupComponent } from "./error-notifier-popup/error-notifier-popup.component";
+import { AllInOnePopupComponent } from "./all-in-one-popup/all-in-one-popup.component";
+import { CalendarHeaderComponent } from "./calendar-header/calendar-header.component";
+import { CreatedDurationModelComponent } from "./created-duration-model/created-duration-model.component";
+import { NewReusableFilterComponent } from "./new-reusable-filter/new-reusable-filter.component";
+import { NewReusableMatTableComponent } from "./new-reusable-mat-table/new-reusable-mat-table.component";
+import { CommonLevelStatusComponent } from "./common-level-status/common-level-status.component";
+import { AduitLogDetailsComponent } from "./audit-log/aduit-log-details/aduit-log-details.component";
+import { AuditLogTableComponent } from "./audit-log/audit-log-table/audit-log-table.component";
+import { AuditLogPopupComponent } from "./audit-log/audit-log-popup/audit-log-popup.component";
+import { NewAuditlogButtonGroupComponent } from "./new-auditlog-button-group/new-auditlog-button-group.component";
+import { UserHeaderTopComponent } from "./user-header-top/user-header-top.component";
+import { AddNewPopupComponent } from "./add-new-popup/add-new-popup.component";
+import { SubNavBarComponent } from "./sub-nav-bar/sub-nav-bar.component";
+import { InputDatePickerComponent } from "./input-date-picker/input-date-picker.component";
+import { CustomDateAdapter } from "../services/date-time/customDateAdapter";
+import { DateAdapter } from "@angular/material/core";
+import { InputMaskModule } from "../directives/input-mask/input-mask.module";
+
+
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -97,6 +116,21 @@ const components = [
   ImageDialogComponent,
   ShowDocumentComponent,
   ErrorNotifierPopupComponent,
+  NewReusableMatTableComponent,
+  NewReusableFilterComponent,
+  CreatedDurationModelComponent,
+  CalendarHeaderComponent,
+  AllInOnePopupComponent,
+  CommonLevelStatusComponent,
+  AuditLogTableComponent,
+  AduitLogDetailsComponent,
+  AuditLogPopupComponent,
+  NewAuditlogButtonGroupComponent,
+  UserHeaderTopComponent,
+  AddNewPopupComponent,
+  SubNavBarComponent,
+  InputDatePickerComponent,
+
 ];
 
 @NgModule({
@@ -116,8 +150,13 @@ const components = [
     NgOtpInputModule,
     SwiperModule,
     MatIconModule,
+    InputMaskModule
   ],
   declarations: components,
   exports: components,
+  providers:[
+    CustomDateAdapter,
+    {provide:DateAdapter , useClass:CustomDateAdapter }
+  ]
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }
