@@ -197,8 +197,10 @@ export class CommonMobileVerificationComponent implements OnInit {
     }
   }
 
+  /**
+   * TO clear the timer interval.
+   */
   stopInterval() {
-    // To clear the interval
     clearInterval(this.intervalId);
   }
 }
