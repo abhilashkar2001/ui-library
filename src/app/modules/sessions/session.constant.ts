@@ -6,6 +6,6 @@ export interface ApplicationData {
 export class SessionsConstants {
   static readonly APPLICATION_DATA: ApplicationData = {
     title: "Demo Bank",
-    greeting: "Welcome to DemoBank!",
+    greeting: "Welcome to Corporate Net banking!",
   };
 }

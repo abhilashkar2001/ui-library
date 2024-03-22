@@ -1,6 +1,11 @@
 <div fxLayoutAlign="center center">
   <div class="login_container">
-    <div class="login_content">
+    <div
+      class="login_content"
+      data-aos="zoom-in"
+      data-aos-delay="200"
+      data-aos-duration="500"
+    >
       <h1 class="login_heading">{{ appData?.title }}</h1>
 
       <h2 class="login_subtitle" *ngIf="authType == 'signIn'">
@@ -26,7 +31,7 @@
               *ngIf="signinForm.get('corporateId').hasError('required')"
               class=""
             >
-              {{ "Please enter user Name" | translate }}
+              {{ "Corporate Id is Required!" | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -49,14 +54,11 @@
               *ngIf="signinForm.get('username').hasError('required')"
               class=""
             >
-              {{ "Please enter user Name" | translate }}
+              {{ "Login Id is Required!" | translate }}
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field
-            class="full-width mt-2 custom-field"
-            appearance="outline"
-          >
+          <mat-form-field class="full-width custom-field" appearance="outline">
             <mat-label>{{ "Password" | translate }}</mat-label>
             <input
               matInput
@@ -78,7 +80,7 @@
               *ngIf="signinForm.get('password').hasError('required')"
               class=""
             >
-              {{ "Please enter Password" | translate }}
+              {{ "Password is Required!" | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -132,8 +134,13 @@
         </div>
       </div>
     </div>
-    <div class="login_image">
-      <!-- <img src="/assets/images/login-image.png" /> -->
+    <div
+      class="login_image"
+      data-aos="fade-right"
+      data-aos-delay="200"
+      data-aos-duration="500"
+    >
+      <img src="/assets/images/logPerson_img.svg" />
     </div>
   </div>
 </div>
