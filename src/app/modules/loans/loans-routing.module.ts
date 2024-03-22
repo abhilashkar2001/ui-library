@@ -1,10 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import {
-  LoanAccountTypeComponent,
-  LoansComponent,
-  CreateLoanLandingPageComponent,
-} from ".";
+import { LoanAccountTypeComponent, LoansComponent } from ".";
 import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
 import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
 
@@ -26,10 +22,6 @@ const routes: Routes = [
         path: "loan-type",
         component: LoanAccountTypeComponent,
       },
-      // {
-      //   path: "create-loan",
-      //   component: CreateLoanLandingPageComponent,
-      // },
       {
         path: "create-loan/:id",
         component: LoanFlowComponent,

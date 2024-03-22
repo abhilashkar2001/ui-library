@@ -91,9 +91,6 @@
             >
           </div>
         </fieldset>
-        <!-- <mat-error *ngIf="personalLoanDetailsForm.get('tenureYear')?.hasError('required')">
-                    Tenure Year is <strong>required</strong>
-                </mat-error> -->
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
@@ -163,12 +160,9 @@
       <div fxFlex="45" class="enabled-mat-form-field">
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Holder Type</mat-label>
-          <mat-select
-            formControlName="holderType"
-            (selectionChange)="accountHolderSelectionChanged()"
-          >
+          <mat-select formControlName="holderType">
             <mat-option
-              *ngFor="let holderItem of holderTypeArray"
+              *ngFor="let holderItem of staticData.HOLDERTYPE"
               [value]="holderItem"
               >{{ holderItem }}</mat-option
             >
@@ -212,7 +206,7 @@
             (selectionChange)="onDisbursementSelectionChanged($event.value)"
           >
             <mat-option
-              *ngFor="let disburse of disbursementArray"
+              *ngFor="let disburse of staticData.DISBURSEMENTTYPE"
               [value]="disburse"
               >{{ disburse }}</mat-option
             >
@@ -229,15 +223,20 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" *ngIf="disbursementType === 'account'">
+      <div
+        fxFlex="45"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
         <mat-radio-group
           aria-label="Select an option"
           formControlName="accountType"
           (change)="onChange()"
         >
-          <mat-radio-button value="internal">Internal Account</mat-radio-button
+          <mat-radio-button
+            [value]="accountType.value"
+            *ngFor="let accountType of accountTypeArr"
+            >{{ accountType.name }}</mat-radio-button
           >&nbsp;&nbsp;
-          <mat-radio-button value="external">External Account</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -245,8 +244,8 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -259,8 +258,8 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -273,8 +272,8 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -286,14 +285,14 @@
       <div
         class="enabled-mat-form-field"
         fxFlex="45"
-        *ngIf="disbursementType === 'account'"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Account Number</mat-label>
           <input
             *ngIf="
-              personalLoanDetailsForm?.value.accountType === 'external' ||
-              !accountList?.length
+              personalLoanDetailsForm?.value.accountType ===
+                loanEnum.EXTERNAL || !accountList?.length
             "
             matInput
             numbersOnly
@@ -301,11 +300,10 @@
           />
           <mat-select
             *ngIf="
-              personalLoanDetailsForm?.value.accountType === 'internal' &&
-              accountList?.length > 0
+              personalLoanDetailsForm?.value.accountType ===
+                loanEnum.INTERNAL && accountList?.length > 0
             "
             formControlName="accountNumber"
-            (selectionChange)="accountHolderSelectionChanged()"
           >
             <mat-option
               *ngFor="let account of accountList"
@@ -336,8 +334,8 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">

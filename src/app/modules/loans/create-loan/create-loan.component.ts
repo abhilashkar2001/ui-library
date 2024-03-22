@@ -1,72 +1,50 @@
-import { Location } from "@angular/common";
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
 import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
+import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 
 @Component({
   selector: "app-create-loan",
   templateUrl: "./create-loan.component.html",
   styleUrls: ["./create-loan.component.scss"],
 })
-export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
+export class CreateLoanComponent implements OnInit {
+  personalLoanDetailsForm: FormGroup;
+  loanEnum = CreateLoanEnum;
+  // decorates for component communication.
   @Output() customgoBack: EventEmitter<any> = new EventEmitter();
   @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
-  @Output() checkAccountHolderType: EventEmitter<any> = new EventEmitter();
 
-  personalLoanDetailsForm: FormGroup | any;
-  stepperTitle: string;
+  // variables with static data.
+  currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
+  screenName: string = CreateLoanConstant.SCREEN_NAME;
+  staticData = CreateLoanConstant.GENERIC_SATIC_KEYS;
+  accountTypeArr = CreateLoanConstant.ACCOUNT_TYPE;
+
   disbursementType: string;
   loanDetails: any;
   isDisabledMode: boolean = true;
-  submitedLoan: any;
-  staticData = {
-    HOLDERTYPE: [],
-    DISBURSEMENTTYPE: [],
-  };
-  holderTypeArray: string[] = [];
-  disbursementArray: string[] = [];
   isReadOnly: boolean = true;
   loanCustomerId: string;
   accountList: any;
   currentDate = new Date();
-  currencySymboll = "₹";
-  screenName: string = "Create Loan";
 
   constructor(
     private fb: FormBuilder,
-    private location: Location,
     private commonService: CommonService,
-    private route: ActivatedRoute,
     private loanApi: LoanService,
     private snack: MatSnackBar,
-    private router: Router,
     private openApi: OpenAccountService,
     private loanCalcService: LoanCalulationService
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
-
-  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.getGenericDetails();
@@ -76,6 +54,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     if (id) this.getLoanById(id);
     else this.initialForm();
   }
+
   getCustomerById() {
     this.openApi
       .getCustomerById(parseInt(this.loanCustomerId))
@@ -87,6 +66,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
         }
       });
   }
+
   getAccountList(customerNo) {
     this.loanApi.getAccountList(customerNo).subscribe((resp) => {
       if (resp?.statusCode === 200) {
@@ -95,23 +75,28 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
+  /**
+   * Api call to get the generic details
+   */
   getGenericDetails() {
     this.loanApi
       .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.holderTypeArray = resp.data["HOLDERTYPE"];
-          this.disbursementArray = resp.data["DISBURSEMENTTYPE"];
+          this.staticData = { ...resp.data };
         }
       });
   }
 
+  /**
+   * Api call to fetch webDisbursement by id.
+   * @param id webdisbursementId
+   */
   getLoanById(id) {
     this.loanApi.getLoanById(id).subscribe(
       (resp) => {
         if (resp.statusCode === 200) {
           this.initialForm(resp?.data); // once fetchById api working then use this
-          //this.initialForm();
           const tenureDays = sessionStorage.getItem("tenureDays");
           const tenureYear = sessionStorage.getItem("tenureYear");
           const tenureMonth = sessionStorage.getItem("tenureMonth");
@@ -130,12 +115,10 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.commonService.$calculatorsData.subscribe((response: any) => {
-      //  this.setValues(response);
-    });
-  }
-
+  /**
+   * building  personalLoanDetailsForm form. & changeDetiction.
+   * @param data is formData
+   */
   initialForm(data?) {
     var holderType = sessionStorage.getItem("loanHolderType");
     this.personalLoanDetailsForm = this.fb.group({
@@ -160,19 +143,21 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       accountNumber: [data ? data?.accountNumber : ""],
       id: data?.id,
       bankCode: [data ? data?.bankCode : ""],
-      accountType: "internal",
+      accountType: this.loanEnum.INTERNAL,
       ifscCode: [data ? data?.ifscCode : ""],
       branchCode: [data ? data?.branchCode : ""],
       confirmAccountNumber: "",
     });
     if (data) this.disbursementType = data?.disbursementType.toLowerCase();
+
     this.personalLoanDetailsForm
       .get("accountNumber")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         if (
           resp &&
-          this.personalLoanDetailsForm.value.accountType === "internal"
+          this.personalLoanDetailsForm.value.accountType ===
+            this.loanEnum.INTERNAL
         ) {
           this.validateAccountNumber(resp);
         }
@@ -196,40 +181,58 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
             this.personalLoanDetailsForm.value.tenureMonth ||
             this.personalLoanDetailsForm.value.tenureDays)
         ) {
-          this.loanCalcService
-            .calculateAmortize(
-              parseInt(this.personalLoanDetailsForm.value.loanAmount),
-              parseInt(this.personalLoanDetailsForm.value.interestRate),
-              parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
-              parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
-              parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
-            )
-            .then((value) => {
-              const finalInterest =
-                value.monthlyInterestArr[0].interestComponent
-                  .toFixed(2)
-                  .split(".");
-
-              this.personalLoanDetailsForm
-                .get("interestPayable")
-                .setValue(
-                  parseFloat(
-                    finalInterest[0] + "." + finalInterest[1].slice(0, 3)
-                  )
-                );
-              this.personalLoanDetailsForm
-                .get("totalPayableAmount")
-                .setValue(value.totalPayableAmount);
-              this.personalLoanDetailsForm
-                .get("emiAmount")
-                .setValue(Math.round(value.emiAmount));
-            });
+          this.calculateLoan();
         }
       });
   }
 
   /**
-   * api call for account number validation.
+   * calculation interestPayable, totalPayableAmount, emiAmount
+   */
+  calculateLoan() {
+    this.loanCalcService
+      .calculateAmortize(
+        parseInt(this.personalLoanDetailsForm.value.loanAmount),
+        parseInt(this.personalLoanDetailsForm.value.interestRate),
+        parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
+        parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
+        parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
+      )
+      .then((value) => {
+        const finalInterest = value.monthlyInterestArr[0].interestComponent
+          .toFixed(2)
+          .split(".");
+
+        this.personalLoanDetailsForm
+          .get("interestPayable")
+          .setValue(
+            parseFloat(finalInterest[0] + "." + finalInterest[1].slice(0, 3))
+          );
+        this.personalLoanDetailsForm
+          .get("totalPayableAmount")
+          .setValue(value.totalPayableAmount);
+        this.personalLoanDetailsForm
+          .get("emiAmount")
+          .setValue(Math.round(value.emiAmount));
+      });
+  }
+
+  /**
+   * account number validation.
+   */
+  onChange() {
+    if (
+      this.personalLoanDetailsForm.value.accountNumber &&
+      this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
+    ) {
+      this.validateAccountNumber(
+        this.personalLoanDetailsForm.value.accountNumber
+      );
+    } else this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
+  }
+
+  /**
+   * api call for account number validation, if account Number not present then invalidAccount error will throw in html.
    */
 
   validateAccountNumber(resp) {
@@ -245,33 +248,17 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   /**
-   * account number validation.
+   *
+   * @param event is disbursement change value
    */
-  onChange() {
-    if (
-      this.personalLoanDetailsForm.value.accountNumber &&
-      this.personalLoanDetailsForm.value.accountType === "internal"
-    ) {
-      this.validateAccountNumber(
-        this.personalLoanDetailsForm.value.accountNumber
-      );
-    } else this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
-  }
-
-  accountHolderSelectionChanged() {
-    this.checkAccountHolderType.emit(
-      this.personalLoanDetailsForm.controls["holderType"].value.toLowerCase()
-    );
-  }
-
   onDisbursementSelectionChanged(event) {
     this.disbursementType =
       this.personalLoanDetailsForm.controls[
         "disbursementType"
       ].value.toLowerCase();
     if (
-      event.toLowerCase().includes("account") &&
-      this.personalLoanDetailsForm.value.accountType === "internal"
+      event.toLowerCase().includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
     ) {
       this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
         Validators.required,
@@ -285,8 +272,12 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     ].updateValueAndValidity();
   }
 
+  /**
+   * 1) check form validity.
+   * 2) api call to submit create loan.
+   * @returns void if form is invalid
+   */
   onConfirm() {
-    console.log(this.personalLoanDetailsForm.value);
     if (this.personalLoanDetailsForm.invalid) {
       return;
     }
@@ -301,7 +292,7 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     );
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
-        this.snack.open(`Create Loan Details Saved` + " !", "OK", {
+        this.snack.open(`Create Loan Details Saved !`, "OK", {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
@@ -311,6 +302,11 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
       }
     });
   }
+
+  /**
+   * method to create a payload.
+   * @returns payload
+   */
   calculatePayload() {
     var payload: any = {
       emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
@@ -338,8 +334,8 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
     if (
       this.personalLoanDetailsForm.value?.disbursementType
         .toLowerCase()
-        .includes("account") &&
-      this.personalLoanDetailsForm.value?.accountType === "external"
+        .includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.personalLoanDetailsForm.value?.accountType === this.loanEnum.EXTERNAL
     ) {
       payload.otherAccNo = this.personalLoanDetailsForm.value.accountNumber;
       payload.accountNumber = null;
@@ -363,6 +359,10 @@ export class CreateLoanComponent implements OnInit, OnChanges, AfterViewInit {
   onBack() {
     this.customgoBack.emit();
   }
+
+  /**
+   * edit boolean change.
+   */
   editRecord() {
     this.isReadOnly = false;
   }
