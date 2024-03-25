@@ -43,6 +43,7 @@ export class LoanFlowComponent implements OnInit {
   originationModel: any;
   basisId: any;
   productDetails: any;
+  processDetails: { processCycleCode: string; processStageId: number };
 
   constructor(
     private loanApi: LoanService,
@@ -171,21 +172,27 @@ export class LoanFlowComponent implements OnInit {
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
+        this.processDetails = {
+          processCycleCode: resp.data.processCycleCode,
+          processStageId: resp.data.processStageList[0]?.id,
+        };
         sessionStorage.setItem(
           "currentStage",
           resp.data.processStageList[0].id
         );
-        this.openAccountService
-          .getProcessStages(resp.data.processStageList[0].id)
-          .subscribe((resp) => {
-            this.screenList = resp.data.screens.sort((s1, s2) => {
-              return s1.sequence - s2.sequence;
-            });
-            this.updateFormGroup();
-            //this.updateStep();
-            this.factory();
-          });
+        this.getProcessStages(resp.data.processStageList[0].id);
       });
+  }
+
+  getProcessStages(id) {
+    this.openAccountService.getProcessStages(id).subscribe((resp) => {
+      this.screenList = resp.data.screens.sort((s1, s2) => {
+        return s1.sequence - s2.sequence;
+      });
+      this.updateFormGroup();
+      //this.updateStep();
+      this.factory();
+    });
   }
   updateFormGroup() {
     this.steper_Array.forEach((item, i) => {
@@ -477,7 +484,8 @@ export class LoanFlowComponent implements OnInit {
   verifyWorkFlow() {
     console.log(this.screenList);
     const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    const loanPayload = {
+
+    const properties = {
       loanAmount: loanAmmount.loanAmount,
       estimatedCost: "09876",
       downPayment: null,
@@ -486,6 +494,12 @@ export class LoanFlowComponent implements OnInit {
       nationality: "",
       residenceType: "",
       screenCode: this.screenList[this.selectedStep].screenCode,
+    };
+    const loanPayload = {
+      properties: properties,
+      screenCode: this.screenList[2].screenCode,
+      processStageId: this.processDetails.processStageId,
+      processCycleCode: this.processDetails.processCycleCode,
     };
     this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
       if (resp?.autoAction) this.saveApprovalConfig(resp);
