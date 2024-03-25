@@ -5,11 +5,12 @@
   width: 1540px;
   justify-content: center;
   align-items: center;
-  background: url("/assets/images/login-image.png") no-repeat;
-  background-position-x: right;
-  background-size: 33%;
+  background: url("/assets/images/backGround_logPage.png") no-repeat;
+  background-size: 132%;
+  background-attachment: fixed;
+  background-position: center;
   @media screen and (max-width: 576px) {
-    background: url("/assets/images/login-image.png") no-repeat;
+    background: url("/assets/images/backGround_logPage.png") no-repeat;
     background-position: center;
   }
 
@@ -63,14 +64,48 @@
       flex-direction: column;
       z-index: 2;
 
+      .mat-form-field-appearance-outline .mat-form-field-outline {
+        border: 2px solid !important;
+        border-radius: 14px;
+      }
+      .mat-form-field-outline-start,
+      .mat-form-field-outline-end,
+      .mat-form-field-outline-gap {
+        border: unset !important;
+      }
+      .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+        .mat-form-field-label {
+        transform: translateY(-1.69373em) translateX(1.30627em) scale(0.85);
+        width: auto;
+        background-color: white;
+      }
+      .mat-form-field-label {
+        line-height: inherit;
+      }
+      .mat-form-field-appearance-outline .mat-form-field-flex {
+        height: 60px;
+      }
+      .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 1em 0 1em 0;
+      }
+      .mat-form-field-subscript-wrapper {
+        font-size: 75%;
+        margin-top: 0.2666666667em !important;
+        top: calc(100% - 1.7916666667em);
+        letter-spacing: normal;
+      }
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+      .alignCred {
+        width: 90%;
+        transform: translate(1.30627em, -3px);
+      }
+
       .login_sigin {
-        // background: $primary-color;
         border-radius: 24px !important;
         opacity: 1 !important;
-        // padding: 5px !important;
         width: 100%;
-        // color: white !important;
-        margin-top: 20px !important;
         background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%)
           0% 0% no-repeat padding-box;
         color: #ffffff;
@@ -163,15 +198,18 @@
 
   // Image section
   .login_image {
+    height: 75%;
     width: 50%;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     z-index: 1;
     @media screen and (max-width: 520px) {
       display: none;
     }
     img {
-      width: 100%;
+      width: 75%;
+      height: 75%;
       object-fit: cover;
     }
   }
