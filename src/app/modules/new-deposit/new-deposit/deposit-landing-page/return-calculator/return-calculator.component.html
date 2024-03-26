@@ -94,63 +94,67 @@
           </mat-radio-group>
         </div>
         <div
+          fxFlex="100"
           class="row"
           fxLayoutAlign="space-between center"
           style="margin-top: 27px"
         >
-          <div class="col-md-4 col-12">
+          <div
+            [fxFlex]="fdName == 'rdCalculator' ? 33 : 48"
+            class="col-md-4 col-12"
+          >
             <label class="calculator_subTItle">Tenure</label>
-            <fieldset class="yeardrop fieldset">
-              <legend visible="true" class="legend-font legend">
-                Deposit Period
-              </legend>
-              <div fxLayout="row" class="parentYearDiv">
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect parentYearDiv--child"
-                >
+            <fieldset class="fieldset">
+              <legend style="width: fit-content">Deposit Period</legend>
+              <div fxFlex="100" fxLayout="row" class="parentYearDiv">
+                <div fxFlex="33">
                   <input
+                    fxFlex="50"
                     matInput
                     name="tenureYear"
                     maxlength="2"
                     formControlName="tenureYear"
-                    placeholder="Year"
+                    placeholder="Enter"
+                    class="pl-3 tenure_input"
                     numbersOnly
                   />
-                </mat-form-field>
-                <span class="vl"></span>
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect parentYearDiv--child"
-                >
+                  <span matSuffix class="suffixLabel">Year</span>
+                </div>
+                <div class="vertical-seperator"></div>
+                <div fxFlex="33">
                   <input
+                    fxFlex="50"
                     matInput
                     name="tenureMonth"
                     maxlength="2"
                     formControlName="tenureMonth"
-                    placeholder="Month"
+                    placeholder="Enter"
+                    class="pl-3 tenure_input"
                     numbersOnly
                   />
-                </mat-form-field>
-                <span class="vl"></span>
-
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width inputSelect parentYearDiv--child"
-                >
+                  <span class="suffixLabel">Month</span>
+                </div>
+                <div class="vertical-seperator"></div>
+                <div fxFlex="33">
                   <input
+                    fxFlex="50"
                     matInput
                     name="tenureDays"
                     maxlength="2"
                     formControlName="tenureDays"
-                    placeholder="Day"
+                    placeholder="Enter"
+                    class="pl-3 tenure_input"
                     numbersOnly
                   />
-                </mat-form-field>
+                  <span class="suffixLabel">Day</span>
+                </div>
               </div>
             </fieldset>
           </div>
-          <div class="col-md-4 col-12">
+          <div
+            [fxFlex]="fdName == 'rdCalculator' ? 33 : 48"
+            class="col-md-4 col-12"
+          >
             <label class="calculator_subTItle">Interest Payout</label>
             <mat-form-field
               appearance="outline"
@@ -176,29 +180,33 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-md-4 col-12" *ngIf="fdName == 'rdCalculator'">
-            <label class="calculator_subTItle">Monthly Savings</label>
-            <mat-form-field
-              appearance="outline"
-              class="full-width field-changedInput"
-            >
-              <mat-label class="custom-mat-label"
-                >Date of Installment</mat-label
+          <ng-container *ngIf="fdName == 'rdCalculator'">
+            <div fxFlex="33" class="col-md-4 col-12">
+              <label class="calculator_subTItle">Monthly Savings</label>
+              <mat-form-field
+                appearance="outline"
+                class="full-width field-changedInput"
               >
-
-              <mat-select
-                class="selectOption"
-                formControlName="monthlySavings"
-                (selectionChange)="fdName == 'rdCalculator' && updateDeposit()"
-              >
-                <mat-option
-                  *ngFor="let monthlySavings of monthlySavings"
-                  [value]="monthlySavings"
-                  >{{ monthlySavings }}</mat-option
+                <mat-label class="custom-mat-label"
+                  >Date of Installment</mat-label
                 >
-              </mat-select>
-            </mat-form-field>
-          </div>
+
+                <mat-select
+                  class="selectOption"
+                  formControlName="monthlySavings"
+                  (selectionChange)="
+                    fdName == 'rdCalculator' && updateDeposit()
+                  "
+                >
+                  <mat-option
+                    *ngFor="let monthlySavings of monthlySavings"
+                    [value]="monthlySavings"
+                    >{{ monthlySavings }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
         </div>
         <div class="sub-child">
           This is applicable for resident individuals <br />

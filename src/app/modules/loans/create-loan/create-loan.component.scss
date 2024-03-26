@@ -91,20 +91,19 @@
 
 fieldset {
   legend {
-    color: rgba(16, 34, 69, 0.43);
+    color: rgb(132 141 159);
     font-family: Poppins;
-    font-size: 13.438px;
-    font-style: normal;
-    font-weight: 500;
+    font-size: 75%;
     line-height: normal;
     float: none;
     margin-left: 13px;
+    opacity: 0.8;
   }
-
   padding: 5px;
-  border: solid 1px #c6c6c6;
   border-radius: 8px;
-
+  height: 62px;
+  background: #fff;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
   .mat-form-field {
     padding: 10px 0;
     border-radius: 11px;
@@ -117,7 +116,7 @@ fieldset {
 
 .disable-fieldset {
   background: #f3f3f3;
-  // cursor: not-allowed;
+  box-shadow: none;
 }
 
 .MiscellaneousClass {
@@ -130,13 +129,14 @@ fieldset {
 .suffixLabel {
   position: relative;
   right: 15%;
-  top: -5px;
+  top: -7px;
   font-size: 16px;
   color: #b4b4b4;
 }
 .vertical-seperator {
-  border-left: #c6c6c6 1px solid;
-  margin-top: -18px;
+  border-left: #e0e0e0 2px solid;
+  margin-top: -15px;
+  border-radius: 5px;
 }
 .tenure_input {
   position: relative;
