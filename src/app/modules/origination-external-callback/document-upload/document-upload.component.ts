@@ -23,6 +23,7 @@ import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
 import { Router } from "@angular/router";
 import { CustomerServiceService } from "app/shared/services/customer-service.service";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
   selector: "app-document-upload",
@@ -543,17 +544,29 @@ export class DocumentUploadComponent implements OnInit {
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
+        if(this.customerId){
+          this.dialog.open(SuccessPopupComponent , {
+            data:{refrenceNo:sessionStorage.getItem("ReferanceNumber") , isNetBanking:true}
+          }).afterClosed().subscribe((res)=>{
+            this.clearState()
+          })
+        }
+        else{
         this.snack.open("Customer Document Saved", "Ok", {
           horizontalPosition: "right",
           verticalPosition: "top",
           duration: 2000,
-        });
-        setTimeout(() => {
-          this.route.navigate(["home"]);
-          sessionStorage.removeItem("mobile");
-          sessionStorage.removeItem("customerId");
-        }, 5000);
+        }); 
+        this.clearState()
+      }
       }
     });
+  }
+  clearState(){
+    setTimeout(() => {
+      this.route.navigate(["home"]);
+      sessionStorage.removeItem("mobile");
+      sessionStorage.removeItem("customerId");
+    }, 100);
   }
 }
