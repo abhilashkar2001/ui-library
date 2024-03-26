@@ -36,6 +36,7 @@ export class CallbackComponent implements OnInit {
         this.tokenService.saveUser(res);
         sessionStorage.setItem("customerId", this.getParameterByName("customerId"));
         sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+        sessionStorage.setItem("ReferanceNumber",this.getParameterByName("referanceNumber"));
         if( this.getParameterByName("customerId") != null && this.getParameterByName("mobile") != null  ){ this.router.navigate([`/origination/otp`],{queryParams: {type:`${this.getParameterByName("screen")}`}})}
         else{sessionStorage.setItem(
           "originationId",
