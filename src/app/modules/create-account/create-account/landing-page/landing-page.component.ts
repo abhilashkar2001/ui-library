@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { HomeService } from "app/shared/services/home-service/home.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-landing-page",
   templateUrl: "./landing-page.component.html",
@@ -17,12 +18,23 @@ export class LandingPageComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private tokenStore: TokenStorageService
   ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.getCountryCurrency();
     this.getAccountTypes();
+  }
+
+  getCountryCurrency() {
+    const userBranchCode = this.tokenStore.getUser()?.branchCode;
+    this.homeService
+      .getCountryCurrency(userBranchCode)
+      .subscribe((resp: any) => {
+        if (resp?.statusCode) this.tokenStore.saveUserOtherInfo(resp.data);
+      });
   }
 
   getAccountTypes() {

@@ -12,4 +12,10 @@ export class HomeService {
   getAccountTypes(newAccount) {
     return this.http.get(`${baseUrl}/basis-class?businessSuite=${newAccount}`);
   }
+
+  getCountryCurrency(branchCode) {
+    return this.http.get(
+      `${baseUrl}/branch/currencyByBranch?branchCode=${branchCode}`
+    );
+  }
 }

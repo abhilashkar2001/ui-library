@@ -4,6 +4,7 @@ const TOKEN_KEY = "auth-token";
 const USER_KEY = "auth-user";
 const JWT_USER = "jwt-user";
 const IS_REMEMBER = "isRemember";
+const USER_INFO = "userInfo";
 
 export const VALIDITY_IN_SECS = "validityInSecs";
 
@@ -101,5 +102,12 @@ export class TokenStorageService {
 
   getRememberMe() {
     return JSON.parse(this.sessionStore.getItem(IS_REMEMBER));
+  }
+
+  saveUserOtherInfo(info) {
+    this.sessionStore.setItem(USER_INFO, JSON.stringify(info));
+  }
+  getUserOtherInfo() {
+    return JSON.parse(this.sessionStore.getItem(USER_INFO));
   }
 }
