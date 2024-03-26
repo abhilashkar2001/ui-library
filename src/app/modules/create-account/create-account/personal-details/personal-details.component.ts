@@ -398,11 +398,6 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
             (item) =>
               item?.countryName == this.tokenStore.getUserOtherInfo().country
           );
-          console.log(
-            indiaIsdCode,
-            "indiaIsdCode",
-            this.tokenStore.getUserOtherInfo().country
-          );
           if (indiaIsdCode) {
             this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
             this.maxMobileLength = indiaIsdCode?.mobileLength;
