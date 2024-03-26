@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -23,7 +23,7 @@ export class OtpComponent implements OnInit {
   };
 
   cardArr: string[] = ["Email", "Mobile"];
-  screenName:any = "";
+  screenName: any = "";
   customerId: any;
   reducedMob: number;
   constructor(
@@ -32,6 +32,7 @@ export class OtpComponent implements OnInit {
     private snack: MatSnackBar,
     private route: Router,
     private router: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.otpForm = new FormGroup({
       email: new FormControl(""),
@@ -42,23 +43,23 @@ export class OtpComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
-    this.router.queryParams.subscribe((params)=>{
+    this.router.queryParams.subscribe((params) => {
       this.screenName = params["type"];
     })
-    if(this.screenName != "" && this.screenName != undefined){
-      this.customerId =  JSON.parse(sessionStorage.getItem("customerId"));
+    if (this.screenName != "" && this.screenName != undefined) {
+      this.customerId = JSON.parse(sessionStorage.getItem("customerId"));
       this.otpForm.get("mobile").patchValue(sessionStorage.getItem("mobile"));
-      this.reducedMob =  this.otpForm.get("mobile").value %1000;
+      this.reducedMob = this.otpForm.get("mobile").value % 1000;
       setTimeout(() => {
         this.generateOtp();
       }, 100);
     }
-    
+
   }
-  resetOrExit(value){
-    if(value == "Reset"){
-      this.otpForm.get("otp").setValue("");
-    }else{
+  resetOrExit(value) {
+    if (value == "Reset") {
+      this.otpForm.get("otp").reset("");
+    } else {
       this.route.navigate(["/home"]);
     }
   }
@@ -79,14 +80,22 @@ export class OtpComponent implements OnInit {
     this.otpForm.get("otp").setValue(otp);
   }
 
+  resendOtp() {
+    this.generateOtp();
+    this.clearOtp();
+  }
+  clearOtp() {
+    this.otpForm.get("otp").patchValue("");
+    this.cdr.detectChanges();
+  }
+
   verifyOtp() {
     this.otpService.verifyOTP(this.otpForm.value).subscribe((res) => {
       if (this.screenName != "" && this.screenName != undefined) {
         this.route.navigate([`/origination/document-upload`])
-      }else{
+      } else {
         this.route.navigate(["/home"]);
       }
-      
     });
   }
 }

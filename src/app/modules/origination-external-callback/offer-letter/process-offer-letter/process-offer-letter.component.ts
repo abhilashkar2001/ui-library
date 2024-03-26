@@ -20,7 +20,7 @@ export class ProcessOfferLetterComponent implements OnInit {
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
     private route: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
@@ -73,5 +73,10 @@ export class ProcessOfferLetterComponent implements OnInit {
           this.buildRevisiteForm(res?.data[0]);
         }
       });
+  }
+
+  /**This function is for reset the formvalues */
+  reset() {
+    this.revisiteForm.reset()
   }
 }
