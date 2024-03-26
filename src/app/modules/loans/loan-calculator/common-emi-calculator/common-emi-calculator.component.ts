@@ -112,7 +112,6 @@ export class CommonEmiCalculatorComponent implements OnInit {
     });
   }
   get checkTenurePresence() {
-    console.log(this.loanForm.value, "this.loanForm.value");
     const { tenureYear, tenureMonth, tenureDays } = this.loanForm.value;
     const isTenurePresent = !!tenureYear || !!tenureMonth || !!tenureDays;
     return isTenurePresent;
