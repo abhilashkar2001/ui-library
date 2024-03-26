@@ -42,3 +42,20 @@
   text-align: left;
   color: #004c97;
 }
+
+.yeardrop.fieldset {
+  box-shadow: none !important;
+  .mat-form-field {
+    height: 50px !important;
+  }
+  ::ng-deep .inputSelect.mat-form-field-type-mat-select {
+    .mat-form-field-outline-end {
+      border-radius: 0px !important;
+    }
+  }
+  ::ng-deep .inputSelect.mat-form-field-type-mat-input {
+    .mat-form-field-outline-start {
+      border-radius: 0px !important;
+    }
+  }
+}
