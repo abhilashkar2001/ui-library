@@ -24,6 +24,8 @@ import * as moment from "moment";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { ReusablePincodePopupComponent } from "../reusable-pincode-popup/reusable-pincode-popup.component";
 import { ErrorNotifierPopupComponent } from "../error-notifier-popup/error-notifier-popup.component";
+import { forkJoin } from "rxjs";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-common-personal-details",
@@ -65,6 +67,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
   primaryCustIndex: number = 0;
   boundaries: any;
   screenName: string = "Personal Details";
+  countriesIsdCodes: any;
+  defaultIsdCodeValue: any;
+  maxMobileLength: any;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -74,7 +79,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private rdApi: CreateRdService,
     private snack: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private tokenStore: TokenStorageService
   ) {}
 
   panelOpened(index: number) {
@@ -93,30 +99,51 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.getCountry();
     this.getGenericDetails();
     this.fetchBoundaries();
     this.holderType = sessionStorage.getItem("loanHolderType") || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
-    if (this.loanCustomerId != null) this.getCustomerById();
-    else this.buildCustomerDetailsForm();
-    this.getCountry();
-    this.getState();
-    this.getCity();
+    this.getAllRequisite().then((res) => {
+      if (this.loanCustomerId != null) this.getCustomerById();
+      else this.buildCustomerDetailsForm();
+    });
+
+    // this.getState();
+    // this.getCity();
   }
 
-  getState() {
-    this.loanApi.getAllState().subscribe((resp: any) => {
-      if (resp?.statusCode == 200) {
-        this.listCityState = resp.data;
-      }
+  async getAllRequisite() {
+    return new Promise((resolve) => {
+      forkJoin({
+        countries: this.api.getCountryDetails(),
+        states: this.loanApi.getAllState(),
+        citys: this.loanApi.getAllCity(),
+      }).subscribe(
+        (res) => {
+          console.log(res, "......");
+          this.getCountry(res.countries);
+          this.getState(res.states);
+          this.getCity(res.citys);
+          resolve("done");
+        },
+        () => {
+          resolve("Fail");
+        }
+      );
     });
   }
-  getCity() {
-    this.loanApi.getAllCity().subscribe((resp: any) => {
-      if (resp?.statusCode == 200) {
-        this.listCity = resp.data;
-      }
-    });
+
+  getState(resp) {
+    if (resp?.statusCode === 200) {
+      this.listCityState = resp.data;
+    }
+  }
+  getCity(resp) {
+    if (resp?.statusCode === 200) {
+      this.countryArray = resp.data;
+    }
+    this.listCity = resp.data;
   }
 
   getCustomerById() {
@@ -142,12 +169,30 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
   }
-  getCountry() {
-    this.api.getCountryDetails().subscribe((resp) => {
-      if (resp?.statusCode == 200) {
+  getCountry(resp) {
+    if (resp?.statusCode === 200) {
+      if (resp?.data) {
         this.countryArray = resp.data;
+        this.countriesIsdCodes = resp?.data;
+        const indiaIsdCode = this.countriesIsdCodes.find(
+          (item) =>
+            item?.countryName == this.tokenStore.getUserOtherInfo().country
+        );
+        console.log(
+          indiaIsdCode,
+          "indiaIsdCode",
+          this.tokenStore.getUserOtherInfo().country
+        );
+        if (indiaIsdCode) {
+          this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
+          this.maxMobileLength = indiaIsdCode?.mobileLength;
+        } else {
+          this.defaultIsdCodeValue =
+            this.countriesIsdCodes[0].countryTelIsdCode;
+          this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
+        }
       }
-    });
+    }
   }
 
   buildCustomerDetailsForm(data?) {
@@ -225,6 +270,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
       source: data?.source ? data.source : "Website",
       kycStatus: data?.kycStatus && data.kycStatus,
       documentId: this.calculateId(data),
+      mobile: [data ? data.contact.mobile : "", Validators.required],
+      mobtCode: [
+        data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
+      ],
     });
   }
   calculateId(data) {
@@ -250,6 +299,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     for (let i = 0; i < this.customer.value?.length; i++) {
       this.fetchStateCity(i);
       this.getCustomerByCif(i);
+      this.checkMobileValidtiy(i);
     }
   }
 
@@ -310,6 +360,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
           this.resetExceptCif(i);
         }
       });
+  }
+  checkMobileValidtiy(i) {
+    const mobileControl = this.customer.controls[i].get("mobile");
+    mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
+      if (resp?.length != this.maxMobileLength) {
+        mobileControl.setErrors({ invalidLength: true });
+      }
+    });
   }
 
   resetExceptCif(i) {

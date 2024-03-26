@@ -15,6 +15,7 @@ import { PersonalDetailsService } from "app/modules/loans/personal-details/perso
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import * as moment from "moment";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-create-account-personal-details",
@@ -57,16 +58,17 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private personalDetailsService: PersonalDetailsService,
     private loanApi: LoanService,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private tokenStore: TokenStorageService
   ) {
     this.accountHeader = this.activateRoute.snapshot["queryParams"]["title"];
   }
 
   ngOnInit(): void {
     var customerId = parseInt(sessionStorage.getItem("customerId"));
+    this.getCountry();
     this.getGenericDetails();
     this.fetchBoundaries();
-    this.getCountry();
     this.getState();
     this.getCity();
     if (customerId) {
@@ -206,7 +208,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
       kycStatus: data?.kycStatus,
       mobile: [data ? data.contact.mobile : "", Validators.required],
       mobtCode: [
-        data ? parseInt(data.contact.mobtCode) : "",
+        data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
         Validators.required,
       ],
     });
@@ -214,6 +216,7 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
 
   addCustomer(data?) {
     this.personalInfoArray.push(this.initialForm(data));
+
     this.debounceZipCode();
   }
 
@@ -304,6 +307,9 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
   }
 
   panelOpened(index: number) {
+    this.personalInfoArray.controls[index]
+      .get("mobtCode")
+      .patchValue(this.defaultIsdCodeValue);
     this.panels.forEach((panel, i) => {
       if (i !== index) {
         panel.close();
@@ -389,7 +395,13 @@ export class CreateAccountPersonalDetailsComponent implements OnInit {
           this.countries = Countrylist.data;
           this.countriesIsdCodes = Countrylist?.data;
           const indiaIsdCode = this.countriesIsdCodes.find(
-            (item) => item?.countryName.toLowerCase() == "india"
+            (item) =>
+              item?.countryName == this.tokenStore.getUserOtherInfo().country
+          );
+          console.log(
+            indiaIsdCode,
+            "indiaIsdCode",
+            this.tokenStore.getUserOtherInfo().country
           );
           if (indiaIsdCode) {
             this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;

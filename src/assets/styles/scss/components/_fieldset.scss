@@ -40,53 +40,55 @@
   box-shadow: none !important;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  border-radius: 11px !important;
-}
-
-.enabled-mat-form-field {
+.fieldset {
   .mat-form-field-appearance-outline .mat-form-field-outline {
-    background: #ffffff 0% 0% no-repeat padding-box !important;
     border-radius: 11px !important;
-    box-shadow: none !important;
-    // border: 1px solid #c3cad0 !important;
-    height: 60px;
-    margin-top: -3px;
-  }
-}
-
-.disable-mat-form-field {
-  .mat-form-field-appearance-outline .mat-form-field-outline {
-    background: #f3f3f3 0% 0% no-repeat padding-box !important;
-    border-radius: 11px !important;
-    box-shadow: none !important;
-    border: 1px solid #c3cad0 !important;
-    height: 60px;
   }
 
-  .mat-form-field-outline-start,
-  .mat-form-field-outline-end,
-  .mat-form-field-outline-gap {
-    border: none !important;
+  .enabled-mat-form-field {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      background: #ffffff 0% 0% no-repeat padding-box !important;
+      border-radius: 11px !important;
+      // box-shadow: none !important;
+      // border: 1px solid #c3cad0 !important;
+      height: 55px;
+      margin-top: -3px;
+    }
   }
 
-  .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: 15px 0px 15px 0px;
-  }
+  .disable-mat-form-field {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      background: #f3f3f3 0% 0% no-repeat padding-box !important;
+      border-radius: 11px !important;
+      box-shadow: none !important;
+      border: 1px solid #c3cad0 !important;
+      height: 55px;
+    }
 
-  .mat-form-field-appearance-outline .mat-form-field-wrapper {
-    margin: 0 0 !important;
-    padding-bottom: 1.34375em;
-  }
-  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-    .mat-form-field-label {
-    transform: translateY(-1.59373em) scale(0.75);
-    width: min-content;
-    backdrop-filter: blur(10px);
-  }
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-end,
+    .mat-form-field-outline-gap {
+      border: none !important;
+    }
 
-  .mat-form-field-infix {
-    border-top: 10px solid transparent;
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 15px 0px 15px 0px;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      margin: 0 0 !important;
+      padding-bottom: 1.34375em;
+    }
+    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+      .mat-form-field-label {
+      transform: translateY(-1.59373em) scale(0.75);
+      width: min-content;
+      backdrop-filter: blur(10px);
+    }
+
+    .mat-form-field-infix {
+      border-top: 10px solid transparent;
+    }
   }
 }
 .legend {
