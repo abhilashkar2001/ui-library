@@ -165,6 +165,17 @@
               {{ productDetails?.minimumTenorMonth }} Months
               {{ productDetails?.minimumTenorDay }} Days
             </mat-error>
+            <mat-error
+              class="mat-error small-error mt-12"
+              *ngIf="
+                (loanForm.get('tenureYear').touched ||
+                  loanForm.get('tenureMonth').touched ||
+                  loanForm.get('tenureDays').touched) &&
+                !checkTenurePresence
+              "
+            >
+              Loan Period is Required
+            </mat-error>
           </div>
           <div class="col-md-6 col-12">
             <label class="calculator_subTItle">Interest Rate</label>
