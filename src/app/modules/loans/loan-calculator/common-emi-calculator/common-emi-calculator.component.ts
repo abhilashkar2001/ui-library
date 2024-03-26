@@ -68,7 +68,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: [0, [Validators.required]],
+      interestRate: [1, [Validators.required]],
     });
 
     this.loanForm
@@ -111,15 +111,23 @@ export class CommonEmiCalculatorComponent implements OnInit {
       }
     });
   }
-  updateDeposit() {
-    console.log(this.loanForm.value);
+  get checkTenurePresence() {
+    console.log(this.loanForm.value, "this.loanForm.value");
+    const { tenureYear, tenureMonth, tenureDays } = this.loanForm.value;
+    const isTenurePresent = !!tenureYear || !!tenureMonth || !!tenureDays;
+    return isTenurePresent;
   }
+
   applyForLoan() {
-    if (this.loanForm.invalid) {
-      this.loanForm.markAllAsTouched();
+    this.loanForm.markAllAsTouched();
+    if (
+      this.loanForm.invalid ||
+      !this.checkTenurePresence ||
+      this.validateMinimumTenure ||
+      this.validateTenure
+    ) {
       return;
     }
-    console.log(this.loanForm.value);
     sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
     sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
     sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
@@ -151,6 +159,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
     );
     return totalDays <= MinimumAllowedDays;
   }
+
   get validateTenure() {
     let totalDays = this.calculateTotalDays(
       this.loanForm.value.tenureYear || 0,
