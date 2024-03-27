@@ -22,6 +22,8 @@ export class GenericBgComponentComponent implements OnInit {
   @Input("componentName") componentName = "";
   tabs: any;
   account$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  tradeDetails: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  shareTradeDetails = this.tradeDetails.asObservable();
   currentStep$: BehaviorSubject<any> = new BehaviorSubject(null);
   isCurrentFormValid$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -80,11 +82,15 @@ export class GenericBgComponentComponent implements OnInit {
         this.currentStep$.value.componrnt
       );
       this.componentRef.instance.bgType = this.bgType;
+      this.shareTradeDetails.subscribe((resp) => {
+        this.componentRef.instance.tradeDetails = resp;
+      });
       this.componentRef.instance.updateParentModel = this.updateAccount;
       this.componentRef.instance.amendmentType = this.currentStep$.value?.type;
     }
   }
   navigatetotab(tab) {
+    this.trackRecord();
     this.currentStep$.next(tab);
     this.createComponentView();
   }
@@ -121,10 +127,14 @@ export class GenericBgComponentComponent implements OnInit {
       otherInfoModel: this.account$.value?.otherInfoModel ?? null,
       attachmentModel: this.account$.value?.attachMentModel ?? null,
     };
-    this.api.saveTemplate(payload).subscribe((resp) => { });
+    this.api.saveTemplate(payload).subscribe((resp) => {});
   }
 
   updateRecord(event) {
     console.log(event, "........");
+  }
+
+  trackRecord() {
+    this.tradeDetails.next(this.account$.value);
   }
 }

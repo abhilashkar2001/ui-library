@@ -5,11 +5,7 @@
 >
   <div [formGroup]="bgIssuanceBgInfoForm" fxLayout="column">
     <div fxLayout="row" fxLayoutGap="2%">
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Value Date</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
@@ -25,11 +21,7 @@
           formControlName="valueDate"
         />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Request Date</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
@@ -45,11 +37,7 @@
           formControlName="requestDate"
         />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Effective Date</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
@@ -78,38 +66,22 @@
     </div>
 
     <div fxLayout="row" fxLayoutGap="2%">
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
           <mat-option value="Category1"> Category1 </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Currency</mat-label>
         <input matInput type="text" formControlName="currencyCode" />
         <mat-icon matSuffix class="searchIcon">search</mat-icon>
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Amount</mat-label>
         <input matInput type="text" formControlName="amount" />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Effective Date</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
@@ -128,27 +100,15 @@
     </div>
 
     <div fxLayout="row" fxLayoutGap="2%">
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>BG Tenure(in Days)</mat-label>
         <input matInput type="text" formControlName="bgTenureInDays" />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Claim Period (MM/DD)</mat-label>
         <input matInput type="text" formControlName="claimPeriod" />
       </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="23"
-      >
+      <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Expiry Date(INC. Claim Period)</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"

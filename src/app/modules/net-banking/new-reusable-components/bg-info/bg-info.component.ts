@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-bg-info",
@@ -14,85 +13,52 @@ export class BgInfoComponent implements OnInit {
     part: Partial<any>,
     isFormValid: boolean
   ) => void;
+
+  @Input("tradeDetails") tradeDetails;
   bgIssuanceForm: FormGroup;
   benificiaryDetailsForm: FormGroup<any>;
   bgIssuanceBgInfoForm: FormGroup<any>;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
-    console.log(this.bgType, "type");
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.buildFormGroup();
+    if (this.tradeDetails?.benificiaryDetails) {
+      this.buildFormGroup({ ...this.tradeDetails });
+    } else {
+      this.buildFormGroup({});
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes, "changein bg");
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
   }
 
-  buildFormGroup() {
+  buildFormGroup(data?) {
     this.bgIssuanceForm = this.fb.group({
-      bgIssuanceBgInfo: this.fb.group({
-        // Define child form controls
-        valueDate: [""],
-        requestDate: [""],
-        effectiveDate: [""],
-        isDomesticBg: [true],
-        category: [""],
-        currencyCode: [""],
-        amount: [""],
-        dueDate: [""],
-        bgTenureInDays: [""],
-        claimPeriod: [""],
-        expiryDateIncClaimPeriod: [""],
-      }),
-
-      benificiaryDetails: this.fb.group({
-        beneficiary: ["", Validators.required],
-        ...(this.bgType === "BG Issuance"
-          ? {
-            purpose: [""],
-          }
-          : {
-            email: [
-              "",
-              Validators.pattern(
-                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-              ),
-            ],
-            notifyBenificary: [true],
-          }),
-        contactInfo: this.fb.group({
-          address: this.fb.array([]),
-        }),
-      }),
-      transactionInfoDetails: this.fb.group({
-        openDate: ["", Validators.required],
-        bgEffectiveDate: [""],
-        type: ["", Validators.required],
-        category: ["", Validators.required],
-        amount: [""],
-        purpose: [""],
-      }),
-      bgAmendBgInfoDetails: this.fb.group({
-        bgNumber: [""],
-        applicant: [""],
-        customerCode: [""],
-        contactInfo: this.fb.group({
-          address: this.fb.array([]),
-        }),
-      }),
+      bgIssuanceBgInfo: this.bgIssuanceInfoFormGroup(data),
+      benificiaryDetails: this.benificiaryFormGroup(data),
+      transactionInfoDetails: this.transactionInfoFormGroup(data),
+      bgAmendBgInfoDetails: this.bgAmendInfoFormGroup(data),
     });
-    this.addressControle.push(this.addUserAddress());
-    this.bgAmendAddress.push(this.addUserAddress());
+    this.addressControle.push(
+      this.addUserAddress(
+        data?.benificiaryDetails?.contactInfo?.address[0] ?? {}
+      )
+    );
+    this.bgAmendAddress.push(
+      this.addUserAddress(
+        data?.benificiaryDetails?.contactInfo?.address[0] ?? {}
+      )
+    );
     this.bgIssuanceForm.valueChanges.subscribe((res) => {
       let payload: any = {};
       if (this.bgType === "BG Issuance") {
         payload = {
           ...this.bgIssuanceForm.value.bgIssuanceBgInfo,
           ...this.bgIssuanceForm.value.benificiaryDetails,
-          contactInfo: !this.bgIssuanceForm.value.benificiaryDetails.contactInfo.address[0].cityId ? null : this.bgIssuanceForm.value.benificiaryDetails.contactInfo
+          contactInfo: !this.bgIssuanceForm.value.benificiaryDetails.contactInfo
+            .address[0].cityId
+            ? null
+            : this.bgIssuanceForm.value.benificiaryDetails.contactInfo,
         };
 
         this.updateParentModel(
@@ -111,6 +77,97 @@ export class BgInfoComponent implements OnInit {
         );
         // for bg amendement
       }
+    });
+  }
+
+  bgIssuanceInfoFormGroup(data?) {
+    return this.fb.group({
+      // Define child form controls
+      valueDate: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.valueDate : "",
+      ],
+      requestDate: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.requestDate : "",
+      ],
+      effectiveDate: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.effectiveDate : "",
+      ],
+      isDomesticBg: [true],
+      category: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.category : "",
+      ],
+      currencyCode: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.currencyCode : "",
+      ],
+      amount: [
+        data?.benificiaryDetails?.amount ? data?.benificiaryDetails.amount : "",
+      ],
+      dueDate: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.dueDate : "",
+      ],
+      bgTenureInDays: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.bgTenureInDays : "",
+      ],
+      claimPeriod: [
+        data?.benificiaryDetails ? data?.benificiaryDetails.claimPeriod : "",
+      ],
+      expiryDateIncClaimPeriod: [
+        data?.benificiaryDetails
+          ? data?.benificiaryDetails.expiryDateIncClaimPeriod
+          : "",
+      ],
+    });
+  }
+
+  benificiaryFormGroup(data?) {
+    return this.fb.group({
+      beneficiary: ["", Validators.required],
+      ...(this.bgType === "BG Issuance"
+        ? {
+            purpose: [
+              data?.benificiaryDetails ? data?.benificiaryDetails.purpose : "",
+            ],
+          }
+        : {
+            email: [
+              "",
+              Validators.pattern(
+                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+              ),
+            ],
+            notifyBenificary: [true],
+          }),
+      contactInfo: this.fb.group({
+        address: this.fb.array([]),
+      }),
+    });
+  }
+
+  transactionInfoFormGroup(data?) {
+    return this.fb.group({
+      openDate: ["", Validators.required],
+      bgEffectiveDate: [""],
+      type: ["", Validators.required],
+      category: ["", Validators.required],
+      amount: [""],
+      purpose: [""],
+    });
+  }
+
+  bgAmendInfoFormGroup(data?) {
+    return this.fb.group({
+      bgNumber: [
+        data?.benificiaryDetails ? data?.benificiaryDetails?.bgNumber : "",
+      ],
+      applicant: [
+        data?.benificiaryDetails ? data?.benificiaryDetails?.applicant : "",
+      ],
+      customerCode: [
+        data?.benificiaryDetails ? data?.benificiaryDetails?.customerCode : "",
+      ],
+      contactInfo: this.fb.group({
+        address: this.fb.array([]),
+      }),
     });
   }
 
@@ -144,6 +201,7 @@ export class BgInfoComponent implements OnInit {
     return this.bgAmendContact.get("address") as FormArray;
   }
   get bgAmendContact() {
+    console.log(this.bgIssuanceForm, "this.bgIssuanceForm");
     return this.bgIssuanceForm
       .get("bgAmendBgInfoDetails")
       .get("contactInfo") as FormGroup;
