@@ -1,0 +1,14 @@
+$buttonHeight: 40px;
+
+.saveTempletButton{
+    @include action_button(#000, #fff, $buttonHeight , 175px );
+}
+.saveandSubmit{
+    @include action_button(#00468B, #fff, $buttonHeight , 185px);
+}
+.submit{
+    @include action_button(#ffff , $gradientBg, $buttonHeight , 124px);
+}
+.resetbtn{
+    @include action_button(#B20000, #fff, $buttonHeight , 124px);
+}

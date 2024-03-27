@@ -1,0 +1,118 @@
+<div class="outer-container">
+  <ng-container *ngIf="data.remark">
+    <div class="header">Confirmation Detail</div>
+    <div
+      class="inner-container"
+      fxLayout="column"
+      fxLayoutAlign="space-between"
+    >
+      <!-- for confirmation -->
+      <ng-container *ngIf="confirmationForm" [formGroup]="confirmationForm">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="48%">
+            <mat-form-field class="full-width mt-2" appearance="outline">
+              <mat-label>{{ "Transaction Password" | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="transactionPassword"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                placeholder="********"
+                autocomplete="off"
+                class="alignCred"
+              />
+              <mat-icon
+                class="opacity-25"
+                matSuffix
+                (click)="hide = !hide"
+                style="cursor: pointer"
+                >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="48%">
+            <mat-form-field class="full-width mt-2" appearance="outline">
+              <mat-label>{{ "One Time Password" | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="oneTimePassword"
+                name="password"
+                placeholder="********"
+                autocomplete="off"
+                class="alignCred"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+      <div class="footer">
+        <button
+          type="button"
+          mat-raised-button
+          class="submitButton"
+          (click)="submit()"
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          class="exitButton"
+          mat-dialog-close
+          (click)="closeDialog()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- for remark -->
+  <ng-container *ngIf="data.recordStatus">
+    <div class="alertImage">
+      <img
+        class="summaryIcon"
+        src="assets/images/success-logo.svg"
+        alt="Success Sign"
+      />
+    </div>
+    <div class="approveSection">
+      <div class="approve">
+        <span class="margin">
+          You are trying to {{ data.recordStatus }} the record. Do you want to
+          proceed?
+        </span>
+      </div>
+      <div class="remark">
+        <textarea
+          matInput
+          placeholder="Remarks"
+          autocomplete="off"
+          class="full-width remarkTextArea"
+          maxlength="50"
+          name="remark"
+          [(ngModel)]="remark"
+        ></textarea>
+      </div>
+    </div>
+    <div class="footer">
+      <button
+        type="button"
+        mat-raised-button
+        class="submitButton"
+        (click)="onRemarkConfirm()"
+      >
+        Yes
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="exitButton"
+        (click)="closeDialog()"
+      >
+        No
+      </button>
+    </div>
+  </ng-container>
+</div>

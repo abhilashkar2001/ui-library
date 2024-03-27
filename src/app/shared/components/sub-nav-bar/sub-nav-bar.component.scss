@@ -1,0 +1,30 @@
+.nav-bar {
+  background: transparent linear-gradient(270deg, #030c14 0%, #002240 100%) 0%
+    0% no-repeat padding-box;
+  position: static;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  // transform: translateX(-63px);
+  min-height: 80px;
+  button {
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .nav_item {
+    width: 67px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+  }
+
+  .open {
+    background: #ffffff24 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 10px #ffffffde;
+    border-radius: 10px;
+  }
+}
