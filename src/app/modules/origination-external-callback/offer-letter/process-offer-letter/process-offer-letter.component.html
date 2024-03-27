@@ -177,7 +177,9 @@
       fxLayoutAlign="start center"
       fxLayoutGap="20px"
     >
-      <button mat-raised-button class="reset-btn" fxFlex="40">Reset</button>
+      <button mat-raised-button class="reset-btn" fxFlex="40" (click)="reset()">
+        Reset
+      </button>
       <button
         mat-raised-button
         class="submit-btn"
