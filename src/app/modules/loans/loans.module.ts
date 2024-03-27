@@ -10,13 +10,11 @@ import {
   LoanDocumentUploadComponent,
   LoanStepperComponent,
   LoanSummaryComponent,
-  LoanUserSelectKycComponent,
   LoansComponent,
   LoansRoutingModule,
   MobileVerificationComponent,
   NormalLoanEmiCalculatorComponent,
   LoanTermsConditionsComponent,
-  CreateLoanLandingPageComponent,
 } from ".";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -48,11 +46,9 @@ import { TaxBenefitsComponent } from "./loan-calculator/education-loan-calculato
     LoanTermsConditionsComponent,
     LoanSummaryComponent,
     CibilScoreContainerComponent,
-    LoanUserSelectKycComponent,
     GoldLoanEmiCalculatorComponent,
     HLLoanEmiCalculatorComponent,
     ExpenseTaxBenefitCalculatorComponent,
-    CreateLoanLandingPageComponent,
     LoansLandingComponent,
     LoanFlowComponent,
     CommonEmiCalculatorComponent,

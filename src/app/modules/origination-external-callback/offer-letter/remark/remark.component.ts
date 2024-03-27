@@ -20,7 +20,7 @@ export class RemarkComponent implements OnInit {
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
     private route: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
@@ -73,5 +73,11 @@ export class RemarkComponent implements OnInit {
         this.route.navigate(["home"]);
       }
     });
+  }
+
+  /**Reseting the remarks data */
+  resetRemark() {
+    this.revisiteForm.get("remark").reset();
+
   }
 }

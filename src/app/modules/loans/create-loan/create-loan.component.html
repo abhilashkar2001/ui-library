@@ -14,7 +14,10 @@
         fxFlex="45"
         [ngClass]="isReadOnly == true && 'disable-mat-form-field'"
       >
-        <mat-form-field appearance="outline" class="full-width currency_field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
           <mat-label class="custom-mat-label">Loan Amount</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
             currencySymboll
@@ -41,63 +44,93 @@
       </div>
 
       <div fxFlex="45" class="MiscellaneousClass">
-        <fieldset [ngClass]="isReadOnly == true && 'disable-fieldset'">
+        <fieldset
+          [ngClass]="isReadOnly == true && 'disable-fieldset'"
+          class="fieldset"
+        >
           <legend style="width: fit-content">Tenure</legend>
-          <div style="display: flex; flex-direction: row">
-            <input
-              matInput
-              name="year"
-              numbersOnly
-              placeholder="Year"
-              formControlName="tenureYear"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureYear"
-              >Year</span
-            >
-
-            <span class="vertical-seperator"></span>
-            <input
-              matInput
-              name="month"
-              numbersOnly
-              placeholder="Month"
-              formControlName="tenureMonth"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureMonth"
-              >Month</span
-            >
-            <span class="vertical-seperator"></span>
-            <input
-              matInput
-              name="day"
-              numbersOnly
-              placeholder="Day"
-              formControlName="tenureDays"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureDays"
-              >Day</span
-            >
+          <div fxFlex="100" fxLayout="row">
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="year"
+                numbersOnly
+                placeholder="Year"
+                formControlName="tenureYear"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container *ngIf="personalLoanDetailsForm.value.tenureYear">
+                <span class="suffixLabel">{{
+                  personalLoanDetailsForm.value.tenureYear
+                    ? personalLoanDetailsForm.value.tenureYear > 1
+                      ? "Years"
+                      : "Year"
+                    : ""
+                }}</span>
+              </ng-container>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="month"
+                numbersOnly
+                placeholder="Month"
+                formControlName="tenureMonth"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container *ngIf="personalLoanDetailsForm.value.tenureMonth">
+                <span class="suffixLabel">{{
+                  personalLoanDetailsForm.value.tenureMonth
+                    ? personalLoanDetailsForm.value.tenureMonth > 1
+                      ? "Months"
+                      : "Month"
+                    : ""
+                }}</span>
+              </ng-container>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="day"
+                numbersOnly
+                placeholder="Day"
+                formControlName="tenureDays"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container>
+                <span
+                  class="suffixLabel"
+                  *ngIf="personalLoanDetailsForm.value.tenureDays"
+                  >{{
+                    personalLoanDetailsForm.value.tenureDays
+                      ? personalLoanDetailsForm.value.tenureDays > 1
+                        ? "Days"
+                        : "Day"
+                      : ""
+                  }}</span
+                >
+              </ng-container>
+            </div>
           </div>
         </fieldset>
-        <!-- <mat-error *ngIf="personalLoanDetailsForm.get('tenureYear')?.hasError('required')">
-                    Tenure Year is <strong>required</strong>
-                </mat-error> -->
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width currency_field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
           <mat-label class="custom-mat-label">EMI Amount</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.emiAmount">{{
             currencySymboll
@@ -107,7 +140,7 @@
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width fieldinput">
           <mat-label class="custom-mat-label">Interest Rate</mat-label>
           <input matInput readonly formControlName="interestRate" />
           <mat-error
@@ -121,7 +154,10 @@
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width currency_field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
           <mat-label class="custom-mat-label">Interest Payable</mat-label>
           <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
             currencySymboll
@@ -140,7 +176,10 @@
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width currency_field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
           <mat-label class="custom-mat-label">Principle Amount</mat-label>
           <span
             matPrefix
@@ -161,14 +200,14 @@
       </div>
 
       <div fxFlex="45" class="enabled-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Holder Type</mat-label>
-          <mat-select
-            formControlName="holderType"
-            (selectionChange)="accountHolderSelectionChanged()"
-          >
+          <mat-select formControlName="holderType">
             <mat-option
-              *ngFor="let holderItem of holderTypeArray"
+              *ngFor="let holderItem of staticData.HOLDERTYPE"
               [value]="holderItem"
               >{{ holderItem }}</mat-option
             >
@@ -184,7 +223,10 @@
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width currency_field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
           <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
           <span
             matPrefix
@@ -205,14 +247,17 @@
       </div>
 
       <div fxFlex="45" class="enabled-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Disbursement Type</mat-label>
           <mat-select
             formControlName="disbursementType"
             (selectionChange)="onDisbursementSelectionChanged($event.value)"
           >
             <mat-option
-              *ngFor="let disburse of disbursementArray"
+              *ngFor="let disburse of staticData.DISBURSEMENTTYPE"
               [value]="disburse"
               >{{ disburse }}</mat-option
             >
@@ -229,15 +274,20 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" *ngIf="disbursementType === 'account'">
+      <div
+        fxFlex="45"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
         <mat-radio-group
           aria-label="Select an option"
           formControlName="accountType"
           (change)="onChange()"
         >
-          <mat-radio-button value="internal">Internal Account</mat-radio-button
+          <mat-radio-button
+            [value]="accountType.value"
+            *ngFor="let accountType of accountTypeArr"
+            >{{ accountType.name }}</mat-radio-button
           >&nbsp;&nbsp;
-          <mat-radio-button value="external">External Account</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -245,11 +295,14 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Bank Code</mat-label>
           <input matInput specialIsAlphaNumeric formControlName="bankCode" />
         </mat-form-field>
@@ -259,11 +312,14 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Branch Code</mat-label>
           <input matInput specialIsAlphaNumeric formControlName="branchCode" />
         </mat-form-field>
@@ -273,11 +329,14 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">IFSC Code</mat-label>
           <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
         </mat-form-field>
@@ -286,14 +345,17 @@
       <div
         class="enabled-mat-form-field"
         fxFlex="45"
-        *ngIf="disbursementType === 'account'"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
       >
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Account Number</mat-label>
           <input
             *ngIf="
-              personalLoanDetailsForm?.value.accountType === 'external' ||
-              !accountList?.length
+              personalLoanDetailsForm?.value.accountType ===
+                loanEnum.EXTERNAL || !accountList?.length
             "
             matInput
             numbersOnly
@@ -301,11 +363,10 @@
           />
           <mat-select
             *ngIf="
-              personalLoanDetailsForm?.value.accountType === 'internal' &&
-              accountList?.length > 0
+              personalLoanDetailsForm?.value.accountType ===
+                loanEnum.INTERNAL && accountList?.length > 0
             "
             formControlName="accountNumber"
-            (selectionChange)="accountHolderSelectionChanged()"
           >
             <mat-option
               *ngFor="let account of accountList"
@@ -336,11 +397,14 @@
         fxFlex="45"
         class=""
         *ngIf="
-          personalLoanDetailsForm?.value.accountType === 'external' &&
-          disbursementType === 'account'
+          personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
           <input matInput numbersOnly formControlName="confirmAccountNumber" />
         </mat-form-field>
@@ -357,7 +421,10 @@
       </div>
 
       <div fxFlex="45" class="enabled-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
           <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
           <input
             matInput

@@ -1,22 +1,3 @@
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
-.mat-form-field-appearance-outline .mat-form-field-outline-end {
-  border: none !important;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-gap {
-  border: none !important;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
-  border: none !important;
-}
-
-::ng-deep .mat-form-field {
-  box-shadow: 0px 3px 10px 0px #00000017;
-  border-radius: 12px;
-  height: 60px;
-}
-
 .customer_Header {
   height: 70px;
   .customer_Header_description {
@@ -141,7 +122,6 @@
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.0901960784);
   border-radius: 12px;
   height: 60px;
-  margin-top: 0.5rem;
 }
 ::ng-deep .inputSelect.mat-form-field {
   box-shadow: none !important;

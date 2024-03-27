@@ -11,7 +11,5 @@ export * from "./loan-summary/loan-summary.component";
 export * from "./mobile-verification/mobile-verification.component";
 export * from "./loan-terms-conditions/loan-terms-conditions.component";
 export * from "./create-loan/create-loan.component";
-export * from "./create-loan-landing-page/create-loan-landing-page.component";
-export * from "./loan-user-select-kyc/loan-user-select-kyc.component";
 export * from "./loans-routing.module";
 export * from "./loans.module";

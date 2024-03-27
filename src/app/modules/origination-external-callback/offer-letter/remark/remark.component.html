@@ -26,8 +26,22 @@
       fxLayoutAlign="start center"
       fxLayoutGap="20px"
     >
-      <button mat-raised-button class="reset-btn" fxFlex="40">Reset</button>
-      <button mat-raised-button class="submit-btn" fxFlex="60">Submit</button>
+      <button
+        mat-raised-button
+        class="reset-btn"
+        fxFlex="40"
+        (click)="resetRemark()"
+      >
+        Reset
+      </button>
+      <button
+        mat-raised-button
+        class="submit-btn"
+        fxFlex="60"
+        (click)="saveCustomerRequest()"
+      >
+        Submit
+      </button>
     </div>
   </div>
 </div>

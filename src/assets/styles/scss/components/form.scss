@@ -152,3 +152,45 @@ input {
     }
   }
 }
+
+.fieldinput {
+  .mat-form-field-wrapper {
+    margin-top: 0px !important;
+      top: -0.8em !important;
+  padding-top: 0.84375em !important;
+  }
+  .mat-form-field-infix {
+    padding: 1em 0em 1em 0em !important;
+  }
+  .mat-form-field-flex {
+    height: 55px !important;
+  }
+  .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: translateY(-20%) !important;
+  }
+}
+.yeardrop.fieldset {
+  box-shadow: none !important;
+  .mat-form-field {
+    height: 50px !important;
+  }
+  .inputSelect.mat-form-field-type-mat-select {
+    .mat-form-field-outline {
+      border-top-right-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+  }
+  .inputSelect.mat-form-field-type-mat-input {
+    .mat-form-field-outline {
+      border-top-left-radius: 0px !important;
+      border-bottom-left-radius: 0px !important;
+    }
+  }
+}
+
+.fielSetDivider {
+  border-left: 2px solid #cacaca;
+  margin-top: 7px;
+  height: 40px;
+}
+

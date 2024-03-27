@@ -47,7 +47,7 @@ export class DocumentUploadComponent implements OnInit {
   @ViewChild("fileInput") fileInput: ElementRef;
   customerDetails: any;
   originationId: any;
-  customerId:any;
+  customerId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -57,7 +57,7 @@ export class DocumentUploadComponent implements OnInit {
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
     private route: Router,
-    private customerService:CustomerServiceService
+    private customerService: CustomerServiceService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class DocumentUploadComponent implements OnInit {
     this.buildDocumentUploadForm();
     this.initialFormLoading();
     if (this.originationId) this.fetchOriginationDetails();
-    if(this.customerId) this.getCustomerData()
+    if (this.customerId) this.getCustomerData();
   }
 
   initialFormLoading() {
@@ -511,21 +511,20 @@ export class DocumentUploadComponent implements OnInit {
       });
   }
 
-  getCustomerData(){
-    this.customerService.fetchCustomerData(this.customerId).subscribe(res=>{
-      if(res?.statusCode == 200 || res?.statusCode == 201){
-
-      }else{
+  getCustomerData() {
+    this.customerService.fetchCustomerData(this.customerId).subscribe((res) => {
+      if (res?.statusCode == 200 || res?.statusCode == 201) {
+      } else {
         this.snack.open("No customer id found to upload document", "ok", {
           horizontalPosition: "right",
           verticalPosition: "top",
           duration: 2000,
         });
-        setTimeout(()=>{
-          this.route.navigate(["home"]);
-        },4000)
+        setTimeout(() => {
+          window.close();
+        }, 4000);
       }
-    })
+    });
   }
   saveDocument() {
     if (!this.customerDetails?.originationId) {
@@ -538,9 +537,11 @@ export class DocumentUploadComponent implements OnInit {
     const documentId = this.documentUploadForm.value.documents.map((item) => ({
       docIds: item?.pages?.map((page) => page?.id)?.filter((page) => page),
     }));
-    
+
     const payload: any = {};
-    payload.customerId = this.originationId ? this.customerDetails?.customerInfo[0]?.customerId : this.customerId;
+    payload.customerId = this.originationId
+      ? this.customerDetails?.customerInfo[0]?.customerId
+      : this.customerId;
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
@@ -556,9 +557,12 @@ export class DocumentUploadComponent implements OnInit {
           horizontalPosition: "right",
           verticalPosition: "top",
           duration: 2000,
-        }); 
-        this.clearState()
-      }
+        });
+        setTimeout(() => {
+          window.close();
+          sessionStorage.removeItem("mobile");
+          sessionStorage.removeItem("customerId");
+        }, 5000);
       }
     });
   }
