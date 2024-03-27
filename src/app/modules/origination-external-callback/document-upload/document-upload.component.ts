@@ -545,28 +545,34 @@ export class DocumentUploadComponent implements OnInit {
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
-        if(this.customerId){
-          this.dialog.open(SuccessPopupComponent , {
-            data:{refrenceNo:sessionStorage.getItem("ReferanceNumber") , isNetBanking:true}
-          }).afterClosed().subscribe((res)=>{
-            this.clearState()
-          })
+        if (this.customerId) {
+          this.dialog
+            .open(SuccessPopupComponent, {
+              data: {
+                refrenceNo: sessionStorage.getItem("ReferanceNumber"),
+                isNetBanking: true,
+              },
+            })
+            .afterClosed()
+            .subscribe((res) => {
+              this.clearState();
+            });
+        } else {
+          this.snack.open("Customer Document Saved", "Ok", {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            duration: 2000,
+          });
+          setTimeout(() => {
+            window.close();
+            sessionStorage.removeItem("mobile");
+            sessionStorage.removeItem("customerId");
+          }, 5000);
         }
-        else{
-        this.snack.open("Customer Document Saved", "Ok", {
-          horizontalPosition: "right",
-          verticalPosition: "top",
-          duration: 2000,
-        });
-        setTimeout(() => {
-          window.close();
-          sessionStorage.removeItem("mobile");
-          sessionStorage.removeItem("customerId");
-        }, 5000);
       }
     });
   }
-  clearState(){
+  clearState() {
     setTimeout(() => {
       this.route.navigate(["home"]);
       sessionStorage.removeItem("mobile");
