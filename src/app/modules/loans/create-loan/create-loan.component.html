@@ -49,52 +49,79 @@
           class="fieldset"
         >
           <legend style="width: fit-content">Tenure</legend>
-          <div style="display: flex; flex-direction: row">
-            <input
-              matInput
-              name="year"
-              numbersOnly
-              placeholder="Year"
-              formControlName="tenureYear"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureYear"
-              >Year</span
-            >
-
-            <span class="vertical-seperator"></span>
-            <input
-              matInput
-              name="month"
-              numbersOnly
-              placeholder="Month"
-              formControlName="tenureMonth"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureMonth"
-              >Month</span
-            >
-            <span class="vertical-seperator"></span>
-            <input
-              matInput
-              name="day"
-              numbersOnly
-              placeholder="Day"
-              formControlName="tenureDays"
-              [readonly]="isReadOnly"
-              maxlength="2"
-            />
-            <span
-              class="suffixLabel"
-              *ngIf="personalLoanDetailsForm.value.tenureDays"
-              >Day</span
-            >
+          <div fxFlex="100" fxLayout="row">
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="year"
+                numbersOnly
+                placeholder="Year"
+                formControlName="tenureYear"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container *ngIf="personalLoanDetailsForm.value.tenureYear">
+                <span class="suffixLabel">{{
+                  personalLoanDetailsForm.value.tenureYear
+                    ? personalLoanDetailsForm.value.tenureYear > 1
+                      ? "Years"
+                      : "Year"
+                    : ""
+                }}</span>
+              </ng-container>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="month"
+                numbersOnly
+                placeholder="Month"
+                formControlName="tenureMonth"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container *ngIf="personalLoanDetailsForm.value.tenureMonth">
+                <span class="suffixLabel">{{
+                  personalLoanDetailsForm.value.tenureMonth
+                    ? personalLoanDetailsForm.value.tenureMonth > 1
+                      ? "Months"
+                      : "Month"
+                    : ""
+                }}</span>
+              </ng-container>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="day"
+                numbersOnly
+                placeholder="Day"
+                formControlName="tenureDays"
+                class="pl-3 tenure_input"
+                [readonly]="isReadOnly"
+                maxlength="2"
+              />
+              <ng-container>
+                <span
+                  class="suffixLabel"
+                  *ngIf="personalLoanDetailsForm.value.tenureDays"
+                  >{{
+                    personalLoanDetailsForm.value.tenureDays
+                      ? personalLoanDetailsForm.value.tenureDays > 1
+                        ? "Days"
+                        : "Day"
+                      : ""
+                  }}</span
+                >
+              </ng-container>
+            </div>
           </div>
         </fieldset>
       </div>
