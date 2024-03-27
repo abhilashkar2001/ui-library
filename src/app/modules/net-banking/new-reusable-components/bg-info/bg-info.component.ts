@@ -201,7 +201,6 @@ export class BgInfoComponent implements OnInit {
     return this.bgAmendContact.get("address") as FormArray;
   }
   get bgAmendContact() {
-    console.log(this.bgIssuanceForm, "this.bgIssuanceForm");
     return this.bgIssuanceForm
       .get("bgAmendBgInfoDetails")
       .get("contactInfo") as FormGroup;
