@@ -18,15 +18,18 @@ export class ApplicantsInfoComponent implements OnInit {
     isFormValid: boolean
   ) => void;
   feeAccArray: any[] = ["dummy Option 1", "dummy Option 2"];
+  @Input("tradeDetails") tradeDetails;
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getStaticData();
-    this.buildFormGroup();
+    if (this.tradeDetails?.applicantInfo) {
+      this.buildFormGroup(this.tradeDetails.applicantInfo);
+    } else this.buildFormGroup();
   }
   getStaticData() {
     this.cntStService.fetchAuthCountry().subscribe((res) => {
@@ -47,10 +50,19 @@ export class ApplicantsInfoComponent implements OnInit {
         address: this.fb.array([]),
       }),
     });
-    this.addUserAddress();
+    this.addUserAddress(item?.contactInfo?.address[0] ?? {});
     this.applicantForm.valueChanges.subscribe((res) => {
-
-      this.updateParentModel({ applicantInfo: { ...res, contactInfo: !this.applicantForm.value.contactInfo.address[0].cityId ? null : this.applicantForm.value.contactInfo } }, this.checkForm());
+      this.updateParentModel(
+        {
+          applicantInfo: {
+            ...res,
+            contactInfo: !this.applicantForm.value.contactInfo.address[0].cityId
+              ? null
+              : this.applicantForm.value.contactInfo,
+          },
+        },
+        this.checkForm()
+      );
     });
   }
   checkForm() {

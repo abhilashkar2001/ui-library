@@ -13,11 +13,7 @@
     </div>
     <div [formGroup]="benificiaryDetailsForm" fxLayout="column">
       <div fxLayout="row" fxLayoutGap="2%">
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="23"
-        >
+        <mat-form-field appearance="outline" fxFlex="23">
           <mat-label>Beneficiary</mat-label>
           <input matInput type="text" formControlName="beneficiary" />
           <mat-error
@@ -30,7 +26,6 @@
         </mat-form-field>
         <mat-form-field
           appearance="outline"
-          class="fieldinput custom-field"
           fxFlex="73"
           *ngIf="componentName == 'BG Issuance'"
         >
@@ -43,11 +38,7 @@
         [formGroup]="address"
       >
         <div fxLayout="row" fxLayoutGap="2%">
-          <mat-form-field
-            appearance="outline"
-            class="fieldinput custom-field"
-            fxFlex="48"
-          >
+          <mat-form-field appearance="outline" fxFlex="48">
             <mat-label>New Address line 1</mat-label>
             <input matInput type="text" formControlName="address1" />
             <mat-error
@@ -58,11 +49,7 @@
               >New Address line 1 is required!</mat-error
             >
           </mat-form-field>
-          <mat-form-field
-            appearance="outline"
-            class="fieldinput custom-field"
-            fxFlex="48"
-          >
+          <mat-form-field appearance="outline" fxFlex="48">
             <mat-label>New Address line 2</mat-label>
             <input matInput type="text" formControlName="address2" />
           </mat-form-field>
@@ -78,11 +65,7 @@
             customClass="custom-field"
           ></app-searchable-select>
 
-          <mat-form-field
-            appearance="outline"
-            class="fieldinput custom-field"
-            fxFlex="23"
-          >
+          <mat-form-field appearance="outline" fxFlex="23">
             <mat-label>Pin Code</mat-label>
             <input matInput type="text" formControlName="pincode" />
             <mat-icon
@@ -92,11 +75,7 @@
               >search</mat-icon
             >
           </mat-form-field>
-          <mat-form-field
-            appearance="outline"
-            class="fieldinput custom-field"
-            fxFlex="23"
-          >
+          <mat-form-field appearance="outline" fxFlex="23">
             <mat-label>State</mat-label>
             <input
               matInput
@@ -112,11 +91,7 @@
               >State is required!</mat-error
             >
           </mat-form-field>
-          <mat-form-field
-            appearance="outline"
-            class="fieldinput custom-field"
-            fxFlex="23"
-          >
+          <mat-form-field appearance="outline" fxFlex="23">
             <mat-label>City</mat-label>
             <input
               matInput
@@ -139,11 +114,7 @@
         fxLayoutGap="2%"
         *ngIf="componentName != 'BG Issuance'"
       >
-        <mat-form-field
-          appearance="outline"
-          class="fieldinput custom-field"
-          fxFlex="23"
-        >
+        <mat-form-field appearance="outline" fxFlex="23">
           <mat-label>Email Id</mat-label>
           <input
             matInput
