@@ -1,10 +1,15 @@
+<mat-label class="custom-label" *ngIf="!skipLabel && showOutsideLabel">{{
+  inputLabel | translate
+}}</mat-label>
 <mat-form-field
   appearance="outline"
   class="full-width fieldinput {{ customInputHeight }} {{
     customClass
   }} custom-field"
 >
-  <mat-label *ngIf="!skipLabel">{{ inputLabel | translate }}</mat-label>
+  <mat-label *ngIf="!skipLabel && !showOutsideLabel">{{
+    inputLabel | translate
+  }}</mat-label>
   <mat-select
     [multiple]="multiple"
     [formControl]="control"

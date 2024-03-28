@@ -67,7 +67,7 @@ export class CustomDrawerComponent implements OnInit {
     this.currentMenu = node.name;
     if (node.path) {
       this.router.navigate([`user/dashboard/trade/${node.path}`], {
-        queryParams: { type: node.id },
+        queryParams: { type: node.name },
       });
     }
     this.cdr.detectChanges();

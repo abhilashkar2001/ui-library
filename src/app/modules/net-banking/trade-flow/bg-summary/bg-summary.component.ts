@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { InternetBankingService } from "../../internet-banking.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
@@ -6,6 +6,7 @@ import { bgConstant } from "./bg-summary.constant";
 import { MatDialog } from "@angular/material/dialog";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { BgSummaryServiceService } from "./bg-summary-service.service";
+import { DrawerConstant } from "../../new-reusable-components/custom-drawer/custom-drawer.constant";
 
 @Component({
   selector: "app-bg-summary",
@@ -39,59 +40,77 @@ export class BgSummaryComponent implements OnInit {
   };
   isSummary: boolean = true;
   componentName: any;
+  tradeMenus = DrawerConstant.DRAWER_MENU;
+  matchedObject: any;
+  summaryDetails: any;
+  addNewList = bgConstant.ADDNEW_LIST;
   constructor(
     private route: Router,
-    private bulkService: BgSummaryServiceService,
+    private api: BgSummaryServiceService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // this.bgType = this.activatedRoute.snapshot.params["id"];
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.isSummary = true;
       this.bgType = params.get("type");
-      this.maintenanceTitle = this.bgType + " Maintenance";
+      this.maintenanceTitle = this.bgType;
       this.module = this.bgType;
-      if (
-        this.bgType === "BG Issuance" ||
-        this.bgType === "BG Amendment" ||
-        this.bgType === "BG Physical"
-      ) {
-        this.columns = bgConstant.BGTYPE_SUMMARY;
-      } else if (this.bgType === "BG Template") {
-        this.columns = bgConstant.BGTEMPLATE_SUMMARY;
-      }
+    });
+  }
+
+  getSummaryUrl() {
+    return new Promise((resolve, reject) => {
+      if (this.summaryDetails) resolve("summary details found");
+      else
+        this.api.getSummaryUrls().subscribe((resp) => {
+          this.summaryDetails = resp.find(
+            (element) => element.name === this.bgType
+          );
+          this.columns = bgConstant[this.summaryDetails.columnRefName];
+          this.cdr.detectChanges();
+          console.log(this.summaryDetails);
+          resolve("summary details found");
+        });
     });
   }
 
   CustomGoBack(data) {
-    this.route.navigate(["/user/dashboard"]);
-  }
-  getDataByPage(event) {
-    this.page = event.page;
-    this.pageSize = event.size;
-    this.sortDirection = event.direction;
-    this.sortValue = event.sort;
-    this.filterBy = event.filterBy;
-    this.module = event.module;
-    this.bulkService
-      .getSummaryDetails(
-        event.filterBy,
-        event.filterValue,
-        event.page,
-        event.size,
-        this.sortValue,
-        event.direction,
-        this.bgType
-      )
-      .subscribe((res) => {
-        this.bgData = res;
-      });
+    this.route.navigate([`${this.summaryDetails.backPath}`]);
   }
 
+  getDataByPage(event) {
+    this.getSummaryUrl().then((_) => {
+      this.page = event.page;
+      this.pageSize = event.size;
+      this.sortDirection = event.direction;
+      this.sortValue = event.sort;
+      this.filterBy = event.filterBy;
+      this.module = event.module;
+      this.api
+        .getSummaryDetails(
+          event.filterBy,
+          event.filterValue,
+          event.page,
+          event.size,
+          this.sortValue,
+          event.direction,
+          this.bgType,
+          this.summaryDetails.summaryUrl
+        )
+        .subscribe((res) => {
+          this.bgData = res;
+        });
+    });
+  }
+
+  /**
+   * add and edit as per action key.
+   * @param event
+   */
   openPopUp(event) {
-    console.log(event, "event..........");
     const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
@@ -100,34 +119,40 @@ export class BgSummaryComponent implements OnInit {
         panelClass: "dialog-class",
       });
       dialogRef.afterClosed().subscribe((res) => {
-        if (res.templateName) {
-        } else {
-        }
-        this.getBGType(this.bgType);
+        this.getBGType();
       });
     } else if (id === "bulk") {
+    } else if (id === "template") {
+      this.openTemplatePopup();
+    } else if (id === "new") {
+      this.getBGType();
     } else {
       console.log("having a id");
     }
   }
 
-  getBGType(resp) {
-    switch (resp) {
-      case "BG Issuance":
-        this.componentName = "Bg_Issuance";
-        break;
-      case "BG Amendment":
-        this.componentName = "Bg_Amendment";
-        break;
-      case "BG Physical":
-        this.componentName = "Bg_PhysicalAmendment";
-        break;
-      default:
-        break;
-    }
+  /**
+   * template popup to select it.
+   */
+  openTemplatePopup() {
+    const dialogRef = this.dialog.open(AddNewPopupComponent, {
+      width: "50%",
+      disableClose: true,
+      panelClass: "dialog-class",
+      data: this.summaryDetails,
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.getBGType(res.templateName);
+    });
+  }
 
-    this.route.navigate([`user/dashboard/trade/genericBg`], {
-      queryParams: { type: this.componentName },
+  /**
+   * Note: if templateName is avilable then it should be send by params
+   * @param template templateName or id
+   */
+  getBGType(template?) {
+    this.route.navigate([`${this.summaryDetails.addNewPath}`], {
+      queryParams: { type: this.summaryDetails.name },
     });
   }
 }
