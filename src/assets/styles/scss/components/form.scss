@@ -156,8 +156,8 @@ input {
 .fieldinput {
   .mat-form-field-wrapper {
     margin-top: 0px !important;
-      top: -0.8em !important;
-  padding-top: 0.84375em !important;
+    top: -0.8em !important;
+    padding-top: 0.84375em !important;
   }
   .mat-form-field-infix {
     padding: 1em 0em 1em 0em !important;
@@ -166,7 +166,7 @@ input {
     height: 55px !important;
   }
   .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: translateY(-20%) !important;
+    transform: translateY(-20%) !important;
   }
 }
 .yeardrop.fieldset {
@@ -194,3 +194,10 @@ input {
   height: 40px;
 }
 
+.custom-label {
+  color: #102245;
+  font-weight: 600;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+  font-size: 13px;
+}
