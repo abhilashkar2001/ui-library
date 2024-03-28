@@ -17,7 +17,8 @@ export class BgSummaryServiceService {
     size,
     sortName,
     direction,
-    moduleName
+    moduleName,
+    url
   ) {
     const bgUrl = this.getBgUrl(moduleName);
     var filterEndpoint = "";
@@ -36,7 +37,7 @@ export class BgSummaryServiceService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?${pagination}`;
-    return this.http.get<any>(`${this.basePath}/${bgUrl}${payload}`);
+    return this.http.get<any>(`${this.basePath}/${url}${payload}`);
   }
 
   getBgUrl(moduleName) {
@@ -46,5 +47,9 @@ export class BgSummaryServiceService {
       default:
         break;
     }
+  }
+
+  getSummaryUrls() {
+    return this.http.get<any>("assets/json/summaryHelper.json");
   }
 }

@@ -37,17 +37,17 @@ export class bgConstant {
     },
     {
       columnDef: "requestAssignedTo",
-      header: "Request Assigned to",
+      header: "Assigned to",
       cell: (element: any) => element.requestAssignedTo,
     },
     {
       columnDef: "audit",
-      header: "Audit",
+      header: "Audit Status",
       cell: (element: any) => {
-        if (element.authStatus === 'AUTHORIZED') {
-          return 'APPROVED';
+        if (element.authStatus === "AUTHORIZED") {
+          return "APPROVED";
         } else {
-          return 'UNAPPROVED';
+          return "UNAPPROVED";
         }
       },
     },
@@ -79,11 +79,11 @@ export class bgConstant {
       header: "Last Update",
       cell: (element: any) => element.lastUpdatedBy,
     },
-    {
-      columnDef: "requestAssignedTo",
-      header: "Request Assigned to",
-      cell: (element: any) => element.requestAssignedTo,
-    },
+    // {
+    //   columnDef: "requestAssignedTo",
+    //   header: "Request Assigned to",
+    //   cell: (element: any) => element.requestAssignedTo,
+    // },
   ];
 
   static readonly bgStaticData = [
@@ -127,6 +127,17 @@ export class bgConstant {
       billId: 36776,
       lastUpdatedBy: "xyz",
       requestAssignedTo: "jghg",
+    },
+  ];
+
+  static readonly ADDNEW_LIST = [
+    {
+      name: "Select Template",
+      value: "template",
+    },
+    {
+      name: "Create New",
+      value: "new",
     },
   ];
 }

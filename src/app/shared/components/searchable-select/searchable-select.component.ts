@@ -30,6 +30,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges {
   @Input() customDocOptionWidth: string = "";
   @Input() customInputHeight: string;
   @Input() displayLabel: string;
+  @Input() showOutsideLabel = false;
 
   @Output() selectionChange = new EventEmitter();
 
