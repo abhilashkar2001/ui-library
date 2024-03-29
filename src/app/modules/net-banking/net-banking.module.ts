@@ -35,6 +35,7 @@ import { AttachmentsComponent } from './new-reusable-components/attachments/atta
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
+import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
     CustomDrawerComponent,
     TradeDashboardComponent,
     BenificiaryBulkUploadSummaryComponent,
+    LcAdditionalInfoComponent,
   ],
   imports: [
     CommonModule,
