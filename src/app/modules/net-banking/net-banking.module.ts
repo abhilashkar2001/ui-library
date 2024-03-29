@@ -37,6 +37,7 @@ import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/c
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
 import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-info.component';
 import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
+import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-account.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { LcAdditionalInfoComponent } from './new-reusable-components/lc-addition
     BenificiaryBulkUploadSummaryComponent,
     GoodsInfoComponent,
     LcAdditionalInfoComponent,
+    FeeAccountComponent,
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,8 @@ export class GoodsInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("goods-info");
+
   }
 
 }
