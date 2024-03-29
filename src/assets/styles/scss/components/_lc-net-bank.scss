@@ -1,18 +1,26 @@
+@mixin buttonStyle {
+  position: relative;
+  height: 37px;
+  color: #004c97;
+  border-radius: 8px;
+  background: #e2effc 0% 0% no-repeat padding-box;
+  font-size: 12px;
+  font-family: Poppins, "Medium";
+  font-weight: 600;
+  border: none;
+}
+
 .verifyDiv {
   position: absolute;
   right: -7px;
   top: 0;
   .verify-btn {
-    position: relative;
-    height: 37px;
-    color: #004c97;
-    border-radius: 8px;
-    background: #e2effc 0% 0% no-repeat padding-box;
-    font-size: 12px;
-    font-family: Poppins, "Medium";
-    font-weight: 600;
-    border: none;
+    @include buttonStyle;
   }
+}
+.clause-btn {
+  @include buttonStyle;
+  border: 2px solid #004c97;
 }
 .sub-head {
   font: 14px/21px Poppins;

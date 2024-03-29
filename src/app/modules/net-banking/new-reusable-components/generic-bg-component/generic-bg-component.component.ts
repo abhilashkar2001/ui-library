@@ -87,6 +87,15 @@ export class GenericBgComponentComponent implements OnInit {
         this.currentStep$.value.componrnt
       );
       this.componentRef.instance.bgType = this.bgType;
+      this.currentStep$.subscribe((resp) => {
+        console.log(resp);
+        if (resp?.isHideFilter) {
+          this.componentRef.instance.isHideFilter = resp.isHideFilter;
+          this.componentRef.instance.isHideButton = resp.isHideButton;
+          this.componentRef.instance.screenName = resp.title;
+        }
+      });
+
       this.shareTradeDetails.subscribe((resp) => {
         this.componentRef.instance.tradeDetails = resp;
       });
