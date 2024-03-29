@@ -1,0 +1,537 @@
+<ng-container [formGroup]="lcInfoForm">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Type (40A)</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="type">
+            <mat-option value="Irrevocable">Irrevocable</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Domestic/Foregin</mat-label>
+        <mat-radio-group
+          fxLayout="row"
+          class="domesticToggle"
+          formControlName="domesticOrForegin"
+        >
+          <mat-radio-button value="domesticLC" class="custom-label"
+            >Domestic LC</mat-radio-button
+          >
+          <mat-radio-button value="foreginLC" class="custom-label"
+            >Foregin LC</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Red Clause</mat-label>
+        <mat-radio-group
+          fxLayout="row"
+          class="redClauseToggle"
+          formControlName="redClause"
+        >
+          <mat-radio-button value="true" class="custom-label"
+            >Yes</mat-radio-button
+          >
+          <mat-radio-button value="false" class="custom-label"
+            >No</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Revolving</mat-label>
+        <mat-radio-group
+          fxLayout="row"
+          class="redClauseToggle"
+          formControlName="revolving"
+        >
+          <mat-radio-button value="true" class="custom-label"
+            >Yes</mat-radio-button
+          >
+          <mat-radio-button value="false" class="custom-label"
+            >No</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div fxFlex="19"></div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Currency (32B)*</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="currency">
+            <mat-option value="INR">INR</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Amount (32B)</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="amount"
+            numbersOnly
+            maxlength="8"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="39">
+        <mat-label class="custom-label"
+          >Max Credit Amount (39B) / Tolerance (39A)*</mat-label
+        >
+        <div fxLayout="row" fxLayoutAlign="space-between" fxFlex="100">
+          <mat-form-field fxFlex="48.5">
+            <mat-select formControlName="tolerance">
+              <mat-option value="notExceeding">Not exceeding</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div
+            fxFlex="48.5"
+            fxLayout="row"
+            fxLayoutAlign="space-between"
+            fxLayoutGap="1%"
+          >
+            <div fxFlex="49" fxLayout="row">
+              <div
+                fxFlex="30"
+                fxFlex.xs="20"
+                class="plusdiv"
+                fxLayoutAlign="center start"
+              >
+                <mat-icon fxFlex="100" class="addbtn">add </mat-icon>
+              </div>
+              <mat-form-field fxFlex="70" style="z-index: 2; right: 9px"
+                ><input matInput type="text" />
+                <mat-icon matSuffix class="percentageIcon"
+                  >percentage</mat-icon
+                ></mat-form-field
+              >
+            </div>
+            <div fxFlex="49" fxLayout="row">
+              <div
+                fxFlex="30"
+                fxFlex.xs="20"
+                class="plusdiv"
+                fxLayoutAlign="center start"
+                style="z-index: 1"
+              >
+                <mat-icon fxFlex="100" class="addbtn">remove </mat-icon>
+              </div>
+              <mat-form-field fxFlex="70" style="z-index: 2; right: 9px"
+                ><input matInput type="text" />
+                <mat-icon matSuffix class="percentageIcon"
+                  >percentage</mat-icon
+                ></mat-form-field
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Additional Amounts (39C)</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="additionalAmounts"
+            numbersOnly
+            maxlength="8"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Value Date*</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="valueDate"
+            matInput
+            [matDatepicker]="picker1"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                _ngcontent-vqa-c346=""
+                src="assets/images/calendar.png"
+                style="margin-bottom: 9px"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Request Date (31C)*</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="requestDate"
+            matInput
+            [matDatepicker]="picker2"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker2">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                _ngcontent-vqa-c346=""
+                src="assets/images/calendar.png"
+                style="margin-bottom: 9px"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Purpose*</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="purpose">
+            <mat-option value="capex">Capex</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Place of Expiry (31D)*</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="placeOfExpiry"
+            maxlength="20"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Expiry Date (31D)*</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="expiryDate"
+            matInput
+            [matDatepicker]="picker3"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker3">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                _ngcontent-vqa-c346=""
+                src="assets/images/calendar.png"
+                style="margin-bottom: 9px"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label"
+          >Credit available with (41A) *</mat-label
+        >
+        <mat-form-field>
+          <mat-select formControlName="creditAvailable">
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">By (41A)</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="by">
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label"
+          >Deferred Payment Details (42P)</mat-label
+        >
+        <mat-form-field>
+          <input
+            formControlName="defferedPaymentDetails"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <div fxLayout="row" fxLayoutAlign="space-around">
+          <mat-label class="custom-label">For</mat-label>
+          <mat-label class="custom-label">Of Invoice value</mat-label>
+        </div>
+        <div fxLayout="row">
+          <div
+            fxFlex="30"
+            fxFlex.xs="20"
+            fxLayout="row"
+            fxLayoutAlign="space-between"
+            class="grayDiv"
+          >
+            <div class="custom-label">100</div>
+            <mat-icon matSuffix class="percentageIcon">percentage</mat-icon>
+          </div>
+          <mat-form-field fxFlex="70" style="z-index: 2"
+            ><input
+              formControlName="invoiceValue"
+              numbersOnly
+              maxlength="8"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Tenor (42C)*</mat-label>
+        <mat-form-field fxLayoutGap="2%">
+          <div
+            fxLayout="row"
+            fxFlex="26"
+            style="padding-left: 7px; padding-bottom: 2px"
+          >
+            <input
+              matInput
+              formControlName="tenorDays"
+              numbersOnly
+              maxlength="2"
+            />
+            <div matSuffix>Day</div>
+          </div>
+          <div fxFlex="1" class="vl"></div>
+          <mat-select fxFlex="68" formControlName="tenor">
+            <mat-option value="awb">AWB</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+
+<ng-container [formGroup]="bankDetails">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxFlex="100">
+        <div class="cardHeading">Bank Details</div>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Advising Bank</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="advisingBank"
+            maxlength="10"
+            matInput
+            type="text"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Branch</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="branch">
+            <mat-option value="hdfc">HDFC</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container
+        *ngFor="let address of bankAddressControl.controls; let i = index"
+        [formGroup]="address"
+      >
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 1 *</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="address1"
+              maxlength="100"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 2</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="address2"
+              maxlength="100"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Country</mat-label>
+          <app-searchable-select
+            [items]="countryArr"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+          ></app-searchable-select>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Zip Code</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="pincode"
+              numbersOnly
+              maxlength="8"
+              matInput
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">State</mat-label>
+          <mat-form-field>
+            <input formControlName="stateName" matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">City</mat-label>
+          <mat-form-field>
+            <input formControlName="cityName" matInput type="text" />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">SWIFT Code / IFSC Code</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="swiftCode"
+            maxlength="8"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label"
+          >Confirmation of Credit (49) *</mat-label
+        >
+        <mat-radio-group
+          fxLayout="row"
+          class="redClauseToggle"
+          formControlName="confirmationOfCredit"
+        >
+          <mat-radio-button value="true" class="custom-label"
+            >Yes</mat-radio-button
+          >
+          <mat-radio-button value="false" class="custom-label"
+            >No</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Drawee (42A)</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="drawee">
+            <mat-option value="issuingBank">Issuing Bank</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+
+<ng-container [formGroup]="beneficiaryDetails">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxFlex="100">
+        <div class="cardHeading">Beneficiary Details</div>
+      </div>
+      <div fxLayout="column" fxFlex="39">
+        <mat-label class="custom-label">Beneficiary</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="beneficiary"
+            maxlength="10"
+            matInput
+            type="text"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <ng-container
+        *ngFor="
+          let address of beneficiaryAddressControl.controls;
+          let i = index
+        "
+        [formGroup]="address"
+      >
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 1</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="address1"
+              maxlength="100"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 2</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="address2"
+              maxlength="100"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Country</mat-label>
+          <app-searchable-select
+            [items]="countryArr"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+          ></app-searchable-select>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Zip Code</mat-label>
+          <mat-form-field>
+            <input
+              formControlName="pincode"
+              numbersOnly
+              maxlength="8"
+              matInput
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">State</mat-label>
+          <mat-form-field>
+            <input formControlName="stateName" matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">City</mat-label>
+          <mat-form-field>
+            <input formControlName="cityName" matInput type="text" />
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card>
+</ng-container>
