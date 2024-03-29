@@ -38,8 +38,10 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { LcInfoComponent } from './new-reusable-components/lc-info/lc-info.component';
 import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-info.component';
 import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
+import { LcOtherConditionsComponent } from './new-reusable-components/lc-other-conditions/lc-other-conditions.component';
 import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-account.component';
 import { AmendmentLcInfoComponent } from './new-reusable-components/amendment-lc-info/amendment-lc-info.component';
+import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendement-info/lc-amendement-info.component';
 
 
 @NgModule({
@@ -73,8 +75,10 @@ import { AmendmentLcInfoComponent } from './new-reusable-components/amendment-lc
     LcInfoComponent,
     GoodsInfoComponent,
     LcAdditionalInfoComponent,
+    LcOtherConditionsComponent,
     FeeAccountComponent,
     AmendmentLcInfoComponent,
+    LcAmendementInfoComponent,
   ],
   imports: [
     CommonModule,
