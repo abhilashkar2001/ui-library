@@ -295,7 +295,9 @@
               numbersOnly
               maxlength="2"
             />
-            <div matSuffix>Day</div>
+            <div matSuffix>
+              {{ lcInfoForm.get("tenorDays").value > 1 ? "Days" : "Day" }}
+            </div>
           </div>
           <div fxFlex="1" class="vl"></div>
           <mat-select fxFlex="68" formControlName="tenor">
