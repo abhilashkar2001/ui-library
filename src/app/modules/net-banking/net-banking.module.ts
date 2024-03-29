@@ -36,6 +36,7 @@ import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
 import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-info.component';
+import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-i
     TradeDashboardComponent,
     BenificiaryBulkUploadSummaryComponent,
     GoodsInfoComponent,
+    LcAdditionalInfoComponent,
   ],
   imports: [
     CommonModule,

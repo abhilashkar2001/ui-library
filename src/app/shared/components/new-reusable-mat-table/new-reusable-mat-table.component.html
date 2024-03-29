@@ -6,12 +6,7 @@
   class="mb-2 mx-2"
   *ngIf="componentName != 'Bulk Upload'"
 >
-  <div
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="20px"
-    *ngIf="CountryModule === false"
-  >
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
     <div (click)="goBack()" fxLayoutAlign="start center" class="cursor">
       <mat-icon>arrow_back</mat-icon>
     </div>
@@ -24,14 +19,7 @@
     fxLayout="row"
     fxLayout.xs="column"
     fxLayoutGap="16px"
-    *ngIf="
-      CountryModule === false &&
-      maintenanceTitle !== 'Beneficiary Maintenance' &&
-      maintenanceTitle !== 'BG Issuance Maintenance' &&
-      maintenanceTitle !== 'BG Amendment Maintenance' &&
-      maintenanceTitle !== 'BG Physical Maintenance' &&
-      maintenanceTitle !== 'BG Template Maintenance'
-    "
+    *ngIf="isUploadBtn"
   >
     <ng-container>
       <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
@@ -41,30 +29,33 @@
     </ng-container>
   </div>
 
-  <div
-    fxLayout="column"
-    class="dropdown position-relative"
-    *ngIf="
-      maintenanceTitle == 'Beneficiary Maintenance' ||
-      maintenanceTitle == 'BG Issuance Maintenance' ||
-      maintenanceTitle == 'BG Amendment Maintenance' ||
-      maintenanceTitle == 'BG Physical Maintenance' ||
-      maintenanceTitle == 'BG Template Maintenance'
-    "
-  >
+  <div fxLayout="column" class="dropdown position-relative">
     <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
       {{ "Add New" }}
     </button>
 
-    <div class="dropdown-content">
-      <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
-        {{ "Create" }}
-      </span>
-      <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
-        {{ "Bulk Upload" }}
-      </span>
+    <div
+      class="dropdown-content"
+      *ngIf="addNewList?.length > 0; else elseBlock"
+    >
+      <ng-container *ngFor="let item of addNewList">
+        <span class="menu_btn" mat-menu-item (click)="openPopUp(item.value)">
+          {{ item.name }}
+        </span>
+      </ng-container>
     </div>
+
+    <ng-template #elseBlock>
+      <div class="dropdown-content">
+        <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
+          {{ "Create" }}
+        </span>
+        <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
+          {{ "Bulk Upload" }}
+        </span>
+      </div>
+    </ng-template>
   </div>
 </section>
 

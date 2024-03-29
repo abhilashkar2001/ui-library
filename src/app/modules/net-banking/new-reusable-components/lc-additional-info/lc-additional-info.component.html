@@ -1,0 +1,169 @@
+<form [formGroup]="lcAdditionalInfoForm" *ngIf="lcAdditionalInfoForm">
+  <mat-card fxLayout="column">
+    <h2 class="sub-head">Authorized Bank for Transfer</h2>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">LC Transfr</mat-label>
+        <mat-radio-group formControlName="lcTransfer">
+          <mat-radio-button value="yes">Yes</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column" fxFlex="79">
+        <mat-label class="custom-label">Additional Condition (47A)</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input
+            matInput
+            formControlName="additionalCondition"
+            type="text"
+            name="additionalCondition"
+          />
+          <div fxFlex="40" class="verifyDiv">
+            <button mat-suffix type="button" class="verify-btn">
+              Clause Template
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card fxLayout="column">
+    <h2 class="sub-head">Bank Details</h2>
+    <div fxLayout="row wrap" fxFlex="100" fxLayoutGap="1%">
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Advise through bank (57A)</mat-label>
+        <mat-form-field apperance="outline">
+          <input
+            matInput
+            formControlName="bankAdvise"
+            type="text"
+            name="bankAdvise"
+          />
+          <mat-icon matSuffix class="searchIcon">search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Branch Code</mat-label>
+        <mat-form-field apperance="outline">
+          <mat-select formControlName="branchCode">
+            <mat-option value="uewi">jksd</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container *ngFor="let address of addressControle.controls">
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 1</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              [formControl]="address.get('address1')"
+              type="text"
+              name="address1"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 2</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              [formControl]="address.get('address1')"
+              type="text"
+              name="address2"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <app-searchable-select
+            [items]="countryArr"
+            inputLabel="Country"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+            showOutsideLabel="true"
+          ></app-searchable-select>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Pin Code</mat-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [formControl]="address.get('pincode')"
+            />
+            <mat-icon
+              matSuffix
+              class="searchIcon"
+              (click)="populatePincodeData()"
+              >search</mat-icon
+            >
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">State</mat-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="stateName"
+              [formControl]="address.get('stateName')"
+              readonly
+            />
+            <mat-error
+              *ngIf="
+                address.get('stateName').touched &&
+                address.get('stateName').hasError('required')
+              "
+              >State is required!</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">City *</mat-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="cityName"
+              [formControl]="address.get('cityName')"
+              readonly
+            />
+            <mat-error
+              *ngIf="
+                address.get('cityName').touched &&
+                address.get('cityName').hasError('required')
+              "
+              >City is required!</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </ng-container>
+
+      <div fxLayout="column" fxFlex="39">
+        <mat-label class="custom-label"
+          >All charges other then issuing bank charges to (71B)</mat-label
+        >
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="allChargesThanBankCharge">
+            <mat-option value="charge1">Charge1</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="59">
+        <mat-label class="custom-label">Remarks to bank</mat-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            formControlName="remarks"
+            name="remarks"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</form>

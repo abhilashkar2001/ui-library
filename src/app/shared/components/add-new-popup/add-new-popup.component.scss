@@ -62,3 +62,18 @@
     margin-top: 10px;
   }
 }
+::ng-deep .template_field .mat-option {
+  height: 5em !important;
+  line-height: 1.7 !important;
+  .template_container {
+    margin-left: 1em;
+    .template_name {
+      color: #000000;
+      font-size: 12px;
+    }
+    .templat_desc {
+      color: gray !important;
+      font-size: 11px;
+    }
+  }
+}

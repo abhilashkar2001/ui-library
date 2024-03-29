@@ -34,6 +34,7 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() maintenanceTitle;
   @Input() subTitle;
   @Input() CountryModule = false;
+  @Input() isUploadBtn = false;
   @Input() SecurityModule;
   @Input() countryModuleFilter;
   @Input() stateModuleFilter;
@@ -44,7 +45,7 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() hideFilters: boolean = false;
   @Input() showOnlySearchTitle;
   @Input() requiredSpecialFields;
-
+  @Input() addNewList = [];
   @Input() InstrumentStatusUpdatedData;
   @Input() createdBy;
   @Input() profileImage;
@@ -185,11 +186,14 @@ export class NewReusableMatTableComponent implements OnInit {
 
     this.currentUser = this.tokenStorageService.getUser();
 
-    this.displayedColumns = this.columns.map((c) => c.columnDef);
-    if (this.componentName != "Bulk Upload" && this.componentName != "BG Template")
-      this.displayedColumns.push("action");
+    this.displayedColumns = this.columns?.map((c) => c.columnDef);
+    if (
+      this.componentName != "Bulk Upload" &&
+      this.componentName != "BG Template"
+    )
+      this.displayedColumns?.push("action");
     if (this.componentName == "Bulk Upload")
-      this.displayedColumns.unshift("checkBox");
+      this.displayedColumns?.unshift("checkBox");
     this.customUpdateTable(
       null,
       null,
@@ -337,12 +341,26 @@ export class NewReusableMatTableComponent implements OnInit {
     });
   }
 
+  updateColumn(data) {
+    this.displayedColumns = this.columns?.map((c) => c.columnDef);
+    if (
+      this.componentName != "Bulk Upload" &&
+      this.componentName != "BG Template"
+    )
+      this.displayedColumns?.push("action");
+    if (this.componentName == "Bulk Upload")
+      this.displayedColumns?.unshift("checkBox");
+  }
+
   /**
    * reading maintenance api resp from respective maintenance screen.
    */
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    this.maintenanceData = changes?.UpdatedData?.currentValue;
+    if (changes.columns) {
+      this.updateColumn(changes.columns.currentValue);
+    }
+    if (changes) this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
     this.bulkUploadFileName = this.maintenanceData?.data[0].templateName;
     if (this.maintenanceData?.statusCode === 200) {
