@@ -140,4 +140,63 @@ export class bgConstant {
       value: "new",
     },
   ];
+
+  static readonly LC_SUMMARY = [
+    {
+      columnDef: "lcNumber",
+      header: "LC Number",
+      cell: (element: any) => element.lcNumber,
+    },
+    {
+      columnDef: "invoiceNo",
+      header: "Invoice No",
+      cell: (element: any) => element.invoiceNo,
+    },
+    // {
+    //   columnDef: "submittedOn",
+    //   header: "Submitted on",
+    //   cell: (element: any) => element.submittedOn,
+    // },
+    {
+      columnDef: "lcOpenDate",
+      header: "LC Open Date",
+      cell: (element: any) => element.lcOpenDate,
+    },
+    {
+      columnDef: "billId",
+      header: "Bill ID",
+      cell: (element: any) => element.billId,
+    },
+    {
+      columnDef: "lastUpdatedBy",
+      header: "Last Update",
+      cell: (element: any) => element.lastUpdatedBy,
+    },
+    {
+      columnDef: "dueDate",
+      header: "Due date",
+      cell: (element: any) => element.dueDate,
+    },
+    {
+      columnDef: "status",
+      header: "Transaction Status",
+      cell: (element: any) => element.status,
+    },
+    {
+      columnDef: "requestAssignedTo",
+      header: "Assigned to",
+      cell: (element: any) => element.requestAssignedTo,
+    },
+    {
+      columnDef: "audit",
+      header: "Audit Status",
+      cell: (element: any) => {
+        if (element.authStatus === "AUTHORIZED") {
+          return "APPROVED";
+        } else {
+          return "UNAPPROVED";
+        }
+      },
+    },
+  ];
 }
