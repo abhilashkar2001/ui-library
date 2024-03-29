@@ -120,7 +120,11 @@
           </div>
         </ng-container>
 
-        <div fxLayout="column" fxFlex="74">
+        <div
+          fxLayout="column"
+          fxFlex="74"
+          *ngIf="componentName != 'Amendment LC Info'"
+        >
           <mat-label class="custom-label">Purpose</mat-label>
           <mat-form-field
             appearance="outline"
@@ -132,7 +136,10 @@
         <div
           fxLayout="row"
           fxLayoutGap="2%"
-          *ngIf="componentName != 'BG Issuance'"
+          *ngIf="
+            componentName != 'BG Issuance' &&
+            componentName != 'Amendment LC Info'
+          "
         >
           <mat-form-field appearance="outline" fxFlex="23">
             <mat-label>Email Id</mat-label>
