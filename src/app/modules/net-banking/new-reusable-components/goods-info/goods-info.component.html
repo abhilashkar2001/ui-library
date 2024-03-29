@@ -7,7 +7,7 @@
       fxLayoutGap="1%"
       class="applicantsInfo"
     >
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label"
           >Partial Shipment option (43P)*</mat-label
         >
@@ -17,7 +17,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Transshipment Option (43T)</mat-label>
         <mat-form-field>
           <mat-select>
@@ -25,21 +25,14 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-      class="applicantsInfo"
-    >
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="50"></div>
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Place of Receipt (44A)</mat-label>
         <mat-form-field>
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label"
           >Place of Final Destination (44B)</mat-label
         >
@@ -47,7 +40,7 @@
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label"
           >Port of loading / Airport of Destination (44E)</mat-label
         >
@@ -55,7 +48,7 @@
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label"
           >Port of discharge / Airport of Destination (44F)</mat-label
         >
@@ -63,15 +56,8 @@
           <input matInput type="text" />
         </mat-form-field>
       </div>
-    </div>
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-      class="applicantsInfo"
-    >
-      <div fxLayout="column" fxFlex="49.5">
+
+      <div fxLayout="column" fxFlex="49">
         <mat-label class="custom-label"
           >Latest Date of Shipment (44C)</mat-label
         >
@@ -84,7 +70,7 @@
           </div>
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="49.5">
+      <div fxLayout="column" fxFlex="49">
         <mat-label class="custom-label"
           >Description of Goods and/or services (45A)</mat-label
         >
@@ -97,15 +83,8 @@
           </div>
         </mat-form-field>
       </div>
-    </div>
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-      class="applicantsInfo"
-    >
-      <div fxLayout="column" fxFlex="23">
+
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Expiry Date</mat-label>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" />
@@ -121,13 +100,13 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">PO/Proforma Invoice No</mat-label>
         <mat-form-field>
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">PO/Proforma Date</mat-label>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" />
@@ -143,7 +122,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Country of Origin</mat-label>
         <mat-form-field>
           <mat-select>
@@ -151,27 +130,20 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-      class="applicantsInfo"
-    >
-      <div fxLayout="column" fxFlex="23">
+
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Insurance coverage details</mat-label>
         <mat-form-field>
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Policy Number</mat-label>
         <mat-form-field>
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Policy date</mat-label>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" />
@@ -187,7 +159,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Merchant Trade LC</mat-label>
         <mat-form-field>
           <input matInput type="text" />
@@ -205,7 +177,7 @@
     fxLayoutGap="1%"
     class="applicantsInfo"
   >
-    <div fxLayout="column" fxFlex="23">
+    <div fxLayout="column" fxFlex="24">
       <mat-label class="custom-label">Trade Terms*</mat-label>
       <mat-form-field>
         <mat-select>
@@ -213,13 +185,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxLayout="column" fxFlex="23">
+    <div fxLayout="column" fxFlex="24">
       <mat-label class="custom-label">Place*</mat-label>
       <mat-form-field>
         <input matInput type="text" />
       </mat-form-field>
     </div>
-    <div fxLayout="column" fxFlex="23">
+    <div fxLayout="column" fxFlex="24">
       <mat-label class="custom-label">HS Code*</mat-label>
       <mat-form-field>
         <input matInput type="text" />
@@ -239,13 +211,13 @@
       fxLayoutGap="1%"
       class="applicantsInfo"
     >
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Document to be within</mat-label>
         <mat-form-field>
           <input matInput type="text" />
         </mat-form-field>
       </div>
-      <div fxLayout="column" fxFlex="23">
+      <div fxLayout="column" fxFlex="24">
         <mat-label class="custom-label">Days from the date of</mat-label>
         <mat-form-field>
           <input matInput type="text" />
