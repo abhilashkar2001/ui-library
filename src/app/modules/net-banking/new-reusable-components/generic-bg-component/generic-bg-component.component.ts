@@ -46,13 +46,18 @@ export class GenericBgComponentComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: any) => {
       this.componentName = params.get("type");
-      this.getTabClassData().then((resp) => {
-        this.tabs = resp;
-        this.bgType = this.tabs[0].type;
-        this.componentRef = null;
-        this.currentStep$.next(this.tabs[0]);
-        this.createComponentView();
-      });
+      for (const key in tabsClass) {
+        if (
+          key.replace("_", "").replace(" ", "").toLowerCase() ===
+          this.componentName.replace(" ", "").toLowerCase()
+        ) {
+          this.tabs = tabsClass[key];
+          this.bgType = this.tabs[0].type;
+          this.componentRef = null;
+          this.currentStep$.next(this.tabs[0]);
+          this.createComponentView();
+        }
+      }
     });
   }
 

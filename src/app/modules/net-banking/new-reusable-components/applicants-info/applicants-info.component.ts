@@ -46,6 +46,8 @@ export class ApplicantsInfoComponent implements OnInit {
       applicantReferences: [item?.applicantReferences ?? ""],
       deliveryMode: [item?.deliveryMode ?? ""],
       feeAccount: [item?.feeAccount ?? []],
+      margin: [item?.margin ?? ""],
+      customerCode: [item?.customerCode ?? ""],
       contactInfo: this.fb.group({
         address: this.fb.array([]),
       }),

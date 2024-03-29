@@ -1,14 +1,14 @@
 <div fxFlex="100" fxLayout="column" class="new-popup">
   <div fxLayout="row" fxLayoutAlign="space-between center" class="titleMainDiv">
     <div class="title-div">
-      <span *ngIf="!isSaveTemplate; else showTemplate"> Create BG</span>
-      <ng-template #showTemplate>Template Name</ng-template>
+      <span>Select Template</span>
+      <!-- <ng-template #showTemplate>Template Name</ng-template> -->
     </div>
   </div>
   <div fxLayout="column" fxLayoutAlign="center">
     <div class="verification-card">
       <ng-container *ngIf="!isSaveTemplate">
-        <div fxLayout="row" class="full-width mb-12 p-0">
+        <!-- <div fxLayout="row" class="full-width mb-12 p-0">
           <div
             fxFlex="50"
             fxLayout="column"
@@ -29,12 +29,37 @@
           >
             <div>Add New</div>
           </div>
-        </div>
-        <div *ngIf="!checkToggle">
+        </div> -->
+        <div fxLayout="column">
+          <mat-label class="custom-label">Template Name</mat-label>
           <mat-form-field appearance="outline" class="custom-field">
-            <mat-label class="autolabel">Template Name</mat-label>
-            <mat-select [(ngModel)]="templateName">
-              <mat-option value="Aadhar">Aadhar</mat-option>
+            <mat-select [(ngModel)]="templateName" panelClass="template_field">
+              <mat-select-trigger (keydown.space)="$event.stopPropagation()">
+                <span class="example-additional-selection">
+                  {{ templateName }}
+                </span>
+              </mat-select-trigger>
+              <mat-option
+                [value]="item.templateName"
+                *ngFor="let item of templateDetails"
+              >
+                <ng-container>
+                  <div fxLayout="row">
+                    <div>
+                      <img src="assets/images/file_img.svg" />
+                    </div>
+                    <div fxLayout="column" class="template_container">
+                      <label class="template_name">{{
+                        item.templateName
+                      }}</label>
+                      <span class="templat_desc"
+                        >{{ item.type }} | {{ item.date }} |
+                        {{ item.applicant }}</span
+                      >
+                    </div>
+                  </div>
+                </ng-container>
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>

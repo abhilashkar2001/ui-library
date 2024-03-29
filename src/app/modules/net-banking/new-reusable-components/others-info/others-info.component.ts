@@ -35,7 +35,7 @@ export class OthersInfoComponent implements OnInit {
   buildOtherInfoForm(item) {
     this.otherInfoForm = this.fb.group({
       specifyCounterGuarantee: [
-        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "",
+        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "yes",
       ],
       swiftCode: [item.swiftCode ? item.swiftCode : ""],
       bankName: [item.bankName ? item.bankName : ""],

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "BG Issuance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "BGTYPE_SUMMARY"
+  },
+  {
+    "name": "BG Amendment",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "BGTYPE_SUMMARY"
+  },
+  {
+    "name": "BG Physical Amedment",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "BGTYPE_SUMMARY"
+  },
+  {
+    "name": "BG Issuance Templates",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "BGTYPE_SUMMARY"
+  },
+  {
+    "name": "LC Issuance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "LC_SUMMARY"
+  },
+  {
+    "name": "LC Amendment",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "LC_SUMMARY"
+  },
+  {
+    "name": "Draft LC Issuance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "LC_SUMMARY"
+  },
+  {
+    "name": "LC Physical Amendment",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "LC_SUMMARY"
+  }
+]
