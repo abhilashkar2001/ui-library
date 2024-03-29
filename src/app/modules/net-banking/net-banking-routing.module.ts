@@ -46,7 +46,6 @@ const routes: Routes = [
             path: "dashboard",
             component: TradeDashboardComponent,
           },
-
           {
             path: "beneficiary",
             component: BeneficiarySummaryComponent,
@@ -97,4 +96,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule {}
+export class NetBankingRoutingModule { }
