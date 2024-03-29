@@ -39,6 +39,7 @@ import { LcInfoComponent } from './new-reusable-components/lc-info/lc-info.compo
 import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-info.component';
 import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
 import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-account.component';
+import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendement-info/lc-amendement-info.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-a
     GoodsInfoComponent,
     LcAdditionalInfoComponent,
     FeeAccountComponent,
+    LcAmendementInfoComponent,
   ],
   imports: [
     CommonModule,

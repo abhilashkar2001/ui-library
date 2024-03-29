@@ -4,6 +4,7 @@ import { AttachmentsComponent } from "./new-reusable-components/attachments/atta
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
+import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 
@@ -80,6 +81,12 @@ export class tabsClass {
       title: "Applicant's Info",
       type: "LC Issuance",
       componrnt: ApplicantsInfoComponent,
+    },
+    {
+      id: 2,
+      title: "LC Info",
+      type: "LC Issuance",
+      componrnt: LcInfoComponent,
     },
     {
       id: 3,

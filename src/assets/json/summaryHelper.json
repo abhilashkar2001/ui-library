@@ -54,5 +54,12 @@
     "summaryUrl": "bgIssuance/fetchApplicantInfo",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "LC_SUMMARY"
+  },
+  {
+    "name": "LC Template",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "addNewPath": "user/dashboard/trade/genericBg",
+    "columnRefName": "BGTEMPLATE_SUMMARY"
   }
 ]
