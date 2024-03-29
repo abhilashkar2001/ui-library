@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -14,9 +21,16 @@ import { TokenStorageService } from "app/shared/token-storage.service";
   styleUrls: ["./upload-bulk-upload.component.scss"],
 })
 export class UploadBulkUploadComponent implements OnInit {
-  @Input('screenName') screenName: any = "";
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
+
+  @Input("screenName") screenName: any = "";
   @Input() showNewBeneficiary: boolean = false;
   @Input() showProductType: boolean = true;
+  @Input() isHideFilter: boolean = false;
+  @Input() isHideButton: boolean = false;
 
   @Output() customSaveBulkUpload = new EventEmitter<any>();
   @Output() downloadBulkUpload = new EventEmitter<any>();
@@ -38,7 +52,7 @@ export class UploadBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private commonService: CommonService,
     private tokenStorage: TokenStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -48,6 +62,7 @@ export class UploadBulkUploadComponent implements OnInit {
     this.buildMaintTemplateForm();
     this.fetchAllScreens();
   }
+
   goBack() {
     this.router.navigate(["/user/dashboard/bulk-upload"]);
   }
@@ -72,7 +87,17 @@ export class UploadBulkUploadComponent implements OnInit {
       processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });
-    this.maintTemplateUpload.valueChanges.subscribe((res) => { });
+    this.maintTemplateUpload.valueChanges.subscribe((res) => {
+      const uploadedDocs = {
+        ...res.uplodedFileArray,
+      };
+      this.updateParentModel(
+        {
+          uploadedDocs: uploadedDocs,
+        },
+        uploadedDocs?.uplodedFileArray?.length > 0 ? true : false
+      );
+    });
   }
 
   get uploadFileArrlrngth() {
@@ -96,7 +121,12 @@ export class UploadBulkUploadComponent implements OnInit {
     const productType = this.maintTemplateUpload.value.productType;
     const processingDate = this.maintTemplateUpload.value.processingDate;
     const screenName = this.screenName;
-    this.customSaveBulkUpload.emit({ formData, userName, productType, processingDate });
+    this.customSaveBulkUpload.emit({
+      formData,
+      userName,
+      productType,
+      processingDate,
+    });
     // this emit should be remove after trade api intigeration done
   }
 
