@@ -119,18 +119,11 @@
       <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
         <h2>Fee Account</h2>
       </div>
-      <app-fee-account [feeAccArray]="feeAccArray"></app-fee-account>
+      <app-fee-account
+        [feeAccArray]="feeAccArray"
+        [control]="applicantForm.get('feeAccount')"
+      ></app-fee-account>
     </div>
-    <!-- <div fxLayout="column" fxFlex="39">
-      <mat-label></mat-label>
-      <mat-form-field>
-        <mat-select formControlName="feeAccount">
-          <mat-option *ngFor="let item of feeAccArray" [value]="item">{{
-            item
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> -->
 
     <h3 class="noteClass" fxFlex="100">
       Note: The bank has the discretion to modify the limit, Margin %, Margin

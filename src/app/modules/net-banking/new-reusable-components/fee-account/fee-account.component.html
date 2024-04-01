@@ -37,7 +37,6 @@
     fxLayout="column wrap"
     fxLayoutAlign="space-between"
     fxFlex="49"
-    [formGroup]="feeAccountForm"
   >
     <div
       fxLayout="row"
@@ -47,14 +46,9 @@
     >
       <div fxLayout="column" fxFlex="100">
         <mat-label class="custom-label">Added Account</mat-label>
-        <div *ngIf="this.feeAccountForm.value.feeAccountModel">
+        <div *ngIf="control.value">
           <div fxLayout="column">
-            <ng-container
-              *ngFor="
-                let title of this.feeAccountForm.value.feeAccountModel;
-                let i = index
-              "
-            >
+            <ng-container *ngFor="let title of control.value; let i = index">
               <div class="account_container" fxLayout="row" fxFlex="100">
                 <div
                   fxFlex="10"

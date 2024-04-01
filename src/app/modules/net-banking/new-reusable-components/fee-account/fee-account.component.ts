@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-fee-account',
@@ -8,32 +8,27 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FeeAccountComponent implements OnInit {
   @Input('feeAccArray') feeAccArray: any = [];
-  feeAccountForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
-    console.log(this.feeAccArray);
-    this.buildInfoForm();
+  @Input() control: AbstractControl = new FormControl();
+  constructor(private formBuilder: FormBuilder) {
+    this.control = this.formBuilder.array([]);
   }
 
-
-  buildInfoForm() {
-    this.feeAccountForm = this.formBuilder.group({
-      feeAccountModel: this.formBuilder.array([]),
-    });
-  }
-
-  public get feeAccountModel(): FormArray {
-    return this.feeAccountForm?.get("feeAccountModel") as FormArray;
-  }
+  ngOnInit(): void { }
 
   addTitleCategory(index: number, accountName: string): void {
-    this.feeAccountModel.push(this.formBuilder.control(accountName));
+    if (this.control instanceof FormArray) {
+      (this.control as FormArray).push(this.formBuilder.control(accountName));
+    } else {
+      const newArray = this.formBuilder.array([accountName]);
+      this.control = newArray;
+    }
     this.feeAccArray.splice(index, 1);
   }
 
   removeTitleCategoty(index: number, accountName: string): void {
-    this.feeAccountModel.removeAt(index);
+    if (this.control instanceof FormArray) {
+      (this.control as FormArray).removeAt(index);
+    }
     this.feeAccArray.push(accountName);
   }
 
