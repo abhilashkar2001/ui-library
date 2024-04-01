@@ -27,6 +27,7 @@ export class CreateAccountLandingPageComponent {
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
+  personalDetails: any;
 
   constructor(
     private router: Router,
@@ -60,6 +61,18 @@ export class CreateAccountLandingPageComponent {
 
         this.getScreenDetails(resp);
       });
+    var customerId = parseInt(sessionStorage.getItem("customerId"));
+    if (customerId) {
+      this.getCustomerById(customerId);
+    }
+  }
+
+  getCustomerById(customerId) {
+    this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.personalDetails = resp.data;
+      }
+    });
   }
 
   getScreenDetails(resp) {
@@ -152,7 +165,19 @@ export class CreateAccountLandingPageComponent {
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
   }
-
+  customSavePersonal(event) {
+    this.openAccountService
+      .savePersonalDetails(event.personalDetails.value.customer)
+      .subscribe(
+        (response: any) => {
+          sessionStorage.setItem("customerId", response.data[0].customerId);
+          this.next();
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
   personalDetailsSubmitted() {
     this.next();
   }

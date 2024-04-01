@@ -252,12 +252,16 @@ export class CreateLoanComponent implements OnInit {
    * @param event is disbursement change value
    */
   onDisbursementSelectionChanged(event) {
-    this.disbursementType =
-      this.personalLoanDetailsForm.controls[
-        "disbursementType"
-      ].value.toLowerCase();
+    this.disbursementType = this.staticData["DISBURSEMENTTYPE"]
+      .filter(
+        (item) =>
+          item?.id ==
+          this.personalLoanDetailsForm.controls["disbursementType"].value
+      )[0]
+      .values.toLowerCase();
+
     if (
-      event.toLowerCase().includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
     ) {
       this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
@@ -286,10 +290,13 @@ export class CreateLoanComponent implements OnInit {
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonths} months ${this.personalLoanDetailsForm.value.tenureDay} Days`,
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
-    sessionStorage.setItem(
-      "loanHolderType",
-      this.personalLoanDetailsForm.value.holderType
-    );
+    const holder = this.staticData["HOLDERTYPE"]
+      .filter(
+        (item) =>
+          item?.id == this.personalLoanDetailsForm.controls["holderType"].value
+      )[0]
+      .values.toLowerCase();
+    sessionStorage.setItem("loanHolderType", holder);
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         this.snack.open(`Create Loan Details Saved !`, "OK", {
@@ -332,9 +339,7 @@ export class CreateLoanComponent implements OnInit {
       payload.id = this.personalLoanDetailsForm.value?.id;
     }
     if (
-      this.personalLoanDetailsForm.value?.disbursementType
-        .toLowerCase()
-        .includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.personalLoanDetailsForm.value?.accountType === this.loanEnum.EXTERNAL
     ) {
       payload.otherAccNo = this.personalLoanDetailsForm.value.accountNumber;

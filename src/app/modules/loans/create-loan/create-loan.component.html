@@ -208,8 +208,8 @@
           <mat-select formControlName="holderType">
             <mat-option
               *ngFor="let holderItem of staticData.HOLDERTYPE"
-              [value]="holderItem"
-              >{{ holderItem }}</mat-option
+              [value]="holderItem.id"
+              >{{ holderItem.values }}</mat-option
             >
           </mat-select>
           <mat-error
@@ -258,8 +258,8 @@
           >
             <mat-option
               *ngFor="let disburse of staticData.DISBURSEMENTTYPE"
-              [value]="disburse"
-              >{{ disburse }}</mat-option
+              [value]="disburse.id"
+              >{{ disburse.values }}</mat-option
             >
           </mat-select>
           <mat-error

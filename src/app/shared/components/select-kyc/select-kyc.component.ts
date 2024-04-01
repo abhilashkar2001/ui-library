@@ -46,22 +46,12 @@ export class SelectKycComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getGenericDetails();
     this.buildKycForm();
     setTimeout(() => {
       this.customFormGroupEmit.emit(this.kycForm);
     }, 200);
   }
 
-  getGenericDetails() {
-    this.sharedService
-      .genericValue("website", Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
-        }
-      });
-  }
   onOtpChange(e) {
     this.yourOtp = e.toString();
   }

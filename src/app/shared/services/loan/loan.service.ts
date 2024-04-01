@@ -131,4 +131,12 @@ export class LoanService {
       `${baseUrl}/interestDetail/formulaElement?basisId=${basisId}`
     );
   }
+
+  fetchStateCityByZipcode(pincode) {
+    return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
+  }
+
+  getCustomerByCif(id) {
+    return this.http.get<any>(`${baseUrl}/customer-api?customerNo=${id}`);
+  }
 }

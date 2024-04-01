@@ -44,6 +44,7 @@ export class LoanFlowComponent implements OnInit {
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
+  personalDetails: any;
 
   constructor(
     private loanApi: LoanService,
@@ -132,6 +133,7 @@ export class LoanFlowComponent implements OnInit {
     this.loanApi.getOriginationMaster(parseInt(id)).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.customerInfo = resp.data[0]?.customerInfo;
+        this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
         this.originationModel = resp.data[0]?.originationModel;
       }
@@ -229,6 +231,15 @@ export class LoanFlowComponent implements OnInit {
 
   checkExistingUserEvent(event) {
     this.loanApi
+      .getExistingUserDetails(event.phone)
+      .subscribe((response: any) => {
+        console.log("Existing user: ", response);
+        this.checkProducts(event);
+      });
+  }
+
+  checkProducts(event) {
+    this.loanApi
       .checkMobileAndProduct(this.productDetails.basisName, event.phone, "Loan")
       .subscribe((resp) => {
         if (!resp) {
@@ -287,6 +298,7 @@ export class LoanFlowComponent implements OnInit {
     };
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
+        this.personalDetails = resp.data?.customerInfo;
         sessionStorage.setItem(
           "originationId",
           resp.data.originationModel.originationId

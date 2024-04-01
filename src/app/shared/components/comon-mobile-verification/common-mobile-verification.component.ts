@@ -16,6 +16,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
@@ -37,7 +38,8 @@ import { debounceTime } from "rxjs/operators";
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
-  @Output() OTPTimer: EventEmitter<any> = new EventEmitter();
+  @Output() onVerifyOtpEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
@@ -70,8 +72,17 @@ export class CommonMobileVerificationComponent implements OnInit {
   resendOtp: number = 0;
   maxMobileLength: number;
   intervalId: any;
+  otpAvailable: boolean = false;
+  yourOtp: any;
+  // SAVE BUTTON PROPERTIES
+  isLoading: boolean = false;
+  loadingBtnText: string = "Saving...";
 
-  constructor(private fb: FormBuilder, private commonService: CommonService) {
+  constructor(
+    private fb: FormBuilder,
+    private commonService: CommonService,
+    private api: OpenAccountService
+  ) {
     this.buildFormGroup();
   }
 
@@ -87,7 +98,13 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onGetOTP() {
-    this.getOTP.emit({ phone: this.otpForm.value.phone });
+    this.api.getOtp(this.otpForm.value.phone).subscribe((response: any) => {
+      this.otpSent = true;
+      this.showOtpSection = true;
+      setTimeout(() => {
+        this.otpSent = false;
+      }, 5000);
+    });
     this.getOtpBtn = true;
     this.validNumber = true;
     this.resendLink = false;
@@ -122,7 +139,9 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   onOtpChange(otp) {
     this.otp = otp;
-    this.enteredOTP.emit({ otp: this.otp, agreed: this.agreed });
+    this.yourOtp = this.otp.toString();
+    this.otpAvailable =
+      this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }
   isValidated() {
     if (this.otpForm.value.phone?.length === 10 && this.getOtpBtn) {
@@ -182,9 +201,17 @@ export class CommonMobileVerificationComponent implements OnInit {
         this.resendLink = true;
         this.stopInterval();
       }
-      this.OTPTimer.emit({ seconds: this.displaySecond });
+      this.otpTimerReset({ seconds: this.displaySecond });
     }, 1000);
   }
+
+  otpTimerReset(event) {
+    if (event.seconds == "00:00") {
+      this.isLoading = false;
+      this.otpAvailable = false;
+    }
+  }
+
   onIsdCodeSelected(isdCode) {
     this.selectedIsd = isdCode;
   }
@@ -202,5 +229,27 @@ export class CommonMobileVerificationComponent implements OnInit {
    */
   stopInterval() {
     clearInterval(this.intervalId);
+  }
+
+  onVerify() {
+    this.isLoading = true;
+    this.loadingBtnText = "Saving...";
+    this.api
+      .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
+      .subscribe((response: any) => {
+        if (response.statusCode === 401) {
+          this.invalidOtp = true;
+          this.isLoading = false;
+        } else if (response.statusCode === 200) {
+          this.loadingBtnText = "Saved";
+          this.isLoading = false;
+          this.invalidOtp = false;
+          this.onVerifyOtpEvent.emit({ phone: this.otpForm.value.phone });
+        }
+      });
+  }
+
+  onExit() {
+    this.onBackEvent.emit();
   }
 }
