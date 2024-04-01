@@ -20,6 +20,7 @@ export class AmendmentLcInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getCountrys();
     this.buildForm();
   }
 
