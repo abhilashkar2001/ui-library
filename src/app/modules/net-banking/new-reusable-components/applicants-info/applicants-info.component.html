@@ -115,16 +115,14 @@
         <input matInput type="text" formControlName="margin" />
       </mat-form-field>
     </div>
-
-    <div fxLayout="column" fxFlex="39">
-      <mat-label>Fee Account</mat-label>
-      <mat-form-field>
-        <mat-select formControlName="feeAccount">
-          <mat-option *ngFor="let item of feeAccArray" [value]="item">{{
-            item
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div fxLayout="column" fxFlex="100">
+      <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Fee Account</h2>
+      </div>
+      <app-fee-account
+        [feeAccArray]="feeAccArray"
+        [control]="applicantForm.get('feeAccount')"
+      ></app-fee-account>
     </div>
 
     <h3 class="noteClass" fxFlex="100">

@@ -17,13 +17,13 @@ export class ApplicantsInfoComponent implements OnInit {
     part: Partial<any>,
     isFormValid: boolean
   ) => void;
-  feeAccArray: any[] = ["dummy Option 1", "dummy Option 2"];
+  feeAccArray: any[] = ["dummy Option 1", "dummy Option 2", "dummy Option 3"];
   @Input("tradeDetails") tradeDetails;
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getStaticData();
