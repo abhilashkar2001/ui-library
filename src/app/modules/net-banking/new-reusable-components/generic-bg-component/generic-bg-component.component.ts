@@ -47,9 +47,10 @@ export class GenericBgComponentComponent implements OnInit {
     this.route.queryParamMap.subscribe((params: any) => {
       this.componentName = params.get("type");
       for (const key in tabsClass) {
+        console.log(key, this.componentName, ".......");
         if (
           key.replace("_", "").replace(" ", "").toLowerCase() ===
-          this.componentName.replace(" ", "").toLowerCase()
+          this.componentName.split(" ").join("").toLowerCase()
         ) {
           this.tabs = tabsClass[key];
           this.bgType = this.tabs[0].type;
