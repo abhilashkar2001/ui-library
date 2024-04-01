@@ -4,6 +4,7 @@ import { AttachmentsComponent } from "./new-reusable-components/attachments/atta
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
+import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
 import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
@@ -115,4 +116,19 @@ export class tabsClass {
       componrnt: AttachmentsComponent,
     },
   ];
+
+  public static Lc_PhysicalAmendment: any[] = [
+    {
+      id: 1,
+      title: "Amendment Info",
+      type: "LC Physical Amendment",
+      componrnt: LcAmendementInfoComponent
+    },
+    {
+      id: 2,
+      title: "Attachements",
+      type: "LC Physical Amendment",
+      componrnt: AttachmentsComponent
+    }
+  ]
 }
