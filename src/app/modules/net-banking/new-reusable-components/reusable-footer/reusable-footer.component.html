@@ -1,43 +1,36 @@
-<div
-  fxLayout="row wrap"
-  fxLayout.lt-sm="column"
-  fxLayoutAlign="end center"
-  fxLayoutGap="10px"
->
-<button
-    type="button"
-    mat-raised-button
-    
-    class="saveTempletButton"
-    (click)="saveAsTemplet()"
+<div fxLayout="row" fxLayoutAlign="end center">
+  <div
+    fxLayout="row wrap"
+    fxLayout.lt-sm="column"
+    fxLayoutGap="10px"
+    fxLayoutAlign="center center"
+    class="buttonsBg"
   >
-    {{ "Save Template" }}
-  </button>
-<button
-    type="button"
-    mat-raised-button
-    
-    class="saveandSubmit"
-    (click)="updateRecord('SubmitLater')"
-  >
-    {{ "Save and Submit Later" }}
-  </button>
-<button
-    type="button"
-    mat-raised-button
-    
-    class="submit"
-    (click)="updateRecord('Submit')"
-  >
-    {{ "Submit" }}
-  </button>
-<button
-    type="button"
-    mat-raised-button
-    
-    class="resetbtn"
-    (click)="updateRecord('ResetForm')"
-  >
-    {{ "Reset" }}
-  </button>
+    <button
+      type="button"
+      mat-raised-button
+      class="submit"
+      (click)="updateRecord('Submit')"
+    >
+      {{ "Submit" }}
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      class="resetbtn"
+      (click)="updateRecord('ResetForm')"
+    >
+      {{ "Exit" }}
+    </button>
+    <div type="button" class="saveTempletButton" (click)="saveAsTemplet()">
+      {{ "Save Template" }}
+    </div>
+    <div
+      type="button"
+      class="saveTempletButton"
+      (click)="updateRecord('SubmitLater')"
+    >
+      {{ "Save and Submit Later" }}
+    </div>
+  </div>
 </div>

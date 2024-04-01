@@ -40,8 +40,8 @@ import { GoodsInfoComponent } from './new-reusable-components/goods-info/goods-i
 import { LcAdditionalInfoComponent } from './new-reusable-components/lc-additional-info/lc-additional-info.component';
 import { LcOtherConditionsComponent } from './new-reusable-components/lc-other-conditions/lc-other-conditions.component';
 import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-account.component';
+import { AmendmentLcInfoComponent } from './new-reusable-components/amendment-lc-info/amendment-lc-info.component';
 import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendement-info/lc-amendement-info.component';
-
 
 
 @NgModule({
@@ -77,8 +77,8 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
     LcAdditionalInfoComponent,
     LcOtherConditionsComponent,
     FeeAccountComponent,
+    AmendmentLcInfoComponent,
     LcAmendementInfoComponent,
-
   ],
   imports: [
     CommonModule,
