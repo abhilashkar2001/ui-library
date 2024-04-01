@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 
 @Component({
@@ -18,14 +19,19 @@ export class LcAmendementInfoComponent implements OnInit {
 
   isLcAmend: boolean = false;
   countryArr: any;
+  componentType: any;
   constructor(
     private fb: FormBuilder,
-    private cntStService: countryStateService
+    private cntStService: countryStateService,
+    private activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getCountry();
-    this.buildForm();
+    this.activeRoute.queryParamMap.subscribe((params: any) => {
+      this.componentType = params.get("type");
+      this.getCountry();
+      this.buildForm();
+    });
   }
 
   getCountry() {
@@ -37,6 +43,7 @@ export class LcAmendementInfoComponent implements OnInit {
   }
 
   buildForm(data?) {
+    console.log(this.componentType, "this.componentType");
     this.lcAmendInfoForm = this.fb.group({
       amendentNumber: [data?.amendentNumber ?? ""],
 
@@ -47,7 +54,7 @@ export class LcAmendementInfoComponent implements OnInit {
       changeOfExpiry: [data?.changeOfExpiry ?? ""],
       amountChange: [data?.amountChange ?? ""],
       // common control end
-      ...(!this.isLcAmend
+      ...(this.componentType == "LC Physical Amendment "
         ? {
             // for lc amend
             expiryDateChangeFrom: [data?.expiryDateChangeFrom ?? ""],
