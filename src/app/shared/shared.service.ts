@@ -23,12 +23,6 @@ export class SharedService {
     });
   }
 
-  getCurrencybyBranch(branchCode) {
-    return this.http.get(
-      `${this.baseUrl}/branch/currencyByBranch?branchCode=${branchCode}`
-    );
-  }
-
   public readAadharData(data) {
     return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
   }

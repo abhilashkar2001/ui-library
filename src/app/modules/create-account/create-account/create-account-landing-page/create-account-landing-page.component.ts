@@ -58,7 +58,7 @@ export class CreateAccountLandingPageComponent {
   ngOnInit(): void {
     this.currentUser = this.tokenStore.getUser();
     this.getGeneric();
-    this.getCurrencybyBranch();
+    this.currencyCode = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("accountstep");
@@ -89,16 +89,6 @@ export class CreateAccountLandingPageComponent {
           this.ownershipId = this.ownership.find(
             (r) => r?.values === "Self"
           )?.id;
-        }
-      });
-  }
-
-  getCurrencybyBranch() {
-    this.sharedService
-      .getCurrencybyBranch(this.currentUser.branchCode)
-      .subscribe((resp: any) => {
-        if (resp?.statusCode == 200) {
-          this.currencyCode = resp?.data?.currency;
         }
       });
   }
@@ -259,7 +249,7 @@ export class CreateAccountLandingPageComponent {
             businessProductName: this.productDetails.basisName,
             productDescription: this.productDetails.basisDetailStory,
             ownership: this.ownershipId,
-            currencyCode: this.currencyCode,
+            currencyCode: this.currencyCode.currency,
             branchId: this.currentUser.branchId,
           },
           customerInfo: custResp,
