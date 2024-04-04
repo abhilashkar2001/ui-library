@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { StaticData } from "./models/static.constant";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "auth-user";
@@ -14,6 +15,7 @@ export const VALIDITY_IN_SECS = "validityInSecs";
 export class TokenStorageService {
   private sessionStore = window.sessionStorage;
   private localStore = window.localStorage;
+  currencyList = StaticData.currencyList;
   constructor() {}
 
   signOut() {
@@ -105,7 +107,13 @@ export class TokenStorageService {
   }
 
   saveUserOtherInfo(info) {
-    this.sessionStore.setItem(USER_INFO, JSON.stringify(info));
+    this.sessionStore.setItem(
+      USER_INFO,
+      JSON.stringify({
+        ...info,
+        currencySymbol: this.currencyList[info.currency].symbol,
+      })
+    );
   }
   getUserOtherInfo() {
     return JSON.parse(this.sessionStore.getItem(USER_INFO));

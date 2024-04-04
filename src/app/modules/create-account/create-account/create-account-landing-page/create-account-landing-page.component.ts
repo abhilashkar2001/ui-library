@@ -11,6 +11,17 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { SharedService } from "app/shared/shared.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
+import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
+
+const {
+  SELF,
+  OWNERSHIP,
+  DUPLICATE_PRODUCT_ERROR_MESSAGE,
+  DUPLICATE_PRODUCT_HINT,
+  PRODUCT_DUPLICATION_KEY,
+  SOURCE_PAYLOAD_KEY,
+  LOADING_TEXT,
+} = CreateEnum;
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -18,10 +29,9 @@ import * as moment from "moment";
   styleUrls: ["./create-account-landing-page.component.scss"],
 })
 export class CreateAccountLandingPageComponent {
-  accountHeader: string | any;
   stepper: MatStepper;
   screenList: any;
-  screenTitle = "Savings Resident Account";
+  screenTitle = "";
   selectedStep: number = 0;
   currentStep: string;
   originationId: any;
@@ -30,10 +40,8 @@ export class CreateAccountLandingPageComponent {
   processDetails: { processCycleCode: string; processStageId: number };
   personalDetails: any;
   ownership: any;
-  screenName: string = "Common";
-  staticData = {
-    OWNERSHIP: [],
-  };
+  screenName: string = CreateAccountConstant.SCREEN_NAME;
+  staticData = CreateAccountConstant.STATIC_DATA;
   ownershipId: any;
   currentUser: any;
   currencyCode: any;
@@ -41,7 +49,6 @@ export class CreateAccountLandingPageComponent {
   constructor(
     private router: Router,
     private openAccountService: OpenAccountService,
-    private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     private dialog: MatDialog,
     private showSideBar: NewDepositService,
@@ -51,7 +58,6 @@ export class CreateAccountLandingPageComponent {
     private sharedService: SharedService
   ) {
     this.showSideBar.setToken(true);
-    this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
   }
 
@@ -85,9 +91,9 @@ export class CreateAccountLandingPageComponent {
       .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.ownership = resp.data["OWNERSHIP"];
+          this.ownership = resp.data[OWNERSHIP];
           this.ownershipId = this.ownership.find(
-            (r) => r?.values === "Self"
+            (r) => r?.values === "SELF"
           )?.id;
         }
       });
@@ -123,7 +129,10 @@ export class CreateAccountLandingPageComponent {
     this.openAccountService
       .getProductDetails(this.basisId)
       .subscribe((resp) => {
-        if (resp?.statusCode === 200) this.productDetails = resp.data[0];
+        if (resp?.statusCode === 200) {
+          this.productDetails = resp.data[0];
+          this.screenTitle = resp.data[0].basisName;
+        }
       });
   }
 
@@ -143,7 +152,7 @@ export class CreateAccountLandingPageComponent {
       .checkMobileAndProduct(
         this.productDetails.basisName,
         event.phone,
-        "Accounts"
+        PRODUCT_DUPLICATION_KEY
       )
       .subscribe((resp) => {
         if (!resp) {
@@ -172,19 +181,14 @@ export class CreateAccountLandingPageComponent {
   allreadyProduct() {
     this.dialog.open(ErrorNotifierPopupComponent, {
       data: {
-        errorMessage:
-          "We have found similar account application in our record on your Mobile Number",
-        errorMessageHint: "Please visit bank for more information.",
+        errorMessage: DUPLICATE_PRODUCT_ERROR_MESSAGE,
+        errorMessageHint: DUPLICATE_PRODUCT_HINT,
       },
       width: "650px",
       disableClose: true,
       panelClass: "popup-dialog-class",
       backdropClass: "bdrop",
     });
-  }
-
-  onExit() {
-    this.router.navigate(["/"]);
   }
 
   getTabDetails(tabDetails: any) {
@@ -204,9 +208,6 @@ export class CreateAccountLandingPageComponent {
         }
       );
   }
-  personalDetailsSubmitted() {
-    this.next();
-  }
 
   onBackOnPreviousStep() {
     this.stepper.previous();
@@ -221,10 +222,6 @@ export class CreateAccountLandingPageComponent {
       docIds.push(docId);
     });
 
-    var payload = {
-      customerId: parseInt(sessionStorage.getItem("customerId")),
-      documentInfo: docIds[0].docIds?.length > 0 ? docIds : [],
-    };
     this.openAccountService
       .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
       .subscribe((resp) => {
@@ -245,11 +242,11 @@ export class CreateAccountLandingPageComponent {
             accountType: sessionData.accountType,
             basisDetailsId: sessionData.basisDetailsId,
             branchCode: this.tokenStore.getUser().branchCode,
-            source: "Website",
+            source: SOURCE_PAYLOAD_KEY,
             businessProductName: this.productDetails.basisName,
             productDescription: this.productDetails.basisDetailStory,
             ownership: this.ownershipId,
-            currencyCode: this.currencyCode.currency,
+            currencyCode: this.currencyCode?.currency,
             branchId: this.currentUser.branchId,
           },
           customerInfo: custResp,
@@ -293,7 +290,7 @@ export class CreateAccountLandingPageComponent {
   workFlowVerify(accountPayload, resp, e) {
     this.loanApi.verifyWorkFlow(accountPayload).subscribe((workres) => {
       if (workres?.autoAction) {
-        e.loadingBtnText = "Saved";
+        e.loadingBtnText = LOADING_TEXT;
         e.isLoading = false;
         this.saveCofig(workres);
       } else this.done(resp);
