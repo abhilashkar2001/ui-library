@@ -23,7 +23,7 @@
               >
                 <mat-label class="custom-mat-label">Amount</mat-label>
                 <div fxLayout="row">
-                  <span>{{ currencySymboll }}</span>
+                  <span>{{ otherUserInfo?.currencySymbol }}</span>
                   <input
                     matInput
                     formControlName="amount"
@@ -49,8 +49,8 @@
           </mat-slider>
         </div>
         <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-          <div>{{ currencySymboll }} {{ min }}</div>
-          <div>{{ currencySymboll }} {{ max }}</div>
+          <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
+          <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
         </div>
 
         <div

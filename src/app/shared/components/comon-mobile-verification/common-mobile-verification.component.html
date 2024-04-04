@@ -52,19 +52,19 @@
           >
             Get OTP
           </button>
-          <mat-error
-            *ngIf="
-              otpForm.get('phone').touched &&
-              otpForm.get('phone').hasError('invalidLength')
-            "
-            class="mobileLength-error"
-            >Mobile length should be {{ maxMobileLength }}</mat-error
-          >
         </mat-form-field>
       </div>
     </fieldset>
+    <mat-error
+      *ngIf="
+        otpForm.get('phone').touched &&
+        otpForm.get('phone').hasError('invalidLength')
+      "
+      class="mobileLength-error"
+      >Mobile length should be {{ maxMobileLength }}</mat-error
+    >
     <mat-error class="custom-mat-error" *ngIf="isValidMobile"
-      >Mobile Number should not contain only numbers
+      >Mobile Number is Invalid.
     </mat-error>
   </div>
   <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>

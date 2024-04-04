@@ -12,6 +12,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { LoanFlowConstants } from "./loan-flow.constant";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-loan-flow",
@@ -45,6 +46,12 @@ export class LoanFlowComponent implements OnInit {
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
   personalDetails: any;
+  staticData = {
+    OWNERSHIP: [],
+  };
+  currentUser: any;
+  otherUserInfo: any;
+  ownerShipId: any;
 
   constructor(
     private loanApi: LoanService,
@@ -54,7 +61,8 @@ export class LoanFlowComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private tokenStore: TokenStorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedService: SharedService
   ) {
     this.steper_Array = [
       {
@@ -111,6 +119,8 @@ export class LoanFlowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.tokenStore.getUser();
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
     this.getAllLoanStep();
     this.getProductDetails();
@@ -118,6 +128,8 @@ export class LoanFlowComponent implements OnInit {
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     var originationId = sessionStorage.getItem("originationId");
     if (originationId) this.getOriginationMaster(parseInt(originationId));
+    this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
+    console.log(this.ownerShipId);
   }
 
   /**
@@ -227,6 +239,8 @@ export class LoanFlowComponent implements OnInit {
     this.createLoanAccountNumber = event.value.accountNumber;
     localStorage.setItem("customerData", JSON.stringify(this.customerData));
     this.next();
+    this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
+    console.log(this.ownerShipId);
   }
 
   checkExistingUserEvent(event) {
@@ -257,6 +271,8 @@ export class LoanFlowComponent implements OnInit {
             );
             this.next();
           } else if (event.response?.statusCode === 204) {
+            this.next();
+          } else {
             this.next();
           }
         }
@@ -293,6 +309,9 @@ export class LoanFlowComponent implements OnInit {
         ...this.getOriginationModel(),
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
+        currencyCode: this.otherUserInfo.currency,
+        branchId: this.currentUser.branchId,
+        ownership: this.ownerShipId,
       },
       customerInfo: customer,
     };
@@ -411,12 +430,17 @@ export class LoanFlowComponent implements OnInit {
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
+      delete custResp[i].documentsInfoModel;
+      delete custResp[i].signatureInfo;
     });
     const payload = {
       originationModel: {
         ...this.getOriginationModel(),
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
+        currencyCode: this.otherUserInfo.currency,
+        branchId: this.currentUser.branchId,
+        ownership: this.ownerShipId,
       },
       customerInfo: custResp,
     };
@@ -429,7 +453,7 @@ export class LoanFlowComponent implements OnInit {
    */
   onConfirm(event) {
     var docIds = [];
-    event.forEach((element) => {
+    event.otherDocument.forEach((element) => {
       let docItemId = [];
       element.fileInfo.forEach((documents: any) => {
         docItemId.push(documents.docId ?? documents.id);
@@ -453,11 +477,13 @@ export class LoanFlowComponent implements OnInit {
         loanTenureYear: sessionStorage.getItem("tenureYear"),
         branchCode: this.originationModel?.branchCode,
         source: "Website",
-        ownership: sessionStorage.getItem("loanHolderType"),
+        ownership: this.ownerShipId,
         documentId: docIds,
         originationId: this.originationModel?.originationId,
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
+        currencyCode: this.otherUserInfo.currency,
+        branchId: this.currentUser.branchId,
       },
       customerInfo: customer,
     };
@@ -588,6 +614,20 @@ export class LoanFlowComponent implements OnInit {
     else return false;
   }
 
+  getOwnershipIdByGeneric(value) {
+    let ownership;
+    this.sharedService
+      .genericValue("Common", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          ownership = resp.data["OWNERSHIP"];
+          this.ownerShipId = ownership.find(
+            (r) => r?.values.toLowerCase() === value.toLowerCase()
+          )?.id;
+        }
+      });
+  }
+
   getOriginationModel() {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
@@ -601,7 +641,6 @@ export class LoanFlowComponent implements OnInit {
       loanTenureYear: sessionStorage.getItem("tenureYear"),
       branchCode: this.tokenStore.getUser().branchCode,
       source: "Website",
-      ownership: sessionStorage.getItem("loanHolderType"),
     };
   }
 }

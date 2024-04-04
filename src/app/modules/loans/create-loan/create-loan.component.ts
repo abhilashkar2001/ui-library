@@ -8,6 +8,7 @@ import * as moment from "moment";
 import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
 import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-create-loan",
@@ -34,6 +35,8 @@ export class CreateLoanComponent implements OnInit {
   loanCustomerId: string;
   accountList: any;
   currentDate = new Date();
+  productDetails: any;
+  otherUserInfo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -41,18 +44,32 @@ export class CreateLoanComponent implements OnInit {
     private loanApi: LoanService,
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
-    private loanCalcService: LoanCalulationService
+    private loanCalcService: LoanCalulationService,
+    private tokenStore: TokenStorageService
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
 
   ngOnInit(): void {
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    const basisId = sessionStorage.getItem("loanBasisDetails");
+    this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
     var id = parseInt(sessionStorage.getItem("loanDisburseId"));
     if (id) this.getLoanById(id);
     else this.initialForm();
+  }
+
+  getProductDetails(basisId) {
+    this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.productDetails = resp.data[0].lendingParameters.find(
+          (el) => el.currency == this.otherUserInfo.currency
+        );
+      }
+    });
   }
 
   getCustomerById() {
@@ -97,9 +114,9 @@ export class CreateLoanComponent implements OnInit {
       (resp) => {
         if (resp.statusCode === 200) {
           this.initialForm(resp?.data); // once fetchById api working then use this
-          const tenureDays = sessionStorage.getItem("tenureDays");
-          const tenureYear = sessionStorage.getItem("tenureYear");
-          const tenureMonth = sessionStorage.getItem("tenureMonth");
+          const tenureDays = sessionStorage.getItem("tenureDays") || 0;
+          const tenureYear = sessionStorage.getItem("tenureYear") || 0;
+          const tenureMonth = sessionStorage.getItem("tenureMonth") || 0;
           this.personalLoanDetailsForm.controls.tenureDays.setValue(tenureDays);
           this.personalLoanDetailsForm.controls.tenureYear.setValue(tenureYear);
           this.personalLoanDetailsForm.controls.tenureMonth.setValue(
@@ -282,12 +299,12 @@ export class CreateLoanComponent implements OnInit {
    * @returns void if form is invalid
    */
   onConfirm() {
-    if (this.personalLoanDetailsForm.invalid) {
+    if (this.personalLoanDetailsForm.invalid || this.validateMinimumTenure) {
       return;
     }
     const loanAmmount = JSON.stringify({
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
-      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonths} months ${this.personalLoanDetailsForm.value.tenureDay} Days`,
+      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
     const holder = this.staticData["HOLDERTYPE"]
@@ -305,6 +322,18 @@ export class CreateLoanComponent implements OnInit {
           horizontalPosition: "right",
         });
         sessionStorage.setItem("loanDisburseId", resp.data.id);
+        sessionStorage.setItem(
+          "tenureYear",
+          this.personalLoanDetailsForm.value.tenureYear
+        );
+        sessionStorage.setItem(
+          "tenureMonth",
+          this.personalLoanDetailsForm.value.tenureMonth
+        );
+        sessionStorage.setItem(
+          "tenureDays",
+          this.personalLoanDetailsForm.value.tenureDays
+        );
         this.onSaveCreateLoan.emit(this.personalLoanDetailsForm);
       }
     });
@@ -370,5 +399,38 @@ export class CreateLoanComponent implements OnInit {
    */
   editRecord() {
     this.isReadOnly = false;
+  }
+
+  calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {
+    const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
+    return d;
+  }
+
+  get validateTenure() {
+    let totalDays = this.calculateTotalDays(
+      this.personalLoanDetailsForm.value.tenureYear || 0,
+      this.personalLoanDetailsForm.value.tenureMonth || 0,
+      this.personalLoanDetailsForm.value.tenureDays || 0
+    );
+    let totalAllowedDays = this.calculateTotalDays(
+      this.productDetails?.maximumTenorYear || 0,
+      this.productDetails?.maximumTenorMonth || 0,
+      this.productDetails?.maximumTenorDay || 0
+    );
+    return totalDays >= totalAllowedDays;
+  }
+
+  get validateMinimumTenure() {
+    let totalDays = this.calculateTotalDays(
+      this.personalLoanDetailsForm.value.tenureYear || 0,
+      this.personalLoanDetailsForm.value.tenureMonth || 0,
+      this.personalLoanDetailsForm.value.tenureDays || 0
+    );
+    let MinimumAllowedDays = this.calculateTotalDays(
+      this.productDetails?.minimumTenorYear || 0,
+      this.productDetails?.minimumTenorMonth || 0,
+      this.productDetails?.minimumTenorDay || 0
+    );
+    return totalDays <= MinimumAllowedDays;
   }
 }

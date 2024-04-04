@@ -8,6 +8,7 @@ import {
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculation.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -30,22 +31,33 @@ export class CommonEmiCalculatorComponent implements OnInit {
   totalPayableAmmount: number = 0;
   emiAmount: any = 0;
   interestDetails: any;
+  otherUserInfo: any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
-    private loanCalcService: LoanCalulationService
+    private loanCalcService: LoanCalulationService,
+    private tokenStore: TokenStorageService
   ) {}
 
   ngOnInit(): void {
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     const basisId = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
-    this.buildForm();
+    setTimeout(() => {
+      this.buildForm();
+    }, 500);
   }
   getProductDetails(basisId) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
-      if (resp?.statusCode === 200)
-        this.productDetails = resp.data[0].lendingParameters[0];
+      if (resp?.statusCode === 200) {
+        this.productDetails = resp.data[0].lendingParameters.find(
+          (el) => el.currency == this.otherUserInfo.currency
+        );
+        this.min = this.productDetails.minimumAmount;
+        this.max = this.productDetails.maximumAmount;
+      }
     });
+
     this.loanApi.getProductInterestDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         resp.data.forEach((item) => {
@@ -136,8 +148,8 @@ export class CommonEmiCalculatorComponent implements OnInit {
       totalPayableAmount: this.totalPayableAmmount,
       emiAmount: this.emiAmount,
     };
-    this.loanForm.reset();
     this.customCalculatorValues.emit(obj);
+    this.loanForm.reset();
   }
 
   calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {

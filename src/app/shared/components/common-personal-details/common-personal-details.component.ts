@@ -551,7 +551,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     )[0].values;
     const gender = this.genderArray.filter(
       (item) => item.id === personalInfoGroup.get("gender").value
-    )[0].values;
+    )[0]?.values;
     if (prefix && gender) {
       if (
         (prefix.toLowerCase() === "mr" && gender.toLowerCase() === "male") ||
