@@ -16,6 +16,7 @@ import {
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -69,7 +70,8 @@ export class WebDocUploadComponent implements OnInit {
     private loanApi: LoanService,
     private api: NewDepositService,
     private snack: MatSnackBar,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private loder: AppLoaderService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
     // this.buildDocumentForm();
@@ -94,7 +96,7 @@ export class WebDocUploadComponent implements OnInit {
 
   getGenericDetails(data) {
     this.sharedService
-      .genericValue(data.screenName, Object.keys(data.staticData))
+      .genericValue("Common", Object.keys(data.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data["DOCUMENTNAME"];
@@ -225,6 +227,66 @@ export class WebDocUploadComponent implements OnInit {
     inputElement.click();
     this.uploadFilesSimulator(0);
   }
+
+  getDocTypeforScan(docname) {
+    let docType;
+    if (docname == "aadhar card") {
+      docType = "adhaar";
+    }
+    if (docname == "pan card") {
+      docType = "pan";
+    }
+    if (docname == "passport") {
+      docType = docname;
+    }
+    return docType;
+  }
+
+  async readDocument(file, i) {
+    const formdata = new FormData();
+    formdata.append("image", file);
+    formdata.append("lang", "eng");
+    formdata.append(
+      "imageType",
+      this.getDocTypeforScan(this.hideSelect[0].toLowerCase())
+    );
+    try {
+      const res: any = await this.sharedService
+        .readAadharData(formdata)
+        .toPromise();
+      if (res?.statusCode == 200) {
+        if (
+          Object.keys(res?.data).filter(
+            (value) =>
+              res?.data[value] != "Detail not found" && res?.data[value] != null
+          )?.length < 1
+        ) {
+          this.deleteFile(i, i, file);
+          this.loder.close();
+          this.snack.open(`Uploaded Document is not valid` + " !", "OK", {
+            duration: 4000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: "snackbar-error",
+          });
+          return -1;
+        } else {
+          this.loder.close();
+          this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
+            duration: 4000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: "snackbar-error",
+          });
+        }
+      }
+    } catch (error) {
+      this.loder.close();
+      this.deleteFile(i, i, file);
+      throw error;
+    }
+  }
+
   uploadImage(file, i) {
     let formData = new FormData();
     let data = {
@@ -241,16 +303,12 @@ export class WebDocUploadComponent implements OnInit {
     formData.append("data", JSON.stringify(data));
     formData.append("file", file);
     formData.append("module", "document");
+    this.loder.open();
     this.api.uploadDocument(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
-        this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error",
-        });
+        this.readDocument(file, i);
       }
     });
   }

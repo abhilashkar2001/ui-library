@@ -87,13 +87,8 @@ export class OtherDocumentsComponent implements OnInit {
 
   getCustomerId(id) {
     this.openAccountService.getCustomerById(id).subscribe((resp) => {
-      if (resp.statusCode == 200) {
+      if (resp?.statusCode == 200) {
         this.documentList = resp.data[0].documnentsInfo?.documents;
-        // if (this.documentList[0].documnentsInfo?.documents?.length > 0) {
-        //   this.buildForm(this.documentList[0].documnentsInfo?.documents);
-        // } else {
-        //   this.buildForm();
-        // }
       }
     });
   }

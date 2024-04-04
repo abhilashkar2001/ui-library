@@ -272,7 +272,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         address1: [address?.address1 ?? "", [Validators.required]],
         address2: [address?.address2 ?? ""],
         residenceType: [address?.residenceType ?? "", [Validators.required]],
-        country: [address?.countryName ?? "", [Validators.required]],
+        countryName: [address?.countryName ?? "", [Validators.required]],
         pincode: [address?.pincode ?? "", [Validators.required]],
         stateName: [address?.stateName ?? ""],
         cityId: [address?.cityId ?? ""],
@@ -325,8 +325,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
                 if (res?.statusCode === 200) {
                   addressControl.patchValue(res?.data?.[0]);
                   addressControl
-                    .get("country")
+                    .get("countryName")
                     .patchValue(res?.data?.[0]?.countryName);
+                  addressControl
+                    .get("cityName")
+                    .patchValue(res?.data?.[0]?.city);
+                  addressControl
+                    .get("stateName")
+                    .patchValue(res?.data?.[0]?.state);
                 }
               });
           }
@@ -384,7 +390,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       nationality: "",
       address1: "",
       residenceType: "",
-      country: "",
+      countryName: "",
       pincode: "",
       state: "",
       cityId: "",
@@ -405,7 +411,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
           .get("contact")
           .get("address")["controls"][0] as FormGroup;
         addressControl.patchValue(res);
-        addressControl.get("country").patchValue(res.countryName);
+        addressControl.get("countryName").patchValue(res.countryName);
       }
     });
   }
@@ -482,7 +488,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
           {
             address1: resp.contact.address[0].address1,
             residenceType: resp.contact.address[0].residenceType,
-            country: resp.contact.address[0].countryName,
+            countryName: resp.contact.address[0].countryName,
             pincode: resp.contact.address[0].pincode,
             state: resp.contact.address[0].stateName,
             cityId: resp.contact.address[0].cityId,

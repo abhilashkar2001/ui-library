@@ -31,8 +31,6 @@ import { ExpenseDetailsComponent } from "./loan-calculator/education-loan-calcul
 import { EducationLoanCalculatorComponent } from "./loan-calculator/education-loan-calculator/education-loan-calculator.component";
 import { KnowYourEmiComponent } from "./loan-calculator/education-loan-calculator/know-your-emi/know-your-emi.component";
 import { TaxBenefitsComponent } from "./loan-calculator/education-loan-calculator/tax-benefits/tax-benefits.component";
-import { GenericCalculatorComponent } from "./loan-calculator/generic-calculator/generic-calculator.component";
-import { LoanDetailsViewComponent } from "./loan-calculator/loan-details-view/loan-details-view.component";
 @NgModule({
   declarations: [
     LoansComponent,
@@ -56,8 +54,6 @@ import { LoanDetailsViewComponent } from "./loan-calculator/loan-details-view/lo
     ExpenseDetailsComponent,
     KnowYourEmiComponent,
     TaxBenefitsComponent,
-    GenericCalculatorComponent,
-    LoanDetailsViewComponent,
   ],
   imports: [
     CommonModule,
