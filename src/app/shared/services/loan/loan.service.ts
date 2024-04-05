@@ -139,4 +139,15 @@ export class LoanService {
   getCustomerByCif(id) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerNo=${id}`);
   }
+  stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
+    return this.http.post(
+      `${baseUrl}/origination-matser/customerStagingSave`,
+      personalDetails
+    );
+  }
+  getCustByStageId(id) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
+    );
+  }
 }

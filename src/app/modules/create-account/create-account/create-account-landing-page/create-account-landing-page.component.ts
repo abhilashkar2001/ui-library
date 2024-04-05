@@ -227,7 +227,6 @@ export class CreateAccountLandingPageComponent {
       .subscribe((resp) => {
         const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
         var custResp = this.factoryCustomer(resp.data);
-        custResp[0].primaryCustomer = true;
         custResp[0].isphoneNumVerified = true;
         custResp[0].isEmailVerified = true;
         custResp[0] = {

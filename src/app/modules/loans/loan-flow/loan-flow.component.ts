@@ -298,46 +298,123 @@ export class LoanFlowComponent implements OnInit {
     this.next();
   }
 
+  getCustInfoPayload(event) {
+    return new Promise((resolve, reject) => {
+      var customer = [];
+      event.forEach((element, i) => {
+        if (element.primaryCustomer) {
+          sessionStorage.setItem(
+            "customerData",
+            JSON.stringify({
+              name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
+              cifNumber:
+                element.kycStatus === "APPROVED" ? element.customerId : "",
+            })
+          );
+        }
+        console.log(element);
+        var docIds = [];
+        if (element?.documentId) {
+          docIds.push(element.documentId);
+        } else {
+          element?.documnentsInfo?.documents.forEach((item) => {
+            let docItemId = [];
+            item.docs.forEach((docItem) => {
+              docItemId.push(docItem.documentId);
+            });
+            const docId = {
+              docIds: docItemId,
+            };
+            docIds.push(docId);
+          });
+        }
+        const cus = {
+          ...element,
+          jointCustomerInfo: [],
+          middleName: "",
+          dateOfBirth: moment(element.dateOfBirth).format(),
+          documentId: element.primaryCustomer ? docIds : [],
+        };
+        customer.push(cus);
+      });
+      resolve(customer);
+    });
+  }
+
   // on Personal details saved
   customSavePersonal(event) {
-    const customer = this.createPayload(event.personalDetails.value.customer);
-    customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
-    if (event.personalDetails.value.customer[0].kycStatus)
-      customer[0].kycStatus = event.personalDetails.value.customer[0].kycStatus;
-    const payload = {
-      originationModel: {
-        ...this.getOriginationModel(),
-        businessProductName: this.productDetails.basisName,
-        productDescription: this.productDetails.basisDetailStory,
-        currencyCode: this.otherUserInfo.currency,
-        branchId: this.currentUser.branchId,
-        ownership: this.ownerShipId,
-      },
-      customerInfo: customer,
-    };
-    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.personalDetails = resp.data?.customerInfo;
-        sessionStorage.setItem(
-          "originationId",
-          resp.data.originationModel.originationId
-        );
-        this.originationId = resp.data.originationModel.originationId;
-        resp.data?.customerInfo?.forEach((item, i) => {
-          if (item.primaryCustomer)
-            sessionStorage.setItem("customerId", item.customerId);
+    // const element = event.personalDetails.value.customer;
+    // console.log(element, "....");
+
+    // if (element.primaryCustomer) {
+    //   sessionStorage.setItem(
+    //     "customerData",
+    //     JSON.stringify({
+    //       name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
+    //       cifNumber: element.kycStatus === "APPROVED" ? element.customerId : "",
+    //     })
+    //   );
+    // }
+
+    // var docIds = [];
+    // if (element?.documentId) {
+    //   docIds.push(element.documentId);
+    // } else {
+    //   element?.documnentsInfo?.documents.forEach((item) => {
+    //     let docItemId = [];
+    //     item.docs.forEach((docItem) => {
+    //       docItemId.push(docItem.documentId);
+    //     });
+    //     const docId = {
+    //       docIds: docItemId,
+    //     };
+    //     docIds.push(docId);
+    //   });
+    // }
+
+    this.getCustInfoPayload(event.personalDetails.value.customer).then(
+      (data) => {
+        this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
+          if (resp?.statusCode === 200) {
+            this.personalDetails = resp.data;
+            // sessionStorage.setItem(
+            //   "originationId",
+            //   resp.data.originationModel.originationId
+            // );
+            // this.originationId = resp.data.originationModel.originationId;
+            resp.data?.forEach((item, i) => {
+              if (item.primaryCustomer)
+                sessionStorage.setItem("customerId", item.customerId);
+            });
+            this.snack.open(`Personal Details Saved` + " !", "OK", {
+              duration: 4000,
+              verticalPosition: "top",
+              horizontalPosition: "right",
+              panelClass: "snackbar-error",
+            });
+            // this.originationModel = resp.data?.originationModel;
+            this.customerInfo = resp.data;
+            this.next();
+          }
         });
-        this.snack.open(`Personal Details Saved` + " !", "OK", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error",
-        });
-        this.originationModel = resp.data?.originationModel;
-        this.customerInfo = resp.data?.customerInfo;
-        this.next();
       }
-    });
+    );
+
+    // const customer = this.createPayload(event.personalDetails.value.customer);
+    // customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
+    // if (event.personalDetails.value.customer[0].kycStatus)
+    //   customer[0].kycStatus = event.personalDetails.value.customer[0].kycStatus;
+    // const payload = {
+    //   originationModel: {
+    //     ...this.getOriginationModel(),
+    //     businessProductName: this.productDetails.basisName,
+    //     productDescription: this.productDetails.basisDetailStory,
+    //     currencyCode: this.otherUserInfo.currency,
+    //     branchId: this.currentUser.branchId,
+    //     ownership: this.ownerShipId,
+    //   },
+    //   customerInfo: customer,
+    // };
   }
 
   createPayload(event) {
@@ -374,9 +451,9 @@ export class LoanFlowComponent implements OnInit {
         firstName: element.firstName,
         lastName: element.lastName,
         customerId: element?.customerId,
-        middleName: "",
+        //  middleName: "",
         gender: element.gender,
-        jointCustomerInfo: [],
+        // jointCustomerInfo: [],
         documentId: element.primaryCustomer ? docIds : [],
         isphoneNumVerified: true,
         isEmailVerified: true,
@@ -420,7 +497,12 @@ export class LoanFlowComponent implements OnInit {
       docIds.push(docId);
     });
     this.docIds = docIds;
-    this.saveCustomerInfo(this.customerInfo, docIds);
+
+    this.loanApi
+      .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) this.saveCustomerInfo(resp.data, docIds);
+      });
   }
 
   saveCustomerInfo(resp, docIds) {
@@ -441,6 +523,7 @@ export class LoanFlowComponent implements OnInit {
         currencyCode: this.otherUserInfo.currency,
         branchId: this.currentUser.branchId,
         ownership: this.ownerShipId,
+        documentId: JSON.parse(sessionStorage.getItem("loanDoc")),
       },
       customerInfo: custResp,
     };
@@ -454,43 +537,43 @@ export class LoanFlowComponent implements OnInit {
   onConfirm(event) {
     var docIds = [];
     event.otherDocument.forEach((element) => {
-      let docItemId = [];
-      element.fileInfo.forEach((documents: any) => {
-        docItemId.push(documents.docId ?? documents.id);
-      });
       const docId = {
-        docIds: docItemId,
+        docIds: element.docIds,
       };
       docIds.push(docId);
     });
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    const customer = this.createPayload(this.customerInfo);
-    const payload = {
-      originationModel: {
-        applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-        accountType: this.originationModel?.accountType,
-        basisDetailsId: sessionData.basisId,
-        loanAmount: parseInt(loanData.loanAmount),
-        loanTenureDay: sessionStorage.getItem("tenureDays"),
-        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-        loanTenureYear: sessionStorage.getItem("tenureYear"),
-        branchCode: this.originationModel?.branchCode,
-        source: "Website",
-        ownership: this.ownerShipId,
-        documentId: docIds,
-        originationId: this.originationModel?.originationId,
-        businessProductName: this.productDetails.basisName,
-        productDescription: this.productDetails.basisDetailStory,
-        currencyCode: this.otherUserInfo.currency,
-        branchId: this.currentUser.branchId,
-      },
-      customerInfo: customer,
-    };
-    payload.customerInfo.forEach((cust) => {
-      cust.documentId = docIds;
-    });
-    this.getMasterSave(payload);
+
+    // sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
+    // const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    // const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    // const customer = this.createPayload(this.customerInfo);
+    // debugger;
+    // const payload = {
+    //   originationModel: {
+    //     applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+    //     accountType: this.originationModel?.accountType,
+    //     basisDetailsId: sessionData.basisId,
+    //     loanAmount: parseInt(loanData.loanAmount),
+    //     loanTenureDay: sessionStorage.getItem("tenureDays"),
+    //     loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+    //     loanTenureYear: sessionStorage.getItem("tenureYear"),
+    //     branchCode: this.originationModel?.branchCode,
+    //     source: "Website",
+    //     ownership: this.ownerShipId,
+    //     documentId: docIds,
+    //     originationId: this.originationModel?.originationId,
+    //     businessProductName: this.productDetails.basisName,
+    //     productDescription: this.productDetails.basisDetailStory,
+    //     currencyCode: this.otherUserInfo.currency,
+    //     branchId: this.currentUser.branchId,
+    //   },
+    //   customerInfo: customer,
+    // };
+    // payload.customerInfo.forEach((cust) => {
+    //   cust.documentId = docIds;
+    // });
+    // this.getMasterSave(payload);
+    this.next();
   }
 
   getMasterSave(payload) {
