@@ -110,8 +110,8 @@ export class WebDocUploadComponent implements OnInit {
     });
     if (data?.length > 0) {
       data.forEach((item, i) => {
-        this.hideSelect.push(item?.docs[0].documentName);
-        this.showDocument(item?.docs, i);
+        this.hideSelect.push(item?.documentType);
+        this.showDocument(item, i);
         this.customDocumentForm.emit(this.createDocumentForm);
       });
     } else {
@@ -128,8 +128,11 @@ export class WebDocUploadComponent implements OnInit {
 
   showDocument(data, i) {
     this.documentControls = this.fb.group({
-      documentNumber: [data ? data[0].documentNumber : "", Validators.required],
-      documentType: [data ? data[0].documentName : "", Validators.required],
+      documentNumber: [data ? data.documentNumber : "", Validators.required],
+      documentType: [
+        data ? parseInt(data.documentType) : "",
+        Validators.required,
+      ],
       fileInfo: new FormControl([]),
       docIds: new FormControl([]),
     });
@@ -144,19 +147,19 @@ export class WebDocUploadComponent implements OnInit {
   calculateDoc(data, i) {
     var docArr = [];
     var docIds = [];
-    data.forEach((item, ind) => {
-      console.log(item, ind);
-      var docItem = {
-        progress: 100,
-        name: item.fileName,
-      };
-      docArr.push({
-        docId: item.documentId,
-        doc: docItem,
-        url: this.mapEndPoints(item.fileUrl),
-      });
-      docIds.push(item.documentId);
+    // data.forEach((item, ind) => {
+    // console.log(item, ind);
+    var docItem = {
+      progress: 100,
+      name: data.fileName,
+    };
+    docArr.push({
+      docId: data.documentId,
+      doc: docItem,
+      url: this.mapEndPoints(data.fileUrl),
     });
+    docIds.push(data.documentId);
+    // });
     this.otherDocument().controls[i].get("docIds").setValue(docIds);
     return docArr;
   }

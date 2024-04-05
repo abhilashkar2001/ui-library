@@ -198,16 +198,17 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
     if (data?.length > 0) {
       setTimeout(() => {
-        if (this.holderType == "Self") this.addCustomer(0, data && data[0]);
-        else if (this.holderType == "Joint") {
+        if (this.holderType.toLowerCase() == "self")
+          this.addCustomer(0, data && data[0]);
+        else if (this.holderType.toLowerCase() == "joint") {
           this.renderApplicant(data, data?.length);
           this.cd.detectChanges();
         }
       }, 200);
     } else {
-      if (this.holderType == "Self") {
+      if (this.holderType.toLowerCase() == "self") {
         this.addCustomer(0);
-      } else if (this.holderType == "Joint")
+      } else if (this.holderType.toLowerCase() == "joint")
         for (let i = 0; i < 2; i++) this.addCustomer(i);
       else this.addCustomer(0);
       this.cd.detectChanges();
@@ -423,6 +424,18 @@ export class CommonPersonalDetailsComponent implements OnInit {
     ) {
       return;
     }
+
+    this.customerDetailsForm.value.customer.forEach((element, i) => {
+      this.prefixArray.forEach((el) => {
+        if (el.id == element.prefix) {
+          this.customerDetailsForm.value.customer[i] = {
+            ...this.customerDetailsForm.value.customer[i],
+            prefixValue: el.values,
+          };
+        }
+      });
+    });
+
     this.customSavePersonal.emit({
       status: true,
       personalDetails: this.customerDetailsForm,

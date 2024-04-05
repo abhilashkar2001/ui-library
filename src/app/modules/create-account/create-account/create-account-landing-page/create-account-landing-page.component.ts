@@ -100,7 +100,7 @@ export class CreateAccountLandingPageComponent {
   }
 
   getCustomerById(customerId) {
-    this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
+    this.openAccountService.getCustByStageId(customerId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.personalDetails = resp.data;
       }

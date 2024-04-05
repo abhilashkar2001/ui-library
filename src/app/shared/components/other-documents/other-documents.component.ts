@@ -23,6 +23,7 @@ import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-other-documents",
@@ -73,7 +74,8 @@ export class OtherDocumentsComponent implements OnInit {
     private snack: MatSnackBar,
     private sharedService: SharedService,
     private openAccountService: OpenAccountService,
-    private CommonService: CommonService
+    private CommonService: CommonService,
+    private loanService: LoanService
   ) {}
 
   ngAfterViewInit() {}
@@ -81,14 +83,24 @@ export class OtherDocumentsComponent implements OnInit {
   ngOnInit() {
     // this.getGenericDetails();
     var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
-    if (loanCustomerId) this.getCustomerId(loanCustomerId);
+    var originationId = parseInt(sessionStorage.getItem("originationId"));
+    if (originationId) this.getDataFromOriginationMaster(originationId);
+    else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }
 
   getCustomerId(id) {
-    this.openAccountService.getCustomerById(id).subscribe((resp) => {
+    this.openAccountService.getCustByStageId(id).subscribe((resp) => {
       if (resp?.statusCode == 200) {
-        this.documentList = resp.data[0].documnentsInfo?.documents;
+        this.documentList = resp?.data[0]?.documentsInfoModel;
+      }
+    });
+  }
+
+  getDataFromOriginationMaster(id) {
+    this.loanService.getOriginationMaster(id).subscribe((resp: any) => {
+      if (resp?.statusCode == 200 && resp?.data) {
+        this.documentList = resp?.data[0]?.customerInfo[0]?.documentsInfoModel;
       }
     });
   }
