@@ -40,8 +40,8 @@
               >
                 <mat-option
                   *ngFor="let doc of documentNames; let i = index"
-                  [value]="doc"
-                  >{{ doc }}</mat-option
+                  [value]="doc.id"
+                  >{{ doc.values }}</mat-option
                 >
               </mat-select>
               <mat-error
