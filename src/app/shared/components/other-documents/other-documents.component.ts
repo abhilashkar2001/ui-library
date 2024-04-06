@@ -92,7 +92,7 @@ export class OtherDocumentsComponent implements OnInit {
   getCustomerId(id) {
     this.openAccountService.getCustByStageId(id).subscribe((resp) => {
       if (resp?.statusCode == 200) {
-        this.documentList = resp?.data[0]?.documentsInfoModel;
+        this.documentList = resp?.data[0]?.documnentsInfo?.documents[0]?.docs;
       }
     });
   }
@@ -100,7 +100,8 @@ export class OtherDocumentsComponent implements OnInit {
   getDataFromOriginationMaster(id) {
     this.loanService.getOriginationMaster(id).subscribe((resp: any) => {
       if (resp?.statusCode == 200 && resp?.data) {
-        this.documentList = resp?.data[0]?.customerInfo[0]?.documentsInfoModel;
+        this.documentList =
+          resp?.data[0]?.customerInfo[0]?.documnentsInfo?.documents[0]?.docs;
       }
     });
   }

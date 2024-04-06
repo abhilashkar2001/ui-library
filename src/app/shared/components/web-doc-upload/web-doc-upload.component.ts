@@ -251,7 +251,7 @@ export class WebDocUploadComponent implements OnInit {
     formdata.append("lang", "eng");
     formdata.append(
       "imageType",
-      this.getDocTypeforScan(this.hideSelect[0].toLowerCase())
+      this.getDocTypeforScan(this.hideSelect[i].toLowerCase())
     );
     try {
       const res: any = await this.sharedService
