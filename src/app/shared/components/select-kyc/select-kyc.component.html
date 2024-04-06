@@ -1,6 +1,6 @@
 <div>
   <form [formGroup]="kycForm" fxLayout="column">
-    <div class="enter_mobile">Kindly Provide Your nationalID</div>
+    <div class="enter_mobile">Kindly Provide Your national ID</div>
     <div class="row full-width">
       <div
         class="standard-txtField-phone-main"
@@ -24,7 +24,7 @@
         </button>
       </div>
     </div>
-    <div class="enter_otp">Enter OTP to verify</div>
+    <div class="enter_otp" *ngIf="isShowOtp">Enter OTP to verify</div>
     <div fxLayout="column">
       <div *ngIf="isShowOtp">
         <ng-otp-input
@@ -52,7 +52,7 @@
           <span id="counter"></span>
         </span>
       </div> -->
-      <div class="standard-font-black">
+      <div class="standard-font-black" *ngIf="isShowOtp">
         <span *ngIf="resendLink"
           ><div (click)="otpTimer()" class="resend-link">Resend</div></span
         >
@@ -69,6 +69,7 @@
           class="col-12"
           fxFlex="100"
           fxLayout="row"
+          *ngIf="isShowOtp"
         >
           <div fxFlex="5">
             <mat-checkbox (change)="isChecked = !isChecked"></mat-checkbox>

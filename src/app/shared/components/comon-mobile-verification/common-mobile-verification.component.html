@@ -52,19 +52,19 @@
           >
             Get OTP
           </button>
-          <mat-error
-            *ngIf="
-              otpForm.get('phone').touched &&
-              otpForm.get('phone').hasError('invalidLength')
-            "
-            class="mobileLength-error"
-            >Mobile length should be {{ maxMobileLength }}</mat-error
-          >
         </mat-form-field>
       </div>
     </fieldset>
+    <mat-error
+      *ngIf="
+        otpForm.get('phone').touched &&
+        otpForm.get('phone').hasError('invalidLength')
+      "
+      class="mobileLength-error"
+      >Mobile length should be {{ maxMobileLength }}</mat-error
+    >
     <mat-error class="custom-mat-error" *ngIf="isValidMobile"
-      >Mobile Number should not contain only numbers
+      >Mobile Number is Invalid.
     </mat-error>
   </div>
   <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>
@@ -106,6 +106,37 @@
           me. This Consent will override any registration from DNC/NDNC
         </span>
       </mat-checkbox>
+    </div>
+  </div>
+
+  <div>
+    <div fxLayout="column">
+      <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
+        <div
+          fxLayout="row"
+          fxLayoutGap="30px"
+          class="button-section"
+          *ngIf="showOtpSection"
+        >
+          <button-loading
+            [loadingText]="loadingBtnText"
+            [type]="'submit'"
+            [disable]="!(otpAvailable && !isLoading && agreed)"
+            [loading]="isLoading"
+            (click)="onVerify()"
+          >
+            Confirm
+          </button-loading>
+          <button
+            class="back-button"
+            mat-raised-button
+            (click)="onExit()"
+            style="color: #b20000; margin-left: 5px"
+          >
+            Exit
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </form>

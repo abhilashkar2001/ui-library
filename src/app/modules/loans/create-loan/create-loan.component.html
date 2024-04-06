@@ -124,6 +124,34 @@
             </div>
           </div>
         </fieldset>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateTenure &&
+            (personalLoanDetailsForm.get('tenureYear').value ||
+              personalLoanDetailsForm.get('tenureMonth').value ||
+              personalLoanDetailsForm.get('tenureDays').value)
+          "
+        >
+          Loan Period should be less than
+          {{ productDetails?.maximumTenorYear || 0 }} Years
+          {{ productDetails?.maximumTenorMonth || 0 }} Months
+          {{ productDetails?.maximumTenorDay || 0 }} Days
+        </mat-error>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateMinimumTenure &&
+            (personalLoanDetailsForm.get('tenureYear').value ||
+              personalLoanDetailsForm.get('tenureMonth').value ||
+              personalLoanDetailsForm.get('tenureDays').value)
+          "
+        >
+          Loan Period should be greater than
+          {{ productDetails?.minimumTenorYear }} Years
+          {{ productDetails?.minimumTenorMonth }} Months
+          {{ productDetails?.minimumTenorDay }} Days
+        </mat-error>
       </div>
 
       <div fxFlex="45" class="disable-mat-form-field">
@@ -208,8 +236,8 @@
           <mat-select formControlName="holderType">
             <mat-option
               *ngFor="let holderItem of staticData.HOLDERTYPE"
-              [value]="holderItem"
-              >{{ holderItem }}</mat-option
+              [value]="holderItem.id"
+              >{{ holderItem.values }}</mat-option
             >
           </mat-select>
           <mat-error
@@ -258,8 +286,8 @@
           >
             <mat-option
               *ngFor="let disburse of staticData.DISBURSEMENTTYPE"
-              [value]="disburse"
-              >{{ disburse }}</mat-option
+              [value]="disburse.id"
+              >{{ disburse.values }}</mat-option
             >
           </mat-select>
           <mat-error

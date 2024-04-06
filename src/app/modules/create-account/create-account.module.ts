@@ -4,9 +4,6 @@ import { CreateAccountComponent } from "./create-account/create-account.componen
 import { RouterModule } from "@angular/router";
 import { HomeRoutes } from "./create-account-routing";
 import { LandingPageComponent } from "./create-account/landing-page/landing-page.component";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { AccountMobileVerificationComponent } from "./create-account/account-mobile-verification/account-mobile-verification.component";
-import { CreateAccountPersonalDetailsComponent } from "./create-account/personal-details/personal-details.component";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -15,13 +12,12 @@ import { SharedModule } from "app/shared/shared.module";
 import { NgOtpInputModule } from "ng-otp-input";
 import { AccountTypeDetailsComponent } from "./create-account/account-type-details/account-type-details.component";
 import { ApplyAccountComponent } from "./create-account/apply-account/apply-account.component";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
     CreateAccountComponent,
     LandingPageComponent,
-    AccountMobileVerificationComponent,
-    CreateAccountPersonalDetailsComponent,
     CreateAccountLandingPageComponent,
     AccountTypeDetailsComponent,
     ApplyAccountComponent,

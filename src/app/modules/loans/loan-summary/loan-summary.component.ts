@@ -13,6 +13,7 @@ import { ImageDialogComponent } from "app/shared/components/image-dialog/image-d
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -29,16 +30,19 @@ export class LoanSummaryComponent implements OnInit {
   @Input() loanSummary;
   endPoints = environment.microServiceURL;
   currencySymboll = "₹";
+  otherUserInfo: any;
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
     private loanService: LoanService,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
+    private tokenStore: TokenStorageService
   ) {}
 
   ngOnInit(): void {
     // this.getLoanSummary();
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary();
   }

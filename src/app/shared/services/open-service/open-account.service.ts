@@ -27,6 +27,13 @@ export class OpenAccountService {
     return this.http.post(`${baseUrl}/customer/joint`, personalDetails);
   }
 
+  stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
+    return this.http.post(
+      `${baseUrl}/origination-matser/customerStagingSave`,
+      personalDetails
+    );
+  }
+
   uploadDocument(documentObjects: any): Observable<any> | any {
     return this.http.post(`${baseUrl}/upload-document`, documentObjects);
   }
@@ -88,8 +95,15 @@ export class OpenAccountService {
   getProcessStages(id) {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
+
   getCustomerById(id) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
+  }
+
+  getCustByStageId(id) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
+    );
   }
 
   fetchStateCityByZipcode(pincode) {
