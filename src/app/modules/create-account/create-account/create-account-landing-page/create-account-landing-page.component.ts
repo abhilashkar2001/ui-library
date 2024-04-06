@@ -93,7 +93,7 @@ export class CreateAccountLandingPageComponent {
         if (resp?.statusCode === 200) {
           this.ownership = resp.data[OWNERSHIP];
           this.ownershipId = this.ownership.find(
-            (r) => r?.values === "SELF"
+            (r) => r?.values.toLowerCase() === "self"
           )?.id;
         }
       });

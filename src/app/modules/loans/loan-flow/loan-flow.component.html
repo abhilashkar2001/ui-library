@@ -99,7 +99,7 @@
     fxLayout="column"
   >
     <app-loan-summary
-      (onConfirmEvent)="verifyWorkFlow()"
+      (onConfirmEvent)="onFlowDone()"
       [loanSummary]="loanSummary"
       (onBackEvent)="goBack()"
     ></app-loan-summary>

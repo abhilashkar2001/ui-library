@@ -1,5 +1,5 @@
 export class CreateAccountConstant {
-  static readonly SCREEN_NAME = "common";
+  static readonly SCREEN_NAME = "Common";
 
   static readonly STATIC_DATA = {
     OWNERSHIP: [],

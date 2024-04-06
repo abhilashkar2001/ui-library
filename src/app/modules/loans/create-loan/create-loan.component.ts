@@ -52,6 +52,7 @@ export class CreateLoanComponent implements OnInit {
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    this.currencySymboll = this.otherUserInfo?.currencySymbol;
     const basisId = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();

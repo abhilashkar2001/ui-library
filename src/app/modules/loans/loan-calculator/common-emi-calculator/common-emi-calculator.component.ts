@@ -32,6 +32,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
   emiAmount: any = 0;
   interestDetails: any;
   otherUserInfo: any;
+  currency: any = "INR";
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -41,6 +42,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    this.currency = this.otherUserInfo?.currency;
     const basisId = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
     setTimeout(() => {

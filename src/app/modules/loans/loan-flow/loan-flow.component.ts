@@ -355,45 +355,11 @@ export class LoanFlowComponent implements OnInit {
 
   // on Personal details saved
   customSavePersonal(event) {
-    // const element = event.personalDetails.value.customer;
-    // console.log(element, "....");
-
-    // if (element.primaryCustomer) {
-    //   sessionStorage.setItem(
-    //     "customerData",
-    //     JSON.stringify({
-    //       name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
-    //       cifNumber: element.kycStatus === "APPROVED" ? element.customerId : "",
-    //     })
-    //   );
-    // }
-
-    // var docIds = [];
-    // if (element?.documentId) {
-    //   docIds.push(element.documentId);
-    // } else {
-    //   element?.documnentsInfo?.documents.forEach((item) => {
-    //     let docItemId = [];
-    //     item.docs.forEach((docItem) => {
-    //       docItemId.push(docItem.documentId);
-    //     });
-    //     const docId = {
-    //       docIds: docItemId,
-    //     };
-    //     docIds.push(docId);
-    //   });
-    // }
-
     this.getCustInfoPayload(event.personalDetails.value.customer).then(
       (data) => {
         this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
           if (resp?.statusCode === 200) {
             this.personalDetails = resp.data;
-            // sessionStorage.setItem(
-            //   "originationId",
-            //   resp.data.originationModel.originationId
-            // );
-            // this.originationId = resp.data.originationModel.originationId;
             resp.data?.forEach((item, i) => {
               if (item.primaryCustomer)
                 sessionStorage.setItem("customerId", item.customerId);
@@ -404,29 +370,12 @@ export class LoanFlowComponent implements OnInit {
               horizontalPosition: "right",
               panelClass: "snackbar-error",
             });
-            // this.originationModel = resp.data?.originationModel;
             this.customerInfo = resp.data;
             this.next();
           }
         });
       }
     );
-
-    // const customer = this.createPayload(event.personalDetails.value.customer);
-    // customer[0].contact.mobile = sessionStorage.getItem("loanPhone");
-    // if (event.personalDetails.value.customer[0].kycStatus)
-    //   customer[0].kycStatus = event.personalDetails.value.customer[0].kycStatus;
-    // const payload = {
-    //   originationModel: {
-    //     ...this.getOriginationModel(),
-    //     businessProductName: this.productDetails.basisName,
-    //     productDescription: this.productDetails.basisDetailStory,
-    //     currencyCode: this.otherUserInfo.currency,
-    //     branchId: this.currentUser.branchId,
-    //     ownership: this.ownerShipId,
-    //   },
-    //   customerInfo: customer,
-    // };
   }
 
   createPayload(event) {
@@ -568,35 +517,6 @@ export class LoanFlowComponent implements OnInit {
     });
 
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
-    // const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    // const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    // const customer = this.createPayload(this.customerInfo);
-    // debugger;
-    // const payload = {
-    //   originationModel: {
-    //     applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-    //     accountType: this.originationModel?.accountType,
-    //     basisDetailsId: sessionData.basisId,
-    //     loanAmount: parseInt(loanData.loanAmount),
-    //     loanTenureDay: sessionStorage.getItem("tenureDays"),
-    //     loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-    //     loanTenureYear: sessionStorage.getItem("tenureYear"),
-    //     branchCode: this.originationModel?.branchCode,
-    //     source: "Website",
-    //     ownership: this.ownerShipId,
-    //     documentId: docIds,
-    //     originationId: this.originationModel?.originationId,
-    //     businessProductName: this.productDetails.basisName,
-    //     productDescription: this.productDetails.basisDetailStory,
-    //     currencyCode: this.otherUserInfo.currency,
-    //     branchId: this.currentUser.branchId,
-    //   },
-    //   customerInfo: customer,
-    // };
-    // payload.customerInfo.forEach((cust) => {
-    //   cust.documentId = docIds;
-    // });
-    // this.getMasterSave(payload);
     this.next();
   }
 
@@ -634,30 +554,31 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
+  //once all workflow formula we will get it will call on summary save api
   verifyWorkFlow() {
-    // console.log(this.screenList);
-    // const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    console.log(this.screenList);
+    const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
 
-    // const properties = {
-    //   loanAmount: loanAmmount.loanAmount,
-    //   estimatedCost: "09876",
-    //   downPayment: null,
-    //   moratariumPeriod: "",
-    //   gender: "",
-    //   nationality: "",
-    //   residenceType: "",
-    //   screenCode: this.screenList[this.selectedStep].screenCode,
-    // };
-    // const loanPayload = {
-    //   properties: properties,
-    //   screenCode: this.screenList[2].screenCode,
-    //   processStageId: this.processDetails.processStageId,
-    //   processCycleCode: this.processDetails.processCycleCode,
-    // };
-    // this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
-    //   if (resp?.autoAction) this.saveApprovalConfig(resp);
-    //   else this.onFlowDone();
-    // });
+    const properties = {
+      loanAmount: loanAmmount.loanAmount,
+      estimatedCost: "09876",
+      downPayment: null,
+      moratariumPeriod: "",
+      gender: "",
+      nationality: "",
+      residenceType: "",
+      screenCode: this.screenList[this.selectedStep].screenCode,
+    };
+    const loanPayload = {
+      properties: properties,
+      screenCode: this.screenList[2].screenCode,
+      processStageId: this.processDetails.processStageId,
+      processCycleCode: this.processDetails.processCycleCode,
+    };
+    this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
+      if (resp?.autoAction) this.saveApprovalConfig(resp);
+      else this.onFlowDone();
+    });
     this.onFlowDone();
   }
 
