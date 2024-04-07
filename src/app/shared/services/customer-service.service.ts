@@ -3,14 +3,13 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CustomerServiceService {
-
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
   public fetchCustomerData(customerID) {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/customer-api?customerId=${customerID}`
+      `${MICROSERVICE_URL}/origination-matser/fetchCustomerStaging?customerStageId=${customerID}`
     );
   }
   getHolidayDates(branchCode, year) {

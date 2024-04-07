@@ -527,13 +527,6 @@ export class DocumentUploadComponent implements OnInit {
     });
   }
   saveDocument() {
-    if (!this.customerDetails?.originationId) {
-      this.snack.open("No customer id found to upload document", "ok", {
-        horizontalPosition: "right",
-        verticalPosition: "top",
-        duration: 2000,
-      });
-    }
     const documentId = this.documentUploadForm.value.documents.map((item) => ({
       docIds: item?.pages?.map((page) => page?.id)?.filter((page) => page),
     }));
@@ -544,31 +537,17 @@ export class DocumentUploadComponent implements OnInit {
       : this.customerId;
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
-      if (res?.statusCode === 200 && res?.data) {
-        if (this.customerId) {
-          this.dialog
-            .open(SuccessPopupComponent, {
-              data: {
-                refrenceNo: sessionStorage.getItem("ReferanceNumber"),
-                isNetBanking: true,
-              },
-            })
-            .afterClosed()
-            .subscribe((res) => {
-              this.clearState();
-            });
-        } else {
-          this.snack.open("Customer Document Saved", "Ok", {
-            horizontalPosition: "right",
-            verticalPosition: "top",
-            duration: 2000,
-          });
-          setTimeout(() => {
-            window.close();
-            sessionStorage.removeItem("mobile");
-            sessionStorage.removeItem("customerId");
-          }, 5000);
-        }
+      if (res?.statusCodeValue === 200 && res?.body?.data) {
+        this.snack.open("Customer Document Saved", "Ok", {
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          duration: 2000,
+        });
+        setTimeout(() => {
+          window.close();
+          sessionStorage.removeItem("mobile");
+          sessionStorage.removeItem("customerId");
+        }, 5000);
       }
     });
   }

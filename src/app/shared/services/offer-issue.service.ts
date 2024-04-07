@@ -67,6 +67,9 @@ export class OfferIssueService {
   }
 
   public saveCustomeDocuments(data) {
-    return this.http.post<any>(`${MICROSERVICE_URL}/documents`, data);
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/origination-matser/saveCustStageDoc`,
+      data
+    );
   }
 }
