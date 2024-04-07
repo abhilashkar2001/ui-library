@@ -81,18 +81,29 @@
           </mat-form-field>
         </div>
         <div fxLayout="column" fxFlex="19">
-          <mat-label class="custom-label">Country</mat-label>
-          <mat-form-field>
-            <mat-select formControlName="countryName">
-              <mat-option></mat-option>
-            </mat-select>
-          </mat-form-field>
+          <app-searchable-select
+            [items]="countryArr"
+            inputLabel="Country"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+            showOutsideLabel="true"
+          ></app-searchable-select>
         </div>
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">Zip Code</mat-label>
           <mat-form-field>
-            <input matInput formControlName="pincode" />
-            <mat-icon matSuffix>search</mat-icon>
+            <input
+              numbersOnly
+              maxlength="8"
+              matInput
+              formControlName="pincode"
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
           </mat-form-field>
         </div>
         <div fxLayout="column" fxFlex="19">
@@ -174,34 +185,50 @@
         <div fxLayout="column" fxFlex="29">
           <mat-label class="custom-label">Address Line 2</mat-label>
           <mat-form-field>
-            <input maxlength="100" matInput type="text" />
+            <input
+              maxlength="100"
+              matInput
+              formControlName="address2"
+              type="text"
+            />
           </mat-form-field>
         </div>
         <div fxLayout="column" fxFlex="19">
-          <mat-label class="custom-label">Country</mat-label>
           <app-searchable-select
             [items]="countryArr"
+            inputLabel="Country"
             bindLabelKey="countryName"
             bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+            showOutsideLabel="true"
           ></app-searchable-select>
         </div>
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">Zip Code</mat-label>
           <mat-form-field>
-            <input numbersOnly maxlength="8" matInput type="text" />
-            <mat-icon matSuffix>search</mat-icon>
+            <input
+              numbersOnly
+              maxlength="8"
+              matInput
+              formControlName="pincode"
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
           </mat-form-field>
         </div>
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">State</mat-label>
           <mat-form-field>
-            <input matInput type="text" />
+            <input matInput formControlName="stateName" type="text" />
           </mat-form-field>
         </div>
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">City</mat-label>
           <mat-form-field>
-            <input matInput type="text" />
+            <input matInput formControlName="cityName" type="text" />
           </mat-form-field></div
       ></ng-container>
       <div fxLayout="column" fxFlex="19">

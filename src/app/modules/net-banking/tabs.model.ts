@@ -1,4 +1,5 @@
 import { AmendementInfoComponent } from "./new-reusable-components/amendement-info/amendement-info.component";
+import { AmendmentLcInfoComponent } from "./new-reusable-components/amendment-lc-info/amendment-lc-info.component";
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
@@ -6,6 +7,7 @@ import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-i
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
 import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
+import { LcOtherConditionsComponent } from "./new-reusable-components/lc-other-conditions/lc-other-conditions.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 
@@ -122,13 +124,40 @@ export class tabsClass {
       id: 1,
       title: "Amendment Info",
       type: "LC Physical Amendment",
-      componrnt: LcAmendementInfoComponent
+      componrnt: LcAmendementInfoComponent,
     },
     {
       id: 2,
       title: "Attachements",
       type: "LC Physical Amendment",
-      componrnt: AttachmentsComponent
-    }
-  ]
+      componrnt: AttachmentsComponent,
+    },
+  ];
+
+  public static LC_Amendment: any[] = [
+    {
+      id: 1,
+      title: "LC Info",
+      type: "LC Amendment",
+      componrnt: AmendmentLcInfoComponent,
+    },
+    {
+      id: 2,
+      title: "Amendment Info",
+      type: "LC Amendment",
+      componrnt: LcAmendementInfoComponent,
+    },
+    {
+      id: 3,
+      title: "Other Conditions",
+      type: "LC Amendment",
+      componrnt: LcOtherConditionsComponent,
+    },
+    {
+      id: 4,
+      title: "Attachments",
+      type: "LC Amendment",
+      componrnt: AttachmentsComponent,
+    },
+  ];
 }
