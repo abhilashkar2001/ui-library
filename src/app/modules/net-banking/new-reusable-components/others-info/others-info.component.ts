@@ -18,11 +18,12 @@ export class OthersInfoComponent implements OnInit {
   otherInfoForm: FormGroup;
   countries: any;
   @Input("tradeDetails") tradeDetails;
+  feeAccArray: any[] = ["dummy Option 1", "dummy Option 2"];
   constructor(
     private fb: FormBuilder,
     private countryService: countryStateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllCountry();
@@ -87,20 +88,20 @@ export class OthersInfoComponent implements OnInit {
       }),
       ...(this.bgType === "BG Issuance"
         ? {
-            textualDescription: [
-              item.textualDescription ? item.textualDescription : "",
-            ],
-            introToBank: [item.introToBank ? item.introToBank : ""],
-          }
+          textualDescription: [
+            item.textualDescription ? item.textualDescription : "",
+          ],
+          introToBank: [item.introToBank ? item.introToBank : ""],
+        }
         : {
-            counterGuarantee: [
-              item.counterGuarantee ? item.counterGuarantee : "",
-            ],
-            deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
-            deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
-            margin: [item.margin ? item.margin : ""],
-            feeAccount: [item.feeAccount ? item.feeAccount : ""],
-          }),
+          counterGuarantee: [
+            item.counterGuarantee ? item.counterGuarantee : "",
+          ],
+          deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
+          deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
+          margin: [item.margin ? item.margin : ""],
+          feeAccount: [item.feeAccount ? item.feeAccount : ""],
+        }),
       branchName: [item.branchName ? item.branchName : ""],
       deliveryInstruction: [
         item.deliveryInstruction ? item.deliveryInstruction : "",

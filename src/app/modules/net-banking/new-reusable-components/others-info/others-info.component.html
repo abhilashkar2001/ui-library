@@ -1,154 +1,212 @@
-<mat-card class="full-width default-card mx-0">
-  <form
-    *ngIf="otherInfoForm"
-    [formGroup]="otherInfoForm"
-    appFormInvalidControlScroll
-    fxFlex="100"
-  >
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-    >
-      <ng-container *ngIf="bgType === 'BG Issuance'">
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100">
-          <h3>Specify Counter Guarantee Issuing Bank/ Advising Bank *</h3>
-          <mat-radio-group formControlName="specifyCounterGuarantee">
-            <mat-radio-button value="yes">yes</mat-radio-button>&nbsp;&nbsp;
-            <mat-radio-button value="no">no</mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div fxFlex="100" fxLayout="column" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> Bank name</mat-label>
-          <mat-form-field>
-            <input matInput name="bankName" formControlName="bankName" />
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> Branch Name </mat-label>
-          <mat-form-field>
-            <input matInput name="branchName" formControlName="branchName" />
-          </mat-form-field>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="bgType != 'BG Issuance'">
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label">
-            Counter Guarantee Issuing Bank
-          </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              name="counterGuarantee"
-              formControlName="counterGuarantee"
-            />
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> Branch Name </mat-label>
-          <mat-form-field>
-            <input matInput name="branchName" formControlName="branchName" />
-          </mat-form-field>
-        </div>
-      </ng-container>
-      <ng-container
-        *ngFor="let addressData of addressControl.controls; let i = index"
-        [formGroup]="addressData"
+<form
+  *ngIf="otherInfoForm"
+  [formGroup]="otherInfoForm"
+  appFormInvalidControlScroll
+  fxFlex="100"
+>
+  <mat-card class="full-width default-card mx-0">
+    <div fxLayout="column" fxFlex="100">
+      <div
+        class="sub-head"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        *ngIf="bgType !== 'BG Issuance'"
       >
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="29">
-          <mat-label class="custom-label"> Address line 1 </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              name="address1"
-              formControlName="address1"
-              required
-            />
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="29">
-          <mat-label class="custom-label"> Address line 2</mat-label>
-          <mat-form-field>
-            <input matInput name="address2" formControlName="address2" />
-          </mat-form-field>
-        </div>
-
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <app-searchable-select
-            [items]="countries"
-            inputLabel="Country"
-            bindLabelKey="countryName"
-            bindValueKey="countryName"
-            [control]="addressData.get('countryName')"
-            customClass="fieldinput"
-            showOutsideLabel="true"
-          ></app-searchable-select>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> Pincode </mat-label>
-          <mat-form-field>
-            <input matInput name="pincode" formControlName="pincode" required />
-            <mat-icon
-              matSuffix
-              class="searchIcon"
-              (click)="populatePincodeData(i)"
-              >search</mat-icon
-            >
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> State </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              name="stateName"
-              formControlName="stateName"
-              required
-            />
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-          <mat-label class="custom-label"> City </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              name="cityName"
-              formControlName="cityName"
-              required
-            />
-          </mat-form-field>
-        </div>
-      </ng-container>
-      <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
-        <mat-label class="custom-label"> SWIFT Code </mat-label>
-        <mat-form-field>
-          <input matInput name="swiftCode" formControlName="swiftCode" />
-        </mat-form-field>
+        <h2>Delivery Details</h2>
       </div>
-      <ng-container *ngIf="bgType === 'BG Issuance'">
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
-          <mat-label class="custom-label"> Textual Description(77C) </mat-label>
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="space Between"
+        fxLayoutGap="1%"
+      >
+        <ng-container *ngIf="bgType === 'BG Issuance'">
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100">
+            <h3>Specify Counter Guarantee Issuing Bank/ Advising Bank *</h3>
+            <mat-radio-group formControlName="specifyCounterGuarantee">
+              <mat-radio-button value="yes">yes</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="no">no</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div fxFlex="100" fxLayout="column" fxFlex.gt-xs="19">
+            <mat-label class="custom-label"> Bank name</mat-label>
+            <mat-form-field>
+              <input matInput name="bankName" formControlName="bankName" />
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
+            <mat-label class="custom-label"> Branch Name </mat-label>
+            <mat-form-field>
+              <input matInput name="branchName" formControlName="branchName" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="bgType != 'BG Issuance'">
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
+            <mat-label class="custom-label">
+              Counter Guarantee Issuing Bank
+            </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="counterGuarantee"
+                formControlName="counterGuarantee"
+              />
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
+            <mat-label class="custom-label"> Branch Name </mat-label>
+            <mat-form-field>
+              <input matInput name="branchName" formControlName="branchName" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngFor="let addressData of addressControl.controls; let i = index"
+          [formGroup]="addressData"
+        >
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="29">
+            <mat-label class="custom-label"> Address line 1 </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="address1"
+                formControlName="address1"
+                required
+              />
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="29">
+            <mat-label class="custom-label"> Address line 2</mat-label>
+            <mat-form-field>
+              <input matInput name="address2" formControlName="address2" />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
+            <app-searchable-select
+              [items]="countries"
+              inputLabel="Country"
+              bindLabelKey="countryName"
+              bindValueKey="countryName"
+              [control]="addressData.get('countryName')"
+              customClass="fieldinput"
+              showOutsideLabel="true"
+            ></app-searchable-select>
+          </div>
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
+            <mat-label class="custom-label"> Pincode </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="pincode"
+                formControlName="pincode"
+                required
+              />
+              <mat-icon
+                matSuffix
+                class="searchIcon"
+                (click)="populatePincodeData(i)"
+                >search</mat-icon
+              >
+            </mat-form-field>
+          </div>
+          <div
+            fxLayout="column"
+            fxFlex="100"
+            [fxFlex.gt-xs]="bgType === 'BG Issuance' ? 19 : 29"
+          >
+            <mat-label class="custom-label"> State </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="stateName"
+                formControlName="stateName"
+                required
+              />
+            </mat-form-field>
+          </div>
+          <div
+            fxLayout="column"
+            fxFlex="100"
+            [fxFlex.gt-xs]="bgType === 'BG Issuance' ? 19 : 29"
+          >
+            <mat-label class="custom-label"> City </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="cityName"
+                formControlName="cityName"
+                required
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <div
+          fxLayout="column"
+          fxFlex="100"
+          fxFlex.gt-xs="19"
+          *ngIf="bgType === 'BG Issuance'"
+        >
+          <mat-label class="custom-label"> SWIFT Code </mat-label>
           <mat-form-field>
-            <input
-              matInput
-              name="textualDescription"
-              formControlName="textualDescription"
-            />
+            <input matInput name="swiftCode" formControlName="swiftCode" />
           </mat-form-field>
         </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
-          <mat-label class="custom-label">
-            Instruction to Demobank(Not to form part of Gurantee Terms)
-          </mat-label>
-          <mat-form-field>
-            <input matInput name="introToBank" formControlName="introToBank" />
-          </mat-form-field>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="bgType != 'BG Issuance'">
+        <ng-container *ngIf="bgType === 'BG Issuance'">
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
+            <mat-label class="custom-label">
+              Textual Description(77C)
+            </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="textualDescription"
+                formControlName="textualDescription"
+              />
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
+            <mat-label class="custom-label">
+              Instruction to Demobank(Not to form part of Gurantee Terms)
+            </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="introToBank"
+                formControlName="introToBank"
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="bgType === 'BG Issuance'">
+          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
+            <mat-label class="custom-label"
+              >Instruction for delivery
+            </mat-label>
+            <mat-form-field>
+              <input
+                matInput
+                name="deliveryInstruction"
+                formControlName="deliveryInstruction"
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card
+    class="full-width default-card mx-0"
+    *ngIf="bgType != 'BG Issuance'"
+  >
+    <div fxLayout="column" fxFlex="100">
+      <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Delivery Details</h2>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="1%">
         <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
           <mat-label class="custom-label"> Delivery Mode</mat-label>
           <mat-form-field>
@@ -185,27 +243,14 @@
             <input matInput name="margin" formControlName="margin" />
           </mat-form-field>
         </div>
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
-          <mat-label class="custom-label">Fee Account </mat-label>
-          <mat-form-field>
-            <mat-select formControlName="feeAccount" name="feeAccount">
-              <mat-option [value]="978653456">978653456</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="bgType === 'BG Issuance'">
-        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="49">
-          <mat-label class="custom-label">Instruction for delivery </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              name="deliveryInstruction"
-              formControlName="deliveryInstruction"
-            />
-          </mat-form-field>
-        </div>
-      </ng-container>
+      </div>
+      <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Fee Account</h2>
+      </div>
+      <app-fee-account
+        [feeAccArray]="feeAccArray"
+        [control]="otherInfoForm.get('feeAccount')"
+      ></app-fee-account>
     </div>
-  </form>
-</mat-card>
+  </mat-card>
+</form>
