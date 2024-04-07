@@ -27,11 +27,11 @@
     fxLayout="column"
     *ngIf="verfyStep('mobile', cuurrentStep)"
   >
-    <app-mobile-verification
-      (checkExistingUserEvent)="checkExistingUserEvent($event)"
+    <app-common-mobile-verification
       (onBackEvent)="goBack()"
+      (onVerifyOtpEvent)="checkExistingUserEvent($event)"
     >
-    </app-mobile-verification>
+    </app-common-mobile-verification>
   </div>
   <!-- cibil score starts here -->
   <div
@@ -53,6 +53,8 @@
     <app-common-personal-details
       (customSavePersonal)="customSavePersonal($event)"
       (personalBack)="goBack()"
+      [basisId]="basisId"
+      [personalDetails]="personalDetails"
     >
     </app-common-personal-details>
   </div>
@@ -97,7 +99,7 @@
     fxLayout="column"
   >
     <app-loan-summary
-      (onConfirmEvent)="verifyWorkFlow()"
+      (onConfirmEvent)="onFlowDone()"
       [loanSummary]="loanSummary"
       (onBackEvent)="goBack()"
     ></app-loan-summary>

@@ -23,7 +23,7 @@
               >
                 <mat-label class="custom-mat-label">Amount</mat-label>
                 <div fxLayout="row">
-                  <span>{{ currencySymboll }}</span>
+                  <span>{{ otherUserInfo?.currencySymbol }}</span>
                   <input
                     matInput
                     formControlName="amount"
@@ -49,8 +49,8 @@
           </mat-slider>
         </div>
         <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-          <div>{{ currencySymboll }} {{ min }}</div>
-          <div>{{ currencySymboll }} {{ max }}</div>
+          <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
+          <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
         </div>
 
         <div
@@ -222,7 +222,7 @@
       <div fxLayout="column" class="emiTitle alignCenter">
         <div class="maturityTitle">EMI Amount</div>
         <div class="emiAmount">
-          {{ emiAmount | currency : "INR" : true : "1.2-2" }}
+          {{ emiAmount | currency : currency : true : "1.2-2" }}
         </div>
       </div>
       <div fxLayout="row" fxFlex="100" style="width: 100%">
@@ -234,7 +234,7 @@
         >
           <div class="maturityLabels">Total Interest Payable</div>
           <div class="gd_value">
-            {{ interestPayble | currency : "INR" : true : "1.2-2" }}
+            {{ interestPayble | currency : currency : true : "1.2-2" }}
           </div>
         </div>
         <div class="emiVl"></div>
@@ -257,7 +257,7 @@
         >
           <div class="maturityLabels">Principal Amount</div>
           <div class="gd_value">
-            {{ loanForm.value?.amount | currency : "INR" : true : "1.2-2" }}
+            {{ loanForm.value?.amount | currency : currency : true : "1.2-2" }}
           </div>
         </div>
         <div class="emiVl"></div>
@@ -269,7 +269,7 @@
         >
           <div class="maturityLabels">Total Amount Payable</div>
           <div class="gd_value">
-            {{ totalPayableAmmount | currency : "INR" : true : "1.2-2" }}
+            {{ totalPayableAmmount | currency : currency : true : "1.2-2" }}
           </div>
         </div>
       </div>

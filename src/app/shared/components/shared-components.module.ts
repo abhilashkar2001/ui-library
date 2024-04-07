@@ -77,7 +77,7 @@ import { CustomDateAdapter } from "../services/date-time/customDateAdapter";
 import { DateAdapter } from "@angular/material/core";
 import { InputMaskModule } from "../directives/input-mask/input-mask.module";
 
-
+import { WebDocUploadComponent } from "./web-doc-upload/web-doc-upload.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -131,6 +131,7 @@ const components = [
   SubNavBarComponent,
   InputDatePickerComponent,
 
+  WebDocUploadComponent,
 ];
 
 @NgModule({
@@ -150,13 +151,13 @@ const components = [
     NgOtpInputModule,
     SwiperModule,
     MatIconModule,
-    InputMaskModule
+    InputMaskModule,
   ],
   declarations: components,
   exports: components,
-  providers:[
+  providers: [
     CustomDateAdapter,
-    {provide:DateAdapter , useClass:CustomDateAdapter }
-  ]
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+  ],
 })
-export class SharedComponentsModule { }
+export class SharedComponentsModule {}

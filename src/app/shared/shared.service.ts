@@ -22,4 +22,8 @@ export class SharedService {
       observe: "events",
     });
   }
+
+  public readAadharData(data) {
+    return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
+  }
 }

@@ -5,7 +5,7 @@
       <div class="col-1">
         <span class="content-header">Loan Amount</span>
         <span class="content">
-          {{ currencySymboll }}
+          {{ otherUserInfo?.currencySymbol }}
           {{ loanSummaryDetails?.loanDetails?.loanAmount }}</span
         >
       </div>
@@ -20,7 +20,7 @@
       <div class="col-3">
         <span class="content-header">EMI Amount</span>
         <span class="content"
-          >{{ currencySymboll }}&nbsp;{{
+          >{{ otherUserInfo?.currencySymbol }}&nbsp;{{
             loanSummaryDetails?.loanDetails?.emiAmount
           }}</span
         >
@@ -34,7 +34,7 @@
       <div class="col-2">
         <span class="content-header">Interest Payable</span>
         <span class="content"
-          >{{ currencySymboll }}&nbsp;{{
+          >{{ otherUserInfo?.currencySymbol }}&nbsp;{{
             loanSummaryDetails?.loanDetails?.interestPayable
           }}</span
         >
@@ -42,7 +42,7 @@
       <div class="col-3">
         <span class="content-header">Principle Amount</span>
         <span class="content"
-          >{{ currencySymboll }}&nbsp;{{
+          >{{ otherUserInfo?.currencySymbol }}&nbsp;{{
             loanSummaryDetails?.loanDetails?.principalAmount
           }}</span
         >
@@ -50,7 +50,7 @@
       <div class="col-4">
         <span class="content-header">Total Payable Amount</span>
         <span class="content"
-          >{{ currencySymboll }}&nbsp;{{
+          >{{ otherUserInfo?.currencySymbol }}&nbsp;{{
             loanSummaryDetails?.loanDetails?.totalPayableAmount
           }}</span
         >
@@ -176,7 +176,7 @@
   </div>
   <div
     *ngFor="
-      let item of loanSummaryDetails.documnentsInfo.documents;
+      let item of loanSummaryDetails?.documnentsInfo?.documents;
       let i = index
     "
     class="uploaded-documents-summary"
