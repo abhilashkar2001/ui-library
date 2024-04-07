@@ -1,0 +1,344 @@
+<form [formGroup]="lcAmendInfoForm" *ngIf="lcAmendInfoForm">
+  <mat-card fxLayout="column">
+    <h2 class="sub-head">Authorized Bank for Transfer</h2>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
+      <!-- for lc amend start here -->
+      <ng-container *ngIf="isLcAmend">
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Amendment Number (26E)</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="amendentNumber"
+              type="text"
+              name="bankAdvise"
+            />
+            <mat-icon matSuffix class="searchIcon">search</mat-icon>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <!-- for lc amend end here -->
+
+      <!-- for lc phy amend start here -->
+      <ng-container *ngIf="!isLcAmend">
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">LC Number</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="lcNumber"
+              type="text"
+              name="bankAdvise"
+            />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <!-- for lc phy amend ends here -->
+
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Value date</mat-label>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="valueDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Amend Request Date</mat-label>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="amendRequestDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" [fxFlex]="isLcAmend ? '39%' : '19%'">
+        <mat-label class="custom-label">Change of Expiry</mat-label>
+        <mat-form-field apperance="outline">
+          <mat-select formControlName="changeOfExpiry">
+            <mat-option value="uewi">jksd</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- for lc amend start here -->
+      <ng-container *ngIf="isLcAmend">
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label"
+            >Expiry date change To (31E)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker4"
+              formControlName="expiryDateChange"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker4">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Expiry date change From</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker5"
+              formControlName="expiryDateChangeFrom"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker5">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker5></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="39">
+          <mat-label class="custom-label"
+            >Latest Date of Shipment (44C)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker6"
+              formControlName="latestDateOfShipment"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker6">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker6></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="39">
+          <mat-label class="custom-label">Last date of shipment from</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker11"
+              formControlName="lastLastDateShipment"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker11">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker11></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">New place of expiry (31D)</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="newPlaceOfExpiry"
+              type="text"
+              name="newPlaceOfExpiry"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label"
+            >Current place of expiry (31D)</mat-label
+          >
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="currentPlaceOfExpiry"
+              type="text"
+              name="currentPlaceOfExpiry"
+            />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <!-- for lc amend end here -->
+
+      <!-- for lc physical amend start here-->
+      <ng-container *ngIf="!isLcAmend">
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Old Expiry date</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker7"
+              formControlName="oldExpiryDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker7">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker7></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">New Expiry date</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker8"
+              formControlName="newExpiryDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker8">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker8></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Old Last date of shipment</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker9"
+              formControlName="oldLastDateShipment"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker9">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker9></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">New Last date of shipment</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker10"
+              formControlName="newLastDateShipment"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker10">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker10></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Current</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="current"
+              type="text"
+              name="current"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Amount</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="amount"
+              type="text"
+              name="amount"
+            />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <!-- for lc physical amend end here -->
+
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Amount Change</mat-label>
+        <mat-form-field apperance="outline">
+          <input
+            matInput
+            formControlName="amountChange"
+            type="text"
+            name="amountChange"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- for lc physical amend start here -->
+      <ng-container *ngIf="!isLcAmend">
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label"
+            >Increase and Decrease Amount (33B)</mat-label
+          >
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="increaseDecreaseAmount"
+              type="text"
+              name="increaseDecreaseAmount"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">New Current</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="newCurrent"
+              type="text"
+              name="newCurrent"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">New Amount</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="newAmount"
+              type="text"
+              name="newAmount"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Comment</mat-label>
+          <mat-form-field apperance="outline">
+            <input
+              matInput
+              formControlName="comment"
+              type="text"
+              name="comment"
+            />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <!-- for lc physical amend end here -->
+    </div>
+  </mat-card>
+
+  <mat-card fxLayout="column" *ngIf="isLcAmend">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
+      <ng-container *ngFor="let credit of creditControle.controls">
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Title 1</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="title">
+              <mat-option value="title1">Title1</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Currency</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="currency">
+              <mat-option value="INR">INR</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Amount(32B)</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName="creditAmount" />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label"
+            >Max Credit Amount (39B) / Tolerance</mat-label
+          >
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="maxCreditAmount">
+              <mat-option value="2000">2000</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card>
+</form>

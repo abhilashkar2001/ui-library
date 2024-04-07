@@ -1,0 +1,183 @@
+$base-spacing-unit: 24px;
+$half-spacing-unit: calc($base-spacing-unit / 2);
+
+$color-alpha: #1772ff;
+$color-form-highlight: rgba(245, 247, 249, 1);
+
+.table {
+  width: 100%;
+  border: 1px solid $color-form-highlight;
+  .table-header {
+    display: flex;
+    width: 100%;
+    background: rgba(245, 247, 249, 1);
+    padding: ($half-spacing-unit * 1.5) 0;
+    border-radius: 5px;
+  }
+}
+.table_container {
+  width: 100%; //100.5%
+  // max-height: 350px;
+  padding: 0 !important;
+  overflow: unset; // auto
+
+  &.dialogAuditLogCard {
+    max-height: 380px;
+    box-shadow: none !important;
+
+    & table {
+      overflow-y: scroll;
+      height: 300px;
+    }
+  }
+  .auditTable {
+    width: 100%; // 98.5%
+    // min-width: 950px;
+  }
+
+  .table-row {
+    display: flex;
+    width: 100%;
+    padding: ($half-spacing-unit * 1.5) 0;
+
+    &:nth-of-type(odd) {
+      background: $color-form-highlight;
+    }
+  }
+
+  .table-data,
+  .header__item {
+    flex: 1 1 10%;
+    text-align: center;
+    font-family: "Poppins";
+  }
+  .pb-32 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .auditLogCard {
+    padding: 0px !important;
+    border-radius: 12px !important;
+  }
+  ::ng-deep .tablealign .mat-header-row {
+    background: #f3f3f3 0% 0% no-repeat padding-box !important;
+    border-radius: 5px;
+    border-bottom-color: white !important;
+  }
+  .headerIcon {
+    margin-right: 2%;
+    width: 33px;
+    height: 29px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 10px #00000017;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 6px;
+    #iconAchor .mat-icon {
+      color: #004c97;
+    }
+  }
+
+  thead,
+  tfoot {
+    background: #f3f3f3 0% 0% no-repeat padding-box !important;
+    color: #fff;
+  }
+
+  // tbody {
+  //   background-color: #e4f0f5;
+  // }
+
+  caption {
+    padding: 10px;
+    caption-side: bottom;
+  }
+
+  table {
+    border-collapse: collapse;
+
+    letter-spacing: 1px;
+    font-family: "Poppins";
+    font-size: 0.8rem;
+  }
+  thead {
+    position: sticky;
+    top: 0;
+  }
+  tr {
+    height: 40px;
+  }
+
+  td,
+  th {
+    padding: 5px 10px;
+    text-align: center;
+  }
+  th {
+    color: #6e7582;
+  }
+
+  td {
+    background-color: white;
+    font-weight: 700;
+    // min-width: 7.35rem;
+    font-family: "Poppins";
+  }
+  thead,
+  tr,
+  th,
+  td {
+    color: #6e7582;
+    font-weight: 400 !important;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    // width: 100%;
+  }
+  th,
+  td {
+    div.alignStatus {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  thead,
+  tr,
+  td {
+    color: #010101;
+    font-weight: 600;
+    // width: 100%;
+  }
+  .callIcon {
+    color: #004c97;
+  }
+  .callIconButton {
+    border: none;
+    cursor: pointer;
+  }
+  .alignStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dialogAuditLogCard {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  .auditIcon {
+    height: 55px !important;
+    min-width: 55px;
+  }
+}
+
+.auditLogClass .mat-dialog-container {
+  overflow: visible !important;
+  height: fit-content !important;
+}
+.audit-divider {
+  border-top-color: rgba(0, 0, 0, 0.12);
+  border-top-width: 2px;
+}

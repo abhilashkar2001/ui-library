@@ -74,6 +74,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     },
   ];
   @ViewChildren("element") elReference: QueryList<ElementRef>;
+  expand: number = 0;
 
   constructor(
     private layout: LayoutService,
@@ -201,5 +202,17 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   onSearch(e) {
     //   console.log(e)
+  }
+
+  openDropdown(i: number) {
+    if (this.expand == i) {
+      this.expand = 0;
+      return;
+    }
+    this.expand = i;
+  }
+
+  redirectToSignIn() {
+    this.router.navigate([`/sessions/signin`]);
   }
 }

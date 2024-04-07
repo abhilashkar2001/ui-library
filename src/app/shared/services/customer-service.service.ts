@@ -12,4 +12,9 @@ export class CustomerServiceService {
       `${MICROSERVICE_URL}/origination-matser/fetchCustomerStaging?customerStageId=${customerID}`
     );
   }
+  getHolidayDates(branchCode, year) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/holiday/fetchBranchDataAndYear?branchCode=${branchCode}&year=${year}`
+    );
+  }
 }

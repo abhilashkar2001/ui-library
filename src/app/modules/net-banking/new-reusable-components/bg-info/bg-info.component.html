@@ -1,0 +1,28 @@
+<ng-container *ngIf="bgIssuanceForm">
+  <ng-container *ngIf="bgType == 'BG Issuance'">
+    <app-bg-issuance-bg-info
+      [bgIssuanceBgInfoForm]="bgIssuanceForm.get('bgIssuanceBgInfo')"
+    >
+    </app-bg-issuance-bg-info>
+  </ng-container>
+
+  <ng-container *ngIf="bgType != 'BG Issuance'">
+    <app-bg-amend-bg-info
+      [bgAmendBgInfoForm]="bgIssuanceForm.get('bgAmendBgInfoDetails')"
+    >
+    </app-bg-amend-bg-info>
+  </ng-container>
+  <ng-container>
+    <app-benificiary-details
+      [benificiaryDetailsForm]="bgIssuanceForm.get('benificiaryDetails')"
+      [componentName]="bgType"
+    ></app-benificiary-details>
+  </ng-container>
+
+  <ng-container *ngIf="bgType != 'BG Issuance'">
+    <app-transaction-info
+      [transactionInfoForm]="bgIssuanceForm.get('transactionInfoDetails')"
+    >
+    </app-transaction-info>
+  </ng-container>
+</ng-container>
