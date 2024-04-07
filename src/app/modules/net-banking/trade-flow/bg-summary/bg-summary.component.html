@@ -1,0 +1,12 @@
+<app-new-reusable-mat-table
+  [columns]="columns"
+  [componentName]="bgType"
+  [maintenanceTitle]="maintenanceTitle"
+  (customGoBack)="CustomGoBack($event)"
+  (customGetDataByPage)="getDataByPage($event)"
+  (customEditForm)="openPopUp($event)"
+  [UpdatedData]="bgData"
+  [hideFilters]="false"
+  showOnlySearchTitle="Search"
+  [addNewList]="addNewList"
+></app-new-reusable-mat-table>

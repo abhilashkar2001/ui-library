@@ -1,0 +1,159 @@
+<div class="upload-bulk">
+  <form [formGroup]="maintTemplateUpload">
+    <div fxLayout="column" fxFlex="100" fxLayoutGap="1%" class="mb-16">
+      <div class="card">
+        <div fxLayoutGap="20px" fxLayoutAlign="space-between center">
+          <div fxFlex="100" class="pb-1" fxLayoutAlign="space-between">
+            <div fxFlex="35" *ngIf="screenName === 'beneficiary' || screenName">
+              <h2>{{ screenName }}</h2>
+            </div>
+            <ng-container *ngIf="!isHideFilter">
+              <div
+                fxFlex="35"
+                *ngIf="showProductType && screenName !== 'beneficiary'"
+              >
+                <mat-form-field
+                  appearance="outline"
+                  class="full-width fieldinput"
+                >
+                  <mat-label class="custom-mat-label">
+                    {{ "Product Type" }}
+                  </mat-label>
+                  <mat-select
+                    name="productTYpe"
+                    formControlName="productType"
+                    placeholder="Product Type"
+                  >
+                    <mat-option value="internal">Internal</mat-option>
+                    <mat-option value="external">External</mat-option>
+                    <mat-option value="mixed">Mixed</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="35" *ngIf="screenName !== 'beneficiary'">
+                <mat-form-field
+                  appearance="outline"
+                  class="full-width fieldinput custom-field"
+                >
+                  <mat-label class="custom-mat-label"
+                    >Processing Date</mat-label
+                  >
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="processingDate"
+                    [min]="currentDate"
+                    readonly
+                  />
+
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img
+                        _ngcontent-vqa-c346=""
+                        src="assets/images/calendar.png"
+                        style="margin-bottom: 10px"
+                      />
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex="26" style="margin-top: 10px">
+                <button
+                  fxFlex="100"
+                  matSuffix
+                  (click)="downloadTemplate($event)"
+                  class="verify-btn"
+                >
+                  {{ "Download Template" }}
+                </button>
+              </div>
+            </ng-container>
+            <ng-container>
+              <button type="button" class="clause-btn">Clause Template</button>
+            </ng-container>
+          </div>
+        </div>
+
+        <div
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          class="w-100 p-16 file-upload"
+          appDragDrop
+          (onFileDropped)="droppedFiles($event)"
+        >
+          <img
+            src="assets/images/upload-logo.svg"
+            alt=""
+            (click)="file.click()"
+          />
+          <span class="HeadingForUpload"
+            >{{ "Drag and Drop files here or" }}
+            <span class="chooseFiles" (click)="file.click()">{{
+              "Choose file"
+            }}</span></span
+          >
+          <span class="sizeAlert">{{ "Maximum size : 25 MB" }}</span>
+          <input
+            type="file"
+            #file
+            [multiple]="false"
+            (change)="Onfilechange($event)"
+            style="display: none"
+            accept=".xls, .xlsx,.csv"
+          />
+        </div>
+
+        <div
+          *ngFor="
+            let uploadfiles of uploadFileArrlrngth.controls;
+            let i = index
+          "
+        >
+          <div
+            class="w-100 p-16 uploadedFile"
+            fxLayout="row"
+            fxLayoutAlign="space-between"
+          >
+            <div fxFlex="24" fxLayoutAlign="space-between">
+              <img src="assets/images/fileUploadSuccessImg.png" alt="" />
+              <span class="paddingtop HeadingForUpload">{{
+                uploadfiles.controls.name.value
+              }}</span>
+            </div>
+            <mat-icon class="icon-delete" (click)="removeItem(i)"
+              >delete</mat-icon
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-16 mb-24 full-width"
+        fxLayoutAlign="end center"
+        class="buttons"
+        *ngIf="!isHideButton"
+      >
+        <div>
+          <button
+            color="primary"
+            mat-raised-button
+            class="submitButton"
+            type="button"
+            (click)="goToScreen()"
+          >
+            {{ "Continue" }}
+          </button>
+          &nbsp;&nbsp;
+        </div>
+
+        <div>
+          <button class="exitButton" mat-raised-button (click)="goBack()">
+            {{ "Cancel" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

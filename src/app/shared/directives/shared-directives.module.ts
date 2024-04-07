@@ -22,6 +22,9 @@ import { NoLeadingSpaceDirective } from "./no-leading-space.directive";
 import { DecimalInputDirective } from "./decimal-input.directive";
 import { NoInitialSpecialCharactersDirective } from "./no-initial-space.directive";
 import { NoSpaceDirective } from "./noSpace.directive";
+import { IcImgFallbackDirective } from "./ic-img-fallback.directive";
+import { InputMaskModule } from "./input-mask/input-mask.module";
+import { Webhost } from "./appHost.directive";
 
 const directives = [
   AutoFocusDirective,
@@ -43,10 +46,12 @@ const directives = [
   DecimalInputDirective,
   NoInitialSpecialCharactersDirective,
   NoSpaceDirective,
+  Webhost,
+  IcImgFallbackDirective,
 ];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule ],
   declarations: directives,
   exports: directives,
 })

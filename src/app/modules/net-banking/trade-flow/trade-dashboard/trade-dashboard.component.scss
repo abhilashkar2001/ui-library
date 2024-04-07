@@ -1,0 +1,40 @@
+.transaction-grid-card {
+  padding: 0px !important;
+  border-radius: 18px 18px 0px 0px;
+  .header-container {
+    color: #6e7582;
+    font-size: 17px;
+    font-weight: 400;
+
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 9px #0000001c;
+    border-radius: 18px 18px 0px 0px;
+  }
+  .customtable-cell {
+    height: 59px;
+    border-right: 2px solid #6e7582;
+  }
+  .customtable-cell:last-child {
+    border-right: none !important;
+  }
+  .row-cell {
+    height: 30px !important;
+    color: #00000f;
+    font-weight: 800;
+  }
+
+  ::ng-deep .custom-expansion-panel {
+    margin: 1% 2% 1% 2% !important;
+    .mat-expansion-panel-header {
+      background: #e9ecf5 0% 0% no-repeat padding-box !important;
+      height: 39px !important;
+    }
+    .mat-expansion-panel-body {
+      padding: 0px 0px 16px 0px !important;
+    }
+  }
+  .note_text {
+    color: #949494;
+    font-size: 13px;
+  }
+}

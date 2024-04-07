@@ -15,6 +15,9 @@ import { SharedDirectivesModule } from "./directives/shared-directives.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgOtpInputModule } from "ng-otp-input";
+import { SearchInputOverComponent } from "./search/search-input-over/search-input-over.component";
+import { SearchModule } from "./search/search.module";
+import { InputMaskModule } from "./directives/input-mask/input-mask.module";
 
 @NgModule({
   imports: [
@@ -23,6 +26,8 @@ import { NgOtpInputModule } from "ng-otp-input";
     SharedPipesModule,
     SharedDirectivesModule,
     NgOtpInputModule,
+    SearchModule,
+    InputMaskModule
   ],
   providers: [
     ThemeService,
