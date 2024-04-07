@@ -436,12 +436,4 @@ export class DocumentUploadComponent implements OnInit {
       }
     });
   }
-  clearState() {
-    setTimeout(() => {
-      this.route.navigate(["home"]);
-      sessionStorage.removeItem("mobile");
-      sessionStorage.removeItem("customerId");
-      sessionStorage.removeItem("referanceNumber");
-    }, 100);
-  }
 }
