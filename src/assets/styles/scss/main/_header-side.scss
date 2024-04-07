@@ -1,17 +1,13 @@
 .topbar {
   &.mat-toolbar {
-    position: relative;
+    position: fixed;
     // min-height: 64px !important;
     box-shadow: 0 10px 30px 0 rgba(47, 60, 74, 0.08);
     z-index: 1001;
-    //  background: transparent linear-gradient(90deg, #051A2D 0%, #004C97 100%) 0% 0% no-repeat padding-box !important;
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box !important;
     color: #ffffff !important;
-    padding-left: 65px;
-    padding-right: 65px;
-    position: sticky;
-    top: 0;
-    background-color: #ffffff;
-    z-index: 1000;
+    padding: 0 4%;
   }
   .mat-select-value {
     font-weight: 400;

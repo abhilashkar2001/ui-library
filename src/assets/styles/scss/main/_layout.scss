@@ -65,7 +65,8 @@
 // --------
 .app-admin-container.sidebar-full:not(.compact-toggle-active) {
   .main-content-wrap {
-    width: calc(100% - #{$sidebar-width});
+    // width: calc(100% - #{$sidebar-width});
+    width: 100%;
   }
   .sidebar-panel {
     width: $sidebar-width;
@@ -109,7 +110,6 @@
     left: -$sidebar-width;
     .branding {
       left: -$sidebar-width;
-
     }
   }
   .main-content-wrap {
@@ -172,7 +172,6 @@
     }
   }
 }
-
 
 [dir="rtl"] {
   &.app-admin-container.sidebar-closed {
