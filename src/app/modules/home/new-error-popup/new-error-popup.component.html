@@ -1,0 +1,13 @@
+<div class="error_popup_container">
+  <div class="error_popup_body">
+    <!-- <h1 class="bold-error-code">400</h1> -->
+    <h3 class="bold-error-message">{{ errorDetails?.error || "Oops!" }}</h3>
+    <p class="error-description">
+      {{ errorDetails?.message || "Something went wrong" }}
+    </p>
+    <button mat-raised-button class="back-button" (click)="back()">Back</button>
+  </div>
+  <div class="error_popup_img">
+    <img [src]="imageUrl" alt="" />
+  </div>
+</div>

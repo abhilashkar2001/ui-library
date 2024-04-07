@@ -8,10 +8,13 @@ import {
 import { catchError } from "rxjs/operators";
 import { of, throwError } from "rxjs";
 import Swal from "sweetalert2";
+import { MatDialog } from "@angular/material/dialog";
+import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
 
 @Injectable()
 export class ErrorNotifierService implements HttpInterceptor {
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
+
   errorData: { code: any; message: string }[] = [
     { code: 400, message: "Bad Request" },
     { code: 401, message: "Unauthorized" },
@@ -23,40 +26,55 @@ export class ErrorNotifierService implements HttpInterceptor {
     { code: 504, message: "Gateway Timeout" },
     { code: 0, message: "Error" },
   ];
+
   intercept(request: HttpRequest<any>, next: HttpHandler): any {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let handled: boolean = false;
         let history: any = [];
+
+        let errorPayload = {
+          error: error?.error?.error,
+          message: error?.error?.message,
+          statusCode: error?.status,
+        };
+
         return next.handle(request).pipe(
           catchError((err) => {
-            if (err instanceof HttpErrorResponse) {
-              let errorObj = this.errorData.filter(
-                (item) => item.code == err.status
-              );
-              console.log(errorObj);
-              if (errorObj?.length > 0) {
-                Swal.fire({
-                  icon: "error",
-                  title: "Status Code : " + errorObj[0].code,
-                  text: "Message : " + errorObj[0].message,
-                  confirmButtonText: "OK",
-                  confirmButtonColor: "#456EFE",
-                });
-              } else {
-                Swal.fire({
-                  icon: "error",
-                  title: "Status Code : " + this.errorData[8].code,
-                  text: "Message : " + this.errorData[8].message,
-                  confirmButtonText: "OK",
-                  confirmButtonColor: "#456EFE",
-                });
-              }
+            // CLose all dialog popup on error
+            this.dialog.closeAll();
+
+            if (error.status === 500) {
+              this.openCustomErrorDialog(errorPayload);
+
+              return throwError(error);
+            } else if (error.status === 403) {
+              errorPayload.error = "Contact your Administrator.";
+              errorPayload.message =
+                "You do not have sufficient privileges to do this operation";
+              this.openCustomErrorDialog(errorPayload);
+              return;
+            } else {
+              this.openCustomErrorDialog(errorPayload);
             }
+
             return throwError(err);
           })
         );
       })
     );
+  }
+
+  openCustomErrorDialog(errPayload?) {
+    const dialogRef = this.dialog.open(NewErrorPopupComponent, {
+      width: "45%",
+      height: "40%",
+      disableClose: true,
+      panelClass: "new_error_popup",
+      data: {
+        type: "customError",
+        errPayload,
+      },
+    });
   }
 }
