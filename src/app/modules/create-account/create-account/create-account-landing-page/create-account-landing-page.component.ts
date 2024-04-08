@@ -213,7 +213,6 @@ export class CreateAccountLandingPageComponent {
   customSavePersonal(event) {
     let payload = event.personalDetails.value.customer;
     if (payload[0]?.prefixValue) delete payload[0].prefixValue;
-    console.log(payload, "......");
     this.openAccountService.stageSavePersonalDetails(payload).subscribe(
       (response: any) => {
         sessionStorage.setItem("customerId", response.data[0].customerId);
