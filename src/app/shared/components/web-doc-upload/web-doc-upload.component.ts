@@ -64,7 +64,6 @@ export class WebDocUploadComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiService: OpenAccountService,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
     private loanApi: LoanService,
