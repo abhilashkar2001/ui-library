@@ -225,8 +225,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   newCustomer(data?): FormGroup {
     return this.fb.group({
-      customerId: data && data.customerId,
+      customerId: null,
       customerNo: [data ? data.customerNo : ""],
+      onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
       ],
@@ -420,7 +421,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   confirmCustomer() {
     if (
       this.customerDetailsForm.invalid ||
-      (this.isHideField && this.isAnyPrimaryCustomer())
+      (!this.isHideField && this.isAnyPrimaryCustomer())
     ) {
       return;
     }

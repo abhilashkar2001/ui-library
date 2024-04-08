@@ -35,7 +35,7 @@ export class WebDocUploadComponent implements OnInit {
   @Output() customSaveDocument = new EventEmitter<any>();
   @Input() documentTypeArray: any;
   @Input() verificationType: string;
-  @Input() documentList: any;
+  @Input() documentList: any = [];
   @Input() genericScreenInfo: any;
 
   documentControls: FormGroup;
