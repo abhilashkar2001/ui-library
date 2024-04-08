@@ -64,7 +64,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   listCity: any = [];
   primaryCustIndex: number = 0;
   boundaries: any;
-  screenName: string = "Personal Details";
+  screenName: string = "Common";
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
