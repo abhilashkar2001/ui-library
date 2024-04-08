@@ -35,7 +35,7 @@ export class WebDocUploadComponent implements OnInit {
   @Output() customSaveDocument = new EventEmitter<any>();
   @Input() documentTypeArray: any;
   @Input() verificationType: string;
-  @Input() documentList: any;
+  @Input() documentList: any = [];
   @Input() genericScreenInfo: any;
 
   documentControls: FormGroup;
@@ -64,7 +64,6 @@ export class WebDocUploadComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiService: OpenAccountService,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
     private loanApi: LoanService,

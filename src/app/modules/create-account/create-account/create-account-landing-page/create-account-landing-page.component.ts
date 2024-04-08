@@ -45,6 +45,8 @@ export class CreateAccountLandingPageComponent {
   ownershipId: any;
   currentUser: any;
   currencyCode: any;
+  isHideField: boolean = true;
+  personalDoc: any[] = [];
 
   constructor(
     private router: Router,
@@ -100,7 +102,7 @@ export class CreateAccountLandingPageComponent {
   }
 
   getCustomerById(customerId) {
-    this.openAccountService.getCustByStageId(customerId).subscribe((resp) => {
+    this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.personalDetails = resp.data;
       }
@@ -162,11 +164,17 @@ export class CreateAccountLandingPageComponent {
             .getExistingCustomer(event.phone)
             .subscribe((resp: any) => {
               if (resp?.statusCode === 200 && resp?.data) {
-                if (resp?.data[0]?.kycStatus) {
+                // if (resp?.data[0]?.onboardingStatus === "APPROVED") {
+                if (resp?.data?.length > 0) {
+                  console.log("approved record");
                   sessionStorage.setItem("mobileNo", event.phone);
-                  sessionStorage.setItem("customerId", resp.data[0].customerId);
-                  this.next();
+                  // sessionStorage.setItem("customerId", resp.data[0].customerId);
+                  this.personalDetails = resp.data;
+                  // if (resp.data[0].primaryCustomer)
+                  this.personalDoc = resp?.data[0]?.documentInfo;
                 }
+                this.next();
+                // }
               } else if (resp?.statusCode === 204) {
                 sessionStorage.setItem("mobileNo", event.phone);
                 this.next();
@@ -226,13 +234,16 @@ export class CreateAccountLandingPageComponent {
       .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
       .subscribe((resp) => {
         const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
-        var custResp = this.factoryCustomer(resp.data);
+        var custResp: any = this.factoryCustomer(resp.data);
         custResp[0].isphoneNumVerified = true;
         custResp[0].isEmailVerified = true;
         custResp[0] = {
           ...custResp[0],
           documentId: docIds[0].docIds?.length > 0 ? docIds : [],
         };
+        custResp[0].customerId = null;
+        custResp[0].contact.contactId = null;
+        custResp[0].contact.address[0].addressId = null;
         delete custResp[0].documentsInfoModel;
 
         const payload = {

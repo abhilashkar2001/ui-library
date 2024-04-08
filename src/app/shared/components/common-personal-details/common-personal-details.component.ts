@@ -64,10 +64,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
   listCity: any = [];
   primaryCustIndex: number = 0;
   boundaries: any;
-  screenName: string = "Personal Details";
+  screenName: string = "Common";
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
+  nationalityArray: any[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -170,7 +171,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
   getCountry(resp) {
     if (resp?.statusCode === 200) {
       if (resp?.data) {
-        this.countryArray = resp.data;
+        resp?.data.forEach((element) => {
+          if (element.nationality != null) this.nationalityArray.push(element);
+        });
         this.countriesIsdCodes = resp?.data;
         const indiaIsdCode = this.countriesIsdCodes.find(
           (item) =>
@@ -225,8 +228,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   newCustomer(data?): FormGroup {
     return this.fb.group({
-      customerId: data && data.customerId,
+      customerId: null,
       customerNo: [data ? data.customerNo : ""],
+      onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
       ],
@@ -420,7 +424,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   confirmCustomer() {
     if (
       this.customerDetailsForm.invalid ||
-      (this.isHideField && this.isAnyPrimaryCustomer())
+      (!this.isHideField && this.isAnyPrimaryCustomer())
     ) {
       return;
     }

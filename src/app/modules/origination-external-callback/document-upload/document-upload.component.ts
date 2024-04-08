@@ -55,7 +55,7 @@ export class DocumentUploadComponent implements OnInit {
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
@@ -147,11 +147,11 @@ export class DocumentUploadComponent implements OnInit {
   createDocumentItem(data?) {
     return this.fb.group({
       documentName: [
-        data?.documentName ? data?.documentName : "",
+        data?.documentName ? data?.documentName : null,
         Validators.required,
       ],
       documentNumber: [
-        data?.documentNumber ? data?.documentNumber : "",
+        data?.documentNumber ? data?.documentNumber : null,
         Validators.required,
       ],
       verifiedMobileNumber: [data?.phoneNumber ?? ""],
@@ -210,8 +210,20 @@ export class DocumentUploadComponent implements OnInit {
     this.documentPages(docIndex).push(this.addNewPage(count++));
   }
 
+
+
   removeDocumentPage(index: number, pageIndex: number) {
-    this.documentPages(index).removeAt(pageIndex);
+    const documentId = this.documentPages(index)
+      .at(pageIndex)
+      .get("id")?.value
+    if (!documentId) {
+      this.documentPages(index).removeAt(pageIndex);
+      return
+    }
+    this.apiService.deleteDocument(documentId).subscribe((res) => {
+      this.documentPages(index).removeAt(pageIndex);
+    })
+
   }
 
   checkForm() {
@@ -225,7 +237,7 @@ export class DocumentUploadComponent implements OnInit {
   onFileSelect(e: any, documentIndex: number, index: number) {
     const file = e.target.files[0];
     if (
-      !this.documents().at(documentIndex)?.get("documentName")?.value &&
+      !this.documents().at(documentIndex)?.get("documentName")?.value ||
       !this.documents().at(documentIndex)?.get("documentNumber")?.value
     ) {
       this.fileInput.nativeElement.value = "";
@@ -234,7 +246,6 @@ export class DocumentUploadComponent implements OnInit {
         ?.get("documentNumber")
         ?.markAsTouched();
       this.documents().at(documentIndex)?.get("documentName")?.markAsTouched();
-
       return;
     }
     this.documentPages(documentIndex)
@@ -272,7 +283,7 @@ export class DocumentUploadComponent implements OnInit {
               let base64File = _event.target.result;
               this.uploadDocument(file, documentIndex, index, base64File);
             };
-          } catch (error) {}
+          } catch (error) { }
         }
       }, 100);
     }
@@ -339,16 +350,24 @@ export class DocumentUploadComponent implements OnInit {
                 .get("fileNameValue")
                 .patchValue(e.target.files[0].name);
             };
-          } catch (error) {}
+          } catch (error) { }
         }
       }, 100);
     }
   }
 
   removeImage(docindex, index) {
-    let i = index;
-    this.fileInput.nativeElement.value = "";
-    this.documentPages(docindex).at(i).get("fileUrl").patchValue("");
+    const documentId = this.documentPages(docindex)
+      .at(index)
+      .get("id")?.value
+    if (!documentId) {
+      return
+    }
+    this.apiService.deleteDocument(documentId).subscribe((res) => {
+      this.documentPages(docindex).at(index).get("fileUrl").patchValue("");
+      this.documentPages(docindex).at(index).get("id").patchValue("");
+    })
+
   }
 
   uploadDocument(file, documentIndex, index, base64File) {
@@ -395,7 +414,7 @@ export class DocumentUploadComponent implements OnInit {
         this.cdr.markForCheck();
       }
     }),
-      (error) => {};
+      (error) => { };
   }
 
   getDocType(docName: string) {
