@@ -30,6 +30,7 @@
     <app-common-mobile-verification
       (onBackEvent)="goBack()"
       (onVerifyOtpEvent)="checkExistingUserEvent($event)"
+      [isLoading]="isLoading"
     >
     </app-common-mobile-verification>
   </div>

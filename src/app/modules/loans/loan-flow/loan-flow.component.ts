@@ -52,7 +52,7 @@ export class LoanFlowComponent implements OnInit {
   currentUser: any;
   otherUserInfo: any;
   ownerShipId: any;
-
+  isLoading: boolean = false;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -256,6 +256,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   checkExistingUserEvent(event) {
+    this.isLoading = true;
     this.loanApi
       .getExistingUserDetails(event.phone)
       .subscribe((response: any) => {
@@ -281,8 +282,10 @@ export class LoanFlowComponent implements OnInit {
               "customerData",
               JSON.stringify(event.response.data[0])
             );
+            this.isLoading = false;
             this.next();
           } else if (event.response?.statusCode === 204) {
+            this.isLoading = false;
             this.next();
           } else {
             this.next();
@@ -355,6 +358,11 @@ export class LoanFlowComponent implements OnInit {
 
   // on Personal details saved
   customSavePersonal(event) {
+    const payload = event.personalDetails.value.customer;
+    payload.forEach((item) => {
+      delete item.prefixValue;
+    });
+    // if (payload[0]?.prefixValue) delete payload[0].prefixValue;
     this.getCustInfoPayload(event.personalDetails.value.customer).then(
       (data) => {
         this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {

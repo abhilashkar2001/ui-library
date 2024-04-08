@@ -75,7 +75,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   otpAvailable: boolean = false;
   yourOtp: any;
   // SAVE BUTTON PROPERTIES
-  isLoading: boolean = false;
+  @Input() isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
 
   constructor(
@@ -242,7 +242,7 @@ export class CommonMobileVerificationComponent implements OnInit {
           this.isLoading = false;
         } else if (response.statusCode === 200 || response?.accessToken) {
           this.loadingBtnText = "Saved";
-          this.isLoading = false;
+          // this.isLoading = false;
           this.invalidOtp = false;
           this.onVerifyOtpEvent.emit({ phone: this.otpForm.value.phone });
         }

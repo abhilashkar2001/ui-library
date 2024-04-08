@@ -228,7 +228,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   newCustomer(data?): FormGroup {
     return this.fb.group({
-      customerId: null,
+      customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [

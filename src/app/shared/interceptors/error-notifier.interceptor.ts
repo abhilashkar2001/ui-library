@@ -10,10 +10,16 @@ import { of, throwError } from "rxjs";
 import Swal from "sweetalert2";
 import { MatDialog } from "@angular/material/dialog";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
+import { Route, Router } from "@angular/router";
+import { NotificationService } from "../services/notification.service";
 
 @Injectable()
 export class ErrorNotifierService implements HttpInterceptor {
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   errorData: { code: any; message: string }[] = [
     { code: 400, message: "Bad Request" },
@@ -54,6 +60,12 @@ export class ErrorNotifierService implements HttpInterceptor {
                 "You do not have sufficient privileges to do this operation";
               this.openCustomErrorDialog(errorPayload);
               return;
+            } else if (error.status === 401) {
+              sessionStorage.clear();
+              this.dialog.closeAll();
+              this.router.navigate(["/home"], {
+                queryParams: { type: "auth" },
+              });
             } else {
               this.openCustomErrorDialog(errorPayload);
             }
@@ -68,7 +80,7 @@ export class ErrorNotifierService implements HttpInterceptor {
   openCustomErrorDialog(errPayload?) {
     const dialogRef = this.dialog.open(NewErrorPopupComponent, {
       width: "45%",
-      height: "40%",
+      // height: "40%",
       disableClose: true,
       panelClass: "new_error_popup",
       data: {

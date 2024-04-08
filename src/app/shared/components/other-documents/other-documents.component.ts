@@ -83,7 +83,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.personalDoc?.currentValue) {
-      // this.documentList = changes?.personalDoc?.currentValue;
+      this.documentList = changes?.personalDoc?.currentValue;
     }
   }
 
