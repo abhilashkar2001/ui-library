@@ -68,6 +68,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
+  nationalityArray: any[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -170,7 +171,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
   getCountry(resp) {
     if (resp?.statusCode === 200) {
       if (resp?.data) {
-        this.countryArray = resp.data;
+        resp?.data.forEach((element) => {
+          if (element.nationality != null) this.nationalityArray.push(element);
+        });
         this.countriesIsdCodes = resp?.data;
         const indiaIsdCode = this.countriesIsdCodes.find(
           (item) =>
