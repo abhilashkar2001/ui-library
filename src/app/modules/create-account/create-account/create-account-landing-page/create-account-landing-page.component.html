@@ -19,6 +19,7 @@
       <app-common-mobile-verification
         (onBackEvent)="onBackOnPreviousStep()"
         (onVerifyOtpEvent)="onVerify($event)"
+        [isLoading]="isLoading"
       >
       </app-common-mobile-verification>
       <!-- <app-web-doc-upload></app-web-doc-upload> -->

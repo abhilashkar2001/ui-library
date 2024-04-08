@@ -47,6 +47,7 @@ export class CreateAccountLandingPageComponent {
   currencyCode: any;
   isHideField: boolean = true;
   personalDoc: any[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -150,6 +151,7 @@ export class CreateAccountLandingPageComponent {
   }
 
   onVerify(event) {
+    this.isLoading = true;
     this.openAccountService
       .checkMobileAndProduct(
         this.productDetails.basisName,
@@ -168,14 +170,19 @@ export class CreateAccountLandingPageComponent {
                 if (resp?.data?.length > 0) {
                   console.log("approved record");
                   sessionStorage.setItem("mobileNo", event.phone);
-                  // sessionStorage.setItem("customerId", resp.data[0].customerId);
+                  sessionStorage.setItem(
+                    "userCustomerId",
+                    resp.data[0].customerId
+                  );
                   this.personalDetails = resp.data;
                   // if (resp.data[0].primaryCustomer)
                   this.personalDoc = resp?.data[0]?.documentInfo;
+                  this.isLoading = false;
                 }
                 this.next();
                 // }
               } else if (resp?.statusCode === 204) {
+                this.isLoading = false;
                 sessionStorage.setItem("mobileNo", event.phone);
                 this.next();
               } else {
@@ -204,17 +211,18 @@ export class CreateAccountLandingPageComponent {
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
   }
   customSavePersonal(event) {
-    this.openAccountService
-      .stageSavePersonalDetails(event.personalDetails.value.customer)
-      .subscribe(
-        (response: any) => {
-          sessionStorage.setItem("customerId", response.data[0].customerId);
-          this.next();
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+    let payload = event.personalDetails.value.customer;
+    if (payload[0]?.prefixValue) delete payload[0].prefixValue;
+    console.log(payload, "......");
+    this.openAccountService.stageSavePersonalDetails(payload).subscribe(
+      (response: any) => {
+        sessionStorage.setItem("customerId", response.data[0].customerId);
+        this.next();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   onBackOnPreviousStep() {
@@ -241,10 +249,14 @@ export class CreateAccountLandingPageComponent {
           ...custResp[0],
           documentId: docIds[0].docIds?.length > 0 ? docIds : [],
         };
-        custResp[0].customerId = null;
+        // custResp[0].customerId = null;
         custResp[0].contact.contactId = null;
         custResp[0].contact.address[0].addressId = null;
         delete custResp[0].documentsInfoModel;
+        const customerId = sessionStorage.getItem("userCustomerId");
+        if (customerId) {
+          custResp[0].customerId = parseInt(customerId);
+        } else custResp[0].customerId = null;
 
         const payload = {
           originationModel: {
