@@ -8,7 +8,7 @@ import { environment } from "environments/environment";
 export class SharedService {
   protected baseUrl = environment.microServiceURL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   genericValue(screenName: string, genericName: string[]) {
     return this.http.get<any>(
@@ -25,5 +25,9 @@ export class SharedService {
 
   public readAadharData(data) {
     return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
+  }
+
+  deleteDocument(documentId) {
+    return this.http.delete(`${this.baseUrl}/upload-document/${documentId}`);
   }
 }
