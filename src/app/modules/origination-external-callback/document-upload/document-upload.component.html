@@ -194,6 +194,7 @@
                         accept="image/*"
                         title=""
                         required
+                        (click)="restrictUpload($event, document)"
                         (change)="
                           onFileSelect($event, documentIndex, pageIndex)
                         "
@@ -259,7 +260,8 @@
                     class="changeInput"
                     accept="image/*"
                     title=""
-                    required
+                    require
+                    (click)="restrictUpload($event, document)"
                     (change)="otherUpload($event, documentIndex)"
                   />
                 </button>

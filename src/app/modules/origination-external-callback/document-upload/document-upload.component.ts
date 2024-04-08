@@ -54,7 +54,7 @@ export class DocumentUploadComponent implements OnInit {
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
@@ -209,20 +209,15 @@ export class DocumentUploadComponent implements OnInit {
     this.documentPages(docIndex).push(this.addNewPage(count++));
   }
 
-
-
   removeDocumentPage(index: number, pageIndex: number) {
-    const documentId = this.documentPages(index)
-      .at(pageIndex)
-      .get("id")?.value
+    const documentId = this.documentPages(index).at(pageIndex).get("id")?.value;
     if (!documentId) {
       this.documentPages(index).removeAt(pageIndex);
-      return
+      return;
     }
     this.apiService.deleteDocument(documentId).subscribe((res) => {
       this.documentPages(index).removeAt(pageIndex);
-    })
-
+    });
   }
 
   checkForm() {
@@ -231,6 +226,16 @@ export class DocumentUploadComponent implements OnInit {
   //Enter issue
   checking(event: KeyboardEvent) {
     event.preventDefault();
+  }
+
+  restrictUpload(event: Event, document: FormGroup) {
+    if (
+      !document.get("documentName").valid ||
+      !document.get("documentNumber").valid
+    ) {
+      event.preventDefault();
+      document.markAllAsTouched();
+    }
   }
 
   onFileSelect(e: any, documentIndex: number, index: number) {
@@ -282,7 +287,7 @@ export class DocumentUploadComponent implements OnInit {
               let base64File = _event.target.result;
               this.uploadDocument(file, documentIndex, index, base64File);
             };
-          } catch (error) { }
+          } catch (error) {}
         }
       }, 100);
     }
@@ -349,24 +354,21 @@ export class DocumentUploadComponent implements OnInit {
                 .get("fileNameValue")
                 .patchValue(e.target.files[0].name);
             };
-          } catch (error) { }
+          } catch (error) {}
         }
       }, 100);
     }
   }
 
   removeImage(docindex, index) {
-    const documentId = this.documentPages(docindex)
-      .at(index)
-      .get("id")?.value
+    const documentId = this.documentPages(docindex).at(index).get("id")?.value;
     if (!documentId) {
-      return
+      return;
     }
     this.apiService.deleteDocument(documentId).subscribe((res) => {
       this.documentPages(docindex).at(index).get("fileUrl").patchValue("");
       this.documentPages(docindex).at(index).get("id").patchValue("");
-    })
-
+    });
   }
 
   uploadDocument(file, documentIndex, index, base64File) {
@@ -413,7 +415,7 @@ export class DocumentUploadComponent implements OnInit {
         this.cdr.markForCheck();
       }
     }),
-      (error) => { };
+      (error) => {};
   }
 
   getDocType(docName: string) {
