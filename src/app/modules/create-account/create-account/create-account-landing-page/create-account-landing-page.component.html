@@ -30,7 +30,7 @@
       <app-common-personal-details
         [basisId]="basisId"
         (customSavePersonal)="customSavePersonal($event)"
-        isHideField="true"
+        [isHideField]="isHideField"
         [personalDetails]="personalDetails"
       ></app-common-personal-details>
     </div>
@@ -41,6 +41,7 @@
       <app-other-documents
         (customSaveDocument)="customSaveDocuments($event)"
         (customgoBack)="goBack()"
+        [personalDoc]="personalDoc"
       >
       </app-other-documents>
     </div>

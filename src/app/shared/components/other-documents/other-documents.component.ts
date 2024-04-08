@@ -49,13 +49,14 @@ export class OtherDocumentsComponent implements OnInit {
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Output() customgoBack = new EventEmitter<any>();
+  @Input() personalDoc: any[] = [];
   verificationType = "kyc";
   documentControls: FormGroup;
   staticData = {
     DOCUMENTNAME: [],
   };
   baseUrl = environment.microServiceURL;
-  documentList;
+  documentList: any = [];
   documentTypeArray: string[] = [];
   hideSelect: string[] = [];
   // SAVE BUTTON PROPERTIES
@@ -80,12 +81,18 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngAfterViewInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.personalDoc?.currentValue) {
+      // this.documentList = changes?.personalDoc?.currentValue;
+    }
+  }
+
   ngOnInit() {
     // this.getGenericDetails();
-    var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
+    // var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
     var originationId = parseInt(sessionStorage.getItem("originationId"));
     if (originationId) this.getDataFromOriginationMaster(originationId);
-    else if (loanCustomerId) this.getCustomerId(loanCustomerId);
+    // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }
 

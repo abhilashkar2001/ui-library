@@ -33,7 +33,7 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
         this.next();
       }, 200);
     } else {
-      this.screenList = changes.screenList.currentValue;
+      this.screenList = changes?.screenList?.currentValue;
       this.screenList = this.screenList?.map((obj) => ({
         ...obj,
         completed: false,

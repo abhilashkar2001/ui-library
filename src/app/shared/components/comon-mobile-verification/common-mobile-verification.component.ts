@@ -240,7 +240,7 @@ export class CommonMobileVerificationComponent implements OnInit {
         if (response.statusCode === 401) {
           this.invalidOtp = true;
           this.isLoading = false;
-        } else if (response.statusCode === 200) {
+        } else if (response.statusCode === 200 || response?.accessToken) {
           this.loadingBtnText = "Saved";
           this.isLoading = false;
           this.invalidOtp = false;
