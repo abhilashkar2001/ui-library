@@ -274,7 +274,7 @@ export class LoanFlowComponent implements OnInit {
         } else {
           if (event.response?.statusCode === 200) {
             sessionStorage.setItem(
-              "customerId",
+              "existingCustomerId",
               event.response.data[0].customerId
             );
             sessionStorage.setItem("isExistingCustomer", "Yes");
@@ -368,9 +368,9 @@ export class LoanFlowComponent implements OnInit {
         this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
           if (resp?.statusCode === 200) {
             this.personalDetails = resp.data;
+            let customId = [];
             resp.data?.forEach((item, i) => {
-              if (item.primaryCustomer)
-                sessionStorage.setItem("customerId", item.customerId);
+              customId.push(item.customerId);
             });
             this.snack.open(`Personal Details Saved` + " !", "OK", {
               duration: 4000,
@@ -378,6 +378,10 @@ export class LoanFlowComponent implements OnInit {
               horizontalPosition: "right",
               panelClass: "snackbar-error",
             });
+            sessionStorage.setItem(
+              "customerStageIds",
+              JSON.stringify(customId)
+            );
             this.customerInfo = resp.data;
             this.next();
           }
@@ -466,19 +470,55 @@ export class LoanFlowComponent implements OnInit {
       docIds.push(docId);
     });
     this.docIds = docIds;
+    this.fetchCustomers().then((resp) => {
+      this.saveCustomerInfo(resp, docIds);
+    });
 
-    this.loanApi
-      .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
-      .subscribe((resp) => {
-        if (resp?.statusCode === 200) this.saveCustomerInfo(resp.data, docIds);
+    // this.loanApi
+    //   .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
+    //   .subscribe((resp) => {
+    //     if (resp?.statusCode === 200) this.saveCustomerInfo(resp.data, docIds);
+    //   });
+  }
+
+  fetchCustomers() {
+    const customIds = JSON.parse(sessionStorage.getItem("customerStageIds"));
+    return new Promise((resolve, reject) => {
+      const promises = customIds.map((id) => {
+        return new Promise((innerResolve, innerReject) => {
+          this.loanApi.getCustByStageId(id).subscribe((resp) => {
+            if (resp?.statusCode === 200)
+              innerResolve({
+                ...resp.data[0],
+                customerId: null,
+                customerNo: null,
+                contact: {
+                  ...resp.data[0].contact,
+                  contactId: null,
+                  address: [
+                    { ...resp.data[0].contact.address[0], addressId: null },
+                  ],
+                },
+              });
+            else innerResolve(null); // or handle rejection if needed
+          });
+        });
       });
+      Promise.all(promises).then((customers) => {
+        const filteredCustomers = customers.filter(
+          (customer) => customer !== null
+        );
+        resolve(filteredCustomers);
+      });
+    });
   }
 
   saveCustomerInfo(resp, docIds) {
+    // sessionStorage.getItem("customerId");
     var custResp: any = [...resp];
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
-      custResp[i].primaryCustomer = true; //Need to remove lator while multiple customer
+      custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
@@ -545,9 +585,6 @@ export class LoanFlowComponent implements OnInit {
    * api call to update Origination.
    */
   onTCAccepted(event) {
-    var customerId = this.customerInfo.filter(
-      (item) => item?.primaryCustomer
-    )[0]?.customerId;
     const originationId = sessionStorage.getItem("originationId");
     var mapPayload = {
       id: parseInt(sessionStorage.getItem("loanDisburseId")),
@@ -640,7 +677,7 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.removeItem("tenureDays");
         sessionStorage.removeItem("tenureMonth");
         sessionStorage.removeItem("tenureYear");
-        sessionStorage.removeItem("customerId");
+        sessionStorage.removeItem("customerStageIds");
         sessionStorage.removeItem("loanBasisDetails");
         sessionStorage.removeItem("loanDisburseId");
         this.router.navigate(["loan/landing"]);

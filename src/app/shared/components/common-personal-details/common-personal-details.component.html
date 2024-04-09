@@ -493,7 +493,10 @@
   </form>
 
   <div *ngIf="!isHideField">
-    <div class="add_applicant" (click)="holderType == 'Joint' && addCustomer()">
+    <div
+      class="add_applicant"
+      (click)="holderType == 'joint' && addCustomer(customer?.controls?.length)"
+    >
       Add Another Applicant
     </div>
   </div>

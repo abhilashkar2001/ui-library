@@ -101,7 +101,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     // this.getCountry();
     this.getGenericDetails();
     this.fetchBoundaries();
-    this.holderType = sessionStorage.getItem("loanHolderType") || "Self";
+    this.holderType =
+      sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
     // this.getAllRequisite().then((res) => {
     //   if (this.loanCustomerId != null) this.getCustomerById();
@@ -303,7 +304,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   async addCustomer(i, data?) {
     await this.customer.push(this.newCustomer(data));
-    this.addAddress(i, data ? data.contact.address[0] : {});
+    this.addAddress(i, data ? data.contact?.address[0] : {});
     this.debounceZipCodeAndCif();
   }
   debounceZipCodeAndCif() {
