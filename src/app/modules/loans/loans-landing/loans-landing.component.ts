@@ -15,6 +15,7 @@ export class LoansLandingComponent implements OnInit {
   profileHint =
     " Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.";
   routeUrl = "loan/loan-type";
+  category: string = "Lending";
   constructor(
     private router: Router,
     private commonService: CommonService,
@@ -34,7 +35,7 @@ export class LoansLandingComponent implements OnInit {
   }
 
   getLoanServices() {
-    this.loanService.getLoanTypes().subscribe((response: any) => {
+    this.loanService.getLoanTypes(this.category).subscribe((response: any) => {
       this.carowselData = response.data;
     });
   }

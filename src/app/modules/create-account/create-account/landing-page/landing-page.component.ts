@@ -15,6 +15,7 @@ export class LandingPageComponent implements OnInit {
     "Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.";
   routeUrl = "/account/open";
   businessSuiteName: string = "ACCOUNTOPENINGSERVICES";
+  category: string = "Accounts";
   constructor(
     private homeService: HomeService,
     private router: Router,
@@ -39,7 +40,7 @@ export class LandingPageComponent implements OnInit {
 
   getAccountTypes() {
     this.homeService
-      .getAccountTypes(this.businessSuiteName)
+      .getAccountTypes(this.category)
       .subscribe((response: any) => {
         if (response) this.data = response.data;
       });

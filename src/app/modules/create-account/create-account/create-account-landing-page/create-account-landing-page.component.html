@@ -1,4 +1,4 @@
-<div class="create-account">
+<div class="create-account" fxLayout="row">
   <!-- Left hand side steps starts here -->
   <div class="stepper" fxFlex="40">
     <app-commmon-steeper
@@ -13,39 +13,12 @@
     class="vertical_divider"
     style="border-right: 1px solid #cbcbcb; height: 550px"
   ></div>
-  <div class="col-div2 mr-0" fxFlex="56">
-    <!-- Mobile verification part starts here -->
-    <div *ngIf="verfyStep('mobile', currentStep)">
-      <app-common-mobile-verification
-        (onBackEvent)="onBackOnPreviousStep()"
-        (onVerifyOtpEvent)="onVerify($event)"
-        [isLoading]="isLoading"
-      >
-      </app-common-mobile-verification>
-      <!-- <app-web-doc-upload></app-web-doc-upload> -->
+  <div class="col-div2 screenMargin" fxFlex="56" fxLayout="column">
+    <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
+      {{ currentStep }}
+    </h2>
+    <div>
+      <ng-template appAppHost #container></ng-template>
     </div>
-    <!-- Mobile verification part ends here -->
-
-    <!-- Personal details part starts here  -->
-    <div *ngIf="verfyStep('personal', currentStep)">
-      <app-common-personal-details
-        [basisId]="basisId"
-        (customSavePersonal)="customSavePersonal($event)"
-        [isHideField]="isHideField"
-        [personalDetails]="personalDetails"
-      ></app-common-personal-details>
-    </div>
-    <!-- Personal details part starts here  -->
-
-    <!-- Select kyc & other document starts here  -->
-    <div *ngIf="verfyStep('kyc', currentStep)" class="ml-24 mr-12">
-      <app-other-documents
-        (customSaveDocument)="customSaveDocuments($event)"
-        (customgoBack)="goBack()"
-        [personalDoc]="personalDoc"
-      >
-      </app-other-documents>
-    </div>
-    <!-- Select kyc & other document ends here  -->
   </div>
 </div>

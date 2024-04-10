@@ -1,6 +1,5 @@
 <div fxLayout="column" *ngIf="customerDetailsForm">
   <form [formGroup]="customerDetailsForm">
-    <div class="highlight_title">Personal Details</div>
     <div formArrayName="customer">
       <div *ngFor="let customer of customer.controls; let i = index">
         <div [formGroupName]="i">

@@ -1,0 +1,21 @@
+<div fxLayout="column">
+  <div class="text-center">
+    <img src="assets/images/failed.svg" width="40%" alt="" />
+  </div>
+  <h2 class="text-center text-label">{{ data?.error }}</h2>
+  <p class="text-center text-normal">
+    {{ data?.message }}
+  </p>
+  <div class="w-100 text-center" fxLayoutAlign="center center">
+    <button
+      mat-raised-button
+      mat-dialog-close="Ok"
+      class="savebutton applyButtonStandard"
+    >
+      Ok
+    </button>
+    <button mat-raised-button mat-dialog-close class="button back_button">
+      Cancel
+    </button>
+  </div>
+</div>
