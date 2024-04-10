@@ -16,19 +16,23 @@
   <div class="col-div2 mr-0" fxFlex="56">
     <!-- Mobile verification part starts here -->
     <div *ngIf="verfyStep('mobile', currentStep)">
-      <app-account-Mobile-verification-details
+      <app-common-mobile-verification
         (onBackEvent)="onBackOnPreviousStep()"
         (onVerifyOtpEvent)="onVerify($event)"
-      ></app-account-Mobile-verification-details>
+      >
+      </app-common-mobile-verification>
+      <!-- <app-web-doc-upload></app-web-doc-upload> -->
     </div>
     <!-- Mobile verification part ends here -->
 
     <!-- Personal details part starts here  -->
     <div *ngIf="verfyStep('personal', currentStep)">
-      <app-create-account-personal-details
-        (onSubmitPersonalDetailsEvent)="personalDetailsSubmitted()"
-        (onBackEvent)="goBack()"
-      ></app-create-account-personal-details>
+      <app-common-personal-details
+        [basisId]="basisId"
+        (customSavePersonal)="customSavePersonal($event)"
+        [isHideField]="isHideField"
+        [personalDetails]="personalDetails"
+      ></app-common-personal-details>
     </div>
     <!-- Personal details part starts here  -->
 
@@ -37,6 +41,7 @@
       <app-other-documents
         (customSaveDocument)="customSaveDocuments($event)"
         (customgoBack)="goBack()"
+        [personalDoc]="personalDoc"
       >
       </app-other-documents>
     </div>

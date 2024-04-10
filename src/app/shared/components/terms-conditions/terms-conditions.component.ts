@@ -8,6 +8,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from "@angular/core";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
@@ -24,10 +25,15 @@ export class TermsConditionsComponent implements OnInit {
   requestDate: any;
   loamAmount: any;
   currencySymboll = "₹";
+  otherUserInfo: any;
 
-  constructor(private _location: Location) {}
+  constructor(
+    private _location: Location,
+    private tokenStore: TokenStorageService
+  ) {}
 
   ngOnInit(): void {
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.customerData = JSON.parse(sessionStorage.getItem("customerData"));
     this.loamAmount = JSON.parse(
       sessionStorage.getItem("loanAmmount")

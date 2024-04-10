@@ -21,7 +21,7 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="row">
-                  <div class="col-md-6 col-12">
+                  <div class="col-md-6 col-12" *ngIf="!isHideField">
                     <mat-form-field
                       appearance="outline"
                       class="full-width disable-field"
@@ -40,6 +40,7 @@
                   <div
                     class="col-md-6 col-12 default-toggle-slide pb-12"
                     fxLayoutAlign="end center"
+                    *ngIf="!isHideField"
                   >
                     <span style="padding-right: 10px"
                       >Is this applicant a primary customer? *</span
@@ -65,8 +66,8 @@
                       >
                         <mat-option
                           *ngFor="let prefixItem of prefixArray"
-                          [value]="prefixItem"
-                          >{{ prefixItem }}</mat-option
+                          [value]="prefixItem.id"
+                          >{{ prefixItem.values }}</mat-option
                         >
                       </mat-select>
                       <mat-error
@@ -174,19 +175,28 @@
                         matInput
                         noInitialSpecialCharacters
                         noSpace
-                        formControlName="email"
+                        [disabled]="!customerDetailsForm.valid"
+                        [formControl]="customer.get('contact').get('email')"
                         name="email"
                       />
                       <mat-error
                         *ngIf="
-                          this.customer.controls.email.touched &&
-                          this.customer.controls.email.hasError('required')
+                          customer.get('contact').get('email').touched &&
+                          customer
+                            .get('contact')
+                            .get('email')
+                            .hasError('required')
                         "
                       >
                         Email is required
                       </mat-error>
                       <mat-error
-                        *ngIf="this.customer.controls.email.hasError('pattern')"
+                        *ngIf="
+                          customer
+                            .get('contact')
+                            .get('email')
+                            .hasError('pattern')
+                        "
                       >
                         Please enter Valid Email
                       </mat-error>
@@ -202,7 +212,9 @@
                         >
                           <mat-select
                             class="selector-input"
-                            formControlName="mobtCode"
+                            [formControl]="
+                              customer.get('contact').get('mobtCode')
+                            "
                           >
                             <ng-container
                               *ngFor="let isdCode of countriesIsdCodes"
@@ -226,7 +238,9 @@
                             matInput
                             type="text"
                             class="inputText"
-                            formControlName="mobile"
+                            [formControl]="
+                              customer.get('contact').get('mobile')
+                            "
                             numbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
@@ -237,8 +251,11 @@
                     <mat-error
                       class="custom-error"
                       *ngIf="
-                        customer.controls['mobile'].hasError('required') &&
-                        customer.controls['mobile'].touched
+                        customer
+                          .get('contact')
+                          .get('mobile')
+                          .hasError('required') &&
+                        customer.get('contact').get('mobile').touched
                       "
                     >
                       Mobile Number is required
@@ -246,8 +263,11 @@
                     <mat-error
                       class="custom-error"
                       *ngIf="
-                        customer.controls['mobile'].touched &&
-                        customer.controls['mobile'].hasError('invalidLength')
+                        customer.get('contact').get('mobile').touched &&
+                        customer
+                          .get('contact')
+                          .get('mobile')
+                          .hasError('invalidLength')
                       "
                       >Mobile length should be {{ maxMobileLength }}</mat-error
                     >
@@ -265,8 +285,8 @@
                       >
                         <mat-option
                           *ngFor="let genderItem of genderArray"
-                          [value]="genderItem"
-                          >{{ genderItem }}</mat-option
+                          [value]="genderItem.id"
+                          >{{ genderItem.values }}</mat-option
                         >
                       </mat-select>
                       <mat-error
@@ -281,154 +301,175 @@
                   </div>
                   <div class="col-md-6 col-12">
                     <app-searchable-select
-                      [items]="countryArray"
+                      [items]="nationalityArray"
                       inputLabel="Nationality"
-                      bindLabelKey="countryName"
-                      bindValueKey="countryName"
+                      bindLabelKey="nationality"
+                      bindValueKey="nationality"
                       [control]="customer.get('nationality')"
                     ></app-searchable-select>
                   </div>
-                  <div class="highlight_title">Address Details</div>
-                  <div class="col-md-12 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Address</mat-label>
-                      <input
-                        matInput
-                        type="text"
-                        formControlName="address1"
-                        name="address1"
-                        noInitialSpecialCharacters
-                        specialIsAlphaNumeric
-                      />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Residence Type</mat-label>
-                      <mat-select formControlName="residenceType">
-                        <mat-option
-                          *ngFor="let residenceItem of residenceTypeArray"
-                          [value]="residenceItem"
-                          >{{ residenceItem }}</mat-option
-                        >
-                      </mat-select>
-                      <mat-error
-                        *ngIf="
-                          this.customer.controls.residenceType.touched &&
-                          this.customer.controls.residenceType.hasError(
-                            'required'
-                          )
-                        "
-                      >
-                        Residence Type is required
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <app-searchable-select
-                      [items]="countryArray"
-                      inputLabel="Country"
-                      bindLabelKey="countryName"
-                      bindValueKey="countryName"
-                      [control]="customer.get('country')"
-                    ></app-searchable-select>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field zipCode_field"
-                    >
-                      <mat-label>Zip Code</mat-label>
-                      <input
-                        matInput
-                        type="text"
-                        formControlName="pincode"
-                        name="pincode"
-                        numbersOnly
-                        maxlength="10"
-                      />
-                      <mat-icon
-                        matSuffix
-                        class="searchIcon-main"
-                        (click)="pincodeExpansion(i)"
-                        >search</mat-icon
-                      >
-                      <mat-error
-                        *ngIf="
-                          this.customer.controls.pincode.touched &&
-                          this.customer.controls.pincode.hasError('required')
-                        "
-                      >
-                        Zip Code is required
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field hide-select-arrow"
-                    >
-                      <mat-label>State</mat-label>
 
-                      <input
-                        matInput
-                        type="text"
-                        formControlName="state"
-                        name="state"
-                        readonly
-                      />
-                      <mat-error
-                        *ngIf="
-                          this.customer.controls.state.touched &&
-                          this.customer.controls.state.hasError('required')
-                        "
-                      >
-                        State is required
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field hide-select-arrow"
+                  <div class="highlight_title">Address Details</div>
+                  <div
+                    class="row"
+                    *ngIf="customer.get('contact.address').controls"
+                  >
+                    <ng-container
+                      *ngFor="
+                        let addressGroup of customer.get('contact.address')
+                          .controls;
+                        let addressIndex = index
+                      "
+                      [formGroup]="addressGroup"
                     >
-                      <mat-label>City</mat-label>
-                      <mat-select formControlName="cityId">
-                        <mat-option
-                          *ngFor="let item of listCity"
-                          [value]="item?.cityId"
-                          >{{ item?.cityName }}</mat-option
+                      <div class="col-md-12 col-12">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width disable-field"
                         >
-                      </mat-select>
-                      <!-- <input
-                        matInput
-                        type="text"
-                        formControlName="cityId"
-                        name="cityId"
-                        readonly
-                      /> -->
-                      <mat-error
-                        *ngIf="
-                          this.customer.controls.cityId.touched &&
-                          this.customer.controls.cityId.hasError('required')
-                        "
-                      >
-                        City required
-                      </mat-error>
-                    </mat-form-field>
+                          <mat-label>Address</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            formControlName="address1"
+                            name="address1"
+                            noInitialSpecialCharacters
+                            specialIsAlphaNumeric
+                          />
+                          <mat-error
+                            *ngIf="
+                              addressGroup.get('address1').touched &&
+                              addressGroup.get('address1').hasError('required')
+                            "
+                          >
+                            Address is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-6 col-12">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width disable-field"
+                        >
+                          <mat-label>Residence Type</mat-label>
+                          <mat-select formControlName="residenceType">
+                            <mat-option
+                              *ngFor="let residenceItem of residenceTypeArray"
+                              [value]="residenceItem.id"
+                              >{{ residenceItem.values }}</mat-option
+                            >
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              addressGroup.get('residenceType').touched &&
+                              addressGroup
+                                .get('residenceType')
+                                .hasError('required')
+                            "
+                          >
+                            Residence Type is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <app-searchable-select
+                          [items]="countryArray"
+                          inputLabel="Country"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          [control]="addressGroup.get('countryName')"
+                        ></app-searchable-select>
+                      </div>
+
+                      <div class="col-md-6 col-12">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width disable-field zipCode_field"
+                        >
+                          <mat-label>Zip Code</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            formControlName="pincode"
+                            name="pincode"
+                            numbersOnly
+                            maxlength="10"
+                          />
+                          <mat-icon
+                            matSuffix
+                            class="searchIcon-main"
+                            (click)="pincodeExpansion(i)"
+                            >search</mat-icon
+                          >
+                          <mat-error
+                            *ngIf="
+                              addressGroup.get('pincode').touched &&
+                              addressGroup.get('pincode').hasError('required')
+                            "
+                          >
+                            Zip Code is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-6 col-12">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width disable-field hide-select-arrow"
+                        >
+                          <mat-label>State</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            formControlName="stateName"
+                            name="stateName"
+                            readonly
+                          />
+                          <mat-error
+                            *ngIf="
+                              addressGroup.get('stateName').touched &&
+                              addressGroup.get('stateName').hasError('required')
+                            "
+                          >
+                            State is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-6 col-12">
+                        <mat-form-field
+                          appearance="outline"
+                          class="full-width disable-field hide-select-arrow"
+                        >
+                          <mat-label>City</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            formControlName="cityName"
+                            name="cityId"
+                            readonly
+                          />
+                          <mat-error
+                            *ngIf="
+                              addressGroup.get('cityName').touched &&
+                              addressGroup.get('cityName').hasError('required')
+                            "
+                          >
+                            City required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </ng-container>
                   </div>
+
                   <div
                     fxFlex="100"
                     fxLayout="row"
                     fxLayoutGap="2%"
                     style="margin-top: 50px"
                     class="col-12"
+                    *ngIf="!isHideField"
                   >
                     <div>
                       <button
@@ -451,7 +492,7 @@
     </div>
   </form>
 
-  <div>
+  <div *ngIf="!isHideField">
     <div class="add_applicant" (click)="holderType == 'Joint' && addCustomer()">
       Add Another Applicant
     </div>

@@ -301,16 +301,38 @@
     </div>
   </mat-card>
 
-  <mat-card fxLayout="column" *ngIf="isLcAmend">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
-      <ng-container *ngFor="let credit of creditControle.controls">
+  <mat-card fxLayout="column" *ngIf="!isLcAmend">
+    <ng-container
+      *ngFor="let credit of creditControle.controls; let i = index"
+      [formGroup]="credit"
+    >
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">Title 1</mat-label>
-          <mat-form-field appearance="outline">
-            <mat-select formControlName="title">
-              <mat-option value="title1">Title1</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div fxLayout="row" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="80">
+              <mat-select formControlName="title">
+                <mat-option value="title1">Title1</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxFlex="20" class="plusdiv" fxLayoutAlign="center start">
+              <mat-icon
+                fxFlex="100"
+                class="addbtn"
+                *ngIf="i == creditControle.controls.length - 1; else remove"
+                (click)="updateCredit()"
+                >add</mat-icon
+              >
+              <ng-template #remove>
+                <mat-icon
+                  fxFlex="100"
+                  class="addbtn"
+                  (click)="removeCreditControl(i)"
+                  >remove</mat-icon
+                >
+              </ng-template>
+            </div>
+          </div>
         </div>
         <div fxLayout="column" fxFlex="19">
           <mat-label class="custom-label">Currency</mat-label>
@@ -328,17 +350,59 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="column" fxFlex="19">
+        <div fxLayout="column" fxFlex="40">
           <mat-label class="custom-label"
-            >Max Credit Amount (39B) / Tolerance</mat-label
-          >
-          <mat-form-field appearance="outline">
-            <mat-select formControlName="maxCreditAmount">
-              <mat-option value="2000">2000</mat-option>
-            </mat-select>
-          </mat-form-field>
+            >Max Credit Amount (39B) / Tolerance
+          </mat-label>
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" fxFlex="48.5">
+              <mat-select formControlName="maxCreditAmount">
+                <mat-option value="2000">2000</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div
+              fxFlex="48.5"
+              fxLayout="row"
+              fxLayoutAlign="space-between"
+              fxLayoutGap="1%"
+            >
+              <div fxFlex="49" fxLayout="row">
+                <div
+                  fxFlex="30"
+                  fxFlex.xs="20"
+                  class="plusdiv1"
+                  fxLayoutAlign="center start"
+                >
+                  <mat-icon fxFlex="100" class="addbtn">add </mat-icon>
+                </div>
+                <mat-form-field fxFlex="70" style="z-index: 2; right: 9px"
+                  ><input matInput type="text" />
+                  <mat-icon matSuffix class="percentageIcon"
+                    >percentage</mat-icon
+                  ></mat-form-field
+                >
+              </div>
+              <div fxFlex="49" fxLayout="row">
+                <div
+                  fxFlex="30"
+                  fxFlex.xs="20"
+                  class="plusdiv1"
+                  fxLayoutAlign="center start"
+                  style="z-index: 1"
+                >
+                  <mat-icon fxFlex="100" class="addbtn">remove </mat-icon>
+                </div>
+                <mat-form-field fxFlex="70" style="z-index: 2; right: 9px"
+                  ><input matInput type="text" />
+                  <mat-icon matSuffix class="percentageIcon"
+                    >percentage</mat-icon
+                  ></mat-form-field
+                >
+              </div>
+            </div>
+          </div>
         </div>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
   </mat-card>
 </form>

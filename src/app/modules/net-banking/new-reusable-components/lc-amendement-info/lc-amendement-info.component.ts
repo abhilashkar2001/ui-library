@@ -54,7 +54,8 @@ export class LcAmendementInfoComponent implements OnInit {
       changeOfExpiry: [data?.changeOfExpiry ?? ""],
       amountChange: [data?.amountChange ?? ""],
       // common control end
-      ...(this.componentType == "LC Physical Amendment "
+      // ...(this.componentType == "LC Physical Amendment "
+      ...(this.isLcAmend
         ? {
             // for lc amend
             expiryDateChangeFrom: [data?.expiryDateChangeFrom ?? ""],
@@ -118,5 +119,9 @@ export class LcAmendementInfoComponent implements OnInit {
       maxCreditAmount: [data?.maxCreditAmount ?? "", [Validators.required]],
     });
     this.creditControle.push(newAddress);
+  }
+
+  removeCreditControl(index: number) {
+    this.creditControle.removeAt(index);
   }
 }

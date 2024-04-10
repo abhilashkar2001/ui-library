@@ -8,8 +8,20 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { SharedService } from "app/shared/shared.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
+import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
+
+const {
+  SELF,
+  OWNERSHIP,
+  DUPLICATE_PRODUCT_ERROR_MESSAGE,
+  DUPLICATE_PRODUCT_HINT,
+  PRODUCT_DUPLICATION_KEY,
+  SOURCE_PAYLOAD_KEY,
+  LOADING_TEXT,
+} = CreateEnum;
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -17,34 +29,44 @@ import * as moment from "moment";
   styleUrls: ["./create-account-landing-page.component.scss"],
 })
 export class CreateAccountLandingPageComponent {
-  accountHeader: string | any;
   stepper: MatStepper;
   screenList: any;
-  screenTitle = "Savings Resident Account";
+  screenTitle = "";
   selectedStep: number = 0;
   currentStep: string;
   originationId: any;
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
+  personalDetails: any;
+  ownership: any;
+  screenName: string = CreateAccountConstant.SCREEN_NAME;
+  staticData = CreateAccountConstant.STATIC_DATA;
+  ownershipId: any;
+  currentUser: any;
+  currencyCode: any;
+  isHideField: boolean = true;
+  personalDoc: any[] = [];
 
   constructor(
     private router: Router,
     private openAccountService: OpenAccountService,
-    private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     private dialog: MatDialog,
     private showSideBar: NewDepositService,
     private loanApi: LoanService,
     private tokenStore: TokenStorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedService: SharedService
   ) {
     this.showSideBar.setToken(true);
-    this.accountHeader = this.activeRoute.snapshot["queryParams"]["title"];
     commonService.updateData(router.url);
   }
 
   ngOnInit(): void {
+    this.currentUser = this.tokenStore.getUser();
+    this.getGeneric();
+    this.currencyCode = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("accountstep");
@@ -60,6 +82,31 @@ export class CreateAccountLandingPageComponent {
 
         this.getScreenDetails(resp);
       });
+    var customerId = parseInt(sessionStorage.getItem("customerId"));
+    if (customerId) {
+      this.getCustomerById(customerId);
+    }
+  }
+
+  getGeneric() {
+    this.sharedService
+      .genericValue(this.screenName, Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.ownership = resp.data[OWNERSHIP];
+          this.ownershipId = this.ownership.find(
+            (r) => r?.values.toLowerCase() === "self"
+          )?.id;
+        }
+      });
+  }
+
+  getCustomerById(customerId) {
+    this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.personalDetails = resp.data;
+      }
+    });
   }
 
   getScreenDetails(resp) {
@@ -84,7 +131,10 @@ export class CreateAccountLandingPageComponent {
     this.openAccountService
       .getProductDetails(this.basisId)
       .subscribe((resp) => {
-        if (resp?.statusCode === 200) this.productDetails = resp.data[0];
+        if (resp?.statusCode === 200) {
+          this.productDetails = resp.data[0];
+          this.screenTitle = resp.data[0].basisName;
+        }
       });
   }
 
@@ -104,7 +154,7 @@ export class CreateAccountLandingPageComponent {
       .checkMobileAndProduct(
         this.productDetails.basisName,
         event.phone,
-        "Account"
+        PRODUCT_DUPLICATION_KEY
       )
       .subscribe((resp) => {
         if (!resp) {
@@ -114,11 +164,17 @@ export class CreateAccountLandingPageComponent {
             .getExistingCustomer(event.phone)
             .subscribe((resp: any) => {
               if (resp?.statusCode === 200 && resp?.data) {
-                if (resp?.data[0]?.kycStatus) {
+                // if (resp?.data[0]?.onboardingStatus === "APPROVED") {
+                if (resp?.data?.length > 0) {
+                  console.log("approved record");
                   sessionStorage.setItem("mobileNo", event.phone);
-                  sessionStorage.setItem("customerId", resp.data[0].customerId);
-                  this.next();
+                  // sessionStorage.setItem("customerId", resp.data[0].customerId);
+                  this.personalDetails = resp.data;
+                  // if (resp.data[0].primaryCustomer)
+                  this.personalDoc = resp?.data[0]?.documentInfo;
                 }
+                this.next();
+                // }
               } else if (resp?.statusCode === 204) {
                 sessionStorage.setItem("mobileNo", event.phone);
                 this.next();
@@ -133,9 +189,8 @@ export class CreateAccountLandingPageComponent {
   allreadyProduct() {
     this.dialog.open(ErrorNotifierPopupComponent, {
       data: {
-        errorMessage:
-          "We have found similar account application in our record on your Mobile Number",
-        errorMessageHint: "Please visit bank for more information.",
+        errorMessage: DUPLICATE_PRODUCT_ERROR_MESSAGE,
+        errorMessageHint: DUPLICATE_PRODUCT_HINT,
       },
       width: "650px",
       disableClose: true,
@@ -144,17 +199,22 @@ export class CreateAccountLandingPageComponent {
     });
   }
 
-  onExit() {
-    this.router.navigate(["/"]);
-  }
-
   getTabDetails(tabDetails: any) {
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
   }
-
-  personalDetailsSubmitted() {
-    this.next();
+  customSavePersonal(event) {
+    this.openAccountService
+      .stageSavePersonalDetails(event.personalDetails.value.customer)
+      .subscribe(
+        (response: any) => {
+          sessionStorage.setItem("customerId", response.data[0].customerId);
+          this.next();
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   onBackOnPreviousStep() {
@@ -170,39 +230,38 @@ export class CreateAccountLandingPageComponent {
       docIds.push(docId);
     });
 
-    var payload = {
-      customerId: parseInt(sessionStorage.getItem("customerId")),
-      documentInfo: docIds[0].docIds?.length > 0 ? docIds : [],
-    };
     this.openAccountService
-      .uploadMultipleDocument(payload)
+      .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
       .subscribe((resp) => {
-        if (resp?.statusCode === 200 || resp?.statusCode === 201) {
-          this.openAccountService
-            .getCustomerById(resp.data.customerId)
-            .subscribe((resp) => {
-              const sessionData = JSON.parse(
-                localStorage.getItem("basisDetails")
-              );
-              var custResp = this.factoryCustomer(resp.data);
-              custResp[0].primaryCustomer = true;
-              custResp[0].isphoneNumVerified = true;
-              custResp[0].isEmailVerified = true;
-              const payload = {
-                originationModel: {
-                  applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-                  accountType: sessionData.accountType,
-                  basisDetailsId: sessionData.basisDetailsId,
-                  branchCode: this.tokenStore.getUser().branchCode,
-                  source: "Website",
-                  businessProductName: this.productDetails.basisName,
-                  productDescription: this.productDetails.basisDetailStory,
-                },
-                customerInfo: custResp,
-              };
-              this.masterSave(payload, e);
-            });
-        }
+        const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
+        var custResp: any = this.factoryCustomer(resp.data);
+        custResp[0].isphoneNumVerified = true;
+        custResp[0].isEmailVerified = true;
+        custResp[0] = {
+          ...custResp[0],
+          documentId: docIds[0].docIds?.length > 0 ? docIds : [],
+        };
+        custResp[0].customerId = null;
+        custResp[0].contact.contactId = null;
+        custResp[0].contact.address[0].addressId = null;
+        delete custResp[0].documentsInfoModel;
+
+        const payload = {
+          originationModel: {
+            applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+            accountType: sessionData.accountType,
+            basisDetailsId: sessionData.basisDetailsId,
+            branchCode: this.tokenStore.getUser().branchCode,
+            source: SOURCE_PAYLOAD_KEY,
+            businessProductName: this.productDetails.basisName,
+            productDescription: this.productDetails.basisDetailStory,
+            ownership: this.ownershipId,
+            currencyCode: this.currencyCode?.currency,
+            branchId: this.currentUser.branchId,
+          },
+          customerInfo: custResp,
+        };
+        this.masterSave(payload, e);
       });
   }
 
@@ -222,7 +281,12 @@ export class CreateAccountLandingPageComponent {
           processStageId: this.processDetails.processStageId,
           processCycleCode: this.processDetails.processCycleCode,
         };
-        this.workFlowVerify(accountPayload, resp, e);
+
+        //Note:- Once workflow formula we will get this should be called.
+        // this.workFlowVerify(accountPayload, resp, e);
+
+        //Note:- Once workflow formula we will get this should be comment
+        this.done();
       }
     });
   }
@@ -236,7 +300,7 @@ export class CreateAccountLandingPageComponent {
   workFlowVerify(accountPayload, resp, e) {
     this.loanApi.verifyWorkFlow(accountPayload).subscribe((workres) => {
       if (workres?.autoAction) {
-        e.loadingBtnText = "Saved";
+        e.loadingBtnText = LOADING_TEXT;
         e.isLoading = false;
         this.saveCofig(workres);
       } else this.done(resp);

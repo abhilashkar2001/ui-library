@@ -4,11 +4,9 @@ export * from "./loan-calculator/normal-loan-emi-calculator/normal-loan-emi-calc
 export * from "./loan-calculator/gold-loan-emi-calculator/gold-loan-emi-calculator.component";
 export * from "./loan-calculator/hl-loan-emi-calculator/hl-loan-emi-calculator.component";
 export * from "./loan-calculator/expense-tax-benefit-calculator/expense-tax-benefit-calculator.component";
-export * from "./common-component/loan-stepper/loan-stepper.component";
 export * from "./cibil-score-container/cibil-score-container.component";
 export * from "./loan-document-upload/loan-document-upload.component";
 export * from "./loan-summary/loan-summary.component";
-export * from "./mobile-verification/mobile-verification.component";
 export * from "./loan-terms-conditions/loan-terms-conditions.component";
 export * from "./create-loan/create-loan.component";
 export * from "./loans-routing.module";

@@ -23,6 +23,7 @@ import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-other-documents",
@@ -48,45 +49,66 @@ export class OtherDocumentsComponent implements OnInit {
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Output() customgoBack = new EventEmitter<any>();
+  @Input() personalDoc: any[] = [];
+  verificationType = "kyc";
   documentControls: FormGroup;
   staticData = {
-    DOCUMENTTYPE: [],
+    DOCUMENTNAME: [],
   };
   baseUrl = environment.microServiceURL;
-  documentList;
+  documentList: any = [];
   documentTypeArray: string[] = [];
   hideSelect: string[] = [];
   // SAVE BUTTON PROPERTIES
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
   screenName: string = "Select KYC";
+  genericScreenInfo = {
+    screenName: "Select KYC",
+    staticData: {
+      DOCUMENTNAME: [],
+    },
+  };
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
     private snack: MatSnackBar,
     private sharedService: SharedService,
     private openAccountService: OpenAccountService,
-    private CommonService: CommonService
+    private CommonService: CommonService,
+    private loanService: LoanService
   ) {}
 
   ngAfterViewInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.personalDoc?.currentValue) {
+      // this.documentList = changes?.personalDoc?.currentValue;
+    }
+  }
+
   ngOnInit() {
-    this.getGenericDetails();
-    var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
-    if (loanCustomerId) this.getCustomerId(loanCustomerId);
+    // this.getGenericDetails();
+    // var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
+    var originationId = parseInt(sessionStorage.getItem("originationId"));
+    if (originationId) this.getDataFromOriginationMaster(originationId);
+    // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }
 
   getCustomerId(id) {
-    this.openAccountService.getCustomerById(id).subscribe((resp) => {
-      if (resp.statusCode == 200) {
-        this.documentList = resp.data;
-        if (this.documentList[0].documnentsInfo?.documents?.length > 0) {
-          this.buildForm(this.documentList[0].documnentsInfo?.documents);
-        } else {
-          this.buildForm();
-        }
+    this.openAccountService.getCustByStageId(id).subscribe((resp) => {
+      if (resp?.statusCode == 200) {
+        this.documentList = resp?.data[0]?.documnentsInfo?.documents[0]?.docs;
+      }
+    });
+  }
+
+  getDataFromOriginationMaster(id) {
+    this.loanService.getOriginationMaster(id).subscribe((resp: any) => {
+      if (resp?.statusCode == 200 && resp?.data) {
+        this.documentList =
+          resp?.data[0]?.customerInfo[0]?.documnentsInfo?.documents[0]?.docs;
       }
     });
   }
@@ -290,19 +312,12 @@ export class OtherDocumentsComponent implements OnInit {
     }, 1000);
   }
 
-  onSubmit() {
-    if (this.createDocumentForm.invalid) {
-      return;
-    }
-    this.isLoading = true;
-    this.loadingBtnText = "Saving...";
+  onConfirmEvent(event?) {
     this.customSaveDocument.emit({
-      isLoading: this.isLoading,
-      loadingBtnText: this.loadingBtnText,
-      status: true,
-      documentDetails: this.createDocumentForm.value,
+      documentDetails: event.documentDetails,
     });
   }
+
   goBack() {
     this.customgoBack.emit();
   }

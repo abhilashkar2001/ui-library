@@ -15,15 +15,14 @@ import {
 } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatDialog } from "@angular/material/dialog";
-import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
 import { environment } from "environments/environment";
 import { UploadImage } from "../origination-external-callback.store";
 import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { Router } from "@angular/router";
-import { CustomerServiceService } from "app/shared/services/customer-service.service";
+import { MatDialog } from "@angular/material/dialog";
+import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
   selector: "app-document-upload",
@@ -52,12 +51,10 @@ export class DocumentUploadComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog,
     private snack: MatSnackBar,
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
-    private route: Router,
-    private customerService: CustomerServiceService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -66,8 +63,6 @@ export class DocumentUploadComponent implements OnInit {
     this.getDocumentName();
     this.buildDocumentUploadForm();
     this.initialFormLoading();
-    if (this.originationId) this.fetchOriginationDetails();
-    if (this.customerId) this.getCustomerData();
   }
 
   initialFormLoading() {
@@ -152,11 +147,11 @@ export class DocumentUploadComponent implements OnInit {
   createDocumentItem(data?) {
     return this.fb.group({
       documentName: [
-        data?.documentName ? data?.documentName : "",
+        data?.documentName ? data?.documentName : null,
         Validators.required,
       ],
       documentNumber: [
-        data?.documentNumber ? data?.documentNumber : "",
+        data?.documentNumber ? data?.documentNumber : null,
         Validators.required,
       ],
       verifiedMobileNumber: [data?.phoneNumber ?? ""],
@@ -216,7 +211,14 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   removeDocumentPage(index: number, pageIndex: number) {
-    this.documentPages(index).removeAt(pageIndex);
+    const documentId = this.documentPages(index).at(pageIndex).get("id")?.value;
+    if (!documentId) {
+      this.documentPages(index).removeAt(pageIndex);
+      return;
+    }
+    this.apiService.deleteDocument(documentId).subscribe((res) => {
+      this.documentPages(index).removeAt(pageIndex);
+    });
   }
 
   checkForm() {
@@ -227,10 +229,20 @@ export class DocumentUploadComponent implements OnInit {
     event.preventDefault();
   }
 
+  restrictUpload(event: Event, document: FormGroup) {
+    if (
+      !document.get("documentName").valid ||
+      !document.get("documentNumber").valid
+    ) {
+      event.preventDefault();
+      document.markAllAsTouched();
+    }
+  }
+
   onFileSelect(e: any, documentIndex: number, index: number) {
     const file = e.target.files[0];
     if (
-      !this.documents().at(documentIndex)?.get("documentName")?.value &&
+      !this.documents().at(documentIndex)?.get("documentName")?.value ||
       !this.documents().at(documentIndex)?.get("documentNumber")?.value
     ) {
       this.fileInput.nativeElement.value = "";
@@ -239,7 +251,6 @@ export class DocumentUploadComponent implements OnInit {
         ?.get("documentNumber")
         ?.markAsTouched();
       this.documents().at(documentIndex)?.get("documentName")?.markAsTouched();
-
       return;
     }
     this.documentPages(documentIndex)
@@ -351,9 +362,14 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   removeImage(docindex, index) {
-    let i = index;
-    this.fileInput.nativeElement.value = "";
-    this.documentPages(docindex).at(i).get("fileUrl").patchValue("");
+    const documentId = this.documentPages(docindex).at(index).get("id")?.value;
+    if (!documentId) {
+      return;
+    }
+    this.apiService.deleteDocument(documentId).subscribe((res) => {
+      this.documentPages(docindex).at(index).get("fileUrl").patchValue("");
+      this.documentPages(docindex).at(index).get("id").patchValue("");
+    });
   }
 
   uploadDocument(file, documentIndex, index, base64File) {
@@ -387,8 +403,6 @@ export class DocumentUploadComponent implements OnInit {
         this.uploadSuccess = true;
         this.percentDone = 0;
         this.isUploading = false;
-        console.log("event", responseBody);
-
         this.documentPages(documentIndex)
           .at(index)
           .get("id")
@@ -405,90 +419,6 @@ export class DocumentUploadComponent implements OnInit {
       (error) => {};
   }
 
-  // otherimgscan(docIndex, index?) {
-  //   if (
-  //     !this.documents().at(docIndex)?.get("documentName")?.value &&
-  //     !this.documents().at(docIndex)?.get("documentNumber")?.value
-  //   ) {
-  //     this.fileInput.nativeElement.value = "";
-  //     this.documents().at(docIndex)?.get("documentNumber")?.markAsTouched();
-  //     this.documents().at(docIndex)?.get("documentName")?.markAsTouched();
-  //     return;
-  //   }
-  //   const dialogRef = this.dialog.open(WebcamCaptureComponent, {
-  //     width: "80%",
-  //     data: {},
-  //     disableClose: true,
-  //     panelClass: "popup-class",
-  //   });
-  //   dialogRef.afterClosed().subscribe((scan) => {
-  //     if (scan.image) {
-  //       const docdatta = new DocumentData();
-  //       docdatta.documentName = this.documents()
-  //         .at(docIndex)
-  //         ?.get("documentName")?.value;
-  //       docdatta.documentType = this.getDocType(
-  //         this.documents().at(docIndex)?.get("documentName")?.value
-  //       );
-  //       docdatta.documentSide = this.documentPages(docIndex)
-  //         ?.at(index)
-  //         ?.get("documentSide")?.value;
-  //       this.selectedIndex = index;
-  //       let scanName = "";
-  //       if (docdatta.documentSide == 0) {
-  //         scanName = docdatta.documentName?.split(" ")[0] + "Front";
-  //       } else if (docdatta.documentSide == 1) {
-  //         scanName = docdatta.documentName?.split(" ")[0] + "Back";
-  //       } else {
-  //         scanName = docdatta.documentName?.split(" ")[0] + "Other";
-  //       }
-  //       const scanimg = scan.image.split(",")[1];
-  //       const scanBlob = this.dataURItoBlob(scanimg);
-  //       const scanFile = new File([scanBlob], scanName, {
-  //         type: "image/png",
-  //       });
-  //       docdatta.fileName = scanName;
-  //       docdatta.fileType = scanFile.type.split("/")[1];
-  //       docdatta.verificationType = "onboarding";
-  //       this.documentPages(docIndex)
-  //         ?.at(index)
-  //         ?.get("fileUrl")
-  //         ?.patchValue(scan.image);
-  //       const scanurl = new FormData();
-  //       scanurl.append("file", scanFile);
-  //       scanurl.append("data", JSON.stringify(docdatta));
-  //       scanurl.append("module", "document");
-  //       this.loader.open();
-  //       this.apiService.uploadDocument(scanurl).subscribe(
-  //         (resp: any) => {
-  //           console.log(resp);
-  //           this.loader.close();
-  //           if (resp.type === HttpEventType.UploadProgress) {
-  //             this.percentDone = Math.round((100 * resp.loaded) / resp.total);
-  //           } else if (resp instanceof HttpResponse) {
-  //             let responseBody: any = resp;
-  //             this.uploadSuccess = true;
-  //             this.percentDone = 0;
-  //             this.isUploading = false;
-  //             console.log("event", responseBody);
-
-  //             this.documentPages(docIndex)
-  //               .at(index)
-  //               .get("id")
-  //               .patchValue(responseBody?.body?.data?.documentId);
-
-  //             this.cdr.markForCheck();
-  //           }
-  //         },
-  //         (error) => {
-  //           this.loader.close();
-  //         }
-  //       );
-  //       this.loader.close();
-  //     }
-  //   });
-  // }
-
   getDocType(docName: string) {
     let docType;
     if (docName === "Aadhar Card" || docName === "Aadhar card") {
@@ -501,83 +431,30 @@ export class DocumentUploadComponent implements OnInit {
     return docType;
   }
 
-  fetchOriginationDetails() {
-    this.offerIssueService
-      .fetchOriginationDetails(this.originationId)
-      .subscribe((res) => {
-        if (res?.statusCode === 200 && res?.data) {
-          this.customerDetails = res?.data[0];
-        }
-      });
-  }
-
-  getCustomerData() {
-    this.customerService.fetchCustomerData(this.customerId).subscribe((res) => {
-      if (res?.statusCode == 200 || res?.statusCode == 201) {
-      } else {
-        this.snack.open("No customer id found to upload document", "ok", {
-          horizontalPosition: "right",
-          verticalPosition: "top",
-          duration: 2000,
-        });
-        setTimeout(() => {
-          window.close();
-        }, 4000);
-      }
-    });
-  }
   saveDocument() {
-    if (!this.customerDetails?.originationId) {
-      this.snack.open("No customer id found to upload document", "ok", {
-        horizontalPosition: "right",
-        verticalPosition: "top",
-        duration: 2000,
-      });
+    if (this.documentUploadForm.invalid) {
+      this.documentUploadForm.markAllAsTouched();
+      return;
     }
     const documentId = this.documentUploadForm.value.documents.map((item) => ({
       docIds: item?.pages?.map((page) => page?.id)?.filter((page) => page),
     }));
 
     const payload: any = {};
-    payload.customerId = this.originationId
-      ? this.customerDetails?.customerInfo[0]?.customerId
-      : this.customerId;
+    payload.customerId = this.customerId;
     payload.documentInfo = documentId;
     this.offerIssueService.saveCustomeDocuments(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
-        if (this.customerId) {
-          this.dialog
-            .open(SuccessPopupComponent, {
-              data: {
-                refrenceNo: sessionStorage.getItem("ReferanceNumber"),
-                isNetBanking: true,
-              },
-            })
-            .afterClosed()
-            .subscribe((res) => {
-              this.clearState();
-            });
-        } else {
-          this.snack.open("Customer Document Saved", "Ok", {
-            horizontalPosition: "right",
-            verticalPosition: "top",
-            duration: 2000,
-          });
-          setTimeout(() => {
-            window.close();
-            sessionStorage.removeItem("mobile");
-            sessionStorage.removeItem("customerId");
-          }, 5000);
-        }
+        const dialogref = this.dialog.open(SuccessModalComponent, {
+          data: {
+            title: "Document Uploaded Successfully",
+          },
+          width: "40%",
+        });
+        dialogref.afterClosed().subscribe((_) => {
+          window.close();
+        });
       }
     });
-  }
-  clearState() {
-    setTimeout(() => {
-      this.route.navigate(["home"]);
-      sessionStorage.removeItem("mobile");
-      sessionStorage.removeItem("customerId");
-      sessionStorage.removeItem("referanceNumber");
-    }, 100);
   }
 }

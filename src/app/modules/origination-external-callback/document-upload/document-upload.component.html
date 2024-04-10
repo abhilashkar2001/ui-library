@@ -40,8 +40,8 @@
               >
                 <mat-option
                   *ngFor="let doc of documentNames; let i = index"
-                  [value]="doc"
-                  >{{ doc }}</mat-option
+                  [value]="doc.id"
+                  >{{ doc.values }}</mat-option
                 >
               </mat-select>
               <mat-error
@@ -194,6 +194,7 @@
                         accept="image/*"
                         title=""
                         required
+                        (click)="restrictUpload($event, document)"
                         (change)="
                           onFileSelect($event, documentIndex, pageIndex)
                         "
@@ -259,7 +260,8 @@
                     class="changeInput"
                     accept="image/*"
                     title=""
-                    required
+                    require
+                    (click)="restrictUpload($event, document)"
                     (change)="otherUpload($event, documentIndex)"
                   />
                 </button>
