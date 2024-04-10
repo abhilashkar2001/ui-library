@@ -18,6 +18,8 @@ import { GenericBgComponentComponent } from "./new-reusable-components/generic-b
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
+import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
+import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 
 const routes: Routes = [
   {
@@ -65,6 +67,14 @@ const routes: Routes = [
           {
             path: "genericBg",
             component: GenericBgComponentComponent,
+          },
+          {
+            path: "generic-remitance",
+            component: GenericRemittanceComponent,
+          },
+          {
+            path: "remittance-summery",
+            component: RemittanceSummeryComponent,
           },
           {
             path: "bgSummary",

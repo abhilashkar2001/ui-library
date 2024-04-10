@@ -64,6 +64,8 @@ export class CustomDrawerComponent implements OnInit {
   hasChild = (_: number, node: any) => node.expandable;
 
   getNode(node) {
+    console.log(node);
+    
     this.currentMenu = node.name;
     if (node.path) {
       this.router.navigate([`user/dashboard/trade/${node.path}`], {

@@ -42,6 +42,9 @@ import { LcOtherConditionsComponent } from './new-reusable-components/lc-other-c
 import { FeeAccountComponent } from './new-reusable-components/fee-account/fee-account.component';
 import { AmendmentLcInfoComponent } from './new-reusable-components/amendment-lc-info/amendment-lc-info.component';
 import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendement-info/lc-amendement-info.component';
+import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
+import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
+import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
 
 
 @NgModule({
@@ -79,6 +82,9 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
     FeeAccountComponent,
     AmendmentLcInfoComponent,
     LcAmendementInfoComponent,
+    RemittanceSummeryComponent,
+    GenericRemittanceComponent,
+    RemittanceInfoComponent,
   ],
   imports: [
     CommonModule,
