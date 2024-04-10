@@ -1,5 +1,5 @@
 <div fxLayout="column">
-  <div class="kycToggle row" fxFlex="100">
+  <div class="kycToggle" fxFlex="100">
     <button
       fxFlex="50"
       class="col-md-6"
@@ -29,7 +29,7 @@
   <ng-container *ngIf="kycToggle == 'addDoocuent'">
     <app-web-doc-upload
       [verificationType]="verificationType"
-      (onConfirmEvent)="onConfirmEvent($event)"
+      (onCustomSubmit)="onConfirmEvent($event)"
       [documentList]="documentList"
       [genericScreenInfo]="genericScreenInfo"
     ></app-web-doc-upload>

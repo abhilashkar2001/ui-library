@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -12,6 +12,7 @@ import { SharedService } from "app/shared/shared.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
+import { AppHostDirective } from "app/shared/directives/app-host.directive";
 
 const {
   SELF,
@@ -38,7 +39,7 @@ export class CreateAccountLandingPageComponent {
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
-  personalDetails: any;
+  personalDetails: any = [];
   ownership: any;
   screenName: string = CreateAccountConstant.SCREEN_NAME;
   staticData = CreateAccountConstant.STATIC_DATA;
@@ -48,6 +49,11 @@ export class CreateAccountLandingPageComponent {
   isHideField: boolean = true;
   personalDoc: any[] = [];
   isLoading: boolean = false;
+  dynamicScreen = CreateAccountConstant.DYNAMIC_SCREEN;
+  @ViewChild("container") container: any;
+  @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
+  componentRef: any;
+  currentComponentInfo: any;
 
   constructor(
     private router: Router,
@@ -62,6 +68,39 @@ export class CreateAccountLandingPageComponent {
   ) {
     this.showSideBar.setToken(true);
     commonService.updateData(router.url);
+  }
+
+  showComponent(screenName) {
+    this.dynamicScreen.forEach((item: any) => {
+      if (screenName.toLowerCase().includes(item.key)) {
+        this.currentComponentInfo = { ...item };
+        const view = this.appAppHost.viewContainerRef;
+        view.clear();
+        setTimeout(() => {
+          this.componentRef = view.createComponent(item.component);
+
+          // for mobile number.
+          this.componentRef.instance.isLoading = this.isLoading;
+
+          // for personal details.
+          this.componentRef.instance.isHideField = this.isHideField;
+          this.componentRef.instance.basisId = this.basisId;
+          this.componentRef.instance.personalDetails = this.personalDetails;
+
+          this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
+            if (screenName.toLowerCase().includes("mobile"))
+              this.onVerify(data);
+            else if (screenName.toLowerCase().includes("personal"))
+              this.customSavePersonal(data);
+            else if (screenName.toLowerCase().includes("kyc"))
+              this.customSaveDocuments(data);
+          });
+          this.componentRef.instance?.onBackEvent.subscribe((_) => {
+            this.goBack();
+          });
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -141,6 +180,7 @@ export class CreateAccountLandingPageComponent {
 
   factory() {
     this.currentStep = this.screenList[this.selectedStep].screenName;
+    this.showComponent(this.currentStep);
   }
 
   next() {
@@ -151,7 +191,8 @@ export class CreateAccountLandingPageComponent {
   }
 
   onVerify(event) {
-    this.isLoading = true;
+    this.componentRef.instance.isLoading = true;
+    // this.isLoading = true;
     this.openAccountService
       .checkMobileAndProduct(
         this.productDetails.basisName,
@@ -174,15 +215,20 @@ export class CreateAccountLandingPageComponent {
                     "userCustomerId",
                     resp.data[0].customerId
                   );
+
                   this.personalDetails = resp.data;
+                  this.componentRef.instance.personalDetails =
+                    this.personalDetails;
                   // if (resp.data[0].primaryCustomer)
                   this.personalDoc = resp?.data[0]?.documentInfo;
-                  this.isLoading = false;
+                  // this.isLoading = false;
+                  this.componentRef.instance.isLoading = false;
                 }
                 this.next();
                 // }
               } else if (resp?.statusCode === 204) {
-                this.isLoading = false;
+                // this.isLoading = false;
+                this.componentRef.instance.isLoading = false;
                 sessionStorage.setItem("mobileNo", event.phone);
                 this.next();
               } else {
@@ -209,7 +255,9 @@ export class CreateAccountLandingPageComponent {
   getTabDetails(tabDetails: any) {
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
+    this.showComponent(this.currentStep);
   }
+
   customSavePersonal(event) {
     let payload = event.personalDetails.value.customer;
     if (payload[0]?.prefixValue) delete payload[0].prefixValue;

@@ -89,7 +89,7 @@ export class OpenAccountService {
 
   getProcessCycle(processName) {
     return this.http.get<any>(
-      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}`
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`
     );
   }
   getProcessStages(id) {

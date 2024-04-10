@@ -38,7 +38,7 @@ import { debounceTime } from "rxjs/operators";
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
-  @Output() onVerifyOtpEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
@@ -244,7 +244,7 @@ export class CommonMobileVerificationComponent implements OnInit {
           this.loadingBtnText = "Saved";
           // this.isLoading = false;
           this.invalidOtp = false;
-          this.onVerifyOtpEvent.emit({ phone: this.otpForm.value.phone });
+          this.onCustomSubmit.emit({ phone: this.otpForm.value.phone });
         }
       });
   }

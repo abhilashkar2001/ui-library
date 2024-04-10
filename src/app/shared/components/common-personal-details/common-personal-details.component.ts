@@ -34,8 +34,8 @@ import { PersonalDetailsConstant } from "./personal-details.constant";
 })
 export class CommonPersonalDetailsComponent implements OnInit {
   customerDetailsForm: FormGroup;
-  @Output() customSavePersonal = new EventEmitter<{}>();
-  @Output() personalBack = new EventEmitter<{}>();
+  @Output() onCustomSubmit = new EventEmitter<{}>();
+  @Output() onBackEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
   @Input() isHideField = false;
   @Input() basisId: any;
@@ -91,6 +91,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getAllRequisite().then((res) => {
+      console.log("buildingForm");
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
       } else this.buildCustomerDetailsForm();
@@ -104,10 +105,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
     this.holderType =
       sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
-    // this.getAllRequisite().then((res) => {
-    //   if (this.loanCustomerId != null) this.getCustomerById();
-    //   else this.buildCustomerDetailsForm();
-    // });
+    this.getAllRequisite().then((res) => {
+      if (this.personalDetails?.length > 0)
+        this.buildCustomerDetailsForm(this.personalDetails);
+      else this.buildCustomerDetailsForm();
+    });
 
     // this.getState();
     // this.getCity();
@@ -441,7 +443,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       });
     });
 
-    this.customSavePersonal.emit({
+    this.onCustomSubmit.emit({
       status: true,
       personalDetails: this.customerDetailsForm,
     });
@@ -473,7 +475,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   goBack() {
-    this.personalBack.emit();
+    this.onBackEvent.emit();
   }
   saveCustomer(i) {
     this.closePanel(i);

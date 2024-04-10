@@ -29,7 +29,7 @@
   >
     <app-common-mobile-verification
       (onBackEvent)="goBack()"
-      (onVerifyOtpEvent)="checkExistingUserEvent($event)"
+      (onCustomSubmit)="checkExistingUserEvent($event)"
       [isLoading]="isLoading"
     >
     </app-common-mobile-verification>
@@ -52,8 +52,8 @@
     *ngIf="verfyStep('personal', cuurrentStep)"
   >
     <app-common-personal-details
-      (customSavePersonal)="customSavePersonal($event)"
-      (personalBack)="goBack()"
+      (onCustomSubmit)="customSavePersonal($event)"
+      (onBackEvent)="goBack()"
       [basisId]="basisId"
       [personalDetails]="personalDetails"
     >
@@ -66,8 +66,8 @@
     *ngIf="verfyStep('kyc', cuurrentStep)"
   >
     <app-other-documents
-      (customSaveDocument)="customSaveDocuments($event)"
-      (customgoBack)="goBack()"
+      (onCustomSubmit)="customSaveDocuments($event)"
+      (onBackEvent)="goBack()"
     >
     </app-other-documents>
   </div>
@@ -78,7 +78,7 @@
     *ngIf="verfyStep('document', cuurrentStep)"
   >
     <app-loan-document-upload
-      (onConfirmEvent)="onConfirm($event)"
+      (onCustomSubmit)="onConfirm($event)"
       (onBackEvent)="goBack()"
     >
     </app-loan-document-upload>

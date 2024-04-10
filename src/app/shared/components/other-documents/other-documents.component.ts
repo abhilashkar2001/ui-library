@@ -47,8 +47,8 @@ export class OtherDocumentsComponent implements OnInit {
     },
   ];
   @Output() customDocumentForm = new EventEmitter<any>();
-  @Output() customSaveDocument = new EventEmitter<any>();
-  @Output() customgoBack = new EventEmitter<any>();
+  @Output() onCustomSubmit = new EventEmitter<any>();
+  @Output() onBackEvent = new EventEmitter<any>();
   @Input() personalDoc: any[] = [];
   verificationType = "kyc";
   documentControls: FormGroup;
@@ -313,13 +313,13 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onConfirmEvent(event?) {
-    this.customSaveDocument.emit({
+    this.onCustomSubmit.emit({
       documentDetails: event.documentDetails,
     });
   }
 
   goBack() {
-    this.customgoBack.emit();
+    this.onBackEvent.emit();
   }
 
   onDocumentSelection(event, index) {
