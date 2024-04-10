@@ -39,6 +39,7 @@ export class WebDocUploadComponent implements OnInit {
   @Input() verificationType: string;
   @Input() documentList: any = [];
   @Input() genericScreenInfo: any;
+  @Input() ocrProcess: boolean;
 
   documentControls: FormGroup;
   createDocumentForm: FormGroup;
@@ -63,6 +64,7 @@ export class WebDocUploadComponent implements OnInit {
   // SAVE BUTTON PROPERTIES
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
+  ocrCheck: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -80,6 +82,7 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     var originationId = sessionStorage.getItem("originationId");
   }
 
@@ -180,18 +183,19 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   /**
+   * NOTE:- Once delete api will get then only this methods api will call.
    * Delete file from files list
    * @param index (File index)
    */
   deleteFile(index: number, i, doc) {
     let documentId =
       this.createDocumentForm.value.otherDocument[i].docIds[index];
-    this.commonService.deleteDocument(documentId).subscribe((res) => {
-      if (res) {
-        console.log("Document deleted Successfully..");
-        this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
-      }
-    });
+    // this.commonService.deleteDocument(documentId).subscribe((res) => {
+    // if (res) {
+    // console.log("Document deleted Successfully..");
+    this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
+    //   }
+    // });
     this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
   }
 
@@ -378,7 +382,8 @@ export class WebDocUploadComponent implements OnInit {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
-        this.readDocument(file, i);
+        if (this.ocrCheck) this.readDocument(file, i);
+        else this.loder.close();
       }
     });
   }

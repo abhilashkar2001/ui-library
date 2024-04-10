@@ -69,6 +69,7 @@ export class OtherDocumentsComponent implements OnInit {
       DOCUMENTNAME: [],
     },
   };
+  ocrProcess: boolean = true;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,

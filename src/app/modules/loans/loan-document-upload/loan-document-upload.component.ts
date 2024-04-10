@@ -10,13 +10,13 @@ import { SharedService } from "app/shared/shared.service";
 })
 export class LoanDocumentUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
 
   custId: any;
   stepperTitle: any;
   documentTypeArray: any;
   staticData = {
-    DOCUMENTNAME: [],
+    DOCUMENTTYPE: [],
   };
   screenName: string = "Loan Document";
   verificationType: string = "Other Document";
@@ -27,6 +27,7 @@ export class LoanDocumentUploadComponent implements OnInit {
       DOCUMENTNAME: [],
     },
   };
+  ocrProcess: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -65,13 +66,13 @@ export class LoanDocumentUploadComponent implements OnInit {
       .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["DOCUMENTNAME"];
+          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
         }
       });
   }
 
   onSubmit(event) {
-    this.onConfirmEvent.emit(event.documentDetails);
+    this.onCustomSubmit.emit(event.documentDetails);
   }
 
   onBack() {

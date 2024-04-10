@@ -45,7 +45,7 @@ export class LoanFlowComponent implements OnInit {
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
-  personalDetails: any;
+  personalDetails: any = [];
   staticData = {
     OWNERSHIP: [],
   };
@@ -126,22 +126,37 @@ export class LoanFlowComponent implements OnInit {
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    var originationId = sessionStorage.getItem("originationId");
-    if (originationId) this.getOriginationMaster(parseInt(originationId));
     this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
     console.log(this.ownerShipId);
-    var customerId = parseInt(sessionStorage.getItem("customerId"));
-    if (customerId) {
+    var originationId = sessionStorage.getItem("originationId");
+    var customerId = JSON.parse(sessionStorage.getItem("customerIds"));
+    var customerStageId = JSON.parse(
+      sessionStorage.getItem("customerStageIds")
+    );
+    if (originationId) this.getOriginationMaster(parseInt(originationId));
+    else if (customerId) {
       this.getCustomerById(customerId);
+    } else if (customerStageId) {
+      this.getCustByStageId(customerStageId);
     }
   }
 
   getCustomerById(customerId) {
-    this.openAccountService.getCustByStageId(customerId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.personalDetails = resp.data;
-      }
+    customerId.forEach((element) => {
+      this.openAccountService.getCustomerById(element).subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.personalDetails = resp.data;
+        }
+      });
     });
+  }
+
+  getCustByStageId(customerStageId) {
+    setTimeout(() => {
+      this.fetchCustomers().then((resp) => {
+        this.personalDetails = resp;
+      });
+    }, 500);
   }
 
   /**
@@ -256,11 +271,21 @@ export class LoanFlowComponent implements OnInit {
   }
 
   checkExistingUserEvent(event) {
+    let customerIds: any[] = [];
     this.isLoading = true;
     this.loanApi
       .getExistingUserDetails(event.phone)
       .subscribe((response: any) => {
         console.log("Existing user: ", response);
+        if (response.statusCode == 200 && response.data) {
+          response.data.forEach((element) => {
+            customerIds.push(element.customerId);
+          });
+          sessionStorage.setItem("customerIds", JSON.stringify(customerIds));
+          // let temp = response.data[0];
+          this.personalDetails = response.data;
+          // this.personalDetails.push(temp);
+        }
         this.checkProducts(event);
       });
   }
@@ -313,7 +338,7 @@ export class LoanFlowComponent implements OnInit {
     this.next();
   }
 
-  getCustInfoPayload(event) {
+  getCustInfoPayload(event, prefixValue) {
     return new Promise((resolve, reject) => {
       var customer = [];
       event.forEach((element, i) => {
@@ -321,7 +346,7 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.setItem(
           "customerData",
           JSON.stringify({
-            name: `${element.prefixValue}. ${element.firstName} ${element.lastName}`,
+            name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
             cifNumber:
               element.kycStatus === "APPROVED" ? element.customerId : "",
           })
@@ -358,36 +383,37 @@ export class LoanFlowComponent implements OnInit {
 
   // on Personal details saved
   customSavePersonal(event) {
+    console.log(event);
+
     const payload = event.personalDetails.value.customer;
     payload.forEach((item) => {
       delete item.prefixValue;
+      item.customerId = null;
     });
     // if (payload[0]?.prefixValue) delete payload[0].prefixValue;
-    this.getCustInfoPayload(event.personalDetails.value.customer).then(
-      (data) => {
-        this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
-          if (resp?.statusCode === 200) {
-            this.personalDetails = resp.data;
-            let customId = [];
-            resp.data?.forEach((item, i) => {
-              customId.push(item.customerId);
-            });
-            this.snack.open(`Personal Details Saved` + " !", "OK", {
-              duration: 4000,
-              verticalPosition: "top",
-              horizontalPosition: "right",
-              panelClass: "snackbar-error",
-            });
-            sessionStorage.setItem(
-              "customerStageIds",
-              JSON.stringify(customId)
-            );
-            this.customerInfo = resp.data;
-            this.next();
-          }
-        });
-      }
-    );
+    this.getCustInfoPayload(
+      event.personalDetails.value.customer,
+      event.prefixValue
+    ).then((data) => {
+      this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.personalDetails = resp.data;
+          let customId = [];
+          resp.data?.forEach((item, i) => {
+            customId.push(item.customerId);
+          });
+          this.snack.open(`Personal Details Saved` + " !", "OK", {
+            duration: 4000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: "snackbar-error",
+          });
+          sessionStorage.setItem("customerStageIds", JSON.stringify(customId));
+          this.customerInfo = resp.data;
+          this.next();
+        }
+      });
+    });
   }
 
   createPayload(event) {
