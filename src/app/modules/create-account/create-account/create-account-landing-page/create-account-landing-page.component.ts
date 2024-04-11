@@ -54,6 +54,7 @@ export class CreateAccountLandingPageComponent {
   @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
   componentRef: any;
   currentComponentInfo: any;
+  existingCustomerId: number;
 
   constructor(
     private router: Router,
@@ -86,6 +87,9 @@ export class CreateAccountLandingPageComponent {
           this.componentRef.instance.isHideField = this.isHideField;
           this.componentRef.instance.basisId = this.basisId;
           this.componentRef.instance.personalDetails = this.personalDetails;
+
+          // for personal doc.
+          this.componentRef.instance.personalDoc = this.personalDoc;
 
           this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
             if (screenName.toLowerCase().includes("mobile"))
@@ -122,10 +126,27 @@ export class CreateAccountLandingPageComponent {
 
         this.getScreenDetails(resp);
       });
-    var customerId = parseInt(sessionStorage.getItem("customerId"));
-    if (customerId) {
-      this.getCustomerById(customerId);
+    this.existingCustomerId = parseInt(
+      sessionStorage.getItem("userCustomerId")
+    );
+    let customStageId = parseInt(sessionStorage.getItem("customerStageId"));
+    if (customStageId) {
+      this.getCustomerbyStageId(customStageId);
+    } else if (this.existingCustomerId) {
+      this.getCustomerById(this.existingCustomerId);
     }
+  }
+
+  getCustomerbyStageId(customStageId) {
+    this.openAccountService
+      .getCustByStageId(parseInt(customStageId))
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.personalDetails = resp.data;
+          // if (resp.data[0].primaryCustomer)
+          this.personalDoc = resp.data[0].documnentsInfo?.documents ?? [];
+        } else if (resp?.statusCode === 204) this.personalDetails = [];
+      });
   }
 
   getGeneric() {
@@ -183,6 +204,14 @@ export class CreateAccountLandingPageComponent {
     this.showComponent(this.currentStep);
   }
 
+  cleanCacheInMobileScreen() {
+    if (this.currentStep.toLowerCase().includes("mobile")) {
+      sessionStorage.removeItem("userCustomerId");
+      sessionStorage.removeItem("customerStageId");
+      sessionStorage.removeItem("customerId");
+    }
+  }
+
   next() {
     const num = this.selectedStep + 1;
     this.selectedStep = num;
@@ -206,6 +235,8 @@ export class CreateAccountLandingPageComponent {
           this.openAccountService
             .getExistingCustomer(event.phone)
             .subscribe((resp: any) => {
+              // Here cleaning the all ids from cache.
+              this.cleanCacheInMobileScreen();
               if (resp?.statusCode === 200 && resp?.data) {
                 // if (resp?.data[0]?.onboardingStatus === "APPROVED") {
                 if (resp?.data?.length > 0) {
@@ -221,20 +252,24 @@ export class CreateAccountLandingPageComponent {
                     this.personalDetails;
                   // if (resp.data[0].primaryCustomer)
                   this.personalDoc = resp?.data[0]?.documentInfo;
-                  // this.isLoading = false;
+                  this.componentRef.instance.personalDoc =
+                    resp.data[0].documentInfo;
                   this.componentRef.instance.isLoading = false;
                 }
-                this.next();
+
                 // }
               } else if (resp?.statusCode === 204) {
-                // this.isLoading = false;
+                this.personalDetails = resp.data;
+                this.componentRef.instance.personalDetails =
+                  this.personalDetails;
                 this.componentRef.instance.isLoading = false;
                 sessionStorage.setItem("mobileNo", event.phone);
-                this.next();
               } else {
                 sessionStorage.setItem("mobileNo", event.phone);
-                this.next();
               }
+              setTimeout(() => {
+                this.next();
+              }, 100);
             });
         }
       });
@@ -253,17 +288,27 @@ export class CreateAccountLandingPageComponent {
   }
 
   getTabDetails(tabDetails: any) {
+    const lastStep = this.selectedStep;
+    this.selectedStep = tabDetails.selectedIndex;
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
-    this.showComponent(this.currentStep);
+    if (lastStep != tabDetails.selectedIndex)
+      this.showComponent(this.currentStep);
   }
 
   customSavePersonal(event) {
     let payload = event.personalDetails.value.customer;
     if (payload[0]?.prefixValue) delete payload[0].prefixValue;
+    payload.forEach((item) => {
+      // this customer id also need to set null dynamically.
+      item.customerId = null;
+      if (!this.existingCustomerId) item.customerNo = null;
+      item.primaryCustomer = true;
+    });
+    // payload[0].customerId=null
     this.openAccountService.stageSavePersonalDetails(payload).subscribe(
       (response: any) => {
-        sessionStorage.setItem("customerId", response.data[0].customerId);
+        sessionStorage.setItem("customerStageId", response.data[0].customerId);
         this.next();
       },
       (error: any) => {
@@ -286,7 +331,7 @@ export class CreateAccountLandingPageComponent {
     });
 
     this.openAccountService
-      .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
+      .getCustByStageId(parseInt(sessionStorage.getItem("customerStageId")))
       .subscribe((resp) => {
         const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
         var custResp: any = this.factoryCustomer(resp.data);
@@ -298,12 +343,14 @@ export class CreateAccountLandingPageComponent {
         };
         // custResp[0].customerId = null;
         custResp[0].contact.contactId = null;
+        custResp[0].customerNo = null;
+        custResp[0].customerId = null;
         custResp[0].contact.address[0].addressId = null;
         delete custResp[0].documentsInfoModel;
         const customerId = sessionStorage.getItem("userCustomerId");
         if (customerId) {
-          custResp[0].customerId = parseInt(customerId);
-        } else custResp[0].customerId = null;
+          custResp[0].existingCustomerId = parseInt(customerId);
+        } else custResp[0].existingCustomerId = null;
 
         const payload = {
           originationModel: {

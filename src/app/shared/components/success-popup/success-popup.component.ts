@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { DownloadService } from "app/shared/services/download.service";
 import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-success-popup",
   templateUrl: "./success-popup.component.html",
@@ -21,7 +22,8 @@ export class SuccessPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public screenData: any,
     private emailService: EmailService,
     private downloadService: DownloadService,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
+    private tokenStore: TokenStorageService
   ) {}
   ngOnInit(): void {
     this.depositType = this.data?.type;
@@ -108,6 +110,7 @@ export class SuccessPopupComponent implements OnInit {
     localStorage.removeItem("basisDetails");
     localStorage.removeItem("customerData");
     sessionStorage.removeItem("loanBasisDetails");
+    this.tokenStore.cleanUpSessionPartially();
     this.dialogRef.close(true);
   }
   close() {
