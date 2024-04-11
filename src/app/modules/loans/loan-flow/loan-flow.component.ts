@@ -142,13 +142,11 @@ export class LoanFlowComponent implements OnInit {
   }
 
   getCustomerById(customerId) {
-    customerId.forEach((element) => {
-      this.openAccountService.getCustomerById(element).subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          this.personalDetails = resp.data;
-        }
+    setTimeout(() => {
+      this.fetchCustomersbyId().then((resp) => {
+        this.personalDetails = resp;
       });
-    });
+    }, 500);
   }
 
   getCustByStageId(customerStageId) {
@@ -505,6 +503,38 @@ export class LoanFlowComponent implements OnInit {
     //   .subscribe((resp) => {
     //     if (resp?.statusCode === 200) this.saveCustomerInfo(resp.data, docIds);
     //   });
+  }
+
+  fetchCustomersbyId() {
+    const customIds = JSON.parse(sessionStorage.getItem("customerIds"));
+    return new Promise((resolve, reject) => {
+      const promises = customIds.map((id) => {
+        return new Promise((innerResolve, innerReject) => {
+          this.openAccountService.getCustomerById(id).subscribe((resp) => {
+            if (resp?.statusCode === 200)
+              innerResolve({
+                ...resp.data[0],
+                customerId: null,
+                customerNo: null,
+                contact: {
+                  ...resp.data[0].contact,
+                  contactId: null,
+                  address: [
+                    { ...resp.data[0].contact.address[0], addressId: null },
+                  ],
+                },
+              });
+            else innerResolve(null); // or handle rejection if needed
+          });
+        });
+      });
+      Promise.all(promises).then((customers) => {
+        const filteredCustomers = customers.filter(
+          (customer) => customer !== null
+        );
+        resolve(filteredCustomers);
+      });
+    });
   }
 
   fetchCustomers() {
