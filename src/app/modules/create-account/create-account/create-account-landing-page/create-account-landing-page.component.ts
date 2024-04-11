@@ -66,7 +66,7 @@ export class CreateAccountLandingPageComponent {
     private route: ActivatedRoute,
     private sharedService: SharedService
   ) {
-    this.showSideBar.setToken(true);
+    // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
   }
 
@@ -387,7 +387,7 @@ export class CreateAccountLandingPageComponent {
         sessionStorage.removeItem("currentAccountStage");
         sessionStorage.removeItem("verifyWork");
         sessionStorage.removeItem("loanHolderType");
-        this.router.navigate(["account/applyAccount"]);
+        this.router.navigate(["/account/landing"]);
       }
     });
   }

@@ -124,12 +124,13 @@ export class LoanAccountTypeComponent implements OnInit {
       if (resp?.statusCode === 201) {
         sessionStorage.removeItem("loanstep");
         sessionStorage.setItem("loanDisburseId", resp?.data.id);
-        const url = this.location.prepareExternalUrl(
-          this.router.serializeUrl(
-            this.router.createUrlTree([`/loan/create-loan/${this.basisId}`])
-          )
-        );
-        window.open(`${url}`, "_blank");
+        // const url = this.location.prepareExternalUrl(
+        //   this.router.serializeUrl(
+        //     this.router.createUrlTree([`/loan/create-loan/${this.basisId}`])
+        //   )
+        // );
+        // window.open(`${url}`, "_blank");
+        this.router.navigate([`/loan/create-loan/${this.basisId}`]);
       }
     });
   }
