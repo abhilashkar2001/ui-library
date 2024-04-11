@@ -16,6 +16,12 @@ export class TokenStorageService {
   private sessionStore = window.sessionStorage;
   private localStore = window.localStorage;
   currencyList = StaticData.currencyList;
+  aliveProperties: string[] = [
+    "userInfo",
+    "auth-user",
+    "auth-token",
+    "validityInSecs",
+  ];
   constructor() {}
 
   signOut() {
@@ -117,5 +123,16 @@ export class TokenStorageService {
   }
   getUserOtherInfo() {
     return JSON.parse(this.sessionStore.getItem(USER_INFO));
+  }
+
+  cleanUpSessionPartially() {
+    var keys = Object.keys(sessionStorage);
+    var propertiesToKeep = this.aliveProperties;
+    // Iterate through keys and delete the ones not in propertiesToKeep
+    keys.forEach(function (key) {
+      if (!propertiesToKeep.includes(key)) {
+        sessionStorage.removeItem(key);
+      }
+    });
   }
 }

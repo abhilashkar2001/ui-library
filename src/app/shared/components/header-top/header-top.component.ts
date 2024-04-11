@@ -23,6 +23,7 @@ import {
   NavigationStart,
   Router,
 } from "@angular/router";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-header-top",
@@ -53,6 +54,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   @Input() notificPanel;
   @Input() mainMenuPanel;
+
   headerType: any;
 
   items = [
@@ -84,7 +86,8 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private showSideBar: NewDepositService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private router: Router
+    private router: Router,
+    private tokenStore: TokenStorageService
   ) {}
 
   ngOnInit() {
@@ -201,5 +204,12 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   onSearch(e) {
     //   console.log(e)
+  }
+  onNavTabClick(item) {
+    this.tokenStore.cleanUpSessionPartially();
+  }
+
+  goToHomePage() {
+    this.router.navigate(["/account/landing"]);
   }
 }

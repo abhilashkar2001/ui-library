@@ -109,7 +109,6 @@ export class SuccessPopupComponent implements OnInit {
     localStorage.removeItem("customerData");
     sessionStorage.removeItem("loanBasisDetails");
     this.dialogRef.close(true);
-    window.close();
   }
   close() {
     this.dialogRef.close(false);
