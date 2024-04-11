@@ -1,7 +1,8 @@
 <app-web-doc-upload
+  [ocrProcess]="ocrProcess"
   [documentTypeArray]="documentTypeArray"
   [verificationType]="verificationType"
-  (onConfirmEvent)="onSubmit($event)"
+  (onCustomSubmit)="onSubmit($event)"
   [documentList]="documentList"
 >
 </app-web-doc-upload>

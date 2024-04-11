@@ -69,6 +69,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   defaultIsdCodeValue: any;
   maxMobileLength: any;
   nationalityArray: any[] = [];
+  customerIds: any[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -222,7 +223,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   renderApplicant(data, applicantLength) {
-    for (let i = 0; i < applicantLength; i++) this.addCustomer(i);
+    for (let i = 0; i < applicantLength; i++)
+      this.addCustomer(i, data && data[i]);
   }
 
   get customer(): FormArray {
@@ -432,19 +434,18 @@ export class CommonPersonalDetailsComponent implements OnInit {
       return;
     }
 
+    let prefixValue = null;
     this.customerDetailsForm.value.customer.forEach((element, i) => {
       this.prefixArray.forEach((el) => {
-        if (el.id == element.prefix) {
-          this.customerDetailsForm.value.customer[i] = {
-            ...this.customerDetailsForm.value.customer[i],
-            prefixValue: el.values,
-          };
+        if (element.primaryCustomer && el.id == element.prefix) {
+          prefixValue = el.values;
         }
       });
     });
 
     this.onCustomSubmit.emit({
       status: true,
+      prefixValue: prefixValue,
       personalDetails: this.customerDetailsForm,
     });
   }

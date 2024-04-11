@@ -28,6 +28,7 @@
   <!-- other documents start here -->
   <ng-container *ngIf="kycToggle == 'addDoocuent'">
     <app-web-doc-upload
+      [ocrProcess]="ocrProcess"
       [verificationType]="verificationType"
       (onCustomSubmit)="onConfirmEvent($event)"
       [documentList]="documentList"
