@@ -1,6 +1,6 @@
 export class staticRemittanceData{
 
-     readonly REMITTANCE_SUMMARY = [
+     static readonly REMITTANCE_SUMMARY = [
         {
           columnDef: "remNo",
           header: "Remittance No",  
