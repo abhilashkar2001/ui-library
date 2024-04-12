@@ -44,6 +44,9 @@ export class BgSummaryServiceService {
     switch (moduleName) {
       case "BG Issuance":
         return "bgIssuance/fetchApplicantInfo";
+      case "Remittance":
+        return "";
+        
       default:
         break;
     }

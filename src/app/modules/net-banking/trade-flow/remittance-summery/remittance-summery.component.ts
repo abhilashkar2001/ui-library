@@ -3,6 +3,7 @@ import { staticRemittanceData } from './remittancestaticdata';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterBy } from 'app/shared/helpers/utils';
+import { BgSummaryServiceService } from '../bg-summary/bg-summary-service.service';
 
 @Component({
   selector: 'app-remittance-summery',
@@ -11,7 +12,7 @@ import { FilterBy } from 'app/shared/helpers/utils';
 })
 export class RemittanceSummeryComponent implements OnInit {
   @Input("bgType") bgType: any = "Remittance";
-  columns: any;
+  columns: any = staticRemittanceData.REMITTANCE_SUMMARY;
   isSummary: boolean;
   maintenanceTitle: any;
   module: any;
@@ -36,8 +37,10 @@ export class RemittanceSummeryComponent implements OnInit {
     status: "OK",
   };
   addNewList = staticRemittanceData.ADDNEW_LIST;
-  constructor(private summeryClm: staticRemittanceData,
+  summaryDetails: any;
+  constructor(
       private route: Router,
+      private api : BgSummaryServiceService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef) {
@@ -45,7 +48,6 @@ export class RemittanceSummeryComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.columns = this.summeryClm.REMITTANCE_SUMMARY;
     this.activatedRoute.queryParamMap.subscribe((params)=>{
       this.isSummary = true;
       this.bgType = params.get("type");
@@ -56,7 +58,25 @@ export class RemittanceSummeryComponent implements OnInit {
   }
 
   getDataByPage(event){
+    this.getUrl().then((_: any)=>{
 
+    })
+
+  }
+
+  getUrl(){
+    return new Promise((resolve , reject)=>{
+      if (this.summaryDetails) resolve("summary details found");
+      else{
+        this.api.getSummaryUrls().subscribe((resp)=>{
+          this.summaryDetails = resp.find(
+            (e)=>
+             e.name.toLowerCase() == this.bgType.toLowerCase()
+          )
+          resolve("summary details found");
+        })
+      }
+    })
   }
   
   /**
@@ -64,26 +84,16 @@ export class RemittanceSummeryComponent implements OnInit {
    * @param event
    */
   openPopUp(event) {
-    // const id = event.element.applicantId || event.element;
-    // if (id === "addNew") {
-    //   const dialogRef = this.dialog.open(AddNewPopupComponent, {
-    //     width: "50%",
-    //     disableClose: true,
-    //     panelClass: "dialog-class",
-    //   });
-    //   dialogRef.afterClosed().subscribe((res) => {
-    //     this.getBGType();
-    //   });
-    // } else if (id === "bulk") {
-    // } else if (id === "template") {
-    //   this.openTemplatePopup();
-    // } else if (id === "new") {
-    //   this.getBGType();
-    // } else {
-    //   console.log("having a id");
-    // }
+    this.goToRemittance()
+  }
+  goToRemittance(){
+    console.log(this.summaryDetails);
+    
+    this.route.navigate([`${this.summaryDetails.addNewPath}`],{
+      queryParams:{type:this.summaryDetails.name}
+    })
   }
   CustomGoBack(data) {
-    // this.route.navigate([`${this.summaryDetails.backPath}`]);
+    this.route.navigate([`${this.summaryDetails.backPath}`]);
   }
 }

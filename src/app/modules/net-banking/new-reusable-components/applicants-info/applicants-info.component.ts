@@ -19,6 +19,7 @@ export class ApplicantsInfoComponent implements OnInit {
   ) => void;
   feeAccArray: any[] = ["dummy Option 1", "dummy Option 2", "dummy Option 3"];
   @Input("tradeDetails") tradeDetails;
+  @Input("amendmentType") tradetype = ""
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
