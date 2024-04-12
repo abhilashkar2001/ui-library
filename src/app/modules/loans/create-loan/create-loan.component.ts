@@ -20,7 +20,7 @@ export class CreateLoanComponent implements OnInit {
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
   @Output() customgoBack: EventEmitter<any> = new EventEmitter();
-  @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
@@ -335,7 +335,7 @@ export class CreateLoanComponent implements OnInit {
           "tenureDays",
           this.personalLoanDetailsForm.value.tenureDays
         );
-        this.onSaveCreateLoan.emit(this.personalLoanDetailsForm);
+        this.onCustomSubmit.emit(this.personalLoanDetailsForm);
       }
     });
   }

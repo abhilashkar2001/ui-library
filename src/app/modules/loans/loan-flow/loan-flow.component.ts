@@ -1,18 +1,17 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Form, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { LoanFlowConstants } from "./loan-flow.constant";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SharedService } from "app/shared/shared.service";
+import { AppHostDirective } from "app/shared/directives/app-host.directive";
 
 @Component({
   selector: "app-loan-flow",
@@ -26,7 +25,6 @@ export class LoanFlowComponent implements OnInit {
   documentForm: FormGroup;
   kycDetailsForm: FormGroup;
   customPersonalDetails: FormGroup;
-  steper_Array: any;
   @ViewChild("stepper") stepper;
   selectedStep: number = 0;
   isLinear = true;
@@ -53,69 +51,70 @@ export class LoanFlowComponent implements OnInit {
   otherUserInfo: any;
   ownerShipId: any;
   isLoading: boolean = false;
+  dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
+  @ViewChild("container") container: any;
+  @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
+  componentRef: any;
+  currentComponentInfo: any;
+  mobileVerifyInfo = {
+    basisName: "",
+    productDuplicationKey: "Loan",
+    applicationType: "loan application",
+  };
+  personalDoc: any[] = [];
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
     private snack: MatSnackBar,
-    private depositApi: NewDepositService,
     private dialog: MatDialog,
     private router: Router,
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    protected cdr: ChangeDetectorRef
   ) {
-    this.steper_Array = [
-      {
-        id: 1,
-        stepFormControl: this.createLoan,
-        label: "Create Loan",
-        key: "create",
-      },
-      {
-        id: 2,
-        stepFormControl: this.customVerifyNumber,
-        label: "Verify Mobile Number",
-        key: "mobile",
-      },
-      {
-        id: 3,
-        stepFormControl: this.cibilScoreForm,
-        label: "CIBIL Score",
-        key: "cibil",
-      },
-      {
-        id: 4,
-        stepFormControl: this.customPersonalDetails,
-        label: "Personal Details",
-        key: "personal",
-      },
-      {
-        id: 5,
-        stepFormControl: this.kycDetailsForm,
-        label: "Select KYC",
-        key: "kyc",
-      },
-      {
-        id: 6,
-        stepFormControl: this.documentForm,
-        label: "Document",
-        key: "document",
-      },
-
-      {
-        id: 7,
-        //stepFormControl,
-        label: "terms",
-        key: "terms",
-      },
-      {
-        id: 8,
-        //stepFormControl: this.kycDetailsForm,
-        label: "summary",
-        key: "summary",
-      },
-    ];
     // this.depositApi.setToken(true);
+  }
+
+  showComponent(screenName) {
+    this.dynamicScreen.forEach((item: any) => {
+      if (screenName.toLowerCase().includes(item.key)) {
+        this.currentComponentInfo = { ...item };
+        const view = this.appAppHost.viewContainerRef;
+        view.clear();
+        setTimeout(() => {
+          this.componentRef = view.createComponent(item.component);
+          // for mobile number.
+          this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
+          // for personal details.
+          this.componentRef.instance.basisId = this.basisId;
+          this.componentRef.instance.personalDetails = this.personalDetails;
+          // for personal doc.
+          this.componentRef.instance.personalDoc = this.personalDoc;
+
+          this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
+            if (data?.value?.accountNumber)
+              this.createLoanAccountNumber = data.value.accountNumber;
+
+            if (data?.personalInfo) {
+              this.personalDetails = data.personalInfo;
+              this.personalDetails.forEach((item) => {
+                if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
+              });
+            }
+
+            if (screenName.toLowerCase().includes("personal")) {
+              this.customSavePersonal(data);
+            } else if (screenName.toLowerCase().includes("kyc")) {
+              this.customSaveDocuments(data);
+            } else this.next();
+          });
+          this.componentRef.instance?.onBackEvent.subscribe((_) => {
+            this.goBack();
+          });
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -129,15 +128,15 @@ export class LoanFlowComponent implements OnInit {
     this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
     console.log(this.ownerShipId);
     var originationId = sessionStorage.getItem("originationId");
-    var customerId = JSON.parse(sessionStorage.getItem("customerIds"));
+    var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
     var customerStageId = JSON.parse(
       sessionStorage.getItem("customerStageIds")
     );
     if (originationId) this.getOriginationMaster(parseInt(originationId));
-    else if (customerId) {
-      this.getCustomerById(customerId);
-    } else if (customerStageId) {
+    else if (customerStageId) {
       this.getCustByStageId(customerStageId);
+    } else if (customerId) {
+      this.getCustomerById(customerId);
     }
   }
 
@@ -145,6 +144,7 @@ export class LoanFlowComponent implements OnInit {
     setTimeout(() => {
       this.fetchCustomersbyId().then((resp) => {
         this.personalDetails = resp;
+        // this.componentRef.instance.personalDetails = this.personalDetails;
       });
     }, 500);
   }
@@ -162,7 +162,13 @@ export class LoanFlowComponent implements OnInit {
    */
   getProductDetails() {
     this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
-      if (resp?.statusCode === 200) this.productDetails = resp.data[0];
+      if (resp?.statusCode === 200) {
+        this.productDetails = resp.data[0];
+        this.mobileVerifyInfo = {
+          ...this.mobileVerifyInfo,
+          basisName: this.productDetails.basisName,
+        };
+      }
     });
   }
 
@@ -173,37 +179,11 @@ export class LoanFlowComponent implements OnInit {
         this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
         this.originationModel = resp.data[0]?.originationModel;
+        this.componentRef.instance.personalDetails = this.personalDetails;
+        this.cdr.detectChanges();
       }
       console.log(this.customerInfo);
     });
-  }
-
-  updateStep() {
-    var isExistingCustomer = sessionStorage.getItem("isExistingCustomer");
-    this.originalScreenList = this.screenList;
-    console.log(this.screenList);
-    if (isExistingCustomer) {
-      var pk = this.screenList;
-      var jk = pk.filter((item) => {
-        if (
-          !item.screenName.toLowerCase().includes("personal") &&
-          !item.screenName.toLowerCase().includes("select")
-        ) {
-          return item;
-        }
-      });
-      const customStepArr = this.steper_Array?.filter((item) => {
-        if (
-          !item.label.toLowerCase().includes("personal") &&
-          !item.label.toLowerCase().includes("select")
-        ) {
-          return item;
-        }
-      });
-      this.steper_Array = customStepArr;
-      this.screenList = jk;
-      console.log(this.screenList, this.steper_Array);
-    }
   }
 
   getAllLoanStep() {
@@ -228,112 +208,36 @@ export class LoanFlowComponent implements OnInit {
       this.screenList = resp.data.screens.sort((s1, s2) => {
         return s1.sequence - s2.sequence;
       });
-      this.updateFormGroup();
+      // this.updateFormGroup();
       //this.updateStep();
       this.factory();
     });
   }
-  updateFormGroup() {
-    this.steper_Array.forEach((item, i) => {
-      this.screenList.map((element, j) => {
-        if (element.screenName.toLowerCase().includes(item.key)) {
-          this.screenList[j].stepFormControl = item?.stepFormControl;
-        }
-      });
-    });
-  }
+
   stepperSelectionChange(event) {
+    const lastStep = this.selectedStep;
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
     this.selectedStep = event.selectedIndex;
+    if (lastStep != event.selectedIndex) this.showComponent(this.cuurrentStep);
   }
   factory() {
     this.cuurrentStep = this.screenList[this.selectedStep]?.screenName;
+    this.showComponent(this.cuurrentStep);
   }
   next() {
     const num = this.selectedStep + 1;
-    this.selectedStep = num;
-    sessionStorage.setItem("loanstep", String(this.selectedStep));
-    this.factory();
-    // for scrolling sidebar and get current state.
-    const el = document.querySelector(".mat-step-label-selected");
-    el.scrollIntoView();
-  }
-
-  onSaveCreateLoan(event) {
-    this.createLoanAccountNumber = event.value.accountNumber;
-    localStorage.setItem("customerData", JSON.stringify(this.customerData));
-    this.next();
-    this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
-    console.log(this.ownerShipId);
-  }
-
-  checkExistingUserEvent(event) {
-    let customerIds: any[] = [];
-    this.isLoading = true;
-    this.loanApi
-      .getExistingUserDetails(event.phone)
-      .subscribe((response: any) => {
-        console.log("Existing user: ", response);
-        if (response.statusCode == 200 && response.data) {
-          response.data.forEach((element) => {
-            customerIds.push(element.customerId);
-          });
-          sessionStorage.setItem("customerIds", JSON.stringify(customerIds));
-          // let temp = response.data[0];
-          this.personalDetails = response.data;
-          // this.personalDetails.push(temp);
-        }
-        this.checkProducts(event);
-      });
-  }
-
-  checkProducts(event) {
-    this.loanApi
-      .checkMobileAndProduct(this.productDetails.basisName, event.phone, "Loan")
-      .subscribe((resp) => {
-        if (!resp) {
-          this.allreadyProduct();
-        } else {
-          if (event.response?.statusCode === 200) {
-            sessionStorage.setItem(
-              "existingCustomerId",
-              event.response.data[0].customerId
-            );
-            sessionStorage.setItem("isExistingCustomer", "Yes");
-            localStorage.setItem(
-              "customerData",
-              JSON.stringify(event.response.data[0])
-            );
-            this.isLoading = false;
-            this.next();
-          } else if (event.response?.statusCode === 204) {
-            this.isLoading = false;
-            this.next();
-          } else {
-            this.next();
-          }
-        }
-      });
-  }
-
-  allreadyProduct() {
-    this.dialog.open(ErrorNotifierPopupComponent, {
-      data: {
-        errorMessage:
-          "We have found similar loan application in our record on your Mobile Number",
-        errorMessageHint: "Please visit bank for more information.",
-      },
-      width: "650px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-  }
-
-  onCustomCibilDetail() {
-    console.log("onCustomCibilDetail");
-    this.next();
+    if (num === this.screenList?.length && num > 0) {
+      this.onFlowDone();
+      return;
+    } else {
+      this.selectedStep = num;
+      sessionStorage.setItem("loanstep", String(this.selectedStep));
+      this.factory();
+      // for scrolling sidebar and get current state.
+      const el = document.querySelector(".mat-step-label-selected");
+      el.scrollIntoView();
+    }
   }
 
   getCustInfoPayload(event, prefixValue) {
@@ -414,77 +318,6 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
-  createPayload(event) {
-    var customer = [];
-    event.forEach((element, i) => {
-      if (element.primaryCustomer) {
-        sessionStorage.setItem(
-          "customerData",
-          JSON.stringify({
-            name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
-            cifNumber:
-              element.kycStatus === "APPROVED" ? element.customerId : "",
-          })
-        );
-      }
-      console.log(element);
-      var docIds = [];
-      if (element?.documentId) {
-        docIds.push(element.documentId);
-      } else {
-        element?.documnentsInfo?.documents.forEach((item) => {
-          let docItemId = [];
-          item.docs.forEach((docItem) => {
-            docItemId.push(docItem.documentId);
-          });
-          const docId = {
-            docIds: docItemId,
-          };
-          docIds.push(docId);
-        });
-      }
-      const cus = {
-        prefix: element.prefix,
-        firstName: element.firstName,
-        lastName: element.lastName,
-        customerId: element?.customerId,
-        //  middleName: "",
-        gender: element.gender,
-        // jointCustomerInfo: [],
-        documentId: element.primaryCustomer ? docIds : [],
-        isphoneNumVerified: true,
-        isEmailVerified: true,
-        primaryCustomer: element.primaryCustomer ?? false,
-        source: element.source,
-        dateOfBirth: moment(element.dateOfBirth).format(),
-        nationality: element.nationality,
-        contact: {
-          mobile: element.mobile,
-          email: element.email,
-          address: [
-            {
-              address1:
-                element?.contact?.address[0].address1 ?? element.address1,
-              address2: "",
-              residenceType:
-                element?.contact?.address[0].residenceType ??
-                element.residenceType,
-              cityId: element?.contact?.address[0].cityId ?? element.cityId,
-              countryName:
-                element?.contact?.address[0].countryName ?? element.country,
-              pincode: element?.contact?.address[0].pincode ?? element.zipCode,
-              stateName:
-                element?.contact?.address[0].stateName ?? element.state,
-            },
-          ],
-        },
-      };
-      customer.push(cus);
-    });
-
-    return customer;
-  }
-
   customSaveDocuments(e) {
     var docIds = [];
     e.documentDetails.otherDocument.forEach((element) => {
@@ -506,7 +339,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   fetchCustomersbyId() {
-    const customIds = JSON.parse(sessionStorage.getItem("customerIds"));
+    const customIds = JSON.parse(sessionStorage.getItem("userCustomerId"));
     return new Promise((resolve, reject) => {
       const promises = customIds.map((id) => {
         return new Promise((innerResolve, innerReject) => {
@@ -583,6 +416,7 @@ export class LoanFlowComponent implements OnInit {
     });
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    console.log(this.ownerShipId, ".//////");
     const payload = {
       originationModel: {
         ...this.getOriginationModel(),
@@ -604,6 +438,7 @@ export class LoanFlowComponent implements OnInit {
       },
       customerInfo: custResp,
     };
+    console.log(payload, ".......");
     this.getMasterSave(payload);
   }
 
@@ -721,21 +556,7 @@ export class LoanFlowComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp === true) {
-        sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("customerId");
-        sessionStorage.removeItem("loanDisburseId");
-        sessionStorage.removeItem("loanstep");
-        sessionStorage.removeItem("isExistingCustomer");
-        sessionStorage.removeItem("loanAmmount");
-        sessionStorage.removeItem("currentStage");
-        sessionStorage.removeItem("verifyWork");
-        sessionStorage.removeItem("loanHolderType");
-        sessionStorage.removeItem("tenureDays");
-        sessionStorage.removeItem("tenureMonth");
-        sessionStorage.removeItem("tenureYear");
-        sessionStorage.removeItem("customerStageIds");
-        sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("loanDisburseId");
+        this.tokenStore.cleanUpSessionPartially();
         this.router.navigate(["loan/landing"]);
       }
     });
@@ -754,14 +575,14 @@ export class LoanFlowComponent implements OnInit {
   }
 
   getOwnershipIdByGeneric(value) {
-    let ownership;
+    let ownership = [];
     this.sharedService
       .genericValue("Common", Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           ownership = resp.data["OWNERSHIP"];
           this.ownerShipId = ownership.find(
-            (r) => r?.values.toLowerCase() === value.toLowerCase()
+            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
           )?.id;
         }
       });

@@ -13,7 +13,7 @@ export class CibilScoreContainerComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
-  @Output() onCustomCibilDetail = new EventEmitter<any>();
+  @Output() onCustomSubmit = new EventEmitter<any>();
   @Input() createLoanAccountNumber;
   hideInfo: boolean = true;
 
@@ -79,7 +79,7 @@ export class CibilScoreContainerComponent implements OnInit {
   }
 
   onConfirmFromCibilScoreResult() {
-    this.onCustomCibilDetail.emit();
+    this.onCustomSubmit.emit();
   }
 
   onVerify() {

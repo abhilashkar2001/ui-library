@@ -23,7 +23,7 @@ import { environment } from "environments/environment";
 })
 export class LoanSummaryComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
   stepperTitle: any;
   loanSummaryDetails: any;
@@ -43,7 +43,7 @@ export class LoanSummaryComponent implements OnInit {
   ngOnInit(): void {
     // this.getLoanSummary();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.loanSummaryDetails = this.loanSummary;
+    // this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,7 +60,7 @@ export class LoanSummaryComponent implements OnInit {
   }
 
   onVerify() {
-    this.onConfirmEvent.emit();
+    this.onCustomSubmit.emit();
     this.openAccountService.setData(this.loanSummaryDetails);
   }
 

@@ -1,6 +1,7 @@
 import { Location } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-loan-terms-conditions",
@@ -9,13 +10,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class LoanTermsConditionsComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   stepperTitle: string;
 
   constructor(
     private location: Location,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private loanApi: LoanService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
   }
@@ -23,7 +25,15 @@ export class LoanTermsConditionsComponent implements OnInit {
   ngOnInit(): void {}
 
   onConfirm() {
-    this.onConfirmEvent.emit();
+    const originationId = sessionStorage.getItem("originationId");
+    var mapPayload = {
+      id: parseInt(sessionStorage.getItem("loanDisburseId")),
+      originationId: parseInt(originationId),
+    };
+
+    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+      this.onCustomSubmit.emit({ gotoNext: true });
+    });
   }
 
   onBack() {

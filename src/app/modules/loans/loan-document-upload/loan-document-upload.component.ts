@@ -72,7 +72,16 @@ export class LoanDocumentUploadComponent implements OnInit {
   }
 
   onSubmit(event) {
-    this.onCustomSubmit.emit(event.documentDetails);
+    var docIds = [];
+    event.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+
+    sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
+    this.onCustomSubmit.emit();
   }
 
   onBack() {

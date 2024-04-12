@@ -427,6 +427,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   confirmCustomer() {
+    console.log(
+      this.customerDetailsForm.invalid ||
+        (!this.isHideField && this.isAnyPrimaryCustomer())
+    );
     if (
       this.customerDetailsForm.invalid ||
       (!this.isHideField && this.isAnyPrimaryCustomer())
