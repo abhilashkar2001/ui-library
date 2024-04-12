@@ -9,6 +9,7 @@ import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendeme
 import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
 import { LcOtherConditionsComponent } from "./new-reusable-components/lc-other-conditions/lc-other-conditions.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
+import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 
 export class tabsClass {
@@ -160,4 +161,31 @@ export class tabsClass {
       componrnt: AttachmentsComponent,
     },
   ];
+
+  public static readonly Remittance:any[] = [
+    {
+      id: 1,
+      title: "Applicant Info",
+      type: "Remittamce_Applicant_Info",
+      componrnt: ApplicantsInfoComponent
+    },
+    {
+      id: 2,
+      title: "Remittance Info",
+      type: "Remittamce_Remittance_Info",
+      componrnt: RemittanceInfoComponent
+    },
+    {
+      id: 3,
+      title: "Other Info",
+      type: "Remittamce_Other_Info",
+      componrnt: OthersInfoComponent
+    },
+    {
+      id: 4,
+      title: "Attachments",
+      type: "Remittamce_Attachments",
+      componrnt: AttachmentsComponent
+    },
+  ]
 }

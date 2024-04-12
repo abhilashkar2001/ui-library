@@ -61,5 +61,12 @@
     "summaryUrl": "bgIssuance/fetchApplicantInfo",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "BGTEMPLATE_SUMMARY"
+  },
+  {
+    "name": "Remittance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/generic-remitance",
+    "columnRefName": "REMITTANCE"
   }
 ]

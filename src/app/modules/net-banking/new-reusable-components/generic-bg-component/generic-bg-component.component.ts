@@ -37,11 +37,7 @@ export class GenericBgComponentComponent implements OnInit {
     private dialog: MatDialog,
     private api: GenericBgServiceService,
     private cdr: ChangeDetectorRef
-  ) {
-    // console.log(this.componentName);
-    // this.tabs = tabsClass[this.componentName];
-    // this.bgType = this.tabs[0].type;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: any) => {
