@@ -129,7 +129,7 @@ export class LoanFlowComponent implements OnInit {
     this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
     console.log(this.ownerShipId);
     var originationId = sessionStorage.getItem("originationId");
-    var customerId = JSON.parse(sessionStorage.getItem("customerIds"));
+    var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
     var customerStageId = JSON.parse(
       sessionStorage.getItem("customerStageIds")
     );
@@ -279,7 +279,7 @@ export class LoanFlowComponent implements OnInit {
           response.data.forEach((element) => {
             customerIds.push(element.customerId);
           });
-          sessionStorage.setItem("customerIds", JSON.stringify(customerIds));
+          sessionStorage.setItem("userCustomerId", JSON.stringify(customerIds));
           // let temp = response.data[0];
           this.personalDetails = response.data;
           // this.personalDetails.push(temp);
@@ -506,7 +506,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   fetchCustomersbyId() {
-    const customIds = JSON.parse(sessionStorage.getItem("customerIds"));
+    const customIds = JSON.parse(sessionStorage.getItem("userCustomerId"));
     return new Promise((resolve, reject) => {
       const promises = customIds.map((id) => {
         return new Promise((innerResolve, innerReject) => {
@@ -581,6 +581,20 @@ export class LoanFlowComponent implements OnInit {
       delete custResp[i].documentsInfoModel;
       delete custResp[i].signatureInfo;
     });
+    const existingCustomerId = JSON.parse(
+      sessionStorage.getItem("userCustomerId")
+    );
+    if (existingCustomerId) {
+      custResp.forEach((item, i) => {
+        if (i >= existingCustomerId.length) {
+          delete custResp[i].existingCustomerId;
+          custResp[i].customerId = null;
+        } else {
+          delete custResp[i].existingCustomerId;
+          custResp[i].customerId = existingCustomerId[i];
+        }
+      });
+    }
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const payload = {
