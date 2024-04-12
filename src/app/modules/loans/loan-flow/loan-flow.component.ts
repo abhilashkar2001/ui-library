@@ -283,10 +283,32 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
+  getOriginationModelForLoan() {
+    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
+    return {
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+      accountType: sessionData.basisName,
+      basisDetailsId: sessionData.basisId,
+      loanAmount: parseInt(loanData.loanAmount),
+      loanTenureDay: sessionStorage.getItem("tenureDays"),
+      loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+      loanTenureYear: sessionStorage.getItem("tenureYear"),
+      branchCode: this.tokenStore.getUser().branchCode,
+      source: "Website",
+      businessProductName: null,
+      productDescription: null,
+      currencyCode: this.otherUserInfo.currency,
+      branchId: this.currentUser.branchId,
+      ownership: ownershipId,
+      documentId: null,
+    };
+  }
+
   // on Personal details saved
   customSavePersonal(event) {
     console.log(event);
-
     const payload = event.personalDetails.value.customer;
     payload.forEach((item) => {
       delete item.prefixValue;
@@ -297,24 +319,50 @@ export class LoanFlowComponent implements OnInit {
       event.personalDetails.value.customer,
       event.prefixValue
     ).then((data) => {
-      this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          this.personalDetails = resp.data;
-          let customId = [];
-          resp.data?.forEach((item, i) => {
-            customId.push(item.customerId);
-          });
-          this.snack.open(`Personal Details Saved` + " !", "OK", {
-            duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-            panelClass: "snackbar-error",
-          });
-          sessionStorage.setItem("customerStageIds", JSON.stringify(customId));
-          this.customerInfo = resp.data;
-          this.next();
-        }
-      });
+      const payloadData = {
+        originationModel: { ...this.getOriginationModelForLoan() },
+        customerInfo: data,
+      };
+      this.openAccountService
+        .saveCustomerInfo(payloadData)
+        .subscribe((resp) => {
+          if (resp?.statusCode === 200) {
+            this.personalDetails = resp.data;
+            let customId = [];
+            resp.data?.customerInfo?.forEach((item, i) => {
+              customId.push(item.customerId);
+            });
+            this.snack.open(`Personal Details Saved` + " !", "OK", {
+              duration: 4000,
+              verticalPosition: "top",
+              horizontalPosition: "right",
+              panelClass: "snackbar-error",
+            });
+            sessionStorage.setItem(
+              "customerStageIds",
+              JSON.stringify(customId)
+            );
+            this.customerInfo = resp.data?.customerInfo;
+            sessionStorage.setItem(
+              "originationId",
+              resp?.data?.originationModel?.originationId
+            );
+            sessionStorage.removeItem("loanDoc");
+            this.updateWebDisbursment();
+          }
+        });
+    });
+  }
+
+  updateWebDisbursment() {
+    const originationId = sessionStorage.getItem("originationId");
+    var mapPayload = {
+      id: parseInt(sessionStorage.getItem("loanDisburseId")),
+      originationId: parseInt(originationId),
+    };
+
+    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+      this.next();
     });
   }
 
