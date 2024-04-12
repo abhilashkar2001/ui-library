@@ -586,9 +586,13 @@ export class LoanFlowComponent implements OnInit {
     );
     if (existingCustomerId) {
       custResp.forEach((item, i) => {
-        if (i >= existingCustomerId.length)
-          custResp[i].existingCustomerId = null;
-        else custResp[i].existingCustomerId = existingCustomerId[i];
+        if (i >= existingCustomerId.length) {
+          delete custResp[i].existingCustomerId;
+          custResp[i].customerId = null;
+        } else {
+          delete custResp[i].existingCustomerId;
+          custResp[i].customerId = existingCustomerId[i];
+        }
       });
     }
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));

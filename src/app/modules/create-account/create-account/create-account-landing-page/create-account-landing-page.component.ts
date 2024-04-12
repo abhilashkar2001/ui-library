@@ -349,8 +349,12 @@ export class CreateAccountLandingPageComponent {
         delete custResp[0].documentsInfoModel;
         const customerId = sessionStorage.getItem("userCustomerId");
         if (customerId) {
-          custResp[0].existingCustomerId = parseInt(customerId);
-        } else custResp[0].existingCustomerId = null;
+          delete custResp[0].existingCustomerId;
+          custResp[0].customerId = parseInt(customerId);
+        } else {
+          delete custResp[0].existingCustomerId;
+          custResp[0].customerId = null;
+        }
 
         const payload = {
           originationModel: {
