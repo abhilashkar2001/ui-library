@@ -321,7 +321,12 @@ export class CreateAccountLandingPageComponent {
     });
     this.openAccountService.stageSavePersonalDetails(payload).subscribe(
       (response: any) => {
-        sessionStorage.setItem("customerStageId", response.data[0].customerId);
+        sessionStorage.setItem(
+          "customerStageId",
+          response.data[0].customerStagingId
+        );
+        this.personalDetails = response.data[0];
+
         this.next();
       },
       (error: any) => {
@@ -360,6 +365,7 @@ export class CreateAccountLandingPageComponent {
         custResp[0].customerId = null;
         custResp[0].contact.address[0].addressId = null;
         delete custResp[0].documentsInfoModel;
+        delete custResp[0].customerStagingId;
         const customerId = sessionStorage.getItem("userCustomerId");
         if (customerId) {
           delete custResp[0].existingCustomerId;
