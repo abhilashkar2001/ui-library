@@ -436,18 +436,13 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.createDocumentForm.value);
-    // let payload = {
-    //   customerId: this.custId,
-    //   documentInfo: this.createDocumentForm
-    //     .get("otherDocument")
-    //     ?.value.map((document: any) => {
-    //       return {
-    //         docIds: document.fileInfo.map((item: any) => item?.id),
-    //       };
-    //     }),
-    // };
-    if (this.createDocumentForm.invalid) {
+    let isDocUploaded: boolean = false;
+    if (this.createDocumentForm) {
+      isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+        (docItem) => docItem.fileInfo?.length > 0
+      );
+    }
+    if (this.createDocumentForm.invalid || !isDocUploaded) {
       return;
     }
     this.isLoading = true;
