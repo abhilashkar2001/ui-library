@@ -55,6 +55,11 @@ export class CreateAccountLandingPageComponent {
   componentRef: any;
   currentComponentInfo: any;
   existingCustomerId: number;
+  mobileVerifyInfo = {
+    basisName: "",
+    productDuplicationKey: PRODUCT_DUPLICATION_KEY,
+    applicationType: "Create Account application",
+  };
 
   constructor(
     private router: Router,
@@ -81,7 +86,7 @@ export class CreateAccountLandingPageComponent {
           this.componentRef = view.createComponent(item.component);
 
           // for mobile number.
-          this.componentRef.instance.isLoading = this.isLoading;
+          this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
 
           // for personal details.
           this.componentRef.instance.isHideField = this.isHideField;
@@ -92,12 +97,15 @@ export class CreateAccountLandingPageComponent {
           this.componentRef.instance.personalDoc = this.personalDoc;
 
           this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
-            if (screenName.toLowerCase().includes("mobile"))
-              this.onVerify(data);
-            else if (screenName.toLowerCase().includes("personal"))
+            if (data?.personalInfo) {
+              this.personalDetails = data.personalInfo;
+              this.personalDoc = data.personalInfo[0]?.documentInfo ?? [];
+            }
+            if (screenName.toLowerCase().includes("personal"))
               this.customSavePersonal(data);
             else if (screenName.toLowerCase().includes("kyc"))
               this.customSaveDocuments(data);
+            else this.next();
           });
           this.componentRef.instance?.onBackEvent.subscribe((_) => {
             this.goBack();
@@ -126,9 +134,11 @@ export class CreateAccountLandingPageComponent {
 
         this.getScreenDetails(resp);
       });
+    //this is for existing customer.
     this.existingCustomerId = parseInt(
       sessionStorage.getItem("userCustomerId")
     );
+    //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
     let customStageId = parseInt(sessionStorage.getItem("customerStageId"));
     if (customStageId) {
       this.getCustomerbyStageId(customStageId);
@@ -195,6 +205,10 @@ export class CreateAccountLandingPageComponent {
         if (resp?.statusCode === 200) {
           this.productDetails = resp.data[0];
           this.screenTitle = resp.data[0].basisName;
+          this.mobileVerifyInfo = {
+            ...this.mobileVerifyInfo,
+            basisName: this.productDetails.basisName,
+          };
         }
       });
   }
@@ -305,7 +319,6 @@ export class CreateAccountLandingPageComponent {
       if (!this.existingCustomerId) item.customerNo = null;
       item.primaryCustomer = true;
     });
-    // payload[0].customerId=null
     this.openAccountService.stageSavePersonalDetails(payload).subscribe(
       (response: any) => {
         sessionStorage.setItem("customerStageId", response.data[0].customerId);

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -9,6 +9,7 @@ import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
 import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-create-loan",
@@ -19,14 +20,18 @@ export class CreateLoanComponent implements OnInit {
   personalLoanDetailsForm: FormGroup;
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
-  @Output() customgoBack: EventEmitter<any> = new EventEmitter();
-  @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
+  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
   screenName: string = CreateLoanConstant.SCREEN_NAME;
   staticData = CreateLoanConstant.GENERIC_SATIC_KEYS;
   accountTypeArr = CreateLoanConstant.ACCOUNT_TYPE;
+  staticOwnership = {
+    OWNERSHIP: [],
+  };
 
   disbursementType: string;
   loanDetails: any;
@@ -37,6 +42,7 @@ export class CreateLoanComponent implements OnInit {
   currentDate = new Date();
   productDetails: any;
   otherUserInfo: any;
+  ownerShipId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -45,7 +51,8 @@ export class CreateLoanComponent implements OnInit {
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
     private loanCalcService: LoanCalulationService,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private sharedService: SharedService
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
@@ -315,6 +322,7 @@ export class CreateLoanComponent implements OnInit {
       )[0]
       .values.toLowerCase();
     sessionStorage.setItem("loanHolderType", holder);
+    this.getOwnershipIdByGeneric(holder);
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         this.snack.open(`Create Loan Details Saved !`, "OK", {
@@ -335,7 +343,8 @@ export class CreateLoanComponent implements OnInit {
           "tenureDays",
           this.personalLoanDetailsForm.value.tenureDays
         );
-        this.onSaveCreateLoan.emit(this.personalLoanDetailsForm);
+        this.updateParentModel({ updateMasterSave: false });
+        this.onCustomSubmit.emit(this.personalLoanDetailsForm);
       }
     });
   }
@@ -392,7 +401,7 @@ export class CreateLoanComponent implements OnInit {
    * navigating back screen.
    */
   onBack() {
-    this.customgoBack.emit();
+    this.onBackEvent.emit();
   }
 
   /**
@@ -433,5 +442,20 @@ export class CreateLoanComponent implements OnInit {
       this.productDetails?.minimumTenorDay || 0
     );
     return totalDays <= MinimumAllowedDays;
+  }
+
+  getOwnershipIdByGeneric(value) {
+    let ownership = [];
+    this.sharedService
+      .genericValue("Common", Object.keys(this.staticOwnership))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          ownership = resp.data["OWNERSHIP"];
+          this.ownerShipId = ownership.find(
+            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
+          )?.id;
+          sessionStorage.setItem("ownershipId", this.ownerShipId);
+        }
+      });
   }
 }
