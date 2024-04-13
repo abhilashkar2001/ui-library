@@ -186,30 +186,22 @@ export class CreateLoanComponent implements OnInit {
           this.validateAccountNumber(resp);
         }
       });
-    // this.personalLoanDetailsForm
-    //   .get("loanAmount")
-    //   .valueChanges.pipe(debounceTime(200))
-    //   .subscribe((resp) => {
-    //     if (resp) {
-    //       this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
-    //     }
-    //   });
 
     const interestRate$ = this.personalLoanDetailsForm
       .get("interestRate")
-      .valueChanges.pipe(debounceTime(1000));
+      .valueChanges.pipe(debounceTime(500));
     const tenureDays$ = this.personalLoanDetailsForm
       .get("tenureDays")
-      .valueChanges.pipe(debounceTime(1000));
+      .valueChanges.pipe(debounceTime(500));
     const tenureYear$ = this.personalLoanDetailsForm
       .get("tenureYear")
-      .valueChanges.pipe(debounceTime(1000));
+      .valueChanges.pipe(debounceTime(500));
     const tenureMonth$ = this.personalLoanDetailsForm
       .get("tenureMonth")
-      .valueChanges.pipe(debounceTime(1000));
+      .valueChanges.pipe(debounceTime(500));
     const loanAmount$ = this.personalLoanDetailsForm
       .get("loanAmount")
-      .valueChanges.pipe(debounceTime(1000));
+      .valueChanges.pipe(debounceTime(500));
 
     merge(
       interestRate$,
@@ -259,7 +251,6 @@ export class CreateLoanComponent implements OnInit {
       parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
       parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
     ).then((result) => {
-      console.log("./////////");
       const payload = {
         principleAmount: parseInt(
           this.personalLoanDetailsForm.value.loanAmount

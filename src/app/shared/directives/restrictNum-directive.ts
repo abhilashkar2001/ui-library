@@ -25,7 +25,7 @@ export class MinMaxDirective {
   @HostListener("input", ["$event"])
   onInput(event: InputEvent): void {
     let val = parseFloat(this.ref.nativeElement.value);
-    this.debounceValue(this.updateInputValue, 700, val);
+    this.debounceValue(this.updateInputValue, 400, val);
   }
 
   updateInputValue = (value: number) => {

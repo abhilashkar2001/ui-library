@@ -100,7 +100,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: [1, [Validators.required]],
+      interestRate: [this.interestRate, [Validators.required]],
     });
 
     this.loanForm
@@ -114,7 +114,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       });
 
     this.valueChangesSubscription = this.loanForm.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(500))
       .subscribe((_) => {
         if (
           this.loanForm.value.interestRate &&
@@ -123,25 +123,6 @@ export class CommonEmiCalculatorComponent implements OnInit {
             this.loanForm.value.tenureMonth ||
             this.loanForm.value.tenureDays)
         ) {
-          // this.loanCalcService
-          //   .calculateAmortize(
-          //     parseInt(this.loanForm.value.amount),
-          //     parseInt(this.loanForm.value.interestRate),
-          //     parseInt(this.loanForm.value.tenureYear) || 0,
-          //     parseInt(this.loanForm.value.tenureMonth) || 0,
-          //     parseInt(this.loanForm.value.tenureDays) || 0
-          //   )
-          //   .then((value) => {
-          //     const finalInterest = value.monthlyInterestArr[0].interestComponent
-          //       .toFixed(2)
-          //       .split(".");
-
-          //     this.interestPayble = Math.abs(
-          //       value.totalPayableAmount - this.loanForm.value.amount
-          //     );
-          //     this.totalPayableAmmount = value.totalPayableAmount;
-          //     this.emiAmount = Math.round(value.emiAmount);
-          //   });
           this.calculateTenure(
             parseInt(this.loanForm.value.tenureYear) || 0,
             parseInt(this.loanForm.value.tenureMonth) || 0,
