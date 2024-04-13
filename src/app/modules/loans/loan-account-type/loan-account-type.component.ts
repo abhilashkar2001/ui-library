@@ -111,10 +111,10 @@ export class LoanAccountTypeComponent implements OnInit {
     emiStartDate.setDate(emiStartDate.getDate() + 1);
     const payload = {
       emiAmount: parseInt(this.selectedLoan.emiAmount),
-      interestRate: parseInt(this.selectedLoan.interestRate),
-      interestPayable: parseInt(this.selectedLoan.interestPayable),
+      interestRate: parseFloat(this.selectedLoan.interestRate),
+      interestPayable: parseFloat(this.selectedLoan.interestPayable),
       principalAmount: this.selectedLoan.amount,
-      totalPayableAmount: parseInt(this.selectedLoan.totalPayableAmount),
+      totalPayableAmount: parseFloat(this.selectedLoan.totalPayableAmount),
       disbursementType: "",
       accountNumber: null,
       emiStartDate: moment(emiStartDate).format(),

@@ -148,4 +148,8 @@ export class LoanService {
       `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
     );
   }
+
+  getEmiCalculation(payload) {
+    return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
+  }
 }

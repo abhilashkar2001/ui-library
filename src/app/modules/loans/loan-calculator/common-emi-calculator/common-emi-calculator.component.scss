@@ -56,6 +56,11 @@
   font-size: 18px;
   font-weight: 600;
   font-family: "Poppins";
+  span {
+    color: #5a607f;
+    font-size: 15px;
+    font-weight: 400;
+  }
 }
 
 :host ::ng-deep .mat-slider-thumb {
