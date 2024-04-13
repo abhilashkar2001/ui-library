@@ -10,6 +10,7 @@ import { LoanCalulationService } from "../loan-calculator/loan-calculation.servi
 import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { SharedService } from "app/shared/shared.service";
+import { combineLatest, merge, Subscription } from "rxjs";
 
 @Component({
   selector: "app-create-loan",
@@ -43,6 +44,7 @@ export class CreateLoanComponent implements OnInit {
   productDetails: any;
   otherUserInfo: any;
   ownerShipId: any;
+  valueChangesSubscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -121,15 +123,12 @@ export class CreateLoanComponent implements OnInit {
     this.loanApi.getLoanById(id).subscribe(
       (resp) => {
         if (resp.statusCode === 200) {
-          this.initialForm(resp?.data); // once fetchById api working then use this
-          const tenureDays = sessionStorage.getItem("tenureDays") || 0;
-          const tenureYear = sessionStorage.getItem("tenureYear") || 0;
-          const tenureMonth = sessionStorage.getItem("tenureMonth") || 0;
-          this.personalLoanDetailsForm.controls.tenureDays.setValue(tenureDays);
-          this.personalLoanDetailsForm.controls.tenureYear.setValue(tenureYear);
-          this.personalLoanDetailsForm.controls.tenureMonth.setValue(
-            tenureMonth
-          );
+          this.initialForm({
+            ...resp?.data,
+            tenureDays: sessionStorage.getItem("tenureDays") || 0,
+            tenureYear: sessionStorage.getItem("tenureYear") || 0,
+            tenureMonth: sessionStorage.getItem("tenureMonth") || 0,
+          });
         } else {
           this.initialForm();
         }
@@ -187,59 +186,102 @@ export class CreateLoanComponent implements OnInit {
           this.validateAccountNumber(resp);
         }
       });
-    this.personalLoanDetailsForm
-      .get("loanAmount")
-      .valueChanges.pipe(debounceTime(200))
-      .subscribe((resp) => {
-        if (resp) {
-          this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
-        }
-      });
+    // this.personalLoanDetailsForm
+    //   .get("loanAmount")
+    //   .valueChanges.pipe(debounceTime(200))
+    //   .subscribe((resp) => {
+    //     if (resp) {
+    //       this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
+    //     }
+    //   });
 
-    this.personalLoanDetailsForm.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((_) => {
-        if (
-          this.personalLoanDetailsForm.value.interestRate &&
-          this.personalLoanDetailsForm.value.loanAmount &&
-          (this.personalLoanDetailsForm.value.tenureYear ||
-            this.personalLoanDetailsForm.value.tenureMonth ||
-            this.personalLoanDetailsForm.value.tenureDays)
-        ) {
-          this.calculateLoan();
-        }
-      });
+    const interestRate$ = this.personalLoanDetailsForm
+      .get("interestRate")
+      .valueChanges.pipe(debounceTime(1000));
+    const tenureDays$ = this.personalLoanDetailsForm
+      .get("tenureDays")
+      .valueChanges.pipe(debounceTime(1000));
+    const tenureYear$ = this.personalLoanDetailsForm
+      .get("tenureYear")
+      .valueChanges.pipe(debounceTime(1000));
+    const tenureMonth$ = this.personalLoanDetailsForm
+      .get("tenureMonth")
+      .valueChanges.pipe(debounceTime(1000));
+    const loanAmount$ = this.personalLoanDetailsForm
+      .get("loanAmount")
+      .valueChanges.pipe(debounceTime(1000));
+
+    merge(
+      interestRate$,
+      tenureDays$,
+      tenureMonth$,
+      tenureYear$,
+      loanAmount$
+    ).subscribe(([loanAmount]) => {
+      if (loanAmount)
+        this.personalLoanDetailsForm
+          .get("principlAmount")
+          .setValue(this.personalLoanDetailsForm.get("loanAmount").value);
+      if (
+        this.personalLoanDetailsForm.value.interestRate &&
+        this.personalLoanDetailsForm.value.loanAmount &&
+        (this.personalLoanDetailsForm.value.tenureYear ||
+          this.personalLoanDetailsForm.value.tenureMonth ||
+          this.personalLoanDetailsForm.value.tenureDays)
+      ) {
+        this.calculateLoan();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.valueChangesSubscription) {
+      this.valueChangesSubscription.unsubscribe();
+    }
+  }
+
+  calculateTenure(years, months, days) {
+    return new Promise((resolve, reject) => {
+      const totalMonths = years * 12 + months;
+      const daysInMonth = days ? Math.ceil(days / 30) : 0;
+      const totalMonthsIncludingDays = totalMonths + daysInMonth;
+      console.log(totalMonthsIncludingDays);
+      resolve(totalMonthsIncludingDays);
+    });
   }
 
   /**
    * calculation interestPayable, totalPayableAmount, emiAmount
    */
   calculateLoan() {
-    this.loanCalcService
-      .calculateAmortize(
-        parseInt(this.personalLoanDetailsForm.value.loanAmount),
-        parseInt(this.personalLoanDetailsForm.value.interestRate),
-        parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
-        parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
-        parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
-      )
-      .then((value) => {
-        const finalInterest = value.monthlyInterestArr[0].interestComponent
-          .toFixed(2)
-          .split(".");
-
+    this.calculateTenure(
+      parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
+      parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
+      parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
+    ).then((result) => {
+      console.log("./////////");
+      const payload = {
+        principleAmount: parseInt(
+          this.personalLoanDetailsForm.value.loanAmount
+        ),
+        interestRate: parseFloat(
+          this.personalLoanDetailsForm.value.interestRate
+        ),
+        numberOfMonths: result,
+        firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY"),
+      };
+      this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
         this.personalLoanDetailsForm
           .get("interestPayable")
-          .setValue(
-            parseFloat(finalInterest[0] + "." + finalInterest[1].slice(0, 3))
-          );
+          .setValue(Math.round(resp.data.totalInterest));
         this.personalLoanDetailsForm
           .get("totalPayableAmount")
-          .setValue(value.totalPayableAmount);
+          .setValue(Math.round(resp.data.totalRepaymentAmount));
         this.personalLoanDetailsForm
           .get("emiAmount")
-          .setValue(Math.round(value.emiAmount));
+          .setValue(Math.round(resp.data.monthlyPayment));
       });
+    });
   }
 
   /**

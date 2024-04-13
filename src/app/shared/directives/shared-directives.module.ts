@@ -23,6 +23,7 @@ import { DecimalInputDirective } from "./decimal-input.directive";
 import { NoInitialSpecialCharactersDirective } from "./no-initial-space.directive";
 import { NoSpaceDirective } from "./noSpace.directive";
 import { AppHostDirective } from "./app-host.directive";
+import { MinMaxDirective } from "./restrictNum-directive";
 
 const directives = [
   AutoFocusDirective,
@@ -45,6 +46,7 @@ const directives = [
   NoInitialSpecialCharactersDirective,
   NoSpaceDirective,
   AppHostDirective,
+  MinMaxDirective,
 ];
 
 @NgModule({
