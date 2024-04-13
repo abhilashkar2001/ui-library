@@ -512,9 +512,24 @@ export class LoanFlowComponent implements OnInit {
 
   saveCustomerInfo(resp, docIds) {
     var custResp: any = [...resp];
+    let customerDetails = this.modelFactoryForCustomer(custResp, docIds);
+    const existingCustomerId = JSON.parse(
+      sessionStorage.getItem("userCustomerId")
+    );
+    if (existingCustomerId) {
+      customerDetails.forEach((item, i) => {
+        if (i >= existingCustomerId.length) {
+          delete customerDetails[i].existingCustomerId;
+          customerDetails[i].customerId = null;
+        } else {
+          delete customerDetails[i].existingCustomerId;
+          customerDetails[i].customerId = existingCustomerId[i];
+        }
+      });
+    }
     const payload = {
       originationModel: this.factorizedPayload(),
-      customerInfo: this.modelFactoryForCustomer(custResp, docIds),
+      customerInfo:customerDetails,
     };
     console.log(payload, ".......");
     this.getMasterSave(payload);
