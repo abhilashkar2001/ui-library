@@ -46,6 +46,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
   @Input() hideInfo = false;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   otpForm: FormGroup;
   phone: string;
   otp: any;
@@ -296,9 +297,20 @@ export class CommonMobileVerificationComponent implements OnInit {
                   );
                 }
                 this.onCustomSubmit.emit({ personalInfo: resp.data });
+                this?.updateParentModel({
+                  personalInfo: resp.data,
+                  updateMasterSave: false,
+                });
               }
             } else if (resp?.statusCode === 204) {
-              this.onCustomSubmit.emit({ personalInfo: resp.data });
+              this.onCustomSubmit.emit({
+                personalInfo: resp.data,
+              });
+              this?.updateParentModel({
+                personalInfo: resp.data,
+                updateMasterSave: false,
+              });
+
               sessionStorage.setItem("mobileNo", event.phone);
             } else {
               sessionStorage.setItem("mobileNo", event.phone);

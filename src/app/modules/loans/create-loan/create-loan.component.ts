@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -20,8 +20,9 @@ export class CreateLoanComponent implements OnInit {
   personalLoanDetailsForm: FormGroup;
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
-  @Output() customgoBack: EventEmitter<any> = new EventEmitter();
+  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
@@ -342,6 +343,7 @@ export class CreateLoanComponent implements OnInit {
           "tenureDays",
           this.personalLoanDetailsForm.value.tenureDays
         );
+        this.updateParentModel({ updateMasterSave: false });
         this.onCustomSubmit.emit(this.personalLoanDetailsForm);
       }
     });
@@ -399,7 +401,7 @@ export class CreateLoanComponent implements OnInit {
    * navigating back screen.
    */
   onBack() {
-    this.customgoBack.emit();
+    this.onBackEvent.emit();
   }
 
   /**

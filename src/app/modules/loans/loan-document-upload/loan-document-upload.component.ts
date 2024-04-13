@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { SharedService } from "app/shared/shared.service";
@@ -11,6 +11,7 @@ import { SharedService } from "app/shared/shared.service";
 export class LoanDocumentUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   custId: any;
   stepperTitle: any;
@@ -81,6 +82,7 @@ export class LoanDocumentUploadComponent implements OnInit {
     });
 
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
+    this.updateParentModel({ otherLoanDoc: docIds, updateMasterSave: true });
     this.onCustomSubmit.emit();
   }
 

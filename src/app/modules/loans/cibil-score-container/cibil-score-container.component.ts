@@ -14,6 +14,7 @@ export class CibilScoreContainerComponent implements OnInit {
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit = new EventEmitter<any>();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input() createLoanAccountNumber;
   hideInfo: boolean = true;
 
@@ -79,6 +80,7 @@ export class CibilScoreContainerComponent implements OnInit {
   }
 
   onConfirmFromCibilScoreResult() {
+    this.updateParentModel({ updateMasterSave: false });
     this.onCustomSubmit.emit();
   }
 

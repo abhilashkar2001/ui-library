@@ -31,6 +31,7 @@ import { LoanService } from "app/shared/services/loan/loan.service";
   styleUrls: ["./other-documents.component.scss"],
 })
 export class OtherDocumentsComponent implements OnInit {
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   denominationArray: any[] = [];
   createDocumentForm: FormGroup;
   count = 0;
@@ -313,9 +314,17 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onConfirmEvent(event?) {
+    var docIds = [];
+    event.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
     this.onCustomSubmit.emit({
       documentDetails: event.documentDetails,
     });
+    this.updateParentModel({ kycDoc: docIds, updateMasterSave: true });
   }
 
   goBack() {

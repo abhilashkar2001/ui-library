@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TermsConditionsComponent } from "app/shared/components/terms-conditions/terms-conditions.component";
 
-import { TermsConditionsComponent } from './loan-terms-conditions.component';
-
-describe('TermsConditionsComponent', () => {
+describe("TermsConditionsComponent", () => {
   let component: TermsConditionsComponent;
   let fixture: ComponentFixture<TermsConditionsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TermsConditionsComponent]
+      declarations: [TermsConditionsComponent],
     });
     fixture = TestBed.createComponent(TermsConditionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

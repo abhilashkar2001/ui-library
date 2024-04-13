@@ -25,6 +25,7 @@ export class LoanSummaryComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   stepperTitle: any;
   loanSummaryDetails: any;
   @Input() loanSummary;
@@ -60,6 +61,7 @@ export class LoanSummaryComponent implements OnInit {
   }
 
   onVerify() {
+    this.updateParentModel({ updateMasterSave: false });
     this.onCustomSubmit.emit();
     this.openAccountService.setData(this.loanSummaryDetails);
   }
