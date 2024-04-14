@@ -149,6 +149,8 @@ export class CreateAccountLandingPageComponent {
           this.personalDetails = resp.data[0]?.customerInfo;
           this.originationId = resp.data[0].originationModel.originationId;
           this.originationModel = resp.data[0]?.originationModel;
+          this.personalDoc =
+            resp.data[0]?.customerInfo[0]?.documnentsInfo?.documents ?? [];
           // this.componentRef.instance.personalDetails = this.personalDetails;
           this.cdr.detectChanges();
         }
