@@ -165,7 +165,7 @@ export class CreateAccountLandingPageComponent {
     const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
     let originationModel = {
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-      originationId: this.originationModel?.originationId ?? null,
+      originationId: parseInt(sessionStorage.getItem("originationId")) ?? null,
       accountType: sessionData.accountType,
       basisDetailsId: sessionData.basisDetailsId,
       branchCode: this.tokenStore.getUser().branchCode,
@@ -249,7 +249,7 @@ export class CreateAccountLandingPageComponent {
           "originationId",
           resp?.data?.originationModel?.originationId
         );
-        this.originationModel = resp.data[0]?.originationModel;
+        this.originationModel = resp.data?.originationModel;
         //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
         //        dynamically wherever it has been asked.
         this.next();
