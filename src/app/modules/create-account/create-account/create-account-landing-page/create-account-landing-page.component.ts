@@ -182,6 +182,12 @@ export class CreateAccountLandingPageComponent {
       this.personalDetails,
       value?.kycDoc ?? []
     );
+    if (value?.personalInfo) {
+      this.personalDetails = value.personalInfo;
+      this.personalDetails.forEach((item) => {
+        if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
+      });
+    }
     if (value.updateMasterSave) {
       this.getMasterSave({
         originationModel: originationModel,
