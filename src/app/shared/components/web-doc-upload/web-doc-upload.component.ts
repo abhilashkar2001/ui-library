@@ -273,7 +273,7 @@ export class WebDocUploadComponent implements OnInit {
           this.documentNotMatched(i, file);
           return -1;
         } else {
-          this.loder.close();
+          // this.loder.close();
           this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
             duration: 4000,
             verticalPosition: "top",
@@ -321,7 +321,7 @@ export class WebDocUploadComponent implements OnInit {
         }
       }
     } catch (error) {
-      this.loder.close();
+      // this.loder.close();
       this.deleteFile(i, i, file);
       throw error;
     }
@@ -329,7 +329,7 @@ export class WebDocUploadComponent implements OnInit {
 
   documentNotMatched(i, file) {
     this.deleteFile(i, i, file);
-    this.loder.close();
+    // this.loder.close();
     this.snack.open(
       `Uploaded Document is not valid or details not found` + " !",
       "OK",
@@ -377,13 +377,13 @@ export class WebDocUploadComponent implements OnInit {
     formData.append("data", JSON.stringify(data));
     formData.append("file", file);
     formData.append("module", "document");
-    this.loder.open();
+    // this.loder.open();
     this.api.uploadDocument(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
         if (this.ocrCheck) this.readDocument(file, i);
-        else this.loder.close();
+        // else this.loder.close();
       }
     });
   }

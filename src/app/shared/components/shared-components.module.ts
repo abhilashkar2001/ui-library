@@ -12,7 +12,7 @@ import { SharedDirectivesModule } from "../directives/shared-directives.module";
 import { HeaderTopComponent } from "./header-top/header-top.component";
 
 // ALWAYS REQUIRED
-import { BreadcrumbComponent } from "./breadcrumb/breadcrumb.component";
+import { BreadcrumbComponent } from "./core-components/breadcrumb/breadcrumb.component";
 import { AppComfirmComponent } from "../services/app-confirm/app-confirm.component";
 import { AppLoaderComponent } from "../services/app-loader/app-loader.component";
 import { ButtonLoadingComponent } from "./button-loading/button-loading.component";
@@ -35,7 +35,6 @@ import { CommonMobileVerificationComponent } from "./comon-mobile-verification/c
 import { CarouselComponent } from "./carousel/carousel.component";
 import { FaqComponent } from "./faq/faq.component";
 import { ClientsComponent } from "./clients/clients.component";
-import { AccountHeaderComponent } from "./account-header/account-header.component";
 import { CibilScorePoorDialgComponent } from "./cibil-score-poor-dialg/cibil-score-poor-dialg.component";
 import { CibilScoreResultComponent } from "./cibil-score-result/cibil-score-result.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -61,6 +60,8 @@ import { ShowDocumentComponent } from "./show-document/show-document.component";
 import { ErrorNotifierPopupComponent } from "./error-notifier-popup/error-notifier-popup.component";
 import { WebDocUploadComponent } from "./web-doc-upload/web-doc-upload.component";
 import { WarningComponent } from "./warning/warning.component";
+import { SpinnerComponent } from "./core-components/spinner/spinner.component";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -83,7 +84,6 @@ const components = [
   FaqComponent,
   CibilScoreResultComponent,
   CibilScorePoorDialgComponent,
-  AccountHeaderComponent,
   ClientsComponent,
   LandingProfileComponent,
   OtherDocumentsComponent,
@@ -101,6 +101,7 @@ const components = [
   ErrorNotifierPopupComponent,
   WebDocUploadComponent,
   WarningComponent,
+  SpinnerComponent,
 ];
 
 @NgModule({
@@ -120,6 +121,7 @@ const components = [
     NgOtpInputModule,
     SwiperModule,
     MatIconModule,
+    NgxSpinnerModule,
   ],
   declarations: components,
   exports: components,
