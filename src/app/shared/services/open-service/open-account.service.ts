@@ -45,8 +45,6 @@ export class OpenAccountService {
     );
   }
 
-  verifyKYC() {}
-
   getResidentType() {
     return this.http.get(`${baseUrl}/details?businessSuite`);
   }
@@ -133,6 +131,11 @@ export class OpenAccountService {
   checkMobileAndProduct(productCode, mobileNo, accountType) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
+    );
+  }
+  getOriginationMaster(id) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser?originationId=${id}`
     );
   }
 }

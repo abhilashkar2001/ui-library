@@ -40,6 +40,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   @Input() isHideField = false;
   @Input() basisId: any;
   @Input() personalDetails: any;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -451,6 +452,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
       status: true,
       prefixValue: prefixValue,
       personalDetails: this.customerDetailsForm,
+    });
+
+    this?.updateParentModel({
+      personalDetails: this.customerDetailsForm.value,
+      updateMasterSave: true,
+      prefixValue: prefixValue,
     });
   }
 

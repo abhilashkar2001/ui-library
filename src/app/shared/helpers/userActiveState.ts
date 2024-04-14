@@ -77,6 +77,7 @@ export class UserActiveState {
 
     setTimeout(() => {
       this.dialog.closeAll();
+      this.tokenStorageService.cleanUpSessionPartially();
       this.router.navigate(["/home"], {
         queryParams: { type: "auth" },
       });

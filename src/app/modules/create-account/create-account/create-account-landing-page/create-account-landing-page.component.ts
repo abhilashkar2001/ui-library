@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -60,17 +60,18 @@ export class CreateAccountLandingPageComponent {
     productDuplicationKey: PRODUCT_DUPLICATION_KEY,
     applicationType: "Create Account application",
   };
+  originationModel: any;
 
   constructor(
     private router: Router,
     private openAccountService: OpenAccountService,
     private commonService: CommonService,
     private dialog: MatDialog,
-    private showSideBar: NewDepositService,
     private loanApi: LoanService,
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private cdr: ChangeDetectorRef
   ) {
     // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
@@ -96,17 +97,8 @@ export class CreateAccountLandingPageComponent {
           // for personal doc.
           this.componentRef.instance.personalDoc = this.personalDoc;
 
-          this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
-            if (data?.personalInfo) {
-              this.personalDetails = data.personalInfo;
-              this.personalDoc = data.personalInfo[0]?.documentInfo ?? [];
-            }
-            if (screenName.toLowerCase().includes("personal"))
-              this.customSavePersonal(data);
-            else if (screenName.toLowerCase().includes("kyc"))
-              this.customSaveDocuments(data);
-            else this.next();
-          });
+          this.componentRef.instance.updateParentModel = this.updateAccount;
+
           this.componentRef.instance?.onBackEvent.subscribe((_) => {
             this.goBack();
           });
@@ -140,11 +132,123 @@ export class CreateAccountLandingPageComponent {
     );
     //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
     let customStageId = parseInt(sessionStorage.getItem("customerStageId"));
-    if (customStageId) {
+    var originationId = sessionStorage.getItem("originationId");
+    if (originationId) this.getOriginationMaster(parseInt(originationId));
+    else if (customStageId) {
       this.getCustomerbyStageId(customStageId);
     } else if (this.existingCustomerId) {
       this.getCustomerById(this.existingCustomerId);
     }
+  }
+
+  getOriginationMaster(originationId) {
+    this.openAccountService
+      .getOriginationMaster(originationId)
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.personalDetails = resp.data[0]?.customerInfo;
+          this.originationId = resp.data[0].originationModel.originationId;
+          this.originationModel = resp.data[0]?.originationModel;
+          this.personalDoc =
+            resp.data[0]?.customerInfo[0]?.documnentsInfo?.documents ?? [];
+          // this.componentRef.instance.personalDetails = this.personalDetails;
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
+  /**
+   * it will check the updateMasterSave key if its true it will call master-save or else it will move to next screen.
+   * @param value inputValue of child screen
+   */
+  updateAccount = (value: Partial<any>) => {
+    const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
+    let originationModel = {
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+      originationId: this.originationModel?.originationId ?? null,
+      accountType: sessionData.accountType,
+      basisDetailsId: sessionData.basisDetailsId,
+      branchCode: this.tokenStore.getUser().branchCode,
+      source: SOURCE_PAYLOAD_KEY,
+      businessProductName: this.productDetails.basisName,
+      productDescription: this.productDetails.basisDetailStory,
+      ownership: this.ownershipId,
+      currencyCode: this.currencyCode?.currency,
+      branchId: this.currentUser.branchId,
+    };
+    if (value.personalDetails)
+      this.personalDetails = value.personalDetails.customer;
+    let customerInfo = this.modelFactoryForCustomer(
+      this.personalDetails,
+      value?.kycDoc ?? []
+    );
+    if (value.updateMasterSave) {
+      this.getMasterSave({
+        originationModel: originationModel,
+        customerInfo: customerInfo,
+      });
+    } else this.next();
+  };
+
+  /**
+   *
+   * @param customerInfo is a customerInfo model
+   * @param docIds is a document model
+   * @returns payload of customerInfo.
+   */
+  modelFactoryForCustomer(customerInfo, docIds) {
+    let custResp: any = [...customerInfo];
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
+      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+      delete custResp[i].documentsInfoModel;
+      delete custResp[i].signatureInfo;
+      if (!custResp[i]?.customerStagingId) {
+        custResp[i].contact.contactId = null;
+        custResp[i].contact.address[i].addressId = null;
+        delete custResp[i].customerStagingId;
+      }
+
+      custResp[i].isphoneNumVerified = true;
+      custResp[i].isEmailVerified = true;
+      custResp[i].customerNo = null;
+      custResp[i].customerId = null;
+
+      const customerId = sessionStorage.getItem("userCustomerId");
+      if (customerId) {
+        delete custResp[i].existingCustomerId;
+        custResp[i].customerId = parseInt(customerId);
+      } else {
+        delete custResp[i].existingCustomerId;
+        custResp[i].customerId = null;
+      }
+    });
+
+    return custResp;
+  }
+
+  /**
+   * Here api call for master save & updating origination model with originationId.
+   * NOTE :- Once Workflow formulla Ready thn conditionally need to add verifyWorkflow api.
+   * @param payload
+   */
+  getMasterSave(payload) {
+    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.originationId = resp.data.originationModel.originationId;
+        sessionStorage.setItem(
+          "originationId",
+          resp?.data?.originationModel?.originationId
+        );
+        this.originationModel = resp.data[0]?.originationModel;
+        //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
+        //        dynamically wherever it has been asked.
+        this.next();
+      }
+    });
   }
 
   getCustomerbyStageId(customStageId) {
@@ -218,87 +322,16 @@ export class CreateAccountLandingPageComponent {
     this.showComponent(this.currentStep);
   }
 
-  cleanCacheInMobileScreen() {
-    if (this.currentStep.toLowerCase().includes("mobile")) {
-      sessionStorage.removeItem("userCustomerId");
-      sessionStorage.removeItem("customerStageId");
-      sessionStorage.removeItem("customerId");
-    }
-  }
-
   next() {
     const num = this.selectedStep + 1;
-    this.selectedStep = num;
-    sessionStorage.setItem("accountstep", String(this.selectedStep));
-    this.factory();
-  }
-
-  onVerify(event) {
-    this.componentRef.instance.isLoading = true;
-    // this.isLoading = true;
-    this.openAccountService
-      .checkMobileAndProduct(
-        this.productDetails.basisName,
-        event.phone,
-        PRODUCT_DUPLICATION_KEY
-      )
-      .subscribe((resp) => {
-        if (!resp) {
-          this.allreadyProduct();
-        } else {
-          this.openAccountService
-            .getExistingCustomer(event.phone)
-            .subscribe((resp: any) => {
-              // Here cleaning the all ids from cache.
-              this.cleanCacheInMobileScreen();
-              if (resp?.statusCode === 200 && resp?.data) {
-                // if (resp?.data[0]?.onboardingStatus === "APPROVED") {
-                if (resp?.data?.length > 0) {
-                  console.log("approved record");
-                  sessionStorage.setItem("mobileNo", event.phone);
-                  sessionStorage.setItem(
-                    "userCustomerId",
-                    resp.data[0].customerId
-                  );
-
-                  this.personalDetails = resp.data;
-                  this.componentRef.instance.personalDetails =
-                    this.personalDetails;
-                  // if (resp.data[0].primaryCustomer)
-                  this.personalDoc = resp?.data[0]?.documentInfo;
-                  this.componentRef.instance.personalDoc =
-                    resp.data[0].documentInfo;
-                  this.componentRef.instance.isLoading = false;
-                }
-
-                // }
-              } else if (resp?.statusCode === 204) {
-                this.personalDetails = resp.data;
-                this.componentRef.instance.personalDetails =
-                  this.personalDetails;
-                this.componentRef.instance.isLoading = false;
-                sessionStorage.setItem("mobileNo", event.phone);
-              } else {
-                sessionStorage.setItem("mobileNo", event.phone);
-              }
-              setTimeout(() => {
-                this.next();
-              }, 100);
-            });
-        }
-      });
-  }
-  allreadyProduct() {
-    this.dialog.open(ErrorNotifierPopupComponent, {
-      data: {
-        errorMessage: DUPLICATE_PRODUCT_ERROR_MESSAGE,
-        errorMessageHint: DUPLICATE_PRODUCT_HINT,
-      },
-      width: "650px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
+    if (num === this.screenList?.length && num > 0) {
+      this.done();
+      return;
+    } else {
+      this.selectedStep = num;
+      sessionStorage.setItem("accountstep", String(this.selectedStep));
+      this.factory();
+    }
   }
 
   getTabDetails(tabDetails: any) {
@@ -310,88 +343,8 @@ export class CreateAccountLandingPageComponent {
       this.showComponent(this.currentStep);
   }
 
-  customSavePersonal(event) {
-    let payload = event.personalDetails.value.customer;
-    if (payload[0]?.prefixValue) delete payload[0].prefixValue;
-    payload.forEach((item) => {
-      // this customer id also need to set null dynamically.
-      item.customerId = null;
-      if (!this.existingCustomerId) item.customerNo = null;
-      item.primaryCustomer = true;
-    });
-    this.openAccountService.stageSavePersonalDetails(payload).subscribe(
-      (response: any) => {
-        sessionStorage.setItem(
-          "customerStageId",
-          response.data[0].customerStagingId
-        );
-        this.personalDetails = response.data[0];
-
-        this.next();
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-  }
-
   onBackOnPreviousStep() {
     this.stepper.previous();
-  }
-
-  customSaveDocuments(e) {
-    var docIds = [];
-    e.documentDetails.otherDocument.forEach((element) => {
-      const docId = {
-        docIds: element.docIds,
-      };
-      docIds.push(docId);
-    });
-
-    this.openAccountService
-      .getCustByStageId(parseInt(sessionStorage.getItem("customerStageId")))
-      .subscribe((resp) => {
-        const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
-        var custResp: any = this.factoryCustomer(resp.data);
-        custResp[0].isphoneNumVerified = true;
-        custResp[0].isEmailVerified = true;
-        custResp[0] = {
-          ...custResp[0],
-          documentId: docIds[0].docIds?.length > 0 ? docIds : [],
-        };
-        // custResp[0].customerId = null;
-        custResp[0].contact.contactId = null;
-        custResp[0].customerNo = null;
-        custResp[0].customerId = null;
-        custResp[0].contact.address[0].addressId = null;
-        delete custResp[0].documentsInfoModel;
-        delete custResp[0].customerStagingId;
-        const customerId = sessionStorage.getItem("userCustomerId");
-        if (customerId) {
-          delete custResp[0].existingCustomerId;
-          custResp[0].customerId = parseInt(customerId);
-        } else {
-          delete custResp[0].existingCustomerId;
-          custResp[0].customerId = null;
-        }
-
-        const payload = {
-          originationModel: {
-            applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-            accountType: sessionData.accountType,
-            basisDetailsId: sessionData.basisDetailsId,
-            branchCode: this.tokenStore.getUser().branchCode,
-            source: SOURCE_PAYLOAD_KEY,
-            businessProductName: this.productDetails.basisName,
-            productDescription: this.productDetails.basisDetailStory,
-            ownership: this.ownershipId,
-            currencyCode: this.currencyCode?.currency,
-            branchId: this.currentUser.branchId,
-          },
-          customerInfo: custResp,
-        };
-        this.masterSave(payload, e);
-      });
   }
 
   /**
@@ -448,15 +401,7 @@ export class CreateAccountLandingPageComponent {
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp === true) {
-        sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("customerId");
-        sessionStorage.removeItem("loanDisburseId");
-        sessionStorage.removeItem("loanstep");
-        sessionStorage.removeItem("isExistingCustomer");
-        sessionStorage.removeItem("loanAmmount");
-        sessionStorage.removeItem("currentAccountStage");
-        sessionStorage.removeItem("verifyWork");
-        sessionStorage.removeItem("loanHolderType");
+        this.tokenStore.cleanUpSessionPartially();
         this.router.navigate(["/account/landing"]);
       }
     });
@@ -493,26 +438,6 @@ export class CreateAccountLandingPageComponent {
     });
   }
 
-  factoryCustomer(resp) {
-    var custResp = resp;
-    custResp.forEach((item, i) => {
-      custResp[i].documentId = [];
-      item.documnentsInfo?.documents.forEach((item2, j) =>
-        item2?.docs.forEach((item3) => {
-          var docId = [];
-          docId.push(item3?.documentId);
-          var doc = {
-            docIds: docId,
-          };
-          custResp[i].documentId.push(doc);
-        })
-      );
-      delete custResp[i].biometricInfo;
-      delete custResp[i].documnentsInfo;
-      delete custResp[i].signatureInfo;
-    });
-    return custResp;
-  }
   verfyStep(verifyStep, currentStep) {
     if (currentStep?.toLowerCase().includes(verifyStep)) return true;
     else return false;
