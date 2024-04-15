@@ -53,10 +53,10 @@ export class LoanDocumentUploadComponent implements OnInit {
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
           if (
-            resp.data[0].loanAccountInfo.documnentsInfo.documents?.length > 0
+            resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel?.length > 0
           ) {
             this.documentList =
-              resp.data[0].loanAccountInfo.documnentsInfo.documents;
+              resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
           }
         }
       });
