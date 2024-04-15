@@ -458,6 +458,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       personalDetails: this.customerDetailsForm.value,
       updateMasterSave: true,
       prefixValue: prefixValue,
+      isForLoan: false,
     });
   }
 
