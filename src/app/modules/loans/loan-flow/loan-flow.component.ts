@@ -145,7 +145,10 @@ export class LoanFlowComponent implements OnInit {
         originationModel: originationModel,
         customerInfo: customerInfo,
       });
-    } else this.next();
+    } else {
+      if (!isLoan) return;
+      else this.next();
+    }
   };
 
   ngOnInit(): void {
