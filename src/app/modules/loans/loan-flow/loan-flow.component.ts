@@ -131,6 +131,7 @@ export class LoanFlowComponent implements OnInit {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
+    const isLoan = value?.isForLoan ?? true;
     this.otherLoanDoc = value?.otherLoanDoc ? value?.otherLoanDoc : null;
     let originationModel = {
       ...this.factorizedPayload(),
@@ -139,7 +140,7 @@ export class LoanFlowComponent implements OnInit {
       this.personalDetails,
       value?.kycDoc ?? null
     );
-    if (value.updateMasterSave) {
+    if (value.updateMasterSave && isLoan) {
       this.getMasterSave({
         originationModel: originationModel,
         customerInfo: customerInfo,
