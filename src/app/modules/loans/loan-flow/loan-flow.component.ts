@@ -270,6 +270,7 @@ export class LoanFlowComponent implements OnInit {
   factorizedPayload() {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
     let payload = {
       originationId: this.originationModel?.originationId ?? null,
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
@@ -285,7 +286,7 @@ export class LoanFlowComponent implements OnInit {
       productDescription: this.productDetails.basisDetailStory,
       currencyCode: this.otherUserInfo.currency,
       branchId: this.currentUser.branchId,
-      ownership: this.ownerShipId,
+      ownership: ownershipId,
       documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
     };
     return payload;
@@ -529,7 +530,7 @@ export class LoanFlowComponent implements OnInit {
     }
     const payload = {
       originationModel: this.factorizedPayload(),
-      customerInfo:customerDetails,
+      customerInfo: customerDetails,
     };
     console.log(payload, ".......");
     this.getMasterSave(payload);
