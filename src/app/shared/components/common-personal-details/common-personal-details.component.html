@@ -243,6 +243,11 @@
                             numbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
+                            [attr.readonly]="
+                              customer.get('contact').get('mobile').readonly
+                                ? true
+                                : null
+                            "
                           />
                         </mat-form-field>
                       </div>

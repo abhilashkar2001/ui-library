@@ -380,8 +380,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
   }
+
   checkMobileValidtiy(i) {
     const mobileControl = this.customer.at(i).get("contact").get("mobile");
+    const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
+    if (mobileNo) {
+      if (i === 0) {
+        mobileControl.patchValue(mobileNo);
+        mobileControl.disable();
+      }
+    }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
       if (resp?.length != this.maxMobileLength) {
         mobileControl.setErrors({ invalidLength: true });
