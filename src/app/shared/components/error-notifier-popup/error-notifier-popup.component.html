@@ -3,7 +3,7 @@
     <div class="alertText">
       {{ errorMessage }}
     </div>
-    <div class="alertText_hint" *ngIf="errorMessageHint">
+    <div class="alertText_hint" *ngIf="errorMessageHint && isStageAvilable">
       {{ errorMessageHint }}
     </div>
   </div>
@@ -17,7 +17,7 @@
       class="saveButton done_btn"
       (click)="closeDialog()"
     >
-      Ok
+      {{ isStageAvilable ? "OK" : "Next" }}
     </button>
   </div>
 </div>

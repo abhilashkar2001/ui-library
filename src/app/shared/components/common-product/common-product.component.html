@@ -58,7 +58,7 @@
         </button>
 
         <a
-          *ngIf="subAccount?.featureInfo?.length > 0"
+          *ngIf="subAccount?.featureInfo?.length > 1"
           class="more-less-text"
           (click)="readMoreLess(subAccount)"
           >View {{ subAccount?.isReadMore ? "Less" : "More" }}</a

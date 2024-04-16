@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 export class ErrorNotifierPopupComponent implements OnInit {
   errorMessage: string = "";
   errorMessageHint: string = "";
+  isStageAvilable: boolean = true;
 
   constructor(
     private dialogRef: MatDialogRef<ErrorNotifierPopupComponent>,
@@ -18,6 +19,7 @@ export class ErrorNotifierPopupComponent implements OnInit {
   ngOnInit(): void {
     this.errorMessage = this.data.errorMessage;
     this.errorMessageHint = this.data?.errorMessageHint ?? "";
+    this.isStageAvilable = this.data?.isStageAvilable ?? true;
   }
 
   closeDialog() {
