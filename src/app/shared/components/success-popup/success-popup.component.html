@@ -3,20 +3,30 @@
     <mat-icon (click)="close()">close</mat-icon>
   </div> -->
   <div class="alertText">
-    <div>Application is submitted successfully.</div>
+    <div *ngIf="isStageAvilable; else showOtherText">
+      Application is submitted successfully.
+    </div>
+    <ng-template #showOtherText
+      >{{ currentStageName }} stage is not avilable. Please move to next
+      screen.</ng-template
+    >
   </div>
-  <div class="alertText">
+  <div class="alertText" *ngIf="isStageAvilable">
     <div>We will review and get back to you.</div>
   </div>
   <div class="alertImage">
     <img
       class="summaryIcon"
-      src="assets/images/success-logo.svg"
+      src="assets/images/error-icon.svg"
       alt="Success Sign"
     />
   </div>
 
-  <div fxLayout="row" style="display: flex; justify-content: center">
+  <div
+    fxLayout="row"
+    style="display: flex; justify-content: center"
+    *ngIf="isStageAvilable"
+  >
     <div class="refrence_no_div">
       <div class="refrence_no_innerDiv">
         Application No. : <span>{{ originationId }}</span>
@@ -25,14 +35,11 @@
   </div>
   <br />
 </div>
-<div fxLayout="column">
+<div fxLayout="column" *ngIf="isStageAvilable">
   <div class="note_background">
     <span class="higlight_note">Note:</span> Please quote the above reference
     number in all communications with the bank
   </div>
-  <!-- <div class="btnGroup">
-    <button class="saveButton" mat-raised-button>Done</button>
-  </div> -->
 </div>
 <div fxLayout="column" fxLayoutAlign="center center" class="btnClass">
   <!-- <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -47,6 +54,7 @@
     fxLayout="row"
     class="button-container"
     fxLayoutAlign="space-between center"
+    *ngIf="isStageAvilable"
   >
     <button
       type="button"

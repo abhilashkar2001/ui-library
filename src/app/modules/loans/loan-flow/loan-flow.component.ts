@@ -628,6 +628,7 @@ export class LoanFlowComponent implements OnInit {
     this.cuurrentStep = this.screenList[num].screenName;
     setTimeout(() => {
       this.selectedStep = num;
+      this.factory();
     }, 200);
   }
 

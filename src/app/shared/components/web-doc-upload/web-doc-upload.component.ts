@@ -281,11 +281,11 @@ export class WebDocUploadComponent implements OnInit {
             panelClass: "snackbar-error",
           });
           // if document details not found or document is invalid.
-          console.log(res, "...........");
           if (
-            res.data?.adhaarNumber == "Detail not found" ||
-            res.data?.panNumber == "Detail not found" ||
-            res.data?.passportNumber == "Detail not found"
+            (res.data?.adhaarNumber == "Detail not found" ||
+              res.data?.panNumber == "Detail not found" ||
+              res.data?.passportNumber == "Detail not found") &&
+            res.data?.dateOfBirth == "Detail not found"
           ) {
             this.documentNotMatched(i, file);
           } else {
