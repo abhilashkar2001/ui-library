@@ -243,10 +243,10 @@
                             numbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
-                            [attr.readonly]="
+                            [readonly]="
                               customer.get('contact').get('mobile').readonly
                                 ? true
-                                : null
+                                : false
                             "
                           />
                         </mat-form-field>
