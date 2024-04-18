@@ -56,6 +56,7 @@
                     <mat-form-field
                       appearance="outline"
                       class="full-width disable-field"
+                      (click)="getGenericDetails()"
                     >
                       <mat-label>Prefix</mat-label>
 
@@ -243,6 +244,11 @@
                             numbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
+                            [readonly]="
+                              customer.get('contact').get('mobile').readonly
+                                ? true
+                                : false
+                            "
                           />
                         </mat-form-field>
                       </div>
@@ -276,6 +282,7 @@
                     <mat-form-field
                       appearance="outline"
                       class="full-width disable-field"
+                      (click)="getGenericDetails()"
                     >
                       <mat-label>Gender</mat-label>
                       <mat-select
@@ -350,6 +357,7 @@
                         <mat-form-field
                           appearance="outline"
                           class="full-width disable-field"
+                          (click)="getGenericDetails()"
                         >
                           <mat-label>Residence Type</mat-label>
                           <mat-select formControlName="residenceType">

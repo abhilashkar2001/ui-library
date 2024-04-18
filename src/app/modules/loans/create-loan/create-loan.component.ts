@@ -30,6 +30,8 @@ export class CreateLoanComponent implements OnInit {
   screenName: string = CreateLoanConstant.SCREEN_NAME;
   staticData = CreateLoanConstant.GENERIC_SATIC_KEYS;
   accountTypeArr = CreateLoanConstant.ACCOUNT_TYPE;
+  holderTypeArray: any[] = [{}];
+  disbursementTypeArray: any[] = [{}];
   staticOwnership = {
     OWNERSHIP: [],
   };
@@ -64,7 +66,7 @@ export class CreateLoanComponent implements OnInit {
     this.currencySymboll = this.otherUserInfo?.currencySymbol;
     const basisId = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
-    this.getGenericDetails();
+    // this.getGenericDetails();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
     var id = parseInt(sessionStorage.getItem("loanDisburseId"));
@@ -111,6 +113,8 @@ export class CreateLoanComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
+          this.holderTypeArray = resp.data["HOLDERTYPE"];
+          this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
         }
       });
   }

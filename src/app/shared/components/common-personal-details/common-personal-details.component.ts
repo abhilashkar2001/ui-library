@@ -58,9 +58,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   listCityState: any = [];
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
-  genderArray: any[] = [];
-  prefixArray: any[] = [];
-  residenceTypeArray: any[] = [];
+  genderArray: any[] = [{}];
+  prefixArray: any[] = [{}];
+  residenceTypeArray: any[] = [{}];
   todayDate: Date = new Date();
   listCity: any = [];
   primaryCustIndex: number = 0;
@@ -71,6 +71,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   maxMobileLength: any;
   nationalityArray: any[] = [];
   customerIds: any[] = [];
+
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -102,33 +103,27 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getCountry();
-    this.getGenericDetails();
+    // this.getGenericDetails();
     this.fetchBoundaries();
     this.holderType =
       sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
     this.getAllRequisite().then((res) => {
-      if (this.personalDetails?.length > 0)
+      if (this.personalDetails?.length > 0) {
+        this.getGenericDetails();
         this.buildCustomerDetailsForm(this.personalDetails);
-      else this.buildCustomerDetailsForm();
+      } else this.buildCustomerDetailsForm();
     });
-
-    // this.getState();
-    // this.getCity();
   }
 
   async getAllRequisite() {
     return new Promise((resolve) => {
       forkJoin({
         countries: this.api.getCountryDetails(),
-        states: this.loanApi.getAllState(),
-        citys: this.loanApi.getAllCity(),
       }).subscribe(
         (res) => {
           console.log(res, "......");
           this.getCountry(res.countries);
-          this.getState(res.states);
-          this.getCity(res.citys);
           resolve("done");
         },
         () => {
@@ -176,6 +171,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   getCountry(resp) {
     if (resp?.statusCode === 200) {
       if (resp?.data) {
+        this.countryArray = resp?.data;
         resp?.data.forEach((element) => {
           if (element.nationality != null) this.nationalityArray.push(element);
         });
@@ -380,8 +376,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
   }
+
   checkMobileValidtiy(i) {
     const mobileControl = this.customer.at(i).get("contact").get("mobile");
+    const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
+    if (mobileNo) {
+      if (i === 0) {
+        mobileControl.patchValue(mobileNo);
+        mobileControl.disable();
+      }
+    }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
       if (resp?.length != this.maxMobileLength) {
         mobileControl.setErrors({ invalidLength: true });
