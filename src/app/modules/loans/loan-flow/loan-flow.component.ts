@@ -159,8 +159,6 @@ export class LoanFlowComponent implements OnInit {
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    // this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
-    // console.log(this.ownerShipId);
     var originationId = sessionStorage.getItem("originationId");
     var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
     var customerStageId = JSON.parse(

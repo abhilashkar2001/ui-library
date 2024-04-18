@@ -47,7 +47,6 @@ export class CreateLoanComponent implements OnInit {
   otherUserInfo: any;
   ownerShipId: any;
   valueChangesSubscription: Subscription;
-  genericFetched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -105,10 +104,6 @@ export class CreateLoanComponent implements OnInit {
     });
   }
 
-  onClickGeneric() {
-    if (!this.genericFetched) this.getGenericDetails();
-  }
-
   /**
    * Api call to get the generic details
    */
@@ -120,7 +115,6 @@ export class CreateLoanComponent implements OnInit {
           this.staticData = { ...resp.data };
           this.holderTypeArray = resp.data["HOLDERTYPE"];
           this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
-          this.genericFetched = true;
         }
       });
   }

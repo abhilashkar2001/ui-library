@@ -65,7 +65,6 @@ export class WebDocUploadComponent implements OnInit {
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
   ocrCheck: boolean = true;
-  genericFetched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -88,10 +87,6 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes?.genericScreenInfo?.currentValue) {
-    //   this.getGenericDetails(changes?.genericScreenInfo?.currentValue);
-    // }
-
     if (changes?.documentList?.currentValue) {
       if (!this.documentTypeArray) {
         this.documentTypeArray = [{}];
@@ -104,22 +99,12 @@ export class WebDocUploadComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
   }
 
-  onClickGeneric() {
-    if (!this.genericFetched) {
-      if (!this.documentTypeArray) {
-        this.documentTypeArray = [{}];
-        this.getGenericDetails();
-      }
-    }
-  }
-
   getGenericDetails() {
     this.sharedService
       .genericValue("Common", Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data["DOCUMENTNAME"];
-          this.genericFetched = true;
         }
       });
   }

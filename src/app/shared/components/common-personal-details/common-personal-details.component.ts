@@ -71,7 +71,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   maxMobileLength: any;
   nationalityArray: any[] = [];
   customerIds: any[] = [];
-  genericFetched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -115,23 +114,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
         this.buildCustomerDetailsForm(this.personalDetails);
       } else this.buildCustomerDetailsForm();
     });
-
-    // this.getState();
-    // this.getCity();
   }
 
   async getAllRequisite() {
     return new Promise((resolve) => {
       forkJoin({
         countries: this.api.getCountryDetails(),
-        // states: this.loanApi.getAllState(),
-        // citys: this.loanApi.getAllCity(),
       }).subscribe(
         (res) => {
           console.log(res, "......");
           this.getCountry(res.countries);
-          // this.getState(res.states);
-          // this.getCity(res.citys);
           resolve("done");
         },
         () => {
@@ -165,12 +157,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
       });
   }
 
-  onClickGeneric() {
-    if (!this.genericFetched) {
-      this.getGenericDetails();
-    }
-  }
-
   getGenericDetails() {
     this.loanApi
       .genericValue(this.screenName, Object.keys(this.staticData))
@@ -179,7 +165,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
           this.genderArray = resp.data["GENDER"];
           this.prefixArray = resp.data["PREFIX"];
           this.residenceTypeArray = resp.data["RESIDENCETYPE"];
-          this.genericFetched = true;
         }
       });
   }
