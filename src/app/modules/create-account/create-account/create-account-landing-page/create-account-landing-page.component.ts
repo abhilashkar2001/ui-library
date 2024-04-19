@@ -235,7 +235,6 @@ export class CreateAccountLandingPageComponent {
    * @returns payload of customerInfo.
    */
   modelFactoryForCustomer(customerInfo, docIds) {
-    console.log(customerInfo, "/.........");
     let custResp: any = [...customerInfo];
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
@@ -265,7 +264,6 @@ export class CreateAccountLandingPageComponent {
         custResp[i].customerId = null;
       }
     });
-    console.log(custResp, "..........");
     return custResp;
   }
 
