@@ -102,8 +102,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getCountry();
-    // this.getGenericDetails();
+    this.getGenericDetails();
     this.fetchBoundaries();
     this.holderType =
       sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
@@ -270,7 +269,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   addAddress(i, address?) {
-    console.log(address, "///");
     const jk = this.customer.at(i).get("contact") as FormGroup;
     const pk = jk.get("address") as FormArray;
     const addressArrayControl = pk;
@@ -383,7 +381,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     if (mobileNo) {
       if (i === 0) {
         mobileControl.patchValue(mobileNo);
-        mobileControl.disable();
+        // mobileControl.disable();
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
@@ -432,10 +430,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   confirmCustomer() {
-    console.log(
-      this.customerDetailsForm.invalid ||
-        (!this.isHideField && this.isAnyPrimaryCustomer())
-    );
     if (
       this.customerDetailsForm.invalid ||
       (!this.isHideField && this.isAnyPrimaryCustomer())
@@ -451,7 +445,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
     });
-
+    console.log(this.customerDetailsForm, "customerDetailsForm");
     this.onCustomSubmit.emit({
       status: true,
       prefixValue: prefixValue,

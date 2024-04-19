@@ -78,7 +78,8 @@ export class OtherDocumentsComponent implements OnInit {
     private sharedService: SharedService,
     private openAccountService: OpenAccountService,
     private CommonService: CommonService,
-    private loanService: LoanService
+    private loanService: LoanService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {}
@@ -113,15 +114,21 @@ export class OtherDocumentsComponent implements OnInit {
       }
     });
   }
+  onDocumentToggle(value) {
+    this.kycToggle = value;
+    this.getGenericDetails();
+  }
 
   getGenericDetails() {
-    this.sharedService
-      .genericValue(this.screenName, Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
-        }
-      });
+    if (this.kycToggle == "addDoocuent" && this.documentTypeArray?.length < 1)
+      this.sharedService
+        .genericValue(this.screenName, Object.keys(this.staticData))
+        .subscribe((resp: any) => {
+          if (resp?.statusCode === 200) {
+            this.documentTypeArray = resp.data["DOCUMENTNAME"];
+            this.cdr.detectChanges();
+          }
+        });
   }
 
   buildForm(data?) {
