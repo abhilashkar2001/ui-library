@@ -25,6 +25,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
   ammountValue = 0;
   loanForm: FormGroup;
   @Input() fdName = "rdCalculator";
+  @Input() calculatorInfo = {};
   @Output() customCalculatorValues = new EventEmitter<any>();
   amount = new FormControl("");
   email = new FormControl("");

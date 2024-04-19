@@ -152,4 +152,10 @@ export class LoanService {
   getEmiCalculation(payload) {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
+
+  fetchInterestDetails(basisId) {
+    return this.http.get<any>(
+      `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`
+    );
+  }
 }

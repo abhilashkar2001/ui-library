@@ -264,7 +264,6 @@ export class CreateAccountLandingPageComponent {
         custResp[i].customerId = null;
       }
     });
-
     return custResp;
   }
 
