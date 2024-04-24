@@ -98,7 +98,6 @@ export class CreateAccountLandingPageComponent {
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
 
             // for personal details.
-
             if (this.docCustomerDetails) {
               console.log(this.docCustomerDetails);
               this.componentRef.instance.docCustomerDetails =
