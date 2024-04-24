@@ -100,6 +100,7 @@ export class LoanFlowComponent implements OnInit {
           this.componentRef.instance.personalDetails = this.personalDetails;
           // for personal doc.
           this.componentRef.instance.personalDoc = this.personalDoc;
+          this.componentRef.instance.isMasterSave = true;
 
           this.componentRef.instance.updateParentModel = this.updateAccount;
 

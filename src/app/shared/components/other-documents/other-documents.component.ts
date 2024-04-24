@@ -53,6 +53,7 @@ export class OtherDocumentsComponent implements OnInit {
   @Input() personalDoc: any[] = [];
   verificationType = "kyc";
   documentControls: FormGroup;
+  @Input() isMasterSave = false;
   staticData = {
     DOCUMENTNAME: [],
   };
@@ -343,7 +344,7 @@ export class OtherDocumentsComponent implements OnInit {
 
     this.updateParentModel({
       kycDoc: docIds,
-      updateMasterSave: false,
+      updateMasterSave: this.isMasterSave,
       customerDetails: customerDetails,
     });
   }
