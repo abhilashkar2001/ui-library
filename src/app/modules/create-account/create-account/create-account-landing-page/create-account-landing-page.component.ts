@@ -62,6 +62,8 @@ export class CreateAccountLandingPageComponent {
   };
   originationModel: any;
   view: any;
+  kycDoc: any = [];
+  docCustomerDetails: any;
 
   constructor(
     private router: Router,
@@ -96,6 +98,12 @@ export class CreateAccountLandingPageComponent {
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
 
             // for personal details.
+
+            if (this.docCustomerDetails) {
+              console.log(this.docCustomerDetails);
+              this.componentRef.instance.docCustomerDetails =
+                this.docCustomerDetails;
+            }
             this.componentRef.instance.isHideField = this.isHideField;
             this.componentRef.instance.basisId = this.basisId;
             this.componentRef.instance.personalDetails = this.personalDetails;
@@ -185,6 +193,7 @@ export class CreateAccountLandingPageComponent {
    */
   updateAccount = (value: Partial<any>) => {
     const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
+    console.log(value, "master data");
     let originationModel = {
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
       originationId: parseInt(sessionStorage.getItem("originationId")) ?? null,
@@ -198,12 +207,17 @@ export class CreateAccountLandingPageComponent {
       branchId: this.currentUser.branchId,
       ownership: this.ownershipId,
     };
+    if (value.kycDoc) {
+      this.kycDoc = value.kycDoc;
+      this.docCustomerDetails = value.customerDetails;
+    }
     if (value.personalDetails)
       this.personalDetails = value.personalDetails.customer;
     let customerInfo = this.modelFactoryForCustomer(
       this.personalDetails,
-      value?.kycDoc ?? []
+      this.kycDoc ?? []
     );
+
     if (value?.personalInfo) {
       this.personalDetails = value.personalInfo;
       this.personalDetails.forEach((item) => {

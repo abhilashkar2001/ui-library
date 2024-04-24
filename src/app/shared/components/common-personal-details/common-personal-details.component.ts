@@ -41,6 +41,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   @Input() basisId: any;
   @Input() personalDetails: any;
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input() docCustomerDetails: any;
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -236,9 +237,27 @@ export class CommonPersonalDetailsComponent implements OnInit {
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
       ],
       prefix: [data ? data.prefix : "", Validators.required],
-      firstName: [data ? data.firstName : "", Validators.required],
+      firstName: [
+        data
+          ? data.firstName
+          : this.docCustomerDetails?.applicantName
+          ? this.docCustomerDetails?.applicantName.split(" ")[0] +
+            " " +
+            this.docCustomerDetails?.applicantName.split(" ")[1]
+          : "",
+        Validators.required,
+      ],
       lastName: [data ? data.lastName : "", Validators.required],
-      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
+      dateOfBirth: [
+        data
+          ? data.dateOfBirth
+          : this.docCustomerDetails?.dateOfBirth
+          ? moment(this.docCustomerDetails?.dateOfBirth, "DD/MM/YYYY").format(
+              "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+            )
+          : "",
+        Validators.required,
+      ],
 
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
