@@ -98,9 +98,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       console.log("buildingForm");
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
-      } else {
-        this.buildCustomerDetailsForm();
-      }
+      } else this.buildCustomerDetailsForm();
     });
   }
 

@@ -322,18 +322,20 @@ export class OtherDocumentsComponent implements OnInit {
 
   onConfirmEvent(event?) {
     var docIds = [];
-    let customerDetails = {};
+    let customerDetails: any;
     event.documentDetails.otherDocument.forEach((element) => {
       const docId = {
         docIds: element.docIds,
       };
       docIds.push(docId);
-      element.fileInfo.forEach((item) => {
-        if (item.applicantName && item.dateOfBirth) {
-          customerDetails = item;
-          return;
-        }
-      });
+      if (!customerDetails) {
+        element.fileInfo.forEach((item) => {
+          if (item.applicantName && item.dateOfBirth && !customerDetails) {
+            customerDetails = item;
+            return;
+          }
+        });
+      }
     });
     this.onCustomSubmit.emit({
       documentDetails: event.documentDetails,

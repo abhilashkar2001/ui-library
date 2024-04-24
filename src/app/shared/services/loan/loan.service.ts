@@ -19,7 +19,7 @@ export class LoanService {
 
   getSubLoanTypes(subAccount: string): Observable<any> | any {
     return this.http.get(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}&internal=false`
+      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}&website=true`
     );
   }
 
