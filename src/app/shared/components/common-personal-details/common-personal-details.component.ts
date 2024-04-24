@@ -98,7 +98,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
       console.log("buildingForm");
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
-      } else this.buildCustomerDetailsForm();
+      } else {
+        this.buildCustomerDetailsForm();
+      }
     });
   }
 
@@ -112,7 +114,29 @@ export class CommonPersonalDetailsComponent implements OnInit {
       if (this.personalDetails?.length > 0) {
         this.getGenericDetails();
         this.buildCustomerDetailsForm(this.personalDetails);
-      } else this.buildCustomerDetailsForm();
+      } else {
+        this.buildCustomerDetailsForm();
+        if (this.docCustomerDetails)
+          setTimeout(() => {
+            this.customerDetailsForm
+              .get("customer")
+              ["controls"][0].get("dateOfBirth")
+              .setValue(
+                moment(
+                  this.docCustomerDetails?.dateOfBirth,
+                  "DD/MM/YYYY"
+                ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+              );
+            this.customerDetailsForm
+              .get("customer")
+              ["controls"][0].get("firstName")
+              .setValue(
+                this.docCustomerDetails?.applicantName.split(" ")[0] +
+                  " " +
+                  this.docCustomerDetails?.applicantName.split(" ")[1]
+              );
+          }, 100);
+      }
     });
   }
 
@@ -237,27 +261,9 @@ export class CommonPersonalDetailsComponent implements OnInit {
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
       ],
       prefix: [data ? data.prefix : "", Validators.required],
-      firstName: [
-        data
-          ? data.firstName
-          : this.docCustomerDetails?.applicantName
-          ? this.docCustomerDetails?.applicantName.split(" ")[0] +
-            " " +
-            this.docCustomerDetails?.applicantName.split(" ")[1]
-          : "",
-        Validators.required,
-      ],
+      firstName: [data ? data.firstName : "", Validators.required],
       lastName: [data ? data.lastName : "", Validators.required],
-      dateOfBirth: [
-        data
-          ? data.dateOfBirth
-          : this.docCustomerDetails?.dateOfBirth
-          ? moment(this.docCustomerDetails?.dateOfBirth, "DD/MM/YYYY").format(
-              "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-            )
-          : "",
-        Validators.required,
-      ],
+      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
 
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
