@@ -140,7 +140,6 @@ export class LoanFlowComponent implements OnInit {
   updateAccount = (value: Partial<any>) => {
     const isLoan = value?.isForLoan ?? true;
     if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
-    console.log(this.otherLoanDoc, "this.otherLoanDoc");
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
       this.docCustomerDetails = value.customerDetails;
