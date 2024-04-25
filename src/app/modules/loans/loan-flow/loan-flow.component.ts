@@ -65,7 +65,9 @@ export class LoanFlowComponent implements OnInit {
   };
   personalDoc: any[] = [];
   loanAccountInfo: any;
-  otherLoanDoc: any[] = [];
+  otherLoanDoc: any = null;
+  kycDoc: any = null;
+  docCustomerDetails: any;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -98,8 +100,13 @@ export class LoanFlowComponent implements OnInit {
           // for personal details.
           this.componentRef.instance.basisId = this.basisId;
           this.componentRef.instance.personalDetails = this.personalDetails;
+          if (this.docCustomerDetails) {
+            this.componentRef.instance.docCustomerDetails =
+              this.docCustomerDetails;
+          }
           // for personal doc.
           this.componentRef.instance.personalDoc = this.personalDoc;
+          this.componentRef.instance.isMasterSave = true;
 
           this.componentRef.instance.updateParentModel = this.updateAccount;
 
@@ -132,7 +139,11 @@ export class LoanFlowComponent implements OnInit {
    */
   updateAccount = (value: Partial<any>) => {
     const isLoan = value?.isForLoan ?? true;
-    this.otherLoanDoc = value?.otherLoanDoc ? value?.otherLoanDoc : null;
+    if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
+    if (value.kycDoc) {
+      this.kycDoc = value.kycDoc;
+      this.docCustomerDetails = value.customerDetails;
+    }
     let originationModel = {
       ...this.factorizedPayload(),
     };
@@ -140,7 +151,7 @@ export class LoanFlowComponent implements OnInit {
       this.personalDetails,
       value?.kycDoc ?? null
     );
-    if (value.updateMasterSave && isLoan) {
+    if (value.updateMasterSave && isLoan && this.personalDetails?.length > 0) {
       this.getMasterSave({
         originationModel: originationModel,
         customerInfo: customerInfo,
@@ -355,7 +366,11 @@ export class LoanFlowComponent implements OnInit {
           jointCustomerInfo: [],
           middleName: "",
           dateOfBirth: moment(element.dateOfBirth).format(),
-          documentId: element.primaryCustomer ? docIds : [],
+          documentId: element.primaryCustomer
+            ? this.kycDoc
+              ? this.kycDoc
+              : docIds
+            : [],
         };
         customer.push(cus);
       });
@@ -368,6 +383,7 @@ export class LoanFlowComponent implements OnInit {
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
     return {
+      originationId: this.originationModel?.originationId ?? null,
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
       accountType: sessionData.basisName,
       basisDetailsId: sessionData.basisId,
@@ -382,7 +398,7 @@ export class LoanFlowComponent implements OnInit {
       currencyCode: this.otherUserInfo.currency,
       branchId: this.currentUser.branchId,
       ownership: ownershipId,
-      documentId: null,
+      documentId: this.otherLoanDoc ?? null,
     };
   }
 
@@ -400,7 +416,7 @@ export class LoanFlowComponent implements OnInit {
       event.prefixValue
     ).then((data) => {
       const payloadData = {
-        originationModel: { ...this.getOriginationModelForLoan() },
+        originationModel: { ...this.factorizedPayload() },
         customerInfo: data,
       };
       this.openAccountService

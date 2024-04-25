@@ -53,6 +53,7 @@ export class OtherDocumentsComponent implements OnInit {
   @Input() personalDoc: any[] = [];
   verificationType = "kyc";
   documentControls: FormGroup;
+  @Input() isMasterSave = false;
   staticData = {
     DOCUMENTNAME: [],
   };
@@ -322,16 +323,30 @@ export class OtherDocumentsComponent implements OnInit {
 
   onConfirmEvent(event?) {
     var docIds = [];
+    let customerDetails: any;
     event.documentDetails.otherDocument.forEach((element) => {
       const docId = {
         docIds: element.docIds,
       };
       docIds.push(docId);
+      if (!customerDetails) {
+        element.fileInfo.forEach((item) => {
+          if (item.applicantName && item.dateOfBirth && !customerDetails) {
+            customerDetails = item;
+            return;
+          }
+        });
+      }
     });
     this.onCustomSubmit.emit({
       documentDetails: event.documentDetails,
     });
-    this.updateParentModel({ kycDoc: docIds, updateMasterSave: true });
+
+    this.updateParentModel({
+      kycDoc: docIds,
+      updateMasterSave: this.isMasterSave,
+      customerDetails: customerDetails,
+    });
   }
 
   goBack() {

@@ -290,6 +290,15 @@ export class WebDocUploadComponent implements OnInit {
             this.documentNotMatched(i, file);
           } else {
             // for aadhar
+            const index =
+              this.otherDocument().controls[i].get("fileInfo").value?.length -
+              1;
+            this.updateFileInfo(
+              index,
+              i,
+              res.data?.name,
+              res.data?.dateOfBirth
+            );
             if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
               if (
                 res.data?.adhaarNumber.replace(/\s/g, "") !=
@@ -325,6 +334,14 @@ export class WebDocUploadComponent implements OnInit {
       this.deleteFile(i, i, file);
       throw error;
     }
+  }
+
+  updateFileInfo(index, i, name, dateOfBirth) {
+    this.otherDocument().controls[i].get("fileInfo").value[index] = {
+      ...this.otherDocument().controls[i].get("fileInfo").value[index],
+      applicantName: name,
+      dateOfBirth: dateOfBirth,
+    };
   }
 
   documentNotMatched(i, file) {

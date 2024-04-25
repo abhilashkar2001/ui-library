@@ -41,6 +41,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   @Input() basisId: any;
   @Input() personalDetails: any;
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input() docCustomerDetails: any;
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -111,7 +112,29 @@ export class CommonPersonalDetailsComponent implements OnInit {
       if (this.personalDetails?.length > 0) {
         this.getGenericDetails();
         this.buildCustomerDetailsForm(this.personalDetails);
-      } else this.buildCustomerDetailsForm();
+      } else {
+        this.buildCustomerDetailsForm();
+        if (this.docCustomerDetails)
+          setTimeout(() => {
+            this.customerDetailsForm
+              .get("customer")
+              ["controls"][0].get("dateOfBirth")
+              .setValue(
+                moment(
+                  this.docCustomerDetails?.dateOfBirth,
+                  "DD/MM/YYYY"
+                ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+              );
+            this.customerDetailsForm
+              .get("customer")
+              ["controls"][0].get("firstName")
+              .setValue(
+                this.docCustomerDetails?.applicantName.split(" ")[0] +
+                  " " +
+                  this.docCustomerDetails?.applicantName.split(" ")[1]
+              );
+          }, 100);
+      }
     });
   }
 
