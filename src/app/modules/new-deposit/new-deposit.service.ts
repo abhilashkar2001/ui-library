@@ -40,7 +40,7 @@ export class NewDepositService {
   }
   getCountryDetails() {
     return this.http.get<any>(
-      `${this.base_url}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.base_url}/country?oneTimeAuth=Y&recordStatus=OPEN`
     );
   }
   getCityDetails() {

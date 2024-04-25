@@ -61,6 +61,7 @@ export class CreateAccountLandingPageComponent {
     applicationType: "Create Account application",
   };
   originationModel: any;
+  view: any;
 
   constructor(
     private router: Router,
@@ -78,38 +79,59 @@ export class CreateAccountLandingPageComponent {
   }
 
   showComponent(screenName) {
-    this.dynamicScreen.forEach((item: any) => {
-      if (screenName.toLowerCase().includes(item.key)) {
-        this.currentComponentInfo = { ...item };
-        const view = this.appAppHost.viewContainerRef;
-        view.clear();
-        setTimeout(() => {
-          this.componentRef = view.createComponent(item.component);
+    if (
+      this.dynamicScreen.some((item) =>
+        screenName.toLowerCase().includes(item.key)
+      )
+    ) {
+      this.dynamicScreen.forEach((item: any) => {
+        if (screenName.toLowerCase().includes(item.key)) {
+          this.currentComponentInfo = { ...item };
+          this.view = this.appAppHost.viewContainerRef;
+          this.view.clear();
+          setTimeout(() => {
+            this.componentRef = this.view.createComponent(item.component);
 
-          // for mobile number.
-          this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
+            // for mobile number.
+            this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
 
-          // for personal details.
-          this.componentRef.instance.isHideField = this.isHideField;
-          this.componentRef.instance.basisId = this.basisId;
-          this.componentRef.instance.personalDetails = this.personalDetails;
+            // for personal details.
+            this.componentRef.instance.isHideField = this.isHideField;
+            this.componentRef.instance.basisId = this.basisId;
+            this.componentRef.instance.personalDetails = this.personalDetails;
 
-          // for personal doc.
-          this.componentRef.instance.personalDoc = this.personalDoc;
+            // for personal doc.
+            this.componentRef.instance.personalDoc = this.personalDoc;
 
-          this.componentRef.instance.updateParentModel = this.updateAccount;
+            this.componentRef.instance.updateParentModel = this.updateAccount;
 
-          this.componentRef.instance?.onBackEvent.subscribe((_) => {
-            this.goBack();
+            this.componentRef.instance?.onBackEvent.subscribe((_) => {
+              this.goBack();
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    } else {
+      this.view?.clear();
+      const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
+        data: {
+          isStageAvilable: false,
+          errorMessage: `${screenName} stage is not avilable. Please move to next stage.`,
+        },
+        width: "750px",
+        disableClose: true,
+        panelClass: "popup-dialog-class",
+        backdropClass: "bdrop",
+      });
+      dialogRef.afterClosed().subscribe((resp) => {
+        this.next();
+      });
+    }
   }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStore.getUser();
-    this.getGeneric();
+    // this.getGeneric();
     this.currencyCode = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
     this.getProductDetails();
@@ -172,9 +194,9 @@ export class CreateAccountLandingPageComponent {
       source: SOURCE_PAYLOAD_KEY,
       businessProductName: this.productDetails.basisName,
       productDescription: this.productDetails.basisDetailStory,
-      ownership: this.ownershipId,
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
+      ownership: this.ownershipId,
     };
     if (value.personalDetails)
       this.personalDetails = value.personalDetails.customer;
@@ -189,10 +211,20 @@ export class CreateAccountLandingPageComponent {
       });
     }
     if (value.updateMasterSave) {
-      this.getMasterSave({
-        originationModel: originationModel,
-        customerInfo: customerInfo,
-      });
+      if (this.ownershipId) {
+        this.getMasterSave({
+          originationModel: originationModel,
+          customerInfo: customerInfo,
+        });
+      } else {
+        this.getGeneric().then((data) => {
+          let FinalOriginationModel = { ...originationModel, ownership: data };
+          this.getMasterSave({
+            originationModel: FinalOriginationModel,
+            customerInfo: customerInfo,
+          });
+        });
+      }
     } else this.next();
   };
 
@@ -232,7 +264,6 @@ export class CreateAccountLandingPageComponent {
         custResp[i].customerId = null;
       }
     });
-
     return custResp;
   }
 
@@ -270,16 +301,21 @@ export class CreateAccountLandingPageComponent {
   }
 
   getGeneric() {
-    this.sharedService
-      .genericValue(this.screenName, Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.ownership = resp.data[OWNERSHIP];
-          this.ownershipId = this.ownership.find(
-            (r) => r?.values.toLowerCase() === "self"
-          )?.id;
-        }
-      });
+    return new Promise((resolve, reject) => {
+      this.sharedService
+        .genericValue(this.screenName, Object.keys(this.staticData))
+        .subscribe((resp: any) => {
+          if (resp?.statusCode === 200) {
+            this.ownership = resp.data[OWNERSHIP];
+            this.ownershipId = this.ownership.find(
+              (r) => r?.values.toLowerCase() === "self"
+            )?.id;
+            resolve(this.ownershipId);
+          } else {
+            reject(new Error("Failed to fetch generic data"));
+          }
+        });
+    });
   }
 
   getCustomerById(customerId) {

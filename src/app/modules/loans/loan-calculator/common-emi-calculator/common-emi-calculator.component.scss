@@ -27,17 +27,19 @@
     padding-bottom: 0px !important;
   }
 }
-::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+::ng-deep
+  .inputSelects.mat-form-field-appearance-outline
+  .mat-form-field-infix {
   padding: 0px;
   margin-top: -10px !important;
 }
 
 ::ng-deep
-  .inputSelect.mat-form-field-appearance-outline
+  .inputSelects.mat-form-field-appearance-outline
   .mat-form-field-outline {
   color: white !important;
 }
-.inputSelect {
+.inputSelects {
   width: 30% !important;
   height: 22px;
   // background: #fffefe 0% 0% no-repeat padding-box;

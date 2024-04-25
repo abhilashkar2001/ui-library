@@ -1,0 +1,23 @@
+<div fxLayout="column">
+  <div class="alertImage">
+    <img class="summaryIcon" src="assets/images/error-icon.svg" alt="..." />
+  </div>
+  <div fxLayout="column">
+    <div class="alertText">
+      {{ message }}
+    </div>
+  </div>
+  &nbsp;
+  <div
+    class="button-section"
+    fxLayout="row"
+    fxLayoutGap="50px"
+    fxLayoutAlign="space-between"
+  >
+    <button mat-raised-button class="confirm-button" (click)="done()">
+      Yes
+    </button>
+
+    <button mat-raised-button class="back-button" (click)="cancel()">No</button>
+  </div>
+</div>

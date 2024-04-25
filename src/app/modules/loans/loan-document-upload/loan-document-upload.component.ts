@@ -15,7 +15,7 @@ export class LoanDocumentUploadComponent implements OnInit {
 
   custId: any;
   stepperTitle: any;
-  documentTypeArray: any;
+  documentTypeArray: any[] = [{}];
   staticData = {
     DOCUMENTTYPE: [],
   };

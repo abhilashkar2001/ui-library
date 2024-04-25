@@ -5,6 +5,7 @@ import { tap } from "rxjs/operators";
 import { MatDialog } from "@angular/material/dialog";
 import { TokenStorageService } from "../token-storage.service";
 import { NotificationService } from "../services/notification.service";
+import { RequestCache } from "../services/request-cache.service";
 
 @Injectable({
   providedIn: "root",
@@ -26,7 +27,8 @@ export class UserActiveState {
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private notificationService: NotificationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private chache: RequestCache
   ) {
     // Subscribe to the property or use the async pipe.
     // Remember to unsubscribe when you are done if you don't use the async pipe (see other example).
@@ -78,6 +80,7 @@ export class UserActiveState {
     setTimeout(() => {
       this.dialog.closeAll();
       this.tokenStorageService.cleanUpSessionPartially();
+      this.chache.clear();
       this.router.navigate(["/home"], {
         queryParams: { type: "auth" },
       });

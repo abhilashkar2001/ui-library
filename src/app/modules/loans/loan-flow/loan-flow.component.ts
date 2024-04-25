@@ -131,6 +131,7 @@ export class LoanFlowComponent implements OnInit {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
+    const isLoan = value?.isForLoan ?? true;
     this.otherLoanDoc = value?.otherLoanDoc ? value?.otherLoanDoc : null;
     let originationModel = {
       ...this.factorizedPayload(),
@@ -139,12 +140,15 @@ export class LoanFlowComponent implements OnInit {
       this.personalDetails,
       value?.kycDoc ?? null
     );
-    if (value.updateMasterSave) {
+    if (value.updateMasterSave && isLoan) {
       this.getMasterSave({
         originationModel: originationModel,
         customerInfo: customerInfo,
       });
-    } else this.next();
+    } else {
+      if (!isLoan) return;
+      else this.next();
+    }
   };
 
   ngOnInit(): void {
@@ -155,8 +159,6 @@ export class LoanFlowComponent implements OnInit {
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
-    console.log(this.ownerShipId);
     var originationId = sessionStorage.getItem("originationId");
     var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
     var customerStageId = JSON.parse(
@@ -624,6 +626,7 @@ export class LoanFlowComponent implements OnInit {
     this.cuurrentStep = this.screenList[num].screenName;
     setTimeout(() => {
       this.selectedStep = num;
+      this.factory();
     }, 200);
   }
 

@@ -1,0 +1,62 @@
+.alertImage {
+  display: flex;
+  justify-content: center;
+}
+
+.alertText {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: center;
+}
+
+.alertTillText {
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 1 !important;
+  font-family: "Poppins";
+  text-align: center;
+}
+
+.button-section {
+  display: ruby-text;
+}
+
+.confirm-button {
+  width: 200px;
+  height: 45px;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box !important;
+  border-radius: 23px !important;
+  color: #ffffff !important;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  margin-right: 2%;
+}
+
+.back-button {
+  width: 200px;
+  height: 45px;
+  background: #ffffff !important;
+  border-radius: 23px !important;
+  color: black !important;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  margin-left: 2%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

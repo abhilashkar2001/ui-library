@@ -17,6 +17,8 @@ export class SuccessPopupComponent implements OnInit {
   accountData: any;
   fdRdDetails: any;
   depositType: any;
+  isStageAvilable: boolean = true;
+  currentStageName: string = "";
   isNetBanking: false;
   referenceNo: any = "";
   actionType: any;
@@ -37,6 +39,7 @@ export class SuccessPopupComponent implements OnInit {
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
+    this.isStageAvilable = this.data?.isStageAvilable ?? true;
     this.email = this.data?.email;
     if (sessionStorage.getItem("loanBasisDetails")) {
       this.openAccountService.getData().subscribe((resp: any) => {

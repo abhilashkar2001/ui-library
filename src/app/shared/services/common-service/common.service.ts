@@ -51,7 +51,7 @@ export class CommonService {
   }
   getAllCountries() {
     return this.http.get<any>(
-      `${baseUrl}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${baseUrl}/country?oneTimeAuth=Y&recordStatus=OPEN`
     );
   }
   generateOTP(mobile) {

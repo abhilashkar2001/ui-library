@@ -4,7 +4,7 @@
       fxFlex="50"
       class="col-md-6"
       [ngClass]="kycToggle == 'kyc' ? 'toggled' : ''"
-      (click)="kycToggle = 'kyc'"
+      (click)="onDocumentToggle('kyc')"
       mat-raised-button
     >
       Select Kyc
@@ -13,7 +13,7 @@
       fxFlex="50"
       class="col-md-6"
       [ngClass]="kycToggle == 'addDoocuent' ? 'toggled' : ''"
-      (click)="kycToggle = 'addDoocuent'"
+      (click)="onDocumentToggle('addDoocuent')"
       mat-raised-button
     >
       Use Other Documents
@@ -29,10 +29,12 @@
   <ng-container *ngIf="kycToggle == 'addDoocuent'">
     <app-web-doc-upload
       [ocrProcess]="ocrProcess"
+      [documentTypeArray]="documentTypeArray"
       [verificationType]="verificationType"
       (onCustomSubmit)="onConfirmEvent($event)"
       [documentList]="documentList"
       [genericScreenInfo]="genericScreenInfo"
+      (onBackEvent)="goBack()"
     ></app-web-doc-upload>
   </ng-container>
   <!-- other documents ends here -->

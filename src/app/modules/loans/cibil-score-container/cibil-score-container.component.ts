@@ -1,6 +1,8 @@
 import { Location } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
@@ -32,10 +34,34 @@ export class CibilScoreContainerComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
+    private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.customerConsent();
+  }
+
+  customerConsent() {
+    const dialogRef = this.dialog.open(ReusableAlertPopupComponent, {
+      data: {
+        msg: "Can I use the same verified number to check the credit bureau",
+      },
+      width: "750px",
+      height: "400px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp) {
+        this.showCibilScoreResult = true;
+      } else {
+        this.showCibilScoreResult = false;
+        this.selectedOption = "different";
+      }
+    });
+  }
 
   onBack() {
     this.onBackEvent.emit();

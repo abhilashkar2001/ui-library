@@ -87,11 +87,11 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.genericScreenInfo?.currentValue) {
-      this.getGenericDetails(changes?.genericScreenInfo?.currentValue);
-    }
-
     if (changes?.documentList?.currentValue) {
+      if (!this.documentTypeArray) {
+        this.documentTypeArray = [{}];
+        this.getGenericDetails();
+      }
       this.buildForm(changes?.documentList?.currentValue);
     } else this.buildForm();
 
@@ -99,9 +99,9 @@ export class WebDocUploadComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
   }
 
-  getGenericDetails(data) {
+  getGenericDetails() {
     this.sharedService
-      .genericValue("Common", Object.keys(data.staticData))
+      .genericValue("Common", Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data["DOCUMENTNAME"];
@@ -281,11 +281,11 @@ export class WebDocUploadComponent implements OnInit {
             panelClass: "snackbar-error",
           });
           // if document details not found or document is invalid.
-          console.log(res, "...........");
           if (
-            res.data?.adhaarNumber == "Detail not found" ||
-            res.data?.panNumber == "Detail not found" ||
-            res.data?.passportNumber == "Detail not found"
+            (res.data?.adhaarNumber == "Detail not found" ||
+              res.data?.panNumber == "Detail not found" ||
+              res.data?.passportNumber == "Detail not found") &&
+            res.data?.dateOfBirth == "Detail not found"
           ) {
             this.documentNotMatched(i, file);
           } else {

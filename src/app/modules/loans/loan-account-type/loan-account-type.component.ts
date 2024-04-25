@@ -1,3 +1,4 @@
+import { filter } from "rxjs/operators";
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -20,6 +21,7 @@ export class LoanAccountTypeComponent implements OnInit {
   endPoints = environment.microServiceURL;
   selectedLoan: any;
   basisId: any;
+  calculatorInfo: {};
 
   constructor(
     private router: Router,
@@ -47,7 +49,9 @@ export class LoanAccountTypeComponent implements OnInit {
     this.loanService
       .getSubLoanTypes(this.basisClass)
       .subscribe((response: any) => {
-        this.subLoanList = response.data;
+        this.subLoanList = response.data.filter(
+          (item) => !!item?.productDetails
+        );
       });
   }
 
@@ -75,6 +79,10 @@ export class LoanAccountTypeComponent implements OnInit {
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
       this.isShowCalculator = event.isShowCalculator;
+      this.calculatorInfo = {
+        interestRate: parseInt(event.selectedLoan?.interestRate ?? "0"),
+        productCode: event.selectedLoan.productCode,
+      };
       this.basisClass = event.subClass;
       this.basisId = event.selectedLoan.basisId;
       setTimeout(() => {
@@ -103,6 +111,7 @@ export class LoanAccountTypeComponent implements OnInit {
       basisName: this.selectedLoan?.productDetails[0].basisName,
       basisId: this.selectedLoan?.productDetails[0].basisId,
     });
+
     sessionStorage.setItem("loanBasisDetails", payload);
   }
   customCalculatorValues(event) {

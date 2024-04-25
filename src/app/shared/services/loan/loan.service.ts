@@ -19,7 +19,7 @@ export class LoanService {
 
   getSubLoanTypes(subAccount: string): Observable<any> | any {
     return this.http.get(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}`
+      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}&internal=false`
     );
   }
 
@@ -151,5 +151,11 @@ export class LoanService {
 
   getEmiCalculation(payload) {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
+  }
+
+  fetchInterestDetails(basisId) {
+    return this.http.get<any>(
+      `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`
+    );
   }
 }
