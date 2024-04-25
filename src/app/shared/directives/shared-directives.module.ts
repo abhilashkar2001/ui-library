@@ -24,6 +24,9 @@ import { NoInitialSpecialCharactersDirective } from "./no-initial-space.directiv
 import { NoSpaceDirective } from "./noSpace.directive";
 import { AppHostDirective } from "./app-host.directive";
 import { MinMaxDirective } from "./restrictNum-directive";
+import { IcImgFallbackDirective } from "./ic-img-fallback.directive";
+import { InputMaskModule } from "./input-mask/input-mask.module";
+import { Webhost } from "./appHost.directive";
 
 const directives = [
   AutoFocusDirective,
@@ -47,10 +50,12 @@ const directives = [
   NoSpaceDirective,
   AppHostDirective,
   MinMaxDirective,
+  Webhost,
+  IcImgFallbackDirective,
 ];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule ],
   declarations: directives,
   exports: directives,
 })

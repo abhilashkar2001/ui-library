@@ -21,6 +21,7 @@ import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
 import { MatDialog } from "@angular/material/dialog";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
+import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import { DownloadService } from "app/shared/services/download.service";
 import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -18,6 +19,9 @@ export class SuccessPopupComponent implements OnInit {
   depositType: any;
   isStageAvilable: boolean = true;
   currentStageName: string = "";
+  isNetBanking: false;
+  referenceNo: any = "";
+  actionType: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -25,8 +29,13 @@ export class SuccessPopupComponent implements OnInit {
     private emailService: EmailService,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService,
-    private tokenStore: TokenStorageService
-  ) {}
+    private tokenStore: TokenStorageService,
+    private router: Router
+  ) {
+    this.isNetBanking = data.isNetBanking || false;
+    this.actionType = data.actionType;
+    this.referenceNo = data.refrenceNo;
+  }
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
@@ -110,11 +119,17 @@ export class SuccessPopupComponent implements OnInit {
   }
 
   done() {
-    localStorage.removeItem("basisDetails");
-    localStorage.removeItem("customerData");
-    sessionStorage.removeItem("loanBasisDetails");
     this.tokenStore.cleanUpSessionPartially();
-    this.dialogRef.close(true);
+    if (this.isNetBanking) {
+      this.router.navigate([`/user/dashboard/${this.data.route}`]);
+      this.dialogRef.close();
+    } else {
+      localStorage.removeItem("basisDetails");
+      localStorage.removeItem("customerData");
+      sessionStorage.removeItem("loanBasisDetails");
+      this.dialogRef.close(true);
+      window.close();
+    }
   }
   close() {
     this.dialogRef.close(false);

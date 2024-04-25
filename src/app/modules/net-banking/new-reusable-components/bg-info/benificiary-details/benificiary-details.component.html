@@ -1,0 +1,175 @@
+<div *ngIf="benificiaryDetailsForm">
+  <mat-card class="full-width default-card mx-0" fxLayout="column">
+    <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+      <h2>Beneficiary Details</h2>
+      <button
+        mat-raised-button
+        class="confirm-button"
+        (click)="onSave()"
+        *ngIf="componentName != 'BG Issuance'"
+      >
+        Save
+      </button>
+    </div>
+    <div [formGroup]="benificiaryDetailsForm" fxLayout="column">
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="space Between"
+        fxLayoutGap="1%"
+      >
+        <div fxLayout="column" fxFlex="39">
+          <mat-label class="custom-label">Beneficiary</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName="beneficiary" />
+            <mat-error
+              *ngIf="
+                benificiaryDetailsForm.get('beneficiary').touched &&
+                benificiaryDetailsForm.get('beneficiary').hasError('required')
+              "
+              >Beneficiary is required!</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <ng-container
+          *ngFor="let address of addressControle.controls; let i = index"
+          [formGroup]="address"
+        >
+          <div fxLayout="column" fxFlex="29">
+            <mat-label class="custom-label">Address line 1</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="address1" />
+              <mat-error
+                *ngIf="
+                  address.get('address1').touched &&
+                  address.get('address1').hasError('required')
+                "
+              >
+                Address line 1 is required!</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="column" fxFlex="29">
+            <mat-label class="custom-label">Address line 2</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="address2" />
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="24">
+            <app-searchable-select
+              [items]="countries"
+              inputLabel="Country"
+              bindLabelKey="countryName"
+              bindValueKey="countryName"
+              [control]="address.get('countryName')"
+              customClass="custom-field"
+              showOutsideLabel="true"
+            ></app-searchable-select>
+          </div>
+
+          <div fxLayout="column" fxFlex="24">
+            <mat-label class="custom-label">Pin Code</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="pincode" />
+              <mat-icon
+                matSuffix
+                class="searchIcon"
+                (click)="populatePincodeData()"
+                >search</mat-icon
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="column" fxFlex="24">
+            <mat-label class="custom-label">State</mat-label>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="stateName"
+                formControlName="stateName"
+                readonly
+              />
+              <mat-error
+                *ngIf="
+                  address.get('stateName').touched &&
+                  address.get('stateName').hasError('required')
+                "
+                >State is required!</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="column" fxFlex="24">
+            <mat-label class="custom-label">City</mat-label>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="cityName"
+                formControlName="cityName"
+                readonly
+              />
+              <mat-error
+                *ngIf="
+                  address.get('cityName').touched &&
+                  address.get('cityName').hasError('required')
+                "
+                >City is required!</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <div
+          fxLayout="column"
+          fxFlex="74"
+          *ngIf="componentName != 'Amendment LC Info'"
+        >
+          <mat-label class="custom-label">Purpose</mat-label>
+          <mat-form-field
+            appearance="outline"
+            *ngIf="componentName == 'BG Issuance'"
+          >
+            <input matInput type="text" formControlName="purpose" />
+          </mat-form-field>
+        </div>
+        <div
+          fxLayout="row"
+          fxLayoutGap="2%"
+          *ngIf="
+            componentName != 'BG Issuance' &&
+            componentName != 'Amendment LC Info'
+          "
+        >
+          <mat-form-field appearance="outline" fxFlex="23">
+            <mat-label>Email Id</mat-label>
+            <input
+              matInput
+              type="text"
+              noInitialSpecialCharacters
+              noSpace
+              formControlName="email"
+            />
+
+            <mat-error
+              *ngIf="benificiaryDetailsForm.get('email').hasError('pattern')"
+            >
+              Please enter Valid Email
+            </mat-error>
+          </mat-form-field>
+          <div fxFlex="23" fxLayoutAlign="start center">
+            <mat-slide-toggle formControlName="notifyBenificary">
+            </mat-slide-toggle>
+            <span style="padding-left: 10px"
+              >Notify Beneficiary on transaction Completeion</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="note-text" *ngIf="componentName == 'BG Issuance'"
+      >Note: The bank has the discretion to modify the limit, Margin %, Margin
+      type details provided as the part of the request</span
+    >
+  </mat-card>
+</div>

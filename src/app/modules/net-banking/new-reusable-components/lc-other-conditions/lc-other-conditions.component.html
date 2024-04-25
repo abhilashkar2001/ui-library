@@ -1,0 +1,169 @@
+<div [formGroup]="lcOtherConditionForm">
+  <!-- Section 1 matcard starts -->
+  <mat-card class="otherConditonCard">
+    <div fxLayout="column wrap">
+      <div fxLayout="row" fxLayoutGap="1%" fxFlex="100">
+        <div fxFlex="24">
+          <mat-label class="custom-label">
+            Place of Receipt Change to (44A)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="receiptto"
+              name="receiptto"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="24">
+          <mat-label class="custom-label">
+            Place of Receipt Change from (44A)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="receiptfrom"
+              name="receiptfrom"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="24">
+          <mat-label class="custom-label">
+            Place Of Final Destination To (44B)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="destinationTo"
+              name="destinationTo"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="24">
+          <mat-label class="custom-label">
+            Place Of Final Destination from (44B)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="destinationfrom"
+              name="destinationfrom"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1%" fxFlex="100">
+        <div fxFlex="49">
+          <mat-label class="custom-label">
+            Port Of Loading / Airport Of Destination Change To (44E)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="loadingTo"
+              name="loadingTo"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="49">
+          <mat-label class="custom-label">
+            Port Of Loading / Airport Of Destination Change From (44E)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="loadingForm"
+              name="loadingForm"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1%" fxFlex="100">
+        <div fxFlex="49">
+          <mat-label class="custom-label">
+            Port Of Discharge / Airport Of Destination Change To (44F)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="disChargeTo"
+              name="disChargeTo"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="49">
+          <mat-label class="custom-label">
+            Port Of Discharge / Airport Of Destination Change From (44F)
+          </mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              type="text"
+              formControlName="disChargeFrom"
+              name="disChargeFrom"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <!-- Section 1 matcard ends  -->
+  <!-- Presentation period starts-->
+  <mat-card class="otherConditonCard" fxLayout="column">
+    <h2 class="sub-head present-card">Presentation Period(48)</h2>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
+      <div fxFlex="19">
+        <mat-label class="custom-label"> Document to be within </mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input
+            matInput
+            type="text"
+            formControlName="documentWithIn"
+            name="documentWithIn"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="19">
+        <mat-label class="custom-label"> Days from the date of </mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input
+            matInput
+            type="text"
+            formControlName="daysDate"
+            name="daysDate"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="60">
+        <mat-label class="custom-label">Additional Condition (47A)</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input
+            matInput
+            formControlName="additionalCondition"
+            type="text"
+            name="additionalCondition"
+          />
+          <div fxFlex="40" class="verifyDiv">
+            <button mat-suffix type="button" class="verify-btn">
+              Clause Template
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+  <!-- Presentation period ends -->
+
+  <!-- Margin starts -->
+
+  <!-- Margin ends -->
+</div>
