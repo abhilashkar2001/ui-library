@@ -1,0 +1,250 @@
+<ng-container [formGroup]="amendmentLcInfoForm">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">LC Number (20)</mat-label>
+        <mat-form-field>
+          <input formControlName="lcNumber" matInput />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">LC open Date (31C)</mat-label>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="lcOpenDate"
+            [matDatepicker]="picker1"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                _ngcontent-vqa-c346=""
+                src="assets/images/calendar.png"
+                style="margin-bottom: 9px"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+
+<ng-container [formGroup]="applicantsDetails">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxFlex="100">
+        <div class="cardHeading">Applicants Details</div>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Applicant (50)</mat-label>
+        <mat-form-field>
+          <input formControlName="applicant" matInput />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Customer Code</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="customerMode">
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container
+        *ngFor="let address of applicantAddress.controls; let i = index"
+        [formGroup]="address"
+      >
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 1</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="address1" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 2</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="address2" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <app-searchable-select
+            [items]="countryArr"
+            inputLabel="Country"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+            showOutsideLabel="true"
+          ></app-searchable-select>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Zip Code</mat-label>
+          <mat-form-field>
+            <input
+              numbersOnly
+              maxlength="8"
+              matInput
+              formControlName="pincode"
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">State</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="stateName" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">City</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="cityName" />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Issuing Branch</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="issuingBranch">
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+
+<app-benificiary-details
+  [benificiaryDetailsForm]="beneficiaryDetails"
+  [componentName]="component"
+></app-benificiary-details>
+
+<ng-container [formGroup]="advisingBankDetails">
+  <mat-card class="full-width default-card mx-0">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="space Between"
+      fxLayoutGap="1%"
+      class="applicantsInfo"
+    >
+      <div fxFlex="100">
+        <div class="cardHeading">Advising Bank</div>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Bank Name</mat-label>
+        <mat-form-field>
+          <input
+            formControlName="bankName"
+            maxlength="10"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Branch</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="branch">
+            <mat-option value="hdfc">HDFC</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container
+        *ngFor="let address of advisingBankAddress.controls; let i = index"
+        [formGroup]="address"
+      >
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 1</mat-label>
+          <mat-form-field>
+            <input
+              maxlength="100"
+              matInput
+              type="text"
+              formControlName="address1"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="29">
+          <mat-label class="custom-label">Address Line 2</mat-label>
+          <mat-form-field>
+            <input
+              maxlength="100"
+              matInput
+              formControlName="address2"
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <app-searchable-select
+            [items]="countryArr"
+            inputLabel="Country"
+            bindLabelKey="countryName"
+            bindValueKey="countryName"
+            [control]="address.get('countryName')"
+            customClass="custom-field"
+            showOutsideLabel="true"
+          ></app-searchable-select>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">Zip Code</mat-label>
+          <mat-form-field>
+            <input
+              numbersOnly
+              maxlength="8"
+              matInput
+              formControlName="pincode"
+              type="text"
+            />
+            <mat-icon matSuffix (click)="pincodeExpansion(address)"
+              >search</mat-icon
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">State</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="stateName" type="text" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="19">
+          <mat-label class="custom-label">City</mat-label>
+          <mat-form-field>
+            <input matInput formControlName="cityName" type="text" />
+          </mat-form-field></div
+      ></ng-container>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">SWIFT Code / IFSC Code</mat-label>
+        <mat-form-field>
+          <input formControlName="swiftCode" matInput type="text" />
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">Delivery Via</mat-label>
+        <mat-form-field>
+          <mat-select formControlName="deliveryVia">
+            <mat-option value="post">Post</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>

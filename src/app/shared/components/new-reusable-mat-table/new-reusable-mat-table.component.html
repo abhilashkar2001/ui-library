@@ -1,0 +1,537 @@
+<section
+  fxLayout="row"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-between center"
+  fxLayoutGap="10px"
+  class="mb-2 mx-2"
+  *ngIf="componentName != 'Bulk Upload'"
+>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <div (click)="goBack()" fxLayoutAlign="start center" class="cursor">
+      <mat-icon>arrow_back</mat-icon>
+    </div>
+    <div>
+      <h1>{{ maintenanceTitle }}</h1>
+    </div>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    *ngIf="isUploadBtn"
+  >
+    <ng-container>
+      <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
+        <mat-icon class="text-white text-xl">add</mat-icon>
+        {{ "Upload" }}
+      </button>
+    </ng-container>
+  </div>
+
+  <div fxLayout="column" class="dropdown position-relative">
+    <button mat-flat-button class="addNewButton">
+      <mat-icon class="text-white text-xl">add</mat-icon>
+      {{ "Add New" }}
+    </button>
+
+    <div
+      class="dropdown-content"
+      *ngIf="addNewList?.length > 0; else elseBlock"
+    >
+      <ng-container *ngFor="let item of addNewList">
+        <span class="menu_btn" mat-menu-item (click)="openPopUp(item.value)">
+          {{ item.name }}
+        </span>
+      </ng-container>
+    </div>
+
+    <ng-template #elseBlock>
+      <div class="dropdown-content">
+        <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
+          {{ "Create" }}
+        </span>
+        <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
+          {{ "Bulk Upload" }}
+        </span>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<mat-card>
+  <ng-container *ngIf="!hideFilters">
+    <app-new-reusable-filter
+      (customDataByPage)="customSearch($event)"
+      [newFilter]="newFilter"
+      [countryModuleFilter]="countryModuleFilter"
+      [stateModuleFilter]="stateModuleFilter"
+      [createdBy]="createdBy"
+      [module]="module"
+      [className]="className"
+      [componentName]="componentName"
+      [bulkUploadFileName]="bulkUploadFileName"
+      (customDownloadRecord)="downloadRecord($event)"
+      [showOnlySearchTitle]="showOnlySearchTitle"
+      [requiredSpecialFields]="requiredSpecialFields"
+    >
+    </app-new-reusable-filter>
+  </ng-container>
+
+  <div class="table_container" id="customtable">
+    <mat-table
+      class="mat-elevation-z8 data_table"
+      matSort
+      [dataSource]="
+        dataSource.data.length > 0 && dataSource.filteredData.length > 0
+          ? dataSource
+          : emptyData
+      "
+      matSortDisableClear="true"
+      matSortDisabled="true"
+    >
+      <ng-container matColumnDef="checkBox">
+        <mat-header-cell *matHeaderCellDef
+          ><mat-checkbox
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [disabled]="
+              (maintenanceData?.data?.length > 0 &&
+                maintenanceData?.data[0]?.status == 'APPROVED') ||
+              maintenanceData?.data[0]?.status == 'REJECTED'
+            "
+          >
+          </mat-checkbox
+        ></mat-header-cell>
+        <mat-cell *matCellDef="let element"
+          ><mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(element) : null"
+            [checked]="selection.isSelected(element)"
+            [disabled]="
+              element?.uploadstatus == 'APPROVED' ||
+              maintenanceData?.data[0]?.status == 'REJECTED'
+            "
+          >
+          </mat-checkbox
+        ></mat-cell>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let column of columns; let i = index"
+        [matColumnDef]="column.columnDef"
+      >
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          ><b>{{ column.header }}</b>
+          <!-- Sorting starts here -->
+
+          <!-- <div fxLayout="column" class="arrow-wrapper">
+            <div
+              [ngClass]="
+                sortValue == column.columnDef && orderBy == 'ASC'
+                  ? 'higlightSort upArrow'
+                  : 'upArrow'
+              "
+              (click)="customSort(column.columnDef, 'asc')"
+            ></div>
+            <div
+              [ngClass]="
+                sortValue == column.columnDef && orderBy == 'DESC'
+                  ? 'higlightSort customIcon'
+                  : 'customIcon'
+              "
+              (click)="customSort(column.columnDef, 'desc')"
+            ></div>
+          </div> -->
+
+          <!-- Sorting ends here -->
+        </mat-header-cell>
+        <mat-cell
+          *matCellDef="let row"
+          class="custom-reuse-table-cell"
+          [ngStyle]="{
+            overflow:
+              showInfoIcon && column.header == 'Approved' ? 'unset' : 'hidden'
+          }"
+        >
+          <div
+            (click)="i == 0 && openPopUp(row)"
+            [ngClass]="[
+              i == 0 ? 'higlightColumn' : 'tableCell',
+              i == 0 && maintenanceTitle == 'User Maintenance'
+                ? 'align-left'
+                : '',
+              (column.header == 'Status' && column.cell(row)) == 'Pending'
+                ? 'highlightPending'
+                : '',
+              (column.header == 'Status' && column.cell(row)) == 'Approved'
+                ? 'higlightApprove'
+                : '',
+              (column.header == 'Status' && column.cell(row)) == 'Rejected'
+                ? 'higlightReject'
+                : '',
+              (column.header == 'Active Status' && column.cell(row)) ==
+              'Inactive'
+                ? 'higlightInactive'
+                : '',
+              (column.header == 'Active Status' && column.cell(row)) == 'Active'
+                ? 'higlightActive'
+                : '',
+              (maintenanceTitle == 'Process Stage Configuration' ||
+                maintenanceTitle == 'Feature Title Maintenance') &&
+              column.header == 'Description'
+                ? 'processStageCell'
+                : ''
+            ]"
+          >
+            <ng-container *ngIf="column.columnDef == 'businessSuite'">
+              <!-- {{ column.cell(row) | slice : 0 : 25 }} -->
+              <span
+                *ngIf="column.cell(row).length > 15"
+                matTooltip="{{
+                  column.cell(row).length > 15 ? column.cell(row) : ''
+                }}"
+                matTooltipPosition="right"
+                [matMenuTriggerFor]="menu"
+                >{{ getShorendValue(column.cell(row), 15) }}</span
+              >
+              <span
+                *ngIf="column.cell(row).length <= 15"
+                [matMenuTriggerFor]="menu"
+                >{{ getShorendValue(column.cell(row), 15) }}</span
+              >
+              <!-- <span *ngIf="column.cell(row)?.length > 5"
+              ><mat-icon [matMenuTriggerFor]="menu" class="viewmore"
+                >more_horiz</mat-icon
+              ></span
+            > -->
+
+              <mat-menu #menu="matMenu" xPosition="after">
+                <div *ngFor="let contact of column.cell(row).split(',')">
+                  {{ contact.trim() }}
+                </div>
+              </mat-menu>
+            </ng-container>
+
+            <ng-container *ngIf="column.columnDef == 'mobile'">
+              <ng-container
+                *ngIf="column.cell(row) && column.cell(row).length > 0"
+              >
+                <ng-container
+                  *ngIf="column.cell(row)?.length > 1; else singleMobile"
+                >
+                  {{ column.cell(row)[0][column.columnDef] | slice : 0 : 3 }}
+                  <span
+                    *ngIf="column.cell(row)[0][column.columnDef]?.length > 3"
+                    class="mask"
+                  >
+                    XXXXXXX
+                  </span>
+                  <mat-icon
+                    [matMenuTriggerFor]="menu"
+                    class="showMoreIconMobile"
+                    >keyboard_arrow_down</mat-icon
+                  >
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <div
+                      fxLayout="column"
+                      fxLayoutGap="10px"
+                      class="dropdownmobile"
+                    >
+                      <div
+                        *ngFor="let contacts of column.cell(row)"
+                        class="dropdownmenu"
+                      >
+                        {{ contacts[column.columnDef] | slice : 0 : 3 }}
+                        <span
+                          *ngIf="contacts[column.columnDef]?.length > 3"
+                          class="maskItem"
+                        >
+                          XXXXXXX
+                        </span>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </ng-container>
+                <ng-template #singleMobile>
+                  {{ column.cell(row)[0][column.columnDef] | slice : 0 : 3 }}
+                  <span
+                    *ngIf="column.cell(row)[0][column.columnDef]?.length > 3"
+                    class="mask"
+                  >
+                    XXXXXXX
+                  </span>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="column.columnDef == 'email'">
+              <ng-container
+                *ngIf="column.cell(row) && column.cell(row).length > 0"
+              >
+                <ng-container *ngIf="column.cell(row)?.length > 1">
+                  {{ maskEmail(column.cell(row)[0][column.columnDef]) }}
+                  <mat-icon
+                    *ngIf="column.cell(row)[0][column.columnDef]?.length >= 12"
+                    [matMenuTriggerFor]="menu"
+                    class="emaildropdown"
+                    >keyboard_arrow_down</mat-icon
+                  >
+
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <div
+                      fxLayout="column"
+                      fxLayoutGap="10px"
+                      class="emaildropdownmenu"
+                    >
+                      <div *ngFor="let contacts of column.cell(row)">
+                        {{ maskEmail(contacts[column.columnDef], 1) }}
+                      </div>
+                    </div>
+                  </mat-menu>
+                </ng-container>
+
+                <ng-container *ngIf="column.cell(row)?.length === 1">
+                  {{ maskEmail(column.cell(row)[0][column.columnDef], 1) }}
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="column.columnDef == 'processStage'">
+              <div fxLayout="row">
+                {{ row[column.columnDef][0][column.columnDef] }} &nbsp;
+                <span
+                  *ngIf="row[column.columnDef]?.length > 1"
+                  class="tooltip-stage"
+                  >...
+                  <span class="tooltiptext-stage">
+                    <span *ngFor="let contacts of row[column.columnDef]"
+                      >{{ contacts[column.columnDef] }},</span
+                    >
+                  </span>
+                </span>
+              </div>
+            </ng-container>
+            <mat-slide-toggle
+              class="table_toggle_btn"
+              [checked]="row?.statusForUser == true ? true : false"
+              *ngIf="column.columnDef === 'statusForUser'"
+            ></mat-slide-toggle>
+            <mat-slide-toggle
+              class="table_toggle_btn"
+              [checked]="row?.primaryVault == true ? true : false"
+              *ngIf="column.columnDef === 'primaryVault'"
+            ></mat-slide-toggle>
+            <ng-container
+              *ngIf="
+                column.columnDef != 'email' &&
+                column.columnDef != 'mobile' &&
+                column.columnDef != 'processStage' &&
+                column.columnDef != 'businessSuite' &&
+                column.columnDef != 'statusForUser' &&
+                column.columnDef != 'primaryVault'
+              "
+            >
+              <ng-container *ngIf="maintenanceTitle == 'User Maintenance'">
+                <ng-container *ngIf="i == 0">
+                  <ng-container *ngIf="row?.profile; else showInitialAvatar">
+                    <img
+                      [src]="row?.profile?.fileUrl"
+                      [src-fallback]="userImage"
+                      class="avatar-2x"
+                    />
+                  </ng-container>
+                  <ng-template #showInitialAvatar>
+                    <div class="circle">
+                      <span class="initials">
+                        {{ getData(row[profileKey]) }}
+                      </span>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+              <div fxLayout="column">
+                <span
+                  matTooltip="{{
+                    column.cell(row) && column.cell(row).length > 25
+                      ? column.cell(row)
+                      : ''
+                  }}"
+                  matTooltipPosition="right"
+                  [ngClass]="
+                    showInfoIcon &&
+                    column.header == 'Approved' &&
+                    'approved_container'
+                  "
+                >
+                  {{
+                    column.cell(row) == "null" ||
+                    column.cell(row) == "undefined"
+                      ? ""
+                      : getShorendValue(column.cell(row), 25)
+                  }}
+                  <div
+                    *ngIf="showInfoIcon && column.header == 'Approved'"
+                    class="info_icon_container"
+                  >
+                    <img
+                      src="assets/images/{{ column.cell(row) }}-info-icon.png"
+                      alt="i"
+                      (mouseover)="
+                        getApprovalHistory(row?.id || row?.bookShortOverId)
+                      "
+                    />
+
+                    <ul
+                      class="approved_history_container"
+                      *ngIf="summaryInfoResp.length"
+                    >
+                      <span class="vertical_line"></span>
+                      <ng-container
+                        *ngFor="let item of summaryInfoResp; let indx = index"
+                      >
+                        <li *ngIf="item">
+                          <div class="count_div">
+                            <p
+                              class="count"
+                              [ngClass]="
+                                item?.action.toLowerCase() === 'unauthorized'
+                                  ? 'unapproved'
+                                  : item?.action.toLowerCase() === 'reject'
+                                  ? 'reject'
+                                  : item?.action.toLowerCase() === 'authorized'
+                                  ? 'default'
+                                  : 'default'
+                              "
+                            >
+                              {{ indx + 1 }}
+                            </p>
+                          </div>
+                          <div class="list_body">
+                            <p class="list_name">
+                              {{ item?.userDetais?.userName }}
+                            </p>
+                            <p class="emp_id">
+                              EMp Id - {{ item?.userDetais?.empId }}
+                            </p>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </span>
+                <span class="Eid" *ngIf="column.columnDef == 'lastUpdatedBy'">
+                  <!-- Eid #{{
+                  maintenanceTitle == "Till/Vault Maintenance"
+                    ? row?.tillId
+                    : maintenanceTitle == "Limit Maintenance"
+                    ? row?.limitId
+                    : row?.empId
+                }} -->
+                  Eid #{{ row?.empId }}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef
+          ><b>{{ "Action" | translate }}</b></mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          <div class="action_btn_wrapper">
+            <div
+              class="action_btn"
+              title="Approve"
+              (click)="updateRecord('Transaction', element.id, element)"
+            >
+              <!-- Enabled -->
+              <mat-icon class="summaryIcon" svgIcon="transaction"></mat-icon>
+            </div>
+            <div
+              class="action_btn"
+              title=""
+              *ngIf="element.authStatus == 'AUTHORIZED'"
+            >
+              <!-- Disabled -->
+              <mat-icon class="summaryIcon" svgIcon="auth-disabled"></mat-icon>
+              <!-- <img
+              class="summaryIcon"
+              src="assets/images/Authorize-disabled.svg"
+              alt="..."
+            /> -->
+            </div>
+          </div>
+          <!-- <div
+            *ngIf="
+              element.oneTimeAuth === 'N' &&
+              element.authStatus != 'REJECTED' &&
+              maintenanceTitle !== 'Open Or Close Till / Vault' &&
+              (tellerOps
+                ? currentUser?.username == element?.createdBy
+                : true) &&
+              maintenanceTitle !== 'Instrument Status Maintenance'
+            "
+            class="action_btn"
+            (click)="updateRecord('Delete', element.id, element)"
+            title="Delete"
+          >
+           
+            <mat-icon class="summaryIcon" svgIcon="delete-enabled"></mat-icon>
+          </div> -->
+          <div
+            *ngIf="
+              element.oneTimeAuth === 'Y' &&
+              element.recordStatus == 'CLOSE' &&
+              !hideClose &&
+              maintenanceTitle !== 'Open Or Close Till / Vault'
+            "
+            (click)="updateRecord('Reopen', element.id, element)"
+            class="action_btn"
+            title="Activate"
+          >
+            <mat-icon class="summaryIcon" svgIcon="reopen-enabled"></mat-icon>
+          </div>
+          <div
+            (click)="updateRecord('Close', element.id, element)"
+            class="action_btn"
+            title="Deactivate"
+          >
+            <!-- Disabled -->
+            <mat-icon class="summaryIcon" svgIcon="close-enabled"></mat-icon>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="empty-row">
+        <mat-cell *matCellDef="let element" class="no_data"
+          >No Data Found</mat-cell
+        >
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row> -->
+
+      <mat-row
+        *matRowDef="
+          let row;
+          columns: dataSource.data.length > 0 &&
+          dataSource.filteredData.length > 0
+            ? displayedColumns
+            : ['empty-row']
+        "
+      ></mat-row>
+    </mat-table>
+  </div>
+</mat-card>
+
+<app-custom-pagination
+  *ngIf="!SecurityModule && totalLength > 0"
+  [total]="totalLength"
+  (customPageEvent)="handlePageEvent($event)"
+  [filterValue]="filterValue"
+  #tableContainer
+>
+</app-custom-pagination>

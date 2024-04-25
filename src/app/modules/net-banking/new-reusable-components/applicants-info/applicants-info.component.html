@@ -1,0 +1,133 @@
+<mat-card class="full-width default-card mx-0">
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="space Between"
+    fxLayoutGap="1%"
+    class="applicantsInfo"
+    [formGroup]="applicantForm"
+  >
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Applicant</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="applicant" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Applicant References</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="applicantReferences" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Customer Code</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="customerCode" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxFlex="39">
+      <mat-label class="custom-label">Issuing Branch</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="issuingBranchCode" />
+      </mat-form-field>
+    </div>
+
+    <ng-container
+      *ngFor="let address of addressControle.controls; let i = index"
+      [formGroup]="address"
+    >
+      <div fxLayout="column" fxFlex="29">
+        <mat-label class="custom-label">Address line 1</mat-label>
+        <mat-form-field>
+          <input matInput type="text" formControlName="address1" />
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxFlex="29">
+        <mat-label class="custom-label">Address line 2</mat-label>
+        <mat-form-field>
+          <input matInput type="text" formControlName="address2" />
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxFlex="19">
+        <app-searchable-select
+          [items]="countryArr"
+          inputLabel="Country"
+          bindLabelKey="countryName"
+          bindValueKey="countryName"
+          [control]="address.get('countryName')"
+          (selectionChange)="onChangeCountry(i)"
+          showOutsideLabel="true"
+        ></app-searchable-select>
+      </div>
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">zip Code</mat-label>
+        <mat-form-field class="full-width disable-field zipCode_field">
+          <input
+            matInput
+            type="text"
+            formControlName="pincode"
+            name="pincode"
+            numbersOnly
+            maxlength="10"
+          />
+          <mat-icon
+            matSuffix
+            class="searchIcon-main"
+            (click)="pincodeExpansion(i, address)"
+            >search</mat-icon
+          >
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">State</mat-label>
+        <mat-form-field>
+          <input matInput type="text" formControlName="stateName" />
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxFlex="19">
+        <mat-label class="custom-label">City</mat-label>
+        <mat-form-field>
+          <input matInput type="text" formControlName="cityName" />
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Delivery Branch</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="deliveryBranchCode" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Delivery Mode</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="deliveryMode" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxFlex="19">
+      <mat-label class="custom-label">Margin %</mat-label>
+      <mat-form-field>
+        <input matInput type="text" formControlName="margin" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" fxFlex="100">
+      <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Fee Account</h2>
+      </div>
+      <app-fee-account
+        [feeAccArray]="feeAccArray"
+        [control]="applicantForm.get('feeAccount')"
+      ></app-fee-account>
+    </div>
+
+    <h3 class="noteClass" fxFlex="100">
+      Note: The bank has the discretion to modify the limit, Margin %, Margin
+      type details provided as the part of the request
+    </h3>
+  </div>
+</mat-card>

@@ -1,3 +1,116 @@
+<!-- <mat-toolbar class="topbar mat-bg-card" style="height: 100px">
+  <div fxLayout="column">
+    <img src="assets/images/Group 5698.svg" alt="" width="100" height="55px" />
+    <div class="toolbar_font" style="font-size: 36px">
+      {{ userDetails?.bankName ?? "Demo Bank" }}
+    </div>
+  </div>
+
+  <span fxFlex></span>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/account']">
+      <span class="item-name lvl1">Open Account</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/card']">
+      <span class="item-name lvl1">Card</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/deposits']">
+      <span class="item-name lvl1">Deposits</span>
+    </a>
+  </div>
+  <div
+    *ngIf="!hideNavItem"
+    class="align_top_items"
+    routerLinkActive="highlight_label"
+  >
+    <a [routerLink]="['/loan']">
+      <span class="item-name lvl1">Loan</span>
+    </a>
+  </div>
+  <div
+    fxLayout="column"
+    *ngIf="!hideNavItem"
+    class="align_top_items dropdown pr-16 position-relative"
+    routerLinkActive="highlight_label"
+  >
+    <button class="login">
+      Log In
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <div class="dropdown-content" fxLayout="column">
+      <div fxLayout="column" class="plr-20">
+        <span
+          class="flex-spaceAround-center cursor-pointer"
+          (click)="openDropdown(1)"
+        >
+          Net Banking
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </span>
+        <span *ngIf="expand == 1" fxLayout="column">
+          <span class="flex-spaceAround-center plr-20 cursor-pointer">
+            Personal
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </span>
+          <span class="flex-spaceAround-center plr-20 cursor-pointer">
+            Corporate
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </span>
+        </span>
+      </div>
+      <span class="flex-spaceAround-center plr-20 cursor-pointer">
+        Cards
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </span>
+      <span class="flex-spaceAround-center plr-20 cursor-pointer">
+        Remit Money
+      </span>
+    </div>
+  </div>
+
+  <div class="nav_menu">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item [routerLink]="['/createAccount']">
+        <span class="item-name lvl1">Open Account</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/card']">
+        <span class="item-name lvl1">Card</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/deposits']">
+        <span class="item-name lvl1">Deposits</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/loan']">
+        <span class="item-name lvl1">Loan</span>
+      </a>
+    </mat-menu>
+  </div>
+
+ 
+</mat-toolbar> -->
+
 <header class="navbar">
   <div class="container">
     <div class="row w-100 d-flex align-items-center">
@@ -30,6 +143,53 @@
           (click)="toggleMobileNavMenu()"
           >menu</mat-icon
         >
+        <div
+          fxLayout="column"
+          class="align_top_items dropdown pr-16 position-relative"
+        >
+          <button class="login" fxLayoutAlign="space-evenly center">
+            Log In
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <div class="dropdown-content" fxLayout="column">
+            <div fxLayout="column" class="bg-color plr-20">
+              <span
+                class="flex-spaceAround-center h-50 cursor-pointer"
+                (click)="openDropdown(1)"
+                [class.active-button]="expand == 1"
+              >
+                Net Banking
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </span>
+              <span *ngIf="expand == 1" fxLayout="column" class="sub-value">
+                <span
+                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                >
+                  Personal
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </span>
+                <span
+                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                  (click)="redirectToSignIn()"
+                >
+                  Corporate
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </span>
+              </span>
+            </div>
+            <span
+              class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
+            >
+              Cards
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </span>
+            <span
+              class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
+            >
+              Remit Money
+            </span>
+          </div>
+        </div>
       </nav>
     </div>
   </div>

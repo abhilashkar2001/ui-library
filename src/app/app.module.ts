@@ -26,6 +26,10 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { InterceptorProviders } from "./shared/interceptors/interceptors";
 import { SwiperModule } from "swiper/angular";
 import { ToastrModule } from "ngx-toastr";
+import { CustomDateAdapter } from "./shared/services/date-time/customDateAdapter";
+import { DateAdapter } from "@angular/material/core";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -74,8 +78,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: "outline" },
+    },
     // REQUIRED IF YOU USE JWT AUTHENTICATION
     InterceptorProviders,
+    CustomDateAdapter,
+    { provide: DateAdapter, useClass: CustomDateAdapter },
   ],
   bootstrap: [AppComponent],
 })

@@ -15,7 +15,7 @@ export class CommonService {
   private calCulatorsDataSource = new BehaviorSubject(false);
   public $calculatorsData = this.calCulatorsDataSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   isExisitingUser(phoneNumber: number): Observable<any> | any {
     return this.http.get(
@@ -39,9 +39,26 @@ export class CommonService {
     return this.http.delete(`${baseUrl}/upload-document/${documentId}`);
   }
 
+  uploadDocument(formData) {
+    return this.http.post<any>(
+      `${baseUrl}/upload-document`,
+      formData,
+      {
+        reportProgress: true,
+        observe: "events",
+      }
+    );
+  }
   getAllCountries() {
     return this.http.get<any>(
       `${baseUrl}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
+  }
+  generateOTP(mobile) {
+    return this.http.get<any>(`${baseUrl}/auth/generateOTP?mobile=${mobile}`);
+  }
+
+  verifyOTP(payload: any) {
+    return this.http.post<any>(`${baseUrl}/auth/verifyOTP`, payload);
   }
 }

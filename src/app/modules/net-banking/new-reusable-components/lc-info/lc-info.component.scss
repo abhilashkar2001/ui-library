@@ -1,0 +1,55 @@
+.domesticToggle {
+  height: 60%;
+  align-items: center;
+  width: 86%;
+  justify-content: space-between;
+}
+.redClauseToggle {
+  height: 60%;
+  align-items: center;
+  width: 50%;
+  justify-content: space-between;
+}
+.plusdiv mat-icon {
+  background-color: #e9ecf5;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  height: 43px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-left: -11px;
+  z-index: 1;
+}
+.addbtn {
+  font-size: 38px;
+  color: #004c97;
+  cursor: pointer;
+  z-index: 0;
+}
+.grayDiv {
+  background-color: #f3f3f3;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  height: 43px !important;
+  margin-top: 5px;
+  z-index: 1;
+  align-items: center !important;
+}
+.percentageIcon {
+  font-size: 15px;
+}
+.vl {
+  height: 20px;
+  border-left: 1px solid #707070;
+  opacity: 0.45;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.cardHeading {
+  color: #004c97;
+  font-size: 19px;
+  padding: 7px;
+  font-weight: 500;
+}
