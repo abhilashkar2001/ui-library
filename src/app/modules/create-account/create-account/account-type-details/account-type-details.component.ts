@@ -73,12 +73,13 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
       processCycleCode: event.processCycleCode,
     });
     localStorage.setItem("basisDetails", payload);
-    const url = this.location.prepareExternalUrl(
-      this.router.serializeUrl(
-        this.router.createUrlTree([`/account/open/${event.basisId}`])
-      )
-    );
-    window.open(`${url}`, "_blank");
+    // const url = this.location.prepareExternalUrl(
+    //   this.router.serializeUrl(
+    //     this.router.createUrlTree([`/account/open/${event.basisId}`])
+    //   )
+    // );
+    // window.open(`${url}`, "_blank");
+    this.router.navigate([`/account/open/${event.basisId}`]);
   }
 
   apply(event) {

@@ -45,8 +45,6 @@ export class OpenAccountService {
     );
   }
 
-  verifyKYC() {}
-
   getResidentType() {
     return this.http.get(`${baseUrl}/details?businessSuite`);
   }
@@ -89,7 +87,7 @@ export class OpenAccountService {
 
   getProcessCycle(processName) {
     return this.http.get<any>(
-      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}`
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`
     );
   }
   getProcessStages(id) {
@@ -133,6 +131,11 @@ export class OpenAccountService {
   checkMobileAndProduct(productCode, mobileNo, accountType) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
+    );
+  }
+  getOriginationMaster(id) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser?originationId=${id}`
     );
   }
 }

@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { DownloadService } from "app/shared/services/download.service";
 import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-success-popup",
   templateUrl: "./success-popup.component.html",
@@ -26,12 +27,12 @@ export class SuccessPopupComponent implements OnInit {
     private emailService: EmailService,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService,
+    private tokenStore: TokenStorageService,
     private router: Router
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
     this.referenceNo = data.refrenceNo;
-    console.log(this.referenceNo);
   }
   ngOnInit(): void {
     this.depositType = this.data?.type;
@@ -115,6 +116,7 @@ export class SuccessPopupComponent implements OnInit {
   }
 
   done() {
+    this.tokenStore.cleanUpSessionPartially();
     if (this.isNetBanking) {
       this.router.navigate([`/user/dashboard/${this.data.route}`]);
       this.dialogRef.close();

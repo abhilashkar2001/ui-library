@@ -115,7 +115,7 @@
   <div class="container">
     <div class="row w-100 d-flex align-items-center">
       <div class="col-10 col-md-6">
-        <div class="logo">
+        <div class="logo" (click)="goToHomePage()">
           <img src="assets/images/Group 5698.svg" alt="logo" />
           <p class="logo_text">DemoBank</p>
         </div>
@@ -127,7 +127,7 @@
         <!-- <ul class="d-none d-md-flex"> -->
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
           <ng-container *ngFor="let item of items">
-            <li>
+            <li (click)="onNavTabClick(item)">
               <a
                 [routerLink]="[item.route]"
                 routerLinkActive="highlight_label"
@@ -195,3 +195,4 @@
   </div>
   <div id="underline"></div>
 </header>
+<app-spinner></app-spinner>

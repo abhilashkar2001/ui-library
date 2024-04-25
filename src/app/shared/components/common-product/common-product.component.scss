@@ -142,3 +142,14 @@
   font-weight: 600;
   padding-left: 6%;
 }
+$btnBackground: #06113c;
+
+.confirm-button:hover {
+  box-shadow: 0px 0px 0px 2.5px #fff, 0px 0px 0px 5px $btnBackground,
+    0px 0px 0px 10px white, 0px 0px 0px 0px $btnBackground;
+  background: rgba(219, 236, 255, 0.8392156863);
+  color: $btnBackground !important;
+  margin-top: 5px;
+  font-size: 600 !important;
+  height: 40px !important;
+}

@@ -9,6 +9,8 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculation.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import * as moment from "moment";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -18,6 +20,8 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 export class CommonEmiCalculatorComponent implements OnInit {
   max = 1000000;
   min = 10000;
+  maxValue: number = 0;
+  minValue: number = 0;
   ammountValue = 0;
   loanForm: FormGroup;
   @Input() fdName = "rdCalculator";
@@ -33,6 +37,8 @@ export class CommonEmiCalculatorComponent implements OnInit {
   interestDetails: any;
   otherUserInfo: any;
   currency: any = "INR";
+  interestRate: number = 10.1;
+  valueChangesSubscription: Subscription;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -57,6 +63,13 @@ export class CommonEmiCalculatorComponent implements OnInit {
         );
         this.min = this.productDetails.minimumAmount;
         this.max = this.productDetails.maximumAmount;
+        this.maxValue =
+          this.interestRate + this.productDetails?.maxRateVariancePercentage ??
+          0;
+        this.minValue = Math.abs(
+          this.interestRate - this.productDetails?.minRateVariancePercentage ??
+            0
+        );
       }
     });
 
@@ -71,18 +84,23 @@ export class CommonEmiCalculatorComponent implements OnInit {
     });
   }
   onSliderChange(e) {
-    console.log(e);
     this.ammountValue = e.value;
     this.loanForm.get("amount").setValue(e.value);
-    console.log(this.loanForm.value);
   }
+
+  ngOnDestroy(): void {
+    if (this.valueChangesSubscription) {
+      this.valueChangesSubscription.unsubscribe();
+    }
+  }
+
   buildForm() {
     this.loanForm = this.fb.group({
       amount: [this.min],
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: [1, [Validators.required]],
+      interestRate: [this.interestRate, [Validators.required]],
     });
 
     this.loanForm
@@ -95,34 +113,45 @@ export class CommonEmiCalculatorComponent implements OnInit {
         }
       });
 
-    this.loanForm.valueChanges.pipe(debounceTime(500)).subscribe((_) => {
-      if (
-        this.loanForm.value.interestRate &&
-        this.loanForm.value.amount &&
-        (this.loanForm.value.tenureYear ||
-          this.loanForm.value.tenureMonth ||
-          this.loanForm.value.tenureDays)
-      ) {
-        this.loanCalcService
-          .calculateAmortize(
-            parseInt(this.loanForm.value.amount),
-            parseInt(this.loanForm.value.interestRate),
+    this.valueChangesSubscription = this.loanForm.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((_) => {
+        if (
+          this.loanForm.value.interestRate &&
+          this.loanForm.value.amount &&
+          (this.loanForm.value.tenureYear ||
+            this.loanForm.value.tenureMonth ||
+            this.loanForm.value.tenureDays)
+        ) {
+          this.calculateTenure(
             parseInt(this.loanForm.value.tenureYear) || 0,
             parseInt(this.loanForm.value.tenureMonth) || 0,
             parseInt(this.loanForm.value.tenureDays) || 0
-          )
-          .then((value) => {
-            const finalInterest = value.monthlyInterestArr[0].interestComponent
-              .toFixed(2)
-              .split(".");
-
-            this.interestPayble = Math.abs(
-              value.totalPayableAmount - this.loanForm.value.amount
-            );
-            this.totalPayableAmmount = value.totalPayableAmount;
-            this.emiAmount = Math.round(value.emiAmount);
+          ).then((result) => {
+            const payload = {
+              principleAmount: parseInt(this.loanForm.value.amount),
+              interestRate: parseFloat(this.loanForm.value.interestRate),
+              numberOfMonths: result,
+              firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY"),
+            };
+            this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
+              this.interestPayble = Math.round(resp.data.totalInterest);
+              this.totalPayableAmmount = Math.round(
+                resp.data.totalRepaymentAmount
+              );
+              this.emiAmount = Math.round(resp.data.monthlyPayment);
+            });
           });
-      }
+        }
+      });
+  }
+  calculateTenure(years, months, days) {
+    return new Promise((resolve, reject) => {
+      const totalMonths = years * 12 + months;
+      const daysInMonth = days ? Math.ceil(days / 30) : 0;
+      const totalMonthsIncludingDays = totalMonths + daysInMonth;
+      console.log(totalMonthsIncludingDays);
+      resolve(totalMonthsIncludingDays);
     });
   }
   get checkTenurePresence() {

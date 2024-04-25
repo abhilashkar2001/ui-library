@@ -31,6 +31,7 @@ import { LoanService } from "app/shared/services/loan/loan.service";
   styleUrls: ["./other-documents.component.scss"],
 })
 export class OtherDocumentsComponent implements OnInit {
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   denominationArray: any[] = [];
   createDocumentForm: FormGroup;
   count = 0;
@@ -47,8 +48,8 @@ export class OtherDocumentsComponent implements OnInit {
     },
   ];
   @Output() customDocumentForm = new EventEmitter<any>();
-  @Output() customSaveDocument = new EventEmitter<any>();
-  @Output() customgoBack = new EventEmitter<any>();
+  @Output() onCustomSubmit = new EventEmitter<any>();
+  @Output() onBackEvent = new EventEmitter<any>();
   @Input() personalDoc: any[] = [];
   verificationType = "kyc";
   documentControls: FormGroup;
@@ -69,6 +70,7 @@ export class OtherDocumentsComponent implements OnInit {
       DOCUMENTNAME: [],
     },
   };
+  ocrProcess: boolean = true;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -83,13 +85,12 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.personalDoc?.currentValue) {
-      // this.documentList = changes?.personalDoc?.currentValue;
+      this.documentList = changes?.personalDoc?.currentValue;
     }
   }
 
   ngOnInit() {
-    // this.getGenericDetails();
-    // var loanCustomerId = parseInt(sessionStorage.getItem("customerId"));
+    this.documentList = this.personalDoc;
     var originationId = parseInt(sessionStorage.getItem("originationId"));
     if (originationId) this.getDataFromOriginationMaster(originationId);
     // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
@@ -313,13 +314,21 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onConfirmEvent(event?) {
-    this.customSaveDocument.emit({
+    var docIds = [];
+    event.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+    this.onCustomSubmit.emit({
       documentDetails: event.documentDetails,
     });
+    this.updateParentModel({ kycDoc: docIds, updateMasterSave: true });
   }
 
   goBack() {
-    this.customgoBack.emit();
+    this.onBackEvent.emit();
   }
 
   onDocumentSelection(event, index) {

@@ -178,7 +178,11 @@
             </mat-error>
           </div>
           <div class="col-md-6 col-12">
-            <label class="calculator_subTItle">Interest Rate</label>
+            <label
+              class="calculator_subTItle"
+              fxLayoutAlign="space-between center"
+              >Interest Rate <span>{{ interestRate }}%</span></label
+            >
             <mat-form-field
               appearance="outline"
               class="full-width field-changedInput background-white"
@@ -186,9 +190,10 @@
               <mat-label class="custom-mat-label">Percentage</mat-label>
               <input
                 matInput
-                numbersOnly
                 formControlName="interestRate"
-                maxlength="2"
+                minMax
+                [min]="minValue"
+                [max]="maxValue"
               />
               <mat-error
                 *ngIf="

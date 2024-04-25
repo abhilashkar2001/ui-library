@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { SharedService } from "app/shared/shared.service";
@@ -10,13 +10,14 @@ import { SharedService } from "app/shared/shared.service";
 })
 export class LoanDocumentUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   custId: any;
   stepperTitle: any;
   documentTypeArray: any;
   staticData = {
-    DOCUMENTNAME: [],
+    DOCUMENTTYPE: [],
   };
   screenName: string = "Loan Document";
   verificationType: string = "Other Document";
@@ -27,6 +28,7 @@ export class LoanDocumentUploadComponent implements OnInit {
       DOCUMENTNAME: [],
     },
   };
+  ocrProcess: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,10 +53,10 @@ export class LoanDocumentUploadComponent implements OnInit {
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
           if (
-            resp.data[0].loanAccountInfo.documnentsInfo.documents?.length > 0
+            resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel?.length > 0
           ) {
             this.documentList =
-              resp.data[0].loanAccountInfo.documnentsInfo.documents;
+              resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
           }
         }
       });
@@ -65,13 +67,23 @@ export class LoanDocumentUploadComponent implements OnInit {
       .genericValue(this.screenName, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["DOCUMENTNAME"];
+          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
         }
       });
   }
 
   onSubmit(event) {
-    this.onConfirmEvent.emit(event.documentDetails);
+    var docIds = [];
+    event.documentDetails.otherDocument.forEach((element) => {
+      const docId = {
+        docIds: element.docIds,
+      };
+      docIds.push(docId);
+    });
+
+    sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
+    this.updateParentModel({ otherLoanDoc: docIds, updateMasterSave: true });
+    this.onCustomSubmit.emit();
   }
 
   onBack() {

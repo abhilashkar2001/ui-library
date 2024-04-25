@@ -18,6 +18,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
+import { ErrorNotifierPopupComponent } from "../error-notifier-popup/error-notifier-popup.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-common-mobile-verification",
@@ -38,12 +40,13 @@ import { debounceTime } from "rxjs/operators";
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
-  @Output() onVerifyOtpEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
   @Input() hideInfo = false;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   otpForm: FormGroup;
   phone: string;
   otp: any;
@@ -75,13 +78,16 @@ export class CommonMobileVerificationComponent implements OnInit {
   otpAvailable: boolean = false;
   yourOtp: any;
   // SAVE BUTTON PROPERTIES
-  isLoading: boolean = false;
+  @Input() isLoading: boolean = false;
+  @Input() basisName: string = "";
   loadingBtnText: string = "Saving...";
+  @Input() mobileVerifyInfo: any = {};
 
   constructor(
     private fb: FormBuilder,
     private commonService: CommonService,
-    private api: OpenAccountService
+    private api: OpenAccountService,
+    private dialog: MatDialog
   ) {
     this.buildFormGroup();
   }
@@ -244,12 +250,92 @@ export class CommonMobileVerificationComponent implements OnInit {
           this.loadingBtnText = "Saved";
           this.isLoading = false;
           this.invalidOtp = false;
-          this.onVerifyOtpEvent.emit({ phone: this.otpForm.value.phone });
+          this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
+          // this.onCustomSubmit.emit({ phone: this.otpForm.value.phone });
         }
       });
   }
 
   onExit() {
     this.onBackEvent.emit();
+  }
+
+  onVerifyExistingProduct(event) {
+    // this.isLoading = true;
+    this.api
+      .checkMobileAndProduct(
+        this.mobileVerifyInfo.basisName,
+        event.phone,
+        this.mobileVerifyInfo.productDuplicationKey
+      )
+      .subscribe((resp) => {
+        if (!resp) {
+          this.allreadyProduct();
+        } else {
+          this.api.getExistingCustomer(event.phone).subscribe((resp: any) => {
+            // Here cleaning the all ids from cache.
+            this.cleanCacheInMobileScreen();
+            if (resp?.statusCode === 200 && resp?.data) {
+              if (resp?.data?.length > 0) {
+                sessionStorage.setItem("mobileNo", event.phone);
+
+                if (
+                  this.mobileVerifyInfo.applicationType === "loan application"
+                ) {
+                  let customerIds: any[] = [];
+                  resp.data.forEach((element) => {
+                    customerIds.push(element.customerId);
+                  });
+                  sessionStorage.setItem(
+                    "userCustomerId",
+                    JSON.stringify(customerIds)
+                  );
+                } else {
+                  sessionStorage.setItem(
+                    "userCustomerId",
+                    resp.data[0].customerId
+                  );
+                }
+                this.onCustomSubmit.emit({ personalInfo: resp.data });
+                this?.updateParentModel({
+                  personalInfo: resp.data,
+                  updateMasterSave: false,
+                });
+              }
+            } else if (resp?.statusCode === 204) {
+              this.onCustomSubmit.emit({
+                personalInfo: resp.data,
+              });
+              this?.updateParentModel({
+                personalInfo: resp.data,
+                updateMasterSave: false,
+              });
+
+              sessionStorage.setItem("mobileNo", event.phone);
+            } else {
+              sessionStorage.setItem("mobileNo", event.phone);
+            }
+          });
+        }
+      });
+  }
+  allreadyProduct() {
+    this.dialog.open(ErrorNotifierPopupComponent, {
+      data: {
+        errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
+        errorMessageHint: "Please visit bank for more information.",
+      },
+      width: "650px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+  }
+  cleanCacheInMobileScreen() {
+    sessionStorage.removeItem("userCustomerId");
+    sessionStorage.removeItem("customerStageId");
+    sessionStorage.removeItem("customerId");
+    sessionStorage.removeItem("customerStageIds");
+    sessionStorage.removeItem("originationId");
   }
 }

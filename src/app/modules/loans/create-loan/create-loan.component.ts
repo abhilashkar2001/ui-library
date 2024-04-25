@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -9,6 +9,8 @@ import { debounceTime } from "rxjs/operators";
 import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
 import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { SharedService } from "app/shared/shared.service";
+import { combineLatest, merge, Subscription } from "rxjs";
 
 @Component({
   selector: "app-create-loan",
@@ -19,14 +21,18 @@ export class CreateLoanComponent implements OnInit {
   personalLoanDetailsForm: FormGroup;
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
-  @Output() customgoBack: EventEmitter<any> = new EventEmitter();
-  @Output() onSaveCreateLoan: EventEmitter<any> = new EventEmitter();
+  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
   screenName: string = CreateLoanConstant.SCREEN_NAME;
   staticData = CreateLoanConstant.GENERIC_SATIC_KEYS;
   accountTypeArr = CreateLoanConstant.ACCOUNT_TYPE;
+  staticOwnership = {
+    OWNERSHIP: [],
+  };
 
   disbursementType: string;
   loanDetails: any;
@@ -37,6 +43,8 @@ export class CreateLoanComponent implements OnInit {
   currentDate = new Date();
   productDetails: any;
   otherUserInfo: any;
+  ownerShipId: any;
+  valueChangesSubscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -45,7 +53,8 @@ export class CreateLoanComponent implements OnInit {
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
     private loanCalcService: LoanCalulationService,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private sharedService: SharedService
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
@@ -114,15 +123,12 @@ export class CreateLoanComponent implements OnInit {
     this.loanApi.getLoanById(id).subscribe(
       (resp) => {
         if (resp.statusCode === 200) {
-          this.initialForm(resp?.data); // once fetchById api working then use this
-          const tenureDays = sessionStorage.getItem("tenureDays") || 0;
-          const tenureYear = sessionStorage.getItem("tenureYear") || 0;
-          const tenureMonth = sessionStorage.getItem("tenureMonth") || 0;
-          this.personalLoanDetailsForm.controls.tenureDays.setValue(tenureDays);
-          this.personalLoanDetailsForm.controls.tenureYear.setValue(tenureYear);
-          this.personalLoanDetailsForm.controls.tenureMonth.setValue(
-            tenureMonth
-          );
+          this.initialForm({
+            ...resp?.data,
+            tenureDays: sessionStorage.getItem("tenureDays") || 0,
+            tenureYear: sessionStorage.getItem("tenureYear") || 0,
+            tenureMonth: sessionStorage.getItem("tenureMonth") || 0,
+          });
         } else {
           this.initialForm();
         }
@@ -180,59 +186,93 @@ export class CreateLoanComponent implements OnInit {
           this.validateAccountNumber(resp);
         }
       });
-    this.personalLoanDetailsForm
-      .get("loanAmount")
-      .valueChanges.pipe(debounceTime(200))
-      .subscribe((resp) => {
-        if (resp) {
-          this.personalLoanDetailsForm.get("principlAmount").setValue(resp);
-        }
-      });
 
-    this.personalLoanDetailsForm.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((_) => {
-        if (
-          this.personalLoanDetailsForm.value.interestRate &&
-          this.personalLoanDetailsForm.value.loanAmount &&
-          (this.personalLoanDetailsForm.value.tenureYear ||
-            this.personalLoanDetailsForm.value.tenureMonth ||
-            this.personalLoanDetailsForm.value.tenureDays)
-        ) {
-          this.calculateLoan();
-        }
-      });
+    const interestRate$ = this.personalLoanDetailsForm
+      .get("interestRate")
+      .valueChanges.pipe(debounceTime(500));
+    const tenureDays$ = this.personalLoanDetailsForm
+      .get("tenureDays")
+      .valueChanges.pipe(debounceTime(500));
+    const tenureYear$ = this.personalLoanDetailsForm
+      .get("tenureYear")
+      .valueChanges.pipe(debounceTime(500));
+    const tenureMonth$ = this.personalLoanDetailsForm
+      .get("tenureMonth")
+      .valueChanges.pipe(debounceTime(500));
+    const loanAmount$ = this.personalLoanDetailsForm
+      .get("loanAmount")
+      .valueChanges.pipe(debounceTime(500));
+
+    merge(
+      interestRate$,
+      tenureDays$,
+      tenureMonth$,
+      tenureYear$,
+      loanAmount$
+    ).subscribe(([loanAmount]) => {
+      if (loanAmount)
+        this.personalLoanDetailsForm
+          .get("principlAmount")
+          .setValue(this.personalLoanDetailsForm.get("loanAmount").value);
+      if (
+        this.personalLoanDetailsForm.value.interestRate &&
+        this.personalLoanDetailsForm.value.loanAmount &&
+        (this.personalLoanDetailsForm.value.tenureYear ||
+          this.personalLoanDetailsForm.value.tenureMonth ||
+          this.personalLoanDetailsForm.value.tenureDays)
+      ) {
+        this.calculateLoan();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.valueChangesSubscription) {
+      this.valueChangesSubscription.unsubscribe();
+    }
+  }
+
+  calculateTenure(years, months, days) {
+    return new Promise((resolve, reject) => {
+      const totalMonths = years * 12 + months;
+      const daysInMonth = days ? Math.ceil(days / 30) : 0;
+      const totalMonthsIncludingDays = totalMonths + daysInMonth;
+      console.log(totalMonthsIncludingDays);
+      resolve(totalMonthsIncludingDays);
+    });
   }
 
   /**
    * calculation interestPayable, totalPayableAmount, emiAmount
    */
   calculateLoan() {
-    this.loanCalcService
-      .calculateAmortize(
-        parseInt(this.personalLoanDetailsForm.value.loanAmount),
-        parseInt(this.personalLoanDetailsForm.value.interestRate),
-        parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
-        parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
-        parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
-      )
-      .then((value) => {
-        const finalInterest = value.monthlyInterestArr[0].interestComponent
-          .toFixed(2)
-          .split(".");
-
+    this.calculateTenure(
+      parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
+      parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
+      parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
+    ).then((result) => {
+      const payload = {
+        principleAmount: parseInt(
+          this.personalLoanDetailsForm.value.loanAmount
+        ),
+        interestRate: parseFloat(
+          this.personalLoanDetailsForm.value.interestRate
+        ),
+        numberOfMonths: result,
+        firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY"),
+      };
+      this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
         this.personalLoanDetailsForm
           .get("interestPayable")
-          .setValue(
-            parseFloat(finalInterest[0] + "." + finalInterest[1].slice(0, 3))
-          );
+          .setValue(Math.round(resp.data.totalInterest));
         this.personalLoanDetailsForm
           .get("totalPayableAmount")
-          .setValue(value.totalPayableAmount);
+          .setValue(Math.round(resp.data.totalRepaymentAmount));
         this.personalLoanDetailsForm
           .get("emiAmount")
-          .setValue(Math.round(value.emiAmount));
+          .setValue(Math.round(resp.data.monthlyPayment));
       });
+    });
   }
 
   /**
@@ -315,6 +355,7 @@ export class CreateLoanComponent implements OnInit {
       )[0]
       .values.toLowerCase();
     sessionStorage.setItem("loanHolderType", holder);
+    this.getOwnershipIdByGeneric(holder);
     this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         this.snack.open(`Create Loan Details Saved !`, "OK", {
@@ -335,7 +376,8 @@ export class CreateLoanComponent implements OnInit {
           "tenureDays",
           this.personalLoanDetailsForm.value.tenureDays
         );
-        this.onSaveCreateLoan.emit(this.personalLoanDetailsForm);
+        this.updateParentModel({ updateMasterSave: false });
+        this.onCustomSubmit.emit(this.personalLoanDetailsForm);
       }
     });
   }
@@ -392,7 +434,7 @@ export class CreateLoanComponent implements OnInit {
    * navigating back screen.
    */
   onBack() {
-    this.customgoBack.emit();
+    this.onBackEvent.emit();
   }
 
   /**
@@ -433,5 +475,20 @@ export class CreateLoanComponent implements OnInit {
       this.productDetails?.minimumTenorDay || 0
     );
     return totalDays <= MinimumAllowedDays;
+  }
+
+  getOwnershipIdByGeneric(value) {
+    let ownership = [];
+    this.sharedService
+      .genericValue("Common", Object.keys(this.staticOwnership))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          ownership = resp.data["OWNERSHIP"];
+          this.ownerShipId = ownership.find(
+            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
+          )?.id;
+          sessionStorage.setItem("ownershipId", this.ownerShipId);
+        }
+      });
   }
 }

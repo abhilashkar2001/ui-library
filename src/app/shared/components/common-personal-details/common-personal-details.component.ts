@@ -34,12 +34,13 @@ import { PersonalDetailsConstant } from "./personal-details.constant";
 })
 export class CommonPersonalDetailsComponent implements OnInit {
   customerDetailsForm: FormGroup;
-  @Output() customSavePersonal = new EventEmitter<{}>();
-  @Output() personalBack = new EventEmitter<{}>();
+  @Output() onCustomSubmit = new EventEmitter<{}>();
+  @Output() onBackEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
   @Input() isHideField = false;
   @Input() basisId: any;
   @Input() personalDetails: any;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -69,6 +70,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   defaultIsdCodeValue: any;
   maxMobileLength: any;
   nationalityArray: any[] = [];
+  customerIds: any[] = [];
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -91,6 +93,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getAllRequisite().then((res) => {
+      console.log("buildingForm");
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
       } else this.buildCustomerDetailsForm();
@@ -101,12 +104,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
     // this.getCountry();
     this.getGenericDetails();
     this.fetchBoundaries();
-    this.holderType = sessionStorage.getItem("loanHolderType") || "Self";
+    this.holderType =
+      sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
-    // this.getAllRequisite().then((res) => {
-    //   if (this.loanCustomerId != null) this.getCustomerById();
-    //   else this.buildCustomerDetailsForm();
-    // });
+    this.getAllRequisite().then((res) => {
+      if (this.personalDetails?.length > 0)
+        this.buildCustomerDetailsForm(this.personalDetails);
+      else this.buildCustomerDetailsForm();
+    });
 
     // this.getState();
     // this.getCity();
@@ -219,7 +224,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   renderApplicant(data, applicantLength) {
-    for (let i = 0; i < applicantLength; i++) this.addCustomer(i);
+    for (let i = 0; i < applicantLength; i++)
+      this.addCustomer(i, data && data[i]);
   }
 
   get customer(): FormArray {
@@ -228,7 +234,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   newCustomer(data?): FormGroup {
     return this.fb.group({
-      customerId: null,
+      customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
@@ -303,7 +309,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   async addCustomer(i, data?) {
     await this.customer.push(this.newCustomer(data));
-    this.addAddress(i, data ? data.contact.address[0] : {});
+    this.addAddress(i, data ? data.contact?.address[0] : {});
     this.debounceZipCodeAndCif();
   }
   debounceZipCodeAndCif() {
@@ -422,6 +428,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   confirmCustomer() {
+    console.log(
+      this.customerDetailsForm.invalid ||
+        (!this.isHideField && this.isAnyPrimaryCustomer())
+    );
     if (
       this.customerDetailsForm.invalid ||
       (!this.isHideField && this.isAnyPrimaryCustomer())
@@ -429,20 +439,25 @@ export class CommonPersonalDetailsComponent implements OnInit {
       return;
     }
 
+    let prefixValue = null;
     this.customerDetailsForm.value.customer.forEach((element, i) => {
       this.prefixArray.forEach((el) => {
-        if (el.id == element.prefix) {
-          this.customerDetailsForm.value.customer[i] = {
-            ...this.customerDetailsForm.value.customer[i],
-            prefixValue: el.values,
-          };
+        if (element.primaryCustomer && el.id == element.prefix) {
+          prefixValue = el.values;
         }
       });
     });
 
-    this.customSavePersonal.emit({
+    this.onCustomSubmit.emit({
       status: true,
+      prefixValue: prefixValue,
       personalDetails: this.customerDetailsForm,
+    });
+
+    this?.updateParentModel({
+      personalDetails: this.customerDetailsForm.value,
+      updateMasterSave: true,
+      prefixValue: prefixValue,
     });
   }
 
@@ -472,7 +487,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   goBack() {
-    this.personalBack.emit();
+    this.onBackEvent.emit();
   }
   saveCustomer(i) {
     this.closePanel(i);

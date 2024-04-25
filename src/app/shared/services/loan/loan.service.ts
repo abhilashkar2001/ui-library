@@ -11,11 +11,9 @@ const baseUrl = environment.microServiceURL;
 export class LoanService {
   constructor(private http: HttpClient) {}
 
-  getLoanTypes(
-    loanServices: string = "LOANOPENINGSERVICES"
-  ): Observable<any> | any {
+  getLoanTypes(categoray): Observable<any> | any {
     return this.http.get(
-      `${baseUrl}/basis-class?businessSuite=${loanServices}`
+      `${baseUrl}/basis-class/fetchAllWebsiteProduct?category=${categoray}`
     );
   }
 
@@ -149,5 +147,9 @@ export class LoanService {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
     );
+  }
+
+  getEmiCalculation(payload) {
+    return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 }

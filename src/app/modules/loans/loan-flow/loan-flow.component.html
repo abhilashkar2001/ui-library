@@ -1,4 +1,4 @@
-<div class="align_fd">
+<div class="mt-20">
   <div fxFlex="40" class="fdCalculator_parent">
     <app-commmon-steeper
       [screenTitle]="screenTitle"
@@ -11,97 +11,13 @@
     class="vertical_divider"
     style="border-right: 1px solid #cbcbcb; height: 450px"
   ></div>
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('create', cuurrentStep)"
-  >
-    <app-create-loan
-      (onSaveCreateLoan)="onSaveCreateLoan($event)"
-      (customgoBack)="goBack()"
-    >
-    </app-create-loan>
-  </div>
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('mobile', cuurrentStep)"
-  >
-    <app-common-mobile-verification
-      (onBackEvent)="goBack()"
-      (onVerifyOtpEvent)="checkExistingUserEvent($event)"
-    >
-    </app-common-mobile-verification>
-  </div>
-  <!-- cibil score starts here -->
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('credit', cuurrentStep)"
-  >
-    <app-cibil-score-container
-      (onCustomCibilDetail)="onCustomCibilDetail()"
-      [createLoanAccountNumber]="createLoanAccountNumber"
-      (onBackEvent)="goBack()"
-    ></app-cibil-score-container>
-  </div>
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('personal', cuurrentStep)"
-  >
-    <app-common-personal-details
-      (customSavePersonal)="customSavePersonal($event)"
-      (personalBack)="goBack()"
-      [basisId]="basisId"
-      [personalDetails]="personalDetails"
-    >
-    </app-common-personal-details>
-  </div>
-  <!-- KYC starts here -->
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('kyc', cuurrentStep)"
-  >
-    <app-other-documents
-      (customSaveDocument)="customSaveDocuments($event)"
-      (customgoBack)="goBack()"
-    >
-    </app-other-documents>
-  </div>
-  <!-- KYC ends here -->
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('document', cuurrentStep)"
-  >
-    <app-loan-document-upload
-      (onConfirmEvent)="onConfirm($event)"
-      (onBackEvent)="goBack()"
-    >
-    </app-loan-document-upload>
-  </div>
-  <div
-    class="align_fdForm"
-    fxLayout="column"
-    *ngIf="verfyStep('term', cuurrentStep)"
-  >
-    <app-loan-terms-conditions
-      (onConfirmEvent)="onTCAccepted($event)"
-      (onBackEvent)="goBack()"
-    >
-    </app-loan-terms-conditions>
-  </div>
-  <div
-    *ngIf="verfyStep('summary', cuurrentStep)"
-    class="align_fdForm"
-    fxLayout="column"
-  >
-    <app-loan-summary
-      (onConfirmEvent)="onFlowDone()"
-      [loanSummary]="loanSummary"
-      (onBackEvent)="goBack()"
-    ></app-loan-summary>
+
+  <div class="col-div2 screenMargin" fxFlex="60" fxLayout="column">
+    <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
+      {{ cuurrentStep }}
+    </h2>
+    <div>
+      <ng-template appAppHost #container></ng-template>
+    </div>
   </div>
 </div>

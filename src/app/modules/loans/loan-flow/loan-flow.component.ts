@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Form, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { LoanFlowConstants } from "./loan-flow.constant";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SharedService } from "app/shared/shared.service";
+import { AppHostDirective } from "app/shared/directives/app-host.directive";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "app-loan-flow",
@@ -20,13 +20,13 @@ import { SharedService } from "app/shared/shared.service";
   styleUrls: ["./loan-flow.component.scss"],
 })
 export class LoanFlowComponent implements OnInit {
+  originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
   createLoan: FormGroup;
   customVerifyNumber: FormGroup;
   cibilScoreForm: FormGroup;
   documentForm: FormGroup;
   kycDetailsForm: FormGroup;
   customPersonalDetails: FormGroup;
-  steper_Array: any;
   @ViewChild("stepper") stepper;
   selectedStep: number = 0;
   isLinear = true;
@@ -45,78 +45,107 @@ export class LoanFlowComponent implements OnInit {
   basisId: any;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number };
-  personalDetails: any;
+  personalDetails: any = [];
   staticData = {
     OWNERSHIP: [],
   };
   currentUser: any;
   otherUserInfo: any;
   ownerShipId: any;
-
+  isLoading: boolean = false;
+  dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
+  @ViewChild("container") container: any;
+  @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
+  componentRef: any;
+  currentComponentInfo: any;
+  mobileVerifyInfo = {
+    basisName: "",
+    productDuplicationKey: "Loan",
+    applicationType: "loan application",
+  };
+  personalDoc: any[] = [];
+  loanAccountInfo: any;
+  otherLoanDoc: any[] = [];
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
     private snack: MatSnackBar,
-    private depositApi: NewDepositService,
     private dialog: MatDialog,
     private router: Router,
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    protected cdr: ChangeDetectorRef
   ) {
-    this.steper_Array = [
-      {
-        id: 1,
-        stepFormControl: this.createLoan,
-        label: "Create Loan",
-        key: "create",
-      },
-      {
-        id: 2,
-        stepFormControl: this.customVerifyNumber,
-        label: "Verify Mobile Number",
-        key: "mobile",
-      },
-      {
-        id: 3,
-        stepFormControl: this.cibilScoreForm,
-        label: "CIBIL Score",
-        key: "cibil",
-      },
-      {
-        id: 4,
-        stepFormControl: this.customPersonalDetails,
-        label: "Personal Details",
-        key: "personal",
-      },
-      {
-        id: 5,
-        stepFormControl: this.kycDetailsForm,
-        label: "Select KYC",
-        key: "kyc",
-      },
-      {
-        id: 6,
-        stepFormControl: this.documentForm,
-        label: "Document",
-        key: "document",
-      },
-
-      {
-        id: 7,
-        //stepFormControl,
-        label: "terms",
-        key: "terms",
-      },
-      {
-        id: 8,
-        //stepFormControl: this.kycDetailsForm,
-        label: "summary",
-        key: "summary",
-      },
-    ];
-    this.depositApi.setToken(true);
+    // this.depositApi.setToken(true);
   }
+
+  /**
+   * creating dynamically view of screen by iterating 'dynamicScreen' json object which match screenName.
+   *  & find componentName and load the component.
+   * @param screenName current scrrenName.
+   */
+  showComponent(screenName) {
+    this.dynamicScreen.forEach((item: any) => {
+      if (screenName.toLowerCase().includes(item.key)) {
+        this.currentComponentInfo = { ...item };
+        const view = this.appAppHost.viewContainerRef;
+        view.clear();
+        setTimeout(() => {
+          this.componentRef = view.createComponent(item.component);
+          // for mobile number.
+          this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
+          // for personal details.
+          this.componentRef.instance.basisId = this.basisId;
+          this.componentRef.instance.personalDetails = this.personalDetails;
+          // for personal doc.
+          this.componentRef.instance.personalDoc = this.personalDoc;
+
+          this.componentRef.instance.updateParentModel = this.updateAccount;
+
+          this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
+            if (data?.value?.accountNumber)
+              this.createLoanAccountNumber = data.value.accountNumber;
+
+            if (data?.personalInfo) {
+              this.personalDetails = data.personalInfo;
+              this.personalDetails.forEach((item) => {
+                if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
+              });
+            }
+
+            if (screenName.toLowerCase().includes("personal")) {
+              this.customSavePersonal(data);
+            }
+          });
+          this.componentRef.instance?.onBackEvent.subscribe((_) => {
+            this.goBack();
+          });
+        });
+      }
+    });
+  }
+
+  /**
+   * it will check the updateMasterSave key if its true it will call master-save or else it will move to next screen.
+   * @param value inputValue of child screen
+   */
+  updateAccount = (value: Partial<any>) => {
+    this.otherLoanDoc = value?.otherLoanDoc ? value?.otherLoanDoc : null;
+    let originationModel = {
+      ...this.factorizedPayload(),
+    };
+    let customerInfo = this.modelFactoryForCustomer(
+      this.personalDetails,
+      value?.kycDoc ?? null
+    );
+    if (value.updateMasterSave) {
+      this.getMasterSave({
+        originationModel: originationModel,
+        customerInfo: customerInfo,
+      });
+    } else this.next();
+  };
 
   ngOnInit(): void {
     this.currentUser = this.tokenStore.getUser();
@@ -126,22 +155,36 @@ export class LoanFlowComponent implements OnInit {
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    var originationId = sessionStorage.getItem("originationId");
-    if (originationId) this.getOriginationMaster(parseInt(originationId));
     this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
     console.log(this.ownerShipId);
-    var customerId = parseInt(sessionStorage.getItem("customerId"));
-    if (customerId) {
+    var originationId = sessionStorage.getItem("originationId");
+    var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
+    var customerStageId = JSON.parse(
+      sessionStorage.getItem("customerStageIds")
+    );
+    if (originationId) this.getOriginationMaster(parseInt(originationId));
+    else if (customerStageId) {
+      this.getCustByStageId(customerStageId);
+    } else if (customerId) {
       this.getCustomerById(customerId);
     }
   }
 
   getCustomerById(customerId) {
-    this.openAccountService.getCustByStageId(customerId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.personalDetails = resp.data;
-      }
-    });
+    setTimeout(() => {
+      this.fetchCustomersbyId().then((resp) => {
+        this.personalDetails = resp;
+        // this.componentRef.instance.personalDetails = this.personalDetails;
+      });
+    }, 500);
+  }
+
+  getCustByStageId(customerStageId) {
+    setTimeout(() => {
+      this.fetchCustomers().then((resp) => {
+        this.personalDetails = resp;
+      });
+    }, 500);
   }
 
   /**
@@ -149,7 +192,13 @@ export class LoanFlowComponent implements OnInit {
    */
   getProductDetails() {
     this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
-      if (resp?.statusCode === 200) this.productDetails = resp.data[0];
+      if (resp?.statusCode === 200) {
+        this.productDetails = resp.data[0];
+        this.mobileVerifyInfo = {
+          ...this.mobileVerifyInfo,
+          basisName: this.productDetails.basisName,
+        };
+      }
     });
   }
 
@@ -160,37 +209,11 @@ export class LoanFlowComponent implements OnInit {
         this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
         this.originationModel = resp.data[0]?.originationModel;
+        this.componentRef.instance.personalDetails = this.personalDetails;
+        this.cdr.detectChanges();
       }
       console.log(this.customerInfo);
     });
-  }
-
-  updateStep() {
-    var isExistingCustomer = sessionStorage.getItem("isExistingCustomer");
-    this.originalScreenList = this.screenList;
-    console.log(this.screenList);
-    if (isExistingCustomer) {
-      var pk = this.screenList;
-      var jk = pk.filter((item) => {
-        if (
-          !item.screenName.toLowerCase().includes("personal") &&
-          !item.screenName.toLowerCase().includes("select")
-        ) {
-          return item;
-        }
-      });
-      const customStepArr = this.steper_Array?.filter((item) => {
-        if (
-          !item.label.toLowerCase().includes("personal") &&
-          !item.label.toLowerCase().includes("select")
-        ) {
-          return item;
-        }
-      });
-      this.steper_Array = customStepArr;
-      this.screenList = jk;
-      console.log(this.screenList, this.steper_Array);
-    }
   }
 
   getAllLoanStep() {
@@ -215,102 +238,87 @@ export class LoanFlowComponent implements OnInit {
       this.screenList = resp.data.screens.sort((s1, s2) => {
         return s1.sequence - s2.sequence;
       });
-      this.updateFormGroup();
-      //this.updateStep();
       this.factory();
     });
   }
-  updateFormGroup() {
-    this.steper_Array.forEach((item, i) => {
-      this.screenList.map((element, j) => {
-        if (element.screenName.toLowerCase().includes(item.key)) {
-          this.screenList[j].stepFormControl = item?.stepFormControl;
-        }
-      });
+
+  /**
+   *
+   * @param customerInfo is a customerInfo model
+   * @param docIds is a document model
+   * @returns payload of customerInfo.
+   */
+  modelFactoryForCustomer(customerInfo, docIds) {
+    let custResp: any = [...customerInfo];
+    custResp.forEach((item, i) => {
+      custResp[i].documentId = [];
+      custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
+      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+      delete custResp[i].biometricInfo;
+      delete custResp[i].documnentsInfo;
+      delete custResp[i].documentsInfoModel;
+      delete custResp[i].signatureInfo;
     });
+
+    return custResp;
   }
+
+  /**
+   *
+   * @returns a payload object for the orgination model.
+   */
+  factorizedPayload() {
+    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
+    let payload = {
+      originationId: this.originationModel?.originationId ?? null,
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+      accountType: sessionData.basisName,
+      basisDetailsId: sessionData.basisId,
+      loanAmount: parseInt(loanData.loanAmount),
+      loanTenureDay: sessionStorage.getItem("tenureDays"),
+      loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+      loanTenureYear: sessionStorage.getItem("tenureYear"),
+      branchCode: this.tokenStore.getUser().branchCode,
+      source: "Website",
+      businessProductName: this.productDetails.basisName,
+      productDescription: this.productDetails.basisDetailStory,
+      currencyCode: this.otherUserInfo.currency,
+      branchId: this.currentUser.branchId,
+      ownership: ownershipId,
+      documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
+    };
+    return payload;
+  }
+
   stepperSelectionChange(event) {
+    const lastStep = this.selectedStep;
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
     this.selectedStep = event.selectedIndex;
+    if (lastStep != event.selectedIndex) this.showComponent(this.cuurrentStep);
   }
   factory() {
     this.cuurrentStep = this.screenList[this.selectedStep]?.screenName;
+    this.showComponent(this.cuurrentStep);
   }
   next() {
     const num = this.selectedStep + 1;
-    this.selectedStep = num;
-    sessionStorage.setItem("loanstep", String(this.selectedStep));
-    this.factory();
-    // for scrolling sidebar and get current state.
-    const el = document.querySelector(".mat-step-label-selected");
-    el.scrollIntoView();
+    if (num === this.screenList?.length && num > 0) {
+      this.onFlowDone();
+      return;
+    } else {
+      this.selectedStep = num;
+      sessionStorage.setItem("loanstep", String(this.selectedStep));
+      this.factory();
+      // for scrolling sidebar and get current state.
+      const el = document.querySelector(".mat-step-label-selected");
+      el.scrollIntoView();
+    }
   }
 
-  onSaveCreateLoan(event) {
-    this.createLoanAccountNumber = event.value.accountNumber;
-    localStorage.setItem("customerData", JSON.stringify(this.customerData));
-    this.next();
-    this.getOwnershipIdByGeneric(sessionStorage.getItem("loanHolderType"));
-    console.log(this.ownerShipId);
-  }
-
-  checkExistingUserEvent(event) {
-    this.loanApi
-      .getExistingUserDetails(event.phone)
-      .subscribe((response: any) => {
-        console.log("Existing user: ", response);
-        this.checkProducts(event);
-      });
-  }
-
-  checkProducts(event) {
-    this.loanApi
-      .checkMobileAndProduct(this.productDetails.basisName, event.phone, "Loan")
-      .subscribe((resp) => {
-        if (!resp) {
-          this.allreadyProduct();
-        } else {
-          if (event.response?.statusCode === 200) {
-            sessionStorage.setItem(
-              "customerId",
-              event.response.data[0].customerId
-            );
-            sessionStorage.setItem("isExistingCustomer", "Yes");
-            localStorage.setItem(
-              "customerData",
-              JSON.stringify(event.response.data[0])
-            );
-            this.next();
-          } else if (event.response?.statusCode === 204) {
-            this.next();
-          } else {
-            this.next();
-          }
-        }
-      });
-  }
-
-  allreadyProduct() {
-    this.dialog.open(ErrorNotifierPopupComponent, {
-      data: {
-        errorMessage:
-          "We have found similar loan application in our record on your Mobile Number",
-        errorMessageHint: "Please visit bank for more information.",
-      },
-      width: "650px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-  }
-
-  onCustomCibilDetail() {
-    console.log("onCustomCibilDetail");
-    this.next();
-  }
-
-  getCustInfoPayload(event) {
+  getCustInfoPayload(event, prefixValue) {
     return new Promise((resolve, reject) => {
       var customer = [];
       event.forEach((element, i) => {
@@ -318,7 +326,7 @@ export class LoanFlowComponent implements OnInit {
         sessionStorage.setItem(
           "customerData",
           JSON.stringify({
-            name: `${element.prefixValue}. ${element.firstName} ${element.lastName}`,
+            name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
             cifNumber:
               element.kycStatus === "APPROVED" ? element.customerId : "",
           })
@@ -353,16 +361,57 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
+  getOriginationModelForLoan() {
+    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
+    return {
+      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+      accountType: sessionData.basisName,
+      basisDetailsId: sessionData.basisId,
+      loanAmount: parseInt(loanData.loanAmount),
+      loanTenureDay: sessionStorage.getItem("tenureDays"),
+      loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+      loanTenureYear: sessionStorage.getItem("tenureYear"),
+      branchCode: this.tokenStore.getUser().branchCode,
+      source: "Website",
+      businessProductName: null,
+      productDescription: null,
+      currencyCode: this.otherUserInfo.currency,
+      branchId: this.currentUser.branchId,
+      ownership: ownershipId,
+      documentId: null,
+    };
+  }
+
   // on Personal details saved
   customSavePersonal(event) {
-    this.getCustInfoPayload(event.personalDetails.value.customer).then(
-      (data) => {
-        this.loanApi.stageSavePersonalDetails(data).subscribe((resp) => {
+    console.log(event);
+    const payload = event.personalDetails.value.customer;
+    payload.forEach((item) => {
+      delete item.prefixValue;
+      item.customerId = null;
+    });
+    // if (payload[0]?.prefixValue) delete payload[0].prefixValue;
+    this.getCustInfoPayload(
+      event.personalDetails.value.customer,
+      event.prefixValue
+    ).then((data) => {
+      const payloadData = {
+        originationModel: { ...this.getOriginationModelForLoan() },
+        customerInfo: data,
+      };
+      this.openAccountService
+        .saveCustomerInfo(payloadData)
+        .subscribe((resp) => {
           if (resp?.statusCode === 200) {
-            this.personalDetails = resp.data;
-            resp.data?.forEach((item, i) => {
-              if (item.primaryCustomer)
-                sessionStorage.setItem("customerId", item.customerId);
+            this.originationModel = resp.data?.originationModel;
+            this.personalDetails = resp.data?.customerInfo;
+            this.loanAccountInfo = resp.data?.loanAccountInfo;
+            this.originationValue$ = resp.data;
+            let customId = [];
+            resp.data?.customerInfo?.forEach((item, i) => {
+              customId.push(item.customerId);
             });
             this.snack.open(`Personal Details Saved` + " !", "OK", {
               duration: 4000,
@@ -370,154 +419,121 @@ export class LoanFlowComponent implements OnInit {
               horizontalPosition: "right",
               panelClass: "snackbar-error",
             });
-            this.customerInfo = resp.data;
-            this.next();
+            sessionStorage.setItem(
+              "customerStageIds",
+              JSON.stringify(customId)
+            );
+            this.customerInfo = resp.data?.customerInfo;
+            sessionStorage.setItem(
+              "originationId",
+              resp?.data?.originationModel?.originationId
+            );
+            sessionStorage.removeItem("loanDoc");
+            this.updateWebDisbursment();
           }
         });
-      }
-    );
+    });
   }
 
-  createPayload(event) {
-    var customer = [];
-    event.forEach((element, i) => {
-      if (element.primaryCustomer) {
-        sessionStorage.setItem(
-          "customerData",
-          JSON.stringify({
-            name: `${element.prefix}. ${element.firstName} ${element.lastName}`,
-            cifNumber:
-              element.kycStatus === "APPROVED" ? element.customerId : "",
-          })
-        );
-      }
-      console.log(element);
-      var docIds = [];
-      if (element?.documentId) {
-        docIds.push(element.documentId);
-      } else {
-        element?.documnentsInfo?.documents.forEach((item) => {
-          let docItemId = [];
-          item.docs.forEach((docItem) => {
-            docItemId.push(docItem.documentId);
+  updateWebDisbursment() {
+    const originationId = sessionStorage.getItem("originationId");
+    var mapPayload = {
+      id: parseInt(sessionStorage.getItem("loanDisburseId")),
+      originationId: parseInt(originationId),
+    };
+
+    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+      this.next();
+    });
+  }
+
+  fetchCustomersbyId() {
+    const customIds = JSON.parse(sessionStorage.getItem("userCustomerId"));
+    return new Promise((resolve, reject) => {
+      const promises = customIds.map((id) => {
+        return new Promise((innerResolve, innerReject) => {
+          this.openAccountService.getCustomerById(id).subscribe((resp) => {
+            if (resp?.statusCode === 200)
+              innerResolve({
+                ...resp.data[0],
+                customerId: null,
+                customerNo: null,
+                contact: {
+                  ...resp.data[0].contact,
+                  contactId: null,
+                  address: [
+                    { ...resp.data[0].contact.address[0], addressId: null },
+                  ],
+                },
+              });
+            else innerResolve(null); // or handle rejection if needed
           });
-          const docId = {
-            docIds: docItemId,
-          };
-          docIds.push(docId);
         });
-      }
-      const cus = {
-        prefix: element.prefix,
-        firstName: element.firstName,
-        lastName: element.lastName,
-        customerId: element?.customerId,
-        //  middleName: "",
-        gender: element.gender,
-        // jointCustomerInfo: [],
-        documentId: element.primaryCustomer ? docIds : [],
-        isphoneNumVerified: true,
-        isEmailVerified: true,
-        primaryCustomer: element.primaryCustomer ?? false,
-        source: element.source,
-        dateOfBirth: moment(element.dateOfBirth).format(),
-        nationality: element.nationality,
-        contact: {
-          mobile: element.mobile,
-          email: element.email,
-          address: [
-            {
-              address1:
-                element?.contact?.address[0].address1 ?? element.address1,
-              address2: "",
-              residenceType:
-                element?.contact?.address[0].residenceType ??
-                element.residenceType,
-              cityId: element?.contact?.address[0].cityId ?? element.cityId,
-              countryName:
-                element?.contact?.address[0].countryName ?? element.country,
-              pincode: element?.contact?.address[0].pincode ?? element.zipCode,
-              stateName:
-                element?.contact?.address[0].stateName ?? element.state,
-            },
-          ],
-        },
-      };
-      customer.push(cus);
+      });
+      Promise.all(promises).then((customers) => {
+        const filteredCustomers = customers.filter(
+          (customer) => customer !== null
+        );
+        resolve(filteredCustomers);
+      });
     });
-
-    return customer;
   }
 
-  customSaveDocuments(e) {
-    var docIds = [];
-    e.documentDetails.otherDocument.forEach((element) => {
-      const docId = {
-        docIds: element.docIds,
-      };
-      docIds.push(docId);
-    });
-    this.docIds = docIds;
-
-    this.loanApi
-      .getCustByStageId(parseInt(sessionStorage.getItem("customerId")))
-      .subscribe((resp) => {
-        if (resp?.statusCode === 200) this.saveCustomerInfo(resp.data, docIds);
+  fetchCustomers() {
+    const customIds = JSON.parse(sessionStorage.getItem("customerStageIds"));
+    return new Promise((resolve, reject) => {
+      const promises = customIds.map((id) => {
+        return new Promise((innerResolve, innerReject) => {
+          this.loanApi.getCustByStageId(id).subscribe((resp) => {
+            if (resp?.statusCode === 200)
+              innerResolve({
+                ...resp.data[0],
+                customerId: null,
+                customerNo: null,
+                contact: {
+                  ...resp.data[0].contact,
+                  contactId: null,
+                  address: [
+                    { ...resp.data[0].contact.address[0], addressId: null },
+                  ],
+                },
+              });
+            else innerResolve(null); // or handle rejection if needed
+          });
+        });
       });
+      Promise.all(promises).then((customers) => {
+        const filteredCustomers = customers.filter(
+          (customer) => customer !== null
+        );
+        resolve(filteredCustomers);
+      });
+    });
   }
 
   saveCustomerInfo(resp, docIds) {
     var custResp: any = [...resp];
-    custResp.forEach((item, i) => {
-      custResp[i].documentId = [];
-      custResp[i].primaryCustomer = true; //Need to remove lator while multiple customer
-      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
-      delete custResp[i].biometricInfo;
-      delete custResp[i].documnentsInfo;
-      delete custResp[i].documentsInfoModel;
-      delete custResp[i].signatureInfo;
-    });
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    let customerDetails = this.modelFactoryForCustomer(custResp, docIds);
+    const existingCustomerId = JSON.parse(
+      sessionStorage.getItem("userCustomerId")
+    );
+    if (existingCustomerId) {
+      customerDetails.forEach((item, i) => {
+        if (i >= existingCustomerId.length) {
+          delete customerDetails[i].existingCustomerId;
+          customerDetails[i].customerId = null;
+        } else {
+          delete customerDetails[i].existingCustomerId;
+          customerDetails[i].customerId = existingCustomerId[i];
+        }
+      });
+    }
     const payload = {
-      originationModel: {
-        ...this.getOriginationModel(),
-        businessProductName: this.productDetails.basisName,
-        productDescription: this.productDetails.basisDetailStory,
-        currencyCode: this.otherUserInfo.currency,
-        branchId: this.currentUser.branchId,
-        ownership: this.ownerShipId,
-        documentId: JSON.parse(sessionStorage.getItem("loanDoc")),
-        applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-        accountType: this.originationModel?.accountType,
-        basisDetailsId: sessionData.basisId,
-        loanAmount: parseInt(loanData.loanAmount),
-        loanTenureDay: sessionStorage.getItem("tenureDays"),
-        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-        loanTenureYear: sessionStorage.getItem("tenureYear"),
-        branchCode: this.originationModel?.branchCode,
-        source: "Website",
-      },
-      customerInfo: custResp,
+      originationModel: this.factorizedPayload(),
+      customerInfo: customerDetails,
     };
+    console.log(payload, ".......");
     this.getMasterSave(payload);
-  }
-
-  /**
-   * Here creating payload and calling getMasterSave method and move to next screen.
-   * @param event is getting all uploaded document info.
-   */
-  onConfirm(event) {
-    var docIds = [];
-    event.otherDocument.forEach((element) => {
-      const docId = {
-        docIds: element.docIds,
-      };
-      docIds.push(docId);
-    });
-
-    sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
-    this.next();
   }
 
   getMasterSave(payload) {
@@ -527,30 +543,8 @@ export class LoanFlowComponent implements OnInit {
           "originationId",
           resp?.data?.originationModel?.originationId
         );
-        sessionStorage.removeItem("loanDoc");
         this.next();
       }
-    });
-  }
-
-  /**
-   * api call to update Origination.
-   */
-  onTCAccepted(event) {
-    var customerId = this.customerInfo.filter(
-      (item) => item?.primaryCustomer
-    )[0]?.customerId;
-    const originationId = sessionStorage.getItem("originationId");
-    var mapPayload = {
-      id: parseInt(sessionStorage.getItem("loanDisburseId")),
-      originationId: parseInt(originationId),
-    };
-
-    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
-      this.loanApi.getLoanSummary(originationId).subscribe((resp) => {
-        this.loanSummary = resp.data;
-        this.next();
-      });
     });
   }
 
@@ -620,21 +614,7 @@ export class LoanFlowComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp === true) {
-        sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("customerId");
-        sessionStorage.removeItem("loanDisburseId");
-        sessionStorage.removeItem("loanstep");
-        sessionStorage.removeItem("isExistingCustomer");
-        sessionStorage.removeItem("loanAmmount");
-        sessionStorage.removeItem("currentStage");
-        sessionStorage.removeItem("verifyWork");
-        sessionStorage.removeItem("loanHolderType");
-        sessionStorage.removeItem("tenureDays");
-        sessionStorage.removeItem("tenureMonth");
-        sessionStorage.removeItem("tenureYear");
-        sessionStorage.removeItem("customerId");
-        sessionStorage.removeItem("loanBasisDetails");
-        sessionStorage.removeItem("loanDisburseId");
+        this.tokenStore.cleanUpSessionPartially();
         this.router.navigate(["loan/landing"]);
       }
     });
@@ -653,32 +633,16 @@ export class LoanFlowComponent implements OnInit {
   }
 
   getOwnershipIdByGeneric(value) {
-    let ownership;
+    let ownership = [];
     this.sharedService
       .genericValue("Common", Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           ownership = resp.data["OWNERSHIP"];
           this.ownerShipId = ownership.find(
-            (r) => r?.values.toLowerCase() === value.toLowerCase()
+            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
           )?.id;
         }
       });
-  }
-
-  getOriginationModel() {
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    return {
-      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-      accountType: sessionData.basisName,
-      basisDetailsId: sessionData.basisId,
-      loanAmount: parseInt(loanData.loanAmount),
-      loanTenureDay: sessionStorage.getItem("tenureDays"),
-      loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-      loanTenureYear: sessionStorage.getItem("tenureYear"),
-      branchCode: this.tokenStore.getUser().branchCode,
-      source: "Website",
-    };
   }
 }

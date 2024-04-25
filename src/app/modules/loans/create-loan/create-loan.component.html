@@ -4,14 +4,10 @@
     [formGroup]="personalLoanDetailsForm"
     fxFlex="100"
   >
-    <div fxLayout="row wrap" fxLayoutGap="10">
-      <div class="text-header" fxFlex="100" fxLayoutAlign="start center">
-        Personal Loan Details
-      </div>
-
+    <div fxLayout="row wrap" fxLayoutGap="1%">
       <div
         class=""
-        fxFlex="45"
+        fxFlex="48"
         [ngClass]="isReadOnly == true && 'disable-mat-form-field'"
       >
         <mat-form-field
@@ -43,7 +39,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="MiscellaneousClass">
+      <div fxFlex="48" class="MiscellaneousClass">
         <fieldset
           [ngClass]="isReadOnly == true && 'disable-fieldset'"
           class="fieldset"
@@ -154,7 +150,7 @@
         </mat-error>
       </div>
 
-      <div fxFlex="45" class="disable-mat-form-field">
+      <div fxFlex="48" class="disable-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
@@ -167,7 +163,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="disable-mat-form-field">
+      <div fxFlex="48" class="disable-mat-form-field">
         <mat-form-field appearance="outline" class="full-width fieldinput">
           <mat-label class="custom-mat-label">Interest Rate</mat-label>
           <input matInput readonly formControlName="interestRate" />
@@ -181,7 +177,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="disable-mat-form-field">
+      <div fxFlex="48" class="disable-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
@@ -203,7 +199,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="disable-mat-form-field">
+      <div fxFlex="48" class="disable-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
@@ -227,7 +223,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="enabled-mat-form-field">
+      <div fxFlex="48" class="enabled-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width custom-field fieldinput"
@@ -250,7 +246,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="disable-mat-form-field">
+      <div fxFlex="48" class="disable-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
@@ -274,7 +270,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="45" class="enabled-mat-form-field">
+      <div fxFlex="48" class="enabled-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width custom-field fieldinput"
@@ -303,7 +299,7 @@
       </div>
 
       <div
-        fxFlex="45"
+        fxFlex="48"
         *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
       >
         <mat-radio-group
@@ -320,7 +316,7 @@
       </div>
 
       <div
-        fxFlex="45"
+        fxFlex="48"
         class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
@@ -337,7 +333,7 @@
       </div>
 
       <div
-        fxFlex="45"
+        fxFlex="48"
         class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
@@ -354,7 +350,7 @@
       </div>
 
       <div
-        fxFlex="45"
+        fxFlex="48"
         class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
@@ -372,7 +368,7 @@
 
       <div
         class="enabled-mat-form-field"
-        fxFlex="45"
+        fxFlex="48"
         *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
       >
         <mat-form-field
@@ -422,7 +418,7 @@
       </div>
 
       <div
-        fxFlex="45"
+        fxFlex="48"
         class=""
         *ngIf="
           personalLoanDetailsForm?.value.accountType === loanEnum.EXTERNAL &&
@@ -448,7 +444,7 @@
         </mat-error>
       </div>
 
-      <div fxFlex="45" class="enabled-mat-form-field">
+      <div fxFlex="48" class="enabled-mat-form-field">
         <mat-form-field
           appearance="outline"
           class="full-width custom-field fieldinput"

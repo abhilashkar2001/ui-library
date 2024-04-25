@@ -9,8 +9,10 @@ const baseUrl = environment.microServiceURL;
 export class HomeService {
   constructor(private http: HttpClient) {}
 
-  getAccountTypes(newAccount) {
-    return this.http.get(`${baseUrl}/basis-class?businessSuite=${newAccount}`);
+  getAccountTypes(categoray) {
+    return this.http.get(
+      `${baseUrl}/basis-class/fetchAllWebsiteProduct?category=${categoray}`
+    );
   }
 
   getCountryCurrency(branchCode) {

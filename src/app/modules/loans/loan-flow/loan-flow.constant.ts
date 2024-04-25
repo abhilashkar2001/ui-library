@@ -1,3 +1,12 @@
+import { CommonPersonalDetailsComponent } from "app/shared/components/common-personal-details/common-personal-details.component";
+import { CommonMobileVerificationComponent } from "app/shared/components/comon-mobile-verification/common-mobile-verification.component";
+import { OtherDocumentsComponent } from "app/shared/components/other-documents/other-documents.component";
+import { CreateLoanComponent } from "../create-loan/create-loan.component";
+import { CibilScoreContainerComponent } from "../cibil-score-container/cibil-score-container.component";
+import { LoanDocumentUploadComponent } from "../loan-document-upload/loan-document-upload.component";
+import { LoanTermsConditionsComponent } from "../loan-terms-conditions/loan-terms-conditions.component";
+import { LoanSummaryComponent } from "../loan-summary/loan-summary.component";
+
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
     {
@@ -32,6 +41,57 @@ export class LoanFlowConstants {
         { header: "Name", headKey: "name" },
         { header: "Your Pan Card", headKey: "yourPan" },
       ],
+    },
+  ];
+
+  static readonly DYNAMIC_SCREEN = [
+    {
+      id: 1,
+      key: "mobile",
+      type: "Create Loan",
+      component: CommonMobileVerificationComponent,
+    },
+    {
+      id: 2,
+      key: "personal",
+      type: "Create Loan",
+      component: CommonPersonalDetailsComponent,
+    },
+    {
+      id: 2,
+      key: "create",
+      type: "Create Loan",
+      component: CreateLoanComponent,
+    },
+    {
+      id: 2,
+      key: "credit",
+      type: "Create Loan",
+      component: CibilScoreContainerComponent,
+    },
+    {
+      id: 2,
+      key: "document",
+      type: "Create Loan",
+      component: LoanDocumentUploadComponent,
+    },
+    {
+      id: 2,
+      key: "kyc",
+      type: "Create Loan",
+      component: OtherDocumentsComponent,
+    },
+    {
+      id: 2,
+      key: "term",
+      type: "Create Loan",
+      component: LoanTermsConditionsComponent,
+    },
+    {
+      id: 2,
+      key: "summary",
+      type: "Create Loan",
+      component: LoanSummaryComponent,
     },
   ];
 }
