@@ -21,6 +21,7 @@ import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
+import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 
 const routes: Routes = [
   {
@@ -79,7 +80,7 @@ const routes: Routes = [
           },
           {
             path: "generic-buyer-credit",
-            component: GenericRemittanceComponent,
+            component: GenericBuyerCreditComponent,
           },
           {
             path: "buyer-credit-summery",
