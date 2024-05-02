@@ -1,0 +1,157 @@
+<div class="chequebook_request_container">
+  <form [formGroup]="chequebookRequestForm">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
+      <mat-label class="ml-20">Account No</mat-label>
+      <app-searchable-select
+        [items]="accountNumberList"
+        bindValueKey="accountNo"
+        bindLabelKey="accountNo"
+        [control]="chequebookRequestForm.get('accountNo')"
+        skipLabel="false"
+        showOutsideLabel="true"
+        (selectionChange)="handleAccountNumberChange($event)"
+      ></app-searchable-select>
+      <span class="message" *ngIf="chequeNumber"
+        >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
+        {{ customerInfo?.customerName }}</span
+      >
+    </div>
+
+    <h2 class="wrapper_row light-blue-title">Cheque Book Detail</h2>
+    <div class="row wrapper_row">
+      <div fxFlex="25" class="input_wrapper">
+        <app-searchable-select
+          [items]="noOfLeaves"
+          bindLabelKey="values"
+          bindValueKey="id"
+          [control]="chequebookRequestForm.get('leavesNo')"
+          inputLabel="No of Leaves Per Book*"
+          showOutsideLabel="true"
+        ></app-searchable-select>
+      </div>
+      <div
+        fxFlex="70"
+        class="input_wrapper"
+        fxLayoutAlign="start center"
+        class="radio-btn"
+      >
+        <div fxLayout="column" fxLayoutGap="20">
+          <mat-label class="mb-8">{{ "Delivery Location" }}</mat-label>
+          <mat-radio-group
+            fxLayoutGap="20"
+            [formControl]="chequebookRequestForm.get('deliveryLocation')"
+          >
+            <mat-radio-button
+              *ngFor="let option of deliveryOptions"
+              [value]="option?.value"
+              >{{ option?.label }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <ng-container
+      *ngIf="
+        chequebookRequestForm.get('deliveryLocation').value ===
+          'Branch Near Me';
+        else showMyAddress
+      "
+    >
+      <div class="row wrapper_row">
+        <div fxFlex="25" class="input_wrapper">
+          <app-searchable-select
+            [items]="branches"
+            bindLabelKey="branchName"
+            bindValueKey="branchCode"
+            [control]="chequebookRequestForm.get('branch')"
+            inputLabel="Branch"
+            showOutsideLabel="true"
+          ></app-searchable-select>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #showMyAddress>
+      <div class="row wrapper_row">
+        <div fxFlex="25" class="input_wrapper">
+          <app-searchable-select
+            [items]="addressTypesList"
+            bindValueKey="addressTypes"
+            bindLabelKey="addressTypes"
+            [control]="chequebookRequestForm.get('type')"
+            inputLabel="Type"
+            (selectionChange)="changeAddressType($event)"
+            showOutsideLabel="true"
+          ></app-searchable-select>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('address1')"
+            inputLabel="Address Line 1"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('address2')"
+            inputLabel="Address Line 2"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('country')"
+            inputLabel="Country"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+
+      <div class="row wrapper_row">
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('state')"
+            inputLabel="State"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('city')"
+            inputLabel="City"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="chequebookRequestForm.get('pin')"
+            inputLabel="PIN Code"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+    </ng-template>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayoutAlign="start center" fxLayoutGap="10">
+        <img src="assets/images/Icon feather-info.png" />
+        <p class="m-0">
+          Exchange rate may be changed at the time of transaction.
+        </p>
+      </div>
+      <div fxLayoutGap="20" class="btn-algn">
+        <button mat-flat-button class="stroked_btn">
+          {{ "Cancel" }}
+        </button>
+        <button
+          mat-flat-button
+          (click)="saveChequeDetails()"
+          class="filled_btn"
+        >
+          {{ "Proceed" }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
