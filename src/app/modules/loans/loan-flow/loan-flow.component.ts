@@ -284,25 +284,27 @@ export class LoanFlowComponent implements OnInit {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
-    let payload = {
-      originationId: this.originationModel?.originationId ?? null,
-      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-      accountType: sessionData.basisName,
-      basisDetailsId: sessionData.basisId,
-      loanAmount: parseInt(loanData.loanAmount),
-      loanTenureDay: sessionStorage.getItem("tenureDays"),
-      loanTenureMonth: sessionStorage.getItem("tenureMonth"),
-      loanTenureYear: sessionStorage.getItem("tenureYear"),
-      branchCode: this.tokenStore.getUser().branchCode,
-      source: "Website",
-      businessProductName: this.productDetails.basisName,
-      productDescription: this.productDetails.basisDetailStory,
-      currencyCode: this.otherUserInfo.currency,
-      branchId: this.currentUser.branchId,
-      ownership: ownershipId,
-      documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
-    };
-    return payload;
+    if (loanData) {
+      let payload = {
+        originationId: this.originationModel?.originationId ?? null,
+        applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+        accountType: sessionData.basisName,
+        basisDetailsId: sessionData.basisId,
+        loanAmount: parseInt(loanData.loanAmount),
+        loanTenureDay: sessionStorage.getItem("tenureDays"),
+        loanTenureMonth: sessionStorage.getItem("tenureMonth"),
+        loanTenureYear: sessionStorage.getItem("tenureYear"),
+        branchCode: this.tokenStore.getUser().branchCode,
+        source: "Website",
+        businessProductName: this.productDetails.basisName,
+        productDescription: this.productDetails.basisDetailStory,
+        currencyCode: this.otherUserInfo.currency,
+        branchId: this.currentUser.branchId,
+        ownership: ownershipId,
+        documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
+      };
+      return payload;
+    } else return;
   }
 
   stepperSelectionChange(event) {
