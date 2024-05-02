@@ -80,6 +80,7 @@ import { WebDocUploadComponent } from "./web-doc-upload/web-doc-upload.component
 import { WarningComponent } from "./warning/warning.component";
 import { SpinnerComponent } from "./core-components/spinner/spinner.component";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { IcCustomInputComponent } from "./ic-custom-input/ic-custom-input.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -135,6 +136,7 @@ const components = [
   WebDocUploadComponent,
   WarningComponent,
   SpinnerComponent,
+  IcCustomInputComponent,
 ];
 
 @NgModule({

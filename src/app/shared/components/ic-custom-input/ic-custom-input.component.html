@@ -1,0 +1,79 @@
+<div fxLayout="column">
+  <mat-label class="ml-16">{{ inputLabel }}</mat-label>
+  <div fxLayout="row" fxLayoutAlign="start start">
+    <!-- Input for mobile number -->
+    <div class="mobile_field" *ngIf="isdCode; else showNormalInput">
+      <div
+        class="mobile_field_wrapper"
+        [ngClass]="{
+          disabled_input: readonly === true
+        }"
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <ng-container *ngIf="isdCode">
+          <mat-select
+            class="isd_dropdown"
+            fxFlex="25"
+            [formControl]="isdControl"
+          >
+            <mat-option *ngFor="let item of isdCode" [value]="item"
+              >{{ item }}
+            </mat-option>
+          </mat-select>
+          <div class="vertical_separator"></div>
+        </ng-container>
+        <span *ngIf="control.value">{{ currencySymbol }}</span>
+        <input
+          matInput
+          type="text"
+          [formControl]="control"
+          [readonly]="readonly"
+          maxlength="10"
+        />
+        <!-- <ng-container *ngIf="matSuffix">
+          <mat-icon class="suffix_icon" [svgIcon]="matSuffix"></mat-icon>
+        </ng-container> -->
+      </div>
+
+      <!-- <mat-hint *ngIf="hintText">{{ hintText }}</mat-hint> -->
+      <p class="hint_text" *ngIf="!hintText">{{ hintText }}</p>
+    </div>
+
+    <ng-template #showNormalInput>
+      <mat-form-field
+        class="{{ customClass }}"
+        [ngClass]="{
+          disabled_input: readonly === true,
+          field_with_icon: showInfoIcon === true
+        }"
+      >
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <span *ngIf="control.value">{{ currencySymbol }}</span>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            [formControl]="control"
+            [readonly]="readonly"
+          />
+          <ng-container *ngIf="matSuffix">
+            <mat-icon
+              class="suffix_icon"
+              (click)="search()"
+              [svgIcon]="matSuffix"
+            ></mat-icon>
+          </ng-container>
+        </div>
+
+        <mat-hint *ngIf="hintText">{{ hintText }}</mat-hint>
+      </mat-form-field>
+    </ng-template>
+
+    <!-- Info Icon -->
+    <img *ngIf="showInfoIcon" class="info_icon" src="assets/images/info.png" />
+    <!-- Info Content -->
+    <!-- <div class="info_content_box">
+
+    </div> -->
+  </div>
+</div>
