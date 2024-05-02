@@ -94,10 +94,13 @@ const routes: Routes = [
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
       },
-      // {
-      //   path: "add-bulk-upload",
-      //   component: UploadBulkUploadComponent,
-      // },
+      {
+        path: "fund-transfer",
+        loadChildren: () =>
+          import("./fund-transfer/fund-transfer.module").then(
+            (m) => m.FundTransferModule
+          ),
+      },
     ],
   },
 ];
@@ -106,4 +109,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule { }
+export class NetBankingRoutingModule {}

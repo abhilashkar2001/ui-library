@@ -40,7 +40,7 @@ export class NETBANKING {
         {
           label: "Single Transfer",
           image: "/assets/images/fund-transfer.svg",
-          route: "",
+          route: "user/net-banking/fund-transfer/single",
         },
         {
           label: "Multi Transfer",
