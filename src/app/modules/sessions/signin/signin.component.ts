@@ -75,6 +75,7 @@ export class SigninComponent implements OnInit {
     let payload = {
       username: this.signinForm.value.username,
       otp: this.otp,
+      tokenRequired: true,
     };
     this.commonService.verifyOTP(payload).subscribe((res: any) => {
       if (res.data !== "Invalid OTP") {
