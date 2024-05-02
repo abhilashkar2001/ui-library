@@ -192,7 +192,7 @@ export class tabsClass {
     },
   ];
 
-  public static readonly BuyerCredit: any[] = [
+  public static readonly BuyersCredit: any[] = [
     {
       id: 1,
       title: "Customer Info",
