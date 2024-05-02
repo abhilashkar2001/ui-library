@@ -1,0 +1,56 @@
+.send-money-container {
+  padding: 20px;
+}
+
+.breadcrumb-title {
+  font: normal normal 11px/14px Raleway;
+  letter-spacing: 0px;
+  color: #575d67;
+  font-weight: 700;
+}
+
+.send-money-title {
+  font: normal normal 18px / 17px Raleway;
+  letter-spacing: 0px;
+  color: #00205c;
+  opacity: 1;
+  margin-left: 14px;
+  font-weight: 700;
+}
+
+.tabs {
+  border-radius: 12px;
+  width: 75%;
+  padding: 0px;
+}
+
+.tab-header {
+  height: 71px;
+  background: #00205c19 0% 0% no-repeat padding-box;
+}
+
+.tab-screens-container {
+  padding: 15px;
+}
+
+.tab-content {
+  align-items: center !important;
+}
+
+.tab-buttons {
+  font: normal normal bold 12px / 14px Raleway;
+  align-content: center;
+  cursor: pointer;
+  padding: 0px 20px 0px 20px;
+}
+
+.selected-tab-buttons {
+  background: #00205c 0% 0% no-repeat padding-box;
+  font: normal normal bold 13px / 15px Raleway;
+  color: #fff;
+  padding: 0px 20px 0px 20px;
+  border-radius: 6px;
+  align-content: center;
+  text-align: center;
+  cursor: pointer;
+}

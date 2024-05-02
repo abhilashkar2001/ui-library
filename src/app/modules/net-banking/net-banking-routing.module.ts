@@ -20,6 +20,7 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
+import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 
 const routes: Routes = [
   {
@@ -99,6 +100,13 @@ const routes: Routes = [
         loadChildren: () =>
           import("./fund-transfer/fund-transfer.module").then(
             (m) => m.FundTransferModule
+          ),
+      },
+      {
+        path: "cheque",
+        loadChildren: () =>
+          import("./cheque-book/cheque-book.module").then(
+            (m) => m.ChequeBookModule
           ),
       },
     ],

@@ -61,3 +61,29 @@
   background: #ffffff !important;
   color: #000000 !important;
 }
+.btn-algn {
+  margin-top: 15px;
+}
+.filled_btn {
+  width: 158px;
+  height: 43px;
+  border-radius: 8px;
+  background-color: #00205c !important;
+  color: white !important;
+  font-family: "Raleway", sans-serif;
+
+  &[disabled="true"] {
+    background-color: #d6d6d6 !important;
+  }
+}
+.stroked_btn {
+  width: 158px;
+  height: 43px;
+  border-radius: 8px;
+  border: 1px solid #00205c !important;
+  font-family: "Raleway", sans-serif;
+
+  &[disabled="true"] {
+    background-color: #d6d6d6 !important;
+  }
+}
