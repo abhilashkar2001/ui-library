@@ -45,6 +45,11 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+import { BuyersCreditSummaryComponent } from './trade-flow/buyers-credit-summary/buyers-credit-summary.component';
+import { GenericBuyerCreditComponent } from './new-reusable-components/generic-buyer-credit/generic-buyer-credit.component';
+import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
+import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
+import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
 
 
 @NgModule({
@@ -85,6 +90,11 @@ import { RemittanceInfoComponent } from './new-reusable-components/remittance-in
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    BuyersCreditSummaryComponent,
+    GenericBuyerCreditComponent,
+    CustomerInfoComponent,
+    SupplierInfoComponent,
+    CreditInfoComponent,
   ],
   imports: [
     CommonModule,
