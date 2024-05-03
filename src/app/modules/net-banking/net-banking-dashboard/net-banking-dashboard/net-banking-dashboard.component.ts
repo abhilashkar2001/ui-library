@@ -5,6 +5,8 @@ import { NETBANKING } from "./net-banking-dashboard.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { Account } from "app/shared/models/account-list-by-subclass.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
+import { DomSanitizer } from "@angular/platform-browser";
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -52,9 +54,17 @@ export class NetBankingDashboardComponent implements OnInit {
     private netBankingService: InternetBankingService,
     private router: Router,
     private tokenStorageService: TokenStorageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) {
     this.currentUser = tokenStorageService.getUser();
+    this.matIconRegistry.addSvgIcon(
+      `search-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/search_icon.svg"
+      )
+    );
   }
 
   ngOnInit(): void {

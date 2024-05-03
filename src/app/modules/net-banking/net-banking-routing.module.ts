@@ -27,7 +27,6 @@ import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 
-
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
 import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
@@ -36,8 +35,6 @@ import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
-import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
-import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 
 const routes: Routes = [
   {
@@ -119,18 +116,18 @@ const routes: Routes = [
             component: BgSummaryComponent,
           },
           {
-
             path: "eefc-summary",
             component: EefcComponent,
           },
           {
             path: "add-edit-eefc",
             component: AddNewEefcComponent,
-
+          },
+          {
             path: "bill-processing",
             component: BillProcessingSummaryComponent,
-
           },
+          {
             path: "ExportSWBillLodgementSummary",
             component: ExportSWBillLodgementComponent,
           },
@@ -141,7 +138,7 @@ const routes: Routes = [
           {
             path: "bill-processing",
             component: BillProcessingSummaryComponent,
-          }
+          },
         ],
       },
       {
