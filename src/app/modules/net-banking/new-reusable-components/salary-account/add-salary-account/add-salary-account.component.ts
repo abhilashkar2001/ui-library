@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { SalaryAccountService } from '../salary-account.service';
 import { debounce, debounceTime } from 'rxjs/operators';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 
 @Component({
   selector: 'app-add-salary-account',
@@ -138,9 +139,23 @@ export class AddSalaryAccountComponent implements OnInit {
     }
     console.log(payload);
     
-    this.api.saveCustomerDetails(payload).subscribe(resp=>{
+    this.api.saveCustomerDetails(payload).subscribe((resp:any)=>{
       console.log(resp);
-      
+      if(resp && resp.statusCode==201){
+        const dialog = this.dialog.open(CustomSuccessPopupComponent,{
+          data:{msg:resp.message,status:resp.status,reffNo:resp.data.customerId},
+          width: "60%",
+          disableClose: true,
+          panelClass: "dialog-class",
+        });
+        dialog.afterClosed().subscribe((res) => {
+          console.log(res);
+          if(res=="Done"){
+            this.goBack();
+          }
+
+        })
+      }
     })
   }
 }

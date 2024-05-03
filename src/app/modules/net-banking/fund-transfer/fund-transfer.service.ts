@@ -25,4 +25,11 @@ export class FundTransferService {
       payload
     );
   }
+
+  saveCreditCard(payload) {
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/corporate-net-banking/creditCardPayment`,
+      payload
+    );
+  }
 }

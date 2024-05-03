@@ -29,9 +29,9 @@ import { BenificiaryDetailsComponent } from "./new-reusable-components/bg-info/b
 import { TransactionInfoComponent } from "./new-reusable-components/bg-info/transaction-info/transaction-info.component";
 import { BgAmendBgInfoComponent } from "./new-reusable-components/bg-info/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./new-reusable-components/bg-info/bg-issuance-bg-info/bg-issuance-bg-info.component";
-import { GenericBgComponentComponent } from './new-reusable-components/generic-bg-component/generic-bg-component.component';
-import { BgSummaryComponent } from './trade-flow/bg-summary/bg-summary.component';
-import { AttachmentsComponent } from './new-reusable-components/attachments/attachments.component';
+import { GenericBgComponentComponent } from "./new-reusable-components/generic-bg-component/generic-bg-component.component";
+import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
+import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
@@ -76,7 +76,14 @@ import { SalaryAccountComponent } from './new-reusable-components/salary-account
 import { AddSalaryAccountComponent } from './new-reusable-components/salary-account/add-salary-account/add-salary-account.component';
 
 
-
+import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
+import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
+import { ExportApplicationDetailsComponent } from "./new-reusable-components/export-application-details/export-application-details.component";
+import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
+import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
+import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
+import { PaymentRequestEnquiryComponent } from './new-reusable-components/payment-request-enquiry/payment-request-enquiry.component';
+import { GenericExportBillDispatchComponent } from './new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +123,15 @@ import { AddSalaryAccountComponent } from './new-reusable-components/salary-acco
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    PreShipmentLPSummaryComponent,
+    ExportProcessInfoComponent,
+    ExportApplicationDetailsComponent,
+    ExportLoanDetailsComponent,
+    ExportAttachmentsComponent,
+    ExportLcDetailsComponent,
+    ExportBillDispatchSummaryComponent,
+    TransactionDetailsComponent,
+    DispatchDocumentsComponent,
     ExportSWBillLodgementComponent,
     AddExportSwBillComponent,
     BillSectionAComponent,
@@ -140,6 +156,10 @@ import { AddSalaryAccountComponent } from './new-reusable-components/salary-acco
     CreditInfoComponent,
     SalaryAccountComponent,
     AddSalaryAccountComponent,
+
+    GenericExportBillDispatchComponent,
+
+    PaymentRequestEnquiryComponent,
 
   ],
   imports: [

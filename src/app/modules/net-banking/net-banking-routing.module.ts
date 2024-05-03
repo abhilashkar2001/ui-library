@@ -20,6 +20,8 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
+import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
+import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
 import { EefcComponent } from "./trade-flow/eefc/eefc.component";
 import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
@@ -34,6 +36,12 @@ import { TransactionDetailsComponent } from "./new-reusable-components/transacti
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 import { SalaryAccountComponent } from "./new-reusable-components/salary-account/salary-account.component";
 import { AddSalaryAccountComponent } from "./new-reusable-components/salary-account/add-salary-account/add-salary-account.component";
+
+import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
+import { GenericExportBillDispatchComponent } from "./new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component";
+
+import { PaymentRequestEnquiryComponent } from "./new-reusable-components/payment-request-enquiry/payment-request-enquiry.component";
+
 
 const routes: Routes = [
   {
@@ -91,6 +99,10 @@ const routes: Routes = [
             component: DocumentAcceptanceComponent,
           },
           {
+            path: "payment-request-enquiry",
+            component: PaymentRequestEnquiryComponent,
+          },
+          {
             path: "remittance-summery",
             component: RemittanceSummeryComponent,
           },
@@ -100,7 +112,7 @@ const routes: Routes = [
           },
           {
             path: "export-bill-dispatch",
-            component: TransactionDetailsComponent,
+            component: GenericExportBillDispatchComponent,
           },
           {
             path: "generic-buyer-credit",
@@ -115,17 +127,24 @@ const routes: Routes = [
             component: BgSummaryComponent,
           },
           {
-
+            path: "export-process-summery",
+            component: PreShipmentLPSummaryComponent,
+          },
+          {
+            path: "export-process-tabs",
+            component: ExportProcessInfoComponent,
+          },
+          {
             path: "eefc-summary",
             component: EefcComponent,
           },
           {
             path: "add-edit-eefc",
             component: AddNewEefcComponent,
-          },{
+          },
+          {
             path: "bill-processing",
             component: BillProcessingSummaryComponent,
-
           },
           {
             path: "ExportSWBillLodgementSummary",

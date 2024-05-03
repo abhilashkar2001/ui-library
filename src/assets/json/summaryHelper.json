@@ -2,7 +2,7 @@
   {
     "name": "BG Issuance",
     "backPath": "user/dashboard/trade/dashboard",
-    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "summaryUrl": "bankGuarantee/fetchBgMaster",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "BGTYPE_SUMMARY"
   },
@@ -30,7 +30,7 @@
   {
     "name": "LC Issuance",
     "backPath": "user/dashboard/trade/dashboard",
-    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "summaryUrl": "lcMaster?lcType=Issuance",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "LC_SUMMARY"
   },
@@ -70,7 +70,13 @@
     "columnRefName": "REMITTANCE"
   },
   {
-
+    "name": "exportProcess",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/export-process-tabs",
+    "columnRefName": "exportProcess"
+  },
+  {
     "name": "Export Bill Dispatch Request",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",
@@ -82,6 +88,13 @@
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/document-acceptance",
+    "columnRefName": "BILL_SUMMARY"
+  },
+  {
+    "name": "Payment Request Enquiry",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/payment-request-enquiry",
     "columnRefName": "BILL_SUMMARY"
   },
   {

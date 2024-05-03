@@ -80,9 +80,9 @@ export class BeneficiarySummaryComponent implements OnInit {
 
       this.route.navigate([`../add-edit-beneficiary`], {
         relativeTo: this.activatedRoute,
-        queryParams: { isEdit: "Yes", id: id.benificiaryId },
+        queryParams: { isEdit: "Yes", id: id.id },
       });
-      console.log(id?.benificiaryId);
+      console.log(id?.id);
     }
     if (id === "bulk") {
       this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);

@@ -1,4 +1,7 @@
 .drawer-container {
+  .example-sidenav {
+    box-shadow: 3px 0 12px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .icon-button {
@@ -7,15 +10,15 @@
   background-color: unset !important;
   left: -14px;
   .btn_icon {
-    width: 42px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 }
 
 .parent-node {
   color: #102245;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
 }
 .align-node {
   & .parent-node {
@@ -25,7 +28,7 @@
 .child-node {
   color: #014b94;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .active-node {
   background: #014588 0% 0% no-repeat padding-box;

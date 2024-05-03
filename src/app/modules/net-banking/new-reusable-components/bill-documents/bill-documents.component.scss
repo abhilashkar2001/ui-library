@@ -7,7 +7,9 @@
   .headerFont{
     color: #606C8D;
   }
-
+  .bodyFont{
+    font-weight: bold;
+  }
 ::ng-deep .mat-expansion-panel-body {
     padding: 0 !important;
   }

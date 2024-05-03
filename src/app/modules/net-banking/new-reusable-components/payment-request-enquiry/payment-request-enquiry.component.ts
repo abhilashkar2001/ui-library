@@ -1,0 +1,149 @@
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
+import { Webhost } from 'app/shared/directives/appHost.directive';
+import { BehaviorSubject } from 'rxjs';
+import { tabsClass } from '../../tabs.model';
+import { GenericBgServiceService } from '../generic-bg-component/generic-bg-service.service';
+
+@Component({
+  selector: 'app-payment-request-enquiry',
+  templateUrl: './payment-request-enquiry.component.html',
+  styleUrls: ['./payment-request-enquiry.component.scss']
+})
+export class PaymentRequestEnquiryComponent implements OnInit {
+
+  @Input("componentName") componentName = "";
+  tabs: any;
+  account$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  tradeDetails: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  shareTradeDetails = this.tradeDetails.asObservable();
+  currentStep$: BehaviorSubject<any> = new BehaviorSubject(null);
+  isCurrentFormValid$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  @ViewChild(Webhost, { static: true })
+  host!: Webhost;
+  componentRef: any;
+  bgType: any;
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private api: GenericBgServiceService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params: any) => {
+      this.componentName = params.get("type");
+      for (const key in tabsClass) {
+        // console.log(key, this.componentName, ".......");
+        if (
+          key.replace("_", "").replace(" ", "").toLowerCase() ===
+          this.componentName.split(" ").join("").toLowerCase()
+        ) {
+          this.tabs = tabsClass[key];
+          console.log(this.tabs);
+          
+          this.bgType = this.tabs[0].type;
+          this.componentRef = null;
+          this.currentStep$.next(this.tabs[0]);
+          this.createComponentView();
+        }
+      }
+    });
+  }
+
+  getTabClassData() {
+    return new Promise((resolve, reject) => {
+      switch (this.componentName) {
+        case "Bg_Issuance":
+          resolve(tabsClass.Bg_Issuance);
+          break;
+        case "Bg_Amendment":
+          resolve(tabsClass.Bg_Amendment);
+          break;
+        case "Bg_PhysicalAmendment":
+          resolve(tabsClass.Bg_PhysicalAmendment);
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  createComponentView() {
+    const view = this.host.viewContainerRef;
+    view.clear();
+    if (this.currentStep$.value?.componrnt) {
+      this.componentRef = view.createComponent(
+        this.currentStep$.value.componrnt
+      );
+      this.componentRef.instance.bgType = this.bgType;
+      this.currentStep$.subscribe((resp) => {
+        if (resp?.isHideFilter) {
+          this.componentRef.instance.isHideFilter = resp.isHideFilter;
+          this.componentRef.instance.isHideButton = resp.isHideButton;
+          this.componentRef.instance.screenName = resp.title;
+        }
+      });
+
+      this.shareTradeDetails.subscribe((resp) => {
+        this.componentRef.instance.tradeDetails = resp;
+      });
+      this.componentRef.instance.updateParentModel = this.updateAccount;
+      this.componentRef.instance.amendmentType = this.currentStep$.value?.type;
+    }
+  }
+  navigatetotab(tab) {
+    this.trackRecord();
+    this.currentStep$.next(tab);
+    this.createComponentView();
+  }
+
+  updateAccount = (part: Partial<any>, isFormValid: boolean) => {
+    const currentAccount = this.account$.value;
+    const updatedAccount = { ...currentAccount, ...part };
+    this.account$.next(updatedAccount);
+    this.isCurrentFormValid$.next(isFormValid);
+  };
+
+  saveTemplet(event) {
+    const dialogRef = this.dialog.open(AddNewPopupComponent, {
+      data: {
+        isSaveTemplate: true,
+      },
+      width: "750px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((resp) => {
+      this.saveTemplate(resp.templateName);
+    });
+  }
+
+  saveTemplate(templateName) {
+    const payload = {
+      applicantModel: {
+        ...this.account$.value.applicantInfo,
+        saveTemplate: true,
+        templateName: templateName,
+      },
+      bgInfoModel: this.account$.value?.benificiaryDetails ?? null,
+      otherInfoModel: this.account$.value?.otherInfoModel ?? null,
+      attachmentModel: this.account$.value?.attachMentModel ?? null,
+    };
+    this.api.saveTemplate(payload).subscribe((resp) => {});
+  }
+
+  updateRecord(event) {
+    console.log(event, "........");
+  }
+
+  trackRecord() {
+    this.tradeDetails.next(this.account$.value);
+  }
+   
+
+}

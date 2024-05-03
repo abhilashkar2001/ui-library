@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
-import { BillBeneficiaryDetailsComponent } from '../bill-beneficiary-details/bill-beneficiary-details.component';
 
 @Component({
   selector: 'app-bill-section-a',
@@ -56,12 +55,7 @@ export class BillSectionAComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {})
   }
   beneficiary(){
-    const dialog = this.dialog.open(BillBeneficiaryDetailsComponent,{
-      width: "60%",
-      disableClose: true,
-      panelClass: "dialog-class",
-    });
-    dialog.afterClosed().subscribe((res) => {})
+   
   }
 
 }

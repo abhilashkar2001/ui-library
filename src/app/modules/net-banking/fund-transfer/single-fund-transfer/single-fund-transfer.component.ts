@@ -4,6 +4,12 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 import { SessionService } from "app/shared/session.service";
 import { FundTransferService } from "../fund-transfer.service";
 import { Router } from "@angular/router";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 
 @Component({
   selector: "app-single-fund-transfer",
@@ -24,13 +30,28 @@ export class SingleFundTransferComponent implements OnInit {
   remitterNarration: boolean = false;
   paymentDetail: boolean = false;
   custAccounts: any;
+  dialogRef: MatDialogRef<CustomSuccessPopupComponent>;
+  dialogRef1: MatDialogRef<AllInOnePopupComponent>;
+  customerInfo: any;
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private dialog: MatDialog,
+    private api: OpenAccountService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `single-trans-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/single-trans.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
+    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
     this.custAccounts.forEach((element) => {
       this.fromAccount.push(element.accountNo);
@@ -103,15 +124,65 @@ export class SingleFundTransferComponent implements OnInit {
     this.fundTransferForm.reset();
   }
 
-  sabmit() {
-    if (!this.fundTransferForm.valid) return;
-    let payload = [];
-    payload.push(this.fundTransferForm.value);
+  getOTP() {
+    this.api
+      .getOtp(this.customerInfo.mobileNumber)
+      .subscribe((response: any) => {});
+  }
+
+  saveData(payload) {
     this.fundTransferService
       .saveFundTransferData(payload)
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
+          this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+            data: { msg: "Transaction Successful", status: true },
+            width: "40%",
+            disableClose: true,
+            panelClass: "popup-class",
+            backdropClass: "bdrop",
+          });
+          this.dialogRef.afterClosed().subscribe((result) => {
+            console.log(result);
+            if (result == "Done") {
+              this.cancel();
+            }
+          });
         }
       });
+  }
+
+  submit() {
+    if (!this.fundTransferForm.valid) return;
+    let payload = [];
+    payload.push(this.fundTransferForm.value);
+
+    this.getOTP();
+    this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
+      data: { remark: true, mobile: this.customerInfo.mobileNumber },
+      width: "50%",
+      height: "33%",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    this.dialogRef1.afterClosed().subscribe((result) => {
+      if (result == "verified") {
+        this.saveData(payload);
+      } else {
+        this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+          data: { msg: "Transaction failed", status: false },
+          width: "40%",
+          disableClose: true,
+          panelClass: "popup-class",
+          backdropClass: "bdrop",
+        });
+        this.dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Failed") {
+            this.dialogRef.close();
+          }
+        });
+      }
+    });
   }
 }

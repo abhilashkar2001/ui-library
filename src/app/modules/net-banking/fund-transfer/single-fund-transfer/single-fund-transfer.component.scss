@@ -1,72 +1,68 @@
-.header-part {
-  padding: 12px;
-}
+.single_fund_container {
+  .heading_card {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    mat-icon {
+      display: flex;
+    }
+  }
+  .text_label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    margin-top: 27px;
+  }
+  .hint {
+    font: normal normal bold 12px/16px poppins;
+    font-style: italic;
+    color: gray;
+    text-align: center;
+  }
 
-.form-title {
-  font: normal normal 25px/16px poppins;
-}
+  .link {
+    font: normal normal bold 15px/16px poppins;
+    color: #004c97;
+    text-align: center;
+    cursor: pointer;
+    font-style: italic;
+    text-decoration: underline;
+  }
+  .add-link {
+    height: 50px;
+    background: aliceblue;
+    font: normal normal bold 15px / 16px poppins;
+    color: #004c97;
+    text-align: center;
+    margin-top: 12px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
 
-.form-container {
-  padding: 2% 10%;
-}
+  .check {
+    margin-top: 20px;
+    mat-checkbox {
+      font-family: "Poppins";
+    }
+  }
+  .form-field {
+    margin-top: 10px;
+  }
 
-.label {
-  font: normal normal 17px/16px poppins;
-  color: gray;
-  text-align: center;
-  display: flex;
-  margin-top: 27px;
-}
+  .serchable-drop {
+    margin-top: 10px;
+  }
 
-.form-field {
-  margin-top: 10px;
-}
+  .narration-form-field {
+    height: 0%;
+  }
 
-.serchable-drop {
-  margin-top: 10px;
-}
+  .hint-div {
+    margin-left: 15%;
+    margin-top: -17px;
+  }
 
-.narration-form-field {
-  height: 0%;
-}
-
-.hint {
-  font: normal normal bold 14px/16px poppins;
-  color: gray;
-  text-align: center;
-}
-
-.link {
-  font: normal normal bold 15px/16px poppins;
-  color: #004c97;
-  text-align: center;
-  cursor: pointer;
-}
-
-.add-link {
-  font: normal normal bold 15px/16px poppins;
-  color: #004c97;
-  text-align: center;
-  margin-top: 30px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.hint-div {
-  margin-left: 15%;
-  margin-top: -17px;
-}
-
-.calender {
-  margin-top: -10px;
-}
-
-.check {
-  margin-top: 20px;
-}
-
-.back-button {
-  color: #b20000;
-  margin-left: 5px;
-  margin-top: -12px;
+  .calender {
+    margin-top: -10px;
+  }
 }

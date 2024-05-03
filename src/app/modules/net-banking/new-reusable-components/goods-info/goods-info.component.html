@@ -1,5 +1,208 @@
-<mat-card class="full-width default-card mx-0">
-  <div fxLayout="column">
+<form *ngIf="goodsInfoForm" [formGroup]="goodsInfoForm">
+  <mat-card class="full-width default-card mx-0">
+    <div fxLayout="column">
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="space Between"
+        fxLayoutGap="1%"
+        class="applicantsInfo"
+      >
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label"
+            >Partial Shipment option (43P)*</mat-label
+          >
+          <mat-form-field>
+            <mat-select formControlName="partialShipmentOption">
+              <mat-option value="Prohibited">Prohibited</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Transshipment Option (43T)</mat-label>
+          <mat-form-field>
+            <mat-select formControlName="transshipmentOption">
+              <mat-option value="Prohibited">Prohibited</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="49"></div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Place of Receipt (44A)</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="placeOfReciept" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label"
+            >Place of Final Destination (44B)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="placeOfFinalDestination"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label"
+            >Port of loading / Airport of Destination (44E)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="prtOfLoadingOrArptOfDestination"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label"
+            >Port of discharge / Airport of Destination (44F)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="prtOfDschrgOrArptOfDestination"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="49">
+          <mat-label class="custom-label"
+            >Latest Date of Shipment (44C)</mat-label
+          >
+          <mat-form-field>
+            <input matInput type="text" formControlName="lstDateOfShipment" />
+            <div fxFlex="40" class="verifyDiv">
+              <button mat-suffix type="button" class="verify-btn">
+                Shipment Period
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="49">
+          <mat-label class="custom-label"
+            >Description of Goods and/or services (45A)</mat-label
+          >
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="descOfGoodsOrServices"
+            />
+            <div fxFlex="40" class="verifyDiv">
+              <button mat-suffix type="button" class="verify-btn">
+                Clause Template
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Expiry Date</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="expiryDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>
+                <img
+                  _ngcontent-vqa-c346=""
+                  src="assets/images/calendar.png"
+                  class="pb-25"
+                />
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">PO/Proforma Invoice No</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="proformaDate" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">PO/Proforma Date</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              formControlName="proformaInvcNo"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker1">
+              <mat-icon matDatepickerToggleIcon>
+                <img
+                  _ngcontent-vqa-c346=""
+                  src="assets/images/calendar.png"
+                  class="pb-25"
+                />
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Country of Origin</mat-label>
+          <mat-form-field>
+            <mat-select formControlName="countryId">
+              <mat-option value="India">India</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Insurance coverage details</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="insuranceCoverageDetails"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Policy Number</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="policyNumber" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Policy date</mat-label>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="picker2"
+              formControlName="policyDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker2">
+              <mat-icon matDatepickerToggleIcon>
+                <img
+                  _ngcontent-vqa-c346=""
+                  src="assets/images/calendar.png"
+                  class="pb-25"
+                />
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Merchant Trade LC</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="merchantTradeLc" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="full-width default-card mx-0">
     <div
       fxFlex="100"
       fxLayout="row wrap"
@@ -8,221 +211,52 @@
       class="applicantsInfo"
     >
       <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label"
-          >Partial Shipment option (43P)*</mat-label
-        >
+        <mat-label class="custom-label">Trade Terms*</mat-label>
         <mat-form-field>
-          <mat-select>
-            <mat-option value="Prohibited">Prohibited</mat-option>
+          <mat-select formControlName="tradeTerms">
+            <mat-option value="India">CIP</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Transshipment Option (43T)</mat-label>
+        <mat-label class="custom-label">Place*</mat-label>
         <mat-form-field>
-          <mat-select>
-            <mat-option value="Prohibited">Prohibited</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="49"></div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Place of Receipt (44A)</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
+          <input matInput type="text" formControlName="place" />
         </mat-form-field>
       </div>
       <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label"
-          >Place of Final Destination (44B)</mat-label
-        >
+        <mat-label class="custom-label">HS Code*</mat-label>
         <mat-form-field>
-          <input matInput type="text" />
+          <input matInput type="text" formControlName="hsCode" />
         </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label"
-          >Port of loading / Airport of Destination (44E)</mat-label
-        >
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label"
-          >Port of discharge / Airport of Destination (44F)</mat-label
-        >
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
+      </div></div
+  ></mat-card>
 
-      <div fxLayout="column" fxFlex="49">
-        <mat-label class="custom-label"
-          >Latest Date of Shipment (44C)</mat-label
-        >
-        <mat-form-field>
-          <input matInput type="text" />
-          <div fxFlex="40" class="verifyDiv">
-            <button mat-suffix type="button" class="verify-btn">
-              Shipment Period
-            </button>
-          </div>
-        </mat-form-field>
+  <mat-card class="full-width default-card mx-0">
+    <div fxLayout="column">
+      <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>Presentation Period (48)</h2>
       </div>
-      <div fxLayout="column" fxFlex="49">
-        <mat-label class="custom-label"
-          >Description of Goods and/or services (45A)</mat-label
-        >
-        <mat-form-field>
-          <input matInput type="text" />
-          <div fxFlex="40" class="verifyDiv">
-            <button mat-suffix type="button" class="verify-btn">
-              Clause Template
-            </button>
-          </div>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Expiry Date</mat-label>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" />
-          <mat-datepicker-toggle matSuffix [for]="picker">
-            <mat-icon matDatepickerToggleIcon>
-              <img
-                _ngcontent-vqa-c346=""
-                src="assets/images/calendar.png"
-                class="pb-25"
-              />
-            </mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">PO/Proforma Invoice No</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">PO/Proforma Date</mat-label>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker1" />
-          <mat-datepicker-toggle matSuffix [for]="picker1">
-            <mat-icon matDatepickerToggleIcon>
-              <img
-                _ngcontent-vqa-c346=""
-                src="assets/images/calendar.png"
-                class="pb-25"
-              />
-            </mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Country of Origin</mat-label>
-        <mat-form-field>
-          <mat-select>
-            <mat-option value="India">India</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Insurance coverage details</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Policy Number</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Policy date</mat-label>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker2" />
-          <mat-datepicker-toggle matSuffix [for]="picker2">
-            <mat-icon matDatepickerToggleIcon>
-              <img
-                _ngcontent-vqa-c346=""
-                src="assets/images/calendar.png"
-                class="pb-25"
-              />
-            </mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Merchant Trade LC</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="space Between"
+        fxLayoutGap="1%"
+        class="applicantsInfo"
+      >
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Document to be within</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="docToBeWithIn" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxFlex="24">
+          <mat-label class="custom-label">Days from the date of</mat-label>
+          <mat-form-field>
+            <input matInput type="text" formControlName="dayFromDateOf" />
+          </mat-form-field>
+        </div>
       </div>
     </div>
-  </div>
-</mat-card>
-
-<mat-card class="full-width default-card mx-0">
-  <div
-    fxFlex="100"
-    fxLayout="row wrap"
-    fxLayoutAlign="space Between"
-    fxLayoutGap="1%"
-    class="applicantsInfo"
-  >
-    <div fxLayout="column" fxFlex="24">
-      <mat-label class="custom-label">Trade Terms*</mat-label>
-      <mat-form-field>
-        <mat-select>
-          <mat-option value="India">CIP</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div fxLayout="column" fxFlex="24">
-      <mat-label class="custom-label">Place*</mat-label>
-      <mat-form-field>
-        <input matInput type="text" />
-      </mat-form-field>
-    </div>
-    <div fxLayout="column" fxFlex="24">
-      <mat-label class="custom-label">HS Code*</mat-label>
-      <mat-form-field>
-        <input matInput type="text" />
-      </mat-form-field>
-    </div></div
-></mat-card>
-
-<mat-card class="full-width default-card mx-0">
-  <div fxLayout="column">
-    <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">
-      <h2>Presentation Period (48)</h2>
-    </div>
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="space Between"
-      fxLayoutGap="1%"
-      class="applicantsInfo"
-    >
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Document to be within</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-      <div fxLayout="column" fxFlex="24">
-        <mat-label class="custom-label">Days from the date of</mat-label>
-        <mat-form-field>
-          <input matInput type="text" />
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-</mat-card>
+  </mat-card>
+</form>
