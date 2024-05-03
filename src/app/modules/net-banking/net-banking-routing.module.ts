@@ -22,13 +22,8 @@ import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remi
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
 import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
-
 import { EefcComponent } from "./trade-flow/eefc/eefc.component";
 import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
-
-import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
-import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
-
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
 import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
@@ -37,6 +32,10 @@ import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
+import { SalaryAccountComponent } from "./new-reusable-components/salary-account/salary-account.component";
+import { AddSalaryAccountComponent } from "./new-reusable-components/salary-account/add-salary-account/add-salary-account.component";
 
 import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
 import { GenericExportBillDispatchComponent } from "./new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component";
@@ -155,7 +154,15 @@ const routes: Routes = [
             path: "add-export",
             component: AddExportSwBillComponent,
           },
+          {
+            path: "bill-processing",
+            component: BillProcessingSummaryComponent,
+          },
         ],
+      },
+      {
+        path: "salary-account",
+        component: SalaryAccountComponent,
       },
       {
         path: "bulk-upload",
@@ -168,6 +175,10 @@ const routes: Routes = [
       {
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
+      },
+      {
+        path: "add-salary",
+        component: AddSalaryAccountComponent,
       },
       {
         path: "fund-transfer",
