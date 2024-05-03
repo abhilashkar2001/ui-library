@@ -10,7 +10,7 @@ import { GenericValueService } from "app/shared/services/generic-value.service";
 export class MultiFundTransferComponent implements OnInit {
   multiTransferForm: FormGroup;
   genericValue = { TRANSFERMODE: [] };
-
+  selectedAccounts: any[] = ["jhg", "kjhg"];
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService
