@@ -76,7 +76,8 @@
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/export-bill-dispatch-summary",
     "columnRefName": "EXPORT BILL DISPATCH"
-
+  },
+  {
     "name": "Document Acceptance",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",
@@ -89,6 +90,12 @@
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/generic-buyer-credit",
     "columnRefName": "BUYER_CREDIT"
-
+  },
+  {
+    "name": "Export SW Bill Lodgement",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/add-export",
+    "columnRefName": "Export SW Bill"
   }
 ]
