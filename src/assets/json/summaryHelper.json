@@ -70,6 +70,14 @@
     "columnRefName": "REMITTANCE"
   },
   {
+
+    "name": "Export Bill Dispatch Request",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/export-bill-dispatch-summary",
+    "columnRefName": "EXPORT BILL DISPATCH"
+  },
+  {
     "name": "Document Acceptance",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",

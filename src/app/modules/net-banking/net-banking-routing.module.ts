@@ -27,6 +27,8 @@ import { DocumentAcceptanceComponent } from "./new-reusable-components/document-
 import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 
 const routes: Routes = [
   {
@@ -88,6 +90,14 @@ const routes: Routes = [
             component: RemittanceSummeryComponent,
           },
           {
+            path: "export-bill-dispatch-summary",
+            component: ExportBillDispatchSummaryComponent,
+          },
+          {
+            path: "export-bill-dispatch",
+            component: TransactionDetailsComponent,
+          },
+          {
             path: "generic-buyer-credit",
             component: GenericBuyerCreditComponent,
           },
@@ -147,4 +157,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule { }
+export class NetBankingRoutingModule {}

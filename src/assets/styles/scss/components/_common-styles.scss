@@ -26,3 +26,17 @@
   top: 1.64375em;
   // line-height: normal;
 }
+.mat-form-field-suffix .mat-icon-button .mat-icon {
+  overflow: visible;
+}
+.egret-navy .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #004c97;
+}
+.egret-navy
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element,
+.egret-navy
+  .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element {
+  background: #004c97;
+}
