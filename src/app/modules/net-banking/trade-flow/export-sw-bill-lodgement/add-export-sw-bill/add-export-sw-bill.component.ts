@@ -98,6 +98,7 @@ export class AddExportSwBillComponent implements OnInit {
     this.trackRecord();
     this.currentStep$.next(tab);
     this.createComponentView();
+    this.cdr.detectChanges();
   }
 
   updateAccount = (part: Partial<any>, isFormValid: boolean) => {
