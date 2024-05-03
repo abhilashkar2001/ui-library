@@ -112,11 +112,9 @@ import { CreditInfoComponent } from "./new-reusable-components/credit-info/credi
     ExportLoanDetailsComponent,
     ExportAttachmentsComponent,
     ExportLcDetailsComponent,
-
     ExportBillDispatchSummaryComponent,
     TransactionDetailsComponent,
     DispatchDocumentsComponent,
-
     BillProcessingSummaryComponent,
     DocumentAcceptanceComponent,
     BeneficiaryDetailsComponent,

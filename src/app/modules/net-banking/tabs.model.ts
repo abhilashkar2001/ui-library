@@ -8,13 +8,12 @@ import { ExportApplicationDetailsComponent } from "./new-reusable-components/exp
 import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
 import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
 import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
-
 import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
 
 import { BillDocumentsComponent } from "./new-reusable-components/bill-documents/bill-documents.component";
+import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
 import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
-
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -208,7 +207,6 @@ export class tabsClass {
       componrnt: AttachmentsComponent,
     },
   ];
-
   public static readonly exportProcess: any[] = [
     {
       id: 1,
@@ -235,7 +233,6 @@ export class tabsClass {
       componrnt: ExportAttachmentsComponent,
     },
   ];
-
   public static readonly exportBillDispatchData: any[] = [
     {
       id: 1,
