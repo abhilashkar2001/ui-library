@@ -126,6 +126,7 @@ export class NetBankingDashboardComponent implements OnInit {
   }
 
   openTransfer(transfer) {
+    console.log(transfer);
     this.router.navigate([transfer.route]);
   }
 }
