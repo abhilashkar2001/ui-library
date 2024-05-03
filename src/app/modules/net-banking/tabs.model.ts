@@ -4,10 +4,14 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BeneficiaryDetailsComponent } from "./new-reusable-components/beneficiary-details/beneficiary-details.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+
+import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
+
 import { BillDocumentsComponent } from "./new-reusable-components/bill-documents/bill-documents.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
 import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
+
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -17,8 +21,13 @@ import { OrdersInfoComponent } from "./new-reusable-components/orders-info/order
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { RemittanceDetailsComponent } from "./new-reusable-components/remittance-details/remittance-details.component";
 import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
+
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+
 import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
+
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
+import { exportBillDispatchData } from "./trade-flow/export-bill-dispatch-summary/exportbillstaticdata";
 
 export class tabsClass {
   public static Bg_Issuance: any[] = [
@@ -175,27 +184,43 @@ export class tabsClass {
       id: 1,
       title: "Applicant Info",
       type: "Remittamce_Applicant_Info",
-      componrnt: ApplicantsInfoComponent
+      componrnt: ApplicantsInfoComponent,
     },
     {
       id: 2,
       title: "Remittance Info",
       type: "Remittamce_Remittance_Info",
-      componrnt: RemittanceInfoComponent
+      componrnt: RemittanceInfoComponent,
     },
     {
       id: 3,
       title: "Other Info",
       type: "Remittamce_Other_Info",
-      componrnt: OthersInfoComponent
+      componrnt: OthersInfoComponent,
     },
     {
       id: 4,
       title: "Attachments",
       type: "Remittamce_Attachments",
-      componrnt: AttachmentsComponent
+      componrnt: AttachmentsComponent,
     },
   ];
+
+  public static readonly exportBillDispatchData: any[] = [
+    {
+      id: 1,
+      title: "Transaction Details",
+      type: "Export_Transaction_Details",
+      componrnt: TransactionDetailsComponent,
+    },
+    {
+      id: 2,
+      title: "Dispatch Documents",
+      type: "Dispatch_Documents_Details",
+      componrnt: DispatchDocumentsComponent,
+    },
+  ];
+
 
   public static readonly BuyersCredit: any[] = [
     {
@@ -255,4 +280,5 @@ export class tabsClass {
       componrnt: BillDocumentsComponent
     },
   ];
+
 }

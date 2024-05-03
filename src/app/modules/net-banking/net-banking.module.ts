@@ -46,8 +46,14 @@ import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remi
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
 
+
 import { EefcComponent } from './trade-flow/eefc/eefc.component';
 import { AddNewEefcComponent } from './trade-flow/eefc/add-new-eefc/add-new-eefc.component';
+
+import { ExportBillDispatchSummaryComponent } from './trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component';
+import { TransactionDetailsComponent } from './new-reusable-components/transaction-details/transaction-details.component';
+import { DispatchDocumentsComponent } from './new-reusable-components/dispatch-documents/dispatch-documents.component';
+
 
 import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
 import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
@@ -103,8 +109,14 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     GenericRemittanceComponent,
     RemittanceInfoComponent,
 
+
     EefcComponent,
     AddNewEefcComponent,
+
+    ExportBillDispatchSummaryComponent,
+    TransactionDetailsComponent,
+    DispatchDocumentsComponent,
+
 
     BillProcessingSummaryComponent,
     DocumentAcceptanceComponent,

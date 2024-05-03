@@ -21,8 +21,13 @@ import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 
+
 import { EefcComponent } from "./trade-flow/eefc/eefc.component";
 import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
+
+import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+
 
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
@@ -91,6 +96,14 @@ const routes: Routes = [
             component: RemittanceSummeryComponent,
           },
           {
+            path: "export-bill-dispatch-summary",
+            component: ExportBillDispatchSummaryComponent,
+          },
+          {
+            path: "export-bill-dispatch",
+            component: TransactionDetailsComponent,
+          },
+          {
             path: "generic-buyer-credit",
             component: GenericBuyerCreditComponent,
           },
@@ -151,4 +164,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule { }
+export class NetBankingRoutingModule {}
