@@ -1,0 +1,6 @@
+<form *ngIf="eefcForm" [formGroup]="eefcForm">
+  <app-ic-custom-input
+    [control]="eefcForm.get('applicantName')"
+    inputlabel="Applicant Name"
+  ></app-ic-custom-input>
+</form>

@@ -1,0 +1,12 @@
+<app-new-reusable-mat-table
+  [columns]="columns"
+  [componentName]="bgType"
+  maintenanceTitle="EEFC Conversion"
+  (customGetDataByPage)="getDataByPage($event)"
+  [UpdatedData]="bgData"
+  [hideFilters]="false"
+  showOnlySearchTitle="Search"
+  [addNewList]="addNewList"
+></app-new-reusable-mat-table>
+<!-- (customGoBack)="CustomGoBack($event)" -->
+<!-- (customEditForm)="openPopUp($event)" -->

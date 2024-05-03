@@ -45,6 +45,8 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+import { EefcComponent } from './trade-flow/eefc/eefc.component';
+import { AddNewEefcComponent } from './trade-flow/eefc/add-new-eefc/add-new-eefc.component';
 
 
 @NgModule({
@@ -85,6 +87,8 @@ import { RemittanceInfoComponent } from './new-reusable-components/remittance-in
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    EefcComponent,
+    AddNewEefcComponent,
   ],
   imports: [
     CommonModule,
