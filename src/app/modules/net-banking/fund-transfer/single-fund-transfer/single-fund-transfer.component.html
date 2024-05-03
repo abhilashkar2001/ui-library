@@ -39,7 +39,7 @@
         >Amount<span class="text-red">*</span></span
       >
       <mat-form-field fxFlex="30" class="form-field">
-        <input matInput formControlName="amount" />
+        <input matInput formControlName="debitAmount" />
       </mat-form-field>
     </div>
     <div fxLayout="row" fxFlex="100">
@@ -72,9 +72,12 @@
           skipLabel="false"
           displayLabel="accountNo"
           [inputLabel]="'Benificiary Account Number'"
+          (selectionChange)="changeInToAccount($event)"
         ></app-searchable-select>
       </div>
-      <button mat-flat-button class="add-link">Add New</button>
+      <button mat-flat-button (click)="goToBeneificiary()" class="add-link">
+        Add New
+      </button>
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"

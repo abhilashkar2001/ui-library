@@ -33,6 +33,7 @@ export class SingleFundTransferComponent implements OnInit {
   dialogRef: MatDialogRef<CustomSuccessPopupComponent>;
   dialogRef1: MatDialogRef<AllInOnePopupComponent>;
   customerInfo: any;
+  beneficiaryName: any;
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
@@ -65,7 +66,7 @@ export class SingleFundTransferComponent implements OnInit {
     this.fundTransferForm = this.fb.group({
       purposeOfPayment: ["", Validators.required],
       debitAccount: ["", Validators.required],
-      amount: ["", Validators.required],
+      debitAmount: ["", Validators.required],
       transferMode: [""],
       creditAccount: ["", Validators.required],
       trransferOn: ["", Validators.required],
@@ -116,8 +117,22 @@ export class SingleFundTransferComponent implements OnInit {
     }
   }
 
+  changeInToAccount(event) {
+    if (event) {
+      this.beneficiaryName = this.transferTo.find(
+        (e) => e.accountNo == event
+      )?.name;
+    }
+  }
+
+  goToBeneificiary() {
+    this.router.navigate(["user/dashboard/trade/add-edit-beneficiary"]);
+  }
+
   cancel() {
-    this.router.navigate(["user/dashboard/home"]);
+    this.router.navigate([
+      "user/net-banking/fund-transfer/fund-transfer-summary",
+    ]);
   }
 
   clear() {
@@ -155,7 +170,10 @@ export class SingleFundTransferComponent implements OnInit {
   submit() {
     if (!this.fundTransferForm.valid) return;
     let payload = [];
-    payload.push(this.fundTransferForm.value);
+    let obj = this.fundTransferForm.value;
+    obj.uploadType = "SINGLE";
+    obj.beneficiaryName = this.beneficiaryName;
+    payload.push(obj);
 
     this.getOTP();
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {

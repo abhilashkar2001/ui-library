@@ -72,7 +72,7 @@ export class MultiFundTransferComponent implements OnInit {
     this.multiTransferForm = this.fb.group({
       purposeOfPayment: ["", Validators.required],
       debitAccount: ["", Validators.required],
-      amount: ["", Validators.required],
+      debitAmount: ["", Validators.required],
       transferMode: [""],
       trransferOn: ["", Validators.required],
       remmitterEmail: [""],
@@ -87,7 +87,7 @@ export class MultiFundTransferComponent implements OnInit {
       remarks: [""],
     });
     this.multiTransferForm
-      .get("amount")
+      .get("debitAmount")
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         if (resp) {
@@ -128,15 +128,15 @@ export class MultiFundTransferComponent implements OnInit {
   selectMultiAcc(event) {
     this.selectedAccounts = event;
     if (
-      this.multiTransferForm.get("amount").value &&
+      this.multiTransferForm.get("debitAmount").value &&
       this.selectedAccounts.length > 1
     ) {
       this.totalAmount =
-        this.multiTransferForm.get("amount").value *
+        this.multiTransferForm.get("debitAmount").value *
         this.selectedAccounts.length;
       this.convertTotalAmountToAlphabet();
     } else {
-      this.totalAmount = this.multiTransferForm.get("amount").value;
+      this.totalAmount = this.multiTransferForm.get("debitAmount").value;
       this.convertTotalAmountToAlphabet();
     }
   }
@@ -173,7 +173,9 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(["user/dashboard/home"]);
+    this.router.navigate([
+      "user/net-banking/fund-transfer/fund-transfer-summary",
+    ]);
   }
 
   clear() {
@@ -209,6 +211,7 @@ export class MultiFundTransferComponent implements OnInit {
     this.selectedAccounts.forEach((element) => {
       let obj = { ...this.multiTransferForm.value };
       obj.creditAccount = element;
+      obj.uploadType = "MULTI";
       payload.push(obj);
     });
 
