@@ -121,12 +121,12 @@ export class PaymentDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private tokenStorageService: TokenStorageService
   ) {
-    // this.matIconRegistry.addSvgIcon(
-    //   "edit-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/edit_pen.svg"
-    //   )
-    // );
+    this.matIconRegistry.addSvgIcon(
+      "edit-icon",
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/edit_pen.svg"
+      )
+    );
     // this.matIconRegistry.addSvgIcon(
     //   "download-icon",
     //   this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -139,12 +139,12 @@ export class PaymentDetailsComponent implements OnInit {
     //     "assets/images/svg/share.svg"
     //   )
     // );
-    // this.matIconRegistry.addSvgIcon(
-    //   "info-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/info_yellow.svg"
-    //   )
-    // );
+    this.matIconRegistry.addSvgIcon(
+      "info-icon",
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/info_yellow.svg"
+      )
+    );
     // this.matIconRegistry.addSvgIcon(
     //   "fav-icon",
     //   this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -174,7 +174,7 @@ export class PaymentDetailsComponent implements OnInit {
     this.profileInfo = this.tokenStorageService.getUser();
   }
   done() {
-    this.router.navigate(["/dashboard"]);
+    this.router.navigate(["user/dashboard/home"]);
   }
   edit() {
     this.location.back();
