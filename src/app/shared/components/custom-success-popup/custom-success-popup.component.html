@@ -1,0 +1,58 @@
+<div class="sucessPopup">
+  <div fxLayout="column">
+    <div fxLayout="column">
+      <div class="alertText">{{ message }}</div>
+    </div>
+    <div class="alertImage">
+      <ng-container *ngIf="status; else error">
+        <ng-container *ngIf="status == 'rejected'; else showStatus">
+          <img class="summaryIcon" src="assets/images/failed.svg" alt="..." />
+        </ng-container>
+        <ng-template #showStatus>
+          <img
+            class="summaryIcon"
+            src="assets/images/success-logo.svg"
+            alt="..."
+          />
+        </ng-template>
+      </ng-container>
+      <ng-template #error>
+        <img class="summaryIcon" src="assets/images/error-icon.svg" alt="..."
+      /></ng-template>
+    </div>
+    <br />
+    <div
+      fxLayout="row"
+      style="display: flex; justify-content: center; padding-bottom: 10px"
+      *ngIf="referenceNo"
+    >
+      <div class="refrence_no_div">
+        <div class="refrence_no_innerDiv">
+          Reference No. : <span>{{ referenceNo }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayoutAlign="center center" class="btnClass">
+    <ng-container *ngIf="status; else ok">
+      <button
+        type="button"
+        mat-raised-button
+        class="saveButton done_btn"
+        (click)="done('Done')"
+      >
+        Done
+      </button></ng-container
+    >
+    <ng-template #ok>
+      <button
+        type="button"
+        mat-raised-button
+        class="saveButton done_btn"
+        (click)="done('Failed')"
+      >
+        Ok
+      </button></ng-template
+    >
+  </div>
+</div>

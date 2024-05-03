@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
-import { FilterBy } from 'app/shared/helpers/utils';
-import { DrawerConstant } from '../../new-reusable-components/custom-drawer/custom-drawer.constant';
-import { BgSummaryServiceService } from '../bg-summary/bg-summary-service.service';
-import { billProcessingConstants } from './bill-processing-summary.constants';
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { Router, ActivatedRoute } from "@angular/router";
+import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
+import { FilterBy } from "app/shared/helpers/utils";
+import { DrawerConstant } from "../../new-reusable-components/custom-drawer/custom-drawer.constant";
+import { BgSummaryServiceService } from "../bg-summary/bg-summary-service.service";
+import { billProcessingConstants } from "./bill-processing-summary.constants";
 
 @Component({
-  selector: 'app-bill-processing-summary',
-  templateUrl: './bill-processing-summary.component.html',
-  styleUrls: ['./bill-processing-summary.component.scss']
+  selector: "app-bill-processing-summary",
+  templateUrl: "./bill-processing-summary.component.html",
+  styleUrls: ["./bill-processing-summary.component.scss"],
 })
 export class BillProcessingSummaryComponent implements OnInit {
   @Input("bgType") bgType: any = "Bill Processing";
@@ -53,7 +53,7 @@ export class BillProcessingSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("bill processing");
-    
+
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.isSummary = true;
       this.bgType = params.get("type");
@@ -63,20 +63,21 @@ export class BillProcessingSummaryComponent implements OnInit {
   }
 
   getSummaryUrl() {
-  console.log(this.summaryDetails);
-  
+    console.log(this.summaryDetails);
+
     return new Promise((resolve, reject) => {
       if (this.summaryDetails) resolve("summary details found");
       else
         this.api.getSummaryUrls().subscribe((resp) => {
-      console.log(resp,this.bgType);
-      
+          console.log(resp, this.bgType);
+
           this.summaryDetails = resp.find(
             (element) => element.name === this.bgType
           );
           console.log(this.summaryDetails);
-          
-          this.columns = billProcessingConstants[this.summaryDetails.columnRefName];
+
+          this.columns =
+            billProcessingConstants[this.summaryDetails.columnRefName];
           this.cdr.detectChanges();
           console.log(this.summaryDetails);
           resolve("summary details found");
@@ -89,6 +90,8 @@ export class BillProcessingSummaryComponent implements OnInit {
   }
 
   getDataByPage(event) {
+    console.log(event);
+    
     this.getSummaryUrl().then((_) => {
       this.page = event.page;
       this.pageSize = event.size;
@@ -118,6 +121,8 @@ export class BillProcessingSummaryComponent implements OnInit {
    * @param event
    */
   openPopUp(event) {
+    console.log(event);
+    
     const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
@@ -159,7 +164,7 @@ export class BillProcessingSummaryComponent implements OnInit {
    */
   getDocumentAcceptanceType(template?) {
     console.log(this.summaryDetails);
-    
+
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
       queryParams: { type: this.summaryDetails.name },
     });

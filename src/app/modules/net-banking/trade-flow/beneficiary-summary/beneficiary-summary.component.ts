@@ -85,7 +85,7 @@ export class BeneficiarySummaryComponent implements OnInit {
       console.log(id?.id);
     }
     if (id === "bulk") {
-      this.route.navigate([`user/dashboard/bulk-upload`, "addNew"]);
+      this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);
     }
   }
 }

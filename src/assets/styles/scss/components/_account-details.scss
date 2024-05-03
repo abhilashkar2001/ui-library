@@ -1,0 +1,550 @@
+.documentuploadscreen {
+  padding: 0px 10px 0px 10px;
+}
+
+.Mandate {
+  .Select_add {
+    position: relative;
+
+    .selection_left {
+      overflow: visible;
+      position: relative;
+      right: -4px;
+      z-index: 5 !important;
+
+      .borderColor {
+        overflow: visible;
+        z-index: 1;
+        padding-bottom: 0px !important;
+
+        .label_input {
+          font-family: "Poppins";
+          font-weight: normal;
+          font-size: medium;
+          color: #102245 !important;
+          opacity: 70%;
+        }
+
+        .mat_selection mat-select-arrow {
+          margin: 4px 4px 0px 4px !important;
+
+          .option_font {
+            color: #000000;
+            opacity: 100%;
+            font: "medium", "Poppins";
+          }
+        }
+      }
+    }
+
+    .addbtndiv mat-icon {
+      background-color: #e9ecf5;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      height: 51px;
+      margin-top: 3px;
+      margin-left: -7px;
+    }
+
+    .addbtn {
+      // padding-left: 5px;
+      font-size: 38px;
+      color: #004c97;
+      cursor: pointer;
+      z-index: 0;
+      height: 83%;
+    }
+  }
+  @mixin styling {
+    display: flex;
+    justify-content: center;
+  }
+  margin-top: 25px;
+  max-height: 100%;
+  img:not(.mat-card-image) {
+    max-width: 85%;
+  }
+  ::ng-deep .mat-dialog-container {
+    border-radius: 12px;
+  }
+  .digsign {
+    color: white !important;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box !important;
+    border-radius: 23px !important;
+    color: #ffffff !important;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box !important;
+    border-radius: 23px !important;
+    font-size: 12px;
+    font-family: "Poppins";
+    // font-weight: 600 !important;
+    letter-spacing: 0px;
+    text-transform: capitalize;
+    width: 91px;
+  }
+  .upd {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    box-shadow: 3px 3px 15px #0000000f;
+    border-radius: 35px !important;
+    color: #004c97 !important;
+    font-size: 12px;
+    font-family: "Poppins";
+    font-weight: 600 !important;
+    letter-spacing: 0px;
+    width: 90px;
+  }
+  .button {
+    @include styling;
+    padding-top: 10px;
+  }
+  .forSignImg {
+    position: relative;
+    border: 3px solid #ffffff;
+    width: 225px;
+    background: #fffefe 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 15px #00000010;
+    border-radius: 12px;
+    height: 260px;
+  }
+  .signdig {
+    width: 219px;
+    height: 214px;
+    border-radius: 8px 8px 18px 18px;
+    background: #f3f3f3 0% 0% no-repeat padding-box;
+    @include styling;
+    align-items: center;
+    position: relative;
+  }
+  .initial {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    top: -6px;
+  }
+  .deletebtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 0px 11px;
+    color: #b20000;
+    cursor: pointer;
+    padding-top: 5px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+  }
+  .changeInput {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+  ::ng-deep .cdk-overlay-backdrop {
+    backdrop-filter: blur(3px);
+  }
+  .signiter {
+    margin-top: 35px !important;
+    color: #102245;
+    opacity: 0.5;
+    font-size: 14px;
+    font-family: "Poppins";
+    font-weight: 600;
+    letter-spacing: 0px;
+    text-transform: capitalize;
+  }
+  .image {
+    padding-top: 12px;
+  }
+}
+
+.fileUploaddesign {
+  background-color: #ffffff;
+  height: 50px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 15px #00000017;
+  position: relative;
+  margin-top: 4px;
+
+  .fileControl {
+    position: absolute;
+    top: 28%;
+    left: 6%;
+
+    .uploaded_file {
+      font-size: medium;
+      font-family: "Poppins";
+      color: #004a9a;
+      opacity: 100%;
+    }
+
+    .fileUploaded {
+      font: medium Poppins;
+      font-weight: bold;
+      color: #0b0b0b;
+      opacity: 70%;
+    }
+  }
+  .fileddown {
+    position: relative !important;
+    width: 368px !important;
+    top: 7px !important;
+  }
+
+  .chooseFile {
+    padding: 10px 10px;
+    font-family: Poppins;
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    position: absolute;
+    color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    top: 3px;
+    right: 4px;
+    width: 137px;
+    line-height: 1.7;
+
+    .hide_file {
+      position: absolute;
+      z-index: 1000;
+      opacity: 0;
+      cursor: pointer;
+      right: 0;
+      top: 0;
+      height: 100%;
+      font-size: 24px;
+      width: 100%;
+      color: #004a9a !important;
+    }
+  }
+}
+
+.plusdiv mat-icon {
+  width: 31px !important;
+  background-color: #e9ecf5;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-left: -11px;
+  height: 50px;
+  &.doc_upload_icon {
+    margin-left: -2px !important;
+  }
+}
+
+.proofOfAddress {
+  align-items: center !important;
+  padding: 10px;
+}
+
+.account-details {
+  .info-card {
+    background: #f7f7f7 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 10px #00000000 !important;
+    border: 1px solid #b7b5b56e;
+    border-radius: 8px;
+    opacity: 1;
+    margin: 0px !important;
+  }
+
+  .headings {
+    font-family: Poppins, sans-serif;
+    font-size: 15px;
+    color: #004c97;
+    font-weight: 600;
+  }
+
+  .valueData {
+    color: #102245;
+    font-size: 12px;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+  }
+  .customer-button {
+    width: 206px;
+    height: 40px;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    border-radius: 23px;
+    color: #fff;
+    opacity: 1;
+    margin-right: 10px;
+  }
+  .cardAlignMargin {
+    margin: 0.75rem;
+  }
+  .deleteButton {
+    width: 154px;
+    height: 49px;
+    background: #fff;
+    border-radius: 23px;
+    color: #b20000;
+    opacity: 1;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+}
+
+.biometric-card-expansion-panel {
+  border-radius: 12px !important;
+  .upper-biometric-card {
+    padding: 0px 28px 0px 28px;
+    .biometric-card {
+      margin: 0px;
+      padding: 2px !important;
+      border-radius: 12px !important;
+
+      .card-top-section {
+        background-color: #f3f3f3;
+        border-radius: 10px;
+      }
+
+      .success-icon {
+        color: green;
+        cursor: pointer;
+        padding-left: 5px;
+      }
+
+      .deleteDiv {
+        height: 32px;
+        width: 34px;
+        background-color: white;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 5px;
+      }
+
+      .deleteBtn {
+        color: red;
+        cursor: pointer;
+      }
+
+      .deleteBtnDisabled {
+        color: gray;
+      }
+
+      .insertDriveImg {
+        color: rgb(69, 110, 254);
+        display: block;
+        margin: auto;
+        width: 170px;
+        height: 108px;
+        text-align: center;
+        opacity: 1;
+      }
+
+      .card-icon {
+        height: 58.34px;
+        width: 58.34px;
+      }
+
+      .scanned-img {
+        max-width: 92% !important;
+        padding-top: 15px;
+        max-height: 118px;
+      }
+
+      .title-label {
+        color: gray;
+        font-family: Manrope;
+      }
+
+      .dived {
+        padding-top: 15px;
+        font-size: 14px;
+        color: #051a2d;
+        text-align: center;
+      }
+
+      .scan-title {
+        display: flex;
+        height: 30px;
+        padding: 10px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+      }
+
+      .scan-btn {
+        display: inline-block;
+        color: #004c97;
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@mixin styling {
+  display: flex;
+  justify-content: center;
+}
+
+img:not(.mat-card-image) {
+  max-width: 85%;
+}
+
+.digsign {
+  color: white !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box !important;
+  border-radius: 23px !important;
+  color: #ffffff !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box !important;
+  border-radius: 23px !important;
+  font-size: 12px;
+  font-family: "Poppins";
+  // font-weight: 600 !important;
+  letter-spacing: 0px;
+  text-transform: capitalize;
+  width: 91px;
+}
+.upd {
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  box-shadow: 3px 3px 15px #0000000f;
+  border-radius: 35px !important;
+  color: #004c97 !important;
+  font-size: 12px;
+  font-family: "Poppins";
+  font-weight: 600 !important;
+  letter-spacing: 0px;
+  width: 90px;
+}
+.button {
+  @include styling;
+  padding-top: 10px;
+}
+
+.signdig {
+  width: 167px;
+  height: 174px;
+  border-radius: 8px 8px 18px 18px;
+  background: #f3f3f3 0% 0% no-repeat padding-box;
+  @include styling;
+  align-items: center;
+  position: relative;
+}
+.deletebtn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 0px 11px;
+  color: #b20000;
+  cursor: pointer;
+  padding-top: 5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+}
+.changeInput {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 15px;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.signiter {
+  margin-top: 35px !important;
+  color: #102245;
+  opacity: 0.5;
+  font-size: 14px;
+  font-family: "Poppins";
+  font-weight: 600;
+  letter-spacing: 0px;
+  text-transform: capitalize;
+}
+.image {
+  padding-top: 12px;
+}
+
+.pepClass {
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000017;
+  border-radius: 8px;
+  opacity: 1;
+  min-height: 50px;
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #b4b4b4;
+  cursor: pointer;
+}
+
+.pep-icon {
+  position: relative;
+  width: 50px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.pep-label {
+  width: calc(100% - 50px);
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.backgroundClass {
+  background: #f3f3f3;
+  border-radius: 12px;
+}
+
+.actionSelected {
+  color: #1d5286 !important;
+}
+
+.actionIcon {
+  font: medium "Poppins";
+  color: #b4b4b4;
+  height: 50px;
+  border-radius: 8px !important;
+  cursor: pointer;
+}
+
+.verification_card {
+  display: flex !important;
+  align-items: center;
+  padding-top: 16px !important;
+  span {
+    width: 80%;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+  }
+}
+
+.searchBox {
+  width: 55%;
+}
+
+.pep-main {
+  margin-top: 10px;
+}

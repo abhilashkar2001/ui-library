@@ -1,4 +1,8 @@
 <div style="position: relative">
   <app-sub-nav-bar></app-sub-nav-bar>
-  <router-outlet></router-outlet>
+  <!-- <div style="padding: 90px 4%"> -->
+  <div [ngClass]="skipPadding ? 'inner-container-2' : 'inner-container-1'">
+    <router-outlet></router-outlet>
+  </div>
+  <!-- </div> -->
 </div>

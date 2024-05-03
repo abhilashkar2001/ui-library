@@ -57,6 +57,7 @@ export class SigninComponent implements OnInit {
 
   submit() {
     let payload = this.signinForm.value;
+    this.tokenService.setCorporateId(payload?.corporateId);
     this.loginService.corporateLogin(payload).subscribe((res: any) => {
       if (res?.status == 200) {
         this.authType = "otp";

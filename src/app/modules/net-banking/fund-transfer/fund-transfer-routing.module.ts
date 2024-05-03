@@ -4,6 +4,7 @@ import { FundTransferComponent } from "./fund-transfer/fund-transfer.component";
 import { SingleFundTransferComponent } from "./single-fund-transfer/single-fund-transfer.component";
 import { MultiFundTransferComponent } from "./multi-fund-transfer/multi-fund-transfer.component";
 import { CreditCardPaymentComponent } from "./credit-card-payment/credit-card-payment.component";
+import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-transfer-summary.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
     redirectTo: "home",
   },
   { path: "home", component: FundTransferComponent },
+  {
+    path: "fund-transfer-summary",
+    component: FundTransferSummaryComponent,
+  },
   {
     path: "single",
     component: SingleFundTransferComponent,

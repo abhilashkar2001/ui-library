@@ -53,9 +53,8 @@ export class StopChequeComponent implements OnInit {
       to: [""],
       reason: [""],
     });
-    const selectedAccountNo = JSON?.parse(
-      sessionStorage.getItem("selectAccNo")
-    );
+    const selectedAccountNo = sessionStorage.getItem("selectAccNo");
+
     if (selectedAccountNo) {
       this.stopChequeForm.get("accountNo").setValue(selectedAccountNo);
       this.handleAccountNumberChange(selectedAccountNo);
@@ -68,6 +67,10 @@ export class StopChequeComponent implements OnInit {
       (acc) => acc?.accountNo == event
     );
     this.currencyCode = accDetails?.accountCurrency;
+  }
+
+  goBack() {
+    this.router.navigate(["/user/dashboard/home"]);
   }
 
   stopCheque() {

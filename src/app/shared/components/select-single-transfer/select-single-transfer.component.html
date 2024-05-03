@@ -1,0 +1,43 @@
+<div fxFlex="100" fxLayout="column" class="new-popup">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="titleMainDiv">
+    <div class="title-div">
+      <span>Single Transfer</span>
+      <!-- <ng-template #showTemplate>Template Name</ng-template> -->
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="center">
+    <div class="verification-card">
+      <div fxLayout="row" class="full-width mb-12 p-0">
+        <div
+          fxFlex="50"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          class="customer-type"
+          [ngClass]="{ 'customer-type-selected': checkToggle }"
+          (click)="customerToggle(true)"
+        >
+          <div>Benificiary Payment</div>
+        </div>
+        <div
+          fxFlex="50"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          class="customer-type"
+          [ngClass]="{ 'customer-type-selected': !checkToggle }"
+          (click)="customerToggle(false)"
+        >
+          <div>Credit Card</div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <button mat-raised-button class="submit-button" (click)="onSubmit()">
+          <span> Submit</span>
+        </button>
+        <button mat-raised-button class="back-button" (click)="onBack()">
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -137,11 +137,6 @@ export class bgConstant {
       header: "Invoice No",
       cell: (element: any) => element.invoiceNo,
     },
-    // {
-    //   columnDef: "submittedOn",
-    //   header: "Submitted on",
-    //   cell: (element: any) => element.submittedOn,
-    // },
     {
       columnDef: "lcOpenDate",
       header: "LC Open Date",

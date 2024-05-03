@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-net-banking-home",
@@ -7,7 +10,9 @@ import { FormGroup } from "@angular/forms";
   styleUrls: ["./net-banking-home.component.scss"],
 })
 export class NetBankingHomeComponent implements OnInit {
+  private routerEventSub: Subscription;
   genericScreenName: any = "Pending for approval";
+  skipPadding: boolean;
   columns = [
     {
       columnDef: "version",
@@ -52,8 +57,19 @@ export class NetBankingHomeComponent implements OnInit {
       link: "/summary",
     },
   ];
+  layout: any;
 
-  constructor() {}
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.routerEventSub = router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((routeChange: NavigationEnd) => {
+        if (routeChange.url.includes("trade")) {
+          this.skipPadding = true;
+        } else {
+          this.skipPadding = false;
+        }
+      });
+  }
 
   ngOnInit(): void {}
 }
