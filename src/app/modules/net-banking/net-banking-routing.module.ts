@@ -20,6 +20,8 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
+import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
+import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 
 const routes: Routes = [
   {
@@ -73,12 +75,20 @@ const routes: Routes = [
             component: GenericRemittanceComponent,
           },
           {
+            path: "document-acceptance",
+            component: DocumentAcceptanceComponent,
+          },
+          {
             path: "remittance-summery",
             component: RemittanceSummeryComponent,
           },
           {
             path: "bgSummary",
             component: BgSummaryComponent,
+          },
+          {
+            path: "bill-processing",
+            component: BillProcessingSummaryComponent,
           },
         ],
       },

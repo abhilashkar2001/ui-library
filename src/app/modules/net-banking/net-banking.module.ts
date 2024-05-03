@@ -45,6 +45,12 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
+import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
+import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficiary-details/beneficiary-details.component';
+import { RemittanceDetailsComponent } from './new-reusable-components/remittance-details/remittance-details.component';
+import { OrdersInfoComponent } from './new-reusable-components/orders-info/orders-info.component';
+import { BillDocumentsComponent } from './new-reusable-components/bill-documents/bill-documents.component';
 
 
 @NgModule({
@@ -85,6 +91,12 @@ import { RemittanceInfoComponent } from './new-reusable-components/remittance-in
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    BillProcessingSummaryComponent,
+    DocumentAcceptanceComponent,
+    BeneficiaryDetailsComponent,
+    RemittanceDetailsComponent,
+    OrdersInfoComponent,
+    BillDocumentsComponent,
   ],
   imports: [
     CommonModule,

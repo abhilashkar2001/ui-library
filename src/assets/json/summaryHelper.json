@@ -68,5 +68,12 @@
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/generic-remitance",
     "columnRefName": "REMITTANCE"
+  },
+  {
+    "name": "Document Acceptance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/document-acceptance",
+    "columnRefName": "BILL_SUMMARY"
   }
 ]
