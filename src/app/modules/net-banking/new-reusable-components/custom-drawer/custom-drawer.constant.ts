@@ -93,7 +93,11 @@ export class DrawerConstant {
             },
           ],
         },
-        { name: "BUYERS CREDIT", path: "", roleName: "child-node" },
+        {
+          name: "BUYERS CREDIT",
+          path: "buyer-credit-summery",
+          roleName: "child-node",
+        },
         {
           name: "EXPORT BILL DISPATCH",
           path: "export-bill-dispatch-summary",
@@ -104,7 +108,7 @@ export class DrawerConstant {
           path: "ExportSWBillLodgementSummary",
           roleName: "child-node",
         },
-        { name: "EEFC", path: "", roleName: "child-node" },
+        { name: "EEFC", path: "eefc-summary", roleName: "child-node" },
       ],
     },
     {

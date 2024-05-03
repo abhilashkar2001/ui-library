@@ -150,10 +150,6 @@ const routes: Routes = [
             path: "add-export",
             component: AddExportSwBillComponent,
           },
-          {
-            path: "bill-processing",
-            component: BillProcessingSummaryComponent,
-          },
         ],
       },
       {
