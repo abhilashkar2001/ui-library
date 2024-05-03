@@ -90,9 +90,9 @@ export class ExportSWBillLodgementComponent implements OnInit {
    * @param event
    */
   openPopUp(event) {
-    this.goToRemittance()
+    this.goToBillLodgement()
   }
-  goToRemittance(){
+  goToBillLodgement(){
     console.log(this.summaryDetails);
     
     this.route.navigate([`${this.summaryDetails.addNewPath}`],{
