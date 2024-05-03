@@ -3,6 +3,10 @@ import { AmendmentLcInfoComponent } from "./new-reusable-components/amendment-lc
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { ExportApplicationDetailsComponent } from "./new-reusable-components/export-application-details/export-application-details.component";
+import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
+import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
+import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -162,30 +166,57 @@ export class tabsClass {
     },
   ];
 
-  public static readonly Remittance:any[] = [
+  public static readonly Remittance: any[] = [
     {
       id: 1,
       title: "Applicant Info",
       type: "Remittamce_Applicant_Info",
-      componrnt: ApplicantsInfoComponent
+      componrnt: ApplicantsInfoComponent,
     },
     {
       id: 2,
       title: "Remittance Info",
       type: "Remittamce_Remittance_Info",
-      componrnt: RemittanceInfoComponent
+      componrnt: RemittanceInfoComponent,
     },
     {
       id: 3,
       title: "Other Info",
       type: "Remittamce_Other_Info",
-      componrnt: OthersInfoComponent
+      componrnt: OthersInfoComponent,
     },
     {
       id: 4,
       title: "Attachments",
       type: "Remittamce_Attachments",
-      componrnt: AttachmentsComponent
+      componrnt: AttachmentsComponent,
     },
-  ]
+  ];
+
+  public static readonly exportProcess: any[] = [
+    {
+      id: 1,
+      title: "Applicant Details",
+      type: "Pre_Shipment_Applicant_Details",
+      componrnt: ExportApplicationDetailsComponent,
+    },
+    {
+      id: 2,
+      title: "Loan Details",
+      type: "Pre_Shipment_Loan_Details",
+      componrnt: ExportLoanDetailsComponent,
+    },
+    {
+      id: 3,
+      title: "LC/Other Details",
+      type: "Pre_Shipment_LC/Other_Details",
+      componrnt: ExportLcDetailsComponent,
+    },
+    {
+      id: 4,
+      title: "Attachments",
+      type: "Pre_Shipment_Attachments",
+      componrnt: ExportAttachmentsComponent,
+    },
+  ];
 }

@@ -45,6 +45,12 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+import { PreShipmentLPSummaryComponent } from './trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component';
+import { ExportProcessInfoComponent } from './new-reusable-components/export-process-info/export-process-info.component';
+import { ExportApplicationDetailsComponent } from './new-reusable-components/export-application-details/export-application-details.component';
+import { ExportLoanDetailsComponent } from './new-reusable-components/export-loan-details/export-loan-details.component';
+import { ExportAttachmentsComponent } from './new-reusable-components/export-attachments/export-attachments.component';
+import { ExportLcDetailsComponent } from './new-reusable-components/export-lc-details/export-lc-details.component';
 
 
 @NgModule({
@@ -85,6 +91,12 @@ import { RemittanceInfoComponent } from './new-reusable-components/remittance-in
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    PreShipmentLPSummaryComponent,
+    ExportProcessInfoComponent,
+    ExportApplicationDetailsComponent,
+    ExportLoanDetailsComponent,
+    ExportAttachmentsComponent,
+    ExportLcDetailsComponent,
   ],
   imports: [
     CommonModule,

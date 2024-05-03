@@ -20,6 +20,8 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
+import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
+import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
 
 const routes: Routes = [
   {
@@ -80,6 +82,14 @@ const routes: Routes = [
             path: "bgSummary",
             component: BgSummaryComponent,
           },
+          {
+            path: "export-process-summery",
+            component: PreShipmentLPSummaryComponent,
+          },
+          {
+            path: "export-process-tabs",
+            component: ExportProcessInfoComponent,
+          },
         ],
       },
       {
@@ -106,4 +116,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule { }
+export class NetBankingRoutingModule {}

@@ -58,9 +58,25 @@ export class DrawerConstant {
             },
           ],
         },
-        { name: "REMITTANCE", path: "remittance-summery", roleName: "child-node" },
+        {
+          name: "REMITTANCE",
+          path: "remittance-summery",
+          roleName: "child-node",
+        },
         { name: "BILLS PROCESSING", path: "", roleName: "child-node" },
-        { name: "EXPORTS PROCESSING", path: "", roleName: "child-node" },
+        {
+          name: "EXPORTS PROCESSING",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "Pre-shipment Loan Process",
+              path: "export-process-summery",
+              id: "Pre-shipment Loan Process",
+              summaryUrl: "",
+            },
+          ],
+        },
         { name: "BUYERS CREDIT", path: "", roleName: "child-node" },
         { name: "EXPORT BILL DISPATCH", path: "", roleName: "child-node" },
         { name: "EXPORT S/W BILL LODGEMENT", path: "", roleName: "child-node" },
