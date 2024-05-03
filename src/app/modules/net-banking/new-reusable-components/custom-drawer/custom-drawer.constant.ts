@@ -99,7 +99,6 @@ export class DrawerConstant {
           path: "export-bill-dispatch-summary",
           roleName: "child-node",
         },
-
         {
           name: "Export SW Bill Lodgement",
           path: "ExportSWBillLodgementSummary",

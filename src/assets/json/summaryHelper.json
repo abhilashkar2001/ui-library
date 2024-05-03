@@ -91,6 +91,13 @@
     "columnRefName": "BILL_SUMMARY"
   },
   {
+    "name": "Payment Request Enquiry",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/payment-request-enquiry",
+    "columnRefName": "BILL_SUMMARY"
+  },
+  {
     "name": "Buyers Credit",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",

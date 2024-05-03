@@ -337,4 +337,30 @@ export class tabsClass {
       componrnt: BillDocumentsComponent,
     },
   ];
+  public static readonly paymentrequestenquiry:any[] = [
+    {
+      id: 1,
+      title: "Beneficiary Details",
+      type: "Document_Acceptance_Info",
+      componrnt: BeneficiaryDetailsComponent
+    },
+    {
+      id: 2,
+      title: "Remittance Details",
+      type: "Remittamce_Details",
+      componrnt: RemittanceDetailsComponent
+    },
+    {
+      id: 3,
+      title: "Order Info",
+      type: "Remittamce_Order_Info",
+      componrnt: OrdersInfoComponent
+    },
+    {
+      id: 4,
+      title: "Document",
+      type: "Remittamce_Attachments",
+      componrnt: BillDocumentsComponent
+    },
+  ];
 }
