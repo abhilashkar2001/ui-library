@@ -167,7 +167,7 @@ export class NetBankingDashboardComponent implements OnInit {
   }
   getDataByPage() {
     this.netBankingService
-      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking")
+      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking", "CREATED")
       .subscribe((res: any) => {
         this.dummyResponse = res?.data?.slice(0, 3);
       });
