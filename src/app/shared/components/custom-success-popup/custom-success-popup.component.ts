@@ -17,6 +17,7 @@ export class CustomSuccessPopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.data);
     if (this.data) {
       this.message = this.data.msg;
       this.status = this.data.status;

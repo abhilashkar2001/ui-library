@@ -172,7 +172,8 @@ export class AddBulkUploadComponent implements OnInit {
                 };
                 this.api.updateRemark(obj).subscribe((response) => {
                   if (response?.statusCode === 200)
-                    this.openSuccessDialog(resp);
+                    // this.openSuccessDialog(resp);
+                    this.callSuccessPopup(this.actionType, response?.data);
                 });
               }
             }
@@ -246,10 +247,24 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   callSuccessPopup(res, reffNo?) {
-    let data =
+    console.log(res);
+    let data;
+    data =
       res == "success"
         ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
-        : { msg: "Uploaded Failed", status: false };
+        : res == "failed"
+        ? { msg: "Uploaded Failed", status: false }
+        : "";
+    data =
+      res == "Authorize"
+        ? {
+            msg: "Approved Successfully",
+            status: true,
+            reffNo: reffNo?.reffNo,
+          }
+        : res == "Reject"
+        ? { msg: "Rejected Successfully", status: "rejected" }
+        : data;
     let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
       data: data,
       width: "40%",
