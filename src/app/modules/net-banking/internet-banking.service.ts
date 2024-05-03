@@ -42,7 +42,9 @@ export class InternetBankingService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?module=${moduleName}&${pagination}`;
-    return this.http.get(`${MICROSERVICE_URL}/corporate-net-banking${payload}`);
+    return this.http.get(
+      `${MICROSERVICE_URL}/corporate-net-banking${payload}&status=CREATED&uploadType=BULK`
+    );
   }
 
   fetchAccountDetails(mobileNo: string) {
