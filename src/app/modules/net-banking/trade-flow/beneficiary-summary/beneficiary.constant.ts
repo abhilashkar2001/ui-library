@@ -1,19 +1,19 @@
 export class beneficiaryConstant {
   static readonly BENEFICIARY_SUMMARY = [
     {
-      columnDef: "payeeName",
+      columnDef: "name",
       header: "Name",
-      cell: (element: any) => element.payeeName,
+      cell: (element: any) => element.name,
     },
     {
-      columnDef: "accountNumber",
+      columnDef: "accountNo",
       header: "Account Number",
-      cell: (element: any) => element.accountNumber,
+      cell: (element: any) => element.accountNo,
     },
     {
-      columnDef: "account",
+      columnDef: "accountType",
       header: "Account",
-      cell: (element: any) => element.account,
+      cell: (element: any) => element.accountType,
     },
     {
       columnDef: "countryName",
@@ -31,9 +31,10 @@ export class beneficiaryConstant {
       cell: (element: any) => element.created,
     },
     {
-      columnDef: "enableAndDisable",
+      columnDef: "beneficiaryStatus",
       header: "Enable/Disable",
-      cell: (element: any) => element.enableAndDisable,
+      cell: (element: any) =>
+        element.beneficiaryStatus ? "Enable" : "Disable",
     },
   ];
 }

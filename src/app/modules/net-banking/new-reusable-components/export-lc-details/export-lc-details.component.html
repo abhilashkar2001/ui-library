@@ -1,0 +1,25 @@
+<mat-card>
+  <div fxLayout="column">
+    <div fxFlex="100" fxFlex.gt-xs="24" fxLayoutAlign="start center">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Expected Date Of Shipment</mat-label>
+        <input matInput type="text" />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>
+            <img src="/assets/images/calendar.png" class="pb-25" />
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxLayoutAlign="start center">
+      <mat-checkbox>LC/Order Detail</mat-checkbox>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <mat-form-field>
+        <mat-label>FOB value</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-card>
