@@ -30,6 +30,11 @@ export class NETBANKING {
           image: "/assets/images/adhoc-payment.svg",
           route: "user/dashboard/cheque/home/chequebook-request",
         },
+        {
+          label: "Salary Account",
+          image: "/assets/images/adhoc-payment.svg",
+          route: "user/dashboard/salary-account",
+        },
       ],
     },
     {

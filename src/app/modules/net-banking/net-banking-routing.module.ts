@@ -20,14 +20,8 @@ import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-
 import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component";
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
-
 import { EefcComponent } from "./trade-flow/eefc/eefc.component";
 import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
-
-import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
-import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
-
-
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
 import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
@@ -38,6 +32,8 @@ import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-b
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
+import { SalaryAccountComponent } from "./new-reusable-components/salary-account/salary-account.component";
+import { AddSalaryAccountComponent } from "./new-reusable-components/salary-account/add-salary-account/add-salary-account.component";
 
 const routes: Routes = [
   {
@@ -126,11 +122,12 @@ const routes: Routes = [
           {
             path: "add-edit-eefc",
             component: AddNewEefcComponent,
-
+          },{
             path: "bill-processing",
             component: BillProcessingSummaryComponent,
 
           },
+          {
             path: "ExportSWBillLodgementSummary",
             component: ExportSWBillLodgementComponent,
           },
@@ -141,8 +138,12 @@ const routes: Routes = [
           {
             path: "bill-processing",
             component: BillProcessingSummaryComponent,
-          }
+          },
         ],
+      },
+      {
+        path: "salary-account",
+        component: SalaryAccountComponent,
       },
       {
         path: "bulk-upload",
@@ -155,6 +156,10 @@ const routes: Routes = [
       {
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
+      },
+      {
+        path: "add-salary",
+        component: AddSalaryAccountComponent,
       },
       {
         path: "fund-transfer",

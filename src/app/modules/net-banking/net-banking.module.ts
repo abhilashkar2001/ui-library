@@ -72,6 +72,8 @@ import { GenericBuyerCreditComponent } from './new-reusable-components/generic-b
 import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
 import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
 import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+import { SalaryAccountComponent } from './new-reusable-components/salary-account/salary-account.component';
+import { AddSalaryAccountComponent } from './new-reusable-components/salary-account/add-salary-account/add-salary-account.component';
 
 
 
@@ -120,16 +122,11 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     BillSectionBComponent,
     BillSectionCValuesComponent,
     BillAttachmentsComponent,
-
-
     EefcComponent,
     AddNewEefcComponent,
-
     ExportBillDispatchSummaryComponent,
     TransactionDetailsComponent,
     DispatchDocumentsComponent,
-
-
     BillProcessingSummaryComponent,
     DocumentAcceptanceComponent,
     BeneficiaryDetailsComponent,
@@ -141,6 +138,8 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     CustomerInfoComponent,
     SupplierInfoComponent,
     CreditInfoComponent,
+    SalaryAccountComponent,
+    AddSalaryAccountComponent,
 
   ],
   imports: [
@@ -155,6 +154,6 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     MatMenuModule,
     MatToolbarModule,
     LayoutsModule,
-  ],
+    ],
 })
 export class NetBankingModule {}
