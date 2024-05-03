@@ -50,14 +50,12 @@ export class BulkUploadComponent implements OnInit {
     this.route.navigate(["user/dashboard/bulk-upload", id]);
   }
 
-  bulkUpload() {
-    this.navigateToBulkUpload("addNew");
+  customEditForm(event) {
+    console.log(event);
+
+    this.navigateToBulkUpload(event?.element?.id || "addNew");
   }
-  // editRecord(element) {
-  //   console.log(element);
-  //   // update id correctly once api works,
-  //   this.navigateToBulkUpload(element.element.id);
-  // }
+
   getDataByPage(event) {
     this.page = event.page;
     this.pageSize = event.size;

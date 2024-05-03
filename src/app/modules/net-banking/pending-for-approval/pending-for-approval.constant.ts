@@ -53,9 +53,9 @@ export class PendingForApprovalConstant {
       cell: (element: any) => `${element?.lastUpdatedBy}`,
     },
     {
-      columnDef: "templateName",
+      columnDef: "fileName",
       header: "File Name",
-      cell: (element: any) => `${element?.templateName}`,
+      cell: (element: any) => `${element?.fileName}`,
     },
     {
       columnDef: "status",
@@ -64,7 +64,7 @@ export class PendingForApprovalConstant {
         let pendingCount = 0;
         let approvedCount = 0;
         let rejectedCount = 0;
-        element.coprateNetBankingBulkUploadInfo.forEach((element) => {
+        element.corpFundDetails.forEach((element) => {
           switch (element.uploadstatus) {
             case null:
             case "PENDING":
@@ -78,15 +78,11 @@ export class PendingForApprovalConstant {
               break;
           }
         });
-        if (pendingCount === element.coprateNetBankingBulkUploadInfo.length) {
+        if (pendingCount === element.corpFundDetails.length) {
           return "Pending";
-        } else if (
-          approvedCount === element.coprateNetBankingBulkUploadInfo.length
-        ) {
+        } else if (approvedCount === element.corpFundDetails.length) {
           return "Approved";
-        } else if (
-          rejectedCount === element.coprateNetBankingBulkUploadInfo.length
-        ) {
+        } else if (rejectedCount === element.corpFundDetails.length) {
           return "Rejected";
         } else {
           return "Pending";

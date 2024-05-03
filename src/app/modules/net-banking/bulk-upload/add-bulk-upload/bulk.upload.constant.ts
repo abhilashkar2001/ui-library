@@ -1,9 +1,9 @@
 export class BulkUploadConstant {
   static readonly GENERIC_COLUMNS = [
     {
-      columnDef: "icustReffNo",
+      columnDef: "icustRefNo",
       header: "Ref No.",
-      cell: (element: any) => element.icustReffNo,
+      cell: (element: any) => element.icustRefNo,
     },
     {
       columnDef: "uploadstatus",
@@ -21,14 +21,14 @@ export class BulkUploadConstant {
       },
     },
     {
-      columnDef: "soucrceAccount",
+      columnDef: "debitAccount",
       header: "Soucrce Account",
-      cell: (element: any) => element.sourceAccount,
+      cell: (element: any) => element.debitAccount,
     },
     {
-      columnDef: "destinationAccount",
+      columnDef: "creditAccount",
       header: "Destination Account",
-      cell: (element: any) => `${element?.destinationAccount}`,
+      cell: (element: any) => `${element?.creditAccount}`,
     },
     {
       columnDef: "customerName",
@@ -46,14 +46,14 @@ export class BulkUploadConstant {
       cell: (element: any) => `${element?.transferType}`,
     },
     {
-      columnDef: "ifcsCode",
+      columnDef: "ifscCode",
       header: "IFSC Code",
-      cell: (element: any) => `${element?.ifcsCode}`,
+      cell: (element: any) => `${element?.ifscCode}`,
     },
     {
-      columnDef: "transactionAmount",
+      columnDef: "debitAmount",
       header: "Ammount",
-      cell: (element: any) => `${element?.transactionAmount}`,
+      cell: (element: any) => `${element?.debitAmount}`,
     },
   ];
 

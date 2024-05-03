@@ -28,11 +28,11 @@ const routes: Routes = [
         path: "stop-cheque",
         component: StopChequeComponent,
       },
-      {
-        path: "payment-summary",
-        component: PaymentPageComponent,
-      },
     ],
+  },
+  {
+    path: "payment-summary",
+    component: PaymentPageComponent,
   },
 ];
 

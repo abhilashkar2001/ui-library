@@ -12,7 +12,7 @@ import { ChequeService } from "../cheque-service";
 export class ChequebookRequestComponent implements OnInit {
   chequebookRequestForm: FormGroup;
   customerInfo: any;
-  accountNumberList: any[] = [{ accountNo: "000037560025" }];
+  accountNumberList: any[] = [];
   selectedAccInfo: any;
 
   chequeNumber: any;
@@ -55,9 +55,9 @@ export class ChequebookRequestComponent implements OnInit {
     const custInfo = sessionStorage.getItem("customer-Info");
     this.customerInfo = JSON.parse(custInfo);
 
-    // this.accountNumberList = JSON.parse(
-    //   sessionStorage.getItem("listOfAccounts")
-    // );
+    this.accountNumberList = JSON.parse(
+      sessionStorage.getItem("listOfAccounts")
+    );
   }
   buildRequestForm() {
     this.chequebookRequestForm = this.fb.group({
@@ -75,11 +75,13 @@ export class ChequebookRequestComponent implements OnInit {
       pin: [""],
     });
 
-    // const selectedAccountNo = this.sessionStorageService.getSelectedAccountNo();
-    // if (selectedAccountNo) {
-    //   this.chequebookRequestForm.get("accountNo").setValue(selectedAccountNo);
-    //   this.handleAccountNumberChange(selectedAccountNo);
-    // }
+    const selectedAccountNo = JSON?.parse(
+      sessionStorage.getItem("selectAccNo")
+    );
+    if (selectedAccountNo) {
+      this.chequebookRequestForm.get("accountNo").setValue(selectedAccountNo);
+      this.handleAccountNumberChange(selectedAccountNo);
+    }
   }
 
   handleAccountNumberChange(event) {
@@ -226,7 +228,7 @@ export class ChequebookRequestComponent implements OnInit {
           (revPayload) => this.accountService.auditLogRevisions(revPayload)
         );
 
-        this.router.navigate(["user/dashboard/cheque/home/payment-summary"]);
+        this.router.navigate(["user/dashboard/cheque/payment-summary"]);
       },
       (err) => {
         console.error("Error: ", err);

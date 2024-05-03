@@ -45,6 +45,12 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+import { ExportSWBillLodgementComponent } from './trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component';
+import { AddExportSwBillComponent } from './trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component';
+import { BillSectionAComponent } from './new-reusable-components/bill-section-a/bill-section-a.component';
+import { BillSectionBComponent } from './new-reusable-components/bill-section-b/bill-section-b.component';
+import { BillSectionCValuesComponent } from './new-reusable-components/bill-section-c-values/bill-section-c-values.component';
+import { BillAttachmentsComponent } from './new-reusable-components/bill-attachments/bill-attachments.component';
 
 
 import { EefcComponent } from './trade-flow/eefc/eefc.component';
@@ -108,6 +114,12 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+    ExportSWBillLodgementComponent,
+    AddExportSwBillComponent,
+    BillSectionAComponent,
+    BillSectionBComponent,
+    BillSectionCValuesComponent,
+    BillAttachmentsComponent,
 
 
     EefcComponent,

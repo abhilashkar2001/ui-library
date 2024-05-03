@@ -21,7 +21,6 @@ import { BgSummaryComponent } from "./trade-flow/bg-summary/bg-summary.component
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 
-
 import { EefcComponent } from "./trade-flow/eefc/eefc.component";
 import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
 
@@ -29,12 +28,16 @@ import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dis
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 
 
+import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
+import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 
 const routes: Routes = [
   {
@@ -128,6 +131,17 @@ const routes: Routes = [
             component: BillProcessingSummaryComponent,
 
           },
+            path: "ExportSWBillLodgementSummary",
+            component: ExportSWBillLodgementComponent,
+          },
+          {
+            path: "add-export",
+            component: AddExportSwBillComponent,
+          },
+          {
+            path: "bill-processing",
+            component: BillProcessingSummaryComponent,
+          }
         ],
       },
       {

@@ -8,18 +8,18 @@ import { environment } from "environments/environment";
 export class BulkUploadServiceService {
   basePath = environment.microServiceURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   processBulkTransaction(payload) {
     return this.http.post<any>(
-      `${this.basePath}/corporate-net-banking/approve-fund-transfer-bulk-upload-data`,
+      `${this.basePath}/corporate-net-banking/approve-fund-transfer`,
       payload
     );
   }
 
-  getLevelApprovalStatus(bulkTransactionId) {
+  getLevelApprovalStatus(bulkTransactionId, className: string) {
     return this.http.get<any>(
-      `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=IcCoprateNetBankingBulkUpload&id=${bulkTransactionId}`
+      `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=${className}&id=${bulkTransactionId}`
     );
   }
 

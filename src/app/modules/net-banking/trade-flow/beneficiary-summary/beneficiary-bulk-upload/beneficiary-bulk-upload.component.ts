@@ -64,7 +64,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private commonService: CommonService,
     private benificiaryService: BeneficiaryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     console.log();
@@ -80,7 +80,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   // tansactionAction() {
   //   this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
-  //     const data = resp.data[0].coprateNetBankingBulkUploadInfo;
+  //     const data = resp.data[0].corpFundDetails;
   //     this.isTransactionActionDone =
   //       data.every((item) => item.uploadstatus === "APPROVED") ||
   //       data.every((item) => item.uploadstatus === "REJECTED");
@@ -99,12 +99,14 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   // }
 
   getBulkUploadDetailsById(filter) {
-    this.benificiaryService.getBulkUploadRecords(this.referenceNo, filter).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.bulkUploadDetails = resp;
-        this.auditLogObject = resp.data[0];
-      }
-    });
+    this.benificiaryService
+      .getBulkUploadRecords(this.referenceNo, filter)
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.bulkUploadDetails = resp;
+          this.auditLogObject = resp.data[0];
+        }
+      });
   }
 
   getDataByPage(filters) {
@@ -215,9 +217,8 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       .generateOTP(this.currentUser.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
-        this.callAllInOnePopup(event)
+        this.callAllInOnePopup(event);
       });
-
   }
 
   callAllInOnePopup(event) {
@@ -232,19 +233,16 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
-        this.benificiaryService.
-          uploadBenificiaryExcel(event.formData)
+        this.benificiaryService
+          .uploadBenificiaryExcel(event.formData)
           .subscribe((res: any) => {
             if (res?.statusCode === 200) {
               this.callSuccessPopup(res);
-
             }
-
           });
       }
     });
   }
-
 
   callSuccessPopup(res) {
     const dialogRef = this.dialog.open(SuccessPopupComponent, {
@@ -266,12 +264,14 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   }
 
   DownloadBulkUpload(event) {
-    this.benificiaryService.downloadBenificiaryTemplate().subscribe((blob: any) => {
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "Upload.csv";
-      link.click();
-    });
+    this.benificiaryService
+      .downloadBenificiaryTemplate()
+      .subscribe((blob: any) => {
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "Upload.csv";
+        link.click();
+      });
   }
 
   downloadRecord() {
