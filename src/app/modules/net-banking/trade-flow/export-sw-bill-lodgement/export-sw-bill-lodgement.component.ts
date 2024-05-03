@@ -13,7 +13,7 @@ import { ExportSwBillService } from './export-sw-bill.service';
 })
 export class ExportSWBillLodgementComponent implements OnInit {
 
-  @Input("bgType") bgType: any = "ExportSWBill";
+  @Input("bgType") bgType: any = "Export SW Bill Lodgement";
   columns: any = ExportSwBill.EXPORTSWBILL_SUMMARY;
   isSummary: boolean;
   maintenanceTitle: any;

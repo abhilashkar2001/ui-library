@@ -258,7 +258,7 @@ export class tabsClass {
       componrnt: AttachmentsComponent
     },
   ]
-  public static readonly ExportSWBill:any[] = [
+  public static readonly ExportSWBillLodgement:any[] = [
     {
       id: 1,
       title: "Section A",
