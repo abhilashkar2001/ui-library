@@ -61,6 +61,7 @@ import { GenericBuyerCreditComponent } from './new-reusable-components/generic-b
 import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
 import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
 import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+import { PaymentRequestEnquiryComponent } from './new-reusable-components/payment-request-enquiry/payment-request-enquiry.component';
 
 
 
@@ -119,6 +120,7 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     CustomerInfoComponent,
     SupplierInfoComponent,
     CreditInfoComponent,
+    PaymentRequestEnquiryComponent,
 
   ],
   imports: [
