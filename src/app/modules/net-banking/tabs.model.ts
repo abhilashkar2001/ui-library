@@ -3,6 +3,10 @@ import { AmendmentLcInfoComponent } from "./new-reusable-components/amendment-lc
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { BillAttachmentsComponent } from "./new-reusable-components/bill-attachments/bill-attachments.component";
+import { BillSectionAComponent } from "./new-reusable-components/bill-section-a/bill-section-a.component";
+import { BillSectionBComponent } from "./new-reusable-components/bill-section-b/bill-section-b.component";
+import { BillSectionCValuesComponent } from "./new-reusable-components/bill-section-c-values/bill-section-c-values.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -186,6 +190,32 @@ export class tabsClass {
       title: "Attachments",
       type: "Remittamce_Attachments",
       componrnt: AttachmentsComponent
+    },
+  ]
+  public static readonly ExportSWBill:any[] = [
+    {
+      id: 1,
+      title: "Section A",
+      type: "Export S/W Bill Lodgement",
+      componrnt: BillSectionAComponent
+    },
+    {
+      id: 2,
+      title: "Section B",
+      type: "Export S/W Bill Lodgement",
+      componrnt: BillSectionBComponent
+    },
+    {
+      id: 3,
+      title: "Section C & Values",
+      type: "Export S/W Bill Lodgement",
+      componrnt: BillSectionCValuesComponent
+    },
+    {
+      id: 4,
+      title: "Attachments",
+      type: "Export S/W Bill Lodgement",
+      componrnt: BillAttachmentsComponent
     },
   ]
 }

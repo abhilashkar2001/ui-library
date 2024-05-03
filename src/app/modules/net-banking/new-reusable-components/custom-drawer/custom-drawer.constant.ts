@@ -63,7 +63,7 @@ export class DrawerConstant {
         { name: "EXPORTS PROCESSING", path: "", roleName: "child-node" },
         { name: "BUYERS CREDIT", path: "", roleName: "child-node" },
         { name: "EXPORT BILL DISPATCH", path: "", roleName: "child-node" },
-        { name: "EXPORT S/W BILL LODGEMENT", path: "", roleName: "child-node" },
+        { name: "ExportSWBill", path: "ExportSWBillLodgementSummary", roleName: "child-node" },
         { name: "EEFC", path: "", roleName: "child-node" },
       ],
     },

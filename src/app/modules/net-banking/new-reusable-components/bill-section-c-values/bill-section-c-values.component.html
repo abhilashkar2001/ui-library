@@ -1,0 +1,108 @@
+<div [formGroup]="billSectionCFrom">
+    
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Invoice No</mat-label>
+                <input matInput type="text" formControlName="invoiceNo" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Invoice Date</mat-label>
+                <input matInput type="text" formControlName="invoiceDate" />
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img src="/assets/images/calendar.png" class="pb-25" />
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Currency</mat-label>
+                <input matInput type="text" formControlName="currency" />
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Value of Software Export</mat-label>
+                <input matInput type="text" formControlName="export" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Transmission Charge</mat-label>
+                <input matInput type="text" formControlName="charge" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Commission</mat-label>
+                <input matInput type="text" formControlName="commission" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Deduction</mat-label>
+                <input matInput type="text" formControlName="deduction" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Code</mat-label>
+                <input matInput type="text" formControlName="code" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxFlex="100" fxFlex.gt-xs="49">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Net Realisable Value</mat-label>
+                <input matInput type="text" formControlName="realisable" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Place</mat-label>
+                <input matInput type="text" formControlName="place" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date Field In Declaration</mat-label>
+                <input matInput type="text" formControlName="declaration" />
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>
+                      <img src="/assets/images/calendar.png" class="pb-25" />
+                    </mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" formControlName="name" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="24">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Designation</mat-label>
+                <input matInput type="text" formControlName="designation" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="49">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Comment to Bank</mat-label>
+                <input matInput type="text" formControlName="commenttoBank" />
+            </mat-form-field>
+        </div>
+    </div>
+</div>
