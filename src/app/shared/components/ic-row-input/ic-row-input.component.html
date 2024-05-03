@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <mat-label class="text-gray"
+    >{{ inputLabel }}<span>{{ validator ? "*" : "" }}</span></mat-label
+  >
+  <div class="ml-48 mt-8">
+    <ng-container *ngIf="type == 'select'; else showInput">
+      <app-searchable-select
+        [items]="items"
+        [inputLabel]="inputLabel"
+        [bindLabelKey]="bindLabelKey"
+        [bindValueKey]="bindValueKey"
+        [control]="control"
+        [skipLabel]="true"
+        [readonly]="readonly"
+      ></app-searchable-select>
+    </ng-container>
+
+    <ng-template #showInput>
+      <app-ic-custom-input
+        [control]="control"
+        [inputLabel]="inputLabel"
+        [skipLabel]="true"
+        [readonly]="readonly"
+      ></app-ic-custom-input>
+    </ng-template>
+  </div>
+</div>

@@ -50,7 +50,7 @@ export class NETBANKING {
         {
           label: "Multi Transfer",
           image: "/assets/images/issue-draft.svg",
-          route: "",
+          route: "user/net-banking/fund-transfer/multi",
         },
       ],
     },
