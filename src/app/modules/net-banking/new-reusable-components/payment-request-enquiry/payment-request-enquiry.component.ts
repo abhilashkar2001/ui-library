@@ -38,7 +38,7 @@ export class PaymentRequestEnquiryComponent implements OnInit {
     this.route.queryParamMap.subscribe((params: any) => {
       this.componentName = params.get("type");
       for (const key in tabsClass) {
-        // console.log(key, this.componentName, ".......");
+        console.log(key, this.componentName, ".......");
         if (
           key.replace("_", "").replace(" ", "").toLowerCase() ===
           this.componentName.split(" ").join("").toLowerCase()
