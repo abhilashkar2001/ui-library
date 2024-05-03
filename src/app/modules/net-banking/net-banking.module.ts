@@ -45,20 +45,17 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
-<<<<<<< HEAD
 import { ExportSWBillLodgementComponent } from './trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component';
 import { AddExportSwBillComponent } from './trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component';
 import { BillSectionAComponent } from './new-reusable-components/bill-section-a/bill-section-a.component';
 import { BillSectionBComponent } from './new-reusable-components/bill-section-b/bill-section-b.component';
 import { BillSectionCValuesComponent } from './new-reusable-components/bill-section-c-values/bill-section-c-values.component';
 import { BillAttachmentsComponent } from './new-reusable-components/bill-attachments/bill-attachments.component';
-=======
 
 import { ExportBillDispatchSummaryComponent } from './trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component';
 import { TransactionDetailsComponent } from './new-reusable-components/transaction-details/transaction-details.component';
 import { DispatchDocumentsComponent } from './new-reusable-components/dispatch-documents/dispatch-documents.component';
 
->>>>>>> 7840574f16931a038c697b45fbba5dc2f1d8f288
 import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
 import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
 import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficiary-details/beneficiary-details.component';
@@ -112,20 +109,17 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
-<<<<<<< HEAD
     ExportSWBillLodgementComponent,
     AddExportSwBillComponent,
     BillSectionAComponent,
     BillSectionBComponent,
     BillSectionCValuesComponent,
     BillAttachmentsComponent,
-=======
 
     ExportBillDispatchSummaryComponent,
     TransactionDetailsComponent,
     DispatchDocumentsComponent,
 
->>>>>>> 7840574f16931a038c697b45fbba5dc2f1d8f288
     BillProcessingSummaryComponent,
     DocumentAcceptanceComponent,
     BeneficiaryDetailsComponent,
