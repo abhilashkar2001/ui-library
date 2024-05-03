@@ -10,6 +10,8 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-multi-fund-transfer",
@@ -43,8 +45,17 @@ export class MultiFundTransferComponent implements OnInit {
     private router: Router,
     private fundTransferService: FundTransferService,
     private dialog: MatDialog,
-    private api: OpenAccountService
-  ) {}
+    private api: OpenAccountService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `single-trans-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/single-trans.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.initMultiTransferForm();
@@ -191,7 +202,7 @@ export class MultiFundTransferComponent implements OnInit {
       });
   }
 
-  sabmit() {
+  submit() {
     if (!this.multiTransferForm.valid) return;
 
     let payload = [];
