@@ -108,4 +108,10 @@ export class BeneficiaryService {
         : "";
     return this.http.get<any>(`${this.basePath}/corp_benieficiary${payload}`);
   }
+
+  checkCorpAccountNumber(accNo) {
+    return this.http.get<any>(
+      `${this.basePath}/corp_benieficiary/checkExistingAccont?accountNumber=${accNo}`
+    );
+  }
 }
