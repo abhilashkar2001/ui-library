@@ -62,6 +62,7 @@ import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
+import { PaymentRequestEnquiryComponent } from './new-reusable-components/payment-request-enquiry/payment-request-enquiry.component';
 
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
@@ -145,7 +146,11 @@ import { GenericExportBillDispatchComponent } from './new-reusable-components/ge
     CustomerInfoComponent,
     SupplierInfoComponent,
     CreditInfoComponent,
+
     GenericExportBillDispatchComponent,
+
+    PaymentRequestEnquiryComponent,
+
   ],
   imports: [
     CommonModule,

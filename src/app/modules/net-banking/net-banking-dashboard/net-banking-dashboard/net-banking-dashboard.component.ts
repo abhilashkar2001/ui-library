@@ -7,6 +7,8 @@ import { Account } from "app/shared/models/account-list-by-subclass.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
+import { MatDialog } from "@angular/material/dialog";
+import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -56,7 +58,8 @@ export class NetBankingDashboardComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private cdr: ChangeDetectorRef,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private dialog: MatDialog
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(
@@ -164,7 +167,7 @@ export class NetBankingDashboardComponent implements OnInit {
   }
   getDataByPage() {
     this.netBankingService
-      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking")
+      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking", "CREATED")
       .subscribe((res: any) => {
         this.dummyResponse = res?.data?.slice(0, 3);
       });
@@ -225,6 +228,23 @@ export class NetBankingDashboardComponent implements OnInit {
 
   openTransfer(transfer) {
     if (!transfer.route) return;
+    if (transfer.label == "Single Transfer") {
+      const dialogRef = this.dialog.open(SelectSingleTransferComponent, {
+        width: "50%",
+        panelClass: "popup-class",
+      });
+      dialogRef.afterClosed().subscribe((res) => {
+        console.log(res);
+
+        if (res == "Cancel") return;
+        if (res === true) {
+          this.router.navigate([transfer.route]);
+        } else {
+          this.router.navigate(["user/net-banking/fund-transfer/credit-card"]);
+        }
+      });
+      return;
+    }
     this.router.navigate([transfer.route]);
   }
 }
