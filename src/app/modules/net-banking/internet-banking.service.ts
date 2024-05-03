@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
@@ -42,5 +43,22 @@ export class InternetBankingService {
 
     const payload = `?module=${moduleName}&${pagination}`;
     return this.http.get(`${MICROSERVICE_URL}/corporate-net-banking${payload}`);
+  }
+
+  fetchAccountDetails(mobileNo: string) {
+    return this.http.get(
+      `${MICROSERVICE_URL}/retail-fund-transfer/fetchDashBoardAccountDetails?mobileNo=${mobileNo}`
+    );
+  }
+
+  /**
+   * This method will call the service to fetch account balance from flex cube
+   * @param accountNumber
+   * @returns
+   */
+  fetchAccountBalance(accountNo: string) {
+    return this.http.get<FlexBalanceModel>(
+      `${MICROSERVICE_URL}/flex-service/queryBalance?originationAccNo=${accountNo}`
+    );
   }
 }
