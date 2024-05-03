@@ -62,6 +62,8 @@ export class BgSummaryComponent implements OnInit {
   }
 
   getSummaryUrl() {
+    console.log(this.summaryDetails);
+    
     return new Promise((resolve, reject) => {
       if (this.summaryDetails) resolve("summary details found");
       else
@@ -69,9 +71,10 @@ export class BgSummaryComponent implements OnInit {
           this.summaryDetails = resp.find(
             (element) => element.name === this.bgType
           );
+          console.log(this.summaryDetails);
+
           this.columns = bgConstant[this.summaryDetails.columnRefName];
           this.cdr.detectChanges();
-          console.log(this.summaryDetails);
           resolve("summary details found");
         });
     });

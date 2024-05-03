@@ -14,7 +14,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   chqueInquiryForm: FormGroup;
 
   customerInfo: any;
-  accountNumberList: any[] = [];
+  accountNumberList: any[] = [{ accountNo: "000037560025" }];
 
   chequeNumber: any;
 
@@ -38,9 +38,9 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   }
 
   fetchCustomerInfo() {
-    this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
-    );
+    // this.accountNumberList = JSON.parse(
+    //   sessionStorage.getItem("listOfAccounts")
+    // );
   }
 
   buildForm() {

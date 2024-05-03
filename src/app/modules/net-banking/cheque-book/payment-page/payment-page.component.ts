@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { TokenStorageService } from "app/@core/security/token-storage.service";
-import { DownloadService } from "app/@core/services/download.service";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
@@ -25,7 +24,6 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
     private serviceCallHandler: ServiceCallHandler,
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private downloadService: DownloadService,
     private tokenStorageService: TokenStorageService
   ) {
     this.matIconRegistry.addSvgIcon(
@@ -57,49 +55,6 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
       this.status = this.resp?.status;
       this.response = this.resp?.res?.data;
     }
-  }
-
-  getPdf(value) {
-    this.payeeFrom = this.paymentDetails[0]?.payeeFrom;
-    this.downloadService
-      .downloadPayee(
-        this.payeeFrom,
-        this.paymentDetails[0]?.benificiaryMasterId
-      )
-      .subscribe((res: any) => {
-        this.download = new Blob([res], {
-          type: "application/octet-stream",
-        });
-        if (value) this.downloadPdf();
-        else this.share();
-      });
-  }
-  downloadPdf() {
-    const url = window.URL.createObjectURL(this.download);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${this.payeeFrom}${moment(new Date()).format("DD-MM-YYYY")}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  }
-
-  share() {
-    const pdfFile = new File([this.download], `${this.payeeFrom}.pdf`, {
-      type: "application/pdf",
-    });
-    const formData = new FormData();
-    formData.append(
-      "subject",
-      `${this.customerInfo?.customerName}${moment(new Date()).format("DD-MM-YYYY")}`
-    );
-    formData.append("body", "Refer below attached pdf");
-    formData.append("to", `${this.profileInfo?.email}`);
-    formData.append("filePath", pdfFile, pdfFile.name);
-    this.downloadService
-      .triggerEmail(formData)
-      .subscribe((res) => console.log(res));
   }
 
   ngOnDestroy(): void {

@@ -5,18 +5,24 @@ export class ChequeStore {
       route: "user/dashboard/cheque/home/chequebook-request",
       src: "assets/images/send-money-abroad.svg",
       icon: "send-money-abroad",
+      selectedSrc: "assets/images/selected-money-abroad.svg",
+      selectedIcon: "selected-money-abroad.svg",
     },
     {
       screenName: "Cheque Status Inquiry",
       route: "user/dashboard/cheque/home/cheque-status-enquiry",
       src: "assets/images/send-money-abroad.svg",
       icon: "send-money-abroad",
+      selectedSrc: "assets/images/selected-money-abroad.svg",
+      selectedIcon: "selected-money-abroad.svg",
     },
     {
       screenName: "Stop Cheque",
       route: "user/dashboard/cheque/home/stop-cheque",
       src: "assets/images/send-money-abroad.svg",
       icon: "send-money-abroad",
+      selectedSrc: "assets/images/selected-money-abroad.svg",
+      selectedIcon: "selected-money-abroad.svg",
     },
   ];
 

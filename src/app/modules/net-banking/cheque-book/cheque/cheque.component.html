@@ -1,4 +1,9 @@
-<div fxLayout="column" fxLayoutGap="8px" class="send-money-container">
+<div
+  fxFlex="100"
+  fxLayout="column"
+  fxLayoutGap="8px"
+  class="send-money-container"
+>
   <!-- <app-toolbar-title title="Cheque Book"></app-toolbar-title> -->
   <mat-card fxLayout="column" class="tabs">
     <div fxLayout="row" fxLayoutAlign="start" class="tab-header">
@@ -16,7 +21,11 @@
           fxLayout="column"
         >
           <button mat-icon-button>
-            <mat-icon [svgIcon]="item.icon"></mat-icon>
+            <mat-icon
+              [svgIcon]="
+                selected == item.screenName ? item.selectedIcon : item.icon
+              "
+            ></mat-icon>
           </button>
           {{ item.screenName }}
         </div>

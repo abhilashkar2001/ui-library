@@ -29,6 +29,10 @@ export class ChequeComponent implements OnInit {
         tab.icon,
         this.sanitizer.bypassSecurityTrustResourceUrl(tab.src)
       );
+      this.matIconRegistry.addSvgIcon(
+        tab.selectedIcon,
+        this.sanitizer.bypassSecurityTrustResourceUrl(tab.selectedSrc)
+      );
     });
   }
 
@@ -36,7 +40,7 @@ export class ChequeComponent implements OnInit {
 
   changeTabs(index) {
     console.log(index);
-    this.selected = this.tabScreens[index].route;
+    this.selected = this.tabScreens[index].screenName;
     console.log(this.selected);
     this.route.navigate([this.tabScreens[index].route]);
   }
