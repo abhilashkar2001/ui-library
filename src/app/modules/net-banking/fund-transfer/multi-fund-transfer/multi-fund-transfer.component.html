@@ -1,0 +1,87 @@
+<div>
+  <div class="text-center text-title mt-12">Trade Funds - Multiple</div>
+  <form *ngIf="multiTransferForm" [formGroup]="multiTransferForm">
+    <div fxLayout="row">
+      <div fxFlex="60" fxLayout="column">
+        <div>
+          <app-ic-row-input
+            inputLabel="Transfer From"
+            [control]="multiTransferForm.get('transferFrom')"
+            type="select"
+            [items]="[]"
+            bindLabelKey="name"
+            bindVlaueKey="name"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Amount"
+            [control]="multiTransferForm.get('amount')"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Transfer Mode"
+            [control]="multiTransferForm.get('transferMode')"
+            type="select"
+            [items]="genericValue.TRANSFERMODE"
+            bindLabelKey="values"
+            bindVlaueKey="id"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Transfer To"
+            [control]="multiTransferForm.get('transferTo')"
+            type="select"
+            bindLabelKey="accountNo"
+            bindValueKey="accountNo"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Send Advice"
+            [control]="multiTransferForm.get('sendAdvice')"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Narration"
+            [control]="multiTransferForm.get('narration')"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Payment Details"
+            [control]="multiTransferForm.get('paymentDetails')"
+            type="select"
+            [items]="[]"
+            bindLabelKey="name"
+            bindVlaueKey="name"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Transfer From"
+            [control]="multiTransferForm.get('transferFrom')"
+            type="select"
+            [items]="[]"
+            bindLabelKey="name"
+            bindVlaueKey="name"
+          ></app-ic-row-input>
+        </div>
+        <div>
+          <app-ic-row-input
+            inputLabel="Transfer From"
+            [control]="multiTransferForm.get('transferFrom')"
+            type="select"
+            [items]="[]"
+            bindLabelKey="name"
+            bindVlaueKey="name"
+          ></app-ic-row-input>
+        </div>
+      </div>
+      <div fxFlex="40"></div>
+    </div>
+  </form>
+</div>

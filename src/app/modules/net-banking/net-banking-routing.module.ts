@@ -22,6 +22,7 @@ import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remi
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
 import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
+import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 
 const routes: Routes = [
   {
@@ -104,10 +105,20 @@ const routes: Routes = [
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
       },
-      // {
-      //   path: "add-bulk-upload",
-      //   component: UploadBulkUploadComponent,
-      // },
+      {
+        path: "fund-transfer",
+        loadChildren: () =>
+          import("./fund-transfer/fund-transfer.module").then(
+            (m) => m.FundTransferModule
+          ),
+      },
+      {
+        path: "cheque",
+        loadChildren: () =>
+          import("./cheque-book/cheque-book.module").then(
+            (m) => m.ChequeBookModule
+          ),
+      },
     ],
   },
 ];
@@ -116,4 +127,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule { }
+export class NetBankingRoutingModule {}
