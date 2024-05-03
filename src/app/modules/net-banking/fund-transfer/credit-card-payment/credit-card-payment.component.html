@@ -1,1 +1,119 @@
-<p>credit-card-payment works!</p>
+<mat-card class="default-card credit_card_container">
+  <div class="heading_card mb-2" fxLayoutAlign="start center" fxLayoutGap="10">
+    <div>{{ "Credit Card Payments" }}</div>
+    <mat-icon svgIcon="card-icon"></mat-icon>
+  </div>
+  <mat-divider></mat-divider>
+  <form *ngIf="creditCardForm" [formGroup]="creditCardForm">
+    <div class="py-8" fxLayout="row wrap" fxLayoutGap="10">
+      <div fxFlex="24">
+        <app-searchable-select
+          [items]="selectList"
+          bindLabelKey="label"
+          bindValueKey="value"
+          [control]="creditCardForm.get('debitAccountNo')"
+          inputLabel="Debit Account Number"
+        ></app-searchable-select>
+      </div>
+
+      <div fxFlex="24">
+        <app-searchable-select
+          [items]="aanList"
+          bindLabelKey="label"
+          bindValueKey="value"
+          [control]="creditCardForm.get('aanNo')"
+          inputLabel="AAN Number"
+        ></app-searchable-select>
+      </div>
+
+      <div fxFlex="24">
+        <mat-form-field appearance="outline">
+          <mat-label class="text_label">Amount</mat-label>
+          <span Prefix class="text_label">₹</span>
+          <input matInput type="text" formControlName="amount" />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="24">
+        <mat-form-field appearance="outline">
+          <mat-label class="text_label">Transfer on</mat-label>
+          <input
+            matInput
+            [min]="today"
+            [matDatepicker]="picker"
+            formControlName="transferOn"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon
+              matDatepickerToggleIcon
+              svgIcon="calendar-icon"
+            ></mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="px-8"
+        fxFlex="24"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="20"
+      >
+        <div class="text_label">Send advice:</div>
+        <div>
+          <mat-checkbox
+            class="example-margin text_label"
+            [formControl]="creditCardForm.get('remitter')"
+            >Remitter</mat-checkbox
+          >
+        </div>
+      </div>
+
+      <ng-container *ngIf="showSendAdviceBlock">
+        <div fxFlex="24">
+          <mat-form-field appearance="outline">
+            <mat-label class="text_label">Remitter email ID</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="24">
+          <mat-form-field appearance="outline">
+            <mat-label class="text_label">Remitter mobile</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+
+        <div
+          class="px-8"
+          fxFlex="24"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="20"
+        >
+          <div class="text_label">Narration:</div>
+          <div>
+            <mat-checkbox
+              class="example-margin text_label"
+              [formControl]="creditCardForm.get('narration')"
+              >Remitter</mat-checkbox
+            >
+          </div>
+        </div>
+
+        <ng-container *ngIf="showNarrationBlock">
+          <div class="textarea_field" fxFlex="25">
+            <textarea
+              matInput
+              name=""
+              id=""
+              cols="30"
+              placeholder="Remitter narration"
+            ></textarea>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</mat-card>
