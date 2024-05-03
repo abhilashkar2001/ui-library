@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { InternetBankingService } from "../../internet-banking.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
@@ -58,25 +65,17 @@ export class BgSummaryComponent implements OnInit {
       this.bgType = params.get("type");
       this.maintenanceTitle = this.bgType;
       this.module = this.bgType;
+      this.getDataByPage({ page: 1, size: 5 });
     });
   }
 
   getSummaryUrl() {
-    console.log(this.summaryDetails);
-
-    return new Promise((resolve, reject) => {
-      if (this.summaryDetails) resolve("summary details found");
-      else
-        this.api.getSummaryUrls().subscribe((resp) => {
-          this.summaryDetails = resp.find(
-            (element) => element.name === this.bgType
-          );
-          console.log(this.summaryDetails);
-
-          this.columns = bgConstant[this.summaryDetails.columnRefName];
-          this.cdr.detectChanges();
-          resolve("summary details found");
-        });
+    this.api.getSummaryUrls().subscribe((resp) => {
+      this.summaryDetails = resp.find(
+        (element) => element.name === this.bgType
+      );
+      this.columns = bgConstant[this.summaryDetails.columnRefName];
+      this.cdr.detectChanges();
     });
   }
 
@@ -85,7 +84,9 @@ export class BgSummaryComponent implements OnInit {
   }
 
   getDataByPage(event) {
-    this.getSummaryUrl().then((_) => {
+    this.getSummaryUrl();
+
+    setTimeout(() => {
       this.page = event.page;
       this.pageSize = event.size;
       this.sortDirection = event.direction;
@@ -106,7 +107,7 @@ export class BgSummaryComponent implements OnInit {
         .subscribe((res) => {
           this.bgData = res;
         });
-    });
+    }, 200);
   }
 
   /**
