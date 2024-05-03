@@ -20,7 +20,6 @@ export class BgSummaryServiceService {
     moduleName,
     url
   ) {
-    const bgUrl = this.getBgUrl(moduleName);
     var filterEndpoint = "";
     if (filterBy) {
       const keys = Object.keys(filterBy);
@@ -31,12 +30,8 @@ export class BgSummaryServiceService {
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
     }
-    const filter = `${filterEndpoint}`;
     const pagination = `page=${page}&size=${size}`;
-
-    const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
-
-    const payload = `?${pagination}`;
+    const payload = `${pagination}`;
     return this.http.get<any>(`${this.basePath}/${url}${payload}`);
   }
 
@@ -46,7 +41,7 @@ export class BgSummaryServiceService {
         return "bgIssuance/fetchApplicantInfo";
       case "Remittance":
         return "";
-        
+
       default:
         break;
     }
