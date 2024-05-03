@@ -19,10 +19,10 @@
           <mat-icon svgIcon="fav-icon"></mat-icon>
         </button>
         <button mat-icon-button>
-          <mat-icon svgIcon="delete-icon" (click)="deletePayee()"></mat-icon>
+          <mat-icon svgIcon="delete-icon"></mat-icon>
         </button>
         <button mat-icon-button>
-          <mat-icon svgIcon="edit-icon" (click)="editPayee()"></mat-icon>
+          <mat-icon svgIcon="edit-icon"></mat-icon>
         </button>
       </ng-container>
       <ng-container
@@ -32,12 +32,12 @@
           details?.status == 'request'
         "
       >
-        <button mat-icon-button (click)="getPdf(true)">
+        <!-- <button mat-icon-button>
           <mat-icon svgIcon="download-icon"></mat-icon>
         </button>
-        <button mat-icon-button (click)="getPdf(false)">
+        <button mat-icon-button>
           <mat-icon svgIcon="share-icon"></mat-icon>
-        </button>
+        </button> -->
       </ng-container>
     </div>
   </div>
@@ -51,16 +51,22 @@
         details?.status == 'confirm-payee'
       "
     >
-    <div fxLayout="column" class="expected-time" *ngIf="paymentDetailsArr[0].eventType==='chequeBookRequest'">
-      <span class="expected-title">{{"Expected Time to deliver:"}}</span>
-      <span>{{"Physical cheque book will be delivered in 5 working days"}}</span>
-    </div>
+      <div
+        fxLayout="column"
+        class="expected-time"
+        *ngIf="paymentDetailsArr[0].eventType === 'chequeBookRequest'"
+      >
+        <span class="expected-title">{{ "Expected Time to deliver:" }}</span>
+        <span>{{
+          "Physical cheque book will be delivered in 5 working days"
+        }}</span>
+      </div>
       <div
         class="news_pallet"
         fxLayout="row"
         fxLayoutAlign="start center"
         fxLayoutGap="10"
-        *ngIf="paymentDetailsArr[0].eventType!='chequeBookRequest'"
+        *ngIf="paymentDetailsArr[0].eventType != 'chequeBookRequest'"
       >
         <div class="img_div d-flex" fxFlex="10">
           <div class="img_content img_txt">
@@ -100,14 +106,11 @@
         <div class="img_div d-flex" fxFlex="10">
           <!-- if status is Succesful -->
           <ng-container *ngIf="details?.status == 'success'">
-            <img
-              src="assets/images/svg/payment-success.png"
-              alt="img.success"
-            />
+            <img src="assets/images/payment-success.png" alt="img.success" />
           </ng-container>
           <!-- if status is failed -->
           <ng-container *ngIf="details?.status == 'failed'">
-            <img src="assets/images/svg/payment-failed.png" alt="img.success" />
+            <img src="assets/images/payment-failed.png" alt="img.success" />
           </ng-container>
         </div>
         <div class="details_div" fxLayout="column" fxFlex="90">
@@ -160,12 +163,12 @@
               </div>
             </ng-container>
             <ng-container *ngIf="item?.header == 'Document Upload'">
-            <ng-container>
-              {{chunk}}
-              <app-reusable-table
-                [columnNames]="docCol"
-                [data]="item.detalis"
-              ></app-reusable-table>
+              <ng-container>
+                {{ chunk }}
+                <app-reusable-table
+                  [columnNames]="docCol"
+                  [data]="item.detalis"
+                ></app-reusable-table>
               </ng-container>
             </ng-container>
           </div>
@@ -218,17 +221,13 @@
       <ng-container
         *ngIf="details?.status == 'success' && details?.qrToggle == true"
       >
-        <app-ic-action-button
-          buttonName="Generate QR"
-          buttonType="stroked"
-          (onClick)="generateQR()"
-        ></app-ic-action-button>
+        <button mat-flat-button (click)="generateQR()" class="filled_btn">
+          {{ "Generate QR" }}
+        </button>
       </ng-container>
-      <app-ic-action-button
-        buttonName="Done"
-        buttonType="filled"
-        (onClick)="done()"
-      ></app-ic-action-button>
+      <button mat-flat-button (click)="DONE()" class="filled_btn">
+        {{ "Done" }}
+      </button>
     </div>
   </div>
   <!-- Footer section Ends -->

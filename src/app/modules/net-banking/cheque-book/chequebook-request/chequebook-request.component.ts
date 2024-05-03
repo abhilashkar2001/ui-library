@@ -12,7 +12,7 @@ import { ChequeService } from "../cheque-service";
 export class ChequebookRequestComponent implements OnInit {
   chequebookRequestForm: FormGroup;
   customerInfo: any;
-  accountNumberList: any[] = [];
+  accountNumberList: any[] = [{ accountNo: "000037560025" }];
   selectedAccInfo: any;
 
   chequeNumber: any;
@@ -55,9 +55,9 @@ export class ChequebookRequestComponent implements OnInit {
     const custInfo = sessionStorage.getItem("customer-Info");
     this.customerInfo = JSON.parse(custInfo);
 
-    this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
-    );
+    // this.accountNumberList = JSON.parse(
+    //   sessionStorage.getItem("listOfAccounts")
+    // );
   }
   buildRequestForm() {
     this.chequebookRequestForm = this.fb.group({
@@ -226,7 +226,7 @@ export class ChequebookRequestComponent implements OnInit {
           (revPayload) => this.accountService.auditLogRevisions(revPayload)
         );
 
-        this.router.navigate(["/account/payment-summary"]);
+        this.router.navigate(["user/dashboard/cheque/home/payment-summary"]);
       },
       (err) => {
         console.error("Error: ", err);

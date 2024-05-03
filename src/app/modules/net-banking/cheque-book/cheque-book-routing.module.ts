@@ -4,6 +4,7 @@ import { ChequeComponent } from "./cheque/cheque.component";
 import { ChequebookRequestComponent } from "./chequebook-request/chequebook-request.component";
 import { ChequeStatusEnquiryComponent } from "./cheque-status-enquiry/cheque-status-enquiry.component";
 import { StopChequeComponent } from "./stop-cheque/stop-cheque.component";
+import { PaymentPageComponent } from "./payment-page/payment-page.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: "stop-cheque",
         component: StopChequeComponent,
+      },
+      {
+        path: "payment-summary",
+        component: PaymentPageComponent,
       },
     ],
   },

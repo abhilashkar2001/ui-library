@@ -10,6 +10,11 @@ import { ChequebookRequestComponent } from "./chequebook-request/chequebook-requ
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { PaymentDetailsComponent } from "./payment-details/payment-details.component";
+import { PaymentPageComponent } from "./payment-page/payment-page.component";
+import { OtpComponent } from "./otp/otp.component";
+import { NgOtpInputModule } from "ng-otp-input";
+import { FeedbackComponent } from "./feedback/feedback.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +22,10 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     StopChequeComponent,
     ChequeComponent,
     ChequebookRequestComponent,
+    PaymentDetailsComponent,
+    PaymentPageComponent,
+    OtpComponent,
+    FeedbackComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +34,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     FlexLayoutModule,
     ReactiveFormsModule,
     SharedComponentsModule,
+    NgOtpInputModule,
   ],
 })
 export class ChequeBookModule {}
