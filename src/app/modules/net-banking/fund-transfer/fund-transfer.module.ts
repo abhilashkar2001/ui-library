@@ -11,6 +11,7 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule } from "@angular/forms";
+import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-transfer-summary.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     SingleFundTransferComponent,
     MultiFundTransferComponent,
     CreditCardPaymentComponent,
+    FundTransferSummaryComponent,
   ],
   imports: [
     CommonModule,

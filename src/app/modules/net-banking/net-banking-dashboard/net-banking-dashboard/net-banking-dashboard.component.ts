@@ -239,11 +239,19 @@ export class NetBankingDashboardComponent implements OnInit {
         if (res == "Cancel") return;
         if (res === true) {
           this.router.navigate([transfer.route]);
+          if (transfer.type) {
+            sessionStorage.setItem("uploadType", transfer.type);
+          }
         } else {
           this.router.navigate(["user/net-banking/fund-transfer/credit-card"]);
         }
       });
       return;
+    } else if (transfer.label == "Multi Transfer") {
+      if ((transfer.type = "MULTI")) {
+        this.router.navigate([transfer.route]);
+        sessionStorage.setItem("uploadType", transfer.type);
+      }
     }
     this.router.navigate([transfer.route]);
   }
