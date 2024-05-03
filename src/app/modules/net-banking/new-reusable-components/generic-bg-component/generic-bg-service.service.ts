@@ -13,4 +13,8 @@ export class GenericBgServiceService {
   saveTemplate(payload) {
     return this.http.post(`${this.basePath}/bgIssuance`, payload);
   }
+
+  submitIssuance(payload) {
+    return this.http.post(`${this.basePath}/lcMaster`, payload);
+  }
 }

@@ -19,12 +19,12 @@ export class ApplicantsInfoComponent implements OnInit {
   ) => void;
   feeAccArray: any[] = ["dummy Option 1", "dummy Option 2", "dummy Option 3"];
   @Input("tradeDetails") tradeDetails;
-  @Input("amendmentType") tradetype = ""
+  @Input("amendmentType") tradetype = "";
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getStaticData();
@@ -59,9 +59,7 @@ export class ApplicantsInfoComponent implements OnInit {
         {
           applicantInfo: {
             ...res,
-            contactInfo: !this.applicantForm.value.contactInfo.address[0].cityId
-              ? null
-              : this.applicantForm.value.contactInfo,
+            contactInfo: this.applicantForm.value.contactInfo,
           },
         },
         this.checkForm()
