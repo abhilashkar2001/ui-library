@@ -37,6 +37,8 @@ import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
+import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
+import { GenericExportBillDispatchComponent } from "./new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component";
 
 const routes: Routes = [
   {
@@ -103,7 +105,7 @@ const routes: Routes = [
           },
           {
             path: "export-bill-dispatch",
-            component: TransactionDetailsComponent,
+            component: GenericExportBillDispatchComponent,
           },
           {
             path: "generic-buyer-credit",

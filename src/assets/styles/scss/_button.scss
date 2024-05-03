@@ -3,8 +3,7 @@
   height: 50px;
   top: 7px;
   right: 5px;
-  background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0%
-    no-repeat padding-box;
+  background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0% no-repeat padding-box;
   border-radius: 35px !important;
   color: #ffffff !important;
   text-align: center;
@@ -61,6 +60,30 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
+  line-height: normal;
+}
+
+.save-template-btn {
+  @extend .applyButtonStandard;
+  color: #0e0101 !important;
+  background: #ffffff !important;
+  box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800 !important;
+  line-height: normal;
+}
+
+.save-submit-btn {
+  @extend .applyButtonStandard;
+  color: #4007d0 !important;
+  background: #ffffff !important;
+  box-shadow: 3px 3px 20px 2px rgba(0, 0, 0, 0.06);
+  font-family: Poppins;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800 !important;
   line-height: normal;
 }
 

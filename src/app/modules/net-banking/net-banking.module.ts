@@ -74,6 +74,7 @@ import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-b
 import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
 import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
 import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
+import { GenericExportBillDispatchComponent } from './new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { CreditInfoComponent } from "./new-reusable-components/credit-info/credi
     CustomerInfoComponent,
     SupplierInfoComponent,
     CreditInfoComponent,
+    GenericExportBillDispatchComponent,
   ],
   imports: [
     CommonModule,
