@@ -34,7 +34,6 @@ import { TransactionDetailsComponent } from "./new-reusable-components/transacti
 import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
 
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
-import { exportBillDispatchData } from "./trade-flow/export-bill-dispatch-summary/exportbillstaticdata";
 
 export class tabsClass {
   public static Bg_Issuance: any[] = [
