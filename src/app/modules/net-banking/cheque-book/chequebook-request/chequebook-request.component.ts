@@ -75,9 +75,8 @@ export class ChequebookRequestComponent implements OnInit {
       pin: [""],
     });
 
-    const selectedAccountNo = JSON?.parse(
-      sessionStorage.getItem("selectAccNo")
-    );
+    const selectedAccountNo = sessionStorage.getItem("selectAccNo");
+
     if (selectedAccountNo) {
       this.chequebookRequestForm.get("accountNo").setValue(selectedAccountNo);
       this.handleAccountNumberChange(selectedAccountNo);
@@ -138,6 +137,10 @@ export class ChequebookRequestComponent implements OnInit {
       .setValue(selectedAddress?.stateName);
     this.chequebookRequestForm.get("city").setValue(selectedAddress?.cityName);
     this.chequebookRequestForm.get("pin").setValue(selectedAddress?.pincode);
+  }
+
+  goBack() {
+    this.router.navigate(["/user/dashboard/home"]);
   }
 
   saveChequeDetails() {
