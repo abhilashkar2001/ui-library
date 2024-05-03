@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { bgConstant } from "../bg-summary/bg-summary.constant";
 import { Router } from "@angular/router";
 import { BgSummaryServiceService } from "../bg-summary/bg-summary-service.service";
+import { ExportProcess } from "./exports-process-staticData";
 
 @Component({
   selector: "app-pre-shipment-lp-summary",
@@ -12,8 +13,18 @@ export class PreShipmentLPSummaryComponent implements OnInit {
   maintenanceTitle = "Exports Processing | Pre-Shipment Loan Process";
   EpType = "exportProcess";
   addNewList = bgConstant.ADDNEW_LIST;
-  EpData: any;
-  columns: any;
+  EpData: any = {
+    data: ExportProcess.staticdata,
+    meta: {
+      page: 1,
+      size: 5,
+      totalElements: 3,
+      totalPages: 1,
+    },
+    statusCode: 200,
+    status: "OK",
+  };
+  columns: any = ExportProcess.EXPORTPROCESS_SUMMARY;
   summaryDetails: any;
 
   constructor(private route: Router, private api: BgSummaryServiceService) {}
