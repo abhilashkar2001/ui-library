@@ -65,6 +65,8 @@ export class NetBankingHomeComponent implements OnInit {
       .subscribe((routeChange: NavigationEnd) => {
         if (routeChange.url.includes("trade")) {
           this.skipPadding = true;
+        } else {
+          this.skipPadding = false;
         }
       });
   }
