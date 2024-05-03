@@ -52,6 +52,24 @@ import { ExportLoanDetailsComponent } from './new-reusable-components/export-loa
 import { ExportAttachmentsComponent } from './new-reusable-components/export-attachments/export-attachments.component';
 import { ExportLcDetailsComponent } from './new-reusable-components/export-lc-details/export-lc-details.component';
 
+import { ExportBillDispatchSummaryComponent } from './trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component';
+import { TransactionDetailsComponent } from './new-reusable-components/transaction-details/transaction-details.component';
+import { DispatchDocumentsComponent } from './new-reusable-components/dispatch-documents/dispatch-documents.component';
+
+import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
+import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
+import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficiary-details/beneficiary-details.component';
+import { RemittanceDetailsComponent } from './new-reusable-components/remittance-details/remittance-details.component';
+import { OrdersInfoComponent } from './new-reusable-components/orders-info/orders-info.component';
+import { BillDocumentsComponent } from './new-reusable-components/bill-documents/bill-documents.component';
+import { BuyersCreditSummaryComponent } from './trade-flow/buyers-credit-summary/buyers-credit-summary.component';
+import { GenericBuyerCreditComponent } from './new-reusable-components/generic-buyer-credit/generic-buyer-credit.component';
+import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
+import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
+import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -97,6 +115,20 @@ import { ExportLcDetailsComponent } from './new-reusable-components/export-lc-de
     ExportLoanDetailsComponent,
     ExportAttachmentsComponent,
     ExportLcDetailsComponent,
+    ExportBillDispatchSummaryComponent,
+    TransactionDetailsComponent,
+    DispatchDocumentsComponent,
+    BillProcessingSummaryComponent,
+    DocumentAcceptanceComponent,
+    BeneficiaryDetailsComponent,
+    RemittanceDetailsComponent,
+    OrdersInfoComponent,
+    BillDocumentsComponent,
+    BuyersCreditSummaryComponent,
+    GenericBuyerCreditComponent,
+    CustomerInfoComponent,
+    SupplierInfoComponent,
+    CreditInfoComponent,
   ],
   imports: [
     CommonModule,

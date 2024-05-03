@@ -75,5 +75,26 @@
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/export-process-tabs",
     "columnRefName": "exportProcess"
+  },
+  {
+    "name": "Export Bill Dispatch Request",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/export-bill-dispatch-summary",
+    "columnRefName": "EXPORT BILL DISPATCH"
+  },
+  {
+    "name": "Document Acceptance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/document-acceptance",
+    "columnRefName": "BILL_SUMMARY"
+  },
+  {
+    "name": "Buyers Credit",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/generic-buyer-credit",
+    "columnRefName": "BUYER_CREDIT"
   }
 ]

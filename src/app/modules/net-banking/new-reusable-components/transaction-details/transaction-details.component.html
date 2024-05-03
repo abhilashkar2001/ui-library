@@ -1,0 +1,41 @@
+<!-- <p>transaction-details works!</p> -->
+<div
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutAlign="space Between"
+  fxLayoutGap="1%"
+  class="applicantsInfo"
+>
+  <div fxLayout="column" fxFlex="22">
+    <mat-form-field class="borderColor" appearance="outline">
+      <mat-label class="label_input">{{ "Drawer" }}</mat-label>
+      <input matInput type="text" />
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" fxFlex="22">
+    <mat-form-field class="borderColor" appearance="outline">
+      <mat-label class="label_input">{{ "Customer Code" }}</mat-label>
+      <mat-select
+        appearance="outline"
+        formControlName="customerCode"
+        class="mat_selection"
+      >
+        <mat-option *ngFor="let drawer of customerCode" [value]="drawer">{{
+          drawer
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" fxFlex="22">
+    <mat-form-field class="borderColor" appearance="outline">
+      <mat-label class="label_input">{{ "Drawer" }}</mat-label>
+      <input matInput type="text" />
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" fxFlex="22">
+    <mat-form-field class="borderColor" appearance="outline">
+      <mat-label class="label_input">{{ "IEC Code" }}</mat-label>
+      <input matInput type="text" />
+    </mat-form-field>
+  </div>
+</div>

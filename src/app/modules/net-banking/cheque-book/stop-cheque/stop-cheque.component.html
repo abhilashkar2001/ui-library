@@ -1,0 +1,83 @@
+<div class="stop-cheque_container">
+  <form [formGroup]="stopChequeForm" fxFlex="100" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
+      <mat-label class="ml-20">Account No</mat-label>
+      <app-searchable-select
+        [items]="accountNumberList"
+        bindValueKey="accountNo"
+        bindLabelKey="accountNo"
+        [control]="stopChequeForm.get('accountNo')"
+        skipLabel="false"
+        (selectionChange)="handleAccountNumberChange($event)"
+      ></app-searchable-select>
+      <span class="message" *ngIf="chequeNumber"
+        >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
+        {{ customerInfo?.customerName }}</span
+      >
+    </div>
+
+    <h3 class="wrapper_row light-blue-title">Cheque Book Detail</h3>
+    <div class="row wrapper_row">
+      <div fxFlex="100" class="input_wrapper">
+        <div fxLayout="column" fxLayoutGap="20">
+          <mat-label class="mb-8">{{ "Stop Cheque By" }}</mat-label>
+          <mat-radio-group
+            fxLayoutGap="20"
+            [formControl]="stopChequeForm.get('stopChequeBy')"
+          >
+            <mat-radio-button
+              *ngFor="let option of stopChequeOptions"
+              [value]="option?.value"
+              >{{ option?.label }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="stopChequeForm.get('stopChequeBy').value === 'Number'">
+      <div fxFlex="100" fxLayoutGap="20" class="row wrapper_row">
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="stopChequeForm.get('chequeNo')"
+            inputLabel="Cheque Number"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="stopChequeForm.get('stopChequeBy').value === 'Range'">
+      <div fxFlex="100" fxLayoutGap="20" class="row wrapper_row">
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="stopChequeForm.get('from')"
+            inputLabel="From"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="stopChequeForm.get('to')"
+            inputLabel="To"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="wrapper_row">
+      <div fxFlex="25" class="input_wrapper">
+        <app-ic-custom-input
+          [control]="stopChequeForm.get('reason')"
+          inputLabel="Reason"
+        ></app-ic-custom-input>
+      </div>
+    </div>
+    <div fxFlex="40" fxLayoutGap="20" fxLayoutAlign="end center">
+      <button mat-flat-button class="stroked_btn">
+        {{ "Cancel" }}
+      </button>
+      <button mat-flat-button (click)="stopCheque()" class="filled_btn">
+        {{ "Proceed" }}
+      </button>
+    </div>
+  </form>
+</div>

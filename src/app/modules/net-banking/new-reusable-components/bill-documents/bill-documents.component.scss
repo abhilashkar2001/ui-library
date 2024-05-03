@@ -1,0 +1,150 @@
+.cardHeading {
+    color: #004c97;
+    font-size: 19px;
+    padding: 7px;
+    font-weight: 500;
+  }
+  .headerFont{
+    color: #606C8D;
+  }
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+  .document-tab_content {
+    .expansion_panel {
+      border-radius: 12px;
+      margin-bottom: 1rem;
+  
+      mat-expansion-panel-header {
+        height: 48px;
+        box-shadow: 0 3px 15px #00000017;
+  
+        mat-panel-title {
+          color: #004c97;
+          font-size: 17px;
+          font-family: "Poppins", sans-serif;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+  
+      .panel_body {
+        .content_row {
+          border-bottom: 1px solid #0000001c;
+          .content_col {
+            // padding: 1.4rem;
+            p {
+              font-family: "Poppins", sans-serif;
+              font-weight: 600;
+              margin-bottom: 0;
+              &.label {
+                color: #606c8d;
+                font-size: 12px;
+                margin-bottom: 2rem;
+              }
+              &.value {
+                color: #060606;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .action-icon {
+    width: 20px;
+    height: 20px;
+    /* UI Properties */
+    background: transparent 0% 0% no-repeat padding-box;
+    opacity: 1;
+  }
+  
+  .icon_card_main {
+    width: 207px;
+    background: #fffefe;
+    box-shadow: 0px 3px 15px #00000010;
+    border-radius: 12px;
+    position: relative !important;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .sub_card {
+    width: 97%;
+    height: 214px;
+    margin-left: 4px;
+    background: #f3f3f3;
+    border-radius: 12px;
+    opacity: 1;
+    margin-top: 4px;
+  }
+  .image_standard {
+    margin-top: 4pt !important;
+    margin-bottom: 14px;
+    position: relative !important;
+  }
+  .upload_btn {
+    color: #004c97;
+    // height: 32px;
+    height: calc(100% - 214px);
+    width: 50%;
+    font-weight: 600;
+    border: none;
+  }
+  .btn_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0 2px 0;
+  }
+ 
+  
+  .uploadImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between !important;
+    padding: 15px;
+  }
+  .noImage {
+    height: 25% !important;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .screen-align {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  .approveButton {
+    height: 50px;
+    width: 187px;
+    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0% 0%
+      no-repeat padding-box;
+    border-radius: 35px;
+    opacity: 1;
+    color: #fff;
+  }
+  .exitButton {
+    height: 50px;
+    width: 187px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 15px #0000000f;
+    border-radius: 50px;
+    opacity: 1;
+    color: #b20000;
+  }
+  .editButton {
+    height: 50px;
+    width: 187px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 15px #0000000f;
+    border-radius: 50px;
+    opacity: 1;
+    color: #004c97;
+  }
+  
