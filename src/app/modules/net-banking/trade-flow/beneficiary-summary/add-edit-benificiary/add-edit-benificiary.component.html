@@ -16,32 +16,47 @@
   <!-- <ng-container [formGroup]="benificiaryDetailsForm"> -->
   <form [formGroup]="benificiaryDetailsForm">
     <div fxLayout="row wrap" fxLayoutGap="2%">
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="22"
-      >
-        <mat-label>Account Number</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="accountNo"
-          [readonly]="readorWrite"
-        />
-      </mat-form-field>
-      <mat-form-field
-        appearance="outline"
-        class="fieldinput custom-field"
-        fxFlex="22"
-      >
-        <mat-label>Confirm Account Number</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="confirmAccountNumber"
-          [readonly]="readorWrite"
-        />
-      </mat-form-field>
+      <div fxFlex="22">
+        <mat-form-field appearance="outline" class="fieldinput custom-field">
+          <mat-label>Account Number</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="accountNo"
+            [readonly]="readorWrite"
+            (keyup)="checkAccountNumber()"
+          />
+        </mat-form-field>
+        <mat-error
+          class="error"
+          *ngIf="
+            benificiaryDetailsForm.get('accountNo').value && accountNumberExists
+          "
+          >{{ "Account Number Already Exists" }}</mat-error
+        >
+      </div>
+      <div fxFlex="22">
+        <mat-form-field appearance="outline" class="fieldinput custom-field">
+          <mat-label>Confirm Account Number</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="confirmAccountNumber"
+            [readonly]="readorWrite"
+          />
+        </mat-form-field>
+        <mat-error
+          class="error"
+          *ngIf="
+            benificiaryDetailsForm.get('accountNo').value &&
+            benificiaryDetailsForm.get('confirmAccountNumber').value &&
+            benificiaryDetailsForm.get('accountNo').value !=
+              benificiaryDetailsForm.get('confirmAccountNumber').value
+          "
+        >
+          {{ "Please enter correct Account Number" }}</mat-error
+        >
+      </div>
       <mat-form-field
         appearance="outline"
         class="fieldinput custom-field"
@@ -132,7 +147,7 @@
       >
         <mat-label>Visibilty</mat-label>
         <!-- <input matInput type="text" /> -->
-        <mat-select formControlName="visibility" disabled>
+        <mat-select formControlName="visibility">
           <mat-option value="Private"> Private </mat-option>
           <mat-option value="Public"> Public </mat-option>
         </mat-select>
