@@ -44,10 +44,10 @@ export class AttachmentsComponent implements OnInit {
       attachMentModel: this.formBuilder.array([]),
     });
 
-    // this.attachementInfoForm.valueChanges.subscribe((res) => {
-    //   console.log(this.attachMentModel["controls"]);
-    //   this.updateParentModel(res, this.checkform());
-    // });
+    this.attachementInfoForm.valueChanges.subscribe((res) => {
+      console.log(this.attachMentModel["controls"]);
+      this.updateParentModel(this.attachMentModel.value, this.checkform());
+    });
   }
 
   checkform() {
@@ -99,11 +99,9 @@ export class AttachmentsComponent implements OnInit {
           setTimeout(() => {
             this.updateParentModel(
               {
-                attachMentModel: {
-                  applicantId: null,
-                  masterId: null,
-                  attachMentModel: attachMentModel,
-                },
+                applicantId: null,
+                masterId: null,
+                attachMentModel: attachMentModel,
               },
               this.checkform()
             );
@@ -138,7 +136,7 @@ export class AttachmentsComponent implements OnInit {
     let lengthForPAyload;
     let formData = new FormData();
     let data = {
-      documentName: "Others Document",
+      // documentName: "Others Document",
       documentType: "",
       documentNumber: "",
       documentSide: index,
@@ -150,19 +148,16 @@ export class AttachmentsComponent implements OnInit {
     formData.append("file", file);
     formData.append("module", "document");
     this.commonService.uploadDocument(formData).subscribe((res) => {
-      if (res.type === HttpEventType.UploadProgress) {
-      } else if (res instanceof HttpResponse) {
-        let responseBody: any = res;
-        console.log(responseBody);
+      if (res?.data) {
         let form = {
           files: file,
-          documentId: responseBody?.body?.data?.documentId,
-          documentName: responseBody?.body?.data?.documentName,
+          documentId: res?.data?.documentId,
+          documentName: res?.data?.documentName,
           documentType: "",
-          documentSide: responseBody?.body?.data?.documentSide,
+          documentSide: res?.data?.documentSide,
           noOfSignatures: null,
-          fileType: responseBody?.body?.data?.fileType,
-          fileName: responseBody?.body?.data?.fileName,
+          fileType: res?.data?.fileType,
+          fileName: res?.data?.fileName,
         };
         this.getArray(index).push(this.addFiles(form));
       }

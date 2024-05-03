@@ -65,13 +65,6 @@ export class CreditCardPaymentComponent implements OnInit {
       this.showNarrationBlock = value;
     });
     this.fetchCustomerInfo();
-    let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-      data: { msg: "Payment failed!!!", status: false },
-      width: "40%",
-      disableClose: true,
-      panelClass: "popup-class",
-      backdropClass: "bdrop",
-    });
   }
   buildCreditCardForm() {
     this.creditCardForm = this.formBuilder.group({
