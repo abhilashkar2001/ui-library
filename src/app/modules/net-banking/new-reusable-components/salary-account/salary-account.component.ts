@@ -33,14 +33,13 @@ export class SalaryAccountComponent implements OnInit {
     private tokenService:TokenStorageService) { }
 
   ngOnInit(): void {
-    this.customerId=this.tokenService;
+    this.customerId=this.tokenService.getCorporateId();
     console.log(this.customerId);
     
     this.getSummary()
   }
   getSummary(){
-    this.api.getSummary('1234').subscribe(resp=>{
-      console.log(resp);
+    this.api.getSummary(this.customerId).subscribe(resp=>{
       this.salaryData=resp;
     })
   }
