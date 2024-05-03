@@ -3,6 +3,7 @@ import { AmendmentLcInfoComponent } from "./new-reusable-components/amendment-lc
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -10,7 +11,9 @@ import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.compo
 import { LcOtherConditionsComponent } from "./new-reusable-components/lc-other-conditions/lc-other-conditions.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
+import { exportBillDispatchData } from "./trade-flow/export-bill-dispatch-summary/exportbillstaticdata";
 
 export class tabsClass {
   public static Bg_Issuance: any[] = [
@@ -162,30 +165,45 @@ export class tabsClass {
     },
   ];
 
-  public static readonly Remittance:any[] = [
+  public static readonly Remittance: any[] = [
     {
       id: 1,
       title: "Applicant Info",
       type: "Remittamce_Applicant_Info",
-      componrnt: ApplicantsInfoComponent
+      componrnt: ApplicantsInfoComponent,
     },
     {
       id: 2,
       title: "Remittance Info",
       type: "Remittamce_Remittance_Info",
-      componrnt: RemittanceInfoComponent
+      componrnt: RemittanceInfoComponent,
     },
     {
       id: 3,
       title: "Other Info",
       type: "Remittamce_Other_Info",
-      componrnt: OthersInfoComponent
+      componrnt: OthersInfoComponent,
     },
     {
       id: 4,
       title: "Attachments",
       type: "Remittamce_Attachments",
-      componrnt: AttachmentsComponent
+      componrnt: AttachmentsComponent,
     },
-  ]
+  ];
+
+  public static readonly exportBillDispatchData: any[] = [
+    {
+      id: 1,
+      title: "Transaction Details",
+      type: "Export_Transaction_Details",
+      componrnt: TransactionDetailsComponent,
+    },
+    {
+      id: 2,
+      title: "Dispatch Documents",
+      type: "Dispatch_Documents_Details",
+      componrnt: DispatchDocumentsComponent,
+    },
+  ];
 }
