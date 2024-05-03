@@ -75,7 +75,7 @@ export class InputDatePickerComponent implements OnInit {
     );
     this.dateMask = createMask<Date>({
       alias: "datetime",
-      inputFormat: this.dateService?.format.toLocaleLowerCase(),
+      inputFormat: this.dateService?.format?.toLocaleLowerCase(),
       formatter: (value: string) => {
         return moment(value).format(this.dateService?.format);
       },

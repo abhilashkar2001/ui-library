@@ -80,6 +80,9 @@ import { WebDocUploadComponent } from "./web-doc-upload/web-doc-upload.component
 import { WarningComponent } from "./warning/warning.component";
 import { SpinnerComponent } from "./core-components/spinner/spinner.component";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { IcCustomInputComponent } from "./ic-custom-input/ic-custom-input.component";
+import { IcRowInputComponent } from "./ic-row-input/ic-row-input.component";
+import { ReusableTableComponent } from "./reusable-table/reusable-table.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -131,10 +134,12 @@ const components = [
   AddNewPopupComponent,
   SubNavBarComponent,
   InputDatePickerComponent,
-
+  ReusableTableComponent,
   WebDocUploadComponent,
   WarningComponent,
   SpinnerComponent,
+  IcCustomInputComponent,
+  IcRowInputComponent,
 ];
 
 @NgModule({

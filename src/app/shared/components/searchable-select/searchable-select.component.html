@@ -63,9 +63,9 @@
       }"
     >
       {{ item?.label }}
-      <!-- <span *ngIf="displayLabel && item?.label != 'No data found'">
+      <span *ngIf="displayLabel && item?.label != 'No data found'">
         ({{ item?.display }})</span
-      > -->
+      >
     </mat-option>
   </mat-select>
   <mat-error *ngIf="control.hasError('required') && control.touched">

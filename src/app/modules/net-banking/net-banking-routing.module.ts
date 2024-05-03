@@ -23,6 +23,15 @@ import { GenericRemittanceComponent } from "./new-reusable-components/generic-re
 import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
 import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
 
+import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
+import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+
+import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
+import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
+import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
+import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
+import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
+
 const routes: Routes = [
   {
     path: "",
@@ -75,8 +84,28 @@ const routes: Routes = [
             component: GenericRemittanceComponent,
           },
           {
+            path: "document-acceptance",
+            component: DocumentAcceptanceComponent,
+          },
+          {
             path: "remittance-summery",
             component: RemittanceSummeryComponent,
+          },
+          {
+            path: "export-bill-dispatch-summary",
+            component: ExportBillDispatchSummaryComponent,
+          },
+          {
+            path: "export-bill-dispatch",
+            component: TransactionDetailsComponent,
+          },
+          {
+            path: "generic-buyer-credit",
+            component: GenericBuyerCreditComponent,
+          },
+          {
+            path: "buyer-credit-summery",
+            component: BuyersCreditSummaryComponent,
           },
           {
             path: "bgSummary",
@@ -89,6 +118,10 @@ const routes: Routes = [
           {
             path: "export-process-tabs",
             component: ExportProcessInfoComponent,
+          },
+          {
+            path: "bill-processing",
+            component: BillProcessingSummaryComponent,
           },
         ],
       },
@@ -104,10 +137,20 @@ const routes: Routes = [
         path: "bulk-upload/:id",
         component: AddBulkUploadComponent,
       },
-      // {
-      //   path: "add-bulk-upload",
-      //   component: UploadBulkUploadComponent,
-      // },
+      {
+        path: "fund-transfer",
+        loadChildren: () =>
+          import("./fund-transfer/fund-transfer.module").then(
+            (m) => m.FundTransferModule
+          ),
+      },
+      {
+        path: "cheque",
+        loadChildren: () =>
+          import("./cheque-book/cheque-book.module").then(
+            (m) => m.ChequeBookModule
+          ),
+      },
     ],
   },
 ];

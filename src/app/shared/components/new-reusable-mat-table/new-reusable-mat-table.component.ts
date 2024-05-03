@@ -301,6 +301,8 @@ export class NewReusableMatTableComponent implements OnInit {
    * Open add / edit screen.
    */
   openPopUp(element) {
+    console.log(element);
+    
     this.tableservice.setEditingStatus(false);
     this.customEditForm.emit({ element });
   }
@@ -330,6 +332,8 @@ export class NewReusableMatTableComponent implements OnInit {
     if (sortName == "SC2") {
       sortName = "stateCode2";
     }
+    console.log("inside custom");
+    
     this.customGetDataByPage.emit({
       filterBy: value,
       filterValue: value,
