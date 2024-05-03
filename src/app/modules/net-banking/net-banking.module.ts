@@ -45,6 +45,11 @@ import { LcAmendementInfoComponent } from './new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from './trade-flow/remittance-summery/remittance-summery.component';
 import { GenericRemittanceComponent } from './new-reusable-components/generic-remittance/generic-remittance.component';
 import { RemittanceInfoComponent } from './new-reusable-components/remittance-info/remittance-info.component';
+
+import { ExportBillDispatchSummaryComponent } from './trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component';
+import { TransactionDetailsComponent } from './new-reusable-components/transaction-details/transaction-details.component';
+import { DispatchDocumentsComponent } from './new-reusable-components/dispatch-documents/dispatch-documents.component';
+
 import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
 import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
 import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficiary-details/beneficiary-details.component';
@@ -56,6 +61,7 @@ import { GenericBuyerCreditComponent } from './new-reusable-components/generic-b
 import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
 import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
 import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+
 
 
 
@@ -97,6 +103,11 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     RemittanceSummeryComponent,
     GenericRemittanceComponent,
     RemittanceInfoComponent,
+
+    ExportBillDispatchSummaryComponent,
+    TransactionDetailsComponent,
+    DispatchDocumentsComponent,
+
     BillProcessingSummaryComponent,
     DocumentAcceptanceComponent,
     BeneficiaryDetailsComponent,
@@ -108,6 +119,7 @@ import { CreditInfoComponent } from './new-reusable-components/credit-info/credi
     CustomerInfoComponent,
     SupplierInfoComponent,
     CreditInfoComponent,
+
   ],
   imports: [
     CommonModule,
