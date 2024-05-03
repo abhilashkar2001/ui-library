@@ -1,20 +1,19 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { InternetBankingService } from "../../internet-banking.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { bgConstant } from "./bg-summary.constant";
-import { MatDialog } from "@angular/material/dialog";
-import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
-import { BgSummaryServiceService } from "./bg-summary-service.service";
-import { DrawerConstant } from "../../new-reusable-components/custom-drawer/custom-drawer.constant";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { DrawerConstant } from '../../new-reusable-components/custom-drawer/custom-drawer.constant';
+import { BgSummaryServiceService } from '../bg-summary/bg-summary-service.service';
+import { billProcessingConstants } from './bill-processing-summary.constants';
 
 @Component({
-  selector: "app-bg-summary",
-  templateUrl: "./bg-summary.component.html",
-  styleUrls: ["./bg-summary.component.scss"],
+  selector: 'app-bill-processing-summary',
+  templateUrl: './bill-processing-summary.component.html',
+  styleUrls: ['./bill-processing-summary.component.scss']
 })
-export class BgSummaryComponent implements OnInit {
-  @Input("bgType") bgType: any = "BG Issuance";
+export class BillProcessingSummaryComponent implements OnInit {
+  @Input("bgType") bgType: any = "Bill Processing";
   maintenanceTitle: any;
   columns: any;
   sort: any;
@@ -28,7 +27,7 @@ export class BgSummaryComponent implements OnInit {
   module: any;
   bgData: Object;
   staticData: any = {
-    data: bgConstant.bgStaticData,
+    data: billProcessingConstants.billStaticData,
     meta: {
       page: 1,
       size: 5,
@@ -43,7 +42,7 @@ export class BgSummaryComponent implements OnInit {
   tradeMenus = DrawerConstant.DRAWER_MENU;
   matchedObject: any;
   summaryDetails: any;
-  addNewList = bgConstant.ADDNEW_LIST;
+  addNewList = billProcessingConstants.ADDNEW_LIST;
   constructor(
     private route: Router,
     private api: BgSummaryServiceService,
@@ -53,6 +52,8 @@ export class BgSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("bill processing");
+    
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.isSummary = true;
       this.bgType = params.get("type");
@@ -62,19 +63,22 @@ export class BgSummaryComponent implements OnInit {
   }
 
   getSummaryUrl() {
-    console.log(this.summaryDetails);
-    
+  console.log(this.summaryDetails);
+  
     return new Promise((resolve, reject) => {
       if (this.summaryDetails) resolve("summary details found");
       else
         this.api.getSummaryUrls().subscribe((resp) => {
+      console.log(resp,this.bgType);
+      
           this.summaryDetails = resp.find(
             (element) => element.name === this.bgType
           );
           console.log(this.summaryDetails);
-
-          this.columns = bgConstant[this.summaryDetails.columnRefName];
+          
+          this.columns = billProcessingConstants[this.summaryDetails.columnRefName];
           this.cdr.detectChanges();
+          console.log(this.summaryDetails);
           resolve("summary details found");
         });
     });
@@ -122,13 +126,13 @@ export class BgSummaryComponent implements OnInit {
         panelClass: "dialog-class",
       });
       dialogRef.afterClosed().subscribe((res) => {
-        this.getBGType();
+        this.getDocumentAcceptanceType();
       });
     } else if (id === "bulk") {
     } else if (id === "template") {
       this.openTemplatePopup();
     } else if (id === "new") {
-      this.getBGType();
+      this.getDocumentAcceptanceType();
     } else {
       console.log("having a id");
     }
@@ -145,7 +149,7 @@ export class BgSummaryComponent implements OnInit {
       data: this.summaryDetails,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      this.getBGType(res.templateName);
+      this.getDocumentAcceptanceType(res.templateName);
     });
   }
 
@@ -153,7 +157,9 @@ export class BgSummaryComponent implements OnInit {
    * Note: if templateName is avilable then it should be send by params
    * @param template templateName or id
    */
-  getBGType(template?) {
+  getDocumentAcceptanceType(template?) {
+    console.log(this.summaryDetails);
+    
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
       queryParams: { type: this.summaryDetails.name },
     });

@@ -58,7 +58,6 @@ export class NetBankingDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDashboardInfo();
     this.getActivityLogData();
     this.getDataByPage();
     this.fetchAccountList();
@@ -102,6 +101,8 @@ export class NetBankingDashboardComponent implements OnInit {
               "listOfAccounts",
               JSON.stringify(listOfAccounts)
             );
+            this.getDashboardInfo(listOfAccounts);
+
             sessionStorage.setItem("selectAccNo", this.selectedAcc);
             this.accountlist.forEach((item: any) => {
               if (item?.accountList)
@@ -130,8 +131,8 @@ export class NetBankingDashboardComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  getDashboardInfo() {
-    this.accountsInfo = JSON.parse(sessionStorage.getItem("listOfAccounts"));
+  getDashboardInfo(listOfAccounts) {
+    this.accountsInfo = listOfAccounts;
     let balance = 0;
     this.accountsInfo.forEach((el) => {
       balance += parseFloat(el.accountBalance);
@@ -155,7 +156,7 @@ export class NetBankingDashboardComponent implements OnInit {
     this.netBankingService
       .getSummary(null, null, 1, 3, null, null, "coprateNetBanking")
       .subscribe((res: any) => {
-        this.dummyResponse = res?.data.slice(0, 3);
+        this.dummyResponse = res?.data?.slice(0, 3);
       });
   }
 
