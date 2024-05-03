@@ -5,21 +5,6 @@ export class bgConstant {
       header: "Applicant",
       cell: (element: any) => element.applicant,
     },
-    // {
-    //   columnDef: "invoiceNo",
-    //   header: "Invoice No",
-    //   cell: (element: any) => element.invoiceNo,
-    // },
-    // {
-    //   columnDef: "submittedOn",
-    //   header: "Submitted on",
-    //   cell: (element: any) => element.submittedOn,
-    // },
-    // {
-    //   columnDef: "billId",
-    //   header: "Bill ID",
-    //   cell: (element: any) => element.billId,
-    // },
     {
       columnDef: "lastUpdatedBy",
       header: "Last Update",
