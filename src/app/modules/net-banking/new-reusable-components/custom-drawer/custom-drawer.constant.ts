@@ -74,7 +74,7 @@ export class DrawerConstant {
               id: "BG Issuance",
             },
             {
-              name: "Payment Request Enquirey",
+              name: "Payment Request Enquiry",
               path: "bill-processing",
               id: "LC Physical Amendment",
             },

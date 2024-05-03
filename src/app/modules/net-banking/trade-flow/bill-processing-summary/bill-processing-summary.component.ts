@@ -90,28 +90,30 @@ export class BillProcessingSummaryComponent implements OnInit {
   }
 
   getDataByPage(event) {
-    // this.getSummaryUrl().then((_) => {
-    //   this.page = event.page;
-    //   this.pageSize = event.size;
-    //   this.sortDirection = event.direction;
-    //   this.sortValue = event.sort;
-    //   this.filterBy = event.filterBy;
-    //   this.module = event.module;
-    //   this.api
-    //     .getSummaryDetails(
-    //       event.filterBy,
-    //       event.filterValue,
-    //       event.page,
-    //       event.size,
-    //       this.sortValue,
-    //       event.direction,
-    //       this.bgType,
-    //       this.summaryDetails.summaryUrl
-    //     )
-    //     .subscribe((res) => {
-    //       this.bgData = res;
-    //     });
-    // });
+    console.log(event);
+    
+    this.getSummaryUrl().then((_) => {
+      this.page = event.page;
+      this.pageSize = event.size;
+      this.sortDirection = event.direction;
+      this.sortValue = event.sort;
+      this.filterBy = event.filterBy;
+      this.module = event.module;
+      this.api
+        .getSummaryDetails(
+          event.filterBy,
+          event.filterValue,
+          event.page,
+          event.size,
+          this.sortValue,
+          event.direction,
+          this.bgType,
+          this.summaryDetails.summaryUrl
+        )
+        .subscribe((res) => {
+          this.bgData = res;
+        });
+    });
   }
 
   /**
@@ -119,6 +121,8 @@ export class BillProcessingSummaryComponent implements OnInit {
    * @param event
    */
   openPopUp(event) {
+    console.log(event);
+    
     const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
