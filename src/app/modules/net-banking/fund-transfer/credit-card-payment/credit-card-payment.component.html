@@ -4,7 +4,7 @@
     <mat-icon svgIcon="card-icon"></mat-icon>
   </div>
   <mat-divider></mat-divider>
-  <form *ngIf="creditCardForm" [formGroup]="creditCardForm">
+  <form *ngIf="creditCardForm" [formGroup]="creditCardForm" fxLayout="column">
     <div class="py-8" fxLayout="row wrap" fxLayoutGap="10">
       <div fxFlex="24">
         <app-searchable-select
@@ -29,7 +29,7 @@
       <div fxFlex="24">
         <mat-form-field appearance="outline">
           <mat-label class="text_label">Amount</mat-label>
-          <span Prefix class="text_label">₹</span>
+          <span matPrefix class="text_label">₹</span>
           <input matInput type="text" formControlName="amount" />
         </mat-form-field>
       </div>
@@ -103,7 +103,7 @@
         </div>
 
         <ng-container *ngIf="showNarrationBlock">
-          <div class="textarea_field" fxFlex="25">
+          <div class="textarea_field" fxFlex="24">
             <textarea
               matInput
               name=""
@@ -114,6 +114,17 @@
           </div>
         </ng-container>
       </ng-container>
+    </div>
+    <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
+      <button class="exit-button" mat-raised-button>Cancel</button>
+      <button class="back-button" mat-raised-button>Clear</button>
+      <button-loading
+        [type]="'button'"
+        [btnClass]="'submit-button'"
+        (click)="submit()"
+      >
+        Submit
+      </button-loading>
     </div>
   </form>
 </mat-card>
