@@ -63,7 +63,7 @@ export class BgSummaryComponent implements OnInit {
 
   getSummaryUrl() {
     console.log(this.summaryDetails);
-    
+
     return new Promise((resolve, reject) => {
       if (this.summaryDetails) resolve("summary details found");
       else
@@ -155,7 +155,7 @@ export class BgSummaryComponent implements OnInit {
    */
   getBGType(template?) {
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
-      queryParams: { type: this.summaryDetails.name },
+      queryParams: { type: this.bgType },
     });
   }
 }
