@@ -70,7 +70,13 @@
     "columnRefName": "REMITTANCE"
   },
   {
-
+    "name": "exportProcess",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/export-process-tabs",
+    "columnRefName": "exportProcess"
+  },
+  {
     "name": "Export Bill Dispatch Request",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",
@@ -97,6 +103,12 @@
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/generic-buyer-credit",
     "columnRefName": "BUYER_CREDIT"
-
+  },
+  {
+    "name": "Export SW Bill Lodgement",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/add-export",
+    "columnRefName": "Export SW Bill"
   }
 ]

@@ -16,6 +16,7 @@ export class AddEditBenificiaryComponent implements OnInit {
   responseItm: any;
   readorWrite: boolean = false;
   saveTheEdit: boolean = false;
+  accountNumberExists: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -24,6 +25,8 @@ export class AddEditBenificiaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.buildForm({});
+    this.getAllCountry();
     this.route.queryParamMap.subscribe((params: any) => {
       this.id = params.get("id");
       this.isEdit = params.get("isEdit");
@@ -34,9 +37,6 @@ export class AddEditBenificiaryComponent implements OnInit {
         console.log(this.id);
       }
     });
-
-    this.getAllCountry();
-    this.buildForm({});
   }
 
   buildForm(item?) {
@@ -64,11 +64,21 @@ export class AddEditBenificiaryComponent implements OnInit {
     });
   }
 
+  checkAccountNumber() {
+    let accNo = this.benificiaryDetailsForm.get("accountNo").value;
+    this.benificiaryApi.checkCorpAccountNumber(accNo).subscribe((res) => {
+      this.accountNumberExists = res;
+    });
+  }
+
   getBeneficiarybyId(id: string) {
     this.benificiaryApi.getBeneficiaryById(this.id).subscribe((resp: any) => {
       if (resp?.statusCode === 200 || resp.statusCode === 201) {
         this.responseItm = resp.data[0];
-        this.buildForm(this.responseItm);
+        this.benificiaryDetailsForm?.patchValue(this.responseItm);
+        this.benificiaryDetailsForm
+          .get("confirmAccountNumber")
+          .setValue(this.responseItm?.accountNo);
       }
     });
   }

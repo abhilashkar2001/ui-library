@@ -9,9 +9,26 @@ const MICROSERVICE_URL = environment.microServiceURL;
 export class FundTransferService {
   constructor(private http: HttpClient) {}
 
+  fetchBenificiary() {
+    return this.http.get<any>(`${MICROSERVICE_URL}/corp_benieficiary`);
+  }
+
+  fetchGeneric(screen, generic) {
+    return this.http.get(
+      `${MICROSERVICE_URL}/generic-value?screenName=${screen}&genericName=${generic}&language=English`
+    );
+  }
+
   saveFundTransferData(payload) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/corporate-net-banking/save-multi-or-single-transfer`,
+      payload
+    );
+  }
+
+  saveCreditCard(payload) {
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/corporate-net-banking/creditCardPayment`,
       payload
     );
   }

@@ -1,13 +1,13 @@
-.header-part {
-  padding: 12px;
-}
-
-.form-title {
-  font: normal normal 25px/16px poppins;
-}
-
-.form-container {
-  padding: 2% 10%;
+.single_fund_container {
+  .heading_card {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    mat-icon {
+      display: flex;
+    }
+  }
 }
 
 .label {
@@ -19,6 +19,10 @@
 }
 
 .form-field {
+  margin-top: 10px;
+}
+
+.serchable-drop {
   margin-top: 10px;
 }
 

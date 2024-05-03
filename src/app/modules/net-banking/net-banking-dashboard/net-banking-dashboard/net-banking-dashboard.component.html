@@ -5,7 +5,7 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">search</mat-label>
         <input matInput />
-        <mat-icon matSuffix>search</mat-icon>
+        <mat-icon matSuffix svgIcon="search-icon"></mat-icon>
       </mat-form-field>
     </div>
   </div>
@@ -120,8 +120,8 @@
     </ng-container>
   </div>
 
-  <div fxLayout="row" fxFlex="100">
-    <div fxLayout="column" fxFlex="73" fxLayoutGap="15px">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between flex-start">
+    <div fxLayout="column" fxFlex="75" fxLayoutGap="15px">
       <div class="transfer-mtcd">
         <nav mat-tab-nav-bar>
           <a
@@ -145,7 +145,7 @@
                 (click)="openTransfer(transfer)"
               >
                 <img [src]="transfer.image" />
-                <div class="operation-font">{{ transfer.label }}</div>
+                <div class="text-normal">{{ transfer.label }}</div>
               </mat-card>
             </div>
           </div>
@@ -191,7 +191,7 @@
                     <div class="table-response">
                       <td
                         class="col labelValRef text-bold"
-                        (click)="viewPendingRecord()"
+                        (click)="viewPendingRecord(auditLogDataObject)"
                       >
                         {{ auditLogDataObject?.transactionReferenceNo }}
                       </td>
@@ -250,8 +250,8 @@
               <ng-container *ngFor="let key of colorCode">
                 <mat-accordion>
                   <mat-expansion-panel class="panel">
-                    <mat-expansion-panel-header class="panelHeader"
-                      ><mat-panel-description>
+                    <mat-expansion-panel-header class="panelHeader">
+                      <mat-panel-description>
                         <div fxLayout="row">
                           <div class="vl"></div>
                           <div class="dropdownName">

@@ -1,0 +1,77 @@
+<mat-card>
+  <div [formGroup]="exportLoan">
+    <div fxLayout="row" fxLayoutGap="10">
+      <div fxFlex="100" fxFlex.gt-xs="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Request Date</mat-label>
+          <input matInput type="text" formControlName="rquestDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img src="/assets/images/calendar.png" class="pb-25" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-xs="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Disbursement Date</mat-label>
+          <input matInput type="text" formControlName="disbrusementDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img src="/assets/images/calendar.png" class="pb-25" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <app-searchable-select
+        fxFlex="24"
+        inputLabel="Type of facility"
+        [control]="exportLoan.get('facility')"
+      ></app-searchable-select>
+      <app-searchable-select
+        fxFlex="24"
+        inputLabel="Document Type"
+        [control]="exportLoan.get('docType')"
+      ></app-searchable-select>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <mat-form-field appearance="outline" fxFlex="24">
+        <mat-label>Loan Currency</mat-label>
+        <input matInput formControlName="loanCurrency" />
+        <mat-icon matSuffix class="searchIcon-main">search</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="24">
+        <mat-label>Loan Amount</mat-label>
+        <input matInput formControlName="loanAmount" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="24">
+        <mat-label>Period of EPC(in days)</mat-label>
+        <input matInput formControlName="epc" />
+      </mat-form-field>
+      <div fxLayout="column" fxFlex="24">
+        <mat-label>Credit Type</mat-label>
+        <mat-radio-group formControlName="creditType">
+          <mat-radio-button
+            *ngFor="let radio of radioArr"
+            [value]="radio?.value"
+            >{{ radio?.label }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <app-searchable-select
+        fxFlex="49.5"
+        inputLabel="Operative Accounts"
+        [control]="exportLoan.get('opAcc')"
+      ></app-searchable-select>
+      <app-searchable-select
+        fxFlex="49.5"
+        inputLabel="Interest Accounts"
+        [control]="exportLoan.get('interestAcc')"
+      ></app-searchable-select>
+    </div>
+  </div>
+</mat-card>

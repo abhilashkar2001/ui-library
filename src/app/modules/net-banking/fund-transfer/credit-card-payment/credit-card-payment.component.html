@@ -9,9 +9,9 @@
       <div fxFlex="24">
         <app-searchable-select
           [items]="selectList"
-          bindLabelKey="label"
-          bindValueKey="value"
-          [control]="creditCardForm.get('debitAccountNo')"
+          bindLabelKey="accountNo"
+          bindValueKey="accountNo"
+          [control]="creditCardForm.get('debitAccount')"
           inputLabel="Debit Account Number"
         ></app-searchable-select>
       </div>
@@ -21,7 +21,7 @@
           [items]="aanList"
           bindLabelKey="label"
           bindValueKey="value"
-          [control]="creditCardForm.get('aanNo')"
+          [control]="creditCardForm.get('creditAccount')"
           inputLabel="AAN Number"
         ></app-searchable-select>
       </div>
@@ -30,7 +30,7 @@
         <mat-form-field appearance="outline">
           <mat-label class="text_label">Amount</mat-label>
           <span matPrefix class="text_label">₹</span>
-          <input matInput type="text" formControlName="amount" />
+          <input matInput type="text" formControlName="debitAmount" />
         </mat-form-field>
       </div>
 
