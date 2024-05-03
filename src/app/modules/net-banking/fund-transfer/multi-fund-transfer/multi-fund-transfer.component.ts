@@ -175,11 +175,10 @@ export class MultiFundTransferComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-            data: { msg: "Transaction Successfull", status: true },
-            width: "50%",
-            height: "60%",
+            data: { msg: "Transaction Successful", status: true },
+            width: "40%",
             disableClose: true,
-            panelClass: "popup-dialog-class",
+            panelClass: "popup-class",
             backdropClass: "bdrop",
           });
           this.dialogRef.afterClosed().subscribe((result) => {
@@ -217,10 +216,9 @@ export class MultiFundTransferComponent implements OnInit {
       } else {
         this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
           data: { msg: "Transaction failed", status: false },
-          width: "50%",
-          height: "60%",
+          width: "40%",
           disableClose: true,
-          panelClass: "popup-dialog-class",
+          panelClass: "popup-class",
           backdropClass: "bdrop",
         });
         this.dialogRef.afterClosed().subscribe((result) => {

@@ -10,6 +10,7 @@ export class CustomSuccessPopupComponent implements OnInit {
   @Output() doneEmit = new EventEmitter<any>();
   message: any;
   status: any;
+  referenceNo: any;
   constructor(
     private dialogRef: MatDialogRef<CustomSuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any
@@ -19,6 +20,7 @@ export class CustomSuccessPopupComponent implements OnInit {
     if (this.data) {
       this.message = this.data.msg;
       this.status = this.data.status;
+      this.referenceNo = this.data?.reffNo;
     }
   }
 
