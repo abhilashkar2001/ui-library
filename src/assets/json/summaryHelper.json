@@ -2,7 +2,7 @@
   {
     "name": "BG Issuance",
     "backPath": "user/dashboard/trade/dashboard",
-    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "summaryUrl": "bankGuarantee/fetchBgMaster",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "BGTYPE_SUMMARY"
   },
@@ -30,7 +30,7 @@
   {
     "name": "LC Issuance",
     "backPath": "user/dashboard/trade/dashboard",
-    "summaryUrl": "bgIssuance/fetchApplicantInfo",
+    "summaryUrl": "lcMaster?lcType=Issuance",
     "addNewPath": "user/dashboard/trade/genericBg",
     "columnRefName": "LC_SUMMARY"
   },

@@ -57,28 +57,28 @@ export class EefcComponent implements OnInit {
   }
 
   getDataByPage(event) {
-    this.getSummaryUrl().then((_) => {
-      this.page = event.page;
-      this.pageSize = event.size;
-      this.sortDirection = event.direction;
-      this.sortValue = event.sort;
-      this.filterBy = event.filterBy;
-      this.module = event.module;
-      this.api
-        .getSummaryDetails(
-          event.filterBy,
-          event.filterValue,
-          event.page,
-          event.size,
-          this.sortValue,
-          event.direction,
-          this.bgType,
-          this.summaryDetails.summaryUrl
-        )
-        .subscribe((res) => {
-          this.bgData = res;
-        });
-    });
+    // this.getSummaryUrl().then((_) => {
+    //   this.page = event.page;
+    //   this.pageSize = event.size;
+    //   this.sortDirection = event.direction;
+    //   this.sortValue = event.sort;
+    //   this.filterBy = event.filterBy;
+    //   this.module = event.module;
+    //   this.api
+    //     .getSummaryDetails(
+    //       event.filterBy,
+    //       event.filterValue,
+    //       event.page,
+    //       event.size,
+    //       this.sortValue,
+    //       event.direction,
+    //       this.bgType,
+    //       this.summaryDetails.summaryUrl
+    //     )
+    //     .subscribe((res) => {
+    //       this.bgData = res;
+    //     });
+    // });
   }
 
   getBenediciaryDataByage() {
