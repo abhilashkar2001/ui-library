@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { FundTransferService } from "../fund-transfer.service";
 
 @Component({
   selector: "app-credit-card-payment",
@@ -18,13 +19,18 @@ export class CreditCardPaymentComponent implements OnInit {
   showSendAdviceBlock: boolean = false;
   showNarrationBlock: boolean = false;
   creditCardForm: FormGroup;
-  selectList = [{ label: "10000", value: "10000" }];
-  aanList = [{ label: "10000", value: "10000" }];
+  selectList = [];
+  aanList = [
+    { label: "000037560058", value: "000037560058" },
+    { label: "000037560078", value: "000037560078" },
+    { label: "000037560069", value: "000037560069" },
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private fundTransferService: FundTransferService
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
@@ -49,18 +55,30 @@ export class CreditCardPaymentComponent implements OnInit {
     this.creditCardForm.get("narration").valueChanges.subscribe((value) => {
       this.showNarrationBlock = value;
     });
+    this.fetchCustomerInfo();
   }
   buildCreditCardForm() {
     this.creditCardForm = this.formBuilder.group({
-      debitAccountNo: ["", Validators.required],
-      aanNo: ["", Validators.required],
-      amount: ["", Validators.required],
+      debitAccount: ["", Validators.required],
+      debitAmount: ["", Validators.required],
       transferOn: ["", Validators.required],
       remitter: [false],
       remitterEmail: [""],
       remitterMobile: [""],
       narration: [false],
       remitterNarration: [""],
+      creditAmount: [""],
+      creditAccount: ["", [Validators.required]],
     });
+  }
+
+  fetchCustomerInfo() {
+    this.selectList = JSON.parse(sessionStorage.getItem("listOfAccounts"));
+  }
+
+  submit() {
+    let payload = { ...this.creditCardForm.value };
+    payload.creditAmount = payload.debitAmount;
+    this.fundTransferService.saveCreditCard(payload).subscribe((res) => {});
   }
 }
