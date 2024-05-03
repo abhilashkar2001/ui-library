@@ -66,6 +66,32 @@ export class UploadBulkUploadComponent implements OnInit {
   goBack() {
     this.router.navigate(["/user/dashboard/bulk-upload"]);
   }
+
+  async uploadDocument(fileInfo) {
+    return new Promise((resolve, reject) => {
+      const formData: any = new FormData();
+      const data = JSON.stringify({
+        fileName: fileInfo?.name,
+        fileType: "",
+        documentType: "Trade",
+      });
+      formData.append("data", data);
+      formData.append("module", "document");
+      formData.append("file", fileInfo?.files);
+
+      this.commonService.uploadDocument(formData).subscribe(
+        (resp: any) => {
+          console.log(resp);
+          resolve(resp?.data);
+        },
+        (err) => {
+          console.error("Error: ", err);
+          reject();
+        }
+      );
+    });
+  }
+
   droppedFiles(evt) {
     this.file = evt.target?.files[0];
     this.uploadFileArrlrngth.push(this.addfiles(evt));
@@ -87,27 +113,39 @@ export class UploadBulkUploadComponent implements OnInit {
       processingDate: [this.currentDate],
       uplodedFileArray: this.fb.array([]),
     });
-    this.maintTemplateUpload.valueChanges.subscribe((res) => {
-      const uploadedDocs = {
-        ...res.uplodedFileArray,
-      };
-      this.updateParentModel(
-        {
-          uploadedDocs: uploadedDocs,
-        },
-        uploadedDocs?.uplodedFileArray?.length > 0 ? true : false
-      );
-    });
+    // this.maintTemplateUpload.valueChanges.subscribe((res) => {
+    //   const uploadedDocs = {
+    //     ...res.uplodedFileArray,
+    //   };
+    //   this.updateParentModel(
+    //     {
+    //       uploadedDocs: uploadedDocs,
+    //     },
+    //     uploadedDocs?.uplodedFileArray?.length > 0 ? true : false
+    //   );
+    // });
   }
 
   get uploadFileArrlrngth() {
     return this.maintTemplateUpload.get("uplodedFileArray") as FormArray;
   }
 
-  addfiles(filesData?): FormGroup {
+  async addfiles(filesData?) {
+    console.log("filesData----", filesData);
+
+    const docInfo: any = await this.uploadDocument(filesData);
+
+    this.updateParentModel(
+      {
+        documentId: docInfo?.documentId,
+      },
+      this.uploadFileArrlrngth.controls?.length > 0 ? true : false
+    );
+
     return this.fb.group({
       files: filesData.files,
       name: filesData.name,
+      documentId: docInfo?.documentId,
     });
   }
 
