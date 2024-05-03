@@ -153,7 +153,7 @@ export class SingleFundTransferComponent implements OnInit {
       });
   }
 
-  sabmit() {
+  submit() {
     if (!this.fundTransferForm.valid) return;
     let payload = [];
     payload.push(this.fundTransferForm.value);
