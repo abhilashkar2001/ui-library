@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-new-eefc",
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 export class AddNewEefcComponent implements OnInit {
   eefcForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.buildEefcForm();
@@ -32,5 +33,12 @@ export class AddNewEefcComponent implements OnInit {
       creditAccountType: [""],
       operativeAccount: [""],
     });
+  }
+
+  onSubmit() {}
+  editRecord() {}
+
+  goBack() {
+    this.router.navigate([`/user/dashboard/trade/eefc-summary`]);
   }
 }

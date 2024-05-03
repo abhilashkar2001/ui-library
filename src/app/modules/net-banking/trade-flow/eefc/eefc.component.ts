@@ -35,6 +35,7 @@ export class EefcComponent implements OnInit {
     status: "OK",
   };
   isSummary: boolean = true;
+  filterValue = "";
   componentName: any;
   tradeMenus = DrawerConstant.DRAWER_MENU;
   matchedObject: any;
@@ -51,6 +52,9 @@ export class EefcComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  CustomGoBack(data) {
+    this.route.navigate(["/user/dashboard/trade/dashboard"]);
+  }
 
   getDataByPage(event) {
     this.getSummaryUrl().then((_) => {
@@ -77,6 +81,18 @@ export class EefcComponent implements OnInit {
     });
   }
 
+  getBenediciaryDataByage() {
+    const payload = {
+      filterBy: this.filterBy,
+      filterValue: this.filterValue,
+      page: this.page,
+      size: this.pageSize,
+      sort: this.sortValue,
+      direction: this.sortDirection,
+    };
+    this.getDataByPage(payload);
+  }
+
   getSummaryUrl() {
     return new Promise((resolve, reject) => {
       if (this.summaryDetails) resolve("summary details found");
@@ -91,5 +107,24 @@ export class EefcComponent implements OnInit {
           resolve("summary details found");
         });
     });
+  }
+
+  openPopUp(event) {
+    const id = event.element;
+    if (id === "addNew") {
+      this.route.navigate([`../add-edit-eefc`], {
+        relativeTo: this.activatedRoute,
+      });
+    } else {
+      const id = event.element;
+
+      this.route.navigate([`../add-edit-eefc`], {
+        relativeTo: this.activatedRoute,
+        // queryParams: { isEdit: "Yes", id: id.benificiaryId },
+      });
+    }
+    if (id === "bulk") {
+      this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);
+    }
   }
 }
