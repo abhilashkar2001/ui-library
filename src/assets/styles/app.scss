@@ -168,3 +168,13 @@ body {
 .egret-navy .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
   background-color: #004c97;
 }
+
+.egret-navy
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: #004c97;
+}
+
+.mat-radio-group {
+  margin-top: 18px;
+}
