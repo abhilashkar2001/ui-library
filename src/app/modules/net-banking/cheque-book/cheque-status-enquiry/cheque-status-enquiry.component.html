@@ -1,0 +1,100 @@
+<div class="cheque-status_container">
+  <form [formGroup]="chqueInquiryForm" fxFlex="100" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
+      <mat-label class="ml-20">Account No</mat-label>
+      <app-searchable-select
+        [items]="accountNumberList"
+        bindValueKey="accountNo"
+        bindLabelKey="accountNo"
+        [control]="chqueInquiryForm.get('accountNo')"
+        skipLabel="false"
+        (selectionChange)="handleAccountNumberChange($event)"
+      ></app-searchable-select>
+      <span class="message" *ngIf="chequeNumber"
+        >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
+        {{ customerInfo?.customerName }}</span
+      >
+    </div>
+
+    <h3 class="wrapper_row light-blue-title">Cheque Book Detail</h3>
+    <div class="row wrapper_row" fxLayout="column" fxLayoutGap="20">
+      <div fxFlex="100">
+        <div fxLayout="column" fxLayoutGap="20">
+          <mat-label class="mb-8">{{ "Account" }}</mat-label>
+          <mat-radio-group
+            fxLayoutGap="20"
+            [formControl]="chqueInquiryForm.get('inquiryChequeBy')"
+          >
+            <mat-radio-button
+              *ngFor="let option of inquiryChequeOptions"
+              [value]="option?.value"
+              >{{ option?.label }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayoutAlign="space-between center" class="row px-12">
+      <div
+        fxFlex="30"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value === 'Number'"
+      >
+        <app-ic-custom-input
+          [control]="chqueInquiryForm.get('chequeNumber')"
+          inputLabel="Cheque Number"
+        ></app-ic-custom-input>
+      </div>
+
+      <div
+        fxFlex="30"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value == 'Status'"
+      >
+        <app-searchable-select
+          [items]="selectList"
+          bindLabelKey="label"
+          bindValueKey="value"
+          [control]="chqueInquiryForm.get('select')"
+          inputLabel="select"
+        ></app-searchable-select>
+      </div>
+
+      <ng-container
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value == 'Range'"
+      >
+        <div fxFlex="25">
+          <app-ic-custom-input
+            [control]="chqueInquiryForm.get('fromChequeBookNo')"
+            inputLabel="From Cheque Book No"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex="25">
+          <app-ic-custom-input
+            [control]="chqueInquiryForm.get('toChequeBookNo')"
+            inputLabel="To Cheque Book No"
+          ></app-ic-custom-input>
+        </div>
+      </ng-container>
+
+      <div fxFlex="40" fxLayoutGap="20">
+        <button mat-flat-button class="stroked_btn">
+          {{ "Cancel" }}
+        </button>
+        <button
+          mat-flat-button
+          (click)="fetchChequeDetails()"
+          class="filled_btn"
+        >
+          {{ "Proceed" }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Summary table for fetched cheque data -->
+<div class="table" *ngIf="fetchedData">
+  <app-reusable-table
+    [columnNames]="chequeStatusCols"
+    [data]="chequeStatusData"
+  ></app-reusable-table>
+</div>

@@ -11,7 +11,7 @@ export class BeneficiaryService {
 
   uploadBenificiaryExcel(formData) {
     return this.http.post(
-      `${this.basePath}/benieficiary/uploadBeneficiary`,
+      `${this.basePath}/corp_benieficiary/uploadBeneficiary`,
       formData
     );
   }
@@ -36,7 +36,7 @@ export class BeneficiaryService {
     if (!filters) filterEndpoint = "";
 
     return this.http.get<any>(
-      `${this.basePath}/benieficiary?refNumber=${refNumber}${filterEndpoint}`
+      `${this.basePath}/corp_benieficiary?refNumber=${refNumber}${filterEndpoint}`
     );
   }
 
@@ -66,13 +66,13 @@ export class BeneficiaryService {
 
     const payload = `?${pagination}`;
     return this.http.get(
-      `${this.basePath}/benieficiary/fetchMasterInfo${payload}`
+      `${this.basePath}/corp_benieficiary/fetchMasterInfo${payload}`
     );
   }
 
   downloadBenificiaryTemplate() {
     return this.http.get(
-      `${this.basePath}/benieficiary/downloadTemplate?filename=Upload`,
+      `${this.basePath}/corp_benieficiary/downloadTemplate?filename=Upload`,
       {
         responseType: "blob",
       }
@@ -84,12 +84,12 @@ export class BeneficiaryService {
   }
 
   saveBeneficiary(payload) {
-    return this.http.post<any>(`${this.basePath}/benieficiary`, payload);
+    return this.http.post<any>(`${this.basePath}/corp_benieficiary`, payload);
   }
 
   getBeneficiaryById(id) {
     return this.http.get<any>(
-      `${this.basePath}/benieficiary?benificiaryId=${id}`
+      `${this.basePath}/corp_benieficiary?benificiaryId=${id}`
     );
   }
   getDataByPage(filterBy, filterValue, page, size, sortName, direction) {
@@ -106,6 +106,6 @@ export class BeneficiaryService {
           ? `?${filter}&${pagination}`
           : `?${pagination}`
         : "";
-    return this.http.get<any>(`${this.basePath}/benieficiary${payload}`);
+    return this.http.get<any>(`${this.basePath}/corp_benieficiary${payload}`);
   }
 }

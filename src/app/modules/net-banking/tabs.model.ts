@@ -6,6 +6,8 @@ import { BeneficiaryDetailsComponent } from "./new-reusable-components/beneficia
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
 import { BillDocumentsComponent } from "./new-reusable-components/bill-documents/bill-documents.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
+import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
+import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -15,6 +17,7 @@ import { OrdersInfoComponent } from "./new-reusable-components/orders-info/order
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
 import { RemittanceDetailsComponent } from "./new-reusable-components/remittance-details/remittance-details.component";
 import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
+import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 
 export class tabsClass {
@@ -167,7 +170,7 @@ export class tabsClass {
     },
   ];
 
-  public static readonly Remittance:any[] = [
+  public static readonly Remittance: any[] = [
     {
       id: 1,
       title: "Applicant Info",
@@ -188,6 +191,39 @@ export class tabsClass {
     },
     {
       id: 4,
+      title: "Attachments",
+      type: "Remittamce_Attachments",
+      componrnt: AttachmentsComponent
+    },
+  ];
+
+  public static readonly BuyersCredit: any[] = [
+    {
+      id: 1,
+      title: "Customer Info",
+      type: "Buyer_Customer_Info",
+      componrnt: CustomerInfoComponent
+    },
+    {
+      id: 2,
+      title: "Supplier Info",
+      type: "Buyer_Supplier_Info",
+      componrnt: SupplierInfoComponent
+    },
+    {
+      id: 3,
+      title: "Credit Info",
+      type: "Buyer_Credit_Info",
+      componrnt: CreditInfoComponent
+    },
+    {
+      id: 4,
+      title: "Other Info",
+      type: "Buyer_Other_Info",
+      componrnt: OthersInfoComponent
+    },
+    {
+      id: 5,
       title: "Attachments",
       type: "Remittamce_Attachments",
       componrnt: AttachmentsComponent

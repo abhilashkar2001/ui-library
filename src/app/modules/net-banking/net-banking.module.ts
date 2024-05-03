@@ -51,6 +51,12 @@ import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficia
 import { RemittanceDetailsComponent } from './new-reusable-components/remittance-details/remittance-details.component';
 import { OrdersInfoComponent } from './new-reusable-components/orders-info/orders-info.component';
 import { BillDocumentsComponent } from './new-reusable-components/bill-documents/bill-documents.component';
+import { BuyersCreditSummaryComponent } from './trade-flow/buyers-credit-summary/buyers-credit-summary.component';
+import { GenericBuyerCreditComponent } from './new-reusable-components/generic-buyer-credit/generic-buyer-credit.component';
+import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
+import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
+import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+
 
 
 @NgModule({
@@ -97,6 +103,11 @@ import { BillDocumentsComponent } from './new-reusable-components/bill-documents
     RemittanceDetailsComponent,
     OrdersInfoComponent,
     BillDocumentsComponent,
+    BuyersCreditSummaryComponent,
+    GenericBuyerCreditComponent,
+    CustomerInfoComponent,
+    SupplierInfoComponent,
+    CreditInfoComponent,
   ],
   imports: [
     CommonModule,

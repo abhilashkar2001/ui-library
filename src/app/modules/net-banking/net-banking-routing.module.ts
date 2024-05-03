@@ -22,6 +22,9 @@ import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remi
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
+import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
+import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
+import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 
 const routes: Routes = [
   {
@@ -83,6 +86,14 @@ const routes: Routes = [
             component: RemittanceSummeryComponent,
           },
           {
+            path: "generic-buyer-credit",
+            component: GenericBuyerCreditComponent,
+          },
+          {
+            path: "buyer-credit-summery",
+            component: BuyersCreditSummaryComponent,
+          },
+          {
             path: "bgSummary",
             component: BgSummaryComponent,
           },
@@ -111,6 +122,13 @@ const routes: Routes = [
             (m) => m.FundTransferModule
           ),
       },
+      {
+        path: "cheque",
+        loadChildren: () =>
+          import("./cheque-book/cheque-book.module").then(
+            (m) => m.ChequeBookModule
+          ),
+      },
     ],
   },
 ];
@@ -119,4 +137,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule {}
+export class NetBankingRoutingModule { }

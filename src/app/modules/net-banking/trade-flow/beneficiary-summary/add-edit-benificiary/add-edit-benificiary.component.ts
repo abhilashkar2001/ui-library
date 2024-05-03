@@ -41,17 +41,17 @@ export class AddEditBenificiaryComponent implements OnInit {
 
   buildForm(item?) {
     this.benificiaryDetailsForm = this.fb.group({
-      accountNumber: [item ? item.accountNumber : "", Validators.required],
+      accountNo: [item ? item.accountNumber : "", Validators.required],
       confirmAccountNumber: [
         item ? item.confirmAccountNumber : "",
         Validators.required,
       ],
-      payeeName: [item ? item.payeeName : "", Validators.required],
+      name: [item ? item.payeeName : "", Validators.required],
       nickName: [item ? item.nickName : "", Validators.required],
       bankCode: [item ? item.bankCode : ""],
-      countryCode: [item ? item.countryCode : "", Validators.required],
-      visibility: [item ? item.visibility : "", Validators.required],
-      account: [item.item?.account ?? true],
+      countryId: [item ? item.countryCode : "", Validators.required],
+      visibility: [item ? item.visibility : ""],
+      accountType: [item.item?.account ?? "I"],
       beneficiaryStatus: [item.item?.beneficiaryStatus ?? true],
     });
   }
@@ -83,6 +83,8 @@ export class AddEditBenificiaryComponent implements OnInit {
       this.benificiaryDetailsForm.markAllAsTouched();
       return;
     }
+    console.log(this.benificiaryDetailsForm, "benificiaryDetailsForm");
+
     let payload: any = {
       ...this.benificiaryDetailsForm.value,
     };

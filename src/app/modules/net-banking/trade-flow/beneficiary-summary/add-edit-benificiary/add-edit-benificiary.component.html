@@ -25,7 +25,7 @@
         <input
           matInput
           type="text"
-          formControlName="accountNumber"
+          formControlName="accountNo"
           [readonly]="readorWrite"
         />
       </mat-form-field>
@@ -51,7 +51,7 @@
         <input
           matInput
           type="text"
-          formControlName="payeeName"
+          formControlName="name"
           [readonly]="readorWrite"
         />
       </mat-form-field>
@@ -80,12 +80,12 @@
             fxLayout="row"
             fxLayoutGap="10%"
             aria-label="Select an option"
-            formControlName="account"
+            formControlName="accountType"
             [disabled]="readorWrite"
           >
             <mat-radio-button
               fxFlex="40"
-              [value]="true"
+              value="I"
               [checked]="true"
               class="radioChecked radiobtn"
             >
@@ -93,7 +93,7 @@
             </mat-radio-button>
             <mat-radio-button
               fxFlex="40"
-              [value]="false"
+              value="E"
               class="radioChecked radiobtn"
               >External</mat-radio-button
             >
@@ -104,7 +104,7 @@
         appearance="outline"
         class="fieldinput custom-field"
         fxFlex="22"
-        *ngIf="benificiaryDetailsForm.get('account').value === false"
+        *ngIf="benificiaryDetailsForm.get('accountType').value === false"
       >
         <mat-label>Bank Code</mat-label>
         <input
@@ -119,8 +119,8 @@
           [items]="countryValue"
           inputLabel="Country"
           bindLabelKey="countryName"
-          bindValueKey="countryCode"
-          [control]="benificiaryDetailsForm.get('countryCode')"
+          bindValueKey="countryId"
+          [control]="benificiaryDetailsForm.get('countryId')"
           customClass="fieldinput"
           [readonly]="readorWrite"
         ></app-searchable-select>
