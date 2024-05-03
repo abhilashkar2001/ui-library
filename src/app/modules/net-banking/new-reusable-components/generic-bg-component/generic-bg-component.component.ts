@@ -155,7 +155,7 @@ export class GenericBgComponentComponent implements OnInit {
           applicantReference: applicantInfo?.applicantReferences,
           customerCode: applicantInfo?.customerCode,
           issuingBranchId: applicantInfo?.issuingBranchCode,
-          // iecCode: applicantInfo?.,
+          iecCode: applicantInfo?.iecCode,
           devliveryVia: applicantInfo?.deliveryMode,
           margin: applicantInfo?.margin,
           // licenceOglOrNonOgl: applicantInfo?.,

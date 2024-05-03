@@ -45,6 +45,7 @@ export class ApplicantsInfoComponent implements OnInit {
       issuingBranchCode: [item?.issuingBranchCode ?? ""],
       deliveryBranchCode: [item?.deliveryBranchCode ?? ""],
       applicantReferences: [item?.applicantReferences ?? ""],
+      iecCode: [item?.iecCode ?? ""],
       deliveryMode: [item?.deliveryMode ?? ""],
       feeAccount: [item?.feeAccount ?? []],
       margin: [item?.margin ?? ""],
