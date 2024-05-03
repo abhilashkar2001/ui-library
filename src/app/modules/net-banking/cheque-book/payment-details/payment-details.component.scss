@@ -1,0 +1,156 @@
+.expected-time {
+  padding: 1%;
+  width: 100%;
+  height: 60px;
+  background: #f0f5ff 0% 0% no-repeat padding-box;
+  border: 1px solid #377dff;
+  border-radius: 8px;
+  .expected-title {
+    color: #00205c;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .expected-value {
+    font-weight: 500;
+    font-size: 12px;
+    color: #606c8d;
+  }
+}
+
+.custom_card {
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: none;
+
+  .custom_card_header {
+    color: #00205c;
+    background: #e4e9ef;
+    padding: 5px 10px;
+    .icon_section {
+      mat-icon {
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+
+  .acc-div {
+    background: #defff6 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    opacity: 1;
+    font: normal normal medium 14px/17px Helvetica Neue;
+    letter-spacing: 0px;
+    color: #008461;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .news_section {
+    .news_pallet {
+      border-bottom: 2px dashed #e0e0e0;
+      padding-bottom: 20px;
+      .img_div {
+        .img_content {
+          height: 80px;
+          width: 80px;
+          background: #f3f3f3;
+          border-radius: 12px;
+          border: 3px solid #ffffff;
+          box-shadow: 0px 3px 15px #0000000a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          object-fit: cover;
+          font-family: "Poppins", sans-serif;
+          font-size: 29px;
+          font-weight: 600;
+          letter-spacing: 0px;
+          color: #0375d6;
+          opacity: 1;
+        }
+      }
+      .details_div {
+        #name {
+          font-size: 20px;
+          font-family: "Raleway", sans-serif;
+          font-weight: 700;
+        }
+        .ref_no_div {
+          background: #f7faff 0% 0% no-repeat padding-box;
+          box-shadow: 0px 3px 15px #00000017;
+          border: 3px solid #ffffff;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          .ref_no {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #00205c;
+          }
+        }
+      }
+    }
+  }
+  .card_top {
+    overflow-y: auto;
+    .custom_card_body {
+      .summary_section {
+        .summary_pallet {
+          .summary_heading {
+            text-align: left;
+            font-family: "Raleway";
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: 0px;
+            color: #377dff;
+            opacity: 1;
+            padding-left: 4px;
+            border-left: 4px solid #377dff70;
+            height: 20px;
+          }
+          .summary_contain {
+            .label {
+              color: #606c8d;
+              font-family: "Raleway", sans-serif;
+              font-size: 13px;
+              font-weight: 700;
+            }
+            .labelval {
+              color: #2f2f2f;
+              font-size: 15px;
+              font-family: Manrope;
+              font-weight: 800;
+              padding-left: 2px;
+              padding-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .summary_pallet:not(:last-child) {
+    border-bottom: 2px dashed #e0e0e0;
+  }
+  .custom_card_footer {
+    padding: 0 2% 2% 2%;
+    .footer_icon {
+      .mat-icon {
+        height: 16px;
+        width: 16px;
+      }
+    }
+    .footer_contain {
+      font-family: "Poppins";
+      font-size: 12px;
+    }
+  }
+
+  .currency-div {
+    background: #f5f7fb 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+    padding: 6px;
+  }
+}

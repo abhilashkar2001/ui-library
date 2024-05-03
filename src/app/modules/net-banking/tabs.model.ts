@@ -2,16 +2,30 @@ import { AmendementInfoComponent } from "./new-reusable-components/amendement-in
 import { AmendmentLcInfoComponent } from "./new-reusable-components/amendment-lc-info/amendment-lc-info.component";
 import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-info/applicants-info.component";
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
+import { BeneficiaryDetailsComponent } from "./new-reusable-components/beneficiary-details/beneficiary-details.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+
 import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
+
+import { BillDocumentsComponent } from "./new-reusable-components/bill-documents/bill-documents.component";
+import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
+import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
+import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
+
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
 import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
 import { LcOtherConditionsComponent } from "./new-reusable-components/lc-other-conditions/lc-other-conditions.component";
+import { OrdersInfoComponent } from "./new-reusable-components/orders-info/orders-info.component";
 import { OthersInfoComponent } from "./new-reusable-components/others-info/others-info.component";
+import { RemittanceDetailsComponent } from "./new-reusable-components/remittance-details/remittance-details.component";
 import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
+
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
+
+import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
+
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
 import { exportBillDispatchData } from "./trade-flow/export-bill-dispatch-summary/exportbillstaticdata";
 
@@ -206,4 +220,65 @@ export class tabsClass {
       componrnt: DispatchDocumentsComponent,
     },
   ];
+
+
+  public static readonly BuyersCredit: any[] = [
+    {
+      id: 1,
+      title: "Customer Info",
+      type: "Buyer_Customer_Info",
+      componrnt: CustomerInfoComponent
+    },
+    {
+      id: 2,
+      title: "Supplier Info",
+      type: "Buyer_Supplier_Info",
+      componrnt: SupplierInfoComponent
+    },
+    {
+      id: 3,
+      title: "Credit Info",
+      type: "Buyer_Credit_Info",
+      componrnt: CreditInfoComponent
+    },
+    {
+      id: 4,
+      title: "Other Info",
+      type: "Buyer_Other_Info",
+      componrnt: OthersInfoComponent
+    },
+    {
+      id: 5,
+      title: "Attachments",
+      type: "Remittamce_Attachments",
+      componrnt: AttachmentsComponent
+    },
+  ]
+  public static readonly documentAcceptance:any[] = [
+    {
+      id: 1,
+      title: "Beneficiary Details",
+      type: "Document_Acceptance_Info",
+      componrnt: BeneficiaryDetailsComponent
+    },
+    {
+      id: 2,
+      title: "Remittance Details",
+      type: "Remittamce_Details",
+      componrnt: RemittanceDetailsComponent
+    },
+    {
+      id: 3,
+      title: "Order Info",
+      type: "Remittamce_Order_Info",
+      componrnt: OrdersInfoComponent
+    },
+    {
+      id: 4,
+      title: "Document",
+      type: "Remittamce_Attachments",
+      componrnt: BillDocumentsComponent
+    },
+  ];
+
 }

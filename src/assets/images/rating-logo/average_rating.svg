@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124" height="124" viewBox="0 0 124 124">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#0472e8"/>
+      <stop offset="1" stop-color="#051a2e"/>
+    </linearGradient>
+    <radialGradient id="radial-gradient" cx="0.652" cy="0.344" r="0.667" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.344" stop-color="#fbe197"/>
+      <stop offset="0.514" stop-color="#f9d264"/>
+      <stop offset="0.747" stop-color="#f7bd1e"/>
+      <stop offset="1" stop-color="#db9800"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="0.468" cy="0.517" r="0.453" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ed1c24"/>
+      <stop offset="0.058" stop-color="#ee3037"/>
+      <stop offset="0.251" stop-color="#f36e73"/>
+      <stop offset="0.437" stop-color="#f7a1a5"/>
+      <stop offset="0.609" stop-color="#facacc"/>
+      <stop offset="0.766" stop-color="#fde7e8"/>
+      <stop offset="0.901" stop-color="#fef8f8"/>
+      <stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-3" cx="0.591" cy="0.517" r="0.453" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b3b3b3"/>
+      <stop offset="0.456" stop-color="#4d4d4d"/>
+      <stop offset="1"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-5" cx="0.586" cy="0.536" r="0.453" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-6" cx="0.507" cy="0.475" r="10.043" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.017" stop-color="#f6f6f6"/>
+      <stop offset="0.133" stop-color="#bdbdbd"/>
+      <stop offset="0.253" stop-color="#8a8a8a"/>
+      <stop offset="0.373" stop-color="#606060"/>
+      <stop offset="0.494" stop-color="#3d3d3d"/>
+      <stop offset="0.616" stop-color="#222"/>
+      <stop offset="0.74" stop-color="#0f0f0f"/>
+      <stop offset="0.867" stop-color="#030303"/>
+      <stop offset="1"/>
+    </radialGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="1.523" x2="0.5" y2="0.477" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ed1c24"/>
+      <stop offset="1" stop-color="#4e272d"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_92" data-name="Group 92" transform="translate(-0.347 0.473)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="62" cy="62" r="62" transform="translate(0.347 -0.473)" fill="url(#linear-gradient)"/>
+    <g id="Group_4" data-name="Group 4" transform="translate(9.024 9.024)" style="mix-blend-mode: luminosity;isolation: isolate">
+      <circle id="Ellipse_44" data-name="Ellipse 44" cx="37.328" cy="37.328" r="37.328" transform="translate(0 52.789) rotate(-45)" fill="url(#radial-gradient)"/>
+      <g id="Group_42" data-name="Group 42" transform="translate(9.149 30.416)">
+        <circle id="Ellipse_45" data-name="Ellipse 45" cx="17.804" cy="17.804" r="17.804" transform="translate(0 25.178) rotate(-45)" fill="url(#radial-gradient-2)" style="mix-blend-mode: multiply;isolation: isolate"/>
+        <circle id="Ellipse_46" data-name="Ellipse 46" cx="7.755" cy="7.755" r="7.755" transform="translate(19.037 18.492) rotate(-62.853)" fill="url(#radial-gradient-3)"/>
+        <ellipse id="Ellipse_47" data-name="Ellipse 47" cx="4.102" cy="4.102" rx="4.102" ry="4.102" transform="translate(25.993 18.307) rotate(-78.216)" fill="#fff"/>
+        <path id="Path_103" data-name="Path 103" d="M17.8,0A17.8,17.8,0,1,1,0,17.8,17.8,17.8,0,0,1,17.8,0Z" transform="translate(36.924 25.178) rotate(-45)" fill="url(#radial-gradient-2)" style="mix-blend-mode: multiply;isolation: isolate"/>
+        <g id="Group_41" data-name="Group 41" transform="translate(48.272 5.597)">
+          <ellipse id="Ellipse_49" data-name="Ellipse 49" cx="7.755" cy="7.755" rx="7.755" ry="7.755" transform="translate(0 14.956) rotate(-74.636)" fill="url(#radial-gradient-5)"/>
+          <circle id="Ellipse_50" data-name="Ellipse 50" cx="4.102" cy="4.102" r="4.102" transform="translate(2.381 9.993) rotate(-49.546)" fill="#fff"/>
+        </g>
+        <path id="Path_58" data-name="Path 58" d="M631.539,158.377c0,.185-2.777.334-6.2.334s-6.2-.15-6.2-.334,2.777-.335,6.2-.335S631.539,158.192,631.539,158.377Z" transform="translate(-580.651 -132.052)" fill="url(#radial-gradient-6)" style="mix-blend-mode: screen;isolation: isolate"/>
+      </g>
+      <path id="Path_59" data-name="Path 59" d="M618.209,156.3l0,3.592s.032.163,0,0h20.763c.1-.077-.013.012,0,0l0-3.592Z" transform="translate(-575.823 -91.406)" fill="url(#linear-gradient-2)"/>
+    </g>
+  </g>
+</svg>

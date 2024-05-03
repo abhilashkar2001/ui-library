@@ -2,28 +2,6 @@
   "statusCode": 200,
   "status": "OK",
   "data": {
-    "account": [
-      {
-        "accountNumber": "xxxxxxxx64146",
-        "type": "account Deposit",
-        "balance": "7896455"
-      },
-      {
-        "accountNumber": "xxxxxxxx64146",
-        "type": "Reccuring Deposit",
-        "balance": "7896455"
-      },
-      {
-        "accountNumber": "xxxxxxxx64146",
-        "type": "Reccuring Deposit",
-        "balance": "7896455"
-      },
-      {
-        "accountNumber": "xxxxxxxx64146",
-        "type": "lastAccount Deposit",
-        "balance": "7896455"
-      }
-    ],
     "deposit": [
       {
         "accountNumber": "xxxxxxxx64146",
