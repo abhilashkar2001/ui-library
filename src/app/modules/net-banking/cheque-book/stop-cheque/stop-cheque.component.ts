@@ -17,7 +17,7 @@ export class StopChequeComponent implements OnInit {
   ];
 
   customerInfo: any;
-  accountNumberList: any[] = [];
+  accountNumberList: any[] = [{ accountNo: "000037560025" }];
 
   chequeNumber: boolean = false;
   currencyCode: any;
@@ -39,9 +39,9 @@ export class StopChequeComponent implements OnInit {
     const custInfo = sessionStorage.getItem("customer-Info");
     this.customerInfo = JSON.parse(custInfo);
 
-    this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
-    );
+    // this.accountNumberList = JSON.parse(
+    //   sessionStorage.getItem("listOfAccounts")
+    // );
   }
 
   buildForm() {
@@ -62,10 +62,10 @@ export class StopChequeComponent implements OnInit {
 
   handleAccountNumberChange(event) {
     this.chequeNumber = true;
-    const accDetails = this.accountNumberList?.find(
-      (acc) => acc?.accountNo == event
-    );
-    this.currencyCode = accDetails?.accountCurrency;
+    // const accDetails = this.accountNumberList?.find(
+    //   (acc) => acc?.accountNo == event
+    // );
+    // this.currencyCode = accDetails?.accountCurrency;
   }
 
   stopCheque() {
@@ -145,6 +145,6 @@ export class StopChequeComponent implements OnInit {
       (payload) => this.chequeService.stopCheque(payload)
     );
 
-    this.router.navigate(["/account/payment-summary"]);
+    this.router.navigate(["user/dashboard/cheque/home/payment-summary"]);
   }
 }

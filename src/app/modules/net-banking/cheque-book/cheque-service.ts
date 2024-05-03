@@ -228,4 +228,11 @@ export class ChequeService {
       { responseType: "Blob" as "json" }
     );
   }
+
+  saveFeedback(payload) {
+    return this.httpClient.post(
+      `${this.basePath}/transaction/customerFeedbackInfo`,
+      payload
+    );
+  }
 }
