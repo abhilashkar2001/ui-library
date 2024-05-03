@@ -26,8 +26,8 @@ export class NETBANKING {
           route: "",
         },
         {
-          label: "Cheque Transfer",
-          image: "/assets/images/adhoc-payment.svg",
+          label: "Cheque",
+          image: "/assets/images/issue-draft.svg",
           route: "user/dashboard/cheque/home/chequebook-request",
         },
         {

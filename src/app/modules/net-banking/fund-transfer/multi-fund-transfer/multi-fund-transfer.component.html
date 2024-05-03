@@ -1,24 +1,17 @@
-<div fxLayout="column">
-  <div
-    class="header-part"
-    fxLayout="column"
-    fxLayoutGap="5px"
-    fxLayoutAlign="center center"
-  >
-    <img src="assets/images/bank_home.svg" />
-    <span class="form-title">Transfer Funds - Multiple</span>
+<mat-card fxLayout="column" class="default-card multi_fund_container">
+  <div class="heading_card mb-2" fxLayoutAlign="start center" fxLayoutGap="10">
+    <div>{{ "Transfer Funds - Multiple" }}</div>
+    <mat-icon svgIcon="single-trans-icon"></mat-icon>
   </div>
+
   <div fxLayout="row" fxLayoutAlign="space-between" class="w-100">
     <ng-container *ngIf="multiTransferForm" [formGroup]="multiTransferForm">
       <div class="form-container" fxLayout="column" fxLayoutGap="3px">
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Purpose of payment</span>
-          <mat-form-field fxFlex="30" class="form-field">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Purpose of payment<span class="text-red">*</span></span
+          >
+          <mat-form-field fxFlex="60" class="form-field">
             <mat-select formControlName="purposeOfPayment">
               <mat-option *ngFor="let item of purpose" [value]="item">{{
                 item
@@ -26,14 +19,11 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Transfer From</span>
-          <mat-form-field fxFlex="30" class="form-field">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Transfer From<span class="text-red">*</span></span
+          >
+          <mat-form-field fxFlex="60" class="form-field">
             <mat-select formControlName="debitAccount">
               <mat-option *ngFor="let item of fromAccount" [value]="item">{{
                 item
@@ -41,25 +31,19 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Amount</span>
-          <mat-form-field fxFlex="30" class="form-field">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Amount<span class="text-red">*</span></span
+          >
+          <mat-form-field fxFlex="60" class="form-field">
             <input matInput formControlName="amount" />
           </mat-form-field>
         </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Transfer Mode</span>
-          <div fxFlex="30">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Transfer Mode<span class="text-red">*</span></span
+          >
+          <div fxFlex="60">
             <app-searchable-select
               [items]="transferMode"
               bindLabelKey="values"
@@ -68,20 +52,20 @@
             ></app-searchable-select>
           </div>
         </div>
-        <div class="hint-div" fxLayout="row" fxLayoutGap="10px">
-          <span class="hint"
-            >07 hours 11 minutes 48 seconds to NEFT cut-off</span
-          >
-          <span class="link">View cut-off times</span>
-        </div>
         <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
+          class="hint-div"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px"
         >
-          <span fxFlex="15" class="label">Transfer To</span>
-          <div fxFlex="40" class="serchable-drop">
+          <div class="hint">07 hours 11 minutes 48 seconds to NEFT cut-off</div>
+          <div class="link">View cut-off times</div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Transfer To<span class="text-red">*</span></span
+          >
+          <div fxFlex="60" class="serchable-drop">
             <app-searchable-select
               [multiple]="true"
               [items]="transferTo"
@@ -93,14 +77,11 @@
             ></app-searchable-select>
           </div>
         </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Transfer On</span>
-          <mat-form-field fxFlex="30" class="form-field">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label"
+            >Transfer On<span class="text-red">*</span></span
+          >
+          <mat-form-field fxFlex="60" class="form-field">
             <input
               matInput
               [matDatepicker]="picker"
@@ -108,19 +89,14 @@
             />
             <mat-datepicker-toggle matSuffix [for]="picker">
               <mat-icon matDatepickerToggleIcon>
-                <img class="calender" src="/assets/images/calendar.png" />
+                <img class="calender" src="/assets/images/calendar.svg" />
               </mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Send Advice</span>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label">Send Advice</span>
           <div class="check" fxLayout="row" fxLayoutGap="50%">
             <mat-checkbox
               color="primary"
@@ -135,60 +111,35 @@
           </div>
         </div>
         <ng-container *ngIf="remitter">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Remitter email id</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Remitter email id</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterEmail" />
             </mat-form-field>
           </div>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Remitter Mobile</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Remitter Mobile</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterMobile" />
             </mat-form-field>
           </div>
         </ng-container>
         <ng-container *ngIf="beneficiary">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Beneficiary Email</span>
-            <mat-form-field fxFlex="40" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Beneficiary Email</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryEmail" />
             </mat-form-field>
           </div>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Beneficiary Mobile</span>
-            <mat-form-field fxFlex="40" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Beneficiary Mobile</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryMobile" />
             </mat-form-field>
           </div>
         </ng-container>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Narration</span>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label">Narration</span>
           <div class="check" fxLayout="row" fxLayoutGap="50%">
             <mat-checkbox
               color="primary"
@@ -203,38 +154,23 @@
           </div>
         </div>
         <ng-container *ngIf="remitterNarration">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Remitter Narration</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Remitter Narration</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterNarration" />
             </mat-form-field>
           </div>
         </ng-container>
         <ng-container *ngIf="beneficiaryNarration">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Beneficiary Narration</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Beneficiary Narration</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryNarration" />
             </mat-form-field>
           </div>
         </ng-container>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Payment Details</span>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label">Payment Details</span>
           <div class="check" fxLayout="row" fxLayoutGap="50%">
             <mat-checkbox
               color="primary"
@@ -243,48 +179,28 @@
           </div>
         </div>
         <ng-container *ngIf="paymentDetail">
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Detail 1</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Detail 1</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail1" />
             </mat-form-field>
           </div>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Detail 2</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Detail 2</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail2" />
             </mat-form-field>
           </div>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="15%"
-            fxFlex="100"
-          >
-            <span fxFlex="15" class="label">Detail 3</span>
-            <mat-form-field fxFlex="30" class="form-field">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <span fxFlex="30" class="text_label">Detail 3</span>
+            <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail3" />
             </mat-form-field>
           </div>
         </ng-container>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          fxLayoutGap="15%"
-          fxFlex="100"
-        >
-          <span fxFlex="15" class="label">Remark(For Reviewer)</span>
-          <mat-form-field fxFlex="30" class="form-field">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+          <span fxFlex="30" class="text_label">Remark(For Reviewer)</span>
+          <mat-form-field fxFlex="60" class="form-field">
             <input matInput formControlName="remarks" />
           </mat-form-field>
         </div>
@@ -334,14 +250,18 @@
   </div>
 
   <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="30">
-    <button class="back-button" mat-raised-button (click)="cancel()">
+    <button class="exit-button" mat-raised-button (click)="cancel()">
       Cancel
     </button>
     <button class="back-button" mat-raised-button (click)="clear()">
       Clear
     </button>
-    <button-loading [type]="'button'" (click)="sabmit()">
+    <button-loading
+      [type]="'button'"
+      [btnClass]="'submit-button'"
+      (click)="submit()"
+    >
       Submit
     </button-loading>
   </div>
-</div>
+</mat-card>
