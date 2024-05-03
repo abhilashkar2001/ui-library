@@ -58,14 +58,25 @@ export class DrawerConstant {
             },
           ],
         },
-
         {
           name: "REMITTANCE",
           path: "remittance-summery",
           roleName: "child-node",
         },
         { name: "BILLS PROCESSING", path: "", roleName: "child-node" },
-        { name: "EXPORTS PROCESSING", path: "", roleName: "child-node" },
+        {
+          name: "EXPORTS PROCESSING",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "Pre-shipment Loan Process",
+              path: "export-process-summery",
+              id: "Pre-shipment Loan Process",
+              summaryUrl: "",
+            },
+          ],
+        },
         { name: "BUYERS CREDIT", path: "", roleName: "child-node" },
         {
           name: "EXPORT BILL DISPATCH",
@@ -73,28 +84,34 @@ export class DrawerConstant {
           roleName: "child-node",
         },
 
-        { name: "REMITTANCE",
-         path: "remittance-summery", 
-         roleName: "child-node"
-         },
-        { name: "BILL PROCESSING", 
+        {
+          name: "REMITTANCE",
+          path: "remittance-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "BILL PROCESSING",
           path: "",
-         roleName: "child-node",
-         children: [
-          {
-            name: "Document Acceptance",
-            path: "bill-processing",
-            id: "BG Issuance",
-          },
-          {
-            name: "Payment Request Enquirey",
-            path: "bill-processing",
-            id: "LC Physical Amendment",
-          },
-        ],
-         },
+          roleName: "child-node",
+          children: [
+            {
+              name: "Document Acceptance",
+              path: "bill-processing",
+              id: "BG Issuance",
+            },
+            {
+              name: "Payment Request Enquirey",
+              path: "bill-processing",
+              id: "LC Physical Amendment",
+            },
+          ],
+        },
         { name: "EXPORTS PROCESSING", path: "", roleName: "child-node" },
-        { name: "BUYERS CREDIT", path: "buyer-credit-summery", roleName: "child-node" },
+        {
+          name: "BUYERS CREDIT",
+          path: "buyer-credit-summery",
+          roleName: "child-node",
+        },
         { name: "EXPORT BILL DISPATCH", path: "", roleName: "child-node" },
         { name: "Export SW Bill Lodgement", path: "ExportSWBillLodgementSummary", roleName: "child-node" },
         { name: "EEFC", path: "", roleName: "child-node" },

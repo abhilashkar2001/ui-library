@@ -4,6 +4,10 @@ import { ApplicantsInfoComponent } from "./new-reusable-components/applicants-in
 import { AttachmentsComponent } from "./new-reusable-components/attachments/attachments.component";
 import { BeneficiaryDetailsComponent } from "./new-reusable-components/beneficiary-details/beneficiary-details.component";
 import { BgInfoComponent } from "./new-reusable-components/bg-info/bg-info.component";
+import { ExportApplicationDetailsComponent } from "./new-reusable-components/export-application-details/export-application-details.component";
+import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
+import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
+import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
 import { BillAttachmentsComponent } from "./new-reusable-components/bill-attachments/bill-attachments.component";
 import { BillSectionAComponent } from "./new-reusable-components/bill-section-a/bill-section-a.component";
 import { BillSectionBComponent } from "./new-reusable-components/bill-section-b/bill-section-b.component";
@@ -15,7 +19,6 @@ import { BillDocumentsComponent } from "./new-reusable-components/bill-documents
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { CreditInfoComponent } from "./new-reusable-components/credit-info/credit-info.component";
 import { CustomerInfoComponent } from "./new-reusable-components/customer-info/customer-info.component";
-
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
 import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendement-info/lc-amendement-info.component";
@@ -209,7 +212,32 @@ export class tabsClass {
       componrnt: AttachmentsComponent,
     },
   ];
-
+  public static readonly exportProcess: any[] = [
+    {
+      id: 1,
+      title: "Applicant Details",
+      type: "Pre_Shipment_Applicant_Details",
+      componrnt: ExportApplicationDetailsComponent,
+    },
+    {
+      id: 2,
+      title: "Loan Details",
+      type: "Pre_Shipment_Loan_Details",
+      componrnt: ExportLoanDetailsComponent,
+    },
+    {
+      id: 3,
+      title: "LC/Other Details",
+      type: "Pre_Shipment_LC/Other_Details",
+      componrnt: ExportLcDetailsComponent,
+    },
+    {
+      id: 4,
+      title: "Attachments",
+      type: "Pre_Shipment_Attachments",
+      componrnt: ExportAttachmentsComponent,
+    },
+  ];
   public static readonly exportBillDispatchData: any[] = [
     {
       id: 1,
@@ -225,90 +253,88 @@ export class tabsClass {
     },
   ];
 
-
   public static readonly BuyersCredit: any[] = [
     {
       id: 1,
       title: "Customer Info",
       type: "Buyer_Customer_Info",
-      componrnt: CustomerInfoComponent
+      componrnt: CustomerInfoComponent,
     },
     {
       id: 2,
       title: "Supplier Info",
       type: "Buyer_Supplier_Info",
-      componrnt: SupplierInfoComponent
+      componrnt: SupplierInfoComponent,
     },
     {
       id: 3,
       title: "Credit Info",
       type: "Buyer_Credit_Info",
-      componrnt: CreditInfoComponent
+      componrnt: CreditInfoComponent,
     },
     {
       id: 4,
       title: "Other Info",
       type: "Buyer_Other_Info",
-      componrnt: OthersInfoComponent
+      componrnt: OthersInfoComponent,
     },
     {
       id: 5,
       title: "Attachments",
       type: "Remittamce_Attachments",
-      componrnt: AttachmentsComponent
+      componrnt: AttachmentsComponent,
     },
-  ]
-  public static readonly ExportSWBillLodgement:any[] = [
+  ];
+  public static readonly ExportSWBillLodgement: any[] = [
     {
       id: 1,
       title: "Section A",
       type: "Export S/W Bill Lodgement",
-      componrnt: BillSectionAComponent
+      componrnt: BillSectionAComponent,
     },
     {
       id: 2,
       title: "Section B",
       type: "Export S/W Bill Lodgement",
-      componrnt: BillSectionBComponent
+      componrnt: BillSectionBComponent,
     },
     {
       id: 3,
       title: "Section C & Values",
       type: "Export S/W Bill Lodgement",
-      componrnt: BillSectionCValuesComponent
+      componrnt: BillSectionCValuesComponent,
     },
     {
       id: 4,
       title: "Attachments",
       type: "Export S/W Bill Lodgement",
-      componrnt: BillAttachmentsComponent
+      componrnt: BillAttachmentsComponent,
     },
-  ]
-  public static readonly documentAcceptance:any[] = [
+  ];
+  public static readonly documentAcceptance: any[] = [
     {
       id: 1,
       title: "Beneficiary Details",
       type: "Document_Acceptance_Info",
-      componrnt: BeneficiaryDetailsComponent
+      componrnt: BeneficiaryDetailsComponent,
     },
     {
       id: 2,
       title: "Remittance Details",
       type: "Remittamce_Details",
-      componrnt: RemittanceDetailsComponent
+      componrnt: RemittanceDetailsComponent,
     },
     {
       id: 3,
       title: "Order Info",
       type: "Remittamce_Order_Info",
-      componrnt: OrdersInfoComponent
+      componrnt: OrdersInfoComponent,
     },
     {
       id: 4,
       title: "Document",
       type: "Remittamce_Attachments",
-      componrnt: BillDocumentsComponent
+      componrnt: BillDocumentsComponent,
     },
   ];
-
 }
