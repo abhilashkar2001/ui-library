@@ -4,6 +4,8 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 import { SessionService } from "app/shared/session.service";
 import { FundTransferService } from "../fund-transfer.service";
 import { Router } from "@angular/router";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-single-fund-transfer",
@@ -27,8 +29,17 @@ export class SingleFundTransferComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `single-trans-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/single-trans.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
