@@ -53,6 +53,7 @@ export class ExportSWBillLodgementComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params)=>{
       this.isSummary = true;
       this.bgType = params.get("type");
+      console.log(this.bgType);
       this.maintenanceTitle = this.bgType;
       this.module = this.bgType;
     })
@@ -67,6 +68,7 @@ export class ExportSWBillLodgementComponent implements OnInit {
   }
 
   getUrl(){
+    console.log(this.bgType);
     return new Promise((resolve , reject)=>{
       if (this.summaryDetails) resolve("summary details found");
       else{

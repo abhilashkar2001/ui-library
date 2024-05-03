@@ -22,6 +22,10 @@ import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remi
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
 import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
+import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-summary/bill-processing-summary.component";
+import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
+import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
+import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 
 const routes: Routes = [
@@ -76,8 +80,20 @@ const routes: Routes = [
             component: GenericRemittanceComponent,
           },
           {
+            path: "document-acceptance",
+            component: DocumentAcceptanceComponent,
+          },
+          {
             path: "remittance-summery",
             component: RemittanceSummeryComponent,
+          },
+          {
+            path: "generic-buyer-credit",
+            component: GenericBuyerCreditComponent,
+          },
+          {
+            path: "buyer-credit-summery",
+            component: BuyersCreditSummaryComponent,
           },
           {
             path: "bgSummary",
@@ -91,6 +107,10 @@ const routes: Routes = [
             path: "add-export",
             component: AddExportSwBillComponent,
           },
+          {
+            path: "bill-processing",
+            component: BillProcessingSummaryComponent,
+          }
         ],
       },
       {
@@ -127,4 +147,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule {}
+export class NetBankingRoutingModule { }

@@ -51,6 +51,18 @@ import { BillSectionAComponent } from './new-reusable-components/bill-section-a/
 import { BillSectionBComponent } from './new-reusable-components/bill-section-b/bill-section-b.component';
 import { BillSectionCValuesComponent } from './new-reusable-components/bill-section-c-values/bill-section-c-values.component';
 import { BillAttachmentsComponent } from './new-reusable-components/bill-attachments/bill-attachments.component';
+import { BillProcessingSummaryComponent } from './trade-flow/bill-processing-summary/bill-processing-summary.component';
+import { DocumentAcceptanceComponent } from './new-reusable-components/document-acceptance/document-acceptance.component';
+import { BeneficiaryDetailsComponent } from './new-reusable-components/beneficiary-details/beneficiary-details.component';
+import { RemittanceDetailsComponent } from './new-reusable-components/remittance-details/remittance-details.component';
+import { OrdersInfoComponent } from './new-reusable-components/orders-info/orders-info.component';
+import { BillDocumentsComponent } from './new-reusable-components/bill-documents/bill-documents.component';
+import { BuyersCreditSummaryComponent } from './trade-flow/buyers-credit-summary/buyers-credit-summary.component';
+import { GenericBuyerCreditComponent } from './new-reusable-components/generic-buyer-credit/generic-buyer-credit.component';
+import { CustomerInfoComponent } from './new-reusable-components/customer-info/customer-info.component';
+import { SupplierInfoComponent } from './new-reusable-components/supplier-info/supplier-info.component';
+import { CreditInfoComponent } from './new-reusable-components/credit-info/credit-info.component';
+
 
 
 @NgModule({
@@ -97,6 +109,17 @@ import { BillAttachmentsComponent } from './new-reusable-components/bill-attachm
     BillSectionBComponent,
     BillSectionCValuesComponent,
     BillAttachmentsComponent,
+    BillProcessingSummaryComponent,
+    DocumentAcceptanceComponent,
+    BeneficiaryDetailsComponent,
+    RemittanceDetailsComponent,
+    OrdersInfoComponent,
+    BillDocumentsComponent,
+    BuyersCreditSummaryComponent,
+    GenericBuyerCreditComponent,
+    CustomerInfoComponent,
+    SupplierInfoComponent,
+    CreditInfoComponent,
   ],
   imports: [
     CommonModule,

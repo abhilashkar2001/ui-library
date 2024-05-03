@@ -70,10 +70,24 @@
     "columnRefName": "REMITTANCE"
   },
   {
-    "name": "ExportSWBill",
+    "name": "Document Acceptance",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/document-acceptance",
+    "columnRefName": "BILL_SUMMARY"
+  },
+  {
+    "name": "Buyers Credit",
+    "backPath": "user/dashboard/trade/dashboard",
+    "summaryUrl": "",
+    "addNewPath": "user/dashboard/trade/generic-buyer-credit",
+    "columnRefName": "BUYER_CREDIT"
+  },
+  {
+    "name": "Export SW Bill",
     "backPath": "user/dashboard/trade/dashboard",
     "summaryUrl": "",
     "addNewPath": "user/dashboard/trade/add-export",
-    "columnRefName": "ExportSWBill"
+    "columnRefName": "Export SW Bill"
   }
 ]
