@@ -38,13 +38,14 @@
       </div>
       <div fxLayout="row" fxFlex="100">
         <span fxFlex="15" class="label">Transfer Mode</span>
-        <mat-form-field fxFlex="20" class="form-field">
-          <mat-select formControlName="transferMode">
-            <mat-option *ngFor="let item of transferMode" [value]="item">{{
-              item
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div fxFlex="20">
+          <app-searchable-select
+            [items]="transferMode"
+            bindLabelKey="values"
+            bindValueKey="values"
+            [control]="fundTransferForm.get('transferMode')"
+          ></app-searchable-select>
+        </div>
       </div>
       <div class="hint-div" fxLayout="row" fxLayoutGap="10px">
         <span class="hint">07 hours 11 minutes 48 seconds to NEFT cut-off</span>
@@ -52,13 +53,16 @@
       </div>
       <div fxLayout="row" fxFlex="100">
         <span fxFlex="15" class="label">Transfer To</span>
-        <mat-form-field fxFlex="30" class="form-field">
-          <mat-select formControlName="creditAccount">
-            <mat-option *ngFor="let item of transferTo" [value]="item">{{
-              item
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div fxFlex="30" class="serchable-drop">
+          <app-searchable-select
+            [items]="transferTo"
+            bindValueKey="accountNo"
+            bindLabelKey="name"
+            [control]="fundTransferForm.get('creditAccount')"
+            skipLabel="false"
+            displayLabel="accountNo"
+          ></app-searchable-select>
+        </div>
         <span class="add-link">Add New</span>
       </div>
       <div fxLayout="row" fxFlex="100">
@@ -110,25 +114,13 @@
         <div fxLayout="row" fxFlex="100">
           <span fxFlex="15" class="label">Beneficiary Email</span>
           <mat-form-field fxFlex="30" class="form-field">
-            <mat-select formControlName="benificiaryEmail">
-              <mat-option
-                *ngFor="let item of benificiaryEmail"
-                [value]="item"
-                >{{ item }}</mat-option
-              >
-            </mat-select>
+            <input matInput formControlName="benificiaryEmail" />
           </mat-form-field>
         </div>
         <div fxLayout="row" fxFlex="100">
           <span fxFlex="15" class="label">Beneficiary Mobile</span>
           <mat-form-field fxFlex="30" class="form-field">
-            <mat-select formControlName="benificiaryMobile">
-              <mat-option
-                *ngFor="let item of benificiaryMobile"
-                [value]="item"
-                >{{ item }}</mat-option
-              >
-            </mat-select>
+            <input matInput formControlName="benificiaryMobile" />
           </mat-form-field>
         </div>
       </ng-container>
@@ -199,8 +191,12 @@
         </mat-form-field>
       </div>
       <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
-        <button class="back-button" mat-raised-button>Cancel</button>
-        <button class="back-button" mat-raised-button>Clear</button>
+        <button class="back-button" mat-raised-button (click)="cancel()">
+          Cancel
+        </button>
+        <button class="back-button" mat-raised-button (click)="clear()">
+          Clear
+        </button>
         <button-loading [type]="'button'" (click)="sabmit()">
           Submit
         </button-loading>
