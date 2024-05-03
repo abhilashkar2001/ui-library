@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
@@ -10,6 +10,10 @@ import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pi
   styleUrls: ["./lc-info.component.scss"],
 })
 export class LcInfoComponent implements OnInit {
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   lcInfoForm: FormGroup;
   countryArr: any[] = [];
 
@@ -77,6 +81,17 @@ export class LcInfoComponent implements OnInit {
           }),
         ]),
       }),
+    });
+
+    this.lcInfoForm.valueChanges.subscribe((res) => {
+      this.updateParentModel(
+        {
+          lcInfo: {
+            ...res,
+          },
+        },
+        this.checkForm()
+      );
     });
   }
 

@@ -141,7 +141,109 @@ export class GenericBgComponentComponent implements OnInit {
   }
 
   updateRecord(event) {
-    console.log(event, "........");
+    console.log(event, "........", this.account$.value);
+
+    let payload;
+
+    if (this.currentStep$?.value?.id == 1) {
+      const applicantInfo = this.account$.value?.applicantInfo;
+      const applicantInfoPayload = {
+        lcType: "Issuance",
+        // lcMasterId: 1234,
+        applicantInfo: {
+          applicant: applicantInfo?.applicant,
+          applicantReference: applicantInfo?.applicantReferences,
+          customerCode: applicantInfo?.customerCode,
+          issuingBranchId: applicantInfo?.issuingBranchCode,
+          iecCode: applicantInfo?.iecCode,
+          devliveryVia: applicantInfo?.deliveryMode,
+          margin: applicantInfo?.margin,
+          // licenceOglOrNonOgl: applicantInfo?.,
+          feeAccount: applicantInfo?.feeAccount,
+          contact: {
+            address: applicantInfo?.contactInfo?.address?.map((i) => ({
+              address1: i?.address1,
+              address2: i?.address2,
+              addressType: i?.residenceType,
+              pincode: i?.pincode,
+              cityId: i?.cityId,
+            })),
+          },
+        },
+      };
+      payload = applicantInfoPayload;
+    } else if (this.currentStep$.value?.id == 2) {
+      const lcInfo = this.account$.value?.lcInfo;
+      const lcInfopayload = {
+        lcType: "Issuance",
+        // lcMasterId: 1234,
+        lcInfo: {
+          type: lcInfo?.type,
+          domesticOrForeignLc: lcInfo?.domesticOrForegin,
+          redClause: lcInfo?.redClause,
+          revolving: lcInfo?.revolving,
+          amount: lcInfo?.amount,
+          // maxCrAmtOrTolerance: lcInfo?.,
+          additionalAmounts: lcInfo?.additionalAmounts,
+          valueDate: lcInfo?.valueDate,
+          requestDate: lcInfo?.requestDate,
+          purpose: lcInfo?.purpose,
+          placeOfExpiry: lcInfo?.placeOfExpiry,
+          expiryDate: lcInfo?.expiryDate,
+          // creditAvailableWith: lcInfo?.,
+          by: lcInfo?.by,
+          defferedPaymentDetails: lcInfo?.defferedPaymentDetails,
+          // forPercentage: lcInfo?.,
+          ofInvoiceValue: lcInfo?.invoiceValue,
+          tenor: lcInfo?.tenor,
+          currencyId: lcInfo?.currency,
+          beneficiary: {
+            name: lcInfo?.beneficiaryDetails?.beneficiary,
+            contactInfo: {
+              address: lcInfo?.beneficiaryDetails?.address?.map((i) =>
+                i({
+                  address1: i?.address1,
+                  address2: i?.address2,
+                  // addressType: "Home",
+                  pincode: i?.pincode,
+                  cityId: i?.cityId,
+                })
+              ),
+            },
+          },
+          bankDetails: {
+            // deliveryVia: lcInfo?.bankDetails?.,
+            confOfCredit: lcInfo?.bankDetails?.confirmationOfCredit,
+            drawee: lcInfo?.bankDetails?.drawee,
+            branchId: lcInfo?.bankDetails?.branch,
+            contact: {
+              address: lcInfo?.bankDetails?.address?.map((i) => ({
+                address1: i?.address1,
+                address2: i?.address2,
+                // addressType: "Home",
+                pincode: i?.pincode,
+                cityId: i?.cityId,
+              })),
+            },
+          },
+        },
+      };
+      payload = lcInfopayload;
+    } else if (this.currentStep$.value?.id == 3) {
+      payload = this.account$?.value?.goodsInfo;
+    }
+
+    this.api.submitIssuance(payload).subscribe(
+      (resp) => {
+        console.log(resp);
+      },
+      (err) => console.error("Error: ", err)
+    );
+
+    const nextTab = this.tabs.find(
+      (i) => i?.id == this.currentStep$?.value?.id + 1
+    );
+    this.navigatetotab(nextTab);
   }
 
   trackRecord() {
