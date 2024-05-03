@@ -22,8 +22,9 @@ export class IcCustomInputComponent implements OnInit {
   currencySymbol: string;
   @Input("showInfoIcon") showInfoIcon: boolean;
   @Input("hide") hide: boolean;
-
-  @Output() bankSearch = new EventEmitter<string>();
+  @Input("skipLabel") skipLabel: boolean = false;
+  @Output()
+  bankSearch = new EventEmitter<string>();
   @Output() onSuffixClick = new EventEmitter<any>();
 
   constructor(

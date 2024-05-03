@@ -25,6 +25,11 @@ export class NETBANKING {
           image: "/assets/images/adhoc-payment.svg",
           route: "",
         },
+        {
+          label: "Cheque Transfer",
+          image: "/assets/images/adhoc-payment.svg",
+          route: "user/dashboard/cheque/home/chequebook-request",
+        },
       ],
     },
     {
@@ -45,7 +50,7 @@ export class NETBANKING {
         {
           label: "Multi Transfer",
           image: "/assets/images/issue-draft.svg",
-          route: "",
+          route: "user/net-banking/fund-transfer/multi",
         },
       ],
     },
