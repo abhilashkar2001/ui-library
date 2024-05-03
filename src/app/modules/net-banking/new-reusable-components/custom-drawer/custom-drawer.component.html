@@ -18,7 +18,11 @@
       >
         <!-- use a disabled button to provide padding for tree leaf -->
 
-        <div [class]="node.roleName" (click)="getNode(node); drawer.toggle()">
+        <div
+          [class]="node.roleName"
+          style="cursor: pointer"
+          (click)="getNode(node); drawer.toggle()"
+        >
           {{ node.name }}
         </div>
       </mat-tree-node>
@@ -37,13 +41,18 @@
           node.roleName == 'parent-node' ? 'align-node' : ''
         ]"
       >
-        <div [class]="node.roleName" (click)="currentMenu = node.name">
+        <div
+          [class]="node.roleName"
+          style="cursor: pointer"
+          (click)="currentMenu = node.name"
+        >
           {{ node.name }}
         </div>
         <button
           mat-icon-button
           matTreeNodeToggle
           [attr.aria-label]="'Toggle ' + node.name"
+          style="cursor: pointer"
         >
           <mat-icon class="mat-icon-rtl-mirror">
             {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
