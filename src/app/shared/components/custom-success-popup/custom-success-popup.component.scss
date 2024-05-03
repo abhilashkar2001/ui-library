@@ -51,3 +51,27 @@
   display: flex;
   justify-content: center;
 }
+
+.refrence_no_div {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  background: #fafafa 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px #00000017;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  width: 300px;
+  .refrence_no_innerDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: #004c97;
+      font-weight: 600;
+    }
+  }
+}
+
+.sucessPopup {
+  padding: 10px 0px;
+}
