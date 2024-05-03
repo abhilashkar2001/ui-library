@@ -302,7 +302,7 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   openPopUp(element) {
     console.log(element);
-    
+
     this.tableservice.setEditingStatus(false);
     this.customEditForm.emit({ element });
   }
@@ -333,7 +333,7 @@ export class NewReusableMatTableComponent implements OnInit {
       sortName = "stateCode2";
     }
     console.log("inside custom");
-    
+
     this.customGetDataByPage.emit({
       filterBy: value,
       filterValue: value,
@@ -366,11 +366,12 @@ export class NewReusableMatTableComponent implements OnInit {
     }
     if (changes) this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
-    this.bulkUploadFileName = this.maintenanceData?.data[0].templateName;
-    if (this.maintenanceData?.statusCode === 200) {
+    this.bulkUploadFileName = this.maintenanceData?.data[0].fileName;
+
+    if (this.maintenanceData?.statusCode == 200) {
       this.updateTable(
         this.componentName == "Bulk Upload"
-          ? this.maintenanceData.data[0].coprateNetBankingBulkUploadInfo
+          ? this.maintenanceData.data[0].corpFundDetails
           : this.maintenanceData.data,
         this.maintenanceData.meta
       );
@@ -389,6 +390,8 @@ export class NewReusableMatTableComponent implements OnInit {
    * Updating table here.
    */
   updateTable(data: any[], meta) {
+    console.log(data, meta);
+
     this.parseUserAvatar(data);
 
     this.totalLength = meta?.totalElements;

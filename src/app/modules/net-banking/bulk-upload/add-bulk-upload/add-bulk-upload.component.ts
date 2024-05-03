@@ -61,7 +61,7 @@ export class AddBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
     private commonService: CommonService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -76,22 +76,24 @@ export class AddBulkUploadComponent implements OnInit {
 
   tansactionAction() {
     this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
-      const data = resp.data[0].coprateNetBankingBulkUploadInfo;
+      const data = resp.data[0].corpFundDetails;
       this.isTransactionActionDone =
-        data.every((item) => item.uploadstatus === "APPROVED") ||
-        data.every((item) => item.uploadstatus === "REJECTED");
+        data?.every((item) => item?.uploadstatus === "APPROVED") ||
+        data?.every((item) => item?.uploadstatus === "REJECTED");
     });
   }
 
   getTransactionLevelStatus() {
-    this.api.getLevelApprovalStatus(this.bulkId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.approvalList = resp.data;
-        if (this.approvalList?.length === 1) {
-          this.approvalList.push(this.pendingLevel);
+    this.api
+      .getLevelApprovalStatus(this.bulkId, "IcCorpFundTransferMaster")
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.approvalList = resp.data;
+          if (this.approvalList?.length === 1) {
+            this.approvalList.push(this.pendingLevel);
+          }
         }
-      }
-    });
+      });
   }
 
   getBulkUploadDetailsById(filter) {
@@ -116,7 +118,7 @@ export class AddBulkUploadComponent implements OnInit {
     this.transactionIds = [];
     this.transactionDetails.forEach((transaction) => {
       this.transactionIds.push({
-        ids: transaction.multiJournalId,
+        ids: transaction.id,
         status: event.operation === "Authorize" ? "APPROVED" : "REJECTED",
       });
     });
@@ -210,9 +212,8 @@ export class AddBulkUploadComponent implements OnInit {
       .generateOTP(this.currentUser.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
-        this.callAllInOnePopup(event)
+        this.callAllInOnePopup(event);
       });
-
   }
 
   callAllInOnePopup(event) {
@@ -227,8 +228,13 @@ export class AddBulkUploadComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
-        this.api.
-          uploadExcel(event.formData, event.userName, event.productType, event.processingDatee)
+        this.api
+          .uploadExcel(
+            event.formData,
+            event.userName,
+            event.productType,
+            event.processingDatee
+          )
           .subscribe((res: any) => {
             if (res?.statusCode === 200) {
               this.callSuccessPopup(res);

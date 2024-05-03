@@ -35,6 +35,12 @@ import { AttachmentsComponent } from "./new-reusable-components/attachments/atta
 import { LayoutsModule } from "app/layouts/layouts.module";
 import { CustomDrawerComponent } from "./new-reusable-components/custom-drawer/custom-drawer.component";
 import { BenificiaryBulkUploadSummaryComponent } from "./trade-flow/beneficiary-summary/benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component";
+import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
+import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
+import { ExportApplicationDetailsComponent } from "./new-reusable-components/export-application-details/export-application-details.component";
+import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
+import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
+import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
 import { LcInfoComponent } from "./new-reusable-components/lc-info/lc-info.component";
 import { GoodsInfoComponent } from "./new-reusable-components/goods-info/goods-info.component";
 import { LcAdditionalInfoComponent } from "./new-reusable-components/lc-additional-info/lc-additional-info.component";
@@ -45,13 +51,14 @@ import { LcAmendementInfoComponent } from "./new-reusable-components/lc-amendeme
 import { RemittanceSummeryComponent } from "./trade-flow/remittance-summery/remittance-summery.component";
 import { GenericRemittanceComponent } from "./new-reusable-components/generic-remittance/generic-remittance.component";
 import { RemittanceInfoComponent } from "./new-reusable-components/remittance-info/remittance-info.component";
-import { PreShipmentLPSummaryComponent } from "./trade-flow/pre-shipment-lp-summary/pre-shipment-lp-summary.component";
-import { ExportProcessInfoComponent } from "./new-reusable-components/export-process-info/export-process-info.component";
-import { ExportApplicationDetailsComponent } from "./new-reusable-components/export-application-details/export-application-details.component";
-import { ExportLoanDetailsComponent } from "./new-reusable-components/export-loan-details/export-loan-details.component";
-import { ExportAttachmentsComponent } from "./new-reusable-components/export-attachments/export-attachments.component";
-import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
-
+import { ExportSWBillLodgementComponent } from "./trade-flow/export-sw-bill-lodgement/export-sw-bill-lodgement.component";
+import { AddExportSwBillComponent } from "./trade-flow/export-sw-bill-lodgement/add-export-sw-bill/add-export-sw-bill.component";
+import { BillSectionAComponent } from "./new-reusable-components/bill-section-a/bill-section-a.component";
+import { BillSectionBComponent } from "./new-reusable-components/bill-section-b/bill-section-b.component";
+import { BillSectionCValuesComponent } from "./new-reusable-components/bill-section-c-values/bill-section-c-values.component";
+import { BillAttachmentsComponent } from "./new-reusable-components/bill-attachments/bill-attachments.component";
+import { EefcComponent } from "./trade-flow/eefc/eefc.component";
+import { AddNewEefcComponent } from "./trade-flow/eefc/add-new-eefc/add-new-eefc.component";
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-documents/dispatch-documents.component";
@@ -112,6 +119,17 @@ import { CreditInfoComponent } from "./new-reusable-components/credit-info/credi
     ExportLoanDetailsComponent,
     ExportAttachmentsComponent,
     ExportLcDetailsComponent,
+    ExportBillDispatchSummaryComponent,
+    TransactionDetailsComponent,
+    DispatchDocumentsComponent,
+    ExportSWBillLodgementComponent,
+    AddExportSwBillComponent,
+    BillSectionAComponent,
+    BillSectionBComponent,
+    BillSectionCValuesComponent,
+    BillAttachmentsComponent,
+    EefcComponent,
+    AddNewEefcComponent,
     ExportBillDispatchSummaryComponent,
     TransactionDetailsComponent,
     DispatchDocumentsComponent,

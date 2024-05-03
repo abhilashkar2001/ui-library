@@ -113,8 +113,7 @@ export class DrawerConstant {
           roleName: "child-node",
         },
         { name: "EXPORT BILL DISPATCH", path: "", roleName: "child-node" },
-
-        { name: "EXPORT S/W BILL LODGEMENT", path: "", roleName: "child-node" },
+        { name: "Export SW Bill Lodgement", path: "ExportSWBillLodgementSummary", roleName: "child-node" },
         { name: "EEFC", path: "", roleName: "child-node" },
       ],
     },
