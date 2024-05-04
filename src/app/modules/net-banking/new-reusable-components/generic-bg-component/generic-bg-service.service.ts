@@ -16,6 +16,10 @@ export class GenericBgServiceService {
     );
   }
 
+  uploadDocument(payload) {
+    return this.http.post(`${this.basePath}/upload-document`, payload);
+  }
+
   saveTemplate(payload) {
     return this.http.post(`${this.basePath}/bgIssuance`, payload);
   }

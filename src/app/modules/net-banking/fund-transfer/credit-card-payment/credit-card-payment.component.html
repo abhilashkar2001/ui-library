@@ -73,7 +73,7 @@
       <ng-container *ngIf="showSendAdviceBlock">
         <div fxFlex="24">
           <mat-form-field appearance="outline">
-            <mat-label class="text_label">Remitter email ID</mat-label>
+            <mat-label class="text_label">Remitter email id</mat-label>
             <input matInput type="text" />
           </mat-form-field>
         </div>
@@ -116,8 +116,12 @@
       </ng-container>
     </div>
     <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
-      <button class="exit-button" mat-raised-button>Cancel</button>
-      <button class="back-button" mat-raised-button>Clear</button>
+      <button class="exit-button" mat-raised-button (click)="close()">
+        Cancel
+      </button>
+      <button class="back-button" mat-raised-button (click)="clear()">
+        Clear
+      </button>
       <button-loading
         [type]="'button'"
         [btnClass]="'submit-button'"

@@ -54,5 +54,8 @@ export class BillSectionAComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res) => {})
   }
+  beneficiary(){
+   
+  }
 
 }

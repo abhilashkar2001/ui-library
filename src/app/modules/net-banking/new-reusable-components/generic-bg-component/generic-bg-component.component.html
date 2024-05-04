@@ -8,7 +8,7 @@
         routerLinkActive
         class="tabnames"
         (click)="navigatetotab(tab)"
-        [active]="tab.id === currentStep$.value.id"
+        [active]="tab.id === currentStep$.value?.id"
       >
         {{ tab?.title }}
       </a>

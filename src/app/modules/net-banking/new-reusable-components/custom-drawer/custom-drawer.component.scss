@@ -17,8 +17,8 @@
 
 .parent-node {
   color: #102245;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
 }
 .align-node {
   & .parent-node {
@@ -28,7 +28,7 @@
 .child-node {
   color: #014b94;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .active-node {
   background: #014588 0% 0% no-repeat padding-box;

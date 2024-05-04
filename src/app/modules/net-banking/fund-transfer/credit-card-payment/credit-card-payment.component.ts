@@ -8,6 +8,11 @@ import {
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FundTransferService } from "../fund-transfer.service";
+import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
+import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-credit-card-payment",
@@ -25,12 +30,16 @@ export class CreditCardPaymentComponent implements OnInit {
     { label: "000037560078", value: "000037560078" },
     { label: "000037560069", value: "000037560069" },
   ];
+  customerInfo: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private fundTransferService: FundTransferService
+    private fundTransferService: FundTransferService,
+    private router: Router,
+    private dialog: MatDialog,
+    private api: OpenAccountService
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
@@ -74,11 +83,69 @@ export class CreditCardPaymentComponent implements OnInit {
 
   fetchCustomerInfo() {
     this.selectList = JSON.parse(sessionStorage.getItem("listOfAccounts"));
+    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
+  }
+
+  close() {
+    this.router.navigate(["/user/dashboard/home"]);
+  }
+
+  clear() {
+    this.creditCardForm.reset();
   }
 
   submit() {
     let payload = { ...this.creditCardForm.value };
     payload.creditAmount = payload.debitAmount;
-    this.fundTransferService.saveCreditCard(payload).subscribe((res) => {});
+    this.getOTP();
+    let dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
+      data: { remark: true, mobile: this.customerInfo.mobileNumber },
+      width: "50%",
+      height: "33%",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef1.afterClosed().subscribe((result) => {
+      if (result == "verified") {
+        this.saveData(payload);
+      } else {
+        let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+          data: { msg: "Payment failed!!!", status: false },
+          width: "40%",
+          disableClose: true,
+          panelClass: "popup-class",
+          backdropClass: "bdrop",
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Failed") {
+            dialogRef.close();
+          }
+        });
+      }
+    });
+  }
+  getOTP() {
+    this.api
+      .getOtp(this.customerInfo.mobileNumber)
+      .subscribe((response: any) => {});
+  }
+
+  saveData(payload) {
+    this.fundTransferService.saveCreditCard(payload).subscribe((res) => {
+      let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+        data: { msg: "Payment Successful", status: true },
+        width: "40%",
+        disableClose: true,
+        panelClass: "popup-class",
+        backdropClass: "bdrop",
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log(result);
+        if (result == "Done") {
+          this.close();
+        }
+      });
+    });
   }
 }

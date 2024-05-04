@@ -5,7 +5,13 @@
         <div fxLayoutGap="20px" fxLayoutAlign="space-between center">
           <div fxFlex="100" class="pb-1" fxLayoutAlign="space-between">
             <div fxFlex="35" *ngIf="screenName === 'beneficiary' || screenName">
-              <h2>{{ screenName }}</h2>
+              <h2>
+                {{
+                  screenName === "beneficiary"
+                    ? "Beneficiary Upload"
+                    : screenName
+                }}
+              </h2>
             </div>
             <ng-container *ngIf="!isHideFilter">
               <div
@@ -70,9 +76,9 @@
                 </button>
               </div>
             </ng-container>
-            <ng-container>
+            <!-- <ng-container>
               <button type="button" class="clause-btn">Clause Template</button>
-            </ng-container>
+            </ng-container> -->
           </div>
         </div>
 
