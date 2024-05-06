@@ -11,8 +11,8 @@
             <input
               matInput
               type="text"
-              formControlName="receiptto"
-              name="receiptto"
+              formControlName="plcOfRcptChngTo"
+              name="plcOfRcptChngTo"
             />
           </mat-form-field>
         </div>
@@ -24,8 +24,8 @@
             <input
               matInput
               type="text"
-              formControlName="receiptfrom"
-              name="receiptfrom"
+              formControlName="plcOfRcptChngFrom"
+              name="plcOfRcptChngFrom"
             />
           </mat-form-field>
         </div>
@@ -37,8 +37,8 @@
             <input
               matInput
               type="text"
-              formControlName="destinationTo"
-              name="destinationTo"
+              formControlName="plcOfFnlDstnTo"
+              name="plcOfFnlDstnTo"
             />
           </mat-form-field>
         </div>
@@ -50,8 +50,8 @@
             <input
               matInput
               type="text"
-              formControlName="destinationfrom"
-              name="destinationfrom"
+              formControlName="plcOfFnlDstnFrom"
+              name="plcOfFnlDstnFrom"
             />
           </mat-form-field>
         </div>
@@ -66,8 +66,8 @@
             <input
               matInput
               type="text"
-              formControlName="loadingTo"
-              name="loadingTo"
+              formControlName="partOfLdngTo"
+              name="partOfLdngTo"
             />
           </mat-form-field>
         </div>
@@ -79,8 +79,8 @@
             <input
               matInput
               type="text"
-              formControlName="loadingForm"
-              name="loadingForm"
+              formControlName="partOfLndgFrom"
+              name="partOfLndgFrom"
             />
           </mat-form-field>
         </div>
@@ -95,8 +95,8 @@
             <input
               matInput
               type="text"
-              formControlName="disChargeTo"
-              name="disChargeTo"
+              formControlName="partOfDschgTo"
+              name="partOfDschgTo"
             />
           </mat-form-field>
         </div>
@@ -108,8 +108,8 @@
             <input
               matInput
               type="text"
-              formControlName="disChargeFrom"
-              name="disChargeFrom"
+              formControlName="partOfDschgFrom"
+              name="partOfDschgFrom"
             />
           </mat-form-field>
         </div>
@@ -127,8 +127,8 @@
           <input
             matInput
             type="text"
-            formControlName="documentWithIn"
-            name="documentWithIn"
+            formControlName="docToBeWithIn"
+            name="docToBeWithIn"
           />
         </mat-form-field>
       </div>
@@ -138,25 +138,31 @@
           <input
             matInput
             type="text"
-            formControlName="daysDate"
-            name="daysDate"
+            formControlName="daysFrmDtOf"
+            name="daysFrmDtOf"
           />
         </mat-form-field>
       </div>
       <div fxFlex="60">
-        <mat-label class="custom-label">Additional Condition (47A)</mat-label>
+        <mat-label class="custom-label">Narrative (79)</mat-label>
         <mat-form-field class="full-width" appearance="outline">
           <input
             matInput
-            formControlName="additionalCondition"
+            formControlName="narrative"
             type="text"
-            name="additionalCondition"
+            name="narrative"
           />
           <div fxFlex="40" class="verifyDiv">
             <button mat-suffix type="button" class="verify-btn">
               Clause Template
             </button>
           </div>
+        </mat-form-field>
+      </div>
+      <div fxFlex="19">
+        <mat-label class="custom-label"> Margin </mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput type="text" formControlName="margin" name="margin" />
         </mat-form-field>
       </div>
     </div>

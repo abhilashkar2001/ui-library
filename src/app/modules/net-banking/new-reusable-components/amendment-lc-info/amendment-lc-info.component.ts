@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
@@ -13,11 +13,15 @@ export class AmendmentLcInfoComponent implements OnInit {
   countryArr: any[] = [];
   component: string = "Amendment LC Info";
   amendmentLcInfoForm: FormGroup;
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCountrys();
@@ -26,9 +30,9 @@ export class AmendmentLcInfoComponent implements OnInit {
 
   buildForm(data?) {
     this.amendmentLcInfoForm = this.fb.group({
-      lcNumber: [data?.lcNumber ?? ""],
-      lcOpenDate: [data?.lcOpenDate ?? ""],
       applicantsDetails: this.fb.group({
+        lcNumber: [data?.lcNumber ?? ""],
+        lcOpenDate: [data?.lcOpenDate ?? ""],
         applicant: [data?.applicant ?? ""],
         customerMode: [data?.customerMode ?? ""],
         issuingBranch: [data?.issuingBranch ?? ""],
@@ -55,6 +59,21 @@ export class AmendmentLcInfoComponent implements OnInit {
     this.applicantAddress.push(this.buildAddressFormGroup(data?.address));
     this.beneficiaryAddress.push(this.buildAddressFormGroup(data?.address));
     this.advisingBankAddress.push(this.buildAddressFormGroup(data?.address));
+    this.amendmentLcInfoForm.valueChanges.subscribe((res) => {
+      let payload: any = {};
+      payload = {
+        lcType: "Amendment",
+        lcInfo: this.amendmentLcInfoForm.value.applicantsDetails,
+        beneficiary: this.amendmentLcInfoForm.value.beneficiaryDetails,
+        advisingBank: this.amendmentLcInfoForm.value.advisingBank
+      }
+      console.log(payload);
+
+      this.updateParentModel(
+        { amendmentLcInfo: payload },
+        this.checkForm()
+      );
+    });
   }
 
   buildAddressFormGroup(data?) {

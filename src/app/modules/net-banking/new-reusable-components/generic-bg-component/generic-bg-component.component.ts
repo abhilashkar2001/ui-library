@@ -38,7 +38,7 @@ export class GenericBgComponentComponent implements OnInit {
     private dialog: MatDialog,
     private api: GenericBgServiceService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: any) => {
@@ -138,7 +138,7 @@ export class GenericBgComponentComponent implements OnInit {
       otherInfoModel: this.account$.value?.otherInfoModel ?? null,
       attachmentModel: this.account$.value?.attachMentModel ?? null,
     };
-    this.api.saveTemplate(payload).subscribe((resp) => {});
+    this.api.saveTemplate(payload).subscribe((resp) => { });
   }
 
   updateRecord(event) {
@@ -150,7 +150,6 @@ export class GenericBgComponentComponent implements OnInit {
     );
 
     let payload;
-
     if (this.currentStep$?.value?.id == 1) {
       const applicantInfo = this.account$.value?.applicantInfo;
       const applicantInfoPayload = {

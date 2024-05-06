@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class LcOtherConditionsComponent implements OnInit {
   lcOtherConditionForm: FormGroup
-
+  @Input("updateParentModel") updateParentModel: (
+    part: Partial<any>,
+    isFormValid: boolean
+  ) => void;
 
   constructor(private fb: FormBuilder) {
 
@@ -20,17 +23,37 @@ export class LcOtherConditionsComponent implements OnInit {
 
   buildForm(data?) {
     this.lcOtherConditionForm = this.fb.group({
-      receiptto: [data?.receiptto ?? ""],
-      receiptfrom: [data?.receiptfrom ?? ""],
-      destinationTo: [data?.destinationTo ?? ""],
-      destinationfrom: [data?.destinationfrom ?? ""],
-      loadingTo: [data?.loadingTo ?? ""],
-      loadingForm: [data?.loadingForm ?? ""],
-      disChargeTo: [data?.disChargeTo ?? ""],
-      disChargeFrom: [data?.disChargeFrom ?? ""],
-      documentWithIn: [data?.documentWithIn ?? ""],
-      daysDate: [data?.daysDate ?? ""],
-      additionalCondition: [data?.additionalCondition ?? ""]
+      plcOfRcptChngTo: [data?.plcOfRcptChngTo ?? ""],
+      plcOfRcptChngFrom: [data?.plcOfRcptChngFrom ?? ""],
+      plcOfFnlDstnTo: [data?.plcOfFnlDstnTo ?? ""],
+      plcOfFnlDstnFrom: [data?.plcOfFnlDstnFrom ?? ""],
+      partOfLdngTo: [data?.partOfLdngTo ?? ""],
+      partOfLndgFrom: [data?.partOfLndgFrom ?? ""],
+      partOfDschgTo: [data?.partOfDschgTo ?? ""],
+      partOfDschgFrom: [data?.partOfDschgFrom ?? ""],
+      docToBeWithIn: [data?.docToBeWithIn ?? ""],
+      daysFrmDtOf: [data?.daysFrmDtOf ?? ""],
+      narrative: [data?.narrative ?? ""],
+      margin: [data?.margin ?? ""]
     });
+    this.lcOtherConditionForm.valueChanges.subscribe((res) => {
+      let payload: any = {};
+      payload = {
+        lcType: "Amendment",
+        amendmentInfo: this.lcOtherConditionForm.value
+      }
+      this.updateParentModel(
+        {
+          lcAmendmentAmendmentInfo: {
+            payload
+          },
+        },
+        this.checkForm()
+      );
+    });
+  }
+
+  checkForm() {
+    return this.lcOtherConditionForm.valid;
   }
 }
