@@ -467,6 +467,7 @@ export class CreateAccountLandingPageComponent {
     this.currentStep = this.screenList[num].screenName;
     setTimeout(() => {
       this.selectedStep = num;
+      this.factory();
     }, 200);
   }
 

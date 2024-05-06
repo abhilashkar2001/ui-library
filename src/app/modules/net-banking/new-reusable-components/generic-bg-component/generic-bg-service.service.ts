@@ -11,20 +11,20 @@ export class GenericBgServiceService {
   constructor(private http: HttpClient) {}
 
   fetchPincode(pincode) {
-    return this.http.get(
+    return this.http.get<any>(
       `${this.basePath}/city/fetchByPinCode?pincode=${pincode}`
     );
   }
 
   uploadDocument(payload) {
-    return this.http.post(`${this.basePath}/upload-document`, payload);
+    return this.http.post<any>(`${this.basePath}/upload-document`, payload);
   }
 
   saveTemplate(payload) {
-    return this.http.post(`${this.basePath}/bgIssuance`, payload);
+    return this.http.post<any>(`${this.basePath}/bgIssuance`, payload);
   }
 
   submitIssuance(payload) {
-    return this.http.post(`${this.basePath}/lcMaster`, payload);
+    return this.http.post<any>(`${this.basePath}/lcMaster`, payload);
   }
 }
