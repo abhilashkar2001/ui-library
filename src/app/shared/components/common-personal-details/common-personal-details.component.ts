@@ -47,6 +47,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   @Input() customerInfo;
+  @Input() mobileVerifyInfo: any = {};
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
@@ -285,6 +286,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         ],
         mobtCode: [
           data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
+          [Validators.required],
         ],
         address: this.fb.array([]),
       }),
@@ -404,13 +406,40 @@ export class CommonPersonalDetailsComponent implements OnInit {
     if (mobileNo) {
       if (i === 0) {
         mobileControl.patchValue(mobileNo);
-        // mobileControl.disable();
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
       if (resp?.length != this.maxMobileLength) {
         mobileControl.setErrors({ invalidLength: true });
+      } else {
+        this.openApi
+          .checkMobileAndProduct(
+            this.mobileVerifyInfo.basisName,
+            resp,
+            this.mobileVerifyInfo.productDuplicationKey
+          )
+          .subscribe((result) => {
+            if (!result) {
+              this.allreadyProduct(mobileControl);
+            }
+          });
       }
+    });
+  }
+
+  allreadyProduct(mobileControl) {
+    const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
+      data: {
+        errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
+        errorMessageHint: "Please visit bank for more information.",
+      },
+      width: "650px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      mobileControl.setValue("");
     });
   }
 

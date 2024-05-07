@@ -251,8 +251,9 @@ export class CommonMobileVerificationComponent implements OnInit {
           this.loadingBtnText = "Saved";
           this.isLoading = false;
           this.invalidOtp = false;
-          this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
-          // this.onCustomSubmit.emit({ phone: this.otpForm.value.phone });
+          if (!this.hideInfo)
+            this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
+          this.onCustomSubmit.emit({});
         }
       });
   }
