@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { FooterConstant } from "./footer.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { FooterServiceService } from "app/shared/services/footer-service.service";
 
 @Component({
   selector: "app-footer",
@@ -15,12 +16,17 @@ export class FooterComponent implements OnInit {
   hideNavItem: boolean = false;
   userDetails: any;
   @Output() scrollToTop = new EventEmitter<any>();
+  isHideFooter: boolean = false;
   constructor(
     private showSideBar: NewDepositService,
-    private store: TokenStorageService
+    private store: TokenStorageService,
+    private footerService: FooterServiceService
   ) {}
 
   ngOnInit(): void {
+    this.footerService.isHideFooter().subscribe((resp) => {
+      this.isHideFooter = resp;
+    });
     this.userDetails = this.store.getUser();
     this.showSideBar.getToken().subscribe((resp) => {
       this.hideNavItem = resp;
