@@ -97,6 +97,14 @@ export const rootRouterConfig: Routes = [
           import("./modules/loans/loans.module").then((m) => m.LoansModule),
         data: { preload: false, title: "Home", breadcrumb: "Home" },
       },
+      {
+        path: "tracking",
+        loadChildren: () =>
+          import("./modules/tracking/tracking.module").then(
+            (m) => m.TrackingModule
+          ),
+        data: { preload: false, title: "Home", breadcrumb: "Home" },
+      },
     ],
   },
   {

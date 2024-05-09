@@ -1,0 +1,93 @@
+.logo {
+  cursor: pointer;
+  img {
+    width: 90px;
+  }
+  p {
+    font-size: 2rem;
+    font-family: BellMT;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+.signIn {
+  margin: 5%;
+  .signIn_container {
+    margin-top: 5%;
+    h1 {
+      color: #707070;
+      font-size: 2rem;
+    }
+  }
+}
+
+.otp_custom_card {
+  display: flex !important;
+  border-radius: 12px;
+  box-shadow: none !important;
+  .verification {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Raleway";
+    color: #707070;
+  }
+  .phoneNumber {
+    display: block;
+    margin-bottom: 20px;
+    font-size: smaller;
+    font-weight: bolder;
+    font-family: "Poppins";
+  }
+
+  .otp_block {
+    // margin: 30px 0;
+    ::ng-deep .wrapper {
+      padding: 4px !important;
+      width: fit-content !important;
+    }
+    ::ng-deep .otp-input {
+      //   background: #ffffff 0% 0% no-repeat padding-box !important;
+      border-radius: 12px !important;
+      border: none !important;
+      box-shadow: 0px 9.07px 30.24px 0px #00000014;
+      &:focus-visible {
+        outline: 0px !important;
+      }
+    }
+  }
+
+  .resend {
+    cursor: pointer;
+    display: flex;
+    font-weight: bolder;
+    font-size: small;
+    color: black;
+    opacity: 0.37;
+    font-family: "Poppins";
+  }
+
+  .verify1 {
+    margin-bottom: 50px;
+  }
+  .addcolor {
+    color: #004c97 !important;
+    opacity: 1 !important;
+  }
+  .removecolor {
+    opacity: 0.37 !important;
+  }
+}
+
+.tracking_stepper {
+  background-color: #e6f2ff !important;
+  border-radius: 24px;
+}
+
+.tracking_sign {
+  margin: 5%;
+}
+
+.btn {
+  border-radius: 50px !important;
+}

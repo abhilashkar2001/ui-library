@@ -1,0 +1,72 @@
+<div fxLayout="column">
+  <mat-form-field
+    appearance="outline"
+    class="full-width fieldinput custom-field custom-search"
+    fxFlex="100"
+  >
+    <!-- <mat-icon matPrefix>search</mat-icon> -->
+    <mat-icon matPrefix class="searchIcon">search</mat-icon>
+    <input matInput type="text" placeholder="Search" />
+    <div matSuffix fxFLex="100">
+      <mat-select [(ngModel)]="searchFilter">
+        <mat-option class="" value="All Categories">All Categories</mat-option>
+      </mat-select>
+    </div>
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <ng-container *ngFor="let product of productList; let i = index">
+      <mat-card
+        fxFlex="24"
+        class="card-div mb-24"
+        (click)="openProduct(product)"
+      >
+        <img [src]="product.imageUrl" class="card-img" />
+        <div class="p-12" fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <p class="label_item">Type</p>
+              <p class="label_value">{{ product.type }}</p>
+            </div>
+            <div fxLayout="column">
+              <p class="label_item">Applicant No</p>
+              <p class="label_value">{{ product.applicationNo }}</p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="pt-12"
+          >
+            <div fxLayout="column">
+              <p class="label_item">Loan Amount</p>
+              <p class="label_value">₹ {{ product?.loanAmount ?? 0 }}</p>
+            </div>
+            <div fxLayout="column">
+              <p class="label_item">Status</p>
+              <p
+                class="label_value"
+                [ngClass]="[
+                  product.status.toLowerCase() == 'pending'
+                    ? 'highlightPending'
+                    : '',
+                  product.status.toLowerCase() == 'ongoing'
+                    ? 'highlightOngoing'
+                    : '',
+                  product.status.toLowerCase() == 'approved'
+                    ? 'highlightApproved'
+                    : '',
+                  product.status.toLowerCase() == 'rjected'
+                    ? 'highlightRejected'
+                    : ''
+                ]"
+              >
+                {{ product.status }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="m-24" fxFlex="100">
+  <div fxFlex="50" class="fdCalculator_parent tracking_stepper">
+    <app-commmon-steeper
+      [screenTitle]="screenTitle"
+      [screenList]="screenList"
+      [screenIndex]="selectedStep"
+      customClass="custom_backGround"
+    ></app-commmon-steeper>
+
+    <div></div>
+  </div>
+  <div fxFlex="50">
+    <section fxLayout="column" class="signIn">
+      <div class="logo">
+        <img src="assets/images/Group 5698.svg" alt="logo" />
+        <p class="logo_text">DemoBank</p>
+      </div>
+      <div class="signIn_container">
+        <form *ngIf="signForm && !isShowOtpField" [formGroup]="signForm">
+          <h1>Welcome To ICUST</h1>
+          <p>Whenever you want, you can check the status of your application</p>
+          <mat-form-field apperance="outline" class="full-width">
+            <mat-label>Mobile No.</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="mobile"
+              maxlength="10"
+            />
+          </mat-form-field>
+        </form>
+
+        <ng-container *ngIf="isShowOtpField">
+          <mat-card
+            fxLayout="column"
+            class="default otp_custom_card mx-auto d-flex flex-column"
+          >
+            <span class="verification">{{ "OTP Authentication" }}</span>
+            <span class="phoneNumber">
+              <ng-container *ngIf="!this.otpResendTrigger">
+                An authentication code has been sent to
+              </ng-container>
+              <ng-container *ngIf="this.otpResendTrigger">
+                An authentication code has been Re-sent to
+              </ng-container>
+              <br />
+              <span class="text-light">(+62) 812 345 6XXX</span>
+            </span>
+            <div class="otp_block">
+              <ng-otp-input
+                #ngOtpInput
+                (onInputChange)="onOtpChange($event)"
+                [config]="config"
+              ></ng-otp-input>
+            </div>
+            <!-- <mat-error *ngIf="invalidOtp"><strong>Invalid OTP!</strong></mat-error> -->
+            <div class="verify1">
+              <span (click)="getOtp()" class="addcolor resend">{{
+                "Resend"
+              }}</span>
+            </div>
+          </mat-card>
+        </ng-container>
+
+        <div fxLayout="row">
+          <div
+            class="button_section"
+            fxLayout="row"
+            fxLayoutGap="20"
+            fxLayoutAlign="center"
+          >
+            <button
+              mat-flat-button
+              class="filled_btn btn"
+              (click)="getOtp()"
+              *ngIf="!isShowOtpField"
+            >
+              {{ "Get Otp" }}
+            </button>
+            <button
+              mat-flat-button
+              class="filled_btn btn"
+              *ngIf="isShowOtpField"
+              (click)="verifyOtp()"
+              [disabled]="!otpAvailable"
+            >
+              {{ "Submit" }}
+            </button>
+            <button mat-flat-button class="stroked_btn btn">
+              {{ "Back" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

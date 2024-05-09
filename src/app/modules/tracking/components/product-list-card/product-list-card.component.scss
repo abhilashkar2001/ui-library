@@ -1,0 +1,106 @@
+.desc-list {
+  margin-left: -25px;
+  color: #051a2d;
+  font: 12px poppins;
+
+  li {
+    padding-bottom: 10px;
+  }
+}
+
+.card-title {
+  color: #004c97;
+}
+
+.card-summary {
+  color: #051a2d;
+  font-family: poppins;
+  font-size: 16px;
+  margin: 0;
+}
+
+.card-img {
+  max-height: 150px;
+  width: 100%;
+  max-width: 100% !important;
+  border-radius: 20px;
+}
+
+.read-text {
+  color: #004c97;
+}
+
+.card-div {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.btn-div {
+  background: #f0f0f0 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+  padding: 5px;
+  margin: 0 30px;
+}
+
+.btn-selected {
+  background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box;
+  border-radius: 15px !important;
+  opacity: 1;
+  color: white;
+  font-weight: 300;
+  padding: 6px;
+}
+
+.btn-hide {
+  text-align: left;
+  font: 16px Poppins;
+  letter-spacing: -0.32px;
+  color: #7e7e7e;
+  opacity: 1;
+  border: none;
+  padding: 6px;
+}
+.label_item {
+  font-size: 9px;
+  color: #b0b7c3;
+  font-weight: bold;
+  margin: 0px 0px 5px !important;
+}
+.label_value {
+  color: #102245;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0px !important;
+}
+
+.highlightPending {
+  color: #004c97 !important;
+}
+.highlightOngoing {
+  color: #eeab2c !important;
+}
+.highlightApproved {
+  color: rgb(0, 132, 97) !important;
+}
+.highlightRejected {
+  color: rgb(178, 0, 0) !important;
+}
+.custom-search {
+  ::ng-deep .mat-form-field-prefix {
+    margin-right: 2% !important;
+    .searchIcon {
+      opacity: 50%;
+    }
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    width: 10%;
+    padding: 10px;
+    box-sizing: content-box;
+    border-radius: 10px;
+    background: #dde0e5;
+    top: -5px;
+  }
+}

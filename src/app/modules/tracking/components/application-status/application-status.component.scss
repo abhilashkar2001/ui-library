@@ -1,0 +1,140 @@
+@mixin statusLabel($color, $bg_color) {
+  border: 1px solid $color !important;
+  color: $color !important;
+  background-color: $bg_color !important;
+}
+
+.dot {
+  display: flex;
+  height: 25px;
+  width: 25px;
+  background-color: #004c97;
+  border-radius: 50%;
+}
+.dot_grp {
+  position: relative;
+}
+.label_title {
+  color: #102245;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 27px;
+}
+.label_value {
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  color: #424545;
+}
+
+.statusVal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #008461;
+  height: 35px;
+  width: 120px;
+  font-size: 16px;
+  border-radius: 19px;
+  color: #008461;
+  font-weight: 600;
+  background-color: #dbfff5;
+}
+
+.scheduleStatus {
+  @include statusLabel(#004c97, #d8e0ff);
+}
+.inProgressStatus {
+  @include statusLabel(#eeab2c, #fff6e5);
+}
+
+ul.approved_history_container {
+  height: max-content;
+  background-color: #f8faff;
+  border-radius: 8px;
+  padding-left: 0 !important;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 1%;
+    right: 17%;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    border-radius: 2px;
+    border-left: 3px solid rgba(0, 76, 151, 0.1803921569);
+    border-top: 3px solid rgba(0, 76, 151, 0.1803921569);
+    transform: rotate(45deg) translate(-50%, -50%);
+  }
+  span.vertical_line {
+    height: calc(100% - 220px);
+    position: absolute;
+    left: calc(10% + 40px);
+    transform: translateX(-50%);
+    background-color: #004c97;
+    width: 4px;
+    top: 145px;
+    border-radius: 40px;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    p {
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .count_div {
+      margin-left: 10%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      p.count {
+        background-color: #004c97;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 600;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        outline: 3px solid #fff;
+        box-shadow: 0 0 1px 1px #fff;
+        z-index: 2;
+      }
+    }
+    .list_body {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      p.list_name {
+        color: #111;
+        font-size: 14px;
+      }
+      p.emp_id {
+        color: #b4b4b4;
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+.dateLabel {
+  right: 60px;
+  position: relative;
+  top: 34px;
+  color: #424545;
+  font-weight: 600;
+  width: 44px;
+  word-wrap: break-word;
+}

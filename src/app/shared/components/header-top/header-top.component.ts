@@ -224,4 +224,8 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   redirectToSignIn() {
     this.router.navigate([`/sessions/signin`]);
   }
+
+  trackingStatus() {
+    this.router.navigate([`/tracking`]);
+  }
 }
