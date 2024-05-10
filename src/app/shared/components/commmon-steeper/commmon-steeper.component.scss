@@ -273,8 +273,13 @@
   }
 
   ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon {
-    background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #004c97 !important;
+  }
+  ::ng-deep
+    .mat-step-header.mat-vertical-stepper-header
+    .mat-step-icon-selected {
+    background: #ffffff !important;
   }
 
   ::ng-deep .mat-vertical-content-container {

@@ -87,7 +87,8 @@
                 class="label_value document_label_value"
                 (click)="opnDocument(docItem?.fileUrl, docItem)"
               >
-                {{ docItem[item?.valueKey] }}
+                {{ docItem[item?.valueKey] ?? docItem?.fileName
+                }}{{ docItem?.documentSide }}
               </p>
             </ng-container>
           </ng-container>

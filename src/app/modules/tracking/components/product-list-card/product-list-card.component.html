@@ -6,17 +6,30 @@
   >
     <!-- <mat-icon matPrefix>search</mat-icon> -->
     <mat-icon matPrefix class="searchIcon">search</mat-icon>
-    <input matInput type="text" placeholder="Search" />
+    <input
+      matInput
+      type="text"
+      placeholder="Search"
+      [formControl]="searchControl"
+    />
     <div matSuffix fxFLex="100">
-      <mat-select [(ngModel)]="searchFilter">
-        <mat-option class="" value="All Categories">All Categories</mat-option>
+      <mat-select
+        [(ngModel)]="searchFilter"
+        (selectionChange)="onCategoryChange()"
+      >
+        <mat-option
+          class=""
+          [value]="category"
+          *ngFor="let category of categoryList"
+          >{{ category }}</mat-option
+        >
       </mat-select>
     </div>
   </mat-form-field>
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <ng-container *ngFor="let product of productList; let i = index">
       <mat-card
-        fxFlex="24"
+        fxFlex="23"
         class="card-div mb-24"
         (click)="openProduct(product)"
       >
