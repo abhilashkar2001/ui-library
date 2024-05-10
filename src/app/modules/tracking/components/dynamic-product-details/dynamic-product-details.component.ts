@@ -15,10 +15,7 @@ export class DynamicProductDetailsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.productInfo) {
       this.productInfo = changes.productInfo.currentValue;
-      console.log(this.productInfo);
     }
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
   }
 
   ngOnInit(): void {}
