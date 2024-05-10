@@ -18,9 +18,16 @@ export class TrackingService {
     return this.http.post(`${this.baseUrl}/auth/verifyOTP`, otpObject);
   }
 
-  getProductList(mobile) {
+  getProductList(mobile, filterItem) {
+    let endPoint = "";
+    if (filterItem)
+      Object.keys(filterItem).forEach((item) => {
+        if (filterItem[item]) {
+          endPoint = endPoint + `&${item}=${filterItem[item]}`;
+        }
+      });
     return this.http.get<any>(
-      `${this.baseUrl}/origination-matser/fetchByMobile?mobileNumber=${mobile}`
+      `${this.baseUrl}/origination-matser/fetchByMobile?mobileNumber=${mobile}${endPoint}`
     );
   }
 

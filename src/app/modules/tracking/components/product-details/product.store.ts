@@ -1,4 +1,35 @@
 export class ProductConstant {
+  static readonly customerInfo = {
+    type: "Personal Details",
+    keyPair: [
+      { label: "Prefix", valueKey: "prefixValue", type: "personal" },
+      { label: "Name", valueKey: "firstName", type: "personal" },
+      { label: "Date Of Birth", valueKey: "dateOfBirth", type: "personal" },
+      { label: "Email ID", valueKey: "email", type: "personal" },
+      { label: "Mobile No", valueKey: "mobile", type: "personal" },
+      { label: "Gender", valueKey: "genderValue", type: "personal" },
+      { label: "Nationality", valueKey: "nationality", type: "personal" },
+    ],
+    addressPair: [
+      { label: "Address", valueKey: "address1", type: "personal" },
+      {
+        label: "Residence Type",
+        valueKey: "residenceTypeValue",
+        type: "personal",
+      },
+      { label: "Country", valueKey: "countryName", type: "personal" },
+      { label: "Zip Code", valueKey: "pincode", type: "personal" },
+      { label: "State", valueKey: "stateName", type: "personal" },
+      { label: "City", valueKey: "cityName", type: "personal" },
+    ],
+  };
+  static readonly docKeyPair = [
+    {
+      label: "Document Type",
+      valueKey: "documentNameValue",
+      type: "document",
+    },
+  ];
   static readonly LoanDynamicKeys = {
     loanAccountInfo: {
       type: "Loan Details",
@@ -44,40 +75,22 @@ export class ProductConstant {
         { label: "Your Pan Card", valueKey: "nationalId", type: "maskText" },
       ],
     },
-    customerInfo: {
-      type: "Personal Details",
-      keyPair: [
-        { label: "Prefix", valueKey: "prefixValue", type: "personal" },
-        { label: "Name", valueKey: "firstName", type: "personal" },
-        { label: "Date Of Birth", valueKey: "dateOfBirth", type: "personal" },
-        { label: "Email ID", valueKey: "email", type: "personal" },
-        { label: "Mobile No", valueKey: "mobile", type: "personal" },
-        { label: "Gender", valueKey: "genderValue", type: "personal" },
-        { label: "Nationality", valueKey: "nationality", type: "personal" },
-      ],
-      addressPair: [
-        { label: "Address", valueKey: "address1", type: "personal" },
-        {
-          label: "Residence Type",
-          valueKey: "residenceTypeValue",
-          type: "personal",
-        },
-        { label: "Country", valueKey: "countryName", type: "personal" },
-        { label: "Zip Code", valueKey: "pincode", type: "personal" },
-        { label: "State", valueKey: "stateName", type: "personal" },
-        { label: "City", valueKey: "cityName", type: "personal" },
-      ],
-    },
+    customerInfo: ProductConstant.customerInfo,
     documnentsInfo: {
-      type: "Documents",
-      //   docTypes:[]
-      keyPair: [
-        {
-          label: "Document Type",
-          valueKey: "fileName",
-          type: "document",
-        },
-      ],
+      type: "Loan Documents",
+      keyPair: ProductConstant.docKeyPair,
+    },
+    docs: {
+      type: "KYC Documents",
+      keyPair: ProductConstant.docKeyPair,
+    },
+  };
+
+  static readonly AccountDynamicKeys = {
+    customerInfo: ProductConstant.customerInfo,
+    docs: {
+      type: "KYC Documents",
+      keyPair: ProductConstant.docKeyPair,
     },
   };
 }

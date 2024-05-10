@@ -12,6 +12,7 @@ import { forkJoin } from "rxjs/internal/observable/forkJoin";
 export class ProductDetailsComponent implements OnInit {
   dynamicDetails: any = [];
   mobileNumber: string;
+  productType: string = "";
   constructor(private api: TrackingService, private route: ActivatedRoute) {}
 
   statusItems = [
@@ -32,82 +33,91 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params["id"];
+    this.route.queryParamMap.subscribe((params: any) => {
+      this.productType = params.get("type");
+    });
     this.mobileNumber = sessionStorage.getItem("trackingMobile");
     this.getOriginationById(id);
   }
 
   getOriginationById(id) {
-    // this.api.getLoanSummary(id).subscribe((resp: any) => {
-    //   this.dynamicDetails = [
-    //     {
-    //       key: "loanAccountInfo",
-    //       values: {
-    //         ...resp.data.loanDetails,
-    //         tenure: `${resp.data.loanDetails?.loanTenureYear} Year ${resp.data.loanDetails?.loanTenureMonth} Months ${resp.data.loanDetails?.loanTenureDay} Day`,
-    //       },
-    //     },
-    //     {
-    //       key: "bankAccount",
-    //       values: resp.data?.bankAccount ?? {},
-    //     },
-    //     {
-    //       key: "disbursementDetails",
-    //       values: resp.data?.disbursementDetails ?? {},
-    //     },
-    //     {
-    //       key: "documnentsInfo",
-    //       values: resp.data?.documnentsInfo?.docInfoModel ?? [],
-    //     },
-    //   ];
-
-    //   this.dynamicKeyHelper = ProductConstant.LoanDynamicKeys;
-    // });
-
-    // this.api.getOriginationMaster(id).subscribe((resp) => {
-    // });
     this.getWebSummary(id);
   }
 
   getWebSummary(id) {
     return new Promise((resolve) => {
-      forkJoin({
-        webSummary: this.api.getLoanSummary(id),
+      let observabelConstant: any = {
         originationDtails: this.api.getOriginationMaster(id),
-        // branch: this.api.getBranchCode(),
-      }).subscribe((resp: any) => {
-        console.log(resp);
-
-        if (resp.webSummary.statusCode === 200) {
-          const loanInfo = resp.webSummary.data;
+      };
+      if (this.productType.toLowerCase().includes("loan")) {
+        observabelConstant = {
+          ...observabelConstant,
+          webSummary: this.api.getLoanSummary(id),
+        };
+      }
+      forkJoin(observabelConstant).subscribe((resp: any) => {
+        if (resp?.originationDtails.statusCode === 200) {
           const orginationInfo = resp.originationDtails.data[0];
-          this.dynamicDetails = [
-            {
-              key: "loanAccountInfo",
-              values: {
-                ...loanInfo.loanDetails,
-                tenure: `${loanInfo.loanDetails?.loanTenureYear} Year ${loanInfo.loanDetails?.loanTenureMonth} Months ${loanInfo.loanDetails?.loanTenureDay} Day`,
-              },
-            },
-            {
-              key: "bankAccount",
-              values: loanInfo?.bankAccount ?? {},
-            },
-            {
-              key: "disbursementDetails",
-              values: loanInfo?.disbursementDetails ?? {},
-            },
-            {
-              key: "customerInfo",
-              values: orginationInfo.customerInfo ?? {},
-            },
-            {
-              key: "documnentsInfo",
-              values: loanInfo?.documnentsInfo?.docInfoModel ?? [],
-            },
-          ];
-        }
+          const kycDoc = [];
+          orginationInfo.customerInfo.forEach((obj) => {
+            if (obj?.primaryCustomer) {
+              obj.documnentsInfo.documents.forEach((objDoc) => {
+                objDoc.docs.forEach((doc) => {
+                  kycDoc.push(doc);
+                });
+              });
+            }
+          });
+          if (
+            resp?.webSummary?.statusCode === 200 &&
+            this.productType.toLowerCase().includes("loan")
+          ) {
+            const loanInfo = resp.webSummary.data;
 
-        this.dynamicKeyHelper = ProductConstant.LoanDynamicKeys;
+            this.dynamicDetails = [
+              {
+                key: "loanAccountInfo",
+                values: {
+                  ...loanInfo.loanDetails,
+                  tenure: `${loanInfo.loanDetails?.loanTenureYear} Year ${loanInfo.loanDetails?.loanTenureMonth} Months ${loanInfo.loanDetails?.loanTenureDay} Day`,
+                },
+              },
+              {
+                key: "bankAccount",
+                values: loanInfo?.bankAccount ?? {},
+              },
+              {
+                key: "disbursementDetails",
+                values: loanInfo?.disbursementDetails ?? {},
+              },
+              {
+                key: "customerInfo",
+                values: orginationInfo.customerInfo ?? {},
+              },
+              {
+                key: "documnentsInfo",
+                values: loanInfo?.documnentsInfo?.docInfoModel ?? [],
+              },
+              {
+                key: "docs",
+                values: kycDoc,
+              },
+            ];
+            this.dynamicKeyHelper = ProductConstant.LoanDynamicKeys;
+          } else {
+            this.dynamicDetails = [
+              {
+                key: "customerInfo",
+                values: orginationInfo.customerInfo ?? {},
+              },
+              {
+                key: "docs",
+                values: kycDoc,
+              },
+            ];
+            this.dynamicKeyHelper = ProductConstant.AccountDynamicKeys;
+          }
+        }
       });
     });
   }
