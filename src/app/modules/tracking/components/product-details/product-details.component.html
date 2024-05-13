@@ -1,21 +1,26 @@
 <div fxLayout="column">
+  <!-- Product Details and Status -->
   <div fxLayout="row" fxLayoutGap="1%" class="mb-24">
+    <!-- Product Information -->
     <div fxFlex="24" class="productName_container">
       <div>Product</div>
       <div>{{ productType }}</div>
     </div>
+
+    <!-- Status Panels -->
     <div
       fxFlex="24"
       fxLayoutAlign="center start"
       fxLayout="column"
-      *ngFor="let item of statusItems"
       class="status_container"
+      *ngFor="let item of statusItems"
     >
       <div fxLayout="column">
         <div class="level_title">
-          <span *ngIf="item.value == 100">
-            <img src="assets/images/done_icon.svg" /></span
-          >{{ item.title }}
+          <span *ngIf="item.value == 100"
+            ><img src="assets/images/done_icon.svg"
+          /></span>
+          {{ item.title }}
         </div>
       </div>
       <mat-progress-bar
@@ -25,6 +30,7 @@
     </div>
   </div>
 
+  <!-- Application Details Panel -->
   <mat-accordion class="custom_action_expansion">
     <mat-expansion-panel class="detail_container">
       <mat-expansion-panel-header class="header">
@@ -47,6 +53,8 @@
         ></app-loan-product-details>
       </div> </mat-expansion-panel
     ><br />
+
+    <!-- Application Status Panel -->
     <mat-expansion-panel>
       <mat-expansion-panel-header class="header">
         <mat-panel-description class="header_description">

@@ -53,7 +53,9 @@
                 [config]="config"
               ></ng-otp-input>
             </div>
-            <!-- <mat-error *ngIf="invalidOtp"><strong>Invalid OTP!</strong></mat-error> -->
+            <mat-error *ngIf="invalidOtp"
+              ><strong>Invalid OTP!</strong></mat-error
+            >
             <div class="verify1">
               <span (click)="getOtp()" class="addcolor resend">{{
                 "Resend"

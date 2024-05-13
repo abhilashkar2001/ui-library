@@ -50,6 +50,7 @@ export class SigninTrackComponent implements OnInit {
   otp: any;
   yourOtp: any;
   otpAvailable: boolean = false;
+  invalidOtp: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -87,8 +88,11 @@ export class SigninTrackComponent implements OnInit {
       })
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
+          this.invalidOtp = false;
           sessionStorage.setItem("trackingMobile", this.signForm.value.mobile);
           this.route.navigate(["/tracking/summary"]);
+        } else if (resp?.statusCode === 401) {
+          this.invalidOtp = true;
         }
       });
   }

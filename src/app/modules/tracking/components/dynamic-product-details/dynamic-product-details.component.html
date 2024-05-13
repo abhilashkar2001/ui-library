@@ -1,5 +1,7 @@
 <section fxFlex="100" fxLayout="column" class="product_details">
-  <ng-container *ngFor="let product of productInfo; let i = index">
+  <ng-container
+    *ngFor="let product of productInfo; let i = index; trackBy: trackByIndex"
+  >
     <h3>{{ dynamicKeyHelper[product.key].type }}</h3>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
       <!-- Personal Info Summary Start -->
