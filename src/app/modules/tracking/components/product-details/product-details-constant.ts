@@ -1,7 +1,6 @@
 export class ProductConstant {
   static LoanDynamicKeys = {
-    // Define keys for loan products
-    // For example:
+
     loanAccountInfo: "Loan Account Information",
     bankAccount: "Bank Account",
     disbursementDetails: "Disbursement Details",
@@ -11,8 +10,6 @@ export class ProductConstant {
   };
 
   static AccountDynamicKeys = {
-    // Define keys for non-loan products
-    // For example:
     customerInfo: "Customer Information",
     docs: "KYC Documents",
   };
