@@ -31,4 +31,8 @@ export class DynamicProductDetailsComponent implements OnInit {
       panelClass: "imageViewDialog",
     });
   }
+
+  trackByIndex(index) {
+    return index;
+  }
 }
