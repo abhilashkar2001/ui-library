@@ -15,6 +15,7 @@ import { ProductListCardComponent } from "./components/product-list-card/product
 import { ProductDetailsComponent } from "./components/product-details/product-details.component";
 import { DynamicProductDetailsComponent } from "./components/dynamic-product-details/dynamic-product-details.component";
 import { ApplicationStatusComponent } from "./components/application-status/application-status.component";
+import { ScheduleKycVideoComponent } from "./components/schedule-kyc-video/schedule-kyc-video.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ApplicationStatusComponent } from "./components/application-status/appl
     ProductDetailsComponent,
     DynamicProductDetailsComponent,
     ApplicationStatusComponent,
+    ScheduleKycVideoComponent,
   ],
   imports: [
     CommonModule,
