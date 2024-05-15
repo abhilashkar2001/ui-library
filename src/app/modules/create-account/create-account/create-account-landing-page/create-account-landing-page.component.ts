@@ -109,6 +109,8 @@ export class CreateAccountLandingPageComponent {
 
             // for personal doc.
             this.componentRef.instance.personalDoc = this.personalDoc;
+            if (this.personalDetails?.length > 0)
+              this.componentRef.instance.isMasterSave = true;
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 

@@ -1,0 +1,108 @@
+<section>
+  <mat-card fxLayout="row" class="schedule_container">
+    <!-- <p>sjk</p> -->
+
+    <div fxFlex="40">
+      <div
+        fxLayout="column"
+        fxFlex="100"
+        class="full-width schedule_card_info"
+        fxLayoutAlign="space-between start"
+      >
+        <div fxLayout="column">
+          <h2>KYC Video Verification</h2>
+          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+            <mat-icon>person</mat-icon>
+            <div>{{ kycInfo.name }} ({{ kycInfo.mobile }})</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+            <mat-icon>timer</mat-icon>
+            <div>15-20 min</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+            <mat-icon>date_range</mat-icon>
+            <div>{{ kycInfo.dateOfSchedule }}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+            <mat-icon>video_call</mat-icon>
+            <div>{{ description }}</div>
+          </div>
+        </div>
+        <div>
+          <p class="note_title">Note :</p>
+          <ol>
+            <li>Participants must keep their original documents handy</li>
+            <li>
+              The video call will be very quick, won’t take more then 15 - 20
+              minutes
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="40" class="sheduleApntmntMain" fxLayout="column">
+      <h2>Select a Date & Time</h2>
+      <mat-card fxFlex="100" class="calender-card">
+        <mat-calendar
+          [minDate]="minDate"
+          [selected]="selectedDate"
+          (selectedChange)="onSelect($event)"
+          [maxDate]="maxDate"
+        >
+        </mat-calendar>
+
+        <div>
+          <mat-label>Time Zone</mat-label>
+          <mat-form-field apperance="outline" class="full-width">
+            <mat-select [(ngModel)]="timeZone">
+              <mat-option value="India Standard Time (5:41pm)"
+                >India Standard Time (5:41pm)</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="btn_grp" fxLayout="row">
+          <button
+            type="button"
+            mat-raised-button
+            class="button schedule_btn back_button"
+            *ngIf="selectedDate && selectedTimeSlot"
+            (click)="scheduleAppointment()"
+          >
+            Schedule</button
+          >&nbsp;
+          <button
+            type="button"
+            mat-raised-button
+            class="button cancel_btn back_button"
+          >
+            Cancel
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+    <div fxFlex="15" *ngIf="formatedSelectedDate" class="time_slot_container">
+      <div fxLayout="column">
+        <h2>{{ formatedSelectedDate }}</h2>
+        <div class="time_slot_grp">
+          <ng-container *ngFor="let timeSlot of timeSlots">
+            <div
+              class="time_slot_card"
+              (click)="onTimeSelected(timeSlot)"
+              [ngClass]="[
+                timeSlot?.time == selectedTimeSlot ? 'bg_selectedSlot' : ''
+              ]"
+            >
+              <span>
+                {{ timeSlot?.time }}
+              </span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</section>
+
+<!-- <router-outlet></router-outlet> -->

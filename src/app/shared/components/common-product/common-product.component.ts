@@ -44,11 +44,13 @@ export class CommonProductComponent implements OnInit {
     this.subAccount.isReadMore = !this.subAccount.isReadMore;
   }
   getFileUrl(url) {
-    if (url.includes("https")) {
-      return "assets/images/normal_loan.svg";
-    } else {
-      return `${this.endPoints}${url}`;
-    }
+    if (url) {
+      if (url.includes("https")) {
+        return "assets/images/normal_loan.svg";
+      } else {
+        return `${this.endPoints}${url}`;
+      }
+    } else return "assets/images/normal_loan.svg";
   }
 
   ngOnChanges(changes: SimpleChanges): void {

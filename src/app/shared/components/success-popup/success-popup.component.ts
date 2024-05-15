@@ -22,6 +22,10 @@ export class SuccessPopupComponent implements OnInit {
   isNetBanking: false;
   referenceNo: any = "";
   actionType: any;
+  message: string = "Application is submitted successfully.";
+  typeOfPopup: string = "";
+  generatedLink: string = "";
+  appontment: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -39,7 +43,11 @@ export class SuccessPopupComponent implements OnInit {
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
+    if (this.data?.msg) this.message = this.data.msg;
+    if (this.data?.generatedLink) this.generatedLink = this.data.generatedLink;
+    if (this.data?.appontment) this.appontment = this.data.appontment;
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
+    this.typeOfPopup = this.data.type ?? "";
     this.email = this.data?.email;
     if (sessionStorage.getItem("loanBasisDetails")) {
       this.openAccountService.getData().subscribe((resp: any) => {
