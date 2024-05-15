@@ -11,7 +11,11 @@
       screen.</ng-template
     >
   </div>
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="typeOfPopup == 'scheduleCall'"
+  >
     <div fxFlex="90" fxLayout="row" fxLayoutAlign="space-between center">
       <mat-card
         fxFlex="40"

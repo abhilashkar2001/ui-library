@@ -47,7 +47,7 @@ export class SuccessPopupComponent implements OnInit {
     if (this.data?.generatedLink) this.generatedLink = this.data.generatedLink;
     if (this.data?.appontment) this.appontment = this.data.appontment;
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
-    this.typeOfPopup = this.data.type ?? "";
+    if (this.data?.type) this.typeOfPopup = this.data.type ?? "";
     this.email = this.data?.email;
     if (sessionStorage.getItem("loanBasisDetails")) {
       this.openAccountService.getData().subscribe((resp: any) => {
