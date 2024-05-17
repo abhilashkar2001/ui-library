@@ -39,12 +39,11 @@
       >
         <p class="feature_name">{{ feature?.featureName }}</p>
         <ul class="desc-list">
-          <li
-            *ngFor="let childFeature of feature?.feature"
-            class="show-hyperLink"
-          >
-            {{ childFeature?.featureDescription }}
-          </li>
+          <ng-container *ngFor="let childFeature of feature?.feature">
+            <li *ngIf="childFeature?.catalogueDesc" class="show-hyperLink">
+              {{ childFeature?.catalogueDesc }}
+            </li>
+          </ng-container>
         </ul>
       </ng-container>
 
