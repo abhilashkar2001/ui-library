@@ -13,7 +13,12 @@
         <div fxFlex="98%" fxLayout="column" [formGroupName]="i">
           <div fxLayout="column" class="outer-div" fxFlex="100">
             <div fxLayout="column">
-              <ng-container>
+              <ng-container
+                *ngIf="
+                  checkListDocList?.nonRequiredDocument?.length > 0 ||
+                  denomDetai.value.documentType
+                "
+              >
                 <mat-card class="card-subdiv">
                   <div
                     appDragDrop
