@@ -1,0 +1,237 @@
+.card-div {
+  margin-top: 10px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-more-btn {
+  border-radius: 10px;
+  background: #fffefe;
+  padding: 5px;
+  border-color: transparent;
+  color: #004c97;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.09);
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 12px;
+}
+
+.card-subdiv {
+  margin-top: 10px;
+  padding: 0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  .doc_upload {
+    box-shadow: -2px 5px 8px 0px #00000012;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    position: relative;
+    height: 74px;
+
+    #fileDropRef {
+      opacity: 0;
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .drag_drop {
+      h3 {
+        font-size: 15px;
+        padding-left: 12px;
+        font-family: Poppins;
+        color: #102245 !important;
+        opacity: 100%;
+        letter-spacing: -0.26px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 11px;
+        line-height: 1.5;
+        width: 70%;
+        margin: 0;
+        color: #aeaeae;
+      }
+    }
+  }
+
+  .upload_img {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    .img_box {
+      height: 65px;
+      width: 65px;
+      border-radius: 10px;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+        max-width: 100% !important;
+      }
+    }
+
+    .img_container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      .img_name {
+        word-break: break-word;
+        color: #606c8d;
+        font-weight: 600;
+        font-size: 13px;
+        margin: 0 0 6px !important;
+      }
+    }
+    .cancel-icon {
+      height: 14px !important;
+      width: 14px !important;
+      overflow: unset !important;
+    }
+  }
+}
+
+.borderColor {
+  overflow: visible;
+  z-index: 1;
+  appearance: none;
+}
+
+mat-card {
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.09);
+}
+
+mat-form-field {
+  width: 100%;
+  border: none;
+}
+
+.deleteButton {
+  font-family: "Poppins";
+  color: #b20000 !important;
+  font-size: 14px;
+  cursor: pointer;
+  height: 41px;
+  width: 112px;
+  background-color: #ffffff;
+  border-radius: 35px !important;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.0588235294) !important;
+  font-weight: bold !important;
+  border: none;
+}
+
+.custom-mat-label {
+  font: normal normal medium 13px/20px Poppins;
+  letter-spacing: -0.26px;
+  color: #102245;
+  opacity: 0.5;
+}
+
+.field {
+  display: flex;
+  width: 100%;
+}
+
+.drag.Drop {
+  border: #102245;
+}
+
+.button-section {
+  margin-left: 20px;
+}
+
+.progress-cont {
+  height: 7px;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #d0d0d0;
+  position: relative;
+
+  .progress {
+    width: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: #4c97cb;
+    transition: 0.5s all;
+  }
+}
+.submit_btn {
+  background: linear-gradient(90deg, #00479a 2.59%, #051a4c 97.41%);
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  height: 36px !important;
+}
+
+// .drop_list_class {
+//   padding: 0 1rem !important;
+//   .custom-doc-field {
+//     ::ng-deep .mat-form-field-wrapper {
+//       margin-bottom: 0px !important;
+//       padding-bottom: 0px !important;
+//       .mat-form-field-outline {
+//         box-shadow: none !important;
+//       }
+//       .mat-form-field-subscript-wrapper {
+//         margin-top: 0 !important;
+//       }
+//     }
+//     //    ::ng-deep
+//   }
+// }
+
+:host ::ng-deep .custom-doc-field .mat-form-field-wrapper {
+  margin: 0 !important;
+  padding-bottom: 0px !important;
+  .mat-form-field-outline {
+    box-shadow: none !important;
+  }
+  .mat-form-field-subscript-wrapper {
+    margin-top: 0 !important;
+  }
+}
+.outer-div {
+  border: 1px solid #bac0d75c;
+  background-color: #f6f9ff;
+  border-radius: 8px;
+}
+
+.doc_card {
+  margin: 1% 0%;
+}
+
+.uploaded_list {
+  background-color: #f6f9ff;
+  padding-left: 10px;
+  .upload_img {
+    background-color: #ffffff;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+  }
+}

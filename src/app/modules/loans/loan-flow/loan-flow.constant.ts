@@ -6,6 +6,7 @@ import { CibilScoreContainerComponent } from "../cibil-score-container/cibil-sco
 import { LoanDocumentUploadComponent } from "../loan-document-upload/loan-document-upload.component";
 import { LoanTermsConditionsComponent } from "../loan-terms-conditions/loan-terms-conditions.component";
 import { LoanSummaryComponent } from "../loan-summary/loan-summary.component";
+import { NationalIdUploadComponent } from "../national-id-upload/national-id-upload.component";
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -58,37 +59,49 @@ export class LoanFlowConstants {
       component: CommonPersonalDetailsComponent,
     },
     {
-      id: 2,
+      id: 3,
       key: "create",
       type: "Create Loan",
       component: CreateLoanComponent,
     },
     {
-      id: 2,
+      id: 4,
       key: "credit",
       type: "Create Loan",
       component: CibilScoreContainerComponent,
     },
+    // {
+    //   id: 2,
+    //   key: "document",
+    //   type: "Create Loan",
+    //   component: LoanDocumentUploadComponent,
+    // },
     {
-      id: 2,
+      id: 5,
       key: "document",
       type: "Create Loan",
       component: LoanDocumentUploadComponent,
     },
+    // {
+    //   id: 6,
+    //   key: "kyc",
+    //   type: "Create Loan",
+    //   component: OtherDocumentsComponent,
+    // },
     {
-      id: 2,
-      key: "kyc",
+      id: 6,
+      key: "national",
       type: "Create Loan",
-      component: OtherDocumentsComponent,
+      component: NationalIdUploadComponent,
     },
     {
-      id: 2,
+      id: 7,
       key: "term",
       type: "Create Loan",
       component: LoanTermsConditionsComponent,
     },
     {
-      id: 2,
+      id: 8,
       key: "summary",
       type: "Create Loan",
       component: LoanSummaryComponent,

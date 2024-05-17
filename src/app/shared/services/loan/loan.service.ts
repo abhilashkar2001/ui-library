@@ -158,4 +158,9 @@ export class LoanService {
       `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`
     );
   }
+  getCheckListDoc(stageId, screenCode) {
+    return this.http.get<any>(
+      `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`
+    );
+  }
 }

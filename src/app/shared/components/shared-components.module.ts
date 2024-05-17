@@ -85,6 +85,7 @@ import { IcRowInputComponent } from "./ic-row-input/ic-row-input.component";
 import { ReusableTableComponent } from "./reusable-table/reusable-table.component";
 import { SelectSingleTransferComponent } from "./select-single-transfer/select-single-transfer.component";
 import { CustomSuccessPopupComponent } from "./custom-success-popup/custom-success-popup.component";
+import { CusotmWebDocUploadComponent } from "./cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -144,6 +145,7 @@ const components = [
   IcRowInputComponent,
   SelectSingleTransferComponent,
   CustomSuccessPopupComponent,
+  CusotmWebDocUploadComponent,
 ];
 
 @NgModule({

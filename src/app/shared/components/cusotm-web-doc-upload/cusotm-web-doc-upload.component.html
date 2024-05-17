@@ -1,0 +1,145 @@
+<div fxLayout="column">
+  <form
+    *ngIf="createDocumentForm"
+    fxLayout="column"
+    fxFlex="100"
+    [formGroup]="createDocumentForm"
+  >
+    <div formArrayName="otherDocument">
+      <div
+        *ngFor="let denomDetai of otherDocument().controls; let i = index"
+        class="doc_card"
+      >
+        <div fxFlex="98%" fxLayout="column" [formGroupName]="i">
+          <div fxLayout="column" class="outer-div" fxFlex="100">
+            <div fxLayout="column">
+              <ng-container>
+                <mat-card class="card-subdiv">
+                  <div
+                    appDragDrop
+                    class="doc_upload"
+                    fxFlex="100"
+                    #fileInput
+                    (onFileDropped)="onFileDropped($event, i)"
+                    [ngClass]="[
+                      denomDetai.value.documentType &&
+                      denomDetai.value.docRequired
+                        ? ''
+                        : 'drop_list_class'
+                    ]"
+                  >
+                    <div class="drag_drop" fxFlex="90">
+                      <h3
+                        class="text-header"
+                        *ngIf="
+                          denomDetai.value.documentType &&
+                            denomDetai.value.docRequired;
+                          else showDropList
+                        "
+                      >
+                        {{ denomDetai.value.documentType }}
+                      </h3>
+                      <ng-template #showDropList>
+                        <mat-form-field
+                          appearance="outline"
+                          class="custom-doc-field"
+                          fxFlex="95"
+                        >
+                          <mat-select formControlName="documentType">
+                            <mat-option
+                              [value]="nonReqDoc.document"
+                              *ngFor="
+                                let nonReqDoc of checkListDocList?.nonRequiredDocument
+                              "
+                              >{{ nonReqDoc.document }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                      </ng-template>
+                    </div>
+                    <!-- <label for="fileDropRef" class="doc_img" fxFlex="10">
+                      <img
+                        src="assets/images/upload-logo.svg"
+                        alt="Upload Sign"
+                      />
+                    </label> -->
+                    <button
+                      type="button"
+                      mat-raised-button
+                      class="button submit_btn"
+                      (click)="fileBrowseHandler($event, i)"
+                    >
+                      Uplaod
+                    </button>
+                  </div>
+                  <div
+                    fxLayout="row wrap"
+                    fxFlex="100"
+                    fxLayoutGap="1%"
+                    class="uploaded_list"
+                  >
+                    <div
+                      *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                      fxFlex="32"
+                    >
+                      <div class="upload_img" fxFlex="100">
+                        <div class="img_box">
+                          <img [src]="file?.url" />
+                        </div>
+                        <div class="img_container">
+                          <p class="img_name">{{ file?.name }}</p>
+                          <div
+                            class="progress-cont"
+                            *ngIf="file.progress === '100%'; else showSize"
+                          >
+                            <div
+                              class="progress"
+                              [style.width]="file.progress ?? '0%'"
+                            ></div>
+                          </div>
+                          <ng-template #showSize>
+                            <div>{{ file.size }}</div>
+                          </ng-template>
+                        </div>
+                        <!-- <button
+                          mat-icon-button
+                          class="btn"
+                          (click)="deleteFile(fileIndx, i, file)"
+                        > -->
+                        <mat-icon
+                          svgIcon="cancel-icon"
+                          (click)="deleteFile(fileIndx, i, file)"
+                          class="cancel-icon"
+                        ></mat-icon>
+                        <!-- </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div fxLayoutGap="50px">
+    <button-loading
+      [loadingText]="loadingBtnText"
+      [type]="'submit'"
+      [disable]="isLoading && checkDocValidity()"
+      [loading]="isLoading"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button-loading>
+    <button
+      type="button"
+      mat-raised-button
+      class="button back_button"
+      (click)="onBack()"
+    >
+      Back
+    </button>
+  </div>
+</div>

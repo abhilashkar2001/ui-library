@@ -21,7 +21,7 @@ export class CibilScoreContainerComponent implements OnInit {
   hideInfo: boolean = true;
 
   isDifferentMobile: boolean = false;
-  showCibilScoreResult: boolean = false;
+  showCibilScoreResult: boolean = true;
   selectedOption: "different" | "same" = "same";
   optionalSteps: any;
   phone: any;
@@ -39,7 +39,7 @@ export class CibilScoreContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.customerConsent();
+    // this.customerConsent();
   }
 
   customerConsent() {
