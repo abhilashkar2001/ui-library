@@ -17,9 +17,22 @@ export class OriginationService {
    * @param screenCode screen code of with which checklist mapped
    * @returns all the checklist document
    */
-  fetchChecklistItem(originationId: number, screenId: number) {
+  fetchChecklistItem(originationId: number, screenId: number, stageId: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenId}`
+      `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenId}&stageId=${stageId}`
+    );
+  }
+
+  validateDateOfBirth(originationId: number, dateOfBirth: string) {
+    return this.http.get(
+      `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`
+    );
+  }
+
+  saveChecklist(payload) {
+    return this.http.post(
+      `${MICROSERVICE_URL}/origination-matser/saveChecklist`,
+      payload
     );
   }
 }

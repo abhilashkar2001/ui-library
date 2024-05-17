@@ -2,12 +2,18 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  background: url("/assets/images/redirection-screen.svg") no-repeat;
+  background: url("/assets/images/otp.svg") no-repeat;
   height: 100vh;
+
+  .exit-button {
+    position: absolute;
+  }
+
   .main_title {
     font: normal normal normal 28px/42px Gurmukhi MN;
     color: #00205c;
   }
+
   .main_section {
     .title {
       text-align: left;
@@ -16,12 +22,14 @@
       color: #004c97;
       opacity: 0.9;
     }
+
     .heading {
       font: normal normal 600 43px/64px Poppins;
       letter-spacing: 0px;
       color: #051a2d;
       opacity: 1;
     }
+
     .forward-arrow-div {
       background: #004c97 0% 0% no-repeat padding-box;
       box-shadow: 0px 3px 6px #377dff0d;
@@ -35,6 +43,7 @@
       align-items: center;
       border-top-right-radius: 7px;
       border-bottom-right-radius: 7px;
+
       .forward-arrow {
         color: #fff;
       }
@@ -42,14 +51,17 @@
 
     .otp-text {
       font: normal 600 14px/21px Poppins;
+
       .mobile-no {
         color: #5a5a5a;
         font-weight: 100;
       }
     }
+
     .resend-text {
       font: normal normal normal 14px/47px Poppins;
       color: #0000005c;
+
       .resend {
         color: #000;
       }

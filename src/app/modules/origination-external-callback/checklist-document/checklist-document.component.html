@@ -38,12 +38,16 @@
   <!-- END:HEADER -->
 </mat-card>
 
-<div>
+<div fxLayout="row wrap" fxLayoutAlign="space-between start" class="p-24">
   <ng-container *ngFor="let document of checklistDocuments">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>{{
-        document.documentName
-      }}</mat-expansion-panel-header>
-    </mat-expansion-panel>
+    <div fxFlex="49">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>{{
+          document.document | titlecase
+        }}</mat-expansion-panel-header>
+
+        <div></div>
+      </mat-expansion-panel>
+    </div>
   </ng-container>
 </div>

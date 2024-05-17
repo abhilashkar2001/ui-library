@@ -69,4 +69,13 @@ export class SessionStorageService {
     this.session.removeItem(SessionStorageEnum.SCREEN_ID);
     this.setItem(SessionStorageEnum.SCREEN_ID, screenId);
   }
+
+  getCustomerInfo() {
+    return this.getItem(SessionStorageEnum.CUSTOMER_INFO);
+  }
+
+  setCustomerInfo(customerInfo) {
+    this.session.removeItem(SessionStorageEnum.CUSTOMER_INFO);
+    this.setItem(SessionStorageEnum.CUSTOMER_INFO, customerInfo);
+  }
 }
