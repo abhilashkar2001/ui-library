@@ -153,14 +153,14 @@
     </div>
   </div>
   <ng-container *ngFor="let item of personalDetails; let i = index">
+    <div class="text-header">Personal Details</div>
     <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
       <mat-expansion-panel-header class="text-header"
-        >Personal Details {{ i + 1 }}</mat-expansion-panel-header
+        >Applicant {{ i + 1 }}</mat-expansion-panel-header
       >
       <mat-panel-description>
         <div fxLayout="column" class="expansion-div">
           <div class="bank-account-summary">
-            <div class="text-header">Personal Details</div>
             <div class="disbursement-details w-full">
               <div class="col-1">
                 <span class="content-header">Prefix</span>
@@ -204,7 +204,7 @@
             *ngFor="let address of item?.contact?.address; let i = index"
           >
             <div class="bank-account-summary">
-              <div class="text-header">Address Details {{ i + 1 }}</div>
+              <div class="text-header">Address Details</div>
               <div class="disbursement-details w-full">
                 <div class="col-1">
                   <span class="content-header">Address</span>
@@ -249,38 +249,45 @@
       fxLayout="column"
     >
       <div class="col-1">
-        <span class="content-header">Document type</span>
+        <!-- <span class="content-header">Document type</span>
         <span class="content"
           >{{ loanSummaryDetails?.docs[0]?.documentType }}
-        </span>
+        </span> -->
       </div>
-      <div fxLayout="row" fxLayoutGap="20px">
+      <div fxLayout="row wrap" fxLayoutGap="2%">
         <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
-          <app-show-document [document]="doc"> </app-show-document>
+          <div fxFlex="31" class="mt-20">
+            <app-show-document [document]="doc"> </app-show-document>
+          </div>
         </ng-container>
       </div>
     </div>
   </div>
-  <div
-    *ngFor="
-      let item of loanSummaryDetails?.documnentsInfo?.documents;
-      let i = index
-    "
-    class="uploaded-documents-summary"
-  >
+  <div class="uploaded-documents-summary">
     <div class="text-header">Loan Document</div>
     <div
       class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.documnentsInfo?.documents?.length > 0"
+      *ngIf="loanSummaryDetails?.documnentsInfo?.docInfoModel?.length > 0"
       fxLayout="column"
     >
-      <div class="col-1">
+      <!-- <div class="col-1">
         <span class="content-header">Document type</span>
-        <span class="content">{{ item?.docs[0].documentType }} </span>
-      </div>
-      <div fxLayout="row" fxLayoutGap="20px">
-        <ng-container *ngFor="let doc of item.docs">
-          <app-show-document [document]="doc"> </app-show-document>
+        <span class="content"
+          >{{
+            loanSummaryDetails?.documnentsInfo?.docInfoModel[0].documentType
+          }}
+        </span>
+      </div> -->
+      <div fxLayout="row wrap" fxLayoutGap="2%" fxFlex="100">
+        <ng-container
+          *ngFor="let doc of loanSummaryDetails?.documnentsInfo?.docInfoModel"
+        >
+          <div fxFlex="31" class="mt-20">
+            <div fxLayout="column">
+              <span class="content">{{ doc.documentType }} </span>
+              <app-show-document [document]="doc"> </app-show-document>
+            </div>
+          </div>
         </ng-container>
       </div>
     </div>

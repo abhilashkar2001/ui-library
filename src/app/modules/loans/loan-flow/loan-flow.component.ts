@@ -314,6 +314,10 @@ export class LoanFlowComponent implements OnInit {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
     this.selectedStep = event.selectedIndex;
+    sessionStorage.setItem(
+      "currentScreenCode",
+      this.screenList[this.selectedStep].screenCode
+    );
     if (lastStep != event.selectedIndex) this.showComponent(this.cuurrentStep);
   }
   factory() {

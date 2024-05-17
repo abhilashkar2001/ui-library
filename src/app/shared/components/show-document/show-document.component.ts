@@ -27,7 +27,9 @@ export class ShowDocumentComponent implements OnInit {
     if (url.includes("https")) {
       return "assets/images/account-img1.png";
     } else {
-      return `${this.endPoints}${url}`;
+      if (url.endsWith("pdf") || url.endsWith("xlsx")) {
+        return "assets/images/file_icon.svg";
+      } else return `${this.endPoints}${url}`;
     }
   }
   viewFiles(imageUrl: any, imageName: any): void {

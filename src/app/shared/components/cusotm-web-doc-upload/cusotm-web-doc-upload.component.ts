@@ -79,7 +79,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private docapi: CustomWebDocUploadServiceService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
     // this.buildDocumentForm();
@@ -234,17 +235,17 @@ export class CusotmWebDocUploadComponent implements OnInit {
   browseFiles(i) {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
-    inputElement.accept = "image/*";
+    if (!this.isOtherDocVisible) inputElement.accept = "image/*";
     inputElement.addEventListener("change", (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file = target.files[0];
         console.log(file, "file");
-        if (file.type.startsWith("image/")) {
-          this.selectedImage = file;
-          this.displayImage(i, file, file.size);
-          this.uploadImage(file, i);
-        }
+        // if (file.type.startsWith("image/")) {
+        this.selectedImage = file;
+        this.displayImage(i, file, file.size);
+        this.uploadImage(file, i);
+        // }
         const fReader = new FileReader();
         fReader.readAsDataURL(file);
       }
@@ -424,10 +425,23 @@ export class CusotmWebDocUploadComponent implements OnInit {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
+        if (this.isOtherDocVisible)
+          this.extractDoc(
+            this.createDocumentForm.value.otherDocument[i].documentType,
+            parseInt(sessionStorage.getItem("originationId")),
+            file
+          );
         if (this.ocrCheck) this.readDocument(file, i);
         // else this.loder.close();
       }
     });
+  }
+  extractDoc(docName, originationId, file) {
+    let formData = new FormData();
+    formData.append("fileName", file);
+    this.docapi
+      .getCheckListDoc(docName, originationId, formData)
+      .subscribe((_) => {});
   }
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx].get("docIds")?.value;
