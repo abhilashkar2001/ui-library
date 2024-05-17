@@ -13,6 +13,7 @@ import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifie
 import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
+import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 
 @Component({
   selector: "app-loan-flow",
@@ -21,6 +22,7 @@ import { BehaviorSubject } from "rxjs";
 })
 export class LoanFlowComponent implements OnInit {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  @ViewChild("loanDocRef") loanDocRef: CusotmWebDocUploadComponent;
   createLoan: FormGroup;
   customVerifyNumber: FormGroup;
   cibilScoreForm: FormGroup;
@@ -326,6 +328,10 @@ export class LoanFlowComponent implements OnInit {
     } else {
       this.selectedStep = num;
       sessionStorage.setItem("loanstep", String(this.selectedStep));
+      sessionStorage.setItem(
+        "currentScreenCode",
+        this.screenList[num].screenCode
+      );
       this.factory();
       // for scrolling sidebar and get current state.
       const el = document.querySelector(".mat-step-label-selected");
@@ -665,5 +671,13 @@ export class LoanFlowComponent implements OnInit {
           )?.id;
         }
       });
+  }
+
+  checkBtnValidity() {
+    return this.cuurrentStep?.toLowerCase().includes("loan document");
+  }
+
+  addDoc() {
+    this.loanDocRef.addDocument();
   }
 }
