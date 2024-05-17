@@ -405,11 +405,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
     const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
     if (mobileNo) {
       if (i === 0) {
+        mobileControl.markAllAsTouched();
         mobileControl.patchValue(mobileNo);
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (resp?.length != this.maxMobileLength) {
+      if (resp?.length != this.maxMobileLength && i != 0) {
         mobileControl.setErrors({ invalidLength: true });
       } else {
         this.openApi
