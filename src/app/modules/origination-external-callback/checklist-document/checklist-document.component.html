@@ -1,0 +1,49 @@
+<mat-card class="header-card">
+  <!-- BEGIN:HEADER -->
+  <div class="header-container" fxLayout="column">
+    <!-- BEGIN ROW: Breadcrumb & TOOLBAR & STATUS -->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row">
+        <div fxLayout="column">
+          <div class="toolbar-page">
+            <mat-toolbar>
+              <div class="toolbar-container">
+                <div fxLayoutAlign="center center">
+                  <div>
+                    <button mat-icon-button>
+                      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+                    </button>
+                  </div>
+                  <div>
+                    <span>{{ title }}</span>
+                  </div>
+                </div>
+              </div>
+            </mat-toolbar>
+          </div>
+        </div>
+      </div>
+      <div
+        fxFlex="15"
+        fxLayout="column"
+        fxLayoutAlign="center start"
+        class="refNoDiv mt-12 mr-12"
+      >
+        <div class="refNoheading">{{ "Reference No" }}</div>
+        <div class="refNoValue">{{ refNumber }}</div>
+      </div>
+    </div>
+    <!-- END ROW: Breadcrumb & TOOLBAR & STATUS -->
+  </div>
+  <!-- END:HEADER -->
+</mat-card>
+
+<div>
+  <ng-container *ngFor="let document of checklistDocuments">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>{{
+        document.documentName
+      }}</mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </ng-container>
+</div>

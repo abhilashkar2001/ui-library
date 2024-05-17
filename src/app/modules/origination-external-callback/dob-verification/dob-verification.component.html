@@ -1,0 +1,33 @@
+<div class="main_container pl-48">
+  <h3 class="main_title">DemoBank</h3>
+  <div class="main_section pl-48 mt-48" fxLayout="column">
+    <span class="title">Loan Document Uplaod</span>
+    <h2 class="heading">OTP Verification</h2>
+    <div class="transparent-form-field">
+      <mat-form-field fxFlex="20">
+        <mat-label>Enter the DOB</mat-label>
+        <input matInput [(ngModel)]="dateOfBirth" />
+      </mat-form-field>
+      <div class="forward-arrow-div">
+        <mat-icon class="forward-arrow">arrow_forward</mat-icon>
+      </div>
+    </div>
+
+    <div class="otp-text">
+      <span
+        >An OTP has been sent to the Registered Mobile Number (
+        <span class="mobile-no">+91 888XX XX123</span>)</span
+      >
+    </div>
+
+    <div>
+      <ng-otp-input></ng-otp-input>
+    </div>
+    <span class="resend-text"
+      >Not Received? <span class="resend">Resend</span></span
+    >
+    <div class="btn-div">
+      <button class="proceed-btn" mat-raised-button>Proceed</button>
+    </div>
+  </div>
+</div>

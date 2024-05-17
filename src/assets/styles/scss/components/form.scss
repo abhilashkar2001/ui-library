@@ -200,3 +200,42 @@ input {
   padding-left: 0.5em;
   font-size: 14px;
 }
+
+.transparent-form-field {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    border: 2px solid !important;
+    border-radius: 8px;
+    height: 47px;
+    width: 90%;
+    background-color: transparent;
+  }
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end,
+  .mat-form-field-outline-gap {
+    border: unset !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.69373em) translateX(1.30627em) scale(0.85);
+    width: auto;
+    background-color: transparent;
+  }
+  .mat-form-field-label {
+    line-height: inherit;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 60px;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 1em 0;
+  }
+  .mat-form-field-subscript-wrapper {
+    font-size: 75%;
+    margin-top: 0.2666666667em !important;
+    top: calc(100% - 1.7916666667em);
+    letter-spacing: normal;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}
