@@ -69,6 +69,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
   ocrCheck: boolean = true;
+  nationalIdGeneric: any;
 
   constructor(
     private fb: FormBuilder,
@@ -101,6 +102,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
+    this.getGenericDetails();
     // if (changes?.documentList?.currentValue) {
     //   if (!this.documentTypeArray) {
     //     this.documentTypeArray = [{}];
@@ -120,6 +122,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data["DOCUMENTNAME"];
+          this.nationalIdGeneric = this.documentTypeArray.filter((item) =>
+            item.values.toLowerCase().includes("aadhar")
+          )[0].id;
         }
       });
   }
@@ -393,10 +398,16 @@ export class CusotmWebDocUploadComponent implements OnInit {
   uploadImage(file, i) {
     let formData = new FormData();
     let data = {
-      documentNameForChecklist:
-        this.createDocumentForm.value.otherDocument[i].documentType,
-      documentName: null,
-      documentType: this.createDocumentForm.value.otherDocument[i].documentType,
+      ...(this.isOtherDocVisible
+        ? {
+            documentNameForChecklist:
+              this.createDocumentForm.value.otherDocument[i].documentType,
+          }
+        : ""),
+      documentName: !this.isOtherDocVisible ? this.nationalIdGeneric : null,
+      documentType: !this.isOtherDocVisible
+        ? this.nationalIdGeneric
+        : this.createDocumentForm.value.otherDocument[i].documentType,
       documentNumber:
         this.createDocumentForm.value.otherDocument[i].documentNumber,
       documentSide: 1,
