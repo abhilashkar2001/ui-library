@@ -78,7 +78,7 @@ export class ChecklistDocumentComponent implements OnInit {
           data?.documentName
         ) ?? "",
       ],
-      docRequired: [true ?? false],
+      docRequired: [data?.docRequired ?? false],
     });
   }
 
