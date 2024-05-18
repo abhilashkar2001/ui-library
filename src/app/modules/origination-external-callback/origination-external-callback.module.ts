@@ -15,6 +15,8 @@ import { SignPadComponent } from "./digital-sign/sign-pad/sign-pad.component";
 import { SuccessModalComponent } from "./digital-sign/success-modal/success-modal.component";
 import { DocumentUploadComponent } from "./document-upload/document-upload.component";
 import { RemarkComponent } from './offer-letter/remark/remark.component';
+import { ChecklistDocumentComponent } from './checklist-document/checklist-document.component';
+import { DobVerificationComponent } from './dob-verification/dob-verification.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { RemarkComponent } from './offer-letter/remark/remark.component';
     SuccessModalComponent,
     DocumentUploadComponent,
     RemarkComponent,
+    ChecklistDocumentComponent,
+    DobVerificationComponent,
   ],
   imports: [
     CommonModule,
