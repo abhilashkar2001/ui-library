@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { QueryParamEnum } from "app/enum/query-param.enum";
+import { ChecklistRouteObjModel } from "app/shared/models/checklist-model";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
@@ -11,7 +14,8 @@ export class CallbackComponent implements OnInit {
   constructor(
     private sessionService: SessionService,
     private tokenService: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit() {
@@ -31,25 +35,46 @@ export class CallbackComponent implements OnInit {
    * @method getProfile()
    */
   getProfile() {
-    this.sessionService.getProfileInfo().subscribe(
-      (res) => {
-        this.tokenService.saveUser(res);
-        sessionStorage.setItem("customerId", this.getParameterByName("customerId"));
-        sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
-        sessionStorage.setItem("ReferanceNumber",this.getParameterByName("referanceNumber"));
-        if( this.getParameterByName("customerId") != null && this.getParameterByName("mobile") != null  ){ this.router.navigate([`/origination/otp`],{queryParams: {type:`${this.getParameterByName("screen")}`}})}
-        else{sessionStorage.setItem(
+    this.sessionService.getProfileInfo().subscribe((res) => {
+      this.tokenService.saveUser(res);
+      sessionStorage.setItem(
+        "customerId",
+        this.getParameterByName("customerId")
+      );
+      sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+      sessionStorage.setItem(
+        "ReferanceNumber",
+        this.getParameterByName("referanceNumber")
+      );
+
+      if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
+        const checklistObj: ChecklistRouteObjModel = {
+          checklistItem: this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM),
+          processStageId: this.getParameterByName(
+            QueryParamEnum.PROCESS_STAGE_ID
+          ),
+          screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
+        };
+        this.sessionStorageService.setChecklistRouteObj(checklistObj);
+      }
+      if (
+        this.getParameterByName("customerId") != null &&
+        this.getParameterByName("mobile") != null
+      ) {
+        this.router.navigate([`/origination/otp`], {
+          queryParams: { type: `${this.getParameterByName("screen")}` },
+        });
+      } else {
+        sessionStorage.setItem(
           "originationId",
           JSON.stringify(this.getParameterByName("originationId"))
         );
+
         this.router.navigate([
           `/origination/${this.getParameterByName("route")}`,
-        ]);}
-      },
-      (err) => {
-        // TODO error hanndler
+        ]);
       }
-    );
+    });
   }
 
   getParameterByName(name, url = window.location.href) {

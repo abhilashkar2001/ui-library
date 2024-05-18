@@ -58,6 +58,21 @@
   }
 }
 
+.custom-expansion-panel {
+  .mat-expansion-panel-header {
+    font: normal normal 18px/27px Poppins;
+    color: #102245;
+    background: #ebf6ff 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+  }
+}
+.text-carbon {
+  text-align: center;
+  font: normal normal 18px/47px Poppins;
+  letter-spacing: 0px;
+  color: #b4b4b4;
+  opacity: 1;
+}
 .text-label {
   color: #102245;
   font-family: "Poppins";

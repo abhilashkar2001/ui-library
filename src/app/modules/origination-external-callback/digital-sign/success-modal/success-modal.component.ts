@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, Optional } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
@@ -8,10 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 })
 export class SuccessModalComponent implements OnInit {
   screenType: string;
-  constructor(
-    private dialogRef: MatDialogRef<SuccessModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public screenData: any
-  ) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public screenData: any) {}
 
   ngOnInit(): void {
     this.screenType = this.screenData.screenType;

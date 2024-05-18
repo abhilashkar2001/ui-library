@@ -1,8 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ChecklistModel } from "app/shared/models/checklist-model";
+import { MatDialog } from "@angular/material/dialog";
+import { MatIconRegistry } from "@angular/material/icon";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { DomSanitizer } from "@angular/platform-browser";
+import {
+  ChecklistModel,
+  ChecklistPayloadModel,
+  ChecklistRouteObjModel,
+} from "app/shared/models/checklist-model";
+import { DocumentUploadService } from "app/shared/services/document-upload.service";
 import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 
 @Component({
   selector: "app-checklist-document",
@@ -11,23 +21,27 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 })
 export class ChecklistDocumentComponent implements OnInit {
   checklistDocumentForm: FormGroup;
-  refNumber: string = "R10034";
+  refNumber: string;
   title: string = "Loan Document Upload";
   originationId: number = 3507;
-  screenId: number;
   checklistDocuments;
-  stageId: number;
+  checklistRouteObj: ChecklistRouteObjModel;
+  customerInfo: any;
 
   constructor(
     private originationService: OriginationService,
     private sessionStorageService: SessionStorageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snack: MatSnackBar,
+    private documentUploadService: DocumentUploadService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.originationId = this.sessionStorageService.getOriginationId() || 3507;
-    this.screenId = this.sessionStorageService.getScreenId() || 290;
-    this.stageId = 1002;
+    this.originationId = this.sessionStorageService.getOriginationId();
+    this.checklistRouteObj = this.sessionStorageService.getCheklistRouteObj();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.refNumber = this.customerInfo?.icustRefNo;
     this.initChecklistDocumentForm();
     this.fetchAllChecklist();
   }
@@ -43,7 +57,7 @@ export class ChecklistDocumentComponent implements OnInit {
    * @param index
    * @returns the control of document in customer form array
    */
-  documentCtrl(): FormArray {
+  get documentCtrl(): FormArray {
     return this.checklistDocumentForm.get("documents") as FormArray;
   }
 
@@ -54,9 +68,17 @@ export class ChecklistDocumentComponent implements OnInit {
    */
   documentFormArray(data?) {
     return this.fb.group({
-      documentName: [data?.documentName ?? "", [Validators.required]],
+      documentName: [data?.document ?? "", [Validators.required]],
       isProofOfAddress: [data?.isProofOfAddress ?? ""],
       files: this.fb.array([]),
+      description: [data?.summary ?? ""],
+      fileType: [
+        this.formatDocumentType(
+          data?.documentTypes?.toLowerCase(),
+          data?.documentName
+        ) ?? "",
+      ],
+      docRequired: [true ?? false],
     });
   }
 
@@ -67,7 +89,7 @@ export class ChecklistDocumentComponent implements OnInit {
    * @returns retuns the form control of file in document form array
    */
   documentFilesCtrl(documentIndex): FormArray {
-    return this.documentCtrl().at(documentIndex).get("files") as FormArray;
+    return this.documentCtrl.at(documentIndex).get("files") as FormArray;
   }
 
   /**
@@ -88,28 +110,157 @@ export class ChecklistDocumentComponent implements OnInit {
    * @param element document data of the particular customer
    * @param index index of the customer in customer form array
    */
-  pushDocumentInfo(element) {
+  pushDocumentInfo(element?) {
     if (element && element?.length > 0) {
-      this.documentCtrl().clear();
+      this.documentCtrl.clear();
       element.forEach((document, docIndex) => {
-        this.documentCtrl().push(this.documentFormArray(document));
+        this.documentCtrl.push(this.documentFormArray(document));
+        this.documentFilesCtrl(docIndex).push(this.documentFileFormArray());
       });
     } else {
-      this.documentCtrl().push(this.documentFormArray());
+      this.documentCtrl.push(this.documentFormArray());
+      this.documentFilesCtrl(0).push(this.documentFileFormArray());
     }
-
-    console.log(this.checklistDocumentForm);
   }
 
   fetchAllChecklist() {
     this.originationService
-      .fetchChecklistItem(this.originationId, this.screenId, this.stageId)
+      .fetchChecklistItem(
+        this.originationId,
+        this.checklistRouteObj.screenId,
+        this.checklistRouteObj.processStageId
+      )
       .subscribe((res: ChecklistModel) => {
         if (res.statusCode == 200 && res?.data) {
-          this.checklistDocuments = res?.data;
-          this.pushDocumentInfo(res?.data);
+          const acceptedDocumentId =
+            this.checklistRouteObj?.checklistItem?.split(",");
+          this.checklistDocuments = res?.data?.filter((checklist) =>
+            acceptedDocumentId.some((item) => item == checklist.id)
+          );
+          this.pushDocumentInfo(this.checklistDocuments);
         }
       });
+  }
+
+  addAnotherPage(index: number) {
+    this.documentFilesCtrl(index).push(this.documentFileFormArray());
+  }
+
+  uploadDocument(event, index: number, fileIndex: number) {
+    const files = event.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      let docdata: any = {};
+      docdata.fileName = file?.name.split(".")[0];
+      docdata.fileType = file?.type.split("/")[1];
+      docdata.documentNameForChecklist = this.documentCtrl
+        .at(index)
+        .get("documentName").value;
+      docdata.documentDesc = this.documentCtrl
+        .at(index)
+        .get("description").value;
+      const formdata = new FormData();
+      formdata.append("file", file);
+      formdata.append("data", JSON.stringify(docdata));
+      formdata.append("module", "document");
+      if (
+        this.documentCtrl.at(index).get("fileType").value ==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf" &&
+        !file.name.includes(".xlsx") &&
+        !file.name.includes(".pdf")
+      ) {
+        this.snack.open(`Please Upload Pdf or Excel Documents`, "Ok!", {
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          duration: 3000,
+        });
+        return;
+      } else if (
+        this.documentCtrl.at(index).get("fileType").value ==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" &&
+        !file.name.includes(".xlsx")
+      ) {
+        this.snack.open(`Please Upload Excel documents`, "Ok!", {
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          duration: 3000,
+        });
+        return;
+      } else if (
+        this.documentCtrl.at(index).get("fileType").value == ".pdf" &&
+        !file.name.toLowerCase().includes(".pdf")
+      ) {
+        this.snack.open(`Please Upload Pdf documents`, "Ok!", {
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          duration: 3000,
+        });
+        return;
+      }
+      this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
+        if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
+          this.documentFilesCtrl(index).at(fileIndex).patchValue(res?.data);
+          this.documentFilesCtrl(index).push(this.documentFileFormArray());
+        }
+      });
+    }
+  }
+
+  removeImage(index: number, fileIndex: number) {
+    const ctrl = this.documentFilesCtrl(index).at(fileIndex);
+    if (ctrl.get("documentId").value) {
+      ctrl.reset();
+    } else {
+      this.documentFilesCtrl(index).removeAt(fileIndex);
+    }
+  }
+
+  formatDocumentType(documentTypes: string, documentName: string) {
+    if (documentTypes?.includes("excel") && documentTypes?.includes("pdf"))
+      return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
+    else if (documentTypes?.includes("excel"))
+      return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    else if (documentTypes?.includes("pdf")) return ".pdf";
+    else console.log(`Document type is not given for ${documentName}`);
+    return "";
+  }
+
+  saveChecklist() {
+    let payload: ChecklistPayloadModel = {
+      documentIds: [],
+      originationId: this.originationId,
+      screenCode: this.checklistRouteObj?.screenId,
+    };
+    payload.documentIds = [];
+    this.documentCtrl?.value?.forEach((element) => {
+      element?.files?.forEach((file) => {
+        if (file?.documentId) payload?.documentIds?.push(file?.documentId);
+      });
+    });
+
+    this.originationService.saveChecklist(payload).subscribe((res) => {
+      if (res?.statusCode === 200 || res?.statusCode == 201) {
+        this.openSuccessPopup();
+      }
+    });
+  }
+
+  openSuccessPopup() {
+    const dialogref = this.dialog.open(SuccessModalComponent, {
+      width: "50%",
+      panelClass: "popup-class",
+      data: {
+        title: "Document Summited Successfully",
+        alert: "Keep a record of your Reference Number for future use",
+        refNo: this.customerInfo.icustRefNo,
+      },
+    });
+    dialogref.afterClosed().subscribe((_) => {
+      window.close();
+    });
   }
 
   goBack() {

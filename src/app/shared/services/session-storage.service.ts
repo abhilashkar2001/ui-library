@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { SessionStorageEnum } from "app/enum/session-storage.enum";
+import { ChecklistRouteObjModel } from "../models/checklist-model";
 
 export const RETURN_TO_SUMMARY = "returnToSummary";
 
@@ -77,5 +78,32 @@ export class SessionStorageService {
   setCustomerInfo(customerInfo) {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_INFO);
     this.setItem(SessionStorageEnum.CUSTOMER_INFO, customerInfo);
+  }
+
+  /**
+   * get parse obj of chekclist route obj from session storage
+   * @returns
+   */
+  public getCheklistRouteObj() {
+    const checklistRouteObj = this.getItem(
+      SessionStorageEnum.CHECKLIST_ROUTE_OBJ
+    );
+    return checklistRouteObj;
+  }
+
+  /**
+   * set checklist route obj in session storage
+   * @param checklistRouteObj route obj
+   */
+  public setChecklistRouteObj(checklistRouteObj: ChecklistRouteObjModel) {
+    this.removeChecklistRouteObj();
+    this.setItem(SessionStorageEnum.CHECKLIST_ROUTE_OBJ, checklistRouteObj);
+  }
+
+  /**
+   * Remove checklist route obj from session storage
+   */
+  public removeChecklistRouteObj() {
+    this.session.removeItem(SessionStorageEnum.CHECKLIST_ROUTE_OBJ);
   }
 }

@@ -35,3 +35,236 @@
     }
   }
 }
+
+hr.line {
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  opacity: 1;
+}
+.card {
+  background: #f3f3f3 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000014;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  opacity: 1;
+  width: 215px;
+  height: 270px;
+  .doc-header {
+    height: 30px;
+  }
+
+  .document-footer {
+    height: 40px;
+  }
+}
+
+.mat-progress-bar {
+  height: 6px !important;
+  border-radius: 100px !important;
+}
+
+.add-doc-btn {
+  text-align: center;
+  color: #004c97;
+  text-decoration: underline;
+  font-family: Poppins, Medium;
+  font-size: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+.ic-progress-bar {
+  padding: 5px 12px 0 12px;
+}
+
+.document-wrapper {
+  width: 215px;
+  height: 230px;
+  padding: 1px 2px 0px 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: normal normal 10px / 16px Poppins;
+  letter-spacing: 0px;
+  color: #000000;
+  text-transform: capitalize;
+}
+.card-title {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #004c97;
+  opacity: 1;
+  font-size: 18px;
+  font-family: Poppins, "Medium";
+}
+
+.mat-card.document {
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px #00000017;
+  border-radius: 12px;
+  opacity: 1;
+}
+
+.card-plus {
+  width: 215px;
+  position: relative;
+  /* UI Properties */
+  background: #f3f3f3 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px #00000014;
+  border: 3px solid #ffffff;
+  border-radius: 18px;
+  opacity: 1;
+  height: 287px;
+}
+.profile-card-content {
+  margin-top: 45px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icon {
+  color: #051a2d;
+  opacity: 1;
+  font-size: 25px;
+}
+
+.danger {
+  color: #b20000 !important;
+  height: 50px;
+  font-size: 15px;
+  font-family: poppins, "SemiBold";
+  font-weight: 600 !important;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 3px 3px 15px #0000000f !important;
+  border-radius: 35px !important;
+  letter-spacing: 0px;
+}
+.danger1 {
+  color: #b20000;
+  background-color: #ffffff;
+}
+
+.btn-box {
+  width: 38px;
+  height: 36px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 0px 11px;
+  opacity: 1;
+  left: 2px;
+  top: -2px;
+}
+.document-image {
+  margin: -35px 10px -20px 10px;
+}
+
+.mat-raised-button.footer-btn {
+  width: 80px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+
+.action-icon {
+  width: 18px;
+  height: 18px;
+  margin: 4px;
+}
+
+.curser {
+  height: 100%;
+  width: 100%;
+}
+
+.changeInput {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 15px;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.disable-acc-doc {
+  color: #8a8989;
+  font-family: Poppins, Medium;
+  font-size: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+  font-weight: 600 !important;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: underline;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.sm-btn {
+  height: 32px !important;
+  line-height: 23px !important;
+  border-radius: 23px !important;
+  opacity: 1;
+}
+
+.scanColor {
+  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+    no-repeat padding-box;
+  color: #fff !important;
+  font-size: 12px;
+  font-family: Poppins, "SemiBold";
+  letter-spacing: 0px;
+  text-transform: capitalize;
+  font-weight: 600 !important;
+}
+
+.uploadColor {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 3px 3px 15px #0000000f;
+  color: #004c97;
+  font-size: 12px;
+  font-family: Poppins, "SemiBold";
+  letter-spacing: 0px;
+  text-transform: capitalize;
+  font-weight: 600 !important;
+}
+.basicin {
+  margin-left: 5px;
+  color: #102245;
+  font-size: 13px;
+  letter-spacing: -0.26px;
+  font-weight: 600;
+  font-family: poppins, "SemiBold";
+}
+.mat-form-field mat-label {
+  font-family: Poppins, "Medium";
+  font-weight: 600;
+  letter-spacing: -0.26px;
+  color: #102245;
+  opacity: 0.5;
+  font-size: 13px;
+  margin-left: 5px;
+}
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #008461 !important;
+}
+.pagetitle {
+  font-size: 14px;
+  color: #102245;
+  opacity: 0.5;
+  font-family: Poppins, "Medium";
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+  margin-bottom: 5px;
+}
+.otherpage {
+  color: #000000;
+  font-size: 14px;
+  font-family: Poppins, "Medium";
+  font-weight: 600 !important;
+  letter-spacing: 0px;
+  text-transform: capitalize;
+}
