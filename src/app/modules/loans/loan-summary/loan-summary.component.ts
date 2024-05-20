@@ -46,20 +46,26 @@ export class LoanSummaryComponent implements OnInit {
     // this.getLoanSummary();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     // this.loanSummaryDetails = this.loanSummary;
-    this.getLoanSummary();
-    this.getOriginationMasterData();
+    this.getLoanSummary().then((resp) => {
+      console.log(".........");
+      this.getOriginationMasterData();
+    });
+    // this.getOriginationMasterData();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes.loanSummary.currentValue;
   }
 
   getLoanSummary() {
-    var originationId = sessionStorage.getItem("originationId");
-    this.loanService
-      .getLoanSummary(originationId)
-      .subscribe((response: any) => {
-        this.loanSummaryDetails = response.data;
-      });
+    return new Promise((resolve, reject) => {
+      var originationId = sessionStorage.getItem("originationId");
+      this.loanService
+        .getLoanSummary(originationId)
+        .subscribe((response: any) => {
+          this.loanSummaryDetails = response.data;
+          resolve("");
+        });
+    });
   }
 
   getOriginationMasterData() {
