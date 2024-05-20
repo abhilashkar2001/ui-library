@@ -141,7 +141,7 @@ export class LoanFlowComponent implements OnInit {
    */
   updateAccount = (value: Partial<any>) => {
     const isLoan = value?.isForLoan ?? true;
-    if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
+    // if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
       this.docCustomerDetails = value.customerDetails;
@@ -154,10 +154,23 @@ export class LoanFlowComponent implements OnInit {
       value?.kycDoc ?? null
     );
     if (value.updateMasterSave && isLoan && this.personalDetails?.length > 0) {
-      this.getMasterSave({
-        originationModel: originationModel,
-        customerInfo: customerInfo,
-      });
+      if (value?.isCheckListDoc) {
+        const payload = {
+          documentIds: value?.otherLoanDoc,
+          originationId: this.originationModel?.originationId,
+          screenCode: null,
+        };
+        this.loanApi.saveChecklist(payload).subscribe((resp) => {
+          console.log(resp, "........");
+          if (resp?.statusCode === 201) {
+            this.next();
+          }
+        });
+      } else
+        this.getMasterSave({
+          originationModel: originationModel,
+          customerInfo: customerInfo,
+        });
     } else {
       if (!isLoan) return;
       else this.next();

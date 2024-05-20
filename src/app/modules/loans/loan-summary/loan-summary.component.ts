@@ -33,6 +33,7 @@ export class LoanSummaryComponent implements OnInit {
   currencySymboll = "₹";
   otherUserInfo: any;
   personalDetails: any;
+  checkListDoc: any[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -47,13 +48,20 @@ export class LoanSummaryComponent implements OnInit {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     // this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary().then((resp) => {
-      console.log(".........");
       this.getOriginationMasterData();
+      this.getCheckListDoc();
     });
-    // this.getOriginationMasterData();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes.loanSummary.currentValue;
+  }
+  getCheckListDoc() {
+    var originationId = sessionStorage.getItem("originationId");
+    this.loanService.getSavedChecklist(originationId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.checkListDoc = resp.data;
+      }
+    });
   }
 
   getLoanSummary() {

@@ -47,7 +47,6 @@ export class LoanDocumentUploadComponent implements OnInit {
         parseInt(sessionStorage.getItem("currentScreenCode"))
       )
       .subscribe((resp) => {
-        console.log(resp);
         if (resp?.statusCode == 200) {
           this.checkListDocList = this.groupBy(resp.data, "docRequired");
         } else {
@@ -100,14 +99,19 @@ export class LoanDocumentUploadComponent implements OnInit {
     var docIds = [];
     event.documentDetails.otherDocument.forEach((element) => {
       if (element.docIds?.length > 0) {
-        const docId = {
-          docIds: element.docIds,
-        };
-        docIds.push(docId);
+        // const docId = {
+        //   docIds: element.docIds,
+        // };
+        // docIds.push(docId);
+        docIds = [...docIds, ...element.docIds];
       }
     });
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
-    this.updateParentModel({ otherLoanDoc: docIds, updateMasterSave: true });
+    this.updateParentModel({
+      otherLoanDoc: docIds,
+      updateMasterSave: true,
+      isCheckListDoc: true,
+    });
     this.onCustomSubmit.emit();
   }
 

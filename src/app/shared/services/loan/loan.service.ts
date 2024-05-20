@@ -163,4 +163,16 @@ export class LoanService {
       `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`
     );
   }
+
+  saveChecklist(payload) {
+    return this.http.post<any>(
+      `${baseUrl}/origination-matser/saveChecklist`,
+      payload
+    );
+  }
+  getSavedChecklist(originationId) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`
+    );
+  }
 }

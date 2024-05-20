@@ -14,11 +14,11 @@ export class ShowDocumentComponent implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    console.log("...");
+    // console.log("...");
   }
 
   ngOnChanges(changes): void {
-    console.log(changes);
+    // console.log(changes);
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
