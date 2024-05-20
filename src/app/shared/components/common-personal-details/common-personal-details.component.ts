@@ -126,14 +126,42 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   "DD/MM/YYYY"
                 ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
               );
-            this.customerDetailsForm
-              .get("customer")
-              ["controls"][0].get("firstName")
-              .setValue(
-                this.docCustomerDetails?.applicantName.split(" ")[0] +
-                  " " +
-                  this.docCustomerDetails?.applicantName.split(" ")[1]
+            const applicantNameArray =
+              this.docCustomerDetails?.applicantName.split(" ");
+            if (applicantNameArray && applicantNameArray.length >= 3) {
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("firstName")
+                .setValue(applicantNameArray.slice(0, 2).join(" "));
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("lastName")
+                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+            } else {
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("firstName")
+                .setValue(applicantNameArray[0]);
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("lastName")
+                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+            }
+            const address = this.customer.at(0).get("contact").get("address")[
+              "controls"
+            ][0] as FormGroup;
+            address
+              .get("pincode")
+              .patchValue(
+                JSON.parse(sessionStorage.getItem("backData")).pincode
               );
+            address
+              .get("address1")
+              .patchValue(
+                JSON.parse(sessionStorage.getItem("backData")).address1
+              );
+
+            sessionStorage.removeItem("backData");
           }, 100);
       }
     });
