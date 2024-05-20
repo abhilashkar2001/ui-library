@@ -234,13 +234,13 @@ export class CusotmWebDocUploadComponent implements OnInit {
   browseFiles(i) {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
-    inputElement.accept = "image/*";
+    inputElement.accept = "image/*, .pdf";
     inputElement.addEventListener("change", (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file = target.files[0];
         console.log(file, "file");
-        if (file.type.startsWith("image/")) {
+        if (file) {
           this.selectedImage = file;
           this.displayImage(i, file, file.size);
           this.uploadImage(file, i);
