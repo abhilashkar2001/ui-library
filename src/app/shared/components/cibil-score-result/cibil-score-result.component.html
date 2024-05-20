@@ -1,47 +1,16 @@
 <div class="cibil-score-result">
   <div class="graph-section">
-    <fusioncharts
+    <!-- <fusioncharts
       width="500"
       height="250"
       type="angulargauge"
       [dataSource]="dataSource"
     >
-    </fusioncharts>
-  </div>
-  <div class="cibil-label">You Credit Bureau Score is</div>
-  <div class="result">
-    {{ cibilScoreText() }}
-    <button type="button" class="info-button" placement="bottom">
-      <mat-icon>info</mat-icon>
-    </button>
-    <div class="jk">
-      <div fxLayout="column">
-        <div class="parentCibil">Understnd CIBIL Score</div>
-        <div class="cibilInfo">
-          Your CIBIL score is 3 digit number that appers on your credit report.
-          The usual range between 300 and 900.
-        </div>
-        <div
-          fxLayout="row"
-          fxLayoutAlign="space-between center"
-          *ngFor="let cibil of cibilScoreList"
-          class="mt-6"
-        >
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <div
-              class="circle"
-              [ngStyle]="{ color: cibil?.colorCode }"
-              [style.background-color]="cibil?.colorCode"
-            ></div>
-            <div class="cibil_score pl-4">{{ cibil?.score }}</div>
-          </div>
-          <div class="cibil_score">{{ cibil?.description }}</div>
-        </div>
-      </div>
-    </div>
-    <!-- triggers="mouseenter:mouseleave" (click)="popOverRef.toggle()" -->
+    </fusioncharts> -->
+    <app-cibil-score-chart [cibilScore]="cibilScore"></app-cibil-score-chart>
   </div>
 
+  <h3 class="cibil_desc_title">Here's quick overview</h3>
   <div *ngIf="cibilScore > 681">
     <div class="cibil-text-card">
       <div class="like-icon">
