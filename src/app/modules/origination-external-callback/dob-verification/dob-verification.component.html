@@ -34,7 +34,8 @@
         ></ng-otp-input>
       </div>
       <span class="resend-text"
-        >Not Received? <span class="resend">Resend</span></span
+        >Not Received?
+        <span class="resend" (click)="verifyOtp()">Resend</span></span
       >
       <div class="btn-div">
         <button class="proceed-btn" mat-raised-button (click)="verifyOtp()">
