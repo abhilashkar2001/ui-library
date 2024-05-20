@@ -40,10 +40,17 @@
   </div>
   <div class="alertImage">
     <img
+      *ngIf="originationId; else showerror"
       class="summaryIcon"
-      src="assets/images/error-icon.svg"
+      src="assets/images/success-logo.svg"
       alt="Success Sign"
     />
+    <ng-template #showerror
+      ><img
+        class="summaryIcon"
+        src="assets/images/error-icon.svg"
+        alt="Success Sign"
+    /></ng-template>
   </div>
 
   <div

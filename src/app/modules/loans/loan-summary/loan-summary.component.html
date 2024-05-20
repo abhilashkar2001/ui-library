@@ -267,7 +267,7 @@
     <div class="text-header">Loan Document</div>
     <div
       class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.documnentsInfo?.docInfoModel?.length > 0"
+      *ngIf="loanSummaryDetails?.documnentsInfo?.documents?.length > 0"
       fxLayout="column"
     >
       <!-- <div class="col-1">
@@ -280,13 +280,18 @@
       </div> -->
       <div fxLayout="row wrap" fxLayoutGap="2%" fxFlex="100">
         <ng-container
-          *ngFor="let doc of loanSummaryDetails?.documnentsInfo?.docInfoModel"
+          *ngFor="
+            let doc of loanSummaryDetails?.documnentsInfo?.documents;
+            let inx = index
+          "
         >
           <div fxFlex="31" class="mt-20">
-            <div fxLayout="column">
-              <span class="content">{{ doc.documentType }} </span>
-              <app-show-document [document]="doc"> </app-show-document>
-            </div>
+            <ng-container *ngFor="let docItem of doc?.docs">
+              <div fxLayout="column">
+                <span class="content">{{ docItem.documentType }} </span>
+                <app-show-document [document]="docItem"> </app-show-document>
+              </div>
+            </ng-container>
           </div>
         </ng-container>
       </div>
