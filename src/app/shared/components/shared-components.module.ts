@@ -86,6 +86,7 @@ import { ReusableTableComponent } from "./reusable-table/reusable-table.componen
 import { SelectSingleTransferComponent } from "./select-single-transfer/select-single-transfer.component";
 import { CustomSuccessPopupComponent } from "./custom-success-popup/custom-success-popup.component";
 import { CusotmWebDocUploadComponent } from "./cusotm-web-doc-upload/cusotm-web-doc-upload.component";
+import { PdfViewerComponent } from "./pdf-viewer/pdf-viewer.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -146,6 +147,7 @@ const components = [
   SelectSingleTransferComponent,
   CustomSuccessPopupComponent,
   CusotmWebDocUploadComponent,
+  PdfViewerComponent,
 ];
 
 @NgModule({

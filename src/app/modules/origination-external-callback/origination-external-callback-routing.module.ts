@@ -6,6 +6,8 @@ import { OtpComponent } from "./otp/otp.component";
 import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.component";
 import { DocumentUploadComponent } from "./document-upload/document-upload.component";
 import { RemarkComponent } from "./offer-letter/remark/remark.component";
+import { DobVerificationComponent } from "./dob-verification/dob-verification.component";
+import { ChecklistDocumentComponent } from "./checklist-document/checklist-document.component";
 
 const routes: Routes = [
   {
@@ -53,6 +55,20 @@ const routes: Routes = [
     component: DocumentUploadComponent,
     data: {
       title: "Document Upload",
+    },
+  },
+  {
+    path: "dob-verification",
+    component: DobVerificationComponent,
+    data: {
+      title: "Verification",
+    },
+  },
+  {
+    path: "checklist-document",
+    component: ChecklistDocumentComponent,
+    data: {
+      title: "Verification",
     },
   },
 ];
