@@ -229,9 +229,10 @@ export class CusotmWebDocUploadComponent implements OnInit {
   mapEndPoints(url) {
     return `${this.baseUrl}${url}`;
   }
-  fileBrowseHandler(event: any, indx: number, jk) {
+  fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
+
   browseFiles(i) {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
@@ -254,16 +255,20 @@ export class CusotmWebDocUploadComponent implements OnInit {
     this.uploadFilesSimulator(0);
   }
 
-  getDocTypeforScan(docname) {
+  getDocTypeforScan(docname, index) {
     let docType;
-    if (docname == "aadhar card") {
+    if (docname == "aadhar card" && index == 0) {
       docType = "adhaar";
     }
+    if (docname == "aadhar card" && index == 1) docType = "adhaar_back";
     if (docname == "pan card") {
       docType = "pan";
     }
-    if (docname == "passport") {
+    if (docname == "passport" && index == 0) {
       docType = docname;
+    }
+    if (docname == "passport" && index == 1) {
+      docType = "passport_back";
     }
     return docType;
   }
@@ -274,7 +279,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
     formdata.append("lang", "eng");
     formdata.append(
       "imageType",
-      this.getDocTypeforScan(this.hideSelect[i].toLowerCase())
+      this.getDocTypeforScan(this.hideSelect[0].toLowerCase(), i)
     );
     try {
       const res: any = await this.sharedService
@@ -410,7 +415,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
         : this.createDocumentForm.value.otherDocument[i].documentType,
       documentNumber:
         this.createDocumentForm.value.otherDocument[i].documentNumber,
-      documentSide: 1,
+      documentSide:
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1 ?? 0,
       fileName: file.name,
       fileType: file.type,
       verificationType: "kyc",
@@ -424,13 +430,20 @@ export class CusotmWebDocUploadComponent implements OnInit {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
+
         if (this.isOtherDocVisible)
           this.extractDoc(
             this.createDocumentForm.value.otherDocument[i].documentType,
             parseInt(sessionStorage.getItem("originationId")),
             file
           );
-        if (this.ocrCheck) this.readDocument(file, i);
+        
+        if (this.ocrCheck)
+          this.readDocument(
+            file,
+            this.createDocumentForm.value.otherDocument[i]?.docIds?.length - 1
+          );
+
         // else this.loder.close();
       }
     });
