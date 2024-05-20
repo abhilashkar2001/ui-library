@@ -278,22 +278,23 @@
           }}
         </span>
       </div> -->
-      <div fxLayout="row wrap" fxLayoutGap="2%" fxFlex="100">
-        <ng-container
-          *ngFor="
-            let doc of loanSummaryDetails?.documnentsInfo?.documents;
-            let inx = index
-          "
-        >
-          <div fxFlex="31" class="mt-20">
-            <ng-container *ngFor="let docItem of doc?.docs">
-              <div fxLayout="column">
-                <span class="content">{{ docItem.documentType }} </span>
-                <app-show-document [document]="docItem"> </app-show-document>
-              </div>
-            </ng-container>
+      <div
+        fxLayout="column"
+        fxFlex="100"
+        *ngFor="
+          let doc of loanSummaryDetails?.documnentsInfo?.documents;
+          let inx = index
+        "
+        class="mt-16"
+      >
+        <span class="content">{{ doc?.docs[0].documentType }} </span>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="2%">
+          <div fxFlex="31" class="mt-20" *ngFor="let docItem of doc?.docs">
+            <div fxLayout="column">
+              <app-show-document [document]="docItem"> </app-show-document>
+            </div>
           </div>
-        </ng-container>
+        </div>
       </div>
     </div>
   </div>
