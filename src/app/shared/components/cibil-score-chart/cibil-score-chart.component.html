@@ -1,0 +1,52 @@
+<section class="chart_section">
+  <!-- Graph Container -->
+  <div class="container_box">
+    <!-- Circular background -->
+    <div class="circular-progress">
+      <span class="circular-progress-cone">
+        <p class="range_number">300</p>
+        <p class="range_number">900</p>
+      </span>
+    </div>
+    <!-- marker container -->
+    <div class="marker_container">
+      <div class="marker_pointer"></div>
+    </div>
+  </div>
+
+  <!-- Chart Content -->
+  <div class="chart_content">
+    <div class="cibil-label">You Credit Score is</div>
+    <div class="result-btn">
+      {{ cibilScoreText() }}
+      <div class="info-button" placement="bottom">
+        <mat-icon>info</mat-icon>
+      </div>
+      <div class="cibil_score_info">
+        <div fxLayout="column">
+          <div class="parentCibil">Understnd CIBIL Score</div>
+          <div class="cibilInfo">
+            Your CIBIL score is 3 digit number that appers on your credit
+            report. The usual range between 300 and 900.
+          </div>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            *ngFor="let cibil of cibilScoreList"
+            class="mt-6"
+          >
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div
+                class="circle"
+                [ngStyle]="{ color: cibil?.colorCode }"
+                [style.background-color]="cibil?.colorCode"
+              ></div>
+              <div class="cibil_score pl-4">{{ cibil?.score }}</div>
+            </div>
+            <div class="cibil_score">{{ cibil?.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

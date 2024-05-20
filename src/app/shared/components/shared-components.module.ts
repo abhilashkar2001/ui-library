@@ -87,6 +87,7 @@ import { SelectSingleTransferComponent } from "./select-single-transfer/select-s
 import { CustomSuccessPopupComponent } from "./custom-success-popup/custom-success-popup.component";
 import { CusotmWebDocUploadComponent } from "./cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { PdfViewerComponent } from "./pdf-viewer/pdf-viewer.component";
+import { CibilScoreChartComponent } from "./cibil-score-chart/cibil-score-chart.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -148,6 +149,7 @@ const components = [
   CustomSuccessPopupComponent,
   CusotmWebDocUploadComponent,
   PdfViewerComponent,
+  CibilScoreChartComponent,
 ];
 
 @NgModule({

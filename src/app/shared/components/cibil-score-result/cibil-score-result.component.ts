@@ -110,20 +110,6 @@ export class CibilScoreResultComponent implements OnInit {
     return 700;
   }
 
-  cibilScoreText() {
-    if (this.cibilScore < 681) {
-      return "Poor";
-    } else if (this.cibilScore > 681 && this.cibilScore <= 730) {
-      return "Average";
-    } else if (this.cibilScore > 730 && this.cibilScore <= 770) {
-      return "Fair";
-    } else if (this.cibilScore > 770 && this.cibilScore <= 790) {
-      return "Good";
-    } else {
-      return "Excellent";
-    }
-  }
-
   onBack() {
     this.onBackEvent.emit();
   }
