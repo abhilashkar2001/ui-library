@@ -16,7 +16,9 @@
         <mat-icon class="forward-arrow">arrow_forward</mat-icon>
       </div>
     </div>
-
+    <mat-hint class="error" *ngIf="incorrectDOB"
+      >Enter correct date of birth</mat-hint
+    >
     <ng-container *ngIf="showOTP">
       <div class="otp-text">
         <span

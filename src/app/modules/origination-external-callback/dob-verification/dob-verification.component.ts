@@ -25,6 +25,7 @@ export class DobVerificationComponent implements OnInit {
   };
   otp: any;
   customerInfo: any;
+  incorrectDOB: boolean = false;
   constructor(
     private originationService: OriginationService,
     private sessionStorageService: SessionStorageService,
@@ -46,7 +47,8 @@ export class DobVerificationComponent implements OnInit {
           this.sessionStorageService.setCustomerInfo(this.customerInfo);
           this.showOTP = true;
           this.sendOTPtoMobile();
-        }
+          this.incorrectDOB = false;
+        } else if (res?.statusCode == 204) this.incorrectDOB = true;
       });
   }
 
