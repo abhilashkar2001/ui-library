@@ -94,8 +94,8 @@ export class LoanSummaryComponent implements OnInit {
     if (
       this.loanSummaryDetails?.disbursementDetails?.disbursementType != null &&
       this.loanSummaryDetails?.disbursementDetails?.disbursementType
-        .toLowerCase()
-        .includes("account")
+        ?.toLowerCase()
+        ?.includes("account")
     )
       return true;
     else return false;
