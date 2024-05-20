@@ -290,12 +290,9 @@
         <span class="content">{{ doc?.docs[0].documentType }} </span>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="2%">
           <div fxFlex="31" class="mt-20" *ngFor="let docItem of doc?.docs">
-            <ng-container>
-              <div fxLayout="column">
-                <!-- <span class="content">{{ docItem.documentType }} </span> -->
-                <app-show-document [document]="docItem"> </app-show-document>
-              </div>
-            </ng-container>
+            <div fxLayout="column">
+              <app-show-document [document]="docItem"> </app-show-document>
+            </div>
           </div>
         </div>
       </div>
