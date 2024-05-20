@@ -31,16 +31,6 @@
         font-weight: 500;
         line-height: normal;
       }
-
-      .content {
-        color: #102245;
-        font-family: Poppins;
-        font-size: 17.918px;
-        display: block;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-      }
     }
 
     .col-2,
@@ -65,4 +55,13 @@
   width: 38px;
   background-color: white;
   border-bottom-left-radius: 10px;
+}
+.content {
+  color: #102245;
+  font-family: Poppins;
+  font-size: 17.918px;
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
