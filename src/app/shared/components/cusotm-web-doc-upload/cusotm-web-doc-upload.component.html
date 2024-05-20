@@ -62,19 +62,13 @@
                         </mat-form-field>
                       </ng-template>
                     </div>
-                    <!-- <label for="fileDropRef" class="doc_img" fxFlex="10">
-                      <img
-                        src="assets/images/upload-logo.svg"
-                        alt="Upload Sign"
-                      />
-                    </label> -->
                     <button
                       type="button"
                       mat-raised-button
                       class="button submit_btn"
-                      (click)="fileBrowseHandler($event, i)"
+                      (click)="fileBrowseHandler(i)"
                     >
-                      Uplaod
+                      Upload
                     </button>
                   </div>
                   <div
@@ -106,17 +100,11 @@
                             <div>{{ file.size }}</div>
                           </ng-template>
                         </div>
-                        <!-- <button
-                          mat-icon-button
-                          class="btn"
-                          (click)="deleteFile(fileIndx, i, file)"
-                        > -->
                         <mat-icon
                           svgIcon="cancel-icon"
                           (click)="deleteFile(fileIndx, i, file)"
                           class="cancel-icon"
                         ></mat-icon>
-                        <!-- </button> -->
                       </div>
                     </div>
                   </div>
