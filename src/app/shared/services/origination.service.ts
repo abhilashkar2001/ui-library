@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import {
@@ -30,8 +30,14 @@ export class OriginationService {
     screenId: number | string,
     stageId: number | string
   ) {
+    const options = {
+      params: screenId
+        ? new HttpParams().set("screenCode", screenId).set("stageId", stageId)
+        : {},
+    };
     return this.http.get<ChecklistModel>(
-      `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenId}&stageId=${stageId}`
+      `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
+      options
     );
   }
 

@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import {
   ChecklistModel,
   ChecklistPayloadModel,
@@ -13,6 +13,7 @@ import { DocumentUploadService } from "app/shared/services/document-upload.servi
 import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-checklist-document",
@@ -27,6 +28,9 @@ export class ChecklistDocumentComponent implements OnInit {
   checklistDocuments;
   checklistRouteObj: ChecklistRouteObjModel;
   customerInfo: any;
+  env: string = environment.microServiceURL;
+  pdfType: string =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
 
   constructor(
     private originationService: OriginationService,
@@ -34,7 +38,8 @@ export class ChecklistDocumentComponent implements OnInit {
     private fb: FormBuilder,
     private snack: MatSnackBar,
     private documentUploadService: DocumentUploadService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {

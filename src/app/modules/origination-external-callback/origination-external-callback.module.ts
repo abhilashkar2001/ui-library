@@ -17,6 +17,7 @@ import { DocumentUploadComponent } from "./document-upload/document-upload.compo
 import { RemarkComponent } from "./offer-letter/remark/remark.component";
 import { ChecklistDocumentComponent } from "./checklist-document/checklist-document.component";
 import { DobVerificationComponent } from "./dob-verification/dob-verification.component";
+import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DobVerificationComponent } from "./dob-verification/dob-verification.co
     FormsModule,
     FlexLayoutModule,
     SharedMaterialModule,
+    SharedComponentsModule,
     NgOtpInputModule,
     OriginationExternalCallbackRoutingModule,
   ],
