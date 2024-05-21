@@ -142,7 +142,10 @@
       </div>
     </div>
   </div>
-  <div class="bank-account-summary">
+  <div
+    class="bank-account-summary"
+    *ngIf="loanSummaryDetails?.bankAccount?.yourAccount"
+  >
     <div class="text-header">Bank Account</div>
     <div class="disbursement-details w-full">
       <div class="col-1">
