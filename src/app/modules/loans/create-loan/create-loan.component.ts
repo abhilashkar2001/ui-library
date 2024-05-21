@@ -63,7 +63,7 @@ export class CreateLoanComponent implements OnInit {
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.currencySymboll = this.otherUserInfo?.currencySymbol;
+    this.currencySymboll = this.otherUserInfo?.currency;
     const basisId = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();
@@ -395,7 +395,7 @@ export class CreateLoanComponent implements OnInit {
       emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
       interestRate: parseInt(this.personalLoanDetailsForm.value.interestRate),
       interestPayable: parseInt(
-        this.personalLoanDetailsForm.value.principlAmount
+        this.personalLoanDetailsForm.value.interestPayable
       ),
       principalAmount: parseInt(
         this.personalLoanDetailsForm.value.principlAmount

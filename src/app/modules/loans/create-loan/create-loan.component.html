@@ -15,20 +15,25 @@
           class="full-width currency_field fieldinput"
         >
           <mat-label class="custom-mat-label">Loan Amount</mat-label>
-          <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
-            currencySymboll
-          }}</span>
-          <input
-            matInput
-            [readonly]="isReadOnly"
-            name="loanAmount"
-            formControlName="loanAmount"
-            maxlength="22"
-            appNoLeadingSpace
-            decimalinput
-            [numLength]="18"
-            [allowedDecimalIndex]="3"
-          />
+          <div fxLayout="row">
+            <span
+              *ngIf="personalLoanDetailsForm.value.loanAmount"
+              class="currencySymbol"
+              >{{ currencySymboll }}</span
+            >
+            <input
+              matInput
+              [readonly]="isReadOnly"
+              name="loanAmount"
+              formControlName="loanAmount"
+              maxlength="22"
+              appNoLeadingSpace
+              decimalinput
+              [numLength]="18"
+              [allowedDecimalIndex]="3"
+            />
+          </div>
+
           <mat-error
             *ngIf="
               personalLoanDetailsForm.get('loanAmount')?.hasError('required')
@@ -156,10 +161,14 @@
           class="full-width currency_field fieldinput"
         >
           <mat-label class="custom-mat-label">EMI Amount</mat-label>
-          <span matPrefix *ngIf="personalLoanDetailsForm.value.emiAmount">{{
-            currencySymboll
-          }}</span>
-          <input matInput readonly formControlName="emiAmount" />
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value.emiAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="emiAmount" />
+          </div>
         </mat-form-field>
       </div>
 
@@ -183,10 +192,14 @@
           class="full-width currency_field fieldinput"
         >
           <mat-label class="custom-mat-label">Interest Payable</mat-label>
-          <span matPrefix *ngIf="personalLoanDetailsForm.value.loanAmount">{{
-            currencySymboll
-          }}</span>
-          <input matInput readonly formControlName="interestPayable" />
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value.loanAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="interestPayable" />
+          </div>
           <mat-error
             *ngIf="
               personalLoanDetailsForm
@@ -205,12 +218,14 @@
           class="full-width currency_field fieldinput"
         >
           <mat-label class="custom-mat-label">Principle Amount</mat-label>
-          <span
-            matPrefix
-            *ngIf="personalLoanDetailsForm.value.principlAmount"
-            >{{ currencySymboll }}</span
-          >
-          <input matInput readonly formControlName="principlAmount" />
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value.principlAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="principlAmount" />
+          </div>
           <mat-error
             *ngIf="
               personalLoanDetailsForm
@@ -252,12 +267,14 @@
           class="full-width currency_field fieldinput"
         >
           <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
-          <span
-            matPrefix
-            *ngIf="personalLoanDetailsForm.value.totalPayableAmount"
-            >{{ currencySymboll }}</span
-          >
-          <input matInput readonly formControlName="totalPayableAmount" />
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value.totalPayableAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="totalPayableAmount" />
+          </div>
           <mat-error
             *ngIf="
               personalLoanDetailsForm

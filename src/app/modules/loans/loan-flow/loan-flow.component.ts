@@ -246,6 +246,7 @@ export class LoanFlowComponent implements OnInit {
 
   getAllLoanStep() {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
+    this.screenTitle = sessionData.basisName;
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {

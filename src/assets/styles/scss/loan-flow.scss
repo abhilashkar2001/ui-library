@@ -1,62 +1,62 @@
 .loan-container,
 .cards-container {
+  display: flex;
+  flex-direction: row;
+
+  .column-1 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+  }
 
-    .column-1 {
-        display: flex;
-        flex-direction: column;
-    }
+  .column-2 {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .column-2 {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .title-text {
-        color: #000;
-        font-family: Poppins;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        margin-bottom: 10px;
-    }
+  .title-text {
+    color: #000;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 10px;
+  }
 }
 
 .standard-font {
-    font-weight: 500;
-    font-family: Poppins;
-    margin-bottom: 27px;
+  font-weight: 500;
+  font-family: Poppins;
+  margin-bottom: 27px;
 }
 
 .standard-font-blue {
-    @extend .standard-font;
-    color: #004c97;
-    font-size: 18px;
-    margin-top: 10px;
+  @extend .standard-font;
+  color: #004c97;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .standard-font-black {
-    @extend .standard-font;
-    color: #000000;
-    font-size: 16px;
-    font-weight: 400;
+  @extend .standard-font;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .standard-font-gray {
-    @extend .standard-font;
-    color: #a1a1a1;
-    font-size: 13px;
-    white-space: pre-wrap;
+  @extend .standard-font;
+  color: #a1a1a1;
+  font-size: 13px;
+  white-space: pre-wrap;
 }
 
 .text-header {
-    font-family: Poppins;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 9px;
-    color: #004C97;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 9px;
+  color: #004c97;
 }
