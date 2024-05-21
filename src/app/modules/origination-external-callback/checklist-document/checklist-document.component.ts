@@ -248,9 +248,27 @@ export class ChecklistDocumentComponent implements OnInit {
 
     this.originationService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
+        let payload = {
+          originationId: this.originationId,
+          status: "CONFIRM",
+          userName: "WEBSITE",
+          department: "CUSTOMER",
+          remarks: "",
+          action: "Upload Document By Customer",
+          code: "DOCREVIEW",
+          nextDepartment: "SALES DEPARTMENTS",
+        };
+        this.saveUpdate(payload);
+
         this.openSuccessPopup();
       }
     });
+  }
+
+  saveUpdate(payload) {
+    this.originationService
+      .updateApprovalStatus(payload)
+      .subscribe((res: any) => console.log(res));
   }
 
   openSuccessPopup() {

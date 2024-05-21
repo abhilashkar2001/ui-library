@@ -64,4 +64,11 @@ export class OriginationService {
       `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`
     );
   }
+
+  updateApprovalStatus(payload: any) {
+    return this.http.post(
+      `${MICROSERVICE_URL}/origination-matser/loanDept-mapping-save`,
+      payload
+    );
+  }
 }
