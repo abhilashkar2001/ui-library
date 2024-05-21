@@ -286,6 +286,13 @@ export class CusotmWebDocUploadComponent implements OnInit {
         .readAadharData(formdata)
         .toPromise();
       if (res?.statusCode == 200) {
+        if (res.data?.address1 && res.data?.pincode) {
+          let backData = {
+            address1: res.data?.address1,
+            pincode: res.data?.pincode,
+          };
+          sessionStorage.setItem("backData", JSON.stringify(backData));
+        }
         if (
           Object.keys(res?.data).filter(
             (value) =>
@@ -437,7 +444,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
             parseInt(sessionStorage.getItem("originationId")),
             file
           );
-        
+
         if (this.ocrCheck)
           this.readDocument(
             file,
