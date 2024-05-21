@@ -175,4 +175,11 @@ export class LoanService {
       `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`
     );
   }
+
+  departmentMapping(payload) {
+    return this.http.post<any>(
+      `${baseUrl}/origination-matser/loanDept-mapping-save`,
+      payload
+    );
+  }
 }

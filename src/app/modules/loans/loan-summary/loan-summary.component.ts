@@ -106,8 +106,9 @@ export class LoanSummaryComponent implements OnInit {
 
   checkDisbursementType() {
     if (
-      this.loanSummaryDetails?.disbursementDetails?.disbursementType != null &&
-      this.loanSummaryDetails?.disbursementDetails?.disbursementType
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue !=
+        null &&
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         ?.toLowerCase()
         ?.includes("account")
     )

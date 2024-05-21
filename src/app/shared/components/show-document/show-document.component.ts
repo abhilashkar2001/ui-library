@@ -38,8 +38,9 @@ export class ShowDocumentComponent implements OnInit {
       data: {
         imageUrl,
         imageName: imageName.fileName,
+        fileInfo: imageName,
       },
-      width: "900px",
+      width: "60%",
       height: "560px",
       panelClass: "imageViewDialog",
     });

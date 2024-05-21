@@ -107,4 +107,10 @@ export class LoanFlowConstants {
       component: LoanSummaryComponent,
     },
   ];
+
+  static readonly DEPT_MAPPING = {
+    department: "SALES DEPARTMENTS",
+    action: [{ status: "Review", next: "VERIFYDET" }],
+    code: "APPLREVIEW",
+  };
 }

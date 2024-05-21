@@ -318,6 +318,7 @@ export class LoanFlowComponent implements OnInit {
         branchId: this.currentUser.branchId,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
+        department: "SALES DEPARTMENTS",
       };
       return payload;
     } else return;
@@ -644,6 +645,16 @@ export class LoanFlowComponent implements OnInit {
 
   onFlowDone() {
     const originationId = sessionStorage.getItem("originationId");
+    const payload = {
+      department: "CUSTOMER",
+      nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
+      remarks: "",
+      action: "Initiated",
+      status: LoanFlowConstants.DEPT_MAPPING.action[0].status,
+      code: LoanFlowConstants.DEPT_MAPPING.code,
+      originationId: originationId,
+    };
+    this.loanApi.departmentMapping(payload).subscribe((_) => {});
     const dialogRef = this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: originationId,

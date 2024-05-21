@@ -32,9 +32,9 @@
       </div>
       <div class="col-4">
         <span class="content-header">Interest Rate</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.interestRate
-        }}</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.loanDetails?.interestRate }} %</span
+        >
       </div>
       <div class="col-2">
         <span class="content-header">Interest Payable</span>
@@ -80,7 +80,7 @@
       <div class="col-1">
         <span class="content-header">Type</span>
         <span class="content">{{
-          loanSummaryDetails?.disbursementDetails?.disbursementType
+          loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         }}</span>
       </div>
       <div class="col-2" *ngIf="checkDisbursementType()">
