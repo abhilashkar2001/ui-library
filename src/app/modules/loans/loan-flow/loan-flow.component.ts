@@ -646,8 +646,8 @@ export class LoanFlowComponent implements OnInit {
   onFlowDone() {
     const originationId = sessionStorage.getItem("originationId");
     const payload = {
-      department: LoanFlowConstants.DEPT_MAPPING.department,
-      nextDepartment: LoanFlowConstants.DEPT_MAPPING.action[0].next,
+      department: "CUSTOMER",
+      nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
       remarks: "",
       action: "Initiated",
       status: LoanFlowConstants.DEPT_MAPPING.action[0].status,

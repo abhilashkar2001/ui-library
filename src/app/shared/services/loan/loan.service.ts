@@ -178,7 +178,7 @@ export class LoanService {
 
   departmentMapping(payload) {
     return this.http.post<any>(
-      `${baseUrl}//origination-matser/loanDept-mapping-save`,
+      `${baseUrl}/origination-matser/loanDept-mapping-save`,
       payload
     );
   }
