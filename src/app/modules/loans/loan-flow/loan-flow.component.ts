@@ -352,9 +352,10 @@ export class LoanFlowComponent implements OnInit {
         this.screenList[num].screenCode
       );
       this.factory();
+      window.scrollTo(0, 0);
       // for scrolling sidebar and get current state.
-      const el = document.querySelector(".mat-step-label-selected");
-      el.scrollIntoView();
+      // const el = document.querySelector(".mat-step-label-selected");
+      // el.scrollIntoView();
     }
   }
 
