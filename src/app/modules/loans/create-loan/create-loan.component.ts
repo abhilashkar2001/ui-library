@@ -391,10 +391,6 @@ export class CreateLoanComponent implements OnInit {
    * @returns payload
    */
   calculatePayload() {
-    console.log(
-      this.personalLoanDetailsForm.value,
-      "this.personalLoanDetailsForm.value"
-    );
     var payload: any = {
       emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
       interestRate: this.personalLoanDetailsForm.value.interestRate,
