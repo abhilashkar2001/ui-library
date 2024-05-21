@@ -9,11 +9,11 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { LoanFlowConstants } from "./loan-flow.constant";
-import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
+import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
 
 @Component({
   selector: "app-loan-flow",
@@ -650,7 +650,7 @@ export class LoanFlowComponent implements OnInit {
       department: "CUSTOMER",
       nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
       remarks: "",
-      deptMappingaction: "Initiated",
+      deptMappingaction: ApprvalStatusEnum.PENDING,
       status: LoanFlowConstants.DEPT_MAPPING.action[0].status,
       code: LoanFlowConstants.DEPT_MAPPING.code,
       originationId: originationId,

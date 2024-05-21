@@ -1,0 +1,9 @@
+export enum ApprvalStatusEnum {
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  PENDING = "PENDING",
+  ONGOING = "ONGOING",
+  QUERY = "QUERY",
+  REVIEW = "REVIEW",
+  CONFIRM = "CONFIRM",
+}
