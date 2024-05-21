@@ -347,6 +347,10 @@ export class CreateLoanComponent implements OnInit {
     if (this.personalLoanDetailsForm.invalid || this.validateMinimumTenure) {
       return;
     }
+    console.log(
+      this.personalLoanDetailsForm,
+      "this.personalLoanDetailsForm.value"
+    );
     const loanAmmount = JSON.stringify({
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
@@ -391,9 +395,13 @@ export class CreateLoanComponent implements OnInit {
    * @returns payload
    */
   calculatePayload() {
+    console.log(
+      this.personalLoanDetailsForm.value,
+      "this.personalLoanDetailsForm.value"
+    );
     var payload: any = {
       emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
-      interestRate: parseInt(this.personalLoanDetailsForm.value.interestRate),
+      interestRate: this.personalLoanDetailsForm.value.interestRate,
       interestPayable: parseInt(
         this.personalLoanDetailsForm.value.interestPayable
       ),
@@ -431,6 +439,7 @@ export class CreateLoanComponent implements OnInit {
       bankCode: this.personalLoanDetailsForm.value.bankCode,
       branchCode: this.personalLoanDetailsForm.value.branchCode,
     };
+    console.log(payload, ".payload");
     return payload;
   }
 

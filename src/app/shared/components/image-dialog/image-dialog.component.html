@@ -5,6 +5,22 @@
     <!-- <mat-icon >close</mat-icon> -->
   </div>
   <div class="imageView">
-    <img class="images expanded_view" [src]="getFileUrl(data.imageUrl)" />
+    <ng-container *ngIf="!isPdfType; else showPdfTemplate">
+      <img
+        class="images expanded_view"
+        [src]="getFileUrl(data.imageUrl)"
+        width="100%"
+      />
+    </ng-container>
+
+    <ng-template #showPdfTemplate>
+      <object
+        [data]="dataLocalUrl"
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        frameborder="0"
+      ></object>
+    </ng-template>
   </div>
 </div>
