@@ -650,7 +650,7 @@ export class LoanFlowComponent implements OnInit {
       department: "CUSTOMER",
       nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
       remarks: "",
-      action: "Initiated",
+      deptMappingaction: "Initiated",
       status: LoanFlowConstants.DEPT_MAPPING.action[0].status,
       code: LoanFlowConstants.DEPT_MAPPING.code,
       originationId: originationId,
