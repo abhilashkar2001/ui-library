@@ -654,23 +654,26 @@ export class LoanFlowComponent implements OnInit {
       code: LoanFlowConstants.DEPT_MAPPING.code,
       originationId: originationId,
     };
-    this.loanApi.departmentMapping(payload).subscribe((_) => {});
-    const dialogRef = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        originationId: originationId,
-        loanSummary: this.loanSummary,
-        customHeader: this.customHeader,
-        type: "loan",
-      },
-      width: "750px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      if (resp === true) {
-        this.tokenStore.cleanUpSessionPartially();
-        this.router.navigate(["loan/landing"]);
+    this.loanApi.departmentMapping(payload).subscribe((resp) => {
+      if (resp?.statusCode === 201) {
+        const dialogRef = this.dialog.open(SuccessPopupComponent, {
+          data: {
+            originationId: originationId,
+            loanSummary: this.loanSummary,
+            customHeader: this.customHeader,
+            type: "loan",
+          },
+          width: "750px",
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+          backdropClass: "bdrop",
+        });
+        dialogRef.afterClosed().subscribe((resp) => {
+          if (resp === true) {
+            this.tokenStore.cleanUpSessionPartially();
+            this.router.navigate(["loan/landing"]);
+          }
+        });
       }
     });
   }
