@@ -123,8 +123,10 @@ export class CommonMobileVerificationComponent implements OnInit {
   otpChange() {}
 
   loadCountries() {
+    console.log(".......");
     this.commonService.getAllCountries().subscribe(
       (resp: any) => {
+        console.log(resp, "./////////");
         if (resp?.data) {
           this.countriesIsdCodes = resp?.data;
           const indiaIsdCode = this.countriesIsdCodes.find(
@@ -138,6 +140,8 @@ export class CommonMobileVerificationComponent implements OnInit {
               this.countriesIsdCodes[0].countryTelIsdCode;
             this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
           }
+
+          this.otpForm.get("isdCode").setValue(this.defaultIsdCodeValue);
         }
       },
       (err) => console.error("Error: ", err)

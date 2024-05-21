@@ -1,11 +1,12 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, CurrencyPipe } from "@angular/common";
 
 import { RelativeTimePipe } from "./relative-time.pipe";
 import { ExcerptPipe } from "./excerpt.pipe";
 import { GetValueByKeyPipe } from "./get-value-by-key.pipe";
 import { SearchOptionsPipe } from "./search-options.pipe";
 import { TextMaskPipe } from "./text-mask.pipe";
+import { CustomCurrencyPipe } from "./custom-currency.pipe";
 
 const pipes = [
   RelativeTimePipe,
@@ -13,11 +14,13 @@ const pipes = [
   GetValueByKeyPipe,
   SearchOptionsPipe,
   TextMaskPipe,
+  CustomCurrencyPipe,
 ];
 
 @NgModule({
   imports: [CommonModule],
   declarations: pipes,
   exports: pipes,
+  providers: [CurrencyPipe],
 })
 export class SharedPipesModule {}
