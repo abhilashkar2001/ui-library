@@ -254,7 +254,6 @@ export class ChecklistDocumentComponent implements OnInit {
           userName: "WEBSITE",
           department: "CUSTOMER",
           remarks: "",
-          action: "Upload Document By Customer",
           code: "DOCREVIEW",
           nextDepartment: "SALES DEPARTMENTS",
         };
