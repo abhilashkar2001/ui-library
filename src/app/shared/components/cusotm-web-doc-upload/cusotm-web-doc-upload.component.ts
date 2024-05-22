@@ -26,7 +26,14 @@ import { WarningComponent } from "../warning/warning.component";
 import { CustomWebDocUploadServiceService } from "./custom-web-doc-upload-service.service";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { debounceTime } from "rxjs/operators";
 
+enum CreateLoanEnum {
+  INTERNAL = "internal",
+  EXTERNAL = "external",
+  ACCOUNT_INCLUDES_KEY = "account",
+}
 @Component({
   selector: "app-cusotm-web-doc-upload",
   templateUrl: "./cusotm-web-doc-upload.component.html",
@@ -44,9 +51,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
   @Input() ocrProcess: boolean;
   @Input() checkListDocList: any;
   @Input() isOtherDocVisible: boolean = true;
+  loanEnum = CreateLoanEnum;
 
   documentControls: FormGroup;
   createDocumentForm: FormGroup;
+  loanDisbursementForm: FormGroup;
   documentIds = [
     {
       docIds: [],
@@ -59,6 +68,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
 
   staticData = {
     DOCUMENTNAME: [],
+    DISBURSEMENTTYPE: [],
   };
   selectedImage: Blob;
   imageUrl: string;
@@ -71,6 +81,22 @@ export class CusotmWebDocUploadComponent implements OnInit {
   ocrCheck: boolean = true;
   nationalIdGeneric: any;
 
+  @Input() isShowDisbursement = false;
+  disbursementType: any;
+  disbursementTypeArray: any[] = [{}];
+  loanCustomerId: string;
+  accountList: any;
+  accountTypeArr = [
+    {
+      name: "Internal Account",
+      value: "internal",
+    },
+    {
+      name: "External Account",
+      value: "external",
+    },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -80,7 +106,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
     private dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private docapi: CustomWebDocUploadServiceService
+    private docapi: CustomWebDocUploadServiceService,
+    private loanApi: LoanService,
+    private openApi: OpenAccountService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
     // this.buildDocumentForm();
@@ -93,6 +121,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isShowDisbursement) this.buildLoanDisbursementForm();
+    this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     var originationId = sessionStorage.getItem("originationId");
   }
@@ -104,17 +134,111 @@ export class CusotmWebDocUploadComponent implements OnInit {
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
     this.getGenericDetails();
-    // if (changes?.documentList?.currentValue) {
-    //   if (!this.documentTypeArray) {
-    //     this.documentTypeArray = [{}];
-    //     this.getGenericDetails();
-    //   }
-    //   this.buildForm(changes?.documentList?.currentValue);
-    // }
-    // else this.buildForm();
+  }
 
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
+  buildLoanDisbursementForm(data?) {
+    this.loanDisbursementForm = this.fb.group({
+      disbursementType: [
+        data ? data?.disbursementType : "",
+        Validators.required,
+      ],
+      accountNumber: [data ? data?.accountNumber : ""],
+      id: data?.id,
+      bankCode: [data ? data?.bankCode : ""],
+      accountType: CreateLoanEnum.INTERNAL,
+      ifscCode: [data ? data?.ifscCode : ""],
+      branchCode: [data ? data?.branchCode : ""],
+      confirmAccountNumber: "",
+      disbursementTypeValue: "",
+    });
+    this.loanDisbursementForm
+      .get("accountNumber")
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        //  if (
+        //    resp &&
+        //    this.personalLoanDetailsForm.value.accountType ===
+        //      this.loanEnum.INTERNAL
+        //  ) {
+        //    this.validateAccountNumber(resp);
+        //  }
+        console.log(resp, "........", this.loanDisbursementForm.value);
+      });
+  }
+
+  /**
+   *
+   * @param event is disbursement change value
+   */
+  onDisbursementSelectionChanged(event) {
+    this.disbursementType = this.staticData["DISBURSEMENTTYPE"]
+      .filter((item) => item?.id == event)[0]
+      .values.toLowerCase();
+    console.log(this.disbursementType, " this.disbursementType ");
+    this.loanDisbursementForm
+      .get("disbursementTypeValue")
+      .setValue(" this.disbursementType");
+    if (
+      this.disbursementType.includes(CreateLoanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.loanDisbursementForm.value.accountType === CreateLoanEnum.INTERNAL
+    ) {
+      this.loanDisbursementForm.controls["accountNumber"].setValidators([
+        Validators.required,
+      ]);
+    } else {
+      this.loanDisbursementForm.controls["accountNumber"].clearValidators();
+    }
+
+    this.loanDisbursementForm.controls[
+      "accountNumber"
+    ].updateValueAndValidity();
+  }
+
+  /**
+   * account number validation.
+   */
+  onChange() {
+    if (
+      this.loanDisbursementForm.value.accountNumber &&
+      this.loanDisbursementForm.value.accountType === this.loanEnum.INTERNAL
+    ) {
+      this.validateAccountNumber(this.loanDisbursementForm.value.accountNumber);
+    } else this.loanDisbursementForm.get("accountNumber").setErrors(null);
+  }
+  /**
+   * api call for account number validation, if account Number not present then invalidAccount error will throw in html.
+   */
+
+  validateAccountNumber(resp) {
+    this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
+      if (!data) {
+        this.loanDisbursementForm
+          .get("accountNumber")
+          .setErrors({ invalidAccount: true });
+      } else {
+        this.loanDisbursementForm.get("accountNumber").setErrors(null);
+      }
+    });
+  }
+
+  getCustomerById() {
+    this.openApi
+      .getCustomerById(parseInt(this.loanCustomerId))
+      .subscribe((resp) => {
+        if (resp?.statusCode == 200) {
+          if (resp?.data[0]?.customerNo) {
+            this.getAccountList(resp?.data[0]?.customerNo);
+          }
+        }
+      });
+  }
+
+  getAccountList(customerNo) {
+    this.loanApi.getAccountList(customerNo).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.accountList = resp.data.accountInfo;
+      }
+    });
   }
 
   getGenericDetails() {
@@ -122,7 +246,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
       .genericValue("Common", Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
+          this.staticData = { ...resp.data };
           this.documentTypeArray = resp.data["DOCUMENTNAME"];
+          this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
           this.nationalIdGeneric = this.documentTypeArray.filter((item) =>
             item.values.toLowerCase().includes("aadhar")
           )[0].id;
@@ -518,7 +644,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.createDocumentForm.value, ".....");
+    console.log(this.loanDisbursementForm, ".....");
     let isDocUploaded: boolean = false;
     if (this.createDocumentForm) {
       isDocUploaded = this.createDocumentForm.value.otherDocument
@@ -533,9 +659,15 @@ export class CusotmWebDocUploadComponent implements OnInit {
     console.log(isDocUploaded);
     this.isLoading = true;
     this.loadingBtnText = "Saving...";
-    this.onCustomSubmit.emit({
-      documentDetails: this.createDocumentForm.value,
-    });
+    if (this.loanDisbursementForm) {
+      this.onCustomSubmit.emit({
+        documentDetails: this.createDocumentForm.value,
+        loanDisbursement: this.loanDisbursementForm.value ?? {},
+      });
+    } else
+      this.onCustomSubmit.emit({
+        documentDetails: this.createDocumentForm.value,
+      });
   }
 
   onBack() {

@@ -66,6 +66,7 @@ export class NationalIdUploadComponent implements OnInit {
       });
   }
   onSubmit(event) {
+    console.log(event, "......");
     var docIds = [];
     let customerDetails: any;
     event.documentDetails.otherDocument.forEach((element) => {
