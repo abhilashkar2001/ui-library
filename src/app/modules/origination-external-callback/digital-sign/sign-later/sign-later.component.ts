@@ -3,6 +3,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { SignNowPopupComponent } from "../sign-now-popup/sign-now-popup.component";
 import { BranchService } from "../sign-now-popup/branch.service";
 import { SuccessModalComponent } from "../success-modal/success-modal.component";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { OriginationService } from "app/shared/services/origination.service";
 
 @Component({
   selector: "app-sign-later",
@@ -13,7 +15,9 @@ export class SignLaterComponent implements OnInit {
   signatureId: any;
   constructor(
     private dialog: MatDialog,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private sessionStorageService: SessionStorageService,
+    private originationService: OriginationService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +36,17 @@ export class SignLaterComponent implements OnInit {
           .saveDigitalSignDetails(signPayload)
           .subscribe((result) => {
             if (result?.statusCode === 200 || result?.statusCode === 201) {
+              let payload = {
+                originationId: this.sessionStorageService.getOriginationId(),
+                status: "PENDING",
+                userName: "WEBSITE",
+                department: "CUSTOMER",
+                remarks: "Upload signature",
+                action: "Upload Document By Customer",
+                code: "REVSIGN",
+                nextDepartment: "SALES DEPARTMENTS",
+              };
+              this.saveUpdate(payload);
               const sucessDialog = this.dialog.open(SuccessModalComponent, {
                 width: "40%",
                 data: {
@@ -49,5 +64,11 @@ export class SignLaterComponent implements OnInit {
         window.close();
       }
     });
+  }
+
+  saveUpdate(payload) {
+    this.originationService
+      .updateApprovalStatus(payload)
+      .subscribe((res: any) => console.log(res));
   }
 }
