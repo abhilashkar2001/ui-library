@@ -8,7 +8,7 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
-import { LoanFlowConstants } from "./loan-flow.constant";
+import { CreateLoanEnum, LoanFlowConstants } from "./loan-flow.constant";
 import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
@@ -70,6 +70,7 @@ export class LoanFlowComponent implements OnInit {
   otherLoanDoc: any = null;
   kycDoc: any = null;
   docCustomerDetails: any;
+  disbursementDetails: any;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -142,6 +143,8 @@ export class LoanFlowComponent implements OnInit {
   updateAccount = (value: Partial<any>) => {
     const isLoan = value?.isForLoan ?? true;
     // if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
+    if (value?.disbursementDetails)
+      this.disbursementDetails = value.disbursementDetails;
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
       this.docCustomerDetails = value.customerDetails;
@@ -161,8 +164,14 @@ export class LoanFlowComponent implements OnInit {
           screenCode: null,
         };
         this.loanApi.saveChecklist(payload).subscribe((resp) => {
-          console.log(resp, "........");
           if (resp?.statusCode === 201) {
+            this.calculateDisbursementPayload(value.loanDisbursement);
+            this.loanApi
+              .submitLoanDetail(
+                this.calculateDisbursementPayload(value.loanDisbursement)
+              )
+              .subscribe((resp) => {});
+
             this.next();
           }
         });
@@ -177,6 +186,35 @@ export class LoanFlowComponent implements OnInit {
     }
   };
 
+  calculateDisbursementPayload(data) {
+    console.log(data, "data", this.disbursementDetails);
+    var payload: any = {
+      ...this.disbursementDetails,
+      disbursementType: data.disbursementType,
+    };
+    if (
+      data.disbursementTypeValue.includes(
+        CreateLoanEnum.ACCOUNT_INCLUDES_KEY
+      ) &&
+      data?.accountType === CreateLoanEnum.EXTERNAL
+    ) {
+      payload.otherAccNo = data.accountNumber;
+      payload.accountNumber = null;
+      payload.external = true;
+    } else {
+      payload.otherAccNo = "";
+      payload.accountNumber = data.accountNumber;
+      payload.external = false;
+    }
+    payload.disbursementAccInfo = {
+      accountNo: data.accountNumber,
+      bankCode: data.bankCode,
+      branchCode: data.branchCode,
+    };
+    console.log(payload, ".payload");
+    return payload;
+  }
+
   ngOnInit(): void {
     this.currentUser = this.tokenStore.getUser();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
@@ -190,12 +228,21 @@ export class LoanFlowComponent implements OnInit {
     var customerStageId = JSON.parse(
       sessionStorage.getItem("customerStageIds")
     );
+    var id = parseInt(sessionStorage.getItem("loanDisburseId"));
+    if (id) this.getLoanById(id);
     if (originationId) this.getOriginationMaster(parseInt(originationId));
     else if (customerStageId) {
       this.getCustByStageId(customerStageId);
     } else if (customerId) {
       this.getCustomerById(customerId);
     }
+  }
+  getLoanById(id) {
+    this.loanApi.getLoanById(id).subscribe((resp) => {
+      if (resp.statusCode === 200) {
+        this.disbursementDetails = resp.data;
+      }
+    });
   }
 
   getCustomerById(customerId) {

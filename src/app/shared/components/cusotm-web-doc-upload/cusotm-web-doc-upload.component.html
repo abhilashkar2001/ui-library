@@ -116,6 +116,173 @@
       </div>
     </div>
   </form>
+
+  <div class="mt-24" fxLayout="column" *ngIf="isShowDisbursement">
+    <h2 class="highlight_title">Disbursement Details</h2>
+    <form
+      [formGroup]="loanDisbursementForm"
+      *ngIf="loanDisbursementForm"
+      fxLayout="row wrap"
+      fxFlex="100"
+      fxLayoutGap="1%"
+    >
+      <div fxFlex="48" class="enabled-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Disbursement Type</mat-label>
+          <mat-select
+            formControlName="disbursementType"
+            (selectionChange)="onDisbursementSelectionChanged($event.value)"
+          >
+            <mat-option
+              *ngFor="let disburse of disbursementTypeArray"
+              [value]="disburse.id"
+              >{{ disburse.values }}</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm.get('disbursementType')?.hasError('required')
+            "
+          >
+            Disbursement Type is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class="pt-12"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="accountType"
+          (change)="onChange()"
+        >
+          <mat-radio-button
+            [value]="accountType.value"
+            *ngFor="let accountType of accountTypeArr"
+            >{{ accountType.name }}</mat-radio-button
+          >&nbsp;&nbsp;
+        </mat-radio-group>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Bank Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Branch Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">IFSC Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        class="enabled-mat-form-field"
+        fxFlex="48"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Account Number</mat-label>
+          <input
+            *ngIf="
+              loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
+              !accountList?.length
+            "
+            matInput
+            numbersOnly
+            formControlName="accountNumber"
+          />
+          <mat-select
+            *ngIf="
+              loanDisbursementForm?.value.accountType === loanEnum.INTERNAL &&
+              accountList?.length > 0
+            "
+            formControlName="accountNumber"
+          >
+            <mat-option
+              *ngFor="let account of accountList"
+              [value]="account.originationAccNo"
+              >{{ account.originationAccNo }}</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm.get('accountNumber')?.hasError('required')
+            "
+          >
+            Account Number is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm
+                .get('accountNumber')
+                ?.hasError('invalidAccount')
+            "
+          >
+            Account Number is not valid
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
+          <input matInput numbersOnly formControlName="confirmAccountNumber" />
+        </mat-form-field>
+        <mat-error
+          class="custom-error"
+          *ngIf="
+            loanDisbursementForm?.value.confirmAccountNumber !=
+              loanDisbursementForm?.value.accountNumber &&
+            loanDisbursementForm.get('confirmAccountNumber').touched
+          "
+        >
+          Account Number is not matching
+        </mat-error>
+      </div>
+    </form>
+  </div>
+
   <div fxLayoutGap="50px">
     <button-loading
       [loadingText]="loadingBtnText"

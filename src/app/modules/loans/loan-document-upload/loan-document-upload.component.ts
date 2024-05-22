@@ -111,6 +111,7 @@ export class LoanDocumentUploadComponent implements OnInit {
       otherLoanDoc: docIds,
       updateMasterSave: true,
       isCheckListDoc: true,
+      loanDisbursement: event.loanDisbursement,
     });
     this.onCustomSubmit.emit();
   }
