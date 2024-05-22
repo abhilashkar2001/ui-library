@@ -187,11 +187,12 @@ export class LoanFlowComponent implements OnInit {
   };
 
   calculateDisbursementPayload(data) {
-    console.log(data, "data", this.disbursementDetails);
     const store = this.tokenStore.getUser();
     var payload: any = {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
+      bankCode: store.bankCode,
+      branchCode: store.branchCode,
     };
     if (
       data.disbursementTypeValue.includes(
@@ -212,7 +213,6 @@ export class LoanFlowComponent implements OnInit {
       bankCode: store.bankCode,
       branchCode: store.branchCode,
     };
-    console.log(payload, ".payload");
     return payload;
   }
 
