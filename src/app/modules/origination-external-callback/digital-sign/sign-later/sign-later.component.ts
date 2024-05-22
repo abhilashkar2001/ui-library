@@ -42,7 +42,6 @@ export class SignLaterComponent implements OnInit {
                 userName: "WEBSITE",
                 department: "CUSTOMER",
                 remarks: "Upload signature",
-                action: "Upload Document By Customer",
                 code: "REVSIGN",
                 nextDepartment: "SALES DEPARTMENTS",
               };
