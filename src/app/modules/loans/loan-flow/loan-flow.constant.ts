@@ -111,6 +111,12 @@ export class LoanFlowConstants {
   static readonly DEPT_MAPPING = {
     department: "SALES DEPARTMENTS",
     action: [{ status: "Review", next: "VERIFYDET" }],
-    code: "APPLREVIEW",
+    code: "DATAINUPUT",
   };
+}
+
+export enum CreateLoanEnum {
+  INTERNAL = "internal",
+  EXTERNAL = "external",
+  ACCOUNT_INCLUDES_KEY = "account",
 }

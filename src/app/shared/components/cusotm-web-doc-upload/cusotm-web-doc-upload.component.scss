@@ -236,3 +236,7 @@ mat-form-field {
     border-radius: 10px;
   }
 }
+
+:host ::ng-deep .mat-radio-group .mat-radio-button:first-child {
+  margin-right: 5%;
+}

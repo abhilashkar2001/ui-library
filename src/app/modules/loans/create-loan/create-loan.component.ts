@@ -164,10 +164,7 @@ export class CreateLoanComponent implements OnInit {
         data ? data.totalPayableAmount : "",
         Validators.required,
       ],
-      disbursementType: [
-        data ? data?.disbursementType : "",
-        Validators.required,
-      ],
+      disbursementType: [data ? data?.disbursementType : ""],
       accountNumber: [data ? data?.accountNumber : ""],
       id: data?.id,
       bankCode: [data ? data?.bankCode : ""],
@@ -176,7 +173,7 @@ export class CreateLoanComponent implements OnInit {
       branchCode: [data ? data?.branchCode : ""],
       confirmAccountNumber: "",
     });
-    if (data) this.disbursementType = data?.disbursementType.toLowerCase();
+    // if (data) this.disbursementType = data?.disbursementType.toLowerCase();
 
     this.personalLoanDetailsForm
       .get("accountNumber")
@@ -380,7 +377,10 @@ export class CreateLoanComponent implements OnInit {
           "tenureDays",
           this.personalLoanDetailsForm.value.tenureDays
         );
-        this.updateParentModel({ updateMasterSave: false });
+        this.updateParentModel({
+          updateMasterSave: false,
+          disbursementDetails: resp.data,
+        });
         this.onCustomSubmit.emit(this.personalLoanDetailsForm);
       }
     });
@@ -414,18 +414,18 @@ export class CreateLoanComponent implements OnInit {
     if (this.personalLoanDetailsForm.value?.id) {
       payload.id = this.personalLoanDetailsForm.value?.id;
     }
-    if (
-      this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
-      this.personalLoanDetailsForm.value?.accountType === this.loanEnum.EXTERNAL
-    ) {
-      payload.otherAccNo = this.personalLoanDetailsForm.value.accountNumber;
-      payload.accountNumber = null;
-      payload.external = true;
-    } else {
-      payload.otherAccNo = "";
-      payload.accountNumber = this.personalLoanDetailsForm.value.accountNumber;
-      payload.external = false;
-    }
+    // if (
+    //   this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
+    //   this.personalLoanDetailsForm.value?.accountType === this.loanEnum.EXTERNAL
+    // ) {
+    //   payload.otherAccNo = this.personalLoanDetailsForm.value.accountNumber;
+    //   payload.accountNumber = null;
+    //   payload.external = true;
+    // } else {
+    //   payload.otherAccNo = "";
+    //   payload.accountNumber = this.personalLoanDetailsForm.value.accountNumber;
+    //   payload.external = false;
+    // }
     payload.disbursementAccInfo = {
       accountNo: this.personalLoanDetailsForm.value.accountNumber,
       bankCode: this.personalLoanDetailsForm.value.bankCode,
