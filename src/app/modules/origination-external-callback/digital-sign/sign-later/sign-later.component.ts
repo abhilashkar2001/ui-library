@@ -38,7 +38,7 @@ export class SignLaterComponent implements OnInit {
             if (result?.statusCode === 200 || result?.statusCode === 201) {
               let payload = {
                 originationId: this.sessionStorageService.getOriginationId(),
-                status: "PENDING",
+                status: "CONFIRM",
                 userName: "WEBSITE",
                 department: "CUSTOMER",
                 remarks: "Upload signature",
