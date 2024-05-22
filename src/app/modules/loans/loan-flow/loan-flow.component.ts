@@ -188,6 +188,7 @@ export class LoanFlowComponent implements OnInit {
 
   calculateDisbursementPayload(data) {
     console.log(data, "data", this.disbursementDetails);
+    const store = this.tokenStore.getUser();
     var payload: any = {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
@@ -208,8 +209,8 @@ export class LoanFlowComponent implements OnInit {
     }
     payload.disbursementAccInfo = {
       accountNo: data.accountNumber,
-      bankCode: data.bankCode,
-      branchCode: data.branchCode,
+      bankCode: store.bankCode,
+      branchCode: store.branchCode,
     };
     console.log(payload, ".payload");
     return payload;
