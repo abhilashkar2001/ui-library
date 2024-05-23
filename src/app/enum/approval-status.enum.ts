@@ -6,4 +6,5 @@ export enum ApprvalStatusEnum {
   QUERY = "QUERY",
   REVIEW = "REVIEW",
   CONFIRM = "CONFIRM",
+  INITIATED = "INITIATED",
 }
