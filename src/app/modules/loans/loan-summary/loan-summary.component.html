@@ -67,7 +67,7 @@
       <div class="col-1">
         <span class="content-header">Type</span>
         <span class="content">{{
-          loanSummaryDetails?.disbursementDetails?.disbursementType
+          loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         }}</span>
       </div>
       <div class="col-2" *ngIf="checkDisbursementType()">
@@ -129,7 +129,10 @@
       </div>
     </div>
   </div>
-  <div class="bank-account-summary">
+  <div
+    class="bank-account-summary"
+    *ngIf="loanSummaryDetails?.bankAccount?.yourAccount"
+  >
     <div class="text-header">Bank Account</div>
     <div class="disbursement-details w-full">
       <div class="col-1">
@@ -153,14 +156,14 @@
     </div>
   </div>
   <ng-container *ngFor="let item of personalDetails; let i = index">
+    <div class="text-header">Personal Details</div>
     <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
       <mat-expansion-panel-header class="text-header"
-        >Personal Details {{ i + 1 }}</mat-expansion-panel-header
+        >Applicant {{ i + 1 }}</mat-expansion-panel-header
       >
       <mat-panel-description>
         <div fxLayout="column" class="expansion-div">
           <div class="bank-account-summary">
-            <div class="text-header">Personal Details</div>
             <div class="disbursement-details w-full">
               <div class="col-1">
                 <span class="content-header">Prefix</span>
@@ -204,7 +207,7 @@
             *ngFor="let address of item?.contact?.address; let i = index"
           >
             <div class="bank-account-summary">
-              <div class="text-header">Address Details {{ i + 1 }}</div>
+              <div class="text-header">Address Details</div>
               <div class="disbursement-details w-full">
                 <div class="col-1">
                   <span class="content-header">Address</span>
@@ -251,7 +254,7 @@
       <div class="col-1">
         <span class="content-header">Document type</span>
         <span class="content"
-          >{{ loanSummaryDetails?.docs[0]?.documentType }}
+          >{{ loanSummaryDetails?.docs[0]?.documentNameValue }}
         </span>
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
@@ -276,7 +279,7 @@
     >
       <div class="col-1">
         <span class="content-header">Document type</span>
-        <span class="content">{{ item?.docs[0].documentType }} </span>
+        <span class="content">{{ item?.docs[0].documentNameValue }} </span>
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
         <ng-container *ngFor="let doc of item.docs">

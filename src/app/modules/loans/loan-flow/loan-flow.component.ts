@@ -337,16 +337,15 @@ export class LoanFlowComponent implements OnInit {
     return new Promise((resolve, reject) => {
       var customer = [];
       event.forEach((element, i) => {
-        // if (element.primaryCustomer) {
-        sessionStorage.setItem(
-          "customerData",
-          JSON.stringify({
-            name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
-            cifNumber:
-              element.kycStatus === "APPROVED" ? element.customerId : "",
-          })
-        );
-        // }
+        if (element.primaryCustomer) {
+          sessionStorage.setItem(
+            "customerData",
+            JSON.stringify({
+              name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
+              cifNumber: element.customerNo,
+            })
+          );
+        }
         console.log(element);
         var docIds = [];
         if (element?.documentId) {

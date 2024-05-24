@@ -45,6 +45,7 @@ export class LoanSummaryComponent implements OnInit {
   ngOnInit(): void {
     // this.getLoanSummary();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    // this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary();
     this.getOriginationMasterData();
   }
@@ -91,10 +92,11 @@ export class LoanSummaryComponent implements OnInit {
 
   checkDisbursementType() {
     if (
-      this.loanSummaryDetails?.disbursementDetails?.disbursementType != null &&
-      this.loanSummaryDetails?.disbursementDetails?.disbursementType
-        .toLowerCase()
-        .includes("account")
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue !=
+        null &&
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
+        ?.toLowerCase()
+        ?.includes("account")
     )
       return true;
     else return false;

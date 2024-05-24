@@ -381,14 +381,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
-              const nationality = this.countryArray.filter(
-                (item) => item.countryName === item.nationality
-              );
-              this.customer.controls[i]
-                .get("nationality")
-                .patchValue(
-                  nationality?.length > 0 ? nationality.countryName : ""
-                );
               this.customerDetailsForm.markAllAsTouched();
             } else {
               this.resetExceptCif(i);
@@ -562,7 +554,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: resp.dateOfBirth,
       email: resp.contact.email,
       gender: resp.gender,
-      // nationality: resp.nationality,
+      nationality: resp.nationality,
       contact: {
         mobile: resp.contact.mobile,
         mobtCode: parseInt(resp.contact.mobtCode),
