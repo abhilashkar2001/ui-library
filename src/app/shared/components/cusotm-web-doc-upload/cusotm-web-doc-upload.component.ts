@@ -128,11 +128,23 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    console.log(changes?.documentList);
     if (changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
+    if (changes.documentList?.currentValue?.length > 0) {
+      this.documentList = changes.documentList.currentValue;
+      // this.buildForm(this.checkListDocList?.requiredDocument ?? []);
+      console.log(this.createDocumentForm.value, ".......");
+      this.createDocumentForm.value.otherDocument.forEach((item, i) => {
+        console.log(item, ".....");
+        this.otherDocument()
+          .controls[i].get("fileInfo")
+          .setValue(this.calculateDoc(this.documentList[i].docs, i));
+      });
+    }
+
     this.getGenericDetails();
   }
 
@@ -260,7 +272,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
     this.createDocumentForm = this.fb.group({
       otherDocument: this.fb.array([]),
     });
-    console.log(data, "data");
+
+    // else {
     if (data?.length > 0) {
       data.forEach((item, i) => {
         this.hideSelect.push(item?.documentType);
@@ -271,6 +284,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
       });
     }
     if (this.isOtherDocVisible) this.addDocument();
+    // }
   }
 
   otherDocument(): FormArray {
@@ -278,6 +292,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   showDocument(data, i) {
+    console.log(data);
     this.documentControls = this.fb.group({
       documentNumber: [data ? data.documentNumber : ""],
       documentType: [data ? data.document : ""],
@@ -293,6 +308,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   calculateDoc(data, i) {
+    console.log(data);
+
     var docArr = [];
     var docIds = [];
     // data.forEach((item, ind) => {
@@ -301,15 +318,32 @@ export class CusotmWebDocUploadComponent implements OnInit {
       progress: 100,
       name: data.fileName,
     };
-    docArr.push({
-      docId: data.documentId,
-      doc: docItem,
-      url: this.mapEndPoints(data.fileUrl),
+    // docArr.push({
+    //   docId: data.documentId,
+    //   doc: docItem,
+    //   url: this.mapEndPoints(data.fileUrl),
+    // });
+    data.forEach((item) => {
+      docArr.push({
+        docId: item.documentId,
+        doc: docItem,
+        url: this.mapEndPoints(item.fileUrl),
+        name: item.fileName,
+      });
+      docIds.push(item.documentId);
     });
-    docIds.push(data.documentId);
+    // docIds.push(data.documentId);
     // });
     this.otherDocument().controls[i].get("docIds").setValue(docIds);
     return docArr;
+  }
+
+  getFileUrl(file) {
+    if (file.name.endsWith("pdf") || file.name.endsWith("xlsx")) {
+      return "assets/images/file_icon.svg";
+    } else return file.url;
+
+    //  if (url.endsWith("pdf") || url.endsWith("xlsx"))
   }
 
   newDenom(data?): FormGroup {
@@ -350,9 +384,16 @@ export class CusotmWebDocUploadComponent implements OnInit {
 
   addDocument(data?) {
     this.otherDocument().push(this.newDenom(data));
+    // console.log(other, ".....");
+    // if (other) {
+    //   this.otherDocument()
+    //     .controls[i].get("fileInfo")
+    //     .setValue(this.calculateDoc(data, i));
+    // }
   }
 
   mapEndPoints(url) {
+    console.log(url);
     return `${this.baseUrl}${url}`;
   }
   fileBrowseHandler(indx: number) {

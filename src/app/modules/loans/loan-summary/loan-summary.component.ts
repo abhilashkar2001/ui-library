@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -37,7 +38,7 @@ export class LoanSummaryComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService
@@ -57,11 +58,18 @@ export class LoanSummaryComponent implements OnInit {
   }
   getCheckListDoc() {
     var originationId = sessionStorage.getItem("originationId");
-    this.loanService.getSavedChecklist(originationId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.checkListDoc = resp.data;
-      }
-    });
+    this.loanService
+      .getSavedChecklist(
+        originationId,
+        parseInt(sessionStorage.getItem("loanDocScreenCode")),
+        parseInt(sessionStorage.getItem("currentStage"))
+      )
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.checkListDoc = resp.data.filter((item) => item.docInfoModel);
+          this.cdr.detectChanges();
+        }
+      });
   }
 
   getLoanSummary() {

@@ -115,6 +115,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         this.buildCustomerDetailsForm(this.personalDetails);
       } else {
         this.buildCustomerDetailsForm();
+        console.log(this.docCustomerDetails, "this.docCustomerDetails");
         if (this.docCustomerDetails)
           setTimeout(() => {
             this.customerDetailsForm
@@ -591,7 +592,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: resp.dateOfBirth,
       email: resp.contact.email,
       gender: resp.gender,
-      // nationality: resp.nationality,
+      nationality: resp.nationality,
       contact: {
         mobile: resp.contact.mobile,
         mobtCode: parseInt(resp.contact.mobtCode),

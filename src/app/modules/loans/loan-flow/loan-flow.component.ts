@@ -71,6 +71,7 @@ export class LoanFlowComponent implements OnInit {
   kycDoc: any = null;
   docCustomerDetails: any;
   disbursementDetails: any;
+  nationalIdDocumentList: any[] = [];
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -98,16 +99,18 @@ export class LoanFlowComponent implements OnInit {
         view.clear();
         setTimeout(() => {
           this.componentRef = view.createComponent(item.component);
+          console.log(this.componentRef);
           // for mobile number.
           this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
           // for personal details.
           this.componentRef.instance.basisId = this.basisId;
           this.componentRef.instance.personalDetails = this.personalDetails;
-          if (this.docCustomerDetails) {
-            this.componentRef.instance.docCustomerDetails =
-              this.docCustomerDetails;
-          }
-          // for personal doc.
+          this.componentRef.instance.docCustomerDetails =
+            this.docCustomerDetails;
+
+          // national Doc
+          this.componentRef.instance.nationalIdDocumentList =
+            this.nationalIdDocumentList;
           this.componentRef.instance.personalDoc = this.personalDoc;
           this.componentRef.instance.isMasterSave = true;
 
@@ -147,6 +150,7 @@ export class LoanFlowComponent implements OnInit {
       this.disbursementDetails = value.disbursementDetails;
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
+      console.log(value, "........");
       this.docCustomerDetails = value.customerDetails;
     }
     let originationModel = {
@@ -161,10 +165,14 @@ export class LoanFlowComponent implements OnInit {
         const payload = {
           documentIds: value?.otherLoanDoc,
           originationId: this.originationModel?.originationId,
-          screenCode: null,
+          screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
         };
         this.loanApi.saveChecklist(payload).subscribe((resp) => {
           if (resp?.statusCode === 201) {
+            sessionStorage.setItem(
+              "loanDocScreenCode",
+              sessionStorage.getItem("currentScreenCode")
+            );
             this.calculateDisbursementPayload(value.loanDisbursement);
             this.loanApi
               .submitLoanDetail(
@@ -220,23 +228,24 @@ export class LoanFlowComponent implements OnInit {
     this.currentUser = this.tokenStore.getUser();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
-    this.getAllLoanStep();
-    this.getProductDetails();
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    var originationId = sessionStorage.getItem("originationId");
-    var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
-    var customerStageId = JSON.parse(
-      sessionStorage.getItem("customerStageIds")
-    );
-    var id = parseInt(sessionStorage.getItem("loanDisburseId"));
-    if (id) this.getLoanById(id);
-    if (originationId) this.getOriginationMaster(parseInt(originationId));
-    else if (customerStageId) {
-      this.getCustByStageId(customerStageId);
-    } else if (customerId) {
-      this.getCustomerById(customerId);
-    }
+    this.getAllLoanStep().then((resp) => {
+      this.getProductDetails();
+      var originationId = sessionStorage.getItem("originationId");
+      var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
+      var customerStageId = JSON.parse(
+        sessionStorage.getItem("customerStageIds")
+      );
+      var id = parseInt(sessionStorage.getItem("loanDisburseId"));
+      if (id) this.getLoanById(id);
+      if (originationId) this.getOriginationMaster(parseInt(originationId));
+      else if (customerStageId) {
+        this.getCustByStageId(customerStageId);
+      } else if (customerId) {
+        this.getCustomerById(customerId);
+      }
+    });
   }
   getLoanById(id) {
     this.loanApi.getLoanById(id).subscribe((resp) => {
@@ -285,29 +294,47 @@ export class LoanFlowComponent implements OnInit {
         this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
         this.originationModel = resp.data[0]?.originationModel;
-        this.componentRef.instance.personalDetails = this.personalDetails;
+        this.updateNationalId(resp);
+        if (this.componentRef)
+          this.componentRef.instance.personalDetails = this.personalDetails;
         this.cdr.detectChanges();
       }
-      console.log(this.customerInfo);
+    });
+  }
+  updateNationalId(resp) {
+    resp.data[0].customerInfo.forEach((customer) => {
+      if (customer?.primaryCustomer) {
+        if (customer?.documnentsInfo) {
+          this.nationalIdDocumentList = customer?.documnentsInfo?.documents;
+          if (this.componentRef)
+            this.componentRef.instance.nationalIdDocumentList =
+              this.nationalIdDocumentList;
+        }
+      }
     });
   }
 
   getAllLoanStep() {
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    this.screenTitle = sessionData.basisName;
-    this.openAccountService
-      .getProcessCycle(sessionData.processCycleCode)
-      .subscribe((resp) => {
-        this.processDetails = {
-          processCycleCode: resp.data.processCycleCode,
-          processStageId: resp.data.processStageList[0]?.id,
-        };
-        sessionStorage.setItem(
-          "currentStage",
-          resp.data.processStageList[0].id
-        );
-        this.getProcessStages(resp.data.processStageList[0].id);
-      });
+    return new Promise((resolve) => {
+      const sessionData = JSON.parse(
+        sessionStorage.getItem("loanBasisDetails")
+      );
+      this.screenTitle = sessionData.basisName;
+      this.openAccountService
+        .getProcessCycle(sessionData.processCycleCode)
+        .subscribe((resp) => {
+          this.processDetails = {
+            processCycleCode: resp.data.processCycleCode,
+            processStageId: resp.data.processStageList[0]?.id,
+          };
+          sessionStorage.setItem(
+            "currentStage",
+            resp.data.processStageList[0].id
+          );
+          this.getProcessStages(resp.data.processStageList[0].id);
+          resolve("");
+        });
+    });
   }
 
   getProcessStages(id) {

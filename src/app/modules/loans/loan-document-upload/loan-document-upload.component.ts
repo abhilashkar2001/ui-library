@@ -21,7 +21,7 @@ export class LoanDocumentUploadComponent implements OnInit {
   };
   screenName: string = "Loan Document";
   verificationType: string = "Other Document";
-  documentList: any;
+  documentList: any[] = [];
   genericScreenInfo = {
     screenName: "Loan Document",
     staticData: {
@@ -30,6 +30,7 @@ export class LoanDocumentUploadComponent implements OnInit {
   };
   ocrProcess: boolean = false;
   checkListDocList: any[] = [];
+  checkListDoc: any = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,6 +42,7 @@ export class LoanDocumentUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var originationId = sessionStorage.getItem("originationId");
     this.loanApi
       .getCheckListDoc(
         parseInt(sessionStorage.getItem("currentStage")),
@@ -49,15 +51,41 @@ export class LoanDocumentUploadComponent implements OnInit {
       .subscribe((resp) => {
         if (resp?.statusCode == 200) {
           this.checkListDocList = this.groupBy(resp.data, "docRequired");
+          let screenCode = parseInt(
+            sessionStorage.getItem("loanDocScreenCode")
+          );
+          if (screenCode) this.getCheckListDoc(originationId, screenCode);
         } else {
           this.checkListDocList = [];
         }
       });
-    var originationId = sessionStorage.getItem("originationId");
-    this.getGenericDetails();
-    if (originationId) this.getOrigination(originationId);
+    // this.getGenericDetails();
+    // if (originationId) this.getOrigination(originationId);
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
+  }
+
+  getCheckListDoc(originationId, screenCode) {
+    this.loanApi
+      .getSavedChecklist(
+        originationId,
+        screenCode,
+        parseInt(sessionStorage.getItem("currentStage"))
+      )
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.documentList = resp.data
+            .filter((item) => item.docInfoModel)
+            .map((item) => {
+              if (item.hasOwnProperty("docInfoModel")) {
+                item.docs = item.docInfoModel;
+                delete item.docInfoModel;
+              }
+              return item;
+            });
+          console.log(this.documentList, "this.documentList ");
+        }
+      });
   }
 
   groupBy(documents, groupName) {
@@ -78,8 +106,8 @@ export class LoanDocumentUploadComponent implements OnInit {
           if (
             resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel?.length > 0
           ) {
-            this.documentList =
-              resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
+            // this.documentList =
+            //   resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
           }
         }
       });

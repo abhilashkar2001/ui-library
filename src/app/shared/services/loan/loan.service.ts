@@ -170,9 +170,9 @@ export class LoanService {
       payload
     );
   }
-  getSavedChecklist(originationId) {
+  getSavedChecklist(originationId, screenCode, stageId) {
     return this.http.get<any>(
-      `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`
+      `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenCode}&stageId=${stageId}`
     );
   }
 

@@ -82,8 +82,11 @@
                       fxFlex="32"
                     >
                       <div class="upload_img" fxFlex="100">
-                        <div class="img_box">
-                          <img src="assets/images/file_icon.svg" />
+                        <div
+                          class="img_box"
+                          [style.width]="isOtherDocVisible ? '65px' : ''"
+                        >
+                          <img [src]="getFileUrl(file)" />
                         </div>
                         <div class="img_container">
                           <p class="img_name">{{ file?.name }}</p>

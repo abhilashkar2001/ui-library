@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+} from "@angular/core";
 import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
@@ -10,6 +19,7 @@ export class NationalIdUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
 
   custId: any;
   stepperTitle: any;
@@ -50,6 +60,14 @@ export class NationalIdUploadComponent implements OnInit {
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes, "nationalIdDocumentList");
+  }
+
+  // ngOnChanges(changes: SimpleChange): void {
+  //   console.log(changes, "nationalIdDocumentList");
+  // }
 
   getOrigination(originationId) {
     this.loanApi
