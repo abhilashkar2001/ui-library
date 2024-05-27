@@ -250,7 +250,7 @@ export class ChecklistDocumentComponent implements OnInit {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
         let payload = {
           originationId: this.originationId,
-          status: "CONFIRM",
+          status: "CONFIRMED",
           userName: "WEBSITE",
           department: "CUSTOMER",
           remarks: "",
