@@ -68,6 +68,7 @@ export class LoanFlowComponent implements OnInit {
   otherLoanDoc: any = null;
   kycDoc: any = null;
   docCustomerDetails: any;
+  view: any;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -88,13 +89,14 @@ export class LoanFlowComponent implements OnInit {
    * @param screenName current scrrenName.
    */
   showComponent(screenName) {
+    if (this.view) this.view.clear();
     this.dynamicScreen.forEach((item: any) => {
       if (screenName.toLowerCase().includes(item.key)) {
         this.currentComponentInfo = { ...item };
-        const view = this.appAppHost.viewContainerRef;
-        view.clear();
+        this.view = this.appAppHost.viewContainerRef;
+        // this.view.clear();
         setTimeout(() => {
-          this.componentRef = view.createComponent(item.component);
+          this.componentRef = this.view.createComponent(item.component);
           // for mobile number.
           this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
           // for personal details.
@@ -342,7 +344,8 @@ export class LoanFlowComponent implements OnInit {
             "customerData",
             JSON.stringify({
               name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
-              cifNumber: element.customerNo,
+              cifNumber:
+                element.kycStatus === "APPROVED" ? element.customerId : "",
             })
           );
         }
