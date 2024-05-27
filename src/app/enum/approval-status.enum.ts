@@ -4,7 +4,7 @@ export enum ApprvalStatusEnum {
   PENDING = "PENDING",
   ONGOING = "ONGOING",
   QUERY = "QUERY",
-  REVIEW = "REVIEW",
-  CONFIRM = "CONFIRM",
+  REVIEWED = "REVIEWED",
+  CONFIRMED = "CONFIRMED",
   INITIATED = "INITIATED",
 }

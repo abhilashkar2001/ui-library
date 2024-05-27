@@ -14,6 +14,7 @@ import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
+import { OriginationService } from "app/shared/services/origination.service";
 
 @Component({
   selector: "app-loan-flow",
@@ -81,7 +82,8 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef
+    protected cdr: ChangeDetectorRef,
+    private originationService: OriginationService
   ) {
     // this.depositApi.setToken(true);
   }
@@ -731,6 +733,10 @@ export class LoanFlowComponent implements OnInit {
     };
     this.loanApi.departmentMapping(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
+        const payload = {
+          originationId: originationId,
+          department: "SALES DEPARTMENTS",
+        };
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: originationId,
@@ -745,8 +751,14 @@ export class LoanFlowComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.tokenStore.cleanUpSessionPartially();
-            this.router.navigate(["loan/landing"]);
+            this.originationService
+              .sendMailToSalesDept(payload)
+              .subscribe((resp: any) => {
+                if (resp?.statusCode == 200) {
+                  this.tokenStore.cleanUpSessionPartially();
+                  this.router.navigate(["loan/landing"]);
+                }
+              });
           }
         });
       }

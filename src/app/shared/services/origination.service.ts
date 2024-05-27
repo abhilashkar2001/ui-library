@@ -71,4 +71,12 @@ export class OriginationService {
       payload
     );
   }
+
+  // To trigger the mail to sales department after saving the record
+  sendMailToSalesDept(payload: any) {
+    return this.http.post(
+      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/sendMailToDept`,
+      payload
+    );
+  }
 }
