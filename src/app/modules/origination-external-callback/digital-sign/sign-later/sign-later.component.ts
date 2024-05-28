@@ -57,6 +57,9 @@ export class SignLaterComponent implements OnInit {
               sucessDialog.afterClosed().subscribe((res) => {
                 window.close();
               });
+              sucessDialog.afterClosed().subscribe((_) => {
+                window.close();
+              });
             }
           });
       } else {

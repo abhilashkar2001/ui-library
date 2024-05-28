@@ -96,6 +96,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
       value: "external",
     },
   ];
+  defaultDisbursement: any;
 
   constructor(
     private fb: FormBuilder,
@@ -264,6 +265,12 @@ export class CusotmWebDocUploadComponent implements OnInit {
           this.nationalIdGeneric = this.documentTypeArray.filter((item) =>
             item.values.toLowerCase().includes("aadhar")
           )[0].id;
+          this.defaultDisbursement = this.disbursementTypeArray?.find(
+            (res) => res?.values == "Cash"
+          )?.id;
+          this.loanDisbursementForm
+            .get("disbursementType")
+            ?.setValue(this.defaultDisbursement);
         }
       });
   }
