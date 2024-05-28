@@ -730,6 +730,7 @@ export class LoanFlowComponent implements OnInit {
       status: ApprvalStatusEnum.INITIATED,
       code: LoanFlowConstants.DEPT_MAPPING.code,
       originationId: originationId,
+      processStageId: parseInt(sessionStorage.getItem("currentStage")),
     };
     this.loanApi.departmentMapping(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
@@ -743,6 +744,8 @@ export class LoanFlowComponent implements OnInit {
             loanSummary: this.loanSummary,
             customHeader: this.customHeader,
             type: "loan",
+            message:
+              "Your loan application is sent. The bank will contact you soon.",
           },
           width: "750px",
           disableClose: true,
