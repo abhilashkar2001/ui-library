@@ -743,6 +743,8 @@ export class LoanFlowComponent implements OnInit {
             loanSummary: this.loanSummary,
             customHeader: this.customHeader,
             type: "loan",
+            message:
+              "Your loan application is sent. The bank will contact you soon.",
           },
           width: "750px",
           disableClose: true,
