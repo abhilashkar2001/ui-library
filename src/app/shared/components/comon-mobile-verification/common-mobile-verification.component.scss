@@ -143,3 +143,11 @@
     box-shadow: none !important;
   }
 }
+.disableResend {
+  pointer-events: none !important;
+  color: #a1a1a1 !important;
+  cursor: default !important;
+  a {
+    cursor: default !important;
+  }
+}

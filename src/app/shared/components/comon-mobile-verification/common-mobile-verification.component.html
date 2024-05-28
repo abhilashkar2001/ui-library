@@ -90,7 +90,13 @@
     <div class="standard-font-black">
       <span
         ><a
-          ><u (click)="onGetOTP()" class="standard-font-blue"> Resend OTP</u></a
+          ><u
+            (click)="onGetOTP()"
+            class="standard-font-blue"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+          >
+            Resend OTP</u
+          ></a
         ></span
       >
       <span *ngIf="!resendLink">({{ displaySecond }} min)</span>
