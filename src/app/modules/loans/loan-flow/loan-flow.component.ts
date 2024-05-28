@@ -730,6 +730,7 @@ export class LoanFlowComponent implements OnInit {
       status: ApprvalStatusEnum.INITIATED,
       code: LoanFlowConstants.DEPT_MAPPING.code,
       originationId: originationId,
+      processStageId: parseInt(sessionStorage.getItem("currentStage")),
     };
     this.loanApi.departmentMapping(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
