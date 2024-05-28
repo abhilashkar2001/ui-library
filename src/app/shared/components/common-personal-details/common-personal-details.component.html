@@ -268,6 +268,7 @@
                       class="custom-error"
                       *ngIf="
                         customer.get('contact').get('mobile').touched &&
+                        customer.get('contact').get('mobile').value &&
                         customer
                           .get('contact')
                           .get('mobile')

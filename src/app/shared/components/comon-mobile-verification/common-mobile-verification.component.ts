@@ -104,20 +104,21 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onGetOTP() {
+    this.ngOtpInput.otpForm.reset();
     this.api.getOtp(this.otpForm.value.phone).subscribe((response: any) => {
       this.otpSent = true;
       this.showOtpSection = true;
+      this.getOtpBtn = true;
+      this.validNumber = true;
+      this.resendLink = false;
+      this.invalidOtp = false;
+      this.resendOtp += 1;
+      this.stopInterval();
+      this.otpTimer();
       setTimeout(() => {
         this.otpSent = false;
       }, 5000);
     });
-    this.getOtpBtn = true;
-    this.validNumber = true;
-    this.resendLink = false;
-    this.invalidOtp = false;
-    this.resendOtp += 1;
-    this.stopInterval();
-    this.otpTimer();
   }
 
   otpChange() {}
@@ -188,15 +189,15 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   otpTimer() {
     this.stopInterval();
-    let minute = 1;
+    let minute = 0.5;
     let seconds: number = minute * 60;
     let textSec: any = "0";
-    let statSec: number = 60;
+    let statSec: number = 30;
     const prefix = minute < 10 ? "0" : "";
     this.intervalId = setInterval(() => {
       seconds--;
       if (statSec != 0) statSec--;
-      else statSec = 59;
+      else statSec = 30;
 
       if (statSec < 10) {
         textSec = "0" + statSec;

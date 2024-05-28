@@ -402,7 +402,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
       if (resp?.length != this.maxMobileLength) {
-        mobileControl.setErrors({ invalidLength: true });
+        mobileControl.setErrors({
+          ...mobileControl.errors,
+          invalidLength: true,
+        });
       } else {
         this.openApi
           .checkMobileAndProduct(
