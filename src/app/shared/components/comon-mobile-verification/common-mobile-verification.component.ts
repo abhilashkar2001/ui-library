@@ -51,7 +51,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   phone: string;
   otp: any;
   agreed: boolean = false;
-  resendLink: boolean;
+  resendLink: boolean = false;
   displaySecond: string;
   getOtpBtn: boolean = true;
   @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
@@ -139,6 +139,7 @@ export class CommonMobileVerificationComponent implements OnInit {
               this.countriesIsdCodes[0].countryTelIsdCode;
             this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
           }
+          this.otpForm.get("isdCode").setValue(this.defaultIsdCodeValue);
         }
       },
       (err) => console.error("Error: ", err)

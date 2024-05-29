@@ -176,7 +176,7 @@ export class CreateLoanComponent implements OnInit {
       branchCode: [data ? data?.branchCode : ""],
       confirmAccountNumber: "",
     });
-    if (data) this.disbursementType = data?.disbursementType.toLowerCase();
+    if (data) this.disbursementType = data?.disbursementTypeValue.toLowerCase();
 
     this.personalLoanDetailsForm
       .get("accountNumber")

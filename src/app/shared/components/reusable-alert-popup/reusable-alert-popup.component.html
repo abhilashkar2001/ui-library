@@ -15,9 +15,16 @@
     fxLayoutAlign="space-between"
   >
     <button mat-raised-button class="confirm-button" (click)="done()">
-      Yes
+      {{ isNextButton ? "Next" : "Yes" }}
     </button>
 
-    <button mat-raised-button class="back-button" (click)="cancel()">No</button>
+    <button
+      mat-raised-button
+      class="back-button"
+      (click)="cancel()"
+      *ngIf="!isNextButton"
+    >
+      No
+    </button>
   </div>
 </div>

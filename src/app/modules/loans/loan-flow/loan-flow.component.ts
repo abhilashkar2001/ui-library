@@ -13,6 +13,7 @@ import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifie
 import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
+import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
 
 @Component({
   selector: "app-loan-flow",
@@ -90,49 +91,67 @@ export class LoanFlowComponent implements OnInit {
    */
   showComponent(screenName) {
     if (this.view) this.view.clear();
-    this.dynamicScreen.forEach((item: any) => {
-      if (screenName.toLowerCase().includes(item.key)) {
-        this.currentComponentInfo = { ...item };
-        this.view = this.appAppHost.viewContainerRef;
-        // this.view.clear();
-        setTimeout(() => {
-          this.componentRef = this.view.createComponent(item.component);
-          // for mobile number.
-          this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
-          // for personal details.
-          this.componentRef.instance.basisId = this.basisId;
-          this.componentRef.instance.personalDetails = this.personalDetails;
-          if (this.docCustomerDetails) {
-            this.componentRef.instance.docCustomerDetails =
-              this.docCustomerDetails;
-          }
-          // for personal doc.
-          this.componentRef.instance.personalDoc = this.personalDoc;
-          this.componentRef.instance.isMasterSave = true;
-
-          this.componentRef.instance.updateParentModel = this.updateAccount;
-
-          this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
-            if (data?.value?.accountNumber)
-              this.createLoanAccountNumber = data.value.accountNumber;
-
-            if (data?.personalInfo) {
-              this.personalDetails = data.personalInfo;
-              this.personalDetails.forEach((item) => {
-                if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
-              });
+    if (
+      this.dynamicScreen.some((element) =>
+        screenName.toLowerCase().includes(element.key)
+      )
+    ) {
+      this.dynamicScreen.forEach((item: any) => {
+        if (screenName.toLowerCase().includes(item.key)) {
+          this.currentComponentInfo = { ...item };
+          this.view = this.appAppHost.viewContainerRef;
+          setTimeout(() => {
+            this.componentRef = this.view.createComponent(item.component);
+            // for mobile number.
+            this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
+            // for personal details.
+            this.componentRef.instance.basisId = this.basisId;
+            this.componentRef.instance.personalDetails = this.personalDetails;
+            if (this.docCustomerDetails) {
+              this.componentRef.instance.docCustomerDetails =
+                this.docCustomerDetails;
             }
+            // for personal doc.
+            this.componentRef.instance.personalDoc = this.personalDoc;
+            this.componentRef.instance.isMasterSave = true;
 
-            if (screenName.toLowerCase().includes("personal")) {
-              this.customSavePersonal(data);
-            }
+            this.componentRef.instance.updateParentModel = this.updateAccount;
+
+            this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
+              if (data?.value?.accountNumber)
+                this.createLoanAccountNumber = data.value.accountNumber;
+
+              if (data?.personalInfo) {
+                this.personalDetails = data.personalInfo;
+                this.personalDetails.forEach((item) => {
+                  if (item.primaryCustomer)
+                    this.personalDoc = item?.documentInfo;
+                });
+              }
+
+              if (screenName.toLowerCase().includes("personal")) {
+                this.customSavePersonal(data);
+              }
+            });
+            this.componentRef.instance?.onBackEvent.subscribe((_) => {
+              this.goBack();
+            });
           });
-          this.componentRef.instance?.onBackEvent.subscribe((_) => {
-            this.goBack();
-          });
-        });
-      }
-    });
+        }
+      });
+    } else {
+      const dialogRef = this.dialog.open(ReusableAlertPopupComponent, {
+        data: {
+          msg: `${screenName} stage is not avilable, please move to next stage`,
+          isNextButton: true,
+        },
+        width: "40%",
+        panelClass: "popup-dialog-class",
+      });
+      dialogRef.afterClosed().subscribe((_) => {
+        this.next();
+      });
+    }
   }
 
   /**
