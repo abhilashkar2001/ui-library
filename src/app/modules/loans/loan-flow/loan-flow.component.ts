@@ -14,6 +14,7 @@ import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
+import { EmailService } from "app/shared/services/email.service";
 
 @Component({
   selector: "app-loan-flow",
@@ -81,7 +82,9 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef
+    protected cdr: ChangeDetectorRef,
+    private emailService: EmailService,
+
   ) {
     // this.depositApi.setToken(true);
   }
@@ -178,7 +181,7 @@ export class LoanFlowComponent implements OnInit {
               .submitLoanDetail(
                 this.calculateDisbursementPayload(value.loanDisbursement)
               )
-              .subscribe((resp) => {});
+              .subscribe((resp) => { });
 
             this.next();
           }
@@ -289,7 +292,7 @@ export class LoanFlowComponent implements OnInit {
 
   getOriginationMaster(id) {
     this.loanApi.getOriginationMaster(parseInt(id)).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+      if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.customerInfo = resp.data[0]?.customerInfo;
         this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
@@ -748,12 +751,53 @@ export class LoanFlowComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
+            this.sendMailLink();
             this.tokenStore.cleanUpSessionPartially();
             this.router.navigate(["loan/landing"]);
           }
         });
       }
     });
+  }
+
+  sendMailLink() {
+    const email = this.customerInfo[0]?.contact?.email || ""
+    const loanAmount = this.loanAccountInfo?.loanAmount || "";
+    const tenure = `Years ${this.loanAccountInfo?.loanTenureYear} Months ${this.loanAccountInfo?.loanTenureMonth} Days ${this.loanAccountInfo?.loanTenureDay}`;
+    const referenceNumber = this.originationModel?.icustRefNo || "";
+    const applicantName = this.customerInfo[0]?.firstName + ' ' + this.customerInfo[0]?.lastName
+    const formData: FormData = new FormData();
+    formData.append("subject", "Thank you for submitting your loan application through our website.");
+    formData.append(
+      "body",
+      `Dear ${applicantName},\n
+     Thank you for submitting your loan application through our website.
+
+
+      We are pleased to inform you that your application has been successfully received and 
+      forwarded to the bank. Our team is currently reviewing your information and will get in touch
+      with you shortly to discuss the next steps. \n\n
+
+     Applicant Name: ${applicantName} \n
+    Loan Amount: ${loanAmount} \n
+    Tenure: ${tenure} \n
+    Reference No: ${referenceNumber} \n\n
+
+Thank you for choosing us for your financial needs. 
+Best regards,
+
+
+    
+      `
+    );
+    formData.append("to", email);
+    this.emailService
+      .triggerTransactionEmail(formData)
+      .subscribe((res: string) => {
+        if (res) {
+
+        }
+      });
   }
   goBack() {
     const num = this.selectedStep - 1;
