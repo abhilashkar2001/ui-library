@@ -50,9 +50,8 @@ export class CallbackComponent implements OnInit {
         "type",
         JSON.stringify(this.getParameterByName("type"))
       );
-      sessionStorage.setItem(
-        "screenCode",
-        JSON.stringify(this.getParameterByName(QueryParamEnum.SCREEN_ID))
+      this.sessionStorageService.setScreenId(
+        this.getParameterByName(QueryParamEnum.SCREEN_ID)
       );
       if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
         const checklistObj: ChecklistRouteObjModel = {

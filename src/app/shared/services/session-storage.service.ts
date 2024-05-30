@@ -66,7 +66,7 @@ export class SessionStorageService {
    * This method will set screen Id in session storage
    * @param screenId
    */
-  setScreenId(screenId: number) {
+  setScreenId(screenId: number | string) {
     this.session.removeItem(SessionStorageEnum.SCREEN_ID);
     this.setItem(SessionStorageEnum.SCREEN_ID, screenId);
   }

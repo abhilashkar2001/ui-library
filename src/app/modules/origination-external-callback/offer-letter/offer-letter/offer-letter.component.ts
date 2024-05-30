@@ -104,9 +104,7 @@ export class OfferLetterComponent implements OnInit {
         const signPayload = {
           originationId: JSON.parse(sessionStorage.getItem("originationId")),
           signatureId: res?.result?.signatureId,
-          screenCode: JSON.parse(
-            sessionStorage.getItem(SessionStorageEnum.SCREEN_ID)
-          ),
+          screenCode: this.sessionStorageService.getScreenId(),
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
@@ -155,11 +153,8 @@ export class OfferLetterComponent implements OnInit {
     formData.append(
       "body",
       `Dear ${this.customerInfo?.firstName} ${this.customerInfo?.lastName},\n
-      
 We are pleased to inform you that your signature for loan application ${this.customerInfo?.icustRefNo} have been successfully uploaded.\n
-
 Our team will review your signature and update you shortly regarding the next steps.\n
-
 Thank you for your cooperation`
     );
     formData.append("to", this.customerInfo?.contact?.email);
