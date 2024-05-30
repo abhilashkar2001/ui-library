@@ -28,13 +28,13 @@ export class OfferIssueService {
     );
   }
 
-  downloadOfferletter(originationId) {
+  downloadOfferletter(originationId: number) {
     const httpOptions = {
       responseType: "blob" as "json",
     };
 
     return this.http.get(
-      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/download?originationId=${originationId}`,
+      `${MICROSERVICE_URL}/origination-matser/fetchEmail?originationId=${originationId}`,
       httpOptions
     );
   }

@@ -1,12 +1,16 @@
 <div class="main_page white-background">
   <mat-card class="default-card m-24">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <h1 class="bank-title">{{ currentUser?.bankName | titlecase }}</h1>
+    <div fxLayout="row" fxLayoutAlign="flex-end center">
+      <!-- <h1 class="bank-title">{{ currentUser?.bankName | titlecase }}</h1> -->
       <div fxLayout="row" fxLayoutGap="10px">
+        <button mat-raised-button class="reset-btn" (click)="openEsign()">
+          <img src="assets/images/edit-icon.svg" alt="edit" class="mr-8" />
+          E-Sign
+        </button>
         <button mat-raised-button class="reset-btn">
           <img src="assets/images/share.png" alt="" class="mr-8" /> Share
         </button>
-        <button mat-raised-button class="submit-btn">
+        <button mat-raised-button class="submit-btn" (click)="handleDownload()">
           <img
             src="assets/images/download_white.svg"
             alt=""
@@ -42,14 +46,14 @@
               <h3 class="sub-heading">Offer Letter</h3>
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-              <h3 class="text-highlighted w-100">Homeland_offer.pdf</h3>
+              <h3 class="text-highlighted w-100">Vehicle_Loan.pdf</h3>
               <div>
                 <span class="text-normal">Offer Issue: </span
-                ><span class="text-highlighted">08 Sep 2023</span>
+                ><span class="text-highlighted">31 May 2024</span>
               </div>
               <div>
                 <span class="text-normal">Offer Expiry:</span
-                ><span class="text-highlighted"> 19 Sep 2023</span>
+                ><span class="text-highlighted"> 10 June 2024</span>
               </div>
             </div>
             <div class="horizontal-bar"></div>
@@ -61,11 +65,10 @@
                 fxLayoutAlign="space-between center"
                 class="mb-12"
               >
-                <span class="text-label">Bibhuti Mahapatra</span>
-                <button class="status_btn">REQUESTED</button>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="text-label">J Sanjana</span>
+                <span class="text-label"
+                  >{{ customerInfo?.firstName }}
+                  {{ customerInfo?.lastName }}</span
+                >
                 <button class="status_btn">REQUESTED</button>
               </div>
             </div>
@@ -73,7 +76,7 @@
 
             <div>
               <h3 class="title-text">Sign Requested By</h3>
-              <span class="text-label">Ragul (ragul@rumango.com)</span>
+              <span class="text-label">CREDIT ADMIN</span>
             </div>
           </div>
           <div>
