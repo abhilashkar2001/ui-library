@@ -120,6 +120,7 @@ export class OfferLetterComponent implements OnInit {
                 nextDepartment: "SALES DEPARTMENTS",
               };
               this.saveUpdate(payload);
+              this.triggerEmail();
               const sucessDialog = this.dialog.open(SuccessModalComponent, {
                 width: "40%",
                 data: {
@@ -129,7 +130,6 @@ export class OfferLetterComponent implements OnInit {
                 disableClose: true,
               });
               sucessDialog.afterClosed().subscribe((_) => {
-                this.triggerEmail();
                 setTimeout(() => {
                   window.close();
                 }, 5000);
