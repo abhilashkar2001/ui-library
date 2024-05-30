@@ -12,6 +12,7 @@ import { OriginationService } from "app/shared/services/origination.service";
 import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
 import { MatIconRegistry } from "@angular/material/icon";
 import { SessionStorageEnum } from "app/enum/session-storage.enum";
+import { EmailService } from "app/shared/services/email.service";
 
 @Component({
   selector: "app-offer-letter",
@@ -33,7 +34,8 @@ export class OfferLetterComponent implements OnInit {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private originationService: OriginationService,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private emailService: EmailService
   ) {}
 
   ngOnInit(): void {
@@ -129,6 +131,7 @@ export class OfferLetterComponent implements OnInit {
                 disableClose: true,
               });
               sucessDialog.afterClosed().subscribe((_) => {
+                this.triggerEmail();
                 setTimeout(() => {
                   window.close();
                 }, 5000);
@@ -144,5 +147,27 @@ export class OfferLetterComponent implements OnInit {
     this.originationService
       .updateApprovalStatus(payload)
       .subscribe((res: any) => console.log(res));
+  }
+
+  triggerEmail() {
+    const formData: FormData = new FormData();
+    formData.append("subject", "Thank you for submitting your signature.");
+    formData.append(
+      "body",
+      `Dear ${this.customerInfo?.firstName} ${this.customerInfo?.lastName},\n
+      
+We are pleased to inform you that your signature for loan application ${this.customerInfo?.icustRefNo} have been successfully uploaded.\n
+
+Our team will review your signature and update you shortly regarding the next steps.\n
+
+Thank you for your cooperation`
+    );
+    formData.append("to", this.customerInfo?.contact?.email);
+    this.emailService
+      .triggerTransactionEmail(formData)
+      .subscribe((res: string) => {
+        if (res) {
+        }
+      });
   }
 }

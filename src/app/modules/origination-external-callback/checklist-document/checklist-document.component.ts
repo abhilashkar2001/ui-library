@@ -14,6 +14,7 @@ import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 import { environment } from "environments/environment";
+import { EmailService } from "app/shared/services/email.service";
 
 @Component({
   selector: "app-checklist-document",
@@ -40,7 +41,7 @@ export class ChecklistDocumentComponent implements OnInit {
     private snack: MatSnackBar,
     private documentUploadService: DocumentUploadService,
     private dialog: MatDialog,
-    private domSanitizer: DomSanitizer
+    private emailService: EmailService
   ) {}
 
   ngOnInit(): void {
@@ -271,6 +272,32 @@ export class ChecklistDocumentComponent implements OnInit {
       .subscribe((res: any) => console.log(res));
   }
 
+  triggerEmail() {
+    const documentList = this.checklistDocuments
+      .map((doc) => doc.document)
+      .join("\n");
+    const formData: FormData = new FormData();
+    formData.append("subject", "Thank you for submitting your documents.");
+    formData.append(
+      "body",
+      `Dear ${this.customerInfo?.firstName} ${this.customerInfo?.lastName},\n
+We are pleased to inform you that your documents for loan application ${this.customerInfo?.icustRefNo} have been successfully uploaded.\n 
+
+Below is the list of documents you provided:\n
+${documentList}\n
+Our team will review your signature and update you shortly regarding the next steps.\n
+
+Thank you for your cooperation`
+    );
+    formData.append("to", this.customerInfo?.contact?.email);
+    this.emailService
+      .triggerTransactionEmail(formData)
+      .subscribe((res: string) => {
+        if (res) {
+        }
+      });
+  }
+
   openSuccessPopup() {
     const dialogref = this.dialog.open(SuccessModalComponent, {
       width: "50%",
@@ -282,6 +309,7 @@ export class ChecklistDocumentComponent implements OnInit {
       },
     });
     dialogref.afterClosed().subscribe((_) => {
+      this.triggerEmail();
       setTimeout(() => {
         window.close();
       }, 5000);
