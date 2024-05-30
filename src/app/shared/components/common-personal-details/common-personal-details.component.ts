@@ -63,7 +63,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   genderArray: any[] = [{}];
   prefixArray: any[] = [{}];
   residenceTypeArray: any[] = [{}];
-  maritalStatusArray: any[] = [{}];
   todayDate: Date = new Date();
   listCity: any = [];
   primaryCustIndex: number = 0;
@@ -189,7 +188,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
           this.genderArray = resp.data["GENDER"];
           this.prefixArray = resp.data["PREFIX"];
           this.residenceTypeArray = resp.data["RESIDENCETYPE"];
-          this.maritalStatusArray = resp.data["MARITALSTATUS"];
         }
       });
   }
@@ -267,7 +265,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
 
       gender: [data ? data.gender : "", Validators.required],
-      maritalStatus: [data ? data.maritalStatus : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
       source: data?.source ? data.source : "Website",
       kycStatus: data?.kycStatus && data.kycStatus,
