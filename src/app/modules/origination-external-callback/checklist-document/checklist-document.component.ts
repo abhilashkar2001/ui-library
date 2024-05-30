@@ -31,6 +31,7 @@ export class ChecklistDocumentComponent implements OnInit {
   env: string = environment.microServiceURL;
   pdfType: string =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
+  acceptedDocumentId: any[];
 
   constructor(
     private originationService: OriginationService,
@@ -137,10 +138,10 @@ export class ChecklistDocumentComponent implements OnInit {
       )
       .subscribe((res: ChecklistModel) => {
         if (res.statusCode == 200 && res?.data) {
-          const acceptedDocumentId =
+          this.acceptedDocumentId =
             this.checklistRouteObj?.checklistItem?.split(",");
           this.checklistDocuments = res?.data?.filter((checklist) =>
-            acceptedDocumentId.some((item) => item == checklist.id)
+            this.acceptedDocumentId.some((item) => item == checklist.id)
           );
           this.pushDocumentInfo(this.checklistDocuments);
         }
@@ -245,7 +246,6 @@ export class ChecklistDocumentComponent implements OnInit {
         if (file?.documentId) payload?.documentIds?.push(file?.documentId);
       });
     });
-
     this.originationService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
         let payload = {
@@ -256,6 +256,7 @@ export class ChecklistDocumentComponent implements OnInit {
           remarks: "",
           code: "DOCREVIEW",
           nextDepartment: "SALES DEPARTMENTS",
+          checklistItem: this.acceptedDocumentId,
         };
         this.saveUpdate(payload);
 
@@ -281,7 +282,9 @@ export class ChecklistDocumentComponent implements OnInit {
       },
     });
     dialogref.afterClosed().subscribe((_) => {
-      window.close();
+      setTimeout(() => {
+        window.close();
+      }, 5000);
     });
   }
 

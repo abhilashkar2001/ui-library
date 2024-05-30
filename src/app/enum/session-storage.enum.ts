@@ -3,4 +3,5 @@ export enum SessionStorageEnum {
   SCREEN_ID = "screenId",
   CUSTOMER_INFO = "customerInfo",
   CHECKLIST_ROUTE_OBJ = "checklistRouteObj",
+  TYPE = "type",
 }

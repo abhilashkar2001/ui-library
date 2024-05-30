@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { SessionStorageEnum } from "app/enum/session-storage.enum";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { OriginationService } from "app/shared/services/origination.service";
@@ -63,13 +64,17 @@ export class DobVerificationComponent implements OnInit {
   }
 
   verifyOtp() {
+    const type = JSON.parse(sessionStorage.getItem(SessionStorageEnum.TYPE));
     this.loginService
       .verifyOtp({
         mobile: this.sessionStorageService?.getCustomerInfo()?.contact?.mobile,
         otp: this.otp,
       })
       .subscribe(async (res: any) => {
-        this.router.navigate(["origination/checklist-document"]);
+        if (type == "send-link")
+          this.router.navigate(["origination/checklist-document"]);
+        else if (type == "e-sign")
+          this.router.navigate(["origination/offer-letter"]);
       });
   }
 
