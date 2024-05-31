@@ -73,6 +73,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   maxMobileLength: any;
   nationalityArray: any[] = [];
   customerIds: any[] = [];
+  debounceTimeout: any;
 
   constructor(
     private fb: FormBuilder,
@@ -255,6 +256,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
+      customerStagingId: data?.customerStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
@@ -392,6 +394,31 @@ export class CommonPersonalDetailsComponent implements OnInit {
       });
   }
 
+  debounceValue(delay: number, value: number, i): void {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+    this.debounceTimeout = setTimeout(() => {
+      const mobileControl = this.customer.at(i).get("contact").get("mobile");
+      if (i == 0)
+        this.openApi
+          .checkMobileAndProduct(
+            this.mobileVerifyInfo.basisName,
+            value,
+            this.mobileVerifyInfo.productDuplicationKey
+          )
+          .subscribe((result) => {
+            if (!result) {
+              this.allreadyProduct(mobileControl);
+            }
+          });
+    }, delay);
+  }
+
+  checkProductDuplicacy(event, i) {
+    this.debounceValue(500, event.target.value, i);
+  }
+
   checkMobileValidtiy(i) {
     const mobileControl = this.customer.at(i).get("contact").get("mobile");
     const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
@@ -401,23 +428,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (resp?.length != this.maxMobileLength) {
+      if (String(resp)?.length != this.maxMobileLength) {
         mobileControl.setErrors({
           ...mobileControl.errors,
           invalidLength: true,
         });
-      } else {
-        this.openApi
-          .checkMobileAndProduct(
-            this.mobileVerifyInfo.basisName,
-            resp,
-            this.mobileVerifyInfo.productDuplicationKey
-          )
-          .subscribe((result) => {
-            if (!result) {
-              this.allreadyProduct(mobileControl);
-            }
-          });
       }
     });
   }
