@@ -232,6 +232,9 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     this.router.navigate([`/tracking`]);
   }
 
+  /**
+   * redirection to internet banking.
+   */
   redirectToInternet() {
     const url = window.location.href;
     const baseUrl = url.split("#")[0].split("?")[0];
