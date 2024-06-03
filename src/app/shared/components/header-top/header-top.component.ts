@@ -31,6 +31,9 @@ import { TokenStorageService } from "app/shared/token-storage.service";
   styleUrls: ["./header-top.component.scss"],
 })
 export class HeaderTopComponent implements OnInit, OnDestroy {
+  // callbackUrl
+  externalInternetRoutePort = ":4211";
+
   layoutConf: any;
   menuItems: any;
   menuItemSub: Subscription;
@@ -227,5 +230,18 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   trackingStatus() {
     this.router.navigate([`/tracking`]);
+  }
+
+  /**
+   * redirection to internet banking.
+   */
+  redirectToInternet() {
+    const url = window.location.href;
+    const baseUrl = url.split("#")[0].split("?")[0];
+    const newBaseUrl = baseUrl.replace(
+      /:(\d+)/,
+      this.externalInternetRoutePort
+    );
+    window.open(`${newBaseUrl}`, "_blank");
   }
 }
