@@ -164,6 +164,7 @@
               <span *ngIf="expand == 1" fxLayout="column" class="sub-value">
                 <span
                   class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
+                  (click)="redirectToInternet()"
                 >
                   Personal
                   <mat-icon>keyboard_arrow_right</mat-icon>
@@ -173,13 +174,6 @@
                   (click)="redirectToSignIn()"
                 >
                   Corporate
-                  <mat-icon>keyboard_arrow_right</mat-icon>
-                </span>
-                <span
-                  class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
-                  (click)="redirectToInternet()"
-                >
-                  Internet
                   <mat-icon>keyboard_arrow_right</mat-icon>
                 </span>
               </span>
