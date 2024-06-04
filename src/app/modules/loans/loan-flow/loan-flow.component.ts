@@ -133,9 +133,15 @@ export class LoanFlowComponent implements OnInit {
                 this.customSavePersonal(data);
               }
             });
-            this.componentRef.instance?.onBackEvent.subscribe((_) => {
-              this.goBack();
-            });
+            if (this.componentRef.instance?.onMobileExitEvent)
+              this.componentRef.instance?.onMobileExitEvent.subscribe((_) => {
+                this.router.navigate(["/loan/landing"]);
+              });
+
+            if (this.componentRef.instance?.onBackEvent)
+              this.componentRef.instance?.onBackEvent.subscribe((_) => {
+                this.goBack();
+              });
           });
         }
       });

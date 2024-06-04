@@ -114,9 +114,18 @@ export class CreateAccountLandingPageComponent {
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
-            this.componentRef.instance?.onBackEvent.subscribe((_) => {
-              this.goBack();
-            });
+            if (this.componentRef.instance?.onMobileExitEvent)
+              this.componentRef.instance?.onMobileExitEvent.subscribe(
+                (resp) => {
+                  this.router.navigate(["/account/landing"]);
+                  console.log("................");
+                }
+              );
+
+            if (this.componentRef.instance?.onBackEvent)
+              this.componentRef.instance?.onBackEvent.subscribe((_) => {
+                this.goBack();
+              });
           });
         }
       });

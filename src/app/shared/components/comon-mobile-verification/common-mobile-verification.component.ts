@@ -41,7 +41,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onMobileExitEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
@@ -261,7 +261,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onExit() {
-    this.onBackEvent.emit();
+    this.onMobileExitEvent.emit();
   }
 
   onVerifyExistingProduct(event) {
