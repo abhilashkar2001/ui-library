@@ -64,13 +64,6 @@
                       maxlength="30"
                       formControlName="documentNumber"
                     />
-                    <mat-error
-                      *ngIf="
-                        otherDocument().controls[i].get('documentNumber')
-                          .touched
-                      "
-                      >Document Number is Required</mat-error
-                    >
                   </mat-form-field>
                 </div>
               </div>
