@@ -47,6 +47,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   @Input() customerInfo;
+  @Input() mobileVerifyInfo: any = {};
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
@@ -72,6 +73,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   maxMobileLength: any;
   nationalityArray: any[] = [];
   customerIds: any[] = [];
+  debounceTimeout: any;
 
   constructor(
     private fb: FormBuilder,
@@ -254,6 +256,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
+      customerStagingId: data?.customerStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
@@ -285,6 +288,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         ],
         mobtCode: [
           data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
+          [Validators.required],
         ],
         address: this.fb.array([]),
       }),
@@ -379,14 +383,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
-              const nationality = this.countryArray.filter(
-                (item) => item.countryName === item.nationality
-              );
-              this.customer.controls[i]
-                .get("nationality")
-                .patchValue(
-                  nationality?.length > 0 ? nationality.countryName : ""
-                );
               this.customerDetailsForm.markAllAsTouched();
             } else {
               this.resetExceptCif(i);
@@ -398,19 +394,62 @@ export class CommonPersonalDetailsComponent implements OnInit {
       });
   }
 
+  debounceValue(delay: number, value: number, i): void {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+    this.debounceTimeout = setTimeout(() => {
+      const mobileControl = this.customer.at(i).get("contact").get("mobile");
+      if (i == 0)
+        this.openApi
+          .checkMobileAndProduct(
+            this.mobileVerifyInfo.basisName,
+            value,
+            this.mobileVerifyInfo.productDuplicationKey
+          )
+          .subscribe((result) => {
+            if (!result) {
+              this.allreadyProduct(mobileControl);
+            }
+          });
+    }, delay);
+  }
+
+  checkProductDuplicacy(event, i) {
+    this.debounceValue(500, event.target.value, i);
+  }
+
   checkMobileValidtiy(i) {
     const mobileControl = this.customer.at(i).get("contact").get("mobile");
     const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
     if (mobileNo) {
       if (i === 0) {
         mobileControl.patchValue(mobileNo);
-        // mobileControl.disable();
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (resp?.length != this.maxMobileLength) {
-        mobileControl.setErrors({ invalidLength: true });
+      if (String(resp)?.length != this.maxMobileLength) {
+        mobileControl.setErrors({
+          ...mobileControl.errors,
+          invalidLength: true,
+        });
       }
+    });
+  }
+
+  allreadyProduct(mobileControl) {
+    const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
+      data: {
+        errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
+        errorMessageHint: "Please visit bank for more information.",
+      },
+      width: "650px",
+      disableClose: true,
+      panelClass: "popup-dialog-class",
+      backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      mobileControl.setValue("");
     });
   }
 
@@ -533,7 +572,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       dateOfBirth: resp.dateOfBirth,
       email: resp.contact.email,
       gender: resp.gender,
-      // nationality: resp.nationality,
+      nationality: resp.nationality,
       contact: {
         mobile: resp.contact.mobile,
         mobtCode: parseInt(resp.contact.mobtCode),

@@ -21,6 +21,6 @@ export class SelectSingleTransferComponent implements OnInit {
   }
 
   onBack() {
-    this.dialogRef.close();
+    this.dialogRef.close("Cancel");
   }
 }

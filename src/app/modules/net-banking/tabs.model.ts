@@ -34,7 +34,6 @@ import { TransactionDetailsComponent } from "./new-reusable-components/transacti
 import { SupplierInfoComponent } from "./new-reusable-components/supplier-info/supplier-info.component";
 
 import { UploadBulkUploadComponent } from "./new-reusable-components/upload-bulk-upload/upload-bulk-upload.component";
-import { exportBillDispatchData } from "./trade-flow/export-bill-dispatch-summary/exportbillstaticdata";
 
 export class tabsClass {
   public static Bg_Issuance: any[] = [
@@ -335,6 +334,32 @@ export class tabsClass {
       title: "Document",
       type: "Remittamce_Attachments",
       componrnt: BillDocumentsComponent,
+    },
+  ];
+  public static readonly paymentrequestenquiry:any[] = [
+    {
+      id: 1,
+      title: "Beneficiary Details",
+      type: "Document_Acceptance_Info",
+      componrnt: BeneficiaryDetailsComponent
+    },
+    {
+      id: 2,
+      title: "Remittance Details",
+      type: "Remittamce_Details",
+      componrnt: RemittanceDetailsComponent
+    },
+    {
+      id: 3,
+      title: "Order Info",
+      type: "Remittamce_Order_Info",
+      componrnt: OrdersInfoComponent
+    },
+    {
+      id: 4,
+      title: "Document",
+      type: "Remittamce_Attachments",
+      componrnt: BillDocumentsComponent
     },
   ];
 }

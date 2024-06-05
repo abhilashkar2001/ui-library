@@ -26,9 +26,14 @@ export class NETBANKING {
           route: "",
         },
         {
-          label: "Cheque Transfer",
-          image: "/assets/images/adhoc-payment.svg",
+          label: "Cheque",
+          image: "/assets/images/issue-draft.svg",
           route: "user/dashboard/cheque/home/chequebook-request",
+        },
+        {
+          label: "Salary Account",
+          image: "/assets/images/adhoc-payment.svg",
+          route: "user/dashboard/salary-account",
         },
       ],
     },
@@ -45,12 +50,14 @@ export class NETBANKING {
         {
           label: "Single Transfer",
           image: "/assets/images/fund-transfer.svg",
-          route: "user/net-banking/fund-transfer/single",
+          route: "user/net-banking/fund-transfer/fund-transfer-summary",
+          type: "SINGLE",
         },
         {
           label: "Multi Transfer",
           image: "/assets/images/issue-draft.svg",
-          route: "user/net-banking/fund-transfer/multi",
+          route: "user/net-banking/fund-transfer/fund-transfer-summary",
+          type: "MULTI",
         },
       ],
     },
@@ -178,6 +185,39 @@ export class NETBANKING {
       Amount: "$2,24,234",
       InitiatedBy: "hari",
       cifNumber: "876543",
+    },
+  ];
+
+  static readonly PENDING_SUMMARY = [
+    {
+      columnDef: "transactionReferenceNo",
+      header: "Ref Number",
+      cell: (element: any) => element.transactionReferenceNo,
+    },
+    {
+      columnDef: "debitAccount",
+      header: "Source Account",
+      cell: (element: any) => element.corpFundDetails?.[0]?.debitAccount,
+    },
+    {
+      columnDef: "creditAccount",
+      header: "Destination Account",
+      cell: (element: any) => element.corpFundDetails?.[0]?.creditAccount,
+    },
+    {
+      columnDef: "beneficiaryName",
+      header: "Beneficiary Name",
+      cell: (element: any) => element.corpFundDetails?.[0]?.beneficiaryName,
+    },
+    {
+      columnDef: "transferMode",
+      header: "Transfer Mode",
+      cell: (element: any) => element.corpFundDetails?.[0]?.transferMode,
+    },
+    {
+      columnDef: "debitAmount",
+      header: "Amount",
+      cell: (element: any) => element.corpFundDetails?.[0]?.debitAmount,
     },
   ];
 }

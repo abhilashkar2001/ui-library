@@ -8,6 +8,7 @@ import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/a
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
+import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 
 @Component({
   selector: "app-add-bulk-upload",
@@ -171,7 +172,8 @@ export class AddBulkUploadComponent implements OnInit {
                 };
                 this.api.updateRemark(obj).subscribe((response) => {
                   if (response?.statusCode === 200)
-                    this.openSuccessDialog(resp);
+                    // this.openSuccessDialog(resp);
+                    this.callSuccessPopup(this.actionType, response?.data);
                 });
               }
             }
@@ -200,7 +202,7 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["user/dashboard"]);
+    this.router.navigate(["/user/dashboard/bulk-upload"]);
   }
 
   processTransaction(event) {
@@ -237,28 +239,44 @@ export class AddBulkUploadComponent implements OnInit {
           )
           .subscribe((res: any) => {
             if (res?.statusCode === 200) {
-              this.callSuccessPopup(res);
-            }
+              this.callSuccessPopup("success", res?.data);
+            } else this.callSuccessPopup("failed");
           });
       }
     });
   }
 
-  callSuccessPopup(res) {
-    const dialogRef = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        refrenceNo: res?.data?.reffNo,
-        isNetBanking: true,
-        route: "bulk-upload",
-      },
-      width: "750px",
+  callSuccessPopup(res, reffNo?) {
+    console.log(res);
+    let data;
+    data =
+      res == "success"
+        ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
+        : res == "failed"
+        ? { msg: "Uploaded Failed", status: false }
+        : "";
+    data =
+      res == "Authorize"
+        ? {
+            msg: "Approved Successfully",
+            status: true,
+            reffNo: reffNo?.reffNo,
+          }
+        : res == "Reject"
+        ? { msg: "Rejected Successfully", status: "rejected" }
+        : data;
+    let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+      data: data,
+      width: "40%",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-class",
       backdropClass: "bdrop",
     });
-    dialogRef.afterClosed().subscribe((res) => {
-      this.bulkId = res?.data?.id;
-      this.router.navigate(["user/dashboard/bulk-upload", this.bulkId]);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result == "Done") {
+        this.goBack();
+      }
     });
   }
 

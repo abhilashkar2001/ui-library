@@ -67,7 +67,7 @@
       <div class="col-1">
         <span class="content-header">Type</span>
         <span class="content">{{
-          loanSummaryDetails?.disbursementDetails?.disbursementType
+          loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         }}</span>
       </div>
       <div class="col-2" *ngIf="checkDisbursementType()">
@@ -129,7 +129,10 @@
       </div>
     </div>
   </div>
-  <div class="bank-account-summary">
+  <div
+    class="bank-account-summary"
+    *ngIf="loanSummaryDetails?.bankAccount?.yourAccount"
+  >
     <div class="text-header">Bank Account</div>
     <div class="disbursement-details w-full">
       <div class="col-1">
@@ -152,17 +155,105 @@
       </div>
     </div>
   </div>
-  <div class="uploaded-documents-summary">
+  <div class="text-header">Personal Details</div>
+  <ng-container *ngFor="let item of personalDetails; let i = index">
+    <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
+      <mat-expansion-panel-header class="text-header"
+        >Applicant {{ i + 1 }}</mat-expansion-panel-header
+      >
+      <mat-panel-description>
+        <div fxLayout="column" class="expansion-div">
+          <div class="bank-account-summary">
+            <div class="disbursement-details w-full">
+              <div class="col-1">
+                <span class="content-header">Prefix</span>
+                <span class="content">{{ item?.prefixValue }} </span>
+              </div>
+              <div class="col-1">
+                <span class="content-header">First Name</span>
+                <span class="content">{{ item?.firstName }} </span>
+              </div>
+              <div class="col-1">
+                <span class="content-header">Last Name</span>
+                <span class="content">{{ item?.lastName }} </span>
+              </div>
+            </div>
+            <div class="disbursement-details w-full">
+              <div class="col-1">
+                <span class="content-header">Date of Birth</span>
+                <span class="content">{{ item?.dateOfBirth }} </span>
+              </div>
+              <div class="col-1">
+                <span class="content-header">Email</span>
+                <span class="content">{{ item?.contact?.email }} </span>
+              </div>
+            </div>
+            <div class="disbursement-details w-full">
+              <div class="col-1">
+                <span class="content-header">Gender</span>
+                <span class="content">{{ item?.genderValue }} </span>
+              </div>
+              <div class="col-1">
+                <span class="content-header">Nationality</span>
+                <span class="content">{{ item?.nationality }} </span>
+              </div>
+              <div class="col-1">
+                <span class="content-header">Mobile No</span>
+                <span class="content">{{ item?.contact?.mobile }} </span>
+              </div>
+            </div>
+          </div>
+          <ng-container
+            *ngFor="let address of item?.contact?.address; let i = index"
+          >
+            <div class="bank-account-summary">
+              <div class="text-header">Address Details</div>
+              <div class="disbursement-details w-full">
+                <div class="col-1">
+                  <span class="content-header">Address</span>
+                  <span class="content">{{ address?.address1 }} </span>
+                </div>
+                <div class="col-1">
+                  <span class="content-header">Residence Type</span>
+                  <span class="content"
+                    >{{ address?.residenceTypeValue }}
+                  </span>
+                </div>
+                <div class="col-1">
+                  <span class="content-header">Country</span>
+                  <span class="content">{{ address?.countryName }} </span>
+                </div>
+              </div>
+              <div class="disbursement-details w-full">
+                <div class="col-1">
+                  <span class="content-header">Zip Code</span>
+                  <span class="content">{{ address?.pincode }} </span>
+                </div>
+                <div class="col-1">
+                  <span class="content-header">State</span>
+                  <span class="content">{{ address?.stateName }} </span>
+                </div>
+                <div class="col-1">
+                  <span class="content-header">City</span>
+                  <span class="content">{{ address?.cityName }} </span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </ng-container>
+  <div
+    class="uploaded-documents-summary"
+    *ngIf="loanSummaryDetails?.docs?.length > 0"
+  >
     <div class="text-header">Select KYC</div>
-    <div
-      class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.docs?.length > 0"
-      fxLayout="column"
-    >
+    <div class="bank-account-details w-full" fxLayout="column">
       <div class="col-1">
         <span class="content-header">Document type</span>
         <span class="content"
-          >{{ loanSummaryDetails?.docs[0]?.documentType }}
+          >{{ loanSummaryDetails?.docs[0]?.documentNameValue }}
         </span>
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
@@ -187,7 +278,7 @@
     >
       <div class="col-1">
         <span class="content-header">Document type</span>
-        <span class="content">{{ item?.docs[0].documentType }} </span>
+        <span class="content">{{ item?.docs[0].documentNameValue }} </span>
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
         <ng-container *ngFor="let doc of item.docs">

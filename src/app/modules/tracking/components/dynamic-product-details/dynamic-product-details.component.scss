@@ -1,0 +1,39 @@
+.product_details {
+  h3 {
+    font-size: 18px;
+    color: #004c97;
+    font-weight: 600;
+    margin-top: 8px;
+    :first-child {
+      margin-top: 0px !important;
+    }
+  }
+
+  .label_title {
+    font-size: 13px;
+    line-height: 20px;
+    color: #c4c4c4;
+
+    margin-bottom: 0px;
+  }
+  .label_value {
+    font-size: 17px;
+    margin-bottom: 0px;
+    color: #102245;
+    font-weight: bold;
+  }
+  .document_label_value {
+    color: #004c97 !important;
+    text-decoration: underline;
+    cursor: pointer;
+    word-wrap: break-word;
+  }
+}
+
+.persoanl_expansion {
+  ::ng-deep .custom_action_expansion {
+    .mat-expansion-panel-header {
+      height: 56px !important;
+    }
+  }
+}

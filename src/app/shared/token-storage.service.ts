@@ -6,6 +6,7 @@ const USER_KEY = "auth-user";
 const JWT_USER = "jwt-user";
 const IS_REMEMBER = "isRemember";
 const USER_INFO = "userInfo";
+const CORPORATE_ID = "corporateId";
 
 export const VALIDITY_IN_SECS = "validityInSecs";
 
@@ -106,6 +107,14 @@ export class TokenStorageService {
   setRememberMe(rememberMe) {
     this.sessionStore.removeItem(IS_REMEMBER);
     this.sessionStore.setItem(IS_REMEMBER, rememberMe);
+  }
+
+  getCorporateId() {
+    return JSON.parse(this.sessionStore.getItem(CORPORATE_ID));
+  }
+  setCorporateId(corporateId) {
+    this.sessionStore.removeItem(CORPORATE_ID);
+    this.sessionStore.setItem(CORPORATE_ID, corporateId);
   }
 
   getRememberMe() {

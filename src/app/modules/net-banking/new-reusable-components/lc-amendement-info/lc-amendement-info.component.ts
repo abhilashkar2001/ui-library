@@ -24,7 +24,7 @@ export class LcAmendementInfoComponent implements OnInit {
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private activeRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activeRoute.queryParamMap.subscribe((params: any) => {
@@ -44,54 +44,61 @@ export class LcAmendementInfoComponent implements OnInit {
 
   buildForm(data?) {
     console.log(this.componentType, "this.componentType");
+    if (this.componentType === 'LC Amendment') {
+      this.isLcAmend = true;
+    } else {
+      this.isLcAmend = false;
+    }
     this.lcAmendInfoForm = this.fb.group({
       amendentNumber: [data?.amendentNumber ?? ""],
-
       lcNumber: [data?.lcNumber ?? ""],
       // common control start
       valueDate: [data?.valueDate ?? ""],
-      amendRequestDate: [data?.amendRequestDate ?? ""],
+      amendReqDate: [data?.amendReqDate ?? ""],
       changeOfExpiry: [data?.changeOfExpiry ?? ""],
       amountChange: [data?.amountChange ?? ""],
       // common control end
-      // ...(this.componentType == "LC Physical Amendment "
       ...(this.isLcAmend
         ? {
-            // for lc amend
-            expiryDateChangeFrom: [data?.expiryDateChangeFrom ?? ""],
-            expiryDateChange: [data?.expiryDateChange ?? ""],
-            latestDateOfShipment: [data?.latestDateOfShipment ?? ""],
-            lastLastDateShipment: [data?.lastLastDateShipment ?? ""],
-            newPlaceOfExpiry: [data?.newPlaceOfExpiry ?? ""],
-            currentPlaceOfExpiry: [data?.currentPlaceOfExpiry ?? ""],
-          }
-        : {
-            // for lc physical amend start
-            oldExpiryDate: [data?.oldExpiryDate ?? ""],
-            newExpiryDate: [data?.newExpiryDate ?? ""],
-            oldLastDateShipment: [data?.oldLastDateShipment ?? ""],
-            newLastDateShipment: [data?.newLastDateShipment ?? ""],
-            current: [data?.current ?? ""],
-            amount: [data?.amount ?? ""],
-            increaseDecreaseAmount: [data?.increaseDecreaseAmount ?? ""],
-            newCurrent: [data?.newCurrent ?? ""],
-            newAmount: [data?.newAmount ?? ""],
-            comment: [data?.comment ?? ""],
-            accountList: [data?.comment ?? []],
-
-            creditInfo: this.fb.group({
-              credit: this.fb.array([]),
-            }),
+          // for lc amend
+          expDateChangeFrom: [data?.expDateChangeFrom ?? ""],
+          expDateChangeTo: [data?.expDateChangeTo ?? ""],
+          latestDtOfShipment: [data?.latestDtOfShipment ?? ""],
+          lastDtOfShipmentFrom: [data?.lastDtOfShipmentFrom ?? ""],
+          newPlcOfExpiry: [data?.newPlcOfExpiry ?? ""],
+          currPlcOfExpiry: [data?.currPlcOfExpiry ?? ""],
+          creditInfo: this.fb.group({
+            credit: this.fb.array([]),
           }),
+        }
+        : {
+          // for lc physical amend start
+          oldExpiryDate: [data?.oldExpiryDate ?? ""],
+          newExpiryDate: [data?.newExpiryDate ?? ""],
+          oldLastDateShipment: [data?.oldLastDateShipment ?? ""],
+          newLastDateShipment: [data?.newLastDateShipment ?? ""],
+          current: [data?.current ?? ""],
+          amount: [data?.amount ?? ""],
+          increaseDecreaseAmount: [data?.increaseDecreaseAmount ?? ""],
+          newCurrent: [data?.newCurrent ?? ""],
+          newAmount: [data?.newAmount ?? ""],
+          comment: [data?.comment ?? ""],
+          accountList: [data?.comment ?? []],
+        }),
     });
 
     this.updateCredit();
 
     this.lcAmendInfoForm.valueChanges.subscribe((res) => {
+      let payload: any = {};
+      payload = {
+        lcType: "Amendment",
+        amendmentInfo: this.lcAmendInfoForm.value
+      }
       this.updateParentModel(
         {
-          lcAdditionalInfo: {
-            ...this.lcAmendInfoForm.value,
+          lcAmendmentAmendmentInfo: {
+            payload
           },
         },
         this.checkForm()

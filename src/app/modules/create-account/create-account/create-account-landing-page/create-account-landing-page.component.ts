@@ -109,12 +109,23 @@ export class CreateAccountLandingPageComponent {
 
             // for personal doc.
             this.componentRef.instance.personalDoc = this.personalDoc;
+            if (this.personalDetails?.length > 0)
+              this.componentRef.instance.isMasterSave = true;
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
-            this.componentRef.instance?.onBackEvent.subscribe((_) => {
-              this.goBack();
-            });
+            if (this.componentRef.instance?.onMobileExitEvent)
+              this.componentRef.instance?.onMobileExitEvent.subscribe(
+                (resp) => {
+                  this.router.navigate(["/account/landing"]);
+                  console.log("................");
+                }
+              );
+
+            if (this.componentRef.instance?.onBackEvent)
+              this.componentRef.instance?.onBackEvent.subscribe((_) => {
+                this.goBack();
+              });
           });
         }
       });
@@ -467,6 +478,7 @@ export class CreateAccountLandingPageComponent {
     this.currentStep = this.screenList[num].screenName;
     setTimeout(() => {
       this.selectedStep = num;
+      this.factory();
     }, 200);
   }
 

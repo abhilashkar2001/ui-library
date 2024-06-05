@@ -1,12 +1,12 @@
 .trade_heading {
-  font-size: 24px;
-  font-family: "Manrope", sans-serif;
+  font: normal normal 24px / 54px Poppins;
+  color: #000000;
+  opacity: 1;
   font-weight: 500;
 }
 
 .transaction-grid-card {
   padding: 0px !important;
-  margin: 10px 0;
   border-radius: 18px 18px;
   .header-container {
     min-height: 59px;
@@ -41,7 +41,9 @@
     margin: 1% 2% 1% 2% !important;
     .mat-expansion-panel-header {
       background: #e9ecf5 0% 0% no-repeat padding-box !important;
-      height: 39px !important;
+      height: 45px !important;
+      font-family: "Poppins", sans-serif;
+      border-radius: 12px;
     }
     .mat-expansion-panel-body {
       padding: 0px 0px 16px 0px !important;
@@ -52,4 +54,5 @@
 .note_text {
   color: #949494;
   font-size: 14px;
+  padding: 0 8px;
 }

@@ -120,7 +120,7 @@ fieldset {
 }
 
 .MiscellaneousClass {
-  margin-top: -12px;
+  margin-top: -24px;
 }
 .custom-error {
   font-size: 13px;
@@ -141,4 +141,8 @@ fieldset {
 .tenure_input {
   position: relative;
   top: -7px !important;
+}
+:host ::ng-deep .fieldinput .mat-form-field-wrapper {
+  padding-top: 0px !important;
+  margin: 0 !important;
 }

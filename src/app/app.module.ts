@@ -30,7 +30,6 @@ import { CustomDateAdapter } from "./shared/services/date-time/customDateAdapter
 import { DateAdapter } from "@angular/material/core";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
-
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);

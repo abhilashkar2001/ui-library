@@ -52,7 +52,7 @@
       </mat-form-field>
       <div fxLayout="column" fxFlex="24">
         <mat-label>Credit Type</mat-label>
-        <mat-radio-group formControlName="creditType">
+        <mat-radio-group formControlName="creditType" color="primary">
           <mat-radio-button
             *ngFor="let radio of radioArr"
             [value]="radio?.value"

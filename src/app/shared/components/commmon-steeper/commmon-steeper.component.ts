@@ -19,6 +19,7 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
   @Input() screenList;
   @Input() screenTitle;
   @Input() screenIndex = 0;
+  @Input() customClass = "";
   isLinear = true;
   @ViewChild("stepper") myStepper: MatStepper;
   @Output() customSelectionChange = new EventEmitter<any>();

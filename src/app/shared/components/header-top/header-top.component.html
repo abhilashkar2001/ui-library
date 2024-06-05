@@ -152,9 +152,9 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
           <div class="dropdown-content" fxLayout="column">
-            <div fxLayout="column" class="bg-color plr-20">
+            <div fxLayout="column" class="bg-color plr-8">
               <span
-                class="flex-spaceAround-center h-50 cursor-pointer"
+                class="flex-spaceAround-center h-50 plr-12 cursor-pointer"
                 (click)="openDropdown(1)"
                 [class.active-button]="expand == 1"
               >
@@ -163,13 +163,14 @@
               </span>
               <span *ngIf="expand == 1" fxLayout="column" class="sub-value">
                 <span
-                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                  class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
+                  (click)="redirectToInternet()"
                 >
                   Personal
                   <mat-icon>keyboard_arrow_right</mat-icon>
                 </span>
                 <span
-                  class="flex-spaceAround-center plr-20 h-50 cursor-pointer background-white"
+                  class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
                   (click)="redirectToSignIn()"
                 >
                   Corporate
@@ -187,6 +188,12 @@
               class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
             >
               Remit Money
+            </span>
+            <span
+              class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
+              (click)="trackingStatus()"
+            >
+              Tracking Status
             </span>
           </div>
         </div>

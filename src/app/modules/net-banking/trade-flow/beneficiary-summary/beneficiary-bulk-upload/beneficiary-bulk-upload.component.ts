@@ -9,6 +9,7 @@ import { SuccessPopupComponent } from "app/shared/components/success-popup/succe
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { BeneficiaryService } from "../beneficiary.service";
+import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 
 @Component({
   selector: "app-beneficiary-bulk-upload",
@@ -205,7 +206,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   goBack() {
     console.log("/////////");
-    this.router.navigate(["user/dashboard/trade/bulk-upload"]);
+    this.router.navigate(["/user/dashboard/trade/beneficiary"]);
   }
 
   processTransaction(event) {
@@ -237,29 +238,30 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
           .uploadBenificiaryExcel(event.formData)
           .subscribe((res: any) => {
             if (res?.statusCode === 200) {
-              this.callSuccessPopup(res);
-            }
+              this.callSuccessPopup("success", res?.data);
+            } else this.callSuccessPopup("failed");
           });
       }
     });
   }
 
-  callSuccessPopup(res) {
-    const dialogRef = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        refrenceNo: res?.data?.reffNo,
-        isNetBanking: true,
-        route: "trade/bulk-upload",
-      },
-      width: "750px",
+  callSuccessPopup(res, reffNo?) {
+    let data =
+      res == "success"
+        ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
+        : { msg: "Uploaded Failed", status: false };
+    let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+      data: data,
+      width: "40%",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-class",
       backdropClass: "bdrop",
     });
-    dialogRef.afterClosed().subscribe((res) => {
-      this.bulkId = res?.data?.id;
-      this.referenceNo = res?.data?.reffNo;
-      this.router.navigate(["user/dashboard/trade/bulk-upload", this.bulkId]);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result == "Done") {
+        this.goBack();
+      }
     });
   }
 

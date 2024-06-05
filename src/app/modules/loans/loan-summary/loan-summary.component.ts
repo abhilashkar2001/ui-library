@@ -32,6 +32,7 @@ export class LoanSummaryComponent implements OnInit {
   endPoints = environment.microServiceURL;
   currencySymboll = "₹";
   otherUserInfo: any;
+  personalDetails: any;
 
   constructor(
     private dialog: MatDialog,
@@ -46,6 +47,7 @@ export class LoanSummaryComponent implements OnInit {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     // this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary();
+    this.getOriginationMasterData();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes.loanSummary.currentValue;
@@ -57,6 +59,17 @@ export class LoanSummaryComponent implements OnInit {
       .getLoanSummary(originationId)
       .subscribe((response: any) => {
         this.loanSummaryDetails = response.data;
+      });
+  }
+
+  getOriginationMasterData() {
+    var originationId = sessionStorage.getItem("originationId");
+    this.loanService
+      .getOriginationMaster(originationId)
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200 && resp?.data) {
+          this.personalDetails = resp?.data?.[0]?.customerInfo;
+        }
       });
   }
 
@@ -79,9 +92,11 @@ export class LoanSummaryComponent implements OnInit {
 
   checkDisbursementType() {
     if (
-      this.loanSummaryDetails?.disbursementDetails?.disbursementType
-        .toLowerCase()
-        .includes("account")
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue !=
+        null &&
+      this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
+        ?.toLowerCase()
+        ?.includes("account")
     )
       return true;
     else return false;

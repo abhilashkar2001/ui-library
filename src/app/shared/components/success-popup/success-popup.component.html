@@ -4,22 +4,53 @@
   </div> -->
   <div class="alertText">
     <div *ngIf="isStageAvilable; else showOtherText">
-      Application is submitted successfully.
+      {{ message }}
     </div>
     <ng-template #showOtherText
       >{{ currentStageName }} stage is not avilable. Please move to next
       screen.</ng-template
     >
   </div>
-  <div class="alertText" *ngIf="isStageAvilable">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="typeOfPopup == 'scheduleCall'"
+  >
+    <div fxFlex="90" fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-card
+        fxFlex="40"
+        class="appointment-card"
+        fxLayoutAlign="center center"
+      >
+        Date Selected: <span>{{ appontment.selectedDate }}</span></mat-card
+      >
+      <mat-card
+        fxFlex="40"
+        class="appointment-card"
+        fxLayoutAlign="center center"
+        >Time Slot: <span>{{ appontment.selectedTime }}</span></mat-card
+      >
+    </div>
+  </div>
+  <div
+    class="alertText"
+    *ngIf="isStageAvilable && typeOfPopup != 'scheduleCall'"
+  >
     <div>We will review and get back to you.</div>
   </div>
   <div class="alertImage">
     <img
+      *ngIf="originationId; else showerror"
       class="summaryIcon"
-      src="assets/images/error-icon.svg"
+      src="assets/images/success-logo.svg"
       alt="Success Sign"
     />
+    <ng-template #showerror
+      ><img
+        class="summaryIcon"
+        src="assets/images/error-icon.svg"
+        alt="Success Sign"
+    /></ng-template>
   </div>
 
   <div
@@ -28,15 +59,24 @@
     *ngIf="isStageAvilable"
   >
     <div class="refrence_no_div">
-      <div class="refrence_no_innerDiv">
+      <div class="refrence_no_innerDiv" *ngIf="!generatedLink">
         Application No. : <span>{{ originationId }}</span>
+      </div>
+      <div
+        class="refrence_no_innerDiv call_link"
+        *ngIf="generatedLink"
+        fxLayout="column"
+      >
+        <p>Video Link</p>
+        <a target="_blank" [href]="generatedLink">{{ generatedLink }}</a>
       </div>
     </div>
   </div>
+
   <br />
 </div>
 <div fxLayout="column" *ngIf="isStageAvilable">
-  <div class="note_background">
+  <div class="note_background" fxLayoutAlign="center center">
     <span class="higlight_note">Note:</span> Please quote the above reference
     number in all communications with the bank
   </div>

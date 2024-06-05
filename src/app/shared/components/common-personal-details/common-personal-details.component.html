@@ -248,6 +248,7 @@
                                 ? true
                                 : false
                             "
+                            (keyup)="checkProductDuplicacy($event, i)"
                           />
                         </mat-form-field>
                       </div>
@@ -268,12 +269,24 @@
                       class="custom-error"
                       *ngIf="
                         customer.get('contact').get('mobile').touched &&
+                        customer.get('contact').get('mobile').value &&
                         customer
                           .get('contact')
                           .get('mobile')
                           .hasError('invalidLength')
                       "
                       >Mobile length should be {{ maxMobileLength }}</mat-error
+                    >
+                    <mat-error
+                      class="custom-error"
+                      *ngIf="
+                        customer
+                          .get('contact')
+                          .get('mobtCode')
+                          .hasError('required') &&
+                        customer.get('contact').get('mobtCode').touched
+                      "
+                      >ISD Code is required</mat-error
                     >
                   </div>
 

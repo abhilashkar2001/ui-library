@@ -1,0 +1,350 @@
+<div fxLayoutAlign="space-between center" class="upload-bulk">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    class="w-full"
+    fxLayoutGap="10px"
+  >
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <label class="header">{{ "Salary Account" }}</label>
+  </div>
+</div>
+<div class="salary-algn" [formGroup]="salaryAccountForm">
+  <div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+      <div fxFlex="25">
+        <mat-form-field appearance="outline">
+          <mat-label>Corporate Id</mat-label>
+          <input matInput formControlName="corporateId" />
+        </mat-form-field>
+      </div>
+      <div fxFlex="25">
+        <mat-form-field appearance="outline">
+          <mat-label>Employee Number</mat-label>
+          <input matInput formControlName="empNo" />
+        </mat-form-field>
+      </div>
+      <div fxFlex="25">
+        <mat-form-field appearance="outline">
+          <mat-label>Prefix</mat-label>
+          <mat-select formControlName="prefix">
+            <mat-option *ngFor="let item of prefixData" [value]="item.id">{{
+              item.values
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="25">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="firstName"
+            name="firstName"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+      <div fxFlex="25">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="lastName"
+            name="lastName"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Date Of Birth</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="dateOfBirth"
+            name="dateOfBirth"
+            [matDatepicker]="picker"
+            readonly
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" formControlName="email" name="email" />
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" class="parentYearDiv" fxFlex="24">
+        <mat-form-field
+          appearance="outline"
+          class="full-width inputSelect isdSelect"
+          fxFlex="20"
+        >
+          <mat-select formControlName="mobtCode">
+            <ng-container>
+              <mat-option
+                *ngFor="let data of countryData"
+                [value]="data.countryTelIsdCode"
+                >{{ data.countryTelIsdCode }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <span class="fielSetDivider"></span>
+        <mat-form-field
+          appearance="outline"
+          class="full-width inputSelect mob_field"
+          fxFlex="80"
+        >
+          <mat-label>Mobile Number</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="mobile"
+            numbersOnly
+            placeholder="Mobile Number"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let data of genederData" [value]="data.id">{{
+              data.values
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Nationality</mat-label>
+          <mat-select formControlName="nationality">
+            <mat-option
+              *ngFor="let data of countryData"
+              [value]="data.nationality"
+              >{{ data.nationality }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="address-algn">Address Details</div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Address</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="address"
+            name="address"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width disable-field">
+          <mat-label>Residence Type</mat-label>
+          <mat-select formControlName="residenceType">
+            <mat-option *ngFor="let data of residencyData" [value]="data.id">{{
+              data.values
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Country*</mat-label>
+          <mat-select formControlName="country">
+            <mat-option
+              *ngFor="let data of countryData"
+              [value]="data.countryName"
+              >{{ data.countryName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Zip Code*</mat-label>
+          <input matInput type="text" formControlName="pincode" />
+          <mat-icon matSuffix (click)="zipCode()">search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>State*</mat-label>
+          <input matInput type="text" formControlName="state" />
+        </mat-form-field>
+      </div>
+      <div fxFlex="24">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>City*</mat-label>
+          <input matInput type="text" formControlName="city" />
+        </mat-form-field>
+      </div>
+    </div>
+    <ng-container *ngIf="customerInfoForm" [formGroup]="customerInfoForm">
+      <mat-card-content>
+        <div>
+          <div
+            fxLayout="row"
+            fxLayout.sm="column"
+            fxLayout.xs="column"
+            fxLayoutAlign="space-between"
+            fxLayoutGap="1%"
+            *ngFor="let document of documentCtrl.controls; let i = index"
+            [formGroup]="document"
+          >
+            <div
+              fxFlex="34"
+              fxFlex.sm="100"
+              fxFlex.xs="100"
+              fxLayout="row"
+              class="Select_add"
+            >
+              <div fxFlex="86" fxFlex.xs="80" fxLayout="row" style="z-index: 2">
+                <app-searchable-select
+                  class="w-100"
+                  [items]="genericData.DOCUMENTNAME"
+                  inputLabel="Document Name"
+                  bindLabelKey="values"
+                  bindValueKey="id"
+                  [control]="document.controls['documentName']"
+                ></app-searchable-select>
+              </div>
+              <div
+                fxFlex="14"
+                fxFlex.xs="20"
+                class="plusdiv"
+                fxLayoutAlign="center start"
+                style="z-index: 1"
+              >
+                <mat-icon
+                  fxFlex="100"
+                  *ngIf="i == documentCtrl.length - 1; else removeBtn"
+                  class="addbtn"
+                  (click)="addDocuments()"
+                  >add
+                </mat-icon>
+                <ng-template #removeBtn>
+                  <mat-icon
+                    fxFlex="100"
+                    class="addbtn"
+                    (click)="removeDocument(i)"
+                    >remove</mat-icon
+                  >
+                </ng-template>
+              </div>
+            </div>
+            <div
+              fxFlex="48"
+              fxFlex.sm="100"
+              fxFlex.xs="100"
+              class="fileUploaddesign"
+            >
+              <ng-container>
+                <div fxFlex="row" fxFlex="80">
+                  <div class="fileControl">
+                    <span
+                      *ngIf="
+                        document.controls['files'].controls.length != 0;
+                        else showDefault
+                      "
+                    >
+                      <span
+                        *ngFor="
+                          let file of document.controls['files'].controls;
+                          let j = index
+                        "
+                        class="uploaded_file"
+                        ><b
+                          ><u (click)="viewUploadedImage(file.value, i, j)">
+                            {{
+                              j === 0
+                                ? (file.value.fileName | slice : 1 : 20) + "..."
+                                : j == 1
+                                ? ",....."
+                                : ""
+                            }},
+                          </u></b
+                        >
+                      </span>
+                    </span>
+                    <ng-template #showDefault>
+                      <span class="fileUploaded">File Uploaded</span>
+                    </ng-template>
+                  </div>
+                  <div fxLayoutAlign="center center" class="fileddown">
+                    <mat-select
+                      class="custom_option"
+                      *ngIf="document.controls['files'].controls.length != 0"
+                    >
+                      <mat-option
+                        *ngFor="
+                          let file of document.controls['files'].controls;
+                          let j = index
+                        "
+                        (click)="viewUploadedImage(file.value, i, j)"
+                      >
+                        <span> {{ j + 1 }}. {{ file.value.fileName }} </span>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div fxFlex="20" fxFlex.xs="35" class="chooseFile">
+                    Choose
+                    <input
+                      #myfile
+                      type="file"
+                      multiple="multiple"
+                      (change)="uploadDocument($event, i)"
+                      class="hide_file"
+                      id="file"
+                      accept="pdf/image"
+                    />
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div
+              fxFlex="16"
+              fxFlex.sm="100"
+              fxFlex.xs="100"
+              fxLayout="row"
+              fxLayoutAlign="space-between"
+              class="proofOfAddress"
+            >
+              <div class="fieldset-input">Proof of address</div>
+              <div>
+                <mat-slide-toggle
+                  formControlName="isProofOfAddress"
+                ></mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </ng-container>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
+      <button mat-raised-button class="next-algn" (click)="saveRecord()">
+        Save
+      </button>
+      <button mat-raised-button class="back-algn" (click)="goBack()">
+        Back
+      </button>
+    </div>
+  </div>
+</div>

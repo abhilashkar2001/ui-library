@@ -50,6 +50,10 @@ export class CarouselComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.dynamicList = this.carowselData;
+    this.alignItems();
+  }
+
+  alignItems() {
     if (this.dynamicList?.length > 0) {
       var swiperwrapper: any =
         document.getElementsByClassName("swiper-wrapper")[0];
@@ -67,6 +71,7 @@ export class CarouselComponent implements OnInit, OnChanges {
       const prevIcon = document.getElementsByClassName("swiper-button-prev")[0];
       nextIcon.innerHTML = `<img src="assets/images/next_icon.svg" />`;
       prevIcon.innerHTML = `<img src="assets/images/prev_icon.svg" />`;
+      this.alignItems();
     }, 200);
   }
 

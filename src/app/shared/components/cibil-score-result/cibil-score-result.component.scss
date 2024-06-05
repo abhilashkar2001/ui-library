@@ -4,44 +4,19 @@
     border: none;
   }
 
-  .result {
-    border-radius: 30px;
-    border: 4.737px solid #fff;
-    background: #f6faff;
-    box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px
-      rgba(0, 0, 0, 0.09);
-    display: flex;
-    color: #000;
-    font-family: Poppins;
-    font-size: 28.421px;
-    font-style: normal;
-    font-weight: 500;
-    text-align: center;
-    line-height: normal;
-    justify-content: center;
-    width: 160px;
-    margin-left: 37%;
-    margin-bottom: 7px;
-    margin-top: 10px;
-  }
-
-  .cibil-label {
-    color: rgba(16, 34, 69, 0.43);
-    font-family: Poppins;
-    font-size: 20px;
-    font-style: normal;
-    text-align: center;
-    font-weight: 500;
-    line-height: normal;
-  }
-
   .graph-section {
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: auto;
   }
-
+  .cibil_desc_title {
+    color: rgba(16, 34, 69, 0.43);
+    font-family: Poppins;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+  }
   .cibil-text-card {
     background: #f6faff;
     display: flex;
@@ -65,47 +40,15 @@
     .like-icon {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       width: 10%;
       padding: 7px;
 
       img {
-        width: 56px;
-        height: 56px;
+        width: 35px;
+        height: 35px;
         object-fit: contain;
       }
     }
   }
-}
-.parentCibil {
-  font-size: 25px !important;
-}
-.cibilInfo {
-  font-size: 16px !important;
-}
-.circle {
-  width: 20px; /* Set the width and height to create a circle */
-  height: 20px;
-  // background-color: #3498db; /* Set the background color */
-  border-radius: 50%;
-}
-.cibil_score {
-  font-size: 20px;
-  font-weight: 500;
-  color: #000;
-}
-.jk {
-  display: none;
-  background: #e6efff;
-  padding: -1%;
-  width: 350px;
-  background: #e6efff;
-  padding: -1%;
-  padding: 2%;
-  float: right;
-}
-.info-button:hover + .jk {
-  z-index: 110 !important;
-  display: flex !important;
-  position: absolute;
-  margin-top: 53px;
 }

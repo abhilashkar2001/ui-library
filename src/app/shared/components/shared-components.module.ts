@@ -84,6 +84,8 @@ import { IcCustomInputComponent } from "./ic-custom-input/ic-custom-input.compon
 import { IcRowInputComponent } from "./ic-row-input/ic-row-input.component";
 import { ReusableTableComponent } from "./reusable-table/reusable-table.component";
 import { SelectSingleTransferComponent } from "./select-single-transfer/select-single-transfer.component";
+import { CustomSuccessPopupComponent } from "./custom-success-popup/custom-success-popup.component";
+import { CibilScoreChartComponent } from "./cibil-score-chart/cibil-score-chart.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -142,6 +144,8 @@ const components = [
   IcCustomInputComponent,
   IcRowInputComponent,
   SelectSingleTransferComponent,
+  CustomSuccessPopupComponent,
+  CibilScoreChartComponent,
 ];
 
 @NgModule({

@@ -1,0 +1,70 @@
+::ng-deep .custom_action_expansion {
+  .mat-expansion-panel-header {
+    box-shadow: 0px 4px 20px 0px #0000000f !important;
+    height: 70px !important;
+  }
+  .mat-expansion-panel-header-description {
+    height: 70px !important;
+  }
+  .header_description {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 600;
+    span {
+      color: #004c97;
+    }
+  }
+}
+
+.editButton {
+  box-shadow: 15.12px 15.12px 60.49px 0px #0000001a;
+  height: 40px;
+  width: 130px !important;
+  border-radius: 50px;
+}
+
+.productName_container {
+  height: 90px;
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+  border-radius: 20px;
+  box-sizing: content-box;
+  padding: 20px;
+  color: #ffffff;
+}
+.status_container {
+  .level_title {
+    color: #004c97;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 1em;
+    span {
+      margin-right: 10px;
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  mat-progress-bar {
+    border-radius: 8px;
+    height: 11px;
+  }
+  ::ng-deep .mat-progress-bar-buffer {
+    background-color: #c4c4c4 !important;
+    border-radius: 8px;
+  }
+  ::ng-deep .egret-blue .mat-progress-bar-fill::after {
+    background: linear-gradient(90deg, #051a2d, #004c97);
+    border-radius: 28px !important;
+  }
+}
+.custom_expansion_container {
+  background: #f8faff;
+  border-radius: 18px;
+}
+.detail_container {
+  ::ng-deep .mat-expansion-panel-body {
+    background-color: #f8faff;
+    margin: 10px;
+    border-radius: 18px;
+  }
+}

@@ -1,9 +1,9 @@
 <mat-card>
-  <div fxLayout="column">
+  <div fxLayout="column" [formGroup]="lcOrder" class="lcDetailsClass">
     <div fxFlex="100" fxFlex.gt-xs="24" fxLayoutAlign="start center">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" fxFlex="24.5">
         <mat-label>Expected Date Of Shipment</mat-label>
-        <input matInput type="text" />
+        <input matInput type="text" formControlName="shipment" />
         <mat-datepicker-toggle matSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>
             <img src="/assets/images/calendar.png" class="pb-25" />
@@ -12,13 +12,346 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
-    <div fxLayoutAlign="start center">
-      <mat-checkbox>LC/Order Detail</mat-checkbox>
+    <div>
+      <div fxLayoutAlign="start center">
+        <mat-checkbox color="primary" formControlName="lcCheck"
+          >LC/Order Detail</mat-checkbox
+        >
+      </div>
+      <ng-container *ngIf="lcOrder.get('lcCheck').value == true">
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-checkbox color="primary" formControlName="lcCheck"
+              >LC/Order Detail</mat-checkbox
+            >
+            <button mat-flat-button class="add" (click)="addLcDetails()">
+              {{ "+" + " " + "Add" }}
+            </button>
+          </div>
+          <mat-card-content class="custom-bg">
+            <div>
+              <div
+                class="full-width card-title standard-margin"
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                fxLayoutGap="1%"
+                *ngIf="showHeader"
+              >
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "Buyer Name/ Country" }}
+                </div>
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "LC Order No/ Date" }}
+                </div>
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "LC Order Amount" }}
+                </div>
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "Last Shipment Date" }}
+                </div>
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "Commodity Details" }}
+                </div>
+                <div fxFlex="11" class="header" fxLayoutAlign="start center">
+                  {{ "INCO term" }}
+                </div>
+                <div fxFlex="20" class="header" fxLayoutAlign="start center">
+                  {{ "Country of Export" }}
+                </div>
+                <div fxFlex="11" class="header" fxLayoutAlign="start center">
+                  {{ "HSN Code" }}
+                </div>
+                <div fxFlex="11" class="header" fxLayoutAlign="start center">
+                  {{ "Action" }}
+                </div>
+              </div>
+              <div fxLayout="column" fxLayoutGap="20">
+                <ng-container
+                  *ngFor="let lcform of lcDetailss.controls; let i = index"
+                  [formGroup]="lcform"
+                >
+                  <div
+                    *ngIf="doneData[i]"
+                    fxLayout="row"
+                    fxLayoutAlign="space-between center"
+                    fxLayoutGap="1%"
+                    class="card-custom"
+                  >
+                    <div
+                      fxFlex="11"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("buyerName")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("buyerCountry")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("lcOrderNo")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("lcOrderDate")?.value }}
+                    </div>
+                    <div
+                      fxFlex="11"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("lastShipment")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("lcCurrency")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("lcAmount")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("exportCountry ")?.value }}
+                    </div>
+                    <div
+                      fxFlex="20"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("commodity")?.value }}
+                    </div>
+                    <div
+                      fxFlex="11"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("incoTerm")?.value }}
+                    </div>
+                    <div
+                      fxFlex="11"
+                      fxLayoutAlign="start center"
+                      class="edit-data"
+                    >
+                      {{ lcform.get("hsnCode")?.value }}
+                    </div>
+                    <div fxFlex="11" fxLayoutGap="2" fxLayout="row">
+                      <button
+                        mat-icon-button
+                        class="edit-btn"
+                        (click)="editClick(i)"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        class="delete-btn"
+                        (click)="removelcOrder(i)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="!doneData[i]" class="card-bg">
+                    <div>
+                      <div fxLayout="row" fxLayoutGap="10">
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>Buyer Name</mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('buyerName')"
+                          />
+                          <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>Country of Buyer</mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('buyerCountry')"
+                          />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>LC Order No </mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('lcOrderNo')"
+                          />
+                        </mat-form-field>
+                        <div fxFlex="100" fxFlex.gt-xs="24">
+                          <mat-form-field
+                            appearance="outline"
+                            class="full-width"
+                          >
+                            <mat-label>LC Order Date </mat-label>
+                            <input
+                              matInput
+                              type="text"
+                              [formControl]="lcform.get('lcOrderDate')"
+                            />
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                              <mat-icon matDatepickerToggleIcon>
+                                <img
+                                  src="/assets/images/calendar.png"
+                                  class="pb-25"
+                                />
+                              </mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div fxLayout="row" fxLayoutGap="10">
+                        <div fxFlex="100" fxFlex.gt-xs="24">
+                          <mat-form-field
+                            appearance="outline"
+                            class="full-width"
+                          >
+                            <mat-label>Last Shipment Date </mat-label>
+                            <input
+                              matInput
+                              type="text"
+                              [formControl]="lcform.get('lastShipment')"
+                            />
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                              <mat-icon matDatepickerToggleIcon>
+                                <img
+                                  src="/assets/images/calendar.png"
+                                  class="pb-25"
+                                />
+                              </mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>LC Order Currency</mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('lcCurrency')"
+                          />
+                          <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>LC Order Amount</mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('lcAmount')"
+                          />
+                        </mat-form-field>
+                        <app-searchable-select
+                          fxFlex="24.5"
+                          inputLabel="Country of Export"
+                          [control]="lcform.get('exportCountry')"
+                        ></app-searchable-select>
+                      </div>
+                      <div fxLayout="row" fxLayoutGap="10">
+                        <app-searchable-select
+                          fxFlex="49.5"
+                          inputLabel="Commodity Details *"
+                          [control]="lcform.get('commodity')"
+                        ></app-searchable-select>
+                        <app-searchable-select
+                          fxFlex="24.5"
+                          inputLabel="INCO term *"
+                          [control]="lcform.get('incoTerm')"
+                        ></app-searchable-select>
+                        <mat-form-field appearance="outline" fxFlex="24.5">
+                          <mat-label>HSN Code *</mat-label>
+                          <input
+                            matInput
+                            [formControl]="lcform.get('hsnCode')"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div
+                      fxLayout="row"
+                      fxLayoutGap="15"
+                      fxLayoutAlign="end center"
+                    >
+                      <button
+                        mat-flat-button
+                        class="save"
+                        (click)="doneClick(i)"
+                      >
+                        Save
+                      </button>
+                      <button
+                        mat-flat-button
+                        class="del"
+                        (click)="removelcOrder(i)"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
     </div>
     <div fxLayout="row" fxLayoutGap="10">
-      <mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="24.5">
         <mat-label>FOB value</mat-label>
-        <input matInput />
+        <input matInput formControlName="fobvalue" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <app-searchable-select
+        fxFlex="24.5"
+        inputLabel="Credit Insurance Policy Number"
+        [control]="lcOrder.get('policyNo')"
+      ></app-searchable-select>
+      <div fxFlex="100" fxFlex.gt-xs="24">
+        <mat-form-field appearance="outline">
+          <mat-label>Policy Date</mat-label>
+          <input matInput type="text" formControlName="policyDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img src="/assets/images/calendar.png" class="pb-25" />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="24.5">
+        <mat-label>Eligible for Subvention</mat-label>
+        <mat-radio-group formControlName="subvention" color="primary">
+          <mat-radio-button *ngFor="let rad of radioArr" [value]="rad?.value">{{
+            rad?.label
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <app-searchable-select
+        fxFlex="49.5"
+        inputLabel="Remarks"
+        [control]="lcOrder.get('remarks')"
+      ></app-searchable-select>
+      <mat-form-field appearance="outline" fxFlex="49.5">
+        <mat-label>End Use</mat-label>
+        <input matInput formControlName="enduse" />
       </mat-form-field>
     </div>
   </div>

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
+import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
 
 @Component({
   selector: "app-lc-additional-info",
@@ -18,6 +20,7 @@ export class LcAdditionalInfoComponent implements OnInit {
   countryArr: any;
   constructor(
     private fb: FormBuilder,
+    private dialog: MatDialog,
     private cntStService: countryStateService
   ) {}
 
@@ -90,5 +93,23 @@ export class LcAdditionalInfoComponent implements OnInit {
       cityName: [address?.cityName ?? ""],
     });
     this.addressControle.push(newAddress);
+  }
+
+  pincodeExpansion(address) {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: "60%",
+      disableClose: true,
+      panelClass: "dialog-class",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res);
+      if (res) {
+        address.get("countryName").patchValue(res?.countryName);
+        address.get("stateName").patchValue(res?.stateName);
+        address.get("cityId").patchValue(res?.cityId);
+        address.get("cityName").patchValue(res?.cityName);
+        address.get("pincode").patchValue(res?.pincode);
+      }
+    });
   }
 }
