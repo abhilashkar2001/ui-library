@@ -370,7 +370,7 @@ export class LoanFlowComponent implements OnInit {
             JSON.stringify({
               name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
               cifNumber:
-                element.kycStatus === "APPROVED" ? element.customerId : "",
+                element.kycStatus === "APPROVED" ? element.customerNo : "",
             })
           );
         }
