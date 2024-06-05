@@ -35,9 +35,6 @@ import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-sum
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
-
-import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
-
 const routes: Routes = [
   {
     path: "",
