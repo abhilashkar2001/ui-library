@@ -117,7 +117,7 @@ export class CommonMobileVerificationComponent implements OnInit {
       this.otpTimer();
       setTimeout(() => {
         this.otpSent = false;
-      }, 5000);
+      }, 500000);
     });
   }
 
