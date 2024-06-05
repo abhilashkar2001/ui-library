@@ -244,13 +244,12 @@
       </mat-panel-description>
     </mat-expansion-panel>
   </ng-container>
-  <div class="uploaded-documents-summary">
+  <div
+    class="uploaded-documents-summary"
+    *ngIf="loanSummaryDetails?.docs?.length > 0"
+  >
     <div class="text-header">Select KYC</div>
-    <div
-      class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.docs?.length > 0"
-      fxLayout="column"
-    >
+    <div class="bank-account-details w-full" fxLayout="column">
       <div class="col-1">
         <span class="content-header">Document type</span>
         <span class="content"
