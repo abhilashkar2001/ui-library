@@ -3,7 +3,8 @@
   height: 50px;
   top: 7px;
   right: 5px;
-  background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0%
+    no-repeat padding-box;
   border-radius: 35px !important;
   color: #ffffff !important;
   text-align: center;
@@ -37,6 +38,11 @@
 .continue-button,
 .submit-button {
   @extend .applyButtonStandard;
+}
+
+.get-otp-button {
+  @extend .applyButtonStandard;
+  border-radius: 8px !important;
 }
 
 .edit-button {
