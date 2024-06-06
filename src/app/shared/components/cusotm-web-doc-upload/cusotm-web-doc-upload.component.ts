@@ -613,7 +613,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
 
-        if (this.isOtherDocVisible)
+        if (
+          this.isOtherDocVisible &&
+          this.createDocumentForm.value.otherDocument[i].documentType !=
+            "Collateral"
+        )
           this.extractDoc(
             this.createDocumentForm.value.otherDocument[i].documentType,
             parseInt(sessionStorage.getItem("originationId")),
