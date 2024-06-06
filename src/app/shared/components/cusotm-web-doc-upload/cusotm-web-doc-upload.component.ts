@@ -640,7 +640,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
                     this.createDocumentForm.value.otherDocument[i].documentType,
                     parseInt(sessionStorage.getItem("originationId")),
                     file,
-                    i
+                    i,
+                    resp.data.documentId
                   );
 
                 // else this.loder.close();
@@ -657,13 +658,18 @@ export class CusotmWebDocUploadComponent implements OnInit {
           this.updateDocId(i).push(resp.data.documentId);
           this.documentIds.push(this.createDocumentForm.value);
 
-          if (this.isOtherDocVisible)
-            this.extractDoc(
-              this.createDocumentForm.value.otherDocument[i].documentType,
-              parseInt(sessionStorage.getItem("originationId")),
-              file,
-              i
-            );
+          if (
+          this.isOtherDocVisible &&
+          this.createDocumentForm.value.otherDocument[i].documentType !=
+            "Collateral"
+        )
+          this.extractDoc(
+            this.createDocumentForm.value.otherDocument[i].documentType,
+            parseInt(sessionStorage.getItem("originationId")),
+            file,
+            i,
+            resp.data.documentId
+          );
 
           // else this.loder.close();
         }
@@ -671,11 +677,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
-  extractDoc(docName, originationId, file, i) {
+  extractDoc(docName, originationId, file, i,documentId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
-      .getCheckListDoc(docName, originationId, formData)
+      .getCheckListDoc(docName, originationId, formData, documentId)
       .subscribe((resp) => {
         if (resp) {
           if (resp?.data?.customerName !== this.docAppliName) {
