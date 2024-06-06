@@ -97,7 +97,9 @@
           ></a
         ></span
       >
-      <span *ngIf="!resendLink">({{ displaySecond }} min)</span>
+      <span *ngIf="!resendLink && displaySecond"
+        >({{ displaySecond }} sec)</span
+      >
     </div>
     <div class="standard-auth-checkbox-container">
       <mat-checkbox
