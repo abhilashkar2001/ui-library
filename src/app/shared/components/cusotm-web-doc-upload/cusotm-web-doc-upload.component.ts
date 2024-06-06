@@ -272,7 +272,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
             (res) => res?.values == "Cash"
           )?.id;
           this.loanDisbursementForm
-            .get("disbursementType")
+            ?.get("disbursementType")
             ?.setValue(this.defaultDisbursement);
         }
       });
@@ -298,7 +298,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   otherDocument(): FormArray {
-    return this.createDocumentForm.get("otherDocument") as FormArray;
+    return this.createDocumentForm?.get("otherDocument") as FormArray;
   }
 
   showDocument(data, i) {
@@ -376,11 +376,6 @@ export class CusotmWebDocUploadComponent implements OnInit {
    * @param index (File index)
    */
   deleteFile(index: number, i, doc) {
-    let documentId =
-      this.createDocumentForm.value.otherDocument[i].docIds[index];
-    // this.commonService.deleteDocument(documentId).subscribe((res) => {
-    // if (res) {
-    // console.log("Document deleted Successfully..");
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
     //   }
     // });
@@ -506,33 +501,35 @@ export class CusotmWebDocUploadComponent implements OnInit {
           } else {
             // for aadhar
             const index =
-              this.otherDocument().controls[i].get("fileInfo").value?.length -
-              1;
-            this.updateFileInfo(
-              index,
-              i,
-              res.data?.name,
-              res.data?.dateOfBirth
-            );
-            if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
+              this.otherDocument()?.controls[i]?.get("fileInfo")?.value
+                ?.length - 1;
+            if (index)
+              this.updateFileInfo(
+                index,
+                i,
+                res.data?.name,
+                res.data?.dateOfBirth
+              );
+            if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
               if (
                 res.data?.adhaarNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
+                this.otherDocument()["controls"][i]?.get("documentNumber").value
               ) {
                 // this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for pan card
-            else if (this.hideSelect[i].toLowerCase().includes("pan")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes("pan")) {
               if (
                 res.data?.panNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
+                this.otherDocument()["controls"]?.[i]?.get("documentNumber")
+                  .value
               ) {
                 this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for passport.
-            else if (this.hideSelect[i].toLowerCase().includes("passport")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes("passport")) {
               console.log(res);
               if (
                 res.data?.passportNumber.replace(/\s/g, "") !=
