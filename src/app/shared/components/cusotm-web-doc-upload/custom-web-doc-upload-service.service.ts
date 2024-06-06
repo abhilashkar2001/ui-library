@@ -10,9 +10,9 @@ export class CustomWebDocUploadServiceService {
 
   constructor(private http: HttpClient) {}
 
-  getCheckListDoc(docName, originationId, fileDesc) {
+  getCheckListDoc(docName, originationId, fileDesc, documentId) {
     return this.http.post<any>(
-      `${this.baseUrl}/extract-doc?originationId=${originationId}&documnetName=${docName}`,
+      `${this.baseUrl}/extract-doc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`,
       fileDesc
     );
   }
