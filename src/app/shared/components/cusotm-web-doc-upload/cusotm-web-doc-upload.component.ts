@@ -98,6 +98,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
     },
   ];
   defaultDisbursement: any;
+  ocrPass: boolean = false;
+  nationalIdNo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -270,7 +272,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
             (res) => res?.values == "Cash"
           )?.id;
           this.loanDisbursementForm
-            .get("disbursementType")
+            ?.get("disbursementType")
             ?.setValue(this.defaultDisbursement);
         }
       });
@@ -296,7 +298,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   otherDocument(): FormArray {
-    return this.createDocumentForm.get("otherDocument") as FormArray;
+    return this.createDocumentForm?.get("otherDocument") as FormArray;
   }
 
   showDocument(data, i) {
@@ -374,11 +376,6 @@ export class CusotmWebDocUploadComponent implements OnInit {
    * @param index (File index)
    */
   deleteFile(index: number, i, doc) {
-    let documentId =
-      this.createDocumentForm.value.otherDocument[i].docIds[index];
-    // this.commonService.deleteDocument(documentId).subscribe((res) => {
-    // if (res) {
-    // console.log("Document deleted Successfully..");
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
     //   }
     // });
@@ -449,6 +446,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   async readDocument(file, i) {
+    this.ocrPass = false;
     const formdata = new FormData();
     formdata.append("image", file);
     formdata.append("lang", "eng");
@@ -468,6 +466,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
           };
           sessionStorage.setItem("backData", JSON.stringify(backData));
         }
+        if (res?.data?.adhaarNumber != "Details not found") {
+          this.nationalIdNo = res?.data?.adhaarNumber;
+        }
         if (
           Object.keys(res?.data).filter(
             (value) =>
@@ -484,6 +485,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
             horizontalPosition: "right",
             panelClass: "snackbar-error",
           });
+          console.log(this.ocrPass);
+
+          this.ocrPass = true;
+          console.log(this.ocrPass);
+
           // if document details not found or document is invalid.
           if (
             (res.data?.adhaarNumber == "Detail not found" ||
@@ -495,33 +501,35 @@ export class CusotmWebDocUploadComponent implements OnInit {
           } else {
             // for aadhar
             const index =
-              this.otherDocument().controls[i].get("fileInfo").value?.length -
-              1;
-            this.updateFileInfo(
-              index,
-              i,
-              res.data?.name,
-              res.data?.dateOfBirth
-            );
-            if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
+              this.otherDocument()?.controls[i]?.get("fileInfo")?.value
+                ?.length - 1;
+            if (index)
+              this.updateFileInfo(
+                index,
+                i,
+                res.data?.name,
+                res.data?.dateOfBirth
+              );
+            if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
               if (
                 res.data?.adhaarNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
+                this.otherDocument()["controls"][i]?.get("documentNumber").value
               ) {
                 // this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for pan card
-            else if (this.hideSelect[i].toLowerCase().includes("pan")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes("pan")) {
               if (
                 res.data?.panNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
+                this.otherDocument()["controls"]?.[i]?.get("documentNumber")
+                  .value
               ) {
                 this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for passport.
-            else if (this.hideSelect[i].toLowerCase().includes("passport")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes("passport")) {
               console.log(res);
               if (
                 res.data?.passportNumber.replace(/\s/g, "") !=
@@ -608,12 +616,49 @@ export class CusotmWebDocUploadComponent implements OnInit {
     formData.append("file", file);
     formData.append("module", "document");
     // this.loder.open();
-    this.api.uploadDocument(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.updateDocId(i).push(resp.data.documentId);
-        this.documentIds.push(this.createDocumentForm.value);
+    this.ocrPass = false;
+    if (this.ocrCheck) {
+      this.readDocument(
+        file,
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length
+      )
+        .then(() => {
+          if (this.ocrPass) {
+            const updatedData = {
+              ...data,
+              documentNumber: this.nationalIdNo,
+            };
+            formData.set("data", JSON.stringify(updatedData));
 
-        if (
+            this.api.uploadDocument(formData).subscribe((resp) => {
+              if (resp?.statusCode === 200) {
+                this.updateDocId(i).push(resp.data.documentId);
+                this.documentIds.push(this.createDocumentForm.value);
+
+                if (this.isOtherDocVisible)
+                  this.extractDoc(
+                    this.createDocumentForm.value.otherDocument[i].documentType,
+                    parseInt(sessionStorage.getItem("originationId")),
+                    file,
+                    i,
+                    resp.data.documentId
+                  );
+
+                // else this.loder.close();
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      this.api.uploadDocument(formData).subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.updateDocId(i).push(resp.data.documentId);
+          this.documentIds.push(this.createDocumentForm.value);
+
+          if (
           this.isOtherDocVisible &&
           this.createDocumentForm.value.otherDocument[i].documentType !=
             "Collateral"
@@ -626,17 +671,13 @@ export class CusotmWebDocUploadComponent implements OnInit {
             resp.data.documentId
           );
 
-        if (this.ocrCheck)
-          this.readDocument(
-            file,
-            this.createDocumentForm.value.otherDocument[i]?.docIds?.length - 1
-          );
-
-        // else this.loder.close();
-      }
-    });
+          // else this.loder.close();
+        }
+      });
+    }
   }
-  extractDoc(docName, originationId, file, i, documentId) {
+
+  extractDoc(docName, originationId, file, i,documentId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
