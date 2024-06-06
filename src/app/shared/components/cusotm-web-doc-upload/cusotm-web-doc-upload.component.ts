@@ -622,7 +622,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
             this.createDocumentForm.value.otherDocument[i].documentType,
             parseInt(sessionStorage.getItem("originationId")),
             file,
-            i
+            i,
+            resp.data.documentId
           );
 
         if (this.ocrCheck)
@@ -635,11 +636,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
       }
     });
   }
-  extractDoc(docName, originationId, file, i) {
+  extractDoc(docName, originationId, file, i, documentId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
-      .getCheckListDoc(docName, originationId, formData)
+      .getCheckListDoc(docName, originationId, formData, documentId)
       .subscribe((resp) => {
         if (resp) {
           if (resp?.data?.customerName !== this.docAppliName) {
