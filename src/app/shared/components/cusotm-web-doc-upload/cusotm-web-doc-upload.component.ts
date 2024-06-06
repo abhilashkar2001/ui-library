@@ -100,6 +100,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   defaultDisbursement: any;
   ocrPass: boolean = false;
   nationalIdNo: any;
+  documentInfo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -459,6 +460,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
         .readAadharData(formdata)
         .toPromise();
       if (res?.statusCode == 200) {
+        this.documentInfo = res?.data;
         if (res.data?.address1 && res.data?.pincode) {
           let backData = {
             address1: res.data?.address1,
@@ -503,6 +505,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
             const index =
               this.otherDocument()?.controls[i]?.get("fileInfo")?.value
                 ?.length - 1;
+            console.log(index, "idx");
+
             if (index)
               this.updateFileInfo(
                 index,
@@ -554,6 +558,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
       applicantName: name,
       dateOfBirth: dateOfBirth,
     };
+
+    console.log(
+      this.otherDocument().controls[i].get("fileInfo").value,
+      "///////"
+    );
   }
 
   documentNotMatched(i, file) {
@@ -634,7 +643,22 @@ export class CusotmWebDocUploadComponent implements OnInit {
               if (resp?.statusCode === 200) {
                 this.updateDocId(i).push(resp.data.documentId);
                 this.documentIds.push(this.createDocumentForm.value);
+                console.log(
+                  this.otherDocument()?.controls[i].get("fileInfo")?.value,
+                  i
+                );
+                const index =
+                  this.otherDocument()?.controls[i]?.get("fileInfo")?.value
+                    ?.length - 1;
+                console.log(index, "idx");
 
+                // if (index)
+                this.updateFileInfo(
+                  index,
+                  i,
+                  this.documentInfo?.name,
+                  this.documentInfo?.dateOfBirth
+                );
                 if (this.isOtherDocVisible)
                   this.extractDoc(
                     this.createDocumentForm.value.otherDocument[i].documentType,
@@ -658,18 +682,14 @@ export class CusotmWebDocUploadComponent implements OnInit {
           this.updateDocId(i).push(resp.data.documentId);
           this.documentIds.push(this.createDocumentForm.value);
 
-          if (
-          this.isOtherDocVisible &&
-          this.createDocumentForm.value.otherDocument[i].documentType !=
-            "Collateral"
-        )
-          this.extractDoc(
-            this.createDocumentForm.value.otherDocument[i].documentType,
-            parseInt(sessionStorage.getItem("originationId")),
-            file,
-            i,
-            resp.data.documentId
-          );
+          if (this.isOtherDocVisible)
+            this.extractDoc(
+              this.createDocumentForm.value.otherDocument[i].documentType,
+              parseInt(sessionStorage.getItem("originationId")),
+              file,
+              i,
+              resp.data.documentId
+            );
 
           // else this.loder.close();
         }
@@ -677,7 +697,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
-  extractDoc(docName, originationId, file, i,documentId) {
+  extractDoc(docName, originationId, file, i, documentId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi

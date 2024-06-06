@@ -94,9 +94,14 @@ export class NationalIdUploadComponent implements OnInit {
         };
         docIds.push(docId);
         if (!customerDetails) {
+          console.log(element);
           element.fileInfo.forEach((item) => {
             console.log(item, ".......");
-            if (item.applicantName && item.dateOfBirth && !customerDetails) {
+            if (
+              (item.applicantName || item.name || item.dateOfBirth) &&
+              !customerDetails
+            ) {
+              console.log(";;;;;;;");
               customerDetails = item;
               return;
             }

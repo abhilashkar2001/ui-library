@@ -259,81 +259,77 @@ export class WebDocUploadComponent implements OnInit {
       "imageType",
       this.getDocTypeforScan(this.hideSelect[i].toLowerCase())
     );
-    try {
-      const res: any = await this.sharedService
-        .readAadharData(formdata)
-        .toPromise();
-      if (res?.statusCode == 200) {
+    // try {
+    const res: any = await this.sharedService
+      .readAadharData(formdata)
+      .toPromise();
+    if (res?.statusCode == 200) {
+      if (
+        Object.keys(res?.data).filter(
+          (value) =>
+            res?.data[value] != "Detail not found" && res?.data[value] != null
+        )?.length < 1
+      ) {
+        this.documentNotMatched(i, file);
+        return -1;
+      } else {
+        // this.loder.close();
+        this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
+          duration: 4000,
+          verticalPosition: "top",
+          horizontalPosition: "right",
+          panelClass: "snackbar-error",
+        });
+        console.log(res);
+        // if document details not found or document is invalid.
         if (
-          Object.keys(res?.data).filter(
-            (value) =>
-              res?.data[value] != "Detail not found" && res?.data[value] != null
-          )?.length < 1
+          (res.data?.adhaarNumber == "Detail not found" ||
+            res.data?.panNumber == "Detail not found" ||
+            res.data?.passportNumber == "Detail not found") &&
+          res.data?.dateOfBirth == "Detail not found"
         ) {
           this.documentNotMatched(i, file);
-          return -1;
         } else {
-          // this.loder.close();
-          this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
-            duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-            panelClass: "snackbar-error",
-          });
-          // if document details not found or document is invalid.
-          if (
-            (res.data?.adhaarNumber == "Detail not found" ||
-              res.data?.panNumber == "Detail not found" ||
-              res.data?.passportNumber == "Detail not found") &&
-            res.data?.dateOfBirth == "Detail not found"
-          ) {
-            this.documentNotMatched(i, file);
-          } else {
-            // for aadhar
-            const index =
-              this.otherDocument().controls[i].get("fileInfo").value?.length -
-              1;
-            this.updateFileInfo(
-              index,
-              i,
-              res.data?.name,
-              res.data?.dateOfBirth
-            );
-            if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
-              if (
-                res.data?.adhaarNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
-              ) {
-                this.documentDataMissMatch(`Document number`, file, i);
-              }
+          // for aadhar
+          const index =
+            this.otherDocument().controls[i].get("fileInfo").value?.length - 1;
+          console.log(index);
+          this.updateFileInfo(index, i, res.data?.name, res.data?.dateOfBirth);
+          if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
+            if (
+              res.data?.adhaarNumber.replace(/\s/g, "") !=
+              this.otherDocument()["controls"][i].get("documentNumber").value
+            ) {
+              this.documentDataMissMatch(`Document number`, file, i);
             }
-            // for pan card
-            else if (this.hideSelect[i].toLowerCase().includes("pan")) {
-              if (
-                res.data?.panNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
-              ) {
-                this.documentDataMissMatch(`Document number`, file, i);
-              }
+          }
+          // for pan card
+          else if (this.hideSelect[i].toLowerCase().includes("pan")) {
+            if (
+              res.data?.panNumber.replace(/\s/g, "") !=
+              this.otherDocument()["controls"][i].get("documentNumber").value
+            ) {
+              this.documentDataMissMatch(`Document number`, file, i);
             }
-            // for passport.
-            else if (this.hideSelect[i].toLowerCase().includes("passport")) {
-              console.log(res);
-              if (
-                res.data?.passportNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i].get("documentNumber").value
-              ) {
-                this.documentDataMissMatch(`Document number`, file, i);
-              }
+          }
+          // for passport.
+          else if (this.hideSelect[i].toLowerCase().includes("passport")) {
+            console.log(res);
+            if (
+              res.data?.passportNumber.replace(/\s/g, "") !=
+              this.otherDocument()["controls"][i].get("documentNumber").value
+            ) {
+              this.documentDataMissMatch(`Document number`, file, i);
             }
           }
         }
       }
-    } catch (error) {
-      // this.loder.close();
-      this.deleteFile(i, i, file);
-      throw error;
     }
+    // } catch (error) {
+    //   // this.loder.close();
+    //   this.deleteFile(i, i, file);
+    //   throw error;
+    // }
   }
 
   updateFileInfo(index, i, name, dateOfBirth) {
