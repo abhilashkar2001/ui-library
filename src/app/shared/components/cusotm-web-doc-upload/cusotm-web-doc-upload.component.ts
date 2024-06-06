@@ -623,8 +623,6 @@ export class CusotmWebDocUploadComponent implements OnInit {
         this.createDocumentForm.value.otherDocument[i]?.docIds?.length
       )
         .then(() => {
-          console.log(this.ocrPass);
-
           if (this.ocrPass) {
             const updatedData = {
               ...data,
