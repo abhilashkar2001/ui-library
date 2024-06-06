@@ -12,7 +12,7 @@ export class LoanDocumentUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
-
+  @Input() docCustomerDetails: any;
   custId: any;
   stepperTitle: any;
   documentTypeArray: any[] = [{}];
@@ -31,6 +31,7 @@ export class LoanDocumentUploadComponent implements OnInit {
   ocrProcess: boolean = false;
   checkListDocList: any[] = [];
   checkListDoc: any = [];
+  docAppliName: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,6 +43,15 @@ export class LoanDocumentUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.docCustomerDetails) {
+      this.docAppliName = this.docCustomerDetails?.applicantName;
+      sessionStorage.setItem(
+        "docAppliName",
+        this.docCustomerDetails?.applicantName
+      );
+    } else {
+      this.docAppliName = sessionStorage.getItem("docAppliName");
+    }
     var originationId = sessionStorage.getItem("originationId");
     this.loanApi
       .getCheckListDoc(
@@ -142,6 +152,7 @@ export class LoanDocumentUploadComponent implements OnInit {
       loanDisbursement: event.loanDisbursement,
     });
     this.onCustomSubmit.emit();
+    sessionStorage.removeItem("docAppliName");
   }
 
   onBack() {
