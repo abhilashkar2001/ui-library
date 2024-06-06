@@ -30,7 +30,6 @@ import { BillProcessingSummaryComponent } from "./trade-flow/bill-processing-sum
 import { DocumentAcceptanceComponent } from "./new-reusable-components/document-acceptance/document-acceptance.component";
 import { BuyersCreditSummaryComponent } from "./trade-flow/buyers-credit-summary/buyers-credit-summary.component";
 import { GenericBuyerCreditComponent } from "./new-reusable-components/generic-buyer-credit/generic-buyer-credit.component";
-
 import { ChequeComponent } from "./cheque-book/cheque/cheque.component";
 import { TransactionDetailsComponent } from "./new-reusable-components/transaction-details/transaction-details.component";
 import { ExportBillDispatchSummaryComponent } from "./trade-flow/export-bill-dispatch-summary/export-bill-dispatch-summary.component";
@@ -41,7 +40,6 @@ import { DispatchDocumentsComponent } from "./new-reusable-components/dispatch-d
 import { GenericExportBillDispatchComponent } from "./new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component";
 
 import { PaymentRequestEnquiryComponent } from "./new-reusable-components/payment-request-enquiry/payment-request-enquiry.component";
-
 
 const routes: Routes = [
   {

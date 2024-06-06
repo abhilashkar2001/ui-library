@@ -34,17 +34,35 @@ export class CallbackComponent implements OnInit {
     this.sessionService.getProfileInfo().subscribe(
       (res) => {
         this.tokenService.saveUser(res);
-        sessionStorage.setItem("customerId", this.getParameterByName("customerId"));
-        sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
-        sessionStorage.setItem("ReferanceNumber",this.getParameterByName("referanceNumber"));
-        if( this.getParameterByName("customerId") != null && this.getParameterByName("mobile") != null  ){ this.router.navigate([`/origination/otp`],{queryParams: {type:`${this.getParameterByName("screen")}`}})}
-        else{sessionStorage.setItem(
-          "originationId",
-          JSON.stringify(this.getParameterByName("originationId"))
-        );
-        this.router.navigate([
-          `/origination/${this.getParameterByName("route")}`,
-        ]);}
+        if (this.getParameterByName("route") == "trade") {
+          this.router.navigate(["user/dashboard"]);
+        } else {
+          sessionStorage.setItem(
+            "customerId",
+            this.getParameterByName("customerId")
+          );
+          sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+          sessionStorage.setItem(
+            "ReferanceNumber",
+            this.getParameterByName("referanceNumber")
+          );
+          if (
+            this.getParameterByName("customerId") != null &&
+            this.getParameterByName("mobile") != null
+          ) {
+            this.router.navigate([`/origination/otp`], {
+              queryParams: { type: `${this.getParameterByName("screen")}` },
+            });
+          } else {
+            sessionStorage.setItem(
+              "originationId",
+              JSON.stringify(this.getParameterByName("originationId"))
+            );
+            this.router.navigate([
+              `/origination/${this.getParameterByName("route")}`,
+            ]);
+          }
+        }
       },
       (err) => {
         // TODO error hanndler
