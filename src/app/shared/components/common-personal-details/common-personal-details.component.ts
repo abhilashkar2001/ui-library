@@ -74,6 +74,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   nationalityArray: any[] = [];
   customerIds: any[] = [];
   debounceTimeout: any;
+  errorDob: any;
 
   constructor(
     private fb: FormBuilder,
@@ -614,23 +615,23 @@ export class CommonPersonalDetailsComponent implements OnInit {
     let dateOfBirth = moment(selectedDate).format("YYYY-MMM-DD");
     console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation("Min", this.boundaries?.minimumAge, i);
+      this.showAgeValidation(i);
+      this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
     } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
-      this.showAgeValidation("Max", this.boundaries?.maximumAge, i);
+      this.showAgeValidation(i);
+      this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
     }
   }
-  showAgeValidation(type, age, i) {
-    this.snack.open(`${type} age should be ${age}`, "OK", {
-      duration: 2000,
-      verticalPosition: "top",
-      horizontalPosition: "right",
-    });
-
+  showAgeValidation(i) {
     setTimeout(() => {
       this.customerDetailsForm
         .get("customer")
         ["controls"][i].get("dateOfBirth")
         .setValue(null);
+      this.customerDetailsForm
+        .get("customer")
+        ["controls"][i].get("dateOfBirth")
+        .setErrors({ invalidDob: true });
     }, 100);
   }
   calculateAge(dateOfBirth) {

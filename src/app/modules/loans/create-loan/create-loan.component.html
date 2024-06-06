@@ -308,6 +308,7 @@
           (change)="onChange()"
         >
           <mat-radio-button
+            class="accountTypeRadio"
             [value]="accountType.value"
             *ngFor="let accountType of accountTypeArr"
             >{{ accountType.name }}</mat-radio-button

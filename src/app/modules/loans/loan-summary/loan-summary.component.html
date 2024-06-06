@@ -249,12 +249,23 @@
     *ngIf="loanSummaryDetails?.docs?.length > 0"
   >
     <div class="text-header">Select KYC</div>
-    <div class="bank-account-details w-full" fxLayout="column">
-      <div class="col-1">
-        <span class="content-header">Document type</span>
-        <span class="content"
-          >{{ loanSummaryDetails?.docs[0]?.documentNameValue }}
-        </span>
+    <div
+      class="bank-account-details w-full"
+      fxLayout="column"
+    >
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div class="col-1">
+          <span class="content-header">Document type</span>
+          <span class="content"
+            >{{ loanSummaryDetails?.docs[0]?.documentNameValue }}
+          </span>
+        </div>
+        <div class="col-1">
+          <span class="content-header">Document Number</span>
+          <span class="content"
+            >{{ loanSummaryDetails?.docs[0]?.documentNumber }}
+          </span>
+        </div>
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
         <ng-container *ngFor="let doc of loanSummaryDetails?.docs">

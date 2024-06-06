@@ -146,7 +146,7 @@
                   loanForm.controls['tenureDays'].value)
               "
             >
-              Loan Period should be less than
+              Loan Period should be Maximum
               {{ productDetails?.maximumTenorYear || 0 }} Years
               {{ productDetails?.maximumTenorMonth || 0 }} Months
               {{ productDetails?.maximumTenorDay || 0 }} Days
@@ -160,10 +160,10 @@
                   loanForm.controls['tenureDays'].value)
               "
             >
-              Loan Period should be greater than
-              {{ productDetails?.minimumTenorYear }} Years
-              {{ productDetails?.minimumTenorMonth }} Months
-              {{ productDetails?.minimumTenorDay }} Days
+              Loan Period should be Minimum
+              {{ productDetails?.minimumTenorYear || 0 }} Years
+              {{ productDetails?.minimumTenorMonth || 0 }} Months
+              {{ productDetails?.minimumTenorDay || 0 }} Days
             </mat-error>
             <mat-error
               class="mat-error small-error mt-12"
