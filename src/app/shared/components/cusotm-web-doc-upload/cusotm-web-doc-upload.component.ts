@@ -51,6 +51,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   @Input() ocrProcess: boolean;
   @Input() checkListDocList: any;
   @Input() isOtherDocVisible: boolean = true;
+  @Input() docAppliName: any;
   loanEnum = CreateLoanEnum;
 
   documentControls: FormGroup;
@@ -616,7 +617,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
           this.extractDoc(
             this.createDocumentForm.value.otherDocument[i].documentType,
             parseInt(sessionStorage.getItem("originationId")),
-            file
+            file,
+            i
           );
 
         if (this.ocrCheck)
@@ -629,12 +631,32 @@ export class CusotmWebDocUploadComponent implements OnInit {
       }
     });
   }
-  extractDoc(docName, originationId, file) {
+  extractDoc(docName, originationId, file, i) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
       .getCheckListDoc(docName, originationId, formData)
-      .subscribe((_) => {});
+      .subscribe((resp) => {
+        if (resp) {
+          if (resp?.data?.customerName !== this.docAppliName) {
+            const dialogData = {
+              error: `National Id name is not matching with this customer.`,
+              message: "Would you like to continue?",
+            };
+            const dialogRef = this.dialog.open(WarningComponent, {
+              width: "40%",
+              data: dialogData,
+              disableClose: true,
+              panelClass: "",
+            });
+            dialogRef.afterClosed().subscribe((result) => {
+              if (result != "Ok") {
+                this.deleteFile(i, i, file);
+              }
+            });
+          }
+        }
+      });
   }
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx].get("docIds")?.value;
