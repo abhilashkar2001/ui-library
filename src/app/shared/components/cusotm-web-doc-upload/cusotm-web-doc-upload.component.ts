@@ -51,6 +51,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   @Input() ocrProcess: boolean;
   @Input() checkListDocList: any;
   @Input() isOtherDocVisible: boolean = true;
+  @Input() docAppliName: any;
   loanEnum = CreateLoanEnum;
 
   documentControls: FormGroup;
@@ -97,6 +98,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
     },
   ];
   defaultDisbursement: any;
+  ocrPass: boolean = false;
+  nationalIdNo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -448,6 +451,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   async readDocument(file, i) {
+    this.ocrPass = false;
     const formdata = new FormData();
     formdata.append("image", file);
     formdata.append("lang", "eng");
@@ -467,6 +471,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
           };
           sessionStorage.setItem("backData", JSON.stringify(backData));
         }
+        if (res?.data?.adhaarNumber != "Details not found") {
+          this.nationalIdNo = res?.data?.adhaarNumber;
+        }
         if (
           Object.keys(res?.data).filter(
             (value) =>
@@ -483,6 +490,11 @@ export class CusotmWebDocUploadComponent implements OnInit {
             horizontalPosition: "right",
             panelClass: "snackbar-error",
           });
+          console.log(this.ocrPass);
+
+          this.ocrPass = true;
+          console.log(this.ocrPass);
+
           // if document details not found or document is invalid.
           if (
             (res.data?.adhaarNumber == "Detail not found" ||
@@ -607,34 +619,89 @@ export class CusotmWebDocUploadComponent implements OnInit {
     formData.append("file", file);
     formData.append("module", "document");
     // this.loder.open();
-    this.api.uploadDocument(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.updateDocId(i).push(resp.data.documentId);
-        this.documentIds.push(this.createDocumentForm.value);
+    this.ocrPass = false;
+    if (this.ocrCheck) {
+      this.readDocument(
+        file,
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length
+      )
+        .then(() => {
+          console.log(this.ocrPass);
 
-        if (this.isOtherDocVisible)
-          this.extractDoc(
-            this.createDocumentForm.value.otherDocument[i].documentType,
-            parseInt(sessionStorage.getItem("originationId")),
-            file
-          );
+          if (this.ocrPass) {
+            const updatedData = {
+              ...data,
+              documentNumber: this.nationalIdNo,
+            };
+            formData.set("data", JSON.stringify(updatedData));
 
-        if (this.ocrCheck)
-          this.readDocument(
-            file,
-            this.createDocumentForm.value.otherDocument[i]?.docIds?.length - 1
-          );
+            this.api.uploadDocument(formData).subscribe((resp) => {
+              if (resp?.statusCode === 200) {
+                this.updateDocId(i).push(resp.data.documentId);
+                this.documentIds.push(this.createDocumentForm.value);
 
-        // else this.loder.close();
-      }
-    });
+                if (this.isOtherDocVisible)
+                  this.extractDoc(
+                    this.createDocumentForm.value.otherDocument[i].documentType,
+                    parseInt(sessionStorage.getItem("originationId")),
+                    file,
+                    i
+                  );
+
+                // else this.loder.close();
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      this.api.uploadDocument(formData).subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.updateDocId(i).push(resp.data.documentId);
+          this.documentIds.push(this.createDocumentForm.value);
+
+          if (this.isOtherDocVisible)
+            this.extractDoc(
+              this.createDocumentForm.value.otherDocument[i].documentType,
+              parseInt(sessionStorage.getItem("originationId")),
+              file,
+              i
+            );
+
+          // else this.loder.close();
+        }
+      });
+    }
   }
-  extractDoc(docName, originationId, file) {
+
+  extractDoc(docName, originationId, file, i) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
       .getCheckListDoc(docName, originationId, formData)
-      .subscribe((_) => {});
+      .subscribe((resp) => {
+        if (resp) {
+          if (resp?.data?.customerName !== this.docAppliName) {
+            const dialogData = {
+              error: `National Id name is not matching with this customer.`,
+              message: "Would you like to continue?",
+            };
+            const dialogRef = this.dialog.open(WarningComponent, {
+              width: "40%",
+              data: dialogData,
+              disableClose: true,
+              panelClass: "",
+            });
+            dialogRef.afterClosed().subscribe((result) => {
+              if (result != "Ok") {
+                this.deleteFile(i, i, file);
+              }
+            });
+          }
+        }
+      });
   }
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx].get("docIds")?.value;
