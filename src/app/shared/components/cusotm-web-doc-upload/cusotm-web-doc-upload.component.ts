@@ -658,18 +658,14 @@ export class CusotmWebDocUploadComponent implements OnInit {
           this.updateDocId(i).push(resp.data.documentId);
           this.documentIds.push(this.createDocumentForm.value);
 
-          if (
-          this.isOtherDocVisible &&
-          this.createDocumentForm.value.otherDocument[i].documentType !=
-            "Collateral"
-        )
-          this.extractDoc(
-            this.createDocumentForm.value.otherDocument[i].documentType,
-            parseInt(sessionStorage.getItem("originationId")),
-            file,
-            i,
-            resp.data.documentId
-          );
+          if (this.isOtherDocVisible)
+            this.extractDoc(
+              this.createDocumentForm.value.otherDocument[i].documentType,
+              parseInt(sessionStorage.getItem("originationId")),
+              file,
+              i,
+              resp.data.documentId
+            );
 
           // else this.loder.close();
         }
@@ -677,7 +673,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
-  extractDoc(docName, originationId, file, i,documentId) {
+  extractDoc(docName, originationId, file, i, documentId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
