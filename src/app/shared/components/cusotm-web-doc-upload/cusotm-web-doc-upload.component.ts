@@ -704,7 +704,10 @@ export class CusotmWebDocUploadComponent implements OnInit {
       .getCheckListDoc(docName, originationId, formData, documentId)
       .subscribe((resp) => {
         if (resp) {
-          if (resp?.data?.customerName !== this.docAppliName) {
+          if (
+            resp?.data?.customerName?.toLowerCase() !==
+            this.docAppliName?.toLowerCase()
+          ) {
             const dialogData = {
               error: `National Id name is not matching with this customer.`,
               message: "Would you like to continue?",
