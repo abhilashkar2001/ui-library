@@ -52,6 +52,7 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buildForm();
     this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
     this.custAccounts.forEach((element) => {
@@ -59,7 +60,6 @@ export class SingleFundTransferComponent implements OnInit {
     });
     this.fetchBenificiary();
     this.fetchGeneric();
-    this.buildForm();
   }
 
   buildForm() {
