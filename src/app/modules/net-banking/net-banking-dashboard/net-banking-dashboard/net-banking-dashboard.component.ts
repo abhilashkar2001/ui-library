@@ -145,25 +145,24 @@ export class NetBankingDashboardComponent implements OnInit {
   }
 
   getDashboardInfo(listOfAccounts) {
-    this.accountsInfo = listOfAccounts;
-    let balance = 0;
-    this.accountsInfo.forEach((el) => {
-      balance += parseFloat(el.accountBalance);
-    });
-    this.availableBalanceForAccount = balance;
-    this.netBankingService.getDashboardInfo().subscribe((resp: any) => {
-      if (resp?.statusCode == 200) {
-        this.dashboardInfo = resp?.data || {};
-        this.availableBalance = [];
-        Object.keys(this.dashboardInfo).forEach((key) => {
-          let balance = 0;
-          this.dashboardInfo[key].forEach((el) => {
-            balance += parseFloat(el.balance);
+    const corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    console.log(this.accountsInfo);
+    // this.availableBalanceForAccount = balance;
+    this.netBankingService
+      .getDashboardInfo(corporateId)
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          this.dashboardInfo = resp?.data?.accounts || {};
+          this.availableBalance = [];
+          Object.keys(this.dashboardInfo).forEach((key) => {
+            let balance;
+            this.dashboardInfo[key]?.accountList.forEach((el) => {
+              balance = this.fetchQueryBalance(el?.accountNo);
+            });
+            this.availableBalance.push(balance);
           });
-          this.availableBalance.push(balance);
-        });
-      }
-    });
+        }
+      });
   }
   getDataByPage() {
     this.netBankingService
@@ -254,5 +253,19 @@ export class NetBankingDashboardComponent implements OnInit {
       }
     }
     this.router.navigate([transfer.route]);
+  }
+
+  fetchQueryBalance(accountNo): void {
+    this.netBankingService
+      .fetchAccountBalance(accountNo)
+      .subscribe((res: FlexBalanceModel) => {
+        if (res?.statusCode === 200 && res?.data) {
+          console.log(res?.data?.currbal);
+          return res?.data?.currbal || 0;
+        } else {
+          console.log("first");
+          return 0;
+        }
+      });
   }
 }

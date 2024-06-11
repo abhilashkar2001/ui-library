@@ -9,8 +9,10 @@ const MICROSERVICE_URL = environment.microServiceURL;
 export class InternetBankingService {
   constructor(private http: HttpClient) {}
 
-  getDashboardInfo() {
-    return this.http.get<any>(`assets/json/net-banking-dashboardInfo.json`);
+  getDashboardInfo(id) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/retail-fund-transfer/fetchCorpDashboardAccounts?corporateId=${id}`
+    );
   }
 
   getActivityLogData() {

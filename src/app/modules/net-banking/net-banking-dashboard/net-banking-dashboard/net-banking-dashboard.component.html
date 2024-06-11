@@ -16,56 +16,6 @@
     fxLayoutGap="8px"
     fxFlex="100"
   >
-    <mat-card
-      [matMenuTriggerFor]="accountRespMenu"
-      #clickHoverMenuTrigger="matMenuTrigger"
-      [ngClass]="{
-        'account-Card-btn': selectedKey !== key,
-        'selected-account-Card': selectedKey === key
-      }"
-      (click)="cardDetails(account)"
-      fxFlex="33"
-    >
-      <div
-        fxLayout="row"
-        fxFlex="100"
-        fxLayoutAlign="space-between"
-        fxLayoutGap="25%"
-      >
-        <div class="infoLength">{{ accountsInfo.length }}</div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <div fxLayout="column" fxLayoutAlign="space-around end">
-            <div class="cardType">{{ "Account" }}</div>
-            <div class="availableTag">Available Balance</div>
-            <div class="balanceAmount" fxLayout="row">
-              ₹ <span>{{ availableBalanceForAccount }}</span>
-            </div>
-          </div>
-          <div>
-            <mat-icon>keyboard_arrow_down</mat-icon>
-          </div>
-        </div>
-      </div>
-    </mat-card>
-    <mat-menu #accountRespMenu="matMenu" class="infoDropdown">
-      <ng-container *ngFor="let info of accountsInfo">
-        <div fxLayout="row" fxFlex="100" fxLayoutGap="60px">
-          <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-            <div class="label">Account Number</div>
-            <div class="labelVal">{{ info.accountNo }}</div>
-          </div>
-          <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-            <div class="label">Type</div>
-            <div class="labelVal">{{ info.accountType }}</div>
-          </div>
-          <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-            <div class="label">Balance</div>
-            <div class="labelVal">{{ info.accountBalance }}</div>
-          </div>
-        </div>
-        <div class="hl"></div>
-      </ng-container>
-    </mat-menu>
     <ng-container *ngFor="let key of Object.keys(dashboardInfo); let i = index">
       <mat-card
         [matMenuTriggerFor]="accountMenu"
@@ -83,13 +33,18 @@
           fxLayoutAlign="space-between"
           fxLayoutGap="25%"
         >
-          <div class="infoLength">{{ dashboardInfo[key].length }}</div>
+          <div class="infoLength">
+            {{ dashboardInfo[key]?.accountList?.length }}
+          </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="space-around end">
-              <div class="cardType">{{ transformLabel(key) }}</div>
+              <div class="cardType">{{ dashboardInfo[key]?.type }}</div>
               <div class="availableTag">Available Balance</div>
               <div class="balanceAmount" fxLayout="row">
-                ₹ <span>{{ availableBalance[i] }}</span>
+                ₹
+                <span>{{
+                  dashboardInfo[key]?.accountList[0]?.accountBalance
+                }}</span>
               </div>
             </div>
             <div>
@@ -99,19 +54,21 @@
         </div>
       </mat-card>
       <mat-menu #accountMenu="matMenu" class="infoDropdown">
-        <ng-container *ngFor="let info of dashboardInfo[key]">
+        <ng-container *ngFor="let info of dashboardInfo[key]?.accountList">
           <div fxLayout="row" fxFlex="100" fxLayoutGap="60px">
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
               <div class="label">Account Number</div>
-              <div class="labelVal">{{ info.accountNumber }}</div>
+              <div class="labelVal">{{ info.accountNo }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
               <div class="label">Type</div>
-              <div class="labelVal">{{ info.type }}</div>
+              <div class="labelVal">{{ dashboardInfo[key]?.accountType }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
               <div class="label">Balance</div>
-              <div class="labelVal">{{ info.balance }}</div>
+              <div class="labelVal">
+                <!-- {{ fetchQueryBalance(info.accountNo) }} -->
+              </div>
             </div>
           </div>
           <div class="hl"></div>
