@@ -52,6 +52,7 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buildForm();
     this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
     this.custAccounts.forEach((element) => {
@@ -59,7 +60,6 @@ export class SingleFundTransferComponent implements OnInit {
     });
     this.fetchBenificiary();
     this.fetchGeneric();
-    this.buildForm();
   }
 
   buildForm() {
@@ -86,7 +86,13 @@ export class SingleFundTransferComponent implements OnInit {
   fetchBenificiary() {
     this.fundTransferService.fetchBenificiary().subscribe((resp: any) => {
       if (resp?.statusCode == 200) {
+        resp?.data
+          ?.forEach((item) => {
+            item.accountNo = item?.bankDetails?.accountNumber;
+          })
+          ?.filter((item) => item?.name && item?.bankDetails?.accountNumber);
         this.transferTo = resp?.data;
+        console.log(this.transferTo);
       }
     });
   }
