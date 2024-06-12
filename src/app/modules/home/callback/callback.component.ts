@@ -35,7 +35,7 @@ export class CallbackComponent implements OnInit {
       (res) => {
         this.tokenService.saveUser(res);
         if (this.getParameterByName("route") == "trade") {
-          this.router.navigate(["user/dashboard"]);
+          this.router.navigate(["user/dashboard/trade/dashboard"]);
         } else {
           sessionStorage.setItem(
             "customerId",
