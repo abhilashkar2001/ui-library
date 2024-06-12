@@ -46,7 +46,7 @@ export class AllInOnePopupComponent implements OnInit {
 
   submit() {
     let payload = {
-      mobile: this.data.mobile,
+      mobile: JSON.parse(sessionStorage.getItem("customer-Info"))?.mobileNumber,
       otp: this.confirmationForm.value.oneTimePassword,
     };
     this.commonService.verifyOTP(payload).subscribe((res: any) => {
