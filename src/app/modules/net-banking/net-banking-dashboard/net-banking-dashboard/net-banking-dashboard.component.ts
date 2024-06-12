@@ -24,7 +24,7 @@ export class NetBankingDashboardComponent implements OnInit {
   navigationItems = NETBANKING.navigationItems;
   dummyResponse = NETBANKING.dummyResponse;
   selectedKey: string | null = null;
-  availableBalance: number[];
+  availableBalance: number[][];
   availableBalanceForAccount: any;
   genericScreenName: any = "Pending for approval";
   currentIndex = 1;
@@ -51,6 +51,7 @@ export class NetBankingDashboardComponent implements OnInit {
   customerInfo: any;
   selectedAcc: any;
   accountsInfo: any;
+  corporateId: any;
 
   constructor(
     private netBankingService: InternetBankingService,
@@ -71,66 +72,10 @@ export class NetBankingDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.getActivityLogData();
     this.getDataByPage();
-    this.fetchAccountList();
-  }
-
-  /**
-   * Fetch all account list by subclass linked with logged in customer mobile number
-   */
-  async fetchAccountList() {
-    this.netBankingService
-      .fetchAccountDetails(this.currentUser.mobile)
-      .subscribe((res: any) => {
-        if (res?.statusCode === 200 && res?.data) {
-          this.accountlist = res?.data?.accounts;
-          const listOfAccounts = [];
-          this.accountlist.forEach(async (item: any) => {
-            item?.accountList?.forEach((account) => {
-              this.netBankingService
-                .fetchAccountBalance(account.accountNo)
-                .subscribe((res: FlexBalanceModel) => {
-                  if (res?.statusCode === 200 && res?.data) {
-                    account.accountBalance = res?.data?.currbal || 0;
-                  } else {
-                    account.accountBalance = 0;
-                  }
-                  account.accountType = item?.accountType;
-                  listOfAccounts.push(account);
-                });
-            });
-          });
-          this.getAccountList(res);
-
-          setTimeout(() => {
-            sessionStorage.setItem("customer-Info", JSON.stringify(res?.data));
-            this.customerInfo = res?.data;
-            this.selectedAcc = sessionStorage.getItem("selectAccNo")
-              ? sessionStorage.getItem("selectAccNo")
-              : res?.data.accounts?.[0]?.accountList?.[0]?.accountNo;
-
-            sessionStorage.setItem(
-              "listOfAccounts",
-              JSON.stringify(listOfAccounts)
-            );
-            this.getDashboardInfo(listOfAccounts);
-
-            sessionStorage.setItem("selectAccNo", this.selectedAcc);
-            this.accountlist.forEach((item: any) => {
-              if (item?.accountList)
-                item.totalAccountBalance = item.accountList.reduce(
-                  (total, accountInfo) => {
-                    return total + accountInfo.accountBalance;
-                  },
-                  0
-                );
-            });
-          }, 1000);
-
-          this.accountlist = [...this.accountlist];
-        }
-      });
+    this.getDashboardInfo();
   }
 
   getAccountList(res) {
@@ -144,29 +89,41 @@ export class NetBankingDashboardComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  getDashboardInfo(listOfAccounts) {
-    const corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
-    console.log(this.accountsInfo);
-    // this.availableBalanceForAccount = balance;
+  /**
+   * dashboard api to show the cards with the balance ant type
+   * */
+  async getDashboardInfo() {
     this.netBankingService
-      .getDashboardInfo(corporateId)
+      .getDashboardInfo(this.corporateId)
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.dashboardInfo = resp?.data?.accounts || {};
           this.availableBalance = [];
+          let keywiseBalance = [];
           Object.keys(this.dashboardInfo).forEach((key) => {
             let balance;
-            this.dashboardInfo[key]?.accountList.forEach((el) => {
-              balance = this.fetchQueryBalance(el?.accountNo);
+            this.dashboardInfo[key]?.accountList.forEach(async (el) => {
+              balance = await this.fetchQueryBalance(el?.accountNo);
+              keywiseBalance.push(balance);
             });
-            this.availableBalance.push(balance);
+            this.availableBalance.push(keywiseBalance);
           });
         }
       });
   }
   getDataByPage() {
     this.netBankingService
-      .getSummary(null, null, 1, 3, null, null, "coprateNetBanking", "CREATED")
+      .getSummary(
+        null,
+        null,
+        1,
+        3,
+        null,
+        null,
+        "coprateNetBanking",
+        "CREATED",
+        this.corporateId
+      )
       .subscribe((res: any) => {
         this.dummyResponse = res?.data?.slice(0, 3);
       });
@@ -255,17 +212,17 @@ export class NetBankingDashboardComponent implements OnInit {
     this.router.navigate([transfer.route]);
   }
 
-  fetchQueryBalance(accountNo): void {
-    this.netBankingService
-      .fetchAccountBalance(accountNo)
-      .subscribe((res: FlexBalanceModel) => {
-        if (res?.statusCode === 200 && res?.data) {
-          console.log(res?.data?.currbal);
-          return res?.data?.currbal || 0;
-        } else {
-          console.log("first");
-          return 0;
-        }
-      });
+  fetchQueryBalance(accountNo) {
+    return new Promise((resolve) => {
+      this.netBankingService
+        .fetchAccountBalance(accountNo)
+        .subscribe((res: FlexBalanceModel) => {
+          if (res?.statusCode === 200 && res?.data) {
+            resolve(res?.data?.currbal || 0);
+          } else {
+            resolve(0);
+          }
+        });
+    });
   }
 }

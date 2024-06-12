@@ -35,4 +35,8 @@ export class SessionService {
   getProfileInfo() {
     return this.httpClient.get<any>(`${this.basePath}/loginApi/profile`);
   }
+
+  getCorporateProfile() {
+    return this.httpClient.get<any>(`${this.basePath}/loginApi/corpProfile`);
+  }
 }

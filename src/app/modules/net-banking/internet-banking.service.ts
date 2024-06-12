@@ -27,7 +27,8 @@ export class InternetBankingService {
     sortName,
     direction,
     moduleName,
-    status?
+    status?,
+    corporateId?
   ) {
     var filterEndpoint = "";
     if (filterBy) {
@@ -48,7 +49,7 @@ export class InternetBankingService {
     return this.http.get(
       `${MICROSERVICE_URL}/corporate-net-banking${payload}&uploadType=BULK${
         status ? "&status=" + status : ""
-      }`
+      }${corporateId ? "&corporateId=" + corporateId : ""}`
     );
   }
 

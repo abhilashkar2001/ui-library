@@ -93,7 +93,7 @@ export class SigninComponent implements OnInit {
   }
 
   getProfile() {
-    this.sessionService.getProfileInfo().subscribe(
+    this.sessionService.getCorporateProfile().subscribe(
       (res) => {
         if (res) {
           this.tokenService.saveUser(res);
