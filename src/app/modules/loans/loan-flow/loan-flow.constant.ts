@@ -6,7 +6,7 @@ import { CibilScoreContainerComponent } from "../cibil-score-container/cibil-sco
 import { LoanDocumentUploadComponent } from "../loan-document-upload/loan-document-upload.component";
 import { LoanTermsConditionsComponent } from "../loan-terms-conditions/loan-terms-conditions.component";
 import { LoanSummaryComponent } from "../loan-summary/loan-summary.component";
-import { NationalIdUploadComponent } from "../national-id-upload/national-id-upload.component";
+import { NationalIdUploadComponent } from "../../../shared/components/national-id-upload/national-id-upload.component";
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
