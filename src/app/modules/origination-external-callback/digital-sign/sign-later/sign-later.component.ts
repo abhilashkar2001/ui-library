@@ -31,6 +31,7 @@ export class SignLaterComponent implements OnInit {
         const signPayload = {
           originationId: JSON.parse(sessionStorage.getItem("originationId")),
           signatureId: res?.result?.signatureId,
+          screenCode: this.sessionStorageService.getScreenId(),
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
