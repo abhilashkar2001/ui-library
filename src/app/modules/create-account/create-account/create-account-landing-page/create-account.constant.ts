@@ -1,5 +1,6 @@
 import { CommonPersonalDetailsComponent } from "app/shared/components/common-personal-details/common-personal-details.component";
 import { CommonMobileVerificationComponent } from "app/shared/components/comon-mobile-verification/common-mobile-verification.component";
+import { NationalIdUploadComponent } from "app/shared/components/national-id-upload/national-id-upload.component";
 import { OtherDocumentsComponent } from "app/shared/components/other-documents/other-documents.component";
 
 export class CreateAccountConstant {
@@ -24,11 +25,17 @@ export class CreateAccountConstant {
     },
     {
       id: 2,
-      key: "kyc",
+      key: "national",
       type: "Create Account",
-      component: OtherDocumentsComponent,
+      component: NationalIdUploadComponent,
     },
   ];
+
+  static readonly DEPT_MAPPING = {
+    department: "SALES DEPARTMENTS",
+    action: [{ status: "Review", next: "VERIFYDET" }],
+    code: "DATAINUPUT",
+  };
 }
 
 export enum CreateEnum {

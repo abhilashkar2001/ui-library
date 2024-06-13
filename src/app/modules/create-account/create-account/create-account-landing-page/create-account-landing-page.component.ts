@@ -13,6 +13,8 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
+import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
+import { EmailService } from "app/shared/services/email.service";
 
 const {
   SELF,
@@ -74,7 +76,8 @@ export class CreateAccountLandingPageComponent {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private emailService: EmailService
   ) {
     // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
@@ -447,21 +450,72 @@ export class CreateAccountLandingPageComponent {
   }
 
   done(resp?) {
-    const dialogRef = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        originationId: this.originationId,
-      },
-      width: "750px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      if (resp === true) {
-        this.tokenStore.cleanUpSessionPartially();
-        this.router.navigate(["/account/landing"]);
+    this.sendMailLink();
+    const payload = {
+      department: "CUSTOMER",
+      nextDepartment: CreateAccountConstant.DEPT_MAPPING.department,
+      remarks: "",
+      status: ApprvalStatusEnum.INITIATED,
+      code: CreateAccountConstant.DEPT_MAPPING.code,
+      originationId: this.originationId,
+      processStageId: parseInt(sessionStorage.getItem("currentAccountStage")),
+    };
+    this.loanApi.departmentMapping(payload).subscribe((resp) => {
+      if (resp?.statusCode === 201) {
+        const dialogRef = this.dialog.open(SuccessPopupComponent, {
+          data: {
+            originationId: this.originationId,
+          },
+          width: "750px",
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+          backdropClass: "bdrop",
+        });
+        dialogRef.afterClosed().subscribe((resp) => {
+          if (resp === true) {
+            this.sendMailLink();
+            this.tokenStore.cleanUpSessionPartially();
+            this.router.navigate(["/account/landing"]);
+          }
+        });
       }
     });
+  }
+  sendMailLink() {
+    const email = this.personalDetails[0]?.contact?.email || "";
+    const referenceNumber = this.originationModel?.icustRefNo || "";
+    const applicantName =
+      this.personalDetails[0]?.firstName +
+      " " +
+      this.personalDetails[0]?.lastName;
+    const formData: FormData = new FormData();
+    formData.append(
+      "subject",
+      "Thank you for submitting your loan application through our website."
+    );
+    formData.append(
+      "body",
+      `Dear ${applicantName},\n
+Thank you for submitting your loan application through our website.
+
+
+We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
+Our team is currently reviewing your information and will get in touch with you shortly to discuss the next steps. \n
+
+Applicant Name: ${applicantName} \n
+
+Reference No: ${referenceNumber} \n
+
+Thank you for choosing us for your financial needs. 
+Best regards, `
+    );
+    formData.append("to", email);
+    this.emailService
+      .triggerTransactionEmail(formData)
+      .subscribe((res: string) => {
+        if (res) {
+        }
+      });
   }
 
   goBack() {
