@@ -491,12 +491,12 @@ export class CreateAccountLandingPageComponent {
     const formData: FormData = new FormData();
     formData.append(
       "subject",
-      "Thank you for submitting your loan application through our website."
+      "Thank you for submitting your application through our website."
     );
     formData.append(
       "body",
       `Dear ${applicantName},\n
-Thank you for submitting your loan application through our website.
+Thank you for submitting your application through our website.
 
 
 We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
