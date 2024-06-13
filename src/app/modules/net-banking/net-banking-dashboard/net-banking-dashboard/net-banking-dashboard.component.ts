@@ -141,7 +141,11 @@ export class NetBankingDashboardComponent implements OnInit {
         this.corporateId
       )
       .subscribe((res: any) => {
-        this.dummyResponse = res?.data?.slice(0, 3);
+        this.dummyResponse = res?.data
+          ?.filter(
+            (resp: any) => resp?.lastUpdatedBy != this.currentUser?.userName
+          )
+          ?.slice(0, 3);
       });
   }
 
