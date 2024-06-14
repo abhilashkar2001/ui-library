@@ -115,6 +115,8 @@ export class CreateAccountLandingPageComponent {
             if (this.personalDetails?.length > 0)
               this.componentRef.instance.isMasterSave = true;
 
+            this.componentRef.instance.accountType = "account";
+
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
             this.componentRef.instance?.onBackEvent.subscribe((_) => {
@@ -230,21 +232,37 @@ export class CreateAccountLandingPageComponent {
     }
     if (value.updateMasterSave && customerInfo?.length > 0) {
       if (this.ownershipId) {
-        this.getMasterSave({
-          originationModel: originationModel,
-          customerInfo: customerInfo,
-        });
+        this.submitCheckList(value, originationModel, customerInfo);
       } else {
         this.getGeneric().then((data) => {
           let FinalOriginationModel = { ...originationModel, ownership: data };
-          this.getMasterSave({
-            originationModel: FinalOriginationModel,
-            customerInfo: customerInfo,
-          });
+          this.submitCheckList(value, FinalOriginationModel, customerInfo);
         });
       }
     } else this.next();
   };
+
+  submitCheckList(value, originationModel, customerInfo) {
+    if (value?.isCheckListDoc) {
+      const payload = {
+        documentIds: value?.otherLoanDoc,
+        originationId: this.originationModel?.originationId,
+        screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+      };
+      this.loanApi.saveChecklist(payload).subscribe((resp) => {
+        if (resp?.statusCode === 201) {
+          this.getMasterSave({
+            originationModel: originationModel,
+            customerInfo: customerInfo,
+          });
+        }
+      });
+    } else
+      this.getMasterSave({
+        originationModel: originationModel,
+        customerInfo: customerInfo,
+      });
+  }
 
   /**
    *
@@ -352,7 +370,7 @@ export class CreateAccountLandingPageComponent {
           return s1.sequence - s2.sequence;
         });
         sessionStorage.setItem(
-          "currentAccountStage",
+          "currentStage",
           resp.data.processStageList[0].id
         );
         this.factory();
@@ -390,6 +408,10 @@ export class CreateAccountLandingPageComponent {
     } else {
       this.selectedStep = num;
       sessionStorage.setItem("accountstep", String(this.selectedStep));
+      sessionStorage.setItem(
+        "currentScreenCode",
+        this.screenList[num].screenCode
+      );
       this.factory();
     }
   }
@@ -399,6 +421,10 @@ export class CreateAccountLandingPageComponent {
     this.selectedStep = tabDetails.selectedIndex;
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
+    sessionStorage.setItem(
+      "currentScreenCode",
+      this.screenList[this.selectedStep].screenCode
+    );
     if (lastStep != tabDetails.selectedIndex)
       this.showComponent(this.currentStep);
   }
@@ -450,7 +476,6 @@ export class CreateAccountLandingPageComponent {
   }
 
   done(resp?) {
-    this.sendMailLink();
     const payload = {
       department: "CUSTOMER",
       nextDepartment: CreateAccountConstant.DEPT_MAPPING.department,
@@ -458,7 +483,7 @@ export class CreateAccountLandingPageComponent {
       status: ApprvalStatusEnum.INITIATED,
       code: CreateAccountConstant.DEPT_MAPPING.code,
       originationId: this.originationId,
-      processStageId: parseInt(sessionStorage.getItem("currentAccountStage")),
+      processStageId: parseInt(sessionStorage.getItem("currentStage")),
     };
     this.loanApi.departmentMapping(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
@@ -491,19 +516,18 @@ export class CreateAccountLandingPageComponent {
     const formData: FormData = new FormData();
     formData.append(
       "subject",
-      "Thank you for submitting your loan application through our website."
+      "Thank you for submitting your application through our website."
     );
     formData.append(
       "body",
       `Dear ${applicantName},\n
-Thank you for submitting your loan application through our website.
+Thank you for submitting your application through our website.
 
 
 We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
 Our team is currently reviewing your information and will get in touch with you shortly to discuss the next steps. \n
 
 Applicant Name: ${applicantName} \n
-
 Reference No: ${referenceNumber} \n
 
 Thank you for choosing us for your financial needs. 
@@ -537,7 +561,7 @@ Best regards, `
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: accountBasisDetails?.basisDetailsId,
       processCycleCode: accountBasisDetails?.processCycleCode,
-      currentStage: parseInt(sessionStorage.getItem("currentAccountStage")),
+      currentStage: parseInt(sessionStorage.getItem("currentStage")),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
       targetScreen: parseInt(resp?.targetScreen),

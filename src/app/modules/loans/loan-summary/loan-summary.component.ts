@@ -61,7 +61,7 @@ export class LoanSummaryComponent implements OnInit {
     this.loanService
       .getSavedChecklist(
         originationId,
-        parseInt(sessionStorage.getItem("loanDocScreenCode")),
+        parseInt(sessionStorage.getItem("otherDocScreenCode")),
         parseInt(sessionStorage.getItem("currentStage"))
       )
       .subscribe((resp) => {
