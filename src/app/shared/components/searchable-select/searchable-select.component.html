@@ -53,6 +53,7 @@
         {{ control.value }}
       </span>
     </mat-select-trigger>
+    <mat-option *ngIf="!multiple" [value]="null">None</mat-option>
     <mat-option
       *ngFor="let item of items | searchOptions : filterFormControl.value"
       [value]="item?.value"
