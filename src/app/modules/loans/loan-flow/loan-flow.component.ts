@@ -395,7 +395,8 @@ export class LoanFlowComponent implements OnInit {
         branchId: this.currentUser.branchId,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
-        department: "SALES DEPARTMENTS",
+        department: this.currentUser?.department,
+        level: this.currentUser?.levelForUser,
       };
       return payload;
     } else return;
