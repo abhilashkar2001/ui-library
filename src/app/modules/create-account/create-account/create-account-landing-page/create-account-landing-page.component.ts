@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -13,18 +12,9 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
-import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
-import { EmailService } from "app/shared/services/email.service";
 
-const {
-  SELF,
-  OWNERSHIP,
-  DUPLICATE_PRODUCT_ERROR_MESSAGE,
-  DUPLICATE_PRODUCT_HINT,
-  PRODUCT_DUPLICATION_KEY,
-  SOURCE_PAYLOAD_KEY,
-  LOADING_TEXT,
-} = CreateEnum;
+const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
+  CreateEnum;
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -76,10 +66,8 @@ export class CreateAccountLandingPageComponent {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    private cdr: ChangeDetectorRef,
-    private emailService: EmailService
+    private cdr: ChangeDetectorRef
   ) {
-    // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
   }
 
@@ -452,7 +440,6 @@ export class CreateAccountLandingPageComponent {
   }
 
   done(resp?) {
-    this.sendMailLink();
     const payload: any = {};
     payload.properties = {};
     payload.screenCode = null;
@@ -474,49 +461,12 @@ export class CreateAccountLandingPageComponent {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.sendMailLink();
             this.tokenStore.cleanUpSessionPartially();
             this.router.navigate(["/account/landing"]);
           }
         });
       }
     });
-  }
-  sendMailLink() {
-    const email = this.personalDetails[0]?.contact?.email || "";
-    const referenceNumber = this.originationModel?.icustRefNo || "";
-    const applicantName =
-      this.personalDetails[0]?.firstName +
-      " " +
-      this.personalDetails[0]?.lastName;
-    const formData: FormData = new FormData();
-    formData.append(
-      "subject",
-      "Thank you for submitting your loan application through our website."
-    );
-    formData.append(
-      "body",
-      `Dear ${applicantName},\n
-Thank you for submitting your loan application through our website.
-
-
-We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
-Our team is currently reviewing your information and will get in touch with you shortly to discuss the next steps. \n
-
-Applicant Name: ${applicantName} \n
-
-Reference No: ${referenceNumber} \n
-
-Thank you for choosing us for your financial needs. 
-Best regards, `
-    );
-    formData.append("to", email);
-    this.emailService
-      .triggerTransactionEmail(formData)
-      .subscribe((res: string) => {
-        if (res) {
-        }
-      });
   }
 
   goBack() {

@@ -1,9 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { MatIconRegistry } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import {
   ChecklistModel,
   ChecklistPayloadModel,
@@ -14,7 +12,6 @@ import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 import { environment } from "environments/environment";
-import { EmailService } from "app/shared/services/email.service";
 
 @Component({
   selector: "app-checklist-document",
@@ -40,8 +37,7 @@ export class ChecklistDocumentComponent implements OnInit {
     private fb: FormBuilder,
     private snack: MatSnackBar,
     private documentUploadService: DocumentUploadService,
-    private dialog: MatDialog,
-    private emailService: EmailService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -249,53 +245,9 @@ export class ChecklistDocumentComponent implements OnInit {
     });
     this.originationService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
-        let payload = {
-          originationId: this.originationId,
-          status: "CONFIRMED",
-          userName: "WEBSITE",
-          department: "CUSTOMER",
-          remarks: "",
-          code: "DOCREVIEW",
-          nextDepartment: "SALES DEPARTMENTS",
-          checklistItem: this.acceptedDocumentId,
-        };
-        this.saveUpdate(payload);
-
         this.openSuccessPopup();
       }
     });
-  }
-
-  saveUpdate(payload) {
-    this.originationService
-      .updateApprovalStatus(payload)
-      .subscribe((res: any) => console.log(res));
-  }
-
-  triggerEmail() {
-    const documentList = this.checklistDocuments
-      .map((doc) => doc.document)
-      .join("\n");
-    const formData: FormData = new FormData();
-    formData.append("subject", "Thank you for submitting your documents.");
-    formData.append(
-      "body",
-      `Dear ${this.customerInfo?.firstName} ${this.customerInfo?.lastName},\n
-We are pleased to inform you that your documents for loan application ${this.customerInfo?.icustRefNo} have been successfully uploaded.\n 
-
-Below is the list of documents you provided:\n
-${documentList}\n
-Our team will review your signature and update you shortly regarding the next steps.\n
-
-Thank you for your cooperation`
-    );
-    formData.append("to", this.customerInfo?.contact?.email);
-    this.emailService
-      .triggerTransactionEmail(formData)
-      .subscribe((res: string) => {
-        if (res) {
-        }
-      });
   }
 
   openSuccessPopup() {
@@ -309,7 +261,6 @@ Thank you for your cooperation`
       },
     });
     dialogref.afterClosed().subscribe((_) => {
-      this.triggerEmail();
       setTimeout(() => {
         window.close();
       }, 5000);
