@@ -444,12 +444,12 @@ export class CreateAccountLandingPageComponent {
     payload.properties = {};
     payload.screenCode = null;
     payload.processStageId = null;
-    payload.processCycleCode = null;
+    payload.processCycleCode = this.processDetails.processCycleCode;
     payload.originationId = this.originationId;
     payload.action = "Submit";
 
     this.loanApi.verifyWorkFlow(payload).subscribe((resp) => {
-      if (resp?.statusCode === 201) {
+      if (resp?.status === 200) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: this.originationId,
