@@ -723,16 +723,15 @@ export class LoanFlowComponent implements OnInit {
 
   onFlowDone() {
     const originationId = sessionStorage.getItem("originationId");
-    const payload = {
-      department: "CUSTOMER",
-      nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
-      remarks: "",
-      status: ApprvalStatusEnum.INITIATED,
-      code: LoanFlowConstants.DEPT_MAPPING.code,
-      originationId: originationId,
-      processStageId: parseInt(sessionStorage.getItem("currentStage")),
-    };
-    this.loanApi.departmentMapping(payload).subscribe((resp) => {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = null;
+    payload.originationId = originationId;
+    payload.action = "Submit";
+
+    this.loanApi.verifyWorkFlow(payload).subscribe((resp: any) => {
       if (resp?.statusCode === 201) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {

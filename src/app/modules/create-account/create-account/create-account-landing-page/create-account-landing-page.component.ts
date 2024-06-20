@@ -451,16 +451,15 @@ export class CreateAccountLandingPageComponent {
 
   done(resp?) {
     this.sendMailLink();
-    const payload = {
-      department: "CUSTOMER",
-      nextDepartment: CreateAccountConstant.DEPT_MAPPING.department,
-      remarks: "",
-      status: ApprvalStatusEnum.INITIATED,
-      code: CreateAccountConstant.DEPT_MAPPING.code,
-      originationId: this.originationId,
-      processStageId: parseInt(sessionStorage.getItem("currentAccountStage")),
-    };
-    this.loanApi.departmentMapping(payload).subscribe((resp) => {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = null;
+    payload.originationId = this.originationId;
+    payload.action = "Submit";
+
+    this.loanApi.verifyWorkFlow(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
