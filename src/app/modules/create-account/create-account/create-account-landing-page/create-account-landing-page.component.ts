@@ -199,7 +199,6 @@ export class CreateAccountLandingPageComponent {
       branchId: this.currentUser.branchId,
       ownership: this.ownershipId,
       department: this.currentUser?.department,
-      level: this.currentUser?.levelForUser,
     };
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
