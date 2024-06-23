@@ -106,4 +106,23 @@ export class SessionStorageService {
   public removeChecklistRouteObj() {
     this.session.removeItem(SessionStorageEnum.CHECKLIST_ROUTE_OBJ);
   }
+
+  /**
+   * Get Process Cycle Code from session storage
+   * @returns
+   */
+  public getProcessCycleCode(): string {
+    const processCycleCode: string = this.getItem(
+      SessionStorageEnum.PROCESS_CYCLE_CODE
+    );
+    return processCycleCode;
+  }
+
+  /**
+   * Save Process Cycle Code in session storage
+   * @param processCycleCode
+   */
+  public setProcessCycleCode(processCycleCode: string): void {
+    this.setItem(SessionStorageEnum.PROCESS_CYCLE_CODE, processCycleCode);
+  }
 }

@@ -4,4 +4,5 @@ export enum SessionStorageEnum {
   CUSTOMER_INFO = "customerInfo",
   CHECKLIST_ROUTE_OBJ = "checklistRouteObj",
   TYPE = "type",
+  PROCESS_CYCLE_CODE = "processCycleCode",
 }

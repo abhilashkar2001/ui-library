@@ -85,6 +85,10 @@ export class CallbackComponent implements OnInit {
           JSON.stringify(this.getParameterByName("originationId"))
         );
 
+        this.sessionStorageService.setProcessCycleCode(
+          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE)
+        );
+
         this.router.navigate([
           `/origination/${this.getParameterByName("route")}`,
         ]);

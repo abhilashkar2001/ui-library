@@ -9,6 +9,7 @@ import { SignNowPopupComponent } from "../../digital-sign/sign-now-popup/sign-no
 import { SuccessModalComponent } from "../../digital-sign/success-modal/success-modal.component";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
+import { OriginationService } from "app/shared/services/origination.service";
 
 @Component({
   selector: "app-offer-letter",
@@ -29,7 +30,8 @@ export class OfferLetterComponent implements OnInit {
     private route: Router,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private originationService: OriginationService
   ) {}
 
   ngOnInit(): void {
@@ -104,23 +106,44 @@ export class OfferLetterComponent implements OnInit {
           .saveDigitalSignDetails(signPayload)
           .subscribe((result) => {
             if (result?.statusCode === 200 || result?.statusCode === 201) {
-              const sucessDialog = this.dialog.open(SuccessModalComponent, {
-                width: "40%",
-                data: {
-                  screenType: "Sign Now",
-                  title: "Digital sign has been successfully recorded!",
-                },
-                disableClose: true,
-              });
-              sucessDialog.afterClosed().subscribe((_) => {
-                setTimeout(() => {
-                  window.close();
-                }, 5000);
-              });
+              this.updateStatus("Submit");
             }
           });
       } else {
         window.close();
+      }
+    });
+  }
+
+  /**
+   * To update the status this method will call workflow api
+   * @param action
+   * @param remarks
+   */
+  updateStatus(action: string, remarks?: string): void {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.sessionStorageService.getProcessCycleCode();
+    payload.originationId = this.originationId;
+    payload.action = action;
+    payload.remarks = remarks;
+    this.originationService.verifyWorkflow(payload).subscribe((res) => {
+      if (res?.status == 200) {
+        const sucessDialog = this.dialog.open(SuccessModalComponent, {
+          width: "40%",
+          data: {
+            screenType: "Sign Now",
+            title: "Digital sign has been successfully recorded!",
+          },
+          disableClose: true,
+        });
+        sucessDialog.afterClosed().subscribe((_) => {
+          setTimeout(() => {
+            window.close();
+          }, 5000);
+        });
       }
     });
   }
