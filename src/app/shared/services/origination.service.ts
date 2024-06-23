@@ -64,4 +64,11 @@ export class OriginationService {
       `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`
     );
   }
+
+  verifyWorkflow(properties) {
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/workflow/verify`,
+      properties
+    );
+  }
 }

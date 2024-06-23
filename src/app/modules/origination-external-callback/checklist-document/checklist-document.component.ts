@@ -77,7 +77,7 @@ export class ChecklistDocumentComponent implements OnInit {
       description: [data?.summary ?? ""],
       fileType: [
         this.formatDocumentType(
-          data?.documentTypes?.toLowerCase(),
+          data?.documentTypes?.map((item) => item?.toLowerCase()),
           data?.documentName
         ) ?? "",
       ],
@@ -221,7 +221,7 @@ export class ChecklistDocumentComponent implements OnInit {
     }
   }
 
-  formatDocumentType(documentTypes: string, documentName: string) {
+  formatDocumentType(documentTypes: string[], documentName: string) {
     if (documentTypes?.includes("excel") && documentTypes?.includes("pdf"))
       return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
     else if (documentTypes?.includes("excel"))
@@ -245,6 +245,27 @@ export class ChecklistDocumentComponent implements OnInit {
     });
     this.originationService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
+        this.updateStatus("Submit");
+      }
+    });
+  }
+
+  /**
+   * To update the status this method will call workflow api
+   * @param action
+   * @param remarks
+   */
+  updateStatus(action: string, remarks?: string): void {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.checklistRouteObj.processCycleCode;
+    payload.originationId = this.originationId;
+    payload.action = action;
+    payload.remarks = remarks;
+    this.originationService.verifyWorkflow(payload).subscribe((res) => {
+      if (res?.status == 200) {
         this.openSuccessPopup();
       }
     });
