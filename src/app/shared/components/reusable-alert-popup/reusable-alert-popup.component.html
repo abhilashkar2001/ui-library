@@ -1,4 +1,7 @@
 <div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="end">
+    <mat-icon (click)="cancel()"> cancel_presentation</mat-icon>
+  </div>
   <div class="alertImage">
     <img class="summaryIcon" src="assets/images/error-icon.svg" alt="..." />
   </div>
@@ -12,7 +15,7 @@
     class="button-section"
     fxLayout="row"
     fxLayoutGap="50px"
-    fxLayoutAlign="space-between"
+    fxLayoutAlign="center center"
   >
     <button mat-raised-button class="confirm-button" (click)="done()">
       {{ isNextButton ? "Next" : "Yes" }}
