@@ -124,8 +124,10 @@ export class CommonMobileVerificationComponent implements OnInit {
   otpChange() {}
 
   loadCountries() {
+    console.log(".......");
     this.commonService.getAllCountries().subscribe(
       (resp: any) => {
+        console.log(resp, "./////////");
         if (resp?.data) {
           this.countriesIsdCodes = resp?.data;
           const indiaIsdCode = this.countriesIsdCodes.find(

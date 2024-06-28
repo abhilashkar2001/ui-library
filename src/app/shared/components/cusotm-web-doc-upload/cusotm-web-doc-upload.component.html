@@ -1,0 +1,308 @@
+<div fxLayout="column">
+  <form
+    *ngIf="createDocumentForm"
+    fxLayout="column"
+    fxFlex="100"
+    [formGroup]="createDocumentForm"
+  >
+    <div formArrayName="otherDocument">
+      <div
+        *ngFor="let denomDetai of otherDocument().controls; let i = index"
+        class="doc_card"
+      >
+        <div fxFlex="98%" fxLayout="column" [formGroupName]="i">
+          <div fxLayout="column" class="outer-div" fxFlex="100">
+            <div fxLayout="column">
+              <ng-container
+                *ngIf="
+                  checkListDocList?.nonRequiredDocument?.length > 0 ||
+                  denomDetai.value.documentType
+                "
+              >
+                <mat-card class="card-subdiv">
+                  <div
+                    appDragDrop
+                    class="doc_upload"
+                    fxFlex="100"
+                    #fileInput
+                    (onFileDropped)="onFileDropped($event, i)"
+                    [ngClass]="[
+                      denomDetai.value.documentType &&
+                      denomDetai.value.docRequired
+                        ? ''
+                        : 'drop_list_class'
+                    ]"
+                  >
+                    <div class="drag_drop" fxFlex="90">
+                      <h3
+                        class="text-header"
+                        *ngIf="
+                          denomDetai.value.documentType &&
+                            denomDetai.value.docRequired;
+                          else showDropList
+                        "
+                      >
+                        {{ denomDetai.value.documentType }}
+                      </h3>
+                      <ng-template #showDropList>
+                        <mat-form-field
+                          appearance="outline"
+                          class="custom-doc-field"
+                          fxFlex="95"
+                        >
+                          <mat-select formControlName="documentType">
+                            <mat-option
+                              [value]="nonReqDoc.document"
+                              *ngFor="
+                                let nonReqDoc of checkListDocList?.nonRequiredDocument
+                              "
+                              >{{ nonReqDoc.document }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                      </ng-template>
+                    </div>
+                    <button
+                      type="button"
+                      mat-raised-button
+                      class="button submit_btn"
+                      (click)="fileBrowseHandler(i)"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                  <div
+                    fxLayout="row wrap"
+                    fxFlex="100"
+                    fxLayoutGap="1%"
+                    class="uploaded_list"
+                  >
+                    <div
+                      *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                      fxFlex="32"
+                    >
+                      <div class="upload_img" fxFlex="100">
+                        <div
+                          class="img_box"
+                          [style.width]="isOtherDocVisible ? '65px' : ''"
+                        >
+                          <img [src]="getFileUrl(file)" />
+                        </div>
+                        <div class="img_container">
+                          <p class="img_name">{{ file?.name }}</p>
+                          <div
+                            class="progress-cont"
+                            *ngIf="file.progress === '100%'; else showSize"
+                          >
+                            <div
+                              class="progress"
+                              [style.width]="file.progress ?? '0%'"
+                            ></div>
+                          </div>
+                          <ng-template #showSize>
+                            <div>{{ file.size }}</div>
+                          </ng-template>
+                        </div>
+                        <mat-icon
+                          svgIcon="cancel-icon"
+                          (click)="deleteFile(fileIndx, i, file)"
+                          class="cancel-icon"
+                        ></mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="mt-24" fxLayout="column" *ngIf="isShowDisbursement">
+    <h2 class="highlight_title">Disbursement Details</h2>
+    <form
+      [formGroup]="loanDisbursementForm"
+      *ngIf="loanDisbursementForm"
+      fxLayout="row wrap"
+      fxFlex="100"
+      fxLayoutGap="1%"
+    >
+      <div fxFlex="48" class="enabled-mat-form-field">
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Disbursement Type</mat-label>
+          <mat-select
+            formControlName="disbursementType"
+            (selectionChange)="onDisbursementSelectionChanged($event.value)"
+          >
+            <mat-option
+              *ngFor="let disburse of disbursementTypeArray"
+              [value]="disburse.id"
+              >{{ disburse.values }}</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm.get('disbursementType')?.hasError('required')
+            "
+          >
+            Disbursement Type is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class="pt-12"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="accountType"
+          (change)="onChange()"
+        >
+          <mat-radio-button
+            [value]="accountType.value"
+            *ngFor="let accountType of accountTypeArr"
+            >{{ accountType.name }}</mat-radio-button
+          >&nbsp;&nbsp;
+        </mat-radio-group>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Bank Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Branch Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">IFSC Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        class="enabled-mat-form-field"
+        fxFlex="48"
+        *ngIf="disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY"
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Account Number</mat-label>
+          <input
+            *ngIf="
+              loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
+              !accountList?.length
+            "
+            matInput
+            numbersOnly
+            formControlName="accountNumber"
+          />
+          <mat-select
+            *ngIf="
+              loanDisbursementForm?.value.accountType === loanEnum.INTERNAL &&
+              accountList?.length > 0
+            "
+            formControlName="accountNumber"
+          >
+            <mat-option
+              *ngFor="let account of accountList"
+              [value]="account.originationAccNo"
+              >{{ account.originationAccNo }}</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm.get('accountNumber')?.hasError('required')
+            "
+          >
+            Account Number is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="
+              loanDisbursementForm
+                .get('accountNumber')
+                ?.hasError('invalidAccount')
+            "
+          >
+            Account Number is not valid
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
+          <input matInput numbersOnly formControlName="confirmAccountNumber" />
+        </mat-form-field>
+        <mat-error
+          class="custom-error"
+          *ngIf="
+            loanDisbursementForm?.value.confirmAccountNumber !=
+              loanDisbursementForm?.value.accountNumber &&
+            loanDisbursementForm.get('confirmAccountNumber').touched
+          "
+        >
+          Account Number is not matching
+        </mat-error>
+      </div>
+    </form>
+  </div>
+
+  <div fxLayoutGap="50px">
+    <button-loading
+      [loadingText]="loadingBtnText"
+      [type]="'submit'"
+      [disable]="isLoading && checkDocValidity()"
+      [loading]="isLoading"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button-loading>
+    <button
+      type="button"
+      mat-raised-button
+      class="button back_button"
+      (click)="onBack()"
+    >
+      Back
+    </button>
+  </div>
+</div>

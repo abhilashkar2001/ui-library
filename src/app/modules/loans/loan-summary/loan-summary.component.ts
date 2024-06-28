@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -33,10 +34,11 @@ export class LoanSummaryComponent implements OnInit {
   currencySymboll = "₹";
   otherUserInfo: any;
   personalDetails: any;
+  checkListDoc: any[] = [];
 
   constructor(
     private dialog: MatDialog,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService
@@ -46,20 +48,40 @@ export class LoanSummaryComponent implements OnInit {
     // this.getLoanSummary();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     // this.loanSummaryDetails = this.loanSummary;
-    this.getLoanSummary();
-    this.getOriginationMasterData();
+    this.getLoanSummary().then((resp) => {
+      this.getOriginationMasterData();
+      this.getCheckListDoc();
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes.loanSummary.currentValue;
   }
-
-  getLoanSummary() {
+  getCheckListDoc() {
     var originationId = sessionStorage.getItem("originationId");
     this.loanService
-      .getLoanSummary(originationId)
-      .subscribe((response: any) => {
-        this.loanSummaryDetails = response.data;
+      .getSavedChecklist(
+        originationId,
+        parseInt(sessionStorage.getItem("otherDocScreenCode")),
+        parseInt(sessionStorage.getItem("currentStage"))
+      )
+      .subscribe((resp) => {
+        if (resp?.statusCode === 200) {
+          this.checkListDoc = resp.data.filter((item) => item.docInfoModel);
+          this.cdr.detectChanges();
+        }
       });
+  }
+
+  getLoanSummary() {
+    return new Promise((resolve, reject) => {
+      var originationId = sessionStorage.getItem("originationId");
+      this.loanService
+        .getLoanSummary(originationId)
+        .subscribe((response: any) => {
+          this.loanSummaryDetails = response.data;
+          resolve("");
+        });
+    });
   }
 
   getOriginationMasterData() {

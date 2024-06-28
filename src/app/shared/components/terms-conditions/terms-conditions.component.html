@@ -18,7 +18,9 @@
   <div class="col-4">
     <span class="content-header">Loan Amount</span>
     <span class="content">
-      {{ otherUserInfo?.currencySymbol }} {{ loamAmount }}</span
+      <span class="currencySymbol">{{ otherUserInfo?.currency }} </span>&nbsp;{{
+        loamAmount | customCurrency : otherUserInfo.currency : "1.2-2"
+      }}</span
     >
   </div>
 </div>

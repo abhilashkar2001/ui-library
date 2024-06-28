@@ -1,13 +1,14 @@
-<div class="column-2">
+<div class="column-2" *ngIf="loanSummaryDetails">
   <div class="loan-summary">
     <div class="text-header">Loan Details</div>
     <div class="loan-details w-full">
       <div class="col-1">
         <span class="content-header">Loan Amount</span>
         <span class="content">
+          <span class="currencySymbol">{{ otherUserInfo?.currency }}</span>
           {{
             loanSummaryDetails?.loanDetails?.loanAmount
-              | currency : otherUserInfo.currency : true : "1.2-2"
+              | customCurrency : otherUserInfo.currency : "1.2-2"
           }}</span
         >
       </div>
@@ -21,37 +22,49 @@
       </div>
       <div class="col-3">
         <span class="content-header">EMI Amount</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.emiAmount
-            | currency : otherUserInfo.currency : true : "1.2-2"
-        }}</span>
+        <span class="content"
+          ><span class="currencySymbol">{{ otherUserInfo?.currency }} </span
+          >&nbsp;{{
+            loanSummaryDetails?.loanDetails?.emiAmount
+              | customCurrency : otherUserInfo.currency : "1.2-2"
+          }}</span
+        >
       </div>
       <div class="col-4">
         <span class="content-header">Interest Rate</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.interestRate
-        }}</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.loanDetails?.interestRate }} %</span
+        >
       </div>
       <div class="col-2">
         <span class="content-header">Interest Payable</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.interestPayable
-            | currency : otherUserInfo.currency : true : "1.2-2"
-        }}</span>
+        <span class="content"
+          ><span class="currencySymbol">{{ otherUserInfo?.currency }} </span
+          >&nbsp;{{
+            loanSummaryDetails?.loanDetails?.interestPayable
+              | customCurrency : otherUserInfo.currency : "1.2-2"
+          }}</span
+        >
       </div>
       <div class="col-3">
         <span class="content-header">Principle Amount</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.principalAmount
-            | currency : otherUserInfo.currency : true : "1.2-2"
-        }}</span>
+        <span class="content"
+          ><span class="currencySymbol">{{ otherUserInfo?.currency }} </span
+          >&nbsp;{{
+            loanSummaryDetails?.loanDetails?.principalAmount
+              | customCurrency : otherUserInfo.currency : "1.2-2"
+          }}</span
+        >
       </div>
       <div class="col-4">
         <span class="content-header">Total Payable Amount</span>
-        <span class="content">{{
-          loanSummaryDetails?.loanDetails?.totalPayableAmount
-            | currency : otherUserInfo.currency : true : "1.2-2"
-        }}</span>
+        <span class="content"
+          ><span class="currencySymbol">{{ otherUserInfo?.currency }} </span
+          >&nbsp;{{
+            loanSummaryDetails?.loanDetails?.totalPayableAmount
+              | customCurrency : otherUserInfo.currency : "1.2-2"
+          }}</span
+        >
       </div>
       <div class="col-3">
         <span class="content-header">Holder Type</span>
@@ -157,6 +170,7 @@
   </div>
   <div class="text-header">Personal Details</div>
   <ng-container *ngFor="let item of personalDetails; let i = index">
+    <div class="text-header">Personal Details</div>
     <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
       <mat-expansion-panel-header class="text-header"
         >Applicant {{ i + 1 }}</mat-expansion-panel-header
@@ -244,56 +258,58 @@
       </mat-panel-description>
     </mat-expansion-panel>
   </ng-container>
-  <div
-    class="uploaded-documents-summary"
-    *ngIf="loanSummaryDetails?.docs?.length > 0"
-  >
+  <div class="uploaded-documents-summary">
     <div class="text-header">Select KYC</div>
-    <div
-      class="bank-account-details w-full"
-      fxLayout="column"
-    >
-      <div fxLayout="row" fxLayoutGap="20px">
-        <div class="col-1">
-          <span class="content-header">Document type</span>
-          <span class="content"
-            >{{ loanSummaryDetails?.docs[0]?.documentNameValue }}
-          </span>
-        </div>
-        <div class="col-1">
-          <span class="content-header">Document Number</span>
-          <span class="content"
-            >{{ loanSummaryDetails?.docs[0]?.documentNumber }}
-          </span>
-        </div>
+    <div class="bank-account-details w-full" fxLayout="column">
+      <div class="col-1">
+        <!-- <span class="content-header">Document type</span>
+        <span class="content"
+          >{{ loanSummaryDetails?.docs[0]?.documentType }}
+        </span> -->
       </div>
-      <div fxLayout="row" fxLayoutGap="20px">
+      <div fxLayout="row wrap" fxLayoutGap="2%">
         <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
-          <app-show-document [document]="doc"> </app-show-document>
+          <div fxFlex="31" class="mt-20">
+            <app-show-document [document]="doc"> </app-show-document>
+          </div>
         </ng-container>
       </div>
     </div>
   </div>
-  <div
-    *ngFor="
-      let item of loanSummaryDetails?.documnentsInfo?.documents;
-      let i = index
-    "
-    class="uploaded-documents-summary"
-  >
+  <div class="uploaded-documents-summary">
     <div class="text-header">Loan Document</div>
     <div
       class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.documnentsInfo?.documents?.length > 0"
+      *ngIf="checkListDoc?.length > 0"
       fxLayout="column"
     >
-      <div class="col-1">
+      <!-- <div class="col-1">
         <span class="content-header">Document type</span>
-        <span class="content">{{ item?.docs[0].documentNameValue }} </span>
-      </div>
-      <div fxLayout="row" fxLayoutGap="20px">
-        <ng-container *ngFor="let doc of item.docs">
-          <app-show-document [document]="doc"> </app-show-document>
+        <span class="content"
+          >{{
+            loanSummaryDetails?.documnentsInfo?.docInfoModel[0].documentType
+          }}
+        </span>
+      </div> -->
+      <div
+        fxLayout="column"
+        fxFlex="100"
+        *ngFor="let doc of checkListDoc; let inx = index"
+        class="mt-16"
+      >
+        <ng-container *ngIf="doc?.docInfoModel?.length > 0">
+          <span class="content">{{ doc?.docInfoModel[0].documentType }} </span>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="2%">
+            <div
+              fxFlex="31"
+              class="mt-20"
+              *ngFor="let docItem of doc?.docInfoModel"
+            >
+              <div fxLayout="column">
+                <app-show-document [document]="docItem"> </app-show-document>
+              </div>
+            </div>
+          </div>
         </ng-container>
       </div>
     </div>

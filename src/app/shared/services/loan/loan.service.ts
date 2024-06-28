@@ -158,4 +158,21 @@ export class LoanService {
       `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`
     );
   }
+  getCheckListDoc(stageId, screenCode) {
+    return this.http.get<any>(
+      `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`
+    );
+  }
+
+  saveChecklist(payload) {
+    return this.http.post<any>(
+      `${baseUrl}/origination-matser/saveChecklist`,
+      payload
+    );
+  }
+  getSavedChecklist(originationId, screenCode, stageId) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenCode}&stageId=${stageId}`
+    );
+  }
 }

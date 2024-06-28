@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { DownloadService } from "app/shared/services/download.service";
-import { EmailService } from "app/shared/services/email.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
@@ -30,7 +29,6 @@ export class SuccessPopupComponent implements OnInit {
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     @Inject(MAT_DIALOG_DATA) public screenData: any,
-    private emailService: EmailService,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService,
@@ -104,16 +102,8 @@ export class SuccessPopupComponent implements OnInit {
       });
 
       if (event.operation == "Share") {
-        formData.append("filePath", report, report.name);
-        formData.append("subject", pdfFileName);
-        formData.append(
-          "body",
-          `Automatic Generated ${pdfFileName}. Find above attach`
-        );
-        formData.append("to", this.email);
-        this.emailService
-          .triggerTransactionEmail(formData)
-          .subscribe((res) => console.log(res));
+        //Send email to be implementated from service that's why
+        //existing ui implementation removed by Abhilsh
       } else {
         const url = window.URL.createObjectURL(report);
         const a = document.createElement("a");

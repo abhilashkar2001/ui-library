@@ -85,7 +85,10 @@ import { IcRowInputComponent } from "./ic-row-input/ic-row-input.component";
 import { ReusableTableComponent } from "./reusable-table/reusable-table.component";
 import { SelectSingleTransferComponent } from "./select-single-transfer/select-single-transfer.component";
 import { CustomSuccessPopupComponent } from "./custom-success-popup/custom-success-popup.component";
+import { CusotmWebDocUploadComponent } from "./cusotm-web-doc-upload/cusotm-web-doc-upload.component";
+import { PdfViewerComponent } from "./pdf-viewer/pdf-viewer.component";
 import { CibilScoreChartComponent } from "./cibil-score-chart/cibil-score-chart.component";
+import { OtherChecklistDocUploadComponent } from "./other-checklist-doc-upload/other-checklist-doc-upload.component";
 import { ReusableAlertPopupComponent } from "./reusable-alert-popup/reusable-alert-popup.component";
 
 // Pass the fusioncharts library and chart modules
@@ -146,6 +149,10 @@ const components = [
   IcRowInputComponent,
   SelectSingleTransferComponent,
   CustomSuccessPopupComponent,
+  CusotmWebDocUploadComponent,
+  PdfViewerComponent,
+  CibilScoreChartComponent,
+  OtherChecklistDocUploadComponent,
   CibilScoreChartComponent,
   ReusableAlertPopupComponent,
 ];

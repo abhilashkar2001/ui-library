@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -13,16 +12,10 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
+import { EmailService } from "app/shared/services/email.service";
 
-const {
-  SELF,
-  OWNERSHIP,
-  DUPLICATE_PRODUCT_ERROR_MESSAGE,
-  DUPLICATE_PRODUCT_HINT,
-  PRODUCT_DUPLICATION_KEY,
-  SOURCE_PAYLOAD_KEY,
-  LOADING_TEXT,
-} = CreateEnum;
+const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
+  CreateEnum;
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -74,9 +67,9 @@ export class CreateAccountLandingPageComponent {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private emailService: EmailService
   ) {
-    // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
   }
 
@@ -111,6 +104,8 @@ export class CreateAccountLandingPageComponent {
             this.componentRef.instance.personalDoc = this.personalDoc;
             if (this.personalDetails?.length > 0)
               this.componentRef.instance.isMasterSave = true;
+
+            this.componentRef.instance.accountType = "account";
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
@@ -216,6 +211,7 @@ export class CreateAccountLandingPageComponent {
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
       ownership: this.ownershipId,
+      department: this.currentUser?.department,
     };
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
@@ -234,23 +230,39 @@ export class CreateAccountLandingPageComponent {
         if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
       });
     }
-    if (value.updateMasterSave) {
+    if (value.updateMasterSave && customerInfo?.length > 0) {
       if (this.ownershipId) {
-        this.getMasterSave({
-          originationModel: originationModel,
-          customerInfo: customerInfo,
-        });
+        this.submitCheckList(value, originationModel, customerInfo);
       } else {
         this.getGeneric().then((data) => {
           let FinalOriginationModel = { ...originationModel, ownership: data };
-          this.getMasterSave({
-            originationModel: FinalOriginationModel,
-            customerInfo: customerInfo,
-          });
+          this.submitCheckList(value, FinalOriginationModel, customerInfo);
         });
       }
     } else this.next();
   };
+
+  submitCheckList(value, originationModel, customerInfo) {
+    if (value?.isCheckListDoc) {
+      const payload = {
+        documentIds: value?.otherLoanDoc,
+        originationId: this.originationModel?.originationId,
+        screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+      };
+      this.loanApi.saveChecklist(payload).subscribe((resp) => {
+        if (resp?.statusCode === 201) {
+          this.getMasterSave({
+            originationModel: originationModel,
+            customerInfo: customerInfo,
+          });
+        }
+      });
+    } else
+      this.getMasterSave({
+        originationModel: originationModel,
+        customerInfo: customerInfo,
+      });
+  }
 
   /**
    *
@@ -358,7 +370,7 @@ export class CreateAccountLandingPageComponent {
           return s1.sequence - s2.sequence;
         });
         sessionStorage.setItem(
-          "currentAccountStage",
+          "currentStage",
           resp.data.processStageList[0].id
         );
         this.factory();
@@ -396,6 +408,10 @@ export class CreateAccountLandingPageComponent {
     } else {
       this.selectedStep = num;
       sessionStorage.setItem("accountstep", String(this.selectedStep));
+      sessionStorage.setItem(
+        "currentScreenCode",
+        this.screenList[num].screenCode
+      );
       this.factory();
     }
   }
@@ -405,6 +421,10 @@ export class CreateAccountLandingPageComponent {
     this.selectedStep = tabDetails.selectedIndex;
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
+    sessionStorage.setItem(
+      "currentScreenCode",
+      this.screenList[this.selectedStep].screenCode
+    );
     if (lastStep != tabDetails.selectedIndex)
       this.showComponent(this.currentStep);
   }
@@ -456,21 +476,69 @@ export class CreateAccountLandingPageComponent {
   }
 
   done(resp?) {
-    const dialogRef = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        originationId: this.originationId,
-      },
-      width: "750px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      if (resp === true) {
-        this.tokenStore.cleanUpSessionPartially();
-        this.router.navigate(["/account/landing"]);
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.processDetails.processCycleCode;
+    payload.originationId = this.originationId;
+    payload.action = "Submit";
+
+    this.loanApi.verifyWorkFlow(payload).subscribe((resp) => {
+      if (resp?.status === 200) {
+        const dialogRef = this.dialog.open(SuccessPopupComponent, {
+          data: {
+            originationId: this.originationId,
+          },
+          width: "750px",
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+          backdropClass: "bdrop",
+        });
+        dialogRef.afterClosed().subscribe((resp) => {
+          if (resp === true) {
+            this.tokenStore.cleanUpSessionPartially();
+            this.router.navigate(["/account/landing"]);
+          }
+        });
       }
     });
+  }
+
+  sendMailLink() {
+    const email = this.personalDetails[0]?.contact?.email || "";
+    const referenceNumber = this.originationModel?.icustRefNo || "";
+    const applicantName =
+      this.personalDetails[0]?.firstName +
+      " " +
+      this.personalDetails[0]?.lastName;
+    const formData: FormData = new FormData();
+    formData.append(
+      "subject",
+      "Thank you for submitting your application through our website."
+    );
+    formData.append(
+      "body",
+      `Dear ${applicantName},\n
+Thank you for submitting your application through our website.
+
+
+We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
+Our team is currently reviewing your information and will get in touch with you shortly to discuss the next steps. \n
+
+Applicant Name: ${applicantName} \n
+Reference No: ${referenceNumber} \n
+
+Thank you for choosing us for your financial needs. 
+Best regards, `
+    );
+    formData.append("to", email);
+    this.emailService
+      .triggerTransactionEmail(formData)
+      .subscribe((res: string) => {
+        if (res) {
+        }
+      });
   }
 
   goBack() {
@@ -492,7 +560,7 @@ export class CreateAccountLandingPageComponent {
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: accountBasisDetails?.basisDetailsId,
       processCycleCode: accountBasisDetails?.processCycleCode,
-      currentStage: parseInt(sessionStorage.getItem("currentAccountStage")),
+      currentStage: parseInt(sessionStorage.getItem("currentStage")),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
       targetScreen: parseInt(resp?.targetScreen),

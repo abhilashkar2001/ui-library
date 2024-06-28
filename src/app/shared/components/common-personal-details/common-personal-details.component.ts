@@ -63,6 +63,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   genderArray: any[] = [{}];
   prefixArray: any[] = [{}];
   residenceTypeArray: any[] = [{}];
+  maritalStatusArray: any[] = [{}];
   todayDate: Date = new Date();
   listCity: any = [];
   primaryCustIndex: number = 0;
@@ -117,6 +118,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         this.buildCustomerDetailsForm(this.personalDetails);
       } else {
         this.buildCustomerDetailsForm();
+        console.log(this.docCustomerDetails, "this.docCustomerDetails");
         if (this.docCustomerDetails)
           setTimeout(() => {
             this.customerDetailsForm
@@ -128,14 +130,42 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   "DD/MM/YYYY"
                 ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
               );
-            this.customerDetailsForm
-              .get("customer")
-              ["controls"][0].get("firstName")
-              .setValue(
-                this.docCustomerDetails?.applicantName.split(" ")[0] +
-                  " " +
-                  this.docCustomerDetails?.applicantName.split(" ")[1]
+            const applicantNameArray =
+              this.docCustomerDetails?.applicantName.split(" ");
+            if (applicantNameArray && applicantNameArray.length >= 3) {
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("firstName")
+                .setValue(applicantNameArray.slice(0, 2).join(" "));
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("lastName")
+                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+            } else {
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("firstName")
+                .setValue(applicantNameArray[0]);
+              this.customerDetailsForm
+                .get("customer")
+                ["controls"][0].get("lastName")
+                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+            }
+            const address = this.customer.at(0).get("contact").get("address")[
+              "controls"
+            ][0] as FormGroup;
+            address
+              .get("pincode")
+              .patchValue(
+                JSON.parse(sessionStorage.getItem("backData")).pincode
               );
+            address
+              .get("address1")
+              .patchValue(
+                JSON.parse(sessionStorage.getItem("backData")).address1
+              );
+
+            sessionStorage.removeItem("backData");
           }, 100);
       }
     });
@@ -190,6 +220,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
           this.genderArray = resp.data["GENDER"];
           this.prefixArray = resp.data["PREFIX"];
           this.residenceTypeArray = resp.data["RESIDENCETYPE"];
+          this.maritalStatusArray = resp.data["MARITALSTATUS"];
         }
       });
   }
@@ -269,6 +300,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
       gender: [data ? data.gender : "", Validators.required],
       nationality: [data ? data.nationality : "", Validators.required],
+      maritalStatus: [data ? data.maritalStatus : "", Validators.required],
       source: data?.source ? data.source : "Website",
       kycStatus: data?.kycStatus && data.kycStatus,
       documentId: this.calculateId(data),
@@ -425,11 +457,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
     const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
     if (mobileNo) {
       if (i === 0) {
+        mobileControl.markAllAsTouched();
         mobileControl.patchValue(mobileNo);
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (String(resp)?.length != this.maxMobileLength) {
+      if (String(resp)?.length != this.maxMobileLength && i != 0) {
         mobileControl.setErrors({
           ...mobileControl.errors,
           invalidLength: true,

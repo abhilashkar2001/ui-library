@@ -78,7 +78,7 @@ export class NetBankingDashboardComponent implements OnInit {
     this.getDashboardInfo();
   }
 
-  getAccountList(res) {
+  getAccountList() {
     this.accountlist.forEach((item) => {
       if (item?.accountList)
         this.accountNumberList = [
@@ -108,6 +108,22 @@ export class NetBankingDashboardComponent implements OnInit {
             });
             this.availableBalance.push(keywiseBalance);
           });
+          sessionStorage.setItem("customer-Info", JSON.stringify(resp?.data));
+          this.selectedAcc = sessionStorage.getItem("selectAccNo")
+            ? sessionStorage.getItem("selectAccNo")
+            : resp?.data.accounts?.[0]?.accountList?.[0]?.accountNo;
+
+          const accountList = [];
+          resp?.data?.accounts?.forEach((item) => {
+            item.accountList?.forEach((element) => {
+              accountList.push(element);
+            });
+          });
+          if (accountList)
+            sessionStorage.setItem(
+              "listOfAccounts",
+              JSON.stringify(accountList)
+            );
         }
       });
   }
@@ -125,7 +141,11 @@ export class NetBankingDashboardComponent implements OnInit {
         this.corporateId
       )
       .subscribe((res: any) => {
-        this.dummyResponse = res?.data?.slice(0, 3);
+        this.dummyResponse = res?.data
+          ?.filter(
+            (resp: any) => resp?.lastUpdatedBy != this.currentUser?.userName
+          )
+          ?.slice(0, 3);
       });
   }
 

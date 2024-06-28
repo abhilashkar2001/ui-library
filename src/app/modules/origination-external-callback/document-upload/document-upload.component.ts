@@ -452,7 +452,9 @@ export class DocumentUploadComponent implements OnInit {
           width: "40%",
         });
         dialogref.afterClosed().subscribe((_) => {
-          window.close();
+          setTimeout(() => {
+            window.close();
+          }, 5000);
         });
       }
     });

@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { SignNowPopupComponent } from "../sign-now-popup/sign-now-popup.component";
 import { BranchService } from "../sign-now-popup/branch.service";
 import { SuccessModalComponent } from "../success-modal/success-modal.component";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
   selector: "app-sign-later",
@@ -13,7 +14,8 @@ export class SignLaterComponent implements OnInit {
   signatureId: any;
   constructor(
     private dialog: MatDialog,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class SignLaterComponent implements OnInit {
         const signPayload = {
           originationId: JSON.parse(sessionStorage.getItem("originationId")),
           signatureId: res?.result?.signatureId,
+          screenCode: this.sessionStorageService.getScreenId(),
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
@@ -40,8 +43,10 @@ export class SignLaterComponent implements OnInit {
                 },
                 disableClose: true,
               });
-              sucessDialog.afterClosed().subscribe((res) => {
-                window.close();
+              sucessDialog.afterClosed().subscribe((_) => {
+                setTimeout(() => {
+                  window.close();
+                }, 5000);
               });
             }
           });

@@ -1,0 +1,91 @@
+.main_container {
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background: url("/assets/images/otp.svg") no-repeat;
+  height: 100vh;
+
+  .exit-button {
+    position: absolute;
+  }
+
+  .main_title {
+    font: normal normal normal 28px/42px Gurmukhi MN;
+    color: #00205c;
+  }
+
+  .main_section {
+    .title {
+      text-align: left;
+      font: normal normal normal 18px/27px Poppins;
+      letter-spacing: 0px;
+      color: #004c97;
+      opacity: 0.9;
+    }
+
+    .heading {
+      font: normal normal 600 43px/64px Poppins;
+      letter-spacing: 0px;
+      color: #051a2d;
+      opacity: 1;
+    }
+
+    .forward-arrow-div {
+      background: #004c97 0% 0% no-repeat padding-box;
+      box-shadow: 0px 3px 6px #377dff0d;
+      height: 44px;
+      position: relative;
+      left: -32px;
+      top: 5px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top-right-radius: 7px;
+      border-bottom-right-radius: 7px;
+
+      .forward-arrow {
+        color: #fff;
+      }
+    }
+
+    .otp-text {
+      font: normal 600 14px/21px Poppins;
+
+      .mobile-no {
+        color: #5a5a5a;
+        font-weight: 100;
+      }
+    }
+
+    .resend-text {
+      font: normal normal normal 14px/47px Poppins;
+      color: #0000005c;
+
+      .resend {
+        color: #000;
+      }
+    }
+
+    .btn-div {
+      .proceed-btn {
+        background: #00205c 0% 0% no-repeat padding-box;
+        border-radius: 24px;
+        color: white;
+        width: 225px !important;
+        max-width: 225px !important;
+        font-family: "Poppins";
+        height: 40px;
+        border: none;
+      }
+    }
+  }
+  .error {
+    color: #eb0000;
+    font-weight: 500;
+    font-size: 12px;
+    position: relative;
+    left: 6px;
+    top: -14px;
+  }
+}

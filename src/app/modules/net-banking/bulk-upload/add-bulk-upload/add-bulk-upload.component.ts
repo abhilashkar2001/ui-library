@@ -144,7 +144,9 @@ export class AddBulkUploadComponent implements OnInit {
 
   openConfirmationPopup() {
     this.commonService
-      .generateOTP(this.currentUser.mobile)
+      .generateOTP(
+        JSON.parse(sessionStorage.getItem("customer-Info"))?.mobileNumber
+      )
       .subscribe((resp: any) => {
         this.otp = resp?.data;
       });
@@ -210,19 +212,21 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   customSaveBulkUpload(event) {
-    this.commonService
-      .generateOTP(this.currentUser.mobile)
-      .subscribe((resp: any) => {
-        this.otp = resp?.data;
-        this.callAllInOnePopup(event);
-      });
+    const mobile = JSON.parse(
+      sessionStorage.getItem("customer-Info")
+    )?.mobileNumber;
+    this.commonService.generateOTP(mobile).subscribe((resp: any) => {
+      this.otp = resp?.data;
+      this.callAllInOnePopup(event);
+    });
   }
 
   callAllInOnePopup(event) {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.currentUser.mobile,
+        mobile: JSON.parse(sessionStorage.getItem("customer-Info"))
+          ?.mobileNumber,
       },
       width: "750px",
       disableClose: true,

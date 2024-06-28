@@ -14,7 +14,10 @@ import { SignNowPopupComponent } from "./digital-sign/sign-now-popup/sign-now-po
 import { SignPadComponent } from "./digital-sign/sign-pad/sign-pad.component";
 import { SuccessModalComponent } from "./digital-sign/success-modal/success-modal.component";
 import { DocumentUploadComponent } from "./document-upload/document-upload.component";
-import { RemarkComponent } from './offer-letter/remark/remark.component';
+import { RemarkComponent } from "./offer-letter/remark/remark.component";
+import { ChecklistDocumentComponent } from "./checklist-document/checklist-document.component";
+import { DobVerificationComponent } from "./dob-verification/dob-verification.component";
+import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { RemarkComponent } from './offer-letter/remark/remark.component';
     SuccessModalComponent,
     DocumentUploadComponent,
     RemarkComponent,
+    ChecklistDocumentComponent,
+    DobVerificationComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +39,7 @@ import { RemarkComponent } from './offer-letter/remark/remark.component';
     FormsModule,
     FlexLayoutModule,
     SharedMaterialModule,
+    SharedComponentsModule,
     NgOtpInputModule,
     OriginationExternalCallbackRoutingModule,
   ],

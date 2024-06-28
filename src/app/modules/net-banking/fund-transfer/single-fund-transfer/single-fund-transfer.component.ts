@@ -86,7 +86,8 @@ export class SingleFundTransferComponent implements OnInit {
   fetchBenificiary() {
     this.fundTransferService.fetchBenificiary().subscribe((resp: any) => {
       if (resp?.statusCode == 200) {
-        this.transferTo = resp?.data;
+        let list = resp?.data;
+        this.transferTo = list?.filter((item) => item?.name && item?.accountNo);
       }
     });
   }

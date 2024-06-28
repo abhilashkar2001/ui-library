@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { QueryParamEnum } from "app/enum/query-param.enum";
+import { ChecklistRouteObjModel } from "app/shared/models/checklist-model";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SessionService } from "app/shared/session.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
@@ -11,63 +14,86 @@ export class CallbackComponent implements OnInit {
   constructor(
     private sessionService: SessionService,
     private tokenService: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit() {
     sessionStorage.clear();
     localStorage.clear();
-    let codeIndex = window.location.href.indexOf("code");
-    if (codeIndex != -1) {
-      let accessToken = this.getParameterByName("code");
-      this.tokenService.saveToken(accessToken);
-      this.getProfile();
-    } else {
-      window.location.href = "https://192.168.0.127:4204/";
-    }
+    /* send username and password to get Access Token */
+    let payload = {
+      username: "WEBSITE",
+      password: "Newuser@1",
+    };
+    let isRememberMe = true;
+    let otpRequired = false;
+
+    this.sessionService
+      .signin(payload, isRememberMe, otpRequired)
+      .subscribe((_) => {
+        /* get profile info */
+        this.getProfile();
+      });
   }
 
   /**
    * @method getProfile()
    */
   getProfile() {
-    this.sessionService.getProfileInfo().subscribe(
-      (res) => {
-        this.tokenService.saveUser(res);
-        if (this.getParameterByName("route") == "trade") {
-          this.router.navigate(["user/dashboard/trade/dashboard"]);
-        } else {
-          sessionStorage.setItem(
-            "customerId",
-            this.getParameterByName("customerId")
-          );
-          sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
-          sessionStorage.setItem(
-            "ReferanceNumber",
-            this.getParameterByName("referanceNumber")
-          );
-          if (
-            this.getParameterByName("customerId") != null &&
-            this.getParameterByName("mobile") != null
-          ) {
-            this.router.navigate([`/origination/otp`], {
-              queryParams: { type: `${this.getParameterByName("screen")}` },
-            });
-          } else {
-            sessionStorage.setItem(
-              "originationId",
-              JSON.stringify(this.getParameterByName("originationId"))
-            );
-            this.router.navigate([
-              `/origination/${this.getParameterByName("route")}`,
-            ]);
-          }
-        }
-      },
-      (err) => {
-        // TODO error hanndler
+    this.sessionService.getProfileInfo().subscribe((res) => {
+      this.tokenService.saveUser(res);
+      sessionStorage.setItem(
+        "customerId",
+        this.getParameterByName("customerId")
+      );
+      sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+      sessionStorage.setItem(
+        "ReferanceNumber",
+        this.getParameterByName("referanceNumber")
+      );
+      sessionStorage.setItem(
+        "type",
+        JSON.stringify(this.getParameterByName("type"))
+      );
+      this.sessionStorageService.setScreenId(
+        this.getParameterByName(QueryParamEnum.SCREEN_ID)
+      );
+      if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
+        const checklistObj: ChecklistRouteObjModel = {
+          checklistItem: this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM),
+          processStageId: this.getParameterByName(
+            QueryParamEnum.PROCESS_STAGE_ID
+          ),
+          screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
+          processCycleCode: this.getParameterByName(
+            QueryParamEnum.PROCESS_CYCLE_CODE
+          ),
+        };
+        this.sessionStorageService.setChecklistRouteObj(checklistObj);
       }
-    );
+      if (
+        this.getParameterByName("customerId") != null &&
+        this.getParameterByName("mobile") != null
+      ) {
+        this.router.navigate([`/origination/otp`], {
+          queryParams: { type: `${this.getParameterByName("screen")}` },
+        });
+      } else {
+        sessionStorage.setItem(
+          "originationId",
+          JSON.stringify(this.getParameterByName("originationId"))
+        );
+
+        this.sessionStorageService.setProcessCycleCode(
+          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE)
+        );
+
+        this.router.navigate([
+          `/origination/${this.getParameterByName("route")}`,
+        ]);
+      }
+    });
   }
 
   getParameterByName(name, url = window.location.href) {
