@@ -42,6 +42,7 @@ export interface ChecklistRouteObjModel {
   checklistItem: string[] | string | any;
   processStageId: number | string;
   screenId: number | string;
+  processCycleCode: string;
 }
 
 export class ChecklistPayloadModel {

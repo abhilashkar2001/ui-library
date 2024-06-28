@@ -8,11 +8,8 @@ import * as moment from "moment";
 import { SignNowPopupComponent } from "../../digital-sign/sign-now-popup/sign-now-popup.component";
 import { SuccessModalComponent } from "../../digital-sign/success-modal/success-modal.component";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { OriginationService } from "app/shared/services/origination.service";
 import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
-import { MatIconRegistry } from "@angular/material/icon";
-import { SessionStorageEnum } from "app/enum/session-storage.enum";
-import { EmailService } from "app/shared/services/email.service";
+import { OriginationService } from "app/shared/services/origination.service";
 
 @Component({
   selector: "app-offer-letter",
@@ -33,9 +30,8 @@ export class OfferLetterComponent implements OnInit {
     private route: Router,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
-    private originationService: OriginationService,
     private branchService: BranchService,
-    private emailService: EmailService
+    private originationService: OriginationService
   ) {}
 
   ngOnInit(): void {
@@ -110,30 +106,7 @@ export class OfferLetterComponent implements OnInit {
           .saveDigitalSignDetails(signPayload)
           .subscribe((result) => {
             if (result?.statusCode === 200 || result?.statusCode === 201) {
-              let payload = {
-                originationId: this.sessionStorageService.getOriginationId(),
-                status: "CONFIRMED",
-                userName: "WEBSITE",
-                department: "CUSTOMER",
-                remarks: "Upload signature",
-                code: "REVSIGN",
-                nextDepartment: "SALES DEPARTMENTS",
-              };
-              this.saveUpdate(payload);
-              this.triggerEmail();
-              const sucessDialog = this.dialog.open(SuccessModalComponent, {
-                width: "40%",
-                data: {
-                  screenType: "Sign Now",
-                  title: "Digital sign has been successfully recorded!",
-                },
-                disableClose: true,
-              });
-              sucessDialog.afterClosed().subscribe((_) => {
-                setTimeout(() => {
-                  window.close();
-                }, 5000);
-              });
+              this.updateStatus("Submit");
             }
           });
       } else {
@@ -141,28 +114,37 @@ export class OfferLetterComponent implements OnInit {
       }
     });
   }
-  saveUpdate(payload) {
-    this.originationService
-      .updateApprovalStatus(payload)
-      .subscribe((res: any) => console.log(res));
-  }
 
-  triggerEmail() {
-    const formData: FormData = new FormData();
-    formData.append("subject", "Thank you for submitting your signature.");
-    formData.append(
-      "body",
-      `Dear ${this.customerInfo?.firstName} ${this.customerInfo?.lastName},\n
-We are pleased to inform you that your signature for loan application ${this.customerInfo?.icustRefNo} have been successfully uploaded.\n
-Our team will review your signature and update you shortly regarding the next steps.\n
-Thank you for your cooperation`
-    );
-    formData.append("to", this.customerInfo?.contact?.email);
-    this.emailService
-      .triggerTransactionEmail(formData)
-      .subscribe((res: string) => {
-        if (res) {
-        }
-      });
+  /**
+   * To update the status this method will call workflow api
+   * @param action
+   * @param remarks
+   */
+  updateStatus(action: string, remarks?: string): void {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.sessionStorageService.getProcessCycleCode();
+    payload.originationId = this.originationId;
+    payload.action = action;
+    payload.remarks = remarks;
+    this.originationService.verifyWorkflow(payload).subscribe((res) => {
+      if (res?.status == 200) {
+        const sucessDialog = this.dialog.open(SuccessModalComponent, {
+          width: "40%",
+          data: {
+            screenType: "Sign Now",
+            title: "Digital sign has been successfully recorded!",
+          },
+          disableClose: true,
+        });
+        sucessDialog.afterClosed().subscribe((_) => {
+          setTimeout(() => {
+            window.close();
+          }, 5000);
+        });
+      }
+    });
   }
 }

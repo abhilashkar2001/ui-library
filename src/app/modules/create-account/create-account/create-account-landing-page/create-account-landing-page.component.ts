@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -13,18 +12,10 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
-import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
 import { EmailService } from "app/shared/services/email.service";
 
-const {
-  SELF,
-  OWNERSHIP,
-  DUPLICATE_PRODUCT_ERROR_MESSAGE,
-  DUPLICATE_PRODUCT_HINT,
-  PRODUCT_DUPLICATION_KEY,
-  SOURCE_PAYLOAD_KEY,
-  LOADING_TEXT,
-} = CreateEnum;
+const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
+  CreateEnum;
 
 @Component({
   selector: "app-create-account-landing-page",
@@ -79,7 +70,6 @@ export class CreateAccountLandingPageComponent {
     private cdr: ChangeDetectorRef,
     private emailService: EmailService
   ) {
-    // this.showSideBar.setToken(true);
     commonService.updateData(router.url);
   }
 
@@ -212,6 +202,7 @@ export class CreateAccountLandingPageComponent {
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
       ownership: this.ownershipId,
+      department: this.currentUser?.department,
     };
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
@@ -476,17 +467,16 @@ export class CreateAccountLandingPageComponent {
   }
 
   done(resp?) {
-    const payload = {
-      department: "CUSTOMER",
-      nextDepartment: CreateAccountConstant.DEPT_MAPPING.department,
-      remarks: "",
-      status: ApprvalStatusEnum.INITIATED,
-      code: CreateAccountConstant.DEPT_MAPPING.code,
-      originationId: this.originationId,
-      processStageId: parseInt(sessionStorage.getItem("currentStage")),
-    };
-    this.loanApi.departmentMapping(payload).subscribe((resp) => {
-      if (resp?.statusCode === 201) {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.processDetails.processCycleCode;
+    payload.originationId = this.originationId;
+    payload.action = "Submit";
+
+    this.loanApi.verifyWorkFlow(payload).subscribe((resp) => {
+      if (resp?.status === 200) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: this.originationId,
@@ -498,7 +488,6 @@ export class CreateAccountLandingPageComponent {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.sendMailLink();
             this.tokenStore.cleanUpSessionPartially();
             this.router.navigate(["/account/landing"]);
           }
@@ -506,6 +495,7 @@ export class CreateAccountLandingPageComponent {
       }
     });
   }
+
   sendMailLink() {
     const email = this.personalDetails[0]?.contact?.email || "";
     const referenceNumber = this.originationModel?.icustRefNo || "";

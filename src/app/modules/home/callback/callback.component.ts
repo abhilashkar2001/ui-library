@@ -21,14 +21,20 @@ export class CallbackComponent implements OnInit {
   ngOnInit() {
     sessionStorage.clear();
     localStorage.clear();
-    let codeIndex = window.location.href.indexOf("code");
-    if (codeIndex != -1) {
-      let accessToken = this.getParameterByName("code");
-      this.tokenService.saveToken(accessToken);
-      this.getProfile();
-    } else {
-      window.location.href = "https://192.168.0.127:4204/";
-    }
+    /* send username and password to get Access Token */
+    let payload = {
+      username: "WEBSITE",
+      password: "Newuser@1",
+    };
+    let isRememberMe = true;
+    let otpRequired = false;
+
+    this.sessionService
+      .signin(payload, isRememberMe, otpRequired)
+      .subscribe((_) => {
+        /* get profile info */
+        this.getProfile();
+      });
   }
 
   /**
@@ -60,6 +66,9 @@ export class CallbackComponent implements OnInit {
             QueryParamEnum.PROCESS_STAGE_ID
           ),
           screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
+          processCycleCode: this.getParameterByName(
+            QueryParamEnum.PROCESS_CYCLE_CODE
+          ),
         };
         this.sessionStorageService.setChecklistRouteObj(checklistObj);
       }
@@ -74,6 +83,10 @@ export class CallbackComponent implements OnInit {
         sessionStorage.setItem(
           "originationId",
           JSON.stringify(this.getParameterByName("originationId"))
+        );
+
+        this.sessionStorageService.setProcessCycleCode(
+          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE)
         );
 
         this.router.navigate([

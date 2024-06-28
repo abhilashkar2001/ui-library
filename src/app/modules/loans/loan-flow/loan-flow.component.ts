@@ -13,9 +13,6 @@ import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
-import { ApprvalStatusEnum } from "app/enum/approval-status.enum";
-import { EmailService } from "app/shared/services/email.service";
-
 @Component({
   selector: "app-loan-flow",
   templateUrl: "./loan-flow.component.html",
@@ -82,11 +79,8 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef,
-    private emailService: EmailService
-  ) {
-    // this.depositApi.setToken(true);
-  }
+    protected cdr: ChangeDetectorRef
+  ) {}
 
   /**
    * creating dynamically view of screen by iterating 'dynamicScreen' json object which match screenName.
@@ -397,7 +391,7 @@ export class LoanFlowComponent implements OnInit {
         branchId: this.currentUser.branchId,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
-        department: "SALES DEPARTMENTS",
+        department: this.currentUser?.department,
       };
       return payload;
     } else return;
@@ -725,17 +719,16 @@ export class LoanFlowComponent implements OnInit {
 
   onFlowDone() {
     const originationId = sessionStorage.getItem("originationId");
-    const payload = {
-      department: "CUSTOMER",
-      nextDepartment: LoanFlowConstants.DEPT_MAPPING.department,
-      remarks: "",
-      status: ApprvalStatusEnum.INITIATED,
-      code: LoanFlowConstants.DEPT_MAPPING.code,
-      originationId: originationId,
-      processStageId: parseInt(sessionStorage.getItem("currentStage")),
-    };
-    this.loanApi.departmentMapping(payload).subscribe((resp) => {
-      if (resp?.statusCode === 201) {
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleCode = this.processDetails.processCycleCode;
+    payload.originationId = originationId;
+    payload.action = "Submit";
+
+    this.loanApi.verifyWorkFlow(payload).subscribe((resp: any) => {
+      if (resp?.status === 200) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: originationId,
@@ -752,7 +745,6 @@ export class LoanFlowComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.sendMailLink();
             this.tokenStore.cleanUpSessionPartially();
             this.router.navigate(["loan/landing"]);
           }
@@ -761,43 +753,6 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
-  sendMailLink() {
-    const email = this.customerInfo[0]?.contact?.email || "";
-    const loanAmount = this.loanAccountInfo?.loanAmount || "";
-    const tenure = `Years ${this.loanAccountInfo?.loanTenureYear} Months ${this.loanAccountInfo?.loanTenureMonth} Days ${this.loanAccountInfo?.loanTenureDay}`;
-    const referenceNumber = this.originationModel?.icustRefNo || "";
-    const applicantName =
-      this.customerInfo[0]?.firstName + " " + this.customerInfo[0]?.lastName;
-    const formData: FormData = new FormData();
-    formData.append(
-      "subject",
-      "Thank you for submitting your loan application through our website."
-    );
-    formData.append(
-      "body",
-      `Dear ${applicantName},\n
-Thank you for submitting your loan application through our website.
-
-
-We are pleased to inform you that your application has been successfully received and forwarded to the bank.\n
-Our team is currently reviewing your information and will get in touch with you shortly to discuss the next steps. \n
-
-Applicant Name: ${applicantName} \n
-Loan Amount: ${loanAmount} \n
-Tenure: ${tenure} \n
-Reference No: ${referenceNumber} \n
-
-Thank you for choosing us for your financial needs. 
-Best regards, `
-    );
-    formData.append("to", email);
-    this.emailService
-      .triggerTransactionEmail(formData)
-      .subscribe((res: string) => {
-        if (res) {
-        }
-      });
-  }
   goBack() {
     const num = this.selectedStep - 1;
     this.cuurrentStep = this.screenList[num].screenName;

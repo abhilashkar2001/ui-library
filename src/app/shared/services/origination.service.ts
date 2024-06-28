@@ -65,18 +65,10 @@ export class OriginationService {
     );
   }
 
-  updateApprovalStatus(payload: any) {
-    return this.http.post(
-      `${MICROSERVICE_URL}/origination-matser/loanDept-mapping-save`,
-      payload
-    );
-  }
-
-  // To trigger the mail to sales department after saving the record
-  sendMailToSalesDept(payload: any) {
-    return this.http.post(
-      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/sendMailToDept`,
-      payload
+  verifyWorkflow(properties) {
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/workflow/verify`,
+      properties
     );
   }
 }
