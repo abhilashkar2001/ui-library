@@ -4,45 +4,30 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 import { SharedService } from "app/shared/shared.service";
 
 @Component({
-  selector: "app-loan-document-upload",
-  templateUrl: "./loan-document-upload.component.html",
-  styleUrls: ["./loan-document-upload.component.scss"],
+  selector: "app-other-checklist-doc-upload",
+  templateUrl: "./other-checklist-doc-upload.component.html",
+  styleUrls: ["./other-checklist-doc-upload.component.scss"],
 })
-export class LoanDocumentUploadComponent implements OnInit {
+export class OtherChecklistDocUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input() docCustomerDetails: any;
-  custId: any;
-  stepperTitle: any;
-  documentTypeArray: any[] = [{}];
-  staticData = {
-    DOCUMENTTYPE: [],
-  };
-  screenName: string = "Loan Document";
+  @Input() accountType: any;
+
   verificationType: string = "Other Document";
   documentList: any[] = [];
-  genericScreenInfo = {
-    screenName: "Loan Document",
-    staticData: {
-      DOCUMENTNAME: [],
-    },
-  };
+
   ocrProcess: boolean = false;
   checkListDocList: any[] = [];
   checkListDoc: any = [];
   docAppliName: any;
+  isDisbursement: boolean = false;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private sharedService: SharedService,
-    private loanApi: LoanService
-  ) {
-    this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
-    // this.buildDocumentForm();
-  }
+  constructor(private loanApi: LoanService) {}
 
   ngOnInit(): void {
+    if (this.accountType === "loan") this.isDisbursement = true;
     if (this.docCustomerDetails) {
       this.docAppliName = this.docCustomerDetails?.applicantName;
       sessionStorage.setItem(
@@ -69,10 +54,6 @@ export class LoanDocumentUploadComponent implements OnInit {
           this.checkListDocList = [];
         }
       });
-    // this.getGenericDetails();
-    // if (originationId) this.getOrigination(originationId);
-    this.custId = localStorage.getItem("customerId");
-    this.custId = JSON.parse(this.custId);
   }
 
   getCheckListDoc(originationId, screenCode) {
@@ -119,16 +100,6 @@ export class LoanDocumentUploadComponent implements OnInit {
             // this.documentList =
             //   resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
           }
-        }
-      });
-  }
-
-  getGenericDetails() {
-    this.sharedService
-      .genericValue(this.screenName, Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.documentTypeArray = resp.data["DOCUMENTTYPE"];
         }
       });
   }

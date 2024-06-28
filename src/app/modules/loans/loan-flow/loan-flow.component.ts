@@ -110,6 +110,8 @@ export class LoanFlowComponent implements OnInit {
           this.componentRef.instance.personalDoc = this.personalDoc;
           this.componentRef.instance.isMasterSave = true;
 
+          this.componentRef.instance.accountType = "loan";
+
           this.componentRef.instance.updateParentModel = this.updateAccount;
 
           this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
@@ -166,7 +168,7 @@ export class LoanFlowComponent implements OnInit {
         this.loanApi.saveChecklist(payload).subscribe((resp) => {
           if (resp?.statusCode === 201) {
             sessionStorage.setItem(
-              "loanDocScreenCode",
+              "otherDocScreenCode",
               sessionStorage.getItem("currentScreenCode")
             );
             this.calculateDisbursementPayload(value.loanDisbursement);

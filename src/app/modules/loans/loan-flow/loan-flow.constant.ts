@@ -7,6 +7,7 @@ import { LoanDocumentUploadComponent } from "../loan-document-upload/loan-docume
 import { LoanTermsConditionsComponent } from "../loan-terms-conditions/loan-terms-conditions.component";
 import { LoanSummaryComponent } from "../loan-summary/loan-summary.component";
 import { NationalIdUploadComponent } from "../../../shared/components/national-id-upload/national-id-upload.component";
+import { OtherChecklistDocUploadComponent } from "app/shared/components/other-checklist-doc-upload/other-checklist-doc-upload.component";
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -80,7 +81,7 @@ export class LoanFlowConstants {
       id: 5,
       key: "document",
       type: "Create Loan",
-      component: LoanDocumentUploadComponent,
+      component: OtherChecklistDocUploadComponent,
     },
     // {
     //   id: 6,
