@@ -560,6 +560,11 @@ export class LoanFlowComponent implements OnInit {
             let customId = [];
             resp.data?.customerInfo?.forEach((item, i) => {
               customId.push(item.customerId);
+              if (item.primaryCustomer)
+                sessionStorage.setItem(
+                  "customerStagingId",
+                  JSON.stringify(item.customerStagingId)
+                );
             });
             this.snack.open(`Personal Details Saved` + " !", "OK", {
               duration: 4000,

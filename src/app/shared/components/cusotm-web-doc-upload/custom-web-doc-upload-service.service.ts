@@ -10,9 +10,15 @@ export class CustomWebDocUploadServiceService {
 
   constructor(private http: HttpClient) {}
 
-  getCheckListDoc(docName, originationId, fileDesc, documentId) {
+  getCheckListDoc(
+    docName,
+    originationId,
+    fileDesc,
+    documentId,
+    customerStagingId
+  ) {
     return this.http.post<any>(
-      `${this.baseUrl}/extract-doc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`,
+      `${this.baseUrl}/pyDocument/save?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}&customerId=${customerStagingId}`,
       fileDesc
     );
   }
