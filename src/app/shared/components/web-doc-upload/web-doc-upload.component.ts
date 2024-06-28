@@ -133,7 +133,7 @@ export class WebDocUploadComponent implements OnInit {
 
   showDocument(data, i) {
     this.documentControls = this.fb.group({
-      documentNumber: [data ? data.documentNumber : "", Validators.required],
+      documentNumber: [data ? data.documentNumber : ""],
       documentType: [
         data ? parseInt(data.documentType) : "",
         Validators.required,
@@ -171,7 +171,7 @@ export class WebDocUploadComponent implements OnInit {
 
   newDenom(data?): FormGroup {
     return this.fb.group({
-      documentNumber: ["", Validators.required],
+      documentNumber: [""],
       documentType: ["", Validators.required],
       fileInfo: new FormControl([]),
       docIds: new FormControl([]),

@@ -12,7 +12,7 @@ export class DownloadService {
   constructor(private http: HttpClient) {}
   downloadloanDetailDoc(originationId) {
     return this.http.get(
-      `${this.baseUrl}/webSummary/Download?originationId=${originationId}`,
+      `${this.baseUrl}/webSummary/download?originationId=${originationId}`,
       { responseType: "arraybuffer" }
     );
   }

@@ -81,6 +81,7 @@
         <span class="content-header">Type</span>
         <span class="content">{{
           loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
+          loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         }}</span>
       </div>
       <div class="col-2" *ngIf="checkDisbursementType()">
@@ -168,6 +169,7 @@
       </div>
     </div>
   </div>
+  <div class="text-header">Personal Details</div>
   <ng-container *ngFor="let item of personalDetails; let i = index">
     <div class="text-header">Personal Details</div>
     <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
@@ -258,12 +260,8 @@
     </mat-expansion-panel>
   </ng-container>
   <div class="uploaded-documents-summary">
-    <div class="text-header">National ID</div>
-    <div
-      class="bank-account-details w-full"
-      *ngIf="loanSummaryDetails?.docs?.length > 0"
-      fxLayout="column"
-    >
+    <div class="text-header">Select KYC</div>
+    <div class="bank-account-details w-full" fxLayout="column">
       <div class="col-1">
         <!-- <span class="content-header">Document type</span>
         <span class="content"

@@ -280,6 +280,7 @@ export class CreateLoanComponent implements OnInit {
    * account number validation.
    */
   onChange() {
+    this.personalLoanDetailsForm.get("accountNumber").setValue(null);
     if (
       this.personalLoanDetailsForm.value.accountNumber &&
       this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL

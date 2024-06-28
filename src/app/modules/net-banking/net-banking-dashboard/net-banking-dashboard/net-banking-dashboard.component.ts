@@ -140,6 +140,17 @@ export class NetBankingDashboardComponent implements OnInit {
         "CREATED",
         this.corporateId
       )
+      .getSummary(
+        null,
+        null,
+        1,
+        3,
+        null,
+        null,
+        "coprateNetBanking",
+        "CREATED",
+        this.corporateId
+      )
       .subscribe((res: any) => {
         this.dummyResponse = res?.data
           ?.filter(

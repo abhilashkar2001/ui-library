@@ -366,7 +366,8 @@ export class NewReusableMatTableComponent implements OnInit {
     }
     if (changes) this.maintenanceData = changes?.UpdatedData?.currentValue;
     this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
-    this.bulkUploadFileName = this.maintenanceData?.data[0].fileName;
+    if (this.maintenanceData?.data?.length > 0)
+      this.bulkUploadFileName = this.maintenanceData?.data[0].fileName;
 
     if (this.maintenanceData?.statusCode == 200) {
       this.updateTable(

@@ -2,6 +2,16 @@
   margin-top: 5%;
 }
 
+.title-text {
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+
 // ::ng-deep .mat-select-value {
 //     color: #CACACA61 !important;
 //     font-weight: 600;
@@ -14,9 +24,10 @@
 .successfully-Otp {
   color: green;
   font-weight: 500;
-  margin-top: -18px;
-  margin-left: 42%;
-  position: absolute;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 .mobileLength-error {
   margin-top: 23px;
@@ -81,7 +92,7 @@
 
 .yeardrop {
   height: 66px !important;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   background-color: white;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
   border-radius: 8px;
@@ -89,12 +100,21 @@
     padding-bottom: 0px !important;
   }
 }
+// .mobile-verify {
+//   max-width: 90%;
+// }
 ::ng-deep
   .mobile-verify
   .inputSelect.mat-form-field-appearance-outline
   .mat-form-field-infix {
   padding: 0px;
   margin-top: -4px !important;
+}
+::ng-deep
+  .mobile-verify
+  .inputSelect.isdSelect.mat-form-field-appearance-outline
+  .mat-form-field-infix {
+  margin-top: 8px !important;
 }
 
 ::ng-deep
@@ -111,7 +131,7 @@
   margin-top: 15px !important;
 }
 :host ::ng-deep .isdSelect .mat-form-field-wrapper {
-  margin-top: 20px;
+  margin: 8px 0;
 }
 
 ::ng-deep .mob_field .mat-form-field-suffix {
@@ -138,8 +158,17 @@
   }
   .parentYearDiv {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.090196) !important;
+    border-radius: 12px;
   }
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     box-shadow: none !important;
+  }
+}
+.disableResend {
+  pointer-events: none !important;
+  color: #a1a1a1 !important;
+  cursor: default !important;
+  a {
+    cursor: default !important;
   }
 }

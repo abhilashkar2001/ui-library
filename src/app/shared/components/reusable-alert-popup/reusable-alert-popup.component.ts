@@ -12,6 +12,7 @@ import {
 })
 export class ReusableAlertPopupComponent implements OnInit {
   message: any;
+  isNextButton: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<ReusableAlertPopupComponent>
@@ -19,6 +20,7 @@ export class ReusableAlertPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = this.data?.msg;
+    if (this.data?.isNextButton) this.isNextButton = this.data.isNextButton;
   }
 
   done() {

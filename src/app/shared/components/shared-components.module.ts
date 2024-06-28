@@ -89,6 +89,7 @@ import { CusotmWebDocUploadComponent } from "./cusotm-web-doc-upload/cusotm-web-
 import { PdfViewerComponent } from "./pdf-viewer/pdf-viewer.component";
 import { CibilScoreChartComponent } from "./cibil-score-chart/cibil-score-chart.component";
 import { OtherChecklistDocUploadComponent } from "./other-checklist-doc-upload/other-checklist-doc-upload.component";
+import { ReusableAlertPopupComponent } from "./reusable-alert-popup/reusable-alert-popup.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -152,6 +153,8 @@ const components = [
   PdfViewerComponent,
   CibilScoreChartComponent,
   OtherChecklistDocUploadComponent,
+  CibilScoreChartComponent,
+  ReusableAlertPopupComponent,
 ];
 
 @NgModule({

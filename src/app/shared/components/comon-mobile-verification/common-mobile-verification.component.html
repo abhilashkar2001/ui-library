@@ -1,6 +1,6 @@
 <form [formGroup]="otpForm">
   <div class="title-text" *ngIf="!hideInfo">
-    Let’s begin with some necessary information and get you started
+    Let's begin with some necessary information and get you started
   </div>
   <div class="standard-font-blue" *ngIf="!hideInfo">
     Enter Mobile Number for Instant Login
@@ -11,7 +11,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width inputSelect isdSelect"
-          fxFlex="10"
+          fxFlex="13"
         >
           <mat-select
             class="selector-input"
@@ -33,7 +33,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width inputSelect mob_field"
-          fxFlex="100"
+          fxFlex="87"
         >
           <input
             matInput
@@ -44,7 +44,7 @@
             [maxlength]="maxMobileLength"
           />
           <button
-            class="confirm-button"
+            class="get-otp-button"
             matSuffix
             mat-raised-button
             (click)="onGetOTP()"
@@ -66,15 +66,15 @@
     <mat-error class="custom-mat-error" *ngIf="isValidMobile"
       >Mobile Number is Invalid.
     </mat-error>
-  </div>
-  <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>
-    OTP <span *ngIf="resendOtp == 1">Sent</span>
-    <span *ngIf="resendOtp > 1">Resent</span> successfully!
+    <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>
+      OTP <span *ngIf="resendOtp == 1">Sent</span>
+      <span *ngIf="resendOtp > 1">Resent</span> successfully!
+    </div>
   </div>
 
   <div
     [ngStyle]="{ display: showOtpSection ? 'block' : 'none' }"
-    style="margin-top: 30px"
+    style="margin-top: 10px"
   >
     <div class="standard-font-blue full-width mt-125">Enter OTP to verify</div>
     <div fxLayout="column" class="standard-otp-container-main">
@@ -83,17 +83,23 @@
         (onInputChange)="onOtpChange($event)"
         [config]="config"
       ></ng-otp-input>
-      <mat-error *ngIf="invalidOtp && !resendLink"
-        ><strong>Invalid OTP!</strong></mat-error
-      >
+      <mat-error *ngIf="invalidOtp"><strong>Invalid OTP!</strong></mat-error>
     </div>
     <div class="standard-font-black">
       <span
         ><a
-          ><u (click)="onGetOTP()" class="standard-font-blue"> Resend OTP</u></a
+          ><u
+            (click)="onGetOTP()"
+            class="standard-font-blue"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+          >
+            Resend OTP</u
+          ></a
         ></span
       >
-      <span *ngIf="!resendLink">({{ displaySecond }} min)</span>
+      <span *ngIf="!resendLink && displaySecond"
+        >({{ displaySecond }} sec)</span
+      >
     </div>
     <div class="standard-auth-checkbox-container">
       <mat-checkbox
@@ -102,7 +108,7 @@
         (click)="onAgreed()"
       >
         <span class="standard-font-gray">
-          I authorize DemoBank and it’s representatives to email, call or SMS
+          I authorize DemoBank and it's representatives to email, call or SMS
           me. This Consent will override any registration from DNC/NDNC
         </span>
       </mat-checkbox>

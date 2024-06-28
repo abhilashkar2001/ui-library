@@ -74,6 +74,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
   maxMobileLength: any;
   nationalityArray: any[] = [];
   customerIds: any[] = [];
+  debounceTimeout: any;
+  errorDob: any;
 
   constructor(
     private fb: FormBuilder,
@@ -286,6 +288,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
+      customerStagingId: data?.customerStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
@@ -413,14 +416,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
               this.customer.controls[i].patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
-              const nationality = this.countryArray.filter(
-                (item) => item.countryName === item.nationality
-              );
-              this.customer.controls[i]
-                .get("nationality")
-                .patchValue(
-                  nationality?.length > 0 ? nationality.countryName : ""
-                );
               this.customerDetailsForm.markAllAsTouched();
             } else {
               this.resetExceptCif(i);
@@ -430,6 +425,31 @@ export class CommonPersonalDetailsComponent implements OnInit {
           this.resetExceptCif(i);
         }
       });
+  }
+
+  debounceValue(delay: number, value: number, i): void {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+    this.debounceTimeout = setTimeout(() => {
+      const mobileControl = this.customer.at(i).get("contact").get("mobile");
+      if (i == 0)
+        this.openApi
+          .checkMobileAndProduct(
+            this.mobileVerifyInfo.basisName,
+            value,
+            this.mobileVerifyInfo.productDuplicationKey
+          )
+          .subscribe((result) => {
+            if (!result) {
+              this.allreadyProduct(mobileControl);
+            }
+          });
+    }, delay);
+  }
+
+  checkProductDuplicacy(event, i) {
+    this.debounceValue(500, event.target.value, i);
   }
 
   checkMobileValidtiy(i) {
@@ -442,20 +462,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
       }
     }
     mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (resp?.length != this.maxMobileLength && i != 0) {
-        mobileControl.setErrors({ invalidLength: true });
-      } else {
-        this.openApi
-          .checkMobileAndProduct(
-            this.mobileVerifyInfo.basisName,
-            resp,
-            this.mobileVerifyInfo.productDuplicationKey
-          )
-          .subscribe((result) => {
-            if (!result) {
-              this.allreadyProduct(mobileControl);
-            }
-          });
+      if (String(resp)?.length != this.maxMobileLength && i != 0) {
+        mobileControl.setErrors({
+          ...mobileControl.errors,
+          invalidLength: true,
+        });
       }
     });
   }
@@ -637,23 +648,23 @@ export class CommonPersonalDetailsComponent implements OnInit {
     let dateOfBirth = moment(selectedDate).format("YYYY-MMM-DD");
     console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation("Min", this.boundaries?.minimumAge, i);
+      this.showAgeValidation(i);
+      this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
     } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
-      this.showAgeValidation("Max", this.boundaries?.maximumAge, i);
+      this.showAgeValidation(i);
+      this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
     }
   }
-  showAgeValidation(type, age, i) {
-    this.snack.open(`${type} age should be ${age}`, "OK", {
-      duration: 2000,
-      verticalPosition: "top",
-      horizontalPosition: "right",
-    });
-
+  showAgeValidation(i) {
     setTimeout(() => {
       this.customerDetailsForm
         .get("customer")
         ["controls"][i].get("dateOfBirth")
         .setValue(null);
+      this.customerDetailsForm
+        .get("customer")
+        ["controls"][i].get("dateOfBirth")
+        .setErrors({ invalidDob: true });
     }, 100);
   }
   calculateAge(dateOfBirth) {

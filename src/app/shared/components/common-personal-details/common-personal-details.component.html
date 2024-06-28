@@ -5,7 +5,10 @@
         <div [formGroupName]="i">
           <div class="custom_accordin">
             <mat-accordion>
-              <mat-expansion-panel (opened)="panelOpened(i)">
+              <mat-expansion-panel
+                [expanded]="i === 0"
+                (opened)="panelOpened(i)"
+              >
                 <mat-expansion-panel-header class="customer_Header">
                   <mat-panel-description class="customer_Header_description">
                     <div fxLayout="row">
@@ -14,7 +17,8 @@
                         src="assets/images/done_icon.svg"
                       />
                       <span style="margin-left: 10px"
-                        >Applicant {{ i + 1 }}</span
+                        >Applicant
+                        {{ holderType == "joint" ? i + 1 : "" }}</span
                       >
                     </div>
                   </mat-panel-description>
@@ -162,6 +166,15 @@
                       >
                         Date Of Birth is required
                       </mat-error>
+                      <mat-error
+                        *ngIf="
+                          this.customer.controls.dateOfBirth.hasError(
+                            'invalidDob'
+                          )
+                        "
+                      >
+                        {{ errorDob }}
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -207,7 +220,7 @@
                         <mat-form-field
                           appearance="outline"
                           class="full-width inputSelect isdSelect"
-                          fxFlex="20"
+                          fxFlex="25"
                         >
                           <mat-select
                             class="selector-input"
@@ -230,7 +243,7 @@
                         <mat-form-field
                           appearance="outline"
                           class="full-width inputSelect mob_field"
-                          fxFlex="80"
+                          fxFlex="75"
                         >
                           <mat-label>Mobile Number</mat-label>
                           <input
@@ -248,6 +261,7 @@
                                 ? true
                                 : false
                             "
+                            (keyup)="checkProductDuplicacy($event, i)"
                           />
                         </mat-form-field>
                       </div>
@@ -268,6 +282,7 @@
                       class="custom-error"
                       *ngIf="
                         customer.get('contact').get('mobile').touched &&
+                        customer.get('contact').get('mobile').value &&
                         customer
                           .get('contact')
                           .get('mobile')
@@ -373,7 +388,6 @@
                             formControlName="address1"
                             name="address1"
                             noInitialSpecialCharacters
-                            specialIsAlphaNumeric
                           />
                           <mat-error
                             *ngIf="
@@ -531,7 +545,7 @@
     </div>
   </form>
 
-  <div *ngIf="!isHideField">
+  <div *ngIf="!isHideField && holderType == 'joint'">
     <div
       class="add_applicant"
       (click)="holderType == 'joint' && addCustomer(customer?.controls?.length)"

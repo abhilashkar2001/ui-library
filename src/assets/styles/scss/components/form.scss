@@ -90,6 +90,12 @@ input {
   color: #102245 !important;
   letter-spacing: -0.26px;
   font-weight: 600 !important;
+
+  &.otp-input {
+    border-radius: 12px !important;
+    height: 60px !important;
+    width: 60px !important;
+  }
 }
 
 .mat-option {
