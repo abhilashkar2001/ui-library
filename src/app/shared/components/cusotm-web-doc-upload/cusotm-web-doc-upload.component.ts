@@ -665,7 +665,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
                     parseInt(sessionStorage.getItem("originationId")),
                     file,
                     i,
-                    resp.data.documentId
+                    resp.data.documentId,
+                    sessionStorage.getItem("customerStagingId")
                   );
 
                 // else this.loder.close();
@@ -688,7 +689,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
               parseInt(sessionStorage.getItem("originationId")),
               file,
               i,
-              resp.data.documentId
+              resp.data.documentId,
+              sessionStorage.getItem("customerStagingId")
             );
 
           // else this.loder.close();
@@ -697,11 +699,17 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
-  extractDoc(docName, originationId, file, i, documentId) {
+  extractDoc(docName, originationId, file, i, documentId, customerStagingId) {
     let formData = new FormData();
     formData.append("fileName", file);
     this.docapi
-      .getCheckListDoc(docName, originationId, formData, documentId)
+      .getCheckListDoc(
+        docName,
+        originationId,
+        formData,
+        documentId,
+        customerStagingId
+      )
       .subscribe((resp) => {
         if (resp) {
           if (
