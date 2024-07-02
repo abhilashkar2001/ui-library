@@ -261,7 +261,7 @@ export class WebDocUploadComponent implements OnInit {
     );
     // try {
     const res: any = await this.sharedService
-      .readAadharData(formdata)
+      .readAadharFrontData(formdata)
       .toPromise();
     if (res?.statusCode == 200) {
       if (

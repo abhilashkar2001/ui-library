@@ -449,27 +449,42 @@ export class CusotmWebDocUploadComponent implements OnInit {
   async readDocument(file, i) {
     this.ocrPass = false;
     const formdata = new FormData();
+    const backFormdata = new FormData();
+    formdata.append("file", file);
     formdata.append("image", file);
     formdata.append("lang", "eng");
     formdata.append(
       "imageType",
       this.getDocTypeforScan(this.hideSelect[0].toLowerCase(), i)
     );
+    backFormdata.append("file", file);
     try {
-      const res: any = await this.sharedService
-        .readAadharData(formdata)
-        .toPromise();
+      let service =
+        formdata.get("imageType") === "adhaar_back"
+          ? this.sharedService.readAadhaarBackData(backFormdata)
+          : this.sharedService.readAadharFrontData(formdata);
+
+      const res: any = await service.toPromise();
       if (res?.statusCode == 200) {
-        this.documentInfo = res?.data;
-        if (res.data?.address1 && res.data?.pincode) {
+        const convertedResp = {};
+        for (let item of res?.data?.data) {
+          convertedResp[item?.label === "dob" ? "dateOfBirth" : item?.label] =
+            item.value;
+        }
+        this.documentInfo = convertedResp;
+        res.data = convertedResp;
+
+        // Aadhaar Back Scan
+        if (this.documentInfo?.address && this.documentInfo?.pincode) {
           let backData = {
-            address1: res.data?.address1,
-            pincode: res.data?.pincode,
+            address1: this.documentInfo?.address,
+            pincode: this.documentInfo?.pincode,
           };
           sessionStorage.setItem("backData", JSON.stringify(backData));
         }
-        if (res?.data?.adhaarNumber != "Details not found") {
-          this.nationalIdNo = res?.data?.adhaarNumber;
+
+        if (res?.data?.aadhaarNumber != "Details not found") {
+          this.nationalIdNo = res?.data?.aadhaarNumber;
         }
         if (
           Object.keys(res?.data).filter(
@@ -494,7 +509,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
 
           // if document details not found or document is invalid.
           if (
-            (res.data?.adhaarNumber == "Detail not found" ||
+            (res.data?.aadhaarNumber == "Detail not found" ||
               res.data?.panNumber == "Detail not found" ||
               res.data?.passportNumber == "Detail not found") &&
             res.data?.dateOfBirth == "Detail not found"
@@ -516,7 +531,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
               );
             if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
               if (
-                res.data?.adhaarNumber.replace(/\s/g, "") !=
+                res.data?.aadhaarNumber.replace(/\s/g, "") !=
                 this.otherDocument()["controls"][i]?.get("documentNumber").value
               ) {
                 // this.documentDataMissMatch(`Document number`, file, i);
