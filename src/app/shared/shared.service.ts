@@ -8,7 +8,7 @@ import { environment } from "environments/environment";
 export class SharedService {
   protected baseUrl = environment.microServiceURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   genericValue(screenName: string, genericName: string[]) {
     return this.http.get<any>(
@@ -23,8 +23,17 @@ export class SharedService {
     });
   }
 
-  public readAadharData(data) {
-    return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
+  // Aadhaar Front API
+  // public readAadharData(data) {
+  //   return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
+  // }
+  public readAadharFrontData(data) {
+    return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-front`, data);
+  }
+
+  // Aadhaar Back API
+  public readAadhaarBackData(data) {
+    return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-back`, data);
   }
 
   deleteDocument(documentId) {
