@@ -130,26 +130,27 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   "DD/MM/YYYY"
                 ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
               );
-            const applicantNameArray =
-              this.docCustomerDetails?.applicantName.split(" ");
-            if (applicantNameArray && applicantNameArray.length >= 3) {
+            const applicantNameArray = this.docCustomerDetails?.applicantName
+              ? this.docCustomerDetails?.applicantName?.split(" ")
+              : [];
+            if (applicantNameArray && applicantNameArray?.length >= 3) {
               this.customerDetailsForm
                 .get("customer")
                 ["controls"][0].get("firstName")
-                .setValue(applicantNameArray.slice(0, 2).join(" "));
+                .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
               this.customerDetailsForm
                 .get("customer")
                 ["controls"][0].get("lastName")
-                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+                .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             } else {
               this.customerDetailsForm
                 .get("customer")
                 ["controls"][0].get("firstName")
-                .setValue(applicantNameArray[0]);
+                .setValue(applicantNameArray?.[0]);
               this.customerDetailsForm
                 .get("customer")
                 ["controls"][0].get("lastName")
-                .setValue(applicantNameArray[applicantNameArray.length - 1]);
+                .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             }
             const address = this.customer.at(0).get("contact").get("address")[
               "controls"
