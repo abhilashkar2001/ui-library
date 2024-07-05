@@ -470,6 +470,9 @@ export class CusotmWebDocUploadComponent implements OnInit {
         for (let item of res?.data?.data) {
           convertedResp[item?.label === "dob" ? "dateOfBirth" : item?.label] =
             item.value;
+          if (item?.label === "gender") {
+            convertedResp[item?.label] = item?.value;
+          }
         }
         this.documentInfo = convertedResp;
         res.data = convertedResp;
@@ -527,7 +530,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
                 index,
                 i,
                 res.data?.name,
-                res.data?.dateOfBirth
+                res.data?.dateOfBirth,
+                res.data?.gender
               );
             if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
               if (
@@ -567,11 +571,12 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
-  updateFileInfo(index, i, name, dateOfBirth) {
+  updateFileInfo(index, i, name, dateOfBirth, gender) {
     this.otherDocument().controls[i].get("fileInfo").value[index] = {
       ...this.otherDocument().controls[i].get("fileInfo").value[index],
       applicantName: name,
       dateOfBirth: dateOfBirth,
+      gender: gender,
     };
 
     console.log(
@@ -672,7 +677,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
                   index,
                   i,
                   this.documentInfo?.name,
-                  this.documentInfo?.dateOfBirth
+                  this.documentInfo?.dateOfBirth,
+                  this.documentInfo?.gender
                 );
                 if (this.isOtherDocVisible)
                   this.extractDoc(

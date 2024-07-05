@@ -152,6 +152,15 @@ export class CommonPersonalDetailsComponent implements OnInit {
                 ["controls"][0].get("lastName")
                 .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             }
+            let gender = this.genderArray.find(
+              (e) =>
+                e.values.toLowerCase() ===
+                this.docCustomerDetails?.gender?.toLowerCase()
+            )?.id;
+            this.customerDetailsForm
+              .get("customer")
+              ["controls"][0].get("gender")
+              .setValue(gender);
             const address = this.customer.at(0).get("contact").get("address")[
               "controls"
             ][0] as FormGroup;
@@ -385,22 +394,24 @@ export class CommonPersonalDetailsComponent implements OnInit {
       .subscribe((value) => {
         if (value) {
           if (value.toString().length) {
-            this.loanApi
-              .fetchStateCityByZipcode(value)
-              .subscribe((res: any) => {
-                if (res?.statusCode === 200) {
-                  addressControl.patchValue(res?.data?.[0]);
-                  addressControl
-                    .get("countryName")
-                    .patchValue(res?.data?.[0]?.countryName);
-                  addressControl
-                    .get("cityName")
-                    .patchValue(res?.data?.[0]?.city);
-                  addressControl
-                    .get("stateName")
-                    .patchValue(res?.data?.[0]?.state);
-                }
-              });
+            setTimeout(() => {
+              this.loanApi
+                .fetchStateCityByZipcode(value)
+                .subscribe((res: any) => {
+                  if (res?.statusCode === 200) {
+                    addressControl.patchValue(res?.data?.[0]);
+                    addressControl
+                      .get("countryName")
+                      .patchValue(res?.data?.[0]?.countryName);
+                    addressControl
+                      .get("cityName")
+                      .patchValue(res?.data?.[0]?.city);
+                    addressControl
+                      .get("stateName")
+                      .patchValue(res?.data?.[0]?.state);
+                  }
+                });
+            }, 1000);
           }
         }
       });

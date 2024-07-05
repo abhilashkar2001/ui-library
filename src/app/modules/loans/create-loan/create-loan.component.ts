@@ -358,33 +358,29 @@ export class CreateLoanComponent implements OnInit {
       .values.toLowerCase();
     sessionStorage.setItem("loanHolderType", holder);
     this.getOwnershipIdByGeneric(holder);
-    this.loanApi.submitLoanDetail(this.calculatePayload()).subscribe((resp) => {
-      if (resp?.statusCode === 201) {
-        this.snack.open(`Create Loan Details Saved !`, "OK", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-        });
-        sessionStorage.setItem("loanDisburseId", resp.data.id);
-        sessionStorage.setItem(
-          "tenureYear",
-          this.personalLoanDetailsForm.value.tenureYear
-        );
-        sessionStorage.setItem(
-          "tenureMonth",
-          this.personalLoanDetailsForm.value.tenureMonth
-        );
-        sessionStorage.setItem(
-          "tenureDays",
-          this.personalLoanDetailsForm.value.tenureDays
-        );
-        this.updateParentModel({
-          updateMasterSave: false,
-          disbursementDetails: resp.data,
-        });
-        this.onCustomSubmit.emit(this.personalLoanDetailsForm);
-      }
+    this.snack.open(`Create Loan Details Saved !`, "OK", {
+      duration: 4000,
+      verticalPosition: "top",
+      horizontalPosition: "right",
     });
+    sessionStorage.setItem("loanDisburseId", this.calculatePayload().id);
+    sessionStorage.setItem(
+      "tenureYear",
+      this.personalLoanDetailsForm.value.tenureYear
+    );
+    sessionStorage.setItem(
+      "tenureMonth",
+      this.personalLoanDetailsForm.value.tenureMonth
+    );
+    sessionStorage.setItem(
+      "tenureDays",
+      this.personalLoanDetailsForm.value.tenureDays
+    );
+    this.updateParentModel({
+      updateMasterSave: false,
+      disbursementDetails: this.calculatePayload(),
+    });
+    this.onCustomSubmit.emit(this.personalLoanDetailsForm);
   }
 
   /**

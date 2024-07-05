@@ -26,16 +26,8 @@ export class LoanTermsConditionsComponent implements OnInit {
   ngOnInit(): void {}
 
   onConfirm() {
-    const originationId = sessionStorage.getItem("originationId");
-    var mapPayload = {
-      id: parseInt(sessionStorage.getItem("loanDisburseId")),
-      originationId: parseInt(originationId),
-    };
-
-    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
-      this.updateParentModel({ updateMasterSave: false });
-      this.onCustomSubmit.emit({ gotoNext: true });
-    });
+    this.updateParentModel({ updateMasterSave: false });
+    this.onCustomSubmit.emit({ gotoNext: true });
   }
 
   onBack() {
