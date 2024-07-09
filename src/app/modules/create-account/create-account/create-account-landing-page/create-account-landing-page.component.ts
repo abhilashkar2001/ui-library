@@ -316,6 +316,10 @@ export class CreateAccountLandingPageComponent {
           "originationId",
           resp?.data?.originationModel?.originationId
         );
+        sessionStorage.setItem(
+          "customerStagingId",
+          JSON.stringify(resp?.data?.customerInfo[0]?.customerStagingId)
+        );
         this.originationModel = resp.data?.originationModel;
         //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
         //        dynamically wherever it has been asked.
