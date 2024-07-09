@@ -21,7 +21,7 @@ import { environment } from "environments/environment";
 export class ChecklistDocumentComponent implements OnInit {
   checklistDocumentForm: FormGroup;
   refNumber: string;
-  title: string = "Loan Document Upload";
+  title: string = "Document Upload";
   originationId: number = 3507;
   checklistDocuments;
   checklistRouteObj: ChecklistRouteObjModel;
@@ -77,7 +77,7 @@ export class ChecklistDocumentComponent implements OnInit {
       description: [data?.summary ?? ""],
       fileType: [
         this.formatDocumentType(
-          data?.documentTypes?.map((item) => item?.toLowerCase()),
+          data?.documentTypesValue?.map((item) => item?.toLowerCase()),
           data?.documentName
         ) ?? "",
       ],
