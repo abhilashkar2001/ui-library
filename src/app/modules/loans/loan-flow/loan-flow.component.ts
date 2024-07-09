@@ -227,6 +227,7 @@ export class LoanFlowComponent implements OnInit {
       disbursementType: data.disbursementType,
       bankCode: store.bankCode,
       branchCode: store.branchCode,
+      originationId: parseInt(sessionStorage.getItem("originationId")),
     };
     if (
       data.disbursementTypeValue.includes(
@@ -305,10 +306,12 @@ export class LoanFlowComponent implements OnInit {
     this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0];
+        this.cdr.detectChanges();
         this.mobileVerifyInfo = {
           ...this.mobileVerifyInfo,
           basisName: this.productDetails.basisName,
         };
+        this.cdr.detectChanges();
       }
     });
   }
@@ -582,7 +585,7 @@ export class LoanFlowComponent implements OnInit {
               resp?.data?.originationModel?.originationId
             );
             sessionStorage.removeItem("loanDoc");
-            this.updateWebDisbursment();
+            this.next();
           }
         });
     });
