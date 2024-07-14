@@ -10,6 +10,7 @@ import { SuccessModalComponent } from "../../digital-sign/success-modal/success-
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
 import { OriginationService } from "app/shared/services/origination.service";
+import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-offer-letter",
@@ -23,6 +24,10 @@ export class OfferLetterComponent implements OnInit {
   signatureId: any;
   customerInfo: any;
   download: any;
+  staticData = {
+    CUSTOMERRESPONSE: [],
+  };
+  CUSTOMERRESPONSE: any[] = [];
   constructor(
     private offerIssueService: OfferIssueService,
     private tokenStorageService: TokenStorageService,
@@ -31,7 +36,8 @@ export class OfferLetterComponent implements OnInit {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private branchService: BranchService,
-    private originationService: OriginationService
+    private originationService: OriginationService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +45,7 @@ export class OfferLetterComponent implements OnInit {
     this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.generatePdf();
+    this.fetchGenericValues();
   }
 
   generatePdf() {
@@ -52,6 +59,15 @@ export class OfferLetterComponent implements OnInit {
         this.dataLocalUrl.changingThisBreaksApplicationSecurity =
           this.dataLocalUrl.changingThisBreaksApplicationSecurity +
           "#toolbar=0";
+      });
+  }
+  fetchGenericValues() {
+    this.sharedService
+      .genericValue("Offer Accept / Reject", Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.CUSTOMERRESPONSE = resp.data["CUSTOMERRESPONSE"];
+        }
       });
   }
 
@@ -75,7 +91,11 @@ export class OfferLetterComponent implements OnInit {
     payload.dateOfOfferAcceptOrReject = moment(new Date()).format(
       "DD-MMM-YYYY"
     );
-    payload.customerResponse = response;
+    let id = this.CUSTOMERRESPONSE.find((item) =>
+      item?.values?.includes(response)
+    )?.id;
+    payload.customerResponse = id;
+
     payload.originationId = this.originationId;
     this.offerIssueService
       .postOfferAcceptRejectDetails(payload)
