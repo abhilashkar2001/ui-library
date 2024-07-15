@@ -14,6 +14,7 @@ import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: "app-loan-flow",
@@ -82,7 +83,8 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef
+    protected cdr: ChangeDetectorRef,
+    private cookieService: CookieService
   ) {}
 
   /**
@@ -766,6 +768,17 @@ export class LoanFlowComponent implements OnInit {
 
     this.loanApi.verifyWorkFlow(payload).subscribe((resp: any) => {
       if (resp?.status === 200) {
+        // REMOVE SESSION ID AFTER FLOW SUBMIT
+        const cookieExists: boolean = this.cookieService.check("JSESSIONID");
+        console.log("isExist?", cookieExists);
+        if (cookieExists) {
+          this.cookieService.delete("JSESSIONID", "/", "192.168.0.17", true);
+          console.log("Removed sessionid");
+          
+        }
+        this.cookieService.deleteAll("/", "192.168.0.17");
+        // END SESSION ID CHNAGES
+
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: originationId,
