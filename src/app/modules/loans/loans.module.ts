@@ -32,7 +32,7 @@ import { EducationLoanCalculatorComponent } from "./loan-calculator/education-lo
 import { KnowYourEmiComponent } from "./loan-calculator/education-loan-calculator/know-your-emi/know-your-emi.component";
 import { TaxBenefitsComponent } from "./loan-calculator/education-loan-calculator/tax-benefits/tax-benefits.component";
 import { NationalIdUploadComponent } from "../../shared/components/national-id-upload/national-id-upload.component";
-import { CookieService } from 'ngx-cookie-service';
+// import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     LoansComponent,
@@ -69,6 +69,6 @@ import { CookieService } from 'ngx-cookie-service';
     SharedComponentsModule,
     FlexLayoutModule,
   ],
-  providers:[CookieService],
+  // providers:[CookieService],
 })
 export class LoansModule {}
