@@ -26,7 +26,7 @@ export class StagingSuccessAreaComponent implements OnInit {
       this.originationSVC.getCompletedtages(this.originationId).subscribe((res)=>{
         if(res){
           let i = res?.data.findIndex((e)=> e.moduleStatus == "INPROGRESS");
-          if(i > -1 ){
+          if(i < 0 ){
             clearInterval(interval)
           }
           this.updatedResult = res?.data
