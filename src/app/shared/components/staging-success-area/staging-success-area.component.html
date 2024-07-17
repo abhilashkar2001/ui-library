@@ -1,11 +1,13 @@
-
-    <div class="container">
-        <div class="wrapper">
-          <ul class="sessions">
-            <li *ngFor="let item of updatedResult ">
-              <div class="time">Processing Time : {{item?.processingTime}}</div>
-              <p>{{item?.name}}</p>
-            </li>
-          </ul>
-        </div>
-      </div> 
+<div class="container">
+  <div class="wrapper" fxFlex="100%">
+    <ul class="sessions" fxFlex="100%" fxLayout="column">
+      <ng-container *ngFor="let item of updatedResult; let i = index; ">
+        <li fxFlex="100%" fxLayout="column" [ngClass]="item?.status == 'SUCCESS' ? 'success':'failure'">
+          <div fxFlex="100%" class="time"> {{item?.name}}</div>
+          <p>Status: {{item?.status}}</p>
+          <span *ngIf="i < updatedResult.length-1" [ngClass]="item?.status == 'SUCCESS' ? 'timeSuccess':'timeFailure'"> {{item?.processingTime}}ms</span>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

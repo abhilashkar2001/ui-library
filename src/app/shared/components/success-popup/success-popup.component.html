@@ -72,8 +72,8 @@
         <a target="_blank" [href]="generatedLink">{{ generatedLink }}</a>
       </div>
     </div>
-    <div class="originationDiv" *ngIf="!generatedLink">
-      <app-staging-success-area [originationId]="originationId" ></app-staging-success-area>
+    <div class="originationDiv"  *ngIf="!generatedLink && isComplete">
+      <app-staging-success-area [originationId]="originationId" [isComplete]="isComplete" ></app-staging-success-area>
     </div>
     
   </div>

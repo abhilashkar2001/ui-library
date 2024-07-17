@@ -11,8 +11,12 @@ li {
     align-items: center;
     padding: 0 1rem;
     padding: 3rem 0 0 0 ;
+    width: 100%;
 }
 
+.succress{
+    background: green;
+}
 .wrapper {
     background: #eaf6ff;
     padding: 2rem;
@@ -32,14 +36,16 @@ h1 {
 
 li {
     padding-bottom: 1.5rem;
-    border-left: 1px solid #abaaed;
+    border-left: 2px solid ;
     position: relative;
     padding-left: 20px;
     margin-left: 10px;
+    color: #abaaed;
 
     &:last-child {
-        border: 0px;
-        padding-bottom: 0;
+        border: none;
+        padding-bottom: 0px;
+        margin-left: 12px;
     }
 
     &:before {
@@ -48,20 +54,37 @@ li {
         height: 15px;
         background: white;
         border: 1px solid #4e5ed3;
-        box-shadow: 3px 3px 0px #bab5f8;
-        box-shadow: 3px 3px 0px #bab5f8;
         border-radius: 50%;
         position: absolute;
-        left: -10px;
+        left: -9px;
         top: 0px;
     }
+}
+
+li.success{
+    color: green;
+    &:before {
+        background: green !important; 
+    }
+}
+li.failure{
+    color: red;
+    &:before {
+        background: red !important; 
+    } 
+}
+.timeSuccess{
+    color: green;
+}
+.timeFailure{
+    color: red;
 }
 
 .time {
     color: #2a2839;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-
+    margin-top: -4px;
 }
 
 p {

@@ -18,7 +18,8 @@ export class LoaderInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     if (
       !window.location.href.includes("landing") &&
-      !request.url.includes("emi-calculation")
+      !request.url.includes("emi-calculation") &&
+      !request.url.includes("/task-summary/requestStatus")
     )
       this._loaderService.ShowLoader();
     return next.handle(request).pipe(
