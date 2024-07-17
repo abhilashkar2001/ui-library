@@ -71,4 +71,8 @@ export class OriginationService {
       properties
     );
   }
+
+  getCompletedtages(originationId){
+    return this.http.get<any>(`${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`)
+  }
 }

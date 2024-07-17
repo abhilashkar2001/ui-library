@@ -54,7 +54,8 @@
   </div>
 
   <div
-    fxLayout="row"
+    fxLayout="column"
+    fxLayoutAlign="center center"
     style="display: flex; justify-content: center"
     *ngIf="isStageAvilable"
   >
@@ -71,6 +72,10 @@
         <a target="_blank" [href]="generatedLink">{{ generatedLink }}</a>
       </div>
     </div>
+    <div class="originationDiv" *ngIf="!generatedLink">
+      <app-staging-success-area [originationId]="originationId" ></app-staging-success-area>
+    </div>
+    
   </div>
 
   <br />

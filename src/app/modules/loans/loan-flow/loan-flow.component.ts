@@ -778,7 +778,7 @@ export class LoanFlowComponent implements OnInit {
           },
           width: "750px",
           disableClose: true,
-          panelClass: "popup-dialog-class",
+          panelClass: ["popup-dialog-class" , "scroll-card"],
           backdropClass: "bdrop",
         });
         dialogRef.afterClosed().subscribe((resp) => {
