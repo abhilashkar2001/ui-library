@@ -3,7 +3,7 @@
     <ul class="sessions"  fxLayout="column">
       <ng-container *ngFor="let item of updatedResult; let i = index; ">
         <li fxFlex="100%" fxLayout="column" [ngClass]="item?.status == 'SUCCESS' ? 'success':'failure'">
-          <div fxFlex="100%" class="time"> {{item?.name}} : {{item?.moduleStatus}} </div>
+          <div fxFlex="100%" class="time"> {{item?.name}} : {{item?.status}} </div>
           <p>{{item?.value}}</p>
           <span *ngIf="i < updatedResult.length-1" [ngClass]="item?.status == 'SUCCESS' ? 'timeSuccess':'timeFailure'"> {{item?.processingTime}}ms</span>
         </li>
