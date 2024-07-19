@@ -24,3 +24,12 @@
 .product-desc-container {
   margin-bottom: 60px;
 }
+
+  .backgroungOverride{
+    .mat-dialog-container{
+      padding: 0;
+    }
+  }
+  .scroll-card{
+    overflow: auto;
+  }

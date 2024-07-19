@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../shared-material.module";
 import { TranslateModule } from "@ngx-translate/core";
@@ -90,6 +90,7 @@ import { PdfViewerComponent } from "./pdf-viewer/pdf-viewer.component";
 import { CibilScoreChartComponent } from "./cibil-score-chart/cibil-score-chart.component";
 import { OtherChecklistDocUploadComponent } from "./other-checklist-doc-upload/other-checklist-doc-upload.component";
 import { ReusableAlertPopupComponent } from "./reusable-alert-popup/reusable-alert-popup.component";
+import { StagingSuccessAreaComponent } from "./staging-success-area/staging-success-area.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -155,6 +156,7 @@ const components = [
   OtherChecklistDocUploadComponent,
   CibilScoreChartComponent,
   ReusableAlertPopupComponent,
+  StagingSuccessAreaComponent
 ];
 
 @NgModule({
@@ -183,5 +185,6 @@ const components = [
     CustomDateAdapter,
     { provide: DateAdapter, useClass: CustomDateAdapter },
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedComponentsModule {}

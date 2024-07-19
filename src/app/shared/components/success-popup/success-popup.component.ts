@@ -25,6 +25,7 @@ export class SuccessPopupComponent implements OnInit {
   typeOfPopup: string = "";
   generatedLink: string = "";
   appontment: any;
+  isComplete: any;
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -41,6 +42,7 @@ export class SuccessPopupComponent implements OnInit {
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
+    this.isComplete = this.data?.isComplete;
     if (this.data?.msg) this.message = this.data.msg;
     if (this.data?.generatedLink) this.generatedLink = this.data.generatedLink;
     if (this.data?.appontment) this.appontment = this.data.appontment;

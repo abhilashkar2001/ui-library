@@ -773,12 +773,13 @@ export class LoanFlowComponent implements OnInit {
             loanSummary: this.loanSummary,
             customHeader: this.customHeader,
             type: "loan",
+            isComplete:resp?.data?.isComplete,
             message:
               "Your loan application is sent. The bank will contact you soon.",
           },
           width: "750px",
           disableClose: true,
-          panelClass: "popup-dialog-class",
+          panelClass: ["popup-dialog-class" , "scroll-card"],
           backdropClass: "bdrop",
         });
         dialogRef.afterClosed().subscribe((resp) => {
