@@ -10,7 +10,7 @@ export class StagingSuccessAreaComponent implements OnInit {
  @Input() originationId:any;
  @Input() isComplete:any;
   updatedResult: any[] = [];
-  interval: NodeJS.Timer;
+  interval: any;
   constructor(private originationSVC:OriginationService,
      private cdr:ChangeDetectorRef) { }
 
