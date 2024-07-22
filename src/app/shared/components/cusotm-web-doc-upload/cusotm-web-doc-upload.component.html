@@ -170,35 +170,7 @@
         </mat-radio-group>
       </div>
 
-      <div
-        fxFlex="48"
-        class=""
-        *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
-        "
-      >
-        <mat-form-field appearance="outline" class="full-width custom-field">
-          <mat-label class="custom-mat-label">Bank Code</mat-label>
-          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
-        </mat-form-field>
-      </div>
-
-      <div
-        fxFlex="48"
-        class=""
-        *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
-        "
-      >
-        <mat-form-field appearance="outline" class="full-width custom-field">
-          <mat-label class="custom-mat-label">Branch Code</mat-label>
-          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
-        </mat-form-field>
-      </div>
-
-      <div
+      <!-- <div
         fxFlex="48"
         class=""
         *ngIf="
@@ -210,7 +182,7 @@
           <mat-label class="custom-mat-label">IFSC Code</mat-label>
           <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
         </mat-form-field>
-      </div>
+      </div> -->
 
       <div
         class="enabled-mat-form-field"
@@ -264,7 +236,7 @@
         fxFlex="48"
         class=""
         *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
           disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
@@ -282,6 +254,34 @@
         >
           Account Number is not matching
         </mat-error>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Bank Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
+        </mat-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class=""
+        *ngIf="
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+        "
+      >
+        <mat-form-field appearance="outline" class="full-width custom-field">
+          <mat-label class="custom-mat-label">Branch Code</mat-label>
+          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
+        </mat-form-field>
       </div>
     </form>
   </div>

@@ -134,4 +134,8 @@ export class SuccessPopupComponent implements OnInit {
   close() {
     this.dialogRef.close(false);
   }
+  // onClick() {
+  //   this.dialogRef.close(true);
+  //   this.router.navigate(["/tracking"]);
+  // }
 }

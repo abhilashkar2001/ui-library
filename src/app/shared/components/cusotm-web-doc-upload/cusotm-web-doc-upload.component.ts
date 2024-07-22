@@ -126,6 +126,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.docAppliName = sessionStorage.getItem("docAppliName");
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
@@ -286,6 +287,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
 
     // else {
     if (data?.length > 0) {
+      console.log(data, "data checking");
+
       data.forEach((item, i) => {
         this.hideSelect.push(item?.documentType);
         // this.showDocument(item, i);
@@ -742,7 +745,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
               message: "Would you like to continue?",
             };
             const dialogRef = this.dialog.open(WarningComponent, {
-              width: "40%",
+              width: "50%",
               data: dialogData,
               disableClose: true,
               panelClass: "",
