@@ -9,8 +9,18 @@
           <div fxFlex="100%" class="time" *ngIf="item?.status == 'SUCCESS'">
             {{ item?.name }} created {{ item?.status }}FULLY ({{ item?.value }})
           </div>
-          <div fxFlex="100%" class="time" *ngIf="item?.status != 'SUCCESS'">
-            {{ item?.name }} creation {{ item?.status }} ({{ item?.value }})
+          <div
+            *ngIf="item?.status != 'SUCCESS'"
+            fxLayout="column"
+            class="w-100"
+            fxLayoutALign="start start"
+            style="position: relative; top: 20px"
+          >
+            <div fxFlex="100%" class="time">
+              {{ item?.name }} creation {{ item?.status }}
+            </div>
+
+            <p class="w-100">{{ item?.value }}</p>
           </div>
         </div>
         <div
