@@ -15,7 +15,6 @@ import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
 
-
 @Component({
   selector: "app-loan-flow",
   templateUrl: "./loan-flow.component.html",
@@ -23,7 +22,9 @@ import { ReusableAlertPopupComponent } from "app/shared/components/reusable-aler
 })
 export class LoanFlowComponent implements OnInit {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  @ViewChild("loanDocRef") loanDocRef: CusotmWebDocUploadComponent;
+  // @ViewChild(CusotmWebDocUploadComponent)
+  // loanDocRef: CusotmWebDocUploadComponent;
+
   createLoan: FormGroup;
   customVerifyNumber: FormGroup;
   cibilScoreForm: FormGroup;
@@ -83,7 +84,7 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef,
+    protected cdr: ChangeDetectorRef
   ) {}
 
   /**
@@ -773,13 +774,13 @@ export class LoanFlowComponent implements OnInit {
             loanSummary: this.loanSummary,
             customHeader: this.customHeader,
             type: "loan",
-            isComplete:resp?.data?.isComplete,
+            isComplete: resp?.data?.isComplete,
             message:
               "Your loan application is sent. The bank will contact you soon.",
           },
           width: "750px",
           disableClose: true,
-          panelClass: ["popup-dialog-class" , "scroll-card"],
+          panelClass: ["popup-dialog-class", "scroll-card"],
           backdropClass: "bdrop",
         });
         dialogRef.afterClosed().subscribe((resp) => {
@@ -825,6 +826,6 @@ export class LoanFlowComponent implements OnInit {
   }
 
   addDoc() {
-    this.loanDocRef.addDocument();
+    this.loanApi.addNewUpload();
   }
 }

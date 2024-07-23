@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 const baseUrl = environment.microServiceURL;
 
@@ -9,7 +9,17 @@ const baseUrl = environment.microServiceURL;
   providedIn: "root",
 })
 export class LoanService {
+  private addNewUploadSubject = new Subject<void>();
+
   constructor(private http: HttpClient) {}
+
+  addNewUpload() {
+    this.addNewUploadSubject.next();
+  }
+
+  getNewUploadClicked() {
+    return this.addNewUploadSubject.asObservable();
+  }
 
   getLoanTypes(categoray): Observable<any> | any {
     return this.http.get(

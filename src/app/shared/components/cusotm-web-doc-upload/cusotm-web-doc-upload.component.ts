@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -28,6 +29,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
 
 enum CreateLoanEnum {
   INTERNAL = "internal",
@@ -39,7 +41,7 @@ enum CreateLoanEnum {
   templateUrl: "./cusotm-web-doc-upload.component.html",
   styleUrls: ["./cusotm-web-doc-upload.component.scss"],
 })
-export class CusotmWebDocUploadComponent implements OnInit {
+export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() customDocumentForm = new EventEmitter<any>();
@@ -101,6 +103,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   ocrPass: boolean = false;
   nationalIdNo: any;
   documentInfo: any;
+  addNewButtonClicked: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -131,6 +134,12 @@ export class CusotmWebDocUploadComponent implements OnInit {
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     var originationId = sessionStorage.getItem("originationId");
+
+    this.addNewUploadField();
+  }
+
+  ngOnDestroy() {
+    this.addNewButtonClicked.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -319,6 +328,20 @@ export class CusotmWebDocUploadComponent implements OnInit {
         .controls[i].get("fileInfo")
         .setValue(this.calculateDoc(data, i));
     }
+  }
+
+  addNewUploadField() {
+    this.addNewButtonClicked = this.loanApi
+      .getNewUploadClicked()
+      .subscribe(() => {
+        const documentControls = this.fb.group({
+          documentNumber: [""],
+          documentType: [""],
+          fileInfo: new FormControl([]),
+          docIds: new FormControl([]),
+        });
+        this.otherDocument().push(documentControls);
+      });
   }
 
   calculateDoc(data, i) {
