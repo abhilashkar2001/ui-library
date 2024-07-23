@@ -91,13 +91,13 @@
 
 fieldset {
   legend {
-    color: rgb(132 141 159);
+    color: rgb(16 34 69);
     font-family: Poppins;
     font-size: 75%;
     line-height: normal;
     float: none;
     margin-left: 13px;
-    opacity: 0.8;
+    opacity: 0.9;
   }
   padding: 5px;
   border-radius: 8px;
@@ -145,4 +145,7 @@ fieldset {
 :host ::ng-deep .fieldinput .mat-form-field-wrapper {
   padding-top: 0px !important;
   margin: 0 !important;
+}
+.custom-radio-grp {
+  margin-top: 0 !important;
 }
