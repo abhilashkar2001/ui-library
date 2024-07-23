@@ -1,13 +1,29 @@
 <div class="container">
   <div class="wrapper" fxFlex="100%">
-    <ul class="sessions"  fxLayout="column">
-      <ng-container *ngFor="let item of updatedResult; let i = index; ">
-        <li fxFlex="100%" fxLayout="column" [ngClass]="item?.status == 'SUCCESS' ? 'success':'failure'">
-          <div fxFlex="100%" class="time"> {{item?.name}} : {{item?.status}} </div>
-          <p>{{item?.value}}</p>
-          <span *ngIf="i < updatedResult.length-1" [ngClass]="item?.status == 'SUCCESS' ? 'timeSuccess':'timeFailure'"> {{item?.processingTime}}ms</span>
-        </li>
+    <div class="sessions" fxLayout="column">
+      <ng-container *ngFor="let item of updatedResult; let i = index">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+          <mat-icon
+            [svgIcon]="item?.status == 'SUCCESS' ? 'approveIcon' : 'rejectIcon'"
+          ></mat-icon>
+          <div fxFlex="100%" class="time" *ngIf="item?.status == 'SUCCESS'">
+            {{ item?.name }} created {{ item?.status }}FULLY ({{ item?.value }})
+          </div>
+          <div fxFlex="100%" class="time" *ngIf="item?.status != 'SUCCESS'">
+            {{ item?.name }} creation {{ item?.status }} ({{ item?.value }})
+          </div>
+        </div>
+        <div
+          fxLayoutAlign="center center"
+          class="progress"
+          *ngIf="updatedResult?.length - 1 != i"
+          [ngStyle]="{
+            background:
+              (item?.status == 'SUCCESS' ? '#008461' : '#B10000') +
+              ' 0% 0% no-repeat padding-box'
+          }"
+        ></div>
       </ng-container>
-    </ul>
+    </div>
   </div>
 </div>
