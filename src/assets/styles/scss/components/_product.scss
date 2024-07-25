@@ -20,16 +20,17 @@
   margin: 0px;
   color: #06113c;
   font-family: "Poppins", sans-serif;
+  text-align: center;
 }
 .product-desc-container {
   margin-bottom: 60px;
 }
 
-  .backgroungOverride{
-    .mat-dialog-container{
-      padding: 0;
-    }
+.backgroungOverride {
+  .mat-dialog-container {
+    padding: 0;
   }
-  .scroll-card{
-    overflow: auto;
-  }
+}
+.scroll-card {
+  overflow: auto;
+}

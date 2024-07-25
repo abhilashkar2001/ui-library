@@ -8,6 +8,7 @@ import {
   SimpleChanges,
   QueryList,
   ViewChildren,
+  HostListener,
 } from "@angular/core";
 import { NavigationService } from "../../../shared/services/navigation.service";
 import { Subscription } from "rxjs";
@@ -143,6 +144,25 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   toggleMobileNavMenu() {
     this.showMobilemenu = !this.showMobilemenu;
+  }
+
+  @HostListener("document:click", ["$event"])
+  clickOutsideDropdown(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!this.isDescendant(target, document.querySelector("nav"))) {
+      this.showMobilemenu = false;
+    }
+  }
+
+  private isDescendant(child: HTMLElement, parent: HTMLElement): boolean {
+    let node = child.parentNode;
+    while (node != null) {
+      if (node === parent) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
   }
 
   // animate the nav link underline
