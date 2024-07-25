@@ -1,11 +1,16 @@
 .calculator_container {
-  background-color: #f6faff;
   padding: 2%;
-  margin-top: 2%;
   border-radius: 16px;
   max-width: 99% !important;
-  margin-left: 4px;
-  margin-bottom: 4px;
+  border: 3px solid #fff;
+  box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
+}
+
+.calc-blue-bg {
+  background-image: url("/assets/images/Mask Group.svg") !important; /* Only the image part */
+  background-color: #f6faff; /* Make sure this is specified again */
+  background-position-y: bottom !important;
+  background-repeat: no-repeat !important;
 }
 .example-margin1 {
   margin-right: 10%;
@@ -31,7 +36,7 @@
   display: flow-root;
 }
 .vl {
-  border-left: 1px solid black;
+  border-left: 1px solid #00000030;
 }
 .calculator_subTItle {
   color: #004c97;
@@ -48,19 +53,48 @@
   margin-left: 10px;
 }
 .rdfdform {
-  background-color: #fdfcfc;
   border-radius: 16px;
 }
 .fd_container {
-  box-shadow: 0px 6.1189799308776855px 30.594900131225586px 0px #0000000d;
-  padding: 1% 0%;
-  border-radius: 39px;
-  max-height: 80%;
+  box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
+  border-radius: 20px;
+  min-height: 80%;
+  padding: 15px;
+  .maturityTitle {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .maturityDesc {
+    font-family: "Poppins", sans-serif;
+    font-size: 33px;
+    font-weight: 600;
+    color: #004c97;
+  }
+  .maturityLabel {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .maturityVal {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #004c97;
+  }
+}
+.calc-white-bg {
+  background-image: url("/assets/images/card-doddle.svg") !important;
+  background-color: #ffffff;
+  background-position-x: right;
+  background-position-y: top !important;
+  background-repeat: no-repeat !important;
 }
 .alignCenter {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid #00000030;
 }
 .alignLeft {
   align-items: inherit !important;
@@ -72,18 +106,18 @@
   left: -30px;
   top: 250px;
 }
-.designImg-1 {
-  position: absolute;
-  margin-top: -13%;
-  margin-left: 18%;
-  transform: rotate(90deg);
-}
-.designImg-2 {
-  position: absolute;
-  margin-top: 24.5%;
-  margin-left: -2%;
-  transform: rotate(270deg);
-}
+// .designImg-1 {
+//   position: absolute;
+//   margin-top: -13%;
+//   margin-left: 18%;
+//   transform: rotate(90deg);
+// }
+// .designImg-2 {
+//   position: absolute;
+//   margin-top: 24.5%;
+//   margin-left: -2%;
+//   transform: rotate(270deg);
+// }
 
 .sub-child {
   color: #a5a5a5;
@@ -94,16 +128,20 @@
   line-height: normal;
 }
 .openFDbtn {
+  width: 200px;
+  height: 50px;
+  border-radius: 40px !important;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.4px;
+  color: #fff;
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
-
-  color: white;
-  border-radius: 50px;
-  width: 153px;
-  margin-bottom: 2%;
+  margin: 10px 0%;
 }
 .icon {
-  color: grey;
-  margin-top: 5px;
+  color: #838383;
 }
 
 ::ng-deep .mat-slider-thumb {

@@ -17,21 +17,24 @@
   width: 163px;
   display: block;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -50%;
+  left: 50%;
+  transform: translate(-50%, 15%);
   background-color: #ffffff;
   min-width: 120px;
   border-radius: 10px;
-  box-shadow: 0px 10px 16px rgba(0, 0, 0, 0.1);
+  border: 4px solid #f3f3f3;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
   transition: all 0.34s ease-in-out;
+  font-family: "Poppins";
+  color: cornflowerblue;
 
-  .bg-color:hover {
-    background-color: #e3e3e3;
-  }
+  // .bg-color:hover {
+  //   background-color: #e0f0fc;
+  // }
 }
 
 .dropdown:hover .dropdown-content {
@@ -41,7 +44,18 @@
   height: auto;
   margin-top: 49px;
 }
+.dropdown:hover .dropdown-content > *:not(:last-child) {
+  position: relative;
+}
 
+.dropdown:hover .dropdown-content > *:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  border-bottom: 1px solid #b4b4b461;
+}
 .sub-value {
   // margin-left: -17px;
   width: 100%;
@@ -50,11 +64,13 @@
 }
 
 .active-button {
-  color: #004c97;
+  color: #ffffff;
+  background: cornflowerblue;
+  border-radius: 6px;
 }
 
 .bg-color {
-  background: #a2a2a227 0% 0% no-repeat padding-box;
+  // background: #a2a2a227 0% 0% no-repeat padding-box;
   transition: all 0.32s;
 }
 
@@ -63,7 +79,8 @@
   background: #ffffff;
   margin: 2px 0;
   &:hover {
-    background-color: #eee;
+    color: #2196f3;
+    background: aliceblue;
   }
 }
 .h-50 {

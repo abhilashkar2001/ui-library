@@ -25,6 +25,8 @@ import {
   Router,
 } from "@angular/router";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-header-top",
@@ -92,8 +94,17 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private el: ElementRef,
     private router: Router,
-    private tokenStore: TokenStorageService
-  ) {}
+    private tokenStore: TokenStorageService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `menu-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/menu_web.svg"
+      )
+    );
+  }
 
   ngOnInit() {
     setTimeout(() => {
