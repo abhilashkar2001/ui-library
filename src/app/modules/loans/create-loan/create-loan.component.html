@@ -238,27 +238,24 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="48" class="enabled-mat-form-field">
-        <mat-form-field
-          appearance="outline"
-          class="full-width custom-field fieldinput"
+      <div
+        fxFlex="48"
+        class="enabled-mat-form-field"
+        style="transform: translate(10px, -15px)"
+      >
+        <mat-label class="text-label">Holder Type</mat-label>
+        <mat-radio-group
+          class="custom-radio-grp"
+          formControlName="holderType"
+          fxLayout="row"
+          fxLayoutGap="10"
         >
-          <mat-label class="custom-mat-label">Holder Type</mat-label>
-          <mat-select formControlName="holderType">
-            <mat-option
-              *ngFor="let holderItem of holderTypeArray"
-              [value]="holderItem.id"
-              >{{ holderItem.values }}</mat-option
-            >
-          </mat-select>
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm.get('holderType')?.hasError('required')
-            "
-          >
-            Holder Type is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+          <div *ngFor="let holderItem of holderTypeArray">
+            <mat-radio-button [value]="holderItem.id">{{
+              holderItem.values
+            }}</mat-radio-button>
+          </div>
+        </mat-radio-group>
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
@@ -319,14 +316,14 @@
       <div fxFlex="100" class="button-section">
         <button class="confirm-button" (click)="onConfirm()">Confirm</button
         >&nbsp;&nbsp;
-        <button
+        <!-- <button
           class="edit-button"
           type="button"
           (click)="editRecord()"
           *ngIf="isReadOnly"
         >
           Edit</button
-        >&nbsp;&nbsp;
+        >&nbsp;&nbsp; -->
         <button class="exit-button" type="button" (click)="onBack()">
           Back</button
         >&nbsp;&nbsp;

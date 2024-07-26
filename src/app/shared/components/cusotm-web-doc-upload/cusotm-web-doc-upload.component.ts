@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -28,6 +29,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
 
 enum CreateLoanEnum {
   INTERNAL = "internal",
@@ -39,7 +41,7 @@ enum CreateLoanEnum {
   templateUrl: "./cusotm-web-doc-upload.component.html",
   styleUrls: ["./cusotm-web-doc-upload.component.scss"],
 })
-export class CusotmWebDocUploadComponent implements OnInit {
+export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() customDocumentForm = new EventEmitter<any>();
@@ -101,6 +103,7 @@ export class CusotmWebDocUploadComponent implements OnInit {
   ocrPass: boolean = false;
   nationalIdNo: any;
   documentInfo: any;
+  addNewButtonClicked: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -126,10 +129,17 @@ export class CusotmWebDocUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.docAppliName = sessionStorage.getItem("docAppliName");
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     var originationId = sessionStorage.getItem("originationId");
+
+    this.addNewUploadField();
+  }
+
+  ngOnDestroy() {
+    this.addNewButtonClicked.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -286,6 +296,8 @@ export class CusotmWebDocUploadComponent implements OnInit {
 
     // else {
     if (data?.length > 0) {
+      console.log(data, "data checking");
+
       data.forEach((item, i) => {
         this.hideSelect.push(item?.documentType);
         // this.showDocument(item, i);
@@ -316,6 +328,20 @@ export class CusotmWebDocUploadComponent implements OnInit {
         .controls[i].get("fileInfo")
         .setValue(this.calculateDoc(data, i));
     }
+  }
+
+  addNewUploadField() {
+    this.addNewButtonClicked = this.loanApi
+      .getNewUploadClicked()
+      .subscribe(() => {
+        const documentControls = this.fb.group({
+          documentNumber: [""],
+          documentType: [""],
+          fileInfo: new FormControl([]),
+          docIds: new FormControl([]),
+        });
+        this.otherDocument().push(documentControls);
+      });
   }
 
   calculateDoc(data, i) {
@@ -720,6 +746,44 @@ export class CusotmWebDocUploadComponent implements OnInit {
     }
   }
 
+  // extractDoc(docName, originationId, file, i, documentId, customerStagingId) {
+  //   let formData = new FormData();
+  //   formData.append("fileName", file);
+  //   this.docapi
+  //     .getCheckListDoc(
+  //       docName,
+  //       originationId,
+  //       formData,
+  //       documentId,
+  //       customerStagingId
+  //     )
+  //     .subscribe((resp) => {
+  //       if (resp) {
+  //         if (
+  //           resp?.data?.customerName?.toLowerCase() !==
+  //           this.docAppliName?.toLowerCase()
+  //         ) {
+  //           const dialogData = {
+  //             error: `National Id name is not matching with this customer.`,
+  //             message: "Would you like to continue?",
+  //           };
+  //           const dialogRef = this.dialog.open(WarningComponent, {
+  //             width: "50%",
+  //             data: dialogData,
+  //             disableClose: true,
+  //             panelClass: "",
+  //           });
+  //           dialogRef.afterClosed().subscribe((result) => {
+  //             if (result != "Ok") {
+  //               this.deleteFile(i, i, file);
+  //             }
+  //           });
+  //         }
+  //       }
+  //     });
+  // }
+
+  //for demo purpose removed error message
   extractDoc(docName, originationId, file, i, documentId, customerStagingId) {
     let formData = new FormData();
     formData.append("fileName", file);
@@ -737,25 +801,14 @@ export class CusotmWebDocUploadComponent implements OnInit {
             resp?.data?.customerName?.toLowerCase() !==
             this.docAppliName?.toLowerCase()
           ) {
-            const dialogData = {
-              error: `National Id name is not matching with this customer.`,
-              message: "Would you like to continue?",
-            };
-            const dialogRef = this.dialog.open(WarningComponent, {
-              width: "40%",
-              data: dialogData,
-              disableClose: true,
-              panelClass: "",
-            });
-            dialogRef.afterClosed().subscribe((result) => {
-              if (result != "Ok") {
-                this.deleteFile(i, i, file);
-              }
-            });
+            console.log(`National Id name is not matching with this customer.`);
+          } else {
+            console.log(`National Id name matches the customer.`);
           }
         }
       });
   }
+
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx].get("docIds")?.value;
   }

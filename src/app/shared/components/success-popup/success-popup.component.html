@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="25px">
+<div fxLayout="column">
   <!-- <div fxLayoutAlign="end center">
     <mat-icon (click)="close()">close</mat-icon>
   </div> -->
@@ -61,7 +61,8 @@
   >
     <div class="refrence_no_div">
       <div class="refrence_no_innerDiv" *ngIf="!generatedLink">
-        Application No. : <span>{{ originationId }}</span>
+        <p>Application No.</p>
+        : <span>{{ originationId }}</span>
       </div>
       <div
         class="refrence_no_innerDiv call_link"
@@ -72,10 +73,12 @@
         <a target="_blank" [href]="generatedLink">{{ generatedLink }}</a>
       </div>
     </div>
-    <div class="originationDiv"  *ngIf="!generatedLink && isComplete">
-      <app-staging-success-area [originationId]="originationId" [isComplete]="isComplete" ></app-staging-success-area>
+    <div class="originationDiv" *ngIf="!generatedLink && isComplete">
+      <app-staging-success-area
+        [originationId]="originationId"
+        [isComplete]="isComplete"
+      ></app-staging-success-area>
     </div>
-    
   </div>
 
   <br />
@@ -101,7 +104,19 @@
     >
       <img src="assets/images/Share-icon.png" alt="Share" />&nbsp;Share
     </button>
-    &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+    &nbsp;&nbsp;
+    <!-- <button
+      type="button"
+      class="shareBtn"
+      mat-raised-button
+      (click)="onClick()"
+    >
+      <img
+        src="assets/images/Download-icon.png"
+        alt="Dlownload"
+      />&nbsp;Tracking
+    </button> -->
+    &nbsp;&nbsp;
     <button
       type="button"
       class="shareBtn"

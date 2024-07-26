@@ -31,8 +31,8 @@ mat-form-field {
   mat-option {
     font-family: "Poppins", sans-serif;
     // font-weight: 600;
-    color: rgb(16, 34, 69);
-    opacity: 0.5;
+    color: #102245;
+    opacity: 0.8;
     font-size: 14px;
     margin-left: 5px;
   }
@@ -77,7 +77,8 @@ mat-form-field {
   font-weight: 600;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-label {
+.mat-form-field-appearance-outline
+  .mat-form-field-label:not(.mat-form-field-empty) {
   top: 1.54375em !important;
   margin-top: 0;
   letter-spacing: 0;
@@ -169,7 +170,7 @@ input {
     padding: 1em 0em 1em 0em !important;
   }
   .mat-form-field-flex {
-    height: 55px !important;
+    height: 50px !important;
   }
   .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
     transform: translateY(-20%) !important;
