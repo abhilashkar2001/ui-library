@@ -1,4 +1,10 @@
-<div fxFlex="100" fxLayout="row" fxLayout.lt-md="column" class="rdfdform">
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayoutGap.lt-md="10px"
+  class="rdfdform"
+>
   <div
     fxFlex="70"
     fxLayout="column"
@@ -46,6 +52,7 @@
     </div>
     <div fxFlex="100">
       <mat-slider
+        class="custom-slider"
         [value]="depositForm.value.amount"
         [max]="max"
         [min]="min"
@@ -69,20 +76,6 @@
     </div>
     <div fxLayout="column" fxFlex="100">
       <div class="calculator_subTItle">Types of Customer</div>
-      <!-- <div class="row">
-            <div class="col-md-3 col-12">
-              <mat-checkbox>Normal Customer</mat-checkbox>
-            </div>
-            <div class="col-md-3 col-12">
-              <mat-checkbox>Differently Abbled</mat-checkbox>
-            </div>
-            <div class="col-md-3 col-12">
-              <mat-checkbox>Sennior Citizen </mat-checkbox>
-            </div>
-            <div class="col-md-3 col-12">
-              <mat-checkbox>Super Senior Citizen</mat-checkbox>
-            </div>
-          </div> -->
       <mat-radio-group formControlName="typeOfCustomer" class="row">
         <mat-radio-button
           class="example-margin col-md-3 col-12"
@@ -92,12 +85,7 @@
         </mat-radio-button>
       </mat-radio-group>
     </div>
-    <div
-      fxFlex="100"
-      class="row"
-      fxLayoutAlign="space-between center"
-      style="margin-top: 27px"
-    >
+    <div fxFlex="100" class="row my-16" fxLayoutAlign="space-between center">
       <div
         [fxFlex]="fdName == 'rdCalculator' ? 33 : 48"
         class="col-md-4 col-12"
@@ -242,7 +230,6 @@
           <div fxLayout="row">
             <div class="maturityLabel">Interest Rate</div>
             <mat-icon
-              class="icon"
               svgIcon="info-outlined-gray"
               (click)="openInterestDialog()"
             ></mat-icon>

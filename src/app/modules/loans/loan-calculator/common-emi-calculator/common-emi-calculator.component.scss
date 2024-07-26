@@ -1,8 +1,12 @@
+.loanForm {
+  border-radius: 16px;
+}
 .calculator_container {
   background-color: #f6faff;
   padding: 2%;
-  margin-top: 2%;
-  width: 80%;
+  border-radius: 16px;
+  border: 3px solid #fff;
+  box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
   .yeardrop.fieldset {
     ::ng-deep .mat-form-field-outline {
       box-shadow: none !important;
@@ -10,23 +14,56 @@
     }
   }
 }
-// .loanForm {
-//   background-image: url("/assets/images/Group 13944.svg") !important;
-// }
+
+.field-set {
+  padding: 0 13px 13px;
+  height: 60px;
+  position: relative;
+  top: -5px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  border: none;
+  border-radius: 8px;
+  opacity: 1;
+
+  .fieldset-title {
+    font: 10px Poppins;
+    color: #102245;
+    margin-bottom: 4px;
+    font-weight: 600;
+    opacity: 0.5;
+    top: -1px;
+  }
+  .tenure-input {
+    position: relative;
+    font-family: Poppins;
+    color: #102245 !important;
+    opacity: 100%;
+    letter-spacing: -0.26px;
+    font-weight: 600;
+  }
+  .placeholders {
+    position: relative;
+    right: 8%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+  }
+
+  .vertical-separator {
+    height: 30px;
+    width: 1px;
+    border: #b4b4b466 1px solid;
+    margin: -5px 10px;
+    position: relative;
+    top: 5px;
+  }
+}
+
 .example-margin1 {
   margin-right: 10%;
   padding: 2%;
 }
-.yeardrop {
-  height: 60px !important;
-  margin-bottom: 25px;
-  background-color: white;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784) !important;
-  border-radius: 8px;
-  ::ng-deep .mat-form-field-wrapper {
-    padding-bottom: 0px !important;
-  }
-}
+
 ::ng-deep
   .inputSelects.mat-form-field-appearance-outline
   .mat-form-field-infix {
@@ -65,65 +102,45 @@
   }
 }
 
-:host ::ng-deep .mat-slider-thumb {
-  background: unset !important;
-  background-image: url("/assets/images/Ellipse_169.svg") !important;
-  background-repeat: no-repeat !important;
-  width: 25px !important;
-  height: 26px !important;
-  bottom: -13px !important;
-  right: -10px !important;
-}
-:host ::ng-deep .mat-slider-thumb {
-  transform: scale(1) !important;
-}
-:host ::ng-deep .mat-slider-thumb-label {
-  transform: rotate(45deg) !important;
-  background-color: unset !important;
-}
-:host ::ng-deep .mat-slider-thumb-label-text {
-  opacity: 1 !important;
-}
-:host ::ng-deep .mat-slider-track-background {
-  height: 8px !important;
-}
-:host ::ng-deep .mat-slider-track-wrapper {
-  height: 8px !important;
-  border-radius: 10px !important;
-}
-:host ::ng-deep .mat-slider-track-fill {
-  height: 8px !important;
-  background: linear-gradient(
-    270deg,
-    #051a2d -11.9%,
-    #014589 28.35%,
-    #01478e 68.71%,
-    #004c97 96.3%
-  ) !important;
-}
-
-:host :ng-deep .mat-slider-thumb {
-  width: 30px !important;
-  height: 30px !important;
-  background-color: #3498db !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  position: relative !important;
-}
-
 .parentCalculator {
   background-color: white;
   margin-left: -1%;
 }
 
 .fd_container {
-  box-shadow: 0px 6.1189799308776855px 30.594900131225586px 0px #0000000d;
-  padding: 1% 0%;
+  box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
   border-radius: 20px;
-  max-height: 80%;
-  margin-top: 15%;
+  min-height: 80%;
+  padding: 15px;
+  .maturityTitle {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .maturityDesc {
+    font-family: "Poppins", sans-serif;
+    font-size: 33px;
+    font-weight: 600;
+    color: #004c97;
+  }
+  .maturityLabel {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .maturityVal {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #004c97;
+  }
+}
+.calc-white-bg {
+  background-image: url("/assets/images/card-doddle.svg") !important;
+  background-color: #ffffff;
+  background-position-x: right;
+  background-position-y: top !important;
+  background-repeat: no-repeat !important;
 }
 .emiTitle {
   padding: 10%;
@@ -133,53 +150,37 @@
   font-size: 50px;
   font-weight: bolder;
 }
-.maturityLabels {
-  font-size: 18px;
-  line-height: 31.7px;
-  font-weight: 500;
-}
-.gd_value {
-  font-size: 15px;
-  line-height: 23px;
-  font-weight: 500;
-  color: #004c97;
-}
+
 .emiVl {
-  border-left: #c6c6c6 1px solid;
-  height: 98px;
+  border-left: 1px solid #00000030;
 }
 .renew_check {
   margin: 5% 0;
 }
 .openFDbtn {
+  width: 200px;
+  height: 50px;
+  border-radius: 40px !important;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.4px;
+  color: #fff;
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
-  color: white;
-  border-radius: 50px;
-  width: 148px;
-  padding: 4px;
+  margin: 10px 0%;
 }
 .alignCenter {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid #00000030;
 }
 .alignLeft {
   align-items: inherit !important;
   padding-left: 5%;
 }
-.designImg {
-  position: absolute;
-  width: 180px;
-  left: -30px;
-  top: 250px;
-}
-.designImg-1 {
-  position: absolute;
-  margin-top: 23%;
-  margin-left: 17.5%;
-  height: 7%;
-  transform: rotate(180deg);
-}
+
 .suffixLabel {
   position: relative;
   font-size: 16px;
