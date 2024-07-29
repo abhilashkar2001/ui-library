@@ -13,10 +13,19 @@
 .signIn {
   margin: 5%;
   .signIn_container {
-    margin-top: 5%;
+    margin-top: 5% 8%;
     h1 {
-      color: #707070;
+      color: #000000;
       font-size: 2rem;
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+    }
+    p {
+      width: 348px;
+      color: #707070;
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
     }
   }
 }
@@ -29,8 +38,8 @@
     display: block;
     font-size: 22px;
     font-weight: 700;
-    font-family: "Raleway";
-    color: #707070;
+    font-family: "poppins";
+    color: #000000;
   }
   .phoneNumber {
     display: block;
@@ -78,10 +87,23 @@
     opacity: 0.37 !important;
   }
 }
-
-.tracking_stepper {
-  background-color: #e6f2ff !important;
-  border-radius: 24px;
+.container_class {
+  height: 80vh;
+  .tracking_stepper {
+    background-image: url("/assets/images/tracking-back.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: unset !important;
+    border-radius: 24px;
+  }
+  .img_heading {
+    color: #ffffff;
+    font-size: 38px;
+  }
+  .img_paragraph {
+    color: #ffffff;
+  }
 }
 
 .tracking_sign {
@@ -90,4 +112,42 @@
 
 .btn {
   border-radius: 50px !important;
+}
+
+::ng-deep .signIn_container {
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 58px;
+  }
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end,
+  .mat-form-field-outline-gap {
+    border: 1px solid #cbcbcb !important;
+  }
+
+  .mat-form-field-outline-start {
+    border-right-style: none !important;
+  }
+  .mat-form-field-should-float .mat-form-field-outline-gap {
+    border-top-style: none !important;
+  }
+  .mat-form-field-outline-gap {
+    border-left-style: none !important;
+    border-right-style: none !important;
+  }
+  .mat-form-field-outline-end {
+    border-left-style: none !important;
+  }
+
+  .btn {
+    width: 148px;
+    height: 40px;
+    &.filled_btn {
+      background: linear-gradient(to right, #004aa0, #06113c);
+    }
+    &.stroked_btn {
+      background-color: #fff;
+      border: none !important;
+      box-shadow: 15.12px 15.12px 60.49px 0px #0000001a;
+    }
+  }
 }
