@@ -12,11 +12,13 @@
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>Open Date</mat-label>
-        <mat-datepicker-toggle
-          class="date-toggle"
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker1">
+          <mat-icon
+            svgIcon="calendar-icon"
+            matsuffix
+            matDatepickerToggleIcon
+          ></mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
         <input
           matInput
@@ -28,11 +30,13 @@
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex="23">
         <mat-label>BG Effective Date</mat-label>
-        <mat-datepicker-toggle
-          class="date-toggle"
-          matSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker">
+          <mat-icon
+            svgIcon="calendar-icon"
+            matsuffix
+            matDatepickerToggleIcon
+          ></mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <input
           matInput

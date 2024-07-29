@@ -1,16 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
+import { Component, OnInit } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
 
 @Component({
-  selector: 'app-customer-info',
-  templateUrl: './customer-info.component.html',
-  styleUrls: ['./customer-info.component.scss']
+  selector: "app-customer-info",
+  templateUrl: "./customer-info.component.html",
+  styleUrls: ["./customer-info.component.scss"],
 })
 export class CustomerInfoComponent implements OnInit {
   customerInfoForm: FormGroup;
-  constructor(private fb: FormBuilder, private dialog: MatDialog) { }
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `calendar-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/calendar.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.buildCustomerInfo({});
@@ -67,5 +81,4 @@ export class CustomerInfoComponent implements OnInit {
       }
     });
   }
-
 }

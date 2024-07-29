@@ -10,11 +10,13 @@
     <div fxFlex="24">
       <mat-label class="custom-label">Request Date</mat-label>
       <mat-form-field appearance="outline">
-        <mat-datepicker-toggle
-          class="date-toggle"
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker1">
+          <mat-icon
+            svgIcon="calendar-icon"
+            matsuffix
+            matDatepickerToggleIcon
+          ></mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
         <input
           matInput
