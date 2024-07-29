@@ -141,8 +141,8 @@
             componentName != 'Amendment LC Info'
           "
         >
-          <mat-form-field appearance="outline" fxFlex="23">
-            <mat-label>Email Id</mat-label>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label class="custom-label">Email Id</mat-label>
             <input
               matInput
               type="text"
@@ -157,19 +157,19 @@
               Please enter Valid Email
             </mat-error>
           </mat-form-field>
-          <div fxFlex="23" fxLayoutAlign="start center">
+          <div fxFlex="100" fxLayoutAlign="start center">
             <mat-slide-toggle formControlName="notifyBenificary">
             </mat-slide-toggle>
-            <span style="padding-left: 10px"
-              >Notify Beneficiary on transaction Completeion</span
-            >
+            <code style="padding-left: 10px">
+              Notify Beneficiary on transaction Completeion
+            </code>
           </div>
         </div>
       </div>
     </div>
-    <span class="note-text" *ngIf="componentName == 'BG Issuance'"
+    <code *ngIf="componentName == 'BG Issuance'"
       >Note: The bank has the discretion to modify the limit, Margin %, Margin
-      type details provided as the part of the request</span
+      type details provided as the part of the request</code
     >
   </mat-card>
 </div>

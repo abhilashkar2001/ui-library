@@ -2,10 +2,18 @@
   <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
     <div class="overView">Account Overview</div>
     <div>
-      <mat-form-field appearance="outline" class="full-width custom-field">
-        <mat-label class="custom-mat-label">search</mat-label>
-        <input matInput />
-        <mat-icon matSuffix svgIcon="search-icon"></mat-icon>
+      <mat-form-field appearance="outline">
+        <mat-label class="custom-mat-label">Search</mat-label>
+        <input
+          matInput
+          type="text"
+          class="searchInput"
+          notAllowFirstSpace
+          placeholder="{{ 'Search' }}"
+        />
+        <mat-icon matSuffix class="searchIcon" style="color: #b4b4b4">
+          search
+        </mat-icon>
       </mat-form-field>
     </div>
   </div>
@@ -102,7 +110,7 @@
                 (click)="openTransfer(transfer)"
               >
                 <img [src]="transfer.image" />
-                <div class="text-normal">{{ transfer.label }}</div>
+                <div class="text-label">{{ transfer.label }}</div>
               </mat-card>
             </div>
           </div>

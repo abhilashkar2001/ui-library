@@ -18,52 +18,51 @@
   font-weight: 600;
 }
 
-.default-expansion-panel {
-  .mat-expansion-panel-header.mat-expanded {
-    font: 16px Poppins;
-    color: #004c97;
-    font-weight: 500;
-    &:hover {
-      background: none;
-    }
-  }
-
-  .mat-expansion-panel {
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.0901960784) !important;
-    border-radius: 21px !important;
-    opacity: 1;
-    background: #b4e0ff33 0% 0% no-repeat padding-box !important;
-  }
-
-  .mat-expansion-panel-body {
-    padding: 0 !important;
-    background: #ffffff 0% 0% no-repeat padding-box;
-    border: 8px solid #f3f3f3;
-    border-radius: 21px;
-    opacity: 1;
-  }
-
-  mat-expansion-panel-header:not(.mat-expanded) {
-    margin: 0;
-    color: #004c97;
-    font-weight: 500;
-    font: 16px Poppins;
-    height: 50px;
-    &:hover {
-      background: none;
-    }
-  }
-  .minor {
-    padding-bottom: 18px;
-  }
-}
-
 .custom-expansion-panel {
   .mat-expansion-panel-header {
     font: normal normal 18px/27px Poppins;
     color: #102245;
     background: #ebf6ff 0% 0% no-repeat padding-box;
     border-radius: 8px;
+  }
+}
+
+mat-expansion-panel.default-expansion-panel {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+  border-radius: 12px !important;
+  opacity: 1;
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  .mat-expansion-panel-header.mat-expanded {
+    font: 16px Poppins;
+    font-weight: 600;
+    color: #00000f;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 10px !important;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 8px solid #f3f3f3;
+    border-radius: 12px;
+    opacity: 1;
+    font-family: "Poppins", sans-serif;
+  }
+
+  mat-expansion-panel-header:not(.mat-expanded) {
+    margin: 0;
+    color: #004896;
+    font: 16px Poppins;
+    font-weight: 600;
+    height: 50px;
+    &:hover {
+      background-color: aliceblue !important;
+      mat-panel-description {
+        color: #2196f3 !important;
+      }
+      border: 1px solid #2196f3;
+    }
+  }
+  .minor {
+    padding-bottom: 18px;
   }
 }
 .text-carbon {

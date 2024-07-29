@@ -46,8 +46,18 @@
     background-color: #e9ecf5;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    height: 44px;
-    margin-top: 5px;
+    height: 50px;
+    right: 10px;
+    position: relative;
+  }
+  .rmvbtndiv {
+    z-index: 0;
+    background-color: #e9ecf5;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    height: 50px;
+    left: 10px;
+    position: relative;
   }
   .selection_left {
     overflow: visible;
@@ -60,12 +70,14 @@
   }
 
   .addbtn {
-    padding-left: 8px;
     font-size: xxx-large;
     color: #004c97;
     cursor: pointer;
     z-index: 0;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .back {
     background-color: #ffffff;
@@ -201,6 +213,16 @@
   }
   .Select_add {
     position: relative;
+    .addbtndiv {
+      z-index: 0;
+      background-color: #e9ecf5;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      height: 46px;
+      top: 4px;
+      right: 10px;
+      position: relative;
+    }
   }
 
   .uploaded_file {

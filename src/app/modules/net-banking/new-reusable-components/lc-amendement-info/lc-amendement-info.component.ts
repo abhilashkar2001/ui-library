@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 
@@ -23,8 +25,17 @@ export class LcAmendementInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
-    private activeRoute: ActivatedRoute
-  ) { }
+    private activeRoute: ActivatedRoute,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `calendar-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/calendar.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.activeRoute.queryParamMap.subscribe((params: any) => {
@@ -44,7 +55,7 @@ export class LcAmendementInfoComponent implements OnInit {
 
   buildForm(data?) {
     console.log(this.componentType, "this.componentType");
-    if (this.componentType === 'LC Amendment') {
+    if (this.componentType === "LC Amendment") {
       this.isLcAmend = true;
     } else {
       this.isLcAmend = false;
@@ -60,31 +71,31 @@ export class LcAmendementInfoComponent implements OnInit {
       // common control end
       ...(this.isLcAmend
         ? {
-          // for lc amend
-          expDateChangeFrom: [data?.expDateChangeFrom ?? ""],
-          expDateChangeTo: [data?.expDateChangeTo ?? ""],
-          latestDtOfShipment: [data?.latestDtOfShipment ?? ""],
-          lastDtOfShipmentFrom: [data?.lastDtOfShipmentFrom ?? ""],
-          newPlcOfExpiry: [data?.newPlcOfExpiry ?? ""],
-          currPlcOfExpiry: [data?.currPlcOfExpiry ?? ""],
-          creditInfo: this.fb.group({
-            credit: this.fb.array([]),
-          }),
-        }
+            // for lc amend
+            expDateChangeFrom: [data?.expDateChangeFrom ?? ""],
+            expDateChangeTo: [data?.expDateChangeTo ?? ""],
+            latestDtOfShipment: [data?.latestDtOfShipment ?? ""],
+            lastDtOfShipmentFrom: [data?.lastDtOfShipmentFrom ?? ""],
+            newPlcOfExpiry: [data?.newPlcOfExpiry ?? ""],
+            currPlcOfExpiry: [data?.currPlcOfExpiry ?? ""],
+            creditInfo: this.fb.group({
+              credit: this.fb.array([]),
+            }),
+          }
         : {
-          // for lc physical amend start
-          oldExpiryDate: [data?.oldExpiryDate ?? ""],
-          newExpiryDate: [data?.newExpiryDate ?? ""],
-          oldLastDateShipment: [data?.oldLastDateShipment ?? ""],
-          newLastDateShipment: [data?.newLastDateShipment ?? ""],
-          current: [data?.current ?? ""],
-          amount: [data?.amount ?? ""],
-          increaseDecreaseAmount: [data?.increaseDecreaseAmount ?? ""],
-          newCurrent: [data?.newCurrent ?? ""],
-          newAmount: [data?.newAmount ?? ""],
-          comment: [data?.comment ?? ""],
-          accountList: [data?.comment ?? []],
-        }),
+            // for lc physical amend start
+            oldExpiryDate: [data?.oldExpiryDate ?? ""],
+            newExpiryDate: [data?.newExpiryDate ?? ""],
+            oldLastDateShipment: [data?.oldLastDateShipment ?? ""],
+            newLastDateShipment: [data?.newLastDateShipment ?? ""],
+            current: [data?.current ?? ""],
+            amount: [data?.amount ?? ""],
+            increaseDecreaseAmount: [data?.increaseDecreaseAmount ?? ""],
+            newCurrent: [data?.newCurrent ?? ""],
+            newAmount: [data?.newAmount ?? ""],
+            comment: [data?.comment ?? ""],
+            accountList: [data?.comment ?? []],
+          }),
     });
 
     this.updateCredit();
@@ -93,12 +104,12 @@ export class LcAmendementInfoComponent implements OnInit {
       let payload: any = {};
       payload = {
         lcType: "Amendment",
-        amendmentInfo: this.lcAmendInfoForm.value
-      }
+        amendmentInfo: this.lcAmendInfoForm.value,
+      };
       this.updateParentModel(
         {
           lcAmendmentAmendmentInfo: {
-            payload
+            payload,
           },
         },
         this.checkForm()

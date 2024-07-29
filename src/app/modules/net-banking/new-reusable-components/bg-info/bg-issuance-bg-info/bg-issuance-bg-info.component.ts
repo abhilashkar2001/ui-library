@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-bg-issuance-bg-info",
@@ -9,7 +11,18 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class BgIssuanceBgInfoComponent implements OnInit {
   @Input() bgIssuanceBgInfoForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `calendar-icon`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/calendar.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {}
 }

@@ -117,11 +117,13 @@
     <div fxFlex="24">
       <mat-label class="custom-label">Date Of Shipment</mat-label>
       <mat-form-field appearance="outline">
-        <mat-datepicker-toggle
-          class="date-toggle"
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker1">
+          <mat-icon
+            svgIcon="calendar-icon"
+            matsuffix
+            matDatepickerToggleIcon
+          ></mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
         <input
           matInput
@@ -141,11 +143,13 @@
     <div fxFlex="24">
       <mat-label class="custom-label">Due Date</mat-label>
       <mat-form-field appearance="outline">
-        <mat-datepicker-toggle
-          class="date-toggle"
-          matSuffix
-          [for]="picker2"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker2">
+          <mat-icon
+            svgIcon="calendar-icon"
+            matsuffix
+            matDatepickerToggleIcon
+          ></mat-icon>
+        </mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
         <input
           matInput
