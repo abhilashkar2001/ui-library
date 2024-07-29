@@ -1,232 +1,199 @@
-<div fxFlex="row" fxFlex="100%">
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayoutGap.lt-md="10px"
+  class="loanForm"
+>
   <div
     fxFlex="70"
     fxLayout="column"
-    fxFlex="100"
+    class="calculator_container"
     *ngIf="loanForm"
-    class="loanForm"
+    [formGroup]="loanForm"
   >
-    <form [formGroup]="loanForm" fxFlex="100">
-      <img class="designImg" src="assets/images/Mask Group.svg" />
-      <div class="calculator_container" fxLayout="column" fxFlex="100">
-        <div
-          fxLayout="row wrap"
-          fxFlex="100"
-          fxLayoutAlign="space-between center"
-        >
-          <div class="calculator_subTItle">Loan Amount</div>
-          <div>
-            <div fxFlex="100">
-              <mat-form-field
-                appearance="outline"
-                class="full-width background-white"
-              >
-                <mat-label class="custom-mat-label">Amount</mat-label>
-                <div fxLayout="row">
-                  <span>{{ otherUserInfo?.currencySymbol }}</span>
-                  <input
-                    matInput
-                    formControlName="amount"
-                    numbersOnly
-                    maxlength="18"
-                  />
-                </div>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
+    <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="space-between center">
+      <div class="calculator_subTItle">Loan Amount</div>
+      <div>
         <div fxFlex="100">
-          <mat-slider
-            [value]="loanForm.value.amount"
-            [max]="max"
-            [min]="min"
-            fxFlex="100"
-            [thumbLabel]="thumbLabel"
-            (change)="onSliderChange($event)"
-            discrete
+          <mat-form-field
+            appearance="outline"
+            class="full-width background-white"
           >
-            <input matSliderThumb #slider />
-          </mat-slider>
-        </div>
-        <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-          <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
-          <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
-        </div>
-
-        <div
-          class="row"
-          fxLayoutAlign="space-between center"
-          style="margin-top: 27px"
-        >
-          <div class="col-md-6 col-12">
-            <label class="calculator_subTItle">Tenure</label>
-            <fieldset class="yeardrop fieldset">
-              <legend visible="true" class="legend-font legend">
-                Loan Period
-              </legend>
-              <div class="parentYearDiv" fxFlex="100">
-                <div fxLayout="row" fxFlex="33.33">
-                  <mat-form-field
-                    appearance="outline"
-                    fxFlex="99"
-                    class="full-width inputSelects suffix-field"
-                  >
-                    <input
-                      matInput
-                      name="tenureYear"
-                      maxlength="2"
-                      formControlName="tenureYear"
-                      placeholder="Year"
-                      numbersOnly
-                    />
-                    <span
-                      class="suffixLabel"
-                      matSuffix
-                      *ngIf="loanForm.value.tenureYear"
-                      >Year</span
-                    >
-                  </mat-form-field>
-                  <span class="vl"></span>
-                </div>
-
-                <div fxLayout="row" fxFlex="33.33">
-                  <mat-form-field
-                    appearance="outline"
-                    class="full-width inputSelects month-suffix-field"
-                    fxFlex="99"
-                  >
-                    <input
-                      matInput
-                      name="tenureMonth"
-                      maxlength="2"
-                      formControlName="tenureMonth"
-                      placeholder="Month"
-                      numbersOnly
-                    />
-                    <div
-                      class="suffixLabel"
-                      matSuffix
-                      *ngIf="loanForm.value.tenureMonth"
-                    >
-                      Month
-                    </div>
-                  </mat-form-field>
-                  <span class="vl"></span>
-                </div>
-
-                <div fxLayout="row" fxFlex="33.33">
-                  <mat-form-field
-                    appearance="outline"
-                    class="full-width inputSelects suffix-field"
-                    fxFlex="99"
-                  >
-                    <input
-                      matInput
-                      name="tenureDays"
-                      maxlength="2"
-                      formControlName="tenureDays"
-                      placeholder="Day"
-                      numbersOnly
-                    /><span
-                      class="suffixLabel"
-                      matSuffix
-                      *ngIf="loanForm.value.tenureDays"
-                      >Day</span
-                    >
-                  </mat-form-field>
-                </div>
-              </div>
-            </fieldset>
-            <mat-error
-              class="mat-error small-error mt-12"
-              *ngIf="
-                validateTenure &&
-                (loanForm.controls['tenureYear'].value ||
-                  loanForm.controls['tenureMonth'].value ||
-                  loanForm.controls['tenureDays'].value)
-              "
-            >
-              Loan Period should be Maximum
-              {{ productDetails?.maximumTenorYear || 0 }} Years
-              {{ productDetails?.maximumTenorMonth || 0 }} Months
-              {{ productDetails?.maximumTenorDay || 0 }} Days
-            </mat-error>
-            <mat-error
-              class="mat-error small-error mt-12"
-              *ngIf="
-                validateMinimumTenure &&
-                (loanForm.controls['tenureYear'].value ||
-                  loanForm.controls['tenureMonth'].value ||
-                  loanForm.controls['tenureDays'].value)
-              "
-            >
-              Loan Period should be Minimum
-              {{ productDetails?.minimumTenorYear || 0 }} Years
-              {{ productDetails?.minimumTenorMonth || 0 }} Months
-              {{ productDetails?.minimumTenorDay || 0 }} Days
-            </mat-error>
-            <mat-error
-              class="mat-error small-error mt-12"
-              *ngIf="
-                (loanForm.get('tenureYear').touched ||
-                  loanForm.get('tenureMonth').touched ||
-                  loanForm.get('tenureDays').touched) &&
-                !checkTenurePresence
-              "
-            >
-              Loan Period is Required
-            </mat-error>
-          </div>
-          <div class="col-md-6 col-12">
-            <label
-              class="calculator_subTItle"
-              fxLayoutAlign="space-between center"
-              >Interest Rate <span>{{ interestRate }}%</span></label
-            >
-            <mat-form-field
-              appearance="outline"
-              class="full-width field-changedInput background-white"
-            >
-              <mat-label class="custom-mat-label">Percentage</mat-label>
+            <mat-label class="custom-mat-label">Amount</mat-label>
+            <div fxLayout="row">
+              <span>{{ otherUserInfo?.currencySymbol }}</span>
               <input
                 matInput
-                formControlName="interestRate"
-                minMax
-                [min]="minValue"
-                [max]="maxValue"
+                formControlName="amount"
+                numbersOnly
+                maxlength="18"
               />
-              <mat-error
-                *ngIf="
-                  loanForm.controls['interestRate'].hasError('required') &&
-                  loanForm.controls['interestRate'].touched
-                "
-              >
-                Interest Rate is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="downImage">
-          <img
-            src="assets/images/Group 13767.svg"
-            height="161px"
-            width="100%"
-          />
+            </div>
+          </mat-form-field>
         </div>
       </div>
-    </form>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap">
+      <mat-slider
+        class="custom-slider"
+        [value]="loanForm.value.amount"
+        [max]="max"
+        [min]="min"
+        fxFlex="100"
+        [thumbLabel]="thumbLabel"
+        (change)="onSliderChange($event)"
+        discrete
+      >
+        <input matSliderThumb #slider />
+      </mat-slider>
+      <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+        <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
+        <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
+      </div>
+    </div>
+
+    <div class="my-16" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10">
+      <div fxFlex="48.5" fxFlex.lt-md="100">
+        <label class="calculator_subTItle">Tenure</label>
+        <fieldset class="field-set">
+          <legend visible="true" class="fieldset-title">Loan Period</legend>
+          <div fxFlex="100">
+            <input
+              fxFlex="30"
+              matInput
+              name="tenureYear"
+              maxlength="2"
+              formControlName="tenureYear"
+              placeholder="Year"
+              numbersOnly
+              class="tenure-input pl-3"
+            />
+            <ng-container *ngIf="loanForm.value.tenureYear">
+              <span fxFlex="8" class="placeholders">
+                {{ loanForm.value.tenureYear ? "Year" : "" }}
+              </span>
+            </ng-container>
+
+            <div class="vertical-separator"></div>
+            <input
+              fxFlex="30"
+              matInput
+              name="tenureMonth"
+              maxlength="2"
+              formControlName="tenureMonth"
+              placeholder="Month"
+              numbersOnly
+              class="tenure-input pl-3"
+            />
+
+            <ng-container *ngIf="loanForm.value.tenureMonth">
+              <span fxFlex="8" class="placeholders">
+                {{ loanForm.value.tenureMonth ? "Month" : "" }}
+              </span>
+            </ng-container>
+
+            <div class="vertical-separator"></div>
+
+            <input
+              fxFlex="30"
+              matInput
+              name="tenureDays"
+              maxlength="2"
+              formControlName="tenureDays"
+              placeholder="Day"
+              numbersOnly
+              class="tenure-input pl-3"
+            />
+            <ng-container *ngIf="loanForm.value.tenureDays">
+              <span fxFlex="8" class="placeholders">
+                {{ loanForm.value.tenureDays ? "Day" : "" }}
+              </span>
+            </ng-container>
+          </div>
+        </fieldset>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateTenure &&
+            (loanForm.controls['tenureYear'].value ||
+              loanForm.controls['tenureMonth'].value ||
+              loanForm.controls['tenureDays'].value)
+          "
+        >
+          Loan Period should be Maximum
+          {{ productDetails?.maximumTenorYear || 0 }} Years
+          {{ productDetails?.maximumTenorMonth || 0 }} Months
+          {{ productDetails?.maximumTenorDay || 0 }} Days
+        </mat-error>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateMinimumTenure &&
+            (loanForm.controls['tenureYear'].value ||
+              loanForm.controls['tenureMonth'].value ||
+              loanForm.controls['tenureDays'].value)
+          "
+        >
+          Loan Period should be Minimum
+          {{ productDetails?.minimumTenorYear || 0 }} Years
+          {{ productDetails?.minimumTenorMonth || 0 }} Months
+          {{ productDetails?.minimumTenorDay || 0 }} Days
+        </mat-error>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            (loanForm.get('tenureYear').touched ||
+              loanForm.get('tenureMonth').touched ||
+              loanForm.get('tenureDays').touched) &&
+            !checkTenurePresence
+          "
+        >
+          Loan Period is Required
+        </mat-error>
+      </div>
+      <div fxFlex="48.5" fxFlex.lt-md="100">
+        <label class="calculator_subTItle" fxLayoutAlign="space-between center"
+          >Interest Rate <span>{{ interestRate }}%</span></label
+        >
+        <mat-form-field
+          appearance="outline"
+          class="full-width field-changedInput background-white"
+        >
+          <mat-label class="custom-mat-label">Percentage</mat-label>
+          <input
+            matInput
+            formControlName="interestRate"
+            minMax
+            [min]="minValue"
+            [max]="maxValue"
+          />
+          <mat-error
+            *ngIf="
+              loanForm.controls['interestRate'].hasError('required') &&
+              loanForm.controls['interestRate'].touched
+            "
+          >
+            Interest Rate is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="downImage">
+      <img src="assets/images/Group 13767.svg" height="161px" width="100%" />
+    </div>
   </div>
 
-  <div fxFlex="30" class="parentCalculator" *ngIf="loanForm">
+  <div fxFlex="30" fxLayoutAlign="center center" *ngIf="loanForm">
     <div
-      fxFlex="80"
+      fxFlex="100"
       fxLayoutAlign="center center"
       fxLayout="column"
-      class="fd_container"
+      class="fd_container calc-white-bg"
     >
-      <div fxLayout="column" class="emiTitle alignCenter">
+      <div fxFlex="100" fxLayout="column" class="alignCenter">
         <div class="maturityTitle">EMI Amount</div>
-        <div class="emiAmount">
+        <div class="maturityDesc">
           {{ emiAmount | currency : currency : true : "1.2-2" }}
         </div>
       </div>
@@ -235,10 +202,10 @@
           fxLayout="column"
           fxFlex="48"
           class="alignLeft"
-          fxLayoutAlign="space-around center"
+          fxLayoutAlign="start center"
         >
-          <div class="maturityLabels">Total Interest Payable</div>
-          <div class="gd_value">
+          <div class="maturityLabel">Total Interest Payable</div>
+          <div class="maturityVal">
             {{ interestPayble | currency : currency : true : "1.2-2" }}
           </div>
         </div>
@@ -247,10 +214,12 @@
           fxLayout="column"
           class="alignLeft"
           fxFlex="48"
-          fxLayoutAlign="space-around center"
+          fxLayoutAlign="start center"
         >
-          <div class="maturityLabels">Interest Rate</div>
-          <div class="gd_value">{{ loanForm.value?.interestRate }}%*p.a.</div>
+          <div class="maturityLabel">Interest Rate</div>
+          <div class="maturityVal">
+            {{ loanForm.value?.interestRate }}%*p.a.
+          </div>
         </div>
       </div>
       <div fxLayout="row" fxFlex="100" style="width: 100%">
@@ -258,10 +227,10 @@
           fxLayout="column"
           class="alignLeft"
           fxFlex="48"
-          fxLayoutAlign="space-around center"
+          fxLayoutAlign="start center"
         >
-          <div class="maturityLabels">Principal Amount</div>
-          <div class="gd_value">
+          <div class="maturityLabel">Principal Amount</div>
+          <div class="maturityVal">
             {{ loanForm.value?.amount | currency : currency : true : "1.2-2" }}
           </div>
         </div>
@@ -270,10 +239,10 @@
           fxLayout="column"
           class="alignLeft"
           fxFlex="48"
-          fxLayoutAlign="space-around center"
+          fxLayoutAlign="start center"
         >
-          <div class="maturityLabels">Total Amount Payable</div>
-          <div class="gd_value">
+          <div class="maturityLabel">Total Amount Payable</div>
+          <div class="maturityVal">
             {{ totalPayableAmmount | currency : currency : true : "1.2-2" }}
           </div>
         </div>
@@ -283,7 +252,6 @@
           Apply
         </button>
       </div>
-      <img class="designImg-1" src="assets/images/Mask Group.svg" />
     </div>
   </div>
 </div>

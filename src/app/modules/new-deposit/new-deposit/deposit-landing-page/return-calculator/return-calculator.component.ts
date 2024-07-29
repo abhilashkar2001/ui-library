@@ -17,6 +17,8 @@ import * as moment from "moment";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { FdCalculatorServiceService } from "../../fd-calculator/fd-calculator-service.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-return-calculator",
@@ -72,8 +74,17 @@ export class ReturnCalculatorComponent implements OnInit {
     private rdApi: CreateRdService,
     private tokenStore: TokenStorageService,
     private FdCalculatorServiceService: FdCalculatorServiceService,
-    private newDepositeService: NewDepositService
-  ) {}
+    private newDepositeService: NewDepositService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `info-outlined-gray`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        "assets/images/info-circle-gray.svg"
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.getGenericDetails();
