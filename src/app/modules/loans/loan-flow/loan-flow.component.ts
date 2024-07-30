@@ -787,6 +787,8 @@ export class LoanFlowComponent implements OnInit {
           if (resp === true) {
             this.tokenStore.cleanUpSessionPartially();
             this.router.navigate(["loan/landing"]);
+          } else if (resp === "tracking") {
+            this.tokenStore.cleanUpSessionPartially();
           }
         });
       }
