@@ -30,11 +30,18 @@
       *ngFor="let product of productList; trackBy: trackByProductId"
     >
       <mat-card
-        fxFlex="23"
-        class="card-div mb-24"
+        fxFlex="31"
+        class="card-div mb-24 p-4"
         (click)="openProduct(product)"
       >
-        <img [src]="product.imageUrl" class="card-img" />
+        <img
+          *ngIf="product.imageUrl; else defaultImage"
+          [src]="product.imageUrl"
+          class="card-img"
+        />
+        <ng-template #defaultImage>
+          <img src="assets/images/applicationlist.svg" class="card-img" />
+        </ng-template>
         <div class="p-12" fxLayout="column">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column">

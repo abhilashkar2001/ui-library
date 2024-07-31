@@ -34,7 +34,8 @@ import { Subscription } from "rxjs";
 enum CreateLoanEnum {
   INTERNAL = "internal",
   EXTERNAL = "external",
-  ACCOUNT_INCLUDES_KEY = "account",
+  ACCOUNT_INCLUDES_KEY = "new acc",
+  ACCOUNT_EXISTING_KEY = "existing acc",
 }
 @Component({
   selector: "app-cusotm-web-doc-upload",
