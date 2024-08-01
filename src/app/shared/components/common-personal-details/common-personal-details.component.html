@@ -524,7 +524,7 @@
                     class="col-12"
                     *ngIf="!isHideField"
                   >
-                    <div>
+                    <div *ngIf="customerDetailsForm.value.customer.length > 1">
                       <button
                         type="button"
                         [disabled]="!customer.valid"

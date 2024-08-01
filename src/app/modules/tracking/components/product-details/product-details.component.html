@@ -29,7 +29,23 @@
       ></mat-progress-bar>
     </div>
   </div>
-
+  <!-- Application Status Panel -->
+  <mat-accordion class="custom_action_expansion">
+    <mat-expansion-panel class="detail_container">
+      <mat-expansion-panel-header class="header">
+        <mat-panel-description class="header_description">
+          <div fxLayoutAlign="space-between start" fxFlex="100">
+            <div>Application Status</div>
+          </div>
+          &nbsp;
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxFlex="100" class="custom_expansion_container">
+        <app-application-status></app-application-status>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  &nbsp;&nbsp;
   <!-- Application Details Panel -->
   <mat-accordion class="custom_action_expansion">
     <mat-expansion-panel class="detail_container">
@@ -50,20 +66,5 @@
         ></app-loan-product-details>
       </div> </mat-expansion-panel
     ><br />
-
-    <!-- Application Status Panel -->
-    <mat-expansion-panel>
-      <mat-expansion-panel-header class="header">
-        <mat-panel-description class="header_description">
-          <div fxLayoutAlign="space-between start" fxFlex="100">
-            <div>Application Status</div>
-          </div>
-          &nbsp;
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div fxFlex="100" class="custom_expansion_container">
-        <app-application-status></app-application-status>
-      </div>
-    </mat-expansion-panel>
   </mat-accordion>
 </div>
