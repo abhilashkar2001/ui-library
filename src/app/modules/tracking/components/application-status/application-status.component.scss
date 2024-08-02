@@ -92,7 +92,7 @@ ul.approved_history_container {
       line-height: 1.5;
     }
     .count_div {
-      margin-left: 10%;
+      margin-left: 9.2%;
       height: 100%;
       display: grid;
       place-items: center;
@@ -109,6 +109,7 @@ ul.approved_history_container {
         outline: 3px solid #fff;
         box-shadow: 0 0 1px 1px #fff;
         z-index: 2;
+        margin-bottom: 20px;
       }
     }
     .list_body {
