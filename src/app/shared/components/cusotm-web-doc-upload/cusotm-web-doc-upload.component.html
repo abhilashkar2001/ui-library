@@ -261,8 +261,8 @@
         fxFlex="48"
         class=""
         *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -275,8 +275,8 @@
         fxFlex="48"
         class=""
         *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
