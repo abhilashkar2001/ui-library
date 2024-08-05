@@ -1,16 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
 import { debounceTime } from "rxjs/operators";
-import { LoanCalulationService } from "../loan-calculator/loan-calculation.service";
 import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { SharedService } from "app/shared/shared.service";
-import { combineLatest, merge, Subscription } from "rxjs";
+import { merge, Subscription } from "rxjs";
 
 @Component({
   selector: "app-create-loan",
@@ -24,6 +22,7 @@ export class CreateLoanComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("mobileVerifyInfo") mobileVerifyInfo: any;
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
@@ -47,14 +46,13 @@ export class CreateLoanComponent implements OnInit {
   otherUserInfo: any;
   ownerShipId: any;
   valueChangesSubscription: Subscription;
+  isCorporate: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private commonService: CommonService,
     private loanApi: LoanService,
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
-    private loanCalcService: LoanCalulationService,
     private tokenStore: TokenStorageService,
     private sharedService: SharedService
   ) {
@@ -115,6 +113,9 @@ export class CreateLoanComponent implements OnInit {
           this.staticData = { ...resp.data };
           this.holderTypeArray = resp.data["HOLDERTYPE"];
           this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
+          if (this.personalLoanDetailsForm && this.isCorporate) {
+            this.setJointAsHolderType();
+          }
         }
       });
   }
@@ -133,6 +134,13 @@ export class CreateLoanComponent implements OnInit {
             tenureYear: sessionStorage.getItem("tenureYear") || 0,
             tenureMonth: sessionStorage.getItem("tenureMonth") || 0,
           });
+          if (
+            this.holderTypeArray?.length > 0 &&
+            !this.personalLoanDetailsForm.get("holderType").value &&
+            this.isCorporate
+          ) {
+            this.setJointAsHolderType();
+          }
         } else {
           this.initialForm();
         }
@@ -143,6 +151,15 @@ export class CreateLoanComponent implements OnInit {
     );
   }
 
+  /**
+   * If the loan application is for corporate then by default customer type would be join
+   */
+  setJointAsHolderType() {
+    const jointHolderId = this.holderTypeArray.find(
+      (item) => item?.values === "Joint"
+    )?.id;
+    this.personalLoanDetailsForm.get("holderType").setValue(jointHolderId);
+  }
   /**
    * building  personalLoanDetailsForm form. & changeDetiction.
    * @param data is formData

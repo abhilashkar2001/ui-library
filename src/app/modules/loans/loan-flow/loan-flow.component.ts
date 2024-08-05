@@ -66,6 +66,7 @@ export class LoanFlowComponent implements OnInit {
     basisName: "",
     productDuplicationKey: "Loan",
     applicationType: "loan application",
+    individual: false,
   };
   personalDoc: any[] = [];
   loanAccountInfo: any;
@@ -306,12 +307,13 @@ export class LoanFlowComponent implements OnInit {
    */
   getProductDetails() {
     this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+      if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.productDetails = resp.data[0];
         this.cdr.detectChanges();
         this.mobileVerifyInfo = {
           ...this.mobileVerifyInfo,
           basisName: this.productDetails.basisName,
+          individual: resp?.data[0]?.individual,
         };
         this.cdr.detectChanges();
       }
