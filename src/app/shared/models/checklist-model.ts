@@ -1,9 +1,3 @@
-import { IcHttpResponseModel } from "./ic-http-response.model";
-
-export interface ChecklistModel extends IcHttpResponseModel {
-  data: ChecklistInfoModel[];
-}
-
 export interface ChecklistInfoModel {
   id: number;
   seq: number;

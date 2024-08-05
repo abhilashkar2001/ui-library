@@ -42,6 +42,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onMobileExitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean;
   @Input() invalidOtp: boolean;
   @Input() otpSent: boolean;
@@ -267,6 +268,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onVerifyExistingProduct(event) {
+    let type = !this.mobileVerifyInfo?.individual ? "corporate" : "";
     // this.isLoading = true;
     this.api
       .checkMobileAndProduct(
@@ -276,65 +278,83 @@ export class CommonMobileVerificationComponent implements OnInit {
       )
       .subscribe((resp) => {
         if (!resp) {
-          this.allreadyProduct();
+          this.allreadyProduct(
+            `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
+            "Please visit bank for more information.",
+            false
+          );
         } else {
-          this.api.getExistingCustomer(event.phone).subscribe((resp: any) => {
-            // Here cleaning the all ids from cache.
-            this.cleanCacheInMobileScreen();
-            if (resp?.statusCode === 200 && resp?.data) {
-              if (resp?.data?.length > 0) {
-                sessionStorage.setItem("mobileNo", event.phone);
-
-                if (
-                  this.mobileVerifyInfo.applicationType === "loan application"
-                ) {
-                  let customerIds: any[] = [];
-                  resp.data.forEach((element) => {
-                    customerIds.push(element.customerId);
-                  });
-                  sessionStorage.setItem(
-                    "userCustomerId",
-                    JSON.stringify(customerIds)
-                  );
-                } else {
-                  sessionStorage.setItem(
-                    "userCustomerId",
-                    resp.data[0].customerId
+          this.api
+            .getExistingCustomer(event.phone, type)
+            .subscribe((resp: any) => {
+              // Here cleaning the all ids from cache.
+              this.cleanCacheInMobileScreen();
+              if (resp?.statusCode === 200 && resp?.data) {
+                if (type) {
+                  this.allreadyProduct(
+                    `Corporate account is already present with this mobile number.`,
+                    "Please visit bank for more information.",
+                    true
                   );
                 }
-                this.onCustomSubmit.emit({ personalInfo: resp.data });
+                if (resp?.data?.length > 0) {
+                  sessionStorage.setItem("mobileNo", event.phone);
+
+                  if (
+                    this.mobileVerifyInfo.applicationType === "loan application"
+                  ) {
+                    let customerIds: any[] = [];
+                    resp.data.forEach((element) => {
+                      customerIds.push(element.customerId);
+                    });
+                    sessionStorage.setItem(
+                      "userCustomerId",
+                      JSON.stringify(customerIds)
+                    );
+                  } else {
+                    sessionStorage.setItem(
+                      "userCustomerId",
+                      resp.data[0].customerId
+                    );
+                  }
+                  this.onCustomSubmit.emit({ personalInfo: resp.data });
+                  this?.updateParentModel({
+                    personalInfo: resp.data,
+                    updateMasterSave: false,
+                  });
+                }
+              } else if (resp?.statusCode === 204) {
+                this.onCustomSubmit.emit({
+                  personalInfo: resp.data,
+                });
                 this?.updateParentModel({
                   personalInfo: resp.data,
                   updateMasterSave: false,
                 });
-              }
-            } else if (resp?.statusCode === 204) {
-              this.onCustomSubmit.emit({
-                personalInfo: resp.data,
-              });
-              this?.updateParentModel({
-                personalInfo: resp.data,
-                updateMasterSave: false,
-              });
 
-              sessionStorage.setItem("mobileNo", event.phone);
-            } else {
-              sessionStorage.setItem("mobileNo", event.phone);
-            }
-          });
+                sessionStorage.setItem("mobileNo", event.phone);
+              } else {
+                sessionStorage.setItem("mobileNo", event.phone);
+              }
+            });
         }
       });
   }
-  allreadyProduct() {
-    this.dialog.open(ErrorNotifierPopupComponent, {
+  allreadyProduct(errorMessage, errorMessageHint, showCancelBtn) {
+    const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
       data: {
-        errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
-        errorMessageHint: "Please visit bank for more information.",
+        errorMessage: errorMessage,
+        errorMessageHint: errorMessageHint,
+        showCancelBtn: showCancelBtn,
       },
       width: "650px",
       disableClose: true,
       panelClass: "popup-dialog-class",
       backdropClass: "bdrop",
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res);
+      if (res == "cancel") this.onBackEvent.emit();
     });
   }
   cleanCacheInMobileScreen() {
@@ -343,5 +363,6 @@ export class CommonMobileVerificationComponent implements OnInit {
     sessionStorage.removeItem("customerId");
     sessionStorage.removeItem("customerStageIds");
     sessionStorage.removeItem("originationId");
+    sessionStorage.removeItem("otherDocScreenCode");
   }
 }

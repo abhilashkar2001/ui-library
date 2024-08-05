@@ -1,0 +1,16 @@
+{
+  "statusCode": 200,
+  "status": "OK",
+  "data": {
+    "corporateCustomer": {
+      "companyName": "RUMANGO SOFTWARE AND CONSULTING SERVICES PRIVATE LIMITED",
+      "companyType": 60196,
+      "numberOfDirectors": 2,
+      "countryOfIncorporationCode": "IN",
+      "dateOfIncorporation": "2019-06-02",
+      "registrationNumber": "29AAICR8073M1ZJ",
+      "tinNumber": "CHER16937E",
+      "sourceOfIncome": 36097
+    }
+  }
+}

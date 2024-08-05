@@ -71,8 +71,12 @@ export class OpenAccountService {
     );
   }
 
-  getExistingCustomer(mobileNo) {
-    return this.http.get(`${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}`);
+  getExistingCustomer(mobileNo, type?) {
+    return this.http.get(
+      `${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}${
+        type ? `&type=${type}` : ""
+      }`
+    );
   }
 
   saveCustomerInfo(payload) {
@@ -137,5 +141,9 @@ export class OpenAccountService {
     return this.http.get<any>(
       `${baseUrl}/origination-matser?originationId=${id}`
     );
+  }
+
+  fetchCompanyDetails() {
+    return this.http.get("assets/json/company-information.json");
   }
 }

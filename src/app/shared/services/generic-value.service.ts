@@ -4,6 +4,8 @@ import { environment } from "environments/environment";
 import { Observable, of } from "rxjs";
 import { GenericValue } from "../data/generic-value";
 import { map } from "rxjs/operators";
+import { GenericValueInfoModel } from "../models/generic-value.model";
+import { IcHttpResponseModel } from "../models/ic-http-response.model";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
@@ -16,7 +18,10 @@ export class GenericValueService extends GenericValue {
     super();
   }
 
-  loadGenericValue(screenName, genericName: string[]): Observable<any> {
+  loadGenericValue(
+    screenName,
+    genericName: string[]
+  ): Observable<IcHttpResponseModel<GenericValueInfoModel>> {
     console.log(this.genericValue);
     console.log(genericName);
     if (this.genericValue && Object.keys(this.genericValue?.data).length > 0) {

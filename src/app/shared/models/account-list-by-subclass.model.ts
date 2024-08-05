@@ -1,9 +1,3 @@
-import { IcHttpResponseModel } from "./ic-http-response.model";
-
-export interface AccountListBySubclassModel extends IcHttpResponseModel {
-  data: AccountListBySubclass;
-}
-
 export interface AccountListBySubclass {
   [key: string]: Account[];
 }

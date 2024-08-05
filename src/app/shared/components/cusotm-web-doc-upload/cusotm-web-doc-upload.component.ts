@@ -30,6 +30,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
 import { Subscription } from "rxjs";
+import { DataService } from "app/shared/services/table-service/data.service";
 
 enum CreateLoanEnum {
   INTERNAL = "internal",
@@ -55,6 +56,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Input() checkListDocList: any;
   @Input() isOtherDocVisible: boolean = true;
   @Input() docAppliName: any;
+  @Input() individual: boolean = true;
   loanEnum = CreateLoanEnum;
 
   documentControls: FormGroup;
@@ -117,7 +119,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private docapi: CustomWebDocUploadServiceService,
     private loanApi: LoanService,
-    private openApi: OpenAccountService
+    private openApi: OpenAccountService,
+    private dataService: DataService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
     // this.buildDocumentForm();
@@ -130,12 +133,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.docAppliName = sessionStorage.getItem("docAppliName");
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
-    var originationId = sessionStorage.getItem("originationId");
-
     this.addNewUploadField();
   }
 
@@ -151,10 +151,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     }
     if (changes.documentList?.currentValue?.length > 0) {
       this.documentList = changes.documentList.currentValue;
-      // this.buildForm(this.checkListDocList?.requiredDocument ?? []);
-      console.log(this.createDocumentForm.value, ".......");
       this.createDocumentForm.value.otherDocument.forEach((item, i) => {
-        console.log(item, ".....");
         this.otherDocument()
           .controls[i].get("fileInfo")
           .setValue(this.calculateDoc(this.documentList[i].docs, i));
@@ -182,16 +179,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.loanDisbursementForm
       .get("accountNumber")
       .valueChanges.pipe(debounceTime(500))
-      .subscribe((resp) => {
-        //  if (
-        //    resp &&
-        //    this.personalLoanDetailsForm.value.accountType ===
-        //      this.loanEnum.INTERNAL
-        //  ) {
-        //    this.validateAccountNumber(resp);
-        //  }
-        console.log(resp, "........", this.loanDisbursementForm.value);
-      });
+      .subscribe(() => {});
   }
 
   /**
@@ -301,14 +289,12 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
       data.forEach((item, i) => {
         this.hideSelect.push(item?.documentType);
-        // this.showDocument(item, i);
         this.addDocument(item);
         this.customDocumentForm.emit(this.createDocumentForm);
         console.log(this.createDocumentForm.value, "data");
       });
     }
     if (this.isOtherDocVisible) this.addDocument();
-    // }
   }
 
   otherDocument(): FormArray {
@@ -350,17 +336,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
     var docArr = [];
     var docIds = [];
-    // data.forEach((item, ind) => {
-    // console.log(item, ind);
     var docItem = {
       progress: 100,
       name: data.fileName,
     };
-    // docArr.push({
-    //   docId: data.documentId,
-    //   doc: docItem,
-    //   url: this.mapEndPoints(data.fileUrl),
-    // });
     data.forEach((item) => {
       docArr.push({
         docId: item.documentId,
@@ -370,8 +349,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       });
       docIds.push(item.documentId);
     });
-    // docIds.push(data.documentId);
-    // });
     this.otherDocument().controls[i].get("docIds").setValue(docIds);
     return docArr;
   }
@@ -380,8 +357,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     if (file.name.endsWith("pdf") || file.name.endsWith("xlsx")) {
       return "assets/images/file_icon.svg";
     } else return file.url;
-
-    //  if (url.endsWith("pdf") || url.endsWith("xlsx"))
   }
 
   newDenom(data?): FormGroup {
@@ -405,8 +380,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
    */
   deleteFile(index: number, i, doc) {
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
-    //   }
-    // });
     this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
   }
 
@@ -417,12 +390,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   addDocument(data?) {
     this.otherDocument().push(this.newDenom(data));
-    // console.log(other, ".....");
-    // if (other) {
-    //   this.otherDocument()
-    //     .controls[i].get("fileInfo")
-    //     .setValue(this.calculateDoc(data, i));
-    // }
   }
 
   mapEndPoints(url) {
@@ -441,7 +408,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file = target.files[0];
-        // if (file.type.startsWith("image/")) {
         this.selectedImage = file;
         this.displayImage(i, file, file.size);
         this.uploadImage(file, i);
@@ -716,7 +682,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                     resp.data.documentId,
                     sessionStorage.getItem("customerStagingId")
                   );
-
+                this.isLoading = false;
                 // else this.loder.close();
               }
             });
@@ -725,7 +691,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         .catch((error) => {
           console.error(error);
         });
-    } else {
+    } else if (!this.ocrCheck && this.individual) {
       this.api.uploadDocument(formData).subscribe((resp) => {
         if (resp?.statusCode === 200) {
           this.updateDocId(i).push(resp.data.documentId);
@@ -740,49 +706,30 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
               resp.data.documentId,
               sessionStorage.getItem("customerStagingId")
             );
-
-          // else this.loder.close();
+        }
+      });
+    } else {
+      this.api.uploadDocument(formData).subscribe((resp) => {
+        if (resp?.statusCode === 200 || resp?.statusCode == 201) {
+          this.dataService.setChecklistDocument(
+            this.createDocumentForm.value.otherDocument[i].documentType,
+            {
+              docName:
+                this.createDocumentForm.value.otherDocument[i].documentType,
+              originationId: parseInt(sessionStorage.getItem("originationId")),
+              file: file,
+              documentId: resp.data.documentId,
+              customerStagingId: sessionStorage.getItem("customerStagingId"),
+            }
+          );
+          sessionStorage.setItem(
+            "otherDocScreenCode",
+            sessionStorage.getItem("currentScreenCode")
+          );
         }
       });
     }
   }
-
-  // extractDoc(docName, originationId, file, i, documentId, customerStagingId) {
-  //   let formData = new FormData();
-  //   formData.append("fileName", file);
-  //   this.docapi
-  //     .getCheckListDoc(
-  //       docName,
-  //       originationId,
-  //       formData,
-  //       documentId,
-  //       customerStagingId
-  //     )
-  //     .subscribe((resp) => {
-  //       if (resp) {
-  //         if (
-  //           resp?.data?.customerName?.toLowerCase() !==
-  //           this.docAppliName?.toLowerCase()
-  //         ) {
-  //           const dialogData = {
-  //             error: `National Id name is not matching with this customer.`,
-  //             message: "Would you like to continue?",
-  //           };
-  //           const dialogRef = this.dialog.open(WarningComponent, {
-  //             width: "50%",
-  //             data: dialogData,
-  //             disableClose: true,
-  //             panelClass: "",
-  //           });
-  //           dialogRef.afterClosed().subscribe((result) => {
-  //             if (result != "Ok") {
-  //               this.deleteFile(i, i, file);
-  //             }
-  //           });
-  //         }
-  //       }
-  //     });
-  // }
 
   //for demo purpose removed error message
   extractDoc(docName, originationId, file, i, documentId, customerStagingId) {
@@ -905,7 +852,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
         (docItem) => docItem.fileInfo?.length > 0
       );
-      return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
+      return (this.createDocumentForm.invalid || !isDocUploaded) &&
+        this.individual
+        ? true
+        : false;
     }
   }
 

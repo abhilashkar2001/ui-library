@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { DataService } from "app/shared/services/table-service/data.service";
 import { SharedService } from "app/shared/shared.service";
 
 @Component({
@@ -14,7 +15,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input() docCustomerDetails: any;
   @Input() accountType: any;
-
+  @Input("mobileVerifyInfo") mobileVerifyInfo;
   verificationType: string = "Other Document";
   documentList: any[] = [];
 
@@ -24,7 +25,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   docAppliName: any;
   isDisbursement: boolean = false;
 
-  constructor(private loanApi: LoanService) {}
+  constructor(private loanApi: LoanService, private dataService: DataService) {}
 
   ngOnInit(): void {
     if (this.accountType === "loan") this.isDisbursement = true;
@@ -115,6 +116,9 @@ export class OtherChecklistDocUploadComponent implements OnInit {
         docIds = [...docIds, ...element.docIds];
       }
     });
+    console.log(event.loanDisbursement);
+
+    this.dataService.setDisbursementDetails(event.loanDisbursement);
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
     this.updateParentModel({
       otherLoanDoc: docIds,

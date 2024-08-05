@@ -20,6 +20,7 @@ export class NationalIdUploadComponent implements OnInit {
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
+  @Input("numberOfDirectors") numberOfDirectors: number;
 
   custId: any;
   stepperTitle: any;
@@ -59,6 +60,21 @@ export class NationalIdUploadComponent implements OnInit {
     if (originationId) this.getOrigination(originationId);
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
+    if (this.numberOfDirectors) {
+      this.checkListDocList.requiredDocument.pop();
+      for (let i = 0; i < this.numberOfDirectors; i++) {
+        this.checkListDocList.requiredDocument.push({
+          id: i + 1,
+          seq: i + 1,
+          document: `National Id of Director ${i + 1}`,
+          summary: `National Id of Director ${i + 1}`,
+          mandatoryForNxtStg: false,
+          mandatoryForApproval: false,
+          docRequired: true,
+          documentTypes: null,
+        });
+      }
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,28 +103,41 @@ export class NationalIdUploadComponent implements OnInit {
     console.log(event, "......");
     var docIds = [];
     let customerDetails: any;
-    event.documentDetails.otherDocument.forEach((element) => {
-      if (element.docIds?.length > 0) {
-        const docId = {
-          docIds: element.docIds,
-        };
-        docIds.push(docId);
-        if (!customerDetails) {
-          console.log(element);
-          element.fileInfo.forEach((item) => {
-            console.log(item, ".......");
-            if (
-              (item.applicantName || item.name || item.dateOfBirth) &&
-              !customerDetails
-            ) {
-              console.log(";;;;;;;");
-              customerDetails = item;
-              return;
-            }
-          });
+    if (this.numberOfDirectors) {
+      event.documentDetails.otherDocument.forEach((element) => {
+        if (element.docIds?.length > 0) {
+          const docId = {
+            docIds: element.docIds,
+          };
+          docIds.push(docId);
         }
-      }
-    });
+      });
+      customerDetails = event.documentDetails.otherDocument[0]?.fileInfo;
+    } else {
+      event.documentDetails.otherDocument.forEach((element) => {
+        if (element.docIds?.length > 0) {
+          const docId = {
+            docIds: element.docIds,
+          };
+          docIds.push(docId);
+          if (!customerDetails) {
+            console.log(element);
+            element.fileInfo.forEach((item) => {
+              console.log(item, ".......");
+              if (
+                (item.applicantName || item.name || item.dateOfBirth) &&
+                !customerDetails
+              ) {
+                console.log(";;;;;;;");
+                customerDetails = item;
+                return;
+              }
+            });
+          }
+        }
+      });
+    }
+
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
     this.updateParentModel({
       kycDoc: docIds,

@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { SessionStorageEnum } from "app/enum/session-storage.enum";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { PrimaryCustomerInfo } from "app/shared/models/primary-customer.model";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-import * as moment from "moment";
 
 @Component({
   selector: "app-dob-verification",
@@ -42,7 +42,7 @@ export class DobVerificationComponent implements OnInit {
     if (this.showOTP) return;
     this.originationService
       .validateDateOfBirth(this.originationId, this.dateOfBirth)
-      .subscribe((res: IcHttpResponseModel) => {
+      .subscribe((res: IcHttpResponseModel<PrimaryCustomerInfo>) => {
         if (res?.statusCode === 200 && res?.data) {
           this.customerInfo = res?.data;
           this.sessionStorageService.setCustomerInfo(this.customerInfo);
