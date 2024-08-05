@@ -3,13 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { Router } from "@angular/router";
 import { ImageDialogComponent } from "app/shared/components/image-dialog/image-dialog.component";
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 import { LoanService } from "app/shared/services/loan/loan.service";

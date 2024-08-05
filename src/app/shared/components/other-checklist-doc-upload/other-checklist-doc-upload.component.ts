@@ -14,7 +14,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input() docCustomerDetails: any;
   @Input() accountType: any;
-
+  @Input("mobileVerifyInfo") mobileVerifyInfo;
   verificationType: string = "Other Document";
   documentList: any[] = [];
 

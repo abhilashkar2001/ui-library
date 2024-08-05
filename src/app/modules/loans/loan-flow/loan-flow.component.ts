@@ -14,6 +14,8 @@ import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
 import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
+import { DataService } from "app/shared/services/table-service/data.service";
+import { CustomWebDocUploadServiceService } from "app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service";
 
 @Component({
   selector: "app-loan-flow",
@@ -86,7 +88,9 @@ export class LoanFlowComponent implements OnInit {
     private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-    protected cdr: ChangeDetectorRef
+    protected cdr: ChangeDetectorRef,
+    private dataService: DataService,
+    private docapi: CustomWebDocUploadServiceService
   ) {}
 
   /**
@@ -420,9 +424,11 @@ export class LoanFlowComponent implements OnInit {
     const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
+    const originationId = JSON.parse(sessionStorage.getItem("originationId"));
     if (loanData) {
       let payload = {
-        originationId: this.originationModel?.originationId ?? null,
+        originationId:
+          this.originationModel?.originationId ?? originationId ?? null,
         applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
         accountType: sessionData.basisName,
         basisDetailsId: sessionData.basisId,
@@ -557,16 +563,46 @@ export class LoanFlowComponent implements OnInit {
   customSaveCompany(data) {
     let payload = data?.companyDetails.value;
     payload.originationModel = this.getOriginationModelForLoan();
-    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-      if ((resp?.statusCode == 200 || resp?.statusCode == 201) && resp?.data) {
-        this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
-        sessionStorage.setItem(
-          "originationId",
-          resp?.data?.originationModel?.originationId
-        );
-        this.next();
-      }
-    });
+    this.openAccountService
+      .saveCustomerInfo(payload)
+      .subscribe(async (resp) => {
+        if (
+          (resp?.statusCode == 200 || resp?.statusCode == 201) &&
+          resp?.data
+        ) {
+          this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
+          sessionStorage.setItem(
+            "originationId",
+            resp?.data?.originationModel?.originationId
+          );
+          const formdataMap: Map<
+            string,
+            Record<string, any>
+          > = this.dataService.getChecklistDocument();
+          const docIds: number[] = [];
+          formdataMap.forEach(async (item) => {
+            await this.docapi
+              .getCheckListDoc(
+                item?.docName,
+                resp?.data?.originationModel?.originationId,
+                item?.formData,
+                item?.documentId,
+                item?.customerStagingId
+              )
+              .toPromise();
+            docIds.push(item?.documentId);
+          });
+          const payload = {
+            documentIds: docIds,
+            originationId:
+              this.originationModel?.originationId ??
+              sessionStorage.getItem("originationId"),
+            screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+          };
+          await this.loanApi.saveChecklist(payload).toPromise();
+          this.next();
+        }
+      });
   }
 
   // on Personal details saved
