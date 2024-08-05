@@ -1,6 +1,6 @@
-export interface IcHttpResponseModel {
+export interface IcHttpResponseModel<T> {
   statusCode: number;
   status: string;
-  data: any;
+  data: T;
   message: string;
 }

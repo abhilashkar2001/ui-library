@@ -44,7 +44,6 @@ export class LoanProductsComponent implements OnInit {
   goForCalculator(subAccount) {
     console.log(subAccount);
     this.selectedLoan = subAccount;
-    console.log(this.selectedLoan);
     if (this.selectedLoan?.productDetails?.length > 1) {
       console.log("multiply product");
       this.customApply.emit({
@@ -99,7 +98,5 @@ export class LoanProductsComponent implements OnInit {
   customClassApply(event) {
     this.subLoanList = event?.clasDetails?.productDetails;
     this.scrollToTop();
-    // this.isShowCalculator.emit(event);
-    // this.subClass = event.subClass;
   }
 }

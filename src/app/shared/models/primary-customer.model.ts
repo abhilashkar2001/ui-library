@@ -1,9 +1,3 @@
-import { IcHttpResponseModel } from "./ic-http-response.model";
-
-export interface PrimaryCustomerModel extends IcHttpResponseModel {
-  data: PrimaryCustomerInfo;
-}
-
 export interface PrimaryCustomerInfo {
   customerId: number;
   customerStagingId: number;

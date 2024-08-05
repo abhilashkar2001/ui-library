@@ -2,13 +2,11 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import {
-  ChecklistModel,
+  ChecklistInfoModel,
   ChecklistPayloadModel,
 } from "../models/checklist-model";
-import {
-  PrimaryCustomerInfo,
-  PrimaryCustomerModel,
-} from "../models/primary-customer.model";
+import { PrimaryCustomerInfo } from "../models/primary-customer.model";
+import { IcHttpResponseModel } from "../models/ic-http-response.model";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
@@ -35,7 +33,7 @@ export class OriginationService {
         ? new HttpParams().set("screenCode", screenId).set("stageId", stageId)
         : {},
     };
-    return this.http.get<ChecklistModel>(
+    return this.http.get<IcHttpResponseModel<ChecklistInfoModel[]>>(
       `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
       options
     );
@@ -47,7 +45,7 @@ export class OriginationService {
    * @returns
    */
   saveChecklist(payload: ChecklistPayloadModel) {
-    return this.http.post<ChecklistModel>(
+    return this.http.post<IcHttpResponseModel<ChecklistInfoModel>>(
       `${MICROSERVICE_URL}/origination-matser/saveChecklist`,
       payload
     );
@@ -60,7 +58,7 @@ export class OriginationService {
    * @returns
    */
   validateDateOfBirth(originationId: number, dateOfBirth: string) {
-    return this.http.get<PrimaryCustomerModel>(
+    return this.http.get<IcHttpResponseModel<PrimaryCustomerInfo>>(
       `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`
     );
   }
@@ -72,7 +70,9 @@ export class OriginationService {
     );
   }
 
-  getCompletedtages(originationId){
-    return this.http.get<any>(`${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`)
+  getCompletedtages(originationId) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`
+    );
   }
 }

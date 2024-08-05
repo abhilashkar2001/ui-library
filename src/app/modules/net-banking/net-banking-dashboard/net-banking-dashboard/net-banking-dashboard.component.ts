@@ -9,6 +9,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatDialog } from "@angular/material/dialog";
 import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -236,7 +237,7 @@ export class NetBankingDashboardComponent implements OnInit {
     return new Promise((resolve) => {
       this.netBankingService
         .fetchAccountBalance(accountNo)
-        .subscribe((res: FlexBalanceModel) => {
+        .subscribe((res: IcHttpResponseModel<FlexBalanceModel>) => {
           if (res?.statusCode === 200 && res?.data) {
             resolve(res?.data?.currbal || 0);
           } else {

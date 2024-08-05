@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {
-  ChecklistModel,
+  ChecklistInfoModel,
   ChecklistPayloadModel,
   ChecklistRouteObjModel,
 } from "app/shared/models/checklist-model";
@@ -12,6 +12,7 @@ import { OriginationService } from "app/shared/services/origination.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 import { environment } from "environments/environment";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 
 @Component({
   selector: "app-checklist-document",
@@ -133,7 +134,7 @@ export class ChecklistDocumentComponent implements OnInit {
         this.checklistRouteObj.screenId,
         this.checklistRouteObj.processStageId
       )
-      .subscribe((res: ChecklistModel) => {
+      .subscribe((res: IcHttpResponseModel<ChecklistInfoModel[]>) => {
         if (res.statusCode == 200 && res?.data) {
           this.acceptedDocumentId =
             this.checklistRouteObj?.checklistItem?.split(",");
