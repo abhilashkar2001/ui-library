@@ -121,6 +121,68 @@ export class CommonPersonalDetailsComponent implements OnInit {
         console.log(this.docCustomerDetails, "this.docCustomerDetails");
         if (this.docCustomerDetails)
           setTimeout(() => {
+            if (this.docCustomerDetails instanceof Array) {
+              this.docCustomerDetails.forEach((item, index) => {
+                this.customerDetailsForm
+                  .get("customer")
+                  ["controls"][index].get("dateOfBirth")
+                  .setValue(
+                    moment(item?.dateOfBirth, "DD/MM/YYYY").format(
+                      "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+                    )
+                  );
+                const applicantNameArray = item?.applicantName
+                  ? item?.applicantName?.split(" ")
+                  : [];
+                if (applicantNameArray && applicantNameArray?.length >= 3) {
+                  this.customerDetailsForm
+                    .get("customer")
+                    ["controls"][index].get("firstName")
+                    .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
+                  this.customerDetailsForm
+                    .get("customer")
+                    ["controls"][index].get("lastName")
+                    .setValue(
+                      applicantNameArray?.[applicantNameArray.length - 1]
+                    );
+                } else {
+                  this.customerDetailsForm
+                    .get("customer")
+                    ["controls"][index].get("firstName")
+                    .setValue(applicantNameArray?.[0]);
+                  this.customerDetailsForm
+                    .get("customer")
+                    ["controls"][index].get("lastName")
+                    .setValue(
+                      applicantNameArray?.[applicantNameArray.length - 1]
+                    );
+                }
+                let gender = this.genderArray.find(
+                  (e) => e.values.toLowerCase() === item?.gender?.toLowerCase()
+                )?.id;
+                this.customerDetailsForm
+                  .get("customer")
+                  ["controls"][index].get("gender")
+                  .setValue(gender);
+                const address = this.customer
+                  .at(index)
+                  .get("contact")
+                  .get("address")["controls"][0] as FormGroup;
+                address
+                  .get("pincode")
+                  .patchValue(
+                    JSON.parse(sessionStorage.getItem("backData")).pincode
+                  );
+                address
+                  .get("address1")
+                  .patchValue(
+                    JSON.parse(sessionStorage.getItem("backData")).address1
+                  );
+
+                // sessionStorage.removeItem("backData");
+              });
+              return;
+            }
             this.customerDetailsForm
               .get("customer")
               ["controls"][0].get("dateOfBirth")
@@ -175,7 +237,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
                 JSON.parse(sessionStorage.getItem("backData")).address1
               );
 
-            sessionStorage.removeItem("backData");
+            // sessionStorage.removeItem("backData");
           }, 100);
       }
     });
@@ -217,7 +279,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
         if (resp?.statusCode === 200) {
           let customerDetails = resp.data[0].customerInfo;
           this.buildCustomerDetailsForm(customerDetails);
-          // this.dateOfBirthValidationHandle(customerDetails);
         } else this.buildCustomerDetailsForm();
       });
   }
