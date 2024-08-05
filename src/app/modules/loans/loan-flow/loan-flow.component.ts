@@ -581,6 +581,7 @@ export class LoanFlowComponent implements OnInit {
           > = this.dataService.getChecklistDocument();
           const docIds: number[] = [];
           formdataMap.forEach(async (item) => {
+            docIds.push(item?.documentId);
             await this.docapi
               .getCheckListDoc(
                 item?.docName,
@@ -590,7 +591,6 @@ export class LoanFlowComponent implements OnInit {
                 item?.customerStagingId
               )
               .toPromise();
-            docIds.push(item?.documentId);
           });
           const payload = {
             documentIds: docIds,
@@ -600,6 +600,15 @@ export class LoanFlowComponent implements OnInit {
             screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
           };
           await this.loanApi.saveChecklist(payload).toPromise();
+          console.log(this.dataService.getDisbursementDetails());
+
+          await this.loanApi
+            .submitLoanDetail(
+              this.calculateDisbursementPayload(
+                this.dataService.getDisbursementDetails()
+              )
+            )
+            .toPromise();
           this.next();
         }
       });
@@ -632,7 +641,7 @@ export class LoanFlowComponent implements OnInit {
             this.originationValue$ = resp.data;
             let customId = [];
             resp.data?.customerInfo?.forEach((item, i) => {
-              customId.push(item.customerId);
+              customId.push(item.customerId || item?.customerStagingId);
               if (item.primaryCustomer)
                 sessionStorage.setItem(
                   "customerStagingId",

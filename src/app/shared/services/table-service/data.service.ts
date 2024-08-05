@@ -49,7 +49,6 @@ export class DataService {
    */
   setChecklistDocument(key: string, value: Record<string, any>): void {
     this.$checklistDocument.value.set(key, value);
-    console.log(this.$checklistDocument.value);
   }
 
   /**
@@ -65,5 +64,30 @@ export class DataService {
    */
   removeChecklistDocument(): void {
     this.$checklistDocument.next(new Map());
+  }
+
+  $disbursementDetails: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
+  /**
+   * store uploaded checklist document in behaviour subject for save later
+   * @param document list of the document uploaded
+   */
+  setDisbursementDetails(value: Record<string, any>): void {
+    this.$disbursementDetails.next(value);
+  }
+
+  /**
+   * disbursement details get from stored observable
+   * @returns disbursement details
+   */
+  getDisbursementDetails(): Record<string, any> {
+    return this.$disbursementDetails.value;
+  }
+
+  /**
+   * null to disbursement details
+   */
+  removeDisbursementDetails(): void {
+    this.$checklistDocument.next(null);
   }
 }

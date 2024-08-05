@@ -363,5 +363,6 @@ export class CommonMobileVerificationComponent implements OnInit {
     sessionStorage.removeItem("customerId");
     sessionStorage.removeItem("customerStageIds");
     sessionStorage.removeItem("originationId");
+    sessionStorage.removeItem("otherDocScreenCode");
   }
 }

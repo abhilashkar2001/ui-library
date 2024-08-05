@@ -11,6 +11,7 @@ import { LoanCalulationService } from "../loan-calculation.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { Subscription } from "rxjs";
+import { DataService } from "app/shared/services/table-service/data.service";
 
 @Component({
   selector: "app-common-emi-calculator",
@@ -44,10 +45,12 @@ export class CommonEmiCalculatorComponent implements OnInit {
     private fb: FormBuilder,
     private loanApi: LoanService,
     private loanCalcService: LoanCalulationService,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
+    this.cleanCache();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currency = this.otherUserInfo?.currency;
     const basisId = sessionStorage.getItem("loanBasisDetails");
@@ -215,5 +218,16 @@ export class CommonEmiCalculatorComponent implements OnInit {
       this.productDetails?.maximumTenorDay || 0
     );
     return totalDays >= totalAllowedDays;
+  }
+
+  cleanCache() {
+    sessionStorage.removeItem("userCustomerId");
+    sessionStorage.removeItem("customerStageId");
+    sessionStorage.removeItem("customerId");
+    sessionStorage.removeItem("customerStageIds");
+    sessionStorage.removeItem("originationId");
+    sessionStorage.removeItem("otherDocScreenCode");
+    this.dataService.removeChecklistDocument();
+    this.dataService.removeDisbursementDetails();
   }
 }
