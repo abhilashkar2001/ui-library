@@ -20,6 +20,7 @@ export class NationalIdUploadComponent implements OnInit {
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
   @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
+  @Input("numberOfDirectors") numberOfDirectors: number;
 
   custId: any;
   stepperTitle: any;
@@ -59,6 +60,21 @@ export class NationalIdUploadComponent implements OnInit {
     if (originationId) this.getOrigination(originationId);
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
+    if (this.numberOfDirectors) {
+      this.checkListDocList.requiredDocument.pop();
+      for (let i = 0; i < this.numberOfDirectors; i++) {
+        this.checkListDocList.requiredDocument.push({
+          id: i + 1,
+          seq: i + 1,
+          document: `National Id of Director ${i + 1}`,
+          summary: `National Id of Director ${i + 1}`,
+          mandatoryForNxtStg: false,
+          mandatoryForApproval: false,
+          docRequired: true,
+          documentTypes: null,
+        });
+      }
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

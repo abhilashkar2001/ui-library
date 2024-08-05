@@ -76,6 +76,7 @@ export class LoanFlowComponent implements OnInit {
   disbursementDetails: any;
   nationalIdDocumentList: any[] = [];
   view: any;
+  noOfDirectors: number;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -106,6 +107,8 @@ export class LoanFlowComponent implements OnInit {
           this.view = this.appAppHost.viewContainerRef;
           setTimeout(() => {
             this.componentRef = this.view.createComponent(item.component);
+            if (this.noOfDirectors)
+              this.componentRef.instance.numberOfDirectors = this.noOfDirectors;
             console.log(this.componentRef);
             // for mobile number.
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
@@ -139,6 +142,9 @@ export class LoanFlowComponent implements OnInit {
 
               if (screenName.toLowerCase().includes("personal")) {
                 this.customSavePersonal(data);
+              }
+              if (screenName.toLowerCase().includes("company")) {
+                this.customSaveCompany(data);
               }
             });
             if (this.componentRef.instance?.onMobileExitEvent)
@@ -537,6 +543,18 @@ export class LoanFlowComponent implements OnInit {
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
     };
+  }
+
+  // company details save
+  customSaveCompany(data) {
+    let payload = data?.companyDetails.value;
+    payload.originationModel = this.getOriginationModelForLoan();
+    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
+      if ((resp?.statusCode == 200 || resp?.statusCode == 201) && resp?.data) {
+        this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
+        this.next();
+      }
+    });
   }
 
   // on Personal details saved

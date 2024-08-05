@@ -716,7 +716,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                     resp.data.documentId,
                     sessionStorage.getItem("customerStagingId")
                   );
-
+                this.isLoading = false;
                 // else this.loder.close();
               }
             });

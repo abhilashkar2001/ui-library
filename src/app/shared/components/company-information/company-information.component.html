@@ -72,7 +72,7 @@
           inputLabel="Country of Incorporation"
           bindLabelKey="countryName"
           bindValueKey="countryCode"
-          [control]="corporateCustomer.controls['countryOfIncorporation']"
+          [control]="corporateCustomer.controls['countryOfIncorporationCode']"
         ></app-searchable-select>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25">
@@ -163,52 +163,9 @@
         ></app-searchable-select>
       </div>
     </div>
-
-    <h4 class="sub-heading mt-16">{{ "Organisation Chart" }}</h4>
-    <div fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" class="fileUpload">
-      <ng-container>
-        <div fxFlex="row" fxFlex="80" class="documentSection">
-          <div class="fileUploadSection">
-            <span
-              *ngIf="
-                corporateCustomer.value.organisationChartId != '';
-                else showDefault
-              "
-            >
-              <span class="uploaded_file">
-                <u
-                  (click)="
-                    viewUploadedImage(
-                      corporateCustomer.value,
-                      corporateCustomer.value.organisationChartUrl
-                    )
-                  "
-                >
-                  {{
-                    (corporateCustomer.value.organisationChartFileName
-                      | slice : 1 : 20) + "..."
-                  }}
-                </u>
-              </span>
-            </span>
-            <ng-template #showDefault>
-              <span class="fileUploaded">File Uploaded</span>
-            </ng-template>
-          </div>
-          <div fxFlex="20" fxFlex.xs="35" class="chooseFile">
-            Choose
-            <input
-              #myfile
-              type="file"
-              multiple="multiple"
-              class="hide_file"
-              (change)="fileChange($event)"
-              id="file"
-              accept="pdf/image"
-            />
-          </div>
-        </div>
-      </ng-container>
-    </div>
+  </div>
+  <div class="button-section">
+    <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+    <button class="back-button">Back</button>
   </div>
 </mat-card>

@@ -389,7 +389,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       "controls"
     ][0] as FormGroup;
     addressControl
-      .get("pincode")
+      ?.get("pincode")
       .valueChanges.pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         if (value) {

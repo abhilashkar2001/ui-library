@@ -138,4 +138,8 @@ export class OpenAccountService {
       `${baseUrl}/origination-matser?originationId=${id}`
     );
   }
+
+  fetchCompanyDetails() {
+    return this.http.get("assets/json/company-information.json");
+  }
 }

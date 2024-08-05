@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
 } from "@angular/core";
@@ -10,6 +12,7 @@ import { CityService } from "app/shared/services/city.service";
 import { CountryService } from "app/shared/services/country-service";
 import { DocumentUploadService } from "app/shared/services/document-upload.service";
 import { GenericValueService } from "app/shared/services/generic-value.service";
+import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-company-information",
@@ -17,7 +20,14 @@ import { GenericValueService } from "app/shared/services/generic-value.service";
   styleUrls: ["./company-information.component.scss"],
 })
 export class CompanyInformationComponent implements OnInit {
-  @Input() _parentForm: FormGroup;
+  @Output() onCustomSubmit = new EventEmitter<{}>();
+  @Output() onBackEvent = new EventEmitter<{}>();
+  @Output() customFormGroup = new EventEmitter<{}>();
+  @Input() personalDetails: any;
+  @Input() basisId: any;
+  @Input() customerInfo;
+
+  _parentForm: FormGroup;
   corporateCustId: any;
   miscellaneousId: any;
   customerCategoryArr: any;
@@ -44,12 +54,13 @@ export class CompanyInformationComponent implements OnInit {
     private documentUploadService: DocumentUploadService,
     private cityService: CityService,
     private countryService: CountryService,
-    private genericValueService: GenericValueService
+    private genericValueService: GenericValueService,
+    private openAccountService: OpenAccountService
   ) {}
 
   ngOnInit(): void {
+    this.buildCompanyForm();
     this.fetchCountries();
-
     this.fetchGenericValues();
     this.corporateCustId = JSON.parse(
       sessionStorage.getItem("corporateCustId")
@@ -57,11 +68,18 @@ export class CompanyInformationComponent implements OnInit {
     this.miscellaneousId = JSON.parse(
       sessionStorage.getItem("miscellaneousId")
     );
-    this._parentForm.addControl(
-      "corporateCustomer",
-      this.addCorporateCustomer()
-    );
-    this._parentForm.addControl("miscellaneous", this.addMiscellaneous());
+    this.fetchCompanyDetails();
+  }
+
+  buildCompanyForm() {
+    this._parentForm = this.fb.group({
+      originationModel: this.fb.group({
+        basisDetailsId: [""],
+        loanAmount: [""],
+      }),
+      corporateCustomer: this.addCorporateCustomer(),
+      miscellaneous: this.addMiscellaneous(),
+    });
   }
 
   addCorporateCustomer() {
@@ -72,7 +90,7 @@ export class CompanyInformationComponent implements OnInit {
       numberOfDirectors: ["", [Validators.required]],
       segment: [""],
       natureOfBusiness: [""],
-      countryOfIncorporation: ["", [Validators.required]],
+      countryOfIncorporationCode: ["", [Validators.required]],
       dateOfIncorporation: ["", [Validators.required]],
       registrationNumber: ["", [Validators.required]],
       tinNumber: ["", [Validators.required]],
@@ -120,7 +138,7 @@ export class CompanyInformationComponent implements OnInit {
           ],
           address2: [data?.contact.address[0]?.address2 ?? ""],
           residenceType: [
-            data?.contact.address[0]?.residenceType ?? "",
+            data?.contact.address[0]?.residenceType ?? 7521,
             [Validators.required],
           ],
           residenceTypeValue: [
@@ -143,18 +161,18 @@ export class CompanyInformationComponent implements OnInit {
             data?.contact.address[0]?.cityName ?? "",
             [Validators.required],
           ],
-          cityId: [data?.contact.address[0]?.cityId ?? ""],
+          cityId: [data?.contact.address[0]?.cityId ?? 1],
         }),
       ]),
     });
   }
 
   get corporateCustomer(): FormGroup {
-    return this._parentForm.get("corporateCustomer") as FormGroup;
+    return this._parentForm?.get("corporateCustomer") as FormGroup;
   }
 
   get miscellaneous(): FormGroup {
-    return this._parentForm.get("miscellaneous") as FormGroup;
+    return this._parentForm?.get("miscellaneous") as FormGroup;
   }
 
   get contact(): FormGroup {
@@ -254,6 +272,13 @@ export class CompanyInformationComponent implements OnInit {
     });
   }
 
+  fetchCompanyDetails() {
+    this.openAccountService.fetchCompanyDetails().subscribe((res: any) => {
+      console.log(res);
+      this._parentForm.patchValue(res?.data);
+    });
+  }
+
   /** fetch all generic value form generic value maintenance for dropdown values */
   fetchGenericValues() {
     this.genericValueService
@@ -338,5 +363,13 @@ export class CompanyInformationComponent implements OnInit {
     addressCtrl.get("cityId").setValue("");
     addressCtrl.get("stateName").setValue("");
     addressCtrl.get("pincode").setValue("");
+  }
+
+  onConfirm() {
+    // if(this._parentForm.invalid) return
+    this.onCustomSubmit.emit({
+      status: true,
+      companyDetails: this._parentForm,
+    });
   }
 }
