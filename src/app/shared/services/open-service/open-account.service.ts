@@ -71,8 +71,12 @@ export class OpenAccountService {
     );
   }
 
-  getExistingCustomer(mobileNo) {
-    return this.http.get(`${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}`);
+  getExistingCustomer(mobileNo, type?) {
+    return this.http.get(
+      `${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}${
+        type ? `&type=${type}` : ""
+      }`
+    );
   }
 
   saveCustomerInfo(payload) {
