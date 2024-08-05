@@ -46,7 +46,6 @@ export class CreateLoanComponent implements OnInit {
   otherUserInfo: any;
   ownerShipId: any;
   valueChangesSubscription: Subscription;
-  isCorporate: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -113,7 +112,10 @@ export class CreateLoanComponent implements OnInit {
           this.staticData = { ...resp.data };
           this.holderTypeArray = resp.data["HOLDERTYPE"];
           this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
-          if (this.personalLoanDetailsForm && this.isCorporate) {
+          if (
+            this.personalLoanDetailsForm &&
+            !this.mobileVerifyInfo?.individual
+          ) {
             this.setJointAsHolderType();
           }
         }
@@ -137,7 +139,7 @@ export class CreateLoanComponent implements OnInit {
           if (
             this.holderTypeArray?.length > 0 &&
             !this.personalLoanDetailsForm.get("holderType").value &&
-            this.isCorporate
+            !this.mobileVerifyInfo?.individual
           ) {
             this.setJointAsHolderType();
           }
