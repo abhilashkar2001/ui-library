@@ -103,28 +103,41 @@ export class NationalIdUploadComponent implements OnInit {
     console.log(event, "......");
     var docIds = [];
     let customerDetails: any;
-    event.documentDetails.otherDocument.forEach((element) => {
-      if (element.docIds?.length > 0) {
-        const docId = {
-          docIds: element.docIds,
-        };
-        docIds.push(docId);
-        if (!customerDetails) {
-          console.log(element);
-          element.fileInfo.forEach((item) => {
-            console.log(item, ".......");
-            if (
-              (item.applicantName || item.name || item.dateOfBirth) &&
-              !customerDetails
-            ) {
-              console.log(";;;;;;;");
-              customerDetails = item;
-              return;
-            }
-          });
+    if (this.numberOfDirectors) {
+      event.documentDetails.otherDocument.forEach((element) => {
+        if (element.docIds?.length > 0) {
+          const docId = {
+            docIds: element.docIds,
+          };
+          docIds.push(docId);
         }
-      }
-    });
+      });
+      customerDetails = event.documentDetails.otherDocument[0]?.fileInfo;
+    } else {
+      event.documentDetails.otherDocument.forEach((element) => {
+        if (element.docIds?.length > 0) {
+          const docId = {
+            docIds: element.docIds,
+          };
+          docIds.push(docId);
+          if (!customerDetails) {
+            console.log(element);
+            element.fileInfo.forEach((item) => {
+              console.log(item, ".......");
+              if (
+                (item.applicantName || item.name || item.dateOfBirth) &&
+                !customerDetails
+              ) {
+                console.log(";;;;;;;");
+                customerDetails = item;
+                return;
+              }
+            });
+          }
+        }
+      });
+    }
+
     sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
     this.updateParentModel({
       kycDoc: docIds,

@@ -140,7 +140,10 @@ export class LoanFlowComponent implements OnInit {
                 });
               }
 
-              if (screenName.toLowerCase().includes("personal")) {
+              if (
+                screenName.toLowerCase().includes("personal") ||
+                screenName.toLowerCase().includes("director")
+              ) {
                 this.customSavePersonal(data);
               }
               if (screenName.toLowerCase().includes("company")) {
@@ -199,7 +202,9 @@ export class LoanFlowComponent implements OnInit {
       if (value?.isCheckListDoc) {
         const payload = {
           documentIds: value?.otherLoanDoc,
-          originationId: this.originationModel?.originationId,
+          originationId:
+            this.originationModel?.originationId ??
+            sessionStorage.getItem("originationId"),
           screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
         };
         this.loanApi.saveChecklist(payload).subscribe((resp) => {
@@ -526,7 +531,10 @@ export class LoanFlowComponent implements OnInit {
     const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
     const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
     return {
-      originationId: this.originationModel?.originationId ?? null,
+      originationId:
+        this.originationModel?.originationId ??
+        sessionStorage.getItem("originationId") ??
+        null,
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
       accountType: sessionData.basisName,
       basisDetailsId: sessionData.basisId,
@@ -552,6 +560,10 @@ export class LoanFlowComponent implements OnInit {
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if ((resp?.statusCode == 200 || resp?.statusCode == 201) && resp?.data) {
         this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
+        sessionStorage.setItem(
+          "originationId",
+          resp?.data?.originationModel?.originationId
+        );
         this.next();
       }
     });
