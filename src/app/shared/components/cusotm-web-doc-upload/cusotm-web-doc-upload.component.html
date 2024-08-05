@@ -152,12 +152,9 @@
         </mat-form-field>
       </div>
 
-      <div
-        fxFlex="48"
-        class="pt-12"
-        *ngIf="disbursementType === loanEnum.ACCOUNT_EXISTING_KEY"
-      >
+      <div fxFlex="48" class="pt-12">
         <mat-radio-group
+          *ngIf="disbursementType === loanEnum.ACCOUNT_EXISTING_KEY"
           aria-label="Select an option"
           formControlName="accountType"
           (change)="onChange()"
@@ -264,7 +261,7 @@
         fxFlex="48"
         class=""
         *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
           disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
@@ -278,7 +275,7 @@
         fxFlex="48"
         class=""
         *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
+          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
           disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
         "
       >
