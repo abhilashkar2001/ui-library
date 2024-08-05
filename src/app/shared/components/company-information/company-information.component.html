@@ -79,8 +79,9 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ "Date of Incorporation" }}</mat-label>
           <input
-            dateFormatCharacters
             matInput
+            type="text"
+            readonly
             [matDatepicker]="incorporationDate"
             formControlName="dateOfIncorporation"
             required

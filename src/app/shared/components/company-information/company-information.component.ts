@@ -115,14 +115,8 @@ export class CompanyInformationComponent implements OnInit {
   }
   addContact(data?) {
     return this.fb.group({
-      email: [
-        data?.contact?.email ?? "",
-        [
-          Validators.required,
-          Validators.pattern("[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),
-        ],
-      ],
-      mobile: [data?.contact?.mobile ?? "", [Validators.required]],
+      email: [data?.contact?.email ?? ""],
+      mobile: [data?.contact?.mobile ?? ""],
       mobtCode: [Number(data?.contact?.mobtCode) ?? ""],
       whatsappNo: [data?.contact?.whatsappNo ?? ""],
       waptCode: [Number(data?.contact?.waptCode) ?? ""],
@@ -132,35 +126,16 @@ export class CompanyInformationComponent implements OnInit {
       contactId: [data?.contact?.contactId ?? ""],
       address: this.fb.array([
         this.fb.group({
-          address1: [
-            data?.contact.address[0]?.address1 ?? "",
-            [Validators.required],
-          ],
+          address1: [data?.contact.address[0]?.address1 ?? ""],
           address2: [data?.contact.address[0]?.address2 ?? ""],
-          residenceType: [
-            data?.contact.address[0]?.residenceType ?? 7521,
-            [Validators.required],
-          ],
+          residenceType: [data?.contact.address[0]?.residenceType ?? 7521],
           residenceTypeValue: [
             data?.contact.address[0]?.residenceTypeValue ?? "",
-            [Validators.required],
           ],
-          countryName: [
-            data?.contact.address[0]?.countryName ?? "",
-            [Validators.required],
-          ],
-          pincode: [
-            data?.contact.address[0]?.pincode ?? "",
-            [Validators.required],
-          ],
-          stateName: [
-            data?.contact.address[0]?.stateName ?? "",
-            [Validators.required],
-          ],
-          cityName: [
-            data?.contact.address[0]?.cityName ?? "",
-            [Validators.required],
-          ],
+          countryName: [data?.contact.address[0]?.countryName ?? ""],
+          pincode: [data?.contact.address[0]?.pincode ?? ""],
+          stateName: [data?.contact.address[0]?.stateName ?? ""],
+          cityName: [data?.contact.address[0]?.cityName ?? ""],
           cityId: [data?.contact.address[0]?.cityId ?? 1],
         }),
       ]),
@@ -366,7 +341,8 @@ export class CompanyInformationComponent implements OnInit {
   }
 
   onConfirm() {
-    // if(this._parentForm.invalid) return
+    console.log(this._parentForm);
+    if (this._parentForm.invalid) return;
     this.onCustomSubmit.emit({
       status: true,
       companyDetails: this._parentForm,
