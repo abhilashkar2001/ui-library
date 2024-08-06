@@ -88,6 +88,6 @@ export class DataService {
    * null to disbursement details
    */
   removeDisbursementDetails(): void {
-    this.$checklistDocument.next(null);
+    this.$disbursementDetails.next(null);
   }
 }
