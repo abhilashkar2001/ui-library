@@ -12,7 +12,6 @@ import { CreateLoanEnum, LoanFlowConstants } from "./loan-flow.constant";
 import { SharedService } from "app/shared/shared.service";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { BehaviorSubject } from "rxjs";
-import { CusotmWebDocUploadComponent } from "app/shared/components/cusotm-web-doc-upload/cusotm-web-doc-upload.component";
 import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { CustomWebDocUploadServiceService } from "app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service";
@@ -24,9 +23,6 @@ import { CustomWebDocUploadServiceService } from "app/shared/components/cusotm-w
 })
 export class LoanFlowComponent implements OnInit {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  // @ViewChild(CusotmWebDocUploadComponent)
-  // loanDocRef: CusotmWebDocUploadComponent;
-
   createLoan: FormGroup;
   customVerifyNumber: FormGroup;
   cibilScoreForm: FormGroup;
@@ -556,6 +552,7 @@ export class LoanFlowComponent implements OnInit {
       branchId: this.currentUser.branchId,
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
+      department: this.currentUser?.department,
     };
   }
 

@@ -264,17 +264,15 @@
   <div class="uploaded-documents-summary">
     <div class="text-header">Select KYC</div>
     <div class="bank-account-details w-full" fxLayout="column">
-      <div class="col-1">
-        <!-- <span class="content-header">Document type</span>
-        <span class="content"
-          >{{ loanSummaryDetails?.docs[0]?.documentType }}
-        </span> -->
-      </div>
+      <div class="col-1"></div>
       <div fxLayout="row wrap" fxLayoutGap="2%">
-        <ng-container *ngFor="let doc of loanSummaryDetails?.docs">
+        <ng-container
+          *ngFor="let doc of loanSummaryDetails?.docs; let i = index"
+        >
           <div fxFlex="31" class="mt-20">
             <app-show-document [document]="doc"> </app-show-document>
           </div>
+          <div fxFlex="31"></div>
         </ng-container>
       </div>
     </div>
@@ -286,14 +284,6 @@
       *ngIf="checkListDoc?.length > 0"
       fxLayout="column"
     >
-      <!-- <div class="col-1">
-        <span class="content-header">Document type</span>
-        <span class="content"
-          >{{
-            loanSummaryDetails?.documnentsInfo?.docInfoModel[0].documentType
-          }}
-        </span>
-      </div> -->
       <div
         fxLayout="column"
         fxFlex="100"

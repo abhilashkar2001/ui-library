@@ -89,6 +89,13 @@ export class CommonEmiCalculatorComponent implements OnInit {
   }
   onSliderChange(e) {
     this.ammountValue = e.value;
+    if (
+      Number(this.ammountValue) == 0 ||
+      Number(this.ammountValue) < this.min
+    ) {
+      this.loanForm.get("amount").setValue(this.min);
+      return;
+    }
     this.loanForm.get("amount").setValue(e.value);
   }
 
@@ -106,16 +113,6 @@ export class CommonEmiCalculatorComponent implements OnInit {
       tenureDays: "",
       interestRate: [this.interestRate, [Validators.required]],
     });
-
-    this.loanForm
-      .get("amount")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((resp) => {
-        console.log(resp);
-        if (parseInt(resp) == 0 || resp < this.min) {
-          this.loanForm.get("amount").setValue(this.min);
-        }
-      });
 
     this.valueChangesSubscription = this.loanForm.valueChanges
       .pipe(debounceTime(500))

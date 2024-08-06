@@ -44,9 +44,7 @@ export class LoanSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getLoanSummary();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    // this.loanSummaryDetails = this.loanSummary;
     this.getLoanSummary().then((resp) => {
       this.getOriginationMasterData();
       this.getCheckListDoc();
