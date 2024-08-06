@@ -33,6 +33,7 @@ export class LoanSummaryComponent implements OnInit {
   otherUserInfo: any;
   personalDetails: any;
   checkListDoc: any[] = [];
+  @Input("mobileVerifyInfo") mobileVerifyInfo: any;
 
   constructor(
     private dialog: MatDialog,

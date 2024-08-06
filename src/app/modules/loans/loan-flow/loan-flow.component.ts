@@ -582,11 +582,15 @@ export class LoanFlowComponent implements OnInit {
           const docIds: number[] = [];
           formdataMap.forEach(async (item) => {
             docIds.push(item?.documentId);
+            let formData = new FormData();
+            formData.append("fileName", item?.file);
+            console.log(formdataMap);
+
             await this.docapi
               .getCheckListDoc(
                 item?.docName,
                 resp?.data?.originationModel?.originationId,
-                item?.formData,
+                formData,
                 item?.documentId,
                 item?.customerStagingId
               )

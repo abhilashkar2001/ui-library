@@ -169,7 +169,11 @@
     </div>
   </div>
   <ng-container *ngFor="let item of personalDetails; let i = index">
-    <div class="text-header">Personal Details</div>
+    <div class="text-header">
+      {{
+        mobileVerifyInfo?.individual ? "Personal Details" : "Director Details"
+      }}
+    </div>
     <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
       <mat-expansion-panel-header class="text-header"
         >Applicant {{ i + 1 }}</mat-expansion-panel-header
