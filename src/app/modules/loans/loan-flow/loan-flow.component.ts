@@ -572,44 +572,6 @@ export class LoanFlowComponent implements OnInit {
             "originationId",
             resp?.data?.originationModel?.originationId
           );
-          const formdataMap: Map<
-            string,
-            Record<string, any>
-          > = this.dataService.getChecklistDocument();
-          const docIds: number[] = [];
-          formdataMap.forEach(async (item) => {
-            docIds.push(item?.documentId);
-            let formData = new FormData();
-            formData.append("fileName", item?.file);
-            console.log(formdataMap);
-
-            await this.docapi
-              .getCheckListDoc(
-                item?.docName,
-                resp?.data?.originationModel?.originationId,
-                formData,
-                item?.documentId,
-                item?.customerStagingId
-              )
-              .toPromise();
-          });
-          const payload = {
-            documentIds: docIds,
-            originationId:
-              this.originationModel?.originationId ??
-              sessionStorage.getItem("originationId"),
-            screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
-          };
-          await this.loanApi.saveChecklist(payload).toPromise();
-          console.log(this.dataService.getDisbursementDetails());
-
-          await this.loanApi
-            .submitLoanDetail(
-              this.calculateDisbursementPayload(
-                this.dataService.getDisbursementDetails()
-              )
-            )
-            .toPromise();
           this.next();
         }
       });
@@ -634,14 +596,14 @@ export class LoanFlowComponent implements OnInit {
       };
       this.openAccountService
         .saveCustomerInfo(payloadData)
-        .subscribe((resp) => {
+        .subscribe(async (resp) => {
           if (resp?.statusCode === 200) {
             this.originationModel = resp.data?.originationModel;
             this.personalDetails = resp.data?.customerInfo;
             this.loanAccountInfo = resp.data?.loanAccountInfo;
             this.originationValue$ = resp.data;
             let customId = [];
-            resp.data?.customerInfo?.forEach((item, i) => {
+            resp.data?.customerInfo?.forEach(async (item, i) => {
               customId.push(item.customerId || item?.customerStagingId);
               if (item.primaryCustomer)
                 sessionStorage.setItem(
@@ -665,6 +627,51 @@ export class LoanFlowComponent implements OnInit {
               resp?.data?.originationModel?.originationId
             );
             sessionStorage.removeItem("loanDoc");
+            if (!this.mobileVerifyInfo.individual) {
+              const formdataMap: Map<
+                string,
+                Record<string, any>
+              > = this.dataService.getChecklistDocument();
+              const docIds: number[] = [];
+              formdataMap.forEach(async (item) => {
+                docIds.push(item?.documentId);
+                let formData = new FormData();
+                formData.append("fileName", item?.file);
+                console.log(formdataMap);
+
+                await this.docapi
+                  .getCheckListDoc(
+                    item?.docName,
+                    resp?.data?.originationModel?.originationId,
+                    formData,
+                    item?.documentId,
+                    docIds[0]
+                  )
+                  .toPromise();
+              });
+              if (this.mobileVerifyInfo) {
+                const payload = {
+                  documentIds: docIds,
+                  originationId:
+                    this.originationModel?.originationId ??
+                    sessionStorage.getItem("originationId"),
+                  screenCode: parseInt(
+                    sessionStorage.getItem("otherDocScreenCode")
+                  ),
+                };
+                await this.loanApi.saveChecklist(payload).toPromise();
+                console.log(this.dataService.getDisbursementDetails());
+
+                await this.loanApi
+                  .submitLoanDetail(
+                    this.calculateDisbursementPayload(
+                      this.dataService.getDisbursementDetails()
+                    )
+                  )
+                  .toPromise();
+              }
+            }
+
             this.next();
           }
         });
