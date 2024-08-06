@@ -73,6 +73,7 @@ export class CompanyInformationComponent implements OnInit {
 
   buildCompanyForm() {
     this._parentForm = this.fb.group({
+      screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
       originationModel: this.fb.group({
         basisDetailsId: [""],
         loanAmount: [""],
@@ -343,6 +344,7 @@ export class CompanyInformationComponent implements OnInit {
   onConfirm() {
     console.log(this._parentForm);
     if (this._parentForm.invalid) return;
+
     this.onCustomSubmit.emit({
       status: true,
       companyDetails: this._parentForm,
