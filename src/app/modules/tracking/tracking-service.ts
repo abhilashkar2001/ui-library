@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class TrackingService {
   baseUrl = environment.microServiceURL;
@@ -34,6 +34,11 @@ export class TrackingService {
   getOriginationMaster(id) {
     return this.http.get<any>(
       `${this.baseUrl}/origination-matser?originationId=${id}`
+    );
+  }
+  applicationDetails(applicationId) {
+    return this.http.get<any>(
+      `${this.baseUrl}/origination-matser/applicationStatus?=${applicationId}`
     );
   }
   getLoanSummary(originationId: any) {

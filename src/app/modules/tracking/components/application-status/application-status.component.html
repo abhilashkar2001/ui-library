@@ -1,7 +1,7 @@
 <div>
   <ul class="approved_history_container">
     <span class="vertical_line"></span>
-    <ng-container *ngFor="let item of summaryInfoResp; let indx = index">
+    <ng-container *ngFor="let item of applicationInfo; let indx = index">
       <li *ngIf="item">
         <div class="count_div">
           <div class="dateLabel">{{ item?.date }}</div>
@@ -12,20 +12,20 @@
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
                 <div class="label_title" *ngIf="indx == 0">Process :</div>
-                <div class="label_value">Application Submitted</div>
+                <div class="label_value">{{ item?.process }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
                 <div class="label_title" *ngIf="indx == 0">Date & Time</div>
-                <div class="label_value">Application Submitted</div>
+                <div class="label_value">{{ item?.processDate }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
                 <div class="label_title" *ngIf="indx == 0">Description</div>
                 <div class="label_value">
-                  Lorem ipsum is placeholder text commonly
+                  {{ item?.description }}
                 </div>
               </div>
             </div>
@@ -38,8 +38,11 @@
                     item?.status?.toLowerCase() == 'schedule'
                       ? 'scheduleStatus'
                       : '',
-                    item?.status?.toLowerCase() == 'in progress'
+                    item?.status?.toLowerCase() == 'ongoing'
                       ? 'inProgressStatus'
+                      : '',
+                    item?.status?.toLowerCase() == 'reject'
+                      ? 'rejectStatus'
                       : ''
                   ]"
                 >

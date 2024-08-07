@@ -1,27 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { TrackingService } from "../../tracking-service";
 import { ActivatedRoute } from "@angular/router";
-import { forkJoin } from "rxjs";
+import { forkJoin, of } from "rxjs";
 import { ProductConstant } from "./product.store";
+import { catchError } from "rxjs/operators";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
-  styleUrls: ["./product-details.component.scss"],
+  styleUrls: ["./product-details.component.scss"]
 })
 export class ProductDetailsComponent implements OnInit {
   dynamicDetails: any = [];
+  applicationStatus: any = [];
   mobileNumber: string;
   productType: string = "";
 
-  constructor(private api: TrackingService, private route: ActivatedRoute) {}
-
-  statusItems = [
-    { title: "Application Submitted", value: 100 },
-    { title: "Verification", value: 20 },
-    { title: "Application Status", value: 0 },
-  ];
+  statusItems: any[] = [];
   dynamicKeyHelper = {};
+
+  constructor(private api: TrackingService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params["id"];
@@ -38,10 +36,17 @@ export class ProductDetailsComponent implements OnInit {
 
   getWebSummary(id) {
     const observables = {
-      originationDetails: this.api.getOriginationMaster(id),
+      applicationDetails: this.api
+        .applicationDetails(id)
+        .pipe(catchError((err) => of({ error: err }))),
+      originationDetails: this.api
+        .getOriginationMaster(id)
+        .pipe(catchError((err) => of({ error: err }))),
       webSummary: this.productType.toLowerCase().includes("loan")
-        ? this.api.getLoanSummary(id)
-        : null,
+        ? this.api
+            .getLoanSummary(id)
+            .pipe(catchError((err) => of({ error: err })))
+        : of(null)
     };
 
     forkJoin(observables).subscribe((resp: any) => {
@@ -54,6 +59,25 @@ export class ProductDetailsComponent implements OnInit {
             obj.documnentsInfo.documents.flatMap((objDoc) => objDoc.docs)
           );
 
+        if (resp?.applicationDetails?.statusCode === 200) {
+          this.applicationStatus = resp?.applicationDetails?.data;
+          this.statusItems = this.applicationStatus.map((item: any) => {
+            const val: any = {
+              title: item?.process
+            };
+            if (item?.status === "DONE") {
+              val.value = 100;
+            }
+            if (item?.status === "ONGOING") {
+              val.value = 20;
+            }
+            if (item?.status === "REJECT") {
+              val.value = 0;
+            }
+            return val;
+          });
+        }
+
         if (resp.webSummary?.statusCode === 200) {
           const loanInfo = resp.webSummary.data;
           const loanTenure = `${loanInfo.loanDetails.loanTenureYear} Year ${loanInfo.loanDetails.loanTenureMonth} Months ${loanInfo.loanDetails.loanTenureDay} Day`;
@@ -61,19 +85,19 @@ export class ProductDetailsComponent implements OnInit {
           this.dynamicDetails = [
             {
               key: "loanAccountInfo",
-              values: { ...loanInfo.loanDetails, tenure: loanTenure },
+              values: { ...loanInfo.loanDetails, tenure: loanTenure }
             },
             { key: "bankAccount", values: loanInfo.bankAccount ?? {} },
             {
               key: "disbursementDetails",
-              values: loanInfo.disbursementDetails ?? {},
+              values: loanInfo.disbursementDetails ?? {}
             },
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
             {
               key: "documnentsInfo",
-              values: loanInfo.documnentsInfo.docInfoModel ?? [],
+              values: loanInfo.documnentsInfo.docInfoModel ?? []
             },
-            { key: "docs", values: kycDoc },
+            { key: "docs", values: kycDoc }
           ];
           this.dynamicKeyHelper = this.productType
             .toLowerCase()
@@ -83,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.dynamicDetails = [
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
-            { key: "docs", values: kycDoc },
+            { key: "docs", values: kycDoc }
           ];
           this.dynamicKeyHelper = ProductConstant.AccountDynamicKeys;
         }

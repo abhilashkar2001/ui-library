@@ -50,6 +50,9 @@
 .inProgressStatus {
   @include statusLabel(#eeab2c, #fff6e5);
 }
+.rejectStatus {
+  @include statusLabel(#ee2c2c, #ffe5e5);
+}
 
 ul.approved_history_container {
   height: max-content;

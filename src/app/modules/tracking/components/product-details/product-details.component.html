@@ -41,7 +41,9 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div fxFlex="100" class="custom_expansion_container">
-        <app-application-status></app-application-status>
+        <app-application-status
+          [applicationInfo]="applicationStatus"
+        ></app-application-status>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
