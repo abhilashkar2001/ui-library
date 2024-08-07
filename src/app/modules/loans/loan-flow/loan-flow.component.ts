@@ -516,11 +516,7 @@ export class LoanFlowComponent implements OnInit {
           jointCustomerInfo: [],
           middleName: "",
           dateOfBirth: moment(element.dateOfBirth).format(),
-          documentId: element.primaryCustomer
-            ? this.kycDoc
-              ? this.kycDoc
-              : docIds
-            : [],
+          documentId: [this.kycDoc[i]],
         };
         customer.push(cus);
       });

@@ -13,6 +13,7 @@ import { CountryService } from "app/shared/services/country-service";
 import { DocumentUploadService } from "app/shared/services/document-upload.service";
 import { GenericValueService } from "app/shared/services/generic-value.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
   selector: "app-company-information",
@@ -48,6 +49,7 @@ export class CompanyInformationComponent implements OnInit {
   };
 
   currencyList = [];
+  originationId: number;
 
   constructor(
     private fb: FormBuilder,
@@ -55,10 +57,12 @@ export class CompanyInformationComponent implements OnInit {
     private cityService: CityService,
     private countryService: CountryService,
     private genericValueService: GenericValueService,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.buildCompanyForm();
     this.fetchCountries();
     this.fetchGenericValues();
@@ -68,7 +72,8 @@ export class CompanyInformationComponent implements OnInit {
     this.miscellaneousId = JSON.parse(
       sessionStorage.getItem("miscellaneousId")
     );
-    this.fetchCompanyDetails();
+    if (this.originationId) this.fetchOriginationMaster();
+    else this.fetchCompanyDetails();
   }
 
   buildCompanyForm() {
@@ -250,9 +255,16 @@ export class CompanyInformationComponent implements OnInit {
 
   fetchCompanyDetails() {
     this.openAccountService.fetchCompanyDetails().subscribe((res: any) => {
-      console.log(res);
       this._parentForm.patchValue(res?.data);
     });
+  }
+
+  fetchOriginationMaster() {
+    this.openAccountService
+      .getOriginationMaster(this.originationId)
+      .subscribe((res: any) => {
+        this._parentForm.patchValue(res?.data[0]);
+      });
   }
 
   /** fetch all generic value form generic value maintenance for dropdown values */
@@ -341,8 +353,11 @@ export class CompanyInformationComponent implements OnInit {
     addressCtrl.get("pincode").setValue("");
   }
 
+  goBack() {
+    this.onBackEvent.emit();
+  }
+
   onConfirm() {
-    console.log(this._parentForm);
     if (this._parentForm.invalid) return;
 
     this.onCustomSubmit.emit({
