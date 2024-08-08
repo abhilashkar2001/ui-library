@@ -27,7 +27,11 @@
   <!-- Product cards -->
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <ng-container
-      *ngFor="let product of productList; trackBy: trackByProductId"
+      *ngFor="
+        let product of productList;
+        trackBy: trackByProductId;
+        let indx = index
+      "
     >
       <mat-card
         fxFlex="31"
@@ -40,7 +44,14 @@
           class="card-img"
         />
         <ng-template #defaultImage>
-          <img src="assets/images/applicationlist.svg" class="card-img" />
+          <img
+            [src]="
+              indx % 2 == 0
+                ? 'assets/images/applicationlist.svg'
+                : 'assets/images/apllicationdetails.svg'
+            "
+            class="card-img"
+          />
         </ng-template>
         <div class="p-12" fxLayout="column">
           <div fxLayout="row" fxLayoutAlign="space-between center">
