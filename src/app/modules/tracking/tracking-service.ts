@@ -38,12 +38,17 @@ export class TrackingService {
   }
   applicationDetails(applicationId) {
     return this.http.get<any>(
-      `${this.baseUrl}/origination-matser/applicationStatus?=${applicationId}`
+      `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`
     );
   }
   getLoanSummary(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/webSummary?originationId=${originationId}`
+    );
+  }
+  getLoanDocument(originationId: any) {
+    return this.http.get(
+      `${this.baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`
     );
   }
 }

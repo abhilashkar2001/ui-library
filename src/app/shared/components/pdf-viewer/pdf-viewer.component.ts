@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DomSanitizer } from "@angular/platform-browser";
 import { DownloadService } from "app/shared/services/download.service";
 
 @Component({
   selector: "app-pdf-viewer",
   templateUrl: "./pdf-viewer.component.html",
-  styleUrls: ["./pdf-viewer.component.scss"],
+  styleUrls: ["./pdf-viewer.component.scss"]
 })
 export class PdfViewerComponent implements OnInit {
   @Input() fileName: string;
@@ -14,8 +15,12 @@ export class PdfViewerComponent implements OnInit {
 
   constructor(
     private domSanitizer: DomSanitizer,
-    private downloadService: DownloadService
-  ) {}
+    private downloadService: DownloadService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.fileUrl = data?.fileUrl;
+    this.fileName = data?.fileName;
+  }
 
   ngOnInit(): void {
     this.getFile();
