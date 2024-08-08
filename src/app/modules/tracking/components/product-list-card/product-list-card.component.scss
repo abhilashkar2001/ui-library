@@ -86,7 +86,10 @@
   color: rgb(0, 132, 97) !important;
 }
 .highlightRejected {
-  color: rgb(178, 0, 0) !important;
+  color: #b20000 !important;
+}
+.highlightExpired {
+  color: #ff742b !important;
 }
 .custom-search {
   ::ng-deep .mat-form-field-prefix {

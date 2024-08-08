@@ -19,6 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   statusItems: any[] = [];
   dynamicKeyHelper = {};
 
+  loanDocument: any[] = [];
+
   constructor(private api: TrackingService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -36,6 +38,9 @@ export class ProductDetailsComponent implements OnInit {
 
   getWebSummary(id) {
     const observables = {
+      getLoanDocument: this.api
+        .getLoanDocument(id)
+        .pipe(catchError((err) => of({ error: err }))),
       applicationDetails: this.api
         .applicationDetails(id)
         .pipe(catchError((err) => of({ error: err }))),
@@ -61,6 +66,9 @@ export class ProductDetailsComponent implements OnInit {
 
         if (resp?.applicationDetails?.statusCode === 200) {
           this.applicationStatus = resp?.applicationDetails?.data;
+          this.applicationStatus = this.applicationStatus.filter(
+            (item: any) => item?.process
+          );
           this.statusItems = this.applicationStatus.map((item: any) => {
             const val: any = {
               title: item?.process
@@ -76,6 +84,13 @@ export class ProductDetailsComponent implements OnInit {
             }
             return val;
           });
+        }
+
+        if (resp.getLoanDocument?.statusCode === 200) {
+          const loanDoc = resp?.getLoanDocument?.data;
+          this.loanDocument = loanDoc
+            .filter((obj) => obj.docInfoModel)
+            ?.map((item) => item?.docInfoModel?.[0]);
         }
 
         if (resp.webSummary?.statusCode === 200) {
@@ -95,8 +110,10 @@ export class ProductDetailsComponent implements OnInit {
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
             {
               key: "documnentsInfo",
-              values: loanInfo.documnentsInfo.docInfoModel ?? []
+              // values: loanInfo.documnentsInfo.docInfoModel ?? []
+              values: this.loanDocument ?? []
             },
+
             { key: "docs", values: kycDoc }
           ];
           this.dynamicKeyHelper = this.productType

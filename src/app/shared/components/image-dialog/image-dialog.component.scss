@@ -1,10 +1,12 @@
 ::ng-deep .imageViewDialog .mat-dialog-container {
   padding: 0px;
+  background: transparent;
+  box-shadow: none;
 }
 .imageDisplayDiv {
   padding: 2px;
   background-color: #f3f3f3;
-  border: 3px solid #ffffff;
+  // border: 3px solid #ffffff;
   border-radius: 18px;
   opacity: 1;
   height: 100%;
