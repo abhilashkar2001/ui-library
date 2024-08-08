@@ -99,7 +99,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getAllRequisite().then((res) => {
-      console.log("buildingForm");
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
       } else this.buildCustomerDetailsForm();
@@ -171,12 +170,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
                 address
                   .get("pincode")
                   .patchValue(
-                    JSON.parse(sessionStorage.getItem("backData")).pincode
+                    JSON.parse(sessionStorage.getItem("backData"))[index]
+                      .pincode
                   );
                 address
                   .get("address1")
                   .patchValue(
-                    JSON.parse(sessionStorage.getItem("backData")).address1
+                    JSON.parse(sessionStorage.getItem("backData"))[index]
+                      .address1
                   );
 
                 // sessionStorage.removeItem("backData");
@@ -229,12 +230,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
             address
               .get("pincode")
               .patchValue(
-                JSON.parse(sessionStorage.getItem("backData")).pincode
+                JSON.parse(sessionStorage.getItem("backData"))[0].pincode
               );
             address
               .get("address1")
               .patchValue(
-                JSON.parse(sessionStorage.getItem("backData")).address1
+                JSON.parse(sessionStorage.getItem("backData"))[0].address1
               );
 
             // sessionStorage.removeItem("backData");

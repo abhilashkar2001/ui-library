@@ -107,6 +107,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   nationalIdNo: any;
   documentInfo: any;
   addNewButtonClicked: Subscription;
+  backData: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -469,14 +470,13 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         }
         this.documentInfo = convertedResp;
         res.data = convertedResp;
-
         // Aadhaar Back Scan
         if (this.documentInfo?.address && this.documentInfo?.pincode) {
-          let backData = {
+          this.backData.push({
             address1: this.documentInfo?.address,
             pincode: this.documentInfo?.pincode,
-          };
-          sessionStorage.setItem("backData", JSON.stringify(backData));
+          });
+          sessionStorage.setItem("backData", JSON.stringify(this.backData));
         }
 
         if (res?.data?.aadhaarNumber != "Details not found") {
@@ -654,6 +654,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
             this.api.uploadDocument(formData).subscribe((resp) => {
               if (resp?.statusCode === 200) {
+                this.isLoading = false;
                 this.updateDocId(i).push(resp.data.documentId);
                 this.documentIds.push(this.createDocumentForm.value);
                 console.log(
@@ -682,7 +683,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                     resp.data.documentId,
                     sessionStorage.getItem("customerStagingId")
                   );
-                this.isLoading = false;
                 // else this.loder.close();
               }
             });

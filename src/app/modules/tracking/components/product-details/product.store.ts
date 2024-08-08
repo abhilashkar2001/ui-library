@@ -8,27 +8,34 @@ export class ProductConstant {
       { label: "Email ID", valueKey: "email", type: "personal" },
       { label: "Mobile No", valueKey: "mobile", type: "personal" },
       { label: "Gender", valueKey: "genderValue", type: "personal" },
-      { label: "Nationality", valueKey: "nationality", type: "personal" },
+      { label: "Nationality", valueKey: "nationality", type: "personal" }
     ],
     addressPair: [
       { label: "Address", valueKey: "address1", type: "personal" },
       {
         label: "Residence Type",
         valueKey: "residenceTypeValue",
-        type: "personal",
+        type: "personal"
       },
       { label: "Country", valueKey: "countryName", type: "personal" },
       { label: "Zip Code", valueKey: "pincode", type: "personal" },
       { label: "State", valueKey: "stateName", type: "personal" },
-      { label: "City", valueKey: "cityName", type: "personal" },
-    ],
+      { label: "City", valueKey: "cityName", type: "personal" }
+    ]
   };
+  static readonly loanDocKeyPair = [
+    {
+      label: "Document Type",
+      valueKey: "documentNameForChecklist",
+      type: "document"
+    }
+  ];
   static readonly docKeyPair = [
     {
       label: "Document Type",
       valueKey: "documentNameValue",
-      type: "document",
-    },
+      type: "document"
+    }
   ];
   static readonly LoanDynamicKeys = {
     loanAccountInfo: {
@@ -41,21 +48,21 @@ export class ProductConstant {
         {
           label: "Interest Payable",
           valueKey: "interestPayable",
-          type: "currency",
+          type: "currency"
         },
         {
           label: "Principle Amount",
           valueKey: "interestPayable",
-          type: "currency",
+          type: "currency"
         },
         {
           label: "Total Payable Amount",
           valueKey: "interestPayable",
-          type: "currency",
+          type: "currency"
         },
         { label: "Holder Type", valueKey: "holderType" },
-        { label: "Nominee", valueKey: "nominee" },
-      ],
+        { label: "Nominee", valueKey: "nominee" }
+      ]
     },
 
     disbursementDetails: {
@@ -64,33 +71,33 @@ export class ProductConstant {
         { label: "Type", valueKey: "disbursementTypeValue" },
         { label: "Account No", valueKey: "accountNo" },
         { label: "Name", valueKey: "name" },
-        { label: "EMI Payment Start Date", valueKey: "emiStartDate" },
-      ],
+        { label: "EMI Payment Start Date", valueKey: "emiStartDate" }
+      ]
     },
     bankAccount: {
       type: "Bank Account",
       keyPair: [
         { label: "Your Account", valueKey: "yourAccount", type: "maskText" },
         { label: "Name", valueKey: "name" },
-        { label: "Your Pan Card", valueKey: "nationalId", type: "maskText" },
-      ],
+        { label: "Your Pan Card", valueKey: "nationalId", type: "maskText" }
+      ]
     },
     customerInfo: ProductConstant.customerInfo,
     documnentsInfo: {
       type: "Loan Documents",
-      keyPair: ProductConstant.docKeyPair,
+      keyPair: ProductConstant.loanDocKeyPair
     },
     docs: {
       type: "KYC Documents",
-      keyPair: ProductConstant.docKeyPair,
-    },
+      keyPair: ProductConstant.docKeyPair
+    }
   };
 
   static readonly AccountDynamicKeys = {
     customerInfo: ProductConstant.customerInfo,
     docs: {
       type: "KYC Documents",
-      keyPair: ProductConstant.docKeyPair,
-    },
+      keyPair: ProductConstant.docKeyPair
+    }
   };
 }

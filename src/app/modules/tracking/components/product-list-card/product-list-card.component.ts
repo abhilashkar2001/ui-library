@@ -8,7 +8,7 @@ import { ProductListConstant } from "./product-list-card.constant";
 @Component({
   selector: "app-product-list-card",
   templateUrl: "./product-list-card.component.html",
-  styleUrls: ["./product-list-card.component.scss"],
+  styleUrls: ["./product-list-card.component.scss"]
 })
 export class ProductListCardComponent implements OnInit {
   productList = [];
@@ -38,7 +38,7 @@ export class ProductListCardComponent implements OnInit {
         this.searchFilter === ProductListConstant.DEFAULT_CATEGORIES
           ? ""
           : this.searchFilter,
-      searchParam: this.searchParam,
+      searchParam: this.searchParam
     };
     this.api
       .getProductList(
@@ -64,7 +64,7 @@ export class ProductListCardComponent implements OnInit {
    */
   openProduct(product) {
     this.route.navigate([`tracking/summary/${product?.originationId}`], {
-      queryParams: { type: product.type },
+      queryParams: { type: product.type }
     });
   }
 
@@ -83,6 +83,8 @@ export class ProductListCardComponent implements OnInit {
         return "highlightApproved";
       case "rejected":
         return "highlightRejected";
+      case "expired":
+        return "highlightExpired";
       default:
         return "";
     }

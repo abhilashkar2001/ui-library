@@ -2,7 +2,7 @@
   <ng-container
     *ngFor="let product of productInfo; let i = index; trackBy: trackByIndex"
   >
-    <h3>{{ dynamicKeyHelper[product.key].type }}</h3>
+    <h3>{{ dynamicKeyHelper?.[product.key]?.type }}</h3>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
       <!-- Personal Info Summary Start -->
       <ng-container
@@ -14,11 +14,11 @@
           >
             <mat-expansion-panel-header
               class="header"
-              style="height: 45px !important"
+              style="height: 56px !important"
             >
               <mat-panel-description class="header_description">
                 <div fxLayoutAlign="space-between start" fxFlex="100">
-                  <div>Applicat {{ personIndx + 1 }}</div>
+                  <div>Applicant {{ personIndx + 1 }}</div>
                 </div>
                 &nbsp;
               </mat-panel-description>
@@ -73,48 +73,55 @@
       <!-- Personal Info Summary Ends -->
 
       <!-- Other Info Summary Starts -->
-      <ng-template #showOtherThanPersonal>
-        <div
-          fxFlex="19"
-          class="mb-24"
-          *ngFor="let item of dynamicKeyHelper[product.key].keyPair"
-        >
-          <!-- Document Info Starts-->
-          <ng-container *ngIf="item.type == 'document'; else showOther">
-            <ng-container
-              *ngFor="let docItem of product.values; let docIndex = index"
-            >
-              <p class="label_title">{{ item.label }} {{ docIndex + 1 }}</p>
-              <p
-                class="label_value document_label_value"
-                (click)="opnDocument(docItem?.fileUrl, docItem)"
+      <div fxFlex="100" fxLayout="row wrap">
+        <ng-template #showOtherThanPersonal>
+          <div
+            [fxFlex]="item.type == 'document' ? '100' : '19'"
+            class="mb-24"
+            *ngFor="let item of dynamicKeyHelper[product.key]?.keyPair"
+          >
+            <!-- Document Info Starts-->
+            <ng-container *ngIf="item.type == 'document'; else showOther">
+              <div
+                fxFlex="19"
+                *ngFor="let docItem of product.values; let docIndex = index"
               >
-                {{ docItem[item?.valueKey] ?? docItem?.fileName
-                }}{{ docItem?.documentSide }}
-              </p>
+                <p class="label_title">{{ item.label }} {{ docIndex + 1 }}</p>
+                <p
+                  class="label_value document_label_value"
+                  (click)="opnDocument(docItem?.fileUrl, docItem)"
+                >
+                  {{ docItem[item?.valueKey] ?? docItem?.fileName
+                  }}{{ docItem?.documentSide }}
+                </p>
+              </div>
             </ng-container>
-          </ng-container>
-          <!-- Document Info Ends -->
+            <!-- Document Info Ends -->
 
-          <ng-template #showOther>
-            <!-- <ng-template #showOtherInfo> -->
-            <p class="label_title">{{ item.label }}</p>
-            <p
-              class="label_value"
-              *ngIf="item.type != 'currency' && item.type != 'maskText'"
-            >
-              {{ product.values[item?.valueKey] }}
-            </p>
-            <p class="label_value" *ngIf="item.type === 'currency'">
-              {{ product.values[item?.valueKey] | currency : "INR" : "symbol" }}
-            </p>
-            <p class="label_value" *ngIf="item.type == 'maskText'">
-              {{ product.values[item?.valueKey] | textMask : 4 }}
-            </p>
-            <!-- </ng-template> -->
-          </ng-template>
-        </div>
-      </ng-template>
+            <ng-template #showOther>
+              <!-- <ng-template #showOtherInfo> -->
+              <div>
+                <p class="label_title">{{ item.label }}</p>
+                <p
+                  class="label_value"
+                  *ngIf="item.type != 'currency' && item.type != 'maskText'"
+                >
+                  {{ product.values[item?.valueKey] }}
+                </p>
+                <p class="label_value" *ngIf="item.type === 'currency'">
+                  {{
+                    product.values[item?.valueKey] | currency : "INR" : "symbol"
+                  }}
+                </p>
+                <p class="label_value" *ngIf="item.type == 'maskText'">
+                  {{ product.values[item?.valueKey] | textMask : 4 }}
+                </p>
+              </div>
+              <!-- </ng-template> -->
+            </ng-template>
+          </div>
+        </ng-template>
+      </div>
       <!-- Other Info Summary Ends-->
     </div>
     <mat-divider *ngIf="i != productInfo?.length - 1"></mat-divider>
