@@ -8,7 +8,7 @@ import { catchError } from "rxjs/operators";
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
-  styleUrls: ["./product-details.component.scss"]
+  styleUrls: ["./product-details.component.scss"],
 })
 export class ProductDetailsComponent implements OnInit {
   dynamicDetails: any = [];
@@ -51,7 +51,7 @@ export class ProductDetailsComponent implements OnInit {
         ? this.api
             .getLoanSummary(id)
             .pipe(catchError((err) => of({ error: err })))
-        : of(null)
+        : of(null),
     };
 
     forkJoin(observables).subscribe((resp: any) => {
@@ -71,10 +71,13 @@ export class ProductDetailsComponent implements OnInit {
           );
           this.statusItems = this.applicationStatus.map((item: any) => {
             const val: any = {
-              title: item?.process
+              title: item?.process,
             };
-            if (item?.status === "DONE") {
+            if (item?.status === "DONE" || item?.status === "APPROVED") {
               val.value = 100;
+            }
+            if (item?.status === "PENDING") {
+              val.value = 50;
             }
             if (item?.status === "ONGOING") {
               val.value = 20;
@@ -100,21 +103,21 @@ export class ProductDetailsComponent implements OnInit {
           this.dynamicDetails = [
             {
               key: "loanAccountInfo",
-              values: { ...loanInfo.loanDetails, tenure: loanTenure }
+              values: { ...loanInfo.loanDetails, tenure: loanTenure },
             },
             { key: "bankAccount", values: loanInfo.bankAccount ?? {} },
             {
               key: "disbursementDetails",
-              values: loanInfo.disbursementDetails ?? {}
+              values: loanInfo.disbursementDetails ?? {},
             },
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
             {
               key: "documnentsInfo",
               // values: loanInfo.documnentsInfo.docInfoModel ?? []
-              values: this.loanDocument ?? []
+              values: this.loanDocument ?? [],
             },
 
-            { key: "docs", values: kycDoc }
+            { key: "docs", values: kycDoc },
           ];
           this.dynamicKeyHelper = this.productType
             .toLowerCase()
@@ -124,7 +127,7 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.dynamicDetails = [
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
-            { key: "docs", values: kycDoc }
+            { key: "docs", values: kycDoc },
           ];
           this.dynamicKeyHelper = ProductConstant.AccountDynamicKeys;
         }

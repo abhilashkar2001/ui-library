@@ -4,7 +4,7 @@
     <ng-container *ngFor="let item of applicationInfo; let indx = index">
       <li *ngIf="item">
         <div class="count_div">
-          <div class="dateLabel">{{ item?.date }}</div>
+          <div class="dateLabel">{{ item?.processDate | date : "dd MMM" }}</div>
           <p class="count"></p>
         </div>
         <div class="list_body" fxFlex="85">
@@ -43,6 +43,9 @@
                       : '',
                     item?.status?.toLowerCase() == 'reject'
                       ? 'rejectStatus'
+                      : '',
+                    item?.status?.toLowerCase() == 'pending'
+                      ? 'pendingStatus'
                       : ''
                   ]"
                 >

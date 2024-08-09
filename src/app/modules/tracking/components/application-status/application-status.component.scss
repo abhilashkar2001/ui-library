@@ -53,6 +53,9 @@
 .rejectStatus {
   @include statusLabel(#ee2c2c, #ffe5e5);
 }
+.pendingStatus {
+  @include statusLabel(#004c97, #ebf6ff);
+}
 
 ul.approved_history_container {
   height: max-content;
@@ -134,11 +137,12 @@ ul.approved_history_container {
 }
 
 .dateLabel {
-  right: 60px;
+  right: 35px;
   position: relative;
-  top: 34px;
+  top: 41px;
   color: #424545;
   font-weight: 600;
   width: 44px;
   word-wrap: break-word;
+  font-size: 1rem;
 }
