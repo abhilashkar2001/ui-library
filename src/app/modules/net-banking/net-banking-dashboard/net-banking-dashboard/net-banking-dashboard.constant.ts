@@ -161,33 +161,6 @@ export class NETBANKING {
     },
   ];
 
-  static readonly dummyResponse = [
-    {
-      refNo: "4578",
-      productType: "Salary",
-      dateAndTime: "3 Apr 2022 | 14: 11",
-      Amount: "$2,24,234",
-      InitiatedBy: "hari",
-      cifNumber: "876543",
-    },
-    {
-      refNo: "4578",
-      productType: "Salary",
-      dateAndTime: "3 Apr 2022 | 14: 11",
-      Amount: "$2,24,234",
-      InitiatedBy: "hari",
-      cifNumber: "876543",
-    },
-    {
-      refNo: "4578",
-      productType: "Salary",
-      dateAndTime: "3 Apr 2022 | 14: 11",
-      Amount: "$2,24,234",
-      InitiatedBy: "hari",
-      cifNumber: "876543",
-    },
-  ];
-
   static readonly PENDING_SUMMARY = [
     {
       columnDef: "transactionReferenceNo",
@@ -203,6 +176,11 @@ export class NETBANKING {
       columnDef: "creditAccount",
       header: "Destination Account",
       cell: (element: any) => element.corpFundDetails?.[0]?.creditAccount,
+    },
+    {
+      columnDef: "cbsRefNo",
+      header: "External Ref No",
+      cell: (element: any) => element.corpFundDetails?.[0]?.cbsRefNo,
     },
     {
       columnDef: "beneficiaryName",

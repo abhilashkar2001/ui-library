@@ -23,7 +23,7 @@ export class NetBankingDashboardComponent implements OnInit {
   dummyHeader = NETBANKING.dummyHeader;
   colorCode = NETBANKING.colorCode;
   navigationItems = NETBANKING.navigationItems;
-  dummyResponse = NETBANKING.dummyResponse;
+  dummyResponse: any[];
   selectedKey: string | null = null;
   availableBalance: number[][];
   availableBalanceForAccount: any;
