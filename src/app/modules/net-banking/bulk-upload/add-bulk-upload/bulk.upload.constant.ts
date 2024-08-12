@@ -21,8 +21,13 @@ export class BulkUploadConstant {
       },
     },
     {
+      columnDef: "cbsRefNo",
+      header: "External Ref No.",
+      cell: (element: any) => element.cbsRefNo,
+    },
+    {
       columnDef: "debitAccount",
-      header: "Soucrce Account",
+      header: "Source Account",
       cell: (element: any) => element.debitAccount,
     },
     {
@@ -140,7 +145,7 @@ export class BulkUploadConstant {
     {
       columnDef: "fileName",
       header: "File Name",
-      cell: (element: any) => element.templateName,
+      cell: (element: any) => element.fileName,
     },
     {
       columnDef: "totalAmount",

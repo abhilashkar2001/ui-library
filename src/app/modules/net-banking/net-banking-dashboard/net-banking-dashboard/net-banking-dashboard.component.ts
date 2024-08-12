@@ -10,6 +10,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { MatDialog } from "@angular/material/dialog";
 import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -23,7 +24,7 @@ export class NetBankingDashboardComponent implements OnInit {
   dummyHeader = NETBANKING.dummyHeader;
   colorCode = NETBANKING.colorCode;
   navigationItems = NETBANKING.navigationItems;
-  dummyResponse = NETBANKING.dummyResponse;
+  dummyResponse: PendingApprovalSummary[];
   selectedKey: string | null = null;
   availableBalance: number[][];
   availableBalanceForAccount: any;
