@@ -52,6 +52,7 @@ export class CreateAccountLandingPageComponent {
     basisName: "",
     productDuplicationKey: PRODUCT_DUPLICATION_KEY,
     applicationType: "Create Account application",
+    individual: "",
   };
   originationModel: any;
   view: any;
@@ -394,6 +395,7 @@ export class CreateAccountLandingPageComponent {
           this.mobileVerifyInfo = {
             ...this.mobileVerifyInfo,
             basisName: this.productDetails.basisName,
+            individual: resp?.data[0]?.individual,
           };
         }
       });
