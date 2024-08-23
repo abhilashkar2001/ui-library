@@ -389,14 +389,16 @@ export class CreateAccountLandingPageComponent {
     this.openAccountService
       .getProductDetails(this.basisId)
       .subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          this.productDetails = resp.data[0];
-          this.screenTitle = resp.data[0].basisName;
-          this.mobileVerifyInfo = {
-            ...this.mobileVerifyInfo,
-            basisName: this.productDetails.basisName,
-            individual: resp?.data[0]?.individual,
-          };
+        if (resp?.statusCode === 200 && resp?.data) {
+          if (resp?.data.length > 0) {
+            this.productDetails = resp.data[0];
+            this.screenTitle = resp.data[0].basisName;
+            this.mobileVerifyInfo = {
+              ...this.mobileVerifyInfo,
+              basisName: this.productDetails.basisName,
+              individual: resp?.data[0]?.individual,
+            };
+          }
         }
       });
   }
