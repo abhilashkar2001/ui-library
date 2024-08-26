@@ -242,7 +242,7 @@
                 >
                 <ng-template #showInput>
                   <mat-form-field fxFlex="30" class="form-field">
-                    <input matInput [value]="item.amount" />
+                    <input matInput [(ngModel)]="item.amount" />
                   </mat-form-field>
                 </ng-template>
               </div>
@@ -266,7 +266,7 @@
                   >
                 </span>
                 <ng-template #showEditButton>
-                  <mat-icon style="color: #004a9a" (click)="done()"
+                  <mat-icon style="color: #004a9a" (click)="done(i)"
                     >done</mat-icon
                   >
                   <mat-icon style="color: #b10000">close</mat-icon>
