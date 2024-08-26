@@ -16,6 +16,7 @@ import { debounceTime, map } from "rxjs/operators";
 import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
 import { MatDialog } from "@angular/material/dialog";
 import { TableService } from "app/shared/services/table-service/table-service";
+import { ViewExcelDocComponent } from "../view-excel-doc/view-excel-doc.component";
 
 @Component({
   selector: "app-new-reusable-filter",
@@ -34,6 +35,7 @@ export class NewReusableFilterComponent implements OnInit {
   @Input() componentName: string = "";
   @Input() showOnlySearchTitle: string;
   @Input() requiredSpecialFields;
+  @Input() excelData;
 
   @Output() customDataByPage = new EventEmitter<{
     filterValue;
@@ -43,6 +45,37 @@ export class NewReusableFilterComponent implements OnInit {
   filterFormControl: FormControl = new FormControl("");
 
   status: FormControl = new FormControl();
+  tableHeader: any[] = [
+    {
+      headerDef: "debitAccount",
+      headerCell: "Source Account",
+    },
+    {
+      headerDef: "creditAccount",
+      headerCell: "Destination Account",
+    },
+    {
+      headerDef: "transferMode",
+      headerCell: "Transfer Mode",
+    },
+    {
+      headerDef: "transferType",
+      headerCell: "Transfer Type",
+    },
+    {
+      headerDef: "customerName",
+      headerCell: "Full Name",
+    },
+    {
+      headerDef: "ifscCode",
+      headerCell: "IFSC Code",
+    },
+    {
+      headerDef: "debitAmount",
+      headerCell: "Amount",
+    },
+  ];
+  tableBody: any[];
 
   actionDateOptions = [
     { value: "ONEDAY", label: "Today" },
@@ -313,5 +346,18 @@ export class NewReusableFilterComponent implements OnInit {
 
   downloadRecord() {
     this.customDownloadRecord.emit();
+  }
+
+  viewExcel() {
+    console.log(this.excelData);
+    this.dialog.open(ViewExcelDocComponent, {
+      width: "80%",
+      disableClose: true,
+      data: {
+        tableHeader: this.tableHeader,
+        tableBody: this.excelData,
+        fileName: this.bulkUploadFileName,
+      },
+    });
   }
 }

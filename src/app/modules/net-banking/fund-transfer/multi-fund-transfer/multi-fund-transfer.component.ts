@@ -203,13 +203,23 @@ export class MultiFundTransferComponent implements OnInit {
     }
   }
 
-  done() {
+  done(index: number) {
     this.editedAmountIndex = -1;
+    const initialAmount = this.selectedAccounts[index].amount;
+    const dividedAmount =
+      (this.totalAmount - initialAmount) / (this.selectedAccounts.length - 1);
+    this.selectedAccounts.forEach((item, i) => {
+      if (i != index) item.amount = dividedAmount;
+    });
   }
 
-  onAmountChange(event, i) {
-    this.selectedAccounts[i].amount = event;
-  }
+  // onAmountChange(event, i) {
+  //   console.log(event);
+  //   console.log(i);
+  //   console.log(this.selectedAccounts);
+  //   console.log(this.selectedAccounts[i].amount);
+  //   this.selectedAccounts[i].amount = event;
+  // }
 
   saveData(payload) {
     payload.forEach((value: any) => delete value.transferTo);
@@ -248,7 +258,9 @@ export class MultiFundTransferComponent implements OnInit {
     let payload = [];
     this.selectedAccounts.forEach((element) => {
       let obj = { ...this.multiTransferForm.value };
-      obj.creditAccount = element;
+      obj.creditAccount = element.accountNo;
+      obj.debitAmount = element.amount;
+
       obj.uploadType = "MULTI";
       payload.push(obj);
     });

@@ -10,7 +10,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-transfer-summary.component";
 
 @NgModule({
@@ -29,6 +29,7 @@ import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-trans
     FlexLayoutModule,
     ReactiveFormsModule,
     FundTransferRoutingModule,
+    FormsModule,
   ],
 })
 export class FundTransferModule {}

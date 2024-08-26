@@ -122,8 +122,12 @@
             fxLayout="row"
             fxLayoutAlign="space-between"
           >
-            <div fxFlex="24" fxLayoutAlign="space-between">
-              <img src="assets/images/fileUploadSuccessImg.png" alt="" />
+            <div
+              fxFlex="24"
+              fxLayoutAlign="space-between"
+              (click)="viewExcel()"
+            >
+              <img src="assets/images/xls_logo.svg" alt="" />
               <span class="paddingtop HeadingForUpload">{{
                 uploadfiles.controls.name.value
               }}</span>
