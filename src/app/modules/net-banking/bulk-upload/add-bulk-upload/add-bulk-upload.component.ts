@@ -149,39 +149,45 @@ export class AddBulkUploadComponent implements OnInit {
       )
       .subscribe((resp: any) => {
         this.otp = resp?.data;
+
+        const dialogRef = this.dialog.open(AllInOnePopupComponent, {
+          data: {
+            remark: true,
+            mobile: this.currentUser.mobile,
+          },
+          width: "750px",
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+        });
+        dialogRef.afterClosed().subscribe((resp) => {
+          if (resp) {
+            this.api
+              .processBulkTransaction(this.transactionIds)
+              .subscribe((resp) => {
+                if (resp?.statusCode === 200) {
+                  if (resp) {
+                    const obj = {
+                      excelId: this.bulkId,
+                      remarks: this.remarks,
+                      status:
+                        this.actionType === "Authorize"
+                          ? "APPROVED"
+                          : "REJECTED",
+                    };
+                    this.api.updateRemark(obj).subscribe((response) => {
+                      if (response?.statusCode === 200)
+                        // this.openSuccessDialog(resp);
+                        this.callSuccessPopup(this.actionType, {
+                          ...response?.data,
+                          reffNo: resp?.data,
+                        });
+                    });
+                  }
+                }
+              });
+          }
+        });
       });
-    const dialogRef = this.dialog.open(AllInOnePopupComponent, {
-      data: {
-        remark: true,
-        mobile: this.currentUser.mobile,
-      },
-      width: "750px",
-      disableClose: true,
-      panelClass: "popup-dialog-class",
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      if (resp) {
-        this.api
-          .processBulkTransaction(this.transactionIds)
-          .subscribe((resp) => {
-            if (resp?.statusCode === 200) {
-              if (resp) {
-                const obj = {
-                  excelId: this.bulkId,
-                  remarks: this.remarks,
-                  status:
-                    this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
-                };
-                this.api.updateRemark(obj).subscribe((response) => {
-                  if (response?.statusCode === 200)
-                    // this.openSuccessDialog(resp);
-                    this.callSuccessPopup(this.actionType, response?.data);
-                });
-              }
-            }
-          });
-      }
-    });
   }
 
   openSuccessDialog(resp) {
