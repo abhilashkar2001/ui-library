@@ -133,19 +133,21 @@ export class CreditCardPaymentComponent implements OnInit {
 
   saveData(payload) {
     this.fundTransferService.saveCreditCard(payload).subscribe((res) => {
-      let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-        data: { msg: "Payment Successful", status: true },
-        width: "40%",
-        disableClose: true,
-        panelClass: "popup-class",
-        backdropClass: "bdrop",
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log(result);
-        if (result == "Done") {
-          this.close();
-        }
-      });
+      if (res?.statusCode == 200) {
+        let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+          data: { msg: "Payment Successful", status: true, reffNo: res?.data },
+          width: "40%",
+          disableClose: true,
+          panelClass: "popup-class",
+          backdropClass: "bdrop",
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(result);
+          if (result == "Done") {
+            this.close();
+          }
+        });
+      }
     });
   }
 }

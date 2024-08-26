@@ -39,6 +39,8 @@ export class MultiFundTransferComponent implements OnInit {
   dialogRef: MatDialogRef<CustomSuccessPopupComponent>;
   dialogRef1: MatDialogRef<AllInOnePopupComponent>;
   customerInfo: any;
+  editedAmountIndex: number;
+  debitAmount: number[] = [];
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -81,6 +83,7 @@ export class MultiFundTransferComponent implements OnInit {
       benificiaryMobile: [""],
       remmitterNarration: [""],
       benificiaryNarration: [""],
+      transferTo: [""],
       detail1: [""],
       detail2: [""],
       detail3: [""],
@@ -127,6 +130,10 @@ export class MultiFundTransferComponent implements OnInit {
 
   selectMultiAcc(event) {
     this.selectedAccounts = event;
+    this.selectedAccounts = event.map((account) => ({
+      accountNo: account,
+      amount: this.multiTransferForm.value.debitAmount,
+    }));
     if (
       this.multiTransferForm.get("debitAmount").value &&
       this.selectedAccounts.length > 1
@@ -182,13 +189,40 @@ export class MultiFundTransferComponent implements OnInit {
     this.multiTransferForm.reset();
   }
 
+  delete(account) {
+    this.multiTransferForm
+      .get("transferTo")
+      .patchValue(
+        this.multiTransferForm.value.transferTo.filter(
+          (item) => item != account
+        )
+      );
+    const index = this.selectedAccounts.indexOf(account);
+    if (index > -1) {
+      this.selectedAccounts.splice(index, 1);
+    }
+  }
+
+  done() {
+    this.editedAmountIndex = -1;
+  }
+
+  onAmountChange(event, i) {
+    this.selectedAccounts[i].amount = event;
+  }
+
   saveData(payload) {
+    payload.forEach((value: any) => delete value.transferTo);
     this.fundTransferService
       .saveFundTransferData(payload)
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-            data: { msg: "Transaction Successful", status: true },
+            data: {
+              msg: "Transaction Successful",
+              status: true,
+              reffNo: resp?.data,
+            },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
@@ -202,6 +236,10 @@ export class MultiFundTransferComponent implements OnInit {
           });
         }
       });
+  }
+
+  edit(index: number) {
+    this.editedAmountIndex = index;
   }
 
   submit() {

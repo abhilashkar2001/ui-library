@@ -152,7 +152,11 @@ export class SingleFundTransferComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-            data: { msg: "Transaction Successful", status: true },
+            data: {
+              msg: "Transaction Successful",
+              status: true,
+              reffNo: resp?.data,
+            },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",

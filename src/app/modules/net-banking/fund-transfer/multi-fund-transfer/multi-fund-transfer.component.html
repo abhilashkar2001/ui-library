@@ -71,6 +71,7 @@
               [items]="transferTo"
               bindValueKey="accountNo"
               bindLabelKey="name"
+              [control]="multiTransferForm.get('transferTo')"
               skipLabel="false"
               displayLabel="accountNo"
               (selectionChange)="selectMultiAcc($event)"
@@ -224,23 +225,52 @@
           </div>
 
           <div class="p-8">
-            <mat-card *ngFor="let item of selectedAccounts" fxLayout="column">
+            <mat-card
+              *ngFor="let item of selectedAccounts; let i = index"
+              fxLayout="column"
+            >
               <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                 <span fxFlex="10" class="text-gray">To</span>
-                <span fxFlex="70" class="text-label">{{ item }}</span>
-                <span fxFlex="20" class="text-normal">{{
-                  87654 | currency
+                <span fxFlex="70" class="text-label">{{
+                  item?.accountNo
                 }}</span>
+                <span
+                  fxFlex="20"
+                  class="text-normal"
+                  *ngIf="editedAmountIndex != i; else showInput"
+                  >{{ item?.amount | currency }}</span
+                >
+                <ng-template #showInput>
+                  <mat-form-field fxFlex="30" class="form-field">
+                    <input matInput [value]="item.amount" />
+                  </mat-form-field>
+                </ng-template>
               </div>
               <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                 <span fxFlex="10" class="text-gray">From</span>
                 <span fxFlex="70" class="text-label">{{
                   multiTransferForm.get("debitAccount").value
                 }}</span>
-                <span fxFlex="20">
-                  <mat-icon style="color: #6e7582" class="mr-12">edit</mat-icon>
-                  <mat-icon style="color: #b10000">delete</mat-icon>
+                <span
+                  fxFlex="20"
+                  *ngIf="editedAmountIndex != i; else showEditButton"
+                >
+                  <mat-icon
+                    style="color: #004a9a"
+                    class="mr-12"
+                    (click)="edit(i)"
+                    >edit</mat-icon
+                  >
+                  <mat-icon style="color: #b10000" (click)="delete(item)"
+                    >delete</mat-icon
+                  >
                 </span>
+                <ng-template #showEditButton>
+                  <mat-icon style="color: #004a9a" (click)="done()"
+                    >done</mat-icon
+                  >
+                  <mat-icon style="color: #b10000">close</mat-icon>
+                </ng-template>
               </div>
             </mat-card>
           </div>
