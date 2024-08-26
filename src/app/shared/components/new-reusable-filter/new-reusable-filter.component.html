@@ -32,6 +32,7 @@
       fxFlex="72"
       *ngIf="componentName == 'Bulk Upload'"
       class="bulkUpload_url"
+      (click)="viewExcel()"
     >
       <img src="assets/images/xls_logo.svg" width="57px" height="57px" />
       <span fxLayoutAlign="center center">{{ bulkUploadFileName }}</span>

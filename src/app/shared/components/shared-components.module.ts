@@ -93,6 +93,7 @@ import { ReusableAlertPopupComponent } from "./reusable-alert-popup/reusable-ale
 import { StagingSuccessAreaComponent } from "./staging-success-area/staging-success-area.component";
 import { CompanyInformationComponent } from "./company-information/company-information.component";
 import { DirectorDetailsComponent } from "./director-details/director-details.component";
+import { ViewExcelDocComponent } from "./view-excel-doc/view-excel-doc.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -161,6 +162,7 @@ const components = [
   StagingSuccessAreaComponent,
   CompanyInformationComponent,
   DirectorDetailsComponent,
+  ViewExcelDocComponent,
 ];
 
 @NgModule({

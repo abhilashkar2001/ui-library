@@ -11,10 +11,13 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { ViewExcelDocComponent } from "app/shared/components/view-excel-doc/view-excel-doc.component";
 import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import * as XLSX from "xlsx";
 
+type AOA = any[][];
 @Component({
   selector: "app-upload-bulk-upload",
   templateUrl: "./upload-bulk-upload.component.html",
@@ -43,6 +46,12 @@ export class UploadBulkUploadComponent implements OnInit {
   currentUser: any;
   otp: any;
   currentDate = new Date();
+  tableHeader: any[];
+  tableBody: any[];
+  data: AOA = [
+    [1, 2],
+    [3, 4],
+  ];
 
   constructor(
     private router: Router,
@@ -78,6 +87,45 @@ export class UploadBulkUploadComponent implements OnInit {
       name: evt.target.files[0].name,
     };
     this.uploadFileArrlrngth.push(this.addfiles(filesObject));
+
+    const target: DataTransfer = <DataTransfer>evt.target;
+    if (target.files.length !== 1) throw new Error("Cannot use multiple files");
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: "binary" });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.data = <AOA>XLSX.utils.sheet_to_json(ws, { header: 1 });
+      this.convertExcel(this.data);
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  convertExcel(data) {
+    const [keys, ...values] = data;
+    const obj = values.map((array) =>
+      array.reduce((a, v, i) => ({ ...a, [keys[i]]: v }), {})
+    );
+    this.tableHeader = keys;
+    this.tableBody = obj;
+  }
+
+  viewExcel() {
+    this.dialog.open(ViewExcelDocComponent, {
+      width: "80%",
+      disableClose: true,
+      data: {
+        tableHeader: this.tableHeader,
+        tableBody: this.tableBody,
+        fileName: this.file.name,
+      },
+    });
   }
 
   buildMaintTemplateForm() {

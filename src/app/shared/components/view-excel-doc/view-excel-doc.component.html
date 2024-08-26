@@ -1,0 +1,36 @@
+<div style="overflow-y: hidden" class="loan-doc-modal">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-24">
+    <span class="fileName">
+      {{ fileName }}
+    </span>
+    <mat-card
+      class="close-card"
+      fxLayoutAlign="center center"
+      (click)="closeDialog()"
+    >
+      <mat-icon style="color: #004c97"> close </mat-icon>
+    </mat-card>
+  </div>
+  <div style="overflow: auto">
+    <mat-table class="w-full" [dataSource]="dataSource">
+      <ng-container
+        *ngFor="let header of tableHeader"
+        [matColumnDef]="header?.headerCell || header"
+      >
+        <mat-header-cell *matHeaderCellDef>
+          {{ header?.headerCell || header }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element[header?.headerDef || header] }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns?.[0]?displayedColumns: tableHeader"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns?.[0]?displayedColumns: tableHeader "
+      ></mat-row>
+    </mat-table>
+  </div>
+</div>
