@@ -323,17 +323,14 @@ export class CommonMobileVerificationComponent implements OnInit {
                     updateMasterSave: false,
                   });
                 }
-              } else if (resp?.statusCode === 204) {
+              } else {
                 this.onCustomSubmit.emit({
-                  personalInfo: resp.data,
+                  personalInfo: resp?.data,
                 });
                 this?.updateParentModel({
-                  personalInfo: resp.data,
+                  personalInfo: resp?.data,
                   updateMasterSave: false,
                 });
-
-                sessionStorage.setItem("mobileNo", event.phone);
-              } else {
                 sessionStorage.setItem("mobileNo", event.phone);
               }
             });
