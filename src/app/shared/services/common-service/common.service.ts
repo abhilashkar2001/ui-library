@@ -61,4 +61,18 @@ export class CommonService {
   verifyOTP(payload: any) {
     return this.http.post<any>(`${baseUrl}/auth/verifyOTP`, payload);
   }
+
+  uploadAndProgress(file: File) {
+    console.log(file);
+    var formData = new FormData();
+    formData.append("file", file);
+    return this.http.post(
+      `${baseUrl}/upload-document/uploadProgress`,
+      formData,
+      {
+        reportProgress: true,
+        observe: "events",
+      }
+    );
+  }
 }

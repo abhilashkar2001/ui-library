@@ -94,6 +94,8 @@ import { StagingSuccessAreaComponent } from "./staging-success-area/staging-succ
 import { CompanyInformationComponent } from "./company-information/company-information.component";
 import { DirectorDetailsComponent } from "./director-details/director-details.component";
 import { ViewExcelDocComponent } from "./view-excel-doc/view-excel-doc.component";
+import { DigitalSignComponent } from "./digital-sign/digital-sign.component";
+import { ScanComponent } from "./scan/scan.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -163,6 +165,8 @@ const components = [
   CompanyInformationComponent,
   DirectorDetailsComponent,
   ViewExcelDocComponent,
+  DigitalSignComponent,
+  ScanComponent,
 ];
 
 @NgModule({

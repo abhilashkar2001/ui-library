@@ -1,0 +1,115 @@
+.scan-dialog-class {
+  .closebtn {
+    top: 5px;
+    right: -330px;
+    position: relative;
+  }
+  .scantitle {
+    font-size: 22px;
+    justify-content: center;
+    display: flex;
+    font-family: Poppins, "SemiBold";
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 600 !important;
+  }
+  .scansub {
+    font-size: 18px;
+    font-family: poppins, "Regular";
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 0.37;
+    font-weight: 600;
+  }
+  .video-container {
+    width: 700px;
+    height: 270px;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 7px;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .canvasDiv {
+    position: relative;
+    top: -275px;
+    left: 1px;
+  }
+  .captured-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btns {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  #btn2 {
+    width: 172px;
+    height: 49px;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    border-radius: 23px;
+    opacity: 1;
+    font-size: 15px;
+    font-family: Poppins, "SemiBold";
+    font-weight: 600 !important;
+    letter-spacing: 0px;
+    text-transform: capitalize;
+    color: #ffffff;
+    border: none;
+  }
+  #btn3 {
+    width: 172px;
+    height: 49px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 3px 3px 15px #0000000f;
+    border-radius: 35px;
+    opacity: 1;
+    border: none;
+    font-size: 15px;
+    font-family: Poppins, "SemiBold";
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: #342711;
+    font-weight: bolder;
+  }
+  .mat-dialog-container {
+    padding: 0px;
+    border-radius: 12px;
+    box-shadow: 0px 3px 15px #00000017;
+  }
+  .donebtn {
+    width: 172px;
+    height: 49px;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+      0% no-repeat padding-box;
+    border-radius: 23px;
+    opacity: 1;
+    font-size: 15px;
+    font-family: Poppins, "SemiBold";
+    font-weight: 600 !important;
+    letter-spacing: 0px;
+    text-transform: capitalize;
+    color: #ffffff;
+    border: none;
+  }
+  .rescanbtn {
+    width: 172px;
+    height: 49px;
+    background-color: #ffffff;
+    color: #b20000;
+    font-size: 15px;
+    font-family: poppins;
+    font-weight: 600 !important;
+    border: none;
+    letter-spacing: -0.3px;
+    box-shadow: 3px 3px 15px #0000000f;
+    border-radius: 35px;
+  }
+  .gray_Class {
+    background: gray !important;
+    pointer-events: none !important;
+  }
+}

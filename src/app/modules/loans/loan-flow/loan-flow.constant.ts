@@ -9,6 +9,7 @@ import { LoanSummaryComponent } from "../loan-summary/loan-summary.component";
 import { NationalIdUploadComponent } from "../../../shared/components/national-id-upload/national-id-upload.component";
 import { OtherChecklistDocUploadComponent } from "app/shared/components/other-checklist-doc-upload/other-checklist-doc-upload.component";
 import { CompanyInformationComponent } from "app/shared/components/company-information/company-information.component";
+import { DigitalSignComponent } from "app/shared/components/digital-sign/digital-sign.component";
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -95,6 +96,12 @@ export class LoanFlowConstants {
       key: "national",
       type: "Create Loan",
       component: NationalIdUploadComponent,
+    },
+    {
+      id: 6,
+      key: "signature",
+      type: "Signature",
+      component: DigitalSignComponent,
     },
     {
       id: 7,

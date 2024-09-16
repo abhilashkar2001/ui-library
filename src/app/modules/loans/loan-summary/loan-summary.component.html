@@ -277,6 +277,24 @@
     </div>
   </div>
   <div class="uploaded-documents-summary">
+    <div class="text-header">Face Scan</div>
+    <div class="bank-account-details w-full" fxLayout="column">
+      <div class="col-1"></div>
+      <div fxLayout="row wrap" fxLayoutGap="2%">
+        <ng-container
+          *ngFor="
+            let doc of loanSummaryDetails?.biometricVerification;
+            let i = index
+          "
+        >
+          <div fxFlex="31" class="mt-20">
+            <app-show-document [document]="doc"> </app-show-document>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="uploaded-documents-summary">
     <div class="text-header">Loan Document</div>
     <div
       class="bank-account-details w-full"
@@ -303,6 +321,18 @@
             </div>
           </div>
         </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="uploaded-documents-summary">
+    <div class="text-header">Signature</div>
+    <div class="bank-account-details w-full" fxLayout="column">
+      <div class="col-1"></div>
+      <div fxLayout="row wrap" fxLayoutGap="2%">
+        <div fxFlex="31" class="mt-20">
+          <app-show-document [document]="loanSummaryDetails?.signature">
+          </app-show-document>
+        </div>
       </div>
     </div>
   </div>
