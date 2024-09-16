@@ -1,0 +1,66 @@
+<div class="biometric-card-expansion-panel">
+  <div class="upper-biometric-card" fxFlex="50" fxLayoutGap="5">
+    <div class="forSignImg" fxLayout="column">
+      <div class="signdig" fxLayout="column" fxLayoutAlign="flex-start center">
+        <div class="biometric-card w-100" fxLayoutAlign="end center">
+          <div
+            class="deleteDiv"
+            fxLayoutAlign="center center"
+            (click)="deleteImage()"
+          >
+            <mat-icon class="deleteBtn"> delete </mat-icon>
+          </div>
+        </div>
+        <img
+          class="image"
+          [src]="
+            image ? MICROSERVICE_URL + image : 'assets/images/upload-icon.svg'
+          "
+          alt=""
+        />
+        <mat-hint *ngIf="!image" matSuffix class="signiter">{{
+          "Signature"
+        }}</mat-hint>
+      </div>
+      <div class="w-100" fxLayout="row" fxLayoutALign="space-between center">
+        <button
+          type="button"
+          mat-button
+          class="digsign"
+          fxFlex="50"
+          fxLayoutALign="center center"
+          (click)="openDigitalSignDialog('Sign Now')"
+        >
+          {{ "Digital Sign" }}
+        </button>
+        <button
+          mat-button
+          class="upd"
+          fxFlex="50"
+          (click)="openDigitalSignDialog('Upload')"
+        >
+          {{ "Upload" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div fxLayoutGap="50px"></div>
+<button-loading
+  [loadingText]="loadingBtnText"
+  [type]="'submit'"
+  [disable]="isLoading && !image"
+  [loading]="isLoading"
+  (click)="onSubmit()"
+>
+  Submit
+</button-loading>
+<button
+  type="button"
+  mat-raised-button
+  class="button back_button"
+  (click)="onBack()"
+>
+  Back
+</button>

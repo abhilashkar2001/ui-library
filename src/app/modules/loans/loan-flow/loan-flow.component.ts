@@ -15,6 +15,7 @@ import { BehaviorSubject } from "rxjs";
 import { ReusableAlertPopupComponent } from "app/shared/components/reusable-alert-popup/reusable-alert-popup.component";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { CustomWebDocUploadServiceService } from "app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
   selector: "app-loan-flow",
@@ -86,7 +87,8 @@ export class LoanFlowComponent implements OnInit {
     private sharedService: SharedService,
     protected cdr: ChangeDetectorRef,
     private dataService: DataService,
-    private docapi: CustomWebDocUploadServiceService
+    private docapi: CustomWebDocUploadServiceService,
+    private sessionService: SessionStorageService
   ) {}
 
   /**
@@ -145,9 +147,10 @@ export class LoanFlowComponent implements OnInit {
                 screenName.toLowerCase().includes("director")
               ) {
                 this.customSavePersonal(data);
-              }
-              if (screenName.toLowerCase().includes("company")) {
+              } else if (screenName.toLowerCase().includes("company")) {
                 this.customSaveCompany(data);
+              } else if (screenName.toLowerCase().includes("signature")) {
+                this.next();
               }
             });
             if (this.componentRef.instance?.onMobileExitEvent)
@@ -517,6 +520,7 @@ export class LoanFlowComponent implements OnInit {
           middleName: "",
           dateOfBirth: moment(element.dateOfBirth).format(),
           documentId: [this.kycDoc[i]],
+          biometricId: [this.sessionService.getItem("biometricId")],
         };
         customer.push(cus);
       });

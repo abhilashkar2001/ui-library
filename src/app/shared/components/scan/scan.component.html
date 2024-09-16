@@ -1,0 +1,56 @@
+<div class="scan-dialog-class" fxLayout="column" fxLayoutAlign="center center">
+  <mat-icon (click)="close()" class="closebtn">clear</mat-icon>
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10">
+    <div class="scantitle">
+      {{ "Scan your" }} {{ dialogData.name }}
+      {{ "to complete the verfication" }}
+    </div>
+    <div class="scansub">
+      {{ "Hold the device still, Look at the camera!" }}
+    </div>
+  </div>
+  <div class="video-container" fxLayoutAlign="center">
+    <div id="mainDiv">
+      <video #video [width]="370" [height]="270" autoplay muted></video>
+      <div #canvas class="canvasDiv"></div>
+    </div>
+    <div class="captured-ima" *ngIf="imageData">
+      <img [width]="370" [height]="270" [src]="imageData" alt="Scanned Image" />
+    </div>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutGap="15"
+    fxLayoutAlign="center center"
+    class="btns"
+  >
+    <button
+      mat-stroked-button
+      class="donebtn"
+      *ngIf="scannedImage && !rescann"
+      (click)="done()"
+    >
+      {{ "DONE" }}
+    </button>
+    <button
+      mat-stoked-button
+      id="btn2"
+      *ngIf="!scannedImage || isScanned || rescann"
+      [ngClass]="perscentageCheck ? 'gray_Class' : ''"
+      (click)="captureImage()"
+    >
+      {{ "Scan" }}
+    </button>
+    <button
+      mat-stroked-button
+      class="rescanbtn"
+      *ngIf="scannedImage && !rescann"
+      (click)="rescan()"
+    >
+      {{ "Re-Scan" }}
+    </button>
+    <button mat-stoked-button id="btn3" (click)="close()">
+      {{ "Back" }}
+    </button>
+  </div>
+</div>

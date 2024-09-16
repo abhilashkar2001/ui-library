@@ -146,4 +146,9 @@ export class OpenAccountService {
   fetchCompanyDetails() {
     return this.http.get("assets/json/company-information.json");
   }
+
+  // Register a face
+  faceRegister(data): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/api/faceid/register`, data);
+  }
 }

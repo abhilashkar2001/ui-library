@@ -9,6 +9,9 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { environment } from "environments/environment";
+import { ScanComponent } from "../scan/scan.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-national-id-upload",
@@ -53,7 +56,7 @@ export class NationalIdUploadComponent implements OnInit {
     ],
   };
 
-  constructor(private loanApi: LoanService) {}
+  constructor(private loanApi: LoanService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     var originationId = sessionStorage.getItem("originationId");

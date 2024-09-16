@@ -31,6 +31,8 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { debounceTime } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { DataService } from "app/shared/services/table-service/data.service";
+import { ScanComponent } from "../scan/scan.component";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 enum CreateLoanEnum {
   INTERNAL = "internal",
@@ -108,6 +110,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   documentInfo: any;
   addNewButtonClicked: Subscription;
   backData: any[] = [];
+  image = "";
+  faceId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -121,7 +125,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private docapi: CustomWebDocUploadServiceService,
     private loanApi: LoanService,
     private openApi: OpenAccountService,
-    private dataService: DataService
+    private dataService: DataService,
+    private sessionService: SessionStorageService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
     // this.buildDocumentForm();
@@ -137,6 +142,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
+    console.log(this.ocrProcess);
     this.addNewUploadField();
   }
 
@@ -878,5 +884,37 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         this.createDocumentForm.value.otherDocument.length
       ? true
       : false;
+  }
+
+  openDialog(check?: string) {
+    const dialogRef = this.dialog.open(ScanComponent, {
+      disableClose: false,
+      width: "60%",
+      data: { title: "Sign Now", check: check },
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res.image) {
+        let timestamp = new Date();
+        var seconds = timestamp.getSeconds();
+        fetch(res.image)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const file = new File([blob], `${seconds}_FaceScan.png`, {
+              type: "image/png",
+            });
+            this.uploadFace(file);
+          });
+      }
+    });
+  }
+
+  uploadFace(file) {
+    let form = new FormData();
+    form.append("file", file);
+    this.openApi.faceRegister(form).subscribe((res) => {
+      this.faceId = res?.data?.data?.biometricId;
+      this.image = res?.data?.data?.fileUrl;
+      this.sessionService.setItem("biometricId", this.faceId);
+    });
   }
 }

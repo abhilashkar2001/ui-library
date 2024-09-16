@@ -241,3 +241,18 @@ mat-form-field {
 :host ::ng-deep .mat-radio-group .mat-radio-button:first-child {
   margin-right: 5%;
 }
+
+.scan-title {
+  display: flex;
+  height: 30px;
+  padding: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+.scan-btn {
+  display: inline-block;
+  color: #004c97;
+  opacity: 1;
+  cursor: pointer;
+}

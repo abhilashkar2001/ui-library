@@ -103,11 +103,11 @@
                             <div>{{ file.size }}</div>
                           </ng-template>
                         </div>
-                        <!-- <mat-icon
-                          svgIcon="cancel-icon"
+                        <mat-icon
                           (click)="deleteFile(fileIndx, i, file)"
                           class="cancel-icon"
-                        ></mat-icon> -->
+                          >close</mat-icon
+                        >
                       </div>
                     </div>
                   </div>
@@ -285,6 +285,42 @@
         </mat-form-field>
       </div>
     </form>
+  </div>
+
+  <div class="biometric-card-expansion-panel" *ngIf="ocrProcess">
+    <div
+      class="upper-biometric-card"
+      fxFlex="50"
+      fxLayoutGap="5"
+      fxLayout="column"
+    >
+      <div class="forSignImg" fxLayout="column">
+        <div
+          class="signdig"
+          fxLayout="column"
+          fxLayoutAlign="flex-start center"
+        >
+          <div class="biometric-card w-100" fxLayoutAlign="end center">
+            <div class="deleteDiv" fxLayoutAlign="center center">
+              <mat-icon class="deleteBtn"> delete </mat-icon>
+            </div>
+          </div>
+          <img
+            class="image"
+            [src]="image ? baseUrl + image : 'assets/images/face.svg'"
+            alt=""
+          />
+          <mat-hint *ngIf="!image" matSuffix class="signiter">{{
+            "Face Scan"
+          }}</mat-hint>
+        </div>
+        <div class="scan-title" fxFlex="20" [fxLayoutAlign]="'center center'">
+          <span class="scan-btn" (click)="openDialog()">
+            {{ !image ? "Scan" : "Re-Scan" }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div fxLayoutGap="50px">
