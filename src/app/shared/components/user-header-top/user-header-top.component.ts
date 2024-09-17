@@ -54,7 +54,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.layoutConf = this.layout.layoutConf;
     this.currentUser = this.tokenStorageService.getUser();
-    this.roleName = this.currentUser?.roles[0]?.roleName;
+    this.roleName = this.currentUser?.roles?.[0]?.roleName;
     this.lastLoginTime = this.tokenStorageService.getLastLoginSession();
   }
 
