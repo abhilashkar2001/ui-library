@@ -110,6 +110,12 @@ export class CreateAccountLandingPageComponent {
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
+            this.componentRef.instance?.onCustomSubmit.subscribe(() => {
+              if (screenName.toLowerCase().includes("signature")) {
+                this.next();
+              }
+            });
+
             if (this.componentRef.instance?.onMobileExitEvent)
               this.componentRef.instance?.onMobileExitEvent.subscribe(
                 (resp) => {

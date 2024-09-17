@@ -1,5 +1,6 @@
 import { CommonPersonalDetailsComponent } from "app/shared/components/common-personal-details/common-personal-details.component";
 import { CommonMobileVerificationComponent } from "app/shared/components/comon-mobile-verification/common-mobile-verification.component";
+import { DigitalSignComponent } from "app/shared/components/digital-sign/digital-sign.component";
 import { NationalIdUploadComponent } from "app/shared/components/national-id-upload/national-id-upload.component";
 import { OtherChecklistDocUploadComponent } from "app/shared/components/other-checklist-doc-upload/other-checklist-doc-upload.component";
 import { OtherDocumentsComponent } from "app/shared/components/other-documents/other-documents.component";
@@ -35,6 +36,12 @@ export class CreateAccountConstant {
       key: "document",
       type: "Create Account",
       component: OtherChecklistDocUploadComponent,
+    },
+    {
+      id: 4,
+      key: "signature",
+      type: "Signature",
+      component: DigitalSignComponent,
     },
   ];
 }
