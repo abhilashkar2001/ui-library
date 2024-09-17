@@ -44,7 +44,7 @@
       fxFlex="{{ fxFlexForCol1 }}"
       *ngIf="componentName != 'Bulk Upload'"
     >
-      <mat-label>{{ showOnlySearchTitle || "Refrence Number" }}</mat-label>
+      <mat-label>{{ showOnlySearchTitle || "Refrence Number" | translate }}</mat-label>
       <input
         matInput
         type="text"
@@ -67,7 +67,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>Audit Status</mat-label>
+        <mat-label>{{"Audit Status" | translate}}</mat-label>
         <mat-select formControlName="Auditstatus" disableOptionCentering>
           <!-- <mat-option
             *ngFor="let option of statusOptions"
@@ -85,7 +85,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>Saved Data</mat-label>
+        <mat-label>{{"Saved Data" | translate}}</mat-label>
         <mat-select formControlName="savedData" disableOptionCentering>
           <!-- <mat-option
             *ngFor="let option of statusOptions"
@@ -103,7 +103,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>Request Assigned to</mat-label>
+        <mat-label>{{"Request Assigned to" | translate}}</mat-label>
         <mat-select formControlName="requestAssignedTo" disableOptionCentering>
           <mat-option> </mat-option>
         </mat-select>
@@ -115,7 +115,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>Transaction Status</mat-label>
+        <mat-label>{{"Transaction Status" | translate}}</mat-label>
         <mat-select formControlName="transactionStatus" disableOptionCentering>
           <mat-option></mat-option>
         </mat-select>
@@ -130,7 +130,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>Status</mat-label>
+        <mat-label>{{"Status" | translate}}</mat-label>
         <mat-select formControlName="status" disableOptionCentering>
           <mat-option
             *ngFor="let option of statusOptions"
@@ -147,7 +147,7 @@
         fxFlex="13"
         *ngIf="componentName != 'Bulk Upload'"
       >
-        <mat-label>From Date</mat-label>
+        <mat-label>{{"From Date" | translate}}</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
           matSuffix
@@ -167,7 +167,7 @@
         fxFlex="13"
         *ngIf="componentName != 'Bulk Upload'"
       >
-        <mat-label>To Date</mat-label>
+        <mat-label>{{"To Date" | translate}}</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
           matSuffix

@@ -11,6 +11,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -62,7 +63,8 @@ export class NetBankingDashboardComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public translate: TranslateService,
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(
@@ -78,6 +80,10 @@ export class NetBankingDashboardComponent implements OnInit {
     this.getActivityLogData();
     this.getDataByPage();
     this.getDashboardInfo();
+    setTimeout(() => {
+      let lang=this.tokenStorageService.getLanguage() ?? 'en';
+       this.translate.use(lang)
+     }, 300);
   }
 
   getAccountList() {
