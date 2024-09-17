@@ -503,10 +503,11 @@ export class CreateAccountLandingPageComponent {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: this.originationId,
+            isComplete: resp?.data?.isComplete,
           },
           width: "750px",
           disableClose: true,
-          panelClass: "popup-dialog-class",
+          panelClass: ["popup-dialog-class", "scroll-card"],
           backdropClass: "bdrop",
         });
         dialogRef.afterClosed().subscribe((resp) => {
