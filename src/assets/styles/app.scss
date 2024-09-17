@@ -23,6 +23,20 @@
   box-sizing: border-box;
 }
 
+:root {
+  // Variables related to theme change
+  --current-theme-color: #fff;
+  --current-theme-background: #e6224a;
+  --current-theme-background-light: #e6224a;
+  --current-theme-background-dark: #e6224a;
+  --current-theme-filter: hue-rotate(60deg);
+  --current-theme-border-color: #e6224a;
+}
+
+.current_theme_filter {
+  filter: var(--current-theme-filter);
+}
+
 html,
 body {
   width: 100%;

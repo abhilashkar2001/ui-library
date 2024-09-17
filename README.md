@@ -1,14 +1,9 @@
-## Development server
+Here in Corporate Banking, color schemes we're using currently are:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- theme1 - icust Blue
+- theme2 - Pink
+- theme3 - Violet
+- theme4 - Mint/Green
+- theme5 - Cyan
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory
-
-
-
+# Note: theme4 - Mint/Green theme is not used in Mobile. Maybe it'll be removed.

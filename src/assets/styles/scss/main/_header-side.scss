@@ -4,8 +4,9 @@
     // min-height: 64px !important;
     box-shadow: 0 10px 30px 0 rgba(47, 60, 74, 0.08);
     z-index: 1001;
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box !important;
+    // background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+    //   0% no-repeat padding-box !important;
+    background: var(--current-theme-background) !important;
     color: #ffffff !important;
     padding: 0 4%;
   }

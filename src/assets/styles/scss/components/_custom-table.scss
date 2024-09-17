@@ -2,6 +2,7 @@
 .addNewButton,
 .uploadButton {
   @include custom_button(white, $gradientBg);
+  filter: var(--current-theme-filter);
 }
 // Title: Download Button
 .downloadBtn {
@@ -153,7 +154,7 @@ mat-cell {
   }
 
   .higlightColumn {
-    color: $primaryTextColor !important;
+    color: var(--current-theme-background) !important;
     font-weight: bold;
     justify-content: center;
     align-items: center;

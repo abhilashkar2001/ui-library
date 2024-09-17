@@ -34,7 +34,8 @@
       &.selected {
         font-size: 17px !important;
         letter-spacing: 0px;
-        color: #004b96 !important;
+        // color: #004b96 !important;
+        color: var(--current-theme-background-dark) !important;
         font-weight: 700 !important;
       }
 

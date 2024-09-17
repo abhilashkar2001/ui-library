@@ -218,7 +218,7 @@
 }
 
 .highlightPending {
-  color: #0049a1 !important;
+  color: var(--current-theme-background) !important;
 }
 
 ::-webkit-scrollbar {
