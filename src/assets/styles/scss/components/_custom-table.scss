@@ -7,6 +7,10 @@
 // Title: Download Button
 .downloadBtn {
   @include custom_button();
+  color: var(--current-theme-background) !important;
+  .mat-icon {
+    filter: var(--current-theme-filter);
+  }
 }
 
 .menu_btn:hover {
