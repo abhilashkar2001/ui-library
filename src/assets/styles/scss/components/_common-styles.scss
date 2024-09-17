@@ -59,7 +59,8 @@ code {
   background: #004c97;
 }
 .egret-navy .mat-expansion-indicator::after {
-  color: rgb(0 83 255 / 61%);
+  // color: rgb(0 83 255 / 61%);
+  color: var(--current-theme-background-dark);
 }
 .mat-radio-label-content {
   color: #102245;

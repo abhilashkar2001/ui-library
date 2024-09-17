@@ -243,6 +243,7 @@ mat-cell {
   mat-icon {
     display: flex;
     align-items: center;
+    filter: var(--current-theme-filter);
   }
   .btn {
     width: 100% !important;

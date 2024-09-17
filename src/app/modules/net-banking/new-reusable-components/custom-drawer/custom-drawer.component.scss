@@ -12,6 +12,7 @@
   .btn_icon {
     width: 40px;
     height: 40px;
+    filter: var(--current-theme-filter);
   }
 }
 
@@ -26,12 +27,13 @@
   }
 }
 .child-node {
-  color: #014b94;
+  // color: #014b94;
+  color: var(--current-theme-background);
   font-size: 13px;
   font-weight: 500;
 }
 .active-node {
-  background: #014588 0% 0% no-repeat padding-box;
+  background: var(--current-theme-background) 0% 0% no-repeat padding-box;
   & .parent-node,
   .child-node {
     color: #ffffff !important;
@@ -39,6 +41,6 @@
 }
 
 .highlight_blue {
-  background: #014588 0% 0% no-repeat padding-box;
+  background: var(--current-theme-background) 0% 0% no-repeat padding-box;
   color: #ffffff !important;
 }

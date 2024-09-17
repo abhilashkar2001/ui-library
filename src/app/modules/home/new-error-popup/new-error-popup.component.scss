@@ -11,24 +11,24 @@
     justify-content: center;
 
     .bold-error-code {
-      color: #184680;
+      color: var(--current-theme-background);
       font-size: 7rem;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: 900;
       letter-spacing: -6px;
-      &::first-letter {
-        color: #1e90ff;
-      }
+      // &::first-letter {
+      //   color: #1e90ff;
+      // }
     }
     .bold-error-message {
-      color: #184680;
+      color: var(--current-theme-background);
       font-size: 18px;
       font-weight: 900;
       font-family: Arial, Helvetica, sans-serif;
       text-transform: uppercase;
-      &::first-letter {
-        color: #1e90ff;
-      }
+      // &::first-letter {
+      //   color: #1e90ff;
+      // }
     }
     .error-description {
       font-size: 16px;
@@ -48,6 +48,7 @@
       color: #e7e7e7;
       font-size: 16px;
       overflow: hidden;
+      filter: var(--current-theme-filter);
     }
   }
   .error_popup_img {

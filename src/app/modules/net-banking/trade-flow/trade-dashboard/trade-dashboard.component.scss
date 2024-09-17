@@ -41,7 +41,8 @@
     box-shadow: none;
     margin: 1% 2% 1% 2% !important;
     .mat-expansion-panel-header {
-      background: #e9ecf5 0% 0% no-repeat padding-box !important;
+      background: var(--current-theme-background-light) 0% 0% no-repeat
+        padding-box !important;
       height: 45px !important;
       font-family: "Poppins", sans-serif;
       border-radius: 12px;
