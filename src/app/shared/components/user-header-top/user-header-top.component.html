@@ -41,6 +41,19 @@
     <mat-icon>notifications</mat-icon>
   </button>
 
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="languageMenu"
+    #clickHoverMenuTrigger="matMenuTrigger"
+  >
+    <mat-icon>language</mat-icon>
+  </button>
+  <!-- language selection tab -->
+  <mat-menu #languageMenu="matMenu">
+    <b mat-menu-item class="lang-title">English</b>
+    <b mat-menu-item class="lang-title">Spanish</b>
+  </mat-menu>
+
   <button mat-icon-button class="topbar-button-right">
     <mat-icon>settings</mat-icon>
   </button>
