@@ -12,6 +12,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-transfer-summary.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FundTransferSummaryComponent } from "./fund-transfer-summary/fund-trans
     ReactiveFormsModule,
     FundTransferRoutingModule,
     FormsModule,
+    TranslateModule
   ],
 })
 export class FundTransferModule {}

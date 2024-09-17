@@ -31,7 +31,11 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   basePath = environment.microServiceURL;
   userImage = "/assets/images/profile-user.png";
   lastLoginTime: any;
-
+  languageList = [
+    { code: 'en', name: 'English'},
+    { code: 'es', name: 'Spanish'},
+  ];
+  selectedLanguage: { code: string; name: string; };
   constructor(
     private layout: LayoutService,
     public themeService: ThemeService,
@@ -56,6 +60,12 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.currentUser = this.tokenStorageService.getUser();
     this.roleName = this.currentUser?.roles?.[0]?.roleName;
     this.lastLoginTime = this.tokenStorageService.getLastLoginSession();
+    setTimeout(() => {
+      let lang=this.tokenStorageService.getLanguage() ?? 'en';
+       this.translate.use(lang)
+     }, 300);
+     
+   
   }
 
   getFileUrl(filePath: string) {
@@ -88,6 +98,16 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.tokenStorageService.signOut();
     this.router.navigate(["sessions/signin"]);
   }
-
+  switchLanguage(language: string) {
+    console.log("324567890");
+   
+    console.log(language)
+    this.selectedLanguage = this.languageList.find(
+      (lang) => lang.code === language,
+    );
+    this.tokenStorageService.saveLanguage(language)
+    let lang=this.tokenStorageService.getLanguage();
+    this.translate.use(lang)
+  }
   ngOnDestroy() {}
 }

@@ -41,6 +41,7 @@
     <mat-icon>notifications</mat-icon>
   </button>
 
+
   <button
     mat-icon-button
     [matMenuTriggerFor]="languageMenu"
@@ -50,8 +51,13 @@
   </button>
   <!-- language selection tab -->
   <mat-menu #languageMenu="matMenu">
-    <b mat-menu-item class="lang-title">English</b>
-    <b mat-menu-item class="lang-title">Spanish</b>
+    <button
+      mat-menu-item
+      *ngFor="let lang of languageList"
+      (click)="switchLanguage(lang.code)"
+    >
+      <span>{{ lang.name }}</span>
+    </button>
   </mat-menu>
 
   <button mat-icon-button class="topbar-button-right">

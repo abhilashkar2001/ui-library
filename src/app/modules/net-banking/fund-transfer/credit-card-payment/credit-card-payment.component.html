@@ -1,6 +1,6 @@
 <mat-card class="default-card credit_card_container">
   <div class="heading_card mb-2" fxLayoutAlign="start center" fxLayoutGap="10">
-    <div>{{ "Credit Card Payments" }}</div>
+    <div>{{ "Credit Card Payments"  | translate}}</div>
     <mat-icon svgIcon="card-icon"></mat-icon>
   </div>
   <mat-divider></mat-divider>
@@ -12,7 +12,7 @@
           bindLabelKey="accountNo"
           bindValueKey="accountNo"
           [control]="creditCardForm.get('debitAccount')"
-          inputLabel="Debit Account Number"
+          [inputLabel]="'Debit Account Number'| translate"
         ></app-searchable-select>
       </div>
 
@@ -22,13 +22,13 @@
           bindLabelKey="label"
           bindValueKey="value"
           [control]="creditCardForm.get('creditAccount')"
-          inputLabel="AAN Number"
+          [inputLabel]="'AAN Number'| translate"
         ></app-searchable-select>
       </div>
 
       <div fxFlex="24">
         <mat-form-field appearance="outline">
-          <mat-label class="text_label">Amount</mat-label>
+          <mat-label class="text_label">{{"Amount" | translate}}</mat-label>
           <span matPrefix class="text_label">₹</span>
           <input matInput type="text" formControlName="debitAmount" />
         </mat-form-field>
@@ -36,7 +36,7 @@
 
       <div fxFlex="24">
         <mat-form-field appearance="outline">
-          <mat-label class="text_label">Transfer on</mat-label>
+          <mat-label class="text_label">{{"Transfer on" | translate}}</mat-label>
           <input
             matInput
             [min]="today"
@@ -60,12 +60,12 @@
         fxLayoutAlign="start center"
         fxLayoutGap="20"
       >
-        <div class="text_label">Send advice:</div>
+        <div class="text_label">{{"Send advice:" | translate}}</div>
         <div>
           <mat-checkbox
             class="example-margin text_label"
             [formControl]="creditCardForm.get('remitter')"
-            >Remitter</mat-checkbox
+            >{{"Remitter" | translate}}</mat-checkbox
           >
         </div>
       </div>
@@ -73,14 +73,14 @@
       <ng-container *ngIf="showSendAdviceBlock">
         <div fxFlex="24">
           <mat-form-field appearance="outline">
-            <mat-label class="text_label">Remitter email id</mat-label>
+            <mat-label class="text_label">{{"Remitter email id" | translate}}</mat-label>
             <input matInput type="text" />
           </mat-form-field>
         </div>
 
         <div fxFlex="24">
           <mat-form-field appearance="outline">
-            <mat-label class="text_label">Remitter mobile</mat-label>
+            <mat-label class="text_label">{{"Remitter mobile" | translate}}</mat-label>
             <input matInput type="text" />
           </mat-form-field>
         </div>
@@ -92,12 +92,12 @@
           fxLayoutAlign="start center"
           fxLayoutGap="20"
         >
-          <div class="text_label">Narration:</div>
+          <div class="text_label">{{"Narration:" | translate}}</div>
           <div>
             <mat-checkbox
               class="example-margin text_label"
               [formControl]="creditCardForm.get('narration')"
-              >Remitter</mat-checkbox
+              >{{"Remitter" | translate}}</mat-checkbox
             >
           </div>
         </div>
@@ -109,7 +109,7 @@
               name=""
               id=""
               cols="30"
-              placeholder="Remitter narration"
+              [placeholder]="'Remitter narration' | translate"
             ></textarea>
           </div>
         </ng-container>
@@ -117,17 +117,17 @@
     </div>
     <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
       <button class="exit-button" mat-raised-button (click)="close()">
-        Cancel
+        {{"Cancel" | translate}}
       </button>
       <button class="back-button" mat-raised-button (click)="clear()">
-        Clear
+        {{"Clear" | translate}}
       </button>
       <button-loading
         [type]="'button'"
         [btnClass]="'submit-button'"
         (click)="submit()"
       >
-        Submit
+        {{"Submit" | translate}}
       </button-loading>
     </div>
   </form>

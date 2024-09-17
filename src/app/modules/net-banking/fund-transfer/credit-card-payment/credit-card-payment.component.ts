@@ -13,6 +13,8 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-credit-card-payment",
@@ -39,7 +41,9 @@ export class CreditCardPaymentComponent implements OnInit {
     private fundTransferService: FundTransferService,
     private router: Router,
     private dialog: MatDialog,
-    private api: OpenAccountService
+    private api: OpenAccountService,
+    private tokenStorageService: TokenStorageService,
+    public translate: TranslateService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
@@ -65,6 +69,10 @@ export class CreditCardPaymentComponent implements OnInit {
       this.showNarrationBlock = value;
     });
     this.fetchCustomerInfo();
+    setTimeout(() => {
+      let lang=this.tokenStorageService.getLanguage() ?? 'en';
+       this.translate.use(lang)
+     }, 300);
   }
   buildCreditCardForm() {
     this.creditCardForm = this.formBuilder.group({

@@ -84,6 +84,7 @@ import { ExportAttachmentsComponent } from "./new-reusable-components/export-att
 import { ExportLcDetailsComponent } from "./new-reusable-components/export-lc-details/export-lc-details.component";
 import { PaymentRequestEnquiryComponent } from './new-reusable-components/payment-request-enquiry/payment-request-enquiry.component';
 import { GenericExportBillDispatchComponent } from './new-reusable-components/generic-export-bill-dispatch/generic-export-bill-dispatch.component';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -174,6 +175,7 @@ import { GenericExportBillDispatchComponent } from './new-reusable-components/ge
     MatMenuModule,
     MatToolbarModule,
     LayoutsModule,
+    TranslateModule
     ],
 })
 export class NetBankingModule {}
