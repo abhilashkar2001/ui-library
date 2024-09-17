@@ -25,6 +25,18 @@
     position: relative;
     cursor: pointer;
 
+    &::before {
+      border-radius: 0 0 10px 10px;
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: 0;
+      height: 0;
+      width: 100%;
+      background-color: var(--current-theme-background-light);
+      transition: height 0.28s cubic-bezier(0.08, 0.77, 0.54, 1.44);
+    }
+
     img {
       background-color: #000;
       mix-blend-mode: difference;
@@ -34,19 +46,13 @@
 
   .open {
     background: rgba(255, 255, 255, 0.3) 0% 0% no-repeat padding-box;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     border-radius: 10px;
     // transition: all 0.2s cubic-bezier(0.39, 0.58, 0.57, 1);
     position: relative;
 
     &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: var(--current-theme-background-light);
+      height: calc(100% + 20px);
     }
   }
 }
