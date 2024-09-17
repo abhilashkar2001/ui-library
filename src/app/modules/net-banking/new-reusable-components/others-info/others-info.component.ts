@@ -3,6 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
+import { BgSummaryServiceService } from "../../trade-flow/bg-summary/bg-summary-service.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-others-info",
@@ -22,8 +25,10 @@ export class OthersInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private countryService: countryStateService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private bgService: BgSummaryServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllCountry();
@@ -31,6 +36,20 @@ export class OthersInfoComponent implements OnInit {
     if (this.tradeDetails?.otherInfoModel) {
       this.buildOtherInfoForm(this.tradeDetails.otherInfoModel);
     } else this.buildOtherInfoForm({});
+    const id = this.router.routerState.snapshot.root.queryParams["id"];
+    if (id) {
+      this.fetchOtherInfo(id);
+    }
+  }
+
+  fetchOtherInfo(bgMasterId: number) {
+    this.bgService
+      .fetchOtherInfo(bgMasterId)
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode == 200 && res?.data) {
+          this.otherInfoForm.patchValue(res?.data[0]);
+        }
+      });
   }
 
   buildOtherInfoForm(item) {
@@ -88,20 +107,20 @@ export class OthersInfoComponent implements OnInit {
       }),
       ...(this.bgType === "BG Issuance"
         ? {
-          textualDescription: [
-            item.textualDescription ? item.textualDescription : "",
-          ],
-          introToBank: [item.introToBank ? item.introToBank : ""],
-        }
+            textualDescription: [
+              item.textualDescription ? item.textualDescription : "",
+            ],
+            introToBank: [item.introToBank ? item.introToBank : ""],
+          }
         : {
-          counterGuarantee: [
-            item.counterGuarantee ? item.counterGuarantee : "",
-          ],
-          deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
-          deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
-          margin: [item.margin ? item.margin : ""],
-          feeAccount: [item.feeAccount ? item.feeAccount : ""],
-        }),
+            counterGuarantee: [
+              item.counterGuarantee ? item.counterGuarantee : "",
+            ],
+            deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
+            deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
+            margin: [item.margin ? item.margin : ""],
+            feeAccount: [item.feeAccount ? item.feeAccount : ""],
+          }),
       branchName: [item.branchName ? item.branchName : ""],
       deliveryInstruction: [
         item.deliveryInstruction ? item.deliveryInstruction : "",

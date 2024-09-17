@@ -56,7 +56,8 @@ export class BgSummaryComponent implements OnInit {
     private api: BgSummaryServiceService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -131,7 +132,7 @@ export class BgSummaryComponent implements OnInit {
     } else if (id === "new") {
       this.getBGType();
     } else {
-      console.log("having a id");
+      this.getBGType(event?.element?.bgMasterId);
     }
   }
 
@@ -154,9 +155,9 @@ export class BgSummaryComponent implements OnInit {
    * Note: if templateName is avilable then it should be send by params
    * @param template templateName or id
    */
-  getBGType(template?) {
+  getBGType(id?: number) {
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
-      queryParams: { type: this.bgType },
+      queryParams: { type: this.bgType, id },
     });
   }
 }

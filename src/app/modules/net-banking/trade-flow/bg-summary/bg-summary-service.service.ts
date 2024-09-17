@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { environment } from "environments/environment";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -49,5 +51,29 @@ export class BgSummaryServiceService {
 
   getSummaryUrls() {
     return this.http.get<any>("assets/json/summaryHelper.json");
+  }
+
+  fetchApplicantInfo(bgMasterId: number) {
+    return this.http.get(
+      `${this.basePath}/bankGuarantee/fetchBgMaster?bgMasterId=${bgMasterId}`
+    );
+  }
+
+  fetchBgInfo(bgMasterId: number): Observable<IcHttpResponseModel<any>> {
+    return this.http.get<IcHttpResponseModel<any>>(
+      `${this.basePath}/bankGuarantee/fetchBgInfo?bgMasterId=${bgMasterId}`
+    );
+  }
+
+  fetchOtherInfo(bgMasterId: number) {
+    return this.http.get(
+      `${this.basePath}/bankGuarantee/fetchOtherInfo?bgMasterId=${bgMasterId}`
+    );
+  }
+
+  fetchAttachments(bgMasterId: number) {
+    return this.http.get(
+      `${this.basePath}/bankGuarantee/fetchAttachment?bgMasterId=${bgMasterId}`
+    );
   }
 }
