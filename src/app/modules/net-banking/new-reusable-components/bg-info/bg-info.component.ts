@@ -1,5 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { BgSummaryServiceService } from "../../trade-flow/bg-summary/bg-summary-service.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-bg-info",
@@ -18,7 +21,11 @@ export class BgInfoComponent implements OnInit {
   bgIssuanceForm: FormGroup;
   benificiaryDetailsForm: FormGroup<any>;
   bgIssuanceBgInfoForm: FormGroup<any>;
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private bgService: BgSummaryServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (this.tradeDetails?.benificiaryDetails) {
@@ -26,10 +33,28 @@ export class BgInfoComponent implements OnInit {
     } else {
       this.buildFormGroup({});
     }
+
+    const id = this.router.routerState.root.snapshot.queryParams["id"];
+    if (id) this.fetchBgInfo(id);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes, "changein bg");
+  fetchBgInfo(bgMasterId: number) {
+    this.bgService
+      .fetchBgInfo(bgMasterId)
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode === 200 && res?.data) {
+          this.bgIssuanceForm.get("bgIssuanceBgInfo").patchValue(res?.data[0]);
+          this.bgIssuanceForm
+            .get("benificiaryDetails")
+            .patchValue(res?.data[0]);
+          this.bgIssuanceForm
+            .get("transactionInfoDetails")
+            .patchValue(res?.data[0]);
+          this.bgIssuanceForm
+            .get("bgAmendBgInfoDetails")
+            .patchValue(res?.data[0]);
+        }
+      });
   }
 
   buildFormGroup(data?) {

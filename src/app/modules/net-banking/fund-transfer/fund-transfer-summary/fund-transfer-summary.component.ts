@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
 import { FundTransferService } from "../fund-transfer.service";
 import { NETBANKING } from "../../net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.constant";
+import { TokenStorageService } from "app/shared/token-storage.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-fund-transfer-summary",
@@ -35,11 +37,18 @@ export class FundTransferSummaryComponent implements OnInit {
   uploadType: any;
   constructor(
     private router: Router,
-    private fundTransferService: FundTransferService
+    private fundTransferService: FundTransferService,
+    private tokenStorageService: TokenStorageService,
+    public translate: TranslateService,
+
   ) {}
 
   ngOnInit(): void {
     this.uploadType = sessionStorage.getItem("uploadType");
+    setTimeout(() => {
+      let lang=this.tokenStorageService.getLanguage() ?? 'en';
+       this.translate.use(lang)
+     }, 300);
   }
 
   getDataByPage(event) {

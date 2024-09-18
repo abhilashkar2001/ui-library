@@ -46,21 +46,22 @@
   </div>
 </div>
 
-<div fxLayoutGap="50px"></div>
-<button-loading
-  [loadingText]="loadingBtnText"
-  [type]="'submit'"
-  [disable]="isLoading && !image"
-  [loading]="isLoading"
-  (click)="onSubmit()"
->
-  Submit
-</button-loading>
-<button
-  type="button"
-  mat-raised-button
-  class="button back_button"
-  (click)="onBack()"
->
-  Back
-</button>
+<div fxLayoutGap="10" fxLayoutAlign="end center" class="pt-12">
+  <button-loading
+    [loadingText]="loadingBtnText"
+    [type]="'submit'"
+    [disable]="isLoading && !image"
+    [loading]="isLoading"
+    (click)="onSubmit()"
+  >
+    Submit
+  </button-loading>
+  <button
+    type="button"
+    mat-raised-button
+    class="button back_button"
+    (click)="onBack()"
+  >
+    Back
+  </button>
+</div>

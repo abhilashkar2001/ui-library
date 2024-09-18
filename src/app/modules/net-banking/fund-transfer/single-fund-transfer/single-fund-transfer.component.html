@@ -1,6 +1,6 @@
 <mat-card class="single_fund_container default-card">
   <div class="heading_card mb-2" fxLayoutAlign="start center" fxLayoutGap="10">
-    <div>{{ "Transfer Funds - Single" }}</div>
+    <div>{{ "Transfer Funds - Single" | translate}}</div>
     <mat-icon svgIcon="single-trans-icon"></mat-icon>
   </div>
   <mat-divider></mat-divider>
@@ -13,19 +13,19 @@
   >
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Purpose of payment <span class="text-red">*</span></span
+        >{{"Purpose of payment" | translate}} <span class="text-red">*</span></span
       >
       <mat-form-field fxFlex="30" class="form-field">
         <mat-select formControlName="purposeOfPayment">
           <mat-option *ngFor="let item of purpose" [value]="item">{{
-            item
+            "item" | translate
           }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Transfer From<span class="text-red">*</span></span
+        >{{"Transfer From" | translate}}<span class="text-red">*</span></span
       >
       <mat-form-field fxFlex="30" class="form-field">
         <mat-select formControlName="debitAccount">
@@ -37,7 +37,7 @@
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Amount<span class="text-red">*</span></span
+        >{{"Amount" | translate}}<span class="text-red">*</span></span
       >
       <mat-form-field fxFlex="30" class="form-field">
         <input matInput formControlName="debitAmount" />
@@ -45,7 +45,7 @@
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Transfer Mode<span class="text-red">*</span></span
+        >{{"Transfer Mode" |translate}}<span class="text-red">*</span></span
       >
       <div fxFlex="30">
         <app-searchable-select
@@ -57,12 +57,12 @@
       </div>
     </div>
     <div class="hint-div" fxLayout="row" fxLayoutGap="10px">
-      <span class="hint">07 hours 11 minutes 48 seconds to NEFT cut-off</span>
-      <span class="link">View cut-off times</span>
+      <span class="hint">{{"07 hours 11 minutes 48 seconds to NEFT cut-off" | translate}}</span>
+      <span class="link">{{"View cut-off times" | translate}}</span>
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Transfer To<span class="text-red">*</span></span
+        >{{"Transfer To" | translate}}<span class="text-red">*</span></span
       >
       <div fxFlex="30" class="serchable-drop">
         <app-searchable-select
@@ -77,12 +77,12 @@
         ></app-searchable-select>
       </div>
       <button mat-flat-button (click)="goToBeneificiary()" class="add-link">
-        Add New
+        {{"Add New" | translate}}
       </button>
     </div>
     <div fxLayout="row" fxFlex="100">
       <span fxFlex="15" class="text_label"
-        >Transfer On<span class="text-red">*</span></span
+        >{{"Transfer On" | translate}}<span class="text-red">*</span></span
       >
       <mat-form-field fxFlex="30" class="form-field">
         <input
@@ -99,27 +99,27 @@
       </mat-form-field>
     </div>
     <div fxLayout="row" fxFlex="100">
-      <span fxFlex="15" class="text_label">Send Advice</span>
+      <span fxFlex="15" class="text_label">{{"Send Advice" | translate}}</span>
       <div class="check" fxLayout="row" fxLayoutGap="50%">
         <mat-checkbox color="primary" (change)="onCheckBox('Remitter', $event)"
-          >Remitter</mat-checkbox
+          >{{"Remitter" | translate}}</mat-checkbox
         >
         <mat-checkbox
           color="primary"
           (change)="onCheckBox('Beneficiary', $event)"
-          >Beneficiary</mat-checkbox
+          >{{"Beneficiary" | translate}}</mat-checkbox
         >
       </div>
     </div>
     <ng-container *ngIf="remitter">
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Remitter email id</span>
+        <span fxFlex="15" class="text_label">{{"Remitter email id" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="remmitterEmail" />
         </mat-form-field>
       </div>
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Remitter Mobile</span>
+        <span fxFlex="15" class="text_label">{{"Remitter Mobile" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="remmitterMobile" />
         </mat-form-field>
@@ -127,36 +127,36 @@
     </ng-container>
     <ng-container *ngIf="beneficiary">
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Beneficiary Email</span>
+        <span fxFlex="15" class="text_label">{{"Beneficiary Email" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="benificiaryEmail" />
         </mat-form-field>
       </div>
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Beneficiary Mobile</span>
+        <span fxFlex="15" class="text_label">{{"Beneficiary Mobile" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="benificiaryMobile" />
         </mat-form-field>
       </div>
     </ng-container>
     <div fxLayout="row" fxFlex="100">
-      <span fxFlex="15" class="text_label">Narration</span>
+      <span fxFlex="15" class="text_label">{{"Narration" | translate}}</span>
       <div class="check" fxLayout="row" fxLayoutGap="50%">
         <mat-checkbox
           color="primary"
           (change)="onCheckBox('RemitterNarration', $event)"
-          >Remitter</mat-checkbox
+          >{{"Remitter" | translate}}</mat-checkbox
         >
         <mat-checkbox
           color="primary"
           (change)="onCheckBox('BeneficiaryNarration', $event)"
-          >Beneficiary</mat-checkbox
+          >{{"Beneficiary" | translate}}</mat-checkbox
         >
       </div>
     </div>
     <ng-container *ngIf="remitterNarration">
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Remitter Narration</span>
+        <span fxFlex="15" class="text_label">{{"Remitter Narration" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="remmitterNarration" />
         </mat-form-field>
@@ -164,14 +164,14 @@
     </ng-container>
     <ng-container *ngIf="beneficiaryNarration">
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Beneficiary Narration</span>
+        <span fxFlex="15" class="text_label">{{"Beneficiary Narration" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="benificiaryNarration" />
         </mat-form-field>
       </div>
     </ng-container>
     <div fxLayout="row" fxFlex="100">
-      <span fxFlex="15" class="text_label">Payment Details</span>
+      <span fxFlex="15" class="text_label">{{"Payment Details" | translate}}</span>
       <div class="check" fxLayout="row" fxLayoutGap="50%">
         <mat-checkbox
           color="primary"
@@ -181,43 +181,43 @@
     </div>
     <ng-container *ngIf="paymentDetail">
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Detail 1</span>
+        <span fxFlex="15" class="text_label">{{"Detail 1" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="detail1" />
         </mat-form-field>
       </div>
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Detail 2</span>
+        <span fxFlex="15" class="text_label">{{"Detail 2" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="detail2" />
         </mat-form-field>
       </div>
       <div fxLayout="row" fxFlex="100">
-        <span fxFlex="15" class="text_label">Detail 3</span>
+        <span fxFlex="15" class="text_label">{{"Detail 3" | translate}}</span>
         <mat-form-field fxFlex="30" class="form-field">
           <input matInput formControlName="detail3" />
         </mat-form-field>
       </div>
     </ng-container>
     <div fxLayout="row" fxFlex="100">
-      <span fxFlex="15" class="text_label">Remark(For Reviewer)</span>
+      <span fxFlex="15" class="text_label">{{"Remark(For Reviewer)" | translate}}</span>
       <mat-form-field fxFlex="30" class="form-field">
         <input matInput formControlName="remarks" />
       </mat-form-field>
     </div>
     <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
       <button class="exit-button" mat-raised-button (click)="cancel()">
-        Cancel
+        {{"Cancel" | translate}}
       </button>
       <button class="back-button" mat-raised-button (click)="clear()">
-        Clear
+        {{"Clear" | translate}}
       </button>
       <button-loading
         [type]="'button'"
         [btnClass]="'submit-button'"
         (click)="submit()"
       >
-        Submit
+        {{"Submit"|translate}}
       </button-loading>
     </div>
   </div>
