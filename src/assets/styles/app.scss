@@ -23,6 +23,20 @@
   box-sizing: border-box;
 }
 
+:root {
+  // Variables related to theme change
+  --current-theme-color: #fff;
+  --current-theme-background: #e6224a;
+  --current-theme-background-light: #e6224a;
+  --current-theme-background-dark: #e6224a;
+  --current-theme-filter: hue-rotate(60deg);
+  --current-theme-border-color: #e6224a;
+}
+
+.current_theme_filter {
+  filter: var(--current-theme-filter);
+}
+
 html,
 body {
   width: 100%;
@@ -136,9 +150,12 @@ body {
 .mat-tab-link.mat-tab-label-active {
   text-align: left;
   letter-spacing: 0px;
-  color: #004c97 !important;
+  color: var(--current-theme-background) !important;
   text-transform: capitalize;
   opacity: 1;
+}
+.egret-navy .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: var(--current-theme-background) !important;
 }
 
 .mat-raised-button,
@@ -166,13 +183,13 @@ body {
   .mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-persistent-ripple,
 .egret-navy .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: #004c97;
+  background-color: var(--current-theme-background);
 }
 
 .egret-navy
   .mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-outer-circle {
-  border-color: #004c97;
+  border-color: var(--current-theme-background);
 }
 
 .mat-radio-group {

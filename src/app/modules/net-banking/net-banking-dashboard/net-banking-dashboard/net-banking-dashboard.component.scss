@@ -11,8 +11,9 @@
     font-weight: 500;
   }
   .selected-account-Card {
-    background: transparent linear-gradient(332deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    // background: transparent linear-gradient(332deg, #051a2d 0%, #004c97 100%) 0%
+    //   0% no-repeat padding-box;
+    background-color: var(--current-theme-background);
     box-shadow: 0px 0px 8px rgb(0 0 0 / 31%) !important;
     height: 145px;
     border-radius: 10px;
@@ -29,7 +30,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    color: #004c97;
+    // color: #004c97;
+    color: var(--current-theme-background);
     margin: 10px 0;
     background: url("/assets/images/background-mask.svg");
   }
@@ -98,7 +100,7 @@
   top: 6px;
   width: 0px;
   height: 38px;
-  border: 1.6px solid #004c97;
+  border: 1.6px solid var(--current-theme-background);
   opacity: 1;
   border-radius: 0 10px 10px 0;
 }
@@ -183,7 +185,7 @@ mat-expansion-panel.mat-expanded {
 .labelValRef {
   font-weight: 600;
   font-size: 14px;
-  color: #004c97;
+  color: var(--current-theme-background);
   font-family: Poppins;
   cursor: pointer;
 }
@@ -270,9 +272,10 @@ mat-expansion-panel.mat-expanded {
     }
   }
   .transfer-card:hover {
-    outline: 2px solid #004c97;
+    outline: 2px solid var(--current-theme-background);
     img {
-      filter: grayscale(0);
+      // filter: grayscale(0);
+      filter: var(--current-theme-filter);
       opacity: 1;
     }
   }

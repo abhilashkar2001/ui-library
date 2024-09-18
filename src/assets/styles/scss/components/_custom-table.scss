@@ -2,10 +2,17 @@
 .addNewButton,
 .uploadButton {
   @include custom_button(white, $gradientBg);
+  // filter: var(--current-theme-filter);
+  background-image: none;
+  background-color: var(--current-theme-background) !important;
 }
 // Title: Download Button
 .downloadBtn {
   @include custom_button();
+  color: var(--current-theme-background) !important;
+  .mat-icon {
+    filter: var(--current-theme-filter);
+  }
 }
 
 .menu_btn:hover {
@@ -153,7 +160,7 @@ mat-cell {
   }
 
   .higlightColumn {
-    color: $primaryTextColor !important;
+    color: var(--current-theme-background) !important;
     font-weight: bold;
     justify-content: center;
     align-items: center;
@@ -242,6 +249,7 @@ mat-cell {
   mat-icon {
     display: flex;
     align-items: center;
+    filter: var(--current-theme-filter);
   }
   .btn {
     width: 100% !important;

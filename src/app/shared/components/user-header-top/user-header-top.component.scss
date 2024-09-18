@@ -149,10 +149,10 @@
   padding: 0 6px !important;
 }
 .mat-menu-item:hover {
-  color: #004c97;
+  color: var(--current-theme-background);
   opacity: 100;
   .mat-icon-no-color {
-    color: #004c97 !important;
+    color: var(--current-theme-background) !important;
     opacity: 100;
   }
 }
@@ -163,7 +163,31 @@
 }
 
 .active-item {
-  color: #004c97 !important;
+  color: var(--current-theme-background) !important;
   opacity: 100;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme_chng_btn_wrapper {
+  margin: 0 12px;
+  padding: 4px 12px;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 30px;
+
+  .theme_chng_btn {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: var(--theme-btn-color);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.24s;
+
+    &:hover,
+    &.active_theme {
+      transform: scale(1.15);
+    }
+  }
 }

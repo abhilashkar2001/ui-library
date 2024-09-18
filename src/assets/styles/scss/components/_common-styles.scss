@@ -48,7 +48,7 @@ code {
   font-family: "Poppins", sans-serif !important;
 }
 .egret-navy .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #004c97;
+  background-color: var(--current-theme-background) !important;
 }
 .egret-navy
   .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
@@ -56,16 +56,54 @@ code {
 .egret-navy
   .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
   .mat-ripple-element {
-  background: #004c97;
+  background: var(--current-theme-background);
 }
 .egret-navy .mat-expansion-indicator::after {
-  color: rgb(0 83 255 / 61%);
+  // color: rgb(0 83 255 / 61%);
+  color: var(--current-theme-background-dark);
 }
 .mat-radio-label-content {
-  color: #102245;
+  color: var(--current-theme-background);
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  opacity: 0.7;
+  opacity: 1;
+}
+//custom toggle button
+.egret-navy .mat-slide-toggle {
+  &.mat-checked:not(.mat-disabled) {
+    .mat-slide-toggle-bar {
+      background-color: var(--current-theme-background) !important;
+      cursor: default;
+    }
+    .mat-slide-toggle-thumb {
+      background-color: white;
+    }
+  }
+  .mat-slide-toggle-bar {
+    width: 32px;
+    height: 17px;
+  }
+  &.mat-checked .mat-slide-toggle-bar {
+    background-color: var(--current-theme-background) !important;
+    .mat-slide-toggle-thumb {
+      background-color: white;
+    }
+  }
+  .mat-slide-toggle-thumb {
+    font-size: 10px;
+    font-weight: 10px;
+    width: 11px;
+    height: 11px;
+    margin-top: 5.9px;
+    left: 2.4px;
+    position: relative;
+  }
+}
+.mat-slide-toggle.mat-checked .mat-ripple-element {
+  background-color: var(--current-theme-background-light) !important;
+}
+.egret-navy .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: var(--current-theme-background);
 }

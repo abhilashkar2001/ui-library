@@ -11,24 +11,24 @@
     justify-content: center;
 
     .bold-error-code {
-      color: #184680;
+      color: var(--current-theme-background);
       font-size: 7rem;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: 900;
       letter-spacing: -6px;
-      &::first-letter {
-        color: #1e90ff;
-      }
+      // &::first-letter {
+      //   color: #1e90ff;
+      // }
     }
     .bold-error-message {
-      color: #184680;
+      color: var(--current-theme-background);
       font-size: 18px;
       font-weight: 900;
       font-family: Arial, Helvetica, sans-serif;
       text-transform: uppercase;
-      &::first-letter {
-        color: #1e90ff;
-      }
+      // &::first-letter {
+      //   color: #1e90ff;
+      // }
     }
     .error-description {
       font-size: 16px;
@@ -39,11 +39,7 @@
     .back-button {
       width: 130px;
       height: 42px;
-      background: linear-gradient(
-        91deg,
-        rgba(5, 26, 45, 1) 0%,
-        rgba(0, 76, 151, 1) 100%
-      ) !important;
+      background: var(--current-theme-background) !important;
       border-radius: 40px !important;
       color: #e7e7e7;
       font-size: 16px;

@@ -30,8 +30,8 @@
 
     .customer-type-selected {
       border-radius: 8px;
-      border: solid 1px #004c97;
-      background-color: #d6dbea;
+      border: solid 1px var(--current-theme-background);
+      background-color: var(--current-theme-background-light);
     }
   }
 

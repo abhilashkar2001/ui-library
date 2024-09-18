@@ -33,7 +33,7 @@
           'selected-account-Card': selectedKey === key
         }"
         (click)="cardDetails(key)"
-        fxFlex="33"
+        fxFlex="35"
       >
         <div
           fxLayout="row"
@@ -129,7 +129,9 @@
                 class="matcard-div"
                 (click)="openPendingForApprovalSummary()"
               >
-                <mat-icon class="call-madeup-icn"> call_made</mat-icon>
+                <mat-icon class="call-madeup-icn current_theme_filter">
+                  call_made</mat-icon
+                >
               </mat-card>
             </div>
           </div>

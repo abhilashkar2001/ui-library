@@ -28,7 +28,12 @@
   }
 }
 
-@mixin action_button($color: #ffffff, $background: $gradientBg, $height: 49px, $width:175px) {
+@mixin action_button(
+  $color: #ffffff,
+  $background: $gradientBg,
+  $height: 49px,
+  $width: 175px
+) {
   width: $width !important;
   max-width: $width !important;
   height: $height;

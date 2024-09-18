@@ -3,7 +3,7 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  ChangeDetectorRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import { ThemeService } from "../../../shared/services/theme.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -13,11 +13,15 @@ import { environment } from "environments/environment";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import {
+  ThemeChangeService,
+  ThemeOption
+} from "app/shared/services/theme-change.service";
 
 @Component({
   selector: "app-user-header-top",
   templateUrl: "./user-header-top.component.html",
-  styleUrls: ["./user-header-top.component.scss"],
+  styleUrls: ["./user-header-top.component.scss"]
 })
 export class UserHeaderTopComponent implements OnInit, OnDestroy {
   layoutConf: any;
@@ -31,11 +35,16 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   basePath = environment.microServiceURL;
   userImage = "/assets/images/profile-user.png";
   lastLoginTime: any;
+
+  // Theme change variables
+  listOfThemeColors: ThemeOption[] = [];
+  selectedTheme: ThemeOption;
+
   languageList = [
-    { code: 'en', name: 'English'},
-    { code: 'es', name: 'Spanish'},
+    { code: "en", name: "English" },
+    { code: "es", name: "Spanish" }
   ];
-  selectedLanguage: { code: string; name: string; };
+  selectedLanguage: { code: string; name: string };
   constructor(
     private layout: LayoutService,
     public themeService: ThemeService,
@@ -45,8 +54,14 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private themeChangeService: ThemeChangeService
   ) {
+    this.listOfThemeColors = this.themeChangeService.themeColors;
+    themeChangeService.getCurrentTheme$.subscribe(
+      (theme) => (this.selectedTheme = theme)
+    );
+
     this.matIconRegistry.addSvgIcon(
       `custom-menu-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -61,11 +76,13 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.roleName = this.currentUser?.roles?.[0]?.roleName;
     this.lastLoginTime = this.tokenStorageService.getLastLoginSession();
     setTimeout(() => {
-      let lang=this.tokenStorageService.getLanguage() ?? 'en';
-       this.translate.use(lang)
-     }, 300);
-     
-   
+      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      this.translate.use(lang);
+    }, 300);
+  }
+
+  handleThemeChange(theme: string) {
+    this.themeChangeService.setCurrentTheme(theme);
   }
 
   getFileUrl(filePath: string) {
@@ -100,14 +117,14 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   }
   switchLanguage(language: string) {
     console.log("324567890");
-   
-    console.log(language)
+
+    console.log(language);
     this.selectedLanguage = this.languageList.find(
-      (lang) => lang.code === language,
+      (lang) => lang.code === language
     );
-    this.tokenStorageService.saveLanguage(language)
-    let lang=this.tokenStorageService.getLanguage();
-    this.translate.use(lang)
+    this.tokenStorageService.saveLanguage(language);
+    let lang = this.tokenStorageService.getLanguage();
+    this.translate.use(lang);
   }
   ngOnDestroy() {}
 }
