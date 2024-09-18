@@ -151,4 +151,8 @@ export class OpenAccountService {
   faceRegister(data): Observable<any> {
     return this.http.post<any>(`${baseUrl}/api/faceid/register`, data);
   }
+
+  faceMatch(payload) {
+    return this.http.post<any>(`${baseUrl}/api/face-match-from-doc`, payload);
+  }
 }
