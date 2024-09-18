@@ -90,6 +90,10 @@ mat-form-field {
 .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
   position: relative !important;
 }
+.egret-navy .mat-radio-outer-circle {
+  border-color: rgb(197 197 197 / 54%);
+}
+
 input {
   font-family: Poppins !important;
   color: #102245 !important;
@@ -119,8 +123,8 @@ input {
 }
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled),
 .mat-option.mat-active {
-  color: #004b9c !important;
-  background: #d8e3f0 0% 0% no-repeat padding-box !important;
+  color: var(--current-theme-background) !important;
+  background: var(--current-theme-background-light) 0% 0% no-repeat padding-box !important;
 }
 .small-error {
   position: relative;

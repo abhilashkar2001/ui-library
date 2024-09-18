@@ -150,9 +150,12 @@ body {
 .mat-tab-link.mat-tab-label-active {
   text-align: left;
   letter-spacing: 0px;
-  color: #004c97 !important;
+  color: var(--current-theme-background) !important;
   text-transform: capitalize;
   opacity: 1;
+}
+.egret-navy .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: var(--current-theme-background) !important;
 }
 
 .mat-raised-button,
@@ -180,13 +183,13 @@ body {
   .mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-persistent-ripple,
 .egret-navy .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: #004c97;
+  background-color: var(--current-theme-background);
 }
 
 .egret-navy
   .mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-outer-circle {
-  border-color: #004c97;
+  border-color: var(--current-theme-background);
 }
 
 .mat-radio-group {

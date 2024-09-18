@@ -1,7 +1,7 @@
 <div class="cheque-status_container">
   <form [formGroup]="chqueInquiryForm" fxFlex="100" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
-      <mat-label class="ml-20">Account No</mat-label>
+      <mat-label class="ml-20 custom-label">Account No</mat-label>
       <app-searchable-select
         [items]="accountNumberList"
         bindValueKey="accountNo"
@@ -20,7 +20,7 @@
     <div class="row wrapper_row" fxLayout="column" fxLayoutGap="20">
       <div fxFlex="100">
         <div fxLayout="column" fxLayoutGap="20">
-          <mat-label class="mb-8">{{ "Account" }}</mat-label>
+          <mat-label class="mb-8 custom-label">{{ "Account" }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
             [formControl]="chqueInquiryForm.get('inquiryChequeBy')"
@@ -76,13 +76,13 @@
       </ng-container>
 
       <div fxFlex="40" fxLayoutGap="20">
-        <button mat-flat-button class="stroked_btn" (click)="goBack()">
+        <button mat-raised-button class="exit-button" (click)="goBack()">
           {{ "Cancel" }}
         </button>
         <button
-          mat-flat-button
+          mat-raised-button
           (click)="fetchChequeDetails()"
-          class="filled_btn"
+          class="submit-button"
         >
           {{ "Proceed" }}
         </button>

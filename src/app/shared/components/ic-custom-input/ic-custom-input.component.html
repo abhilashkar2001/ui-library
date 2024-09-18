@@ -1,5 +1,7 @@
 <div fxLayout="column">
-  <mat-label class="ml-16" *ngIf="!skipLabel">{{ inputLabel }}</mat-label>
+  <mat-label class="ml-16 custom-label" *ngIf="!skipLabel">{{
+    inputLabel
+  }}</mat-label>
   <div fxLayout="row" fxLayoutAlign="start start">
     <!-- Input for mobile number -->
     <div class="mobile_field" *ngIf="isdCode; else showNormalInput">
