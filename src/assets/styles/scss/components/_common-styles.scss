@@ -104,3 +104,6 @@ code {
 .mat-slide-toggle.mat-checked .mat-ripple-element {
   background-color: var(--current-theme-background-light) !important;
 }
+.egret-navy .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: var(--current-theme-background);
+}

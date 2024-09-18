@@ -43,7 +43,7 @@
   }
   .addbtndiv {
     z-index: 0;
-    background-color: #e9ecf5;
+    background-color: var(--current-theme-background-light);
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     height: 50px;
@@ -52,7 +52,7 @@
   }
   .rmvbtndiv {
     z-index: 0;
-    background-color: #e9ecf5;
+    background-color: var(--current-theme-background-light);
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     height: 50px;
@@ -70,8 +70,8 @@
   }
 
   .addbtn {
-    font-size: xxx-large;
-    color: #004c97;
+    font-size: xx-large;
+    color: var(--current-theme-background);
     cursor: pointer;
     z-index: 0;
     height: 100%;
@@ -90,8 +90,7 @@
   .chooseFile {
     padding: 10px 10px;
     font-family: Poppins;
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    background: var(--current-theme-background);
     position: absolute;
     color: #fff;
     border-radius: 8px;
@@ -215,7 +214,7 @@
     position: relative;
     .addbtndiv {
       z-index: 0;
-      background-color: #e9ecf5;
+      background-color: var(--current-theme-background-light);
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
       height: 46px;
