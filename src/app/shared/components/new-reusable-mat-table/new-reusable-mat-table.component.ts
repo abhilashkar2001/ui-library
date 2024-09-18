@@ -301,8 +301,6 @@ export class NewReusableMatTableComponent implements OnInit {
    * Open add / edit screen.
    */
   openPopUp(element) {
-    console.log(element);
-
     this.tableservice.setEditingStatus(false);
     this.customEditForm.emit({ element });
   }

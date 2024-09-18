@@ -11,7 +11,8 @@
   }
 
   .verification-card {
-    background: #f3f3f3 0% 0% no-repeat padding-box;
+    background: var(--current-theme-background-light) 0% 0% no-repeat
+      padding-box;
     border: 8px solid #ffffff;
     border-radius: 21px !important;
     opacity: 1;
@@ -36,8 +37,7 @@
   }
 
   .submit {
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    background: var(--current-theme-background);
     border-radius: 20px;
     color: #ffffff !important;
     letter-spacing: -0.3px;

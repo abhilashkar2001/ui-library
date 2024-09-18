@@ -39,6 +39,8 @@
 }
 .submit {
   @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
+  background-image: none;
+  background-color: var(--current-theme-background) !important;
   border-radius: 8px !important;
 }
 .resetbtn {
