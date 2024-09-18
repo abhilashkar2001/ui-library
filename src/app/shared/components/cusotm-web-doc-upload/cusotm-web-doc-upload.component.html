@@ -287,7 +287,12 @@
     </form>
   </div>
 
-  <div class="biometric-card-expansion-panel" *ngIf="ocrProcess">
+  <div
+    class="biometric-card-expansion-panel"
+    *ngIf="ocrProcess"
+    fxLayout="column"
+  >
+    <h2 class="highlight_title pt-8">Face Capture</h2>
     <div
       class="upper-biometric-card"
       fxFlex="50"
@@ -323,7 +328,7 @@
     </div>
   </div>
 
-  <div fxLayoutGap="50px">
+  <div fxLayoutGap="20px" fxLayoutAlign="end center" class="pt-12">
     <button-loading
       [loadingText]="loadingBtnText"
       [type]="'submit'"

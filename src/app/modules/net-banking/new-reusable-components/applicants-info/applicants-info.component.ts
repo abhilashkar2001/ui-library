@@ -3,6 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
+import { BgSummaryServiceService } from "../../trade-flow/bg-summary/bg-summary-service.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-applicants-info",
@@ -23,14 +26,31 @@ export class ApplicantsInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bgService: BgSummaryServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getStaticData();
+
     if (this.tradeDetails?.applicantInfo) {
       this.buildFormGroup(this.tradeDetails.applicantInfo);
     } else this.buildFormGroup();
+    const id = this.router.routerState.root.snapshot.queryParams["id"];
+    if (id) {
+      this.fetchBgInfo(id);
+    }
+  }
+
+  fetchBgInfo(id) {
+    this.bgService
+      .fetchApplicantInfo(id)
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode == 200 && res?.data?.length) {
+          this.applicantForm.patchValue(res?.data[0]);
+        }
+      });
   }
   getStaticData() {
     this.cntStService.fetchAuthCountry().subscribe((res) => {

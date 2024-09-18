@@ -4,6 +4,10 @@ import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { environment } from "environments/environment";
+import { BgSummaryServiceService } from "../../trade-flow/bg-summary/bg-summary-service.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Router } from "@angular/router";
+import { GenericValueService } from "app/shared/services/generic-value.service";
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Component({
@@ -23,6 +27,7 @@ export class AttachmentsComponent implements OnInit {
     "Declaration",
     "Approvals",
     "Others",
+    "CQW",
   ];
   fileNamelength: number;
   showUplodad: boolean = false;
@@ -30,12 +35,42 @@ export class AttachmentsComponent implements OnInit {
   slectedFiles: File[] = [];
   constructor(
     private formBuilder: FormBuilder,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private bgService: BgSummaryServiceService,
+    private router: Router,
+    private genericValueService: GenericValueService
   ) {}
 
   ngOnInit(): void {
     this.buildAttachmentInfoForm();
     this.addTitleCategory();
+    const id = this.router.routerState.root.snapshot.queryParams["id"];
+    this.fetchGenericValue();
+    if (id) {
+      this.fetchAttachments(id);
+    }
+  }
+
+  fetchGenericValue() {
+    this.genericValueService
+      .loadGenericValue("Common", ["TITLE"])
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+
+  fetchAttachments(id) {
+    this.bgService
+      .fetchAttachments(id)
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode == 200 && res?.data) {
+          const data = res?.data[0]?.attachmentModel;
+          this.attachMentModel.clear();
+          data?.forEach((item) => {
+            this.attachMentModel.push(this.createDocArray(item));
+          });
+        }
+      });
   }
 
   /**Buildform*/

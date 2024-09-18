@@ -10,6 +10,8 @@ import { CustomSuccessPopupComponent } from "app/shared/components/custom-succes
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
+import { TokenStorageService } from "app/shared/token-storage.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-single-fund-transfer",
@@ -41,7 +43,9 @@ export class SingleFundTransferComponent implements OnInit {
     private dialog: MatDialog,
     private api: OpenAccountService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private tokenStorageService: TokenStorageService,
+    public translate: TranslateService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
@@ -60,6 +64,10 @@ export class SingleFundTransferComponent implements OnInit {
     });
     this.fetchBenificiary();
     this.fetchGeneric();
+    setTimeout(() => {
+      let lang=this.tokenStorageService.getLanguage() ?? 'en';
+       this.translate.use(lang)
+     }, 300);
   }
 
   buildForm() {

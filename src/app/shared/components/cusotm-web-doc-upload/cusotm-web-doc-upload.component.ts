@@ -112,6 +112,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   backData: any[] = [];
   image = "";
   faceId: any;
+  frontAadhar: any;
 
   constructor(
     private fb: FormBuilder,
@@ -458,6 +459,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.getDocTypeforScan(this.hideSelect[0].toLowerCase(), i)
     );
     backFormdata.append("file", file);
+    if (formdata.get("imageType") !== "adhaar_back") this.frontAadhar = file;
+
     try {
       let service =
         formdata.get("imageType") === "adhaar_back"
@@ -504,11 +507,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             horizontalPosition: "right",
             panelClass: "snackbar-error",
           });
-          console.log(this.ocrPass);
-
           this.ocrPass = true;
-          console.log(this.ocrPass);
-
           // if document details not found or document is invalid.
           if (
             (res.data?.aadhaarNumber == "Detail not found" ||
@@ -524,7 +523,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                 ?.length - 1;
             console.log(index, "idx");
 
-            if (index)
+            if (index) {
               this.updateFileInfo(
                 index,
                 i,
@@ -532,6 +531,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                 res.data?.dateOfBirth,
                 res.data?.gender
               );
+            }
             if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
               if (
                 res.data?.aadhaarNumber.replace(/\s/g, "") !=
@@ -902,7 +902,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             const file = new File([blob], `${seconds}_FaceScan.png`, {
               type: "image/png",
             });
-            this.uploadFace(file);
+            this.validateFace(file);
           });
       }
     });
@@ -915,6 +915,34 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.faceId = res?.data?.data?.biometricId;
       this.image = res?.data?.data?.fileUrl;
       this.sessionService.setItem("biometricId", this.faceId);
+    });
+  }
+
+  validateFace(file) {
+    let form = new FormData();
+    form.append("faceImage", file);
+    form.append("docImage", this.frontAadhar);
+    this.openApi.faceMatch(form).subscribe((res) => {
+      console.log(res);
+      if (res?.data?.message === "Face matched successfully")
+        this.uploadFace(file);
+      else if (res?.data?.message == "Face did not match") {
+        const dialogData = {
+          error: `Captured face is not matching with the National id image.`,
+          message: "Would you like to continue?",
+        };
+        const dialogRef = this.dialog.open(WarningComponent, {
+          width: "50%",
+          data: dialogData,
+          disableClose: true,
+          panelClass: "",
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result != "Ok") {
+            this.openDialog();
+          } else if (result == "Ok") this.uploadFace(file);
+        });
+      }
     });
   }
 }
