@@ -1,12 +1,12 @@
 .lcDetailsClass {
   .add {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box !important;
+    background: var(--current-theme-background) !important;
+    font-family: "Poppins", sans-serif;
     color: #ffffff;
   }
   .save {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box !important;
+    background: var(--current-theme-background) !important;
+    font-family: "Poppins", sans-serif;
     color: #ffffff;
   }
   .del {
@@ -15,12 +15,13 @@
     border-radius: 50px;
     letter-spacing: 0px;
     color: #b20000;
+    font-family: "Poppins", sans-serif;
     text-transform: capitalize;
   }
   .edit-data {
     font-size: 13px;
     font-weight: 500;
-    font-family: "Poppins";
+    font-family: "Poppins", sans-serif;
     color: #051a2d;
     opacity: 1;
   }

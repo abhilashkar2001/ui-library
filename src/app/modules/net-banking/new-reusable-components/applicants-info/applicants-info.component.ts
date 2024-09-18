@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-applicants-info",
   templateUrl: "./applicants-info.component.html",
-  styleUrls: ["./applicants-info.component.scss"],
+  styleUrls: ["./applicants-info.component.scss"]
 })
 export class ApplicantsInfoComponent implements OnInit {
   applicantForm: FormGroup;
@@ -71,8 +71,8 @@ export class ApplicantsInfoComponent implements OnInit {
       margin: [item?.margin ?? ""],
       customerCode: [item?.customerCode ?? ""],
       contactInfo: this.fb.group({
-        address: this.fb.array([]),
-      }),
+        address: this.fb.array([])
+      })
     });
     this.addUserAddress(item?.contactInfo?.address[0] ?? {});
     this.applicantForm.valueChanges.subscribe((res) => {
@@ -80,8 +80,8 @@ export class ApplicantsInfoComponent implements OnInit {
         {
           applicantInfo: {
             ...res,
-            contactInfo: this.applicantForm.value.contactInfo,
-          },
+            contactInfo: this.applicantForm.value.contactInfo
+          }
         },
         this.checkForm()
       );
@@ -113,7 +113,7 @@ export class ApplicantsInfoComponent implements OnInit {
       pincode: [address?.pincode ?? "", [Validators.required]],
       stateName: [address?.stateName ?? ""],
       cityId: [address?.cityId ?? ""],
-      cityName: [address?.cityName ?? ""],
+      cityName: [address?.cityName ?? ""]
     });
     this.addressControle.push(newAddress);
   }
@@ -121,7 +121,7 @@ export class ApplicantsInfoComponent implements OnInit {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "popup-class-approve"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

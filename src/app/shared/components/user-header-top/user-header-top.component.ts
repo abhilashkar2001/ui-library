@@ -39,7 +39,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   // Theme change variables
   listOfThemeColors: ThemeOption[] = [];
   selectedTheme: ThemeOption;
-
+  currentLangTheme: any;
   languageList = [
     { code: "en", name: "English" },
     { code: "es", name: "Spanish" }
@@ -81,7 +81,16 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     }, 300);
   }
 
-  handleThemeChange(theme: string) {
+  handleThemeChange(theme: any) {
+    this.themeChangeService
+      .saveCurrentTheme({
+        userId: this.currentUser.userId,
+        language: this.tokenStorageService.getLanguage(),
+        color: theme.theme as unknown as any,
+        id: this.currentLangTheme?.id ?? null
+      })
+      .subscribe((res) => console.log(res));
+
     this.themeChangeService.setCurrentTheme(theme);
   }
 
@@ -116,8 +125,6 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.router.navigate(["sessions/signin"]);
   }
   switchLanguage(language: string) {
-    console.log("324567890");
-
     console.log(language);
     this.selectedLanguage = this.languageList.find(
       (lang) => lang.code === language
@@ -125,6 +132,14 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.tokenStorageService.saveLanguage(language);
     let lang = this.tokenStorageService.getLanguage();
     this.translate.use(lang);
+    this.themeChangeService
+      .saveCurrentTheme({
+        userId: this.currentUser.userId,
+        language: lang,
+        color: this.selectedTheme.theme,
+        id: this.currentLangTheme?.id ?? null
+      })
+      .subscribe(() => console.log("ddd"));
   }
   ngOnDestroy() {}
 }
