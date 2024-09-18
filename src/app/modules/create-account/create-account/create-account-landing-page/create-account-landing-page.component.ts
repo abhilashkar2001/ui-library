@@ -13,6 +13,7 @@ import * as moment from "moment";
 import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { EmailService } from "app/shared/services/email.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;
@@ -69,7 +70,8 @@ export class CreateAccountLandingPageComponent {
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private sessionService: SessionStorageService
   ) {
     commonService.updateData(router.url);
   }
@@ -292,7 +294,7 @@ export class CreateAccountLandingPageComponent {
         custResp[i].contact.address[i].addressId = null;
         delete custResp[i].customerStagingId;
       }
-
+      custResp[0].biometricId = [this.sessionService.getItem("biometricId")];
       custResp[i].isphoneNumVerified = true;
       custResp[i].isEmailVerified = true;
       custResp[i].customerNo = null;
