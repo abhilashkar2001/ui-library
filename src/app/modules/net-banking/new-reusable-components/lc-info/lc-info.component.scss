@@ -11,7 +11,7 @@
   justify-content: space-between;
 }
 .plusdiv mat-icon {
-  background-color: #e9ecf5;
+  background-color: var(--current-theme-background-light);
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   height: 43px !important;
@@ -24,7 +24,7 @@
 }
 .addbtn {
   font-size: 38px;
-  color: #004c97;
+  color: var(--current-theme-background);
   cursor: pointer;
   z-index: 0;
 }

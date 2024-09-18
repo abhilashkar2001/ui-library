@@ -58,7 +58,7 @@ export class BgSummaryComponent implements OnInit {
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
@@ -121,7 +121,7 @@ export class BgSummaryComponent implements OnInit {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
         width: "50%",
         disableClose: true,
-        panelClass: "dialog-class",
+        panelClass: "popup-class-approve",
       });
       dialogRef.afterClosed().subscribe((res) => {
         this.getBGType();
@@ -143,7 +143,7 @@ export class BgSummaryComponent implements OnInit {
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
       width: "50%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "popup-class-approve",
       data: this.summaryDetails,
     });
     dialogRef.afterClosed().subscribe((res) => {

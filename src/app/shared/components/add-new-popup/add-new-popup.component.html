@@ -6,7 +6,7 @@
     </div>
   </div>
   <div fxLayout="column" fxLayoutAlign="center">
-    <div class="verification-card">
+    <div class="verification-card py-4">
       <ng-container *ngIf="!isSaveTemplate">
         <!-- <div fxLayout="row" class="full-width mb-12 p-0">
           <div
@@ -46,7 +46,10 @@
                 <ng-container>
                   <div fxLayout="row">
                     <div>
-                      <img src="assets/images/file_img.svg" />
+                      <img
+                        src="assets/images/file_img.svg"
+                        class="current_theme_filter"
+                      />
                     </div>
                     <div fxLayout="column" class="template_container">
                       <label class="template_name">{{
@@ -71,10 +74,10 @@
         </mat-form-field>
       </ng-container>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-        <button mat-raised-button class="submit" (click)="onSubmit()">
+        <button mat-flat-button class="submit-button" (click)="onSubmit()">
           <span> Submit</span>
         </button>
-        <button mat-raised-button class="skipbtn" (click)="onBack()">
+        <button mat-flat-button class="exit-button" (click)="onBack()">
           Back
         </button>
       </div>

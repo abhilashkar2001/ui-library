@@ -5,6 +5,12 @@
     padding-top: 0;
   }
 }
+.popup-class-approve {
+  mat-dialog-container {
+    padding: 0px;
+    border-radius: 18px;
+  }
+}
 .default-card {
   background: #fffefe 0% 0% no-repeat padding-box !important;
   box-shadow: 0px 3px 15px #00000017 !important;
@@ -53,12 +59,13 @@ mat-expansion-panel.default-expansion-panel {
     font: 16px Poppins;
     font-weight: 600;
     height: 50px;
+    transition: all 0.28s;
     &:hover {
-      background-color: aliceblue !important;
+      background-color: var(--current-theme-background-light) !important;
       mat-panel-description {
-        color: #2196f3 !important;
+        color: var(--current-theme-background) !important;
       }
-      border: 1px solid #2196f3;
+      border: 1px solid var(--current-theme-background);
     }
   }
   .minor {

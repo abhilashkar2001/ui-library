@@ -1,9 +1,9 @@
 @mixin buttonStyle {
   position: relative;
   height: 37px;
-  color: #004c97;
+  color: var(--current-theme-background);
   border-radius: 8px;
-  background: #e2effc 0% 0% no-repeat padding-box;
+  background: var(--current-theme-background-light) 0% 0% no-repeat padding-box;
   font-size: 12px;
   font-family: Poppins, "Medium";
   font-weight: 600;
@@ -39,6 +39,8 @@
 }
 .submit {
   @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
+  background-image: none;
+  background-color: var(--current-theme-background) !important;
   border-radius: 8px !important;
 }
 .resetbtn {

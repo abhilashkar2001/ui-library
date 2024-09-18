@@ -32,9 +32,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private themeChangeService: ThemeChangeService
   ) {
     this.listOfThemeColors = this.themeChangeService.themeColors;
-    console.log("listOfThemeColors------------------", this.listOfThemeColors);
 
-    this.themeChangeService.setCurrentTheme(this.listOfThemeColors[1]);
+    this.themeChangeService.setCurrentTheme(this.listOfThemeColors[0]);
 
     iconService.init();
   }

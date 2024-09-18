@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-others-info",
   templateUrl: "./others-info.component.html",
-  styleUrls: ["./others-info.component.scss"],
+  styleUrls: ["./others-info.component.scss"]
 })
 export class OthersInfoComponent implements OnInit {
   @Input("bgType") bgType; // 'BG Issuance' - Dynamically both names it should be work
@@ -55,7 +55,7 @@ export class OthersInfoComponent implements OnInit {
   buildOtherInfoForm(item) {
     this.otherInfoForm = this.fb.group({
       specifyCounterGuarantee: [
-        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "yes",
+        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "yes"
       ],
       swiftCode: [item.swiftCode ? item.swiftCode : ""],
       bankName: [item.bankName ? item.bankName : ""],
@@ -67,64 +67,64 @@ export class OthersInfoComponent implements OnInit {
               item.contactInfo?.address[0]?.address1
                 ? item.contactInfo?.address[0]?.address1
                 : "",
-              Validators.required,
+              Validators.required
             ],
             address2: [
               item.contactInfo?.address[0]?.address2
                 ? item.contactInfo?.address[0]?.address2
-                : "",
+                : ""
             ],
             countryName: [
               item.contactInfo?.address[0]?.countryName
                 ? item.contactInfo?.address[0]?.countryName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             pincode: [
               item.contactInfo?.address[0]?.pincode
                 ? item.contactInfo?.address[0]?.pincode
                 : "",
-              Validators.required,
+              Validators.required
             ],
             stateName: [
               item.contactInfo?.address[0]?.stateName
                 ? item.contactInfo?.address[0]?.stateName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             cityName: [
               item.contactInfo?.address[0]?.cityName
                 ? item.contactInfo?.address[0]?.cityName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             cityId: [
               item?.contactInfo?.address[0]?.cityId ?? "",
-              [Validators.required],
-            ],
-          }),
-        ]),
+              [Validators.required]
+            ]
+          })
+        ])
       }),
       ...(this.bgType === "BG Issuance"
         ? {
             textualDescription: [
-              item.textualDescription ? item.textualDescription : "",
+              item.textualDescription ? item.textualDescription : ""
             ],
-            introToBank: [item.introToBank ? item.introToBank : ""],
+            introToBank: [item.introToBank ? item.introToBank : ""]
           }
         : {
             counterGuarantee: [
-              item.counterGuarantee ? item.counterGuarantee : "",
+              item.counterGuarantee ? item.counterGuarantee : ""
             ],
             deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
             deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
             margin: [item.margin ? item.margin : ""],
-            feeAccount: [item.feeAccount ? item.feeAccount : ""],
+            feeAccount: [item.feeAccount ? item.feeAccount : ""]
           }),
       branchName: [item.branchName ? item.branchName : ""],
       deliveryInstruction: [
-        item.deliveryInstruction ? item.deliveryInstruction : "",
-      ],
+        item.deliveryInstruction ? item.deliveryInstruction : ""
+      ]
     });
     this.otherInfoForm.valueChanges.subscribe((res) => {
       this.updateParentModel(
@@ -133,8 +133,8 @@ export class OthersInfoComponent implements OnInit {
             ...this.otherInfoForm.value,
             contactInfo: !this.otherInfoForm.value.contactInfo.address[0].cityId
               ? null
-              : this.otherInfoForm.value.contactInfo,
-          },
+              : this.otherInfoForm.value.contactInfo
+          }
         },
         this.checkform()
       );
@@ -162,7 +162,7 @@ export class OthersInfoComponent implements OnInit {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "popup-class-approve"
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
