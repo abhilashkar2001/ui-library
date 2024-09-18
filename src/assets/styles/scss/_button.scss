@@ -3,8 +3,10 @@
   height: 50px;
   top: 7px;
   right: 5px;
-  background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0%
-    no-repeat padding-box;
+  // background: transparent linear-gradient(91deg, #004c97 0%, #051a2d 100%) 0% 0%
+  //   no-repeat padding-box;
+  //  background-image: none;
+  background-color: var(--current-theme-background);
   border-radius: 35px !important;
   color: #ffffff !important;
   text-align: center;

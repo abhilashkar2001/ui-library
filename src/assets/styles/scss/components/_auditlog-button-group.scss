@@ -2,7 +2,9 @@ $btnHeight: 40px;
 
 .approveButton {
   @include action_button(#fff, $gradientBg, $btnHeight);
-  filter: var(--current-theme-filter);
+  // filter: var(--current-theme-filter);
+  background-image: none;
+  background-color: var(--current-theme-background) !important;
 }
 .editButton {
   @include action_button(#000, #fff, $btnHeight);

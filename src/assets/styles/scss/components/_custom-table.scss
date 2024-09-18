@@ -2,7 +2,9 @@
 .addNewButton,
 .uploadButton {
   @include custom_button(white, $gradientBg);
-  filter: var(--current-theme-filter);
+  // filter: var(--current-theme-filter);
+  background-image: none;
+  background-color: var(--current-theme-background) !important;
 }
 // Title: Download Button
 .downloadBtn {
