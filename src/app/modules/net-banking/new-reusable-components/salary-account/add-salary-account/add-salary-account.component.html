@@ -285,7 +285,7 @@
                       </span>
                     </span>
                     <ng-template #showDefault>
-                      <span class="fileUploaded">File Uploaded</span>
+                      <span class="custom-label">File Uploaded</span>
                     </ng-template>
                   </div>
                   <div fxLayoutAlign="center center" class="fileddown">
@@ -339,10 +339,10 @@
       </mat-card-content>
     </ng-container>
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
-      <button mat-raised-button class="next-algn" (click)="saveRecord()">
+      <button mat-raised-button class="submit-button" (click)="saveRecord()">
         Save
       </button>
-      <button mat-raised-button class="back-algn" (click)="goBack()">
+      <button mat-raised-button class="exit-button" (click)="goBack()">
         Back
       </button>
     </div>

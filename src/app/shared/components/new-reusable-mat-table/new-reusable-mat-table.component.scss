@@ -74,8 +74,8 @@
   font-size: 13px !important;
 }
 .menu_btn:hover {
-  background: #d8e3f0 0% 0% no-repeat padding-box !important;
-  color: #004b9c;
+  background: var(--current-theme-background-light) 0% 0% no-repeat padding-box !important;
+  color: var(--current-theme-background);
 }
 
 .approved_container {

@@ -203,8 +203,7 @@
   .chooseFile {
     padding: 10px 10px;
     font-family: Poppins;
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    background: var(--current-theme-background);
     position: absolute;
     color: #fff;
     border-radius: 8px;
@@ -232,16 +231,17 @@
 
 .plusdiv mat-icon {
   width: 31px !important;
-  background-color: #e9ecf5;
+  background-color: var(--current-theme-background-light);
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
+  margin-top: 2px; // 5px;
   margin-left: -11px;
   height: 50px;
+  color: var(--current-theme-background);
   &.doc_upload_icon {
     margin-left: -2px !important;
   }

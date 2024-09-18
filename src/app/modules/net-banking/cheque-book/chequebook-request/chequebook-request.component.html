@@ -1,7 +1,7 @@
 <div class="chequebook_request_container">
   <form [formGroup]="chequebookRequestForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
-      <mat-label class="ml-20">Account No</mat-label>
+      <mat-label class="ml-20 custom-label">Account No</mat-label>
       <app-searchable-select
         [items]="accountNumberList"
         bindValueKey="accountNo"
@@ -36,7 +36,9 @@
         class="radio-btn"
       >
         <div fxLayout="column" fxLayoutGap="20">
-          <mat-label class="mb-8">{{ "Delivery Location" }}</mat-label>
+          <mat-label class="mb-8 custom-label">{{
+            "Delivery Location"
+          }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
             [formControl]="chequebookRequestForm.get('deliveryLocation')"
@@ -141,13 +143,13 @@
         </p>
       </div>
       <div fxLayoutGap="20" class="btn-algn">
-        <button mat-flat-button class="stroked_btn" (click)="goBack()">
+        <button mat-raised-button class="exit-button" (click)="goBack()">
           {{ "Cancel" }}
         </button>
         <button
-          mat-flat-button
+          mat-raised-button
           (click)="saveChequeDetails()"
-          class="filled_btn"
+          class="submit-button"
         >
           {{ "Proceed" }}
         </button>

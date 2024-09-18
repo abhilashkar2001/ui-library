@@ -68,5 +68,39 @@ code {
   padding-left: 0.5em;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  opacity: 0.7;
+  opacity: 1;
+}
+//custom toggle button
+.egret-navy .mat-slide-toggle {
+  &.mat-checked:not(.mat-disabled) {
+    .mat-slide-toggle-bar {
+      background-color: var(--current-theme-background) !important;
+      cursor: default;
+    }
+    .mat-slide-toggle-thumb {
+      background-color: white;
+    }
+  }
+  .mat-slide-toggle-bar {
+    width: 32px;
+    height: 17px;
+  }
+  &.mat-checked .mat-slide-toggle-bar {
+    background-color: var(--current-theme-background) !important;
+    .mat-slide-toggle-thumb {
+      background-color: white;
+    }
+  }
+  .mat-slide-toggle-thumb {
+    font-size: 10px;
+    font-weight: 10px;
+    width: 11px;
+    height: 11px;
+    margin-top: 5.9px;
+    left: 2.4px;
+    position: relative;
+  }
+}
+.mat-slide-toggle.mat-checked .mat-ripple-element {
+  background-color: var(--current-theme-background-light) !important;
 }

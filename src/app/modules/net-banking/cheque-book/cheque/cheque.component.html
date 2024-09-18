@@ -25,9 +25,12 @@
               [svgIcon]="
                 selected == item.screenName ? item.selectedIcon : item.icon
               "
+              class="current_theme_filter"
             ></mat-icon>
           </button>
-          {{ item.screenName }}
+          <span class="item_name">
+            {{ item.screenName }}
+          </span>
         </div>
       </div>
     </div>
