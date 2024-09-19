@@ -44,16 +44,14 @@
 }
 .loading_submit {
   height: 50px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
-    no-repeat padding-box;
+  background: var(--current-theme-background) 0% 0% no-repeat padding-box !important;
   color: #ffffff !important;
   border-radius: 25px !important;
   margin-top: 8px !important;
 }
 .submit_button {
   height: 50px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
-    no-repeat padding-box;
+  background: var(--current-theme-background) 0% 0% no-repeat padding-box !important;
   color: #ffffff !important;
 }
 .back_button {
@@ -68,7 +66,7 @@
   width: 158px;
   height: 43px;
   border-radius: 8px;
-  background-color: #00205c !important;
+  background: var(--current-theme-background) !important;
   color: white !important;
   font-family: "Raleway", sans-serif;
 
