@@ -41,7 +41,7 @@
     line-height: 25px;
     font-family: poppins;
     letter-spacing: 0px;
-    color: #004a9a;
+    color: var(--current-theme-background);
     cursor: pointer;
   }
 
@@ -73,8 +73,7 @@
     height: 45px;
     color: #ffffff;
     border-radius: 8px;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    background: var(--current-theme-background);
     font-size: 14px;
     font-family: Poppins, "Medium";
     font-weight: 600;
@@ -102,8 +101,7 @@
   }
 
   .submitButton {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
-      0% no-repeat padding-box;
+    background: var(--current-theme-background) !important;
     color: #fff !important;
     border-radius: 20px !important;
     width: 154px !important;

@@ -191,10 +191,10 @@
 </mat-card>
 
 <div fxLayout="row wrap" fxLayout.lt-sm="column">
-  <div fxFlex="100" fxLayoutAlign="end center">
+  <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="10">
     <div>
       <button
-        class="exitButton"
+        class="exit-button"
         type="button"
         (click)="editRecord()"
         *ngIf="isEdit && !saveTheEdit"
@@ -203,10 +203,12 @@
         {{ "Edit" }}
       </button>
     </div>
-    <button-loading (click)="onSubmit()"> Save</button-loading>&nbsp;&nbsp;
+    <button-loading (click)="onSubmit()" [btnClass]="'submit-button'">
+      Save</button-loading
+    >
     <div>
       <button
-        class="exitButton"
+        class="exit-button"
         type="button"
         (click)="goBack()"
         mat-raised-button

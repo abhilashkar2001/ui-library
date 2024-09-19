@@ -49,7 +49,7 @@ export class BillProcessingSummaryComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     console.log("bill processing");
@@ -91,7 +91,7 @@ export class BillProcessingSummaryComponent implements OnInit {
 
   getDataByPage(event) {
     console.log(event);
-    
+
     this.getSummaryUrl().then((_) => {
       this.page = event.page;
       this.pageSize = event.size;
@@ -122,7 +122,7 @@ export class BillProcessingSummaryComponent implements OnInit {
    */
   openPopUp(event) {
     console.log(event);
-    
+
     const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
@@ -150,7 +150,7 @@ export class BillProcessingSummaryComponent implements OnInit {
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
       width: "50%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "popup-class-approve",
       data: this.summaryDetails,
     });
     dialogRef.afterClosed().subscribe((res) => {
