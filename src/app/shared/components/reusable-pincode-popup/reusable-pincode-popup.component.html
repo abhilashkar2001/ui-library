@@ -1,6 +1,8 @@
 <div class="search_pincode_container">
   <div fxLayout="row" class="w-100" fxLayoutAlign="space-between center">
-    <h2>Search</h2>
+    <div class="sub-head">
+      <h2>Search</h2>
+    </div>
     <div>
       <mat-icon (click)="close()">close</mat-icon>
     </div>
@@ -103,7 +105,11 @@
         <span *ngIf="dataSource">Search Results</span>
       </div>
       <div></div>
-      <button class="saveButton" mat-raised-button (click)="fetchResultArray()">
+      <button
+        class="submit-button"
+        mat-raised-button
+        (click)="fetchResultArray()"
+      >
         Fetch
       </button>
     </div>

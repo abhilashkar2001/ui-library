@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { DOCUMENT } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -61,7 +63,10 @@ export class ThemeChangeService {
   // This exposed observable is for getting current theme data across the application
   getCurrentTheme$ = this.currentThemeSubject.asObservable();
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private http: HttpClient
+  ) {}
 
   // This method is to set/update the current theme
   setCurrentTheme(data: any) {
@@ -120,6 +125,25 @@ export class ThemeChangeService {
         "--current-theme-border-color",
         borderColor
       );
+  }
+  saveCurrentTheme(payload: {
+    userId: number;
+    themeInfoId?: number;
+    language: string;
+    color: string;
+    id?: number;
+  }) {
+    return this.http.post(
+      `${environment.microServiceURL}/screen/saveUserThemeLang`,
+      payload
+    );
+  }
+
+  fetchCurrentTheme(userId: number) {
+    console.log(userId);
+    return this.http.get(
+      `${environment.microServiceURL}/screen/fetchUserThemeLang?userId=2456`
+    );
   }
 }
 
