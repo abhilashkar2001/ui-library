@@ -291,7 +291,9 @@ export class CreateAccountLandingPageComponent {
       delete custResp[i].signatureInfo;
       if (!custResp[i]?.customerStagingId) {
         custResp[i].contact.contactId = null;
-        custResp[i].contact.address[i].addressId = null;
+        if (custResp[i]?.contact?.address?.[i]?.addressId) {
+          custResp[i].contact.address[i].addressId = null;
+        }
         delete custResp[i].customerStagingId;
       }
       custResp[0].biometricId = [this.sessionService.getItem("biometricId")];
