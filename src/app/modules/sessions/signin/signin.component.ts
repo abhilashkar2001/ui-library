@@ -102,7 +102,7 @@ export class SigninComponent implements OnInit {
 
   fetchThemeAndLanguange(userId: number) {
     return new Promise((resolve, reject) => {
-      this.themingService.fetchCurrentTheme(userId).subscribe(
+      this.themingService.fetchCurrentTheme(2456).subscribe(
         (res: IcHttpResponseModel<any>) => {
           resolve(res);
         },
