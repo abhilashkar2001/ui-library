@@ -142,7 +142,7 @@ export class ThemeChangeService {
   fetchCurrentTheme(userId: number) {
     console.log(userId);
     return this.http.get(
-      `${environment.microServiceURL}/screen/fetchUserThemeLang?userId=2456`
+      `${environment.microServiceURL}/screen/fetchUserThemeLang?userId=${userId}`
     );
   }
 }
