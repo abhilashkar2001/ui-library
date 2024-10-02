@@ -401,7 +401,8 @@ export class LoanFlowComponent implements OnInit {
    * @returns payload of customerInfo.
    */
   modelFactoryForCustomer(customerInfo, docIds) {
-    let custResp: any = [...customerInfo];
+    let custResp: any =
+      customerInfo?.length > 1 ? customerInfo : [...customerInfo];
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
