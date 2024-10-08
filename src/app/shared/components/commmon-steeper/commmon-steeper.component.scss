@@ -260,26 +260,27 @@
   align-items: center;
 }
 
+.custom_steppper {
+  background-color: #f2f7fd !important;
+  border-radius: 24px 24px;
+}
+.scrollStep__prodInfo,
+.custom_steppper {
+  padding-left: 5% !important;
+}
+
 .custom_backGround {
   padding-top: 5%;
   box-sizing: content-box !important;
-  .custom_steppper {
-    background-color: #e6f2ff !important;
-    border-radius: 24px 24px;
-  }
-  .scrollStep__prodInfo,
-  .custom_steppper {
-    padding-left: 5% !important;
-  }
 
   ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon {
-    background-color: #ffffff !important;
+    background-color: #f2f7fd !important;
     color: #004c97 !important;
   }
   ::ng-deep
     .mat-step-header.mat-vertical-stepper-header
     .mat-step-icon-selected {
-    background: #ffffff !important;
+    background: #f2f7fd !important;
   }
 
   ::ng-deep .mat-vertical-content-container {
