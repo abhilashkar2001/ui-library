@@ -42,7 +42,7 @@ export class DigitalSignComponent implements OnInit {
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
   signatureId: any;
-  originationId: number;
+  customerId: number;
 
   constructor(
     private dialog: MatDialog,
@@ -51,8 +51,8 @@ export class DigitalSignComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.originationId = this.sessionStorageService.getOriginationId();
-    if (this.originationId) this.fetchSign();
+    this.customerId = this.sessionStorageService.getItem("customerStagingId");
+    if (this.customerId) this.fetchSign();
   }
 
   openDigitalSignDialog(check: string) {
@@ -77,19 +77,25 @@ export class DigitalSignComponent implements OnInit {
   }
 
   fetchSign() {
-    this.branchService.fetchSignImage(this.originationId).subscribe((res) => {
-      this.image = res?.data?.signatureInfo?.fileUrl;
-      this.signatureId = res?.data?.signatureInfo?.signatureId;
+    this.branchService.fetchCustomerSign(this.customerId).subscribe((res) => {
+      if (
+        (res?.statusCode == 200 || res?.statusCode == 201) &&
+        res?.data?.length
+      ) {
+        this.image = res?.data[0]?.fileUrl;
+        this.signatureId = res?.data[0]?.signatureId;
+      }
     });
   }
 
   onSubmit() {
     const signPayload = {
-      originationId: this.originationId,
-      signatureId: this.signatureId,
+      customerId: this.customerId,
+      signatureIds: [this.signatureId],
     };
-    this.branchService.saveDigitalSignDetails(signPayload).subscribe((res) => {
-      if (res?.statusCode == 200 && res?.data) this.onCustomSubmit.emit();
+    this.branchService.saveCustomerSign(signPayload).subscribe((res) => {
+      if ((res?.statusCode == 200 || res?.statusCode == 201) && res?.data)
+        this.onCustomSubmit.emit();
     });
   }
 }
