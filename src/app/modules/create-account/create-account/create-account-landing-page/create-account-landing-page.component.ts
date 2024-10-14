@@ -329,7 +329,7 @@ export class CreateAccountLandingPageComponent {
         );
         sessionStorage.setItem(
           "customerStagingId",
-          JSON.stringify(resp?.data?.customerInfo[0]?.customerStagingId)
+          JSON.stringify(resp?.data?.customerInfo?.[0]?.customerStagingId)
         );
         this.originationModel = resp.data?.originationModel;
         //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
@@ -414,7 +414,7 @@ export class CreateAccountLandingPageComponent {
   }
 
   factory() {
-    this.currentStep = this.screenList[this.selectedStep].screenName;
+    this.currentStep = this.screenList?.[this.selectedStep]?.screenName;
     this.showComponent(this.currentStep);
   }
 
@@ -428,7 +428,7 @@ export class CreateAccountLandingPageComponent {
       sessionStorage.setItem("accountstep", String(this.selectedStep));
       sessionStorage.setItem(
         "currentScreenCode",
-        this.screenList[num].screenCode
+        this.screenList?.[num]?.screenCode
       );
       this.factory();
     }
@@ -441,7 +441,7 @@ export class CreateAccountLandingPageComponent {
     sessionStorage.setItem("accountstep", tabDetails.selectedIndex);
     sessionStorage.setItem(
       "currentScreenCode",
-      this.screenList[this.selectedStep].screenCode
+      this.screenList?.[this.selectedStep]?.screenCode
     );
     if (lastStep != tabDetails.selectedIndex)
       this.showComponent(this.currentStep);
@@ -562,7 +562,7 @@ Best regards, `
 
   goBack() {
     const num = this.selectedStep - 1;
-    this.currentStep = this.screenList[num].screenName;
+    this.currentStep = this.screenList?.[num]?.screenName;
     setTimeout(() => {
       this.selectedStep = num;
       this.factory();
