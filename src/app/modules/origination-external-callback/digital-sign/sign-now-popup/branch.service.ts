@@ -66,6 +66,17 @@ export class BranchService {
   sendEditsign(signid) {
     this.sendSign.next(signid);
   }
+  saveCustomerSign(payload: any): Observable<any> {
+    return this.httpClient.post(
+      `${MICROSERVICE_URL}/signature/saveCustStageSignature`,
+      payload
+    );
+  }
+  fetchCustomerSign(id) {
+    return this.httpClient.get<any>(
+      `${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${id}`
+    );
+  }
 }
 
 //  const formData: FormData = new FormData();
