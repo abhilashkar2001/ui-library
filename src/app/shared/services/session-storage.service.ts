@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { SessionStorageEnum } from "app/enum/session-storage.enum";
 import { ChecklistRouteObjModel } from "../models/checklist-model";
+import { LoanAccounts } from "../models/loan-account.model";
 
 export const RETURN_TO_SUMMARY = "returnToSummary";
 
@@ -11,7 +12,7 @@ export class SessionStorageService {
   //WINDOW SESSION STORAGE
   private session = window.sessionStorage;
 
-  constructor() {}
+  constructor() { }
 
   /**
    * stringfy the item and stored
@@ -125,4 +126,22 @@ export class SessionStorageService {
   public setProcessCycleCode(processCycleCode: string): void {
     this.setItem(SessionStorageEnum.PROCESS_CYCLE_CODE, processCycleCode);
   }
+
+  /**
+  * fetch the list of card stored in session storeage
+  * @returns
+  */
+  public getLoanInfo(): LoanAccounts {
+    const loanInfo = this.getItem(SessionStorageEnum.LOAN_INFO);
+    return loanInfo;
+  }
+
+  /**
+ * set the loan info in session storage
+ * @param loanInfo
+ */
+  public setLoanInfo(loanInfo): void {
+    this.setItem(SessionStorageEnum.LOAN_INFO, loanInfo);
+  }
+
 }

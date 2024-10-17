@@ -96,6 +96,8 @@ import { DirectorDetailsComponent } from "./director-details/director-details.co
 import { ViewExcelDocComponent } from "./view-excel-doc/view-excel-doc.component";
 import { DigitalSignComponent } from "./digital-sign/digital-sign.component";
 import { ScanComponent } from "./scan/scan.component";
+import { TabLinkComponent } from "../widgets/tab-link/tab-link.component";
+import { TransactionCardComponent } from "../widgets/transaction-card/transaction-card.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -167,6 +169,8 @@ const components = [
   ViewExcelDocComponent,
   DigitalSignComponent,
   ScanComponent,
+  TransactionCardComponent,
+  TabLinkComponent,
 ];
 
 @NgModule({
@@ -197,4 +201,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }

@@ -154,6 +154,7 @@ export class NETBANKING {
     {
       label: "Loan",
       icon: "/assets/images/net-banking-nav-bar/Loan_Icon.svg",
+      link: "/user/loan/dashboard"
     },
     {
       label: "Summary",

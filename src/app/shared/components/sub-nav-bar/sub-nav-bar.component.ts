@@ -9,11 +9,15 @@ import { NETBANKING } from "app/modules/net-banking/modules/dashboard/net-bankin
 })
 export class SubNavBarComponent implements OnInit {
   navigationItems = NETBANKING.navigationItems;
+
+
+
   activeItem = "";
 
-  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private route: Router, private cdr: ChangeDetectorRef) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   navigateByUrl(url) {
     if (url?.link) {
