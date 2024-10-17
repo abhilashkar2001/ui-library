@@ -24,6 +24,11 @@ const routes: Routes = [
         loadChildren: () =>
           import("./modules/trade/trade.module").then((m) => m.TradeModule),
       },
+      {
+        path: "loan",
+        loadChildren: () =>
+          import("./modules/loan/loan.module").then((m) => m.LoanModule),
+      }
     ],
   },
 ];
@@ -32,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NetBankingRoutingModule {}
+export class NetBankingRoutingModule { }

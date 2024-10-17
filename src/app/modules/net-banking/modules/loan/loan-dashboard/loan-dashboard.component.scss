@@ -1,0 +1,160 @@
+.loan-card {
+  background: #fffefe 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784) !important;
+  border-radius: 12px !important;
+  opacity: 1 !important;
+  margin: 0.5rem !important;
+}
+
+.card_container {
+  border-radius: 12px;
+  height: 115px;
+  padding: 18px 25px;
+  background: #f3f3f3;
+  background: url("/assets/images/background-mask.svg");
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784);
+  border: 3px solid #ffffff;
+  opacity: 1;
+
+  .card_account_type {
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+  }
+
+  .masked {
+    width: fit-content;
+    background: #e8fff9 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 1px 10px;
+    .masked_text {
+      text-align: center;
+      font: normal normal normal 10px/12px "Poppins", sans-serif;
+      letter-spacing: 0px;
+      color: #008461;
+    }
+    mat-icon {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      top: 2px;
+      position: relative !important;
+      transition: transform 0.4s ease;
+      &:active {
+        transform: scale(1.5);
+      }
+    }
+  }
+}
+
+@mixin btn {
+  height: 32px !important;
+  line-height: 0px;
+  border-radius: 20px !important;
+  width: 95px;
+  font-size: 10px;
+}
+.add_btn {
+  @include btn;
+  background: var(--current-theme-background) 0% 0% no-repeat padding-box;
+  color: #ffffff;
+}
+.transfer_btn {
+  @include btn;
+  background: #f5f7fb 0% 0% no-repeat padding-box;
+  border: 1px solid var(--current-theme-border-color);
+  color: #005bff;
+}
+.label {
+  text-align: left;
+  font: normal normal 400 12px/7px Poppins, sans-serif;
+  letter-spacing: -0.24px;
+  color: #606c8d;
+  padding-top: 8px;
+}
+
+.value {
+  text-align: left;
+  font: normal normal 600 14px/3px Poppins, sans-serif;
+  letter-spacing: 0px;
+  color: #377dff;
+}
+
+.diffValue {
+  text-align: left;
+  font: normal normal 600 14px/3px Poppins, sans-serif;
+  letter-spacing: 0px;
+  color: #00205c;
+}
+
+.flex-item {
+  box-sizing: border-box; /* Optional: Include padding and border in the width */
+  margin: 0.5% 1%;
+}
+
+.dashboard_card_title {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0px;
+  color: #00205c;
+  opacity: 1;
+  font-weight: 700;
+}
+
+.toogle-div {
+  background: #f5f7fb;
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: #707070;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    margin-right: 7px;
+  }
+}
+
+.scroll_bar {
+  height: 100vh;
+  padding: 7px;
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.mtcd {
+  border-radius: 12px;
+  background: #fafcff 0% 0% no-repeat padding-box;
+}
+
+.bill_body {
+  flex-grow: 1;
+}
+
+.createdByImg {
+  border-radius: 12px;
+  min-width: 60px;
+  width: 60px;
+  height: 49px;
+  box-sizing: border-box;
+  margin: 2% 2%;
+}
+
+.bill_info {
+  margin: 2%;
+}
+.bill_type {
+  font-weight: bold;
+  word-break: break-all;
+  color: #00205c;
+}
+.bill_number {
+  color: #a8a8a8;
+  font-size: 12px;
+  word-break: break-all;
+}

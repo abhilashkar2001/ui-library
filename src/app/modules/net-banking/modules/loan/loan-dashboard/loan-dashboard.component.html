@@ -1,0 +1,93 @@
+<div fxFlex="100" fxLayout="row" fxLayoutGap="1%">
+  <div fxFlex="74" fxLayout="column">
+    <mat-card fxLayout="column" class="loan-card">
+      <div fxLayout="row" class="m-8" fxLayoutAlign="space-between center">
+        <h1 class="dashboard_card_title">{{ "My Loan" }}</h1>
+        <div class="toogle-div">
+          <span>{{ "Statistics" }}</span>
+          <mat-slide-toggle> </mat-slide-toggle>
+        </div>
+      </div>
+      <!-- Overview Account Starts Here -->
+      <div fxLayout="column">
+        <div class="flex-item" *ngFor="let loan of loanDetails; let i = index">
+          <div class="card_container" fxLayout="column" fxFlex="100">
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              fxFlex="100"
+            >
+              <span fxLayoutAlign="space-between center">
+                <div fxFlex="20" fxLayoutAlign="center center">
+                  <img
+                    src="assets/images/bank-profile-logo.svg"
+                    class="current_theme_filter"
+                  />
+                </div>
+                <div fxFlex="75" fxLayout="column">
+                  <div class="card_account_type">
+                    {{ loan?.accountType }}
+                  </div>
+                  <div class="masked" fxFlexAlign="center center">
+                    <span class="masked_text">{{
+                      loan?.cbsAccountNumber
+                    }}</span>
+                    &nbsp;
+                    <mat-icon
+                      svgIcon="copy_icon"
+                      [cdkCopyToClipboard]="loan.cbsAccountNumber"
+                      class="btn_icon"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </span>
+              <div fxLayout="row">
+                <button
+                  mat-raised-button
+                  class="transfer_btn"
+                  (click)="route('/loan/dashboard/summary')"
+                >
+                  {{ "View Summary" }}
+                </button>
+                &nbsp;
+                <button
+                  mat-raised-button
+                  class="add_btn"
+                  (click)="route('/loan/loan-service/loan-repayment')"
+                >
+                  {{ "Pay Now" }}
+                </button>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div
+                fxLayout="column"
+                *ngFor="let item of loanValues; let i = index"
+              >
+                <p class="label">{{ item?.label }}</p>
+                <span
+                  [ngClass]="
+                    item?.label == 'Maturity Date' ||
+                    item?.label == 'Current rate of interest'
+                      ? 'diffValue'
+                      : 'value'
+                  "
+                >
+                  {{ item?.value }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Overview Account Ends Here -->
+    </mat-card>
+
+    <!-- Transcation tab starts here -->
+    <mat-card class="loan-card">
+      <app-transaction-card
+        [transactionList]="transactionCard"
+      ></app-transaction-card
+    ></mat-card>
+  </div>
+</div>

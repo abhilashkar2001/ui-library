@@ -12,6 +12,8 @@ import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";
 import { TranslateService } from "@ngx-translate/core";
 import { InternetBankingService } from "app/shared/services/internet-banking.service";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { LoanAccounts } from "app/shared/models/loan-account.model";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -32,6 +34,7 @@ export class NetBankingDashboardComponent implements OnInit {
   genericScreenName: any = "Pending for approval";
   currentIndex = 1;
   transferArray = NETBANKING.transferType[0].types;
+  loanDetails: LoanAccounts;
   columns = [
     {
       columnDef: "version",
@@ -64,7 +67,8 @@ export class NetBankingDashboardComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private dialog: MatDialog,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public loanService: LoanService
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(
@@ -96,6 +100,19 @@ export class NetBankingDashboardComponent implements OnInit {
     });
     this.cdr.detectChanges();
   }
+
+  fetchLoanDetails(customerNo: string) {
+    this.loanService
+      .fetchLoanDetails(customerNo)
+      .subscribe((res: IcHttpResponseModel<LoanAccounts>) => {
+        if (res?.statusCode == 200 && res?.data) {
+          this.loanDetails = res?.data;
+          console.log(this.loanDetails, "checkloandetailss");
+          // this.sessionStorageService.setLoanInfo(this.loanDetails);
+        }
+      });
+  }
+
 
   /**
    * dashboard api to show the cards with the balance ant type

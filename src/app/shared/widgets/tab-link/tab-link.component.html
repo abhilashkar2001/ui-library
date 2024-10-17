@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayoutGap="20px">
+  <ng-contaier *ngFor="let tab of tabs; let i = index" (click)="navigate(tab)">
+    <div
+      class="label-text"
+      [ngClass]="selectedTab?.screenName == tab?.screenName && 'label-selected'"
+    >
+      {{ tab?.screenName | translate }}
+    </div>
+    <div
+      [ngClass]="
+        selectedTab?.screenName == tab?.screenName ? 'horizontal-line' : ''
+      "
+      class="mt-8"
+    ></div>
+  </ng-contaier>
+</div>
