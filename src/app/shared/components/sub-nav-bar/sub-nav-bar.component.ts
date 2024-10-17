@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { NETBANKING } from "app/modules/net-banking/net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.constant";
+import { NETBANKING } from "app/modules/net-banking/modules/dashboard/net-banking-dashboard/net-banking-dashboard.constant";
 
 @Component({
   selector: "app-sub-nav-bar",

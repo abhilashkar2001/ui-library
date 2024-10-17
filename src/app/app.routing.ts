@@ -44,23 +44,11 @@ export const rootRouterConfig: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: "dashboard",
+        path: "",
         loadChildren: () =>
           import("./modules/net-banking/net-banking.module").then(
             (m) => m.NetBankingModule
           ),
-      },
-      {
-        path: "net-banking",
-        loadChildren: () =>
-          import("./modules/net-banking/net-banking.module").then(
-            (m) => m.NetBankingModule
-          ),
-        data: {
-          preload: false,
-          title: "Net Banking",
-          breadcrumb: "net-banking",
-        },
       },
     ],
   },
