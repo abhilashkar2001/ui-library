@@ -45,7 +45,7 @@ export class SingleFundTransferComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
@@ -65,9 +65,9 @@ export class SingleFundTransferComponent implements OnInit {
     this.fetchBenificiary();
     this.fetchGeneric();
     setTimeout(() => {
-      let lang=this.tokenStorageService.getLanguage() ?? 'en';
-       this.translate.use(lang)
-     }, 300);
+      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      this.translate.use(lang);
+    }, 300);
   }
 
   buildForm() {
@@ -135,12 +135,12 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   goToBeneificiary() {
-    this.router.navigate(["user/dashboard/trade/add-edit-beneficiary"]);
+    this.router.navigate(["user/trade/beneficiary/add-edit-beneficiary"]);
   }
 
   cancel() {
     this.router.navigate([
-      "user/net-banking/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary",
     ]);
   }
 

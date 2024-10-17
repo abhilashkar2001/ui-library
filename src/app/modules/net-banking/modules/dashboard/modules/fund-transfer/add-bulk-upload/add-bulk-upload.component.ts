@@ -210,7 +210,7 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/user/dashboard/bulk-upload"]);
+    this.router.navigate(["/user/dashboard/fund-transfer/bulk-upload"]);
   }
 
   processTransaction(event) {

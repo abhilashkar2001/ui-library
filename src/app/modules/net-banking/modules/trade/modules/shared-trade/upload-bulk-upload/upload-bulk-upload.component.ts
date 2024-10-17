@@ -73,7 +73,7 @@ export class UploadBulkUploadComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/user/dashboard/bulk-upload"]);
+    this.router.navigate(["/user/dashboard/fund-transfer/bulk-upload"]);
   }
   droppedFiles(evt) {
     this.file = evt.target?.files[0];

@@ -45,18 +45,18 @@ export class NETBANKING {
         {
           label: "Bulk Upload",
           image: "/assets/images/bulk-upload.svg",
-          route: "user/dashboard/bulk-upload",
+          route: "user/dashboard/fund-transfer/bulk-upload",
         },
         {
           label: "Single Transfer",
           image: "/assets/images/fund-transfer.svg",
-          route: "user/net-banking/fund-transfer/fund-transfer-summary",
+          route: "user/dashboard/fund-transfer/fund-transfer-summary",
           type: "SINGLE",
         },
         {
           label: "Multi Transfer",
           image: "/assets/images/issue-draft.svg",
-          route: "user/net-banking/fund-transfer/fund-transfer-summary",
+          route: "user/dashboard/fund-transfer/fund-transfer-summary",
           type: "MULTI",
         },
       ],

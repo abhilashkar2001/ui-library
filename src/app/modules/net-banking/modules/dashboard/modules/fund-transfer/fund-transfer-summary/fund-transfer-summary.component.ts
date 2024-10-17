@@ -75,20 +75,20 @@ export class FundTransferSummaryComponent implements OnInit {
 
   editRecord(element) {
     if (this.uploadType == "SINGLE")
-      this.router.navigate(["user/net-banking/fund-transfer/single"]);
+      this.router.navigate(["user/dashboard/fund-transfer/single"]);
   }
 
   openPopUp(event) {
     const id = event.element;
     if (id === "addNew") {
       if (this.uploadType == "SINGLE")
-        this.router.navigate(["user/net-banking/fund-transfer/single"]);
-      else this.router.navigate(["user/net-banking/fund-transfer/multi"]);
+        this.router.navigate(["user/dashboard/fund-transfer/single"]);
+      else this.router.navigate(["user/dashboard/fund-transfer/multi"]);
     }
   }
 
   goToTransfer() {
-    this.router.navigate(["user/net-banking/fund-transfer/single"]);
+    this.router.navigate(["user/dashboard/fund-transfer/single"]);
   }
 
   CustomGoBack(data) {

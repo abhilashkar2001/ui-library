@@ -181,7 +181,7 @@ export class MultiFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/net-banking/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary",
     ]);
   }
 

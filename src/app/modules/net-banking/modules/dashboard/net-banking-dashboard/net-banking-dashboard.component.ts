@@ -167,7 +167,10 @@ export class NetBankingDashboardComponent implements OnInit {
   }
   viewPendingRecord(element) {
     console.log(element, "...........");
-    this.router.navigate(["/user/dashboard/bulk-upload", element?.id]);
+    this.router.navigate([
+      "/user/dashboard/fund-transfer/bulk-upload",
+      element?.id,
+    ]);
   }
   getActiveTransferType(transfer) {
     this.currentIndex = transfer.sequence;
@@ -229,7 +232,7 @@ export class NetBankingDashboardComponent implements OnInit {
             sessionStorage.setItem("uploadType", transfer.type);
           }
         } else {
-          this.router.navigate(["user/net-banking/fund-transfer/credit-card"]);
+          this.router.navigate(["user/dashboard/fund-transfer/credit-card"]);
         }
       });
       return;

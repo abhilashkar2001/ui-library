@@ -15,6 +15,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { AddBulkUploadComponent } from "./add-bulk-upload/add-bulk-upload.component";
 import { BulkUploadComponent } from "./bulk-upload/bulk-upload.component";
 import { PendingForApprovalComponent } from "./pending-for-approval/pending-for-approval.component";
+import { SharedTradeModule } from "../../../trade/modules/shared-trade/shared-trade.module";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PendingForApprovalComponent } from "./pending-for-approval/pending-for-
     FundTransferRoutingModule,
     FormsModule,
     TranslateModule,
+    SharedTradeModule,
   ],
 })
 export class FundTransferModule {}

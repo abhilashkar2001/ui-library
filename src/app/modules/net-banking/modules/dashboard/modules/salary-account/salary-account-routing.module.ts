@@ -5,6 +5,12 @@ import { SalaryAccountComponent } from "./salary-account/salary-account.componen
 
 const routes: Routes = [
   {
+    path: "",
+    redirectTo: "salary-account",
+    pathMatch: "full",
+  },
+
+  {
     path: "add-salary",
     component: AddSalaryAccountComponent,
   },

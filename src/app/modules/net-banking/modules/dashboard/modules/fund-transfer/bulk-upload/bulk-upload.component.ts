@@ -47,7 +47,7 @@ export class BulkUploadComponent implements OnInit {
   }
 
   navigateToBulkUpload(id) {
-    this.route.navigate(["user/dashboard/bulk-upload", id]);
+    this.route.navigate(["user/dashboard/fund-transfer/bulk-upload", id]);
   }
 
   customEditForm(event) {
