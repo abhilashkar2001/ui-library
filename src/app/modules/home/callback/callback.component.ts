@@ -79,6 +79,8 @@ export class CallbackComponent implements OnInit {
         this.router.navigate([`/origination/otp`], {
           queryParams: { type: `${this.getParameterByName("screen")}` },
         });
+      } else if (this.getParameterByName("route") == "tracking") {
+        this.router.navigate([`${this.getParameterByName("route")}`]);
       } else {
         sessionStorage.setItem(
           "originationId",
