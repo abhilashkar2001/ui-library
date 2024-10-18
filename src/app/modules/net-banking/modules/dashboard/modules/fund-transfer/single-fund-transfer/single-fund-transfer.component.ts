@@ -16,7 +16,7 @@ import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: "app-single-fund-transfer",
   templateUrl: "./single-fund-transfer.component.html",
-  styleUrls: ["./single-fund-transfer.component.scss"],
+  styleUrls: ["./single-fund-transfer.component.scss"]
 })
 export class SingleFundTransferComponent implements OnInit {
   fundTransferForm: FormGroup;
@@ -36,6 +36,7 @@ export class SingleFundTransferComponent implements OnInit {
   dialogRef1: MatDialogRef<AllInOnePopupComponent>;
   customerInfo: any;
   beneficiaryName: any;
+  corporateId: any;
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
@@ -56,6 +57,7 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.buildForm();
     this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
@@ -87,17 +89,21 @@ export class SingleFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""],
+      remarks: [""]
     });
   }
 
   fetchBenificiary() {
-    this.fundTransferService.fetchBenificiary().subscribe((resp: any) => {
-      if (resp?.statusCode == 200) {
-        let list = resp?.data;
-        this.transferTo = list?.filter((item) => item?.name && item?.accountNo);
-      }
-    });
+    this.fundTransferService
+      .fetchBenificiary(this.corporateId)
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          let list = resp?.data;
+          this.transferTo = list?.filter(
+            (item) => item?.name && item?.accountNo
+          );
+        }
+      });
   }
 
   fetchGeneric() {
@@ -140,7 +146,7 @@ export class SingleFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary"
     ]);
   }
 
@@ -163,12 +169,12 @@ export class SingleFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data,
+              reffNo: resp?.data
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop",
+            backdropClass: "bdrop"
           });
           this.dialogRef.afterClosed().subscribe((result) => {
             console.log(result);
@@ -195,7 +201,7 @@ export class SingleFundTransferComponent implements OnInit {
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     this.dialogRef1.afterClosed().subscribe((result) => {
       if (result == "verified") {
@@ -206,7 +212,7 @@ export class SingleFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         this.dialogRef.afterClosed().subscribe((result) => {
           if (result == "Failed") {

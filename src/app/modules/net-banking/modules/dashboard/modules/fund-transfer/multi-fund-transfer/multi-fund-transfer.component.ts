@@ -16,7 +16,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 @Component({
   selector: "app-multi-fund-transfer",
   templateUrl: "./multi-fund-transfer.component.html",
-  styleUrls: ["./multi-fund-transfer.component.scss"],
+  styleUrls: ["./multi-fund-transfer.component.scss"]
 })
 export class MultiFundTransferComponent implements OnInit {
   multiTransferForm: FormGroup;
@@ -41,6 +41,7 @@ export class MultiFundTransferComponent implements OnInit {
   customerInfo: any;
   editedAmountIndex: number;
   debitAmount: number[] = [];
+  corporateId: any;
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -60,6 +61,7 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.initMultiTransferForm();
     this.fetchGenericValues();
     this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
@@ -87,7 +89,7 @@ export class MultiFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""],
+      remarks: [""]
     });
     this.multiTransferForm
       .get("debitAmount")
@@ -121,18 +123,20 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   fetchBenificiary() {
-    this.fundTransferService.fetchBenificiary().subscribe((resp: any) => {
-      if (resp?.statusCode == 200) {
-        this.transferTo = resp?.data;
-      }
-    });
+    this.fundTransferService
+      .fetchBenificiary(this.corporateId)
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          this.transferTo = resp?.data;
+        }
+      });
   }
 
   selectMultiAcc(event) {
     this.selectedAccounts = event;
     this.selectedAccounts = event.map((account) => ({
       accountNo: account,
-      amount: this.multiTransferForm.value.debitAmount,
+      amount: this.multiTransferForm.value.debitAmount
     }));
     if (
       this.multiTransferForm.get("debitAmount").value &&
@@ -181,7 +185,7 @@ export class MultiFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary"
     ]);
   }
 
@@ -231,12 +235,12 @@ export class MultiFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data,
+              reffNo: resp?.data
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop",
+            backdropClass: "bdrop"
           });
           this.dialogRef.afterClosed().subscribe((result) => {
             console.log(result);
@@ -272,7 +276,7 @@ export class MultiFundTransferComponent implements OnInit {
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     this.dialogRef1.afterClosed().subscribe((result) => {
       if (result == "verified") {
@@ -283,7 +287,7 @@ export class MultiFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         this.dialogRef.afterClosed().subscribe((result) => {
           if (result == "Failed") {
