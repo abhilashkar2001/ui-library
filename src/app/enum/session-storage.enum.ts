@@ -6,4 +6,6 @@ export enum SessionStorageEnum {
   TYPE = "type",
   PROCESS_CYCLE_CODE = "processCycleCode",
   LOAN_INFO = "loan-info",
+  CARD_INFO = "card-info",
+  LIST_OF_CARDS = "listOfCards",
 }

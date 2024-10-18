@@ -1,0 +1,20 @@
+<mat-card class="default-card m-0">
+  <div>
+    <h3 class="sub-heading">{{ title | translate }}</h3>
+
+    <div>
+      <div *ngFor="let card of cardList" fxLayout="row" class="mt-12">
+        <div fxFlex="30" class="image-container">
+          <img [src]="card?.fileUrl" alt="" class="image" />
+          <div class="highlight-overlay"></div>
+        </div>
+        <div fxFlex="670" fxLayout="column" class="ml-8">
+          <span class="sub-title">{{ card?.cardName | translate }}</span>
+          <span class="text-gray"
+            >{{ card?.cardNumber }} / {{ card?.expiryDate }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <div fxFlex="75">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <div fxFlex="40">
+        <app-dashboard-card-preview
+          title="Credit Card"
+          [cardList]="staticCardList"
+        ></app-dashboard-card-preview>
+      </div>
+      <div fxFlex="60">
+        <app-dashboard-card-details
+          [cardInfo]="cardList[0]"
+          [detailsItem]="detailsItem"
+        ></app-dashboard-card-details>
+      </div>
+    </div>
+
+    <mat-card class="default-card my-0 py-8">
+      <app-transaction-card
+        [transactionList]="quickLinkItems"
+      ></app-transaction-card>
+    </mat-card>
+
+    <div>
+      <app-recent-transaction
+        [recentTransTabs]="recentTransTabs"
+        [recentTransCols]="recentTransCols"
+        [recentTransData]="recentTransData"
+      ></app-recent-transaction>
+    </div>
+  </div>
+
+  <div fxFlex="25">
+    <div>
+      <app-swiper-card></app-swiper-card>
+    </div>
+    <div>
+      <app-dashboard-card-list
+        [title]="'Inactive Card'"
+        [cardList]="staticCardList"
+      ></app-dashboard-card-list>
+    </div>
+  </div>
+</div>
