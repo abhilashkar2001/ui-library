@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { NETBANKING } from "./net-banking-dashboard.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
@@ -18,9 +26,9 @@ import { LoanAccounts } from "app/shared/models/loan-account.model";
 @Component({
   selector: "app-net-banking-dashboard",
   templateUrl: "./net-banking-dashboard.component.html",
-  styleUrls: ["./net-banking-dashboard.component.scss"],
+  styleUrls: ["./net-banking-dashboard.component.scss"]
 })
-export class NetBankingDashboardComponent implements OnInit {
+export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   dashboardInfo: any;
   Object = Object;
   transferType = NETBANKING.transferType;
@@ -39,13 +47,13 @@ export class NetBankingDashboardComponent implements OnInit {
     {
       columnDef: "version",
       header: "Version",
-      cell: (element: any) => `${element?.version}`,
+      cell: (element: any) => `${element?.version}`
     },
     {
       columnDef: "lastUpdatedBy",
       header: "Action By",
-      cell: (element: any) => `${element.lastUpdatedBy}`,
-    },
+      cell: (element: any) => `${element.lastUpdatedBy}`
+    }
   ];
 
   activityLogData: any;
@@ -59,6 +67,10 @@ export class NetBankingDashboardComponent implements OnInit {
   accountsInfo: any;
   corporateId: any;
 
+  @ViewChild("targetElContainer") targetElContainer!: ElementRef;
+  @ViewChild("targetElement") targetElement!: ElementRef;
+  tableContainerSize: number = window.innerWidth;
+
   constructor(
     private netBankingService: InternetBankingService,
     private router: Router,
@@ -68,7 +80,8 @@ export class NetBankingDashboardComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private dialog: MatDialog,
     public translate: TranslateService,
-    public loanService: LoanService
+    public loanService: LoanService,
+    private renderer: Renderer2
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(
@@ -90,12 +103,73 @@ export class NetBankingDashboardComponent implements OnInit {
     }, 300);
   }
 
+  ngAfterViewInit(): void {
+    this.checkTableWidth();
+  }
+
+  checkTableWidth() {
+    const targetElContainer = this.targetElContainer.nativeElement.offsetWidth;
+    const targetElement = this.targetElement.nativeElement.offsetWidth;
+    this.tableContainerSize = targetElContainer;
+
+    if (targetElement > targetElContainer) {
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_shadow"
+      );
+    }
+  }
+
+  onTableSectionScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    const isScrolledToEnd =
+      target.scrollWidth - target.scrollLeft === target.clientWidth;
+
+    if (isScrolledToEnd) {
+      this.renderer.removeClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_shadow"
+      );
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_left_shadow"
+      );
+    } else if (target.scrollLeft > 1) {
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_left_shadow"
+      );
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_shadow"
+      );
+    } else if (target.scrollLeft <= 1) {
+      this.renderer.removeClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_left_shadow"
+      );
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_shadow"
+      );
+    } else {
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_shadow"
+      );
+      this.renderer.addClass(
+        this.targetElContainer.nativeElement,
+        "scroll_more_left_shadow"
+      );
+    }
+  }
+
   getAccountList() {
     this.accountlist.forEach((item) => {
       if (item?.accountList)
         this.accountNumberList = [
           ...this.accountNumberList,
-          ...item.accountList,
+          ...item.accountList
         ];
     });
     this.cdr.detectChanges();
@@ -112,7 +186,6 @@ export class NetBankingDashboardComponent implements OnInit {
         }
       });
   }
-
 
   /**
    * dashboard api to show the cards with the balance ant type
@@ -179,14 +252,14 @@ export class NetBankingDashboardComponent implements OnInit {
   }
   openPendingForApprovalSummary() {
     this.router.navigate([
-      "/user/dashboard/fund-transfer/pending-for-approval",
+      "/user/dashboard/fund-transfer/pending-for-approval"
     ]);
   }
   viewPendingRecord(element) {
     console.log(element, "...........");
     this.router.navigate([
       "/user/dashboard/fund-transfer/bulk-upload",
-      element?.id,
+      element?.id
     ]);
   }
   getActiveTransferType(transfer) {
@@ -237,7 +310,7 @@ export class NetBankingDashboardComponent implements OnInit {
     if (transfer.label == "Single Transfer") {
       const dialogRef = this.dialog.open(SelectSingleTransferComponent, {
         width: "50%",
-        panelClass: "popup-class",
+        panelClass: "popup-class"
       });
       dialogRef.afterClosed().subscribe((res) => {
         console.log(res);
