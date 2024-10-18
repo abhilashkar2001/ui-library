@@ -124,7 +124,7 @@ export class MultiFundTransferComponent implements OnInit {
 
   fetchBenificiary() {
     this.fundTransferService
-      .fetchBenificiary(this.corporateId)
+      .fetchBenificiary(this.customerInfo?.customerId)
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.transferTo = resp?.data;

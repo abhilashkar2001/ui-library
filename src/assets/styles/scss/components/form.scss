@@ -77,6 +77,10 @@ mat-form-field {
   font-weight: 600;
 }
 
+.login_container .mat-form-field-appearance-outline .mat-form-field-label {
+  top: 1.55em !important;
+}
+
 .mat-form-field-appearance-outline .mat-form-field-label {
   top: 1.25em !important;
   margin-top: 0;

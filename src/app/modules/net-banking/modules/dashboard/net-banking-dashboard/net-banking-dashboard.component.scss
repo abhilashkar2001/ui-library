@@ -10,6 +10,24 @@
     opacity: 1;
     font-weight: 500;
   }
+
+  .account_info_card {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("/assets/images/background-mask.svg");
+      z-index: 1;
+    }
+    .account_info_wrapper {
+      z-index: 2;
+    }
+  }
+
   .selected-account-Card {
     // background: transparent linear-gradient(332deg, #051a2d 0%, #004c97 100%) 0%
     //   0% no-repeat padding-box;
@@ -24,16 +42,15 @@
   .account-Card-btn {
     height: 145px;
     background: #f3f3f3;
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784);
-    border: 3px solid #ffffff;
+    box-shadow: 0px 3px 15px #00000017 !important;
+    border: 5px solid #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     // color: #004c97;
     color: var(--current-theme-background);
-    margin: 10px 0;
-    background: url("/assets/images/background-mask.svg");
+    margin: 10px 0 30px;
   }
 
   .infoLength {
@@ -115,18 +132,28 @@
 }
 
 .valueBg {
-  position: absolute;
-  margin-left: 133px;
-  width: 40px;
-  top: 10px;
-}
+  // position: absolute;
+  // margin-left: 133px;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  // top: 10px;
 
-.totalVal {
-  font-size: 20px;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  border-radius: 6px;
+  &:not(:has(.totalVal)) {
+    display: none;
+  }
+
+  .totalVal {
+    height: 100%;
+    width: 100%;
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+  }
 }
 
 .arrow {
@@ -150,6 +177,7 @@
 
 .panelHeader {
   height: 50px;
+  padding: 0 16px;
   background: #ffffff !important;
   box-shadow: 0 0px 15px #00000017;
 }
@@ -158,9 +186,9 @@ mat-expansion-panel.mat-expanded {
 }
 .label {
   font-size: 13px;
-  color: #a3a3a3;
-  font-weight: 500;
-  font-family: Poppins;
+  color: #b4b4b4;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
 }
 
 .header-container {
@@ -170,7 +198,7 @@ mat-expansion-panel.mat-expanded {
   padding-top: 14px;
 }
 .horizontal-separator {
-  border-top: #a3a7aa 1px solid;
+  border-top: 1px solid #eeeeee;
   margin: 2px 0;
   width: 100%;
 }
@@ -179,14 +207,16 @@ mat-expansion-panel.mat-expanded {
   width: 103.3%;
 }
 .labelVal {
-  color: #000000;
-  font: normal normal bold 14px / 21px Poppins;
+  color: #090909;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
 }
 .labelValRef {
-  font-weight: 600;
-  font-size: 14px;
   color: var(--current-theme-background);
-  font-family: Poppins;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
   cursor: pointer;
 }
 .bottom-container {
@@ -196,11 +226,11 @@ mat-expansion-panel.mat-expanded {
   padding: 0px;
   width: 98.9%;
   background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.0588235294);
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0588235294);
   opacity: 1;
 }
 .inner-container {
-  border-radius: 9px;
+  border-radius: 12px;
   opacity: 1;
   padding: 10px;
   width: 100%;
@@ -236,13 +266,14 @@ mat-expansion-panel.mat-expanded {
 .transfer-mtcd {
   border-radius: 18px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 3px 3px 15px #0000000f;
+  box-shadow: 0 3px 15px #00000017;
   font-weight: bold;
   padding: 1%;
   width: 98.9%;
 }
 .transfer_main_div {
   display: flex;
+  min-width: 200px;
 
   .transfer-card {
     cursor: pointer;
@@ -283,6 +314,63 @@ mat-expansion-panel.mat-expanded {
 
 .transfer {
   background: url("/assets/images/background-mask.svg");
+  background-size: cover;
+  height: 200px;
+  display: flex;
+  position: relative;
+
+  .transfer_wrapper_div {
+    margin: auto 0;
+    padding: 10px;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: unset;
+    right: 0;
+    height: 100%;
+    width: 38px;
+    border-radius: 0 12px 12px 0;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(153, 153, 153, 0.08),
+      rgb(34 34 34 / 9%)
+    );
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.32s;
+  }
+  &::before {
+    left: 0;
+    right: unset;
+    border-radius: 12px 0 0 12px;
+    background: linear-gradient(
+      to right,
+      rgb(34 34 34 / 9%),
+      rgba(153, 153, 153, 0.08),
+      transparent
+    );
+  }
+  &.scroll_more_left_shadow::before,
+  &.scroll_more_shadow::after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+::ng-deep
+  .financial_outline_field.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  border: 1px solid #d5d5d5;
 }
 
 .mat-tab-link.mat-tab-label-active {
