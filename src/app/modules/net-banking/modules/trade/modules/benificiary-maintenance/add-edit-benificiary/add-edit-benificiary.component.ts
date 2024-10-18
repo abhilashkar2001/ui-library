@@ -6,7 +6,7 @@ import { BeneficiaryService } from "../beneficiary-summary/beneficiary.service";
 @Component({
   selector: "app-add-edit-benificiary",
   templateUrl: "./add-edit-benificiary.component.html",
-  styleUrls: ["./add-edit-benificiary.component.scss"],
+  styleUrls: ["./add-edit-benificiary.component.scss"]
 })
 export class AddEditBenificiaryComponent implements OnInit {
   benificiaryDetailsForm: FormGroup;
@@ -17,6 +17,7 @@ export class AddEditBenificiaryComponent implements OnInit {
   readorWrite: boolean = false;
   saveTheEdit: boolean = false;
   accountNumberExists: any;
+  customerInfo: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -25,6 +26,7 @@ export class AddEditBenificiaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
     this.buildForm({});
     this.getAllCountry();
     this.route.queryParamMap.subscribe((params: any) => {
@@ -44,7 +46,7 @@ export class AddEditBenificiaryComponent implements OnInit {
       accountNo: [item ? item.accountNumber : "", Validators.required],
       confirmAccountNumber: [
         item ? item.confirmAccountNumber : "",
-        Validators.required,
+        Validators.required
       ],
       name: [item ? item.payeeName : "", Validators.required],
       nickName: [item ? item.nickName : "", Validators.required],
@@ -52,7 +54,7 @@ export class AddEditBenificiaryComponent implements OnInit {
       countryId: [item ? item.countryCode : "", Validators.required],
       visibility: [item ? item.visibility : ""],
       accountType: [item.item?.account ?? "I"],
-      beneficiaryStatus: [item.item?.beneficiaryStatus ?? true],
+      beneficiaryStatus: [item.item?.beneficiaryStatus ?? true]
     });
   }
 
@@ -97,6 +99,7 @@ export class AddEditBenificiaryComponent implements OnInit {
 
     let payload: any = {
       ...this.benificiaryDetailsForm.value,
+      corpCustId: this.customerInfo?.customerId
     };
     if (this.responseItm?.benificiaryId) {
       payload.benificiaryId = this.responseItm.benificiaryId;

@@ -8,11 +8,17 @@
   padding: 0px;
   width: fit-content;
   background-color: unset !important;
+  position: absolute;
   left: -14px;
   .btn_icon {
     width: 40px;
     height: 40px;
   }
+}
+
+.custom_drawer_components_container {
+  padding: 16px 58px;
+  background-color: #fff;
 }
 
 .parent-node {
