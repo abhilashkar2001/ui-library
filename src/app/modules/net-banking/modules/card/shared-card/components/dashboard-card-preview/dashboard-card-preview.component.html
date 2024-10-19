@@ -10,9 +10,9 @@
       <mat-icon (click)="prev()">arrow_back_ios</mat-icon>
       <div fxFlex="70" class="slider" [style.transform]="transform">
         <ng-container *ngFor="let image of cardList; let i = index">
-          <ng-container *ngIf="image?.fileUrl; else showDefault">
+          <ng-container *ngIf="image?.document?.fileUrl; else showDefault">
             <img
-              [src]="image?.fileUrl"
+              [src]="baseUrl + image?.document?.fileUrl"
               class="slide"
               [ngStyle]="{ opacity: i == currentIndex ? 1 : 0 }"
             />

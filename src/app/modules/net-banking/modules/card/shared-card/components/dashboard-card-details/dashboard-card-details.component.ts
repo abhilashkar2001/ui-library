@@ -32,4 +32,7 @@ export class DashboardCardDetailsComponent implements OnInit {
     //   this.router.navigate(["/card/credit-card/manage/card-usage"]);
     // }
   }
+  isFunction(item: any): boolean {
+    return item?.actionItem && typeof item.actionItem === "function";
+  }
 }

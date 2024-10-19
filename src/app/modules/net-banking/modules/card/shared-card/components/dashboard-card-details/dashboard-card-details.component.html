@@ -85,16 +85,14 @@
           }"
           >{{ cardInfo?.[item?.key] }}</span
         >
-        <span
-          *ngIf="item?.actionItem"
-          [ngClass]="{
-            'action-text': !item?.actionKey,
-            'text-gray': item?.actionKey
-          }"
-          (click)="gotoActionPage(item.actionItem(cardInfo[item?.actionKey]))"
-        >
-          <!-- {{ item.actionItem(cardInfo[item?.actionKey]) }} -->
-        </span>
+<span *ngIf="isFunction(item)" [ngClass]="{
+      'action-text': !item?.actionKey,
+      'text-gray': item?.actionKey
+    }"
+    (click)="gotoActionPage(item.actionItem(cardInfo?.[item?.actionKey]))"
+  >
+    {{ item.actionItem(cardInfo?.[item?.actionKey]) }}
+  </span>
       </div>
     </div>
   </div>
