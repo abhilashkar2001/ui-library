@@ -83,7 +83,7 @@
       border-color: transparent;
       position: sticky;
       top: 0;
-      min-height: 40px;
+      min-height: 48px;
       z-index: 1;
 
       .mat-header-cell {
@@ -98,7 +98,7 @@
         }
 
         b {
-          font-size: 12px;
+          font-size: 15px;
           font-weight: 500;
           font-family: "Poppins", sans-serif;
           margin-left: 2px;
@@ -153,7 +153,7 @@ mat-cell {
   padding: 0 10px;
   cursor: pointer;
   &.mat-cell:not(.no_data):first-of-type {
-    padding-left: 3%;
+    padding-left: 2.6%;
   }
   &.mat-cell:not(.no_data):last-of-type {
     max-width: 11%;
@@ -216,7 +216,7 @@ mat-cell {
   max-height: 5.5rem;
   padding: 0 5px;
   // min-height: 35px;
-  min-height: 40px;
+  min-height: 48px;
   border: none;
   position: relative;
 

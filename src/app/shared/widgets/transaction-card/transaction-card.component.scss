@@ -18,6 +18,7 @@
       justify-content: center;
       .mat-icon {
         filter: var(--current-theme-filter);
+        width: 16px;
       }
     }
     transition: transform 0.4s ease;

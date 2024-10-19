@@ -6,21 +6,21 @@ SwiperCore.use([Navigation]);
 @Component({
   selector: "app-swiper-card",
   templateUrl: "./swiper-card.component.html",
-  styleUrls: ["./swiper-card.component.scss"],
+  styleUrls: ["./swiper-card.component.scss"]
 })
 export class SwiperCardComponent implements OnInit {
   slides = [
     {
       imageUrl: "assets/images/earn-reward.png",
-      caption: "Caption Text",
+      caption: "Caption Text"
     },
 
     { imageUrl: "assets/images/slide_img2.png", caption: "Caption Two" },
     { imageUrl: "assets/images/loan.png", caption: "Caption Two" },
     {
       imageUrl: "assets/images/account_addvertize.png",
-      caption: "Caption Two",
-    },
+      caption: "Caption Two"
+    }
   ];
   currentIndex = 0;
 

@@ -127,7 +127,8 @@ code {
     font-weight: 10px;
     width: 11px;
     height: 11px;
-    margin-top: 5.9px;
+    margin-top: 1px;
+    // margin-top: 5.9px;
     left: 2.4px;
     position: relative;
   }
@@ -141,4 +142,26 @@ code {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.small-title {
+  color: #606c8d;
+  font-size: 12px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 500;
+  &-bold {
+    font-weight: 600;
+  }
+}
+.text-bold {
+  color: #060606;
+  font-size: 18px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 700;
+}
+.text-gray {
+  color: #313131;
+  font-size: 12px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
 }

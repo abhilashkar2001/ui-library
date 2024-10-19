@@ -1,8 +1,18 @@
-<div fxFlex="100" fxLayout="row" fxLayoutGap="1%">
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayoutGap="1%"
+  class="loan_dashboard_main_container"
+>
   <div fxFlex="74" fxLayout="column">
     <mat-card fxLayout="column" class="loan-card">
       <div fxLayout="row" class="m-8" fxLayoutAlign="space-between center">
-        <h1 class="dashboard_card_title">{{ "My Loan" }}</h1>
+        <h1 class="dashboard_card_title">
+          <mat-icon class="cursor-pointer mr-16" (click)="goBack()"
+            >arrow_back</mat-icon
+          >
+          {{ "My Loan" }}
+        </h1>
         <div class="toogle-div">
           <span>{{ "Statistics" }}</span>
           <mat-slide-toggle> </mat-slide-toggle>
@@ -16,8 +26,13 @@
               fxLayout="row"
               fxLayoutAlign="space-between center"
               fxFlex="100"
+              class="mb-8"
             >
-              <span fxLayoutAlign="space-between center">
+              <span
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                fxLayoutGap="4"
+              >
                 <div fxFlex="20" fxLayoutAlign="center center">
                   <img
                     src="assets/images/bank-profile-logo.svg"
@@ -25,7 +40,7 @@
                   />
                 </div>
                 <div fxFlex="75" fxLayout="column">
-                  <div class="card_account_type">
+                  <div class="card_account_type mb-6">
                     {{ loan?.accountType }}
                   </div>
                   <div class="masked" fxFlexAlign="center center">
@@ -41,7 +56,7 @@
                   </div>
                 </div>
               </span>
-              <div fxLayout="row">
+              <div fxLayout="row" fxLayoutGap="10">
                 <button
                   mat-raised-button
                   class="transfer_btn"
@@ -49,7 +64,6 @@
                 >
                   {{ "View Summary" }}
                 </button>
-                &nbsp;
                 <button
                   mat-raised-button
                   class="add_btn"

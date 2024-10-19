@@ -1,3 +1,9 @@
+::ng-deep .loan_dashboard_main_container {
+  .mat-slide-toggle .mat-slide-toggle-thumb {
+    margin-top: 6px;
+  }
+}
+
 .loan-card {
   background: #fffefe 0% 0% no-repeat padding-box !important;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784) !important;
@@ -8,13 +14,18 @@
 
 .card_container {
   border-radius: 12px;
-  height: 115px;
+  min-height: 130px;
+  max-height: max-content;
   padding: 18px 25px;
   background: #f3f3f3;
   background: url("/assets/images/background-mask.svg");
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784);
   border: 3px solid #ffffff;
   opacity: 1;
+
+  img {
+    max-width: 100%;
+  }
 
   .card_account_type {
     font-size: 12px;
@@ -30,7 +41,9 @@
     padding: 1px 10px;
     .masked_text {
       text-align: center;
-      font: normal normal normal 10px/12px "Poppins", sans-serif;
+      font-size: 12px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
       letter-spacing: 0px;
       color: #008461;
     }
@@ -62,6 +75,9 @@
 }
 .transfer_btn {
   @include btn;
+  width: max-content;
+  min-width: 95px;
+  max-width: max-content;
   background: #f5f7fb 0% 0% no-repeat padding-box;
   border: 1px solid var(--current-theme-border-color);
   color: #005bff;
@@ -76,14 +92,18 @@
 
 .value {
   text-align: left;
-  font: normal normal 600 14px/3px Poppins, sans-serif;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   letter-spacing: 0px;
   color: #377dff;
 }
 
 .diffValue {
   text-align: left;
-  font: normal normal 600 14px/3px Poppins, sans-serif;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   letter-spacing: 0px;
   color: #00205c;
 }
@@ -94,13 +114,14 @@
 }
 
 .dashboard_card_title {
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Poppins", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0px;
-  color: #00205c;
+  color: var(--current-theme-background);
   opacity: 1;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
 }
 
 .toogle-div {

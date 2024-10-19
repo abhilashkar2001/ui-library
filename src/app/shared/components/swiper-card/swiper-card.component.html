@@ -4,7 +4,7 @@
       <ng-container *ngFor="let slide of slides; let i = index">
         <img
           [src]="slide.imageUrl"
-          class="slide fade"
+          class="slide"
           (click)="currentIndex = i"
           [ngClass]="currentIndex == i && 'glaze'"
         />
