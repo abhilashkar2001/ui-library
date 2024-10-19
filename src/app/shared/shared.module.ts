@@ -27,7 +27,7 @@ import { InputMaskModule } from "./directives/input-mask/input-mask.module";
     SharedDirectivesModule,
     NgOtpInputModule,
     SearchModule,
-    InputMaskModule
+    InputMaskModule,
   ],
   providers: [
     ThemeService,

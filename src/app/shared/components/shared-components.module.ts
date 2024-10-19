@@ -98,6 +98,9 @@ import { DigitalSignComponent } from "./digital-sign/digital-sign.component";
 import { ScanComponent } from "./scan/scan.component";
 import { TabLinkComponent } from "../widgets/tab-link/tab-link.component";
 import { TransactionCardComponent } from "../widgets/transaction-card/transaction-card.component";
+import { SwiperCardComponent } from "./swiper-card/swiper-card.component";
+import { RecentTransactionComponent } from "./recent-transaction/recent-transaction.component";
+import { IcToggleSlideComponent } from "./ic-toggle-slide/ic-toggle-slide.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -171,6 +174,9 @@ const components = [
   ScanComponent,
   TransactionCardComponent,
   TabLinkComponent,
+  SwiperCardComponent,
+  RecentTransactionComponent,
+  IcToggleSlideComponent,
 ];
 
 @NgModule({
@@ -201,4 +207,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule { }
+export class SharedComponentsModule {}

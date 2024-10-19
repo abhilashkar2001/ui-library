@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21.75" viewBox="0 0 21 21.75">
+  <g id="EMI_Details_Blue" data-name="EMI Details Blue" transform="translate(-28.5 -5.879)">
+    <g id="Group_20304" data-name="Group 20304" transform="translate(-3052.5 3310.42)">
+      <path id="Path_26786" data-name="Path 26786" d="M4087,499.75a.756.756,0,0,1-.75-.75v-3a.75.75,0,0,1,1.5,0v3A.756.756,0,0,1,4087,499.75Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26787" data-name="Path 26787" d="M4095,499.75a.756.756,0,0,1-.75-.75v-3a.75.75,0,0,1,1.5,0v3A.756.756,0,0,1,4095,499.75Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26788" data-name="Path 26788" d="M4100,502.5V511c0,3-1.5,5-5,5h-8c-3.5,0-5-2-5-5v-8.5c0-3,1.5-5,5-5h8C4098.5,497.5,4100,499.5,4100,502.5Z" transform="translate(-1001 -3799.791)" fill="#00205c" opacity="0.3"/>
+      <path id="Path_26789" data-name="Path 26789" d="M4093,505.75h-6a.75.75,0,0,1,0-1.5h6a.75.75,0,0,1,0,1.5Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26790" data-name="Path 26790" d="M4090,510.75h-3a.75.75,0,0,1,0-1.5h3a.75.75,0,0,1,0,1.5Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26791" data-name="Path 26791" d="M4101,507.63a5.24,5.24,0,0,0-7.74,6.82,5.266,5.266,0,0,0,1.42,1.55,5.205,5.205,0,0,0,6.52-.31,4.652,4.652,0,0,0,1.04-1.24,5.176,5.176,0,0,0,.76-2.7A5.229,5.229,0,0,0,4101,507.63Zm-3.25,6.62a2.5,2.5,0,0,1,0-5,2.5,2.5,0,0,1,0,5Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+    </g>
+  </g>
+</svg>

@@ -12,7 +12,7 @@ export class SessionStorageService {
   //WINDOW SESSION STORAGE
   private session = window.sessionStorage;
 
-  constructor() { }
+  constructor() {}
 
   /**
    * stringfy the item and stored
@@ -128,20 +128,43 @@ export class SessionStorageService {
   }
 
   /**
-  * fetch the list of card stored in session storeage
-  * @returns
-  */
+   * fetch the list of card stored in session storeage
+   * @returns
+   */
   public getLoanInfo(): LoanAccounts {
     const loanInfo = this.getItem(SessionStorageEnum.LOAN_INFO);
     return loanInfo;
   }
 
   /**
- * set the loan info in session storage
- * @param loanInfo
- */
+   * set the loan info in session storage
+   * @param loanInfo
+   */
   public setLoanInfo(loanInfo): void {
     this.setItem(SessionStorageEnum.LOAN_INFO, loanInfo);
   }
 
+  /**
+   * fetch the list of card stored in session storeage
+   * @returns
+   */
+  public getListOfCards(): any[] {
+    const cardList = this.getItem(SessionStorageEnum.LIST_OF_CARDS);
+    return cardList;
+  }
+
+  /**
+   * set the list of card in session storage
+   * @param listOfCards
+   */
+  public setListOfCards(listOfCards): void {
+    this.setItem(SessionStorageEnum.LIST_OF_CARDS, listOfCards);
+  }
+
+  /**
+   * this method will remove list of cards from session storage
+   */
+  public removeListOfCards(): void {
+    this.session.removeItem(SessionStorageEnum.LIST_OF_CARDS);
+  }
 }

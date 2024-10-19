@@ -149,12 +149,13 @@ export class NETBANKING {
     },
     {
       label: "Cards",
-      icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg"
+      icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg",
+      link: "/user/card/dashboard",
     },
     {
       label: "Loan",
       icon: "/assets/images/net-banking-nav-bar/Loan_Icon.svg",
-      link: "/user/loan/dashboard"
+      link: "/user/loan/dashboard",
     },
     {
       label: "Summary",

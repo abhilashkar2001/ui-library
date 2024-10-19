@@ -1,0 +1,24 @@
+<main class="main-container">
+  <div class="slider-container">
+    <div class="slider" [style.transform]="transform">
+      <ng-container *ngFor="let slide of slides; let i = index">
+        <img
+          [src]="slide.imageUrl"
+          class="slide fade"
+          (click)="currentIndex = i"
+          [ngClass]="currentIndex == i && 'glaze'"
+        />
+      </ng-container>
+    </div>
+  </div>
+  <br />
+
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="6px">
+    <span
+      *ngFor="let slide of slides; let i = index"
+      class="dot"
+      [ngClass]="i === currentIndex && 'dot-selected'"
+      (click)="currentSlide(i)"
+    ></span>
+  </div>
+</main>

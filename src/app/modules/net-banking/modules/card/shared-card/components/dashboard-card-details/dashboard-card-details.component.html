@@ -1,0 +1,101 @@
+<!-- prettier-ignore -->
+<mat-card class="main-container default-card ml-0">
+  <div fxLayout="column">
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutGap="10px">
+        <h3 class="sub-heading p-0">{{'Master Card' | translate}}</h3>
+        <span class="action-text">{{'Upgrade' | translate}}</span>
+      </div>
+      <div class="reward-div">
+        <span class="reward-text">{{'Reward Points' | translate}}</span>
+        <div class="reward-box" fxLayoutAlign="center center">
+          <mat-icon svgIcon="reward-icon"></mat-icon>
+          <span class="pt-text">{{ cardInfo?.rewardPoint }}Pts</span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="middle-content w-100 mt-24"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <div
+        class="section-highlight p-12"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="12px"
+      >
+        <div fxLayout="column">
+          <span class="small-title">{{'Total Due Amount' | translate}}</span>
+          <span>
+            <span class="currency mr-12">{{
+              cardInfo?.accountCurrency || "INR"
+            }}</span>
+            <span class="alert-text"
+              >₹ &nbsp;{{ cardInfo?.totalDueAmount }}</span
+            >
+          </span>
+        </div>
+        <div class="vertical-bar"></div>
+        <div fxLayout="column">
+          <span class="small-title">{{'Minimum Due Amount' | translate}}</span>
+          <span
+            ><span class="currency mr-12">{{
+              cardInfo?.accountCurrency || "INR"
+            }}</span>
+            <span class="normal-text">
+              ₹ &nbsp;{{ cardInfo?.currentOutStaning }}</span
+            ></span
+          >
+        </div>
+      </div>
+
+      <div>
+        <span class="pay-bill" fxLayoutAlign="center center"
+          ><mat-icon svgIcon="info-icon"></mat-icon> &nbsp;
+          <span>{{"Due on 6 June 2024" | translate}}</span></span
+        >
+        <div>
+          <!-- <app-ic-action-button
+            [buttonName]="'Pay Now' | translate"
+            buttonType="filled"
+            (onClick)="payNow()"
+          ></app-ic-action-button> -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between "
+      class="w-100 mt-24 details-content"
+    >
+      <div
+        *ngFor="let item of detailsItem"
+        fxLayout="column"
+        fxFlex="33"
+        class="mt-12"
+      >
+        <span class="small-title">{{ item?.label  | translate}}</span>
+        <span
+          [ngClass]="{
+            'small-values': !item?.actionItem,
+            'text-bold': item?.actionItem
+          }"
+          >{{ cardInfo?.[item?.key] }}</span
+        >
+        <span
+          *ngIf="item?.actionItem"
+          [ngClass]="{
+            'action-text': !item?.actionKey,
+            'text-gray': item?.actionKey
+          }"
+          (click)="gotoActionPage(item.actionItem(cardInfo[item?.actionKey]))"
+        >
+          <!-- {{ item.actionItem(cardInfo[item?.actionKey]) }} -->
+        </span>
+      </div>
+    </div>
+  </div>
+</mat-card>
