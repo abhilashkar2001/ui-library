@@ -101,6 +101,10 @@ import { TransactionCardComponent } from "../widgets/transaction-card/transactio
 import { SwiperCardComponent } from "./swiper-card/swiper-card.component";
 import { RecentTransactionComponent } from "./recent-transaction/recent-transaction.component";
 import { IcToggleSlideComponent } from "./ic-toggle-slide/ic-toggle-slide.component";
+import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-from.component";
+import { IcActionButtonComponent } from "./ic-action-button/ic-action-button.component";
+import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
+import { IcCustomAmountInput } from "./ic-custom-amount-input/ic-custom-amount-input.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -177,6 +181,10 @@ const components = [
   SwiperCardComponent,
   RecentTransactionComponent,
   IcToggleSlideComponent,
+  IcCustomPayFromComponent,
+  IcActionButtonComponent,
+  IcRadioButtonComponent,
+  IcCustomAmountInput,
 ];
 
 @NgModule({

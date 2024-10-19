@@ -36,6 +36,14 @@ const routes: Routes = [
             (m) => m.CreditCardModule
           ),
       },
+      {
+        path: "send-money",
+        loadChildren: () =>
+          import("./modules/send-money/send-money.module").then(
+            (m) => m.SendMoneyModule
+          ),
+        data: { preload: false, title: "Home", breadcrumb: "Home" },
+      },
     ],
   },
 ];

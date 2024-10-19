@@ -1,0 +1,217 @@
+<form [formGroup]="schedulePaymentForm">
+  <div class="send-money-abroad-container" fxLayout="column">
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <app-ic-custom-pay-from
+          [control]="schedulePaymentForm.get('debitAccount')"
+          [inputLabel]="'Pay From*' | translate"
+          [items]="payFromData"
+          bindValueKey="accountNo"
+          bindLabelKey="accountNo"
+          message="Savings Account | Balance ₹ 2090"
+          (selectionChange)="payAccount($event)"
+        >
+        </app-ic-custom-pay-from>
+      </div>
+    </div>
+
+    <div class="light-blue-title">{{ "Payment Details" | translate }}</div>
+    <div *ngIf="!proceedPayment; else showSchedulePayment" fxLayout="column">
+      <div fxFlex="100">
+        <div fxFlex="25" class="input_wrapper">
+          <app-searchable-select
+            [control]="schedulePaymentForm.get('creditAccount')"
+            [inputLabel]="'Transfer To' | translate"
+            [items]="transferData"
+            bindValueKey="accountNo"
+            bindLabelKey="accountNo"
+            displayLabel="payeeName"
+            [currencyCode]="selectedAccNo?.accountCurrecny"
+            [showOutsideLabel]="true"
+          ></app-searchable-select>
+          <div fxLayout="row" class="favourites-algn" fxLayoutGap="10px">
+            <mat-label class="light-blue-title">{{
+              "Favourites" | translate
+            }}</mat-label>
+            <mat-radio-group
+              color="primary"
+              aria-label="Select an option"
+              formControlName="paymentType"
+              fxLayout="row"
+              (change)="changeFav($event.value)"
+            >
+              <mat-radio-button value="Same">{{
+                "Same Bank" | translate
+              }}</mat-radio-button>
+              <mat-radio-button value="Other">{{
+                "Other Bank" | translate
+              }}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <div>
+        <app-reusable-favourities
+          [items]="filterFav"
+          (rediectTo)="proceed($event)"
+        >
+        </app-reusable-favourities>
+      </div>
+      <div fxLayoutGap="20" fxLayoutAlign="end center" class="btn-algn">
+        <app-ic-action-button
+          [buttonName]="'Cancel' | translate"
+          buttonType="stroked"
+        >
+        </app-ic-action-button>
+        <app-ic-action-button
+          [buttonName]="'Proceed' | translate"
+          buttonType="filled"
+          (onClick)="proceed()"
+          [disabled]="schedulePaymentForm.get('debitAccount').invalid"
+        ></app-ic-action-button>
+      </div>
+    </div>
+  </div>
+  <ng-template #showSchedulePayment>
+    <div class="main-div">
+      <form [formGroup]="schedulePaymentForm">
+        <div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <div fxFlex="100" fxFlex.gt-xs="24">
+              <app-searchable-select
+                [control]="schedulePaymentForm.get('creditAccount')"
+                [inputLabel]="'Transfer To' | translate"
+                [items]="transferData"
+                bindValueKey="accountNo"
+                bindLabelKey="accountNo"
+                displayLabel="payeeName"
+                [currencyCode]="selectedAccNo?.accountCurrecny"
+                [showOutsideLabel]="true"
+              >
+              </app-searchable-select>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="24">
+              <app-ic-custom-amount-input
+                [inputLabel]="'Amount'"
+                [currencyCode]="currencyCode"
+                [inputType]="'text'"
+                [control]="schedulePaymentForm.get('amount')"
+              ></app-ic-custom-amount-input>
+              <mat-error
+                *ngIf="
+                  schedulePaymentForm.get('amount').hasError('required') &&
+                  schedulePaymentForm.get('amount').touched
+                "
+                >{{ "Amount is Required" | translate }}</mat-error
+              >
+            </div>
+            <div
+              fxFlex="100"
+              fxFlex.gt-xs="24"
+              *ngIf="schedulePaymentForm.get('paymentType').value == 'Same'"
+            >
+              <app-searchable-select
+                [control]="schedulePaymentForm.get('paymentMode')"
+                [inputLabel]="'Payment Mode' | translate"
+                [items]="paymentModes"
+                bindValueKey="id"
+                bindLabelKey="values"
+                [showOutsideLabel]="true"
+              >
+              </app-searchable-select>
+            </div>
+            <div
+              fxFlex="100"
+              fxFlex-xs="24"
+              fxLayoutGap="12"
+              fxLayout="column"
+              class="recurring-algn"
+            >
+              <div>
+                <app-ic-radio-button
+                  [optiions]="options"
+                  [control]="schedulePaymentForm.get('recurringPayment')"
+                  [displayLabel]="'Recurring' | translate"
+                  layout="column"
+                >
+                </app-ic-radio-button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <mat-hint *ngIf="schedulePaymentForm.get('creditAccount').value">{{
+              message
+            }}</mat-hint>
+          </div>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="w-full"
+            fxLayoutGap="10px"
+          >
+            <div fxFlex="100" fxFlex.gt-xs="24">
+              <app-ic-custom-datepicker
+                [control]="schedulePaymentForm.get('schedulePaymentDate')"
+                [inputLabel]="'Schedule Payment' | translate"
+              ></app-ic-custom-datepicker>
+            </div>
+            <div
+              fxFlex="100"
+              fxFlex.gt-xs="24"
+              *ngIf="schedulePaymentForm.get('recurringPayment').value === true"
+            >
+              <app-searchable-select
+                [control]="schedulePaymentForm.get('frequency')"
+                [inputLabel]="'Frequency' | translate"
+                [items]="frequncyData"
+                bindValueKey="id"
+                bindLabelKey="values"
+                [showOutsideLabel]="true"
+              >
+              </app-searchable-select>
+            </div>
+            <div
+              fxFlex="100"
+              fxFlex.gt-xs="24"
+              *ngIf="schedulePaymentForm.get('recurringPayment').value === true"
+            >
+              <app-ic-custom-input
+                [inputLabel]="'No Of Instalments' | translate"
+                [control]="schedulePaymentForm.get('noOfInstalment')"
+              ></app-ic-custom-input>
+            </div>
+          </div>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            class="w-full"
+            fxLayoutGap="10px"
+          >
+            <div fxFlex="100" fxFlex.gt-xs="24">
+              <app-ic-custom-input
+                [inputLabel]="'Remark' | translate"
+                [control]="schedulePaymentForm.get('remark')"
+              >
+              </app-ic-custom-input>
+            </div>
+          </div>
+        </div>
+        <div fxLayoutGap="20" fxLayoutAlign="end center" class="btn-algn">
+          <app-ic-action-button
+            [buttonName]="'Cancel' | translate"
+            (click)="close()"
+            buttonType="stroked"
+          >
+          </app-ic-action-button>
+          <app-ic-action-button
+            [buttonName]="'Proceed' | translate"
+            buttonType="filled"
+            (onClick)="submit()"
+            [disabled]="schedulePaymentForm.invalid"
+          ></app-ic-action-button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</form>

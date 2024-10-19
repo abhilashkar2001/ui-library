@@ -1,0 +1,89 @@
+<div class="self-transfer-container" fxLayout="column">
+  <form [formGroup]="selfTransferForm" fxFlex="100" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="row px-12">
+        <!-- <app-ic-custom-pay-from
+          [control]="selfTransferForm.get('payFrom')"
+          inputLabel="Pay From"
+          [items]="payFrom"
+          bindValueKey="accountNo"
+          bindLabelKey="accountNo"
+          [currencyCode]="'INR'"
+          (selectionChange)="checkDebitDetails($event)"
+        ></app-ic-custom-pay-from> -->
+        <app-ic-custom-pay-from
+          [control]="selfTransferForm.get('payFrom')"
+          [inputLabel]="'Pay From' | translate"
+          bindValueKey="accountNo"
+          bindLabelKey="accountNo"
+          [currencyCode]="selectedCurrency"
+          (selectionChange)="payAccount($event)"
+          [accountType]="accountType"
+        ></app-ic-custom-pay-from>
+      </div>
+    </div>
+    <h1 class="wrapper_row light-blue-title">
+      {{ "Transfer To" | translate }}
+    </h1>
+    <div class="row px-12">
+      <div fxFlex="25" class="input_wrapper">
+        <app-searchable-select
+          [control]="selfTransferForm.get('type')"
+          [inputLabel]="'Type' | translate"
+          [items]="categoryTypes"
+          bindValueKey="value"
+          bindLabelKey="value"
+          (selectionChange)="updateFilteredPayToList($event)"
+          [showOutsideLabel]="true"
+        ></app-searchable-select>
+      </div>
+      <div fxFlex="25" class="input_wrapper">
+        <app-searchable-select
+          [control]="selfTransferForm.get('payTo')"
+          [inputLabel]="'Pay To' | translate"
+          [items]="filteredAccountList"
+          bindValueKey="accountNo"
+          bindLabelKey="accountNo"
+          (selectionChange)="checkCreditDetails($event)"
+          [showOutsideLabel]="true"
+        ></app-searchable-select>
+        <p *ngIf="toAccount">
+          <span class="text-small"
+            >{{ toAccount?.accountType | translate }} |
+            {{ "Balance" | translate }}:
+          </span>
+          <span class="text-normal">
+            {{
+              toAccountBalance
+                | currency : this.selfTransferForm.get("creditCurrency").value
+            }}
+          </span>
+        </p>
+      </div>
+      <div fxFlex="25" class="input_wrapper">
+        <app-ic-custom-input
+          [control]="selfTransferForm.get('amount')"
+          [inputLabel]="'Amount' | translate"
+        ></app-ic-custom-input>
+      </div>
+      <div fxFlex="25" class="input_wrapper">
+        <app-ic-custom-input
+          [control]="selfTransferForm.get('remark')"
+          [inputLabel]="'Remark' | translate"
+        ></app-ic-custom-input>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="100" fxLayoutAlign="end center" fxLayoutGap="20">
+    <app-ic-action-button
+      [buttonName]="'Cancel' | translate"
+      buttonType="stroked"
+    >
+    </app-ic-action-button>
+    <app-ic-action-button
+      (click)="onSubmit()"
+      [buttonName]="'Proceed' | translate"
+      buttonType="filled"
+    ></app-ic-action-button>
+  </div>
+</div>

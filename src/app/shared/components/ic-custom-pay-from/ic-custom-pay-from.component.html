@@ -1,0 +1,44 @@
+<ng-container fxLayout="column"
+  ><div fxLayout="row" fxLayoutAlign="flex-start start" fxLayoutGap="10px">
+    <div
+      [fxLayout]="layout || 'row'"
+      [fxLayoutAlign]="layoutAlign || 'start start'"
+      fxLayoutGap="5px"
+    >
+      <mat-label class="mt-16 mr-8 sub-title">{{ inputLabel }}</mat-label>
+      <app-searchable-select
+        [items]="items"
+        [bindValueKey]="bindValueKey || 'accountNo'"
+        [bindLabelKey]="bindLabelKey || 'accountNo'"
+        [control]="control"
+        skipLabel="false"
+        [currencyCode]="currencyCode"
+        [errorMessage]="errorMessage"
+        (selectionChange)="fetchBalance($event)"
+      ></app-searchable-select>
+    </div>
+    <ng-content></ng-content>
+    <span
+      *ngIf="message && control.value"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="message mt-16"
+    >
+      <span class="text-gray mr-4">{{'Balance' | translate}} : </span>
+      <span class="text-poppins">{{
+        message | currency: this.currencyCode
+      }}</span>
+    </span>
+    <span  fxLayout="row"
+    fxLayoutAlign="start center" class="message mt-16" *ngIf="accountType && control.value">
+      <span class="text-gray mr-4">{{accountType | translate}} | {{"Balance"| translate}}: </span>
+      <span class="text-gray mr-4">
+        {{
+          balance ? balance: 0
+            | currency: this.currencyCode
+        }}
+      </span>
+    </span>
+ 
+  </div>
+</ng-container>

@@ -8,4 +8,6 @@ export enum SessionStorageEnum {
   LOAN_INFO = "loan-info",
   CARD_INFO = "card-info",
   LIST_OF_CARDS = "listOfCards",
+  LIST_OF_ACCOUNTS = "listOfAccounts",
+  SELECTED_ACCOUNT_NO = "selectAccNo",
 }
