@@ -24,6 +24,8 @@ export class CompanyInformationComponent implements OnInit {
   @Output() onCustomSubmit = new EventEmitter<{}>();
   @Output() onBackEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+
   @Input() personalDetails: any;
   @Input() basisId: any;
   @Input() customerInfo;
@@ -363,6 +365,11 @@ export class CompanyInformationComponent implements OnInit {
     this.onCustomSubmit.emit({
       status: true,
       companyDetails: this._parentForm,
+    });
+    this?.updateParentModel({
+      companyDetails: this._parentForm.value,
+      updateMasterSave: true,
+      isForLoan: false,
     });
   }
 }
