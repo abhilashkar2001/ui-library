@@ -66,7 +66,7 @@ mat-form-field {
   padding-top: 0.84375em;
 }
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: translateY(10%) !important;
+  transform: translateY(-10%) !important;
 }
 
 .mat-select-value {
@@ -75,6 +75,10 @@ mat-form-field {
   opacity: 100%;
   letter-spacing: -0.26px;
   font-weight: 600;
+}
+
+.login_container .mat-form-field-appearance-outline .mat-form-field-label {
+  top: 1.55em !important;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-label {
@@ -175,10 +179,12 @@ input {
     padding-top: 0.84375em !important;
   }
   .mat-form-field-infix {
-    padding: 1em 0em 1em 0em !important;
+    // padding: 1em 0em 1em 0em !important;
+    padding: 0.7em 0em 1em 0em !important;
   }
   .mat-form-field-flex {
-    height: 55px !important;
+    height: 45px !important;
+    // height: 55px !important;
   }
   .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
     transform: translateY(-20%) !important;

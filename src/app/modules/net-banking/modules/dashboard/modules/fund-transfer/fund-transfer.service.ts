@@ -4,7 +4,7 @@ import { environment } from "environments/environment";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class FundTransferService {
   constructor(private http: HttpClient) {}
@@ -40,8 +40,10 @@ export class FundTransferService {
     );
   }
 
-  fetchBenificiary() {
-    return this.http.get<any>(`${MICROSERVICE_URL}/corp_benieficiary`);
+  fetchBenificiary(corporateId) {
+    return this.http.get<any>(
+      `${MICROSERVICE_URL}/corp_benieficiary?corporateId=${corporateId}`
+    );
   }
 
   fetchGeneric(screen, generic) {
