@@ -19,6 +19,7 @@ export class CreditCardDashboardComponent implements OnInit {
   recentTransData = CreditCardStore.recentTransData;
   quickLinkItems: QuickLinkTabModel[] = CreditCardStore.quickLinks;
   customerInfo: any;
+  cardSummaryDetails: any;
 
   constructor(
     private sessionStorageService: SessionStorageService,
@@ -35,7 +36,7 @@ export class CreditCardDashboardComponent implements OnInit {
     this.cardService
       .fetchCardSummary(this.customerInfo?.customerId, "Credit Card")
       .subscribe((res) => {
-        console.log(res);
+        this.cardSummaryDetails = res?.data;
       });
   }
 }

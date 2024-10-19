@@ -29,7 +29,7 @@ export class CardService {
   }
   fetchCardSummary(customerId, cardType) {
     return this.http.get<any>(
-      `${baseUrl}/card/fetch-card-summary?customerId=${customerId}&cardType=${cardType}`
+      `${baseUrl}/card/fetch-card-summary?corporateId=${customerId}&cardType=${cardType}`
     );
   }
 }
