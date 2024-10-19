@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-between" class="recentTitleLine">
   <div class="send-money-title">{{ "Recent Transaction" | translate }}</div>
 
-  <button mat-icon-button>
+  <button mat-icon-button class="extent_icon_btn">
     <mat-icon
       class="extend-icon current_theme_filter"
       svgIcon="extend-icon"
@@ -44,7 +44,12 @@
       fxLayoutGap="2%"
     >
       <mat-card fxLayout="row" class="search-field" fxFlex="80">
-        <input matInput [formControl]="searchValue" placeholder="Search" />
+        <input
+          matInput
+          class="saerch_input_field"
+          [formControl]="searchValue"
+          placeholder="Search"
+        />
         <mat-icon
           matSuffix
           svgIcon="search-icon"

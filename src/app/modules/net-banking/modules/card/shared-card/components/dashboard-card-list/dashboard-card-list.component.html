@@ -1,16 +1,21 @@
-<mat-card class="default-card m-0">
+<mat-card class="default-card card_list_container m-0">
   <div>
-    <h3 class="sub-heading">{{ title | translate }}</h3>
+    <h3>{{ title | translate }}</h3>
+    <mat-divider></mat-divider>
 
     <div>
-      <div *ngFor="let card of cardList" fxLayout="row" class="mt-12">
+      <div
+        *ngFor="let card of cardList"
+        fxLayout="row"
+        class="single_card_div mt-12"
+      >
         <div fxFlex="30" class="image-container">
           <img [src]="card?.fileUrl" alt="" class="image" />
           <div class="highlight-overlay"></div>
         </div>
         <div fxFlex="670" fxLayout="column" class="ml-8">
-          <span class="sub-title">{{ card?.cardName | translate }}</span>
-          <span class="text-gray"
+          <span class="card_name">{{ card?.cardName | translate }}</span>
+          <span class="card_num_date"
             >{{ card?.cardNumber }} / {{ card?.expiryDate }}</span
           >
         </div>

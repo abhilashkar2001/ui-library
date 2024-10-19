@@ -1,6 +1,6 @@
 <div class="parent-div" fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
-    <div class="overView">{{ "Account Overview" | translate }}</div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="searchDiv">
+    <div class="overView mb-8">{{ "Account Overview" | translate }}</div>
     <div>
       <mat-form-field appearance="outline">
         <mat-label class="custom-mat-label">{{
@@ -93,7 +93,12 @@
     </ng-container>
   </div>
 
-  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between flex-start">
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="space-between flex-start"
+    fxLayoutGap="10"
+  >
     <div fxLayout="column" fxFlex="75" fxLayoutGap="15px">
       <div class="transfer-mtcd">
         <nav mat-tab-nav-bar>
@@ -211,7 +216,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div fxFlex="25">
       <div class="activityLog">
         <div fxLayout="column" fxLayoutGap="10px">
           <div class="activityLog_header" fxLayoutGap="5px">

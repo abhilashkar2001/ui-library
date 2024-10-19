@@ -43,6 +43,15 @@
     visibility: visible;
     opacity: 1;
   }
+
+  .status_text {
+    font-weight: 500;
+    .mat-icon {
+      height: 16px;
+      width: 16px;
+      font-size: 16px;
+    }
+  }
 }
 .approved_history_container {
   position: absolute;
