@@ -7,14 +7,13 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { MatCardModule } from "@angular/material/card";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { CreditCardDashboardComponent } from "./credit-card/credit-card-dashboard/credit-card-dashboard.component";
-import { CreditCardRoutingModule } from "./credit-card/credit-card-routing.module";
+import { CardRoutingModule } from "./card-routing.module";
 
 @NgModule({
-  declarations: [CreditCardDashboardComponent],
+  declarations: [],
   imports: [
     CommonModule,
-    CreditCardRoutingModule,
+    CardRoutingModule,
     FormsModule,
     SharedModule,
     FlexLayoutModule,

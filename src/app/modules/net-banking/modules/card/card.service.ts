@@ -32,4 +32,20 @@ export class CardService {
       `${baseUrl}/card/fetch-card-summary?corporateId=${customerId}&cardType=${cardType}`
     );
   }
+  saveCreditPaymentDetails(payload) {
+    return this.http.post(`${baseUrl}/card/pay`, payload);
+  }
+  generateAccountQr(accnum) {
+    return this.http.post<any>(
+      `${baseUrl}/task-summary/get-qr-code?originationAccNo=${accnum}`,
+      "",
+      { responseType: "Blob" as "json" }
+    );
+  }
+  getBalance(accNo) {
+    return this.http.get(
+      `${baseUrl}/flex-service/queryBalance?originationAccNo=${accNo}
+`
+    );
+  }
 }

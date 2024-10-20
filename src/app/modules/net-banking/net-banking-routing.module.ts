@@ -32,9 +32,7 @@ const routes: Routes = [
       {
         path: "card",
         loadChildren: () =>
-          import("./modules/card/credit-card/credit-card.module").then(
-            (m) => m.CreditCardModule
-          ),
+          import("./modules/card/card.module").then((m) => m.CardModule),
       },
     ],
   },

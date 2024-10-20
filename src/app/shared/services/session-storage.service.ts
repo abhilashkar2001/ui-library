@@ -167,4 +167,51 @@ export class SessionStorageService {
   public removeListOfCards(): void {
     this.session.removeItem(SessionStorageEnum.LIST_OF_CARDS);
   }
+
+  /**
+   * This method will get the list of account stored in session storage
+   * @returns will parse the list of account array getting from session storage and return
+   */
+  public getListOfAccounts(): any[] {
+    const listOfAccounts = this.getItem(SessionStorageEnum.LIST_OF_ACCOUNTS);
+    return listOfAccounts;
+  }
+
+  /**
+   * This method will stringfy and set the list of accounts in session storage
+   * @param listOfAccounts
+   */
+  public setListOfAccounts(listOfAccounts: string[]): void {
+    this.setItem(SessionStorageEnum.LIST_OF_ACCOUNTS, listOfAccounts);
+  }
+
+  /**
+   * This mehtod will remove the list of account from the session storage
+   */
+  public removeListOfAccounts(): void {
+    this.session.removeItem(SessionStorageEnum.LIST_OF_ACCOUNTS);
+  }
+  /**
+   * FETCH: Selected account from session storage whose key is stored in SELECTED_ACCOUNT_NO in session storage enum
+   * @returns it will give selected account no using enum
+   */
+  getSelectedAccountNo() {
+    const accountNo = this.getItem(SessionStorageEnum.SELECTED_ACCOUNT_NO);
+    return accountNo;
+  }
+
+  /**
+   * This method will stringfy and set the selected account no in the session storage
+   * @param selectedAccountNo
+   */
+  public setSelectedAccountNo(selectedAccountNo: string) {
+    this.setItem(SessionStorageEnum.SELECTED_ACCOUNT_NO, selectedAccountNo);
+  }
+
+  /**
+   * This method will remove the selected account no in session storage
+   */
+  public removeSelectedAccountNo() {
+    this.session.removeItem(SessionStorageEnum.SELECTED_ACCOUNT_NO);
+  }
 }

@@ -1,0 +1,49 @@
+.haderdiv {
+  background: #e4e9ef 0% 0% no-repeat padding-box;
+  border-radius: 12px 12px 0px 0px;
+  opacity: 1;
+  padding: 10px;
+  margin-bottom: 22px;
+}
+
+.banktext {
+  text-align: left;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #051a2d;
+  opacity: 1;
+  margin-bottom: 10px;
+}
+
+.text {
+  text-align: left;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #00205c;
+}
+
+.imageAspect {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  aspect-ratio: 100/63;
+}
+
+.bottomdiv {
+  padding: 13px;
+}
+
+.accountDetails {
+  background: #e5fff8 0% 0% no-repeat padding-box;
+  border-radius: 6px;
+  opacity: 1;
+  padding: 0 10px 0 10px;
+}
