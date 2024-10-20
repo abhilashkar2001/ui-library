@@ -1,0 +1,69 @@
+<div class="parentContainerforQr" fxFlex="100" fxLayout="column">
+  <div
+    class="haderdiv"
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+  >
+    <span class="text">{{ "Add Fund" | translate }}</span>
+    <span class="closediv" (click)="closeDialogref()">
+      <mat-icon>close</mat-icon>
+    </span>
+  </div>
+  <div
+    class="qrcodeDiv"
+    fxFlex="100"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    [formGroup]="qrform"
+  >
+    <div class="orheader" fxLayout="column" fxLayoutAlign="center center">
+      <div class="banktext">{{ selectedAccountBank }}</div>
+      <div
+        class="accountDetails"
+        fxFlex="100"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <span class="accountType" fxFlex="50">{{
+          accountType | translate
+        }}</span>
+        <mat-form-field fxFlex="50">
+          <mat-select
+            (selectionChange)="cahngeAccount($event)"
+            formControlName="accountValue"
+          >
+            <mat-option
+              *ngFor="let accounts of accountList"
+              [value]="accounts"
+              >{{ "xxxxxxxx" + accounts.slice(-4) }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="qrcodeDiv">
+        <img class="imageAspect" [src]="imagesrc" alt="" />
+      </div>
+    </div>
+    <div
+      class="bottomdiv"
+      fxFlex="100"
+      fxLayout="row"
+      fxLayoutGap="50px"
+      fxLayoutAlign="center center"
+    >
+      <app-ic-action-button
+        buttonName="Download"
+        buttonType="stroked"
+        (onClick)="download()"
+      >
+      </app-ic-action-button>
+      <app-ic-action-button
+        buttonName="Share"
+        buttonType="filled"
+        (onClick)="share()"
+      >
+      </app-ic-action-button>
+    </div>
+  </div>
+</div>

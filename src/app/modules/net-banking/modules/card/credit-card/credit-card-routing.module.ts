@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { CreditCardDashboardComponent } from "./credit-card-dashboard/credit-card-dashboard.component";
 
 const routes: Routes = [
   {
@@ -13,6 +12,13 @@ const routes: Routes = [
     loadChildren: () =>
       import("./credit-card-dashboard/credit-card-dashboard.module").then(
         (m) => m.CreditCardDashboardModule
+      ),
+  },
+  {
+    path: "service",
+    loadChildren: () =>
+      import("./credit-card-service/credit-card-service.module").then(
+        (m) => m.CreditCardServiceModule
       ),
   },
 ];

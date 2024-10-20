@@ -6,9 +6,9 @@ import { CreditCardRoutingModule } from "./credit-card-routing.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { SharedCardModule } from "../shared-card/shared-card.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
+import { ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [],
@@ -21,6 +21,10 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     SharedCardModule,
     SharedMaterialModule,
     CoreModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatSlideToggleModule,
   ],
 })
 export class CreditCardModule {}
