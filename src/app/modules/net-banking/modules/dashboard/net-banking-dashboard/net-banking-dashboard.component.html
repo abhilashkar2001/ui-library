@@ -1,9 +1,11 @@
 <div class="parent-div" fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="space-between" class="searchDiv">
-    <div class="overView">{{"Account Overview" | translate}}</div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="searchDiv">
+    <div class="overView mb-8">{{ "Account Overview" | translate }}</div>
     <div>
       <mat-form-field appearance="outline">
-        <mat-label class="custom-mat-label">{{"Search"  | translate}}</mat-label>
+        <mat-label class="custom-mat-label">{{
+          "Search" | translate
+        }}</mat-label>
         <input
           matInput
           type="text"
@@ -11,7 +13,7 @@
           notAllowFirstSpace
           placeholder="{{ 'Search' }}"
         />
-        <mat-icon matSuffix class="searchIcon" style="color: #b4b4b4">
+        <mat-icon matSuffix class="searchIcon" style="color: #004c97">
           search
         </mat-icon>
       </mat-form-field>
@@ -20,14 +22,15 @@
   <div
     *ngIf="dashboardInfo"
     fxLayout="row"
-    fxLayoutAlign="space-between"
-    fxLayoutGap="8px"
+    fxLayoutAlign="start center"
+    fxLayoutGap="16px"
     fxFlex="100"
   >
     <ng-container *ngFor="let key of Object.keys(dashboardInfo); let i = index">
       <mat-card
         [matMenuTriggerFor]="accountMenu"
         #clickHoverMenuTrigger="matMenuTrigger"
+        class="account_info_card"
         [ngClass]="{
           'account-Card-btn': selectedKey !== key,
           'selected-account-Card': selectedKey === key
@@ -40,14 +43,19 @@
           fxFlex="100"
           fxLayoutAlign="space-between"
           fxLayoutGap="25%"
+          class="account_info_wrapper"
         >
           <div class="infoLength">
             {{ dashboardInfo[key]?.accountList?.length }}
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="space-around end">
-              <div class="cardType">{{ dashboardInfo[key]?.type | translate }}</div>
-              <div class="availableTag">{{"Available Balance" | translate}}</div>
+              <div class="cardType">
+                {{ dashboardInfo[key]?.type | translate }}
+              </div>
+              <div class="availableTag">
+                {{ "Available Balance" | translate }}
+              </div>
               <div class="balanceAmount" fxLayout="row">
                 ₹
                 <span>{{ availableBalance[key][0] }}</span>
@@ -65,15 +73,15 @@
         >
           <div fxLayout="row" fxFlex="100" fxLayoutGap="60px">
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{"Account Number" | translate}}</div>
+              <div class="label">{{ "Account Number" | translate }}</div>
               <div class="labelVal">{{ info.accountNo }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{"Type"| translate}}</div>
+              <div class="label">{{ "Type" | translate }}</div>
               <div class="labelVal">{{ dashboardInfo[key]?.accountType }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{"Balance"| translate}}</div>
+              <div class="label">{{ "Balance" | translate }}</div>
               <div class="labelVal">
                 {{ availableBalance[key][i] }}
               </div>
@@ -85,7 +93,12 @@
     </ng-container>
   </div>
 
-  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between flex-start">
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="space-between flex-start"
+    fxLayoutGap="10"
+  >
     <div fxLayout="column" fxFlex="75" fxLayoutGap="15px">
       <div class="transfer-mtcd">
         <nav mat-tab-nav-bar>
@@ -94,11 +107,17 @@
             *ngFor="let transfer of transferType; let i = index"
             [active]="i + 1 == currentIndex"
             (click)="getActiveTransferType(transfer)"
-            >{{ transfer.label | translate}}</a
+            >{{ transfer.label | translate }}</a
           >
         </nav>
-        <div class="transfer">
-          <div fxLayout="row" fxLayoutAlign="flex-start">
+        <div class="transfer" #targetElContainer>
+          <div
+            #targetElement
+            (scroll)="onTableSectionScroll($event)"
+            fxLayout="row"
+            fxLayoutAlign="flex-start"
+            class="transfer_wrapper_div"
+          >
             <div
               fxFlex="20"
               class="transfer_main_div"
@@ -110,7 +129,7 @@
                 (click)="openTransfer(transfer)"
               >
                 <img [src]="transfer.image" />
-                <div class="text-label">{{ transfer.label | translate}}</div>
+                <div class="text-label">{{ transfer.label | translate }}</div>
               </mat-card>
             </div>
           </div>
@@ -123,7 +142,7 @@
             fxLayout="row"
             fxLayoutAlign="space-between center"
           >
-            <div class="cardType">{{"Pending Approval" | translate}}</div>
+            <div class="cardType">{{ "Pending Approval" | translate }}</div>
             <div>
               <mat-card
                 class="matcard-div"
@@ -144,7 +163,7 @@
               <thead fxFlex="100" fxLayoutAlign="space-between" class="pl-28">
                 <tr fxFlex="100" fxLayout="row">
                   <th class="col label" *ngFor="let item of dummyHeader">
-                    {{ item.header | translate}}
+                    {{ item.header | translate }}
                   </th>
                 </tr>
               </thead>
@@ -180,6 +199,7 @@
                         style="position: relative; right: 6.5%; cursor: pointer"
                       >
                         <mat-icon
+                          style="color: #9696969e; font-size: 28px"
                           (click)="viewPendingRecord(auditLogDataObject)"
                         >
                           chevron_right
@@ -196,21 +216,30 @@
         </div>
       </div>
     </div>
-    <div>
+    <div fxFlex="25">
       <div class="activityLog">
         <div fxLayout="column" fxLayoutGap="10px">
           <div class="activityLog_header" fxLayoutGap="5px">
-            <div class="activityLog_name">{{"Activity log" | translate}}</div>
-            <div class="availableTag">{{"Most liked by demo bank user" | translate}}</div>
+            <div class="activityLog_name">{{ "Activity log" | translate }}</div>
+            <div class="availableTag">
+              {{ "Most liked by demo bank user" | translate }}
+            </div>
           </div>
           <div fxLayout="column" fxLayoutGap="5px">
-            <mat-form-field appearance="outline">
+            <mat-form-field
+              appearance="outline"
+              class="financial_outline_field"
+            >
               <mat-select
                 [(ngModel)]="selectedActivityLog"
                 (selectionChange)="onDropdownChange($event.value)"
               >
-                <mat-option value="financial">{{"Financial" | translate}}</mat-option>
-                <mat-option value="nonfinancial">{{"Non-Financial" | translate}}</mat-option>
+                <mat-option value="financial">{{
+                  "Financial" | translate
+                }}</mat-option>
+                <mat-option value="nonfinancial">{{
+                  "Non-Financial" | translate
+                }}</mat-option>
               </mat-select>
             </mat-form-field>
             <div fxLayout="column" fxLayoutGap="12px">
@@ -221,21 +250,30 @@
                       <mat-panel-description>
                         <div fxLayout="row">
                           <div class="vl"></div>
-                          <div class="dropdownName">
-                            {{ transformLabel(key.label) | translate}}
-                          </div>
-                          <ng-container *ngFor="let obj of displayActivityLog">
-                            <div class="valueBg">
-                              <div
-                                class="totalVal"
-                                [style.color]="key.valColor"
-                                [style.background-color]="key.bgColor"
-                                *ngIf="obj.label == key.label"
-                              >
-                                {{ obj.total }}
+                          <div
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                            fxLayoutGap="14"
+                            class="dropdownName"
+                          >
+                            <span>{{
+                              transformLabel(key.label) | translate
+                            }}</span>
+                            <ng-container
+                              *ngFor="let obj of displayActivityLog"
+                            >
+                              <div class="valueBg">
+                                <div
+                                  class="totalVal"
+                                  [style.color]="key.valColor"
+                                  [style.background-color]="key.bgColor"
+                                  *ngIf="obj.label == key.label"
+                                >
+                                  {{ obj.total }}
+                                </div>
                               </div>
-                            </div>
-                          </ng-container>
+                            </ng-container>
+                          </div>
                         </div>
                       </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -246,7 +284,7 @@
                           [style.background-color]="key.bgColor"
                           *ngIf="obj.label == key.label"
                         >
-                          <div fxLayout="column" fxLayoutGap="5px">
+                          <div fxLayout="column" fxLayoutGap="10">
                             <div
                               fxLayout="row"
                               fxLayoutAlign="space-between center"
@@ -255,7 +293,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{"Processed" | translate}}
+                                {{ "Processed" | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.processed || 0 }}
@@ -269,7 +307,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{"Pending" | translate}}
+                                {{ "Pending" | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.pending || 0 }}
@@ -283,7 +321,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{"Rejected" | translate}}
+                                {{ "Rejected" | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.rejected || 0 }}

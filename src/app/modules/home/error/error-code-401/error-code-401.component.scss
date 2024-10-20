@@ -1,55 +1,57 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 .error-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    max-width: 100vw;
-    margin: 0px auto;
-    font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: 100vw;
+  margin: 0px auto;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
 }
 
-.message-area {}
+.message-area {
+}
 
 .bold-error-code {
-    font-size: 150px;
-    font-weight: 700;
-    letter-spacing: -30px;
-    color: #184680;
+  font-size: 150px;
+  font-weight: 700;
+  letter-spacing: -30px;
+  color: #184680;
 }
 
 .bold-error-code-style-in-middle {
-    color: #3e97d9;
+  color: #3e97d9;
 }
 
 .bold-error-message {
-    text-transform: uppercase;
-    font-size: 24px;
-    font-weight: 600;
-    color: #184680;
-
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 600;
+  color: #184680;
 }
 
 .internal-server {
-    color: #3e97d9;
-    text-transform: capitalize;
-
+  color: #3e97d9;
+  text-transform: capitalize;
 }
 
 .error-description {
-    color: #000;
-    font-size: 13px;
-    font-weight: 500;
-    max-width: 800px;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  max-width: 800px;
 }
 
 .back-button {
-    background: rgb(5, 26, 45);
-    background: linear-gradient(91deg,
-            rgba(5, 26, 45, 1) 0%,
-            rgba(0, 76, 151, 1) 100%);
-    padding: 3px 50px;
-    border-radius: 20px;
-    color: #e7e7e7;
+  background: rgb(5, 26, 45);
+  background: linear-gradient(
+    91deg,
+    rgba(5, 26, 45, 1) 0%,
+    rgba(0, 76, 151, 1) 100%
+  );
+  padding: 3px 50px;
+  border-radius: 20px;
+  color: #e7e7e7;
 }

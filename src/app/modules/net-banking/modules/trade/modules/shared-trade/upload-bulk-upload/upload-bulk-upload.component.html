@@ -3,7 +3,7 @@
     <div fxLayout="column" fxFlex="100" fxLayoutGap="1%" class="mb-16">
       <div class="card">
         <div fxLayoutGap="20px" fxLayoutAlign="space-between center">
-          <div fxFlex="100" class="pb-1" fxLayoutAlign="space-between">
+          <div fxFlex="100" class="pb-1" fxLayoutAlign="space-between start">
             <div fxFlex="35" *ngIf="screenName === 'beneficiary' || screenName">
               <h2>
                 {{
@@ -65,12 +65,12 @@
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               </div>
-              <div fxFlex="26" style="margin-top: 10px">
+              <div fxFlex="26">
                 <button
                   fxFlex="100"
                   matSuffix
                   (click)="downloadTemplate($event)"
-                  class="verify-btn"
+                  class="verify-btn mt-0"
                 >
                   {{ "Download Template" }}
                 </button>

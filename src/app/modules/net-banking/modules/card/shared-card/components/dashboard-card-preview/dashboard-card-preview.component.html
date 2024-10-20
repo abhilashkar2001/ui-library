@@ -1,0 +1,62 @@
+<div class="top-container">
+  <mat-card class="default-card p-8">
+    <h3 class="sub-heading p-8">{{ title | translate }}</h3>
+    <mat-divider class="custom_divider"></mat-divider>
+    <div
+      fxLayout="row "
+      fxLayoutAlign="space-between center"
+      class="slider-container"
+    >
+      <mat-icon (click)="prev()">arrow_back_ios</mat-icon>
+      <div fxFlex="70" class="slider" [style.transform]="transform">
+        <ng-container *ngFor="let image of cardList; let i = index">
+          <ng-container *ngIf="image?.document?.fileUrl; else showDefault">
+            <img
+              [src]="baseUrl + image?.document?.fileUrl"
+              class="slide"
+              [ngStyle]="{ opacity: i == currentIndex ? 1 : 0 }"
+            />
+          </ng-container>
+          <ng-template #showDefault>
+            <img src="assets/images/card_img1.png" />
+          </ng-template>
+        </ng-container>
+      </div>
+
+      <mat-icon (click)="next()">arrow_forward_ios</mat-icon>
+    </div>
+    <div class="w-100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <div fxFlex="45" fxLayoutAlign="start center">
+        <div class="toggle-box">
+          <app-ic-toggle-slide
+            [label]="'Show Details' | translate"
+            labelPosition="before"
+          ></app-ic-toggle-slide>
+          <!-- <div class="toogle-div">
+            <span>{{ "Show Details" }}</span>
+            <mat-slide-toggle> </mat-slide-toggle>
+          </div> -->
+        </div>
+      </div>
+      <div fxFlex="45" fxLayoutAlign="end center">
+        <button mat-flat-button class="small-button class-name get_statement">
+          {{ "Get Statement" | translate }}
+        </button>
+      </div>
+      <ng-container *ngIf="!forexFilter">
+        <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
+          <span class="small-title">{{ "Type of Card" | translate }}</span>
+          <span class="small-values">{{
+            displayCard?.typeOfCard || "Visa" | translate
+          }}</span>
+        </div>
+        <div fxFlex="45" fxLayout="column" fxLayoutAlign="end end" class="mt-8">
+          <span class="small-title">{{
+            "Autopay is Disabled" | translate
+          }}</span>
+          <!-- <app-ic-toggle-slide [control]="autoPay"></app-ic-toggle-slide> -->
+        </div>
+      </ng-container>
+    </div>
+  </mat-card>
+</div>
