@@ -4,12 +4,12 @@
       <div fxFlex="40">
         <app-dashboard-card-preview
           title="Credit Card"
-          [cardList]="staticCardList"
+          [cardList]="cardSummaryDetails"
         ></app-dashboard-card-preview>
       </div>
       <div fxFlex="60">
         <app-dashboard-card-details
-          [cardInfo]="cardList[0]"
+          [cardInfo]="cardSummaryDetails?.[0]"
           [detailsItem]="detailsItem"
         ></app-dashboard-card-details>
       </div>

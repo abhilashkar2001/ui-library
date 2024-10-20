@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { CardModel, Cards } from "app/shared/models/card.model";
+import { environment } from "environments/environment";
 // import { CardModel, Cards } from "app/@core/models/card.model";
 
 @Component({
@@ -21,7 +22,7 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
 
   displayCard: CardModel;
   currentIndex: number = 0;
-
+  baseUrl = environment.microServiceURL;
   autoPay: FormControl<boolean> = new FormControl<boolean>(false);
 
   constructor() {}

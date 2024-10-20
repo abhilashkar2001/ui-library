@@ -72,28 +72,28 @@
       class="w-100 mt-24 details-content"
     >
       <div
-        *ngFor="let item of detailsItem"
+        *ngFor="let item of detailsItem; let itemIndx = index"
         fxLayout="column"
         fxFlex="33"
-        class="mt-12"
+        class="single_details_div"
+        [ngClass]="{'mt-0': itemIndx < 3}"
       >
-        <span class="small-title">{{ item?.label  | translate}}</span>
+        <span class="small-title-bold">{{ item?.label  | translate}}</span>
         <span
           [ngClass]="{
             'small-values': !item?.actionItem,
             'text-bold': item?.actionItem
           }"
-          >{{ cardInfo?.[item?.key] }}</span
-        >
-        <span
-          *ngIf="item?.actionItem"
-          [ngClass]="{
+          >
+          {{ cardInfo?.[item?.key] }}
+        </span>
+        <span *ngIf="isFunction(item)" [ngClass]="{
             'action-text': !item?.actionKey,
             'text-gray': item?.actionKey
           }"
-          (click)="gotoActionPage(item.actionItem(cardInfo[item?.actionKey]))"
+          (click)="gotoActionPage(item.actionItem(cardInfo?.[item?.actionKey]))"
         >
-          <!-- {{ item.actionItem(cardInfo[item?.actionKey]) }} -->
+          {{ item.actionItem(cardInfo?.[item?.actionKey]) }}
         </span>
       </div>
     </div>

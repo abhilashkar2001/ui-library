@@ -323,27 +323,19 @@ export class CreditCardStore {
   static readonly recentTransTabs: string[] = ["Unbilled Transaction"];
   static readonly recentTransColumn: TableHeader[] = [
     {
-      headerDef: "date",
-      headerCell: "Date",
-    },
-    {
-      headerDef: "refNumber",
+      headerDef: "icustRefNo",
       headerCell: "Ref Number",
     },
     {
-      headerDef: "details",
+      headerDef: "transferType",
       headerCell: "Details",
     },
     {
-      headerDef: "amount",
+      headerDef: "debitAmount",
       headerCell: "Amount",
     },
     {
-      headerDef: "points",
-      headerCell: "Points",
-    },
-    {
-      headerDef: "transactionDate",
+      headerDef: "created",
       headerCell: "Transaction Date",
     },
   ];
