@@ -41,3 +41,31 @@ export interface HeaderModel {
   actionItem?: (action?) => string;
   actionKey?: string;
 }
+export interface AccountList {
+  accountNo?: string;
+  accountBranch?: string;
+  accountCurrency?: string;
+  accountBalance: any;
+  id?: number;
+  cardName?: string;
+  cardType?: string;
+  bankName?: string;
+  cardNumber: any;
+  customerName?: string;
+  validDate?: string;
+  typeOfCard?: string;
+  autoPay?: boolean;
+  cardStatus?: boolean;
+  rewardPoint?: number;
+  totalDueAmount?: number;
+  minDueAmount?: number;
+  dueDate?: string;
+  currentOutStaning?: number;
+  avlCreditBalance?: number;
+  totalCreditLimit?: number;
+  statementDate?: string;
+  lastStlmtMade?: number;
+  lastPaymentDate?: string;
+  accountNumber?: string;
+  customerId?: number;
+}

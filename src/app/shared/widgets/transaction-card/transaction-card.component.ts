@@ -1,29 +1,30 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { TransactionCardConstant } from './transaction-card.constants';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UILibIconService } from 'app/shared/services/ui-lib-icon.service';
-import { IconService } from 'app/shared/services/icon.service';
+import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
+import { Router } from "@angular/router";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { TransactionCardConstant } from "./transaction-card.constants";
+import { IconService } from "app/shared/services/icon.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
-  selector: 'app-transaction-card',
-  templateUrl: './transaction-card.component.html',
-  styleUrls: ['./transaction-card.component.scss']
+  selector: "app-transaction-card",
+  templateUrl: "./transaction-card.component.html",
+  styleUrls: ["./transaction-card.component.scss"],
 })
 export class TransactionCardComponent implements OnInit {
   @Input("transactionList") transactionList =
     TransactionCardConstant.transactionCard;
   selectedTab;
-
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-    // @Optional() private dialogRef: MatDialogRef<TransactionCardComponent>,
     private iconService: IconService,
-  ) { }
+    private router: Router,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() private dialogRef: MatDialogRef<TransactionCardComponent>,
+    private tokenStorageService: TokenStorageService
+  ) {}
 
   ngOnInit(): void {
     if (this.data) {
       this.selectedTab = this.data[0];
-      console.log(this.selectedTab, "checkkkk");
       this.addSvgIcon(this.selectedTab?.childTab);
     } else if (this.transactionList?.length > 0) {
       this.selectedTab = this.transactionList[0];
@@ -32,8 +33,8 @@ export class TransactionCardComponent implements OnInit {
   }
 
   /**
- * Add svg icon to mat icon registry, if it is not present in mat icon registry
- */
+   * Add svg icon to mat icon registry, if it is not present in mat icon registry
+   */
   addSvgIcon(item) {
     item.forEach((item) => {
       this.iconService
@@ -58,4 +59,21 @@ export class TransactionCardComponent implements OnInit {
     });
   }
 
+  /**
+   * On click on any quick link it will navigate to that particular screen
+   * @param route route of the quick link
+   */
+  route(route: string) {
+    this.router.navigate([route]).then((_) => {
+      if (this.dialogRef) this.dialogRef.close();
+    });
+  }
+
+  navigate(route: string, screenName: string) {
+    if (screenName == "Tracking")
+      window.open(
+        `${route}?route=tracking&code=${this.tokenStorageService.getToken()}`
+      );
+    else window.open(route);
+  }
 }

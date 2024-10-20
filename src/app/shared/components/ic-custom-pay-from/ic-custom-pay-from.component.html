@@ -18,27 +18,29 @@
       ></app-searchable-select>
     </div>
     <ng-content></ng-content>
-    <span
+    <!-- <span
       *ngIf="message && control.value"
       fxLayout="row"
       fxLayoutAlign="start center"
       class="message mt-16"
     >
-      <span class="text-gray mr-4">{{'Balance' | translate}} : </span>
+      <span class="text-gray mr-4">{{ "Balance" | translate }} : </span>
       <span class="text-poppins">{{
         message | currency: this.currencyCode
       }}</span>
-    </span>
-    <span  fxLayout="row"
-    fxLayoutAlign="start center" class="message mt-16" *ngIf="accountType && control.value">
-      <span class="text-gray mr-4">{{accountType | translate}} | {{"Balance"| translate}}: </span>
+    </span> -->
+    <span
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="message mt-16"
+      *ngIf="accountType && control.value"
+    >
+      <span class="text-gray mr-4"
+        >{{ accountType | translate }} | {{ "Balance" | translate }}:
+      </span>
       <span class="text-gray mr-4">
-        {{
-          balance ? balance: 0
-            | currency: this.currencyCode
-        }}
+        {{ balance ?? 0 | currency : this.currencyCode }}
       </span>
     </span>
- 
   </div>
 </ng-container>

@@ -151,7 +151,7 @@ export class NETBANKING {
     {
       label: "Cards",
       icon: "/assets/images/net-banking-nav-bar/Cards_Icon.svg",
-      link: "/user/card/dashboard",
+      link: "/user/card/credit-card",
     },
     {
       label: "Loan",

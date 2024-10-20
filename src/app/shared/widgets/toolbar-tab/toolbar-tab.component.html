@@ -1,0 +1,50 @@
+<mat-card fxLayout="column" class="container-card">
+  <div
+    fxLayout="row"
+    class="tab-header scroll-container"
+    #scrollContainer
+    (scroll)="onScroll()"
+  >
+    <div class="arrow-container left">
+      <button mat-icon-button (click)="scroolToLeft()" *ngIf="isScrolled">
+        <mat-icon class="scroll-icon current_theme_filter" svgIcon="arrow-back">
+        </mat-icon>
+      </button>
+    </div>
+
+    <div
+      class="tab-buttons"
+      [ngClass]="selectedTab == item.screenName ? 'selected-tab-buttons' : ''"
+      *ngFor="let item of items; let i = index"
+      (click)="navigate(item, i)"
+    >
+      <div
+        class="tab-content"
+        fxLayoutGap="5%"
+        fxLayoutAlign="space-around center  "
+        fxLayout="column"
+        #scrollContainer
+      >
+        <button mat-icon-button>
+          <mat-icon
+            [svgIcon]="
+              selectedTab == item.screenName ? item.selectedIcon : item.icon
+            "
+            class="current_theme_filter"
+          ></mat-icon>
+        </button>
+        {{ item.screenName | translate }}
+      </div>
+    </div>
+    <div class="arrow-container right" *ngIf="showArrow">
+      <button mat-icon-button (click)="scrollToRight()">
+        <mat-icon class="scroll-icon current_theme_filter" svgIcon="arrow-back">
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+<div class="content-div mx-12 p-24">
+  <ng-content></ng-content>
+</div>

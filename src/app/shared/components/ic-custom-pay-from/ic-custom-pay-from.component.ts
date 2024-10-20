@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
-import { ChequeService } from "app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service";
-import { InternetBankingService } from "app/shared/services/internet-banking.service";
+import { CardService } from "app/modules/net-banking/modules/card/card.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
@@ -22,13 +21,14 @@ export class IcCustomPayFromComponent implements OnInit {
   @Input("bindValueKey") bindValueKey: string;
   @Input("bindLabelKey") bindLabelKey: string;
   @Input("currencyCode") currencyCode: string;
+  @Input("skipBalanceCheck") skipBalanceCheck: boolean = false;
   @Output() selectionChange = new EventEmitter();
   @Output() remainedBalance = new EventEmitter();
   @Output() currencyCodeValue = new EventEmitter();
   errorMessage: string;
 
   constructor(
-    private payFromService: InternetBankingService,
+    private payFromService: CardService,
     private sessionStorageService: SessionStorageService
   ) {}
 
@@ -44,17 +44,21 @@ export class IcCustomPayFromComponent implements OnInit {
   }
 
   fetchBalance(event) {
+    this.errorMessage = null;
     this.selectionChange.emit(event);
     this.currencyCodeValue.emit(this.currencyCode);
-    if (event)
-      this.payFromService.fetchAccountBalance(event).subscribe((res: any) => {
-        if (res?.data) {
-          this.balance = res?.data?.currbal;
-          this.remainedBalance.emit(this.balance);
-          if (this.balance < 0) {
-            this.errorMessage = "Minimum balance is required";
-          } else this.errorMessage = "";
-        }
-      });
+    this.accountType = this.items.find(
+      (item) => item?.accountNo == event
+    )?.accountType;
+    this.payFromService.getBalance(event).subscribe((res: any) => {
+      if (res?.data) {
+        this.balance = res?.data?.currbal;
+        this.remainedBalance.emit(this.balance);
+        if (this.skipBalanceCheck) return;
+        if (this.balance < 0) {
+          this.errorMessage = "Minimum balance is required";
+        } else this.errorMessage = "";
+      }
+    });
   }
 }

@@ -13,7 +13,7 @@ export class IcRadioButtonComponent implements OnInit {
   @Input("displayLabel") displayLabel: string;
   @Input("layout") layout: any = "row";
   @Input("radiolayout") radiolayout: any = "row";
-  @Input("gap") gap: string = "10px";
+  @Input("gap") gap: string | number = 10;
 
   @Output() change = new EventEmitter();
   constructor() {}
