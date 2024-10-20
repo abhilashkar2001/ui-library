@@ -10,6 +10,7 @@ import { SendMoneyService } from "app/shared/services/fund-transfer/send-money.s
 import { GenericValueService } from "app/shared/services/generic-value.service";
 import { debounceTime } from "rxjs/operators";
 import { findCurrency, removeSpecCharsOnly } from "app/shared/helpers/utils";
+import { IconService } from "app/shared/services/icon.service";
 
 @Component({
   selector: "app-schedule-payment",
@@ -24,7 +25,7 @@ export class SchedulePaymentComponent implements OnInit {
     { label: "No", value: false },
   ];
   frequncyData: any[] = [];
-  proceedPayment: boolean = false;
+  proceedPayment: boolean = true;
   payFromData: any;
   transferData: any;
   mobileNo = "";
@@ -52,9 +53,13 @@ export class SchedulePaymentComponent implements OnInit {
     private tokenService: TokenStorageService,
     private sendMoneyService: SendMoneyService,
     private genericValueService: GenericValueService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    private iconService: IconService
   ) {
     this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
+    this.iconService
+      .addIconIfNotExists("calendar-icon", "assets/images/calendar.svg")
+      .subscribe(() => {});
   }
 
   ngOnInit(): void {
@@ -94,9 +99,16 @@ export class SchedulePaymentComponent implements OnInit {
       });
   }
   selectTransfer(event) {
+    console.log(event);
     this.selectedAccNo = this.transferData.find(
-      (res) => (res.accountNo = event ? event?.accountNo : "")
+      (res) => (res.accountNo = event ?? event?.accountNo)
     );
+    console.log(this.selectedAccNo);
+    this.message =
+      "Bank Name - " +
+      this.selectedAccNo.bankName +
+      "| Bank Code - " +
+      this.selectedAccNo.bankCode;
     this.service
       .fetchInfoByoriginationAccNo(this.selectedAccNo?.accountNo)
       .subscribe((res) => {
@@ -137,37 +149,24 @@ export class SchedulePaymentComponent implements OnInit {
       customerId: [],
       retailBeneficiaryMasterId: [],
     });
-    this.schedulePaymentForm
-      .get("creditAccount")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((resp: any) => {
-        if (resp) this.accountDetails(resp);
-      });
-    this.schedulePaymentForm
-      .get("creditAccount")
-      .valueChanges.pipe(debounceTime(500))
-      .subscribe((res) => {
-        if (res) this.selectTransfer(res);
-      });
+    // this.schedulePaymentForm
+    //   .get("creditAccount")
+    //   .valueChanges.pipe(debounceTime(500))
+    //   .subscribe((resp: any) => {
+    //     if (resp) this.accountDetails(resp);
+    //   });
+    // this.schedulePaymentForm
+    //   .get("creditAccount")
+    //   .valueChanges.pipe(debounceTime(500))
+    //   .subscribe((res) => {
+    //     if (res) this.selectTransfer(res);
+    //   });
   }
   payAccount(value) {
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.selectedCurrency = listOfAccounts.find(
       (res) => res?.accountNo == value
     )?.accountCurrency;
-  }
-  accountDetails(value) {
-    const transferDetails = this.transferData.find(
-      (item) => item.accountNo === value
-    );
-    this.message =
-      "Bank Name - " +
-      transferDetails.bankName +
-      "| Bank Code - " +
-      transferDetails.bankCode;
-    this.schedulePaymentForm
-      .get("retailBeneficiaryMasterId")
-      ?.setValue(transferDetails?.retailBeneficiaryMasterId);
   }
   getCustomerInfo() {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();

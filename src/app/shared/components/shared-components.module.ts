@@ -105,6 +105,7 @@ import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-fro
 import { IcActionButtonComponent } from "./ic-action-button/ic-action-button.component";
 import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
 import { IcCustomAmountInput } from "./ic-custom-amount-input/ic-custom-amount-input.component";
+import { ReusableFavouritiesComponent } from "./reusable-favourities/reusable-favourities.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -185,6 +186,7 @@ const components = [
   IcActionButtonComponent,
   IcRadioButtonComponent,
   IcCustomAmountInput,
+  ReusableFavouritiesComponent,
 ];
 
 @NgModule({
