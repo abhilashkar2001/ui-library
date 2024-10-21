@@ -137,6 +137,7 @@ export class NETBANKING {
     {
       label: "Fund Transfer",
       icon: "/assets/images/net-banking-nav-bar/Fund-Transfer_Icon.svg",
+      link: "/user/send-money/dashboard",
     },
     {
       label: "Trade on Net",

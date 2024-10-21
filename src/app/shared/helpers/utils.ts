@@ -1,4 +1,5 @@
 import * as moment from "moment";
+import { StaticData } from "../models/static.constant";
 
 export function getIndexBy(array: Array<{}>, { name, value }): number {
   for (let i = 0; i < array.length; i++) {
@@ -97,4 +98,18 @@ export interface FilterBy {
   newFilter: string;
   authStatus: string;
   recordStatus: string;
+}
+
+export function removeSpecCharsOnly(separator: any, val: any) {
+  let value = val?.toString();
+  const expression = `[${separator}]`;
+  const customRegx = new RegExp(expression, "g");
+  const money = value?.replace(customRegx, "");
+  console.log("check", money);
+
+  return Number(money);
+}
+
+export function findCurrency(currencyCode) {
+  return StaticData.currencyList[currencyCode];
 }

@@ -1,0 +1,52 @@
+.main-div{
+    margin-right: 30px;
+}
+.radion-btn-algn{
+position: relative;
+bottom: 7PX;
+}
+.cancel-btn{
+    width: 158px;
+    height: 43px;
+    border-radius: 8px;
+    border: 1px solid #00205c;
+    color: #00205C;
+}
+.payment-details{
+    // top: 15px;
+    position: relative;
+    color:#377DFF; 
+    font-size: 16px;
+}
+.proceed-btn{
+    width: 158px;
+    height: 43px;
+    border-radius: 8px;
+    background-color: #00205c;
+    color: white;
+}
+
+.custom-margin{
+    margin-top: -3%;
+}
+.recurring-algn{
+    margin-top: -3.5%;
+}
+.custom-transfer{
+    margin-top: 4%;
+}
+
+.btn-algn{
+    margin-top: 15px
+}
+.favourites-algn{
+    margin-bottom: 10px;
+}
+.favourites{
+    color: #377DFF;
+    font-size: 16px;
+}
+::ng-deep .mat-dialog-container{
+    padding: 0px !important;
+    border-radius: 12px !important;
+  }

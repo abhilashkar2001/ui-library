@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 @Component({
   selector: "app-ic-action-button",
   templateUrl: "./ic-action-button.component.html",
-  styleUrls: ["./ic-action-button.component.scss"],
+  styleUrls: ["./ic-action-button.component.scss"]
 })
 export class IcActionButtonComponent implements OnInit {
   @Input() buttonName: string;

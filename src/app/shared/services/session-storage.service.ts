@@ -191,6 +191,7 @@ export class SessionStorageService {
   public removeListOfAccounts(): void {
     this.session.removeItem(SessionStorageEnum.LIST_OF_ACCOUNTS);
   }
+
   /**
    * FETCH: Selected account from session storage whose key is stored in SELECTED_ACCOUNT_NO in session storage enum
    * @returns it will give selected account no using enum

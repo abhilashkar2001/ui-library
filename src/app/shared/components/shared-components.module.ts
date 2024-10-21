@@ -101,6 +101,8 @@ import { TransactionCardComponent } from "../widgets/transaction-card/transactio
 import { SwiperCardComponent } from "./swiper-card/swiper-card.component";
 import { RecentTransactionComponent } from "./recent-transaction/recent-transaction.component";
 import { IcToggleSlideComponent } from "./ic-toggle-slide/ic-toggle-slide.component";
+import { IcCustomAmountInput } from "./ic-custom-amount-input/ic-custom-amount-input.component";
+import { ReusableFavouritiesComponent } from "./reusable-favourities/reusable-favourities.component";
 import { IcActionButtonComponent } from "./ic-action-button/ic-action-button.component";
 import { ToolbarTitleComponent } from "../widgets/toolbar-title/toolbar-title.component";
 import { ToolbarTabComponent } from "../widgets/toolbar-tab/toolbar-tab.component";
@@ -184,6 +186,8 @@ const components = [
   SwiperCardComponent,
   RecentTransactionComponent,
   IcToggleSlideComponent,
+  IcCustomAmountInput,
+  ReusableFavouritiesComponent,
   IcActionButtonComponent,
   ToolbarTitleComponent,
   ToolbarTabComponent,
