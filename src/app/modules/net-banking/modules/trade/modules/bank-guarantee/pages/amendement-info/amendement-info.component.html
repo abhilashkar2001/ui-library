@@ -108,6 +108,7 @@
   <div fxFlex="23">
     <mat-form-field appearance="outline" class="full-width">
       <mat-select formControlName="amountChnage">
+        <mat-option [value]="">Select</mat-option>
         <mat-option *ngFor="let item of amountArray" [value]="item">{{
           item
         }}</mat-option>
@@ -147,6 +148,7 @@
   <div fxFlex="23" *ngIf="amdmentFormGroup.controls['feeAmount']">
     <mat-form-field appearance="outline" class="full-width">
       <mat-select formControlName="feeAmount">
+        <mat-option [value]="">Select</mat-option>
         <mat-option *ngFor="let item of feeAmountArray" [value]="item">{{
           item
         }}</mat-option>

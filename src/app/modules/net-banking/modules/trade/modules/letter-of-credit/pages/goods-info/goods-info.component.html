@@ -14,6 +14,7 @@
           >
           <mat-form-field>
             <mat-select formControlName="partialShipmentOption">
+              <mat-option [value]="">Select</mat-option>
               <mat-option value="Prohibited">Prohibited</mat-option>
             </mat-select>
           </mat-form-field>
@@ -22,6 +23,7 @@
           <mat-label class="custom-label">Transshipment Option (43T)</mat-label>
           <mat-form-field>
             <mat-select formControlName="transshipmentOption">
+              <mat-option [value]="">Select</mat-option>
               <mat-option value="Prohibited">Prohibited</mat-option>
             </mat-select>
           </mat-form-field>
@@ -151,6 +153,7 @@
           <mat-label class="custom-label">Country of Origin</mat-label>
           <mat-form-field>
             <mat-select formControlName="countryId">
+              <mat-option [value]="">Select</mat-option>
               <mat-option value="India">India</mat-option>
             </mat-select>
           </mat-form-field>
@@ -214,6 +217,7 @@
         <mat-label class="custom-label">Trade Terms*</mat-label>
         <mat-form-field>
           <mat-select formControlName="tradeTerms">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="India">CIP</mat-option>
           </mat-select>
         </mat-form-field>

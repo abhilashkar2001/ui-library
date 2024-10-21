@@ -66,6 +66,7 @@
                         formControlName="prefix"
                         (selectionChange)="CheckGenderandPrefix(i)"
                       >
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let prefixItem of prefixArray"
                           [value]="prefixItem.id"
@@ -230,6 +231,7 @@
                             <ng-container
                               *ngFor="let isdCode of countriesIsdCodes"
                             >
+                              <mat-option [value]="">Select</mat-option>
                               <mat-option
                                 *ngIf="isdCode?.countryTelIsdCode"
                                 [value]="isdCode?.countryTelIsdCode"
@@ -312,6 +314,7 @@
                         formControlName="gender"
                         (selectionChange)="CheckGenderandPrefix(i)"
                       >
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let genderItem of genderArray"
                           [value]="genderItem.id"
@@ -344,6 +347,7 @@
                     >
                       <mat-label>Marital Status</mat-label>
                       <mat-select formControlName="maritalStatus">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let maritalItem of maritalStatusArray"
                           [value]="maritalItem.id"
@@ -406,6 +410,7 @@
                         >
                           <mat-label>Residence Type</mat-label>
                           <mat-select formControlName="residenceType">
+                            <mat-option [value]="">Select</mat-option>
                             <mat-option
                               *ngFor="let residenceItem of residenceTypeArray"
                               [value]="residenceItem.id"

@@ -11,6 +11,7 @@
         <mat-label class="custom-label">Type (40A)</mat-label>
         <mat-form-field>
           <mat-select formControlName="type">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="Irrevocable">Irrevocable</mat-option>
           </mat-select>
         </mat-form-field>
@@ -65,6 +66,7 @@
         <mat-label class="custom-label">Currency (32B)*</mat-label>
         <mat-form-field>
           <mat-select formControlName="currency">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="1">INR</mat-option>
           </mat-select>
         </mat-form-field>
@@ -88,6 +90,7 @@
         <div fxLayout="row" fxLayoutAlign="space-between" fxFlex="100">
           <mat-form-field fxFlex="48.5">
             <mat-select formControlName="tolerance">
+              <mat-option [value]="">Select</mat-option>
               <mat-option value="notExceeding">Not exceeding</mat-option>
             </mat-select>
           </mat-form-field>
@@ -189,6 +192,7 @@
         <mat-label class="custom-label">Purpose*</mat-label>
         <mat-form-field>
           <mat-select formControlName="purpose">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="capex">Capex</mat-option>
           </mat-select>
         </mat-form-field>
@@ -230,6 +234,7 @@
         >
         <mat-form-field>
           <mat-select formControlName="creditAvailable">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="Advising Bank">Advising Bank</mat-option>
             <mat-option>any Bank</mat-option>
             <mat-option>Other</mat-option>
@@ -240,6 +245,7 @@
         <mat-label class="custom-label">By (41A)</mat-label>
         <mat-form-field>
           <mat-select formControlName="by">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="Acceptance">Acceptance</mat-option>
             <mat-option>Negotiation</mat-option>
             <mat-option>Payment</mat-option>
@@ -306,6 +312,7 @@
           </div>
           <div fxFlex="1" class="vl"></div>
           <mat-select fxFlex="68" formControlName="tenor">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="awb">AWB</mat-option>
           </mat-select>
         </mat-form-field>
@@ -344,6 +351,7 @@
         <mat-label class="custom-label">Branch</mat-label>
         <mat-form-field>
           <mat-select formControlName="branch">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="1">HDFC</mat-option>
           </mat-select>
         </mat-form-field>
@@ -443,6 +451,7 @@
         <mat-label class="custom-label">Drawee (42A)</mat-label>
         <mat-form-field>
           <mat-select formControlName="drawee">
+            <mat-option [value]="">Select</mat-option>
             <mat-option value="issuingBank">Issuing Bank</mat-option>
           </mat-select>
         </mat-form-field>

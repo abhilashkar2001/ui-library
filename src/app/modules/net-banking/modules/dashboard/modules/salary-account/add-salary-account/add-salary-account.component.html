@@ -30,6 +30,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Prefix</mat-label>
           <mat-select formControlName="prefix">
+            <mat-option [value]="">Select</mat-option>
             <mat-option *ngFor="let item of prefixData" [value]="item.id">{{
               item.values
             }}</mat-option>
@@ -91,6 +92,7 @@
         >
           <mat-select formControlName="mobtCode">
             <ng-container>
+              <mat-option [value]="">Select</mat-option>
               <mat-option
                 *ngFor="let data of countryData"
                 [value]="data.countryTelIsdCode"
@@ -121,6 +123,7 @@
         <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender">
+            <mat-option [value]="">Select</mat-option>
             <mat-option *ngFor="let data of genederData" [value]="data.id">{{
               data.values
             }}</mat-option>
@@ -131,6 +134,7 @@
         <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label>Nationality</mat-label>
           <mat-select formControlName="nationality">
+            <mat-option [value]="">Select</mat-option>
             <mat-option
               *ngFor="let data of countryData"
               [value]="data.nationality"
@@ -157,6 +161,7 @@
         <mat-form-field appearance="outline" class="full-width disable-field">
           <mat-label>Residence Type</mat-label>
           <mat-select formControlName="residenceType">
+            <mat-option [value]="">Select</mat-option>
             <mat-option *ngFor="let data of residencyData" [value]="data.id">{{
               data.values
             }}</mat-option>
@@ -167,6 +172,7 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Country*</mat-label>
           <mat-select formControlName="country">
+            <mat-option [value]="">Select</mat-option>
             <mat-option
               *ngFor="let data of countryData"
               [value]="data.countryName"
@@ -293,6 +299,7 @@
                       class="custom_option"
                       *ngIf="document.controls['files'].controls.length != 0"
                     >
+                      <mat-option [value]="">Select</mat-option>
                       <mat-option
                         *ngFor="
                           let file of document.controls['files'].controls;
