@@ -1,5 +1,5 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import {
   MatTreeFlatDataSource,
@@ -15,8 +15,9 @@ import { DrawerConstant } from "./custom-drawer.constant";
   templateUrl: "./custom-drawer.component.html",
   styleUrls: ["./custom-drawer.component.scss"],
 })
-export class CustomDrawerComponent implements OnInit {
-  TREE_DATA: any[] = DrawerConstant.DRAWER_MENU;
+export class CustomDrawerComponent implements OnInit, OnChanges {
+  @Input() menuType: string;
+  TREE_DATA: any[] = [];
   currentMenu = "";
 
   constructor(
@@ -25,7 +26,6 @@ export class CustomDrawerComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {
-    this.dataSource.data = this.TREE_DATA;
     this.matIconRegistry.addSvgIcon(
       `sidenav-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -34,7 +34,26 @@ export class CustomDrawerComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['menuType']) {
+      this.setTreeData()
+    }
+  }
+
+
+  setTreeData() {
+    if (this.menuType == 'trade') {
+      this.TREE_DATA = DrawerConstant.DRAWER_MENU;
+    } else if (this.menuType == 'loan') {
+      this.TREE_DATA = DrawerConstant.LOAN_DRAWER_MENU;
+    }
+    this.dataSource.data = this.TREE_DATA
+    this.cdr.markForCheck()
+  }
+
 
   private _transformer = (node: any, level: number) => {
     return {
@@ -44,8 +63,11 @@ export class CustomDrawerComponent implements OnInit {
       roleName: node.roleName,
       path: node.path,
       id: node?.id,
+      children: node.children || []
     };
   };
+
+
 
   treeControl = new FlatTreeControl<any>(
     (node) => node.level,
@@ -62,6 +84,7 @@ export class CustomDrawerComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   hasChild = (_: number, node: any) => node.expandable;
+
 
   getNode(node) {
     this.currentMenu = node.name;

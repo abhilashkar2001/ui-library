@@ -4,7 +4,7 @@
   fxLayoutGap="1%"
   class="loan_dashboard_main_container"
 >
-  <div fxFlex="74" fxLayout="column">
+  <div fxFlex="75" fxLayout="column">
     <mat-card fxLayout="column" class="loan-card">
       <div fxLayout="row" class="m-8" fxLayoutAlign="space-between center">
         <h1 class="dashboard_card_title">
@@ -15,11 +15,11 @@
         </h1>
         <div class="toogle-div">
           <span>{{ "Statistics" }}</span>
-          <mat-slide-toggle> </mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="isStatics"> </mat-slide-toggle>
         </div>
       </div>
       <!-- Overview Account Starts Here -->
-      <div fxLayout="column">
+      <div *ngIf="!isStatics" fxLayout="column">
         <div class="flex-item" *ngFor="let loan of loanDetails; let i = index">
           <div class="card_container" fxLayout="column" fxFlex="100">
             <div
@@ -95,6 +95,20 @@
         </div>
       </div>
       <!-- Overview Account Ends Here -->
+
+      <!-- Static data starts here -->
+      <!-- <div *ngIf="isStatics" style="max-height: 250px" fxLayout="row">
+        <div class="flex-item" fxFlex="30">
+          <ng-container *ngFor="let item of staticDataArr; let i = index">
+            <app-dashboard-overview-card
+              [cardInfo]="item"
+            ></app-dashboard-overview-card>
+          </ng-container>
+        </div>
+        <div fxFlex="70">
+          <app-chart [dynamicCharData]="staticsAccountData"> </app-chart>
+        </div>
+      </div> -->
     </mat-card>
 
     <!-- Transcation tab starts here -->
@@ -103,5 +117,58 @@
         [transactionList]="transactionCard"
       ></app-transaction-card
     ></mat-card>
+  </div>
+
+  <!-- Right sidebar starts -->
+  <div fxFlex="25">
+    <div>
+      <app-swiper-card></app-swiper-card>
+      <!-- Closed loan start here -->
+      <section class="mtcd">
+        <div fxLayout="column">
+          <div fxLayoutAlign="space-between center">
+            <h3 class="bill_type">{{ "Closed Loan" }}</h3>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div
+            fxLayout="row"
+            *ngFor="let closedLoan of closedLoanList; let i = index"
+            fxLayoutAlign="space-between center"
+          >
+            <div class="bill_body" fxLayout="row">
+              <div class="createdByImg">
+                <img
+                  class="roundedImg"
+                  [src]="closedLoan?.loanImageUrl"
+                  alt=""
+                  height="100%"
+                  width="100%"
+                />
+              </div>
+              <div fxLayout="column" class="bill_info">
+                <label class="bill_type">{{ closedLoan?.loanType }}</label>
+                <label class="bill_number"
+                  >{{ closedLoan.accNo }} / {{ closedLoan.date }}</label
+                >
+              </div>
+            </div>
+            <!-- <div fxLayout="column">
+              <label class="due_date">Due on {{ closedLoan.date }}</label>
+              <button mat-raised-button class="pay_btn">Pay</button>
+            </div> -->
+          </div>
+        </div>
+      </section>
+      <!-- Closed loan ends here -->
+
+      <!-- Instant approve start here -->
+      <div class="mtcd">
+        <app-external-link
+          title="Instant Approve"
+          [types]="instantApprove"
+        ></app-external-link>
+      </div>
+    </div>
   </div>
 </div>

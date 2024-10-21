@@ -110,6 +110,8 @@ import { LinkPayeeSideBarComponent } from "../widgets/link-payee-side-bar/link-p
 import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-from.component";
 import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
+import { ExternalLinkComponent } from "./external-link/external-link.component";
+import { CustomDrawerComponent } from "./custom-drawer/custom-drawer.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -195,6 +197,8 @@ const components = [
   QrcodeComponent,
   IcCustomPayFromComponent,
   IcRadioButtonComponent,
+  ExternalLinkComponent,
+  CustomDrawerComponent,
 ];
 
 @NgModule({
@@ -225,4 +229,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }
