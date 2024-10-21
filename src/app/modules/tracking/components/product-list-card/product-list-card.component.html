@@ -17,6 +17,7 @@
         [(ngModel)]="searchFilter"
         (selectionChange)="onCategoryChange()"
       >
+        <mat-option [value]="">Select</mat-option>
         <mat-option [value]="category" *ngFor="let category of categoryList">{{
           category
         }}</mat-option>

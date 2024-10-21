@@ -13,6 +13,7 @@
           >
           <mat-form-field fxFlex="60" class="form-field">
             <mat-select formControlName="purposeOfPayment">
+              <mat-option [value]="">Select</mat-option>
               <mat-option *ngFor="let item of purpose" [value]="item">{{
                 item
               }}</mat-option>
@@ -25,6 +26,7 @@
           >
           <mat-form-field fxFlex="60" class="form-field">
             <mat-select formControlName="debitAccount">
+              <mat-option [value]="">Select</mat-option>
               <mat-option *ngFor="let item of fromAccount" [value]="item">{{
                 item
               }}</mat-option>

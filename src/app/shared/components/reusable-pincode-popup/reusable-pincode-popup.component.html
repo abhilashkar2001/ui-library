@@ -58,6 +58,7 @@
             (selectionChange)="fetchCityByState($event.value)"
             disableOptionCentering
           >
+            <mat-option [value]="">Select</mat-option>
             <mat-option *ngFor="let state of states" [value]="state.stateId">{{
               state.stateName
             }}</mat-option>
@@ -84,6 +85,7 @@
             (selectionChange)="populateStateCountryByCity($event.value)"
             disableOptionCentering
           >
+            <mat-option [value]="">Select</mat-option>
             <mat-option *ngFor="let city of cities" [value]="city.cityId">{{
               city.cityName
             }}</mat-option>

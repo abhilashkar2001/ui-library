@@ -1,64 +1,105 @@
 <div class="card-type">
-    <div class="header">
-        <button class="back-arrow" (click)="onBack()">
-            <mat-icon>navigate_before</mat-icon>
-        </button>
-        <span class="text-header">Card Feature Compare</span>
-        <div class="add-button-section">
-            <button class="confirm-button add-btn">
-                <mat-icon>add</mat-icon>
-                <span> Add </span>
-            </button>
-        </div>
+  <div class="header">
+    <button class="back-arrow" (click)="onBack()">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <span class="text-header">Card Feature Compare</span>
+    <div class="add-button-section">
+      <button class="confirm-button add-btn">
+        <mat-icon>add</mat-icon>
+        <span> Add </span>
+      </button>
     </div>
-    <div class="row">
-        <div class="col-1">
-            <div class="list-container">
-                <div class="list active" (click)="selectedTab(1)" [ngClass]="{'active' : tab === 1}">Key Benefits</div>
-                <mat-divider></mat-divider>
-                <div class="list" (click)="selectedTab(2)" [ngClass]="{'active' : tab === 2}">Whay You Earn</div>
-                <mat-divider></mat-divider>
-                <div class="list" (click)="selectedTab(3)" [ngClass]="{'active' : tab === 3}">Reward on every spend
-                </div>
-                <mat-divider></mat-divider>
-                <div class="list" (click)="selectedTab(4)" [ngClass]="{'active' : tab === 4}">Fuel Surcharge Wavier
-                </div>
-                <mat-divider></mat-divider>
-                <div class="list" (click)="selectedTab(5)" [ngClass]="{'active' : tab === 5}">Milestone Benefits (In a
-                    Year)</div>
-                <mat-divider></mat-divider>
-                <div class="list" (click)="selectedTab(6)" [ngClass]="{'active' : tab === 6}">Membership Fee</div>
-
-            </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <div class="list-container">
+        <div
+          class="list active"
+          (click)="selectedTab(1)"
+          [ngClass]="{ active: tab === 1 }"
+        >
+          Key Benefits
         </div>
-        <div class="col-2">
-            <div class="cards-section">
-                <div class="cards" *ngFor="let card of cards; let index = index;">
-                    <span><button (click)="onCardDelete(index)"><mat-icon>delete</mat-icon></button></span>
-                    <img [src]="card.image" alt="" width="229" height="138">
-                    <mat-form-field appearance="outline">
-                        <mat-select>
-                            <mat-option value="'joint'">Debit Card</mat-option>
-                            <mat-option value="'individual">Credit Card</mat-option>
-                            <mat-option value="'individual">Shopping Card</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="rewards-section">
-                <div class="rewards-details" style="text-align: center; align-items: center;">
-                    <span class="plain-text">N/A</span>
-                </div>
-                <div class="vl"></div>
-                <div class="rewards-details">
-                    <span class="lable-text">10000</span>
-                    <span class="plain-text">Rewards Point</span>
-                </div>
-                <div class="vl"></div>
-                <div class="rewards-details">
-                    <span class="lable-text">1000</span>
-                    <span class="plain-text">Rewards Point</span>
-                </div>
-            </div>
+        <mat-divider></mat-divider>
+        <div
+          class="list"
+          (click)="selectedTab(2)"
+          [ngClass]="{ active: tab === 2 }"
+        >
+          Whay You Earn
         </div>
+        <mat-divider></mat-divider>
+        <div
+          class="list"
+          (click)="selectedTab(3)"
+          [ngClass]="{ active: tab === 3 }"
+        >
+          Reward on every spend
+        </div>
+        <mat-divider></mat-divider>
+        <div
+          class="list"
+          (click)="selectedTab(4)"
+          [ngClass]="{ active: tab === 4 }"
+        >
+          Fuel Surcharge Wavier
+        </div>
+        <mat-divider></mat-divider>
+        <div
+          class="list"
+          (click)="selectedTab(5)"
+          [ngClass]="{ active: tab === 5 }"
+        >
+          Milestone Benefits (In a Year)
+        </div>
+        <mat-divider></mat-divider>
+        <div
+          class="list"
+          (click)="selectedTab(6)"
+          [ngClass]="{ active: tab === 6 }"
+        >
+          Membership Fee
+        </div>
+      </div>
     </div>
+    <div class="col-2">
+      <div class="cards-section">
+        <div class="cards" *ngFor="let card of cards; let index = index">
+          <span
+            ><button (click)="onCardDelete(index)">
+              <mat-icon>delete</mat-icon>
+            </button></span
+          >
+          <img [src]="card.image" alt="" width="229" height="138" />
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option [value]="">Select</mat-option>
+              <mat-option value="'joint'">Debit Card</mat-option>
+              <mat-option value="'individual">Credit Card</mat-option>
+              <mat-option value="'individual">Shopping Card</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="rewards-section">
+        <div
+          class="rewards-details"
+          style="text-align: center; align-items: center"
+        >
+          <span class="plain-text">N/A</span>
+        </div>
+        <div class="vl"></div>
+        <div class="rewards-details">
+          <span class="lable-text">10000</span>
+          <span class="plain-text">Rewards Point</span>
+        </div>
+        <div class="vl"></div>
+        <div class="rewards-details">
+          <span class="lable-text">1000</span>
+          <span class="plain-text">Rewards Point</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

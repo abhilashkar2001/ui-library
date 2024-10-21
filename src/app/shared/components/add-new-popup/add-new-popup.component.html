@@ -39,6 +39,7 @@
                   {{ templateName }}
                 </span>
               </mat-select-trigger>
+              <mat-option [value]="">Select</mat-option>
               <mat-option
                 [value]="item.templateName"
                 *ngFor="let item of templateDetails"

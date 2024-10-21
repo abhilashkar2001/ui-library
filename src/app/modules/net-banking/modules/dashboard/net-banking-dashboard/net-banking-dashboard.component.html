@@ -234,6 +234,7 @@
                 [(ngModel)]="selectedActivityLog"
                 (selectionChange)="onDropdownChange($event.value)"
               >
+                <mat-option [value]="">Select</mat-option>
                 <mat-option value="financial">{{
                   "Financial" | translate
                 }}</mat-option>
