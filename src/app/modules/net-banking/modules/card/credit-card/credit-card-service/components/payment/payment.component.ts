@@ -93,7 +93,7 @@ export class PaymentComponent implements OnInit {
     );
     let payload: any = {
       ...this.creditPaymentForm.value,
-      customerId: this.customerInfo?.customerId,
+      corporateId: this.customerInfo?.customerId,
     };
     let creditPaymentArr = [
       {
@@ -161,6 +161,6 @@ export class PaymentComponent implements OnInit {
       creditPaymentArr,
       (payload) => this.cardService.saveCreditPaymentDetails(payload)
     );
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
 }
