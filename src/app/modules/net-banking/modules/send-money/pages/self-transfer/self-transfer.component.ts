@@ -116,7 +116,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
       amount: ["", [Validators.required]],
       remark: [""],
       source: ["I"],
-      transferType: ["Self Transfer"],
+      transferType: "Self Transfer",
       creditAccount: [""],
       creditCurrency: [""],
       creditBranch: [""],

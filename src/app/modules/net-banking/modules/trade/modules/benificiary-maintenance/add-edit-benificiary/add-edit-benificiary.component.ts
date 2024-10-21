@@ -2,11 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { BeneficiaryService } from "../beneficiary-summary/beneficiary.service";
+import { BankCodePopupComponent } from "app/shared/components/bank-code-popup/bank-code-popup.component";
+import { MatDialog } from "@angular/material/dialog";
+import { IconService } from "app/shared/services/icon.service";
 
 @Component({
   selector: "app-add-edit-benificiary",
   templateUrl: "./add-edit-benificiary.component.html",
-  styleUrls: ["./add-edit-benificiary.component.scss"]
+  styleUrls: ["./add-edit-benificiary.component.scss"],
 })
 export class AddEditBenificiaryComponent implements OnInit {
   benificiaryDetailsForm: FormGroup;
@@ -18,12 +21,29 @@ export class AddEditBenificiaryComponent implements OnInit {
   saveTheEdit: boolean = false;
   accountNumberExists: any;
   customerInfo: any;
+  bankDetails: any;
+  bankInfoTableColumn: any = [
+    {
+      headerDef: "bankCode",
+      headerCell: "Bank Code",
+    },
+    {
+      headerDef: "city",
+      headerCell: "City",
+    },
+  ];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private benificiaryApi: BeneficiaryService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private iconService: IconService
+  ) {
+    this.iconService
+      .addIconIfNotExists("search-icon", "assets/images/search-icon.svg")
+      .subscribe(() => {});
+  }
 
   ngOnInit(): void {
     this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
@@ -46,16 +66,21 @@ export class AddEditBenificiaryComponent implements OnInit {
       accountNo: [item ? item.accountNumber : "", Validators.required],
       confirmAccountNumber: [
         item ? item.confirmAccountNumber : "",
-        Validators.required
+        Validators.required,
       ],
       name: [item ? item.payeeName : "", Validators.required],
       nickName: [item ? item.nickName : "", Validators.required],
       bankCode: [item ? item.bankCode : ""],
-      countryId: [item ? item.countryCode : "", Validators.required],
+      countryId: [item ? item.countryCode : ""],
       visibility: [item ? item.visibility : ""],
       accountType: [item.item?.account ?? "I"],
-      beneficiaryStatus: [item.item?.beneficiaryStatus ?? true]
+      beneficiaryStatus: [item.item?.beneficiaryStatus ?? true],
+      city: [""],
+      ifscCode: [""],
+      countryName: [""],
     });
+    console.log(this.benificiaryDetailsForm);
+    console.log(item);
   }
 
   getAllCountry() {
@@ -81,8 +106,57 @@ export class AddEditBenificiaryComponent implements OnInit {
         this.benificiaryDetailsForm
           .get("confirmAccountNumber")
           .setValue(this.responseItm?.accountNo);
+        if (this.responseItm?.accountType == "E")
+          this.fetchBankCode(this.responseItm?.bankCode);
       }
     });
+  }
+
+  async openSearchDialog() {
+    const resp = await this.fetchBankCode(
+      this.benificiaryDetailsForm?.value.bankCode ?? ""
+    );
+    if (resp) {
+      const dialogRef = this.dialog.open(BankCodePopupComponent, {
+        data: {
+          tableColumns: this.bankInfoTableColumn,
+          bankDetails: this.bankDetails,
+        },
+        disableClose: true,
+        height: "auto",
+        width: "80%",
+        panelClass: "search-dialog-container",
+        backdropClass: "auditLog-backdrop",
+      });
+
+      dialogRef.afterClosed().subscribe((value) => {
+        if (value) {
+          console.log(value);
+          this.setOtherBankValues(value);
+        }
+      });
+    }
+  }
+
+  fetchBankCode(event): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.benificiaryApi.fetchBankCode(event).subscribe(
+        (res) => {
+          this.bankDetails = res?.data;
+          if (this.isEdit && this.id)
+            this.setOtherBankValues(this.bankDetails[0]);
+
+          resolve(res?.data);
+        },
+        () => reject(null)
+      );
+    });
+  }
+  setOtherBankValues(value: any) {
+    console.log(value);
+    this.benificiaryDetailsForm.get("ifscCode").patchValue(value?.ifscCode);
+    this.benificiaryDetailsForm.get("city").patchValue(value?.city);
+    this.benificiaryDetailsForm.get("countryName").patchValue(value?.country);
   }
 
   editRecord() {
@@ -99,7 +173,7 @@ export class AddEditBenificiaryComponent implements OnInit {
 
     let payload: any = {
       ...this.benificiaryDetailsForm.value,
-      corpCustId: this.customerInfo?.customerId
+      corpCustId: this.customerInfo?.customerId,
     };
     if (this.responseItm?.benificiaryId) {
       payload.benificiaryId = this.responseItm.benificiaryId;

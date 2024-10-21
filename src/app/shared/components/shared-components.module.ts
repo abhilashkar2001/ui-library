@@ -200,6 +200,7 @@ const components = [
   QrcodeComponent,
   IcCustomPayFromComponent,
   IcRadioButtonComponent,
+  BankCodePopupComponent,
   ExternalLinkComponent,
   CustomDrawerComponent,
   DashboardInstantPayComponent,
