@@ -114,4 +114,12 @@ export class BeneficiaryService {
       `${this.basePath}/corp_benieficiary/checkExistingAccont?accountNumber=${accNo}`
     );
   }
+
+  fetchBankCode(searchValue) {
+    return this.http.get<any>(
+      `${this.basePath}/retail-beneficiary/fetchOtherBankInfo${
+        searchValue ? `?searchValue=${searchValue}` : ""
+      }`
+    );
+  }
 }

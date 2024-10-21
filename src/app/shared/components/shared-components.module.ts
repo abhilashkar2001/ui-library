@@ -110,6 +110,7 @@ import { LinkPayeeSideBarComponent } from "../widgets/link-payee-side-bar/link-p
 import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-from.component";
 import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
+import { BankCodePopupComponent } from "./bank-code-popup/bank-code-popup.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -195,6 +196,7 @@ const components = [
   QrcodeComponent,
   IcCustomPayFromComponent,
   IcRadioButtonComponent,
+  BankCodePopupComponent,
 ];
 
 @NgModule({
