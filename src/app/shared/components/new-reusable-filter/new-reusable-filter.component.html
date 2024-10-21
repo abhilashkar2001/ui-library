@@ -107,6 +107,7 @@
       >
         <mat-label>{{ "Request Assigned to" | translate }}</mat-label>
         <mat-select formControlName="requestAssignedTo" disableOptionCentering>
+          <mat-option [value]="">Select</mat-option>
           <mat-option> </mat-option>
         </mat-select>
       </mat-form-field>
@@ -119,6 +120,7 @@
       >
         <mat-label>{{ "Transaction Status" | translate }}</mat-label>
         <mat-select formControlName="transactionStatus" disableOptionCentering>
+          <mat-option [value]="">Select</mat-option>
           <mat-option></mat-option>
         </mat-select>
       </mat-form-field>
@@ -134,6 +136,7 @@
       >
         <mat-label>{{ "Status" | translate }}</mat-label>
         <mat-select formControlName="status" disableOptionCentering>
+          <mat-option [value]="">Select</mat-option>
           <mat-option
             *ngFor="let option of statusOptions"
             [value]="option.recordStatus"
@@ -199,6 +202,7 @@
           (selectionChange)="getFilterValue($event.value)"
           disableOptionCentering
         >
+          <mat-option [value]="">Select</mat-option>
           <mat-option
             *ngFor="let item of newFilter.options"
             [value]="item.value"
@@ -220,6 +224,7 @@
           (selectionChange)="getFilterValue($event.value)"
           disableOptionCentering
         >
+          <mat-option [value]="">Select</mat-option>
           <mat-option
             *ngFor="let item of FilternameState.options"
             [value]="item.value"

@@ -44,6 +44,7 @@
                       <mat-label>Prefix</mat-label>
 
                       <mat-select formControlName="prefix">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option value="mr.">Mr.</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -119,6 +120,7 @@
                     >
                       <mat-label>Gender</mat-label>
                       <mat-select formControlName="gender">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option value="Male">Male</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -130,6 +132,7 @@
                     >
                       <mat-label>Nationality</mat-label>
                       <mat-select formControlName="nationality">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option value="India">India</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -156,6 +159,7 @@
                     >
                       <mat-label>Residence Type</mat-label>
                       <mat-select formControlName="residenceType">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option value="Citizen">Citizen</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -167,6 +171,7 @@
                     >
                       <mat-label>Country</mat-label>
                       <mat-select formControlName="countryName">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let countryItem of countryArray"
                           [value]="countryItem.countryName"
@@ -198,6 +203,7 @@
                     >
                       <mat-label>State</mat-label>
                       <mat-select formControlName="stateName">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let item of listCityState"
                           [value]="item?.state"
@@ -213,6 +219,7 @@
                     >
                       <mat-label>City</mat-label>
                       <mat-select formControlName="cityId">
+                        <mat-option [value]="">Select</mat-option>
                         <mat-option
                           *ngFor="let item of listCityState"
                           [value]="item?.cityId"

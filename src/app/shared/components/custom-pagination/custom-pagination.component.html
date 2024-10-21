@@ -13,6 +13,7 @@
         (selectionChange)="selectPageSize($event)"
         disableOptionCentering
       >
+        <mat-option [value]="">Select</mat-option>
         <mat-option
           *ngFor="let size of pageSizes"
           [value]="size"
