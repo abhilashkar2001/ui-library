@@ -3,15 +3,15 @@
   fxLayout.xs="column"
   fxLayoutAlign="space-between center"
   fxLayoutGap="10px"
-  class="mb-2 mx-2"
+  class="mat_table_header_sec mb-2 mx-2 py-8"
   *ngIf="componentName != 'Bulk Upload'"
 >
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
     <div (click)="goBack()" fxLayoutAlign="start center" class="cursor">
-      <mat-icon>arrow_back</mat-icon>
+      <mat-icon class="cursor-pointer">arrow_back</mat-icon>
     </div>
     <div>
-      <h1>{{ maintenanceTitle | translate }}</h1>
+      <h1 class="table_title">{{ maintenanceTitle | translate }}</h1>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
     <ng-container>
       <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
         <mat-icon class="text-white text-xl">add</mat-icon>
-        {{ "Upload" | translate}}
+        {{ "Upload" | translate }}
       </button>
     </ng-container>
   </div>
@@ -32,7 +32,7 @@
   <div fxLayout="column" class="dropdown position-relative">
     <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
-      {{ "Add New" | translate}}
+      {{ "Add New" | translate }}
     </button>
 
     <div
@@ -41,7 +41,7 @@
     >
       <ng-container *ngFor="let item of addNewList">
         <span class="menu_btn" mat-menu-item (click)="openPopUp(item.value)">
-          {{ item.name |translate}}
+          {{ item.name | translate }}
         </span>
       </ng-container>
     </div>
@@ -49,10 +49,10 @@
     <ng-template #elseBlock>
       <div class="dropdown-content">
         <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
-          {{ "Create" | translate}}
+          {{ "Create" | translate }}
         </span>
         <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
-          {{ "Bulk Upload"  | translate}}
+          {{ "Bulk Upload" | translate }}
         </span>
       </div>
     </ng-template>

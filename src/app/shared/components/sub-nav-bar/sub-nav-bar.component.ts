@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { NETBANKING } from "app/modules/net-banking/net-banking-dashboard/net-banking-dashboard/net-banking-dashboard.constant";
+import { NETBANKING } from "app/modules/net-banking/modules/dashboard/net-banking-dashboard/net-banking-dashboard.constant";
 
 @Component({
   selector: "app-sub-nav-bar",
@@ -9,11 +9,15 @@ import { NETBANKING } from "app/modules/net-banking/net-banking-dashboard/net-ba
 })
 export class SubNavBarComponent implements OnInit {
   navigationItems = NETBANKING.navigationItems;
+
+
+
   activeItem = "";
 
-  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private route: Router, private cdr: ChangeDetectorRef) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   navigateByUrl(url) {
     if (url?.link) {

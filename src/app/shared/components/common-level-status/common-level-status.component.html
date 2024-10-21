@@ -8,7 +8,7 @@
       <div
         fxLayout="column"
         [fxFlex]="i == approvalList?.length - 1 ? '100%' : '20%'"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="center start"
       >
         <!-- for CREATED action need to update src path -->
         <img
@@ -35,8 +35,8 @@
             levelItem?.action == 'PENDING' ? 'bgBlue' : ''
           ]"
         >
-          <span fxLayoutAlign="center center"
-            >{{ levelItem.action }} <mat-icon class="">info</mat-icon></span
+          <span fxLayoutAlign="center center" class="status_text"
+            >{{ levelItem.action }} <mat-icon class="ml-4">info</mat-icon></span
           >
           <div class="approved_history_container">
             <ng-container>
@@ -73,6 +73,7 @@
         fxFlex="80"
         fxLayoutAlign="center center"
         *ngIf="i != approvalList?.length - 1"
+        class="px-16"
       >
         <div class="progress_fill" fxFlex="100">
           <div

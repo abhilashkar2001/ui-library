@@ -1,0 +1,56 @@
+.tab_button_group {
+  padding: 1% 0%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  .tab_button_wrapper {
+    margin: 0% 10px;
+    // min-width: 140px;
+    .tab_icon_div {
+      min-height: 40px;
+      min-width: 40px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .mat-icon {
+        filter: var(--current-theme-filter);
+        width: 16px;
+      }
+    }
+    transition: transform 0.4s ease;
+    .label {
+      font-family: "Poppins", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--current-theme-background);
+      padding-right: 8px;
+    }
+    .tab_buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 145px;
+      border: none;
+      box-shadow: 0px 0px 5px #e4e4e4;
+      background: #fff;
+      border-radius: 25px;
+      padding: 3px;
+    }
+
+    button:hover {
+      background: var(--current-theme-background) !important;
+      box-shadow: 0px 3px 15px #00000017 !important;
+      .label {
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
+.tab_button_group::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}

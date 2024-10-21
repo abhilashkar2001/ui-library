@@ -1,0 +1,22 @@
+.no_block {
+  border: 2px solid var(--current-theme-background);
+  background: var(--current-theme-background-light) 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  font-weight: 600;
+  width: 204px;
+  span {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    &:first-child {
+      color: #000000;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    &:last-child {
+      font-size: 17px;
+      color: var(--current-theme-background);
+    }
+  }
+}

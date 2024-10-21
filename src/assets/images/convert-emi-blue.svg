@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20">
+  <g id="Convert_EMI_Blue" data-name="Convert EMI Blue" transform="translate(-55.086)">
+    <g id="Group_20268" data-name="Group 20268" transform="translate(-3347.914 3431.791)">
+      <path id="Path_26813" data-name="Path 26813" d="M4420,374.25V384c0,3-1.79,4-4,4h-8c-2.21,0-4-1-4-4v-9.75c0-3.25,1.79-4,4-4a2.254,2.254,0,0,0,2.25,2.25h3.5a2.253,2.253,0,0,0,2.25-2.25C4418.21,370.25,4420,371,4420,374.25Z" transform="translate(-1001 -3799.791)" fill="#00205c" opacity="0.3"/>
+      <path id="Path_26814" data-name="Path 26814" d="M4416,370.25a2.253,2.253,0,0,1-2.25,2.25h-3.5a2.25,2.25,0,0,1,0-4.5h3.5a2.254,2.254,0,0,1,2.25,2.25Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26815" data-name="Path 26815" d="M4412,379.75h-4a.75.75,0,0,1,0-1.5h4a.75.75,0,0,1,0,1.5Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+      <path id="Path_26816" data-name="Path 26816" d="M4416,383.75h-8a.75.75,0,0,1,0-1.5h8a.75.75,0,0,1,0,1.5Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+    </g>
+  </g>
+</svg>
