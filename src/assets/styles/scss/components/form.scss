@@ -62,11 +62,11 @@ mat-form-field {
   padding-bottom: 0.5375em;
 }
 .mat-form-field-label-wrapper {
-  top: -0.65em;
+  top: -0.95em;
   padding-top: 0.84375em;
 }
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: translateY(10%) !important;
+  transform: translateY(-10%) !important;
 }
 
 .mat-select-value {
@@ -77,8 +77,12 @@ mat-form-field {
   font-weight: 600;
 }
 
+.login_container .mat-form-field-appearance-outline .mat-form-field-label {
+  top: 1.55em !important;
+}
+
 .mat-form-field-appearance-outline .mat-form-field-label {
-  top: 1.25em !important;
+  top: 1.5em !important;
   margin-top: 0;
   letter-spacing: 0;
 }
@@ -95,10 +99,11 @@ mat-form-field {
 }
 
 input {
-  font-family: Poppins !important;
+  font-family: "Poppins", sans-serif !important;
   color: #102245 !important;
   letter-spacing: -0.26px;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
 
   &.otp-input {
     border-radius: 12px !important;
@@ -175,10 +180,12 @@ input {
     padding-top: 0.84375em !important;
   }
   .mat-form-field-infix {
-    padding: 1em 0em 1em 0em !important;
+    // padding: 1em 0em 1em 0em !important;
+    padding: 0.7em 0em 1em 0em !important;
   }
   .mat-form-field-flex {
-    height: 55px !important;
+    height: 50px !important;
+    // height: 55px !important;
   }
   .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
     transform: translateY(-20%) !important;

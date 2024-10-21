@@ -24,6 +24,8 @@ export class CompanyInformationComponent implements OnInit {
   @Output() onCustomSubmit = new EventEmitter<{}>();
   @Output() onBackEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+
   @Input() personalDetails: any;
   @Input() basisId: any;
   @Input() customerInfo;

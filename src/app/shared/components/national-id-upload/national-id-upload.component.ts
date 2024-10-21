@@ -63,6 +63,7 @@ export class NationalIdUploadComponent implements OnInit {
     if (originationId) this.getOrigination(originationId);
     this.custId = localStorage.getItem("customerId");
     this.custId = JSON.parse(this.custId);
+    console.log(this.numberOfDirectors);
     if (this.numberOfDirectors) {
       this.checkListDocList.requiredDocument.pop();
       for (let i = 0; i < this.numberOfDirectors; i++) {

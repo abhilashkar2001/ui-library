@@ -1,0 +1,51 @@
+.same-bank {
+  padding: 0px !important;
+  border-radius: 4px !important;
+  background: #e5e9ef 0% 0% no-repeat padding-box;
+  width: 170px !important;
+  height: max-content;
+  margin: 0;
+  cursor: pointer;
+}
+.other-bank {
+  padding: 0px !important;
+  border-radius: 4px !important;
+  background: #d0e0ff;
+  width: 170px !important;
+  height: max-content;
+  margin: 0;
+  cursor: pointer;
+}
+
+.account-title {
+  font-size: 10px;
+  font-weight: 500;
+  //   font-family: Work Sans;
+  letter-spacing: 0px;
+  color: #707070;
+}
+.name-title {
+  font-size: 12px;
+  font-weight: 600;
+  //   font-family: Work Sans;
+  color: #262831;
+}
+.profile-card {
+  margin: 7%;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  color: #00205c;
+  font-size: 24px;
+}
+.margin-class {
+  margin: 1%;
+}
+.internal-scroll {
+  overflow-x: auto;
+}
+.internal-scroll::-webkit-scrollbar {
+  display: none;
+}

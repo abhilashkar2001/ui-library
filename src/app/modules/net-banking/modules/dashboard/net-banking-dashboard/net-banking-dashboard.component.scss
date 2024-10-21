@@ -1,0 +1,413 @@
+.parent-div {
+  // padding: 90px 4% 1%;
+  font-family: "Poppins", sans-serif;
+  .searchDiv {
+    height: 62px;
+    margin-top: 18px;
+  }
+  .overView {
+    color: #000000;
+    opacity: 1;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+
+  .account_info_card {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("/assets/images/background-mask.svg");
+      z-index: 1;
+    }
+    .account_info_wrapper {
+      z-index: 2;
+    }
+  }
+
+  .selected-account-Card {
+    // background: transparent linear-gradient(332deg, #051a2d 0%, #004c97 100%) 0%
+    //   0% no-repeat padding-box;
+    background-color: var(--current-theme-background);
+    box-shadow: 0px 0px 8px rgb(0 0 0 / 31%) !important;
+    height: 145px;
+    border-radius: 10px;
+    color: #ffffff;
+    outline: 3px solid #fff;
+    margin: 10px 0;
+  }
+  .account-Card-btn {
+    height: 145px;
+    background: #f3f3f3;
+    box-shadow: 0px 3px 15px #00000017 !important;
+    border: 5px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    // color: #004c97;
+    color: var(--current-theme-background);
+    margin: 10px 0 30px;
+  }
+
+  .infoLength {
+    font-weight: bolder;
+    font-size: 70px;
+  }
+
+  .cardType {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Poppins;
+  }
+
+  .availableTag {
+    font-size: 12px;
+    color: #a3a3a3;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .balanceAmount {
+    font-weight: 700;
+    font-size: 25px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .infoDropdown {
+    position: relative;
+  }
+}
+.activityLog {
+  // width: 351px;
+  height: auto;
+  border-radius: 18px;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px #00000012;
+  padding: 20px;
+}
+
+.activityLog_header {
+  padding: 5px;
+}
+
+.activityLog_name {
+  font: normal normal 18px/25px Poppins;
+  color: #000000;
+  opacity: 1;
+  font-weight: 500;
+}
+
+.val-dropdown {
+  left: -11px;
+  width: 315px !important;
+  height: 57px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px #00000017;
+  border: 3px solid #ffffff;
+  border-radius: 13px;
+  opacity: 1;
+}
+
+.vl {
+  position: absolute;
+  left: 0px;
+  top: 6px;
+  width: 0px;
+  height: 38px;
+  border: 1.6px solid var(--current-theme-background);
+  opacity: 1;
+  border-radius: 0 10px 10px 0;
+}
+
+.dropdownName {
+  text-align: left;
+  font: normal normal 16px/18px Poppins;
+  letter-spacing: 0px;
+  color: #222222;
+  opacity: 1;
+  font-weight: 500;
+}
+
+.valueBg {
+  // position: absolute;
+  // margin-left: 133px;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  // top: 10px;
+
+  &:not(:has(.totalVal)) {
+    display: none;
+  }
+
+  .totalVal {
+    height: 100%;
+    width: 100%;
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+  }
+}
+
+.arrow {
+  position: absolute;
+  margin-left: 260px;
+}
+
+.processedName {
+  font: normal normal 15px/18px Poppins;
+  font-weight: 400;
+}
+
+.contentBg {
+  padding: 10px;
+}
+
+.panel {
+  border-radius: 8px !important;
+  box-shadow: 0px 3px 15px #00000017 !important;
+}
+
+.panelHeader {
+  height: 50px;
+  padding: 0 16px;
+  background: #ffffff !important;
+  box-shadow: 0 0px 15px #00000017;
+}
+mat-expansion-panel.mat-expanded {
+  box-shadow: none !important;
+}
+.label {
+  font-size: 13px;
+  color: #b4b4b4;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-container {
+  padding: 15px;
+}
+.table-body-container {
+  padding-top: 14px;
+}
+.horizontal-separator {
+  border-top: 1px solid #eeeeee;
+  margin: 2px 0;
+  width: 100%;
+}
+.table-response {
+  display: flex;
+  width: 103.3%;
+}
+.labelVal {
+  color: #090909;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+.labelValRef {
+  color: var(--current-theme-background);
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+}
+.bottom-container {
+  border-radius: 18px;
+  opacity: 1;
+  margin-bottom: 1%;
+  padding: 0px;
+  width: 98.9%;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0588235294);
+  opacity: 1;
+}
+.inner-container {
+  border-radius: 12px;
+  opacity: 1;
+  padding: 10px;
+  width: 100%;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 15px rgba(13, 11, 11, 0.0901960784);
+}
+.horizontalSeperator {
+  width: 1px;
+  border: #004c97 1px solid;
+}
+.matcard-div {
+  padding: 0px !important;
+  margin: 0px;
+  width: 33px;
+  height: 33px;
+  right: 0;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 10px #00000017 !important;
+}
+.call-madeup-icn {
+  display: flex;
+  margin: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-top: 3px;
+  color: #004c97;
+  font-size: 25px;
+  cursor: pointer;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+.transfer-mtcd {
+  border-radius: 18px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0 3px 15px #00000017;
+  font-weight: bold;
+  padding: 1%;
+  width: 98.9%;
+}
+.transfer_main_div {
+  display: flex;
+  min-width: 200px;
+
+  .transfer-card {
+    cursor: pointer;
+    width: 100%;
+    height: 92%;
+    display: flex !important;
+    flex-direction: column;
+    margin: 12px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px !important;
+    box-shadow: 0 3px 15px #00000017 !important;
+    background: #fffefe 0% 0% no-repeat padding-box;
+    font-weight: bold;
+    font-size: 13px;
+    color: #000000;
+    box-sizing: border-box;
+    text-align: center;
+    &:nth-child(4) {
+      margin-right: 0;
+    }
+    img {
+      filter: grayscale(1);
+      opacity: 0.6;
+      margin: 10px;
+    }
+  }
+  .transfer-card:hover {
+    outline: 2px solid var(--current-theme-background);
+    img {
+      // filter: grayscale(0);
+      filter: var(--current-theme-filter);
+      opacity: 1;
+    }
+  }
+}
+
+.transfer {
+  background: url("/assets/images/background-mask.svg");
+  background-size: cover;
+  height: 200px;
+  display: flex;
+  position: relative;
+
+  .transfer_wrapper_div {
+    margin: auto 0;
+    padding: 10px;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: unset;
+    right: 0;
+    height: 100%;
+    width: 38px;
+    border-radius: 0 12px 12px 0;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(153, 153, 153, 0.08),
+      rgb(34 34 34 / 9%)
+    );
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.32s;
+  }
+  &::before {
+    left: 0;
+    right: unset;
+    border-radius: 12px 0 0 12px;
+    background: linear-gradient(
+      to right,
+      rgb(34 34 34 / 9%),
+      rgba(153, 153, 153, 0.08),
+      transparent
+    );
+  }
+  &.scroll_more_left_shadow::before,
+  &.scroll_more_shadow::after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+::ng-deep
+  .financial_outline_field.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  border: 1px solid #d5d5d5;
+}
+
+.mat-tab-link.mat-tab-label-active {
+  font-weight: bold;
+}
+.hl {
+  width: 100%;
+  height: 1px;
+  border-top: 1px solid #707070;
+  opacity: 0.45;
+  margin-top: 10px;
+}
+
+::ng-deep.infoDropdown.mat-menu-panel {
+  overflow-y: auto;
+  top: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 100% !important;
+  left: 0;
+}
+
+::ng-deep.mat-menu-panel {
+  min-width: 150px !important;
+  max-width: 400px !important;
+  max-height: 350px; /* Set the maximum height of the menu */
+  overflow-y: auto;
+  left: 0;
+  background: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep.mat-expansion-panel-body {
+  padding: 0px !important;
+}

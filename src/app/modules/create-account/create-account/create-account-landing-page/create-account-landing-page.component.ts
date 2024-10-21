@@ -209,6 +209,7 @@ export class CreateAccountLandingPageComponent {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
+    console.log(value);
     const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
     console.log(value, "master data");
     let originationModel = {
@@ -334,6 +335,7 @@ export class CreateAccountLandingPageComponent {
    * @param payload
    */
   getMasterSave(payload) {
+    console.log(payload);
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200 || resp?.statusCode == 201) {
         this.originationId = resp.data.originationModel.originationId;
@@ -346,6 +348,9 @@ export class CreateAccountLandingPageComponent {
             "customerStagingId",
             JSON.stringify(resp?.data?.customerInfo?.[0]?.customerStagingId)
           );
+        if (resp?.data?.corporateCustomer)
+          this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
+
         this.originationModel = resp.data?.originationModel;
         if (resp?.data?.corporateCustomer)
           this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;

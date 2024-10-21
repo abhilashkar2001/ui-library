@@ -1,0 +1,198 @@
+export class DrawerConstant {
+  static readonly DRAWER_MENU = [
+    {
+      name: "Transaction",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "BANK GUARANTEE",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "BG Issuance",
+              path: "bank-gurantee",
+              id: "BG Issuance",
+              summaryUrl: "bgIssuance/fetchApplicantInfo",
+            },
+            { name: "BG Amendment", path: "bank-gurantee", id: "BG Amendment" },
+            {
+              name: "BG Physical Amedment",
+              path: "bank-gurantee",
+              id: "BG Physical",
+            },
+            {
+              name: "BG Templates",
+              path: "bank-gurantee",
+              id: "BG Templates",
+            },
+          ],
+        },
+        {
+          name: "LETTER OF CREDIT",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "LC Issuance",
+              path: "bgSummary",
+              id: "BG Issuance",
+              summaryUrl: "bgIssuance/fetchApplicantInfo",
+            },
+            { name: "LC Amendment", path: "bgSummary", id: "LC Amendment" },
+            {
+              name: "Draft LC Issuance",
+              path: "bgSummary",
+              id: "Draft LC Issuance",
+            },
+            {
+              name: "LC Physical Amendment",
+              path: "bgSummary",
+              id: "LC Physical Amendment",
+            },
+            {
+              name: "LC Template",
+              path: "bgSummary",
+              id: "LC Template",
+            },
+          ],
+        },
+        {
+          name: "REMITTANCE",
+          path: "remittance-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "BILL PROCESSING",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "Document Acceptance",
+              path: "bill-processing",
+              id: "BG Issuance",
+            },
+            {
+              name: "Payment Request Enquiry",
+              path: "bill-processing",
+              id: "LC Physical Amendment",
+            },
+          ],
+        },
+        {
+          name: "EXPORTS PROCESSING",
+          path: "",
+          roleName: "child-node",
+          children: [
+            {
+              name: "Pre-shipment Loan Process",
+              path: "export-process-summery",
+              id: "Pre-shipment Loan Process",
+              summaryUrl: "",
+            },
+          ],
+        },
+        {
+          name: "BUYERS CREDIT",
+          path: "buyer-credit-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "EXPORT BILL DISPATCH",
+          path: "export-bill-dispatch-summary",
+          roleName: "child-node",
+        },
+        {
+          name: "Export SW Bill Lodgement",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        { name: "EEFC", path: "eefc-summary", roleName: "child-node" },
+      ],
+    },
+    {
+      name: "Beneficiary Maintenance",
+      path: "beneficiary",
+      roleName: "parent-node",
+    },
+  ];
+
+  static readonly LOAN_DRAWER_MENU = [
+    {
+      name: "Loan Services",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "LOAN REPAYMENT",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "TOPUP LOAN",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "MODIFY TENURE",
+          path: "remittance-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "REPAYMENT CYCLE",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "DISBURSTMENT SCHEDULE",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "E-STATEMENT",
+          path: "buyer-credit-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "VIEW STATEMENT",
+          path: "export-bill-dispatch-summary",
+          roleName: "child-node",
+        },
+        {
+          name: "DISBURSTMENT REQUEST",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "REPAYMENT SCHEDULE",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "PRE-GENERATED STATEMENT",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "GOLD RENEWAL",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "REQUEST CERTIFICATE",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "INTERSET STATEMENT",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+      ],
+    },
+
+  ];
+
+
+}

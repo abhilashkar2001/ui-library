@@ -96,6 +96,25 @@ import { DirectorDetailsComponent } from "./director-details/director-details.co
 import { ViewExcelDocComponent } from "./view-excel-doc/view-excel-doc.component";
 import { DigitalSignComponent } from "./digital-sign/digital-sign.component";
 import { ScanComponent } from "./scan/scan.component";
+import { TabLinkComponent } from "../widgets/tab-link/tab-link.component";
+import { TransactionCardComponent } from "../widgets/transaction-card/transaction-card.component";
+import { SwiperCardComponent } from "./swiper-card/swiper-card.component";
+import { RecentTransactionComponent } from "./recent-transaction/recent-transaction.component";
+import { IcToggleSlideComponent } from "./ic-toggle-slide/ic-toggle-slide.component";
+import { IcCustomAmountInput } from "./ic-custom-amount-input/ic-custom-amount-input.component";
+import { ReusableFavouritiesComponent } from "./reusable-favourities/reusable-favourities.component";
+import { IcActionButtonComponent } from "./ic-action-button/ic-action-button.component";
+import { ToolbarTitleComponent } from "../widgets/toolbar-title/toolbar-title.component";
+import { ToolbarTabComponent } from "../widgets/toolbar-tab/toolbar-tab.component";
+import { LinkPayeeSideBarComponent } from "../widgets/link-payee-side-bar/link-payee-side-bar.component";
+import { QrcodeComponent } from "./qrcode/qrcode.component";
+import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-from.component";
+import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
+import { ExternalLinkComponent } from "./external-link/external-link.component";
+import { CustomDrawerComponent } from "./custom-drawer/custom-drawer.component";
+import { DashboardInstantPayComponent } from "../widgets/dashboard-instant-pay/dashboard-instant-pay.component";
+import { ExternalLinkComponent } from "../widgets/external-link/external-link.component";
+import { ReusableNodatafoundComponent } from "./reusable-nodatafound/reusable-nodatafound.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -167,6 +186,27 @@ const components = [
   ViewExcelDocComponent,
   DigitalSignComponent,
   ScanComponent,
+  TransactionCardComponent,
+  TabLinkComponent,
+  SwiperCardComponent,
+  RecentTransactionComponent,
+  IcToggleSlideComponent,
+  IcCustomAmountInput,
+  ReusableFavouritiesComponent,
+  IcActionButtonComponent,
+  ToolbarTitleComponent,
+  ToolbarTabComponent,
+  LinkPayeeSideBarComponent,
+  QrcodeComponent,
+  IcCustomPayFromComponent,
+  IcRadioButtonComponent,
+  BankCodePopupComponent,
+  ExternalLinkComponent,
+  CustomDrawerComponent,
+  DashboardInstantPayComponent,
+  ExternalLinkComponent,
+  ReusableNodatafoundComponent,
+
 ];
 
 @NgModule({
@@ -197,4 +237,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }

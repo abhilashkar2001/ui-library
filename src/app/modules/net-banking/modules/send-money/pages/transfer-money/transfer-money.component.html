@@ -1,0 +1,209 @@
+<form
+  [formGroup]="transferMoneyForm"
+  class="send-money-abroad-container"
+  fxLayout="column"
+>
+  <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="row">
+      <app-ic-custom-pay-from
+        [control]="transferMoneyForm.get('debitAccount')"
+        [inputLabel]="'Pay From' | translate"
+        bindValueKey="accountNo"
+        bindLabelKey="accountNo"
+        [currencyCode]="selectedCurrency"
+        (selectionChange)="payAccount($event)"
+        [accountType]="accountType"
+      ></app-ic-custom-pay-from>
+    </div>
+  </div>
+  <h3 class="light-blue-title">{{ "Payment Details" | translate }}</h3>
+
+  <ng-container *ngIf="!proceedTransferMoney; else showTransferMoney">
+    <div fxFlex="100" fxLayout="row wrap">
+      <div fxFlex="30" class="input_wrapper">
+        <app-searchable-select
+          [control]="transferMoneyForm.get('creditAccount')"
+          [inputLabel]="'Transfer To' | translate"
+          [items]="transferType"
+          bindLabelKey="payeeName"
+          bindValueKey="accountNo"
+          displayLabel="accountNo"
+          [showOutsideLabel]="true"
+          [currencyCode]="selectedTransferAccount?.accountCurrecny"
+          (selectionChange)="setTransfer($event)"
+        ></app-searchable-select>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-label class="light-blue-title">{{
+            "Favourites" | translate
+          }}</mat-label>
+          <mat-radio-group
+            color="primary"
+            aria-label="Select an option"
+            formControlName="paymentType"
+            fxLayout="row"
+            fxLayoutGap="20"
+            (change)="changeFav($event.value)"
+          >
+            <mat-radio-button value="Same">{{
+              "Same Bank" | translate
+            }}</mat-radio-button>
+            <mat-radio-button value="Other">{{
+              "Other Bank" | translate
+            }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div fxFlex="100" class="my-12">
+        <app-reusable-favourities
+          [items]="filterFav"
+          (rediectTo)="proceedToTransferMoney($event); setTransfer($event)"
+        ></app-reusable-favourities>
+      </div>
+    </div>
+    <div fxLayoutGap="20" fxLayoutAlign="end center">
+      <app-ic-action-button
+        [buttonName]="'Cancel' | translate"
+        buttonType="stroked"
+      >
+      </app-ic-action-button>
+      <app-ic-action-button
+        [disabled]="
+          transferMoneyForm.get('creditAccount')?.invalid &&
+          transferMoneyForm.get('debitAccount')?.invalid
+        "
+        [buttonName]="'Proceed' | translate"
+        buttonType="filled"
+        (onClick)="proceedToTransferMoney()"
+        [disabled]="transferMoneyForm.invalid"
+      ></app-ic-action-button>
+    </div>
+  </ng-container>
+</form>
+
+<ng-template #showTransferMoney>
+  <div class="send-abroad-container" fxLayout="column">
+    <form [formGroup]="transferMoneyForm" fxFlex="100" fxLayout="column">
+      <div class="wrapper_row" fxLayout="row wrap" fxFlex="100">
+        <div fxFlex="25" class="input_wrapper">
+          <app-searchable-select
+            [items]="transferType"
+            bindValueKey="accountNo"
+            bindLabelKey="accountNo"
+            [control]="transferMoneyForm.get('creditAccount')"
+            [currencyCode]="selectedTransferAccount?.accountCurrecny"
+            [inputLabel]="'Transfer To' | translate"
+            [showOutsideLabel]="true"
+            (selectionChange)="setTransfer($event)"
+          ></app-searchable-select>
+          <p class="message" *ngIf="accountType || bankName">
+            {{ accountType }} | {{ bankName }}
+          </p>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-amount-input
+            [inputLabel]="'Amount'"
+            [currencyCode]="currencyCode"
+            [inputType]="'text'"
+            [control]="transferMoneyForm.get('creditAmount')"
+          ></app-ic-custom-amount-input>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-searchable-select
+            [items]="genericValue?.PAYMENTMODE"
+            [control]="transferMoneyForm.get('paymentMode')"
+            [inputLabel]="'Payment Mode' | translate"
+            bindLabelKey="values"
+            bindValueKey="id"
+            [showOutsideLabel]="true"
+          ></app-searchable-select>
+        </div>
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-radio-button
+            [optiions]="transferOptions"
+            [control]="transferMoneyForm.get('paymentType')"
+            displayLabel="Transfer Type"
+            layout="column"
+          >
+          </app-ic-radio-button>
+        </div>
+        <ng-container
+          *ngIf="transferMoneyForm.get('paymentType').value === 'later'"
+        >
+          <div fxFlex="25" class="input_wrapper">
+            <app-ic-radio-button
+              [optiions]="recurringOptions"
+              [control]="transferMoneyForm.get('recurringPayment')"
+              displayLabel="Recurring Payment"
+              layout="column"
+            >
+            </app-ic-radio-button>
+          </div>
+          <div fxFlex="25" class="input_wrapper" fxLayout="column">
+            <mat-label class="ml-16">{{
+              "Schedule Payment" | translate
+            }}</mat-label>
+            <mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="schedulePaymentDate"
+                />
+              </div>
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon
+                  svgIcon="calendar-icon"
+                  matsuffix
+                  matDatepickerToggleIcon
+                ></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <ng-container
+            *ngIf="transferMoneyForm.get('recurringPayment').value == true"
+          >
+            <div fxFlex="25" class="input_wrapper">
+              <app-searchable-select
+                [items]="genericValue?.SCHEDULEPAYMENT"
+                [control]="transferMoneyForm.get('frequency')"
+                [inputLabel]="'Frequency' | translate"
+                bindLabelKey="values"
+                bindValueKey="id"
+                [showOutsideLabel]="true"
+              ></app-searchable-select>
+            </div>
+            <div fxFlex="25" class="input_wrapper">
+              <app-ic-custom-input
+                [control]="transferMoneyForm.get('noOfInstalment')"
+                [inputLabel]="'No. of Installments' | translate"
+              ></app-ic-custom-input>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="wrapper_row" fxLayout="row wrap" fxFlex="100">
+        <div fxFlex="25" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="transferMoneyForm.get('remark')"
+            [inputLabel]="'Remark' | translate"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+      <div fxLayoutGap="20" fxLayoutAlign="end center">
+        <app-ic-action-button
+          [buttonName]="'Cancel' | translate"
+          buttonType="stroked"
+          (onClick)="goBack()"
+        >
+        </app-ic-action-button>
+        <app-ic-action-button
+          (onClick)="submit()"
+          [disabled]="transferMoneyForm?.invalid"
+          [buttonName]="'Proceed' | translate"
+          buttonType="filled"
+        ></app-ic-action-button>
+      </div>
+    </form>
+  </div>
+</ng-template>

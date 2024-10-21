@@ -27,7 +27,7 @@ import { InputMaskModule } from "./directives/input-mask/input-mask.module";
     SharedDirectivesModule,
     NgOtpInputModule,
     SearchModule,
-    InputMaskModule
+    InputMaskModule,
   ],
   providers: [
     ThemeService,
@@ -41,4 +41,4 @@ import { InputMaskModule } from "./directives/input-mask/input-mask.module";
   ],
   exports: [SharedComponentsModule, SharedPipesModule, SharedDirectivesModule],
 })
-export class SharedModule {}
+export class SharedModule { }

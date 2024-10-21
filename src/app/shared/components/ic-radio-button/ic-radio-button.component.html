@@ -1,0 +1,24 @@
+<div class="custom_radio_field" fxLayout="{{ layout }}" fxLayoutGap="20">
+  <mat-label class="mb-8 {{ labelClass }}"
+    >{{ displayLabel | translate }}
+    <span
+      *ngIf="control?.hasError('required')"
+      class="required_star"
+      style="color: red"
+      >*</span
+    ></mat-label
+  >
+  <mat-radio-group
+    color="primary"
+    fxLayoutGap="{{ gap }}"
+    [formControl]="control"
+    fxLayout="{{ radiolayout }}"
+  >
+    <mat-radio-button
+      *ngFor="let option of optiions"
+      [value]="option?.value ?? option?.id"
+      (change)="change.emit(option?.label ?? option?.values)"
+      >{{ option?.label ?? option?.values | translate }}</mat-radio-button
+    >
+  </mat-radio-group>
+</div>
