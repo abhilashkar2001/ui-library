@@ -110,11 +110,11 @@ import { LinkPayeeSideBarComponent } from "../widgets/link-payee-side-bar/link-p
 import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { IcCustomPayFromComponent } from "./ic-custom-pay-from/ic-custom-pay-from.component";
 import { IcRadioButtonComponent } from "./ic-radio-button/ic-radio-button.component";
-import { ExternalLinkComponent } from "./external-link/external-link.component";
 import { CustomDrawerComponent } from "./custom-drawer/custom-drawer.component";
 import { DashboardInstantPayComponent } from "../widgets/dashboard-instant-pay/dashboard-instant-pay.component";
 import { ExternalLinkComponent } from "../widgets/external-link/external-link.component";
 import { ReusableNodatafoundComponent } from "./reusable-nodatafound/reusable-nodatafound.component";
+import { BankCodePopupComponent } from "./bank-code-popup/bank-code-popup.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
