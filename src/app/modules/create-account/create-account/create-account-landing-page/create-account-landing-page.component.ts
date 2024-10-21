@@ -297,7 +297,7 @@ export class CreateAccountLandingPageComponent {
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
-      custResp[i].documentId = docIds[i];
+      custResp[i].documentId = [docIds[i]];
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
       delete custResp[i].documentsInfoModel;
