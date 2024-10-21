@@ -90,9 +90,9 @@ export class CreateAccountLandingPageComponent {
           this.view.clear();
           setTimeout(() => {
             this.componentRef = this.view.createComponent(item.component);
-            console.log(this.noOfDirectors);
             if (this.noOfDirectors)
               this.componentRef.instance.numberOfDirectors = this.noOfDirectors;
+
             // for mobile number.
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
 
@@ -352,6 +352,8 @@ export class CreateAccountLandingPageComponent {
           this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
 
         this.originationModel = resp.data?.originationModel;
+        if (resp?.data?.corporateCustomer)
+          this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
         //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
         //        dynamically wherever it has been asked.
         this.next();
