@@ -56,6 +56,12 @@ export class CreateAccountConstant {
       type: "Signature",
       component: DigitalSignComponent,
     },
+    {
+      id: 5,
+      key: "director",
+      type: "Create Loan",
+      component: CommonPersonalDetailsComponent,
+    },
   ];
 }
 

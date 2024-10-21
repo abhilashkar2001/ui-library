@@ -29,6 +29,7 @@ export class CompanyInformationComponent implements OnInit {
   @Input() personalDetails: any;
   @Input() basisId: any;
   @Input() customerInfo;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   _parentForm: FormGroup;
   corporateCustId: any;
