@@ -45,16 +45,16 @@ export class CreateAccountConstant {
       component: OtherChecklistDocUploadComponent,
     },
     {
-      id: 6,
-      key: "director",
-      type: "Create Loan",
-      component: CommonPersonalDetailsComponent,
-    },
-    {
       id: 4,
       key: "signature",
       type: "Signature",
       component: DigitalSignComponent,
+    },
+    {
+      id: 5,
+      key: "director",
+      type: "Create Account",
+      component: CommonPersonalDetailsComponent,
     },
   ];
 }
