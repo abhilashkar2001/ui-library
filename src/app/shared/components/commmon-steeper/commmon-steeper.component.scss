@@ -91,6 +91,24 @@
   border-radius: 5px;
   padding: 0 2%;
 }
+.steps-average-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #004c97;
+}
+.stepper-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 33px;
+}
+.screen-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 48px;
+}
 @media only screen and (min-width: 768px) and (max-width: 910px) {
   .fd_info_stat {
     display: none !important;
@@ -119,7 +137,7 @@
   position: relative;
   height: 50px;
   left: 30px;
-  border-left: 1px #bac0d7 dotted;
+  border-left: 1px #bac0d7 dashed;
   display: block;
   height: 122px;
 }
@@ -141,6 +159,8 @@
 .deposit_icon {
   width: 75px;
   height: 75px;
+  position: relative;
+  left: -4px;
   background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
   border-radius: 10px;
   display: flex;
@@ -203,15 +223,15 @@
   }
   .mat-step-label.mat-step-label-active.mat-step-label-selected {
     color: #004c97 !important;
-    // font-weight: 600;
-    font-size: 24px !important;
+    font-weight: 500 !important;
+    font-size: 18px !important;
     padding-left: 33px !important;
   }
   .mat-step-label {
     color: #004c97 !important;
-    // font-weight: 600;
+    font-weight: 400 !important;
     padding-left: 33px !important;
-    font-size: 24px !important;
+    font-size: 18px !important;
     font-family: "Poppins", sans-serif;
   }
 }
@@ -261,7 +281,7 @@
 }
 
 .custom_steppper {
-  background-color: #f2f7fd !important;
+  background-color: #ffffff !important;
   border-radius: 24px 24px;
 }
 .scrollStep__prodInfo,
@@ -274,13 +294,13 @@
   box-sizing: content-box !important;
 
   ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon {
-    background-color: #f2f7fd !important;
+    background-color: #ffffff !important;
     color: #004c97 !important;
   }
   ::ng-deep
     .mat-step-header.mat-vertical-stepper-header
     .mat-step-icon-selected {
-    background: #f2f7fd !important;
+    background: #ffffff !important;
   }
 
   ::ng-deep .mat-vertical-content-container {
