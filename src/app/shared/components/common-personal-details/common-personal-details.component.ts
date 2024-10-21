@@ -330,18 +330,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
     if (data?.length > 0) {
       setTimeout(() => {
-        if (this.holderType.toLowerCase() == "self")
-          this.addCustomer(0, data && data[0]);
-        else if (this.holderType.toLowerCase() == "joint") {
-          this.renderApplicant(data, data?.length);
-          this.cd.detectChanges();
-        }
+        this.renderApplicant(data, this.docCustomerDetails.length);
       }, 200);
     } else {
-      if (this.holderType.toLowerCase() == "self") {
-        this.addCustomer(0);
-      } else if (this.holderType.toLowerCase() == "joint")
-        for (let i = 0; i < 2; i++) this.addCustomer(i);
+      if (this.docCustomerDetails.length > 0)
+        for (let i = 0; i < this.docCustomerDetails.length; i++)
+          this.addCustomer(i);
       else this.addCustomer(0);
       this.cd.detectChanges();
     }

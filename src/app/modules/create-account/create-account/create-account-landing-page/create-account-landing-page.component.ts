@@ -59,6 +59,7 @@ export class CreateAccountLandingPageComponent {
   view: any;
   kycDoc: any = [];
   docCustomerDetails: any;
+  noOfDirectors: number;
 
   constructor(
     private router: Router,
@@ -89,6 +90,8 @@ export class CreateAccountLandingPageComponent {
           this.view.clear();
           setTimeout(() => {
             this.componentRef = this.view.createComponent(item.component);
+            if (this.noOfDirectors)
+              this.componentRef.instance.numberOfDirectors = this.noOfDirectors;
 
             // for mobile number.
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
@@ -153,7 +156,7 @@ export class CreateAccountLandingPageComponent {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStore.getUser();
-    // this.getGeneric();
+    this.getGeneric();
     this.currencyCode = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params["id"];
     this.getProductDetails();
@@ -219,7 +222,7 @@ export class CreateAccountLandingPageComponent {
       productDescription: this.productDetails.basisDetailStory,
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
-      ownership: this.ownershipId,
+      ownership: JSON.parse(sessionStorage.getItem("ownershipId")),
       department: this.currentUser?.department,
     };
     if (value.kycDoc) {
@@ -239,14 +242,23 @@ export class CreateAccountLandingPageComponent {
         if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
       });
     }
+    if (value?.companyDetails) {
+      console.log(value);
+      this.getMasterSave({
+        originationModel: originationModel,
+        corporateCustomer: value?.companyDetails?.corporateCustomer,
+      });
+      return;
+    }
     if (value.updateMasterSave && customerInfo?.length > 0) {
       if (this.ownershipId) {
         this.submitCheckList(value, originationModel, customerInfo);
       } else {
-        this.getGeneric().then((data) => {
-          let FinalOriginationModel = { ...originationModel, ownership: data };
-          this.submitCheckList(value, FinalOriginationModel, customerInfo);
-        });
+        let FinalOriginationModel = {
+          ...originationModel,
+          ownership: JSON.parse(sessionStorage.getItem("ownershipId")),
+        };
+        this.submitCheckList(value, FinalOriginationModel, customerInfo);
       }
     } else this.next();
   };
@@ -284,7 +296,7 @@ export class CreateAccountLandingPageComponent {
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
-      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+      custResp[i].documentId = docIds[i];
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
       delete custResp[i].documentsInfoModel;
@@ -296,7 +308,9 @@ export class CreateAccountLandingPageComponent {
         }
         delete custResp[i].customerStagingId;
       }
-      custResp[0].biometricId = [this.sessionService.getItem("biometricId")];
+      custResp[0].biometricId = this.sessionService.getItem("biometricId")
+        ? [this.sessionService.getItem("biometricId")]
+        : [];
       custResp[i].isphoneNumVerified = true;
       custResp[i].isEmailVerified = true;
       custResp[i].customerNo = null;
@@ -321,7 +335,7 @@ export class CreateAccountLandingPageComponent {
    */
   getMasterSave(payload) {
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+      if (resp?.statusCode === 200 || resp?.statusCode == 201) {
         this.originationId = resp.data.originationModel.originationId;
         sessionStorage.setItem(
           "originationId",
@@ -333,6 +347,8 @@ export class CreateAccountLandingPageComponent {
             JSON.stringify(resp?.data?.customerInfo?.[0]?.customerStagingId)
           );
         this.originationModel = resp.data?.originationModel;
+        if (resp?.data?.corporateCustomer)
+          this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
         //Note:- properties should be update once complete forumulla list recieves & we ned to call a verify Workflow api,
         //        dynamically wherever it has been asked.
         this.next();
@@ -362,6 +378,7 @@ export class CreateAccountLandingPageComponent {
             this.ownershipId = this.ownership.find(
               (r) => r?.values.toLowerCase() === "self"
             )?.id;
+            sessionStorage.setItem("ownershipId", this.ownershipId);
             resolve(this.ownershipId);
           } else {
             reject(new Error("Failed to fetch generic data"));

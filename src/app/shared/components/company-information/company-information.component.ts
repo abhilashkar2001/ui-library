@@ -27,6 +27,7 @@ export class CompanyInformationComponent implements OnInit {
   @Input() personalDetails: any;
   @Input() basisId: any;
   @Input() customerInfo;
+  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
 
   _parentForm: FormGroup;
   corporateCustId: any;
@@ -363,6 +364,11 @@ export class CompanyInformationComponent implements OnInit {
     this.onCustomSubmit.emit({
       status: true,
       companyDetails: this._parentForm,
+    });
+    this?.updateParentModel({
+      companyDetails: this._parentForm.value,
+      updateMasterSave: true,
+      isForLoan: false,
     });
   }
 }
