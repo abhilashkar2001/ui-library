@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { CreditCardServiceComponent } from "./credit-card-service/credit-card-service.component";
+import { Routes, RouterModule } from "@angular/router";
 import { ConvertToEmiComponent } from "./components/convert-to-emi/convert-to-emi.component";
 import { PaymentComponent } from "./components/payment/payment.component";
+import { CreditCardServiceComponent } from "./credit-card-service/credit-card-service.component";
+import { PaymentPageComponent } from "../../../dashboard/modules/cheque-book/payment-page/payment-page.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
         component: PaymentComponent,
       },
     ],
+  },
+  {
+    path: "payment-summary",
+    component: PaymentPageComponent,
   },
 ];
 

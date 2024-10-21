@@ -32,16 +32,21 @@
             [label]="'Show Details' | translate"
             labelPosition="before"
           ></app-ic-toggle-slide>
-          <!-- <div class="toogle-div">
-            <span>{{ "Show Details" }}</span>
-            <mat-slide-toggle> </mat-slide-toggle>
-          </div> -->
         </div>
       </div>
-      <div fxFlex="45" fxLayoutAlign="end center">
-        <button mat-flat-button class="small-button class-name get_statement">
-          {{ "Get Statement" | translate }}
-        </button>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
+          <span class="small-title">{{ "Expiry Date" | translate }}</span>
+          <span class="small-values">{{
+            displayCard?.validDate | translate
+          }}</span>
+        </div>
+        <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
+          <span class="small-title">{{ "Cvv" | translate }}</span>
+          <span class="small-values">{{
+            displayCard?.cvv || "123" | translate
+          }}</span>
+        </div>
       </div>
       <ng-container *ngIf="!forexFilter">
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
@@ -50,11 +55,10 @@
             displayCard?.typeOfCard || "Visa" | translate
           }}</span>
         </div>
-        <div fxFlex="45" fxLayout="column" fxLayoutAlign="end end" class="mt-8">
-          <span class="small-title">{{
-            "Autopay is Disabled" | translate
-          }}</span>
-          <!-- <app-ic-toggle-slide [control]="autoPay"></app-ic-toggle-slide> -->
+        <div fxFlex="45" fxLayoutAlign="end center">
+          <button mat-flat-button class="small-button class-name get_statement">
+            {{ "Get Statement" | translate }}
+          </button>
         </div>
       </ng-container>
     </div>

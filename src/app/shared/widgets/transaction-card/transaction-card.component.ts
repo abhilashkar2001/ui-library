@@ -20,7 +20,7 @@ export class TransactionCardComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     @Optional() private dialogRef: MatDialogRef<TransactionCardComponent>,
     private tokenStorageService: TokenStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.data) {
@@ -64,12 +64,17 @@ export class TransactionCardComponent implements OnInit {
    * @param route route of the quick link
    */
   route(route: string) {
+    console.log(route, "callingg");
+
     this.router.navigate([route]).then((_) => {
+      console.log(route, "checkkkkk");
       if (this.dialogRef) this.dialogRef.close();
     });
   }
 
   navigate(route: string, screenName: string) {
+    console.log(route, "22");
+    console.log(screenName, "screennamee");
     if (screenName == "Tracking")
       window.open(
         `${route}?route=tracking&code=${this.tokenStorageService.getToken()}`

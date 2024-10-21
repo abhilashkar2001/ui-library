@@ -1,0 +1,148 @@
+.addPayee_container {
+  &.bg-payee {
+    background: #f5f7fb 0% 0% no-repeat padding-box;
+  }
+
+  border-radius: 12px;
+
+  .addPayee_title {
+    padding: 12px 14px;
+
+    h2 {
+      font-size: 20px;
+      font-family: "Raleway", sans-serif;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+  }
+
+  .addPayee_body {
+    padding: 12px;
+
+    .addPayee_box {
+      padding: 5px;
+    }
+  }
+
+  .createdByImg {
+    border: 3px solid #377dff4e;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 55px;
+    height: auto;
+    aspect-ratio: 1/1;
+    box-sizing: border-box;
+    margin: 2% 2%;
+    transition: transform 0.4s ease;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+  }
+  .shortName-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--current-theme-background);
+    font-size: 20px;
+    font-weight: bold;
+    background: #f3f3f3 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 15px #0000000a;
+    border: 3px solid #fff !important;
+  }
+
+  .addPayee_nickname {
+    word-break: break-all;
+    font-family: "Poppins", sans-serif;
+  }
+  .prefix_symboll {
+    color: #377dff;
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  .currency_tag {
+    display: flex;
+    margin-right: 20px;
+    background: var(--current-theme-background-light);
+    border: 1px solid var(--current-theme-border-color);
+    border-radius: 4px;
+    color: var(--current-theme-background);
+    font: normal normal bold 12px/15px Work Sans;
+    font-weight: bold;
+    width: 37px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+  }
+  .next_go {
+    background: var(--current-theme-background);
+    box-shadow: 0px 3px 6px rgba(55, 125, 255, 0.0509803922);
+    height: 50px;
+    width: 40px;
+    top: 3px;
+    position: relative;
+    z-index: 1;
+    left: -5px;
+    display: flex;
+    color: var(--current-theme-color);
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 8px 8px 0;
+  }
+  .extend-card {
+    border-radius: 8px;
+    height: 2px;
+    width: 2px;
+    margin: 0px;
+    box-shadow: 0px 3px 6px #377dff0d !important;
+  }
+
+  .extend-icon {
+    width: 14px;
+  }
+  .heading-allPayee {
+    font: normal normal bold 16px/30px Raleway;
+    color: #00205c;
+  }
+}
+
+::ng-deep .inputField_wrapper .mat-form-field {
+  position: relative;
+  height: 50px;
+  z-index: 2;
+  width: calc(100% - 40px) !important;
+
+  .mat-form-field-flex,
+  .mat-form-field-outline {
+    height: 50px;
+  }
+
+  .mat-form-field-infix {
+    padding: 12px 0;
+  }
+  .icon_input_wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: -2px;
+  }
+  input {
+    font-size: 17px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+  }
+}
+
+.selectedPayee {
+  .shortName-tag {
+    border: 3px solid var(--current-theme-border-color) !important;
+  }
+}
+
+::ng-deep
+  .payee_border_highlight.mat-form-field.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  border: 1px solid #00205c;
+}

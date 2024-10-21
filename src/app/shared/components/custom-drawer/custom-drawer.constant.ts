@@ -117,4 +117,82 @@ export class DrawerConstant {
       roleName: "parent-node",
     },
   ];
+
+  static readonly LOAN_DRAWER_MENU = [
+    {
+      name: "Loan Services",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "LOAN REPAYMENT",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "TOPUP LOAN",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "MODIFY TENURE",
+          path: "remittance-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "REPAYMENT CYCLE",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "DISBURSTMENT SCHEDULE",
+          path: "",
+          roleName: "child-node",
+        },
+        {
+          name: "E-STATEMENT",
+          path: "buyer-credit-summery",
+          roleName: "child-node",
+        },
+        {
+          name: "VIEW STATEMENT",
+          path: "export-bill-dispatch-summary",
+          roleName: "child-node",
+        },
+        {
+          name: "DISBURSTMENT REQUEST",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "REPAYMENT SCHEDULE",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "PRE-GENERATED STATEMENT",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "GOLD RENEWAL",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "REQUEST CERTIFICATE",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+        {
+          name: "INTERSET STATEMENT",
+          path: "ExportSWBillLodgementSummary",
+          roleName: "child-node",
+        },
+      ],
+    },
+
+  ];
+
+
 }

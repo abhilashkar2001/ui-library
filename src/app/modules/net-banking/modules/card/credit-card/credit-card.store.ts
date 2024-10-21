@@ -18,7 +18,7 @@ export class CreditCardStore {
     // },
     {
       screenName: "Payment",
-      route: "/card/credit-card/service/payment",
+      route: "/user/card/credit-card/service/payment",
       src: "assets/images/card-payment-blue.svg",
       selectedSrc: "assets/images/card-payment-white.svg",
       icon: "card-payment-blue",
@@ -26,7 +26,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Convert to EMI",
-      route: "/card/credit-card/service/convert-to-emi",
+      route: "/user/card/credit-card/service/convert-to-emi",
       src: "assets/images/net-banking/loans/loan-repayment.svg",
       selectedSrc: "assets/images/selected-quick-transfer.svg",
       icon: "loan_repayment",
@@ -210,6 +210,8 @@ export class CreditCardStore {
       lastStlmtMade: 0,
       accountNumber: "",
       customerId: 0,
+      status: "Active",
+      cvv: 876,
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -236,6 +238,8 @@ export class CreditCardStore {
       lastStlmtMade: 0,
       accountNumber: "",
       customerId: 0,
+      status: "Active",
+      cvv: 876,
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -262,6 +266,8 @@ export class CreditCardStore {
       lastStlmtMade: 0,
       accountNumber: "",
       customerId: 0,
+      status: "Active",
+      cvv: 876,
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -288,6 +294,8 @@ export class CreditCardStore {
       lastStlmtMade: 0,
       accountNumber: "",
       customerId: 0,
+      status: "Active",
+      cvv: 876,
     },
   ];
   static readonly detailsItem: HeaderModel[] = [

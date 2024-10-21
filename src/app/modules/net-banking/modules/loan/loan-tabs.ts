@@ -12,7 +12,7 @@ export class loanServiceStore {
         },
         {
             screenName: "Loan Repayment",
-            route: "/loan/loan-service/loan-repayment",
+            route: "user/loan/loan-service/loan-repayment",
             src: "assets/images/net-banking/loans/loan-repayment.svg",
             selectedSrc: "assets/images/svg/selected-quick-transfer.svg",
             icon: "loan_repayment",
@@ -20,7 +20,7 @@ export class loanServiceStore {
         },
         {
             screenName: "Top up loan",
-            route: "/loan/loan-service/loan-topUP",
+            route: "/loan/dashboard/loan-topUP",
             src: "assets/images/net-banking/loans/topUp.svg",
             selectedSrc: "assets/images/svg/selected-quick-transfer.svg",
             icon: "topUP",
@@ -28,7 +28,7 @@ export class loanServiceStore {
         },
         {
             screenName: "Repayment cycle",
-            route: "/loan/loan-service/repayment-cycle",
+            route: "/loan/loan-dashboard/repayment-cycle",
             src: "assets/images/net-banking/loans/repayment-cycle.svg",
             selectedSrc: "assets/images/svg/selected-quick-transfer.svg",
             icon: "payment-icon",
@@ -61,7 +61,7 @@ export class loanServiceStore {
         },
         {
             screenName: "Disbursement Schedule",
-            route: "/loan/loan-service/disbursement-schedule",
+            route: "/loan/loan-dashboard/disbursement-schedule",
             src: "assets/images/net-banking/loans/disbursment-schedule.svg",
             selectedSrc: "assets/images/svg/selected-quick-transfer.svg",
             icon: "autopay-icon",

@@ -33,7 +33,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(private iconService: IconService, private router: Router) {
     //This will add arrow back icon in mat icon registry
     this.iconService
-      .addIconIfNotExists("arrow-back", "assets/images/svg/arrow-back.svg")
+      .addIconIfNotExists("arrow-back", "assets/images/arrow-back.svg")
       .subscribe((exists) => {
         if (exists) {
           console.log(`Icon arrow-back already exists.`);

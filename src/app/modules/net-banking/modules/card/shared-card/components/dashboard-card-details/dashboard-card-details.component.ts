@@ -22,7 +22,7 @@ export class DashboardCardDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   payNow() {
-    this.router.navigate(["card/credit-card/service/payment"]);
+    this.router.navigate(["/user/card/credit-card/service/payment"]);
   }
   gotoActionPage(value) {
     console.log(value);
@@ -35,4 +35,5 @@ export class DashboardCardDetailsComponent implements OnInit {
   isFunction(item: any): boolean {
     return item?.actionItem && typeof item.actionItem === "function";
   }
+  goToUpgradePage() {}
 }

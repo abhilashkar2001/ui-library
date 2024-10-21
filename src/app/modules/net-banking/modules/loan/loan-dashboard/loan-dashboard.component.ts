@@ -11,6 +11,8 @@ export class LoanDashboardComponent implements OnInit {
   selectedAccNo: any;
   isStatics: boolean = false;
   transactionCard = LoanDashboardConstant.transactionCard;
+  closedLoanList = LoanDashboardConstant.closedLoan;  // Need to remove static api
+  instantApprove = LoanDashboardConstant.instantApproveItems; // Need to remove static store
   //Need to remove static api
   loanDetails = [
     {
@@ -46,7 +48,7 @@ export class LoanDashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private location: Location) {}
+  constructor(private location: Location) { }
 
   ngOnInit(): void {
     console.log(this.transactionCard, "transcationcard");

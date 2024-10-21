@@ -23,6 +23,8 @@ export interface CardModel {
   lastStlmtMade: number;
   accountNumber: string;
   customerId: number;
+  status: string;
+  cvv: number;
 }
 
 export declare type Cards = CardModel[];
@@ -68,4 +70,45 @@ export interface AccountList {
   lastPaymentDate?: string;
   accountNumber?: string;
   customerId?: number;
+}
+
+export interface Payee {
+  benificiaryId: any;
+  benificiaryMasterId: number;
+  isFavorite: any;
+  accountNo?: string;
+  payeeName: string;
+  nickName?: string;
+  bankType: any;
+  mobileNumber?: string;
+  emailId?: string;
+  bankName: any;
+  bankCode: any;
+  branchName: any;
+  branchCode: any;
+  mobileCode?: string;
+  profilePicUrl: any;
+  customerId?: number;
+  payeeFrom?: string;
+  swiftCode?: string;
+  purpose: any;
+  confirmAccountNumber: any;
+  account: any;
+  visibility: any;
+  beneficiaryStatus: any;
+  countryCode: any;
+  recordStatus: any;
+  authStatus: any;
+  action: any;
+  oneTimeAuth: any;
+  created: any;
+  createdBy: any;
+  lastUpdated: any;
+  lastUpdatedBy: any;
+  empId: any;
+  version: any;
+  countryName?: string;
+  refNumber: any;
+  source?: string;
+  icustRefNo: string;
 }

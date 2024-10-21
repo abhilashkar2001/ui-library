@@ -27,13 +27,13 @@ export class LinkPayeeSideBarComponent implements OnInit {
     this.matIconRegistry.addSvgIcon(
       "extend-icon",
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/svg/extend-arrow.svg"
+        "assets/images/extend-arrow.svg"
       )
     );
     this.matIconRegistry.addSvgIcon(
       "plus-icon",
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/svg/plus-icon.svg"
+        "assets/images/plus-icon.svg"
       )
     );
   }

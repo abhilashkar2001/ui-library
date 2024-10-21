@@ -9,29 +9,6 @@
       <mat-icon class="extend-icon" svgIcon="extend-icon"></mat-icon>
       {{ "Quick Link" | translate }}
     </div>
-    <div
-      *ngIf="screenname == 'send-money'"
-      fxFlex="50"
-      fxLayoutAlign="center center"
-      class="payee_btn add-payee-btn"
-      (click)="navigateToAddPayee()"
-    >
-      <mat-icon class="plus-icon mr-100" svgIcon="plus-icon"></mat-icon>&nbsp;
-      {{ "Add Payee" | translate }}
-    </div>
-    <div
-      fxLayoutAlign="center center"
-      class="payee_btn btn"
-      fxFlex="50"
-      (click)="addFund()"
-      *ngIf="screenname == 'account'"
-    >
-      <mat-icon
-        class="plus-icon current_theme_filter"
-        svgIcon="plus-icon"
-      ></mat-icon>
-      Add Fund
-    </div>
   </div>
   <div class="mtcd" *ngIf="viewPayee != true">
     <app-dashboard-instant-pay [instantPay]="false"></app-dashboard-instant-pay>
