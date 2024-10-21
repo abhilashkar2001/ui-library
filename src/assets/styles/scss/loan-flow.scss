@@ -26,7 +26,7 @@
 
 .standard-font {
   font-weight: 500;
-  font-family: Poppins;
+  font-family: "Poppins", sans-serif;
   margin-bottom: 27px;
 }
 
@@ -35,6 +35,7 @@
   color: #004c97;
   font-size: 18px;
   margin-top: 10px;
+  line-height: 24px;
 }
 
 .standard-font-black {
@@ -53,7 +54,7 @@
 
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  max-width: 70%;
+  max-width: 80%;
   display: flex;
 }
 

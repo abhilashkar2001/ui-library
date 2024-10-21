@@ -11,18 +11,14 @@
       <span class="vertical_line"></span>
     </div>
     <div fxLayout="column" style="padding-left: 33px">
-      <div style="font-size: 22px; line-height: 33px; font-weight: 400">
-        Get Your
-      </div>
-      <div style="font-size: 28px; line-height: 48px; font-weight: 600">
+      <div class="stepper-title">Get Your</div>
+      <div class="screen-title">
         {{ screenTitle }}
       </div>
-      <div style="font-size: 22px; line-height: 33px; font-weight: 400">
-        in {{ screenList?.length }} simple steps
-      </div>
-      <div class="fd_info_stat" fxLayout="row">
+      <div class="stepper-title">in {{ screenList?.length }} simple steps</div>
+      <div class="fd_info_stat" fxLayout="row" fxLayoutGap="10">
         <img src="assets/images/Group.svg" />
-        <div>
+        <div class="steps-average-text">
           On an average, People get their savings account in 15 - 20 min
         </div>
       </div>
