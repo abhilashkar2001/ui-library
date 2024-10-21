@@ -18,7 +18,7 @@ export class CreditCardServiceComponent implements OnInit {
   selectedTab: TabModel | undefined;
   constructor(private router: Router, private iconService: IconService) {
     this.iconService
-      .addIconIfNotExists("feather-info", "assets/images/svg/feather-info.svg")
+      .addIconIfNotExists("feather-info", "assets/images/feather-info.svg")
       .subscribe((exists) => {
         if (exists) {
           console.log(`Icon arrow-back already exists.`);
