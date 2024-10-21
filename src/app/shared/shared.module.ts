@@ -41,4 +41,4 @@ import { InputMaskModule } from "./directives/input-mask/input-mask.module";
   ],
   exports: [SharedComponentsModule, SharedPipesModule, SharedDirectivesModule],
 })
-export class SharedModule {}
+export class SharedModule { }

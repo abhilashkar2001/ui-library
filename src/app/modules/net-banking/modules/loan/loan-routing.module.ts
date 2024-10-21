@@ -11,8 +11,15 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: LoanDashboardComponent,
-  }
+  },
 
+  {
+    path: "loan-service",
+    loadChildren: () =>
+      import("./loan-services/loan-services.module").then(
+        (m) => m.LoanServicesModule
+      ),
+  },
 ];
 
 @NgModule({

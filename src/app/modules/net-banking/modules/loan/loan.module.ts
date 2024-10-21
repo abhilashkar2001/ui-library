@@ -9,11 +9,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { MatCardModule } from '@angular/material/card';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { LoanServiceDashboardComponent } from './loan-services/loan-service-dashboard/loan-service-dashboard.component';
 
 
 @NgModule({
   declarations: [
-    LoanDashboardComponent
+    LoanDashboardComponent,
+    LoanServiceDashboardComponent,
   ],
   imports: [
     CommonModule,
