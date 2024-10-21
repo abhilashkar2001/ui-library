@@ -11,10 +11,9 @@ const MICROSERVICE_URL = environment.microServiceURL;
 export class SendMoneyService {
   constructor(private http: HttpClient) {}
 
-  fetchPayeeList(payload, customerId) {
-    return this.http.post<IcHttpResponseModel<any[]>>(
-      `${MICROSERVICE_URL}/retail-beneficiary/fetchBenificiary?customerId=${customerId}`,
-      payload
+  fetchPayeeList() {
+    return this.http.get<IcHttpResponseModel<any[]>>(
+      `${MICROSERVICE_URL}/corp_benieficiary`
     );
   }
 

@@ -297,7 +297,7 @@ export class CreateAccountLandingPageComponent {
     custResp.forEach((item, i) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
-      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+      custResp[i].documentId = docIds[i];
       delete custResp[i].biometricInfo;
       delete custResp[i].documnentsInfo;
       delete custResp[i].documentsInfoModel;
@@ -309,7 +309,9 @@ export class CreateAccountLandingPageComponent {
         }
         delete custResp[i].customerStagingId;
       }
-      custResp[0].biometricId = [this.sessionService.getItem("biometricId")];
+      custResp[0].biometricId = this.sessionService.getItem("biometricId")
+        ? [this.sessionService.getItem("biometricId")]
+        : [];
       custResp[i].isphoneNumVerified = true;
       custResp[i].isEmailVerified = true;
       custResp[i].customerNo = null;

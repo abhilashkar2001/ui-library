@@ -79,10 +79,11 @@ export class TransferMoneyComponent implements OnInit {
 
   async ngOnInit() {
     this.buildTransferMoney();
-    this.getFavouritiesData();
     this.profileInfo = this.tokenService.getUser();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    console.log(this.customerInfo);
     this.fetchGenericValue();
+    this.getFavouritiesData();
     this.fetchingDetails = await this.serviceCallHandler.get(
       "serviceHandler",
       true
@@ -167,19 +168,19 @@ export class TransferMoneyComponent implements OnInit {
   getFavouritiesData() {
     let payload: any = {
       source: "I",
+      customerId: this.customerInfo?.customerId,
     };
-    this.sendMoneyService
-      .fetchPayeeList(payload, this.customerInfo?.customerId)
-      .subscribe((res: any) => {
-        if (res?.statusCode === 200) {
-          this.transferType = res?.data;
-          this.transferType.forEach((res) => {
-            if (res?.isFavorite == true) {
-              this.filterFav.push(res);
-            }
-          });
-        }
-      });
+    console.log(this.customerInfo);
+    this.sendMoneyService.fetchPayeeList().subscribe((res: any) => {
+      if (res?.statusCode === 200) {
+        this.transferType = res?.data;
+        this.transferType.forEach((res) => {
+          if (res?.isFavorite == true) {
+            this.filterFav.push(res);
+          }
+        });
+      }
+    });
   }
 
   fetchGenericValue() {

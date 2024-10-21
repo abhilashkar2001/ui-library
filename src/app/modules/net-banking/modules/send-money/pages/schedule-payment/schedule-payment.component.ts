@@ -25,7 +25,7 @@ export class SchedulePaymentComponent implements OnInit {
     { label: "No", value: false },
   ];
   frequncyData: any[] = [];
-  proceedPayment: boolean = true;
+  proceedPayment: boolean = false;
   payFromData: any;
   transferData: any;
   mobileNo = "";
@@ -82,21 +82,16 @@ export class SchedulePaymentComponent implements OnInit {
   }
 
   getFavouritiesData() {
-    let payload: any = {
-      source: "I",
-    };
-    this.sendMoneyService
-      .fetchPayeeList(payload, this.customerId)
-      .subscribe((res: any) => {
-        if (res?.statusCode === 200) {
-          this.transferData = res.data;
-          this.transferData.forEach((res) => {
-            if (res?.isFavorite == true) {
-              this.filterFav.push(res);
-            }
-          });
-        }
-      });
+    this.sendMoneyService.fetchPayeeList().subscribe((res: any) => {
+      if (res?.statusCode === 200) {
+        this.transferData = res.data;
+        this.transferData.forEach((res) => {
+          if (res?.isFavorite == true) {
+            this.filterFav.push(res);
+          }
+        });
+      }
+    });
   }
   selectTransfer(event) {
     console.log(event);
@@ -148,19 +143,8 @@ export class SchedulePaymentComponent implements OnInit {
       payeeName: [],
       customerId: [],
       retailBeneficiaryMasterId: [],
+      transferType: "Schedule Payment",
     });
-    // this.schedulePaymentForm
-    //   .get("creditAccount")
-    //   .valueChanges.pipe(debounceTime(500))
-    //   .subscribe((resp: any) => {
-    //     if (resp) this.accountDetails(resp);
-    //   });
-    // this.schedulePaymentForm
-    //   .get("creditAccount")
-    //   .valueChanges.pipe(debounceTime(500))
-    //   .subscribe((res) => {
-    //     if (res) this.selectTransfer(res);
-    //   });
   }
   payAccount(value) {
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
