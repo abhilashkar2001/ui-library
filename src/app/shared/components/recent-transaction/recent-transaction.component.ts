@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
 import { CardService } from "app/modules/net-banking/modules/card/card.service";
+import { CardModel } from "app/shared/models/card.model";
 
 @Component({
   selector: "app-recent-transaction",
@@ -45,6 +46,7 @@ export class RecentTransactionComponent implements OnInit {
   fromDate: string;
   toDate: string;
   createdDate: string;
+  cardList: CardModel[];
   constructor(
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
@@ -92,6 +94,7 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cardList = this.sessionStorageService.getListOfCards();
     if (this.recentTransTabs?.length > 0)
       this.selectedRecentTab = this.recentTransTabs[0];
     this.fetRecntTransaction();
@@ -135,7 +138,11 @@ export class RecentTransactionComponent implements OnInit {
     this.recentTransData = [];
     console.log(this.createpayload());
     this.cardService
-      .fetchAllRecentTransaction(customer.customerId, this.createpayload())
+      .fetchAllRecentTransaction(
+        customer.customerId,
+        this.cardList?.[0]?.cardNumber,
+        this.createpayload()
+      )
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.recentTransData = resp?.data;
