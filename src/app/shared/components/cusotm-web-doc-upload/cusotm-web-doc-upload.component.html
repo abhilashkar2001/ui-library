@@ -50,7 +50,10 @@
                           class="custom-doc-field"
                           fxFlex="95"
                         >
-                          <mat-select formControlName="documentType">
+                          <mat-select
+                            formControlName="documentType"
+                            placeholder="Select Document"
+                          >
                             <mat-option
                               [value]="nonReqDoc.document"
                               *ngFor="
@@ -328,7 +331,7 @@
     </div>
   </div>
 
-  <div fxLayoutGap="20px" fxLayoutAlign="end center" class="pt-12">
+  <div fxLayoutGap="20px" fxLayoutAlign="start center" class="pt-12">
     <button-loading
       [loadingText]="loadingBtnText"
       [type]="'submit'"
