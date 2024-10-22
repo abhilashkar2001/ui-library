@@ -1,1 +1,251 @@
-<p>disbursment-request works!</p>
+<form *ngIf="_parentForm" [formGroup]="_parentForm">
+  <h3>Disbursment Request</h3>
+  <mat-card>
+    <div fxLayout="column">
+      <!-- Loan Account number section -->
+      <div>
+        <app-ic-custom-pay-from
+          [inputLabel]="'Loan Account Number*' | translate"
+          [items]="loanAccounts"
+          bindValueKey="cbsAccountNumber"
+          bindLabelKey="cbsAccountNumber"
+          [control]="_parentForm.get('debitAccount')"
+        >
+          <span class="label-text">{{
+            _parentForm.get("loanType")?.value
+          }}</span>
+        </app-ic-custom-pay-from>
+      </div>
+
+      <!-- Cheque favouring section  -->
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxFlex="49.5" class="border-box">
+          <div>
+            <app-ic-toggle-slide
+              labelPosition="before"
+              [control]="_parentForm.get('chequeFavouringSame')"
+              [label]="
+                'Cheque Favouring Same as Previous disbursement' | translate
+              "
+            ></app-ic-toggle-slide>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="padding-box"
+          >
+            <div fxFlex="49">
+              <app-ic-custom-input
+                [readonly]="true"
+                [inputLabel]="'Name of Payee' | translate"
+                [control]="this._parentForm.get('payeeName')"
+              ></app-ic-custom-input>
+            </div>
+            <div fxFlex="49">
+              <app-ic-custom-datepicker
+                [inputLabel]="'Specific Date' | translate"
+                [control]="this._parentForm.get('specificDate')"
+              ></app-ic-custom-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div fxFlex="49.5" class="border-box">
+          <div>
+            <app-ic-toggle-slide
+              labelPosition="before"
+              [control]="_parentForm.get('ownContribution')"
+              [label]="'Own Contribution with this disbursement' | translate"
+            ></app-ic-toggle-slide>
+          </div>
+          <div
+            *ngIf="_parentForm.get('ownContribution').value == true"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="padding-box"
+          >
+            <div fxFlex="49">
+              <!-- <app-ic-custom-input
+                    [readonly]="true"
+                    [inputLabel]="'Amount' | translate"
+                    [control]="_parentForm.get('creditAmount')"
+                  ></app-ic-custom-input> -->
+              <app-ic-custom-amount-input
+                [readonly]="true"
+                [inputLabel]="'Amount' | translate"
+                [currencyCode]="currentCurrency"
+                [inputType]="'text'"
+                [control]="_parentForm.get('creditAmount')"
+              ></app-ic-custom-amount-input>
+            </div>
+            <div fxFlex="49">
+              <app-ic-custom-datepicker
+                [inputLabel]="'Transfer Date' | translate"
+                [control]="_parentForm.get('transferDate')"
+              ></app-ic-custom-datepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disbursment Request -->
+      <div fxLayout="column" class="mt-16">
+        <span class="light-blue-title-md"
+          >{{ "Disbursement Requested" | translate }}
+        </span>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxFlex="100"
+          class="mt-12"
+        >
+          <div fxFlex="24">
+            <!-- <app-ic-custom-input
+                  [control]="_parentForm.get('debitAmount')"
+                  [inputLabel]="'Amount' | translate"
+                ></app-ic-custom-input> -->
+            <app-ic-custom-amount-input
+              [inputLabel]="'Amount' | translate"
+              [currencyCode]="currentCurrency"
+              [inputType]="'text'"
+              [control]="_parentForm.get('debitAmount')"
+            ></app-ic-custom-amount-input>
+          </div>
+          <div fxFlex="24">
+            <app-ic-custom-input
+              [control]="_parentForm.get('purpose')"
+              [inputLabel]="'Purpose' | translate"
+            ></app-ic-custom-input>
+          </div>
+          <div fxFlex="24">
+            <app-ic-custom-datepicker
+              [control]="_parentForm.get('preferredDate')"
+              [inputLabel]="'Preferred Date' | translate"
+            ></app-ic-custom-datepicker>
+          </div>
+          <div fxFlex="24">
+            <app-ic-custom-input
+              [control]="_parentForm.get('remark')"
+              [inputLabel]="'Remark' | translate"
+            ></app-ic-custom-input>
+          </div>
+        </div>
+      </div>
+
+      <!-- Document Upload -->
+      <mat-card class="mat-card-container">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <span class="light-blue-title-md">{{
+            "Document Upload" | translate
+          }}</span>
+          <div>
+            <app-ic-action-button
+              [buttonName]="'Add' | translate"
+              buttonType="filled"
+              class="add-btn"
+              (click)="addDocumentRow()"
+            >
+            </app-ic-action-button>
+          </div>
+        </div>
+        <div
+          fxLayout="row"
+          [formGroupName]="i"
+          *ngFor="let document of documentCtrl.controls; let i = index"
+        >
+          <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
+            <div fxFlex="24">
+              <app-searchable-select
+                [control]="document.get('documentName')"
+                [inputLabel]="'Document Name' | translate"
+                [items]="documentNameArr"
+                bindValueKey="value"
+                bindLabelKey="label"
+              >
+              </app-searchable-select>
+            </div>
+            <div fxFlex="24">
+              <app-ic-custom-input
+                [control]="document.get('isProofOfAddress')"
+                [inputLabel]="'Description' | translate"
+              ></app-ic-custom-input>
+            </div>
+            <div fxFlex="45">
+              <mat-label class="ml-16 customLabelClass">
+                {{ "File Upload" | translate }}
+              </mat-label>
+              <div fxLayoutAlign="flex-end" class="chooseDiv ml-0">
+                <ng-container
+                  *ngIf="document.controls['files'].controls.length != 0"
+                >
+                  <div
+                    fxFlex="70"
+                    fxLayoutAlign="start center"
+                    class="fileUploadBtn"
+                    *ngFor="
+                      let file of document.controls['files'].controls;
+                      let j = index
+                    "
+                    (click)="openImage(i)"
+                  >
+                    {{ file.value.fileName }},
+                  </div>
+                </ng-container>
+                <div
+                  fxFlex="30"
+                  fxLayoutAlign="center center"
+                  class="chooseBtn"
+                >
+                  {{ "Upload" | translate }}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hide_file"
+                    (change)="onFileSelected($event, i, document.get('files'))"
+                    multiple="multiple"
+                  />
+                </div>
+              </div>
+            </div>
+            <div fxFlex="10" (click)="deleteDocs(i)">
+              <img
+                src="./assets/images/delete-icn.png"
+                alt=""
+                class="delete-icn"
+              />
+            </div>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- terms and condition checkbox -->
+      <mat-checkbox
+        class="customCheckBox"
+        [formControl]="_parentForm.get('acceptTermsConditions')"
+        >{{ "I accept" | translate }}
+        <span class="light-blue-title-sml">{{
+          "Terms and Condition" | translate
+        }}</span></mat-checkbox
+      >
+
+      <div
+        fxFlex="15"
+        fxLayout="row"
+        fxLayoutGap="10"
+        fxLayoutAlign="end center"
+      >
+        <app-ic-action-button
+          (onClick)="_parentForm.reset()"
+          [buttonName]="'Cancel' | translate"
+          buttonType="stroked"
+        ></app-ic-action-button>
+        <app-ic-action-button
+          (onClick)="saveDisbursement()"
+          [buttonName]="'Submit' | translate"
+          buttonType="filled"
+        ></app-ic-action-button>
+      </div>
+    </div>
+  </mat-card>
+</form>

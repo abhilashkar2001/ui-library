@@ -26,7 +26,8 @@ import { LoanServiceDashboardComponent } from './loan-services/loan-service-dash
     ReactiveFormsModule,
     SharedComponentsModule,
     SharedMaterialModule,
-    MatCardModule
+    MatCardModule,
+
   ]
 })
 export class LoanModule { }

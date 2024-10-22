@@ -1,1 +1,219 @@
-<p>topup-loan works!</p>
+<form *ngIf="topUpForm" [formGroup]="topUpForm">
+  <h3>Topup Loan</h3>
+  <mat-card>
+    <div class="w-100" fxLayout="column" fxLayoutGap="10px">
+      <div class="row" fxFlex="100" class="blue-box" fxLayoutGap="30px">
+        <!-- loan account number -->
+        <div fxFlex="40" fxLayout="column">
+          <app-searchable-select
+            [control]="topUpForm.get('debitAccount')"
+            [inputLabel]="'Loan Account Number' | translate"
+            bindValueKey="cbsAccountNumber"
+            bindLabelKey="cbsAccountNumber"
+            direction="row"
+            [items]="loanDetails"
+            (selectionChange)="fetchLoanInstallment()"
+          ></app-searchable-select>
+        </div>
+
+        <div fxFlex="13" *ngFor="let item of accountDetails">
+          <p class="label">{{ item?.headerCell | translate }}</p>
+          <span class="value" *ngIf="installmentDetails">
+            {{ installmentDetails[item?.headerDef] }}</span
+          >
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxLayout="column" fxFlex="50">
+          <!-- top up Amount -->
+          <div fxFlex="100" class="mt-12">
+            <app-ic-custom-input
+              fxFlex="45"
+              [control]="topUpForm.get('topUpAmount')"
+              [inputLabel]="'Deposite Amount' | translate"
+              customClass="customTotalField"
+              customLabelClass="customLabelClass"
+              [numbersOnly]="true"
+              customDirectives="appTwoDigitDecimaNumber"
+            ></app-ic-custom-input>
+          </div>
+          <!-- slider -->
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
+            <div>
+              <mat-slider
+                [value]="topUpForm.value.topUpAmount"
+                [max]="max"
+                [min]="min"
+                fxFlex="100"
+                [thumbLabel]="thumbLabel"
+                (change)="onSliderChange($event, 'amount')"
+                discrete
+                [displayWith]="formatCurrencyLabel"
+              >
+                <input matSliderThumb #slider />
+              </mat-slider>
+            </div>
+            <div
+              fxLayout="row"
+              fxFlex="100"
+              fxLayoutAlign="space-between center"
+            >
+              <div>{{ "Min" | translate }} {{ currencySymbol }} {{ min }}</div>
+              <div>{{ "Max" | translate }} {{ currencySymbol }} {{ max }}</div>
+            </div>
+          </div>
+          <!-- Tenure -->
+          <div fxFlex="100" class="mt-12" fxLayout="column">
+            <mat-label class="customLabelClass">{{
+              "Tenure" | translate
+            }}</mat-label>
+            <div>
+              <fieldset class="fieldset mb-12" fxFlex="45">
+                <div fxFlex="100" fxLayout="row" class="parentYearDiv">
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureYear"
+                      maxlength="2"
+                      [formControl]="topUpForm.get('tenureYear')"
+                      (change)="onInputChange($event, 'tenure')"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span matSuffix class="suffixLabel">{{
+                      "Year" | translate
+                    }}</span>
+                  </div>
+                  <div class="vertical-seperator"></div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureMonth"
+                      maxlength="2"
+                      [formControl]="topUpForm.get('tenureMonth')"
+                      (change)="onTenureChange()"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span class="suffixLabel">{{ "Month" | translate }}</span>
+                  </div>
+                  <div class="vertical-seperator"></div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureDay"
+                      maxlength="2"
+                      [formControl]="topUpForm.get('tenureDay')"
+                      (change)="onTenureChange()"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span class="suffixLabel">{{ "Day" | translate }}</span>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <!-- slider -->
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
+            <div>
+              <mat-slider
+                class="custom-slider-label"
+                [value]="topUpForm.value.tenure"
+                [max]="maxTenure"
+                [min]="minTenure"
+                fxFlex="100"
+                [thumbLabel]="thumbLabel"
+                discrete
+                (change)="onSliderChange($event, 'tenure')"
+                [displayWith]="formatLabel"
+              >
+                <input matSliderThumb #slider />
+              </mat-slider>
+            </div>
+            <div
+              fxLayout="row"
+              fxFlex="100"
+              fxLayoutAlign="space-between center"
+            >
+              <div>{{ "Min" | translate }} {{ minTenure }}days</div>
+              <div>{{ "Max" | translate }} {{ maxTenureInYears }}year</div>
+            </div>
+          </div>
+
+          <div fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+            <div fxFlex="50" class="blue-box blue-border">
+              <p class="label">{{ "Account to be credited" | translate }}</p>
+              <span class="light-blue-title">SA | 8739872378623</span>
+            </div>
+
+            <!-- purpose -->
+            <app-searchable-select
+              [control]="topUpForm.get('purpose')"
+              [inputLabel]="'Purpose' | translate"
+              bindValueKey="id"
+              bindLabelKey="values"
+              fxFlex="50"
+              [items]="genericValue?.PURPOSE"
+            ></app-searchable-select>
+          </div>
+
+          <!-- remarks -->
+          <div fxFlex="100">
+            <app-ic-custom-input
+              [control]="topUpForm.get('remarks')"
+              [inputLabel]="'Remarks' | translate"
+            ></app-ic-custom-input>
+          </div>
+
+          <!-- terms and condition checkbox -->
+          <mat-checkbox
+            class="customCheckBox"
+            [formControl]="topUpForm.get('acceptTermsConditions')"
+            >{{ "I accept" | translate }}
+            <span class="light-blue-title-sml">{{
+              "Terms and Condition" | translate
+            }}</span></mat-checkbox
+          >
+
+          <div
+            fxFlex="15"
+            fxLayout="row"
+            fxLayoutGap="10"
+            fxLayoutAlign="end center"
+          >
+            <app-ic-action-button
+              (onClick)="topUpForm.reset()"
+              [buttonName]="'Cancel' | translate"
+              buttonType="stroked"
+            ></app-ic-action-button>
+            <app-ic-action-button
+              (onClick)="saveTopUp()"
+              [buttonName]="'Submit' | translate"
+              buttonType="filled"
+            ></app-ic-action-button>
+          </div>
+        </div>
+
+        <app-maturity-chart
+          fxFlex="50"
+          [chartData]="chartData"
+          [chartSectionDetails]="chartSectionDetails"
+          [autoCheck]="false"
+          [data]="calculatedData"
+          labelTwo="New EMI"
+          labelOne="Current EMI"
+          [loanDetailsSection]="true"
+        ></app-maturity-chart>
+      </div>
+    </div>
+  </mat-card>
+</form>

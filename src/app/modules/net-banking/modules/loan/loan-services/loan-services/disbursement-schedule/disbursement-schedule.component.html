@@ -1,1 +1,74 @@
-<p>disbursement-schedule works!</p>
+<div *ngIf="disbursementScheduleForm" fxLayout="column" fxLayoutGap="16px">
+  <h3>Disbursement Schedule</h3>
+  <mat-card>
+    <div
+      class="w-100"
+      fxLayout="row"
+      fxLayoutGap="90px"
+      fxLayoutAlign="start center"
+      *ngIf="disbursementScheduleForm"
+      [formGroup]="disbursementScheduleForm"
+    >
+      <h3>{{ "Loan Account Number" | translate }}</h3>
+      <div>
+        <app-searchable-select
+          fxFlex="100"
+          class="icon_input_wrapper"
+          [control]="disbursementScheduleForm.get('loanAccNo')"
+          [items]="loanDetails"
+          bindValueKey="cbsAccountNumber"
+          bindLabelKey="cbsAccountNumber"
+        >
+        </app-searchable-select>
+        <div class="next_go" (click)="onClick()">
+          <mat-icon>arrow_forward</mat-icon>
+        </div>
+      </div>
+      <span fxFlex></span>
+      <div
+        *ngIf="fetchStatement"
+        fxLayout="row"
+        fxLayoutGap="16px"
+        fxLayoutAlign="end center"
+      >
+        <h3
+          class="light-blue-title-md"
+          (click)="route('loan/loan-service/disbursement-request')"
+        >
+          <u>{{ "Disbursement Request" | translate }}</u>
+        </h3>
+        <app-ic-action-button
+          *ngIf="fetchStatement"
+          [buttonName]="'Download' | translate"
+          buttonType="stroked"
+        ></app-ic-action-button>
+      </div>
+    </div>
+    <div class="disbursementList">
+      <table *ngIf="fetchStatement" class="info-table">
+        <thead>
+          <ng-container *ngIf="fetchedData">
+            <tr class="disbursementListHead">
+              <th *ngFor="let head of disbursementList">
+                {{ head?.headerCell | translate }}
+              </th>
+            </tr>
+          </ng-container>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of fetchedData">
+            <td class="basicInfoList" *ngFor="let item of disbursementList">
+              {{ data[item?.hederDef] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-100" *ngIf="fetchStatement">
+      <app-reusable-table
+        [columnNames]="disbursementStatementColumns"
+        [data]="disbursementRecords"
+      ></app-reusable-table>
+    </div>
+  </mat-card>
+</div>
