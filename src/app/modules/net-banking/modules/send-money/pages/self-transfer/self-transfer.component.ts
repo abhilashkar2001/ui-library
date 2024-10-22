@@ -123,7 +123,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
       debitAccount: [""],
       debitCurrency: [""],
       debitBranch: [""],
-      customerId: [this.customerInfo?.customerId],
+      corpCustomerId: [this.customerInfo?.customerId],
     });
   }
 

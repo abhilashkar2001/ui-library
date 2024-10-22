@@ -5,6 +5,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { ChequeService } from "app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { SchedulePaymentService } from "app/shared/services/fund-transfer/schedule-payment.service";
 import { SendMoneyService } from "app/shared/services/fund-transfer/send-money.service";
 import { TransferMoneyService } from "app/shared/services/fund-transfer/transfer-money.service";
 import { GenericValueService } from "app/shared/services/generic-value.service";
@@ -57,7 +58,8 @@ export class TransferMoneyComponent implements OnInit {
     private genericValueService: GenericValueService,
     private accountService: ChequeService,
     private sendMoneyService: SendMoneyService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    private schedulePaymentService: SchedulePaymentService
   ) {
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
@@ -138,9 +140,9 @@ export class TransferMoneyComponent implements OnInit {
       remark: [""],
       source: "I",
       payeeName: "",
-      customerId: [""],
-      retailBeneficiaryMasterId: [""],
       amount: [""],
+      corpCustomerId: [],
+      corpBeneficiaryId: [],
     });
   }
 
@@ -166,11 +168,6 @@ export class TransferMoneyComponent implements OnInit {
     });
   }
   getFavouritiesData() {
-    let payload: any = {
-      source: "I",
-      customerId: this.customerInfo?.customerId,
-    };
-    console.log(this.customerInfo);
     this.sendMoneyService.fetchPayeeList().subscribe((res: any) => {
       if (res?.statusCode === 200) {
         this.transferType = res?.data;
@@ -192,9 +189,8 @@ export class TransferMoneyComponent implements OnInit {
   }
 
   payAccount(event) {
-    let listOfAccounts;
-    // this.sessionStorageService.getListOfAccounts();
-    this.accountType = listOfAccounts.find(
+    let listOfAccounts = this.sessionStorageService.getListOfAccounts();
+    this.accountType = listOfAccounts?.find(
       (res) => res?.accountNo == event
     )?.accountType;
     this.selectedCurrency = listOfAccounts.find(
@@ -206,6 +202,7 @@ export class TransferMoneyComponent implements OnInit {
     this.selectedTransferAccount = this.transferType.find(
       (res) => res?.accountNo == event || event?.accountNo
     );
+    console.log(this.selectedTransferAccount);
     this.accountService
       .fetchInfoByoriginationAccNo(this.selectedTransferAccount?.accountNo)
       .subscribe((res) => {
@@ -234,10 +231,9 @@ export class TransferMoneyComponent implements OnInit {
       (res) => this.transferMoneyForm.get("frequency").value == res?.id
     )?.values;
     payload.bankId = this.profileInfo.bankId;
-    payload.customerId = this.customerInfo.customerId;
+    payload.corpCustomerId = this.customerInfo.customerId;
     payload.debitAmount = payload.creditAmount;
-    payload.retailBeneficiaryMasterId =
-      this.selectedTransferAccount?.retailBeneficiaryMasterId;
+    payload.corpBeneficiaryId = this.selectedTransferAccount?.id;
     console.log(payload);
     if (payload?.paymentType == "later") payload.amount = payload?.creditAmount;
     else delete payload.amount;
@@ -310,7 +306,7 @@ export class TransferMoneyComponent implements OnInit {
       (payload) =>
         this.transferMoneyForm.get("paymentType").value == "now"
           ? this.transferMoneyService.saveTransferMoney(payload)
-          : this.transferMoneyService.saveScheduleTransfer(payload)
+          : this.schedulePaymentService.save(payload)
     );
     this.router.navigate(["/user/send-money/payment-summary"]);
   }

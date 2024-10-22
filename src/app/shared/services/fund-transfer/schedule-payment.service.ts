@@ -7,7 +7,7 @@ const MICROSERVICE_URL = environment.microServiceURL;
   providedIn: "root",
 })
 export class SchedulePaymentService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   fetchViewSchedulePayment(debitAccount?: string) {
     return this.http.get<any>(
@@ -43,7 +43,7 @@ export class SchedulePaymentService {
       `${MICROSERVICE_URL}/fundTransfer/fetchCustInfo?mobileNo=${mobileNum}`
     );
   }
-  getTransferDetails(payload,customerId) {
+  getTransferDetails(payload, customerId) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/retail-beneficiary/fetchBenificiary?customerId=${customerId}`,
       payload
@@ -51,7 +51,7 @@ export class SchedulePaymentService {
   }
   save(payload) {
     return this.http.post<any>(
-      `${MICROSERVICE_URL}/fundTransfer/save-schedule-payment`,
+      `${MICROSERVICE_URL}/corporate-net-banking/save-corp-schedule-payment`,
       payload
     );
   }

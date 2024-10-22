@@ -16,11 +16,4 @@ export class TransferMoneyService {
       payload
     );
   }
-
-  saveScheduleTransfer(payload) {
-    return this.httpClient.post(
-      `${MICROSERVICE_URL}/fundTransfer/save-schedule-payment`,
-      payload
-    );
-  }
 }

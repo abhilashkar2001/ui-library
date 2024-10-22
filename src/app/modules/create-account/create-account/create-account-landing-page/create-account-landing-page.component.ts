@@ -316,6 +316,11 @@ export class CreateAccountLandingPageComponent {
       custResp[i].isEmailVerified = true;
       custResp[i].customerNo = null;
       custResp[i].customerId = null;
+      if (this.noOfDirectors)
+        custResp[i].corpDirectorModel = {
+          sharePercentage: 100 / this.noOfDirectors,
+          isManagingDirector: custResp[0].primaryCustomer,
+        };
 
       const customerId = sessionStorage.getItem("userCustomerId");
       if (customerId) {
