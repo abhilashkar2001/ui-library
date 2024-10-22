@@ -1,1 +1,168 @@
-<p>modify-tenure works!</p>
+<form [formGroup]="modifyTenureForm">
+  <h3>Modify Tenure</h3>
+  <mat-card>
+    <div class="w-100" fxLayout="column" fxLayoutGap="10px">
+      <div class="row" fxFlex="100" class="blue-box" fxLayoutGap="30px">
+        <!-- loan account number -->
+        <div fxFlex="40" fxLayout="column">
+          <app-searchable-select
+            [control]="modifyTenureForm.get('debitAccount')"
+            [inputLabel]="'Loan Account Number' | translate"
+            bindValueKey="cbsAccountNumber"
+            bindLabelKey="cbsAccountNumber"
+            direction="row"
+            [items]="loanDetails"
+          ></app-searchable-select>
+        </div>
+        <!-- loan details -->
+        <div fxFlex="20" *ngFor="let item of accountDetails">
+          <p class="label">{{ item?.headerCell | translate }}</p>
+          <span class="value" *ngIf="installmentDetails">
+            {{ installmentDetails[item?.headerDef] }}</span
+          >
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxLayout="column" fxFlex="50">
+          <!-- Tenure -->
+          <div fxFlex="100" class="mt-12" fxLayout="column">
+            <mat-label class="customLabelClass">{{
+              "Tenure" | translate
+            }}</mat-label>
+            <div>
+              <fieldset class="fieldset mb-12" fxFlex="45">
+                <div fxFlex="100" fxLayout="row" class="parentYearDiv">
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureYear"
+                      maxlength="2"
+                      [formControl]="modifyTenureForm.get('tenureYear')"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span matSuffix class="suffixLabel">{{
+                      "Year" | translate
+                    }}</span>
+                  </div>
+                  <div class="vertical-seperator"></div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureMonth"
+                      maxlength="2"
+                      [formControl]="modifyTenureForm.get('tenureMonth')"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span class="suffixLabel">{{ "Month" }}</span>
+                  </div>
+                  <div class="vertical-seperator"></div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input
+                      fxFlex="50"
+                      matInput
+                      name="tenureDay"
+                      maxlength="2"
+                      [formControl]="modifyTenureForm.get('tenureDay')"
+                      placeholder="Enter"
+                      class="pl-3 tenure_input"
+                      numbersOnly
+                    />
+                    <span class="suffixLabel">{{ "Day" | translate }}</span>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <!-- slider -->
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
+            <div>
+              <mat-slider
+                class="custom-slider-label"
+                [value]="modifyTenureForm.value.tenure"
+                [max]="maxTenure"
+                [min]="minTenure"
+                fxFlex="100"
+                discrete
+              >
+                <input matSliderThumb #slider />
+              </mat-slider>
+            </div>
+            <div
+              fxLayout="row"
+              fxFlex="100"
+              fxLayoutAlign="space-between center"
+            >
+              <div>{{ "Min" | translate }} {{ minTenure }}days</div>
+              <div>{{ "Max" | translate }} {{ maxTenureInYears }}year</div>
+            </div>
+          </div>
+
+          <!-- reason for modification -->
+          <div fxFlex="100">
+            <app-searchable-select
+              [control]="modifyTenureForm.get('reason')"
+              [inputLabel]="'Reason for modification' | translate"
+              bindValueKey="values"
+              bindLabelKey="id"
+              fxFlex="60"
+              [items]="genericValue?.REASON"
+            ></app-searchable-select>
+          </div>
+
+          <!-- remarks -->
+          <div fxFlex="100">
+            <app-ic-custom-input
+              [control]="modifyTenureForm.get('remarks')"
+              [inputLabel]="'Remarks' | translate"
+            ></app-ic-custom-input>
+          </div>
+
+          <!-- terms and condition checkbox -->
+          <mat-checkbox
+            class="customCheckBox"
+            [formControl]="modifyTenureForm.get('acceptTermsConditions')"
+            >{{ "I accept" | translate }}
+            <span class="light-blue-title-sml">{{
+              "Terms and Condition" | translate
+            }}</span></mat-checkbox
+          >
+
+          <div
+            fxFlex="15"
+            fxLayout="row"
+            fxLayoutGap="10"
+            fxLayoutAlign="end center"
+          >
+            <app-ic-action-button
+              (onClick)="modifyTenureForm.reset()"
+              [buttonName]="'Cancel' | translate"
+              buttonType="stroked"
+            ></app-ic-action-button>
+            <app-ic-action-button
+              [buttonName]="'Submit' | translate"
+              buttonType="filled"
+            ></app-ic-action-button>
+          </div>
+        </div>
+
+        <!-- <app-maturity-chart
+          fxFlex="50"
+          [chartData]="chartData"
+          [chartSectionDetails]="chartSectionDetails"
+          [autoCheck]="false"
+          [data]="calculatedData"
+          labelTwo="New EMI"
+          labelOne="Current EMI"
+          [loanDetailsSection]="true"
+        ></app-maturity-chart> -->
+      </div>
+    </div>
+  </mat-card>
+</form>

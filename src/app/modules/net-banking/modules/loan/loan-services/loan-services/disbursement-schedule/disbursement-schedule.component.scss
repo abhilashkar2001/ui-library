@@ -1,0 +1,54 @@
+.next_go {
+  background: #377dff;
+  box-shadow: 0px 3px 6px rgb(37 113 255 / 5%);
+  height: 42px;
+  width: 50px;
+  top: 1px;
+  position: relative;
+  /* left: 135px; */
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 8px 8px 0;
+}
+.icon_input_wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: -2px;
+  z-index: 1;
+}
+.disbursementRqstLink {
+  font: normal normal bold 16px/19px Raleway;
+  color: #377dff;
+  opacity: 1;
+}
+.info-table {
+  width: 100%;
+}
+.info-table th,
+.info-table td {
+  padding: 8px;
+  text-align: center;
+}
+
+.disbursementList {
+  background-color: #f2f7ff;
+  border-radius: 12px 12px 12px 12px;
+}
+.disbursementListHead {
+  color: #606c8d;
+  opacity: 1;
+}
+.basicInfoList {
+  font: normal normal medium 14px/17px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #060606;
+  opacity: 1;
+}
+.successInfoList {
+  color: #377dff;
+}
+.failedInfoList {
+  color: #e0262b;
+}

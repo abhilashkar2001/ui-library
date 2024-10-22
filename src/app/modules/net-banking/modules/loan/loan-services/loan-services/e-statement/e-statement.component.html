@@ -1,1 +1,66 @@
-<p>e-statement works!</p>
+<div
+  fxLayout="column"
+  fxLayoutGap="16px"
+  *ngIf="estatementForm"
+  [formGroup]="estatementForm"
+>
+  <h3>E-Statement</h3>
+  <mat-card>
+    <div class="w-100" fxLayout="row" fxLayoutGap="16px">
+      <app-searchable-select
+        fxFlex="24"
+        [control]="estatementForm.get('accountNumber')"
+        [inputLabel]="'Loan Account No' | translate"
+        [items]="loanDetails"
+        bindValueKey="cbsAccountNumber"
+        bindLabelKey="cbsAccountNumber"
+        (selectionChange)="fetchLoanInstallment()"
+      >
+      </app-searchable-select>
+      <app-ic-custom-input
+        fxFlex="24"
+        [control]="estatementForm.get('loanType')"
+        [inputLabel]="'Loan Type' | translate"
+        [readonly]="true"
+      ></app-ic-custom-input>
+      <app-ic-custom-input
+        fxFlex="24"
+        [control]="estatementForm.get('email')"
+        [inputLabel]="'Email' | translate"
+        [readonly]="true"
+      ></app-ic-custom-input>
+    </div>
+    <div class="w-100" fxLayout="row" fxLayoutGap="16px">
+      <app-searchable-select
+        fxFlex="24"
+        [control]="estatementForm.get('frequency')"
+        [inputLabel]="'Frequency' | translate"
+        [items]="genericValue?.FREQUENCY"
+        bindValueKey="values"
+        bindLabelKey="values"
+      >
+      </app-searchable-select>
+      <app-searchable-select
+        fxFlex="24"
+        [control]="estatementForm.get('format')"
+        [inputLabel]="'Format' | translate"
+        [items]="genericValue?.FORMAT"
+        bindValueKey="values"
+        bindLabelKey="values"
+      >
+      </app-searchable-select>
+    </div>
+    <div fxLayoutGap="20" fxLayoutAlign="end center">
+      <app-ic-action-button
+        [buttonName]="'Cancel' | translate"
+        buttonType="stroked"
+      >
+      </app-ic-action-button>
+      <app-ic-action-button
+        [buttonName]="'Subscribe' | translate"
+        buttonType="filled"
+        (onClick)="saveEStatement()"
+      ></app-ic-action-button>
+    </div>
+  </mat-card>
+</div>
