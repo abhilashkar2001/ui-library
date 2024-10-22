@@ -69,7 +69,7 @@
       >
     </mat-option>
   </mat-select>
-  <mat-error *ngIf="control.hasError('required') && control.touched">
+  <mat-error *ngIf="control?.hasError('required') && control?.touched">
     <!-- Please Select {{ inputLabel }} -->
     {{ inputLabel }} is Required!
   </mat-error>

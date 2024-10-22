@@ -1,0 +1,93 @@
+.label-text {
+  font: normal normal normal 12px/14px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #575d67;
+  opacity: 1;
+}
+.border-box {
+  background: url("/assets/images/background-mask.svg");
+  border: 1px solid #377dff45;
+  opacity: 1;
+  border-radius: 12px;
+  padding: 10px;
+
+  .padding-box {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 12px;
+    margin-top: 10px;
+    padding: 6px 6px 0 6px;
+  }
+}
+
+.mat-card-container {
+  background: url("/assets/images/background-mask.svg");
+  border: 3px solid #f2f7ff;
+  border-radius: 8px;
+  opacity: 1;
+  .add-btn {
+    display: flex;
+    width: 100px;
+  }
+
+  .delete-icn {
+    width: 40px;
+    top: 24px;
+    position: relative;
+  }
+}
+
+.chooseDiv {
+  margin-top: 3px;
+  margin-bottom: 25px;
+  padding: 0px;
+  top: -17px;
+  background: #fffefe;
+  box-shadow: none;
+  border: 1px solid #bfbfbf;
+  border-radius: 6px;
+  opacity: 1;
+  max-width: 98% !important;
+  margin-bottom: 18px;
+  height: 40px;
+}
+.fileUploadBtn {
+  font-weight: 600;
+  color: #00205c;
+  opacity: 1;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 12px;
+  text-decoration: underline;
+}
+.fileUploadBtn:hover {
+  color: #377dff;
+}
+
+.chooseBtn {
+  border-radius: 6px;
+  opacity: 1;
+  margin-right: -1px;
+  font: normal normal 400 14px/17px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #377dff;
+  opacity: 1;
+  max-width: 96px !important;
+  height: 100%;
+  position: relative;
+}
+.hide_file {
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  cursor: pointer;
+  right: 0;
+  top: 0;
+  height: 100%;
+  font-size: 24px;
+  width: 100%;
+}
+
+.customLabelClass {
+  margin-left: 0 !important;
+  font-family: "Raleway", sans-serif;
+}

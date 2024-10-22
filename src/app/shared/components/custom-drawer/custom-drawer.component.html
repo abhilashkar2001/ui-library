@@ -48,12 +48,7 @@
         >
           {{ node.name }}
         </div>
-        <button
-          mat-icon-button
-          matTreeNodeToggle
-          [attr.aria-label]="'Toggle ' + node.name"
-          style="cursor: pointer"
-        >
+        <button mat-icon-button matTreeNodeToggle style="cursor: pointer">
           <mat-icon class="mat-icon-rtl-mirror">
             {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
           </mat-icon>
