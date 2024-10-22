@@ -1,3 +1,7 @@
+# Contributing to Project Name
+
+We welcome contributions from everyone! Please follow these guidelines to ensure a smooth contribution process.
+
 ## Commit Message Format
 
 We follow the **Conventional Commits** specification for commit messages to make it easier to write a clear project history and generate changelogs. Please use the following format for your commits:
