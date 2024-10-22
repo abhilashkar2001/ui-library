@@ -16,6 +16,8 @@ We follow the **Conventional Commits** specification for commit messages to make
 
 Here are some examples of well-formed commit messages:
 
+**git commit -m "docs: add CONTRIBUTING.md"**
+
 ### Summary
 
 This expanded section clearly outlines the types of commits, provides specific examples, and ensures contributors understand how to format their commit messages properly. You can include this in your `CONTRIBUTING.md` file to guide contributors effectively.
