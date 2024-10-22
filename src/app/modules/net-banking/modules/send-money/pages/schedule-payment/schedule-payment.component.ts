@@ -33,7 +33,7 @@ export class SchedulePaymentComponent implements OnInit {
   debitAccData: any;
   debitAccCurr: any;
   message: any;
-  customerId: any;
+  customerId: number;
   genericData = {
     FREQUENCY: [],
     PAYMENTMODE: [],
@@ -99,11 +99,7 @@ export class SchedulePaymentComponent implements OnInit {
       (res) => (res.accountNo = event ?? event?.accountNo)
     );
     console.log(this.selectedAccNo);
-    this.message =
-      "Bank Name - " +
-      this.selectedAccNo.bankName +
-      "| Bank Code - " +
-      this.selectedAccNo.bankCode;
+    this.message = "Bank Code - " + this.selectedAccNo.bankCode;
     this.service
       .fetchInfoByoriginationAccNo(this.selectedAccNo?.accountNo)
       .subscribe((res) => {
@@ -141,9 +137,9 @@ export class SchedulePaymentComponent implements OnInit {
       remark: [],
       paymentType: [],
       payeeName: [],
-      customerId: [],
-      retailBeneficiaryMasterId: [],
       transferType: "Schedule Payment",
+      corpCustomerId: [],
+      corpBeneficiaryId: [],
     });
   }
   payAccount(value) {
@@ -179,9 +175,9 @@ export class SchedulePaymentComponent implements OnInit {
     payload.payeeName = transferTo?.payeeName;
     payload.creditAccountType = transferTo?.bankType;
     payload.bankId = this.profileInfo?.bankId;
-    payload.customerId = this.customerId;
+    payload.corpCustomerId = this.customerId;
     payload.debitAccountType = this.transferToData.accountType;
-    payload.retailBeneficiaryMasterId = transferTo?.retailBeneficiaryMasterId;
+    payload.corpBeneficiaryId = transferTo?.id;
     let paymentVal = this.schedulePaymentForm.get("paymentMode").value;
     const paymentModeVal = this.paymentModes.find(
       (item) => item.id === paymentVal

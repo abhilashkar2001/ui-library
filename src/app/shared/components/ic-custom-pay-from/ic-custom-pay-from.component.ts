@@ -50,15 +50,16 @@ export class IcCustomPayFromComponent implements OnInit {
     this.accountType = this.items.find(
       (item) => item?.accountNo == event
     )?.accountType;
-    this.payFromService.getBalance(event).subscribe((res: any) => {
-      if (res?.data) {
-        this.balance = res?.data?.currbal;
-        this.remainedBalance.emit(this.balance);
-        if (this.skipBalanceCheck) return;
-        if (this.balance < 0) {
-          this.errorMessage = "Minimum balance is required";
-        } else this.errorMessage = "";
-      }
-    });
+    if (event)
+      this.payFromService.getBalance(event).subscribe((res: any) => {
+        if (res?.data) {
+          this.balance = res?.data?.currbal;
+          this.remainedBalance.emit(this.balance);
+          if (this.skipBalanceCheck) return;
+          if (this.balance < 0) {
+            this.errorMessage = "Minimum balance is required";
+          } else this.errorMessage = "";
+        }
+      });
   }
 }
