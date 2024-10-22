@@ -137,23 +137,24 @@ export class RecentTransactionComponent implements OnInit {
     let customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
     console.log(this.createpayload());
-    this.cardService
-      .fetchAllRecentTransaction(
-        customer.customerId,
-        this.cardList?.[0]?.cardNumber,
-        this.createpayload()
-      )
-      .subscribe((resp: any) => {
-        if (resp?.statusCode == 200) {
-          this.recentTransData = resp?.data;
-          this.recentTransData.forEach((element) => {
-            element.action = "Repay";
-            const date = new Date(element.created);
-            const formattedDate = date.toISOString().split("T")[0];
-            element.created = formattedDate;
-          });
-        }
-      });
+    if (this.cardList?.[0]?.cardNumber)
+      this.cardService
+        .fetchAllRecentTransaction(
+          customer.customerId,
+          this.cardList?.[0]?.cardNumber,
+          this.createpayload()
+        )
+        .subscribe((resp: any) => {
+          if (resp?.statusCode == 200) {
+            this.recentTransData = resp?.data;
+            this.recentTransData.forEach((element) => {
+              element.action = "Repay";
+              const date = new Date(element.created);
+              const formattedDate = date.toISOString().split("T")[0];
+              element.created = formattedDate;
+            });
+          }
+        });
   }
 
   fetRecntTransactionScreenWise(screen) {

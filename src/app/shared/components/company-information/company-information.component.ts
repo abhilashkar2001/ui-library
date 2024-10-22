@@ -93,6 +93,7 @@ export class CompanyInformationComponent implements OnInit {
   addCorporateCustomer() {
     return this.fb.group({
       corporateCustId: [this.corporateCustomer ?? ""],
+      currencyCode: "INR",
       companyName: ["", [Validators.required]],
       companyType: [" ", [Validators.required]],
       numberOfDirectors: ["", [Validators.required]],
@@ -134,7 +135,7 @@ export class CompanyInformationComponent implements OnInit {
       contactId: [data?.contact?.contactId ?? ""],
       address: this.fb.array([
         this.fb.group({
-          address1: [data?.contact.address[0]?.address1 ?? ""],
+          address1: [data?.contact.address[0]?.address1 ?? "Akshay Tech Park"],
           address2: [data?.contact.address[0]?.address2 ?? ""],
           residenceType: [data?.contact.address[0]?.residenceType ?? 7521],
           residenceTypeValue: [
