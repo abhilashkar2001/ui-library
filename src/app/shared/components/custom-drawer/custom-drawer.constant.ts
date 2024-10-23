@@ -191,8 +191,120 @@ export class DrawerConstant {
         },
       ],
     },
-
   ];
 
-
+  static readonly CARD_DRAWER_MENU = [
+    {
+      name: "Credit Card",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "Service",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "Payment",
+              path: "/card/credit-card/service/payment",
+              roleName: "child-node",
+            },
+            {
+              name: "Convert to EMI",
+              path: "/card/credit-card/service/convert-to-emi",
+              roleName: "child-node",
+            },
+            {
+              name: "AutoPay",
+              path: "/card/credit-card/service/autopay",
+              roleName: "child-node",
+            },
+            {
+              name: "Billing Cycle",
+              path: "/card/credit-card/service/billing-cycle",
+              roleName: "child-node",
+            },
+            {
+              name: "E Statement",
+              path: "/card/credit-card/service/e-statement",
+              roleName: "child-node",
+            },
+            {
+              name: "PIN Generation",
+              path: "/card/credit-card/service/pin-generation",
+              roleName: "child-node",
+            },
+            {
+              name: "Block Card",
+              path: "/card/credit-card/service/block-card",
+              roleName: "child-node",
+            },
+            {
+              name: "Change PIN",
+              path: "/card/credit-card/service/change-pin",
+              roleName: "child-node",
+            },
+            {
+              name: "Card EMI Details",
+              path: "/card/credit-card/service/card-emi-details",
+              roleName: "child-node",
+            },
+            {
+              name: "Pre Generated Statement",
+              path: "/card/credit-card/service/pre-generated-statement",
+              roleName: "child-node",
+            },
+            {
+              name: "Instant Loan",
+              path: "/card/credit-card/service/instant-loan",
+              roleName: "child-node",
+            },
+            {
+              name: "Alert Subscription",
+              path: "/card/credit-card/service/alert-subscription",
+              roleName: "child-node",
+            },
+            {
+              name: "Unbilled Transaction",
+              path: "/card/credit-card/service/unbilled-transaction",
+              roleName: "child-node",
+            },
+            {
+              name: "Add On Card",
+              path: "/card/credit-card/service/add-on-card",
+              roleName: "child-node",
+            },
+            {
+              name: "Upgrade",
+              path: "/card/credit-card/service/upgrade",
+              roleName: "child-node",
+            },
+          ],
+        },
+        {
+          name: "Manage Crads",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "Card Control",
+              path: "/card/credit-card/manage/card-control",
+              roleName: "child-node",
+            },
+            {
+              name: "Usage Limit",
+              path: "/card/credit-card/manage/card-usage",
+              roleName: "child-node",
+            },
+          ],
+        },
+        {
+          name: "Apply",
+          path: "",
+          roleName: "parent-node",
+          children: [],
+        },
+      ],
+    },
+  ];
 }
