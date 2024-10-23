@@ -31,6 +31,7 @@
     class="custom_steppper"
     [selectedIndex]="screenIndex"
     (selectionChange)="stepperSelectionChange($event)"
+    class="mt-32"
   >
     <ng-container *ngFor="let item of screenList; let i = index">
       <mat-step

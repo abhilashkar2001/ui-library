@@ -1,11 +1,62 @@
-<div fxFlex="100" fxLayout="column" style="padding: 2%">
-  <app-landing-profile
+<section class="container-fluid hero_section">
+  <div class="row align-items-center">
+    <div class="col-12 col-lg-7 py-3 pt-md-5 pb-md-3 order-1 order-lg-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-11 col-md-11 ml-auto">
+            <h1 class="hero_title">Lorem ipsum dolor sit amet consectetur.</h1>
+            <p class="hero_subtitle">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque provident facilis tenetur quo atque quas voluptas, esse in?</p>
+            <div class="apply_div">
+              <button type="button" class="apply_btn" >
+                Apply
+              </button>
+            </div>
+            <div class="stacked_imgs_div">
+              <div class="img_wrapper">
+                <img
+                  src="assets/images/user-profile-pic-1.svg"
+                  alt=""
+                  class="stacked_images"
+                />
+                <img
+                  src="assets/images/user-profile-pic-2.svg"
+                  alt=""
+                  class="stacked_images"
+                />
+                <img
+                  src="assets/images/user-profile-pic-3.svg"
+                  alt=""
+                  class="stacked_images"
+                />
+              </div>
+              <div class="stacked_div_text">
+                <h2>4K+</h2>
+                <p>users worldwide</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-12 col-lg-5 order-0 order-lg-1 d-flex justify-content-end align-items-center pt-3 pr-0"
+    >
+      <img [src]="imageUrl" alt="hero image" class="img-fluid deposit_hero_img" />
+    </div>
+  </div>
+</section>
+
+
+
+<div  fxLayout="column" style="padding: 1% 2% 2%">
+  <!-- <app-landing-profile
     [imageUrl]="imageUrl"
     [profileHeader]="profileHeader"
     [profileHint]="profileHint"
     [routeUrl]="routeUrl"
   >
-  </app-landing-profile>
+  </app-landing-profile> -->
   <div>
     <app-fd-rd-calculator
       (customDepositChange)="customDepositChange($event)"
