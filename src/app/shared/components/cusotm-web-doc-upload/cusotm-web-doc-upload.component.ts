@@ -634,7 +634,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       documentNumber:
         this.createDocumentForm.value.otherDocument[i].documentNumber,
       documentSide:
-        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1 ?? 0,
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1 ,
       fileName: file.name,
       fileType: file.type,
       verificationType: "kyc",

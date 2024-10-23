@@ -76,7 +76,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
   customerIds: any[] = [];
   debounceTimeout: any;
   errorDob: any;
-
+  genderPrefixMap=new Map([
+  ['male', 'Mr'],
+  ['female', 'Ms'],
+  ['female', 'Mrs'],
+]);
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -163,6 +167,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   .get("customer")
                   ["controls"][index].get("gender")
                   .setValue(gender);
+                if(item?.gender?.toLowerCase()){
+                  let prefix=this.prefixArray.filter((val:any)=>
+                    val?.values==this.genderPrefixMap.get(item?.gender?.toLowerCase())
+                  )
+                   this.customerDetailsForm
+                  .get("customer")
+                  ["controls"][index].get("prefix")
+                  .setValue(prefix[0]?.id);
+                }
+
                 const address = this.customer
                   .at(index)
                   .get("contact")
@@ -333,8 +347,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
         this.renderApplicant(data, this.docCustomerDetails.length);
       }, 200);
     } else {
-      if (this.docCustomerDetails.length > 0)
-        for (let i = 0; i < this.docCustomerDetails.length; i++)
+      if (this.docCustomerDetails?.length > 0)
+        for (let i = 0; i < this.docCustomerDetails?.length; i++)
           this.addCustomer(i);
       else this.addCustomer(0);
       this.cd.detectChanges();
