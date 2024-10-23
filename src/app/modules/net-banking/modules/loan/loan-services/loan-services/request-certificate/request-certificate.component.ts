@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
 import { loanServiceStore } from '../../../loan-tabs';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 
 @Component({
   selector: 'app-request-certificate',
@@ -14,7 +16,17 @@ export class RequestCertificateComponent implements OnInit {
   requestCertificateheadings =
     loanServiceStore.requestCertificateheadings;
   fetchStatement: Boolean = false;
-  loanDetails: LoanDetailsModel[];
+  // loanDetails: LoanDetailsModel[];
+  loanDetails = [
+    {
+      cbsAccountNumber: '300200003035',
+      additionalValue: 'Value 1'
+    },
+    {
+      cbsAccountNumber: '300200007504',
+      additionalValue: 'Value 2'
+    }
+  ];
   requestOptions = [
     "Offer Letter",
     "Annual Loan Statement",
@@ -23,7 +35,7 @@ export class RequestCertificateComponent implements OnInit {
   ];
   installmentDetails: LoanInstallmentModel;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private loanService: LoanService) { }
 
   ngOnInit(): void {
     this.buildRequestCertificateForm()
@@ -35,7 +47,17 @@ export class RequestCertificateComponent implements OnInit {
       requestOption: ["", [Validators.required]],
       debitAccount: ["", [Validators.required]],
     });
+  }
 
+
+  onClick() {
+    this.fetchStatement = true;
+    this.loanService
+      .fetchLoanInstallment(this.requestCertificateForm?.value?.debitAccount)
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
+        if (res?.statusCode == 200 && res?.data)
+          this.installmentDetails = res?.data;
+      });
   }
 
 }

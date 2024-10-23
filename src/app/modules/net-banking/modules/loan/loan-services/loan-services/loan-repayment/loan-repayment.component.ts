@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoanRepaymentStore } from './loan-repayment.store';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-loan-repayment',
@@ -11,21 +12,24 @@ import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 export class LoanRepaymentComponent implements OnInit {
   repaymentForm: FormGroup | undefined;
   accountDetails = LoanRepaymentStore.loanAccountDetails;
+  genericValue = { PAYMENTTYPE: [] };
+  //Need to remove the static data
   loanDetails = [
     {
-      cbsAccountNumber: '1234567890',
+      cbsAccountNumber: '300200003035',
       additionalValue: 'Value 1'
     },
     {
-      cbsAccountNumber: '0987654321',
+      cbsAccountNumber: '300200007504',
       additionalValue: 'Value 2'
     }
   ];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private genericValueService: GenericValueService) { }
 
   ngOnInit(): void {
     this.buildLoanRepayment()
+    this.fetchGenericValues()
   }
 
   buildLoanRepayment() {
@@ -45,4 +49,19 @@ export class LoanRepaymentComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Fetch the generic data
+   */
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 && res?.data) {
+          Object.keys(res?.data).forEach(
+            (k) => (this.genericValue[k] = res.data[k])
+          );
+        }
+      });
+  }
 }

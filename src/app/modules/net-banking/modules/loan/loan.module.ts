@@ -10,12 +10,15 @@ import { SharedComponentsModule } from 'app/shared/components/shared-components.
 import { MatCardModule } from '@angular/material/card';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { LoanServiceDashboardComponent } from './loan-services/loan-service-dashboard/loan-service-dashboard.component';
+import { LoanSummaryComponent } from './loan-summary/loan-summary.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
   declarations: [
     LoanDashboardComponent,
     LoanServiceDashboardComponent,
+    LoanSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,7 @@ import { LoanServiceDashboardComponent } from './loan-services/loan-service-dash
     SharedComponentsModule,
     SharedMaterialModule,
     MatCardModule,
-
+    TranslateModule,
   ]
 })
 export class LoanModule { }

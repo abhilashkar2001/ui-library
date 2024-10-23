@@ -22,21 +22,6 @@
               >{{ option | translate }}</mat-radio-button
             >
           </ng-container>
-          <!-- <mat-radio-button
-          [value]="'Annual Loan Statement'"
-          class="radioChecked radiobtn text-gray px-16"
-          >Annual Loan Statement</mat-radio-button
-        >
-        <mat-radio-button
-          [value]="'Final Interest Certificate'"
-          class="radioChecked radiobtn text-gray px-16"
-          >Final Interest Certificate</mat-radio-button
-        >
-        <mat-radio-button
-          [value]="'Closure Letter'"
-          class="radioChecked radiobtn text-gray px-16"
-          >Closure Letter</mat-radio-button
-        > -->
         </mat-radio-group>
       </div>
     </div>
@@ -48,6 +33,7 @@
         [inputLabel]="'Loan Account No' | translate"
         bindValueKey="cbsAccountNumber"
         bindLabelKey="cbsAccountNumber"
+        [showOutsideLabel]="true"
       >
       </app-searchable-select>
       <span fxFlex></span>

@@ -80,10 +80,10 @@
               ></app-ic-custom-amount-input>
             </div>
             <div fxFlex="49">
-              <app-ic-custom-datepicker
+              <app-input-date-picker
                 [inputLabel]="'Transfer Date' | translate"
                 [control]="_parentForm.get('transferDate')"
-              ></app-ic-custom-datepicker>
+              ></app-input-date-picker>
             </div>
           </div>
         </div>
@@ -119,10 +119,10 @@
             ></app-ic-custom-input>
           </div>
           <div fxFlex="24">
-            <app-ic-custom-datepicker
+            <app-input-date-picker
               [control]="_parentForm.get('preferredDate')"
               [inputLabel]="'Preferred Date' | translate"
-            ></app-ic-custom-datepicker>
+            ></app-input-date-picker>
           </div>
           <div fxFlex="24">
             <app-ic-custom-input
@@ -162,6 +162,7 @@
                 [items]="documentNameArr"
                 bindValueKey="value"
                 bindLabelKey="label"
+                [showOutsideLabel]="true"
               >
               </app-searchable-select>
             </div>

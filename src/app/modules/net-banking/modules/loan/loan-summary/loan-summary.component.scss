@@ -1,0 +1,118 @@
+.content-div {
+  background: #fcfcfc 0% 0% no-repeat padding-box;
+  border-radius: 12px;
+  opacity: 1;
+  position: relative;
+  padding: 10px 20px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.0901960784);
+}
+
+.summary_heading {
+  text-align: left;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  color: #00205c;
+  opacity: 1;
+  padding-left: 4px;
+  border-left: 4px solid #bfbfbf;
+  background: #f2f2f5 0% 0% no-repeat padding-box;
+  padding: 9px 4px;
+}
+
+.label {
+  text-align: left;
+  font:
+    normal normal 500 14px/3px "Poppins",
+    sans-serif;
+  letter-spacing: -0.24px;
+  color: #606c8d;
+  padding-top: 30px;
+}
+
+.value {
+  text-align: left;
+  font: normal normal 600 16px/17px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #060606;
+}
+
+.recent-tabs {
+  font:
+    normal normal normal 16px/19px "Poppins",
+    sans-serif;
+  letter-spacing: 0px;
+  color: #575d67;
+  cursor: pointer;
+}
+
+.horizontal-line {
+  background: #377dff;
+  height: 3px;
+  border-radius: 30px;
+  animation: increaseWidth 0.34s ease-out forwards; /* Apply animation */
+}
+
+@keyframes increaseWidth {
+  from {
+    width: 0%;
+  } /* Start width */
+  to {
+    width: 60%;
+  } /* End width */
+}
+
+.chart_container {
+  padding: 20px;
+}
+
+.dynamicChart {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  margin: auto;
+}
+
+.chart_info {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.info_label {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.info_value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+}
+
+.quick_btn {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  color: #00205c;
+}
+.btn {
+  width: 158px;
+  height: 43px;
+  cursor: pointer;
+  border-radius: 8px;
+  font:
+    normal normal 400 14px/16px "Poppins",
+    sans-serif;
+}
+.extend-icon {
+  width: 30px;
+  padding: 7px;
+}
+.payee_btn {
+  background: #00205c 0% 0% no-repeat padding-box;
+  color: #ffffff;
+}
