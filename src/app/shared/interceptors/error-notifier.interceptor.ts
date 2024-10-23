@@ -7,7 +7,6 @@ import {
 } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 import { of, throwError } from "rxjs";
-import Swal from "sweetalert2";
 import { MatDialog } from "@angular/material/dialog";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
 import { Route, Router } from "@angular/router";
@@ -19,7 +18,7 @@ export class ErrorNotifierService implements HttpInterceptor {
     private dialog: MatDialog,
     private router: Router,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   errorData: { code: any; message: string }[] = [
     { code: 400, message: "Bad Request" },
@@ -50,11 +49,17 @@ export class ErrorNotifierService implements HttpInterceptor {
             // CLose all dialog popup on error
             this.dialog.closeAll();
 
-            if (error.status === 500) {
+            if (request.url.includes("assets/")) {
+              return;
+            }
+            else if (error.status === 500) {
               this.openCustomErrorDialog(errorPayload);
-
               return throwError(error);
-            } else if (error.status === 403) {
+            }
+            else if (request.url.includes("assets/")) {
+              return;
+            }
+            else if (error.status === 403) {
               errorPayload.error = "Contact your Administrator.";
               errorPayload.message =
                 "You do not have sufficient privileges to do this operation";

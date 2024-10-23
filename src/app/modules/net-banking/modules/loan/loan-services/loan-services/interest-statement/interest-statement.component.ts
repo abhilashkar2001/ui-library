@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { InterestStatementStore } from './interest-statement.store';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 
 @Component({
   selector: 'app-interest-statement',
@@ -14,10 +16,21 @@ export class InterestStatementComponent implements OnInit {
   yearDurationArr = InterestStatementStore.yearDuration;
   interestStatementheadings = InterestStatementStore.interestStatementheadings;
   fetchStatement: boolean = false;
-  loanDetails: LoanDetailsModel[];
+  // loanDetails: LoanDetailsModel[];
+  // Need to remove the static data
+  loanDetails = [
+    {
+      cbsAccountNumber: '300200003035',
+      additionalValue: 'Value 1'
+    },
+    {
+      cbsAccountNumber: '300200007504',
+      additionalValue: 'Value 2'
+    }
+  ];
   interestStatement: any;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private loanService: LoanService) { }
 
   ngOnInit(): void {
     this.buildInterestStatementForm()
@@ -32,6 +45,25 @@ export class InterestStatementComponent implements OnInit {
       statementFrom: [""],
       statementTo: [""],
     });
-
   }
+
+
+  fetchData() {
+    this.fetchStatement = true;
+    let payload;
+    if (this.interestStatementForm.get("statementOption").value === "Duration")
+      payload = `&fromDate=${this.interestStatementForm.value.statementFrom}&toDate=${this.interestStatementForm.value.statementTo}`;
+    else
+      payload = `&financialYear=${this.interestStatementForm.value.yearDuration}`;
+    this.loanService
+      .fetchInterestStatement(
+        this.interestStatementForm.value.debitAccount,
+        payload
+      )
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode && res?.data) this.interestStatement = res?.data;
+      });
+  }
+
+
 }

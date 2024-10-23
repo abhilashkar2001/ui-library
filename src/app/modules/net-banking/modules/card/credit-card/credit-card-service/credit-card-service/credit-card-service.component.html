@@ -1,4 +1,4 @@
-<div
+<!-- <div
   fxLayout="row"
   fxLayout.lt-md="column"
   fxLayoutGap="8px"
@@ -81,5 +81,10 @@
   </div>
   <div fxFlex="25" fxFlex.lt-md="100" class="custom_component_top">
     <app-link-payee-side-bar [viewPayee]="true"> </app-link-payee-side-bar>
+  </div>
+</div> -->
+<div fxLayout="row">
+  <div fxLayout="column" class="full-width">
+    <app-custom-drawer [menuType]="'Card'"></app-custom-drawer>
   </div>
 </div>

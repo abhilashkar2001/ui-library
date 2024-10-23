@@ -32,17 +32,17 @@ export class CreditCardStore {
       icon: "loan_repayment",
       selectedIcon: "selected-payment-icon",
     },
-    {
-      screenName: "Card Summary",
-      // route: "/card/credit-card/service/card-summary",
-      src: "assets/images/card-summary-blue.svg",
-      selectedSrc: "assets/images/card-summary-white.svg",
-      icon: "card-summary-icon",
-      selectedIcon: "selected-card-summary-icon",
-    },
+    // {
+    //   screenName: "Card Summary",
+    //   // route: "/card/credit-card/service/card-summary",
+    //   src: "assets/images/card-summary-blue.svg",
+    //   selectedSrc: "assets/images/card-summary-white.svg",
+    //   icon: "card-summary-icon",
+    //   selectedIcon: "selected-card-summary-icon",
+    // },
     {
       screenName: "AutoPay",
-      // route: "/card/credit-card/service/autopay",
+      route: "/user/card/credit-card/service/autopay",
       src: "assets/images/auto-debit-blue.svg",
       selectedSrc: "assets/images/auto-debit-white.svg",
       icon: "autopay-icon",
@@ -50,7 +50,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Billing Cycle",
-      // route: "/card/credit-card/service/billing-cycle",
+      route: "/user/card/credit-card/service/billing-cycle",
       src: "assets/images/billing-cycle-blue.svg",
       selectedSrc: "assets/images/billing-cycle-white.svg",
       icon: "bill-cycle-icon",
@@ -58,7 +58,7 @@ export class CreditCardStore {
     },
     {
       screenName: "E Statement",
-      // route: "/card/credit-card/service/e-statement",
+      route: "/user/card/credit-card/service/e-statement",
       src: "assets/images/e-statment-blue.svg",
       selectedSrc: "assets/images/e-statment-white.svg",
       icon: "bill-cycle-icon",
@@ -66,7 +66,7 @@ export class CreditCardStore {
     },
     {
       screenName: "PIN Generation",
-      // route: "/card/credit-card/service/pin-generation",
+      route: "/user/card/credit-card/service/pin-generation",
       src: "assets/images/pin-generation-blue.svg",
       selectedSrc: "assets/images/pin-generation-white.svg",
       icon: "pin-gen-icon",
@@ -74,7 +74,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Block Card",
-      // route: "/card/credit-card/service/block-card",
+      route: "/user/card/credit-card/service/block-card",
       src: "assets/images/block-card-blue.svg",
       selectedSrc: "assets/images/block-card-white.svg",
       icon: "block-card-icon",
@@ -82,7 +82,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Change PIN",
-      // route: "/card/credit-card/service/change-pin",
+      route: "/user/card/credit-card/service/change-pin",
       src: "assets/images/change-pin-blue.svg",
       selectedSrc: "assets/images/change-pin-white.svg",
       icon: "change-pin-icon",
@@ -91,7 +91,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Card EMI Details",
-      // route: "/card/credit-card/service/card-emi-details",
+      route: "/user/card/credit-card/service/card-emi-details",
       src: "assets/images/emi-details-blue.svg",
       selectedSrc: "assets/images/emi-details-white.svg",
       icon: "emi-details-icon",
@@ -99,7 +99,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Pre Generated Statement",
-      // route: "/card/credit-card/service/pre-generated-statement",
+      route: "/user/card/credit-card/service/pre-generated-statement",
       src: "assets/images/pre-generated-blue.svg",
       selectedSrc: "assets/images/pre-generated-white.svg",
       icon: "payment-icon",
@@ -107,7 +107,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Insta Loan",
-      // route: "/card/credit-card/service/instant-loan",
+      route: "/user/card/credit-card/service/instant-loan",
       src: "assets/images/insta-loan-blue.svg",
       selectedSrc: "assets/images/insta-loan-white.svg",
       icon: "insta-loan-icon",
@@ -115,7 +115,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Alert Subscription",
-      // route: "/card/credit-card/service/alert-subscription",
+      route: "/user/card/credit-card/service/alert-subscription",
       src: "assets/images/alert-sub-blue.svg",
       selectedSrc: "assets/images/alert-sub-white.svg",
       icon: "alert-subsc-icon",
@@ -123,7 +123,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Unbilled Transaction",
-      // route: "/card/credit-card/service/unbilled-transaction",
+      route: "/user/card/credit-card/service/unbilled-transaction",
       src: "assets/images/unbilled-transcation-blue.svg",
       selectedSrc: "assets/images/unbilled-transcation-white.svg",
       icon: "unbill-trans-icon",
@@ -131,7 +131,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Add On Card",
-      // route: "/card/credit-card/service/add-on-card",
+      route: "/user/card/credit-card/service/add-on-card",
       src: "assets/images/addcard-blue.svg",
       selectedSrc: "assets/images/addcard-white.svg",
       icon: "add-card-icon",
@@ -139,7 +139,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Upgrade",
-      // route: "/card/credit-card/service/upgrade",
+      route: "/user/card/credit-card/service/upgrade",
       src: "assets/images/upgrade-white.svg",
       selectedSrc: "assets/images/upgrade-blue.svg",
       icon: "upgrade-icon",
@@ -149,7 +149,7 @@ export class CreditCardStore {
   static readonly manageCardTabs: TabModel[] = [
     {
       screenName: "Card Control",
-      route: "/card/credit-card/manage/card-control",
+      route: "/user/card/credit-card/manage/card-control",
       src: "assets/images/card-control-icon.svg",
       selectedSrc: "assets/images/selected-card-control-icon.svg",
       icon: "card-control-icon",
@@ -157,7 +157,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Usage Limit",
-      route: "/card/credit-card/manage/card-usage",
+      route: "/user/card/credit-card/manage/card-usage",
       src: "assets/images/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/selected-usage-limit-icon.svg",
       icon: "selected-usage-limit-icon",
@@ -389,5 +389,21 @@ export class CreditCardStore {
     "Corporate Banking",
     "Create Account",
     "Help & Support",
+  ];
+  static readonly Links = [
+    "Payment",
+    "Convert to EMI",
+    "Autopay",
+    "Billing Cycle",
+    "E Statement",
+    "PIN Generation",
+    "Block Card",
+    "Change PIN",
+    "Card EMI Details",
+    "Pre Generated Statement",
+    "Instant Loan",
+    "Alert Subscription",
+    "Add On Card",
+    "Upgrade",
   ];
 }

@@ -106,7 +106,7 @@ export class NationalIdUploadComponent implements OnInit {
   onSubmit(event) {
     console.log(event, "......");
     var docIds = [];
-    let customerDetails: any;
+    let customerDetails=[];
     if (this.numberOfDirectors) {
       event.documentDetails.otherDocument.forEach((element) => {
         if (element.docIds?.length > 0) {
@@ -114,9 +114,10 @@ export class NationalIdUploadComponent implements OnInit {
             docIds: element.docIds,
           };
           docIds.push(docId);
+          customerDetails.push(element.fileInfo[0]);
+          console.log(customerDetails);
         }
       });
-      customerDetails = event.documentDetails.otherDocument[0]?.fileInfo;
     } else {
       event.documentDetails.otherDocument.forEach((element) => {
         if (element.docIds?.length > 0) {
@@ -124,20 +125,19 @@ export class NationalIdUploadComponent implements OnInit {
             docIds: element.docIds,
           };
           docIds.push(docId);
-          if (!customerDetails) {
+          console.log(customerDetails)
             console.log(element);
             element.fileInfo.forEach((item) => {
               console.log(item, ".......");
               if (
-                (item.applicantName || item.name || item.dateOfBirth) &&
-                !customerDetails
+                (item.applicantName || item.gender || item.dateOfBirth)
               ) {
                 console.log(";;;;;;;");
-                customerDetails = item;
+                customerDetails.push(item);
                 return;
               }
             });
-          }
+          
         }
       });
     }

@@ -1,0 +1,24 @@
+<article class="chart_container" fxLayout="column">
+  <div fxLayoutAlign="space-between center">
+    <div class="chart_title">{{chartTitle | translate}}</div>
+    <form [formGroup]="chartForm" fxLayoutGap="5px">
+      <ng-container *ngIf="rangeSelectorRequired">
+        <div fxFlex="100">
+          <mat-form-field appearance="outline" class="full-width fieldinput">
+            <mat-label>{{'Select Range' | translate}}</mat-label>
+            <mat-select
+              formControlName="yearItems"
+              (selectionChange)="emitDateOutput('yearItems')"
+            >
+              <mat-option *ngFor="let range of yearItems" [value]="range">
+                {{ range }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+
+  <div class="dynamicChart" [id]="getId()"></div>
+</article>

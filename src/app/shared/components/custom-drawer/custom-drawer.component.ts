@@ -1,5 +1,12 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import {
   MatTreeFlatDataSource,
@@ -34,26 +41,25 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
     );
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['menuType']) {
-      this.setTreeData()
+    if (changes["menuType"]) {
+      this.setTreeData();
     }
   }
-
 
   setTreeData() {
-    if (this.menuType == 'trade') {
+    if (this.menuType == "trade") {
       this.TREE_DATA = DrawerConstant.DRAWER_MENU;
-    } else if (this.menuType == 'loan') {
+    } else if (this.menuType == "loan") {
       this.TREE_DATA = DrawerConstant.LOAN_DRAWER_MENU;
+    } else if (this.menuType == "Card") {
+      this.TREE_DATA = DrawerConstant.CARD_DRAWER_MENU;
     }
-    this.dataSource.data = this.TREE_DATA
-    this.cdr.markForCheck()
+    this.dataSource.data = this.TREE_DATA;
+    this.cdr.markForCheck();
   }
-
 
   private _transformer = (node: any, level: number) => {
     return {
@@ -63,11 +69,9 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
       roleName: node.roleName,
       path: node.path,
       id: node?.id,
-      children: node.children || []
+      children: node.children || [],
     };
   };
-
-
 
   treeControl = new FlatTreeControl<any>(
     (node) => node.level,
@@ -85,11 +89,9 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
 
   hasChild = (_: number, node: any) => node.expandable;
 
-
   getNode(node) {
     console.log(node, "nodeee");
     this.currentMenu = node.name;
-
 
     if (node.path) {
       this.router.navigate([`user/${node.path}`], {

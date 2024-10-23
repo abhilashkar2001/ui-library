@@ -1,0 +1,34 @@
+.sub-heading {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: #051a2d;
+}
+.fetch-table th,
+.fetch-table td {
+  padding: 8px;
+  text-align: center;
+}
+
+.fetch-table thead {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.fetch-table tbody td {
+  font: medium 12px/15px Helvetica Neue;
+  letter-spacing: 0px;
+  color: #00205c;
+  opacity: 1;
+}
+.statementHead {
+  color: #6e7582;
+  opacity: 1;
+}
+.requestCertificateHead {
+  font: normal normal bold 16px/19px Raleway;
+  color: #377dff;
+  opacity: 1;
+}
+.actionBtn {
+  border-radius: 4px 4px 4px 4px;
+}

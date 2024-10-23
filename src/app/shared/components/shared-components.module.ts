@@ -115,6 +115,8 @@ import { DashboardInstantPayComponent } from "../widgets/dashboard-instant-pay/d
 import { ReusableNodatafoundComponent } from "./reusable-nodatafound/reusable-nodatafound.component";
 import { BankCodePopupComponent } from "./bank-code-popup/bank-code-popup.component";
 import { ExternalLinkComponent } from "../widgets/external-link/external-link.component";
+import { ChartPage } from "./chart/chart.page";
+import { MaturityChartComponent } from "./maturity-chart/maturity-chart.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -205,6 +207,8 @@ const components = [
   CustomDrawerComponent,
   DashboardInstantPayComponent,
   ReusableNodatafoundComponent,
+  ChartPage,
+  MaturityChartComponent,
 ];
 
 @NgModule({
@@ -235,4 +239,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }

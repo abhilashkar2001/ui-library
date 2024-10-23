@@ -12,6 +12,7 @@
             bindLabelKey="cbsAccountNumber"
             direction="row"
             [items]="loanDetails"
+            (selectionChange)="fetchLoanInstallment()"
           ></app-searchable-select>
         </div>
         <!-- loan details -->
@@ -151,8 +152,7 @@
             ></app-ic-action-button>
           </div>
         </div>
-
-        <!-- <app-maturity-chart
+        <app-maturity-chart
           fxFlex="50"
           [chartData]="chartData"
           [chartSectionDetails]="chartSectionDetails"
@@ -161,7 +161,7 @@
           labelTwo="New EMI"
           labelOne="Current EMI"
           [loanDetailsSection]="true"
-        ></app-maturity-chart> -->
+        ></app-maturity-chart>
       </div>
     </div>
   </mat-card>

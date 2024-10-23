@@ -47,7 +47,7 @@ export class SigninComponent implements OnInit {
     private themingService: ThemeChangeService,
     private dialog: MatDialog,
     public translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenService.getUser();

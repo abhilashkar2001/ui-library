@@ -13,6 +13,7 @@
         [inputLabel]="'Loan Account No' | translate"
         bindValueKey="cbsAccountNumber"
         bindLabelKey="cbsAccountNumber"
+        [showOutsideLabel]="true"
       >
       </app-searchable-select>
       <div fxLayout="column">
@@ -83,7 +84,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngIf="interestStatement.length > 0">
+        <ng-container *ngIf="interestStatement">
           <tr *ngFor="let card of interestStatement?.schedules">
             <td>{{ interestStatement?.accountNo }}</td>
             <td>{{ card?.dueDate }}</td>

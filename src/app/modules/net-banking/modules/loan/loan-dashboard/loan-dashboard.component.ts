@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LoanDashboardConstant } from "./loan-dashboard.constant";
 import { Location } from "@angular/common";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-loan-dashboard",
@@ -48,13 +49,16 @@ export class LoanDashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.transactionCard, "transcationcard");
   }
 
   goBack() {
     this.location.back();
+  }
+
+  route(path: string) {
+    this.router.navigate([path]);
   }
 }

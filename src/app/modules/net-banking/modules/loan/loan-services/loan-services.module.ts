@@ -18,6 +18,7 @@ import { InterestStatementComponent } from './loan-services/interest-statement/i
 import { ViewStatementComponent } from './loan-services/view-statement/view-statement.component';
 import { PreGeneratedStatementComponent } from './loan-services/pre-generated-statement/pre-generated-statement.component';
 import { RequestCertificateComponent } from './loan-services/request-certificate/request-certificate.component';
+import { GoldRenewalComponent } from './loan-services/gold-renewal/gold-renewal.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { RequestCertificateComponent } from './loan-services/request-certificate
     InterestStatementComponent,
     ViewStatementComponent,
     PreGeneratedStatementComponent,
-    RequestCertificateComponent
+    RequestCertificateComponent,
+    GoldRenewalComponent
 
   ],
   imports: [

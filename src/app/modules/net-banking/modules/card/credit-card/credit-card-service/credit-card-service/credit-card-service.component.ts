@@ -16,16 +16,21 @@ export class CreditCardServiceComponent implements OnInit {
   activatedComponent!: PaymentComponent;
   tabname: string = "";
   selectedTab: TabModel | undefined;
-  constructor(private router: Router, private iconService: IconService) {
-    this.iconService
-      .addIconIfNotExists("feather-info", "assets/images/feather-info.svg")
-      .subscribe((exists) => {
-        if (exists) {
-          console.log(`Icon arrow-back already exists.`);
-        } else {
-          console.log(`Icon arrow-back was added.`);
-        }
-      });
+  transactionCard = CreditCardStore.quickLinks;
+  serviceLinks = CreditCardStore.Links;
+  constructor(
+    private router: Router,
+    private iconService: IconService
+  ) {
+    // this.iconService
+    //   .addIconIfNotExists("feather-info", "assets/images/feather-info.svg")
+    //   .subscribe((exists) => {
+    //     if (exists) {
+    //       console.log(`Icon arrow-back already exists.`);
+    //     } else {
+    //       console.log(`Icon arrow-back was added.`);
+    //     }
+    //   });
   }
 
   ngOnInit(): void {

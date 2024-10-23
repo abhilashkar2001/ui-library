@@ -1,0 +1,135 @@
+<form
+  *ngIf="summaryForm"
+  [formGroup]="summaryForm"
+  fxLayout="row"
+  fxLayoutAlign="space-between"
+  fxLayoutGap="10px"
+>
+  <div class="w-100" fxLayout="column" fxFlex="100" fxLayoutGap="10px">
+    <div
+      fxFlex="10"
+      class="content-div"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <!-- loan account number -->
+      <div fxFlex="30" fxLayout="column">
+        <app-searchable-select
+          [control]="summaryForm.get('loanAccountNumber')"
+          [inputLabel]="'Loan Account Number' | translate"
+          bindValueKey="cbsAccountNumber"
+          bindLabelKey="cbsAccountNumber"
+          direction="row"
+          fxFlex="40"
+          [items]="loanDetails"
+        ></app-searchable-select>
+      </div>
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="end center">
+        <h3 class="light-blue-title">
+          <u>{{ "Interest Rate History" | translate }}</u>
+        </h3>
+        <app-ic-action-button
+          [buttonName]="'View Schedule' | translate"
+          buttonType="stroked"
+          (click)="route('loan/loan-service/view-statement')"
+        ></app-ic-action-button>
+        <app-ic-action-button
+          matIcon="blue-download"
+          buttonName="Download"
+          buttonType="filled"
+          (onClick)="downloadInterestHistory()"
+        ></app-ic-action-button>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <!-- summary details -->
+      <div fxFlex="60" class="content-div" fxLayout="column">
+        <ng-container *ngFor="let details of customerDetails; let i = index">
+          <div class="summary_heading" fxFlex="10" *ngIf="summaryDetails">
+            {{ i > 0 ? details?.header : summaryDetails[details?.header] }}
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <div
+              fxFlex="23"
+              fxLayout="column wrap"
+              *ngFor="let item of details?.details"
+            >
+              <p class="label">{{ item?.headerCell }}</p>
+              <span class="value" *ngIf="summaryDetails">{{
+                summaryDetails[item?.headerDef]
+              }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- graph -->
+      <div fxFlex="40" class="content-div" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div
+            fxLayout="column"
+            class="tab-box"
+            *ngFor="let item of loanInfo; let i = index"
+          >
+            <div
+              [ngClass]="
+                selectedRecentTab == item ? 'light-blue-title' : 'recent-tabs'
+              "
+              (click)="changeRecentTransTabs(i)"
+            >
+              {{ item }}
+            </div>
+            <div
+              [ngClass]="selectedRecentTab == item ? 'horizontal-line' : ''"
+            ></div>
+          </div>
+        </div>
+        <app-chart [dynamicCharData]="chartData"></app-chart>
+        <mat-divider></mat-divider>
+        <div fxLayout="row wrap" *ngIf="chartDetails">
+          <ng-container *ngFor="let details of chartDetails; let j = index">
+            <div
+              fxFlex="50"
+              fxLayout="column"
+              fxLayoutGap="10px"
+              fxLayoutAlign="center center"
+            >
+              <div class="label">{{ details.headerCell | translate }}</div>
+              <div ngClass="labelval" *ngIf="summaryDetails">
+                <ng-container
+                  *ngIf="details.headerCell.includes('Tenure'); else detail"
+                >
+                  {{ summaryDetails[details.headerDef] ?? "-" }} Months
+                </ng-container>
+                <ng-template #detail>
+                  ₹ {{ summaryDetails[details.headerDef] ?? "-" }}
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div fxLayout="column" fxFlex="25" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div
+        fxLayoutAlign="center center"
+        class="quick_btn btn"
+        fxLayoutGap="3px"
+        (click)="openQuickLink()"
+      >
+        <mat-icon class="extend-icon" svgIcon="extend-icon"></mat-icon>
+        {{ "Quick Link" | translate }}
+      </div>
+      <div
+        fxLayoutAlign="center center"
+        class="payee_btn btn"
+        fxFlex="50"
+        (click)="route('/loan/dashboard/emi-calculator')"
+      >
+        {{ "EMI Calculator" | translate }}
+      </div>
+    </div>
+  </div> -->
+</form>
