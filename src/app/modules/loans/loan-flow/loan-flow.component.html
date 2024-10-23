@@ -1,4 +1,4 @@
-<div class="mt-20">
+<div class="loan_flow_container">
   <div fxFlex="40" class="fdCalculator_parent">
     <app-commmon-steeper
       [screenTitle]="screenTitle"
@@ -7,10 +7,11 @@
       (customSelectionChange)="stepperSelectionChange($event)"
     ></app-commmon-steeper>
   </div>
-  <div
+  <!-- <div
     class="vertical_divider"
     style="border-right: 1px solid #cbcbcb; height: 450px"
-  ></div>
+  ></div> -->
+  <mat-divider vertical ></mat-divider>
 
   <div class="col-div2 screenMargin" fxFlex="60" fxLayout="column">
     <div fxLayoutAlign="space-between start">

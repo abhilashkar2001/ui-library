@@ -158,13 +158,19 @@
   padding: 20px 33px;
 }
 .screenMargin {
-  margin-top: 0%;
   margin-right: 0% !important;
-  margin: 2% 1% !important;
+  margin: 2% 3% 2% 2% !important;
+  margin-top: 0% !important;
 }
 
 .add_btn {
   border: 1px solid #023e79;
   border-radius: 4px;
   width: 80px;
+}
+
+
+// Loan Flow Container
+.loan_flow_container {
+  margin-top: 3rem;
 }

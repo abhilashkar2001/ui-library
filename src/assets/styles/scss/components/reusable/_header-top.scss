@@ -37,7 +37,7 @@ header.navbar {
         a {
           color: $text_blue;
           font-size: 1rem;
-          font-weight: 500;
+          font-weight: 400;
           font-family: "Poppins", sans-serif;
           display: block;
           text-align: center;
@@ -51,7 +51,7 @@ header.navbar {
           }
           &.highlight_label {
             color: $dark_blue;
-            font-weight: 600;
+            font-weight: 500;
           }
         }
       }

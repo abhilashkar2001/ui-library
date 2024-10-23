@@ -100,14 +100,14 @@
 .stepper-title {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 33px;
 }
 .screen-title {
   font-family: "Poppins", sans-serif;
   font-size: 26px;
   font-weight: 600;
-  line-height: 48px;
+  line-height: 1.4;
 }
 @media only screen and (min-width: 768px) and (max-width: 910px) {
   .fd_info_stat {
@@ -139,7 +139,7 @@
   left: 30px;
   border-left: 1px #bac0d7 dashed;
   display: block;
-  height: 122px;
+  height: 100%;
 }
 
 .steeper_name {
@@ -254,17 +254,19 @@
 ::ng-deep
   .mat-step-header.mat-vertical-stepper-header
   .mat-step-icon-state-edit {
-  background-image: url("/assets/images/Group_13808.svg") !important;
-  width: 60px;
-  border-radius: 10px;
-  font-size: 24px;
-  border: 1px solid #008461 !important;
-  height: 60px;
-  font-size: 24px;
-  background-position-y: 15px;
-  background-position-x: 15px;
-  height: 60px;
-  background-repeat: no-repeat;
+     background-image: url("/assets/images/Group_13808.svg") !important;
+    background-position: center;
+    background-size: 26px 30px;
+    width: 60px;
+    border-radius: 10px;
+    font-size: 24px;
+    border: 1px solid #008461 !important;
+    height: 60px;
+    font-size: 24px;
+    background-position-y: 15px;
+    background-position-x: 15px;
+    height: 60px;
+    background-repeat: no-repeat;
   .mat-step-icon-content {
     display: none !important;
   }
@@ -284,10 +286,10 @@
   background-color: #ffffff !important;
   border-radius: 24px 24px;
 }
-.scrollStep__prodInfo,
-.custom_steppper {
-  padding-left: 5% !important;
-}
+// .scrollStep__prodInfo,
+// .custom_steppper {
+//   padding-left: 5% !important;
+// }
 
 .custom_backGround {
   padding-top: 5%;
