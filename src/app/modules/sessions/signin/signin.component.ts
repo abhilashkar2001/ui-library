@@ -60,6 +60,7 @@ export class SigninComponent implements OnInit {
       username: ["", Validators.required],
       password: ["", Validators.required],
       otpRequired: [true],
+      appType: ["CORP"]
     });
   }
 
