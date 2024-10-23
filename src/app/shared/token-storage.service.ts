@@ -114,7 +114,7 @@ export class TokenStorageService {
   }
   setCorporateId(corporateId) {
     this.sessionStore.removeItem(CORPORATE_ID);
-    this.sessionStore.setItem(CORPORATE_ID, corporateId);
+    this.sessionStore.setItem(CORPORATE_ID, JSON.stringify(corporateId));
   }
 
   getRememberMe() {

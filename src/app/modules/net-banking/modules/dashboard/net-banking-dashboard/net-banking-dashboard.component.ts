@@ -96,9 +96,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    this.getDashboardInfo();
     this.getActivityLogData();
     this.getDataByPage();
-    this.getDashboardInfo();
     setTimeout(() => {
       let lang = this.tokenStorageService.getLanguage() ?? "en";
       this.translate.use(lang);
