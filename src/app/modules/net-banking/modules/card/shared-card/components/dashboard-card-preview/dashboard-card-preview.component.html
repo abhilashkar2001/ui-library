@@ -31,10 +31,16 @@
           <app-ic-toggle-slide
             [label]="'Show Details' | translate"
             labelPosition="before"
+            [control]="showDetails"
           ></app-ic-toggle-slide>
         </div>
       </div>
-      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+      <div
+        fxFlex="50"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *ngIf="toggleDetails === true"
+      >
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
           <span class="small-title">{{ "Expiry Date" | translate }}</span>
           <span class="small-values">{{

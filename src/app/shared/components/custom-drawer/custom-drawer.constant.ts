@@ -240,18 +240,8 @@ export class DrawerConstant {
               roleName: "child-node",
             },
             {
-              name: "Change PIN",
-              path: "/card/credit-card/service/change-pin",
-              roleName: "child-node",
-            },
-            {
               name: "Card EMI Details",
               path: "/card/credit-card/service/card-emi-details",
-              roleName: "child-node",
-            },
-            {
-              name: "Pre Generated Statement",
-              path: "/card/credit-card/service/pre-generated-statement",
               roleName: "child-node",
             },
             {
@@ -279,10 +269,15 @@ export class DrawerConstant {
               path: "/card/credit-card/service/upgrade",
               roleName: "child-node",
             },
+            {
+              name: "Pre Generated Statement",
+              path: "/card/credit-card/service/pre-generated-statement",
+              roleName: "child-node",
+            },
           ],
         },
         {
-          name: "Manage Crads",
+          name: "Manage Cards",
           path: "",
           roleName: "parent-node",
           children: [

@@ -73,4 +73,31 @@ export class CardService {
       payload
     );
   }
+  saveAutoPayCreditPaymentDetails(payload) {
+    return this.http.post(`${baseUrl}/card/auto-pay`, payload);
+  }
+  saveBlockPayCreditPaymentDetails(payload) {
+    return this.http.post(`${baseUrl}/card/block-card`, payload);
+  }
+
+  saveBillingCycleCreditPaymentDetails(payload) {
+    return this.http.put(`${baseUrl}/card/updateBillingCycle`, payload);
+  }
+  eStatementSubscribe(payload) {
+    return this.http.post<any>(`${baseUrl}/estatement/save`, payload);
+  }
+  public fetchbycustomerId(customerId) {
+    return this.http.get<any>(
+      `${baseUrl}/customer-api?customerId=${customerId}`
+    );
+  }
+  public fetchAlertByCardNo(cardNo) {
+    return this.http.get<any>(
+      `${baseUrl}/card/alert-subscription?cardNo=${cardNo}`
+    );
+  }
+
+  saveAddOnCreditPaymentDetails(payload) {
+    return this.http.put(`${baseUrl}/card/addon-cards`, payload);
+  }
 }
