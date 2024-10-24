@@ -49,4 +49,14 @@
       ></app-searchable-select>
     </div>
   </div>
+
+  <div fxLayoutGap="20" fxLayoutAlign="end center">
+    <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+    </app-ic-action-button>
+    <app-ic-action-button
+      buttonName="Proceed"
+      buttonType="filled"
+      (onClick)="proceed()"
+    ></app-ic-action-button>
+  </div>
 </div>

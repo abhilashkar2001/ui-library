@@ -437,4 +437,46 @@ export class CreditCardStore {
     { value: "Brother", label: "Brother" },
     { value: "Sister", label: "Sister" },
   ];
+  static readonly creditEmiHeader = [
+    {
+      headerDef: "merchantNameOnCard",
+      headerCell: "Merchant Name",
+    },
+    {
+      headerDef: "amount",
+      headerCell: "Loan Amount",
+    },
+    {
+      headerDef: "tenure",
+      headerCell: "Tenure",
+    },
+    {
+      headerDef: "currentOutStaning",
+      headerCell: "Outstanding Amount",
+    },
+    {
+      headerDef: "monthlyEmi",
+      headerCell: "Monthly EMI",
+    },
+    {
+      headerDef: "interestRate",
+      headerCell: "Interest Rate",
+    },
+    {
+      headerDef: "pendingEmi",
+      headerCell: "Pending EMI",
+    },
+    {
+      headerDef: "startDate",
+      headerCell: "Start Date",
+    },
+    {
+      headerDef: "endDate",
+      headerCell: "End Date",
+    },
+    {
+      headerDef: "status",
+      headerCell: "Status",
+    },
+  ];
 }

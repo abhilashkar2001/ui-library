@@ -28,9 +28,11 @@ export class CreditCardDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.cardList = this.sessionStorageService.getListOfCards() || [];
+    console.log(this.corporateId);
+
     this.fetchCardSummaryDetails();
   }
 

@@ -1,4 +1,4 @@
-<form [formGroup]="alertSubscriptionForm">
+<form [formGroup]="alertSubscriptionForm" fxLayout="column">
   <div fxFlex="100" fxLayoutGap="10">
     <div fxLayout="column" class="blue-box" fxFlex="100">
       <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
@@ -37,5 +37,14 @@
         </div>
       </div>
     </div>
+  </div>
+  <div fxLayoutGap="20" fxLayoutAlign="end center">
+    <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+    </app-ic-action-button>
+    <app-ic-action-button
+      buttonName="Proceed"
+      buttonType="filled"
+      (onClick)="proceed()"
+    ></app-ic-action-button>
   </div>
 </form>
