@@ -8,62 +8,66 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-loan-dashboard",
   templateUrl: "./loan-dashboard.component.html",
-  styleUrls: ["./loan-dashboard.component.scss"]
+  styleUrls: ["./loan-dashboard.component.scss"],
 })
 export class LoanDashboardComponent implements OnInit {
   selectedAccNo: any;
   isStatics: boolean = false;
   transactionCard = LoanDashboardConstant.transactionCard;
-  closedLoanList = LoanDashboardConstant.closedLoan;  // Need to remove static api
+  closedLoanList = LoanDashboardConstant.closedLoan; // Need to remove static api
   instantApprove = LoanDashboardConstant.instantApproveItems; // Need to remove static store
   //Need to remove static api
   loanDetails = [
     {
       accountType: "Business Loan",
-      cbsAccountNumber: "1234567890"
+      cbsAccountNumber: "1234567890",
     },
     {
       accountType: "Letter Of Credit (LOC)",
-      cbsAccountNumber: "0987654321"
-    }
+      cbsAccountNumber: "0987654321",
+    },
   ];
 
   loanValues = [
     {
       label: "Next Instalment",
-      value: "24-10-2394"
+      value: "24-10-2394",
     },
     {
       label: "Next Instalment Date",
-      value: "10April"
+      value: "10April",
     },
     {
       label: "Outstanding Amount",
-      value: "920930923"
+      value: "920930923",
     },
     {
       label: "Maturity Date",
-      value: "232093"
+      value: "232093",
     },
     {
       label: "Current rate of interest",
-      value: "10%"
-    }
+      value: "10%",
+    },
   ];
   corpCustId: any;
 
-  constructor(private location: Location, private router: Router, private loanService: LoanService, private sessionService: SessionStorageService) { }
+  constructor(
+    private location: Location,
+    private router: Router,
+    private loanService: LoanService,
+    private sessionService: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId
-    this.fetchCorpLoanDetails()
+    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId;
+    this.fetchCorpLoanDetails();
   }
-
 
   fetchCorpLoanDetails() {
     this.loanService.fetchCorpLoanDetails(this.corpCustId).subscribe((res) => {
       console.log(res);
-    })
+    });
   }
 
   goBack() {

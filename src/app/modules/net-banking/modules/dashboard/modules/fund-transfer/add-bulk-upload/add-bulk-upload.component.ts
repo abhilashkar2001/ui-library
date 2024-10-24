@@ -63,7 +63,7 @@ export class AddBulkUploadComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private commonService: CommonService,
     private tokenStorageService: TokenStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -266,10 +266,10 @@ export class AddBulkUploadComponent implements OnInit {
     data =
       res == "Authorize"
         ? {
-          msg: "Approved Successfully",
-          status: true,
-          reffNo: reffNo?.reffNo,
-        }
+            msg: "Approved Successfully",
+            status: true,
+            reffNo: reffNo?.reffNo,
+          }
         : res == "Reject"
           ? { msg: "Rejected Successfully", status: "rejected" }
           : data;

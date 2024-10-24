@@ -210,7 +210,7 @@ const components = [
   ReusableNodatafoundComponent,
   ChartPage,
   MaturityChartComponent,
-  PopupSuccessComponent
+  PopupSuccessComponent,
 ];
 
 @NgModule({
@@ -241,4 +241,4 @@ const components = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedComponentsModule { }
+export class SharedComponentsModule {}

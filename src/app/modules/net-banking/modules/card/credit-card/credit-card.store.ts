@@ -406,12 +406,8 @@ export class CreditCardStore {
     "Add On Card",
     "Upgrade",
   ];
-  static readonly ManageLinks=[
-    "Card Control",
-    "Usage Limit"
-  ]
-    
-  
+  static readonly ManageLinks = ["Card Control", "Usage Limit"];
+
   static readonly billCycleList = [
     { value: 1, label: "1st  each month" },
     { value: 2, label: "2nd  each month" },

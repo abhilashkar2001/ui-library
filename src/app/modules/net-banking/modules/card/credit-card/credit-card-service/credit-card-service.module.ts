@@ -25,7 +25,7 @@ import { UnbilledTransactionComponent } from "./components/unbilled-transaction/
 import { AddOnCardComponent } from "./components/add-on-card/add-on-card.component";
 import { UpgradeComponent } from "./components/upgrade/upgrade.component";
 import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
-import { CalculateEmiComponent } from './components/convert-to-emi/calculate-emi/calculate-emi.component';
+import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
 
 @NgModule({
   declarations: [
