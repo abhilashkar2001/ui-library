@@ -407,10 +407,15 @@ export class LoanFlowComponent implements OnInit {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
-      delete custResp[i].biometricInfo;
-      delete custResp[i].documnentsInfo;
-      delete custResp[i].documentsInfoModel;
-      delete custResp[i].signatureInfo;
+      if (this.noOfDirectors)
+        custResp[i].corpDirectorModel = {
+          sharePercentage: 100 / this.noOfDirectors,
+          isManagingDirector: custResp[i]?.primaryCustomer,
+        };
+      delete custResp[i]?.biometricInfo;
+      delete custResp[i]?.documnentsInfo;
+      delete custResp[i]?.documentsInfoModel;
+      delete custResp[i]?.signatureInfo;
     });
 
     return custResp;
