@@ -12,7 +12,7 @@ export class SessionStorageService {
   //WINDOW SESSION STORAGE
   private session = window.sessionStorage;
 
-  constructor() {}
+  constructor() { }
 
   /**
    * stringfy the item and stored
@@ -143,6 +143,15 @@ export class SessionStorageService {
   public setLoanInfo(loanInfo): void {
     this.setItem(SessionStorageEnum.LOAN_INFO, loanInfo);
   }
+
+  /**
+ * this method will remove loan info from session storage
+ */
+  public removeLoanInfo(): void {
+    this.session.removeItem(SessionStorageEnum.LOAN_INFO);
+  }
+
+
 
   /**
    * fetch the list of card stored in session storeage

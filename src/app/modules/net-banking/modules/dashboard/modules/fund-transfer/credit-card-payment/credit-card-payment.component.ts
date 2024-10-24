@@ -107,7 +107,10 @@ export class CreditCardPaymentComponent implements OnInit {
     payload.creditAmount = payload.debitAmount;
     this.getOTP();
     let dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
-      data: { remark: true, mobile: this.customerInfo.mobileNumber },
+      data: {
+        remark: true,
+        mobile: this.tokenStorageService.getUser()?.mobile,
+      },
       width: "50%",
       height: "33%",
       disableClose: true,
@@ -135,7 +138,7 @@ export class CreditCardPaymentComponent implements OnInit {
   }
   getOTP() {
     this.api
-      .getOtp(this.customerInfo.mobileNumber)
+      .getOtp(this.tokenStorageService.getUser()?.mobile)
       .subscribe((response: any) => {});
   }
 

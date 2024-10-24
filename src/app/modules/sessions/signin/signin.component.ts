@@ -47,7 +47,7 @@ export class SigninComponent implements OnInit {
     private themingService: ThemeChangeService,
     private dialog: MatDialog,
     public translate: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenService.getUser();
@@ -59,8 +59,8 @@ export class SigninComponent implements OnInit {
       corporateId: ["", Validators.required],
       username: ["", Validators.required],
       password: ["", Validators.required],
-      otpRequired: [true],
-      appType: ["CORP"]
+      // otpRequired: [true],
+      appType: ["CORP"],
     });
   }
 
@@ -68,9 +68,11 @@ export class SigninComponent implements OnInit {
     let payload = this.signinForm.value;
     this.tokenService.setCorporateId(payload?.corporateId);
     this.loginService.corporateLogin(payload).subscribe((res: any) => {
-      if (res?.status == 200) {
-        this.authType = "otp";
-      }
+      // if (res?.status == 200) {
+      this.authType = "otp";
+      this.tokenService.saveToken(res?.data);
+
+      // }
     });
   }
 
@@ -87,18 +89,19 @@ export class SigninComponent implements OnInit {
       otp: this.otp,
       tokenRequired: true,
     };
-    this.commonService.verifyOTP(payload).subscribe((res: any) => {
-      if (res.data !== "Invalid OTP") {
-        this.tokenService.saveToken(res?.accessToken);
-        this.getProfile();
-      } else {
-        this.snack.open(res.message, "OK", {
-          duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-        });
-      }
-    });
+    this.getProfile();
+    // this.commonService.verifyOTP(payload).subscribe((res: any) => {
+    //   if (res.data !== "Invalid OTP") {
+    //     this.tokenService.saveToken(res?.accessToken);
+    //     this.getProfile();
+    //   } else {
+    //     this.snack.open(res.message, "OK", {
+    //       duration: 4000,
+    //       verticalPosition: "top",
+    //       horizontalPosition: "right",
+    //     });
+    //   }
+    // });
   }
 
   fetchThemeAndLanguange(userId: number) {

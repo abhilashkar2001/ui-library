@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { LoanDashboardConstant } from "./loan-dashboard.constant";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
   selector: "app-loan-dashboard",
@@ -48,10 +50,20 @@ export class LoanDashboardComponent implements OnInit {
       value: "10%"
     }
   ];
+  corpCustId: any;
 
-  constructor(private location: Location, private router: Router) { }
+  constructor(private location: Location, private router: Router, private loanService: LoanService, private sessionService: SessionStorageService) { }
 
   ngOnInit(): void {
+    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId
+    this.fetchCorpLoanDetails()
+  }
+
+
+  fetchCorpLoanDetails() {
+    this.loanService.fetchCorpLoanDetails(this.corpCustId).subscribe((res) => {
+      console.log(res);
+    })
   }
 
   goBack() {
