@@ -6,12 +6,13 @@
   class="rdfdform"
 >
   <div
-    fxFlex="70"
+    fxFlex="80"
     fxLayout="column"
-    class="calculator_container calc-blue-bg"
+    class="calculator_container"
     *ngIf="depositForm"
     [formGroup]="depositForm"
   >
+  <img src="/assets/images/Mask Group.svg" class="calc_cornor_image">
     <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
       <div fxLayout="column" fxFlex="40">
         <span class="calculator_subTItle">Scheme</span>
@@ -200,14 +201,15 @@
       at maturity as simple interest.
     </div>
   </div>
-  <div fxFlex="30" fxLayoutAlign="center center">
+  <div fxFlex="20" fxLayoutAlign="center center">
     <div
       fxFlex="100"
       fxLayoutAlign="center center"
       fxLayout="column"
-      class="fd_container calc-white-bg"
+      class="fd_container"
     >
-      <div fxFlex="100" fxLayout="column" class="alignCenter">
+    <img src="/assets/images/card-doddle.svg" class="fd_cornor_image">
+      <div fxFlex="100" fxLayout="column" class="alignCenter full-width">
         <div class="maturityTitle">Maturity Amount</div>
         <div class="maturityDesc">₹ 1,10,202</div>
       </div>
