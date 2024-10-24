@@ -16,7 +16,7 @@ import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: "app-single-fund-transfer",
   templateUrl: "./single-fund-transfer.component.html",
-  styleUrls: ["./single-fund-transfer.component.scss"]
+  styleUrls: ["./single-fund-transfer.component.scss"],
 })
 export class SingleFundTransferComponent implements OnInit {
   fundTransferForm: FormGroup;
@@ -89,7 +89,7 @@ export class SingleFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""]
+      remarks: [""],
     });
   }
 
@@ -146,7 +146,7 @@ export class SingleFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary"
+      "user/dashboard/fund-transfer/fund-transfer-summary",
     ]);
   }
 
@@ -169,12 +169,12 @@ export class SingleFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data
+              reffNo: resp?.data,
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop"
+            backdropClass: "bdrop",
           });
           this.dialogRef.afterClosed().subscribe((result) => {
             console.log(result);
@@ -196,12 +196,15 @@ export class SingleFundTransferComponent implements OnInit {
 
     this.getOTP();
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
-      data: { remark: true, mobile: this.customerInfo.mobileNumber },
+      data: {
+        remark: true,
+        mobile: this.tokenStorageService.getUser()?.mobile,
+      },
       width: "50%",
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop"
+      backdropClass: "bdrop",
     });
     this.dialogRef1.afterClosed().subscribe((result) => {
       if (result == "verified") {
@@ -212,7 +215,7 @@ export class SingleFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop"
+          backdropClass: "bdrop",
         });
         this.dialogRef.afterClosed().subscribe((result) => {
           if (result == "Failed") {

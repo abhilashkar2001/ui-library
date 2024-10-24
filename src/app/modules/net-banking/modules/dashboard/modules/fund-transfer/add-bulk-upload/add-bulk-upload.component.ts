@@ -61,7 +61,8 @@ export class AddBulkUploadComponent implements OnInit {
     private api: BulkUploadServiceService,
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -144,16 +145,14 @@ export class AddBulkUploadComponent implements OnInit {
 
   openConfirmationPopup() {
     this.commonService
-      .generateOTP(
-        JSON.parse(sessionStorage.getItem("customer-Info"))?.mobileNumber
-      )
+      .generateOTP(this.tokenStorage.getUser()?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
 
         const dialogRef = this.dialog.open(AllInOnePopupComponent, {
           data: {
             remark: true,
-            mobile: this.currentUser.mobile,
+            mobile: this.tokenStorageService.getUser()?.mobile,
           },
           width: "750px",
           disableClose: true,
@@ -218,21 +217,19 @@ export class AddBulkUploadComponent implements OnInit {
   }
 
   customSaveBulkUpload(event) {
-    const mobile = JSON.parse(
-      sessionStorage.getItem("customer-Info")
-    )?.mobileNumber;
-    this.commonService.generateOTP(mobile).subscribe((resp: any) => {
-      this.otp = resp?.data;
-      this.callAllInOnePopup(event);
-    });
+    this.commonService
+      .generateOTP(this.tokenStorage.getUser()?.mobile)
+      .subscribe((resp: any) => {
+        this.otp = resp?.data;
+        this.callAllInOnePopup(event);
+      });
   }
 
   callAllInOnePopup(event) {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: JSON.parse(sessionStorage.getItem("customer-Info"))
-          ?.mobileNumber,
+        mobile: this.tokenStorageService.getUser()?.mobile,
       },
       width: "750px",
       disableClose: true,
@@ -263,8 +260,8 @@ export class AddBulkUploadComponent implements OnInit {
       res == "success"
         ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
         : res == "failed"
-        ? { msg: "Uploaded Failed", status: false }
-        : "";
+          ? { msg: "Uploaded Failed", status: false }
+          : "";
     data =
       res == "Authorize"
         ? {
@@ -273,8 +270,8 @@ export class AddBulkUploadComponent implements OnInit {
             reffNo: reffNo?.reffNo,
           }
         : res == "Reject"
-        ? { msg: "Rejected Successfully", status: "rejected" }
-        : data;
+          ? { msg: "Rejected Successfully", status: "rejected" }
+          : data;
     let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
       data: data,
       width: "40%",

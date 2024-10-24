@@ -148,14 +148,14 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   openConfirmationPopup() {
     this.commonService
-      .generateOTP(this.currentUser.mobile)
+      .generateOTP(this.tokenStorage.getUser()?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
       });
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.currentUser.mobile,
+        mobile: this.tokenStorage.getUser()?.mobile,
       },
       width: "750px",
       disableClose: true,
@@ -215,7 +215,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   customSaveBulkUpload(event) {
     this.commonService
-      .generateOTP(this.currentUser.mobile)
+      .generateOTP(this.tokenStorage.getUser()?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
         this.callAllInOnePopup(event);
