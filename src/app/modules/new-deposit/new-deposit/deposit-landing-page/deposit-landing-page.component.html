@@ -1,13 +1,22 @@
 <section class="container-fluid hero_section">
   <div class="row align-items-center">
-    <div class="col-12 col-lg-7 py-3 pt-md-5 pb-md-3 order-1 order-lg-0">
+    <div
+      class="col-12 col-lg-6 col-md-6 py-3 pt-md-5 pb-md-3 order-1 order-lg-0"
+    >
       <div class="container">
         <div class="row">
           <div class="col-12 col-lg-11 col-md-11 ml-auto">
-            <h1 class="hero_title">Lorem ipsum dolor sit amet consectetur.</h1>
-            <p class="hero_subtitle">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque provident facilis tenetur quo atque quas voluptas, esse in?</p>
+            <h1 class="hero_title">
+              Secure Your Future<br />with Guaranteed<br />Returns.
+            </h1>
+            <p class="hero_subtitle">
+              A safe and accessible solution to manage your finances. Enjoy the
+              convenience of instant access while your money grows securely.
+              Start banking with us today and take control of your financial
+              journey.
+            </p>
             <div class="apply_div">
-              <button type="button" class="apply_btn" >
+              <button type="button" class="apply_btn" (click)="apply()">
                 Apply
               </button>
             </div>
@@ -34,22 +43,23 @@
                 <p>users worldwide</p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
     <div
-      class="col-12 col-lg-5 order-0 order-lg-1 d-flex justify-content-end align-items-center pt-3 pr-0"
+      class="col-12 col-lg-6 col-md-6 order-0 order-lg-1 d-flex justify-content-end align-items-center pt-3 pr-0"
     >
-      <img [src]="imageUrl" alt="hero image" class="img-fluid deposit_hero_img" />
+      <img
+        [src]="imageUrl"
+        alt="hero image"
+        class="img-fluid deposit_hero_img"
+      />
     </div>
   </div>
 </section>
 
-
-
-<div  fxLayout="column" style="padding: 1% 2% 2%">
+<div fxLayout="column" style="padding: 1% 2% 2%">
   <!-- <app-landing-profile
     [imageUrl]="imageUrl"
     [profileHeader]="profileHeader"

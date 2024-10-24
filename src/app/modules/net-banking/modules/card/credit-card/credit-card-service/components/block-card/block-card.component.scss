@@ -1,0 +1,83 @@
+.blue_card {
+  margin: 0;
+  padding: 16px 24px;
+  width: 50%;
+  background-color: #f2f7ff;
+}
+.customCheckBox {
+  font-family: "Raleway" !important;
+  font-size: small !important;
+  font-weight: 600 !important;
+}
+
+img.info_icon {
+  position: relative;
+  height: 16px;
+  width: 16px;
+  top: 24px;
+  margin-left: 8px;
+
+  & + .info_content_container {
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    transform: translate(-8%, 12%);
+    min-width: 200px;
+    width: max-content;
+    max-width: 500px;
+    min-height: auto;
+    max-height: 300px;
+    padding: 1rem;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #000;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.32s,
+      visibility 0.28s;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 21px;
+      height: 20px;
+      width: 20px;
+      border-radius: 4px;
+      background-color: #000;
+      transform: translateY(-50%) rotate(45deg) skew(15deg, 10deg);
+    }
+
+    .info_title {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      font-family: "Raleway", sans-serif;
+    }
+    .content_list {
+      margin-bottom: 0;
+      opacity: 0.75;
+      font-family: "Work Sans", sans-serif;
+    }
+  }
+  &:hover + .info_content_container {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.address_card {
+  background-color: #f2f7ff;
+  padding: 16px 24px;
+  margin: 0;
+  .add_content {
+    text-align: left;
+    font-family: "Work Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #060606;
+    opacity: 1;
+  }
+}

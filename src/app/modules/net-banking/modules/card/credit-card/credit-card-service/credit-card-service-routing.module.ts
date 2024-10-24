@@ -17,6 +17,7 @@ import { PreGeneratedStatementComponent } from "./components/pre-generated-state
 import { UnbilledTransactionComponent } from "./components/unbilled-transaction/unbilled-transaction.component";
 import { UpgradeComponent } from "./components/upgrade/upgrade.component";
 import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
+import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
   {
     path: "payment-summary",
     component: PaymentPageComponent,
+  },
+  {
+    path: "calculate-emi",
+    component: CalculateEmiComponent,
   },
 ];
 

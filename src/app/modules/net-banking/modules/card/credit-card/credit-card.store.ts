@@ -80,15 +80,15 @@ export class CreditCardStore {
       icon: "block-card-icon",
       selectedIcon: "selected-block-card-icon",
     },
-    {
-      screenName: "Change PIN",
-      route: "/user/card/credit-card/service/change-pin",
-      src: "assets/images/change-pin-blue.svg",
-      selectedSrc: "assets/images/change-pin-white.svg",
-      icon: "change-pin-icon",
-      selectedIcon: "selected-change-pin-icon",
-      skipActionButton: true,
-    },
+    // {
+    //   screenName: "Change PIN",
+    //   route: "/user/card/credit-card/service/change-pin",
+    //   src: "assets/images/change-pin-blue.svg",
+    //   selectedSrc: "assets/images/change-pin-white.svg",
+    //   icon: "change-pin-icon",
+    //   selectedIcon: "selected-change-pin-icon",
+    //   skipActionButton: true,
+    // },
     {
       screenName: "Card EMI Details",
       route: "/user/card/credit-card/service/card-emi-details",
@@ -96,14 +96,6 @@ export class CreditCardStore {
       selectedSrc: "assets/images/emi-details-white.svg",
       icon: "emi-details-icon",
       selectedIcon: "selected-emi-details-icon",
-    },
-    {
-      screenName: "Pre Generated Statement",
-      route: "/user/card/credit-card/service/pre-generated-statement",
-      src: "assets/images/pre-generated-blue.svg",
-      selectedSrc: "assets/images/pre-generated-white.svg",
-      icon: "payment-icon",
-      selectedIcon: "selected-payment-icon",
     },
     {
       screenName: "Insta Loan",
@@ -145,11 +137,19 @@ export class CreditCardStore {
       icon: "upgrade-icon",
       selectedIcon: "selected-upgrade-icon",
     },
+    {
+      screenName: "Pre Generated Statement",
+      route: "/user/card/credit-card/service/pre-generated-statement",
+      src: "assets/images/pre-generated-blue.svg",
+      selectedSrc: "assets/images/pre-generated-white.svg",
+      icon: "payment-icon",
+      selectedIcon: "selected-payment-icon",
+    },
   ];
   static readonly manageCardTabs: TabModel[] = [
     {
       screenName: "Card Control",
-      route: "/user/card/credit-card/manage/card-control",
+      route: "/user/card/credit-card/manage-card/card-control",
       src: "assets/images/card-control-icon.svg",
       selectedSrc: "assets/images/selected-card-control-icon.svg",
       icon: "card-control-icon",
@@ -157,7 +157,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Usage Limit",
-      route: "/user/card/credit-card/manage/card-usage",
+      route: "/user/card/credit-card/manage-card/card-usage",
       src: "assets/images/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/selected-usage-limit-icon.svg",
       icon: "selected-usage-limit-icon",
@@ -405,5 +405,74 @@ export class CreditCardStore {
     "Alert Subscription",
     "Add On Card",
     "Upgrade",
+  ];
+  static readonly ManageLinks = ["Card Control", "Usage Limit"];
+
+  static readonly billCycleList = [
+    { value: 1, label: "1st  each month" },
+    { value: 2, label: "2nd  each month" },
+    { value: 3, label: "3rd  each month" },
+  ];
+  static readonly alertData: HeaderModel[] = [
+    {
+      key: "customerName",
+      label: "Name on Card",
+    },
+    {
+      key: "mobile",
+      label: "Mobile Number",
+    },
+    {
+      key: "email",
+      label: "Email Id",
+    },
+  ];
+  static readonly relationShipDetail = [
+    { value: "Monther", label: "Mother" },
+    { value: "Father", label: "Father" },
+    { value: "Brother", label: "Brother" },
+    { value: "Sister", label: "Sister" },
+  ];
+  static readonly creditEmiHeader = [
+    {
+      headerDef: "merchantNameOnCard",
+      headerCell: "Merchant Name",
+    },
+    {
+      headerDef: "amount",
+      headerCell: "Loan Amount",
+    },
+    {
+      headerDef: "tenure",
+      headerCell: "Tenure",
+    },
+    {
+      headerDef: "currentOutStaning",
+      headerCell: "Outstanding Amount",
+    },
+    {
+      headerDef: "monthlyEmi",
+      headerCell: "Monthly EMI",
+    },
+    {
+      headerDef: "interestRate",
+      headerCell: "Interest Rate",
+    },
+    {
+      headerDef: "pendingEmi",
+      headerCell: "Pending EMI",
+    },
+    {
+      headerDef: "startDate",
+      headerCell: "Start Date",
+    },
+    {
+      headerDef: "endDate",
+      headerCell: "End Date",
+    },
+    {
+      headerDef: "status",
+      headerCell: "Status",
+    },
   ];
 }

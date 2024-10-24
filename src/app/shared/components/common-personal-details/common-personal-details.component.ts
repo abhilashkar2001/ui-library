@@ -334,8 +334,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
   }
 
-  onIsdCodeSelected(isdCode) {}
-
   buildCustomerDetailsForm(data?) {
     this.customerDetailsForm = this.fb.group({
       loanCustomerId: "",
@@ -344,7 +342,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
     if (data?.length > 0) {
       setTimeout(() => {
-        this.renderApplicant(data, this.docCustomerDetails.length);
+        this.renderApplicant(data, this.docCustomerDetails?.length || data?.length);
       }, 200);
     } else {
       if (this.docCustomerDetails?.length > 0)

@@ -242,6 +242,7 @@ export class AddBulkUploadComponent implements OnInit {
             event.formData,
             event.userName,
             event.productType,
+            event.corpCustomerId,
             event.processingDatee
           )
           .subscribe((res: any) => {

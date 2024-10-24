@@ -1,0 +1,120 @@
+<mat-card>
+  <form
+    [formGroup]="desiredLimitForm"
+    fxLayout="column"
+    fxLayoutGap="10px"
+    class="mainDiv"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutGap="10"
+      fxLayoutAlign="space-between center"
+      fxFlex="100"
+    >
+      <div class="row" fxFlex="50">
+        <app-searchable-select
+          [items]="creditCardList"
+          bindValueKey="cardNo"
+          bindLabelKey="cardValue"
+          [control]="desiredLimitForm.get('cardNumber')"
+          [inputLabel]="'Card Number' | translate"
+        ></app-searchable-select>
+      </div>
+      <app-ic-action-button buttonName="Upgrade" buttonType="stroked">
+      </app-ic-action-button>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+      <div class="toggle-div" fxLayoutGap="5">
+        <span class="menu-label">Existing Credit Limit</span>
+        <span class="light-blue-title">INR:</span>
+        <span class="small-values"
+          >₹ {{ cardNoDetails?.existingCreditLimit }}</span
+        >
+      </div>
+      <div class="toggle-div" fxLayoutGap="5">
+        <span class="menu-label">Maximum Available Limit</span>
+        <span class="light-blue-title">INR:</span>
+        <span class="small-values">₹ {{ cardNoDetails?.maxCreditLimit }}</span>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10" fxFlex="100">
+      <div class="row" fxFlex="17">
+        <app-ic-custom-input
+          [control]="desiredLimitForm.get('eligibleCreditLimit')"
+          inputLabel="Eligible Credit Limit"
+          [country]="selectedCurrency"
+          customClass="customTotalField"
+          customLabelClass="customLabelClass"
+          [readonly]="true"
+        ></app-ic-custom-input>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row" fxLayoutGap="5">
+      <div fxFlex="70" fxLayout="column">
+        <div class="custom-slider">
+          <mat-slider
+            [value]="desiredLimitForm.get('eligibleCreditLimit').value"
+            [max]="max"
+            [min]="min"
+            fxFlex="100"
+            [thumbLabel]="thumbLabel"
+            (change)="onSliderChange($event)"
+            discrete
+            [displayWith]="formatCurrencyLabel"
+          >
+            <input matSliderThumb #slider />
+          </mat-slider>
+        </div>
+        <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+          <div>Min {{ currencySymbol }} {{ min }}</div>
+          <div>Max {{ currencySymbol }} {{ cardNoDetails?.maxCreditLimit }}</div>
+        </div>
+      </div>
+      <div fxFlex="20" fxLayoutGap="5" fxLayout="row">
+        <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+        </app-ic-action-button>
+        <app-ic-action-button
+          buttonName="Proceed"
+          buttonType="filled"
+          [disabled]="desiredLimitForm.invalid"
+          (onClick)="proceedToOtp()"
+        ></app-ic-action-button>
+      </div>
+    </div>
+    <ng-container *ngIf="viewOtp">
+      <mat-divider></mat-divider>
+      <span class="otp-Disclamer"
+        >{{
+            "You will receive an OTP on your registered mobile number" | translate
+          }}
+          *******{{ fourDigitNo }} /
+          {{ "email ID. Please enter the same to continue." | translate }}</span
+      >
+      <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+        <div fxFlex="75" fxLayoutGap="10">
+          <div class="row" fxFlex="33">
+            <mat-form-field>
+              <input matInput [formControl]="desiredLimitForm.get('otp')" />
+            </mat-form-field>
+          </div>
+          <span class="gray-text" fxLayoutAlign="center center"
+            >Didn’t receive the OTP?</span
+          >
+          <span
+            class="resend-btn"
+            fxLayoutAlign="center center"
+            (click)="submit()"
+            >Resend Code</span
+          >
+        </div>
+        <div>
+          <app-ic-action-button
+            buttonName="Submit"
+            buttonType="filled"
+            (click)="submit()"
+          ></app-ic-action-button>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+</mat-card>

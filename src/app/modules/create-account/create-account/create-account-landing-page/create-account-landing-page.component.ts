@@ -319,7 +319,7 @@ export class CreateAccountLandingPageComponent {
       if (this.noOfDirectors)
         custResp[i].corpDirectorModel = {
           sharePercentage: 100 / this.noOfDirectors,
-          isManagingDirector: custResp[0].primaryCustomer,
+          isManagingDirector: custResp[i]?.primaryCustomer,
         };
 
       const customerId = sessionStorage.getItem("userCustomerId");

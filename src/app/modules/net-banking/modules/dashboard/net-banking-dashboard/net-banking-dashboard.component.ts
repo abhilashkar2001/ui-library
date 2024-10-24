@@ -83,7 +83,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     public translate: TranslateService,
     public loanService: LoanService,
     private renderer: Renderer2,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(

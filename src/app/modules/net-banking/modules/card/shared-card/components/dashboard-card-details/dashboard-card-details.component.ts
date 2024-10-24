@@ -26,11 +26,11 @@ export class DashboardCardDetailsComponent implements OnInit {
   }
   gotoActionPage(value) {
     console.log(value);
-    // if (value === "Convert to EMI") {
-    //   this.router.navigate(["/card/credit-card/service/convert-to-emi"]);
-    // } else if (value === "Increase") {
-    //   this.router.navigate(["/card/credit-card/manage/card-usage"]);
-    // }
+    if (value === "Convert to EMI") {
+      this.router.navigate(["/user/card/credit-card/service/convert-to-emi"]);
+    } else if (value === "Increase") {
+      this.router.navigate(["/user/card/credit-card/manage-card/card-control"]);
+    }
   }
   isFunction(item: any): boolean {
     return item?.actionItem && typeof item.actionItem === "function";

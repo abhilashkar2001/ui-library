@@ -20,6 +20,12 @@ export class LoanService {
         );
     }
 
+    fetchCorpLoanDetails(corpCustId: string) {
+        return this.http.get<IcHttpResponseModel<LoanAccounts>>(
+            `${MICROSERVICE_URL}/origination-matser/fetchLoanByCorpCustId?corpCustId=${corpCustId}`
+        );
+    }
+
     /**
      * @param accNo to fetch summary data for respective account Number
      *  */

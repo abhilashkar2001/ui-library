@@ -20,6 +20,7 @@ export class CreditCardDashboardComponent implements OnInit {
   quickLinkItems: QuickLinkTabModel[] = CreditCardStore.quickLinks;
   customerInfo: any;
   cardSummaryDetails: any;
+  corporateId: any;
 
   constructor(
     private sessionStorageService: SessionStorageService,
@@ -28,7 +29,10 @@ export class CreditCardDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.cardList = this.sessionStorageService.getListOfCards() || [];
+    console.log(this.corporateId);
+
     this.fetchCardSummaryDetails();
   }
 

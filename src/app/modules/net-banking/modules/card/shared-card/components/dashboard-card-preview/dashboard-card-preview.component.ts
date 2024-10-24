@@ -23,7 +23,8 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
   displayCard: CardModel;
   currentIndex: number = 0;
   baseUrl = environment.microServiceURL;
-  autoPay: FormControl<boolean> = new FormControl<boolean>(false);
+  showDetails: FormControl<boolean> = new FormControl<boolean>(false);
+  toggleDetails: boolean = false;
 
   constructor() {}
 
@@ -33,10 +34,22 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showDetails.valueChanges.subscribe((value) => {
+      this.handleToggleChange(value);
+    });
+  }
 
   get transform(): string {
     return `translateX(-${this.currentIndex * 100}%)`;
+  }
+
+  handleToggleChange(value: boolean) {
+    if (value) {
+      this.toggleDetails = true;
+    } else {
+      this.toggleDetails = false;
+    }
   }
 
   prev() {

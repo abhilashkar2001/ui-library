@@ -1,1 +1,61 @@
-<p>convert-to-emi works!</p>
+<form [formGroup]="convertEmiForm">
+  <div class="emi-form-container" fxLayout="column">
+    <!-- Credit Card Number Section -->
+    <h4 class="emi-header">{{ "Credit Card Number" | translate }}</h4>
+    <div class="card-selection" fxLayout="row" fxLayoutAlign="space-between">
+      <div class="card-selector" fxFlex="30">
+        <app-ic-custom-pay-from
+          [control]="convertEmiForm.get('cardNumber')"
+          [items]="listOfAccounts"
+          bindValueKey="accountNo"
+          bindLabelKey="accountNo"
+          [currencyCode]="currencyCode"
+          (selectionChange)="handleTransactionDetails($event)"
+        >
+        </app-ic-custom-pay-from>
+      </div>
+      <div fxFlex="15">
+        <app-ic-action-button
+          buttonName="Download"
+          buttonType="filled"
+        ></app-ic-action-button>
+      </div>
+    </div>
+
+    <!-- Reusable Table Section -->
+    <div class="table-container">
+      <app-reusable-table
+        [columnNames]="viewColumnData"
+        [data]="transactionDetails"
+        (actionItemClicked)="calculateTotalTransactionAmount($event)"
+      ></app-reusable-table>
+    </div>
+
+    <!-- Converted Amount Section -->
+    <div class="amount-container" fxLayoutAlign="end">
+      <div class="converted-amount">
+        <h6>
+          {{ "Amount to be Converted" | translate }}
+          <span class="currency-label">{{ currencyCode }}:</span>
+          <span class="currency-label amount">{{
+            totalTransactionAmount
+          }}</span>
+        </h6>
+      </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="notes-section" fxLayout="row" fxLayoutGap="2px">
+      <img
+        class="notes-icon"
+        src="assets/images/svg/notes-icon.svg"
+        alt="Notes Icon"
+      />
+      <h3>{{ "Notes" | translate }}</h3>
+    </div>
+
+    <ul class="notes">
+      <li *ngFor="let note of notes">* {{ note | translate }}</li>
+    </ul>
+  </div>
+</form>

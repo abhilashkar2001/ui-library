@@ -1,1 +1,32 @@
-<p>card-emi-details works!</p>
+<div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between center">
+  <div class="w-100" fxLayoutAlign="space-between center">
+    <div fxFlex="33">
+      <app-searchable-select
+        [inputLabel]="'Credit Card Number' | translate"
+        [items]="listOfAccounts"
+        bindValueKey="accountNo"
+        bindLabelKey="accountNo"
+        [control]="cardEmiDetailsForm.get('creditNumber')"
+        (selectionChange)="handleTransactionDetails($event)"
+      ></app-searchable-select>
+    </div>
+    <div fxFlex="18">
+      <div
+        fxLayoutAlign="space-evenly center"
+        fxLayoutGap="15px"
+        class="payee_btn add-payee-btn size"
+      >
+        <mat-icon class="plus-icon mr-100" svgIcon="download-icon"></mat-icon>
+        {{ "Download" | translate }}
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100">
+    <app-reusable-table
+      [columnNames]="creditEmiHeader"
+      [data]="creditEmiValues"
+    ></app-reusable-table>
+  </div>
+</div>
+<!-- [paginationRequired]="true" -->

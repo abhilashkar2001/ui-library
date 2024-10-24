@@ -12,7 +12,6 @@ import { SharedCardModule } from "../../shared-card/shared-card.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
 import { BillingCycleComponent } from "./components/billing-cycle/billing-cycle.component";
 import { EStatementComponent } from "./components/e-statement/e-statement.component";
 import { PinGenerationComponent } from "./components/pin-generation/pin-generation.component";
@@ -25,6 +24,8 @@ import { AlertSubscriptionComponent } from "./components/alert-subscription/aler
 import { UnbilledTransactionComponent } from "./components/unbilled-transaction/unbilled-transaction.component";
 import { AddOnCardComponent } from "./components/add-on-card/add-on-card.component";
 import { UpgradeComponent } from "./components/upgrade/upgrade.component";
+import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
+import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { UpgradeComponent } from "./components/upgrade/upgrade.component";
     UnbilledTransactionComponent,
     AddOnCardComponent,
     UpgradeComponent,
+    CalculateEmiComponent,
   ],
   imports: [
     CommonModule,

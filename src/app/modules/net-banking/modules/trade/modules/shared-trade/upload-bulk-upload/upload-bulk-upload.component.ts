@@ -52,6 +52,7 @@ export class UploadBulkUploadComponent implements OnInit {
     [1, 2],
     [3, 4],
   ];
+  corporateId: string;
 
   constructor(
     private router: Router,
@@ -61,10 +62,11 @@ export class UploadBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private commonService: CommonService,
     private tokenStorage: TokenStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
+    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;
     });
@@ -165,14 +167,16 @@ export class UploadBulkUploadComponent implements OnInit {
   goToScreen() {
     const formData = new FormData();
     formData.append("fileName", this.file);
-    const userName = this.currentUser.userName;
+    const userName = this.currentUser.username;
     const productType = this.maintTemplateUpload.value.productType;
     const processingDate = this.maintTemplateUpload.value.processingDate;
+    const corpCustomerId = this.corporateId
     const screenName = this.screenName;
     this.customSaveBulkUpload.emit({
       formData,
       userName,
       productType,
+      corpCustomerId,
       processingDate,
     });
     // this emit should be remove after trade api intigeration done
