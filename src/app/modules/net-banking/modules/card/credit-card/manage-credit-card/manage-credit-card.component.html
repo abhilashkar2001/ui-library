@@ -1,0 +1,27 @@
+<div fxLayout="row">
+  <div fxLayout="column" class="full-width">
+    <app-custom-drawer [menuType]="'Card'"></app-custom-drawer>
+  </div>
+  <!-- <div class="w-100" fxLayout="row" fxLayoutAlign="space-between">
+    <div fxFlex="100" class="mx-12">
+      <h2 class="title-text mt-12">{{ "Manage Card" | translate }}</h2>
+      <div class="mt-12">
+        <div fxLayout="row" class="tab_button_group">
+          <div *ngFor="let childTab of tabs" class="tab_button_wrapper mb-12">
+            <button class="tab_buttons" (click)="route(childTab?.route)">
+              <div class="tab_icon_div">
+                <mat-icon [svgIcon]="childTab.icon" matPreffix></mat-icon>
+              </div>
+              <div class="label text-center w-100">
+                {{ childTab.screenName | translate }}
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <mat-card class="default-card ml-0">
+        <router-outlet></router-outlet>
+      </mat-card>
+    </div>
+  </div> -->
+</div>

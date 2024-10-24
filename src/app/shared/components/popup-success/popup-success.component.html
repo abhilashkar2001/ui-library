@@ -1,0 +1,19 @@
+<div>
+    <div class="success-bgcolor" fxLayoutAlign="center center">
+      <div class="img-algn">
+        <img src="/assets/images/Group 1796.png" />
+      </div>
+    </div>
+    <div class="success-padding" >
+      <div fxLayoutAlign="center center" class="sucses-text custom-margin">
+        Successfully
+      </div>
+      <div fxLayoutAlign="center center" class="bill-text-algn custom-margin">
+        {{ data?.Msg }}
+      </div>
+      <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+        <button mat-flat-button class="yes-btn" (click)="close('Yes')">OK</button
+        >
+      </div>
+    </div>
+  </div>

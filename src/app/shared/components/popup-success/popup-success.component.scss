@@ -1,0 +1,59 @@
+::ng-deep .mat-dialog-container {
+    padding: 0px !important;
+  }
+  .yes-btn {
+    width: 77%;
+    margin-bottom: 10PX;
+    height: 43px;
+    border-radius: 8px;
+    background-color: var(--current-theme-background);
+    color: white;
+  }
+
+  .bill-text-algn {
+    color: #b1b1b1;
+    font: normal normal bold 12px Raleway;
+  }
+  .custom-algn {
+    color: #b1b1b1;
+    font: normal normal bold 12px Raleway;
+  }
+  .img-algn {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+  }
+  .bg-color {
+    background-color: #ffe8e9;
+  }
+  .common-padding {
+    padding: 1%;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    max-width: 320px;
+    text-align: center;
+  }
+  .success-padding {
+    padding: 1%;
+  }
+  .bg-colorHold {
+    background-color: #fef6e5;
+  }
+  .success-bgcolor {
+    background-color: #e3fff7;
+  }
+  .sucses-text {
+    color: #008461;
+    font: normal normal bold 18px Raleway;
+  }
+  .text-color {
+    color: #00205c;
+    font: normal normal medium 12px Work Sans;
+  }
+  .custom-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  

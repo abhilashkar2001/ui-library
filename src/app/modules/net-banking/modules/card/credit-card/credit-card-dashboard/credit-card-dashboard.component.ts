@@ -36,7 +36,7 @@ export class CreditCardDashboardComponent implements OnInit {
 
   fetchCardSummaryDetails() {
     this.cardService
-      .fetchCardSummary(this.corporateId, "Credit Card")
+      .fetchCardSummary(this.customerInfo?.customerId, "Credit Card")
       .subscribe((res) => {
         this.cardSummaryDetails = res?.data;
         this.sessionStorageService.setListOfCards(this.cardSummaryDetails);

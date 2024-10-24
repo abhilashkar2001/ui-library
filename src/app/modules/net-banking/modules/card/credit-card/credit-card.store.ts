@@ -149,7 +149,7 @@ export class CreditCardStore {
   static readonly manageCardTabs: TabModel[] = [
     {
       screenName: "Card Control",
-      route: "/user/card/credit-card/manage/card-control",
+      route: "/user/card/credit-card/manage-card/card-control",
       src: "assets/images/card-control-icon.svg",
       selectedSrc: "assets/images/selected-card-control-icon.svg",
       icon: "card-control-icon",
@@ -157,7 +157,7 @@ export class CreditCardStore {
     },
     {
       screenName: "Usage Limit",
-      route: "/user/card/credit-card/manage/card-usage",
+      route: "/user/card/credit-card/manage-card/card-usage",
       src: "assets/images/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/selected-usage-limit-icon.svg",
       icon: "selected-usage-limit-icon",
@@ -406,6 +406,12 @@ export class CreditCardStore {
     "Add On Card",
     "Upgrade",
   ];
+  static readonly ManageLinks=[
+    "Card Control",
+    "Usage Limit"
+  ]
+    
+  
   static readonly billCycleList = [
     { value: 1, label: "1st  each month" },
     { value: 2, label: "2nd  each month" },

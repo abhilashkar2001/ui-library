@@ -1,0 +1,84 @@
+<mat-card>
+  <form
+    [formGroup]="increaseLimitForm"
+    fxLayout="column"
+    fxLayoutGap="10px"
+    class="mainDiv"
+  >
+    <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+      <div fxFlex="50" fxLayoutGap="10" fxLayoutAlign="center center">
+        <div class="row card-algn" fxFlex="50">
+          <app-searchable-select
+            [items]="creditCardList"
+            bindValueKey="cardNo"
+            bindLabelKey="cardValue"
+            [control]="increaseLimitForm.get('cardNo')"
+            [inputLabel]="'Card Number' | translate"
+            (selectionChange)="getCreditCardLimitByNo($event)"
+          ></app-searchable-select>
+          <!-- <p class="message">
+                {{ "Credit Card | Name - Master Card" }}
+              </p> -->
+        </div>
+        <div class="row" fxFlex="50">
+          <app-ic-custom-input
+            [control]="increaseLimitForm.get('eligibleCreditLimit')"
+            [inputLabel]="'Eligible Credit Limit' | translate"
+            [country]="selectedCurrency"
+            customClass="customTotalField"
+            customLabelClass="customLabelClass"
+            [readonly]="true"
+          ></app-ic-custom-input>
+        </div>
+      </div>
+      <div fxLayoutGap="20" fxLayoutAlign="end center">
+        <app-ic-action-button
+          [buttonName]="'Cancel' | translate"
+          buttonType="stroked"
+        >
+        </app-ic-action-button>
+        <app-ic-action-button
+          [buttonName]="'Proceed' | translate"
+          buttonType="filled"
+          (onClick)="proceedToOtp()"
+        ></app-ic-action-button>
+        <!-- [disabled]="increaseLimitForm.invalid" -->
+      </div>
+    </div>
+    <ng-container *ngIf="viewOtp">
+      <mat-divider></mat-divider>
+      <span class="otp-Disclamer"
+        >{{
+          "You will receive an OTP on your registered mobile number" | translate
+        }}
+        *******{{ fourDigitNo }} /
+        {{ "email ID. Please enter the same to continue." | translate }}</span
+      >
+      <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+        <div fxFlex="75" fxLayoutGap="10">
+          <div class="row" fxFlex="33">
+            <mat-form-field>
+              <input matInput [formControl]="increaseLimitForm.get('otp')" />
+            </mat-form-field>
+          </div>
+          <span class="gray-text" fxLayoutAlign="center center">{{
+            "Didn’t receive the OTP?" | translate
+          }}</span>
+          <span
+            class="resend-btn"
+            fxLayoutAlign="center center"
+            (click)="submitEligibleLimit()"
+            >{{ "Resend Code" | translate }}</span
+          >
+        </div>
+        <div>
+          <app-ic-action-button
+            [buttonName]="'Submit' | translate"
+            buttonType="filled"
+            (onClick)="submitEligibleLimit()"
+          ></app-ic-action-button>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+</mat-card>

@@ -283,12 +283,12 @@ export class DrawerConstant {
           children: [
             {
               name: "Card Control",
-              path: "/card/credit-card/manage/card-control",
+              path: "/card/credit-card/manage-card/card-control",
               roleName: "child-node",
             },
             {
               name: "Usage Limit",
-              path: "/card/credit-card/manage/card-usage",
+              path: "/card/credit-card/manage-card/card-usage",
               roleName: "child-node",
             },
           ],
@@ -300,6 +300,61 @@ export class DrawerConstant {
           children: [],
         },
       ],
+    },
+  ];
+  static readonly cardMenuTabs = [
+    {
+      screenName: "Card Control",
+      route: "/user/card/credit-card/manage-card/card-control",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
+    },
+    {
+      screenName: "Usage Limit",
+      route: "/user/card/credit-card/manage-card/card-usage",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
+    },
+  ];
+
+  static readonly cardControlTabs = [
+    {
+      screenName: "Increase Limit",
+      route: "/card/credit-card/manage-card/card-control/increase-limit",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
+    },
+    {
+      screenName: "Desired Limits",
+      route: "/card/credit-card/manage-card/card-control/desire-limit",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
+    },
+  ];
+  static readonly cardLimitTabs = [
+    {
+      screenName: "Domestic limits",
+      route: "/card/credit-card/manage-card/card-usage/domestic-limits",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
+    },
+    {
+      screenName: "International Limits",
+      route: "",
+      src: "",
+      selectedSrc: "",
+      icon: "",
+      selectedIcon: "",
     },
   ];
 }

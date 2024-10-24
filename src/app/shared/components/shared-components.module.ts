@@ -117,6 +117,7 @@ import { BankCodePopupComponent } from "./bank-code-popup/bank-code-popup.compon
 import { ExternalLinkComponent } from "../widgets/external-link/external-link.component";
 import { ChartPage } from "./chart/chart.page";
 import { MaturityChartComponent } from "./maturity-chart/maturity-chart.component";
+import { PopupSuccessComponent } from "./popup-success/popup-success.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -209,6 +210,7 @@ const components = [
   ReusableNodatafoundComponent,
   ChartPage,
   MaturityChartComponent,
+  PopupSuccessComponent
 ];
 
 @NgModule({
