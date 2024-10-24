@@ -10,13 +10,9 @@ export class DepositLandingPageComponent implements OnInit {
   depositName = "fdCalculator";
   fdRdName = "FD";
   fdRdFullName = "Fixed";
-  title = "My first AGM project";
   lat = 51.678418;
   lng = 7.809007;
   imageUrl = "assets/images/deposit-landing-image.svg";
-  profileHeader = "Secure Your Future with Guaranteed Returns.";
-  profileHint =
-    "A safe and accessible solution to manage your finances. Enjoy the convenience of instant access while your money grows securely. Start banking with us today and take control of your financial journey.";
   routeUrl = "";
   constructor(private router: Router) {}
 
