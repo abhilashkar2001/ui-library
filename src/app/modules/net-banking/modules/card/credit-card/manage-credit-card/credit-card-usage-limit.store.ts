@@ -5,7 +5,7 @@ export class LimitType {
         control: "atmWithdraw",
         toggleControl:"atmRequired",
         min:"minAtmAmount",
-        max:"minAtmAmount",
+        max:"maxAtmAmount",
       },
       {
         header: "Online Transaction",

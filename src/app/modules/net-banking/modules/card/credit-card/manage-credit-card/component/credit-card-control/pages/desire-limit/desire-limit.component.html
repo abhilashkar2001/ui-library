@@ -78,6 +78,7 @@
           buttonType="filled"
           [disabled]="desiredLimitForm.invalid"
           (onClick)="proceedToOtp()"
+          [disabled]="!desiredLimitForm.get('eligibleCreditLimit').value"
         ></app-ic-action-button>
       </div>
     </div>
@@ -103,7 +104,7 @@
           <span
             class="resend-btn"
             fxLayoutAlign="center center"
-            (click)="submit()"
+            (click)="proceedToOtp()"
             >Resend Code</span
           >
         </div>
@@ -112,6 +113,7 @@
             buttonName="Submit"
             buttonType="filled"
             (click)="submit()"
+            [disabled]="!desiredLimitForm.get('otp').value"
           ></app-ic-action-button>
         </div>
       </div>

@@ -41,6 +41,7 @@
           [buttonName]="'Proceed' | translate"
           buttonType="filled"
           (onClick)="proceedToOtp()"
+          [disabled]="!increaseLimitForm.get('eligibleCreditLimit').value"
         ></app-ic-action-button>
         <!-- [disabled]="increaseLimitForm.invalid" -->
       </div>
@@ -67,7 +68,7 @@
           <span
             class="resend-btn"
             fxLayoutAlign="center center"
-            (click)="submitEligibleLimit()"
+            (click)="proceedToOtp()"
             >{{ "Resend Code" | translate }}</span
           >
         </div>
@@ -76,6 +77,7 @@
             [buttonName]="'Submit' | translate"
             buttonType="filled"
             (onClick)="submitEligibleLimit()"
+            [disabled]="!increaseLimitForm.get('otp').value"
           ></app-ic-action-button>
         </div>
       </div>

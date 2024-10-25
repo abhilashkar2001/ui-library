@@ -72,7 +72,7 @@ export class CreditCardUsageLimitComponent implements OnInit {
       atmWithdraw: [data ? data?.atmWithdrawal: ""],
       atmRequired:[data? data?.atmRequired : false],
       minAtmAmount:[data ? data?.minAtmAmount :null],
-      maxAtmAmount:[data ? data?.minAtmAmount :null],
+      maxAtmAmount:[data ? data?.maxAtmAmount :null],
       onlineTransaction: [data? data?.onlineTransaction :""],
       onlineRequired:[data? data?.onlineRequired : false],
       minOnlineAmount:[data ? data?.minOnlineAmount :null],
@@ -152,7 +152,7 @@ export class CreditCardUsageLimitComponent implements OnInit {
                 "Card Name": this.selecetdCardNo[0]?.cardName
               },
               {
-                "credit limit": this.selecetdCardNo[0]?.cashLimit
+                "credit limit": this.selecetdCardNo[0]?.totalCreditLimit
               },
               
             ]
