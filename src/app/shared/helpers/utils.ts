@@ -113,3 +113,20 @@ export function removeSpecCharsOnly(separator: any, val: any) {
 export function findCurrency(currencyCode) {
   return StaticData.currencyList[currencyCode];
 }
+
+
+export function handleDownload(data, pdfName) {
+  const blob = new Blob([data], { type: "application/octet-stream" });
+  const url = window.URL.createObjectURL(blob);
+
+  // Create a link element and simulate a click to trigger the download
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${pdfName}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+
+  // Cleanup the link element
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}

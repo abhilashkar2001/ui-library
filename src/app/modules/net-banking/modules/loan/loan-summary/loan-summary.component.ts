@@ -5,6 +5,8 @@ import { LoanSummaryStore } from './loan-summary.store';
 import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { SessionService } from 'app/shared/session.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-loan-summary',
@@ -22,16 +24,7 @@ export class LoanSummaryComponent implements OnInit {
   chartData: any;
 
   //need to remove the static data
-  loanDetails = [
-    {
-      cbsAccountNumber: '300200003035',
-      additionalValue: 'Value 1'
-    },
-    {
-      cbsAccountNumber: '300200007504',
-      additionalValue: 'Value 2'
-    }
-  ];
+  loanDetails: any[];
 
   Repayment = LoanSummaryStore.RepaymentDetails;
   Disbursed = LoanSummaryStore.DisbursedDetails;
@@ -40,9 +33,12 @@ export class LoanSummaryComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, private loanService: LoanService,) { }
+  constructor(private fb: FormBuilder, private loanService: LoanService, private sessionStorageService: SessionStorageService) { }
 
   ngOnInit(): void {
+    this.loanDetails = this.sessionStorageService.getLoanInfo()
+    console.log(this.loanDetails, "checkk");
+
     this.fetchSummaryDetails(this.loanDetails[0]?.cbsAccountNumber);
     this.buildSummary()
   }
@@ -51,13 +47,16 @@ export class LoanSummaryComponent implements OnInit {
     this.summaryForm = this.fb.group({
       loanAccountNumber: [""],
     });
+    this.summaryForm?.get("loanAccountNumber")?.setValue(this.loanDetails[0]?.cbsAccountNumber)
+
   }
 
 
   //to fetch summary details
-  fetchSummaryDetails(accNo) {
+  fetchSummaryDetails(loanaccNo) {
+    console.log(loanaccNo, "chekkk");
     this.loanService
-      .fetchLoanSummary(accNo)
+      .fetchLoanSummary(loanaccNo)
       .subscribe((res: IcHttpResponseModel<LoanDetailsModel>) => {
         if (res?.statusCode == 200 && res?.data) {
           this.summaryDetails = res?.data;

@@ -26,6 +26,13 @@ export class LoanService {
         );
     }
 
+    /**get all the corpAccount details */
+    fetchListofCorpAccountDetails(corpCustId: string) {
+        return this.http.get<IcHttpResponseModel<LoanAccounts>>(
+            `${MICROSERVICE_URL}/corporate-net-banking/getCorpAccountsForDashBoard?corpCustId=${corpCustId}`
+        );
+    }
+
     /**
      * @param accNo to fetch summary data for respective account Number
      *  */

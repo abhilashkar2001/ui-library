@@ -38,12 +38,13 @@
         </mat-expansion-panel-header>
         <div
           class="yearlyStatement"
-          fxLayout="row"
+          fxLayout="row wrap"
           fxLayoutGap="16px"
           fxLayoutAlign="start space-between"
-          *ngFor="let month of data?.monthly"
         >
           <app-ic-action-button
+            class="mt-12"
+            *ngFor="let month of data?.monthly"
             [buttonName]="month?.month + ' ' + data?.year"
             buttonType="stroked"
             matIcon="download"

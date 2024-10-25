@@ -39,3 +39,26 @@ export interface LoanAccount {
     cbsAccountNumber: string;
     loanAccountStatus: string;
 }
+
+
+export interface Account {
+    accountNo: string | null;
+    accountBranch: string;
+    accountCurrency: string;
+    accountBalance: number | null;
+    accountType?: string;
+}
+
+export interface LoanAccount {
+    accountType: string;
+    type: string;
+    accountList: Account[];
+}
+
+export interface LoanDetails {
+    customerId: string | null;
+    customerNo: string | null;
+    customerName: string | null;
+    mobileNumber: string | null;
+    accounts: LoanAccount[];
+}

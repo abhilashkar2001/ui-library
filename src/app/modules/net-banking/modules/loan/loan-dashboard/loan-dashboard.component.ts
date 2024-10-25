@@ -4,70 +4,82 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { LoanService } from "app/shared/services/net-loan-service/loan.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { Account, LoanAccount, LoanAccounts } from "app/shared/models/loan-account.model";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 
 @Component({
   selector: "app-loan-dashboard",
   templateUrl: "./loan-dashboard.component.html",
-  styleUrls: ["./loan-dashboard.component.scss"],
+  styleUrls: ["./loan-dashboard.component.scss"]
 })
 export class LoanDashboardComponent implements OnInit {
   selectedAccNo: any;
   isStatics: boolean = false;
   transactionCard = LoanDashboardConstant.transactionCard;
-  closedLoanList = LoanDashboardConstant.closedLoan; // Need to remove static api
+  closedLoanList = LoanDashboardConstant.closedLoan;  // Need to remove static api
   instantApprove = LoanDashboardConstant.instantApproveItems; // Need to remove static store
-  //Need to remove static api
-  loanDetails = [
-    {
-      accountType: "Business Loan",
-      cbsAccountNumber: "1234567890",
-    },
-    {
-      accountType: "Letter Of Credit (LOC)",
-      cbsAccountNumber: "0987654321",
-    },
-  ];
-
+  loanDetails: LoanAccounts;
   loanValues = [
     {
       label: "Next Instalment",
-      value: "24-10-2394",
+      value: "nextInstallmentAmount"
     },
     {
       label: "Next Instalment Date",
-      value: "10April",
+      value: "nextInstallmentDate"
     },
     {
       label: "Outstanding Amount",
-      value: "920930923",
+      value: "outstandingAmount"
     },
     {
       label: "Maturity Date",
-      value: "232093",
+      value: "maturityDate"
     },
     {
       label: "Current rate of interest",
-      value: "10%",
-    },
+      value: "currentInterestRate"
+    }
   ];
   corpCustId: any;
+  loanDetailsAccountData: any
 
-  constructor(
-    private location: Location,
-    private router: Router,
-    private loanService: LoanService,
-    private sessionService: SessionStorageService
-  ) {}
+  constructor(private location: Location, private router: Router, private loanService: LoanService, private sessionService: SessionStorageService) { }
 
   ngOnInit(): void {
-    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId;
-    this.fetchCorpLoanDetails();
+    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId
+    this.fetchListOfCorpLoanNo()
+    this.fetchCorpLoanDetails()
   }
 
+  /**fetch corpLoandetails of dashboard */
   fetchCorpLoanDetails() {
     this.loanService.fetchCorpLoanDetails(this.corpCustId).subscribe((res) => {
-      console.log(res);
-    });
+      if (res.statusCode == 200) {
+        this.loanDetails = res?.data;
+        this.sessionService.setLoanInfo(this.loanDetails);
+      }
+    })
+  }
+
+  /**
+   * This method is for fetch the list of only loanaccount number and storing in sessionstorage
+   */
+
+  fetchListOfCorpLoanNo() {
+    this.loanService.fetchListofCorpAccountDetails(this.corpCustId).subscribe((res: IcHttpResponseModel<any>) => {
+      if (res?.statusCode == 200) {
+        this.loanDetailsAccountData = res?.data?.accounts
+          ?.filter((account: LoanAccount) => account.type === 'Lending')
+          ?.flatMap((account: LoanAccount) =>
+            account.accountList.map((acc: Account) => ({
+              ...acc,
+              accountType: account.accountType
+            }))
+          )
+        this.sessionService.setListOfAccounts(this.loanDetailsAccountData)
+      }
+    })
   }
 
   goBack() {
