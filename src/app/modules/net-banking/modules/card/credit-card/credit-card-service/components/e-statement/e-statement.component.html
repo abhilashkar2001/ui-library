@@ -3,18 +3,18 @@
     <div fxFlex="25">
       <app-searchable-select
         [items]="accountNumberList"
-        [inputLabel]="'Account Number' | translate"
+        [inputLabel]="'Card Number' | translate"
         bindValueKey="cardNumber"
         bindLabelKey="cardNumber"
         [control]="eStatementForm.get('accountNumber')"
-        (selectionChange)="handleAccountNumberChange($event)"
+        (selectionChange)="patchDetails($event)"
       >
       </app-searchable-select>
     </div>
     <div fxFlex="25">
       <app-ic-custom-input
-        [inputLabel]="'Account Type' | translate"
-        [control]="eStatementForm.get('accountType')"
+        [inputLabel]="'Card Name' | translate"
+        [control]="eStatementForm.get('cardName')"
         [readonly]="true"
       ></app-ic-custom-input>
     </div>
@@ -22,7 +22,6 @@
       <app-ic-custom-input
         [inputLabel]="'Email' | translate"
         [control]="eStatementForm.get('email')"
-        [readonly]="true"
       ></app-ic-custom-input>
     </div>
   </div>
@@ -57,7 +56,7 @@
       </app-ic-action-button>
       <app-ic-action-button
         [buttonName]="'Subscription' | translate"
-        (click)="onSubscribe()"
+        (click)="proceed()"
         buttonType="filled"
         [disabled]="eStatementForm.invalid"
       >

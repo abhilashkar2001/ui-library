@@ -8,6 +8,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
 import { MatCardModule } from "@angular/material/card";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { CardRoutingModule } from "./card-routing.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [],
@@ -21,6 +22,7 @@ import { CardRoutingModule } from "./card-routing.module";
     SharedMaterialModule,
     MatCardModule,
     MatSlideToggleModule,
+    TranslateModule,
   ],
 })
 export class CardModule {}

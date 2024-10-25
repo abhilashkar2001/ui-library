@@ -10,7 +10,10 @@ import { IconService } from "app/shared/services/icon.service";
 export class DashboardCardDetailsComponent implements OnInit {
   @Input("cardInfo") cardInfo: CardModel | undefined;
   @Input("detailsItem") detailsItem: HeaderModel[] | undefined;
-  constructor(private iconService: IconService, private router: Router) {
+  constructor(
+    private iconService: IconService,
+    private router: Router
+  ) {
     this.iconService
       .addIconIfNotExists("reward-icon", "assets/images/reward.svg")
       .subscribe(() => {});
@@ -35,5 +38,7 @@ export class DashboardCardDetailsComponent implements OnInit {
   isFunction(item: any): boolean {
     return item?.actionItem && typeof item.actionItem === "function";
   }
-  goToUpgradePage() {}
+  goToUpgradePage() {
+    this.router.navigate(["/user/card/credit-card/service/upgrade"]);
+  }
 }

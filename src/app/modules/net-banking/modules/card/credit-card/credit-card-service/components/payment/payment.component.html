@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <div class="payment-section2 m-12" formGroupName="cardFundTransfer">
+  <div class="payment-section2 m-12" formGroupName="corpFundDetails">
     <div class="table-content">
       <div fxLayout="column" fxFlex="25">
         <app-ic-radio-button
@@ -56,16 +56,16 @@
         <app-ic-custom-input
           [readonly]="true"
           [inputLabel]="'Payment Amount' | translate"
-          [control]="creditPaymentForm.get('cardFundTransfer.totalDue')"
+          [control]="creditPaymentForm.get('corpFundDetails.totalDue')"
         >
         </app-ic-custom-input>
         <app-ic-custom-input
           [readonly]="true"
-          [control]="creditPaymentForm.get('cardFundTransfer.minimumDue')"
+          [control]="creditPaymentForm.get('corpFundDetails.minimumDue')"
         >
         </app-ic-custom-input>
         <app-ic-custom-input
-          [control]="creditPaymentForm.get('cardFundTransfer.other')"
+          [control]="creditPaymentForm.get('corpFundDetails.other')"
         >
         </app-ic-custom-input>
       </div>
@@ -73,14 +73,14 @@
     <div fxLayout="row" fxLayoutGap="30px" class="mt-12">
       <app-ic-radio-button
         [optiions]="autoPay"
-        [control]="creditPaymentForm.get('cardFundTransfer.autoPay')"
+        [control]="creditPaymentForm.get('corpFundDetails.autoPay')"
         [displayLabel]="'Setup for autoPay for this biller' | translate"
         layout="column"
       >
       </app-ic-radio-button>
       <app-searchable-select
         [items]="selectedAmount"
-        [control]="creditPaymentForm.get('cardFundTransfer.selectAmount')"
+        [control]="creditPaymentForm.get('corpFundDetails.selectAmount')"
         [inputLabel]="'Select Amount' | translate"
         bindValueKey="value"
         bindLabelKey="label"
@@ -88,7 +88,7 @@
       </app-searchable-select>
       <app-ic-custom-input
         [inputLabel]="'Enter Maximum AutoPay Amount' | translate"
-        [control]="creditPaymentForm.get('cardFundTransfer.maxAutopayAmount')"
+        [control]="creditPaymentForm.get('corpFundDetails.maxAutopayAmount')"
       >
       </app-ic-custom-input>
     </div>

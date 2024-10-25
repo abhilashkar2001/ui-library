@@ -25,6 +25,7 @@ export interface CardModel {
   customerId: number;
   status: string;
   cvv: number;
+  cardType: string;
 }
 
 export declare type Cards = CardModel[];
@@ -70,6 +71,7 @@ export interface AccountList {
   lastPaymentDate?: string;
   accountNumber?: string;
   customerId?: number;
+  currencyCode: string;
 }
 
 export interface Payee {

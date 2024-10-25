@@ -1,1 +1,72 @@
-<p>pin-generation works!</p>
+<form class="pin_generation" [formGroup]="pinGenerationForm" fxLayout="column">
+  <div fxFlex="100">
+    <div class="default blue_card" fxLayout="column">
+      <div fxFlex="100" fxLayout="row">
+        <div fxFlex="20" class="input_wrapper">
+          <app-searchable-select
+            [items]="listOfAccounts"
+            [inputLabel]="'Select Card' | translate"
+            bindValueKey="cardNumber"
+            bindLabelKey="cardNumber"
+            [control]="pinGenerationForm.get('selectCard')"
+            (selectionChange)="patchDetails($event)"
+          >
+          </app-searchable-select>
+        </div>
+        <div fxFlex="25" fxLayoutAlign="start center" class="input_wrapper">
+          <p class="mt-8 mb-0">
+            {{ "Debit Card" | translate }} | {{ "Name" | translate }} -
+            {{ "Master Card" | translate }}
+          </p>
+        </div>
+        <div fxFlex="20" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="pinGenerationForm.get('cvv')"
+            [inputLabel]="'Enter CVV' | translate"
+          ></app-ic-custom-input>
+        </div>
+
+        <div fxFlex fxLayoutGap="10" fxLayoutAlign="end center" class="mt-8">
+          <app-ic-action-button buttonName="Back" buttonType="stroked">
+          </app-ic-action-button>
+          <app-ic-action-button
+            [buttonName]="'Get Otp' | translate"
+            buttonType="filled"
+            (onClick)="getOtp()"
+          ></app-ic-action-button>
+        </div>
+      </div>
+      <p>
+        {{
+          "You will receive an otp on your register mobile no. 7654324567/email ID.Please enter the same to continue"
+            | translate
+        }}.
+      </p>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxFlex="20" class="input_wrapper">
+          <app-ic-custom-input
+            [control]="pinGenerationForm.get('otp')"
+          ></app-ic-custom-input>
+        </div>
+        <div fxFlex class="input_wrapper" class="resend_otp_section">
+          <p>{{ "Didnt receive the OTP?" | translate }}</p>
+          <p>{{ "Resend Code" | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end center" fxLayoutGap="10">
+      <app-ic-action-button
+        [buttonName]="'Cancel' | translate"
+        buttonType="stroked"
+      >
+      </app-ic-action-button>
+      <app-ic-action-button
+        [buttonName]="'Subscription' | translate"
+        (click)="proceed()"
+        buttonType="filled"
+        [disabled]="pinGenerationForm.invalid"
+      >
+      </app-ic-action-button>
+    </div>
+  </div>
+</form>

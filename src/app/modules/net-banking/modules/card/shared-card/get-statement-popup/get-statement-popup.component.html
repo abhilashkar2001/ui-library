@@ -1,0 +1,44 @@
+<div class="getStatementMain">
+  <div fxLayout="row" fxLayoutAlign="space-between" class="pd20 heading">
+    <div>Get Statement</div>
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+  <form [formGroup]="getStatementForm">
+    <div fxLayout="column" class="pd20">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="49">
+          <app-searchable-select
+            [inputLabel]="'Month' | translate"
+            [items]="monthList"
+            bindLabelKey="label"
+            bindValueKey="id"
+            [control]="getStatementForm.get('month')"
+          ></app-searchable-select>
+        </div>
+        <div fxFlex="49">
+          <app-searchable-select
+            [inputLabel]="'Year' | translate"
+            [items]="yearList"
+            bindLabelKey="label"
+            bindValueKey="label"
+            [control]="getStatementForm.get('year')"
+          ></app-searchable-select>
+        </div>
+      </div>
+      <app-searchable-select
+        [inputLabel]="'Format' | translate"
+        [items]="formatList"
+        bindLabelKey="label"
+        bindValueKey="label"
+        [control]="getStatementForm.get('format')"
+      ></app-searchable-select>
+    </div>
+    <div fxLayoutAlign="center center" class="mTB10">
+      <app-ic-action-button
+        [buttonName]="'Download' | translate"
+        buttonType="filled"
+        (onClick)="downLoad()"
+      ></app-ic-action-button>
+    </div>
+  </form>
+</div>

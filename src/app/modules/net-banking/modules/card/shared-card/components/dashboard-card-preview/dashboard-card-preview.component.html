@@ -61,7 +61,11 @@
             displayCard?.typeOfCard || "Visa" | translate
           }}</span>
         </div>
-        <div fxFlex="45" fxLayoutAlign="end center">
+        <div
+          fxFlex="45"
+          fxLayoutAlign="end center"
+          (click)="openGetStatement()"
+        >
           <button mat-flat-button class="small-button class-name get_statement">
             {{ "Get Statement" | translate }}
           </button>

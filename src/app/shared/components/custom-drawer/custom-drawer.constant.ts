@@ -200,6 +200,11 @@ export class DrawerConstant {
       roleName: "parent-node",
       children: [
         {
+          name: "Dashboard",
+          path: "/card/credit-card/dashboard",
+          roleName: "child-node",
+        },
+        {
           name: "Service",
           path: "",
           roleName: "parent-node",
@@ -293,8 +298,77 @@ export class DrawerConstant {
             },
           ],
         },
+      ],
+    },
+    {
+      name: "Debit Card",
+      path: "",
+      roleName: "parent-node",
+      children: [
         {
-          name: "Apply",
+          name: "Dashboard",
+          path: "/card/debit-card/dashboard",
+          roleName: "child-node",
+        },
+        {
+          name: "Service",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "PIN Generation",
+              path: "/card/credit-card/service/pin-generation",
+              roleName: "child-node",
+            },
+            {
+              name: "Block Card",
+              path: "/card/credit-card/service/block-card",
+              roleName: "child-node",
+            },
+            {
+              name: "Upgrade",
+              path: "/card/credit-card/service/upgrade",
+              roleName: "child-node",
+            },
+          ],
+        },
+        {
+          name: "Manage Cards",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "Card Control",
+              path: "/card/credit-card/manage-card/card-control",
+              roleName: "child-node",
+            },
+            {
+              name: "Usage Limit",
+              path: "/card/credit-card/manage-card/card-usage",
+              roleName: "child-node",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Prepaid Card",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "Dashboard",
+          path: "/card/credit-card/dashboard",
+          roleName: "child-node",
+        },
+        {
+          name: "Service",
+          path: "",
+          roleName: "parent-node",
+          children: [],
+        },
+        {
+          name: "Manage Cards",
           path: "",
           roleName: "parent-node",
           children: [],

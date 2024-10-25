@@ -20,6 +20,8 @@ export class EStatementComponent implements OnInit {
   selectedAccInfo: any;
   genericValue = { DOCUMENTTYPE: [], SCHEDULEPAYMENT: [] };
   profileInfo: any;
+  accountDetails: any;
+  typeofCard: any;
 
   constructor(
     private fb: FormBuilder,
@@ -54,17 +56,32 @@ export class EStatementComponent implements OnInit {
 
   bulidForm() {
     this.eStatementForm = this.fb.group({
-      accountNumber: ["", [Validators.required]],
+      cardNo: ["", [Validators.required]],
+      cardName: [""],
       accountType: [""],
       email: ["", [Validators.required]],
       frequency: ["", [Validators.required]],
       format: ["", [Validators.required]],
     });
+  }
 
-    const defaultAccNo = this.sessionStorageService.getSelectedAccountNo();
-    if (defaultAccNo) {
-      this.eStatementForm.get("accountNumber").setValue(defaultAccNo);
-      this.handleAccountNumberChange(defaultAccNo);
+  patchDetails(event: any) {
+    const account = event;
+    this.accountDetails = this.accountNumberList?.find(
+      (card) => card?.cardNumber == account
+    );
+    if (this.accountDetails) {
+      this.typeofCard = this.accountDetails?.typeOfCard;
+      this.eStatementForm
+        ?.get("cardNo")
+        .patchValue(this.accountDetails?.cardNumber);
+      this.eStatementForm
+        ?.get("cardName")
+        .patchValue(this.accountDetails?.cardName);
+      this.eStatementForm
+        ?.get("accountType")
+        .patchValue(this.accountDetails?.cardType);
+      this.eStatementForm?.get("email").patchValue(this.accountDetails?.email);
     }
   }
 
@@ -78,8 +95,6 @@ export class EStatementComponent implements OnInit {
       .patchValue(this.selectedAccInfo?.cardType);
     this.eStatementForm.get("email").patchValue(this.profileInfo?.emailId);
   }
-
-  onSubscribe() {}
 
   proceed() {
     const payload: any = {
@@ -96,23 +111,24 @@ export class EStatementComponent implements OnInit {
         statusNews: "E Statement Subscribed Successfully",
         summary: [
           {
-            header: "Account Details",
+            header: "Card Control",
             details: [
-              { Name: this.customerInfo?.customerName },
+              { "Name on Card": this.accountDetails?.customerName },
               {
-                "Account No": this.eStatementForm.value.accountNumber,
+                "Card Number": this.accountDetails?.cardNumber,
               },
-              { "Account Type": this.customerInfo?.accounts[0]?.accountType },
-            ],
-          },
-          {
-            header: "Subscription Details",
-            details: [
-              { Email: this.eStatementForm.value.email },
               {
-                Frequency: this.eStatementForm.value.frequency,
+                "Card Name": this.accountDetails?.cardName,
               },
-              { Format: this.eStatementForm.value.format },
+              {
+                Email: payload?.email,
+              },
+              {
+                Frequency: payload?.frequency,
+              },
+              {
+                Format: payload?.format,
+              },
             ],
           },
         ],
@@ -126,7 +142,7 @@ export class EStatementComponent implements OnInit {
       (payload) => this.cardService.eStatementSubscribe(payload)
     );
 
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
   close() {
     throw new Error("Method not implemented.");

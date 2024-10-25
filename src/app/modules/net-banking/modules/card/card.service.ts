@@ -18,12 +18,10 @@ const baseUrl = environment.microServiceURL;
 })
 export class CardService {
   constructor(private http: HttpClient) {}
-  fetchAllRecentTransaction(customerId, cardNo, payload?) {
-    let params = appendFilterParam(payload);
+
+  fetchCardRecentTransaction(corporateId, cardNumber, cardType) {
     return this.http.get<any>(
-      `${baseUrl}/card/fetchRecentTransaction?corporateCustomerId=${customerId}&cardNo=${cardNo}${
-        params ? `&${params}` : ``
-      }`
+      `${baseUrl}/card/fetchTransactions?corporateId=${corporateId}&cardNo=${cardNumber}&cardType=${cardType}`
     );
   }
   fetchScreenWiseRecentTrans(transferType, customerId, payload?) {
@@ -40,8 +38,9 @@ export class CardService {
     );
   }
   saveCreditPaymentDetails(payload) {
-    return this.http.post(`${baseUrl}/card/pay`, payload);
+    return this.http.post(`${baseUrl}/card/pay-corp`, payload);
   }
+
   generateAccountQr(accnum) {
     return this.http.post<any>(
       `${baseUrl}/task-summary/get-qr-code?originationAccNo=${accnum}`,
@@ -129,6 +128,17 @@ export class CardService {
   fetchEmiDetails(cardNo, customerId) {
     return this.http.get<IcHttpResponseModel<EmiDetails[]>>(
       `${baseUrl}/card/fetch-emi?cardNo=${cardNo}&customerId=${customerId}`
+    );
+  }
+  downloadCreditInfoAsPdf(accountNo: any, month: any, year: any) {
+    return this.http.get<any>(
+      `${baseUrl}/card/fetchCardPaymentDetailsPdf?cardNo=${accountNo}&month=${month}&year=${year}`
+    );
+  }
+  setPin(cardNumber, cvv, pin) {
+    return this.http.put<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/set-pin?cardNumber=${cardNumber}&cvv=${cvv}&pin=${pin}`,
+      ""
     );
   }
 }

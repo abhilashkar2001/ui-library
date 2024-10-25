@@ -212,6 +212,7 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -240,6 +241,7 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -268,6 +270,7 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -296,6 +299,7 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
     },
   ];
   static readonly detailsItem: HeaderModel[] = [
@@ -331,7 +335,7 @@ export class CreditCardStore {
   static readonly recentTransTabs: string[] = ["Unbilled Transaction"];
   static readonly recentTransColumn: TableHeader[] = [
     {
-      headerDef: "icustRefNo",
+      headerDef: "cbsRefNo",
       headerCell: "Ref Number",
     },
     {
@@ -473,6 +477,24 @@ export class CreditCardStore {
     {
       headerDef: "status",
       headerCell: "Status",
+    },
+  ];
+  static readonly unbilledHeader = [
+    {
+      headerDef: "cbsRefNo",
+      headerCell: "Ref Number",
+    },
+    {
+      headerDef: "paymentType",
+      headerCell: "Details",
+    },
+    {
+      headerDef: "debitAmount",
+      headerCell: "Amount",
+    },
+    {
+      headerDef: "created",
+      headerCell: "Transaction Date",
     },
   ];
 }

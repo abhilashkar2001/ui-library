@@ -5,6 +5,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { CardService } from "../../../../card.service";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { AccountList } from "app/shared/models/card.model";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-payment",
@@ -28,13 +29,17 @@ export class PaymentComponent implements OnInit {
   customerInfo: any;
   cardList: AccountList[];
   typeofCard: string;
+  profileInfo: any;
   constructor(
     private fb: FormBuilder,
     private sessionStorage: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
-    private cardService: CardService
-  ) {}
+    private cardService: CardService,
+    private tokenService: TokenStorageService
+  ) {
+    this.profileInfo = this.tokenService.getUser();
+  }
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorage.getCustomerInfo();
@@ -52,14 +57,14 @@ export class PaymentComponent implements OnInit {
       creditAmount: [""],
       creditCurrency: [""],
       amountPaid: [""],
-      cardFundTransfer: this.fb.group({
+      corpFundDetails: this.fb.group({
         totalDue: [""],
         minimumDue: [""],
         other: [""],
         autoPay: [""],
         selectAmount: [""],
         maxAutopayAmount: [""],
-        cardDetailsId: [1],
+        cardDetailsId: [""],
       }),
     });
     this.patchDetails(this.cardList[0]?.cardNumber);
@@ -77,11 +82,20 @@ export class PaymentComponent implements OnInit {
     if (accountDetails) {
       this.typeofCard = accountDetails?.typeOfCard;
       this.creditPaymentForm
-        .get("cardFundTransfer.totalDue")
+        .get("corpFundDetails.totalDue")
         .setValue(accountDetails?.totalDueAmount);
       this.creditPaymentForm
-        .get("cardFundTransfer.minimumDue")
+        .get("corpFundDetails.minimumDue")
         .setValue(accountDetails?.minDueAmount);
+      this.creditPaymentForm
+        ?.get("creditAccount")
+        .patchValue(accountDetails?.cardNumber);
+      this.creditPaymentForm
+        ?.get("creditCurrency")
+        .patchValue(accountDetails?.currencyCode);
+      this.creditPaymentForm
+        ?.get("corpFundDetails.cardDetailsId")
+        .patchValue(accountDetails?.id);
     }
   }
 
@@ -93,7 +107,7 @@ export class PaymentComponent implements OnInit {
     );
     let payload: any = {
       ...this.creditPaymentForm.value,
-      corporateId: this.customerInfo?.customerId,
+      corporateId: this.profileInfo?.corporateCustomerId,
     };
     let creditPaymentArr = [
       {
@@ -137,17 +151,17 @@ export class PaymentComponent implements OnInit {
               },
               {
                 "Auto type status": this.creditPaymentForm.get(
-                  "cardFundTransfer.autoPay"
+                  "corpFundDetails.autoPay"
                 )?.value,
               },
               {
                 "Selected Amount": this.creditPaymentForm.get(
-                  "cardFundTransfer.selectAmount"
+                  "corpFundDetails.selectAmount"
                 )?.value,
               },
               {
                 "Enter Maximum Amount": this.creditPaymentForm.get(
-                  "cardFundTransfer.maxAutopayAmount"
+                  "corpFundDetails.maxAutopayAmount"
                 )?.value,
               },
             ],

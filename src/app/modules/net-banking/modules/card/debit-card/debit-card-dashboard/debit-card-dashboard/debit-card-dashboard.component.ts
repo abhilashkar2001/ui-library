@@ -1,17 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { Cards, HeaderModel } from "app/shared/models/card.model";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { CreditCardStore } from "../credit-card.store";
 import { QuickLinkTabModel } from "app/shared/models/tab-model";
-import { CardService } from "../../card.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { CardService } from "../../../card.service";
+import { CreditCardStore } from "../../../credit-card/credit-card.store";
 
 @Component({
-  selector: "app-credit-card-dashboard",
-  templateUrl: "./credit-card-dashboard.component.html",
-  styleUrls: ["./credit-card-dashboard.component.scss"],
+  selector: "app-debit-card-dashboard",
+  templateUrl: "./debit-card-dashboard.component.html",
+  styleUrls: ["./debit-card-dashboard.component.scss"],
 })
-export class CreditCardDashboardComponent implements OnInit {
+export class DebitCardDashboardComponent implements OnInit {
   cardList: Cards = [];
   staticCardList: Cards = CreditCardStore.cardList;
   detailsItem: HeaderModel[] = CreditCardStore.detailsItem;

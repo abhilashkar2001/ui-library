@@ -15,6 +15,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
 import { CardService } from "app/modules/net-banking/modules/card/card.service";
 import { CardModel } from "app/shared/models/card.model";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-recent-transaction",
@@ -31,6 +32,7 @@ export class RecentTransactionComponent implements OnInit {
   recentTransTabs;
   @Input("recentTransCols") recentTransCols;
   @Input("recentTransData") recentTransData;
+  @Input("event") event;
   selectedRecentTab: any;
   searchValue: FormControl = new FormControl("");
   selectedDate: FormControl = new FormControl("");
@@ -47,14 +49,17 @@ export class RecentTransactionComponent implements OnInit {
   toDate: string;
   createdDate: string;
   cardList: CardModel[];
+  profileInfo: any;
   constructor(
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenStorageService
   ) {
+    this.profileInfo = this.tokenService.getUser();
     this.matIconRegistry.addSvgIcon(
       "search-icon",
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -110,10 +115,7 @@ export class RecentTransactionComponent implements OnInit {
   }
   recentTransTabChange(event) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
-    if (event == "Account") this.fetRecntTransaction();
-    else if (event == "MMID") this.fetRecntTransactionScreenWise("MMID");
-    else if (event == "Abroad")
-      this.fetRecntTransactionScreenWise("Send Money Abroad");
+    if (event == "Card") this.fetRecntTransaction();
     else this.recentTransData = [];
   }
 
@@ -134,15 +136,14 @@ export class RecentTransactionComponent implements OnInit {
     return payload;
   }
   fetRecntTransaction() {
-    let customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
     console.log(this.createpayload());
     if (this.cardList?.[0]?.cardNumber)
       this.cardService
-        .fetchAllRecentTransaction(
-          customer.customerId,
+        .fetchCardRecentTransaction(
+          this.profileInfo?.corporateCustomerId,
           this.cardList?.[0]?.cardNumber,
-          this.createpayload()
+          this.cardList?.[0]?.cardType
         )
         .subscribe((resp: any) => {
           if (resp?.statusCode == 200) {
@@ -209,6 +210,8 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   gotoBillTransaction() {
-    this.router.navigate(["/card/credit-card/service/unbilled-transaction"]);
+    this.router.navigate([
+      "/user/card/credit-card/service/unbilled-transaction",
+    ]);
   }
 }

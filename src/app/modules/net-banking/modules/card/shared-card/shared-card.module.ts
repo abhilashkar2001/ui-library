@@ -11,11 +11,15 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { DashboardCardDetailsComponent } from "./components/dashboard-card-details/dashboard-card-details.component";
 import { DashboardCardListComponent } from "./components/dashboard-card-list/dashboard-card-list.component";
+import { GetStatementPopupComponent } from "./get-statement-popup/get-statement-popup.component";
+import { GeneratePinComponent } from "./components/generate-pin/generate-pin.component";
 
 const components = [
   DashboardCardPreviewComponent,
   DashboardCardDetailsComponent,
   DashboardCardListComponent,
+  GetStatementPopupComponent,
+  GeneratePinComponent,
 ];
 @NgModule({
   declarations: components,
@@ -29,6 +33,7 @@ const components = [
     MatCardModule,
     TranslateModule,
     SharedMaterialModule,
+    ClipboardModule,
   ],
 })
 export class SharedCardModule {}
