@@ -4,7 +4,8 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { QuickLinkTabModel } from "app/shared/models/tab-model";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { CardService } from "../../../card.service";
-import { CreditCardStore } from "../../../credit-card/credit-card.store";
+import { DebitCardStore } from "../../debit-card.store";
+
 
 @Component({
   selector: "app-debit-card-dashboard",
@@ -13,15 +14,16 @@ import { CreditCardStore } from "../../../credit-card/credit-card.store";
 })
 export class DebitCardDashboardComponent implements OnInit {
   cardList: Cards = [];
-  staticCardList: Cards = CreditCardStore.cardList;
-  detailsItem: HeaderModel[] = CreditCardStore.detailsItem;
-  recentTransTabs = CreditCardStore.recentTransTabs;
-  recentTransCols = CreditCardStore.recentTransColumn;
+  detailsItem: HeaderModel[] = DebitCardStore.detailsItem;
+  recentTransTabs = DebitCardStore.recentTransTabs;
+  recentTransCols = DebitCardStore.recentTransColumn;
   recentTransData: any;
-  quickLinkItems: QuickLinkTabModel[] = CreditCardStore.quickLinks;
+  quickLinkItems: QuickLinkTabModel[] = DebitCardStore.quickLinks;
   cardSummaryDetails: any;
   profileInfo: any;
   displayCard: any;
+  isDrawerOpen = "close";
+
 
   constructor(
     private sessionStorageService: SessionStorageService,
@@ -33,13 +35,16 @@ export class DebitCardDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardList = this.sessionStorageService.getListOfCards() || [];
-
     this.fetchCardSummaryDetails();
   }
 
   fetchCardSummaryDetails() {
+
+    if (this.cardList.length > 1) {
+      this.sessionStorageService.removeListOfCards();
+    }
     this.cardService
-      .fetchCardSummary(this.profileInfo?.corporateCustomerId, "Credit Card")
+      .fetchCardSummary(this.profileInfo?.corporateCustomerId, "Debit Card")
       .subscribe((res) => {
         this.cardSummaryDetails = res?.data;
         this.sessionStorageService.setListOfCards(this.cardSummaryDetails);
@@ -62,7 +67,7 @@ export class DebitCardDashboardComponent implements OnInit {
         .fetchCardRecentTransaction(
           this.profileInfo?.corporateCustomerId,
           cardNumber,
-          "Credit Card"
+          "Debit Card"
         )
         .subscribe((resp: any) => {
           if (resp?.statusCode == 200) {
@@ -70,4 +75,10 @@ export class DebitCardDashboardComponent implements OnInit {
           }
         });
   }
+
+  toggleCheck(value) {
+    this.isDrawerOpen = value;
+    console.log(this.isDrawerOpen);
+  }
+
 }

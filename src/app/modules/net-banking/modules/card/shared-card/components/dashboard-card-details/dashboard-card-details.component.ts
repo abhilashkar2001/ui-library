@@ -2,17 +2,22 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CardModel, HeaderModel } from "app/shared/models/card.model";
 import { IconService } from "app/shared/services/icon.service";
+import { CardService } from "../../../card.service";
 @Component({
   selector: "app-dashboard-card-details",
   templateUrl: "./dashboard-card-details.component.html",
   styleUrls: ["./dashboard-card-details.component.scss"],
 })
 export class DashboardCardDetailsComponent implements OnInit {
+  @Input("title") title: any;
   @Input("cardInfo") cardInfo: CardModel | undefined;
   @Input("detailsItem") detailsItem: HeaderModel[] | undefined;
+  totalBalance: any;
   constructor(
     private iconService: IconService,
-    private router: Router
+    private router: Router,
+    private cardService: CardService
+
   ) {
     this.iconService
       .addIconIfNotExists("reward-icon", "assets/images/reward.svg")
@@ -22,7 +27,15 @@ export class DashboardCardDetailsComponent implements OnInit {
       .subscribe(() => {});
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.title === "Debit Card") {
+      this.cardService
+        .getBalance(this.cardInfo?.accountNumber)
+        .subscribe((res: any) => {
+          this.totalBalance = res?.data?.currbal;
+        });
+    }
+  }
 
   payNow() {
     this.router.navigate(["/user/card/credit-card/service/payment"]);

@@ -29,7 +29,7 @@
         fxLayoutAlign="space-between center"
         fxLayoutGap="12px"
       >
-        <div fxLayout="column">
+        <div fxLayout="column" *ngIf="title === 'Credit Card'">
           <span class="small-title">{{'Total Due Amount' | translate}}</span>
           <span>
             <span class="currency mr-12">{{
@@ -41,7 +41,7 @@
           </span>
         </div>
         <div class="vertical-bar"></div>
-        <div fxLayout="column">
+        <div fxLayout="column" *ngIf="title === 'Credit Card'">
           <span class="small-title">{{'Minimum Due Amount' | translate}}</span>
           <span
             ><span class="currency mr-12">{{
@@ -52,14 +52,25 @@
             ></span
           >
         </div>
+        <div fxLayout="column" *ngIf="title === 'Debit Card'">
+          <span class="small-title">{{'Total Balance' | translate}}</span>
+          <span
+            ><span class="currency mr-12">{{
+              cardInfo?.accountCurrency || "INR"
+            }}</span>
+            <span class="normal-text">
+              ₹ &nbsp;{{ totalBalance }}</span
+            ></span
+          >
+        </div>
       </div>
 
-      <div>
+      <div *ngIf="title === 'Credit Card'">
         <span class="pay-bill" fxLayoutAlign="center center"
           ><mat-icon svgIcon="info-icon"></mat-icon> &nbsp;
           <span>{{"Due on 6 June 2024" | translate}}</span></span
         >
-        <div>           
+        <div >           
           <app-ic-action-button
             [buttonName]="'Pay Now' | translate"
             buttonType="filled"

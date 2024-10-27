@@ -317,17 +317,17 @@ export class DrawerConstant {
           children: [
             {
               name: "PIN Generation",
-              path: "/card/credit-card/service/pin-generation",
+              path: "/card/debit-card/service/pin-generation",
               roleName: "child-node",
             },
             {
               name: "Block Card",
-              path: "/card/credit-card/service/block-card",
+              path: "/card/debit-card/service/block-card",
               roleName: "child-node",
             },
             {
               name: "Upgrade",
-              path: "/card/credit-card/service/upgrade",
+              path: "/card/debit-card/service/upgrade",
               roleName: "child-node",
             },
           ],
@@ -350,7 +350,7 @@ export class DrawerConstant {
           ],
         },
       ],
-    },
+    },   
     {
       name: "Prepaid Card",
       path: "",

@@ -49,7 +49,7 @@ export class PaymentComponent implements OnInit {
 
   buildCreditPaymentForm() {
     this.creditPaymentForm = this.fb.group({
-      source: ["I"],
+      source: ["C"],
       debitAccount: [""],
       debitAmount: [""],
       debitCurrency: [""],

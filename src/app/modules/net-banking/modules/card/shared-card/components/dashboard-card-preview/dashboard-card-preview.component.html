@@ -49,16 +49,14 @@
         </div>
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
           <span class="small-title">{{ "Cvv" | translate }}</span>
-          <span class="small-values">{{
-            displayCard?.cvv || "123" | translate
-          }}</span>
+          <span class="small-values">{{ displayCard?.cvv | translate }}</span>
         </div>
       </div>
       <ng-container *ngIf="!forexFilter">
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
           <span class="small-title">{{ "Type of Card" | translate }}</span>
           <span class="small-values">{{
-            displayCard?.typeOfCard || "Visa" | translate
+            displayCard?.typeOfCard | translate
           }}</span>
         </div>
         <div

@@ -23,6 +23,9 @@ export class CreditCardDashboardComponent implements OnInit {
   profileInfo: any;
   displayCard: any;
 
+  isDrawerOpen = "close";
+
+
   constructor(
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
@@ -38,6 +41,9 @@ export class CreditCardDashboardComponent implements OnInit {
   }
 
   fetchCardSummaryDetails() {
+    if (this.cardList.length > 1) {
+      this.sessionStorageService.removeListOfCards();
+    }
     this.cardService
       .fetchCardSummary(this.profileInfo?.corporateCustomerId, "Credit Card")
       .subscribe((res) => {
@@ -70,4 +76,11 @@ export class CreditCardDashboardComponent implements OnInit {
           }
         });
   }
+
+
+  toggleCheck(value) {
+    this.isDrawerOpen = value;
+    console.log(this.isDrawerOpen);
+  }
+
 }

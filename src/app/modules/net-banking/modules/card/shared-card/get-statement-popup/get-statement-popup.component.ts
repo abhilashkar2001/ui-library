@@ -37,10 +37,8 @@ export class GetStatementPopupComponent implements OnInit {
     { id: 3, value: "2022", label: "2022" },
     { id: 4, value: "2021", label: "2021" },
   ];
-  formatList = [
-    { id: 1, value: "PDF", label: "PDF" },
-    { id: 1, value: "Excle", label: "Excel" },
-  ];
+  formatList = [{ id: 1, value: "PDF", label: "PDF" }];
+
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<GetStatementPopupComponent>,

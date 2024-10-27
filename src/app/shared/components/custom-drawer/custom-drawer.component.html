@@ -13,7 +13,7 @@
         class="custom-tree-node"
         [ngClass]="[
           currentMenu == node.name ? 'active-node highlight_blue' : '',
-          node.roleName == 'parent-node' ? 'align-node' : ''
+          node.roleName == 'parent-node' ? 'align-node' : '',
         ]"
       >
         <!-- use a disabled button to provide padding for tree leaf -->
@@ -38,7 +38,7 @@
           node.roleName != 'child-node'
             ? 'active-node'
             : '',
-          node.roleName == 'parent-node' ? 'align-node' : ''
+          node.roleName == 'parent-node' ? 'align-node' : '',
         ]"
       >
         <div
@@ -57,7 +57,11 @@
     </mat-tree>
   </mat-drawer>
 
-  <button mat-flat-button (click)="drawer.toggle()" class="icon-button">
+  <button
+    mat-flat-button
+    (click)="toggledo(drawer.toggle())"
+    class="icon-button"
+  >
     <mat-icon svgIcon="sidenav-icon" class="btn_icon"></mat-icon>
   </button>
 
