@@ -7,8 +7,8 @@
         <app-ic-custom-pay-from
           [control]="convertEmiForm.get('cardNumber')"
           [items]="listOfAccounts"
-          bindValueKey="accountNo"
-          bindLabelKey="accountNo"
+          bindValueKey="cardNumber"
+          bindLabelKey="cardNumber"
           [currencyCode]="currencyCode"
           (selectionChange)="handleTransactionDetails($event)"
         >
@@ -48,7 +48,7 @@
     <div class="notes-section" fxLayout="row" fxLayoutGap="2px">
       <img
         class="notes-icon"
-        src="assets/images/svg/notes-icon.svg"
+        src="assets/images/notes-icon.svg"
         alt="Notes Icon"
       />
       <h3>{{ "Notes" | translate }}</h3>

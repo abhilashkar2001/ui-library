@@ -4,7 +4,7 @@ import { appendFilterParam } from "app/shared/helpers/http.utils";
 import { Payee } from "app/shared/models/card.model";
 import {
   cardTransactionDetails,
-  EmiDetails,
+  EmiDetails
 } from "app/shared/models/emi-converter.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
@@ -14,7 +14,7 @@ import { Observable, Subject } from "rxjs";
 const baseUrl = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CardService {
   constructor(private http: HttpClient) {}
@@ -103,17 +103,17 @@ export class CardService {
   saveAddOnCreditPaymentDetails(payload) {
     return this.http.put(`${baseUrl}/card/addon-cards`, payload);
   }
-  fetchCardTransactionDetails(cardNo) {
+  fetchCardTransactionDetails(cardNo, customerId?) {
     return this.http.get<IcHttpResponseModel<cardTransactionDetails>>(
-      `${baseUrl}/card/fetchTransactions?cardNo=${cardNo}`
+      `${baseUrl}/card/fetchTransactions?cardNo=${cardNo}&corporateId=${customerId}`
     );
   }
-  // calculateEmi(obj) {
-  //   return this.http.post<IcHttpResponseModel<any>>(
-  //     `${LOAN_URL}/api/loan-repayment/emi-calculation`,
-  //     obj
-  //   );
-  // }
+  calculateEmi(obj) {
+    return this.http.post<IcHttpResponseModel<any>>(
+      `${baseUrl}/loan-repayment/emi-calculation`,
+      obj
+    );
+  }
   convertToEmi(payload) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/card/convert-to-emi`,
@@ -139,6 +139,11 @@ export class CardService {
     return this.http.put<IcHttpResponseModel<any>>(
       `${baseUrl}/card/set-pin?cardNumber=${cardNumber}&cvv=${cvv}&pin=${pin}`,
       ""
+    );
+  }
+  fdRdCalculatorDetails(bookType, amount, tenureYear, tenureMonth, tenureDay) {
+    return this.http.get<any>(
+      `${baseUrl}/fdRd/fd-rd-calculator?bookType=${bookType}&amount=${amount}&tenureYears=${tenureYear}&tenureMonths=${tenureMonth}&tenureDays=${tenureDay}`
     );
   }
 }
