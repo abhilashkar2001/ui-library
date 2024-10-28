@@ -103,17 +103,17 @@ export class CardService {
   saveAddOnCreditPaymentDetails(payload) {
     return this.http.put(`${baseUrl}/card/addon-cards`, payload);
   }
-  fetchCardTransactionDetails(cardNo) {
+  fetchCardTransactionDetails(cardNo, corporateId) {
     return this.http.get<IcHttpResponseModel<cardTransactionDetails>>(
-      `${baseUrl}/card/fetchTransactions?cardNo=${cardNo}`
+      `${baseUrl}/card/fetchTransactions?cardNo=${cardNo}&corporateId=${corporateId}`
     );
   }
-  // calculateEmi(obj) {
-  //   return this.http.post<IcHttpResponseModel<any>>(
-  //     `${LOAN_URL}/api/loan-repayment/emi-calculation`,
-  //     obj
-  //   );
-  // }
+  calculateEmi(obj) {
+    return this.http.post<IcHttpResponseModel<any>>(
+      `${baseUrl}/api/loan-repayment/emi-calculation`,
+      obj
+    );
+  }
   convertToEmi(payload) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/card/convert-to-emi`,
