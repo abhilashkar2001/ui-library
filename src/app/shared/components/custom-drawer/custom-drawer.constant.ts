@@ -365,7 +365,28 @@ export class DrawerConstant {
           name: "Service",
           path: "",
           roleName: "parent-node",
-          children: [],
+          children: [
+              {
+              name: "Reload",
+              path: "/card/prepaid-card/service/reload",
+              roleName: "child-node",
+            },
+            {
+              name: "PIN Generation",
+              path: "/card/prepaid-card/service/pin-generation",
+              roleName: "child-node",
+            },
+            {
+              name: "Block Card",
+              path: "/card/prepaid-card/service/block-card",
+              roleName: "child-node",
+            },
+              {
+              name: "Refund",
+              path: "/card/prepaid-card/service/refund",
+              roleName: "child-node",
+            },
+          ],
         },
         {
           name: "Manage Cards",

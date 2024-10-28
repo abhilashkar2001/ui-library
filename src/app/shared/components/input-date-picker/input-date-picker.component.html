@@ -1,5 +1,6 @@
+<mat-label  *ngIf="!skipLabel && showOutsideLabel">{{ inputLabel }}</mat-label>
 <mat-form-field appearance="outline" class="date">
-  <mat-label>{{ inputLabel }}</mat-label>
+  <mat-label *ngIf="!skipLabel && !showOutsideLabel">{{ inputLabel }}</mat-label>
   <input
     matInput
     [matDatepicker]="picker"

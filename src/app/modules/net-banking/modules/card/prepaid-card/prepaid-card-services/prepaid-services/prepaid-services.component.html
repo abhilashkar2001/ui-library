@@ -1,0 +1,85 @@
+<div
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayoutGap="8px"
+  class="send-money-container"
+  fxFlex="100"
+>
+  <div fxFlex="75" fxFlex.lt-md="100" class="custom_component_top">
+    <app-toolbar-title title="Prepaid Card Service"></app-toolbar-title>
+    <app-toolbar-tab [items]="tabs" (onTabSelect)="onSelectTab($event)">
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
+      <div
+        fxLayoutGap="20"
+        fxLayoutAlign="end center"
+        *ngIf="!selectedTab?.skipActionButton"
+      >
+        <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+        </app-ic-action-button>
+        <app-ic-action-button
+          buttonName="Proceed"
+          buttonType="filled"
+          (onClick)="proceed()"
+        ></app-ic-action-button>
+      </div>
+      <div
+        *ngIf="tabname && tabname == 'E Statement'"
+        class="noteClass"
+        fxLayout="column"
+      >
+        <span fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="Info-icon" svgIcon="feather-info"> </mat-icon>
+          <h3 class="notes">{{ "Notes" | translate }}</h3>
+        </span>
+        <div fxFlex="100" fxLayout="column" class="pl-1">
+          <div fxFlex="100" fxLayout="row">
+            <span fxFlex="11" class="accountHeader"
+              >{{ "Saving Account" | translate }}:</span
+            >
+            <div fxFlex="80" fxLayout="column" class="description">
+              <span class="description"
+                >{{
+                  "Email Statements will be sent in 1 Working Day" | translate
+                }}.</span
+              >
+              <span class="description"
+                >{{
+                  "Only the Primary Account holder will be eligible for Email Statement facility"
+                    | translate
+                }}.
+              </span>
+              <span class="description"
+                >{{
+                  "In case you are a secondary account holder, you will not receive any Email Statements"
+                    | translate
+                }}.</span
+              >
+            </div>
+          </div>
+          <div fxFlex="100" fxLayout="row">
+            <span fxFlex="11" class="accountHeader"
+              >{{ "Current Account" | translate }}:</span
+            >
+            <div fxFlex="80" fxLayout="column" class="description">
+              <span class="description"
+                >{{
+                  "Only a Sole current account holder can avall of this registration facility"
+                    | translate
+                }}.</span
+              >
+              <span class="description">
+                {{
+                  "In case of Proprietorship, Private Limited, Partnership, Karta etc., a one time registration needs to be done at the branch by filling up the form (click on the link to download the form)"
+                    | translate
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-toolbar-tab>
+  </div>
+  <div fxFlex="25" fxFlex.lt-md="100" class="custom_component_top">
+    <app-link-payee-side-bar [viewPayee]="true"> </app-link-payee-side-bar>
+  </div>
+</div>

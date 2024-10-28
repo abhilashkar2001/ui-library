@@ -141,6 +141,28 @@ export class CardService {
       ""
     );
   }
+  savePrepaidReload(payload) {
+    return this.http.post<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/reload-prepaid`,
+      payload
+    );
+  }
+  savePrepaidRefund(payload) {
+    return this.http.post<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/refund-prepaid`,
+      payload
+    );
+  }
+   fetchRefund(cardNo:number) {
+    return this.http.get<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/fetch-refund?cardNumber=${cardNo}`);
+  }
+  fetchRecentTransaction(cardNo: number) {
+    return this.http.get<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/debit-transaction?cardNumber=${cardNo}&cardType=Prepaid Card`
+      )
+  }
+
   fdRdCalculatorDetails(bookType, amount, tenureYear, tenureMonth, tenureDay) {
     return this.http.get<any>(
       `${baseUrl}/fdRd/fd-rd-calculator?bookType=${bookType}&amount=${amount}&tenureYears=${tenureYear}&tenureMonths=${tenureMonth}&tenureDays=${tenureDay}`

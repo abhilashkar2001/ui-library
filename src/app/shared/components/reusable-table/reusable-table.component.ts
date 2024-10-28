@@ -56,6 +56,7 @@ export class ReusableTableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
+      console.log(changes.data)
       if (changes.data.currentValue) {
         this.data = changes.data.currentValue;
         this.dataSource = new MatTableDataSource(this.data);

@@ -33,6 +33,9 @@ export class InputDatePickerComponent implements OnInit {
   @Input() maxDate: Date;
   @Input() maxDateDesc: string;
   @Input() mandatory: string;
+  @Input() showOutsideLabel = false;
+  @Input() skipLabel: boolean = false;
+
   refactoredMinDate: Date;
 
   dateMask: any;
