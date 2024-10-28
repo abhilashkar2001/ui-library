@@ -1,3 +1,4 @@
+import { HeaderModel } from "app/shared/models/card.model";
 import { QuickLinkTabModel, TabModel } from "app/shared/models/tab-model";
 
 export class PrepaidCardStore {
@@ -74,22 +75,8 @@ export class PrepaidCardStore {
     },
   ];
 
-  static readonly recentTransTabs: string[] = ["Unbilled Transaction"];
+  static readonly recentTransTabs: string[] = ["Forex Transaction"];
 
-  static readonly quickLinks: QuickLinkTabModel[] = [
-    {
-      screenName: "Service",
-      childTab: this.prepaidCardTab,
-    },
-    {
-      screenName: "Manage Card",
-      childTab: this.manageCardTabs,
-    },
-    {
-      screenName: "Apply",
-      childTab: this.applyTabs,
-    },
-  ];
   static readonly externalLinks = [
     "Invesments",
     "Credit Card",
@@ -104,7 +91,34 @@ export class PrepaidCardStore {
     "Reload",
     "PIN Generation",
     "Block Card",
-"Refund"
+    "Refund"
   ];
   static readonly ManageLinks = ["Card Control", "Usage Limit"];
+
+static readonly prepaidQuickLinks: QuickLinkTabModel[] = [
+    {
+      screenName: "Service",
+      childTab: this.prepaidCardTab,
+    },
+    {
+      screenName: "Apply",
+      childTab: this.applyTabs,
+    },
+  ];
+
+  
+  static readonly prepaidDetailsItem: HeaderModel[] = [
+    {
+      key: "customerName",
+      label: "Card Holder",
+    },
+    {
+      key: "typeOfCard",
+      label: "Card Type",
+    },
+    {
+      key: "lastPaymentDate",
+      label: "Registration Date",
+    },
+  ];
 }

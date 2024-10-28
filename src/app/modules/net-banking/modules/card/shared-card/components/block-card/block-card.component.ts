@@ -72,6 +72,8 @@ export class BlockCardComponent implements OnInit {
       this.title = "Credit Card";
     } else if (url.includes("/debit-card")) {
       this.title = "Debit Card";
+    }else if (url.includes("/prepaid-card")) {
+      this.title = "Prepaid Card";
     }
   }
 

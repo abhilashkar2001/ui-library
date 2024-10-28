@@ -358,7 +358,7 @@ export class DrawerConstant {
       children: [
         {
           name: "Dashboard",
-          path: "/card/credit-card/dashboard",
+          path: "/card/prepaid-card/dashboard",
           roleName: "child-node",
         },
         {

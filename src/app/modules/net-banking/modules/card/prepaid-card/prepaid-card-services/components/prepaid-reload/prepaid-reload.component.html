@@ -1,4 +1,6 @@
 <form *ngIf="reloadForm" [formGroup]="reloadForm" fxLayout="column">
+  <h3 class="light-blue-title">Reload</h3>
+  <mat-card fxLayout="column">
   <div fxFlex="100" class="mb-8">
     <app-ic-radio-button
       [optiions]="prepaidRegister"
@@ -145,4 +147,14 @@
       ></app-ic-custom-input>
     </div>
   </div>
+  <div fxLayoutGap="20" fxLayoutAlign="end center">
+      <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+      </app-ic-action-button>
+      <app-ic-action-button
+        buttonName="Proceed"
+        buttonType="filled"
+        (onClick)="proceed()"
+      ></app-ic-action-button>
+    </div>
+    </mat-card>
 </form>

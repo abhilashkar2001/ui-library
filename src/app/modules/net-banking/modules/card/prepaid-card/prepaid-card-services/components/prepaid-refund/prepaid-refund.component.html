@@ -1,4 +1,6 @@
 <form *ngIf="refundForm" [formGroup]="refundForm" fxLayout="column">
+  <h3 class="light-blue-title">Refund</h3>
+  <mat-card fxLayout="column">
   <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
     <div fxLayout="column" class="blue-box" fxFlex="100">
       <span class="light-blue-title">{{ "Pay From" | translate }}</span>
@@ -44,4 +46,5 @@
       [data]="cardDetails"
     ></app-reusable-table>
   </div>
+  </mat-card>
 </form>

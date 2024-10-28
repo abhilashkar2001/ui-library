@@ -2,9 +2,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { PrepaidServicesComponent } from "./prepaid-services/prepaid-services.component";
 import { PrepaidReloadComponent } from "./components/prepaid-reload/prepaid-reload.component";
-import { PrepaidBlockCardComponent } from "./components/prepaid-block-card/prepaid-block-card.component";
 import { PrepaidRefundComponent } from "./components/prepaid-refund/prepaid-refund.component";
-import { PrepaidPinGenerationComponent } from "./components/prepaid-pin-generation/prepaid-pin-generation.component";
+import { BlockCardComponent } from "../../shared-card/components/block-card/block-card.component";
+import { PinGenerationComponent } from "../../shared-card/components/pin-generation/pin-generation.component";
 
 const routes: Routes = [
   {
@@ -22,11 +22,11 @@ const routes: Routes = [
       },
       {
         path: "pin-generation",
-        component: PrepaidPinGenerationComponent,
+        component: PinGenerationComponent,
       },
       {
         path: "block-card",
-        component: PrepaidBlockCardComponent,
+        component: BlockCardComponent,
       },
       {
         path: "refund",

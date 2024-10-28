@@ -17,7 +17,7 @@ export class TabLinkComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("calling");
-    if (this.tabs.length > 0) this.selectedTab = this.tabs[0];
+    if (this.tabs?.length > 0) this.selectedTab = this.tabs[0];
   }
 
   navigate(item) {

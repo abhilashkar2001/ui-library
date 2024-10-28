@@ -11,18 +11,15 @@ import { PrepaidReloadComponent } from "./components/prepaid-reload/prepaid-relo
 import { PrepaidCardServicesRoutingModule } from "./prepaid-card-service-routing.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
-import { PrepaidBlockCardComponent } from "./components/prepaid-block-card/prepaid-block-card.component";
 import { PrepaidRefundComponent } from "./components/prepaid-refund/prepaid-refund.component";
 import { TranslateModule } from "@ngx-translate/core";
-import { PrepaidPinGenerationComponent } from "./components/prepaid-pin-generation/prepaid-pin-generation.component";
+import { SharedMaterialModule } from "app/shared/shared-material.module";
 
 @NgModule({
   declarations: [
     PrepaidServicesComponent,
     PrepaidReloadComponent,
-    PrepaidBlockCardComponent,
     PrepaidRefundComponent,
-    PrepaidPinGenerationComponent,
   ],
   imports: [
     PrepaidCardServicesRoutingModule,
@@ -32,6 +29,7 @@ import { PrepaidPinGenerationComponent } from "./components/prepaid-pin-generati
     FlexLayoutModule,
     SharedCardModule,
     TranslateModule,
+    SharedMaterialModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

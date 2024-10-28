@@ -4,7 +4,7 @@
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
       <div class="reward-div">
       <div fxLayout="row" fxLayoutGap="10px">
-        <h3 class="sub-heading p-0">{{'Master Card' | translate}}</h3>
+        <h3 class="sub-heading p-0">{{cardInfo?.cardName??'Master Card' | translate}}</h3>
         <span class="action-text" (click)="goToUpgradePage()">{{'Upgrade' | translate}}</span>
       </div>
        <span class="text-gray">{{cardInfo?.cardNumber}} | {{cardInfo?.status}}</span>
@@ -52,7 +52,7 @@
             ></span
           >
         </div>
-        <div fxLayout="column" *ngIf="title === 'Debit Card'">
+        <div fxLayout="column" *ngIf="title === 'Debit Card' || title === 'Prepaid Card'">
           <span class="small-title">{{'Total Balance' | translate}}</span>
           <span
             ><span class="currency mr-12">{{
