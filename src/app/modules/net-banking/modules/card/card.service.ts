@@ -153,14 +153,15 @@ export class CardService {
       payload
     );
   }
-   fetchRefund(cardNo:number) {
+  fetchRefund(cardNo: number) {
     return this.http.get<IcHttpResponseModel<any>>(
-      `${baseUrl}/card/fetch-refund?cardNumber=${cardNo}`);
+      `${baseUrl}/card/fetch-refund?cardNumber=${cardNo}`
+    );
   }
   fetchRecentTransaction(cardNo: number) {
     return this.http.get<IcHttpResponseModel<any>>(
       `${baseUrl}/card/debit-transaction?cardNumber=${cardNo}&cardType=Prepaid Card`
-      )
+    );
   }
 
   fdRdCalculatorDetails(bookType, amount, tenureYear, tenureMonth, tenureDay) {
@@ -170,5 +171,23 @@ export class CardService {
   }
   saveUpgradeCreditPaymentDetails(payload) {
     return this.http.post(`${baseUrl}/card/upgrade-card`, payload);
+  }
+  fetchAllRecentTransaction(customerId, payload?) {
+    let params = appendFilterParam(payload);
+    return this.http.get<any>(
+      `${baseUrl}/retail-fund-transfer/fetchRecentTransaction?customerId=${customerId}${params ? `&${params}` : ``}`
+    );
+  }
+
+  fetchCreditCardRecentTransaction(customerId, cardNumber, cardType) {
+    return this.http.get<any>(
+      `${baseUrl}/card/fetchTransactions?customerId=${customerId}&cardNo=${cardNumber}&cardType=${cardType}`
+    );
+  }
+
+  fetchDebitCardRecentTransaction(cardNumber, cardType) {
+    return this.http.get<any>(
+      `${baseUrl}/card/debit-transaction?cardNumber=${cardNumber}&cardType=${cardType}`
+    );
   }
 }

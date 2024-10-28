@@ -39,10 +39,12 @@
 
     <div>
       <app-recent-transaction
+        *ngIf="displayCard"
         [recentTransTabs]="recentTransTabs"
         [recentTransCols]="recentTransCols"
         [recentTransData]="recentTransData"
-        [event]="'Card'"
+        [cardInfo]="displayCard"
+        [event]="'Debit Card'"
       ></app-recent-transaction>
     </div>
   </div>

@@ -90,15 +90,23 @@ export class DebitCardStore {
   static readonly recentTransTabs: string[] = ["Transaction"];
   static readonly recentTransColumn: TableHeader[] = [
     {
-      headerDef: "cbsRefNo",
+      headerDef: "name",
+      headerCell: "Name",
+    },
+    {
+      headerDef: "accountNumber",
+      headerCell: "Account Number",
+    },
+    {
+      headerDef: "type",
+      headerCell: "Type",
+    },
+    {
+      headerDef: "refNo",
       headerCell: "Ref Number",
     },
     {
-      headerDef: "transferType",
-      headerCell: "Details",
-    },
-    {
-      headerDef: "debitAmount",
+      headerDef: "amount",
       headerCell: "Amount",
     },
     {

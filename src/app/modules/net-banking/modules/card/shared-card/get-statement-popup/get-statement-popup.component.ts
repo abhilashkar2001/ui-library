@@ -74,8 +74,9 @@ export class GetStatementPopupComponent implements OnInit {
         )
         .subscribe(
           (res: Blob) => {
-            this.downloadFile(res);
-            // this.openPopUp();
+            if (res !== null) {
+              this.downloadFile(res);
+            }
           },
           (errorResponse) => {
             this.errorPopUp(errorResponse);
