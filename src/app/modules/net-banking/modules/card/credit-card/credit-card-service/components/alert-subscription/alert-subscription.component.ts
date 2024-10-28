@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { CreditCardStore } from "../../../credit-card.store";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../../card.service";
+import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
 
 @Component({
   selector: "app-alert-subscription",
@@ -52,18 +53,18 @@ export class AlertSubscriptionComponent implements OnInit {
     this.cardService.fetchAlertByCardNo(payload?.cardNo).subscribe((res) => {
       console.log(res);
       if (res?.statusCode === 200) {
-        // this.openDialog(PopUpComponent, {
-        //   data: {
-        //     auth: {
-        //       type: "Success",
-        //       status: "Alert Subscription!",
-        //       msg: "Any update you’ll received notification",
-        //     },
-        //   },
-        //   disableClose: true,
-        //   panelClass: "popup-dialog-class",
-        //   backdropClass: "bdrop",
-        // }).subscribe();
+        this.openDialog(PopupSuccessComponent, {
+          data: {
+            auth: {
+              type: "Success",
+              status: "Alert Subscription!",
+              msg: "Any update you’ll received notification",
+            },
+          },
+          disableClose: true,
+          panelClass: "popup-dialog-class",
+          backdropClass: "bdrop",
+        }).subscribe();
       }
     });
   }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
 import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-pre-generated-statement',
@@ -11,25 +13,14 @@ import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 })
 export class PreGeneratedStatementComponent implements OnInit {
   preGeneratedStatementForm: FormGroup;
-  // loanAccNoArr = PreGeneratedStatementStore.loanAccNo;
-  // loanDetails: any[];
-  //Need to remove the static data
-  loanDetails = [
-    {
-      cbsAccountNumber: '300200003035',
-      additionalValue: 'Value 1'
-    },
-    {
-      cbsAccountNumber: '300200007504',
-      additionalValue: 'Value 2'
-    }
-  ];
+  loanDetails: LoanDetailsModel[]
   installmentDetails: LoanInstallmentModel;
   preGeneratedDetails: any;
 
-  constructor(private fb: FormBuilder, private loanService: LoanService,) { }
+  constructor(private fb: FormBuilder, private loanService: LoanService, private sessionStorageService: SessionStorageService) { }
 
   ngOnInit(): void {
+    this.loanDetails = this.sessionStorageService.getLoanInfo()
     this.buildPreGeneratedStatementForm()
   }
 
@@ -37,7 +28,8 @@ export class PreGeneratedStatementComponent implements OnInit {
     this.preGeneratedStatementForm = this.fb.group({
       debitAccount: [""],
     });
-
+    this.preGeneratedStatementForm.get('debitAccount').setValue(this.loanDetails[0]?.cbsAccountNumber)
+    this.fetchLoanInstallment()
   }
 
   //fetch installment details
@@ -51,6 +43,9 @@ export class PreGeneratedStatementComponent implements OnInit {
       });
   }
 
+  /**
+   * fetch the pregenerated loan details
+   */
   fetchPreGenerated() {
     this.loanService
       .fetchPreGenerated(this.preGeneratedStatementForm?.value?.debitAccount)

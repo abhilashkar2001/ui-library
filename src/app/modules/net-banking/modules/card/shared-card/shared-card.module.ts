@@ -7,15 +7,27 @@ import { TranslateModule } from "@ngx-translate/core";
 import { DashboardCardPreviewComponent } from "./components/dashboard-card-preview/dashboard-card-preview.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
-import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { DashboardCardDetailsComponent } from "./components/dashboard-card-details/dashboard-card-details.component";
 import { DashboardCardListComponent } from "./components/dashboard-card-list/dashboard-card-list.component";
+import { GetStatementPopupComponent } from "./get-statement-popup/get-statement-popup.component";
+import { GeneratePinComponent } from "./components/generate-pin/generate-pin.component";
+import { PinGenerationComponent } from "./components/pin-generation/pin-generation.component";
+import { UpgradeComponent } from "./components/upgrade/upgrade.component";
+import { BlockCardComponent } from "./components/block-card/block-card.component";
+import { SelectNewCardPopupComponent } from "./components/select-new-card-popup/select-new-card-popup.component";
+import { NgOtpInputModule } from "ng-otp-input";
 
 const components = [
   DashboardCardPreviewComponent,
   DashboardCardDetailsComponent,
   DashboardCardListComponent,
+  GetStatementPopupComponent,
+  GeneratePinComponent,
+  PinGenerationComponent,
+  UpgradeComponent,
+  BlockCardComponent,
+  SelectNewCardPopupComponent,
 ];
 @NgModule({
   declarations: components,
@@ -29,6 +41,8 @@ const components = [
     MatCardModule,
     TranslateModule,
     SharedMaterialModule,
+    ClipboardModule,
+    NgOtpInputModule,
   ],
 })
 export class SharedCardModule {}

@@ -67,6 +67,13 @@
             </mat-menu>
           </ng-template>
         </ng-container>
+        <ng-container *ngSwitchCase="'Full Refund'">
+          <mat-checkbox
+                  [checked]="element[column?.headerDef]"
+                  [readonly]="true"
+                >
+          </mat-checkbox>
+        </ng-container>
         <ng-container *ngSwitchCase="'Download'">
           <button mat-flat-button class="download-btn">
             {{ "Download" }}

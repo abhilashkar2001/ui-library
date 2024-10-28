@@ -2,9 +2,11 @@ import { FlatTreeControl } from "@angular/cdk/tree";
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
@@ -26,6 +28,7 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
   @Input() menuType: string;
   TREE_DATA: any[] = [];
   currentMenu = "";
+  @Output() drawerToggled = new EventEmitter<any>();
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -99,5 +102,20 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
       });
     }
     this.cdr.detectChanges();
+  }
+  toggledo(value: any) {
+    if (value instanceof Promise) {
+      value
+        .then((resolvedValue) => {
+          console.log(resolvedValue);
+
+          this.drawerToggled.emit(resolvedValue);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      console.log("Value is not a promise:", value);
+    }
   }
 }

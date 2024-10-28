@@ -5,6 +5,10 @@ import {
 } from "app/shared/models/card.model";
 import { TableHeader } from "../../dashboard/modules/cheque-book/cheque.store";
 import { QuickLinkTabModel, TabModel } from "app/shared/models/tab-model";
+import {
+  ChartHeaderModel,
+  tabScreenModel,
+} from "app/shared/models/card-chart.model";
 
 export class CreditCardStore {
   static readonly serviceTabs: TabModel[] = [
@@ -137,14 +141,14 @@ export class CreditCardStore {
       icon: "upgrade-icon",
       selectedIcon: "selected-upgrade-icon",
     },
-    {
-      screenName: "Pre Generated Statement",
-      route: "/user/card/credit-card/service/pre-generated-statement",
-      src: "assets/images/pre-generated-blue.svg",
-      selectedSrc: "assets/images/pre-generated-white.svg",
-      icon: "payment-icon",
-      selectedIcon: "selected-payment-icon",
-    },
+    // {
+    //   screenName: "Pre Generated Statement",
+    //   route: "/user/card/credit-card/service/pre-generated-statement",
+    //   src: "assets/images/pre-generated-blue.svg",
+    //   selectedSrc: "assets/images/pre-generated-white.svg",
+    //   icon: "payment-icon",
+    //   selectedIcon: "selected-payment-icon",
+    // },
   ];
   static readonly manageCardTabs: TabModel[] = [
     {
@@ -212,11 +216,20 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
-      cardName: "Moneyback Plus Visa",
-      expiryDate: "4689 **** **** 6321 ",
-      cardNumber: "10 Apr 2021",
+      cardName: "Sapphiro Credit Card",
+      expiryDate: "4689 **** **** 6386 ",
+      cardNumber: "5 Apr 20231",
       fileUrl: "assets/images/credit-card-green.png",
       cashLimit: "₹ 1,43,103",
       statementDate: "20 Apr 2024",
@@ -240,6 +253,51 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
+      joiningFee: 699,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
+    },
+    {
+      cardName: "Moneyback Plus Visa",
+      expiryDate: "4689 **** **** 6327",
+      cardNumber: "4th Apr 20228",
+      fileUrl: "assets/images/credit-card-red.png",
+      cashLimit: "₹ 1,43,103",
+      statementDate: "20 Apr 2024",
+      lastPaymentDate: "09 Apr 20240",
+      totalCreditLimit: "₹ 8,00,000",
+      totalDueAmount: "",
+      accountCurrency: "",
+      rewardPoint: 0,
+      dueDate: 0,
+      cardStatus: "",
+      id: 0,
+      bankName: "",
+      customerName: "",
+      validDate: "",
+      typeOfCard: "",
+      autoPay: false,
+      currentOutStaning: 0,
+      avlCreditBalance: 0,
+      lastStlmtMade: 0,
+      accountNumber: "",
+      customerId: 0,
+      status: "Active",
+      cvv: 123,
+      joiningFee: 999,
+      annualFee: 399,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -268,6 +326,15 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -296,6 +363,15 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
   ];
   static readonly detailsItem: HeaderModel[] = [
@@ -331,7 +407,7 @@ export class CreditCardStore {
   static readonly recentTransTabs: string[] = ["Unbilled Transaction"];
   static readonly recentTransColumn: TableHeader[] = [
     {
-      headerDef: "icustRefNo",
+      headerDef: "cbsRefNo",
       headerCell: "Ref Number",
     },
     {
@@ -412,6 +488,15 @@ export class CreditCardStore {
     { value: 1, label: "1st  each month" },
     { value: 2, label: "2nd  each month" },
     { value: 3, label: "3rd  each month" },
+    { value: 5, label: "5th  each month" },
+    { value: 10, label: "10th  each month" },
+    { value: 12, label: "12th  each month" },
+    { value: 15, label: "15th  each month" },
+    { value: 18, label: "18th  each month" },
+    { value: 21, label: "21st  each month" },
+    { value: 23, label: "23rd  each month" },
+    { value: 25, label: "25th  each month" },
+    { value: 26, label: "26th  each month" },
   ];
   static readonly alertData: HeaderModel[] = [
     {
@@ -473,6 +558,152 @@ export class CreditCardStore {
     {
       headerDef: "status",
       headerCell: "Status",
+    },
+  ];
+  static readonly unbilledHeader = [
+    {
+      headerDef: "cbsRefNo",
+      headerCell: "Ref Number",
+    },
+    {
+      headerDef: "paymentType",
+      headerCell: "Details",
+    },
+    {
+      headerDef: "debitAmount",
+      headerCell: "Amount",
+    },
+    {
+      headerDef: "created",
+      headerCell: "Transaction Date",
+    },
+  ];
+  static readonly tabScreens: tabScreenModel[] = [
+    {
+      screenName: "RD Calculator",
+      route: "/rd-calculator",
+    },
+    {
+      screenName: "FD Calculator",
+      route: "/fd-calculator",
+    },
+    {
+      screenName: "Top UP",
+      route: "/top-up",
+    },
+  ];
+
+  static readonly chartData = {
+    chart: {
+      type: "column",
+      backgroundColor: "transparent",
+    },
+    title: {
+      text: "FD/RD Calculator",
+      align: "left",
+    },
+    xAxis: {
+      categories: [],
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: "",
+      },
+      labels: {
+        enabled: false,
+      },
+      gridLineWidth: 0,
+    },
+    tooltip: {
+      pointFormat:
+        '<span style="color:#00205c"><b>{series.name}</b></span>' +
+        ": <b>{point.percentage:.0f}%</b>&nbsp;",
+      shared: true,
+    },
+    plotOptions: {
+      column: {
+        borderRadius: "12px",
+        shadow: {
+          offsetX: 0,
+          offsetY: 0,
+          opacity: 0.01,
+          width: 10,
+        },
+        stacking: "normal",
+        dataLabels: {
+          enabled: false,
+          format: "{point.percentage:.0f}%",
+        },
+      },
+    },
+    series: [],
+  };
+
+  static readonly TopUpChart: ChartHeaderModel[] = [
+    {
+      headerCell: "Top Up",
+      headerDef: "₹ 20,090",
+    },
+    {
+      headerCell: "Interest Rate",
+      headerDef: "7.10% p.a",
+    },
+    {
+      headerCell: "Interest Amount",
+      headerDef: "₹ 20,000",
+    },
+    {
+      headerCell: "Maturity Date",
+      headerDef: "02 Aug 2025",
+    },
+  ];
+
+  static readonly TopUpDeposite: ChartHeaderModel[] = [
+    {
+      headerCell: "Top Up",
+      headerDef: "topUpAmount",
+    },
+    {
+      headerCell: "Interest Rate",
+      headerDef: "intrestRate",
+    },
+    {
+      headerCell: "Interest Amount",
+      headerDef: "intrestAmount",
+    },
+    {
+      headerCell: "Maturity Date",
+      headerDef: "maturityDate",
+    },
+  ];
+
+  static readonly FdRdChart: ChartHeaderModel[] = [
+    {
+      headerCell: "Interest Rate",
+      headerDef: "intrestRate",
+    },
+    {
+      headerCell: "Interest Amount",
+      headerDef: "intrestAmount",
+    },
+    {
+      headerCell: "Maturity Date",
+      headerDef: "maturityDate",
+    },
+  ];
+  static readonly instaChart: ChartHeaderModel[] = [
+    {
+      headerCell: "Interest Rate",
+      headerDef: "intrestRate",
+    },
+    {
+      headerCell: "Interest Amount",
+      headerDef: "intrestAmount",
+    },
+    {
+      headerCell: "Monthly EMI",
+      headerDef: "monthlyEmi",
     },
   ];
 }

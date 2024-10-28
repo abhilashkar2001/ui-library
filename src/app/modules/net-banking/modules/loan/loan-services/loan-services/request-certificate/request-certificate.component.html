@@ -49,7 +49,7 @@
         {{ "View Request Certificate" | translate }}
       </h2>
     </div>
-    <table class="fetch-table" *ngIf="fetchStatement">
+    <table class="fetch-table w-100" *ngIf="fetchStatement">
       <thead>
         <tr class="statementHead">
           <th *ngFor="let head of requestCertificateheadings">
@@ -63,7 +63,12 @@
             <td>{{ requestCertificateForm?.value?.debitAccount }}</td>
             <td>{{ installmentDetails?.loanType }}</td>
             <td>{{ requestCertificateForm?.value?.requestOption }}</td>
-            <td class="actionBtn" fxLayoutGap="16px">
+            <td
+              class="actionBtn"
+              fxLayout="row"
+              fxLayoutAlign="center"
+              fxLayoutGap="16px"
+            >
               <app-ic-action-button
                 [buttonName]="'share' | translate"
                 buttonType="stroked"

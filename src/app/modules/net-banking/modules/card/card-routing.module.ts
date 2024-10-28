@@ -14,6 +14,20 @@ const routes: Routes = [
         (m) => m.CreditCardRoutingModule
       ),
   },
+  {
+    path: "debit-card",
+    loadChildren: () =>
+      import("./debit-card/debit-card-routing.module").then(
+        (m) => m.DebitCardRoutingModule
+      ),
+  },
+  {
+    path: "prepaid-card",
+    loadChildren: () =>
+      import("./prepaid-card/prepaid-card.module").then(
+        (m) => m.PrepaidCardModule
+      ),
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

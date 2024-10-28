@@ -67,7 +67,9 @@
         </div>
         <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
           <div>Min {{ currencySymbol }} {{ min }}</div>
-          <div>Max {{ currencySymbol }} {{ cardNoDetails?.maxCreditLimit }}</div>
+          <div>
+            Max {{ currencySymbol }} {{ cardNoDetails?.maxCreditLimit }}
+          </div>
         </div>
       </div>
       <div fxFlex="20" fxLayoutGap="5" fxLayout="row">
@@ -78,6 +80,7 @@
           buttonType="filled"
           [disabled]="desiredLimitForm.invalid"
           (onClick)="proceedToOtp()"
+          [disabled]="!desiredLimitForm.get('eligibleCreditLimit').value"
         ></app-ic-action-button>
       </div>
     </div>
@@ -85,10 +88,10 @@
       <mat-divider></mat-divider>
       <span class="otp-Disclamer"
         >{{
-            "You will receive an OTP on your registered mobile number" | translate
-          }}
-          *******{{ fourDigitNo }} /
-          {{ "email ID. Please enter the same to continue." | translate }}</span
+          "You will receive an OTP on your registered mobile number" | translate
+        }}
+        *******{{ fourDigitNo }} /
+        {{ "email ID. Please enter the same to continue." | translate }}</span
       >
       <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
         <div fxFlex="75" fxLayoutGap="10">
@@ -103,7 +106,7 @@
           <span
             class="resend-btn"
             fxLayoutAlign="center center"
-            (click)="submit()"
+            (click)="proceedToOtp()"
             >Resend Code</span
           >
         </div>
@@ -112,6 +115,7 @@
             buttonName="Submit"
             buttonType="filled"
             (click)="submit()"
+            [disabled]="!desiredLimitForm.get('otp').value"
           ></app-ic-action-button>
         </div>
       </div>

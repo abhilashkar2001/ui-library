@@ -1,67 +1,69 @@
 <div [formGroup]="eStatementForm">
-  <div fxLayout="row" fxLayoutGap="10">
-    <div fxFlex="25">
-      <app-searchable-select
-        [items]="accountNumberList"
-        [inputLabel]="'Account Number' | translate"
-        bindValueKey="cardNumber"
-        bindLabelKey="cardNumber"
-        [control]="eStatementForm.get('accountNumber')"
-        (selectionChange)="handleAccountNumberChange($event)"
-      >
-      </app-searchable-select>
+  <h3 class="light-blue-title">E-Statement</h3>
+  <mat-card fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="10">
+      <div fxFlex="25">
+        <mat-label class="ml-20 custom-label">Card Number</mat-label>
+        <app-searchable-select
+          [items]="accountNumberList"
+          bindValueKey="cardNumber"
+          bindLabelKey="cardNumber"
+          [control]="eStatementForm.get('accountNumber')"
+          (selectionChange)="patchDetails($event)"
+        >
+        </app-searchable-select>
+      </div>
+      <div fxFlex="25">
+        <app-ic-custom-input
+          [inputLabel]="'Card Name' | translate"
+          [control]="eStatementForm.get('cardName')"
+          [readonly]="true"
+        ></app-ic-custom-input>
+      </div>
+      <div fxFlex="25">
+        <app-ic-custom-input
+          [inputLabel]="'Email' | translate"
+          [control]="eStatementForm.get('email')"
+        ></app-ic-custom-input>
+      </div>
     </div>
-    <div fxFlex="25">
-      <app-ic-custom-input
-        [inputLabel]="'Account Type' | translate"
-        [control]="eStatementForm.get('accountType')"
-        [readonly]="true"
-      ></app-ic-custom-input>
-    </div>
-    <div fxFlex="25">
-      <app-ic-custom-input
-        [inputLabel]="'Email' | translate"
-        [control]="eStatementForm.get('email')"
-        [readonly]="true"
-      ></app-ic-custom-input>
-    </div>
-  </div>
-  <div fxLayout="row" fxLayoutGap="10">
-    <div fxFlex="25">
-      <app-searchable-select
-        [items]="genericValue.SCHEDULEPAYMENT"
-        [inputLabel]="'Frequency' | translate"
-        bindLabelKey="values"
-        bindValueKey="values"
-        [control]="eStatementForm.get('frequency')"
-      >
-      </app-searchable-select>
-    </div>
-    <div fxFlex="25">
-      <app-searchable-select
-        [items]="genericValue.DOCUMENTTYPE"
-        [inputLabel]="'Format' | translate"
-        bindLabelKey="values"
-        bindValueKey="values"
-        [control]="eStatementForm.get('format')"
-      >
-      </app-searchable-select>
-    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <div fxFlex="25">
+        <app-searchable-select
+          [items]="genericValue.SCHEDULEPAYMENT"
+          [inputLabel]="'Frequency' | translate"
+          bindLabelKey="values"
+          bindValueKey="values"
+          [control]="eStatementForm.get('frequency')"
+        >
+        </app-searchable-select>
+      </div>
+      <div fxFlex="25">
+        <app-searchable-select
+          [items]="genericValue.DOCUMENTTYPE"
+          [inputLabel]="'Format' | translate"
+          bindLabelKey="values"
+          bindValueKey="values"
+          [control]="eStatementForm.get('format')"
+        >
+        </app-searchable-select>
+      </div>
 
-    <div fxFlex="50" fxLayoutAlign="end center" fxLayoutGap="10">
-      <app-ic-action-button
-        [buttonName]="'Cancel' | translate"
-        (click)="close()"
-        buttonType="stroked"
-      >
-      </app-ic-action-button>
-      <app-ic-action-button
-        [buttonName]="'Subscription' | translate"
-        (click)="onSubscribe()"
-        buttonType="filled"
-        [disabled]="eStatementForm.invalid"
-      >
-      </app-ic-action-button>
+      <div fxFlex="50" fxLayoutAlign="end center" fxLayoutGap="10">
+        <app-ic-action-button
+          [buttonName]="'Cancel' | translate"
+          (click)="close()"
+          buttonType="stroked"
+        >
+        </app-ic-action-button>
+        <app-ic-action-button
+          [buttonName]="'Subscription' | translate"
+          (click)="proceed()"
+          buttonType="filled"
+          [disabled]="eStatementForm.invalid"
+        >
+        </app-ic-action-button>
+      </div>
     </div>
-  </div>
+  </mat-card>
 </div>

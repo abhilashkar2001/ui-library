@@ -14,6 +14,7 @@ import { TopupLoanComponent } from './loan-services/topup-loan/topup-loan.compon
 import { RepaymentScheduleComponent } from './loan-services/repayment-schedule/repayment-schedule.component';
 import { GoldRenewalComponent } from './loan-services/gold-renewal/gold-renewal.component';
 import { LoanServiceDashboardComponent } from './loan-service-dashboard/loan-service-dashboard.component';
+import { PaymentPageComponent } from '../../dashboard/modules/cheque-book/payment-page/payment-page.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,10 @@ const routes: Routes = [
       {
         path: "gold-renewal",
         component: GoldRenewalComponent,
+      },
+      {
+        path: "payment-summary",
+        component: PaymentPageComponent,
       },
     ],
   },

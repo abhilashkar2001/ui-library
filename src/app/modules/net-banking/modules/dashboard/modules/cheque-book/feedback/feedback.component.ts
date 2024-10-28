@@ -18,7 +18,10 @@ export class FeedbackComponent implements OnInit {
     loading: false,
   };
 
-  constructor(private router: Router, private feedbackService: ChequeService) {}
+  constructor(
+    private router: Router,
+    private feedbackService: ChequeService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -66,7 +69,7 @@ export class FeedbackComponent implements OnInit {
     };
     this.feedbackService.saveFeedback(payload).subscribe((res: any) => {
       if (res?.statusCode === 200 || res?.statusCode === 201) {
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/user/dashboard"]);
       }
     });
   }

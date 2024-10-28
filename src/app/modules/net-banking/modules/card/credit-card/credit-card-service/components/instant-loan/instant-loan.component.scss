@@ -1,0 +1,114 @@
+.card_payable {
+  background-color: #f2f7ff;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+.custom_dropDown_accountNo {
+  padding: 14px 37px 0px 0px;
+}
+
+.custom_dropDown_label {
+  padding: 14px 14px 0px 0px;
+}
+
+.custom-slider {
+  .mat-slider-thumb-label {
+    transform: rotate(45deg) !important;
+    background-color: unset !important;
+    width: fit-content !important;
+  }
+
+  .mat-slider-thumb-label-text {
+    opacity: 1 !important;
+    position: relative;
+    // top: -45px;
+    left: 10px;
+  }
+
+  .mat-slider-track-background {
+    height: 5px !important;
+  }
+
+  .mat-slider-track-wrapper {
+    height: 5px !important;
+    border-radius: 10px !important;
+    box-shadow: 0px 3px 6px 0px #0000001f;
+    .mat-slider-track-background {
+      background-color: #fff !important;
+    }
+  }
+
+  .mat-slider-track-fill {
+    height: 6px !important;
+    background: var(--current-theme-background) !important;
+  }
+
+  .mat-slider-thumb {
+    width: 25px !important;
+    height: 25px !important;
+    background: var(--current-theme-background) !important;
+    top: -11px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border: 6px solid #fff;
+    outline: 3px solid var(--current-theme-background);
+  }
+}
+
+fieldset {
+  padding: 5px;
+  border-radius: 8px;
+  height: 40px;
+  background: var(--current-theme-background-light);
+  border: 1px solid var(--current-theme-background);
+  .mat-form-field {
+    padding: 10px 0;
+    border-radius: 11px;
+  }
+  .suffixLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--current-theme-background);
+    font-family: "Raleway";
+  }
+
+  input {
+    padding: 5px 5px;
+    font-size: 12px;
+  }
+  .vertical-seperator {
+    border-left: var(--current-theme-background) 2px solid;
+    border-radius: 5px;
+  }
+}
+
+.mat-checkbox-inner-container {
+  display: inline-block;
+  height: 16px;
+  line-height: 0;
+  margin: auto;
+  margin-right: 8px;
+  order: 0;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 16px;
+  flex-shrink: 0;
+}
+
+::ng-deep.custom-slider-label .mat-slider-thumb-label-text {
+  top: -72px;
+  left: 84px;
+}
+.tenure_input {
+  margin-left: 8px;
+}
+
+.tenure_input::-webkit-outer-spin-button,
+.tenure_input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

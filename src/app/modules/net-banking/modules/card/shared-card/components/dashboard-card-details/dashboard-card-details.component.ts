@@ -8,9 +8,14 @@ import { IconService } from "app/shared/services/icon.service";
   styleUrls: ["./dashboard-card-details.component.scss"],
 })
 export class DashboardCardDetailsComponent implements OnInit {
+  @Input("title") title: any;
   @Input("cardInfo") cardInfo: CardModel | undefined;
   @Input("detailsItem") detailsItem: HeaderModel[] | undefined;
-  constructor(private iconService: IconService, private router: Router) {
+  totalBalance: any;
+  constructor(
+    private iconService: IconService,
+    private router: Router
+  ) {
     this.iconService
       .addIconIfNotExists("reward-icon", "assets/images/reward.svg")
       .subscribe(() => {});
@@ -35,5 +40,7 @@ export class DashboardCardDetailsComponent implements OnInit {
   isFunction(item: any): boolean {
     return item?.actionItem && typeof item.actionItem === "function";
   }
-  goToUpgradePage() {}
+  goToUpgradePage() {
+    this.router.navigate(["/user/card/credit-card/service/upgrade"]);
+  }
 }

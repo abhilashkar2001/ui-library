@@ -200,6 +200,11 @@ export class DrawerConstant {
       roleName: "parent-node",
       children: [
         {
+          name: "Dashboard",
+          path: "/card/credit-card/dashboard",
+          roleName: "child-node",
+        },
+        {
           name: "Service",
           path: "",
           roleName: "parent-node",
@@ -293,8 +298,98 @@ export class DrawerConstant {
             },
           ],
         },
+      ],
+    },
+    {
+      name: "Debit Card",
+      path: "",
+      roleName: "parent-node",
+      children: [
         {
-          name: "Apply",
+          name: "Dashboard",
+          path: "/card/debit-card/dashboard",
+          roleName: "child-node",
+        },
+        {
+          name: "Service",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "PIN Generation",
+              path: "/card/debit-card/service/pin-generation",
+              roleName: "child-node",
+            },
+            {
+              name: "Block Card",
+              path: "/card/debit-card/service/block-card",
+              roleName: "child-node",
+            },
+            {
+              name: "Upgrade",
+              path: "/card/debit-card/service/upgrade",
+              roleName: "child-node",
+            },
+          ],
+        },
+        {
+          name: "Manage Cards",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "Card Control",
+              path: "/card/debit-card/manage-card/card-control",
+              roleName: "child-node",
+            },
+            {
+              name: "Usage Limit",
+              path: "/card/debit-card/manage-card/card-usage",
+              roleName: "child-node",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Prepaid Card",
+      path: "",
+      roleName: "parent-node",
+      children: [
+        {
+          name: "Dashboard",
+          path: "/card/prepaid-card/dashboard",
+          roleName: "child-node",
+        },
+        {
+          name: "Service",
+          path: "",
+          roleName: "parent-node",
+          children: [
+            {
+              name: "Reload",
+              path: "/card/prepaid-card/service/reload",
+              roleName: "child-node",
+            },
+            {
+              name: "PIN Generation",
+              path: "/card/prepaid-card/service/pin-generation",
+              roleName: "child-node",
+            },
+            {
+              name: "Block Card",
+              path: "/card/prepaid-card/service/block-card",
+              roleName: "child-node",
+            },
+            {
+              name: "Refund",
+              path: "/card/prepaid-card/service/refund",
+              roleName: "child-node",
+            },
+          ],
+        },
+        {
+          name: "Manage Cards",
           path: "",
           roleName: "parent-node",
           children: [],

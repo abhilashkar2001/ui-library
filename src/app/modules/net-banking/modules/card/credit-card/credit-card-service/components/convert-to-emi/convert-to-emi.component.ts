@@ -1,16 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-
-import * as moment from "moment";
-import { ConvertEmiStore } from "./convert-emi.store";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { ConvertEmiStore } from "./convert-emi.store";
+import { CardService } from "../../../../card.service";
 import {
   cardTransactionDetails,
   TransactionDetail,
 } from "app/shared/models/emi-converter.model";
-import { CardService } from "../../../../card.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import * as moment from "moment";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-convert-to-emi",
@@ -26,12 +26,13 @@ export class ConvertToEmiComponent implements OnInit {
   transactionDetails: TransactionDetail[] = [];
   totalTransactionAmount: number = 0;
   customerId: number;
-
+  corporateId: string;
   constructor(
     private formBuilder: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private router: Router,
-    private apiService: CardService
+    private emiService: CardService,
+    private tokenStorage: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -42,14 +43,8 @@ export class ConvertToEmiComponent implements OnInit {
   // Initialize account list from session storage
   private initializeAccounts(): void {
     this.customerId = this.sessionStorageService?.getCustomerInfo()?.customerId;
-    this.fetchListOfCards(this.customerId);
-  }
-  fetchListOfCards(customerId) {
-    this.apiService.fetchListOfCards(customerId).subscribe((resp) => {
-      if (resp) {
-        this.listOfAccounts = resp.data;
-      }
-    });
+    this.corporateId = this.tokenStorage?.getUser()?.corporateCustomerId;
+    this.listOfAccounts = this.sessionStorageService?.getListOfCards();
   }
 
   // Build the form group for EMI conversion
@@ -68,8 +63,8 @@ export class ConvertToEmiComponent implements OnInit {
 
   // Fetch transaction details from the API
   private fetchTransactionDetails(accountNo: string): void {
-    this.apiService
-      .fetchCardTransactionDetails(accountNo)
+    this.emiService
+      .fetchCardTransactionDetails(accountNo, this.corporateId)
       .subscribe((response: IcHttpResponseModel<cardTransactionDetails>) => {
         if (response && response.statusCode === 200) {
           this.processTransactionData(response.data);
@@ -84,7 +79,7 @@ export class ConvertToEmiComponent implements OnInit {
       transactionDate: item?.created,
       details: item?.paymentType,
       amount: item?.debitAmount,
-      refNo: item?.icustRefNo,
+      refNo: item?.cbsRefNo,
       convertToEmi: false,
       cardName: item?.cardFundTransfer?.cardDetails?.cardName,
       cardNumber: item?.cardFundTransfer?.cardDetails?.cardNumber,

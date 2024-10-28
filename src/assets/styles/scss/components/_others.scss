@@ -24,6 +24,30 @@
   font-weight: 600;
 }
 
+.text-poppins {
+  text-align: left;
+  font: normal normal 600 16px/19px Poppins;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.add-payee-btn {
+  min-width: 130px;
+  max-width: max-content;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  padding: 0 24px;
+
+  & > .mat-icon {
+    margin-right: 8px;
+  }
+}
+
 .custom-expansion-panel {
   .mat-expansion-panel-header {
     font: normal normal 18px/27px Poppins;
@@ -137,6 +161,7 @@ mat-expansion-panel.default-expansion-panel {
 
   .mat-slider-thumb-label-text {
     opacity: 1 !important;
+    position: relative; // this css needed to adjust the position of the slider's thumb
   }
 
   .mat-slider-track-background {

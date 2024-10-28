@@ -4,6 +4,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { CreditCardStore } from "../credit-card.store";
 import { QuickLinkTabModel } from "app/shared/models/tab-model";
 import { CardService } from "../../card.service";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-credit-card-dashboard",
@@ -16,20 +17,24 @@ export class CreditCardDashboardComponent implements OnInit {
   detailsItem: HeaderModel[] = CreditCardStore.detailsItem;
   recentTransTabs = CreditCardStore.recentTransTabs;
   recentTransCols = CreditCardStore.recentTransColumn;
-  recentTransData = CreditCardStore.recentTransData;
+  recentTransData: any;
   quickLinkItems: QuickLinkTabModel[] = CreditCardStore.quickLinks;
-  customerInfo: any;
   cardSummaryDetails: any;
   corporateId: any;
+  profileInfo: any;
+  displayCard: any;
+
+  isDrawerOpen = "close";
 
   constructor(
     private sessionStorageService: SessionStorageService,
-    private cardService: CardService
-  ) {}
+    private cardService: CardService,
+    private tokenService: TokenStorageService
+  ) {
+    this.profileInfo = this.tokenService.getUser();
+  }
 
   ngOnInit(): void {
-    this.customerInfo = this.sessionStorageService.getCustomerInfo();
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
     this.cardList = this.sessionStorageService.getListOfCards() || [];
     console.log(this.corporateId);
 
@@ -37,11 +42,44 @@ export class CreditCardDashboardComponent implements OnInit {
   }
 
   fetchCardSummaryDetails() {
+    if (this.cardList.length > 1) {
+      this.sessionStorageService.removeListOfCards();
+    }
     this.cardService
-      .fetchCardSummary(this.customerInfo?.customerId, "Credit Card")
+      .fetchCardSummary(this.profileInfo?.corporateCustomerId, "Credit Card")
       .subscribe((res) => {
         this.cardSummaryDetails = res?.data;
         this.sessionStorageService.setListOfCards(this.cardSummaryDetails);
+        this.fetRecntTransaction();
       });
+  }
+  getDashboardCardDetails(event) {
+    this.displayCard = event;
+  }
+
+  fetRecntTransaction() {
+    console.log("hgfg");
+
+    this.recentTransData = [];
+    let cardNumber =
+      this.cardSummaryDetails?.[0]?.cardNumber ||
+      this.cardList?.[0]?.cardNumber;
+    if (cardNumber)
+      this.cardService
+        .fetchCardRecentTransaction(
+          this.profileInfo?.corporateCustomerId,
+          cardNumber,
+          "Credit Card"
+        )
+        .subscribe((resp: any) => {
+          if (resp?.statusCode == 200) {
+            this.recentTransData = resp?.data;
+          }
+        });
+  }
+
+  toggleCheck(value) {
+    this.isDrawerOpen = value;
+    console.log(this.isDrawerOpen);
   }
 }

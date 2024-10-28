@@ -4,12 +4,12 @@
     (changeTab)="selectedTab = $event"
   ></app-tab-link>
   <div
-    *ngIf="selectedTab.childTab?.length > 0"
+    *ngIf="selectedTab?.childTab?.length > 0"
     fxLayout="row"
     class="tab_button_group"
   >
     <div
-      *ngFor="let childTab of selectedTab.childTab"
+      *ngFor="let childTab of selectedTab?.childTab"
       class="tab_button_wrapper mb-12"
     >
       <button class="tab_buttons" (click)="route(childTab?.route)">

@@ -180,7 +180,7 @@ export class MultiFundTransferComponent implements OnInit {
   getOTP() {
     this.api
       .getOtp(this.customerInfo.mobileNumber)
-      .subscribe((response: any) => {});
+      .subscribe((response: any) => { });
   }
 
   cancel() {
@@ -276,6 +276,7 @@ export class MultiFundTransferComponent implements OnInit {
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
+
       backdropClass: "bdrop"
     });
     this.dialogRef1.afterClosed().subscribe((result) => {

@@ -1,105 +1,117 @@
 <div class="payment-container" [formGroup]="creditPaymentForm">
-  <div class="payment-section1">
-    <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
-      <div fxLayout="column" class="blue-box" fxFlex="100">
-        <span class="light-blue-title">{{ "Pay From" | translate }}</span>
-        <div fxLayout="column">
-          <app-ic-custom-pay-from
-            [control]="creditPaymentForm.get('debitAccount')"
-            [inputLabel]="'Account No' | translate"
-            bindValueKey="accountNo"
-            bindLabelKey="accountNo"
-            (currencyCodeValue)="payFromCurrencyCode($event)"
-            message="Saving Account | Balance:$20"
-          ></app-ic-custom-pay-from>
-        </div>
-      </div>
-      <div fxLayout="column" class="blue-box" fxFlex="100">
-        <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
-        <div fxLayout="row">
-          <app-ic-custom-pay-from
-            [control]="creditPaymentForm.get('creditAccount')"
-            [inputLabel]="'Card No' | translate"
-            bindValueKey="cardNumber"
-            bindLabelKey="cardNumber"
-            [items]="cardList"
-            (selectionChange)="patchDetails($event)"
-          ></app-ic-custom-pay-from>
-          <div
-            fxLayout="column"
-            fxLayoutAlign="center center"
-            class="label-info m-12"
-          >
-            <span class="label-info">
-              {{ "Credit card" | translate }} | {{ "Name" | translate }} -
-              {{ typeofCard }}
-            </span>
+  <h3 class="light-blue-title">Payment</h3>
+  <mat-card>
+    <ng-container
+      *ngFor="let paymentDetails of paymentControl.controls; let indx = index"
+    >
+      <div class="payment-section1">
+        <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
+          <div fxLayout="column" class="blue-box" fxFlex="100">
+            <span class="light-blue-title">{{ "Pay From" | translate }}</span>
+            <div fxLayout="column">
+              <app-ic-custom-pay-from
+                [control]="paymentDetails.get('debitAccount')"
+                [inputLabel]="'Account No' | translate"
+                bindValueKey="accountNo"
+                bindLabelKey="accountNo"
+                (currencyCodeValue)="payFromCurrencyCode($event)"
+                message="Saving Account | Balance:$20"
+              ></app-ic-custom-pay-from>
+            </div>
+          </div>
+          <div fxLayout="column" class="blue-box" fxFlex="100">
+            <span class="light-blue-title">{{
+              "Credit Card" | translate
+            }}</span>
+            <div fxLayout="row">
+              <app-ic-custom-pay-from
+                [control]="paymentDetails.get('creditAccount')"
+                [inputLabel]="'Card No' | translate"
+                bindValueKey="cardNumber"
+                bindLabelKey="cardNumber"
+                [items]="cardList"
+                (selectionChange)="patchDetails($event)"
+              ></app-ic-custom-pay-from>
+              <div
+                fxLayout="column"
+                fxLayoutAlign="center center"
+                class="label-info m-12"
+              >
+                <span class="label-info">
+                  {{ "Credit card" | translate }} | {{ "Name" | translate }} -
+                  {{ typeofCard }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="payment-section2 m-12" formGroupName="cardFundTransfer">
-    <div class="table-content">
-      <div fxLayout="column" fxFlex="25">
-        <app-ic-radio-button
-          [optiions]="options"
-          [control]="creditPaymentForm.get('amountPaid')"
-          [displayLabel]="'Amount To be paid' | translate"
-          layout="column"
-          radiolayout="column"
-          gap="50px"
-        >
-        </app-ic-radio-button>
+      <div class="payment-section2 m-12" formGroupName="cardFundTransfer">
+        <div class="table-content">
+          <div fxLayout="column" fxFlex="25">
+            <app-ic-radio-button
+              [optiions]="options"
+              [control]="paymentDetails.get('amountPaid')"
+              [displayLabel]="'Amount To be paid' | translate"
+              layout="column"
+              radiolayout="column"
+              gap="50px"
+            >
+            </app-ic-radio-button>
+          </div>
+          <div fxLayout="column" fxLayoutGap="5px">
+            <app-ic-custom-input
+              [readonly]="true"
+              [inputLabel]="'Payment Amount' | translate"
+              [control]="paymentDetails.get('cardFundTransfer.totalDue')"
+            >
+            </app-ic-custom-input>
+            <app-ic-custom-input
+              [readonly]="true"
+              [control]="paymentDetails.get('cardFundTransfer.minimumDue')"
+            >
+            </app-ic-custom-input>
+            <app-ic-custom-input
+              [control]="paymentDetails.get('cardFundTransfer.other')"
+            >
+            </app-ic-custom-input>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="30px" class="mt-12">
+          <app-ic-radio-button
+            [optiions]="autoPay"
+            [control]="paymentDetails.get('cardFundTransfer.autoPay')"
+            [displayLabel]="'Setup for autoPay for this biller' | translate"
+            layout="column"
+          >
+          </app-ic-radio-button>
+          <div fxLayout="column">
+            <mat-label class="ml-20 custom-label">Select Amount</mat-label>
+            <app-searchable-select
+              [items]="selectedAmount"
+              [control]="paymentDetails.get('cardFundTransfer.selectAmount')"
+              bindValueKey="value"
+              bindLabelKey="label"
+            >
+            </app-searchable-select>
+          </div>
+
+          <app-ic-custom-input
+            [inputLabel]="'Enter Maximum AutoPay Amount' | translate"
+            [control]="paymentDetails.get('cardFundTransfer.maxAutopayAmount')"
+          >
+          </app-ic-custom-input>
+        </div>
       </div>
-      <div fxLayout="column" fxLayoutGap="5px">
-        <app-ic-custom-input
-          [readonly]="true"
-          [inputLabel]="'Payment Amount' | translate"
-          [control]="creditPaymentForm.get('cardFundTransfer.totalDue')"
-        >
-        </app-ic-custom-input>
-        <app-ic-custom-input
-          [readonly]="true"
-          [control]="creditPaymentForm.get('cardFundTransfer.minimumDue')"
-        >
-        </app-ic-custom-input>
-        <app-ic-custom-input
-          [control]="creditPaymentForm.get('cardFundTransfer.other')"
-        >
-        </app-ic-custom-input>
-      </div>
+    </ng-container>
+    <div fxLayoutGap="20" fxLayoutAlign="end center">
+      <app-ic-action-button buttonName="Cancel" buttonType="stroked">
+      </app-ic-action-button>
+      <app-ic-action-button
+        buttonName="Proceed"
+        buttonType="filled"
+        (onClick)="proceed()"
+      ></app-ic-action-button>
     </div>
-    <div fxLayout="row" fxLayoutGap="30px" class="mt-12">
-      <app-ic-radio-button
-        [optiions]="autoPay"
-        [control]="creditPaymentForm.get('cardFundTransfer.autoPay')"
-        [displayLabel]="'Setup for autoPay for this biller' | translate"
-        layout="column"
-      >
-      </app-ic-radio-button>
-      <app-searchable-select
-        [items]="selectedAmount"
-        [control]="creditPaymentForm.get('cardFundTransfer.selectAmount')"
-        [inputLabel]="'Select Amount' | translate"
-        bindValueKey="value"
-        bindLabelKey="label"
-      >
-      </app-searchable-select>
-      <app-ic-custom-input
-        [inputLabel]="'Enter Maximum AutoPay Amount' | translate"
-        [control]="creditPaymentForm.get('cardFundTransfer.maxAutopayAmount')"
-      >
-      </app-ic-custom-input>
-    </div>
-  </div>
-  <div fxLayoutGap="20" fxLayoutAlign="end center">
-    <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-    </app-ic-action-button>
-    <app-ic-action-button
-      buttonName="Proceed"
-      buttonType="filled"
-      (onClick)="proceed()"
-    ></app-ic-action-button>
-  </div>
+  </mat-card>
 </div>

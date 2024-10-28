@@ -17,7 +17,7 @@
         <app-searchable-select
           fxFlex="100"
           class="icon_input_wrapper"
-          [control]="repaymentScheduleForm.get('debitAccount')"
+          [control]="repaymentScheduleForm.get('loanAccNo')"
           [items]="loanDetails"
           bindValueKey="cbsAccountNumber"
           bindLabelKey="cbsAccountNumber"
@@ -125,7 +125,7 @@
                     *ngFor="let item of date?.monthly; let j = index"
                   >
                     <div fxFlex="10" class="text-highlighted">
-                      {{ item?.dueDate | date : "shortDate" }}
+                      {{ item?.dueDate | date: "shortDate" }}
                     </div>
 
                     <div fxFlex="10" class="text-highlighted">

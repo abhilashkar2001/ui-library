@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../../card.service";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { AccountList } from "app/shared/models/card.model";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-payment",
@@ -28,13 +29,17 @@ export class PaymentComponent implements OnInit {
   customerInfo: any;
   cardList: AccountList[];
   typeofCard: string;
+  profileInfo: any;
   constructor(
     private fb: FormBuilder,
     private sessionStorage: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
-    private cardService: CardService
-  ) {}
+    private cardService: CardService,
+    private tokenService: TokenStorageService
+  ) {
+    this.profileInfo = this.tokenService.getUser();
+  }
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorage.getCustomerInfo();
@@ -44,29 +49,41 @@ export class PaymentComponent implements OnInit {
 
   buildCreditPaymentForm() {
     this.creditPaymentForm = this.fb.group({
-      source: ["I"],
-      debitAccount: [""],
-      debitAmount: [""],
-      debitCurrency: [""],
-      creditAccount: [this.cardList?.[0]?.cardNumber || ""],
-      creditAmount: [""],
-      creditCurrency: [""],
-      amountPaid: [""],
-      cardFundTransfer: this.fb.group({
-        totalDue: [""],
-        minimumDue: [""],
-        other: [""],
-        autoPay: [""],
-        selectAmount: [""],
-        maxAutopayAmount: [""],
-        cardDetailsId: [1],
-      }),
+      source: ["C"],
+      corpFundDetails: this.fb.array([]),
     });
-    this.patchDetails(this.cardList[0]?.cardNumber);
+    this.getFundDetails();
+  }
+
+  getFundDetails() {
+    this.paymentControl.push(
+      this.fb.group({
+        debitAccount: [""],
+        debitAmount: [""],
+        debitCurrency: [""],
+        creditAccount: [""],
+        creditAmount: [""],
+        creditCurrency: [""],
+        amountPaid: [""],
+        cardFundTransfer: this.fb.group({
+          totalDue: [""],
+          minimumDue: [""],
+          other: [""],
+          autoPay: [""],
+          selectAmount: [""],
+          maxAutopayAmount: [""],
+          cardDetailsId: [""],
+        }),
+      })
+    );
+  }
+
+  get paymentControl(): FormArray {
+    return this.creditPaymentForm.get("corpFundDetails") as FormArray;
   }
 
   payFromCurrencyCode(value) {
-    this.creditPaymentForm.get("debitCurrency").setValue(value);
+    this.paymentControl.get("debitCurrency")?.setValue(value);
   }
 
   patchDetails(event: any) {
@@ -74,52 +91,60 @@ export class PaymentComponent implements OnInit {
     const accountDetails = this.cardList?.find(
       (card) => card?.cardNumber == account
     );
+
     if (accountDetails) {
       this.typeofCard = accountDetails?.typeOfCard;
-      this.creditPaymentForm
+      const currentIndex = 0;
+      const currentDetailGroup = this.paymentControl.at(currentIndex);
+      currentDetailGroup
         .get("cardFundTransfer.totalDue")
-        .setValue(accountDetails?.totalDueAmount);
-      this.creditPaymentForm
+        ?.setValue(accountDetails?.totalDueAmount);
+      currentDetailGroup
         .get("cardFundTransfer.minimumDue")
-        .setValue(accountDetails?.minDueAmount);
+        ?.setValue(accountDetails?.minDueAmount);
+      currentDetailGroup
+        .get("creditAccount")
+        ?.patchValue(accountDetails?.cardNumber);
+      currentDetailGroup
+        .get("creditCurrency")
+        ?.patchValue(accountDetails?.currencyCode);
+      currentDetailGroup
+        .get("cardFundTransfer.cardDetailsId")
+        ?.patchValue(accountDetails?.id);
     }
   }
 
   proceed() {
     const selectedCardNumber =
-      this.creditPaymentForm?.get("creditAccount")?.value;
+      this.creditPaymentForm.get("creditAccount")?.value;
     const accountDetails = this.cardList.find(
-      (card) => card.cardNumber == selectedCardNumber
+      (card) => card.cardNumber === selectedCardNumber
     );
+    if (!accountDetails) {
+      console.error("Account details not found for the selected card number.");
+      return;
+    }
     let payload: any = {
       ...this.creditPaymentForm.value,
-      corporateId: this.customerInfo?.customerId,
+      corporateId: this.profileInfo?.corporateCustomerId,
     };
+    const fundDetails = this.paymentControl.at(0);
+
     let creditPaymentArr = [
       {
         eventType: "mmidTransfer",
         status: "confirm",
-        statusHeader: "Comfirm Details",
+        statusHeader: "Confirm Details",
         masterId: "benificiaryMasterId",
-        statusNews: "Payment sent sucessfully!",
+        statusNews: "Payment sent successfully!",
         summary: [
           {
             header: "Card Controls",
             details: [
-              {
-                "Name on card": this.customerInfo?.customerName,
-              },
-              {
-                "Card Number":
-                  this.creditPaymentForm?.get("creditAccount")?.value,
-              },
-              {
-                "Card Name": accountDetails?.cardName,
-              },
-
-              {
-                "Current Outstanding": accountDetails?.currentOutStaning,
-              },
+              { "Name on card": this.customerInfo?.customerName },
+              { "Card Number": fundDetails.get("creditAccount")?.value },
+              { "Card Name": accountDetails.cardName },
+              { "Current Outstanding": accountDetails.currentOutStaning },
             ],
           },
           {
@@ -129,24 +154,19 @@ export class PaymentComponent implements OnInit {
               {
                 "Account No": this.creditPaymentForm.get("debitAccount")?.value,
               },
+              { "Account Type": this.customerInfo?.accounts[0]?.accountType },
+              { "Payment Amount": fundDetails.get("debitAmount")?.value },
               {
-                "Account Type": this.customerInfo?.accounts[0]?.accountType,
+                "Auto type status": fundDetails.get("cardFundTransfer.autoPay")
+                  ?.value,
               },
               {
-                "Payment Amount": this.customerInfo?.accounts[0]?.accountType,
-              },
-              {
-                "Auto type status": this.creditPaymentForm.get(
-                  "cardFundTransfer.autoPay"
-                )?.value,
-              },
-              {
-                "Selected Amount": this.creditPaymentForm.get(
+                "Selected Amount": fundDetails.get(
                   "cardFundTransfer.selectAmount"
                 )?.value,
               },
               {
-                "Enter Maximum Amount": this.creditPaymentForm.get(
+                "Enter Maximum Amount": fundDetails.get(
                   "cardFundTransfer.maxAutopayAmount"
                 )?.value,
               },
@@ -155,12 +175,14 @@ export class PaymentComponent implements OnInit {
         ],
       },
     ];
+
     this.serviceCallHandler.put(
       "serviceHandler",
       payload,
       creditPaymentArr,
-      (payload) => this.cardService.saveCreditPaymentDetails(payload)
+      (response) => this.cardService.saveCreditPaymentDetails(response)
     );
+
     this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
 }

@@ -1,1 +1,33 @@
-<p>unbilled-transaction works!</p>
+<div fxLayout="column">
+  <div class="creditNumber">
+    <app-searchable-select
+      [inputLabel]="'Credit Card Number' | translate"
+      [items]="creditList"
+      bindValueKey="cardNumber"
+      bindLabelKey="cardNumber"
+      [control]="unbilledForm.get('creditNumber')"
+      (selectionChange)="patchDetails($event)"
+    ></app-searchable-select>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayoutAlign="start center" fxLayoutGap="15">
+      <span class="send-money-title">
+        {{ "Unbilled Transaction" | translate }}
+      </span>
+      <div class="amountSection">
+        <span class="totalAmount">{{ "Total Amount" | translate }}</span>
+        <span class="currency"> INR: </span>
+        <span class="amount"> ₹ 1,40,000 </span>
+      </div>
+    </div>
+    <div class="convert" (click)="goToConvertPage()">
+      {{ "Convert To EMI" | translate }}
+    </div>
+  </div>
+  <div>
+    <app-reusable-table
+      [columnNames]="unbilledHeader"
+      [data]="unbilledValues"
+    ></app-reusable-table>
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
 import { CardService } from "app/modules/net-banking/modules/card/card.service";
 import { CardModel } from "app/shared/models/card.model";
+import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
   selector: "app-recent-transaction",
@@ -31,6 +32,8 @@ export class RecentTransactionComponent implements OnInit {
   recentTransTabs;
   @Input("recentTransCols") recentTransCols;
   @Input("recentTransData") recentTransData;
+  @Input("event") event;
+  @Input("cardInfo") cardInfo;
   selectedRecentTab: any;
   searchValue: FormControl = new FormControl("");
   selectedDate: FormControl = new FormControl("");
@@ -47,14 +50,21 @@ export class RecentTransactionComponent implements OnInit {
   toDate: string;
   createdDate: string;
   cardList: CardModel[];
+  profileInfo: any;
+  page: any;
+  recentTransMetaData: any;
+  pageSize: any;
+
   constructor(
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenStorageService
   ) {
+    this.profileInfo = this.tokenService.getUser();
     this.matIconRegistry.addSvgIcon(
       "search-icon",
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -91,13 +101,19 @@ export class RecentTransactionComponent implements OnInit {
         this.selectedAcc = changes.selectedAcc.currentValue;
       }
     }
+    if (this.event == "Credit Card") {
+      this.fetchRecentTransactionCreditCards();
+    } else if (this.event == "Debit Card") {
+      this.fetchRecentTransactionDebitCards();
+    } else {
+      this.fetRecntTransaction();
+    }
   }
 
   ngOnInit(): void {
     this.cardList = this.sessionStorageService.getListOfCards();
     if (this.recentTransTabs?.length > 0)
       this.selectedRecentTab = this.recentTransTabs[0];
-    this.fetRecntTransaction();
   }
 
   changeRecentTransTabs(i) {
@@ -110,14 +126,20 @@ export class RecentTransactionComponent implements OnInit {
   }
   recentTransTabChange(event) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
-    if (event == "Account") this.fetRecntTransaction();
-    else if (event == "MMID") this.fetRecntTransactionScreenWise("MMID");
-    else if (event == "Abroad")
+    if (event == "Account") {
+      this.fetRecntTransaction("Account");
+    } else if (event == "MMID") {
+      this.fetRecntTransactionScreenWise("MMID");
+    } else if (event == "Abroad") {
       this.fetRecntTransactionScreenWise("Send Money Abroad");
-    else this.recentTransData = [];
+    } else if (event === "Credit Card") {
+      this.fetchRecentTransactionCreditCards();
+    } else if (event === "Debit Card") {
+      this.fetchRecentTransactionDebitCards();
+    } else this.recentTransData = [];
   }
 
-  createpayload() {
+  createpayload(event?) {
     let payload: any;
     if (this.selectedDate.value == "DATERANGE") {
       payload = {
@@ -133,28 +155,59 @@ export class RecentTransactionComponent implements OnInit {
     }
     return payload;
   }
-  fetRecntTransaction() {
+  fetRecntTransaction(event?) {
     let customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
-    console.log(this.createpayload());
-    if (this.cardList?.[0]?.cardNumber)
-      this.cardService
-        .fetchAllRecentTransaction(
-          customer.customerId,
-          this.cardList?.[0]?.cardNumber,
-          this.createpayload()
-        )
-        .subscribe((resp: any) => {
-          if (resp?.statusCode == 200) {
-            this.recentTransData = resp?.data;
-            this.recentTransData.forEach((element) => {
-              element.action = "Repay";
-              const date = new Date(element.created);
-              const formattedDate = date.toISOString().split("T")[0];
-              element.created = formattedDate;
-            });
-          }
-        });
+
+    this.page = event?.value?.page;
+    this.pageSize = event?.value?.pageSize;
+
+    this.cardService
+      .fetchAllRecentTransaction(customer.customerId, this.createpayload(event))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          this.recentTransData = resp?.data;
+          this.recentTransData.forEach((element) => {
+            element.action = "Repay";
+            const date = new Date(element.created);
+            const formattedDate = date.toISOString().split("T")[0];
+            element.created = formattedDate;
+          });
+
+          this.recentTransMetaData = resp?.meta || {
+            page: this.page,
+            size: this.pageSize,
+            totalElements: resp?.data?.length,
+          };
+        }
+      });
+  }
+
+  fetchRecentTransactionCreditCards() {
+    let customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.recentTransData = [];
+    this.cardService
+      .fetchCreditCardRecentTransaction(
+        customerInfo?.customerId,
+        this.cardInfo?.cardNumber,
+        "Credit Card"
+      )
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          this.recentTransData = resp?.data;
+        }
+      });
+  }
+
+  fetchRecentTransactionDebitCards() {
+    this.recentTransData = [];
+    this.cardService
+      .fetchDebitCardRecentTransaction(this.cardInfo?.cardNumber, "Debit Card")
+      .subscribe((resp: any) => {
+        if (resp?.statusCode == 200) {
+          this.recentTransData = resp?.data;
+        }
+      });
   }
 
   fetRecntTransactionScreenWise(screen) {
@@ -209,6 +262,8 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   gotoBillTransaction() {
-    this.router.navigate(["/card/credit-card/service/unbilled-transaction"]);
+    this.router.navigate([
+      "/user/card/credit-card/service/unbilled-transaction",
+    ]);
   }
 }

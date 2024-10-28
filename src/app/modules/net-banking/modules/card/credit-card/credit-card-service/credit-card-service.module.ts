@@ -14,8 +14,6 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { BillingCycleComponent } from "./components/billing-cycle/billing-cycle.component";
 import { EStatementComponent } from "./components/e-statement/e-statement.component";
-import { PinGenerationComponent } from "./components/pin-generation/pin-generation.component";
-import { BlockCardComponent } from "./components/block-card/block-card.component";
 import { ChangePinComponent } from "./components/change-pin/change-pin.component";
 import { CardEmiDetailsComponent } from "./components/card-emi-details/card-emi-details.component";
 import { PreGeneratedStatementComponent } from "./components/pre-generated-statement/pre-generated-statement.component";
@@ -23,7 +21,6 @@ import { InstantLoanComponent } from "./components/instant-loan/instant-loan.com
 import { AlertSubscriptionComponent } from "./components/alert-subscription/alert-subscription.component";
 import { UnbilledTransactionComponent } from "./components/unbilled-transaction/unbilled-transaction.component";
 import { AddOnCardComponent } from "./components/add-on-card/add-on-card.component";
-import { UpgradeComponent } from "./components/upgrade/upgrade.component";
 import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
 import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
 
@@ -35,8 +32,6 @@ import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi
     AutoPayComponent,
     BillingCycleComponent,
     EStatementComponent,
-    PinGenerationComponent,
-    BlockCardComponent,
     ChangePinComponent,
     CardEmiDetailsComponent,
     PreGeneratedStatementComponent,
@@ -44,7 +39,6 @@ import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi
     AlertSubscriptionComponent,
     UnbilledTransactionComponent,
     AddOnCardComponent,
-    UpgradeComponent,
     CalculateEmiComponent,
   ],
   imports: [

@@ -40,7 +40,7 @@ export class IcCustomPayFromComponent implements OnInit {
     let listAccounts = this.sessionStorageService.getListOfAccounts();
     this.items = listAccounts || [];
     this.control?.setValue(this.sessionStorageService.getSelectedAccountNo());
-    this.fetchBalance(this.control.value);
+    this.fetchBalance(this.control?.value);
   }
 
   fetchBalance(event) {

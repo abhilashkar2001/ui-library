@@ -1,0 +1,48 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <div fxFlex="75" class="custom_component_top">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <div fxFlex="40">
+        <app-dashboard-card-preview
+          title="Prepaid Card"
+          [cardList]="cardSummaryDetails"
+          (selectedCard)="getDashboardCardDetails($event)"
+        ></app-dashboard-card-preview>
+      </div>
+      <div fxFlex="60">
+        <app-dashboard-card-details
+          title="Prepaid Card"
+          [cardInfo]="displayCard"
+          [detailsItem]="detailsItem"
+        ></app-dashboard-card-details>
+      </div>
+    </div>
+
+    <mat-card class="default-card my-0 mb-12 py-8">
+      <app-transaction-card
+        [transactionList]="quickLinkItems"
+      ></app-transaction-card>
+    </mat-card>
+
+    <div>
+      <app-recent-transaction
+        [recentTransTabs]="recentTransTabs"
+        [recentTransCols]="recentTransCols"
+        [recentTransData]="recentTransData"
+        [event]="'Card'"
+      ></app-recent-transaction>
+    </div>
+  </div>
+
+  <div fxFlex="25" class="custom_component_top bg-white">
+    <div>
+      <app-swiper-card></app-swiper-card>
+    </div>
+
+    <!-- <div>
+      <app-dashboard-card-list
+        [title]="'Inactive Card'"
+        [cardList]="staticCardList"
+      ></app-dashboard-card-list>
+    </div> -->
+  </div>
+</div>

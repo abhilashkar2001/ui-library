@@ -31,7 +31,7 @@
           [buttonName]="'Download' | translate"
           buttonType="stroked"
           (click)="download()"
-          matIcon="ib-download"
+          matIcon="blue-download"
         ></app-ic-action-button>
       </div>
     </div>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <table class="fetch-table" *ngIf="fetchStatement">
+    <table class="fetch-table w-100" *ngIf="fetchStatement">
       <thead>
         <ng-container *ngIf="fetchedData">
           <tr class="statementHead">
@@ -79,7 +79,7 @@
         <tr *ngFor="let data of fetchedData">
           <td *ngFor="let item of viewStatementHeadingsArr">
             <span *ngIf="item?.headerDef.includes('Date'); else showData">
-              {{ data[item?.headerDef] | date : "shortDate" }}</span
+              {{ data[item?.headerDef] | date: "shortDate" }}</span
             >
             <ng-template #showData>{{ data[item?.headerDef] }}</ng-template>
           </td>

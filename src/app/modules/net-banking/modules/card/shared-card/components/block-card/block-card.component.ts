@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { AccountList } from "app/shared/models/card.model";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
-import { CardService } from "../../../../card.service";
+import { CardService } from "../../../card.service";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-block-card",
@@ -24,10 +25,10 @@ export class BlockCardComponent implements OnInit {
   typeofCard: string;
   currencyCode: string;
   profileInfo: any;
-  customerInfo: any;
   communicationAddress: any;
   permanentAddress: string;
   accountDetails: AccountList;
+  title: string;
 
   constructor(
     private fb: FormBuilder,
@@ -38,12 +39,16 @@ export class BlockCardComponent implements OnInit {
     private router: Router
   ) {
     this.profileInfo = this.tokenService.getUser();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.updateItemsBasedOnUrl(event.url);
+      });
   }
 
   ngOnInit(): void {
     this.currencyCode = this.profileInfo?.branchCrncyCode;
     this.cardList = this.sessionStorageService.getListOfCards();
-    this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.buildBlockCard();
   }
   buildBlockCard() {
@@ -56,6 +61,20 @@ export class BlockCardComponent implements OnInit {
       address: [""],
       reIssueToggle: [""],
     });
+  }
+
+  /**
+   * update Items Based on url
+   * @param url -url of the activated route
+   */
+  private updateItemsBasedOnUrl(url: string) {
+    if (url.includes("/credit-card")) {
+      this.title = "Credit Card";
+    } else if (url.includes("/debit-card")) {
+      this.title = "Debit Card";
+    }else if (url.includes("/prepaid-card")) {
+      this.title = "Prepaid Card";
+    }
   }
 
   patchDetails(event: any) {
@@ -84,7 +103,7 @@ export class BlockCardComponent implements OnInit {
 
   fetchAddressDetails() {
     this.creditCardService
-      .fetchbycustomerId(this.customerInfo?.customerId)
+      .fetchbycustomerId(this.profileInfo?.corporateCustomerId)
       .subscribe((res) => {
         if (res?.data?.[0]?.contact?.address?.length === 1) {
           this.communicationAddress = this.communicationAddress =
@@ -181,6 +200,6 @@ export class BlockCardComponent implements OnInit {
         this.creditCardService.saveBlockPayCreditPaymentDetails(payload)
       // Service call completion callback
     );
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
 }

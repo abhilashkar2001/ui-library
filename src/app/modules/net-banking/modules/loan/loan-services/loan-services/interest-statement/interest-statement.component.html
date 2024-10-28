@@ -77,7 +77,7 @@
         {{ "View Request Certificate" | translate }}
       </h2>
     </div>
-    <table class="fetch-table" *ngIf="fetchStatement">
+    <table class="fetch-table w-100" *ngIf="fetchStatement">
       <thead>
         <tr class="statementHead">
           <th *ngFor="let head of interestStatementheadings">{{ head }}</th>
@@ -85,12 +85,17 @@
       </thead>
       <tbody>
         <ng-container *ngIf="interestStatement">
-          <tr *ngFor="let card of interestStatement?.schedules">
+          <tr>
             <td>{{ interestStatement?.accountNo }}</td>
-            <td>{{ card?.dueDate }}</td>
-            <td>{{ card?.settledAmount }}</td>
-            <td>{{ card?.dueAmount }}</td>
-            <td class="actionBtn" fxLayoutGap="16px">
+            <td>{{ card?.schedules?.dueDate }}</td>
+            <td>{{ card?.schedules?.settledAmount }}</td>
+            <td>{{ card?.schedules?.dueAmount }}</td>
+            <td
+              class="actionBtn"
+              fxLayout="row"
+              fxLayoutAlign="center"
+              fxLayoutGap="16px"
+            >
               <app-ic-action-button
                 [buttonName]="'share' | translate"
                 buttonType="stroked"

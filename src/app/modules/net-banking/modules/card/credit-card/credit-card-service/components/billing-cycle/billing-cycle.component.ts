@@ -44,8 +44,8 @@ export class BillingCycleComponent implements OnInit {
   buildFormGroup() {
     this.billingCycleForm = this.formBuilder.group({
       source: ["I"],
-      customerId: [""],
-      cardNo: [this.cardList?.[0]?.cardNumber || ""],
+      corporateId: [this.profileInfo?.corporateCustomerId],
+      cardNo: [""],
       creditAmount: [""],
       creditCurrency: [""],
       requestDate: [""],
@@ -60,6 +60,31 @@ export class BillingCycleComponent implements OnInit {
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
+      this.billingCycleForm
+        ?.get("cardNo")
+        .patchValue(this.accountDetails?.cardNumber);
+      const dueDate = this.accountDetails?.dueDate;
+      if (dueDate) {
+        const dateObj = new Date(dueDate); // Parse the due date
+        const day = dateObj.getDate(); // Get the day of the month
+        const formattedDay = this.getOrdinalSuffix(day) + " Each Month"; // Add ordinal suffix
+
+        this.billingCycleForm?.get("billingCycleDate").patchValue(formattedDay);
+      }
+    }
+  }
+
+  getOrdinalSuffix(day: number): string {
+    if (day > 3 && day < 21) return day + "th"; // For 11th, 12th, 13th, etc.
+    switch (day % 10) {
+      case 1:
+        return day + "st";
+      case 2:
+        return day + "nd";
+      case 3:
+        return day + "rd";
+      default:
+        return day + "th";
     }
   }
 
@@ -108,6 +133,6 @@ export class BillingCycleComponent implements OnInit {
         this.cardService.saveBillingCycleCreditPaymentDetails(payload)
       // Service call completion callback
     );
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
 }
