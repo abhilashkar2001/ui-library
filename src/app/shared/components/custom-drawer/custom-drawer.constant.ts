@@ -339,12 +339,12 @@ export class DrawerConstant {
           children: [
             {
               name: "Card Control",
-              path: "/card/credit-card/manage-card/card-control",
+              path: "/card/debit-card/manage-card/card-control",
               roleName: "child-node",
             },
             {
               name: "Usage Limit",
-              path: "/card/credit-card/manage-card/card-usage",
+              path: "/card/debit-card/manage-card/card-usage",
               roleName: "child-node",
             },
           ],

@@ -34,10 +34,11 @@ export class DebitCardStore {
       selectedIcon: "selected-upgrade-icon",
     },
   ];
-  static readonly manageCardTabs: TabModel[] = [
+
+  static readonly manageDebitCardTabs: TabModel[] = [
     {
       screenName: "Card Control",
-      route: "/user/card/credit-card/manage-card/card-control",
+      route: "/user/card/debit-card/manage-card/card-control",
       src: "assets/images/card-control-icon.svg",
       selectedSrc: "assets/images/selected-card-control-icon.svg",
       icon: "card-control-icon",
@@ -45,7 +46,7 @@ export class DebitCardStore {
     },
     {
       screenName: "Usage Limit",
-      route: "/user/card/credit-card/manage-card/card-usage",
+      route: "/user/card/debit-card/manage-card/card-usage",
       src: "assets/images/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/selected-usage-limit-icon.svg",
       icon: "selected-usage-limit-icon",
@@ -113,7 +114,7 @@ export class DebitCardStore {
     },
     {
       screenName: "Manage Card",
-      childTab: this.manageCardTabs,
+      childTab: this.manageDebitCardTabs,
     },
   ];
 
