@@ -140,8 +140,7 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
         operationType: "Schedule_Payment",
         status: "confirm",
         masterId: "retailFundTransferMasterId",
-        statusHeader: "Comfirm Payment",
-        statusNews: "Payment Scheduled!",
+        statusHeader: "Confirm Details",
         summary: [
           {
             header: "Card Detail",
@@ -162,18 +161,18 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
           {
             header: "International Limits",
             details: [
-              { "ATM Withdraw": this.internaltionLimitForm?.get("atmWithdrawal")?.value == true ?'Yes':'No' },
+              { "ATM Withdraw": this.internaltionLimitForm?.get("atmRequired")?.value == true ?'Yes':'No' },
               {
-                "ATM Withdraw Limit": this.internaltionLimitForm?.get("atmWithdrawal")?.value
+                "ATM Withdraw Limit": this.internaltionLimitForm?.get("atmWithdraw")?.value
               },
-              { "Merchant Outlets": this.internaltionLimitForm?.get("atmWithdrawal")?.value == true ?'Yes':'No' } ,
+              { "Merchant Outlets": this.internaltionLimitForm?.get("merchantRequired")?.value == true ?'Yes':'No' } ,
               { "Merchant Outlets Limit": this.internaltionLimitForm?.get("maxOnlineAmount")?.value},
 
               { "Online Transaction":this.internaltionLimitForm?.get("onlineRequired")?.value == true ?'Yes':'No' } ,
               {
                 "Online Transaction Limit": this.internaltionLimitForm?.get("onlineTransaction")?.value
               },
-              { "Online Transaction":this.internaltionLimitForm?.get("tapRequired")?.value == true ?'Yes':'No' },
+              { "Tap & Pay Transaction": this.internaltionLimitForm?.get("tapRequired")?.value == true ?'Yes':'No' },
               { "Tap & Pay Transaction Limit": this.internaltionLimitForm?.get("tapPayTransaction")?.value }
             ]
           }

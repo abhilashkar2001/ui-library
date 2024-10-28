@@ -136,10 +136,10 @@ export class CreditCardUsageLimitComponent implements OnInit {
     let creditPaymentArr = [
       {
         eventType: "mmidTransfer",
+        operationType: "Schedule_Payment",
         status: "confirm",
-        statusHeader: "Comfirm Details",
-        masterId: "benificiaryMasterId",
-        statusNews: "Payment sent sucessfully!",
+        masterId: "retailFundTransferMasterId",
+        statusHeader: "Confirm Details",
         summary: [
           {
             header: "Card Detail",
@@ -160,18 +160,18 @@ export class CreditCardUsageLimitComponent implements OnInit {
           {
             header: "Domestic Limits",
             details: [
-              { "ATM Withdraw": this.limitForm?.get("atmWithdrawal")?.value == true ?'Yes':'No' },
+              { "ATM Withdraw": this.limitForm?.get("atmRequired")?.value == true ?'Yes':'No' },
               {
-                "ATM Withdraw Limit": this.limitForm?.get("atmWithdrawal")?.value
+                "ATM Withdraw Limit": this.limitForm?.get("atmWithdraw")?.value
               },
-              { "Merchant Outlets": this.limitForm?.get("atmWithdrawal")?.value == true ?'Yes':'No' } ,
+              { "Merchant Outlets": this.limitForm?.get("merchantRequired")?.value == true ?'Yes':'No' } ,
               { "Merchant Outlets Limit": this.limitForm?.get("maxOnlineAmount")?.value},
 
               { "Online Transaction":this.limitForm?.get("onlineRequired")?.value == true ?'Yes':'No' } ,
               {
                 "Online Transaction Limit": this.limitForm?.get("onlineTransaction")?.value
               },
-              { "Online Transaction":this.limitForm?.get("tapRequired")?.value == true ?'Yes':'No' },
+              { "Tap & Pay Transaction": this.limitForm?.get("tapRequired")?.value == true ?'Yes':'No' },
               { "Tap & Pay Transaction Limit": this.limitForm?.get("tapPayTransaction")?.value }
             ]
           }
