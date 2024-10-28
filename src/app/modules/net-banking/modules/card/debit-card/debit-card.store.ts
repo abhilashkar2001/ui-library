@@ -10,7 +10,7 @@ export class DebitCardStore {
   static readonly serviceTabs: TabModel[] = [
     {
       screenName: "PIN Generation",
-      route: "/user/card/credit-card/service/pin-generation",
+      route: "/user/card/debit-card/service/pin-generation",
       src: "assets/images/pin-generation-blue.svg",
       selectedSrc: "assets/images/pin-generation-white.svg",
       icon: "pin-gen-icon",
@@ -18,7 +18,7 @@ export class DebitCardStore {
     },
     {
       screenName: "Block Card",
-      route: "/user/card/credit-card/service/block-card",
+      route: "/user/card/debit-card/service/block-card",
       src: "assets/images/block-card-blue.svg",
       selectedSrc: "assets/images/block-card-white.svg",
       icon: "block-card-icon",
@@ -27,7 +27,7 @@ export class DebitCardStore {
 
     {
       screenName: "Upgrade",
-      route: "/user/card/credit-card/service/upgrade",
+      route: "/user/card/debit-card/service/upgrade",
       src: "assets/images/upgrade-white.svg",
       selectedSrc: "assets/images/upgrade-blue.svg",
       icon: "upgrade-icon",
@@ -133,6 +133,7 @@ export class DebitCardStore {
     "Add On Card",
     "Upgrade",
   ];
+  static readonly DebitLinks = ["Block Card", "PIN Generation", "Upgrade"];
   static readonly ManageLinks = ["Card Control", "Usage Limit"];
 
   static readonly unbilledHeader = [

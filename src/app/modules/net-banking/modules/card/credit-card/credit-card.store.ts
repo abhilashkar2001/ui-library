@@ -1,13 +1,13 @@
 import {
   Cards,
   CardTransactionModel,
-  HeaderModel
+  HeaderModel,
 } from "app/shared/models/card.model";
 import { TableHeader } from "../../dashboard/modules/cheque-book/cheque.store";
 import { QuickLinkTabModel, TabModel } from "app/shared/models/tab-model";
 import {
   ChartHeaderModel,
-  tabScreenModel
+  tabScreenModel,
 } from "app/shared/models/card-chart.model";
 
 export class CreditCardStore {
@@ -26,7 +26,7 @@ export class CreditCardStore {
       src: "assets/images/card-payment-blue.svg",
       selectedSrc: "assets/images/card-payment-white.svg",
       icon: "card-payment-blue",
-      selectedIcon: "card-payment-white"
+      selectedIcon: "card-payment-white",
     },
     {
       screenName: "Convert to EMI",
@@ -34,7 +34,7 @@ export class CreditCardStore {
       src: "assets/images/net-banking/loans/loan-repayment.svg",
       selectedSrc: "assets/images/selected-quick-transfer.svg",
       icon: "loan_repayment",
-      selectedIcon: "selected-payment-icon"
+      selectedIcon: "selected-payment-icon",
     },
     // {
     //   screenName: "Card Summary",
@@ -50,7 +50,7 @@ export class CreditCardStore {
       src: "assets/images/auto-debit-blue.svg",
       selectedSrc: "assets/images/auto-debit-white.svg",
       icon: "autopay-icon",
-      selectedIcon: "selected-autopay-icon"
+      selectedIcon: "selected-autopay-icon",
     },
     {
       screenName: "Billing Cycle",
@@ -58,7 +58,7 @@ export class CreditCardStore {
       src: "assets/images/billing-cycle-blue.svg",
       selectedSrc: "assets/images/billing-cycle-white.svg",
       icon: "bill-cycle-icon",
-      selectedIcon: "selected-bill-cycle-icon"
+      selectedIcon: "selected-bill-cycle-icon",
     },
     {
       screenName: "E Statement",
@@ -66,7 +66,7 @@ export class CreditCardStore {
       src: "assets/images/e-statment-blue.svg",
       selectedSrc: "assets/images/e-statment-white.svg",
       icon: "bill-cycle-icon",
-      selectedIcon: "selected-bill-cycle-icon"
+      selectedIcon: "selected-bill-cycle-icon",
     },
     {
       screenName: "PIN Generation",
@@ -74,7 +74,7 @@ export class CreditCardStore {
       src: "assets/images/pin-generation-blue.svg",
       selectedSrc: "assets/images/pin-generation-white.svg",
       icon: "pin-gen-icon",
-      selectedIcon: "selected-pin-gen-icon"
+      selectedIcon: "selected-pin-gen-icon",
     },
     {
       screenName: "Block Card",
@@ -82,7 +82,7 @@ export class CreditCardStore {
       src: "assets/images/block-card-blue.svg",
       selectedSrc: "assets/images/block-card-white.svg",
       icon: "block-card-icon",
-      selectedIcon: "selected-block-card-icon"
+      selectedIcon: "selected-block-card-icon",
     },
     // {
     //   screenName: "Change PIN",
@@ -99,7 +99,7 @@ export class CreditCardStore {
       src: "assets/images/emi-details-blue.svg",
       selectedSrc: "assets/images/emi-details-white.svg",
       icon: "emi-details-icon",
-      selectedIcon: "selected-emi-details-icon"
+      selectedIcon: "selected-emi-details-icon",
     },
     {
       screenName: "Insta Loan",
@@ -107,7 +107,7 @@ export class CreditCardStore {
       src: "assets/images/insta-loan-blue.svg",
       selectedSrc: "assets/images/insta-loan-white.svg",
       icon: "insta-loan-icon",
-      selectedIcon: "selected-insta-loan-icon"
+      selectedIcon: "selected-insta-loan-icon",
     },
     {
       screenName: "Alert Subscription",
@@ -115,7 +115,7 @@ export class CreditCardStore {
       src: "assets/images/alert-sub-blue.svg",
       selectedSrc: "assets/images/alert-sub-white.svg",
       icon: "alert-subsc-icon",
-      selectedIcon: "selected-alert-subsc-icon"
+      selectedIcon: "selected-alert-subsc-icon",
     },
     {
       screenName: "Unbilled Transaction",
@@ -123,7 +123,7 @@ export class CreditCardStore {
       src: "assets/images/unbilled-transcation-blue.svg",
       selectedSrc: "assets/images/unbilled-transcation-white.svg",
       icon: "unbill-trans-icon",
-      selectedIcon: "selected-unbill-trans-icon"
+      selectedIcon: "selected-unbill-trans-icon",
     },
     {
       screenName: "Add On Card",
@@ -131,7 +131,7 @@ export class CreditCardStore {
       src: "assets/images/addcard-blue.svg",
       selectedSrc: "assets/images/addcard-white.svg",
       icon: "add-card-icon",
-      selectedIcon: "selected-add-card-icon"
+      selectedIcon: "selected-add-card-icon",
     },
     {
       screenName: "Upgrade",
@@ -139,16 +139,16 @@ export class CreditCardStore {
       src: "assets/images/upgrade-white.svg",
       selectedSrc: "assets/images/upgrade-blue.svg",
       icon: "upgrade-icon",
-      selectedIcon: "selected-upgrade-icon"
+      selectedIcon: "selected-upgrade-icon",
     },
-    {
-      screenName: "Pre Generated Statement",
-      route: "/user/card/credit-card/service/pre-generated-statement",
-      src: "assets/images/pre-generated-blue.svg",
-      selectedSrc: "assets/images/pre-generated-white.svg",
-      icon: "payment-icon",
-      selectedIcon: "selected-payment-icon"
-    }
+    // {
+    //   screenName: "Pre Generated Statement",
+    //   route: "/user/card/credit-card/service/pre-generated-statement",
+    //   src: "assets/images/pre-generated-blue.svg",
+    //   selectedSrc: "assets/images/pre-generated-white.svg",
+    //   icon: "payment-icon",
+    //   selectedIcon: "selected-payment-icon",
+    // },
   ];
   static readonly manageCardTabs: TabModel[] = [
     {
@@ -157,7 +157,7 @@ export class CreditCardStore {
       src: "assets/images/card-control-icon.svg",
       selectedSrc: "assets/images/selected-card-control-icon.svg",
       icon: "card-control-icon",
-      selectedIcon: "selected-card-control-icon"
+      selectedIcon: "selected-card-control-icon",
     },
     {
       screenName: "Usage Limit",
@@ -165,8 +165,8 @@ export class CreditCardStore {
       src: "assets/images/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/selected-usage-limit-icon.svg",
       icon: "selected-usage-limit-icon",
-      selectedIcon: "selected-usage-limit-icon"
-    }
+      selectedIcon: "selected-usage-limit-icon",
+    },
   ];
 
   static readonly applyTabs: TabModel[] = [
@@ -177,7 +177,7 @@ export class CreditCardStore {
       selectedSrc:
         "assets/images/svg/card-icons/selected-card-control-icon.svg",
       icon: "card-control-icon",
-      selectedIcon: "selected-card-control-icon"
+      selectedIcon: "selected-card-control-icon",
     },
     {
       screenName: "Tracking",
@@ -185,8 +185,8 @@ export class CreditCardStore {
       src: "assets/images/svg/card-icons/selected-usage-limit-icon.svg",
       selectedSrc: "assets/images/svg/card-icons/selected-usage-limit-icon.svg",
       icon: "usage-limit-icon",
-      selectedIcon: "selected-usage-limit-icon"
-    }
+      selectedIcon: "selected-usage-limit-icon",
+    },
   ];
   static readonly cardList: Cards = [
     {
@@ -216,12 +216,20 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
-      cardType: "Credit Card"
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
-      cardName: "Moneyback Plus Visa",
-      expiryDate: "4689 **** **** 6321 ",
-      cardNumber: "10 Apr 2021",
+      cardName: "Sapphiro Credit Card",
+      expiryDate: "4689 **** **** 6386 ",
+      cardNumber: "5 Apr 20231",
       fileUrl: "assets/images/credit-card-green.png",
       cashLimit: "₹ 1,43,103",
       statementDate: "20 Apr 2024",
@@ -245,7 +253,51 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
-      cardType: "Credit Card"
+      cardType: "Credit Card",
+      joiningFee: 699,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
+    },
+    {
+      cardName: "Moneyback Plus Visa",
+      expiryDate: "4689 **** **** 6327",
+      cardNumber: "4th Apr 20228",
+      fileUrl: "assets/images/credit-card-red.png",
+      cashLimit: "₹ 1,43,103",
+      statementDate: "20 Apr 2024",
+      lastPaymentDate: "09 Apr 20240",
+      totalCreditLimit: "₹ 8,00,000",
+      totalDueAmount: "",
+      accountCurrency: "",
+      rewardPoint: 0,
+      dueDate: 0,
+      cardStatus: "",
+      id: 0,
+      bankName: "",
+      customerName: "",
+      validDate: "",
+      typeOfCard: "",
+      autoPay: false,
+      currentOutStaning: 0,
+      avlCreditBalance: 0,
+      lastStlmtMade: 0,
+      accountNumber: "",
+      customerId: 0,
+      status: "Active",
+      cvv: 123,
+      joiningFee: 999,
+      annualFee: 399,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -274,7 +326,15 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
-      cardType: "Credit Card"
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
     },
     {
       cardName: "Moneyback Plus Visa",
@@ -303,57 +363,65 @@ export class CreditCardStore {
       customerId: 0,
       status: "Active",
       cvv: 876,
-      cardType: "Credit Card"
-    }
+      cardType: "Credit Card",
+      joiningFee: 999,
+      annualFee: 499,
+      benefits: [
+        "Tata CliQ voucher worth ₹ 3,000",
+        "EaseMyTrip vouchers worth ₹ 4,000 (Four vouchers worth ₹ 1,000 each)",
+        "Uber vouchers worth ₹ 1,000 (Four vouchers worth ₹ 250 each)",
+        "Croma voucher worth ₹ 1,500",
+      ],
+    },
   ];
   static readonly detailsItem: HeaderModel[] = [
     {
       key: "currentOutStaning",
       label: "Current Outstanding",
-      actionItem: () => "Convert to EMI"
+      actionItem: () => "Convert to EMI",
     },
     {
       key: "avlCreditBalance",
       label: "Available Credit Limit",
       actionKey: "cashLimit",
-      actionItem: (cashLimit: string) => `* Includes Cash limit ${cashLimit}`
+      actionItem: (cashLimit: string) => `* Includes Cash limit ${cashLimit}`,
     },
     {
       key: "totalCreditLimit",
       label: "Total Credit Limit",
-      actionItem: () => "Increase"
+      actionItem: () => "Increase",
     },
     {
       key: "statementDate",
-      label: "Statement Date"
+      label: "Statement Date",
     },
     {
       key: "lastStlmtMade",
-      label: "Last Statement Made"
+      label: "Last Statement Made",
     },
     {
       key: "lastPaymentDate",
-      label: "Last Payment Date"
-    }
+      label: "Last Payment Date",
+    },
   ];
   static readonly recentTransTabs: string[] = ["Unbilled Transaction"];
   static readonly recentTransColumn: TableHeader[] = [
     {
       headerDef: "cbsRefNo",
-      headerCell: "Ref Number"
+      headerCell: "Ref Number",
     },
     {
       headerDef: "transferType",
-      headerCell: "Details"
+      headerCell: "Details",
     },
     {
       headerDef: "debitAmount",
-      headerCell: "Amount"
+      headerCell: "Amount",
     },
     {
       headerDef: "created",
-      headerCell: "Transaction Date"
-    }
+      headerCell: "Transaction Date",
+    },
   ];
 
   static readonly recentTransData: CardTransactionModel[] = [
@@ -363,7 +431,7 @@ export class CreditCardStore {
       details: "UPI CC-24042024-411504615701",
       amount: "- ₹ 20,900",
       points: 60,
-      transactionDate: "10 Apr 2023"
+      transactionDate: "10 Apr 2023",
     },
     {
       date: "28 Apr",
@@ -371,22 +439,22 @@ export class CreditCardStore {
       details: "UPI CC-24042024-411504615701",
       amount: "- ₹ 10,500",
       points: 30,
-      transactionDate: "10 Apr 2024"
-    }
+      transactionDate: "10 Apr 2024",
+    },
   ];
   static readonly quickLinks: QuickLinkTabModel[] = [
     {
       screenName: "Service",
-      childTab: this.serviceTabs
+      childTab: this.serviceTabs,
     },
     {
       screenName: "Manage Card",
-      childTab: this.manageCardTabs
+      childTab: this.manageCardTabs,
     },
     {
       screenName: "Apply",
-      childTab: this.applyTabs
-    }
+      childTab: this.applyTabs,
+    },
   ];
   static readonly externalLinks = [
     "Invesments",
@@ -396,7 +464,7 @@ export class CreditCardStore {
     "Mobile Banking",
     "Corporate Banking",
     "Create Account",
-    "Help & Support"
+    "Help & Support",
   ];
   static readonly Links = [
     "Payment",
@@ -412,137 +480,146 @@ export class CreditCardStore {
     "Instant Loan",
     "Alert Subscription",
     "Add On Card",
-    "Upgrade"
+    "Upgrade",
   ];
   static readonly ManageLinks = ["Card Control", "Usage Limit"];
 
   static readonly billCycleList = [
     { value: 1, label: "1st  each month" },
     { value: 2, label: "2nd  each month" },
-    { value: 3, label: "3rd  each month" }
+    { value: 3, label: "3rd  each month" },
+    { value: 5, label: "5th  each month" },
+    { value: 10, label: "10th  each month" },
+    { value: 12, label: "12th  each month" },
+    { value: 15, label: "15th  each month" },
+    { value: 18, label: "18th  each month" },
+    { value: 21, label: "21st  each month" },
+    { value: 23, label: "23rd  each month" },
+    { value: 25, label: "25th  each month" },
+    { value: 26, label: "26th  each month" },
   ];
   static readonly alertData: HeaderModel[] = [
     {
       key: "customerName",
-      label: "Name on Card"
+      label: "Name on Card",
     },
     {
       key: "mobile",
-      label: "Mobile Number"
+      label: "Mobile Number",
     },
     {
       key: "email",
-      label: "Email Id"
-    }
+      label: "Email Id",
+    },
   ];
   static readonly relationShipDetail = [
     { value: "Monther", label: "Mother" },
     { value: "Father", label: "Father" },
     { value: "Brother", label: "Brother" },
-    { value: "Sister", label: "Sister" }
+    { value: "Sister", label: "Sister" },
   ];
   static readonly creditEmiHeader = [
     {
       headerDef: "merchantNameOnCard",
-      headerCell: "Merchant Name"
+      headerCell: "Merchant Name",
     },
     {
       headerDef: "amount",
-      headerCell: "Loan Amount"
+      headerCell: "Loan Amount",
     },
     {
       headerDef: "tenure",
-      headerCell: "Tenure"
+      headerCell: "Tenure",
     },
     {
       headerDef: "currentOutStaning",
-      headerCell: "Outstanding Amount"
+      headerCell: "Outstanding Amount",
     },
     {
       headerDef: "monthlyEmi",
-      headerCell: "Monthly EMI"
+      headerCell: "Monthly EMI",
     },
     {
       headerDef: "interestRate",
-      headerCell: "Interest Rate"
+      headerCell: "Interest Rate",
     },
     {
       headerDef: "pendingEmi",
-      headerCell: "Pending EMI"
+      headerCell: "Pending EMI",
     },
     {
       headerDef: "startDate",
-      headerCell: "Start Date"
+      headerCell: "Start Date",
     },
     {
       headerDef: "endDate",
-      headerCell: "End Date"
+      headerCell: "End Date",
     },
     {
       headerDef: "status",
-      headerCell: "Status"
-    }
+      headerCell: "Status",
+    },
   ];
   static readonly unbilledHeader = [
     {
       headerDef: "cbsRefNo",
-      headerCell: "Ref Number"
+      headerCell: "Ref Number",
     },
     {
       headerDef: "paymentType",
-      headerCell: "Details"
+      headerCell: "Details",
     },
     {
       headerDef: "debitAmount",
-      headerCell: "Amount"
+      headerCell: "Amount",
     },
     {
       headerDef: "created",
-      headerCell: "Transaction Date"
-    }
+      headerCell: "Transaction Date",
+    },
   ];
   static readonly tabScreens: tabScreenModel[] = [
     {
       screenName: "RD Calculator",
-      route: "/rd-calculator"
+      route: "/rd-calculator",
     },
     {
       screenName: "FD Calculator",
-      route: "/fd-calculator"
+      route: "/fd-calculator",
     },
     {
       screenName: "Top UP",
-      route: "/top-up"
-    }
+      route: "/top-up",
+    },
   ];
 
   static readonly chartData = {
     chart: {
       type: "column",
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
     },
     title: {
       text: "FD/RD Calculator",
-      align: "left"
+      align: "left",
     },
     xAxis: {
-      categories: []
+      categories: [],
     },
     yAxis: {
       min: 0,
       title: {
-        text: ""
+        text: "",
       },
       labels: {
-        enabled: false
+        enabled: false,
       },
-      gridLineWidth: 0
+      gridLineWidth: 0,
     },
     tooltip: {
       pointFormat:
         '<span style="color:#00205c"><b>{series.name}</b></span>' +
         ": <b>{point.percentage:.0f}%</b>&nbsp;",
-      shared: true
+      shared: true,
     },
     plotOptions: {
       column: {
@@ -551,82 +628,82 @@ export class CreditCardStore {
           offsetX: 0,
           offsetY: 0,
           opacity: 0.01,
-          width: 10
+          width: 10,
         },
         stacking: "normal",
         dataLabels: {
           enabled: false,
-          format: "{point.percentage:.0f}%"
-        }
-      }
+          format: "{point.percentage:.0f}%",
+        },
+      },
     },
-    series: []
+    series: [],
   };
 
   static readonly TopUpChart: ChartHeaderModel[] = [
     {
       headerCell: "Top Up",
-      headerDef: "₹ 20,090"
+      headerDef: "₹ 20,090",
     },
     {
       headerCell: "Interest Rate",
-      headerDef: "7.10% p.a"
+      headerDef: "7.10% p.a",
     },
     {
       headerCell: "Interest Amount",
-      headerDef: "₹ 20,000"
+      headerDef: "₹ 20,000",
     },
     {
       headerCell: "Maturity Date",
-      headerDef: "02 Aug 2025"
-    }
+      headerDef: "02 Aug 2025",
+    },
   ];
 
   static readonly TopUpDeposite: ChartHeaderModel[] = [
     {
       headerCell: "Top Up",
-      headerDef: "topUpAmount"
+      headerDef: "topUpAmount",
     },
     {
       headerCell: "Interest Rate",
-      headerDef: "intrestRate"
+      headerDef: "intrestRate",
     },
     {
       headerCell: "Interest Amount",
-      headerDef: "intrestAmount"
+      headerDef: "intrestAmount",
     },
     {
       headerCell: "Maturity Date",
-      headerDef: "maturityDate"
-    }
+      headerDef: "maturityDate",
+    },
   ];
 
   static readonly FdRdChart: ChartHeaderModel[] = [
     {
       headerCell: "Interest Rate",
-      headerDef: "intrestRate"
+      headerDef: "intrestRate",
     },
     {
       headerCell: "Interest Amount",
-      headerDef: "intrestAmount"
+      headerDef: "intrestAmount",
     },
     {
       headerCell: "Maturity Date",
-      headerDef: "maturityDate"
-    }
+      headerDef: "maturityDate",
+    },
   ];
   static readonly instaChart: ChartHeaderModel[] = [
     {
       headerCell: "Interest Rate",
-      headerDef: "intrestRate"
+      headerDef: "intrestRate",
     },
     {
       headerCell: "Interest Amount",
-      headerDef: "intrestAmount"
+      headerDef: "intrestAmount",
     },
     {
       headerCell: "Monthly EMI",
-      headerDef: "monthlyEmi"
-    }
+      headerDef: "monthlyEmi",
+    },
   ];
 }

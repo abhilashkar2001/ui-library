@@ -6,7 +6,7 @@ import { ConvertEmiStore } from "./convert-emi.store";
 import { CardService } from "../../../../card.service";
 import {
   cardTransactionDetails,
-  TransactionDetail
+  TransactionDetail,
 } from "app/shared/models/emi-converter.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import * as moment from "moment";
@@ -15,7 +15,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-convert-to-emi",
   templateUrl: "./convert-to-emi.component.html",
-  styleUrls: ["./convert-to-emi.component.scss"]
+  styleUrls: ["./convert-to-emi.component.scss"],
 })
 export class ConvertToEmiComponent implements OnInit {
   convertEmiForm: FormGroup;
@@ -50,7 +50,7 @@ export class ConvertToEmiComponent implements OnInit {
   // Build the form group for EMI conversion
   private buildEmiForm(): void {
     this.convertEmiForm = this.formBuilder.group({
-      cardNumber: [""]
+      cardNumber: [""],
     });
   }
 
@@ -79,13 +79,13 @@ export class ConvertToEmiComponent implements OnInit {
       transactionDate: item?.created,
       details: item?.paymentType,
       amount: item?.debitAmount,
-      refNo: item?.icustRefNo,
+      refNo: item?.cbsRefNo,
       convertToEmi: false,
       cardName: item?.cardFundTransfer?.cardDetails?.cardName,
       cardNumber: item?.cardFundTransfer?.cardDetails?.cardNumber,
       cardId: item?.cardFundTransfer?.cardDetails?.id,
       nameOnCard: item?.cardFundTransfer?.cardDetails?.nameOnCard,
-      maturityDate: item?.cardFundTransfer?.cardDetails?.dueDate
+      maturityDate: item?.cardFundTransfer?.cardDetails?.dueDate,
     }));
   }
 
@@ -107,10 +107,10 @@ export class ConvertToEmiComponent implements OnInit {
         nameOnCard: selectedTransactions[0]?.nameOnCard,
         maturityDate: moment(maturityDateString, "DD-MMM-YYYY").isValid()
           ? moment(maturityDateString, "DD-MMM-YYYY").format("YYYY-MM-DD")
-          : ""
+          : "",
       };
       this.router.navigate(["/card/credit-card/service/calculate-emi"], {
-        state: payload
+        state: payload,
       });
     }
   }

@@ -7,17 +7,17 @@ import { PaymentPageComponent } from "../../../dashboard/modules/cheque-book/pay
 import { AddOnCardComponent } from "./components/add-on-card/add-on-card.component";
 import { AlertSubscriptionComponent } from "./components/alert-subscription/alert-subscription.component";
 import { BillingCycleComponent } from "./components/billing-cycle/billing-cycle.component";
-import { BlockCardComponent } from "./components/block-card/block-card.component";
 import { CardEmiDetailsComponent } from "./components/card-emi-details/card-emi-details.component";
 import { ChangePinComponent } from "./components/change-pin/change-pin.component";
 import { EStatementComponent } from "./components/e-statement/e-statement.component";
 import { InstantLoanComponent } from "./components/instant-loan/instant-loan.component";
-import { PinGenerationComponent } from "./components/pin-generation/pin-generation.component";
 import { PreGeneratedStatementComponent } from "./components/pre-generated-statement/pre-generated-statement.component";
 import { UnbilledTransactionComponent } from "./components/unbilled-transaction/unbilled-transaction.component";
-import { UpgradeComponent } from "./components/upgrade/upgrade.component";
+import { UpgradeComponent } from "../../shared-card/components/upgrade/upgrade.component";
 import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
 import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
+import { BlockCardComponent } from "../../shared-card/components/block-card/block-card.component";
+import { PinGenerationComponent } from "../../shared-card/components/pin-generation/pin-generation.component";
 
 const routes: Routes = [
   {

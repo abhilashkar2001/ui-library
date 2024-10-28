@@ -9,8 +9,8 @@ import { CreditCardControlComponent } from "./component/credit-card-control/cred
 import { CreditCardUsageLimitComponent } from "./component/credit-card-usage-limit/credit-card-usage-limit.component";
 import { ManageCreditCardModuleRoutingModule } from "./manage-credit-card-module-routing.module";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
-import { DesireLimitComponent } from './component/credit-card-control/pages/desire-limit/desire-limit.component';
-import { IncreaseLimitComponent } from './component/credit-card-control/pages/increase-limit/increase-limit.component';
+import { DesireLimitComponent } from "./component/credit-card-control/pages/desire-limit/desire-limit.component";
+import { IncreaseLimitComponent } from "./component/credit-card-control/pages/increase-limit/increase-limit.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { MatCardModule } from "@angular/material/card";
@@ -24,7 +24,7 @@ import { CreditCardInternaltionalLimitComponent } from "./component/credit-card-
     ManageCreditCardComponent,
     DesireLimitComponent,
     IncreaseLimitComponent,
-    CreditCardInternaltionalLimitComponent
+    CreditCardInternaltionalLimitComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,6 @@ import { CreditCardInternaltionalLimitComponent } from "./component/credit-card-
     TranslateModule,
     SharedCardModule,
     FormsModule,
-    SharedCardModule,
     SharedMaterialModule,
     CoreModule,
     CommonModule,

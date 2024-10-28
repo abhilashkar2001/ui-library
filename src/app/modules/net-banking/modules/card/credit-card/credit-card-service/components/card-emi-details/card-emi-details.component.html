@@ -1,30 +1,33 @@
-<div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between center">
-  <div class="w-100" fxLayoutAlign="space-between center">
-    <div fxFlex="33">
-      <app-searchable-select
-        [inputLabel]="'Credit Card Number' | translate"
-        [items]="listOfAccounts"
-        bindValueKey="cardNumber"
-        bindLabelKey="cardNumber"
-        [control]="cardEmiDetailsForm.get('creditNumber')"
-        (selectionChange)="handleTransactionDetails($event)"
-      ></app-searchable-select>
+<h3 class="light-blue-title">Card EMI Details</h3>
+<mat-card fxLayout="column">
+  <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between center">
+    <div class="w-100" fxLayoutAlign="space-between center">
+      <div fxFlex="33">
+        <app-searchable-select
+          [inputLabel]="'Credit Card Number' | translate"
+          [items]="listOfAccounts"
+          bindValueKey="cardNumber"
+          bindLabelKey="cardNumber"
+          [control]="cardEmiDetailsForm.get('creditNumber')"
+          (selectionChange)="handleTransactionDetails($event)"
+        ></app-searchable-select>
+      </div>
+      <div fxFlex="18">
+        <app-ic-action-button
+          buttonName="Download"
+          buttonType="filled"
+        ></app-ic-action-button>
+      </div>
     </div>
-    <div fxFlex="18">
-      <app-ic-action-button
-        buttonName="Download"
-        buttonType="filled"
-      ></app-ic-action-button>
-    </div>
-  </div>
 
-  <div class="w-100">
-    <app-reusable-table
-      [columnNames]="creditEmiHeader"
-      [data]="creditEmiValues"
-    ></app-reusable-table>
+    <div class="w-100">
+      <app-reusable-table
+        [columnNames]="creditEmiHeader"
+        [data]="creditEmiValues"
+      ></app-reusable-table>
+    </div>
   </div>
-</div>
+</mat-card>
 <!-- [paginationRequired]="true" -->
 
 <!-- <div fxLayoutGap="20" fxLayoutAlign="end center">

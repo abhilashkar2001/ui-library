@@ -114,6 +114,6 @@ export class AddOnCardComponent implements OnInit {
       (payload) => this.cardService.saveAddOnCreditPaymentDetails(payload)
       // Service call completion callback
     );
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
 }

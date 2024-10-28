@@ -5,9 +5,9 @@
       <div class="reward-div">
       <div fxLayout="row" fxLayoutGap="10px">
         <h3 class="sub-heading p-0">{{'Master Card' | translate}}</h3>
-        <span class="action-text">{{'Upgrade' | translate}}</span>
+        <span class="action-text" (click)="goToUpgradePage()">{{'Upgrade' | translate}}</span>
       </div>
-       <span class="text-gray">{{cardInfo?.accountNumber}} | {{cardInfo?.status}}</span>
+       <span class="text-gray">{{cardInfo?.cardNumber}} | {{cardInfo?.status}}</span>
       </div>
       <div class="reward-div">
         <span class="reward-text">{{'Reward Points' | translate}}</span>
@@ -40,7 +40,7 @@
             >
           </span>
         </div>
-        <div class="vertical-bar"></div>
+        <div class="vertical-bar" *ngIf="title === 'Credit Card'"></div>
         <div fxLayout="column" *ngIf="title === 'Credit Card'">
           <span class="small-title">{{'Minimum Due Amount' | translate}}</span>
           <span
@@ -59,7 +59,7 @@
               cardInfo?.accountCurrency || "INR"
             }}</span>
             <span class="normal-text">
-              ₹ &nbsp;{{ totalBalance }}</span
+              ₹ &nbsp;{{ cardInfo?.avlCreditBalance }}</span
             ></span
           >
         </div>

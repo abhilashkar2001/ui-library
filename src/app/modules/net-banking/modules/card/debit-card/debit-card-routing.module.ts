@@ -14,6 +14,13 @@ const routes: Routes = [
         (m) => m.DebitCardDashboardModule
       ),
   },
+  {
+    path: "service",
+    loadChildren: () =>
+      import("./debit-card-service/debit-card-service.module").then(
+        (m) => m.DebitCardServiceModule
+      ),
+  },
 ];
 
 @NgModule({

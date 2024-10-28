@@ -25,7 +25,10 @@ export interface CardModel {
   customerId: number;
   status: string;
   cvv: number;
-  cardType: string;
+  cardType?: string;
+  joiningFee?: number;
+  annualFee?: number;
+  benefits?: string[];
 }
 
 export declare type Cards = CardModel[];

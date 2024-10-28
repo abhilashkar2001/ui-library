@@ -1,4 +1,3 @@
-
 <div fxLayout="row" fxLayoutAlign="space-between" class="main-container">
   <!-- Drawer with fxFlex toggling -->
   <div
@@ -14,7 +13,6 @@
   </div>
 
   <div [fxFlex]="isDrawerOpen === 'open' ? '65' : '70'">
-
     <div fxLayout="row" fxLayoutAlign="space-between start">
       <div fxFlex="40">
         <app-dashboard-card-preview
@@ -25,10 +23,8 @@
       </div>
       <div fxFlex="60">
         <app-dashboard-card-details
-
           *ngIf="displayCard"
           title="Credit Card"
-
           [cardInfo]="displayCard"
           [detailsItem]="detailsItem"
         ></app-dashboard-card-details>
@@ -51,9 +47,7 @@
     </div>
   </div>
 
-
   <div [fxFlex]="isDrawerOpen === 'open' ? '20' : '25'">
-
     <div>
       <app-swiper-card></app-swiper-card>
     </div>

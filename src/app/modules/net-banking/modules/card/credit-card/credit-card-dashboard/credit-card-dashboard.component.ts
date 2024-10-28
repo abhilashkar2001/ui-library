@@ -25,7 +25,6 @@ export class CreditCardDashboardComponent implements OnInit {
 
   isDrawerOpen = "close";
 
-
   constructor(
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
@@ -36,7 +35,6 @@ export class CreditCardDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardList = this.sessionStorageService.getListOfCards() || [];
-
     this.fetchCardSummaryDetails();
   }
 
@@ -77,10 +75,8 @@ export class CreditCardDashboardComponent implements OnInit {
         });
   }
 
-
   toggleCheck(value) {
     this.isDrawerOpen = value;
     console.log(this.isDrawerOpen);
   }
-
 }

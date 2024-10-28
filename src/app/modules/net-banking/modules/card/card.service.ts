@@ -4,7 +4,7 @@ import { appendFilterParam } from "app/shared/helpers/http.utils";
 import { Payee } from "app/shared/models/card.model";
 import {
   cardTransactionDetails,
-  EmiDetails
+  EmiDetails,
 } from "app/shared/models/emi-converter.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
@@ -14,7 +14,7 @@ import { Observable, Subject } from "rxjs";
 const baseUrl = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class CardService {
   constructor(private http: HttpClient) {}
@@ -101,7 +101,7 @@ export class CardService {
   }
 
   saveAddOnCreditPaymentDetails(payload) {
-    return this.http.put(`${baseUrl}/card/addon-cards`, payload);
+    return this.http.post(`${baseUrl}/card/addon-cards`, payload);
   }
   fetchCardTransactionDetails(cardNo, customerId?) {
     return this.http.get<IcHttpResponseModel<cardTransactionDetails>>(
@@ -132,7 +132,7 @@ export class CardService {
   }
   downloadCreditInfoAsPdf(accountNo: any, month: any, year: any) {
     return this.http.get<any>(
-      `${baseUrl}/card/fetchCardPaymentDetailsPdf?cardNo=${accountNo}&month=${month}&year=${year}`
+      `${baseUrl}/card/fetchCorpCardPaymentDetailsPdf?cardNo=${accountNo}&month=${month}&year=${year}`
     );
   }
   setPin(cardNumber, cvv, pin) {
@@ -145,5 +145,8 @@ export class CardService {
     return this.http.get<any>(
       `${baseUrl}/fdRd/fd-rd-calculator?bookType=${bookType}&amount=${amount}&tenureYears=${tenureYear}&tenureMonths=${tenureMonth}&tenureDays=${tenureDay}`
     );
+  }
+  saveUpgradeCreditPaymentDetails(payload) {
+    return this.http.post(`${baseUrl}/card/upgrade-card`, payload);
   }
 }

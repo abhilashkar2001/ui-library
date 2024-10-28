@@ -10,22 +10,22 @@
     <span class="text-light">Enter New ATM PIN <strong>(4 digit)</strong></span>
     <input matInput />
     <div class="otp_block">
-      <!-- <ng-otp-input
+      <ng-otp-input
         class="ng_otp_input"
         #newPin
         (onInputChange)="onOtpChange($event)"
         [config]="newPinConfig"
-      ></ng-otp-input> -->
+      ></ng-otp-input>
       <div class="view_pin_btn" (click)="toggleNewPinView()">View PIN</div>
     </div>
     <span class="text-light">Confirm ATM PIN <strong>(4 digit)</strong></span>
     <div class="otp_block">
-      <!-- <ng-otp-input
+      <ng-otp-input
         class="ng_otp_input"
         #ngOtpInput
         (onInputChange)="onOtpChange($event)"
         [config]="confPinConfig"
-      ></ng-otp-input> -->
+      ></ng-otp-input>
       <div class="view_pin_btn" (click)="toggleConfPinView()">View PIN</div>
     </div>
 

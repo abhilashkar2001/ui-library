@@ -6,7 +6,6 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import { CardService } from "../../../card.service";
 import { DebitCardStore } from "../../debit-card.store";
 
-
 @Component({
   selector: "app-debit-card-dashboard",
   templateUrl: "./debit-card-dashboard.component.html",
@@ -24,7 +23,6 @@ export class DebitCardDashboardComponent implements OnInit {
   displayCard: any;
   isDrawerOpen = "close";
 
-
   constructor(
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
@@ -39,7 +37,6 @@ export class DebitCardDashboardComponent implements OnInit {
   }
 
   fetchCardSummaryDetails() {
-
     if (this.cardList.length > 1) {
       this.sessionStorageService.removeListOfCards();
     }
@@ -78,7 +75,5 @@ export class DebitCardDashboardComponent implements OnInit {
 
   toggleCheck(value) {
     this.isDrawerOpen = value;
-    console.log(this.isDrawerOpen);
   }
-
 }
