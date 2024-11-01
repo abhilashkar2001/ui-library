@@ -7,6 +7,9 @@ import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { Router } from '@angular/router';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-gold-renewal',
@@ -21,29 +24,23 @@ export class GoldRenewalComponent implements OnInit {
   maxTenureInYears: number = 2;
   maxTenure: number = 730;
   renewalAmount: number[] = [100, 50, 25];
-  // loanDetails: LoanDetailsModel[];
-  // need to remove the static data
-  loanDetails = [
-    {
-      cbsAccountNumber: '300200003035',
-      additionalValue: 'Value 1'
-    },
-    {
-      cbsAccountNumber: '300200007504',
-      additionalValue: 'Value 2'
-    }
-  ];
-
-  customerId: any;
+  loanDetails: LoanDetailsModel[]
   installmentDetails: LoanInstallmentModel;
   calculatedData: any;
   amount: number;
   profileInfo: any;
   currentCurrency: any;
+  corpCustId: number;
 
-  constructor(private loanService: LoanService, private fb: FormBuilder,) { }
+  constructor(private loanService: LoanService, private fb: FormBuilder,
+    private sessionStorageService: SessionStorageService,
+    private serviceCallHandler: ServiceCallHandler,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+    this.corpCustId = this.sessionStorageService.getCustomerInfo()?.customerId;
+    this.loanDetails = this.sessionStorageService.getLoanInfo();
     this.buildGoldRenewal();
   }
 
@@ -58,12 +55,17 @@ export class GoldRenewalComponent implements OnInit {
       renewalAmount: ["", [Validators.required]],
       transferType: "Gold Renewal",
       source: "I",
-      customerId: this.customerId
+      corpCustomerId: this.corpCustId
     });
+
+    this.goldRenewalForm
+      ?.get("debitAccount")
+      ?.setValue(this.loanDetails[0]?.cbsAccountNumber);
+    this.fetchLoanInstallment();
+
     this.goldRenewalForm.valueChanges
       .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe(() => {
-        console.log(this.goldRenewalForm);
         if (this.goldRenewalForm.valid) this.calculateTenure();
       });
   }
@@ -118,12 +120,11 @@ export class GoldRenewalComponent implements OnInit {
       this.installmentDetails.loanAmount;
     let payload = {
       firstRepaymentDate: new Date(),
-      interestRate: this.installmentDetails?.interestRate,
+      interestRate: this.installmentDetails?.interestRate || 10,
       numberOfMonths: numberOfMonths,
       principleAmount: this.amount
     };
     this.loanService.calculateEMI(payload).subscribe((res: any) => {
-      console.log(res);
       this.calculatedData = {
         ...res?.data,
         maturityAmount: res?.data?.monthlyPayment,
@@ -133,5 +134,82 @@ export class GoldRenewalComponent implements OnInit {
       };
     });
   }
+
+
+  //save gold renewal
+  saveGoldRenewal() {
+    let payload = {
+      ...this.goldRenewalForm.value,
+      renewalAmount: this.getDecimalValue(
+        this.goldRenewalForm.value.renewalAmount
+      )
+    };
+    payload.debitCurrency = this.loanDetails?.find(
+      (res) =>
+        res?.cbsAccountNumber == this.goldRenewalForm?.value?.debitAccount
+    )?.currencyCode;
+
+    let goldLoanArr = [
+      {
+        eventType: "goldRenewal",
+        operationType: "Loan",
+        status: "details",
+        masterId: "benificiaryMasterId",
+        statusHeader: "Comfirm Details",
+        statusNews: "Gold Renewal Request",
+        summary: [
+          {
+            header: "Loan Details",
+            details: [
+              { Name: "" },
+              {
+                "Loan Account Number":
+                  this.goldRenewalForm?.get("debitAccount")?.value
+              },
+              { Type: "" },
+              { "Current Sanctioned": this.installmentDetails?.sanctionAmount },
+
+              {
+                "Outstanding Principal":
+                  this.installmentDetails?.outstandPrincpl
+              },
+              {
+                "Interest Rate": this.installmentDetails?.interestRate
+              },
+              {
+                Duration: this.installmentDetails?.duration
+              },
+              { "Maturity Date": this.installmentDetails?.maturityDate },
+              {
+                "Remaining Installments":
+                  this.installmentDetails?.remainingInstall
+              },
+              { Status: this.installmentDetails?.status }
+            ]
+          },
+          {
+            header: "Renewal Detail",
+            details: [
+              {
+                "Renewal Amount": this.getDecimalValue(
+                  this.goldRenewalForm.value.renewalAmount
+                )
+              },
+              { Tenure: this.goldRenewalForm.value.tenureYear + "Year" },
+              { "Interest Rate": "" }
+            ]
+          }
+        ]
+      }
+    ];
+    this.serviceCallHandler.put(
+      "serviceHandler",
+      payload,
+      goldLoanArr,
+      (payload) => this.loanService.saveService(payload)
+    );
+    this.router.navigate(["/user/loan/loan-service/payment-summary"]);
+  }
+
 
 }

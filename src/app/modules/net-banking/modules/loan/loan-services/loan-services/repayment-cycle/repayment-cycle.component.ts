@@ -1,28 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { GenericValueService } from "app/shared/services/generic-value.service";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
-  selector: 'app-repayment-cycle',
-  templateUrl: './repayment-cycle.component.html',
-  styleUrls: ['./repayment-cycle.component.scss']
+  selector: "app-repayment-cycle",
+  templateUrl: "./repayment-cycle.component.html",
+  styleUrls: ["./repayment-cycle.component.scss"],
 })
 export class RepaymentCycleComponent implements OnInit {
   repaymentCycleForm: FormGroup;
   loanDetails: LoanDetailsModel[];
   installmentDetails: LoanInstallmentModel;
+  genericValue = { REQUESTEDREPAYMENTCYCLE: [] };
 
-  constructor(private fb: FormBuilder, private sessionStorageService: SessionStorageService, private loanService: LoanService, private serviceCallHandler: ServiceCallHandler, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
+    private serviceCallHandler: ServiceCallHandler,
+    private router: Router,
+    private genericValueService: GenericValueService
+  ) { }
 
   ngOnInit(): void {
-    this.loanDetails = this.sessionStorageService.getLoanInfo()
-    this.buildRepaymentCycleForm()
+    this.loanDetails = this.sessionStorageService.getLoanInfo();
+    this.buildRepaymentCycleForm();
+    this.fetchGenericValues()
+  }
+
+
+  //fetch generic values
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 && res?.data) {
+          Object.keys(res?.data).forEach(
+            (k) => (this.genericValue[k] = res.data[k])
+          );
+        }
+      });
   }
 
   buildRepaymentCycleForm() {
@@ -31,12 +55,16 @@ export class RepaymentCycleComponent implements OnInit {
       debitCurrency: [""],
       currentRepayment: [""],
       repayRequest: [""],
+      transferType: "Repayment Cycle",
     });
     this.repaymentCycleForm
       ?.get("debitAccount")
       ?.setValue(this.loanDetails?.[0]?.cbsAccountNumber);
     this.fetchCurrentRepaymentCycle()
   }
+
+
+
 
   //fetch current repayment cycle
   fetchCurrentRepaymentCycle() {
@@ -53,8 +81,6 @@ export class RepaymentCycleComponent implements OnInit {
       });
   }
 
-
-
   //fetch installment details
   fetchLoanInstallment() {
     this.loanService
@@ -65,7 +91,6 @@ export class RepaymentCycleComponent implements OnInit {
         }
       });
   }
-
 
   //save function to save the details
   saveRepaymentCycle() {
@@ -78,12 +103,12 @@ export class RepaymentCycleComponent implements OnInit {
     console.log(payload);
     let topUpArr = [
       {
-        eventType: "topUp",
+        eventType: "repaymentCycle",
         operationType: "Loan",
         status: "confirm",
         masterId: "benificiaryMasterId",
         statusHeader: "Comfirm Details",
-        statusNews: "Top Up Loan Request",
+        statusNews: "Repayment Cycle",
         summary: [
           {
             header: "Loan Details",
@@ -115,7 +140,4 @@ export class RepaymentCycleComponent implements OnInit {
     );
     this.router.navigate(["/user/loan/loan-service/payment-summary"]);
   }
-
-
-
 }

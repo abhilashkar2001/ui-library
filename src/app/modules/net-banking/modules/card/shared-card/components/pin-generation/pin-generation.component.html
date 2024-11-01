@@ -4,7 +4,7 @@
     <!-- <div fxFlex="100"> -->
     <div class="default blue_card" fxLayout="column">
       <div fxFlex="100" fxLayout="row">
-        <div fxFlex="20" class="input_wrapper">
+        <!--  <div fxFlex="20" class="input_wrapper">
           <app-searchable-select
             [items]="listOfAccounts"
             [inputLabel]="'Select Card' | translate"
@@ -20,7 +20,31 @@
             {{ title | translate }} | {{ "Name" | translate }} -
             {{ typeofCard | translate }}
           </p>
+        </div> -->
+        <div fxLayout="column" class="blue-box" fxFlex="50">
+          <span class="light-blue-title">{{ title | translate }}</span>
+          <div fxLayout="row">
+            <app-ic-custom-pay-from
+              [control]="pinGenerationForm.get('selectCard')"
+              [inputLabel]="'Card No' | translate"
+              bindValueKey="cardNumber"
+              bindLabelKey="cardNumber"
+              [items]="listOfAccounts"
+              (selectionChange)="patchDetails($event)"
+            ></app-ic-custom-pay-from>
+            <div
+              fxLayout="column"
+              fxLayoutAlign="center center"
+              class="label-info m-12"
+            >
+              <span class="label-info">
+                {{ title | translate }} | {{ "Name" | translate }} -
+                {{ typeofCard }}
+              </span>
+            </div>
+          </div>
         </div>
+
         <div fxFlex="20" class="input_wrapper">
           <app-ic-custom-input
             [control]="pinGenerationForm.get('cvv')"
@@ -60,7 +84,12 @@
         <p>{{ "Resend Code" | translate }}</p>
       </div>
     </div>
-    <div fxFlex="50" fxLayoutAlign="end center" fxLayoutGap="10">
+    <div
+      fxFlex="50"
+      fxLayoutAlign="end center"
+      fxLayoutGap="10"
+      *ngIf="otp === true"
+    >
       <app-ic-action-button
         [buttonName]="'Cancel' | translate"
         buttonType="stroked"

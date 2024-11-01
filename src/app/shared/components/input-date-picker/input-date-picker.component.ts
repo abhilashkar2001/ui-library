@@ -159,11 +159,11 @@ export class InputDatePickerComponent implements OnInit {
   }
   populateDate() {
     setTimeout(() => {
-      if (this.control.value) {
-        this.control?.patchValue(pluckOnlyDate(this.control.value));
+      if (this.control?.value) {
+        this.control?.patchValue(pluckOnlyDate(this.control?.value));
       } else this.control?.patchValue(null);
     }, 1000);
-    if (this.mandatory.toLowerCase() == "required") {
+    if (this.mandatory?.toLowerCase() == "required") {
       setTimeout(() => {
         this.control?.setErrors({ matDatepickerParse: null });
         this.control?.clearValidators();

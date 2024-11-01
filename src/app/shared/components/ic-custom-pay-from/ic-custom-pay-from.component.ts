@@ -30,7 +30,7 @@ export class IcCustomPayFromComponent implements OnInit {
   constructor(
     private payFromService: CardService,
     private sessionStorageService: SessionStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (!this.items) this.setDefaultAccount();
@@ -39,6 +39,7 @@ export class IcCustomPayFromComponent implements OnInit {
   setDefaultAccount() {
     let listAccounts = this.sessionStorageService.getListOfAccounts();
     this.items = listAccounts || [];
+    console.log(this.items, "itemss");
     this.control?.setValue(this.sessionStorageService.getSelectedAccountNo());
     this.fetchBalance(this.control?.value);
   }

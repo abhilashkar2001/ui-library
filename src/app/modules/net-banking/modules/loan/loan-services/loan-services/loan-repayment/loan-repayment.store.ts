@@ -7,7 +7,7 @@ export class LoanRepaymentStore {
         },
         {
             headerCell: "Due Date",
-            headerDef: "",
+            headerDef: "installmentDate",
         },
         {
             headerCell: "Duration",

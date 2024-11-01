@@ -5,12 +5,13 @@
       <div class="row" fxFlex="100" class="blue-box" fxLayoutGap="30px">
         <div fxLayout="column" fxFlex="40">
           <app-searchable-select
-            [control]="repaymentForm.get('debitAccount')"
+            [control]="repaymentForm.get('creditAccount')"
             [inputLabel]="'Loan Account Number'"
             bindValueKey="cbsAccountNumber"
             bindLabelKey="cbsAccountNumber"
             direction="row"
             [items]="loanDetails"
+            (selectionChange)="fetchInstallment()"
           ></app-searchable-select>
         </div>
         <!-- loan details -->
@@ -32,7 +33,7 @@
 
       <!-- account number -->
       <app-ic-custom-pay-from
-        [control]="repaymentForm.get('creditAccount')"
+        [control]="repaymentForm.get('debitAccount')"
         [inputLabel]="'Account Number' | translate"
         fxFlex="35"
       ></app-ic-custom-pay-from>
@@ -92,6 +93,7 @@
         ></app-ic-action-button>
         <app-ic-action-button
           [buttonName]="'Submit' | translate"
+          (onClick)="saveRepayment()"
           buttonType="filled"
         ></app-ic-action-button>
       </div>

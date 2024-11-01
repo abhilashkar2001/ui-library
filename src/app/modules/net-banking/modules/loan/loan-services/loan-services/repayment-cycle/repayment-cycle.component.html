@@ -31,9 +31,9 @@
       <app-searchable-select
         fxFlex="24"
         [control]="repaymentCycleForm.get('repayRequest')"
-        [items]="repayRequestArr"
-        bindValueKey="value"
-        bindLabelKey="label"
+        [items]="genericValue?.REQUESTEDREPAYMENTCYCLE"
+        bindValueKey="id"
+        bindLabelKey="values"
       >
       </app-searchable-select>
     </div>

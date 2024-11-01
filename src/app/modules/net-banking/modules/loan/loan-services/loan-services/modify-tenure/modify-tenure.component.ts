@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { LoanTopUpStore } from '../topup-loan/topup-loan.store';
-import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { LoanTopUpStore } from "../topup-loan/topup-loan.store";
+import { GenericValueService } from "app/shared/services/generic-value.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-modify-tenure',
-  templateUrl: './modify-tenure.component.html',
-  styleUrls: ['./modify-tenure.component.scss']
+  selector: "app-modify-tenure",
+  templateUrl: "./modify-tenure.component.html",
+  styleUrls: ["./modify-tenure.component.scss"],
 })
 export class ModifyTenureComponent implements OnInit {
   modifyTenureForm!: FormGroup;
@@ -19,31 +23,27 @@ export class ModifyTenureComponent implements OnInit {
   maxTenure: number = 3650;
   chartSectionDetails = LoanTopUpStore.ChartDetails;
   accountDetails = LoanTopUpStore.loanAccountDetails;
-  // loanDetails: any;
-  customerId: number;
   installmentDetails: LoanInstallmentModel;
   genericValue = { REASON: [] };
   calculatedData: any;
-  // Need to remove the static data
-  loanDetails = [
-    {
-      cbsAccountNumber: '300200003035',
-      additionalValue: 'Value 1'
-    },
-    {
-      cbsAccountNumber: '300200007504',
-      additionalValue: 'Value 2'
-    }
-  ];
+  loanDetails: LoanDetailsModel[];
   chartData: any;
-
-  constructor(private fb: FormBuilder, private genericValueService: GenericValueService, private loanService: LoanService) { }
+  corpCustId: number;
+  constructor(
+    private fb: FormBuilder,
+    private genericValueService: GenericValueService,
+    private loanService: LoanService,
+    private sessionStorageService: SessionStorageService,
+    private router: Router,
+    private serviceCallHandler: ServiceCallHandler
+  ) { }
 
   ngOnInit(): void {
+    this.corpCustId = this.sessionStorageService.getCustomerInfo()?.customerId;
+    this.loanDetails = this.sessionStorageService.getLoanInfo();
     this.buildModifyTenure();
-    this.fetchGenericValues()
+    this.fetchGenericValues();
   }
-
 
   //building the form
   buildModifyTenure() {
@@ -59,15 +59,18 @@ export class ModifyTenureComponent implements OnInit {
       acceptTermsConditions: [""],
       transferType: "Modify Tenure",
       source: "I",
-      customerId: this.customerId,
+      corpCustomerId: this.corpCustId
     });
+    this.modifyTenureForm
+      .get("debitAccount")
+      .setValue?.(this.loanDetails[0]?.cbsAccountNumber);
     this.modifyTenureForm.valueChanges
       .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe(() => {
         if (this.modifyTenureForm.valid) this.calculateTenure();
       });
+    this.fetchLoanInstallment()
   }
-
 
   //fetch generic values
   fetchGenericValues() {
@@ -82,7 +85,6 @@ export class ModifyTenureComponent implements OnInit {
       });
   }
 
-
   //fetch installment details
   fetchLoanInstallment() {
     this.loanService
@@ -93,8 +95,6 @@ export class ModifyTenureComponent implements OnInit {
         }
       });
   }
-
-
 
   //when the input values changes, slider value changes
   onTenureChange() {
@@ -120,14 +120,14 @@ export class ModifyTenureComponent implements OnInit {
 
   calculateTenure() {
     let numberOfMonths =
-      this.modifyTenureForm.value.tenureYear * 12 +
-      this.modifyTenureForm.value.tenureMonth;
+      (this.modifyTenureForm.value.tenureYear * 12) + (this.modifyTenureForm.value.tenureMonth);
     let payload = {
       firstRepaymentDate: new Date(),
-      interestRate: this.installmentDetails?.interestRate,
+      interestRate: this.installmentDetails?.interestRate || 10,
       numberOfMonths: numberOfMonths,
       principleAmount: this.installmentDetails?.loanAmount,
     };
+
     this.loanService.calculateEMI(payload).subscribe((res: any) => {
       this.calculatedData = {
         ...res?.data,
@@ -139,6 +139,66 @@ export class ModifyTenureComponent implements OnInit {
     });
   }
 
+  //save function to save the details
+  saveModifyTenure() {
+    let payload: any = { ...this.modifyTenureForm.value };
+    let modifyTenureArr = [
+      {
+        eventType: "modifyTenure",
+        operationType: "Loan",
+        status: "confirm",
+        masterId: "benificiaryMasterId",
+        statusHeader: "Comfirm Details",
+        statusNews: "Modify Tenure Successfully!",
+        summary: [
+          {
+            header: "Loan Details",
+            details: [
+              { Name: this.installmentDetails?.customerName },
+              {
+                "Loan Account Number":
+                  this.modifyTenureForm?.get("debitAccount")?.value,
+              },
+              { Type: this.installmentDetails?.loanType },
+              { "Loan Amount": this.installmentDetails?.loanAmount },
+              {
+                "Outstanding Principal":
+                  this.installmentDetails?.outstandPrincpl,
+              },
+              {
+                "Interest Rate": this.installmentDetails?.interestRate,
+              },
+              {
+                Duration: this.installmentDetails?.duration,
+              },
+              { "Maturity Date": this.installmentDetails?.maturityDate },
+              {
+                "Remaining Installments":
+                  this.installmentDetails?.remainingInstall,
+              },
+              { Status: this.installmentDetails?.status },
+            ],
+          },
+          {
+            header: "Modify Tenure ",
+            details: [
+              { Tenure: this.modifyTenureForm.value.tenureYear + "Year" },
+              { "New Monthly Payment": "" },
+              { "New Interest Rate": "" },
+              { Purpose: this.modifyTenureForm.value.remarks },
+            ],
+          },
+        ],
+      },
+    ];
+    this.serviceCallHandler.put(
+      "serviceHandler",
+      payload,
+      modifyTenureArr,
+      (payload) => this.loanService.saveService(payload)
+    );
+    this.router.navigate(["/user/loan/loan-service/payment-summary"]);
+  }
 
 
 }

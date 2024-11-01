@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-generate-pin",
@@ -18,7 +19,10 @@ export class GeneratePinComponent implements OnInit {
   newPinConfig = this.createPinConfig(this.hideNewPin);
   confPinConfig = this.createPinConfig(this.hideConfPin);
 
-  constructor(public dialogRef: MatDialogRef<GeneratePinComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<GeneratePinComponent>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Initialization logic if needed
@@ -63,6 +67,10 @@ export class GeneratePinComponent implements OnInit {
   onOtpChange(otp: string): void {
     this.otp = otp;
     this.otpAvailable = this.otp.length >= 4;
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 
   /**

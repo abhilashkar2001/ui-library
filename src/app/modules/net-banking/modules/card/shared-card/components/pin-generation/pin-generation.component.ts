@@ -62,7 +62,7 @@ export class PinGenerationComponent implements OnInit {
       this.title = "Credit Card";
     } else if (url.includes("/debit-card")) {
       this.title = "Debit Card";
-    }else if (url.includes("/prepaid-card")) {
+    } else if (url.includes("/prepaid-card")) {
       this.title = "Prepaid Card";
     }
   }
@@ -121,7 +121,9 @@ export class PinGenerationComponent implements OnInit {
           panelClass: "popup-dialog-class",
           backdropClass: "bdrop",
           width: "25%",
-        }).subscribe();
+        }).subscribe((res) => {
+          this.router.navigate(["/user/card/credit-card/dashboard"]);
+        });
       }
     });
   }

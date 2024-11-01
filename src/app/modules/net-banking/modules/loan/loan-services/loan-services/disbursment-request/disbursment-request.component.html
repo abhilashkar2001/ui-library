@@ -6,10 +6,11 @@
       <div>
         <app-ic-custom-pay-from
           [inputLabel]="'Loan Account Number*' | translate"
-          [items]="loanAccounts"
+          [items]="loanDetails"
           bindValueKey="cbsAccountNumber"
           bindLabelKey="cbsAccountNumber"
           [control]="_parentForm.get('debitAccount')"
+          (selectionChange)="onSelectionChange($event)"
         >
           <span class="label-text">{{
             _parentForm.get("loanType")?.value
@@ -31,6 +32,7 @@
           </div>
 
           <div
+            *ngIf="_parentForm.get('chequeFavouringSame').value == true"
             fxLayout="row"
             fxLayoutAlign="space-between center"
             class="padding-box"
@@ -43,10 +45,11 @@
               ></app-ic-custom-input>
             </div>
             <div fxFlex="49">
-              <app-ic-custom-datepicker
-                [inputLabel]="'Specific Date' | translate"
+              <app-input-date-picker
                 [control]="this._parentForm.get('specificDate')"
-              ></app-ic-custom-datepicker>
+                [inputLabel]="'Specific Date' | translate"
+                [showOutsideLabel]="true"
+              ></app-input-date-picker>
             </div>
           </div>
         </div>
@@ -66,11 +69,6 @@
             class="padding-box"
           >
             <div fxFlex="49">
-              <!-- <app-ic-custom-input
-                    [readonly]="true"
-                    [inputLabel]="'Amount' | translate"
-                    [control]="_parentForm.get('creditAmount')"
-                  ></app-ic-custom-input> -->
               <app-ic-custom-amount-input
                 [readonly]="true"
                 [inputLabel]="'Amount' | translate"
@@ -82,6 +80,7 @@
             <div fxFlex="49">
               <app-input-date-picker
                 [inputLabel]="'Transfer Date' | translate"
+                [showOutsideLabel]="true"
                 [control]="_parentForm.get('transferDate')"
               ></app-input-date-picker>
             </div>
@@ -101,10 +100,6 @@
           class="mt-12"
         >
           <div fxFlex="24">
-            <!-- <app-ic-custom-input
-                  [control]="_parentForm.get('debitAmount')"
-                  [inputLabel]="'Amount' | translate"
-                ></app-ic-custom-input> -->
             <app-ic-custom-amount-input
               [inputLabel]="'Amount' | translate"
               [currencyCode]="currentCurrency"
@@ -122,6 +117,7 @@
             <app-input-date-picker
               [control]="_parentForm.get('preferredDate')"
               [inputLabel]="'Preferred Date' | translate"
+              [showOutsideLabel]="true"
             ></app-input-date-picker>
           </div>
           <div fxFlex="24">
@@ -151,7 +147,7 @@
         </div>
         <div
           fxLayout="row"
-          [formGroupName]="i"
+          [formGroup]="document"
           *ngFor="let document of documentCtrl.controls; let i = index"
         >
           <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
@@ -210,11 +206,7 @@
               </div>
             </div>
             <div fxFlex="10" (click)="deleteDocs(i)">
-              <img
-                src="./assets/images/delete-icn.png"
-                alt=""
-                class="delete-icn"
-              />
+              <img src="assets/images/delete.svg" alt="" class="delete-icn" />
             </div>
           </div>
         </div>

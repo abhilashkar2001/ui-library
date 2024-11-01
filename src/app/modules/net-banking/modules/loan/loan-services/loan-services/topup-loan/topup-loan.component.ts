@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoanTopUpStore } from './topup-loan.store';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { removeSpecCharsOnly } from 'app/shared/helpers/utils';
-import Decimal from 'decimal.js';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { LoanTopUpStore } from "./topup-loan.store";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { GenericValueService } from "app/shared/services/generic-value.service";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { removeSpecCharsOnly } from "app/shared/helpers/utils";
+import Decimal from "decimal.js";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { Router } from "@angular/router";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
 
 @Component({
-  selector: 'app-topup-loan',
-  templateUrl: './topup-loan.component.html',
-  styleUrls: ['./topup-loan.component.scss']
+  selector: "app-topup-loan",
+  templateUrl: "./topup-loan.component.html",
+  styleUrls: ["./topup-loan.component.scss"],
 })
 export class TopupLoanComponent implements OnInit {
-
   topUpForm: FormGroup | undefined;
   minTenure: number = 7;
   maxTenureInYears: number = 10;
@@ -24,27 +27,26 @@ export class TopupLoanComponent implements OnInit {
   min = 5000;
   chartSectionDetails = LoanTopUpStore.ChartDetails;
   accountDetails = LoanTopUpStore.loanAccountDetails;
-  customerId: any;
   genericValue = { PURPOSE: [] };
   installmentDetails: LoanInstallmentModel;
   calculatedData: any;
   profileInfo: any;
   currentCurrency: any;
-  //need to remove the static data
-  loanDetails = [
-    {
-      cbsAccountNumber: '300200003035',
-      additionalValue: 'Value 1'
-    },
-    {
-      cbsAccountNumber: '300200007504',
-      additionalValue: 'Value 2'
-    }
-  ];
+  loanDetails: LoanDetailsModel[];
+  corpCustId: number;
 
-  constructor(private fb: FormBuilder, private genericValueService: GenericValueService, private loanService: LoanService) { }
+  constructor(
+    private fb: FormBuilder,
+    private genericValueService: GenericValueService,
+    private loanService: LoanService,
+    private sessionStorageService: SessionStorageService,
+    private router: Router,
+    private serviceCallHandler: ServiceCallHandler
+  ) { }
 
   ngOnInit(): void {
+    this.corpCustId = this.sessionStorageService.getCustomerInfo()?.customerId;
+    this.loanDetails = this.sessionStorageService.getLoanInfo();
     this.buildTopUp();
     this.fetchGenericValues();
   }
@@ -64,9 +66,13 @@ export class TopupLoanComponent implements OnInit {
       topUpAmount: ["", [Validators.required]],
       transferType: "Top Up Loan",
       source: "I",
-      customerId: this.customerId
+      corpCustomerId: this.corpCustId,
     });
 
+    this.topUpForm
+      .get("debitAccount")
+      .setValue?.(this.loanDetails[0]?.cbsAccountNumber);
+    this.fetchLoanInstallment();
     this.topUpForm.valueChanges
       .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe(() => {
@@ -75,7 +81,7 @@ export class TopupLoanComponent implements OnInit {
   }
 
   /**
-   * Fetch genericvalues 
+   * Fetch genericvalues
    */
   fetchGenericValues() {
     this.genericValueService
@@ -99,7 +105,6 @@ export class TopupLoanComponent implements OnInit {
       });
   }
 
-
   //when the input values changes, slider value changes
   onInputChange(e, value) {
     if (value == "tenure") {
@@ -110,8 +115,6 @@ export class TopupLoanComponent implements OnInit {
       this.topUpForm.get("tenure").setValue(totalDays);
     } else this.topUpForm.get("topUpAmount").setValue(e);
   }
-
-
 
   //on the slider change, the input values should change
   onSliderChange(e, value) {
@@ -127,9 +130,8 @@ export class TopupLoanComponent implements OnInit {
     } else this.topUpForm.get("topUpAmount").setValue(e?.value);
   }
 
-
   /**
-   * calculate the tenure 
+   * calculate the tenure
    */
   calculateTenure() {
     let numberOfMonths =
@@ -138,7 +140,7 @@ export class TopupLoanComponent implements OnInit {
       firstRepaymentDate: new Date(),
       interestRate: this.installmentDetails?.interestRate,
       numberOfMonths: numberOfMonths,
-      principleAmount: this.topUpForm.value.topUpAmount
+      principleAmount: this.topUpForm.value.topUpAmount,
     };
     this.loanService.calculateEMI(payload).subscribe((res: any) => {
       this.calculatedData = {
@@ -146,7 +148,7 @@ export class TopupLoanComponent implements OnInit {
         maturityAmount: res?.data?.monthlyPayment,
         depositAmount: this.installmentDetails?.emiAmount,
         currentMaturityDate: this.installmentDetails?.maturityDate,
-        currentInterest: this.installmentDetails?.totalInterest
+        currentInterest: this.installmentDetails?.totalInterest,
       };
     });
   }
@@ -157,8 +159,73 @@ export class TopupLoanComponent implements OnInit {
     );
   }
 
-
-
-
-
+  //save function to save the details
+  saveTopUp() {
+    let payload = { ...this.topUpForm.value };
+    payload.debitCurrency = this.loanDetails?.find(
+      (res) => res?.cbsAccountNumber == this.topUpForm?.value?.debitAccount
+    )?.currencyCode;
+    delete payload.tenure;
+    console.log(payload, "payload");
+    let topUpArr = [
+      {
+        eventType: "topUp",
+        operationType: "Loan",
+        status: "details",
+        masterId: "benificiaryMasterId",
+        statusHeader: "Confirm Details",
+        statusNews: "Top Up Loan Request",
+        summary: [
+          {
+            header: "Loan Details",
+            details: [
+              { Name: this.installmentDetails?.customerName },
+              {
+                "Loan Account Number":
+                  this.topUpForm?.get("debitAccount")?.value,
+              },
+              { Type: this.installmentDetails?.loanType },
+              { "Loan Amount": this.installmentDetails?.loanAmount },
+              {
+                "Outstanding Principal":
+                  this.installmentDetails?.outstandPrincpl,
+              },
+              {
+                "Interest Rate": this.installmentDetails?.interestRate,
+              },
+              {
+                Duration: this.installmentDetails?.duration,
+              },
+              { "Maturity Date": this.installmentDetails?.maturityDate },
+              {
+                "Remaining Installments":
+                  this.installmentDetails?.remainingInstall,
+              },
+              { Status: this.installmentDetails?.status },
+            ],
+          },
+          {
+            header: "Modify Tenure ",
+            details: [
+              {
+                "Top up Amount": this.getDecimalValue(
+                  this.topUpForm.value.topUpAmount
+                ),
+              },
+              { Tenure: this.topUpForm.value.tenureYear + "Year" },
+              { "Account to be credited": "" },
+              { Purpose: this.topUpForm.value.purpose },
+            ],
+          },
+        ],
+      },
+    ];
+    this.serviceCallHandler.put(
+      "serviceHandler",
+      payload,
+      topUpArr,
+      (payload) => this.loanService.saveService(payload)
+    );
+    this.router.navigate(["/user/loan/loan-service/payment-summary"]);
+  }
 }

@@ -6,6 +6,7 @@ import { CreditCardStore } from "../../../credit-card.store";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../../card.service";
 import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-alert-subscription",
@@ -23,7 +24,8 @@ export class AlertSubscriptionComponent implements OnInit {
     private formbuilder: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +66,10 @@ export class AlertSubscriptionComponent implements OnInit {
           disableClose: true,
           panelClass: "popup-dialog-class",
           backdropClass: "bdrop",
-        }).subscribe();
+          width: "25%",
+        }).subscribe((res) => {
+          this.router.navigate(["/user/card/credit-card/dashboard"]);
+        });
       }
     });
   }
