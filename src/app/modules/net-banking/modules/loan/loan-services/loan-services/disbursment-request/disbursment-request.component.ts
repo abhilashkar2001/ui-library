@@ -1,5 +1,6 @@
+import { DOCUMENT } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { DocumentUploadFormGroup } from "app/shared/helpers/docuemnt-upload.helper";
 import { removeSpecCharsOnly } from "app/shared/helpers/utils";
@@ -8,6 +9,8 @@ import { LoanAccount } from "app/shared/models/loan-account.model";
 import { LoanDetailsModel } from "app/shared/models/loan-details.model";
 import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { CommonService } from "app/shared/services/common-service/common.service";
+import { GenericValueService } from "app/shared/services/generic-value.service";
 import { LoanService } from "app/shared/services/net-loan-service/loan.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 
@@ -37,11 +40,14 @@ export class DisbursmentRequestComponent
   profileInfo: any;
   currentCurrency: any;
   corpCustId: number;
+  genericValue = { DOCUMENTTYPE: [] };
   constructor(
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
     private router: Router,
-    private serviceCallHandler: ServiceCallHandler
+    private serviceCallHandler: ServiceCallHandler,
+    private genericValueService: GenericValueService,
+    private commonService: CommonService
   ) {
     super(new FormBuilder());
   }
@@ -56,6 +62,21 @@ export class DisbursmentRequestComponent
         .setValue(this.loanDetails[0]?.cbsAccountNumber);
       this.onSelectionChange(this.loanDetails[0]?.cbsAccountNumber);
     }
+    this.fetchGenericValues()
+  }
+
+
+  //fetch generic values
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 && res?.data) {
+          Object.keys(res?.data).forEach(
+            (k) => (this.genericValue[k] = res.data[k])
+          );
+        }
+      });
   }
 
   buildDisbursementRequestForm() {
@@ -75,6 +96,7 @@ export class DisbursmentRequestComponent
       acceptTermsConditions: ["", [Validators.required]],
       transferType: "Loan Disbursement",
       source: "I",
+      corpCustomerId: this.corpCustId,
       documents: this.fb.array([]),
     });
     this.pushDocumentInfo();
@@ -104,65 +126,58 @@ export class DisbursmentRequestComponent
       .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
         if (res?.statusCode == 200 && res?.data)
           this.installmentDetails = res?.data;
+        this._parentForm
+          .get("payeeName")
+          .setValue(this.installmentDetails?.customerName);
+        this._parentForm
+          .get("creditAmount")
+          .setValue(this.installmentDetails?.loanAmount);
       });
   }
 
+  /**
+   * Multiple files can able to upload
+   * @param event 
+   * @param i 
+   */
   onFileSelected(event, i) {
     this.selectedFiles = event.target.files;
-    this.uploadDocument(i);
+    Array.from(this.selectedFiles).forEach(file => {
+      this.uploadDocument(file, i);
+    });
   }
 
-  uploadDocument(index) {
-    const processFile = (file, idx) => {
-      let formData = new FormData();
-      let data = {
-        documentName: "91526",
-        documentType: "",
-        documentNumber: "",
-        documentSide: 1,
-        fileName: file.name,
-        fileType: file.type,
-        verificationType: "loan",
-      };
-      formData.append("data", JSON.stringify(data));
-      formData.append("file", file);
-      formData.append("module", "document");
-      // this.kycService.uploadDocument(formData).subscribe((res) => {
-      //   if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
-      //     this.form = {
-      //       name: res?.data?.documentName,
-      //       documentId: res?.data?.documentId,
-      //       documentName: res?.data?.documentName,
-      //       documentType: res?.data?.documentType,
-      //       documentSide: res?.data?.documentSide,
-      //       noOfSignatures: null,
-      //       fileType: res?.data?.fileType,
-      //       fileName: res?.data?.fileName,
-      //       fileUrl: res?.data?.fileUrl
-      //     };
-      //     let dataArray = {
-      //       fileName: file.name,
-      //       fileUrl: res?.data?.fileUrl,
-      //       documentId: res?.data?.documentId
-      //     };
-      //     this.documentFilesCtrl(index).push(
-      //       this.documentFileFormArray(dataArray)
-      //     );
-      //     if (idx + 1 < this.selectedFiles.length) {
-      //       processFile(this.selectedFiles[idx + 1], idx + 1);
-      //     }
-      //   } else {
-      //     if (idx + 1 < this.selectedFiles.length) {
-      //       processFile(this.selectedFiles[idx + 1], idx + 1);
-      //     }
-      //   }
-      // });
+
+  /**
+   * Upload document method
+   * @param file 
+   * @param i 
+   */
+  uploadDocument(file, i) {
+    const docdata: any = {
+      fileName: file.name.split(".")[0],
+      fileType: file.type.split("/")[1],
+      documentSide: 1
     };
-    if (this.selectedFiles.length > 0) {
-      processFile(this.selectedFiles[0], 0);
-    }
-  }
 
+    // Prepare FormData for each file
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("data", JSON.stringify(docdata));
+    formdata.append("module", "document");
+
+    this.commonService.uploadDocument(formdata).subscribe((res: any) => {
+      if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
+        const uploadedFile = {
+          fileName: file.name,
+          fileUrl: res.data.fileUrl || '',
+          documentId: res.data.documentId || null
+        };
+        const filesArray = this.documentCtrl.controls[i].get('files') as FormArray;
+        filesArray.push(this.fb.group(uploadedFile));
+      }
+    });
+  }
 
 
   getDecimalValue(value: string) {
@@ -199,11 +214,10 @@ export class DisbursmentRequestComponent
     delete payload?.chequeFavouringSame;
     delete payload?.loanType;
     4;
-    console.log(payload, "loan-disbursment");
 
     let disburArr = [
       {
-        eventType: "topUp",
+        eventType: "disbursmentReq",
         operationType: "Loan",
         status: "details",
         masterId: "benificiaryMasterId",

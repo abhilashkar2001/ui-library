@@ -1,3 +1,4 @@
+import { TableHeader } from "../../send-money/send-money-store";
 import { loanServiceStore } from "../loan-tabs";
 
 
@@ -58,6 +59,33 @@ export class LoanDashboardConstant {
         "Unclear Transaction",
         "Lien Linked on Account",
     ];
+
+
+    static readonly recentTabs: string[] = ["Active Loan"];
+
+    static readonly recentColumns: TableHeader[] = [
+        {
+            headerDef: "created",
+            headerCell: "Date",
+        },
+        {
+            headerDef: "cbsRefNo",
+            headerCell: "Ref Number",
+        },
+        {
+            headerDef: "remarks",
+            headerCell: "Description",
+        },
+        {
+            headerDef: "renewalAmount",
+            headerCell: "Amount",
+        },
+        {
+            headerDef: "balance",
+            headerCell: "Balance",
+        },
+    ];
+
 
 }
 

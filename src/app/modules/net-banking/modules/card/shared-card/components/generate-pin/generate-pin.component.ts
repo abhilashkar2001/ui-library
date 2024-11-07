@@ -79,6 +79,7 @@ export class GeneratePinComponent implements OnInit {
   submit(): void {
     if (this.otpAvailable) {
       this.dialogRef.close({ pin: this.otp });
+      this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
     }
   }
 }

@@ -120,6 +120,11 @@ export class DrawerConstant {
 
   static readonly LOAN_DRAWER_MENU = [
     {
+      name: "Loan Dashboard",
+      path: "loan/dashboard",
+      roleName: "parent-node",
+    },
+    {
       name: "Loan Services",
       path: "",
       roleName: "parent-node",
@@ -190,7 +195,8 @@ export class DrawerConstant {
           roleName: "child-node",
         },
       ],
-    },
+    }
+
   ];
 
   static readonly CARD_DRAWER_MENU = [

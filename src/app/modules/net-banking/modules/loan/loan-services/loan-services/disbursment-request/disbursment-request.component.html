@@ -155,9 +155,9 @@
               <app-searchable-select
                 [control]="document.get('documentName')"
                 [inputLabel]="'Document Name' | translate"
-                [items]="documentNameArr"
-                bindValueKey="value"
-                bindLabelKey="label"
+                [items]="genericValue?.DOCUMENTTYPE"
+                bindValueKey="id"
+                bindLabelKey="values"
                 [showOutsideLabel]="true"
               >
               </app-searchable-select>

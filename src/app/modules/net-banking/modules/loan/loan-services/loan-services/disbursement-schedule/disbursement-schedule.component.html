@@ -32,7 +32,7 @@
         fxLayoutAlign="end center"
       >
         <h3
-          class="light-blue-title-md"
+          class="disbursementRqstLink"
           (click)="route('loan/loan-service/disbursement-request')"
         >
           <u>{{ "Disbursement Request" | translate }}</u>
@@ -56,9 +56,9 @@
           </ng-container>
         </thead>
         <tbody>
-          <tr *ngFor="let data of fetchedData">
+          <tr>
             <td class="basicInfoList" *ngFor="let item of disbursementList">
-              {{ data[item?.hederDef] }}
+              {{ fetchedData[item?.headerDef] }}
             </td>
           </tr>
         </tbody>

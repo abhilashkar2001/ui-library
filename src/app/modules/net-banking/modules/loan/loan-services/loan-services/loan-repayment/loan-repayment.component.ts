@@ -139,9 +139,6 @@ export class LoanRepaymentComponent implements OnInit {
     payload.debitCurrency = this.loanDetails?.find(
       (res) => res?.cbsAccountNumber == this.repaymentForm?.value?.debitAccount
     )?.currencyCode;
-
-    console.log(payload, "payloadddd");
-
     let loanRepaymentArr = [
       {
         eventType: "loanRepayment",

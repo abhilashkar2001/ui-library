@@ -36,4 +36,6 @@ export interface LoanDetailsModel {
     checklistDocumentInfo: any;
     cbsAccountNumber: string;
     loanAccountStatus: string;
+    customerName?: string;
+    loanAmount?: string
 }

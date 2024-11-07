@@ -16,6 +16,9 @@ export class LoanDashboardComponent implements OnInit {
   selectedAccNo: any;
   isStatics: boolean = false;
   transactionCard = LoanDashboardConstant.transactionCard;
+  recentTransTabs = LoanDashboardConstant.recentTabs;
+  recentTransCols = LoanDashboardConstant.recentColumns;
+  recentTransData: any;
   closedLoanList = LoanDashboardConstant.closedLoan;  // Need to remove static api
   instantApprove = LoanDashboardConstant.instantApproveItems; // Need to remove static store
   loanDetails: LoanAccounts;

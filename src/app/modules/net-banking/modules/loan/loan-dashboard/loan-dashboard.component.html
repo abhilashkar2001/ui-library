@@ -117,6 +117,13 @@
         [transactionList]="transactionCard"
       ></app-transaction-card
     ></mat-card>
+
+    <app-recent-transaction
+      [recentTransTabs]="recentTransTabs"
+      [recentTransCols]="recentTransCols"
+      [recentTransData]="recentTransData"
+      [event]="'Loan'"
+    ></app-recent-transaction>
   </div>
 
   <!-- Right sidebar starts -->
