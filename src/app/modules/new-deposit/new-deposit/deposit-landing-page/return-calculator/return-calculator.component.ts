@@ -9,7 +9,6 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { InfoPopupComponent } from "./info-popup/info-popup.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { Router } from "@angular/router";
 import { CreateRdService } from "../../rd-calculator/create-rd.service";
 import { Location } from "@angular/common";
@@ -19,6 +18,7 @@ import { FdCalculatorServiceService } from "../../fd-calculator/fd-calculator-se
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-return-calculator",

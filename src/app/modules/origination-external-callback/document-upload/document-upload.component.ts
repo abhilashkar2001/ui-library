@@ -14,14 +14,13 @@ import {
   Validators,
 } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { environment } from "environments/environment";
 import { UploadImage } from "../origination-external-callback.store";
 import { SharedService } from "app/shared/shared.service";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
-import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({

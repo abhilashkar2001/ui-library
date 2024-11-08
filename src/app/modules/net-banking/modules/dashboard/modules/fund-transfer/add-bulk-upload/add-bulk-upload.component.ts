@@ -2,13 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { BulkUploadConstant } from "./bulk.upload.constant";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { BulkUploadServiceService } from "../bulk-upload/bulk-upload-service.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-add-bulk-upload",
@@ -261,8 +261,8 @@ export class AddBulkUploadComponent implements OnInit {
       res == "success"
         ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
         : res == "failed"
-          ? { msg: "Uploaded Failed", status: false }
-          : "";
+        ? { msg: "Uploaded Failed", status: false }
+        : "";
     data =
       res == "Authorize"
         ? {
@@ -271,8 +271,8 @@ export class AddBulkUploadComponent implements OnInit {
             reffNo: reffNo?.reffNo,
           }
         : res == "Reject"
-          ? { msg: "Rejected Successfully", status: "rejected" }
-          : data;
+        ? { msg: "Rejected Successfully", status: "rejected" }
+        : data;
     let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
       data: data,
       width: "40%",

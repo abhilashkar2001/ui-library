@@ -1,6 +1,12 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import * as faceapi from "face-api.js";
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
 
 @Component({
   selector: "app-scan",
@@ -35,28 +41,15 @@ export class ScanComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private elRef: ElementRef,
     public dialogRef: MatDialogRef<ScanComponent>
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.dialogData;
-    this.startVideo()
+    this.startVideo();
     faceapi.nets.tinyFaceDetector.loadFromUri("../../assets/models"),
-
-    await faceapi.nets.faceLandmark68Net.loadFromUri("../../assets/models")
-
-    await faceapi.nets.faceRecognitionNet.loadFromUri("../../assets/models")
-
-    await faceapi.nets.faceExpressionNet.loadFromUri("../../assets/models")
-    
-    // await Promise.all([
-    //   faceapi.nets.tinyFaceDetector.loadFromUri("../../assets/models"),
-
-    //   await faceapi.nets.faceLandmark68Net.loadFromUri("../../assets/models"),
-
-    //   await faceapi.nets.faceRecognitionNet.loadFromUri("../../assets/models"),
-
-    //   await faceapi.nets.faceExpressionNet.loadFromUri("../../assets/models"),
-    // ]).then(() => this.startVideo());
+      await faceapi.nets.faceLandmark68Net.loadFromUri("../../assets/models");
+    await faceapi.nets.faceRecognitionNet.loadFromUri("../../assets/models");
+    await faceapi.nets.faceExpressionNet.loadFromUri("../../assets/models");
   }
 
   closeClick(isScanned: boolean) {
@@ -127,20 +120,19 @@ export class ScanComponent implements OnInit {
             this.displaySize
           );
           let color = "red";
-        if(this.resizedDetections?.length > 0 ){
-          this.resizedDetections.forEach(detection => {
-            const box = detection.detection.box;
-            const faceWidth = box.width;
-            const imageWidth = this.displaySize.width;
-            const facePercent = (faceWidth / imageWidth) * 100;
+          if (this.resizedDetections?.length > 0) {
+            this.resizedDetections.forEach((detection) => {
+              const box = detection.detection.box;
+              const faceWidth = box.width;
+              const imageWidth = this.displaySize.width;
+              const facePercent = (faceWidth / imageWidth) * 100;
 
-            // Calculate the color based on the face percentage
-            color = this.getColorBasedOnPercentage(facePercent);
-          })
-        }else{
-          color = this.getColorBasedOnPercentage(0);
-        }
-          
+              // Calculate the color based on the face percentage
+              color = this.getColorBasedOnPercentage(facePercent);
+            });
+          } else {
+            color = this.getColorBasedOnPercentage(0);
+          }
 
           this.canvas
             .getContext("2d")
@@ -148,14 +140,17 @@ export class ScanComponent implements OnInit {
           const context = this.canvas.getContext("2d");
           context.clearRect(0, 0, this.canvas.width, this.canvas.height);
           const gradient = context.createLinearGradient(
-            0, 0, this.canvas.width, this.canvas.height
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
           );
-          gradient.addColorStop(0, color);    // Start color
-          gradient.addColorStop(0.5, color);    // Start color
+          gradient.addColorStop(0, color); // Start color
+          gradient.addColorStop(0.5, color); // Start color
           gradient.addColorStop(1, color); // End color
           context.strokeStyle = gradient;
-          context.lineJoin = 'round';
-          this.resizedDetections.forEach(detection => {
+          context.lineJoin = "round";
+          this.resizedDetections.forEach((detection) => {
             const box = detection.detection.box;
             const borderRadius = 10;
             // Draw the detection frame border with gradient stroke style and rounded corners
@@ -163,13 +158,40 @@ export class ScanComponent implements OnInit {
             context.beginPath();
             context.moveTo(box.x + borderRadius, box.y);
             context.lineTo(box.x + box.width - borderRadius, box.y);
-            context.arcTo(box.x + box.width, box.y, box.x + box.width, box.y + borderRadius, borderRadius);
-            context.lineTo(box.x + box.width, box.y + box.height - borderRadius);
-            context.arcTo(box.x + box.width, box.y + box.height, box.x + box.width - borderRadius, box.y + box.height, borderRadius);
+            context.arcTo(
+              box.x + box.width,
+              box.y,
+              box.x + box.width,
+              box.y + borderRadius,
+              borderRadius
+            );
+            context.lineTo(
+              box.x + box.width,
+              box.y + box.height - borderRadius
+            );
+            context.arcTo(
+              box.x + box.width,
+              box.y + box.height,
+              box.x + box.width - borderRadius,
+              box.y + box.height,
+              borderRadius
+            );
             context.lineTo(box.x + borderRadius, box.y + box.height);
-            context.arcTo(box.x, box.y + box.height, box.x, box.y + box.height - borderRadius, borderRadius);
+            context.arcTo(
+              box.x,
+              box.y + box.height,
+              box.x,
+              box.y + box.height - borderRadius,
+              borderRadius
+            );
             context.lineTo(box.x, box.y + borderRadius);
-            context.arcTo(box.x, box.y, box.x + borderRadius, box.y, borderRadius);
+            context.arcTo(
+              box.x,
+              box.y,
+              box.x + borderRadius,
+              box.y,
+              borderRadius
+            );
             context.closePath();
             context.lineWidth = 2;
             context.stroke();
@@ -186,14 +208,14 @@ export class ScanComponent implements OnInit {
 
   getColorBasedOnPercentage(percentage: number): string {
     console.log(percentage);
-    
+
     // Adjust color based on your threshold values
     if (percentage > 34) {
       this.perscentageCheck = false;
-      return 'green';
+      return "green";
     } else if (percentage > 18 && percentage <= 34) {
       this.perscentageCheck = false;
-      return 'yellow';
+      return "yellow";
     } else {
       this.perscentageCheck = true;
       return "red";

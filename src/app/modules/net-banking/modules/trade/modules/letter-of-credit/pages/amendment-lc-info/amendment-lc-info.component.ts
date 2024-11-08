@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
 import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
 
@@ -21,7 +21,7 @@ export class AmendmentLcInfoComponent implements OnInit {
     private fb: FormBuilder,
     private cntStService: countryStateService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCountrys();
@@ -65,14 +65,11 @@ export class AmendmentLcInfoComponent implements OnInit {
         lcType: "Amendment",
         lcInfo: this.amendmentLcInfoForm.value.applicantsDetails,
         beneficiary: this.amendmentLcInfoForm.value.beneficiaryDetails,
-        advisingBank: this.amendmentLcInfoForm.value.advisingBank
-      }
+        advisingBank: this.amendmentLcInfoForm.value.advisingBank,
+      };
       console.log(payload);
 
-      this.updateParentModel(
-        { amendmentLcInfo: payload },
-        this.checkForm()
-      );
+      this.updateParentModel({ amendmentLcInfo: payload }, this.checkForm());
     });
   }
 

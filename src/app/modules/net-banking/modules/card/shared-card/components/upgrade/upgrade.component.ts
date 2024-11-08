@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { NavigationEnd, Router } from "@angular/router";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../card.service";
@@ -8,6 +7,7 @@ import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { SelectNewCardPopupComponent } from "../select-new-card-popup/select-new-card-popup.component";
 import { filter } from "rxjs/operators";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-upgrade",

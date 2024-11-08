@@ -1,12 +1,12 @@
 import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DomSanitizer } from "@angular/platform-browser";
 import { DownloadService } from "app/shared/services/download.service";
 
 @Component({
   selector: "app-pdf-viewer",
   templateUrl: "./pdf-viewer.component.html",
-  styleUrls: ["./pdf-viewer.component.scss"]
+  styleUrls: ["./pdf-viewer.component.scss"],
 })
 export class PdfViewerComponent implements OnInit {
   @Input() fileName: string;

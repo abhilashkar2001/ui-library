@@ -3,20 +3,20 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { GenericValueService } from "app/shared/services/generic-value.service";
 import { FundTransferService } from "../fund-transfer.service";
-import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
 import { debounceTime } from "rxjs/operators";
 import { numberToWords } from "number-to-words";
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { MatCheckboxChange } from "@angular/material/checkbox";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-multi-fund-transfer",
   templateUrl: "./multi-fund-transfer.component.html",
-  styleUrls: ["./multi-fund-transfer.component.scss"]
+  styleUrls: ["./multi-fund-transfer.component.scss"],
 })
 export class MultiFundTransferComponent implements OnInit {
   multiTransferForm: FormGroup;
@@ -89,7 +89,7 @@ export class MultiFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""]
+      remarks: [""],
     });
     this.multiTransferForm
       .get("debitAmount")
@@ -136,7 +136,7 @@ export class MultiFundTransferComponent implements OnInit {
     this.selectedAccounts = event;
     this.selectedAccounts = event.map((account) => ({
       accountNo: account,
-      amount: this.multiTransferForm.value.debitAmount
+      amount: this.multiTransferForm.value.debitAmount,
     }));
     if (
       this.multiTransferForm.get("debitAmount").value &&
@@ -180,12 +180,12 @@ export class MultiFundTransferComponent implements OnInit {
   getOTP() {
     this.api
       .getOtp(this.customerInfo.mobileNumber)
-      .subscribe((response: any) => { });
+      .subscribe((response: any) => {});
   }
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary"
+      "user/dashboard/fund-transfer/fund-transfer-summary",
     ]);
   }
 
@@ -235,12 +235,12 @@ export class MultiFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data
+              reffNo: resp?.data,
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop"
+            backdropClass: "bdrop",
           });
           this.dialogRef.afterClosed().subscribe((result) => {
             console.log(result);
@@ -277,7 +277,7 @@ export class MultiFundTransferComponent implements OnInit {
       disableClose: true,
       panelClass: "popup-dialog-class",
 
-      backdropClass: "bdrop"
+      backdropClass: "bdrop",
     });
     this.dialogRef1.afterClosed().subscribe((result) => {
       if (result == "verified") {
@@ -288,7 +288,7 @@ export class MultiFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop"
+          backdropClass: "bdrop",
         });
         this.dialogRef.afterClosed().subscribe((result) => {
           if (result == "Failed") {

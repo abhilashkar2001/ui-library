@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 @Component({
@@ -26,7 +26,7 @@ export class SavingsSubmitDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-  
+
   done() {
     if (this.data.flow && this.data.flow === "cards") {
       this.router.navigate(["/cards"]);

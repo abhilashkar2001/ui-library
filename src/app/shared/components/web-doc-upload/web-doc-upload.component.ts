@@ -13,8 +13,6 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { ActivatedRoute } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
@@ -24,6 +22,8 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { WarningComponent } from "../warning/warning.component";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-web-doc-upload",

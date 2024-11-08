@@ -19,7 +19,7 @@ import { CommonService } from "app/shared/services/common-service/common.service
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { debounceTime } from "rxjs/operators";
 import { ErrorNotifierPopupComponent } from "../error-notifier-popup/error-notifier-popup.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-common-mobile-verification",

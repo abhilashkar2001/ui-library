@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "app-bank-code-popup",
   templateUrl: "./bank-code-popup.component.html",
-  styleUrls: ["./bank-code-popup.component.scss"]
+  styleUrls: ["./bank-code-popup.component.scss"],
 })
 export class BankCodePopupComponent implements OnInit {
   tableColumns: any = [];

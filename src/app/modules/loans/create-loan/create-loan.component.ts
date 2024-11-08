@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import * as moment from "moment";
@@ -9,6 +8,7 @@ import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { SharedService } from "app/shared/shared.service";
 import { merge, Subscription } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-create-loan",

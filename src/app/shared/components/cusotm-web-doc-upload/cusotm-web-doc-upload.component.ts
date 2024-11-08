@@ -14,12 +14,8 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { ActivatedRoute } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
@@ -634,7 +630,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       documentNumber:
         this.createDocumentForm.value.otherDocument[i].documentNumber,
       documentSide:
-        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1 ,
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1,
       fileName: file.name,
       fileType: file.type,
       verificationType: "kyc",

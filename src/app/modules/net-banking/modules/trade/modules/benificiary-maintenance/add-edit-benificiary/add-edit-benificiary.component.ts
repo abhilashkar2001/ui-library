@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { BeneficiaryService } from "../beneficiary-summary/beneficiary.service";
 import { BankCodePopupComponent } from "app/shared/components/bank-code-popup/bank-code-popup.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { IconService } from "app/shared/services/icon.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-add-edit-benificiary",

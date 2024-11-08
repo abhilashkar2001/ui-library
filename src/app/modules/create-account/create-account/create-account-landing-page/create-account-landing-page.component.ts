@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
@@ -14,6 +13,7 @@ import { CreateAccountConstant, CreateEnum } from "./create-account.constant";
 import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { EmailService } from "app/shared/services/email.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { MatDialog } from "@angular/material/dialog";
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;

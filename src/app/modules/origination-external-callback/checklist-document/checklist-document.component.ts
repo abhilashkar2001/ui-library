@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import {
   ChecklistInfoModel,
   ChecklistPayloadModel,
@@ -13,6 +11,8 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
 import { environment } from "environments/environment";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-checklist-document",

@@ -5,8 +5,8 @@ import * as moment from "moment";
 import { ActivatedRoute } from "@angular/router";
 import { CreateRdService } from "./create-rd.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-rd-calculator",

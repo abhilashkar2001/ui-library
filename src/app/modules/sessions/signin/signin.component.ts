@@ -4,14 +4,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoginService } from "../login.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { SessionService } from "app/shared/session.service";
 import { ThemeChangeService } from "app/shared/services/theme-change.service";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
 import { TranslateService } from "@ngx-translate/core";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-signin",
@@ -40,8 +39,6 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private loginService: LoginService,
-    private commonService: CommonService,
-    private snack: MatSnackBar,
     private tokenService: TokenStorageService,
     private sessionService: SessionService,
     private themingService: ThemeChangeService,

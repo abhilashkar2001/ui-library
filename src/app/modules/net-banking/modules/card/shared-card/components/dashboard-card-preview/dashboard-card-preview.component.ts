@@ -8,10 +8,10 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { CardModel, Cards } from "app/shared/models/card.model";
 import { environment } from "environments/environment";
 import { GetStatementPopupComponent } from "../../get-statement-popup/get-statement-popup.component";
+import { MatDialog } from "@angular/material/dialog";
 // import { CardModel, Cards } from "app/@core/models/card.model";
 
 @Component({

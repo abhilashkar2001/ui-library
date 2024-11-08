@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { User } from "app/shared/models/user.model";
 import { OtpService } from "app/shared/services/otp.service";
@@ -45,7 +45,7 @@ export class OtpComponent implements OnInit {
     this.currentUser = this.tokenStorageService.getUser();
     this.router.queryParams.subscribe((params) => {
       this.screenName = params["type"];
-    })
+    });
     if (this.screenName != "" && this.screenName != undefined) {
       this.customerId = JSON.parse(sessionStorage.getItem("customerId"));
       this.otpForm.get("mobile").patchValue(sessionStorage.getItem("mobile"));
@@ -54,7 +54,6 @@ export class OtpComponent implements OnInit {
         this.generateOtp();
       }, 100);
     }
-
   }
   resetOrExit(value) {
     if (value == "Reset") {
@@ -92,7 +91,7 @@ export class OtpComponent implements OnInit {
   verifyOtp() {
     this.otpService.verifyOTP(this.otpForm.value).subscribe((res) => {
       if (this.screenName != "" && this.screenName != undefined) {
-        this.route.navigate([`/origination/document-upload`])
+        this.route.navigate([`/origination/document-upload`]);
       } else {
         this.route.navigate(["/home"]);
       }

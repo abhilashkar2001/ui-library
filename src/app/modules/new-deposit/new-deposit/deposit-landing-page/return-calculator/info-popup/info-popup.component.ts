@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
-import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
+import { MatDialogRef } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 
 @Component({

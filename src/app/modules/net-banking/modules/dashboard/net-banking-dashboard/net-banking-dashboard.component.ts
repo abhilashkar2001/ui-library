@@ -14,7 +14,6 @@ import { Account } from "app/shared/models/account-list-by-subclass.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";
@@ -23,6 +22,7 @@ import { InternetBankingService } from "app/shared/services/internet-banking.ser
 import { LoanService } from "app/shared/services/net-loan-service/loan.service";
 import { LoanAccounts } from "app/shared/models/loan-account.model";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-net-banking-dashboard",
@@ -83,7 +83,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     public translate: TranslateService,
     public loanService: LoanService,
     private renderer: Renderer2,
-    private sessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(

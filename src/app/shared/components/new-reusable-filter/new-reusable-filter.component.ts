@@ -14,9 +14,9 @@ import { environment } from "environments/environment";
 import { fromEvent } from "rxjs";
 import { debounceTime, map } from "rxjs/operators";
 import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TableService } from "app/shared/services/table-service/table-service";
 import { ViewExcelDocComponent } from "../view-excel-doc/view-excel-doc.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-new-reusable-filter",

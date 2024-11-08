@@ -1,8 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { SharedService } from "app/shared/shared.service";
 
 @Component({
   selector: "app-select-kyc",
@@ -38,12 +35,7 @@ export class SelectKycComponent implements OnInit {
   };
   displaySecond: string;
   resendLink: boolean;
-  constructor(
-    private fb: FormBuilder,
-    private api: NewDepositService,
-    private snack: MatSnackBar,
-    private sharedService: SharedService
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildKycForm();
@@ -75,32 +67,8 @@ export class SelectKycComponent implements OnInit {
       mobile: this.kycForm.value.verifyNationalID,
       otp: this.yourOtp,
     };
-    // this.api.verifyOtp(payload).subscribe((resp) => {
-    //   if (resp?.statusCode === 200) {
-    //     this.snack.open(`Mobile Number verified successfully`, "OK", {
-    //       duration: 4000,
-    //       verticalPosition: "top",
-    //       horizontalPosition: "right",
-    //       panelClass: "snackbar-error",
-    //     });
-    //     this.customSaveVerify.emit(true);
-    //     this.customFormGroupEmit.emit(this.kycForm);
-    //   }
-    // });
   }
   getOtp() {
-    // this.api.getOtp(this.kycForm.value.verifyNationalID).subscribe((resp) => {
-    //   if (resp?.statusCode === 200) {
-    //     //  need to be replace bytoast service
-    //     this.snack.open(`Otp sent successfully`, "OK", {
-    //       duration: 4000,
-    //       verticalPosition: "top",
-    //       horizontalPosition: "right",
-    //       panelClass: "snackbar-error",
-    //     });
-    //     this.timer(1);
-    //   }
-    // });
     this.isShowOtp = true;
     this.getOtpBtn = false;
     this.otpTimer();

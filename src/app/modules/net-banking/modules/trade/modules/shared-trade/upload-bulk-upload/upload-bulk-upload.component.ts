@@ -7,10 +7,8 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
-import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { ViewExcelDocComponent } from "app/shared/components/view-excel-doc/view-excel-doc.component";
 import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -58,11 +56,9 @@ export class UploadBulkUploadComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private bulkservice: BulkUpload,
     private dialog: MatDialog,
-    private commonService: CommonService,
     private tokenStorage: TokenStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
@@ -170,7 +166,7 @@ export class UploadBulkUploadComponent implements OnInit {
     const userName = this.currentUser.username;
     const productType = this.maintTemplateUpload.value.productType;
     const processingDate = this.maintTemplateUpload.value.processingDate;
-    const corpCustomerId = this.corporateId
+    const corpCustomerId = this.corporateId;
     const screenName = this.screenName;
     this.customSaveBulkUpload.emit({
       formData,

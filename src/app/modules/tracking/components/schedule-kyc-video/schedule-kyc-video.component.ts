@@ -7,8 +7,7 @@ import {
   MAT_DATE_LOCALE,
 } from "@angular/material/core";
 import { MatCalendarCellClassFunction } from "@angular/material/datepicker";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
+import { MatDialog } from "@angular/material/dialog";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import * as moment from "moment";
 

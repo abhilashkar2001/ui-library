@@ -1,19 +1,12 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
 import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogRef as MatDialogRef,
-} from "@angular/material/legacy-dialog";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
-import { SuccessPopupComponent } from "../success-popup/success-popup.component";
 import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({

@@ -8,7 +8,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { EmiDetails } from "app/shared/models/emi-converter.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-card-emi-details",

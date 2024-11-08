@@ -1,20 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  RequiredValidator,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FundTransferService } from "../fund-transfer.service";
 import { Router } from "@angular/router";
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { TranslateService } from "@ngx-translate/core";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-credit-card-payment",

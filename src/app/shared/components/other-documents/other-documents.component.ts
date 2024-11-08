@@ -15,15 +15,13 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
-
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-other-documents",

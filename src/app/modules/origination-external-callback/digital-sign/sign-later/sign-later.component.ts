@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SignNowPopupComponent } from "../sign-now-popup/sign-now-popup.component";
 import { BranchService } from "../sign-now-popup/branch.service";
 import { SuccessModalComponent } from "../success-modal/success-modal.component";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-sign-later",

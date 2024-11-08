@@ -1,46 +1,40 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NewDepositComponent } from "./new-deposit/new-deposit.component";
-import { DepositLandingPageComponent } from "./new-deposit/deposit-landing-page/deposit-landing-page.component";
-import { RouterModule } from "@angular/router";
-import { NewDepositRoutes } from "./new-deposit-routing";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatLegacyButtonModule as MatButtonModule } from "@angular/material/legacy-button";
-import { FdRdCalculatorComponent } from "./new-deposit/deposit-landing-page/fd-rd-calculator/fd-rd-calculator.component";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ReturnCalculatorComponent } from "./new-deposit/deposit-landing-page/return-calculator/return-calculator.component";
-import { MatLegacyRadioModule as MatRadioModule } from "@angular/material/legacy-radio";
-import { MatLegacyFormFieldModule as MatFormFieldModule } from "@angular/material/legacy-form-field";
-import { MatLegacySliderModule as MatSliderModule } from "@angular/material/legacy-slider";
-import { MatLegacyCheckboxModule as MatCheckboxModule } from "@angular/material/legacy-checkbox";
-import { MatLegacyInputModule as MatInputModule } from "@angular/material/legacy-input";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatLegacySelectModule as MatSelectModule } from "@angular/material/legacy-select";
-import { MaturityCalculatorComponent } from "./new-deposit/deposit-landing-page/return-calculator/maturity-calculator/maturity-calculator.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { RouterModule } from "@angular/router";
+import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap";
+import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { SharedDirectivesModule } from "app/shared/directives/shared-directives.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { GrowthFdAnimationComponent } from "./new-deposit/deposit-landing-page/growth-fd-animation/growth-fd-animation.component";
+import { SharedModule } from "app/shared/shared.module";
+import { NgOtpInputModule } from "ng-otp-input";
+import { NewDepositRoutes } from "./new-deposit-routing";
 import { DepositFaqComponent } from "./new-deposit/deposit-landing-page/deposit-faq/deposit-faq.component";
-import {
-  NgbCarousel,
-  NgbCarouselModule,
-  NgbSlideEvent,
-  NgbSlideEventSource,
-} from "@ng-bootstrap/ng-bootstrap";
-import { FdCalculatorComponent } from "./new-deposit/fd-calculator/fd-calculator.component";
-import { FixedDepositDetailsComponent } from "./new-deposit/fd-calculator/fixed-deposit-details/fixed-deposit-details.component";
-import { VerifyNumberComponent } from "./new-deposit/fd-calculator/verify-number/verify-number.component";
-import { PersonalDetailsComponent } from "./new-deposit/fd-calculator/personal-details/personal-details.component";
+import { DepositLandingPageComponent } from "./new-deposit/deposit-landing-page/deposit-landing-page.component";
+import { FdRdCalculatorComponent } from "./new-deposit/deposit-landing-page/fd-rd-calculator/fd-rd-calculator.component";
+import { GrowthFdAnimationComponent } from "./new-deposit/deposit-landing-page/growth-fd-animation/growth-fd-animation.component";
+import { InfoPopupComponent } from "./new-deposit/deposit-landing-page/return-calculator/info-popup/info-popup.component";
+import { MaturityCalculatorComponent } from "./new-deposit/deposit-landing-page/return-calculator/maturity-calculator/maturity-calculator.component";
+import { ReturnCalculatorComponent } from "./new-deposit/deposit-landing-page/return-calculator/return-calculator.component";
 import { BookFdComponent } from "./new-deposit/fd-calculator/book-fd/book-fd.component";
 import { PaymentMethodComponent } from "./new-deposit/fd-calculator/book-fd/payment-method/payment-method.component";
-import { SharedDirectivesModule } from "app/shared/directives/shared-directives.module";
-import { RdCalculatorComponent } from "./new-deposit/rd-calculator/rd-calculator.component";
+import { FdCalculatorComponent } from "./new-deposit/fd-calculator/fd-calculator.component";
+import { FixedDepositDetailsComponent } from "./new-deposit/fd-calculator/fixed-deposit-details/fixed-deposit-details.component";
+import { PersonalDetailsComponent } from "./new-deposit/fd-calculator/personal-details/personal-details.component";
+import { VerifyNumberComponent } from "./new-deposit/fd-calculator/verify-number/verify-number.component";
+import { NewDepositComponent } from "./new-deposit/new-deposit.component";
 import { CreateCdComponent } from "./new-deposit/rd-calculator/create-cd/create-cd.component";
-import { NgOtpInputModule } from "ng-otp-input";
-import { SharedModule } from "app/shared/shared.module";
-import { SharedComponentsModule } from "app/shared/components/shared-components.module";
-import { InfoPopupComponent } from './new-deposit/deposit-landing-page/return-calculator/info-popup/info-popup.component';
+import { RdCalculatorComponent } from "./new-deposit/rd-calculator/rd-calculator.component";
+import { MatSliderModule } from "@angular/material/slider";
 
 @NgModule({
   declarations: [

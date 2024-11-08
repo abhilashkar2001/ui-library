@@ -13,9 +13,9 @@ import { DesireLimitComponent } from "./component/credit-card-control/pages/desi
 import { IncreaseLimitComponent } from "./component/credit-card-control/pages/increase-limit/increase-limit.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
-import { MatLegacySlideToggleModule as MatSlideToggleModule } from "@angular/material/legacy-slide-toggle";
 import { CreditCardInternaltionalLimitComponent } from "./component/credit-card-internaltional-limit/credit-card-internaltional-limit.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [

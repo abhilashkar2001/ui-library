@@ -1,13 +1,12 @@
-import { HttpEventType, HttpResponse } from "@angular/common/http";
-import { Component, Input, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { environment } from "environments/environment";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Component, OnInit, Input } from "@angular/core";
+import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
 import { Router } from "@angular/router";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { CommonService } from "app/shared/services/common-service/common.service";
 import { GenericValueService } from "app/shared/services/generic-value.service";
+import { environment } from "environments/environment";
 import { BgSummaryServiceService } from "../bg-summary/bg-summary-service.service";
+
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Component({

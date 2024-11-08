@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject, Subscription, fromEvent } from "rxjs";
 import { Router } from "@angular/router";
 import { tap } from "rxjs/operators";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TokenStorageService } from "../token-storage.service";
 import { NotificationService } from "../services/notification.service";
 import { RequestCache } from "../services/request-cache.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Injectable({
   providedIn: "root",

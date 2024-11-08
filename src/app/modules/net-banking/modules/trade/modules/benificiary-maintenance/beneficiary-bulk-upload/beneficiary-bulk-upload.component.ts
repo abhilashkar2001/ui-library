@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
@@ -10,6 +9,7 @@ import { CustomSuccessPopupComponent } from "app/shared/components/custom-succes
 import { BeneficiaryService } from "../beneficiary-summary/beneficiary.service";
 import { BulkUploadConstant } from "app/modules/net-banking/modules/dashboard/modules/fund-transfer/add-bulk-upload/bulk.upload.constant";
 import { BulkUploadServiceService } from "app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-beneficiary-bulk-upload",

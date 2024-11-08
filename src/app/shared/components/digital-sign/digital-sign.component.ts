@@ -8,23 +8,12 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
-import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogRef as MatDialogRef,
-} from "@angular/material/legacy-dialog";
-// import { SignaturePad } from "angular2-signaturepad";
-import { Subscription } from "rxjs";
-import { HttpEventType, HttpResponse } from "@angular/common/http";
-import SignaturePad from "signature_pad";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { SignPadComponent } from "app/modules/origination-external-callback/digital-sign/sign-pad/sign-pad.component";
 import { SignNowPopupComponent } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component";
 import { environment } from "environments/environment";
 import { BranchService } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-// import { SignPadComponent } from "app/shared/components/sign-pad/sign-pad.component";
-// import { ApiService } from "app/shared/services/api.service";
+import { MatDialog } from "@angular/material/dialog";
+
 @Component({
   selector: "app-digital-sign",
   templateUrl: "./digital-sign.component.html",

@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { CreditCardStore } from "../../../credit-card.store";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../../card.service";
 import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
 import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-alert-subscription",

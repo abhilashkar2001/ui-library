@@ -9,9 +9,6 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { LoanService } from "app/shared/services/loan/loan.service";
-import { environment } from "environments/environment";
-import { ScanComponent } from "../scan/scan.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 
 @Component({
   selector: "app-national-id-upload",
@@ -56,7 +53,7 @@ export class NationalIdUploadComponent implements OnInit {
     ],
   };
 
-  constructor(private loanApi: LoanService, private dialog: MatDialog) {}
+  constructor(private loanApi: LoanService) {}
 
   ngOnInit(): void {
     var originationId = sessionStorage.getItem("originationId");
@@ -106,7 +103,7 @@ export class NationalIdUploadComponent implements OnInit {
   onSubmit(event) {
     console.log(event, "......");
     var docIds = [];
-    let customerDetails=[];
+    let customerDetails = [];
     if (this.numberOfDirectors) {
       event.documentDetails.otherDocument.forEach((element) => {
         if (element.docIds?.length > 0) {
@@ -125,19 +122,16 @@ export class NationalIdUploadComponent implements OnInit {
             docIds: element.docIds,
           };
           docIds.push(docId);
-          console.log(customerDetails)
-            console.log(element);
-            element.fileInfo.forEach((item) => {
-              console.log(item, ".......");
-              if (
-                (item.applicantName || item.gender || item.dateOfBirth)
-              ) {
-                console.log(";;;;;;;");
-                customerDetails.push(item);
-                return;
-              }
-            });
-          
+          console.log(customerDetails);
+          console.log(element);
+          element.fileInfo.forEach((item) => {
+            console.log(item, ".......");
+            if (item.applicantName || item.gender || item.dateOfBirth) {
+              console.log(";;;;;;;");
+              customerDetails.push(item);
+              return;
+            }
+          });
         }
       });
     }

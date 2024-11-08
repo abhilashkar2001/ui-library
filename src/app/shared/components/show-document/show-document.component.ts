@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { environment } from "environments/environment";
 import { ImageDialogComponent } from "../image-dialog/image-dialog.component";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-show-document",

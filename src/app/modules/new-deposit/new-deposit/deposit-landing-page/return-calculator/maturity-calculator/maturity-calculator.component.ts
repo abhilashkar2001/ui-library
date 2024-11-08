@@ -3,8 +3,8 @@ import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { CreateRdService } from "../../../rd-calculator/create-rd.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { InfoPopupComponent } from "../info-popup/info-popup.component";
+import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-maturity-calculator",
   templateUrl: "./maturity-calculator.component.html",

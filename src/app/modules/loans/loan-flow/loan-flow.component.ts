@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Form, FormGroup } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -16,6 +14,8 @@ import { ReusableAlertPopupComponent } from "app/shared/components/reusable-aler
 import { DataService } from "app/shared/services/table-service/data.service";
 import { CustomWebDocUploadServiceService } from "app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-loan-flow",

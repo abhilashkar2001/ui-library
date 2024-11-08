@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { CreditcardService } from '../../../../creditcard.service';
-import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { CreditcardService } from "../../../../creditcard.service";
+import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-increase-limit',
-  templateUrl: './increase-limit.component.html',
-  styleUrls: ['./increase-limit.component.scss']
+  selector: "app-increase-limit",
+  templateUrl: "./increase-limit.component.html",
+  styleUrls: ["./increase-limit.component.scss"],
 })
 export class IncreaseLimitComponent implements OnInit {
-
   increaseLimitForm: FormGroup;
   selectedCurrency: string = "INR";
   viewOtp: boolean = false;
@@ -35,11 +34,10 @@ export class IncreaseLimitComponent implements OnInit {
     this.initIncreaseLimitForm();
     this.getCreditCardDetailsList();
     this.customerInfo = this.ss.getCustomerInfo();
-    this.userInfo=JSON.parse(sessionStorage.getItem('auth-user'));
+    this.userInfo = JSON.parse(sessionStorage.getItem("auth-user"));
     this.cardList = this.ss.getListOfCards();
-    this.fourDigitNo = this.userInfo?.mobile.substr(6,10);
+    this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     console.log(this.fourDigitNo);
-    
   }
 
   getCreditCardDetailsList() {
@@ -78,10 +76,12 @@ export class IncreaseLimitComponent implements OnInit {
 
   proceedToOtp() {
     this.viewOtp = true;
-    this.creditCardService.generateOTP(this.userInfo?.mobile).subscribe((res: any) => {
-      this.otp = res.data;
-      // this.increaseLimitForm.get("otp").setValue(this.otp);
-    });
+    this.creditCardService
+      .generateOTP(this.userInfo?.mobile)
+      .subscribe((res: any) => {
+        this.otp = res.data;
+        // this.increaseLimitForm.get("otp").setValue(this.otp);
+      });
   }
 
   submitEligibleLimit() {
@@ -98,7 +98,7 @@ export class IncreaseLimitComponent implements OnInit {
           .subscribe((resp: any) => {
             console.log(resp);
             if (resp) {
-              const dialogRef=this.dialog.open(PopupSuccessComponent, {
+              const dialogRef = this.dialog.open(PopupSuccessComponent, {
                 data: {
                   status: "SuccessOnly",
                   Msg: "Card limit has been set",
@@ -106,21 +106,18 @@ export class IncreaseLimitComponent implements OnInit {
                 disableClose: true,
                 panelClass: "popup-dialog-class",
                 backdropClass: "bdrop",
-                width:"25%"
+                width: "25%",
               });
-              dialogRef.afterClosed().subscribe(res=>{
+              dialogRef.afterClosed().subscribe((res) => {
                 console.log(res);
-                if(res == 'Yes'){
+                if (res == "Yes") {
                   this.increaseLimitForm.reset();
                   this.viewOtp = false;
-
                 }
-                
-              })
+              });
             }
           });
       }
     });
   }
-
 }

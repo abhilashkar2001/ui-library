@@ -1,9 +1,9 @@
 import { Location } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { CibilScorePoorDialgComponent } from "../cibil-score-poor-dialg/cibil-score-poor-dialg.component";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-cibil-score-result",

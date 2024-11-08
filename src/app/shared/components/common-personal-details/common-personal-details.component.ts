@@ -11,9 +11,7 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { CreateRdService } from "app/modules/new-deposit/new-deposit/rd-calculator/create-rd.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -26,6 +24,8 @@ import { ErrorNotifierPopupComponent } from "../error-notifier-popup/error-notif
 import { forkJoin } from "rxjs";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { PersonalDetailsConstant } from "./personal-details.constant";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-common-personal-details",
@@ -76,11 +76,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
   customerIds: any[] = [];
   debounceTimeout: any;
   errorDob: any;
-  genderPrefixMap=new Map([
-  ['male', 'Mr'],
-  ['female', 'Ms'],
-  ['female', 'Mrs'],
-]);
+  genderPrefixMap = new Map([
+    ["male", "Mr"],
+    ["female", "Ms"],
+    ["female", "Mrs"],
+  ]);
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -167,14 +167,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
                   .get("customer")
                   ["controls"][index].get("gender")
                   .setValue(gender);
-                if(item?.gender?.toLowerCase()){
-                  let prefix=this.prefixArray.filter((val:any)=>
-                    val?.values==this.genderPrefixMap.get(item?.gender?.toLowerCase())
-                  )
-                   this.customerDetailsForm
-                  .get("customer")
-                  ["controls"][index].get("prefix")
-                  .setValue(prefix[0]?.id);
+                if (item?.gender?.toLowerCase()) {
+                  let prefix = this.prefixArray.filter(
+                    (val: any) =>
+                      val?.values ==
+                      this.genderPrefixMap.get(item?.gender?.toLowerCase())
+                  );
+                  this.customerDetailsForm
+                    .get("customer")
+                    ["controls"][index].get("prefix")
+                    .setValue(prefix[0]?.id);
                 }
 
                 const address = this.customer
@@ -342,7 +344,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
 
     if (data?.length > 0) {
       setTimeout(() => {
-        this.renderApplicant(data, this.docCustomerDetails?.length || data?.length);
+        this.renderApplicant(
+          data,
+          this.docCustomerDetails?.length || data?.length
+        );
       }, 200);
     } else {
       if (this.docCustomerDetails?.length > 0)

@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TransactionCardComponent } from "../transaction-card/transaction-card.component";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { CreditCardStore } from "app/modules/net-banking/modules/card/credit-card/credit-card.store";
 import { QrcodeComponent } from "app/shared/components/qrcode/qrcode.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-link-payee-side-bar",

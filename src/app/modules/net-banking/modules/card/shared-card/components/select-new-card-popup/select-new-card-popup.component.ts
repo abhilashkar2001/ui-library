@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { CreditCardStore } from "../../../credit-card/credit-card.store";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-select-new-card-popup",

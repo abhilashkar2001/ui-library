@@ -1,25 +1,24 @@
-import { Component, OnInit, Optional } from '@angular/core';
-import { CreditCardStore } from '../credit-card.store';
-import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawer.constant';
-import { Router } from '@angular/router';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { Component, OnInit, Optional } from "@angular/core";
+import { CreditCardStore } from "../credit-card.store";
+import { DrawerConstant } from "app/shared/components/custom-drawer/custom-drawer.constant";
+import { Router } from "@angular/router";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-manage-credit-card',
-  templateUrl: './manage-credit-card.component.html',
-  styleUrls: ['./manage-credit-card.component.scss']
+  selector: "app-manage-credit-card",
+  templateUrl: "./manage-credit-card.component.html",
+  styleUrls: ["./manage-credit-card.component.scss"],
 })
 export class ManageCreditCardComponent implements OnInit {
   transactionCard = CreditCardStore.quickLinks;
   serviceLinks = CreditCardStore.ManageLinks;
   tabs = DrawerConstant.cardMenuTabs;
-  constructor(private router: Router,
-    @Optional() private dialogRef: MatDialogRef<ManageCreditCardComponent>,
+  constructor(
+    private router: Router,
+    @Optional() private dialogRef: MatDialogRef<ManageCreditCardComponent>
+  ) {}
 
-  ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   route(route: string) {
     console.log(route, "callingg");
 

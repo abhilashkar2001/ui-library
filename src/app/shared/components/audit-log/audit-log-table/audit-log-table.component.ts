@@ -5,11 +5,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 
 import { AduitLogDetailsComponent } from "../aduit-log-details/aduit-log-details.component";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { AuditLogPopupComponent } from "../audit-log-popup/audit-log-popup.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-audit-log-table",

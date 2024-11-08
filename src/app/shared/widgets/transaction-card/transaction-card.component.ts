@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
 import { Router } from "@angular/router";
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { TransactionCardConstant } from "./transaction-card.constants";
 import { IconService } from "app/shared/services/icon.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-transaction-card",
@@ -20,7 +20,7 @@ export class TransactionCardComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     @Optional() private dialogRef: MatDialogRef<TransactionCardComponent>,
     private tokenStorageService: TokenStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.data) {

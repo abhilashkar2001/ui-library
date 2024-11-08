@@ -1,17 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
-import { SessionService } from "app/shared/session.service";
 import { FundTransferService } from "../fund-transfer.service";
 import { Router } from "@angular/router";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { TranslateService } from "@ngx-translate/core";
+import { MatCheckboxChange } from "@angular/material/checkbox";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-single-fund-transfer",

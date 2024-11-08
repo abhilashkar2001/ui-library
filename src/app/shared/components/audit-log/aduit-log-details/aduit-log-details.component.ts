@@ -9,10 +9,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { DatePipe } from "@angular/common";
-import { MatLegacyPaginator as MatPaginator } from "@angular/material/legacy-paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
 import { AuditLogService } from "../audit-log-service.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
   selector: "app-aduit-log-details",

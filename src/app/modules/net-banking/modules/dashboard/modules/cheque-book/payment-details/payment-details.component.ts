@@ -2,10 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
-import * as moment from "moment";
 import { Location } from "@angular/common";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({
@@ -118,7 +115,6 @@ export class PaymentDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private location: Location,
-    private dialog: MatDialog,
     private tokenStorageService: TokenStorageService
   ) {
     this.matIconRegistry.addSvgIcon(
@@ -127,36 +123,12 @@ export class PaymentDetailsComponent implements OnInit {
         "assets/images/edit_pen.svg"
       )
     );
-    // this.matIconRegistry.addSvgIcon(
-    //   "download-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/download.svg"
-    //   )
-    // );
-    // this.matIconRegistry.addSvgIcon(
-    //   "share-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/share.svg"
-    //   )
-    // );
     this.matIconRegistry.addSvgIcon(
       "info-icon",
       this.sanitizer.bypassSecurityTrustResourceUrl(
         "assets/images/info_yellow.svg"
       )
     );
-    // this.matIconRegistry.addSvgIcon(
-    //   "fav-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/favourite.svg"
-    //   )
-    // );
-    // this.matIconRegistry.addSvgIcon(
-    //   "delete-icon",
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(
-    //     "assets/images/svg/delete.svg"
-    //   )
-    // );
   }
 
   ngOnChanges(changes: SimpleChanges): void {

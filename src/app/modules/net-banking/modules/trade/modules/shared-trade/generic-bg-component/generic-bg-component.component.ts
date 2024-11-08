@@ -1,16 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { Webhost } from "app/shared/directives/appHost.directive";
 import { BehaviorSubject } from "rxjs";
 import { GenericBgServiceService } from "./generic-bg-service.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-generic-bg-component",

@@ -10,8 +10,6 @@ import { TranslateModule } from "@ngx-translate/core";
 import { ConvertToEmiComponent } from "./components/convert-to-emi/convert-to-emi.component";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
-import { MatLegacySlideToggleModule as MatSlideToggleModule } from "@angular/material/legacy-slide-toggle";
 import { BillingCycleComponent } from "./components/billing-cycle/billing-cycle.component";
 import { EStatementComponent } from "./components/e-statement/e-statement.component";
 import { ChangePinComponent } from "./components/change-pin/change-pin.component";
@@ -23,6 +21,8 @@ import { UnbilledTransactionComponent } from "./components/unbilled-transaction/
 import { AddOnCardComponent } from "./components/add-on-card/add-on-card.component";
 import { AutoPayComponent } from "./components/auto-pay/auto-pay.component";
 import { CalculateEmiComponent } from "./components/convert-to-emi/calculate-emi/calculate-emi.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [

@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { OfferIssueService } from "app/shared/services/offer-issue.service";
@@ -11,6 +10,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
 import { OriginationService } from "app/shared/services/origination.service";
 import { SharedService } from "app/shared/shared.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-offer-letter",

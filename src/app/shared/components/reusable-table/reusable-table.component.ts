@@ -7,9 +7,9 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
-import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
+import { MatTableDataSource } from "@angular/material/table";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 
 @Component({
@@ -56,7 +56,7 @@ export class ReusableTableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
-      console.log(changes.data)
+      console.log(changes.data);
       if (changes.data.currentValue) {
         this.data = changes.data.currentValue;
         this.dataSource = new MatTableDataSource(this.data);
