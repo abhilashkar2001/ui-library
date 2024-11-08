@@ -1,7 +1,7 @@
 import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { environment } from "environments/environment";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";

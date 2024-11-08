@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
+import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
 import { countryStateService } from "./countrySateCityService";
 
 @Component({

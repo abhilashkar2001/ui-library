@@ -5,9 +5,9 @@ import { LoanDashboardComponent } from './loan-dashboard/loan-dashboard.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
-import { MatCardModule } from '@angular/material/card';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { LoanServiceDashboardComponent } from './loan-services/loan-service-dashboard/loan-service-dashboard.component';
 import { LoanSummaryComponent } from './loan-summary/loan-summary.component';

@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";

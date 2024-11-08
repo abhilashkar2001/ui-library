@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { InfoPopupComponent } from "./info-popup/info-popup.component";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { Router } from "@angular/router";
 import { CreateRdService } from "../../rd-calculator/create-rd.service";
 import { Location } from "@angular/common";

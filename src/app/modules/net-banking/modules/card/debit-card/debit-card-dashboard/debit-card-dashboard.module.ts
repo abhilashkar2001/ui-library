@@ -4,7 +4,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatCardModule } from "@angular/material/card";
+import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
 import { DebitCardDashboardComponent } from "./debit-card-dashboard/debit-card-dashboard.component";
 import { DebitCardDashboardRoutingModule } from "./debit-card-dashboard-routing.module";
 

@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 

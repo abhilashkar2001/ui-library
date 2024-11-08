@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CreditcardService } from '../../../../creditcard.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { debounceTime } from 'rxjs/operators';
 import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
 

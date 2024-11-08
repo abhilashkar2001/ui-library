@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CreditcardService } from '../../../../creditcard.service';
 import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';

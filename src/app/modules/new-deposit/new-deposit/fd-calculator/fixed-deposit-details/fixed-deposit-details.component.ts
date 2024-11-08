@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "../../../new-deposit.service";
 import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 import * as moment from "moment";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { ActivatedRoute } from "@angular/router";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";

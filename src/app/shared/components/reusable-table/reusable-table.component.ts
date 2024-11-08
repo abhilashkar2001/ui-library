@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ServiceCallHandler } from "app/shared/service-call.handler";

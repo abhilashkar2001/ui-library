@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 import { of, throwError } from "rxjs";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
 import { Route, Router } from "@angular/router";
 import { NotificationService } from "../services/notification.service";

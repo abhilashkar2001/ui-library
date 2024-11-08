@@ -6,8 +6,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { MatCardModule } from "@angular/material/card";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
+import { MatLegacySlideToggleModule as MatSlideToggleModule } from "@angular/material/legacy-slide-toggle";
 import { DebitCardServiceComponent } from "./debit-card-service/debit-card-service.component";
 import { DebitCardServiceRoutingModule } from "./debit-card-service-routing.module";
 

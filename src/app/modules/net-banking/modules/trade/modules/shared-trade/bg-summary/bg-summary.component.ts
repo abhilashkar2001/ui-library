@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
 import { bgConstant, summaryHelper } from "./bg-summary.constant";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { BgSummaryServiceService } from "./bg-summary-service.service";
 import { DrawerConstant } from "../../../../../../../shared/components/custom-drawer/custom-drawer.constant";

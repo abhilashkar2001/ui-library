@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { NavigationEnd, Router } from "@angular/router";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../../card.service";

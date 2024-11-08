@@ -9,9 +9,9 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatLegacyPaginator as MatPaginator } from "@angular/material/legacy-paginator";
 import { MatSort, Sort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { environment } from "environments/environment";

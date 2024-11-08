@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { FdCalculatorServiceService } from "../../fd-calculator-service.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 

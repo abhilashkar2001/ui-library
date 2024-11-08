@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { Webhost } from "app/shared/directives/appHost.directive";

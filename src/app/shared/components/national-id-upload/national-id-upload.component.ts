@@ -11,7 +11,7 @@ import {
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { environment } from "environments/environment";
 import { ScanComponent } from "../scan/scan.component";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 
 @Component({
   selector: "app-national-id-upload",

@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { EducationLoan } from "../education-calculator.constant";
-import { MatSlider } from "@angular/material/slider";
+import { MatLegacySlider as MatSlider } from "@angular/material/legacy-slider";
 import { EducationCalculatorService } from "../education-calculator.service";
 
 @Component({

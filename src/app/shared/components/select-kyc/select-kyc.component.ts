@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";

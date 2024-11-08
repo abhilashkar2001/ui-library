@@ -9,7 +9,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FundTransferService } from "../fund-transfer.service";
 import { Router } from "@angular/router";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";

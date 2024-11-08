@@ -14,7 +14,7 @@ import { Account } from "app/shared/models/account-list-by-subclass.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";

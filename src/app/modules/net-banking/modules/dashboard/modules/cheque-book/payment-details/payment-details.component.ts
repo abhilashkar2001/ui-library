@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import * as moment from "moment";
 import { Location } from "@angular/common";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { TokenStorageService } from "app/shared/token-storage.service";
 
 @Component({

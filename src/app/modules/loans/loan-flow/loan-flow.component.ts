@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Form, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";

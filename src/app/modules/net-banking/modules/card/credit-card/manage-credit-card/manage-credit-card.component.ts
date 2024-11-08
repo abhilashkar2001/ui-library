@@ -2,7 +2,7 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { CreditCardStore } from '../credit-card.store';
 import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawer.constant';
 import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-manage-credit-card',

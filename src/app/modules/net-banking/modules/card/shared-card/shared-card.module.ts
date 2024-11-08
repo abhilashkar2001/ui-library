@@ -6,7 +6,7 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { TranslateModule } from "@ngx-translate/core";
 import { DashboardCardPreviewComponent } from "./components/dashboard-card-preview/dashboard-card-preview.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatCardModule } from "@angular/material/card";
+import { MatLegacyCardModule as MatCardModule } from "@angular/material/legacy-card";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { DashboardCardDetailsComponent } from "./components/dashboard-card-details/dashboard-card-details.component";
 import { DashboardCardListComponent } from "./components/dashboard-card-list/dashboard-card-list.component";

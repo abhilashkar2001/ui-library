@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { CreateRdService } from "../../rd-calculator/create-rd.service";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { FdCalculatorServiceService } from "../fd-calculator-service.service";
 

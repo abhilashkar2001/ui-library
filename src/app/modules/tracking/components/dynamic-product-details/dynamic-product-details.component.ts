@@ -1,6 +1,6 @@
 import { Location } from "@angular/common";
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { Router } from "@angular/router";
 import { ImageDialogComponent } from "app/shared/components/image-dialog/image-dialog.component";
 import { PdfViewerComponent } from "app/shared/components/pdf-viewer/pdf-viewer.component";

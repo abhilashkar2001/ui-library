@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { SignNowPopupComponent } from "../sign-now-popup/sign-now-popup.component";
 import { BranchService } from "../sign-now-popup/branch.service";
 import { SuccessModalComponent } from "../success-modal/success-modal.component";

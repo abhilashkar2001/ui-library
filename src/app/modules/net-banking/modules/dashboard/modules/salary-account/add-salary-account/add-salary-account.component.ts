@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { Router } from "@angular/router";
 import { debounceTime } from "rxjs/operators";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { OCRService } from "app/shared/services/ocr.service";
 import { NotificationService } from "app/shared/services/notification.service";
 import { DocumentUploadService } from "app/shared/services/document-upload.service";

@@ -11,9 +11,9 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { CreateRdService } from "app/modules/new-deposit/new-deposit/rd-calculator/create-rd.service";
 import { LoanService } from "app/shared/services/loan/loan.service";

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from "@angular/material/dialog";
+  MatLegacyDialogRef as MatDialogRef,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+  MatLegacyDialog as MatDialog,
+} from "@angular/material/legacy-dialog";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { CardService } from "../../card.service";

@@ -17,7 +17,7 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";

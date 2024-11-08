@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
