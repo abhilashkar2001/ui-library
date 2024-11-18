@@ -29,6 +29,8 @@ import { Subscription } from "rxjs";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { ScanComponent } from "../scan/scan.component";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 enum CreateLoanEnum {
   INTERNAL = "internal",
