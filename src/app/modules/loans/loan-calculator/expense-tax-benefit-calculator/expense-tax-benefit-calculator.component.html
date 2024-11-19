@@ -58,7 +58,7 @@
             [max]="72"
             [min]="6"
             [step]="step"
-            [value]="courseSlider.value"
+            [(ngModel)]="courseSlider.value"
           >
           </mat-slider>
           <div class="selected-value">
@@ -88,7 +88,7 @@
             [max]="1000000"
             [min]="5000"
             [step]="step"
-            [value]="amount"
+            [(ngModel)]="amount"
           >
           </mat-slider>
           <div class="selected-value">
@@ -118,7 +118,7 @@
             [max]="1000000"
             [min]="5000"
             [step]="step"
-            [value]="amount"
+            [(ngModel)]="amount"
           >
           </mat-slider>
           <div class="selected-value">
@@ -190,7 +190,7 @@
               [max]="100000"
               [min]="5000"
               [step]="step"
-              [value]="amount"
+              [(ngModel)]="amount"
             >
             </mat-slider>
             <div class="selected-value">
@@ -349,7 +349,7 @@
               [max]="100000"
               [min]="5000"
               [step]="step"
-              [value]="amount"
+              [(ngModel)]="amount"
             >
               <input matSliderThumb />
             </mat-slider>

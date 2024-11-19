@@ -53,11 +53,11 @@
       <div fxFlex="70" fxLayout="column">
         <div class="custom-slider">
           <mat-slider
-            [value]="desiredLimitForm.get('eligibleCreditLimit').value"
+            [(ngModel)]="desiredLimitForm.get('eligibleCreditLimit').value"
             [max]="max"
             [min]="min"
             fxFlex="100"
-            [thumbLabel]="thumbLabel"
+            thumbLabel
             (change)="onSliderChange($event)"
             discrete
             [displayWith]="formatCurrencyLabel"

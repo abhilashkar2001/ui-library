@@ -67,8 +67,8 @@
             [min]="minTenure"
             (input)="onSliderChangeForTenure($event.value)"
             discrete
-            [thumbLabel]="thumbLabel"
-            [value]="sliderValue"
+            thumbLabel
+            [(ngModel)]="sliderValue"
             [displayWith]="formatLabel"
           >
           </mat-slider>

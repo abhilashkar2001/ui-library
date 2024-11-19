@@ -1,4 +1,3 @@
-import { NgxSliderModule } from "@angular-slider/ngx-slider";
 import { NgModule } from "@angular/core";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatButtonModule } from "@angular/material/button";
@@ -36,6 +35,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatListModule } from "@angular/material/list";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { NgxSliderModule } from "@angular-slider/ngx-slider";
 
 @NgModule({
   exports: [

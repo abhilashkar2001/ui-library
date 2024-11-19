@@ -88,7 +88,7 @@
             <div>
               <mat-slider
                 class="custom-slider-label"
-                [value]="modifyTenureForm.value.tenure"
+                [(ngModel)]="modifyTenureForm.value.tenure"
                 [max]="maxTenure"
                 [min]="minTenure"
                 fxFlex="100"
