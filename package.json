@@ -27,7 +27,7 @@
     "@angular/router": "^16.2.12",
     "@juggle/resize-observer": "^3.4.0",
     "@ng-bootstrap/ng-bootstrap": "^14.2.0",
-    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/webgl2": "^0.0.7",
     "angular-fusioncharts": "4.0.3",
