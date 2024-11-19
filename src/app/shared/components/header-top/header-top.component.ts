@@ -13,7 +13,6 @@ import {
 import { NavigationService } from "../../../shared/services/navigation.service";
 import { Subscription } from "rxjs";
 import { ThemeService } from "../../../shared/services/theme.service";
-import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
@@ -25,8 +24,9 @@ import {
   Router,
 } from "@angular/router";
 import { TokenStorageService } from "app/shared/token-storage.service";
-import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { TranslateService } from "@ngx-translate/core";
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "app-header-top",

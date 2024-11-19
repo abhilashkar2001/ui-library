@@ -3,25 +3,25 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from "@angular/core";
 import { ThemeService } from "../../../shared/services/theme.service";
-import { TranslateService } from "@ngx-translate/core";
 import { LayoutService } from "../../services/layout.service";
 import { Router } from "@angular/router";
 import { environment } from "environments/environment";
-import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import {
   ThemeChangeService,
-  ThemeOption
+  ThemeOption,
 } from "app/shared/services/theme-change.service";
+import { TranslateService } from "@ngx-translate/core";
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "app-user-header-top",
   templateUrl: "./user-header-top.component.html",
-  styleUrls: ["./user-header-top.component.scss"]
+  styleUrls: ["./user-header-top.component.scss"],
 })
 export class UserHeaderTopComponent implements OnInit, OnDestroy {
   layoutConf: any;
@@ -42,7 +42,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
   currentLangTheme: any;
   languageList = [
     { code: "en", name: "English" },
-    { code: "es", name: "Spanish" }
+    { code: "es", name: "Spanish" },
   ];
   selectedLanguage: { code: string; name: string };
   constructor(
@@ -87,7 +87,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
         userId: this.currentUser.userId,
         language: this.tokenStorageService.getLanguage(),
         color: theme.theme as unknown as any,
-        id: this.currentLangTheme?.id ?? null
+        id: this.currentLangTheme?.id ?? null,
       })
       .subscribe((res) => console.log(res));
 
@@ -137,7 +137,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
         userId: this.currentUser.userId,
         language: lang,
         color: this.selectedTheme.theme,
-        id: this.currentLangTheme?.id ?? null
+        id: this.currentLangTheme?.id ?? null,
       })
       .subscribe(() => console.log("ddd"));
   }

@@ -1,16 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { ApplicationData, SessionsConstants } from "../session.constant";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoginService } from "../login.service";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { SessionService } from "app/shared/session.service";
 import { ThemeChangeService } from "app/shared/services/theme-change.service";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
-import { TranslateService } from "@ngx-translate/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-signin",

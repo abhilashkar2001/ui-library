@@ -16,12 +16,12 @@ import {
   ResolveEnd,
 } from "@angular/router";
 import { Subscription } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { filter } from "rxjs/operators";
 import { MatSidenav } from "@angular/material/sidenav";
 import { LayoutService } from "app/shared/services/layout.service";
 import { SidenavService } from "app/shared/services/sidenav.service";
 import { ThemeService } from "app/shared/services/theme.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-user-layout",

@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
 import { UserActiveState } from "app/shared/helpers/userActiveState";
 import { ThemeService } from "app/shared/services/theme.service";
 @Component({
@@ -10,7 +9,6 @@ import { ThemeService } from "app/shared/services/theme.service";
 export class AdminLayoutComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
-    public translate: TranslateService,
     public themeService: ThemeService,
     private userActiveState: UserActiveState
   ) {
