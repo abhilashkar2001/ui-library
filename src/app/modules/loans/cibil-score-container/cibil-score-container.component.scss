@@ -58,21 +58,6 @@ label {
   width: 100%;
 }
 
-::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle,
-.mat-radio-button.mat-accent
-  .mat-radio-ripple
-  .mat-ripple-element:not(.mat-radio-persistent-ripple),
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
-.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: #004c97;
-}
-
-::ng-deep
-  .mat-radio-button.mat-accent.mat-radio-checked
-  .mat-radio-outer-circle {
-  border-color: #004c97;
-}
-
 .button-section {
   margin-left: 8px;
 }
@@ -82,18 +67,6 @@ label {
   font-weight: 600;
 }
 
-::ng-deep
-  .radioChecked.mat-radio-checked
-  .mat-radio-label
-  .mat-radio-container {
-  .mat-radio-outer-circle {
-    border-color: #004c97 !important;
-  }
-
-  .mat-radio-inner-circle {
-    background-color: #004c97 !important;
-  }
-}
 .title-text {
   font-weight: 600;
 }

@@ -36,11 +36,14 @@
   }
   .tenure-input {
     position: relative;
+    width: 100%;
     font-family: Poppins;
     color: #102245 !important;
     opacity: 100%;
     letter-spacing: -0.26px;
     font-weight: 600;
+    outline: none;
+    border: none;
   }
   .placeholders {
     position: relative;
@@ -166,8 +169,8 @@
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   letter-spacing: 0.4px;
-  color: #fff;
-  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
+  color: #fff !important;
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%) !important;
   margin: 10px 0%;
 }
 .alignCenter {

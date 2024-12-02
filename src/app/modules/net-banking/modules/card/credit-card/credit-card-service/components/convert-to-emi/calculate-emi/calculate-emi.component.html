@@ -68,7 +68,7 @@
             (input)="onSliderChangeForTenure($event.value)"
             discrete
             thumbLabel
-            [(ngModel)]="sliderValue"
+            [formControl]="sliderValue"
             [displayWith]="formatLabel"
           >
           </mat-slider>

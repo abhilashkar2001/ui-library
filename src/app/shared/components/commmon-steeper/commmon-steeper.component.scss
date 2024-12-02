@@ -199,7 +199,7 @@
   font-size: 24px;
   width: 60px;
   border-radius: 10px;
-  margin-left: -22px !important;
+  // margin-left: -22px !important;
   height: 60px;
   font-family: "Poppins", sans-serif;
 }
@@ -248,25 +248,25 @@
   border-radius: 10px;
   font-size: 24px;
   height: 60px;
-  margin-left: -22px !important;
+  // margin-left: -22px !important;
 }
 
 ::ng-deep
   .mat-step-header.mat-vertical-stepper-header
   .mat-step-icon-state-edit {
-     background-image: url("/assets/images/Group_13808.svg") !important;
-    background-position: center;
-    background-size: 26px 30px;
-    width: 60px;
-    border-radius: 10px;
-    font-size: 24px;
-    border: 1px solid #008461 !important;
-    height: 60px;
-    font-size: 24px;
-    background-position-y: 15px;
-    background-position-x: 15px;
-    height: 60px;
-    background-repeat: no-repeat;
+  background-image: url("/assets/images/Group_13808.svg") !important;
+  background-position: center;
+  background-size: 26px 30px;
+  width: 60px;
+  border-radius: 10px;
+  font-size: 24px;
+  border: 1px solid #008461 !important;
+  height: 60px;
+  font-size: 24px;
+  background-position-y: 15px;
+  background-position-x: 15px;
+  height: 60px;
+  background-repeat: no-repeat;
   .mat-step-icon-content {
     display: none !important;
   }

@@ -3,7 +3,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
@@ -16,7 +16,7 @@ import { DataService } from "app/shared/services/table-service/data.service";
 @Component({
   selector: "app-common-emi-calculator",
   templateUrl: "./common-emi-calculator.component.html",
-  styleUrls: ["./common-emi-calculator.component.scss"],
+  styleUrls: ["./common-emi-calculator.component.scss"]
 })
 export class CommonEmiCalculatorComponent implements OnInit {
   max = 1000000;
@@ -88,7 +88,8 @@ export class CommonEmiCalculatorComponent implements OnInit {
     });
   }
   onSliderChange(e) {
-    this.ammountValue = e.value;
+    this.ammountValue = e.srcElement.ariaValueText;
+    console.log(e.srcElement.ariaValueText);
     if (
       Number(this.ammountValue) == 0 ||
       Number(this.ammountValue) < this.min
@@ -96,7 +97,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       this.loanForm.get("amount").setValue(this.min);
       return;
     }
-    this.loanForm.get("amount").setValue(e.value);
+    this.loanForm.get("amount").setValue(e.srcElement.ariaValueText);
   }
 
   ngOnDestroy(): void {
@@ -111,7 +112,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       tenureYear: "",
       tenureMonth: "",
       tenureDays: "",
-      interestRate: [this.interestRate, [Validators.required]],
+      interestRate: [this.interestRate, [Validators.required]]
     });
 
     this.valueChangesSubscription = this.loanForm.valueChanges
@@ -133,7 +134,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
               principleAmount: parseInt(this.loanForm.value.amount),
               interestRate: parseFloat(this.loanForm.value.interestRate),
               numberOfMonths: result,
-              firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY"),
+              firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY")
             };
             this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
               this.interestPayble = Math.round(resp.data.totalInterest);
@@ -178,7 +179,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       ...this.loanForm.value,
       interestPayable: this.interestPayble,
       totalPayableAmount: this.totalPayableAmmount,
-      emiAmount: this.emiAmount,
+      emiAmount: this.emiAmount
     };
     this.customCalculatorValues.emit(obj);
     this.loanForm.reset();

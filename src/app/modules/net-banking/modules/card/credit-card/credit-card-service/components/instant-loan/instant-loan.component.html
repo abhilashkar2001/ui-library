@@ -23,7 +23,7 @@
       <div class="slider">
         <mat-slider
           class="custom-slider"
-          [(ngModel)]="instantLoanForm.value.amount"
+          [formControl]="instantLoanForm.value.amount"
           [max]="amountmax"
           [min]="amountmin"
           fxFlex="100"
@@ -101,7 +101,6 @@
           [max]="maxTenure"
           [min]="minTenure"
           fxFlex="100"
-          [thumbLabel]="thumbLabel"
           discrete
           (change)="onSliderChangeForTenure($event)"
           [displayWith]="formatLabel"

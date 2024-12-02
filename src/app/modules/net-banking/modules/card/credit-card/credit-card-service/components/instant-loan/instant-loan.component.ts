@@ -12,7 +12,7 @@ import { CreditCardStore } from "../../../credit-card.store";
 @Component({
   selector: "app-instant-loan",
   templateUrl: "./instant-loan.component.html",
-  styleUrls: ["./instant-loan.component.scss"],
+  styleUrls: ["./instant-loan.component.scss"]
 })
 export class InstantLoanComponent implements OnInit {
   instantLoanForm: FormGroup;
@@ -21,7 +21,7 @@ export class InstantLoanComponent implements OnInit {
   currencySymbol = "₹";
   amountmax: number = 1000000;
   amountmin: number = 10000;
-  thumbLabel: boolean = true;
+  // thumbLabel: boolean = true;
   maxTenure = 3650;
   minTenure = 7;
   chartData = CreditCardStore.chartData;
@@ -73,19 +73,38 @@ export class InstantLoanComponent implements OnInit {
       tenureMonths: [""],
       creditLoanAmount: [""],
       loanPorpose: [""],
-      cardId: [""],
+      cardId: [""]
     });
   }
 
   onDepositAmountChange(value): void {
-    this.instantLoanForm.get("amount")?.setValue(value?.value);
+    this.instantLoanForm
+      .get("amount")
+      ?.setValue(value.srcElement.ariaValueText);
   }
 
-  // Handle slider change for tenure
+  private parseDurationToDays(duration: string): number {
+    const regex = /(\d+)\s*year.*?(\d+)\s*month.*?(\d+)\s*day/;
+    const match = duration.match(regex);
+
+    if (!match) {
+      throw new Error("Invalid duration format");
+    }
+
+    const years = parseInt(match[1], 10);
+    const months = parseInt(match[2], 10);
+    const days = parseInt(match[3], 10);
+
+    return years * 365 + months * 30 + days;
+  }
+
   onSliderChangeForTenure(e): void {
     this.totalMonths = 0;
-    const maxTenure = e.value || e.data;
-    if (maxTenure) {
+    const duration = e.srcElement.ariaValueText;
+
+    if (duration) {
+      // Convert duration to days
+      const maxTenure = this.parseDurationToDays(duration);
       const years = Math.floor(maxTenure / 365);
       const remainingDays = maxTenure % 365;
       const months = Math.floor(remainingDays / 30);
@@ -95,14 +114,14 @@ export class InstantLoanComponent implements OnInit {
       this.instantLoanForm.patchValue({
         tenureYears: years,
         tenureMonths: months,
-        tenureDays: remainingDays % 30,
+        tenureDays: remainingDays % 30
       });
 
       const payload = {
-        principleAmount: this.instantLoanForm.value.amount,
+        principleAmount: parseFloat(this.instantLoanForm.value.amount),
         interestRate: 7.28, // Static interest rate
         numberOfMonths: this.totalMonths,
-        firstRepaymentDate: tomorrow,
+        firstRepaymentDate: tomorrow
       };
 
       this.calculateEmi(payload);
@@ -134,7 +153,7 @@ export class InstantLoanComponent implements OnInit {
           this.calculatedData = {
             ...res?.data,
             depositAmount: this.instantLoanForm.value.amount,
-            monthlyEmi: this.monthlyEmi,
+            monthlyEmi: this.monthlyEmi
           };
         }
       });
@@ -232,7 +251,7 @@ export class InstantLoanComponent implements OnInit {
       intrestAmount: this.calculatedData?.intrestAmount,
       payeeName:
         this.transactionDetails?.cardFundTransfer?.cardDetails?.customerName,
-      accountType: "savings",
+      accountType: "savings"
     };
   }
 
@@ -250,8 +269,8 @@ export class InstantLoanComponent implements OnInit {
               { "Name On Card": payload.nameOnCard },
               { "Card Number": payload.cardNo },
               { "Card Name": payload.cardName },
-              { "Eligible Amount": payload.eligibleAmount },
-            ],
+              { "Eligible Amount": payload.eligibleAmount }
+            ]
           },
           {
             header: "Loan Details",
@@ -262,12 +281,12 @@ export class InstantLoanComponent implements OnInit {
               { Tenure: payload.tenure },
               { "Maturity Date": payload.maturityDate },
               { "Monthly Emi": payload.monthlyEmi },
-              { "Card Id": payload.cardId },
-            ],
-          },
+              { "Card Id": payload.cardId }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
   }
 }

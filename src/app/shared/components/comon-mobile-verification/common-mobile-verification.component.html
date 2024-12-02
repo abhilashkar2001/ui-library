@@ -126,6 +126,7 @@
           *ngIf="showOtpSection"
         >
           <button-loading
+            [btnClass]="'submit-button'"
             [loadingText]="loadingBtnText"
             [type]="'submit'"
             [disable]="!(otpAvailable && !isLoading && agreed)"

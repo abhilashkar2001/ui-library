@@ -4,7 +4,7 @@ import { appendFilterParam } from "app/shared/helpers/http.utils";
 import { Payee } from "app/shared/models/card.model";
 import {
   cardTransactionDetails,
-  EmiDetails,
+  EmiDetails
 } from "app/shared/models/emi-converter.model";
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
@@ -14,7 +14,7 @@ import { Observable, Subject } from "rxjs";
 const baseUrl = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CardService {
   constructor(private http: HttpClient) {}
@@ -110,7 +110,7 @@ export class CardService {
   }
   calculateEmi(obj) {
     return this.http.post<IcHttpResponseModel<any>>(
-      `${baseUrl}/api/loan-repayment/emi-calculation`,
+      `${baseUrl}/loan-repayment/emi-calculation`,
       obj
     );
   }
@@ -175,7 +175,9 @@ export class CardService {
   fetchAllRecentTransaction(customerId, payload?) {
     let params = appendFilterParam(payload);
     return this.http.get<any>(
-      `${baseUrl}/retail-fund-transfer/fetchRecentTransaction?customerId=${customerId}${params ? `&${params}` : ``}`
+      `${baseUrl}/retail-fund-transfer/fetchRecentTransaction?customerId=${customerId}${
+        params ? `&${params}` : ``
+      }`
     );
   }
 

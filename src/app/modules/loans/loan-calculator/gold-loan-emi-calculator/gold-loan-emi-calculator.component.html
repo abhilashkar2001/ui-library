@@ -93,7 +93,7 @@
       </div>
       <div fxFlex="100">
         <mat-slider
-          [(ngModel)]="loanForm.value.amount"
+          [formControl]="loanForm.value.amount"
           [max]="max"
           [min]="min"
           fxFlex="100"

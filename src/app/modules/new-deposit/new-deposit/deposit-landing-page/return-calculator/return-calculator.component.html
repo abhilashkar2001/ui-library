@@ -12,7 +12,7 @@
     *ngIf="depositForm"
     [formGroup]="depositForm"
   >
-  <img src="/assets/images/Mask Group.svg" class="calc_cornor_image">
+    <img src="/assets/images/Mask Group.svg" class="calc_cornor_image" />
     <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
       <div fxLayout="column" fxFlex="40">
         <span class="calculator_subTItle">Scheme</span>
@@ -208,7 +208,7 @@
       fxLayout="column"
       class="fd_container"
     >
-    <img src="/assets/images/card-doddle.svg" class="fd_cornor_image">
+      <img src="/assets/images/card-doddle.svg" class="fd_cornor_image" />
       <div fxFlex="100" fxLayout="column" class="alignCenter full-width">
         <div class="maturityTitle">Maturity Amount</div>
         <div class="maturityDesc">₹ 1,10,202</div>
@@ -259,7 +259,9 @@
           fxFlex="48"
           fxLayoutAlign="start center"
         >
-          <mat-checkbox [(ngModel)]="isAutoRenew">Auto Renew </mat-checkbox>
+          <mat-checkbox class="custom_checkBox" [(ngModel)]="isAutoRenew"
+            >Auto Renew
+          </mat-checkbox>
         </div>
       </div>
 

@@ -58,7 +58,7 @@
         <label class="calculator_subTItle">Tenure</label>
         <fieldset class="field-set">
           <legend visible="true" class="fieldset-title">Loan Period</legend>
-          <div fxFlex="100">
+          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
             <input
               fxFlex="30"
               matInput
@@ -74,7 +74,6 @@
                 {{ loanForm.value.tenureYear ? "Year" : "" }}
               </span>
             </ng-container>
-
             <div class="vertical-separator"></div>
             <input
               fxFlex="30"

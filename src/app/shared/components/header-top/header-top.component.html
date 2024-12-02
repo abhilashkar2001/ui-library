@@ -5,7 +5,10 @@
         <img src="assets/images/Group 5698.svg" alt="logo" />
         <p class="logo_text">DemoBank</p>
       </div>
-      <nav class="d-flex align-items-md-center" *ngIf="!hideNavItem">
+      <nav
+        class="d-flex align-items-md-center justify-content-end"
+        *ngIf="!hideNavItem"
+      >
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
           <ng-container *ngFor="let item of items">
             <li (click)="onNavTabClick(item)">

@@ -41,7 +41,8 @@
               "jspdf-autotable",
               "sweetalert2",
               "@tensorflow/tfjs-core",
-              "fusioncharts"
+              "fusioncharts",
+              "face-api.js"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
@@ -55,7 +56,8 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/ngx-spinner/animations/square-loader.css",
               "node_modules/keen-slider/keen-slider.min.css",
-              "node_modules/ngx-spinner/animations/square-jelly-box.css"
+              "node_modules/ngx-spinner/animations/square-jelly-box.css",
+              "node_modules/ic-test-css/src/main.scss"
             ],
             "scripts": []
           },

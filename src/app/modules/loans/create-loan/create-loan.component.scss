@@ -101,7 +101,7 @@ fieldset {
   }
   padding: 5px;
   border-radius: 8px;
-  height: 62px;
+  height: 55px;
   background: #fff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
   .mat-form-field {
@@ -120,7 +120,7 @@ fieldset {
 }
 
 .MiscellaneousClass {
-  margin-top: -24px;
+  margin-top: -10px;
 }
 .custom-error {
   font-size: 13px;
@@ -141,6 +141,9 @@ fieldset {
 .tenure_input {
   position: relative;
   top: -7px !important;
+  outline: none;
+  border: none;
+  background: transparent;
 }
 :host ::ng-deep .fieldinput .mat-form-field-wrapper {
   padding-top: 0px !important;

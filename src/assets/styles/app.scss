@@ -24,15 +24,15 @@
   box-sizing: border-box;
 }
 
-:root {
-  // Variables related to theme change
-  --current-theme-color: #fff;
-  --current-theme-background: #00205c;
-  --current-theme-background-light: #eaf1ff;
-  --current-theme-background-dark: #001131;
-  --current-theme-filter: hue-rotate(0deg);
-  --current-theme-border-color: #377dff4e;
-}
+// :root {
+//   // Variables related to theme change
+//   --current-theme-color: #fff;
+//   --current-theme-background: #00205c;
+//   --current-theme-background-light: #eaf1ff;
+//   --current-theme-background-dark: #001131;
+//   --current-theme-filter: hue-rotate(0deg);
+//   --current-theme-border-color: #377dff4e;
+// }
 
 .current_theme_filter {
   filter: var(--current-theme-filter);
@@ -71,31 +71,42 @@ body {
 // Main Variables File
 @import "scss/variables";
 
-@import "scss/mixins/mixins";
-@import "scss/colors";
+// @import "scss/mixins/mixins";
+// @import "ic-test-css/src/mixins/mixins";
+@import "node_modules/ic-test-css/src/mixins/mixins";
 
-@import "scss/animations";
+// @import "scss/colors";
+@import "node_modules/ic-test-css/src/colors";
 
+// @import "scss/animations";
+@import "node_modules/ic-test-css/src/animations";
 // Open _main.scss and keep files which are required for your current layout.
-@import "scss/main/main";
+// @import "scss/main/main";
+// @import "ic-test-css/src/main/main";
+@import "node_modules/ic-test-css/src/main/main";
 
 // Angular material theme files
-@import "scss/themes/init";
+// @import "scss/themes/init";
+@import "node_modules/ic-test-css/src/themes/init";
 
 @import "scss/utilities/utilities";
 @import "scss/components/components";
 @import "scss/palette";
 
-@import "scss/page-layouts";
+// @import "scss/page-layouts";
+@import "node_modules/ic-test-css/src/page-layouts";
 
 // Open _views.scss and remove unnecessary view related files
-@import "scss/views/views";
+// @import "scss/views/views";
+@import "node_modules/ic-test-css/src/views/views";
 
 @import "scss/button";
 @import "scss/calculator";
 @import "scss/loan-flow.scss";
-@import "scss/stepper";
-@import "./scss/accordian";
+// @import "scss/stepper";
+@import "node_modules/ic-test-css/src/stepper";
+// @import "./scss/accordian";
+@import "node_modules/ic-test-css/src/accordian";
 
 @import "https://fonts.googleapis.com/css?family=Manrope";
 
@@ -178,23 +189,6 @@ body {
 
 .new_error_popup .mat-dialog-container {
   border-radius: 8px;
-}
-.egret-navy .mat-radio-button.mat-accent .mat-radio-inner-circle,
-.egret-navy
-  .mat-radio-button.mat-accent
-  .mat-radio-ripple
-  .mat-ripple-element:not(.mat-radio-persistent-ripple),
-.egret-navy
-  .mat-radio-button.mat-accent.mat-radio-checked
-  .mat-radio-persistent-ripple,
-.egret-navy .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: var(--current-theme-background);
-}
-
-.egret-navy
-  .mat-radio-button.mat-accent.mat-radio-checked
-  .mat-radio-outer-circle {
-  border-color: var(--current-theme-background);
 }
 
 .mat-radio-group {

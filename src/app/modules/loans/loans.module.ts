@@ -1,4 +1,8 @@
-import { NgModule } from "@angular/core";
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  NO_ERRORS_SCHEMA
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   CibilScoreContainerComponent,
@@ -12,7 +16,7 @@ import {
   LoansComponent,
   LoansRoutingModule,
   NormalLoanEmiCalculatorComponent,
-  LoanTermsConditionsComponent,
+  LoanTermsConditionsComponent
 } from ".";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -56,7 +60,7 @@ import { NationalIdUploadComponent } from "../../shared/components/national-id-u
     ExpenseDetailsComponent,
     KnowYourEmiComponent,
     TaxBenefitsComponent,
-    NationalIdUploadComponent,
+    NationalIdUploadComponent
   ],
   imports: [
     CommonModule,
@@ -67,8 +71,8 @@ import { NationalIdUploadComponent } from "../../shared/components/national-id-u
     SharedMaterialModule,
     LoansRoutingModule,
     SharedComponentsModule,
-    FlexLayoutModule,
+    FlexLayoutModule
   ],
-  // providers:[CookieService],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoansModule {}

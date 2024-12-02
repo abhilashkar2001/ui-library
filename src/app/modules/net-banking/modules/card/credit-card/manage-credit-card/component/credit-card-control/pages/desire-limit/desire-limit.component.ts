@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-desire-limit",
   templateUrl: "./desire-limit.component.html",
-  styleUrls: ["./desire-limit.component.scss"],
+  styleUrls: ["./desire-limit.component.scss"]
 })
 export class DesireLimitComponent implements OnInit {
   desiredLimitForm: FormGroup;
@@ -51,7 +51,7 @@ export class DesireLimitComponent implements OnInit {
     this.desiredLimitForm = this.fb.group({
       cardNumber: ["", [Validators.required]],
       eligibleCreditLimit: ["", [Validators.required]],
-      otp: [""],
+      otp: [""]
     });
     this.desiredLimitForm
       .get("cardNumber")
@@ -70,12 +70,14 @@ export class DesireLimitComponent implements OnInit {
   }
 
   onSliderChange(e) {
-    this.desiredLimitForm.get("eligibleCreditLimit").setValue(e?.value);
+    this.desiredLimitForm
+      .get("eligibleCreditLimit")
+      .setValue(e?.srcElement.ariaValueText);
   }
 
-  formatCurrencyLabel(value) {
-    return `₹ ${value}`;
-  }
+  // formatCurrencyLabel(value) {
+  //   return `₹ ${value}`;
+  // }
 
   proceedToOtp() {
     this.viewOtp = true;
@@ -99,7 +101,7 @@ export class DesireLimitComponent implements OnInit {
     if (Array.isArray(cardList)) {
       const list = cardList.map((item) => ({
         cardNo: item.cardNumber,
-        cardValue: item.cardNumber,
+        cardValue: item.cardNumber
       }));
       this.creditCardList = list;
     } else {
@@ -124,7 +126,7 @@ export class DesireLimitComponent implements OnInit {
     this.otp = this.desiredLimitForm.get("otp").value;
     let payload = {
       mobile: this.mobileNo,
-      otp: this.otp,
+      otp: this.otp
     };
     this.service.verifyOtp(payload).subscribe((res: any) => {
       if (res) {
@@ -137,12 +139,12 @@ export class DesireLimitComponent implements OnInit {
               const dialogRef = this.dialog.open(PopupSuccessComponent, {
                 data: {
                   status: "SuccessOnly",
-                  Msg: "Card limit has been set",
+                  Msg: "Card limit has been set"
                 },
                 disableClose: true,
                 panelClass: "popup-dialog-class",
                 backdropClass: "bdrop",
-                width: "25%",
+                width: "25%"
               });
               dialogRef.afterClosed().subscribe((res) => {
                 console.log(res);

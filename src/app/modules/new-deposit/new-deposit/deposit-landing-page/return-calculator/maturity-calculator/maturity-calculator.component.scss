@@ -30,7 +30,6 @@
 
 .openFDbtn {
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
-
   color: white;
   border-radius: 50px;
   width: 153px;
@@ -39,7 +38,7 @@
 
 .icon {
   color: grey;
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 ::ng-deep .cdk-overlay-backdrop {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ConvertEmiStore } from "../convert-emi.store";
 import { Router } from "@angular/router";
 import { CardDetails } from "app/shared/models/emi-converter.model";
@@ -9,14 +9,14 @@ import { ServiceCallHandler } from "app/shared/service-call.handler";
 @Component({
   selector: "app-calculate-emi",
   templateUrl: "./calculate-emi.component.html",
-  styleUrls: ["./calculate-emi.component.scss"],
+  styleUrls: ["./calculate-emi.component.scss"]
 })
 export class CalculateEmiComponent implements OnInit {
   calculateEmiForm: FormGroup;
   minTenure = 7;
   maxTenure = 3650;
   thumbLabel = true;
-  sliderValue = 0;
+  sliderValue = new FormControl(0);
 
   emiData = ConvertEmiStore.emiDetails;
   amount: number;
@@ -39,7 +39,7 @@ export class CalculateEmiComponent implements OnInit {
     this.calculateEmiForm = this.fb.group({
       tenureYears: [""],
       tenureMonths: [""],
-      tenureDays: [""],
+      tenureDays: [""]
     });
   }
 
@@ -66,7 +66,9 @@ export class CalculateEmiComponent implements OnInit {
 
   onSliderChangeForTenure(tenureInDays: number) {
     this.totalMonths = 0;
-    this.sliderValue = tenureInDays;
+    // this.sliderValue.value = tenureInDays;
+    console.log(this.sliderValue.value);
+
     const years = Math.floor(tenureInDays / 365);
     const remainingDays = tenureInDays % 365;
     const months = Math.floor(remainingDays / 30);
@@ -79,7 +81,7 @@ export class CalculateEmiComponent implements OnInit {
       principleAmount: this.emiData[3].value,
       interestRate: 7.28, //now we are maintaining percentage as statically
       numberOfMonths: this.totalMonths,
-      firstRepaymentDate: tomorrow,
+      firstRepaymentDate: tomorrow
     };
     this.calculateEmi(payload);
     this.updateTenureForm(years, months, remainingDays % 30);
@@ -132,10 +134,10 @@ export class CalculateEmiComponent implements OnInit {
       amount: this.obj.amount,
       interestRate: 7.28, //we are maintaining static value
       processingFee: this.emiData[5].value,
-      tenure: this.formatLabel(this.sliderValue),
+      tenure: this.formatLabel(this.sliderValue.value),
       maturityDate: this.obj.maturityDate,
       monthlyEmi: this.emiData[6].value,
-      cardId: this.obj.cardId,
+      cardId: this.obj.cardId
     };
 
     const emiDetailsArr = [
@@ -150,8 +152,8 @@ export class CalculateEmiComponent implements OnInit {
               { "Name On Card": this.obj.nameOnCard },
               { "Card No": payload.cardNo },
               { "Card Name": payload.cardName },
-              { "Convert To EMI": payload.amount },
-            ],
+              { "Convert To EMI": payload.amount }
+            ]
           },
           {
             header: "EMI Details",
@@ -162,12 +164,12 @@ export class CalculateEmiComponent implements OnInit {
               { Tenure: payload.tenure },
               { "Maturity Date": payload.maturityDate },
               { "Monthly Emi": this.emiData[6].value },
-              { "Card Id": payload.cardId },
-            ],
-          },
+              { "Card Id": payload.cardId }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
 
     this.serviceCallHandler.put(

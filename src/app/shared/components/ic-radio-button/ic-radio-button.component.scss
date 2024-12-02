@@ -4,17 +4,3 @@
   font-size: 12px;
   font-weight: 700;
 }
-::ng-deep .custom_radio_field {
-  .mat-radio-button.mat-accent .mat-radio-outer-circle {
-    border-color: #fff !important;
-    // border-color: #00205c !important;
-    border-width: 3px;
-    background-color: #fff;
-  }
-
-  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: var(--current-theme-background) !important;
-    border-width: 2px;
-    background-color: transparent;
-  }
-}

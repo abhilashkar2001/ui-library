@@ -25,7 +25,7 @@
 }
 
 .card-subdiv {
-  margin-top: 10px;
+  // margin-top: 10px;
   padding: 0;
   border-radius: 8px;
   display: flex;
@@ -190,23 +190,6 @@ mat-form-field {
   color: #ffffff !important;
   height: 36px !important;
 }
-
-// .drop_list_class {
-//   padding: 0 1rem !important;
-//   .custom-doc-field {
-//     ::ng-deep .mat-form-field-wrapper {
-//       margin-bottom: 0px !important;
-//       padding-bottom: 0px !important;
-//       .mat-form-field-outline {
-//         box-shadow: none !important;
-//       }
-//       .mat-form-field-subscript-wrapper {
-//         margin-top: 0 !important;
-//       }
-//     }
-//     //    ::ng-deep
-//   }
-// }
 
 :host ::ng-deep .custom-doc-field .mat-form-field-wrapper {
   margin: 0 !important;

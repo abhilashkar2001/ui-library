@@ -341,6 +341,7 @@
       [disable]="isLoading && checkDocValidity()"
       [loading]="isLoading"
       (click)="onSubmit()"
+      [btnClass]="'submit-button'"
     >
       Submit
     </button-loading>
@@ -349,6 +350,7 @@
       mat-raised-button
       class="button back_button"
       (click)="onBack()"
+      class="back-button"
     >
       Back
     </button>

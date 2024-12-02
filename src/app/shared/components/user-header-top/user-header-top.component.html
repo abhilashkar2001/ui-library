@@ -58,7 +58,6 @@
     <mat-icon>notifications</mat-icon>
   </button>
 
-
   <button
     mat-icon-button
     [matMenuTriggerFor]="languageMenu"
@@ -89,7 +88,7 @@
     #clickHoverMenuTrigger="matMenuTrigger"
   >
     <div fxLayout="column" fxLayoutAlign="center center">
-      <button mat-icon-button class="topbar-button-right img-button">
+      <button mat-icon-button class="topbar-button-right img-button d-flex">
         <img [src]="fileUrl" [src-fallback]="userImage" />
       </button>
     </div>

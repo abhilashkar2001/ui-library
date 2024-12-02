@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { InfoPopupComponent } from "./info-popup/info-popup.component";
@@ -23,7 +23,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-return-calculator",
   templateUrl: "./return-calculator.component.html",
-  styleUrls: ["./return-calculator.component.scss"],
+  styleUrls: ["./return-calculator.component.scss"]
 })
 export class ReturnCalculatorComponent implements OnInit {
   max = 100000;
@@ -44,7 +44,7 @@ export class ReturnCalculatorComponent implements OnInit {
     intrestRate: 1.9,
     maturityDate: "2023-02-21",
     autoRenew: false,
-    monthlySavings: "2023-08-21",
+    monthlySavings: "2023-08-21"
   };
   url: string = "";
   rdBasisId: any;
@@ -59,7 +59,7 @@ export class ReturnCalculatorComponent implements OnInit {
     INTERESTPAYOUT: [],
     MONTHLYSAVINGS: [],
     OWNERSHIP: [],
-    SCHEME: [],
+    SCHEME: []
   };
   typesOfCustomer: string[];
   interestPayout: string[];
@@ -161,9 +161,9 @@ export class ReturnCalculatorComponent implements OnInit {
   }
 
   onSliderChange(e) {
-    this.ammountValue = e.value;
-    this.depositForm.get("amount").setValue(e.value);
-    console.log(this.depositForm.value);
+    console.log(e);
+    this.ammountValue = e.srcElement.ariaValueText;
+    this.depositForm.get("amount").setValue(this.ammountValue);
   }
   buildForm() {
     this.depositForm = this.fb.group({
@@ -175,7 +175,7 @@ export class ReturnCalculatorComponent implements OnInit {
       ownership: "",
       intrestPayout: "",
       typeOfCustomer: "",
-      monthlySavings: "",
+      monthlySavings: ""
     });
   }
   updateDeposit() {
@@ -189,7 +189,7 @@ export class ReturnCalculatorComponent implements OnInit {
   openInterestDialog(): void {
     const dialogRef = this.dialog.open(InfoPopupComponent, {
       width: "700px",
-      height: "400px",
+      height: "400px"
     });
   }
 
@@ -200,7 +200,7 @@ export class ReturnCalculatorComponent implements OnInit {
       const payload = this.originationModel(this.fdBasisId);
       const finalPayload = {
         originationModel: payload,
-        customerInfo: [],
+        customerInfo: []
       };
       this.FdCalculatorServiceService.saveFdOriginationMaster(
         finalPayload
@@ -216,7 +216,7 @@ export class ReturnCalculatorComponent implements OnInit {
       const payload = this.originationModel(this.rdBasisId);
       const finalPayload = {
         originationModel: payload,
-        customerInfo: [],
+        customerInfo: []
       };
       this.rdApi.saveRdOriginationMaster(finalPayload).subscribe((resp) => {
         path = `/deposits/rdDeposit`;
@@ -244,7 +244,7 @@ export class ReturnCalculatorComponent implements OnInit {
       ),
       typeOfCustomer: this.depositForm.value.typeOfCustomer,
       intrestRate: 677, //need to change once flexCube data avilable.
-      scheme: "Normal or Tax saver",
+      scheme: "Normal or Tax saver"
     };
   }
 

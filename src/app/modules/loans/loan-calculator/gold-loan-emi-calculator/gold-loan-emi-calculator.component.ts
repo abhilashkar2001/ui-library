@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 @Component({
   selector: "app-gold-loan-emi-calculator",
   templateUrl: "./gold-loan-emi-calculator.component.html",
-  styleUrls: ["./gold-loan-emi-calculator.component.scss"],
+  styleUrls: ["./gold-loan-emi-calculator.component.scss"]
 })
 export class GoldLoanEmiCalculatorComponent implements OnInit {
   max = 100000;
@@ -32,10 +32,8 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
     this.buildForm();
   }
   onSliderChange(e) {
-    console.log(e);
-    this.ammountValue = e.value;
-    this.loanForm.get("amount").setValue(e.value);
-    console.log(this.loanForm.value);
+    this.ammountValue = e.srcElement.ariaValueText;
+    this.loanForm.get("amount").setValue(e.srcElement.ariaValueText);
   }
   buildForm() {
     this.loanForm = this.fb.group({
@@ -45,7 +43,7 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
       tenureDays: "",
       ornaments: "",
       carat: "",
-      weight: "",
+      weight: ""
     });
   }
   applyForLoan() {

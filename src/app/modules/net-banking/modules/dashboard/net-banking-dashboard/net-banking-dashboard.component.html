@@ -43,7 +43,7 @@
           fxFlex="100"
           fxLayoutAlign="space-between"
           fxLayoutGap="25%"
-          class="account_info_wrapper"
+          class="account_info_wrapper p-4"
         >
           <div class="infoLength">
             {{ dashboardInfo[key]?.accountList?.length }}
@@ -233,6 +233,7 @@
               <mat-select
                 [(ngModel)]="selectedActivityLog"
                 (selectionChange)="onDropdownChange($event.value)"
+                panelClass="sticky_panel"
               >
                 <mat-option [value]="">Select</mat-option>
                 <mat-option value="financial">{{
