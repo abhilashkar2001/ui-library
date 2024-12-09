@@ -6,7 +6,7 @@
         <!-- loan account number -->
         <div fxFlex="40" fxLayout="column">
           <app-searchable-select
-            [control]="goldRenewalForm.get('debitAccount')"
+            [control]="goldRenewalForm.get('debitAccount') | formcontrol"
             [inputLabel]="'Loan Account Number' | translate"
             bindValueKey="cbsAccountNumber"
             bindLabelKey="cbsAccountNumber"
@@ -54,10 +54,7 @@
                 <ng-container
                   *ngFor="let value of renewalAmount; let i = index"
                 >
-                  <p
-                    class="blue-border white-bg p-4 light-blue-title-sml"
-                    (click)="setRenewalAmount(i)"
-                  >
+                  <p class="blue-border white-bg p-4 light-blue-title-sml">
                     {{ value }} %
                   </p>
                   <!-- <p class="blue-border white-bg p-4 light-blue-title-sml">50%</p>
@@ -92,7 +89,9 @@
                         matInput
                         name="tenureYear"
                         maxlength="2"
-                        [formControl]="goldRenewalForm.get('tenureYear')"
+                        [formControl]="
+                          goldRenewalForm.get('tenureYear') | formcontrol
+                        "
                         (change)="onInputChange()"
                         placeholder="Enter"
                         class="pl-3 tenure_input"
@@ -109,8 +108,9 @@
                         matInput
                         name="tenureMonth"
                         maxlength="2"
-                        [formControl]="goldRenewalForm.get('tenureMonth')"
-                        (change)="onTenureChange()"
+                        [formControl]="
+                          goldRenewalForm.get('tenureMonth') | formcontrol
+                        "
                         placeholder="Enter"
                         class="pl-3 tenure_input"
                         numbersOnly
@@ -124,8 +124,9 @@
                         matInput
                         name="tenureDay"
                         maxlength="2"
-                        [formControl]="goldRenewalForm.get('tenureDay')"
-                        (change)="onTenureChange()"
+                        [formControl]="
+                          goldRenewalForm.get('tenureDay') | formcontrol
+                        "
                         placeholder="Enter"
                         class="pl-3 tenure_input"
                         numbersOnly
@@ -152,14 +153,12 @@
             <div>
               <mat-slider
                 class="custom-slider-label"
-                [value]="goldRenewalForm.value.tenure"
+                [(ngModel)]="goldRenewalForm.value.tenure"
                 [max]="maxTenure"
                 [min]="minTenure"
                 fxFlex="100"
-                [thumbLabel]="thumbLabel"
                 discrete
                 (change)="onSliderChange($event)"
-                [displayWith]="formatLabel"
               >
                 <input matSliderThumb #slider />
               </mat-slider>
@@ -195,7 +194,6 @@
         <!-- [disabled]="goldRenewalForm.invalid" -->
         <app-maturity-chart
           fxFlex="50"
-          [chartData]="chartData"
           [chartSectionDetails]="chartSectionDetails"
           [autoCheck]="false"
           [data]="calculatedData"

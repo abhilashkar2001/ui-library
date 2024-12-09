@@ -13,6 +13,7 @@ import { BgInfoComponent } from "./pages/bg-info/bg-info.component";
 import { BgAmendBgInfoComponent } from "./components/bg-amend-bg-info/bg-amend-bg-info.component";
 import { BgIssuanceBgInfoComponent } from "./components/bg-issuance-bg-info/bg-issuance-bg-info.component";
 import { TransactionInfoComponent } from "./components/transaction-info/transaction-info.component";
+import { SharedPipesModule } from "../../../../../../shared/pipes/shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { TransactionInfoComponent } from "./components/transaction-info/transact
     BgInfoComponent,
     BgAmendBgInfoComponent,
     BgIssuanceBgInfoComponent,
-    TransactionInfoComponent,
+    TransactionInfoComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +33,7 @@ import { TransactionInfoComponent } from "./components/transaction-info/transact
     FlexLayoutModule,
     TranslateModule,
     BankGuaranteeRoutingModule,
-  ],
+    SharedPipesModule
+  ]
 })
 export class BankGuaranteeModule {}

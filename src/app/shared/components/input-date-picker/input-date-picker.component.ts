@@ -1,14 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  SimpleChange,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import {
   MatCalendarCellClassFunction,
-  MatDatepickerInputEvent,
+  MatDatepickerInputEvent
 } from "@angular/material/datepicker";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -23,20 +17,20 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 @Component({
   selector: "app-input-date-picker",
   templateUrl: "./input-date-picker.component.html",
-  styleUrls: ["./input-date-picker.component.scss"],
+  styleUrls: ["./input-date-picker.component.scss"]
 })
 export class InputDatePickerComponent implements OnInit {
   @Input() control: FormControl = new FormControl();
-  @Input() inputLabel: string;
-  @Input() minDate: Date;
-  @Input() minDateDesc: string;
-  @Input() maxDate: Date;
-  @Input() maxDateDesc: string;
-  @Input() mandatory: string;
+  @Input() inputLabel: string | any;
+  @Input() minDate: Date | any;
+  @Input() minDateDesc: string | any;
+  @Input() maxDate: Date | any;
+  @Input() maxDateDesc: string | any;
+  @Input() mandatory: string | any;
   @Input() showOutsideLabel = false;
   @Input() skipLabel: boolean = false;
 
-  refactoredMinDate: Date;
+  refactoredMinDate: Date | any;
 
   dateMask: any;
   controlValue: any;
@@ -81,7 +75,7 @@ export class InputDatePickerComponent implements OnInit {
       inputFormat: this.dateService?.format?.toLocaleLowerCase(),
       formatter: (value: string) => {
         return moment(value).format(this.dateService?.format);
-      },
+      }
     });
   }
 
@@ -93,7 +87,7 @@ export class InputDatePickerComponent implements OnInit {
 
   initEvents(): void {
     const handleClick = () => {
-      const displayedYearElement = document.querySelector(
+      const displayedYearElement: any = document.querySelector(
         ".mat-calendar-period-button"
       );
       if (displayedYearElement) {
@@ -137,7 +131,7 @@ export class InputDatePickerComponent implements OnInit {
   }
 
   /**Year wise holidays will populate in every month of the calender */
-  getYearlyHolidays(selectedYear) {
+  getYearlyHolidays(selectedYear: any) {
     this.holidayInfo = [];
     this.customerservice
       .getHolidayDates(this.currentUser.branchCode, selectedYear)

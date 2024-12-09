@@ -7,10 +7,10 @@ import { environment } from "environments/environment";
 @Component({
   selector: "app-image-dialog",
   templateUrl: "./image-dialog.component.html",
-  styleUrls: ["./image-dialog.component.scss"],
+  styleUrls: ["./image-dialog.component.scss"]
 })
 export class ImageDialogComponent implements OnInit {
-  imageUrl: string;
+  imageUrl: string | any;
   endPoint = environment.microServiceURL;
   isPdfType: boolean = false;
   fileUrl: string = "";

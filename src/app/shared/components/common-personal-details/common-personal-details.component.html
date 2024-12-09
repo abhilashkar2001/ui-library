@@ -2,7 +2,7 @@
   <form [formGroup]="customerDetailsForm">
     <div formArrayName="customer">
       <div *ngFor="let customer of customer.controls; let i = index">
-        <div [formGroupName]="i">
+        <div [formGroup]="customer | formgroup">
           <div class="custom_accordin">
             <mat-accordion>
               <mat-expansion-panel
@@ -45,7 +45,8 @@
                     *ngIf="!isHideField"
                   >
                     <span class="applicat-text">
-                      Is this applicant a primary customer? *</span>
+                      Is this applicant a primary customer? *</span
+                    >
                     <mat-slide-toggle
                       formControlName="primaryCustomer"
                       [disabled]="
@@ -74,8 +75,8 @@
                       </mat-select>
                       <mat-error
                         *ngIf="
-                          this.customer.controls.prefix.touched &&
-                          this.customer.controls.prefix.hasError('required')
+                          customer.get('prefix')?.touched &&
+                          customer.get('prefix')?.hasError('required')
                         "
                       >
                         Prefix is required
@@ -95,10 +96,11 @@
                         formControlName="firstName"
                         name="firstName"
                       />
+
                       <mat-error
                         *ngIf="
-                          this.customer.controls.firstName.touched &&
-                          this.customer.controls.firstName.hasError('required')
+                          customer.get('firstName')?.touched &&
+                          customer.get('firstName')?.hasError('required')
                         "
                       >
                         First Name is required
@@ -120,8 +122,8 @@
                       />
                       <mat-error
                         *ngIf="
-                          this.customer.controls.lastName.touched &&
-                          this.customer.controls.lastName.hasError('required')
+                          customer.get('lastName')?.touched &&
+                          customer.get('lastName')?.hasError('required')
                         "
                       >
                         Last Name is required
@@ -157,19 +159,15 @@
                       <mat-datepicker #picker></mat-datepicker>
                       <mat-error
                         *ngIf="
-                          this.customer.controls.dateOfBirth.touched &&
-                          this.customer.controls.dateOfBirth.hasError(
-                            'required'
-                          )
+                          customer.get('dateOfBirth')?.touched &&
+                          customer.get('dateOfBirth')?.hasError('required')
                         "
                       >
-                        Date Of Birth is required
+                        Date of Birth is required
                       </mat-error>
                       <mat-error
                         *ngIf="
-                          this.customer.controls.dateOfBirth.hasError(
-                            'invalidDob'
-                          )
+                          customer.get('dateOfBirth')?.hasError('invalidDob')
                         "
                       >
                         {{ errorDob }}
@@ -187,16 +185,18 @@
                         noInitialSpecialCharacters
                         noSpace
                         [disabled]="!customerDetailsForm.valid"
-                        [formControl]="customer.get('contact').get('email')"
+                        [formControl]="
+                          customer.get('contact')?.get('email') | formcontrol
+                        "
                         name="email"
                       />
                       <mat-error
                         *ngIf="
-                          customer.get('contact').get('email').touched &&
+                          customer.get('contact')?.get('email')?.touched &&
                           customer
                             .get('contact')
-                            .get('email')
-                            .hasError('required')
+                            ?.get('email')
+                            ?.hasError('required')
                         "
                       >
                         Email is required
@@ -205,8 +205,8 @@
                         *ngIf="
                           customer
                             .get('contact')
-                            .get('email')
-                            .hasError('pattern')
+                            ?.get('email')
+                            ?.hasError('pattern')
                         "
                       >
                         Please enter Valid Email
@@ -224,7 +224,8 @@
                           <mat-select
                             class="selector-input"
                             [formControl]="
-                              customer.get('contact').get('mobtCode')
+                              customer.get('contact')?.get('mobtCode')
+                                | formcontrol
                             "
                           >
                             <ng-container
@@ -251,13 +252,14 @@
                             type="text"
                             class="inputText"
                             [formControl]="
-                              customer.get('contact').get('mobile')
+                              customer.get('contact')?.get('mobile')
+                                | formcontrol
                             "
                             numbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
                             [readonly]="
-                              customer.get('contact').get('mobile').readonly
+                              customer.get('contact')?.get('mobile')?.value
                                 ? true
                                 : false
                             "
@@ -271,9 +273,9 @@
                       *ngIf="
                         customer
                           .get('contact')
-                          .get('mobile')
-                          .hasError('required') &&
-                        customer.get('contact').get('mobile').touched
+                          ?.get('mobile')
+                          ?.hasError('required') &&
+                        customer.get('contact')?.get('mobile')?.touched
                       "
                     >
                       Mobile Number is required
@@ -281,12 +283,12 @@
                     <mat-error
                       class="custom-error"
                       *ngIf="
-                        customer.get('contact').get('mobile').touched &&
-                        customer.get('contact').get('mobile').value &&
+                        customer.get('contact')?.get('mobile')?.touched &&
+                        customer.get('contact')?.get('mobile')?.value &&
                         customer
                           .get('contact')
-                          .get('mobile')
-                          .hasError('invalidLength')
+                          ?.get('mobile')
+                          ?.hasError('invalidLength')
                       "
                       >Mobile length should be {{ maxMobileLength }}</mat-error
                     >
@@ -295,9 +297,9 @@
                       *ngIf="
                         customer
                           .get('contact')
-                          .get('mobtCode')
-                          .hasError('required') &&
-                        customer.get('contact').get('mobtCode').touched
+                          ?.get('mobtCode')
+                          ?.hasError('required') &&
+                        customer.get('contact')?.get('mobtCode')?.touched
                       "
                       >ISD Code is required</mat-error
                     >
@@ -322,8 +324,8 @@
                       </mat-select>
                       <mat-error
                         *ngIf="
-                          this.customer.controls.gender.touched &&
-                          this.customer.controls.gender.hasError('required')
+                          customer.get('gender')?.touched &&
+                          customer.get('gender')?.hasError('required')
                         "
                       >
                         Gender is required
@@ -336,7 +338,7 @@
                       inputLabel="Nationality"
                       bindLabelKey="nationality"
                       bindValueKey="nationality"
-                      [control]="customer.get('nationality')"
+                      [control]="customer.get('nationality') | formcontrol"
                     ></app-searchable-select>
                   </div>
                   <div class="col-md-6 col-12">
@@ -355,10 +357,10 @@
                       </mat-select>
                       <mat-error
                         *ngIf="
-                          this.customer.controls.maritalStatus.touched &&
-                          this.customer.controls.maritalStatus.hasError(
-                            'required'
-                          )
+                          this.customer.get('maritalStatus')?.touched &&
+                          this.customer
+                            .get('maritalStatus')
+                            ?.hasError('required')
                         "
                       >
                         Marital Status is required
@@ -368,12 +370,13 @@
                   <div class="highlight_title">Address Details</div>
                   <div
                     class="row"
-                    *ngIf="customer.get('contact.address').controls"
+                    *ngIf="
+                      customer.get('contact.address')?.value as addressControl
+                    "
                   >
                     <ng-container
                       *ngFor="
-                        let addressGroup of customer.get('contact.address')
-                          .controls;
+                        let addressGroup of addressControl?.controls;
                         let addressIndex = index
                       "
                       [formGroup]="addressGroup"
@@ -455,7 +458,7 @@
                           <mat-icon
                             matSuffix
                             class="searchIcon-main"
-                            (click)="pincodeExpansion(i)"
+                            (click)="pincodeExpansion()"
                             >search</mat-icon
                           >
                           <mat-error
@@ -551,7 +554,7 @@
   <div *ngIf="!isHideField && holderType == 'joint'">
     <div
       class="add_applicant"
-      (click)="holderType == 'joint' && addCustomer(customer?.controls?.length)"
+      (click)="holderType == 'joint' && addCustomer(customer.controls.length)"
     >
       Add Another Applicant
     </div>

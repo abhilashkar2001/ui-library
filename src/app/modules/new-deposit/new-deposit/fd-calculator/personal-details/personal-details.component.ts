@@ -6,7 +6,7 @@ import {
   Output,
   QueryList,
   ViewChild,
-  ViewChildren,
+  ViewChildren
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
@@ -18,7 +18,7 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-personal-details",
   templateUrl: "./personal-details.component.html",
-  styleUrls: ["./personal-details.component.scss"],
+  styleUrls: ["./personal-details.component.scss"]
 })
 export class PersonalDetailsComponent implements OnInit {
   @Input() existingCustomer: any;
@@ -33,14 +33,14 @@ export class PersonalDetailsComponent implements OnInit {
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
-    secondCtrl: [""],
+    secondCtrl: [""]
   });
   isLinear = true;
   holderType: any;
   fixedDepositId: any;
   countryArray: any;
 
-  customerDetailsForm: FormGroup;
+  customerDetailsForm!: FormGroup;
   listCityState: any = [];
 
   constructor(
@@ -59,7 +59,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   ngAfterViewInit() {
     // Set up initial expansion state
-    this.panels.forEach((panel, i) => {
+    this.panels.forEach(() => {
       // panel.expandedChange.subscribe((expanded) => {
       //   this.items[i].expanded = expanded;
       // });
@@ -73,7 +73,9 @@ export class PersonalDetailsComponent implements OnInit {
       this.buildCustomerDetailsForm();
     }
     this.holderType = sessionStorage.getItem("holderType") || "Self";
-    this.fixedDepositId = parseInt(sessionStorage.getItem("fixedDepositId"));
+    this.fixedDepositId = parseInt(
+      <string>sessionStorage.getItem("fixedDepositId")
+    );
     this.getCountry();
   }
   getCountry() {
@@ -84,10 +86,10 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-  buildCustomerDetailsForm(data?) {
+  buildCustomerDetailsForm(data?: any) {
     this.customerDetailsForm = this.fb.group({
       fixedDepositId: "",
-      customer: this.fb.array([]),
+      customer: this.fb.array([])
     });
     setTimeout(() => {
       if (this.holderType == "Self") this.addCustomer(data);
@@ -108,7 +110,7 @@ export class PersonalDetailsComponent implements OnInit {
     return this.customerDetailsForm.get("customer") as FormArray;
   }
 
-  newCustomer(data?): FormGroup {
+  newCustomer(data?: any): FormGroup {
     return this.fb.group({
       customerId: [data ? data.customerId : ""],
       customerNo: [data ? data.customerNo : ""],
@@ -125,11 +127,11 @@ export class PersonalDetailsComponent implements OnInit {
       countryName: [data ? data.countryName : "", Validators.required],
       pincode: [data ? data.pincode : "", Validators.required],
       stateName: [data ? data.stateName : "", Validators.required],
-      cityId: [data ? data.cityId : "", Validators.required],
+      cityId: [data ? data.cityId : "", Validators.required]
     });
   }
 
-  addCustomer(data?) {
+  addCustomer(data?: any) {
     this.customer.push(this.newCustomer(data));
   }
 
@@ -141,25 +143,25 @@ export class PersonalDetailsComponent implements OnInit {
     console.log(this.customerDetailsForm.value);
     this.customSavePersonal.emit({
       status: true,
-      personalDetails: customer,
+      personalDetails: customer
     });
   }
   createPayload() {
     var contact = {};
-    var customer = [];
-    this.customerDetailsForm.value.customer.forEach((element) => {
+    var customer: any = [];
+    this.customerDetailsForm.value.customer.forEach((element: any) => {
       const address = {
         address1: element.address1,
         address2: "",
         residenceType: element.residenceType,
         countryName: element.countryName,
         stateName: element.stateName,
-        cityId: element.cityId,
+        cityId: element.cityId
         // parseInt(element.cityId),
       };
       contact = {
         email: element.email,
-        address: [address],
+        address: [address]
       };
       var customerDetails = {
         prefix: element.prefix,
@@ -170,14 +172,14 @@ export class PersonalDetailsComponent implements OnInit {
         gender: element.gender,
         dateOfBirth: moment(element.dateOfBirth).format("YYYY-MM-DD"),
         nationality: element.nationality,
-        contact: contact,
+        contact: contact
       };
       customer.push(customerDetails);
     });
 
     const payload = {
       fixedDepositId: this.fixedDepositId,
-      customer: customer,
+      customer: customer
     };
 
     return payload;
@@ -186,10 +188,10 @@ export class PersonalDetailsComponent implements OnInit {
   goBack() {
     this.personalBack.emit();
   }
-  saveCustomer(i) {
+  saveCustomer(i: any) {
     this.closePanel(i);
   }
-  closePanel(index) {
+  closePanel(index: any) {
     this.panels.forEach((panel, i) => {
       if (i == index) {
         panel.close();
@@ -197,10 +199,10 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-  getCityandStateByZipcode(indx) {
+  getCityandStateByZipcode(indx: any) {
     (<FormGroup>this.customer.controls[indx])
       .get("pincode")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
         if (value) {
           if (value.toString().length) {
@@ -210,11 +212,11 @@ export class PersonalDetailsComponent implements OnInit {
                 if (res) {
                   this.listCityState = res?.data;
                   this.customer.controls[indx]
-                    .get("stateName")
-                    .patchValue(res?.data?.[0]?.state);
+                    ?.get("stateName")
+                    ?.patchValue(res?.data?.[0]?.state);
                   this.customer.controls[indx]
-                    .get("cityId")
-                    .patchValue(res?.data?.[0]?.cityId);
+                    ?.get("cityId")
+                    ?.patchValue(res?.data?.[0]?.cityId);
                 }
               });
           }

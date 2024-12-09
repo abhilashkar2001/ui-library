@@ -68,7 +68,7 @@
         <app-ic-action-button
           [buttonName]="'Proceed' | translate"
           buttonType="filled"
-          (onClick)="proceed()"
+          (onClick)="proceed('')"
           [disabled]="schedulePaymentForm.get('debitAccount').invalid"
         ></app-ic-action-button>
       </div>
@@ -98,7 +98,6 @@
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-amount-input
             [inputLabel]="'Amount'"
-            [currencyCode]="currencyCode"
             [inputType]="'text'"
             [control]="schedulePaymentForm.get('amount')"
           ></app-ic-custom-amount-input>

@@ -3,35 +3,29 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-common-personal-details",
   templateUrl: "./personal-details.component.html",
-  styleUrls: ["./personal-details.component.scss"],
+  styleUrls: ["./personal-details.component.scss"]
 })
 export class PersonalDetailsComponent implements OnInit {
-  @Input() screen: string;
+  @Input() screen: string | any;
   @Output() OnConfirmEmitter: EventEmitter<any> = new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   personalDetailsForm: FormGroup | any;
   countries: any = [];
   stateList: any = [];
   cityList: any = [];
-  accountHeader: string;
-  flag: boolean;
+  accountHeader: string | any;
+  flag: boolean | any;
   todayDate: Date = new Date();
 
   constructor(
-    private commonService: CommonService,
-    private _location: Location,
-    private router: Router,
     private fb: FormBuilder,
     private openAccountService: OpenAccountService
   ) {}
@@ -63,9 +57,9 @@ export class PersonalDetailsComponent implements OnInit {
       });
   }
 
-  onSelectCity(event: any, cityObj: any) {
+  onSelectCity(cityObj: any) {
     this.personalDetailsForm.patchValue({
-      zipCode: cityObj.pincode,
+      zipCode: cityObj.pincode
     });
   }
 
@@ -83,7 +77,7 @@ export class PersonalDetailsComponent implements OnInit {
       address: new FormControl("", [Validators.required]),
       residentType: new FormControl("", [Validators.required]),
       country: new FormControl("", [Validators.required]),
-      zipCode: new FormControl("", [Validators.required]),
+      zipCode: new FormControl("", [Validators.required])
     });
   }
 
@@ -110,10 +104,10 @@ export class PersonalDetailsComponent implements OnInit {
             residentType: this.personalDetailsForm.value.residentType,
             cityId: this.personalDetailsForm.value.city,
             country: this.personalDetailsForm.value.country,
-            zipCode: this.personalDetailsForm.value.zipCode,
-          },
-        ],
-      },
+            zipCode: this.personalDetailsForm.value.zipCode
+          }
+        ]
+      }
     };
   }
 

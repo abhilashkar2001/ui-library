@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { Webhost } from "app/shared/directives/appHost.directive";
 import { BehaviorSubject } from "rxjs";
@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-generic-bg-component",
   templateUrl: "./generic-bg-component.component.html",
-  styleUrls: ["./generic-bg-component.component.scss"],
+  styleUrls: ["./generic-bg-component.component.scss"]
 })
 export class GenericBgComponentComponent implements OnInit {
   @Input("componentName") componentName = "";
@@ -27,7 +27,6 @@ export class GenericBgComponentComponent implements OnInit {
   bgType: any;
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
     private api: GenericBgServiceService
   ) {}
@@ -57,7 +56,7 @@ export class GenericBgComponentComponent implements OnInit {
       this.componentRef.instance.amendmentType = this.currentStep$.value?.type;
     }
   }
-  navigatetotab(tab) {
+  navigatetotab(tab: any) {
     this.trackRecord();
     this.currentStep$.next(tab);
     this.createComponentView();
@@ -70,35 +69,35 @@ export class GenericBgComponentComponent implements OnInit {
     this.isCurrentFormValid$.next(isFormValid);
   };
 
-  saveTemplet(event) {
+  saveTemplet() {
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
       data: {
-        isSaveTemplate: true,
+        isSaveTemplate: true
       },
       width: "750px",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-dialog-class"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       this.saveTemplate(resp.templateName);
     });
   }
 
-  saveTemplate(templateName) {
+  saveTemplate(templateName: any) {
     const payload = {
       applicantModel: {
         ...this.account$.value.applicantInfo,
         saveTemplate: true,
-        templateName: templateName,
+        templateName: templateName
       },
       bgInfoModel: this.account$.value?.benificiaryDetails ?? null,
       otherInfoModel: this.account$.value?.otherInfoModel ?? null,
-      attachmentModel: this.account$.value?.attachMentModel ?? null,
+      attachmentModel: this.account$.value?.attachMentModel ?? null
     };
-    this.api.saveTemplate(payload).subscribe((resp) => {});
+    this.api.saveTemplate(payload).subscribe(() => {});
   }
 
-  updateRecord(event) {
+  updateRecord(event: any) {
     console.log(
       event,
       "........",
@@ -122,15 +121,15 @@ export class GenericBgComponentComponent implements OnInit {
           // licenceOglOrNonOgl: applicantInfo?.,
           feeAccount: applicantInfo?.feeAccount,
           contact: {
-            address: applicantInfo?.contactInfo?.address?.map((i) => ({
+            address: applicantInfo?.contactInfo?.address?.map((i: any) => ({
               address1: i?.address1,
               address2: i?.address2,
               addressType: i?.residenceType,
               pincode: i?.pincode,
-              cityId: i?.cityId,
-            })),
-          },
-        },
+              cityId: i?.cityId
+            }))
+          }
+        }
       };
       payload = applicantInfoPayload;
     } else if (this.currentStep$.value?.id == 2) {
@@ -161,14 +160,14 @@ export class GenericBgComponentComponent implements OnInit {
           beneficiary: {
             name: lcInfo?.beneficiaryDetails?.beneficiary,
             contactInfo: {
-              address: lcInfo?.beneficiaryDetails?.address?.map((i) => ({
+              address: lcInfo?.beneficiaryDetails?.address?.map((i: any) => ({
                 address1: i?.address1,
                 address2: i?.address2,
                 addressType: "Home",
                 pincode: i?.pincode,
-                cityId: i?.cityId,
-              })),
-            },
+                cityId: i?.cityId
+              }))
+            }
           },
           bankDetails: {
             // deliveryVia: lcInfo?.bankDetails?.,
@@ -176,31 +175,31 @@ export class GenericBgComponentComponent implements OnInit {
             drawee: lcInfo?.bankDetails?.drawee,
             branchId: lcInfo?.bankDetails?.branch,
             contact: {
-              address: lcInfo?.bankDetails?.address?.map((i) => ({
+              address: lcInfo?.bankDetails?.address?.map((i: any) => ({
                 address1: i?.address1,
                 address2: i?.address2,
                 addressType: "Home",
                 pincode: i?.pincode,
-                cityId: i?.cityId,
-              })),
-            },
-          },
-        },
+                cityId: i?.cityId
+              }))
+            }
+          }
+        }
       };
       payload = lcInfopayload;
     } else if (this.currentStep$.value?.id == 3) {
       payload = {
         lcType: "Issuance",
         lcMasterId: sessionStorage.getItem("lcMasterId"),
-        ...this.account$?.value?.goodsInfo,
+        ...this.account$?.value?.goodsInfo
       };
     } else if (this.currentStep$.value?.id == 4) {
       const docPayload = {
         lcType: "Issuance",
         lcMasterId: sessionStorage.getItem("lcMasterId"),
         documentInfo: {
-          documentId: this.account$.value?.documentId,
-        },
+          documentId: this.account$.value?.documentId
+        }
       };
       payload = docPayload;
     } else if (this.currentStep$.value?.id == 5) {
@@ -218,16 +217,18 @@ export class GenericBgComponentComponent implements OnInit {
               lcAdditionalInfo?.allChargesThanBankCharge,
             remarksToBank: lcAdditionalInfo?.remarks,
             contact: {
-              address: lcAdditionalInfo?.contactInfo?.address?.map((i) => ({
-                address1: i?.address1,
-                address2: i?.address2,
-                addressType: i?.residenceType,
-                pincode: i?.pincode,
-                cityId: i?.cityId,
-              })),
-            },
-          },
-        },
+              address: lcAdditionalInfo?.contactInfo?.address?.map(
+                (i: any) => ({
+                  address1: i?.address1,
+                  address2: i?.address2,
+                  addressType: i?.residenceType,
+                  pincode: i?.pincode,
+                  cityId: i?.cityId
+                })
+              )
+            }
+          }
+        }
       };
       payload = additionalPayload;
     } else if (this.currentStep$.value?.id == 6) {
@@ -236,9 +237,9 @@ export class GenericBgComponentComponent implements OnInit {
         lcMasterId: sessionStorage.getItem("lcMasterId"),
         attachment: {
           documentIds: this.account$.value?.attachMentModel?.map(
-            (i) => i?.documentId
-          ),
-        },
+            (i: any) => i?.documentId
+          )
+        }
       };
       payload = attachmentPayload;
     }
@@ -255,7 +256,7 @@ export class GenericBgComponentComponent implements OnInit {
     );
 
     const nextTab = this.tabs.find(
-      (i) => i?.id == this.currentStep$?.value?.id + 1
+      (i: any) => i?.id == this.currentStep$?.value?.id + 1
     );
 
     if (nextTab?.id) {

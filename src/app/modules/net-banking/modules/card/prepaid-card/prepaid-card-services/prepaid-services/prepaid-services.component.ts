@@ -9,17 +9,14 @@ import { PrepaidCardStore } from "../../prepaid-card.store";
 @Component({
   selector: "app-prepaid-services",
   templateUrl: "./prepaid-services.component.html",
-  styleUrls: ["./prepaid-services.component.scss"],
+  styleUrls: ["./prepaid-services.component.scss"]
 })
 export class PrepaidServicesComponent implements OnInit {
   tabs: Tabs = PrepaidCardStore.prepaidCardTab;
   activatedComponent!: PaymentComponent;
-  tabname: string = "";
+  tabname: string | any = "";
   selectedTab: TabModel | undefined;
-  constructor(
-    private router: Router,
-    private iconService: IconService
-  ) {
+  constructor(private router: Router, private iconService: IconService) {
     this.iconService
       .addIconIfNotExists("feather-info", "assets/images/svg/feather-info.svg")
       .subscribe((exists) => {
@@ -35,17 +32,21 @@ export class PrepaidServicesComponent implements OnInit {
     let route = this.router.url;
     this.selectedRoute(route);
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        ) // Type guard
+      )
       .subscribe((event: NavigationEnd) => {
         route = event.urlAfterRedirects;
         this.selectedRoute(route);
       });
   }
-  onSelectTab(event) {
+  onSelectTab(event: any) {
     this.selectedTab = event;
   }
 
-  selectedRoute(route) {
+  selectedRoute(route: any) {
     let selectedTabValue = this.tabs.filter((item) => item?.route == route)[0];
     this.tabname = selectedTabValue?.screenName;
   }

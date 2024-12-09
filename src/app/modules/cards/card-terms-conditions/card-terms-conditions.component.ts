@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { SavingsSubmitDialogComponent } from "app/shared/components/savings-submit-dialog/savings-submit-dialog.component";
 
 @Component({
   selector: "app-card-terms-conditions",
   templateUrl: "./card-terms-conditions.component.html",
-  styleUrls: ["./card-terms-conditions.component.scss"],
+  styleUrls: ["./card-terms-conditions.component.scss"]
 })
 export class CardTermsConditionsComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
@@ -15,11 +15,7 @@ export class CardTermsConditionsComponent implements OnInit {
   dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
   stepperTitle: any;
 
-  constructor(
-    private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -27,15 +23,15 @@ export class CardTermsConditionsComponent implements OnInit {
     this.dialogsaveRef = this.dialog.open(SavingsSubmitDialogComponent, {
       data: {
         applicationNo: 746764326432,
-        flow: "cards",
+        flow: "cards"
       },
       width: "885px",
       height: "676px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
-    this.dialogsaveRef.componentInstance.submitClicked.subscribe((result) => {
+    this.dialogsaveRef.componentInstance.submitClicked.subscribe(() => {
       this.router.navigate(["/cards"]);
     });
   }

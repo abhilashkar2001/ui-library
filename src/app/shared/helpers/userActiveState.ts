@@ -8,21 +8,21 @@ import { RequestCache } from "../services/request-cache.service";
 import { MatDialog } from "@angular/material/dialog";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UserActiveState {
-  userLoginValidInSecs;
-  userActivity;
+  userLoginValidInSecs: any;
+  userActivity: any;
   userInactive: Subject<any> = new Subject();
-  userLoginValid;
+  userLoginValid: any;
 
   // Watch for events on the window (or any other element).
   keyboardInput$ = fromEvent(window, "mousemove").pipe(tap());
   // Hold a reference to the subscription.
-  keyboardSub?: Subscription;
+  keyboardSub?: Subscription | any;
   elapsedTime: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  loginTime: number;
-  intervalId;
+  loginTime: number | any;
+  intervalId: any;
   constructor(
     private tokenStorageService: TokenStorageService,
     private router: Router,
@@ -32,7 +32,7 @@ export class UserActiveState {
   ) {
     // Subscribe to the property or use the async pipe.
     // Remember to unsubscribe when you are done if you don't use the async pipe (see other example).
-    this.keyboardSub = this.keyboardInput$.subscribe((res) => {
+    this.keyboardSub = this.keyboardInput$.subscribe(() => {
       clearTimeout(this.userActivity);
       this.setTimeout();
     });
@@ -67,7 +67,7 @@ export class UserActiveState {
 
   setTimeout() {
     this.userActivity = setTimeout(() => {
-      if (this.tokenStorageService.isLoggedIn) {
+      if (this.tokenStorageService.isLoggedIn()) {
         this.userInactive.next(true);
         console.log("logged out");
       }
@@ -82,7 +82,7 @@ export class UserActiveState {
       this.tokenStorageService.cleanUpSessionPartially();
       this.chache.clear();
       this.router.navigate(["/home"], {
-        queryParams: { type: "auth" },
+        queryParams: { type: "auth" }
       });
     }, 3500);
   }

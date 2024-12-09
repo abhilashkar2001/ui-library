@@ -1,9 +1,5 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from "@angular/core";
-import {
-  DateAdapter,
-  MatDateFormats,
-  MAT_DATE_FORMATS,
-} from "@angular/material/core";
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
+import { DateAdapter } from "@angular/material/core";
 import { MatCalendar } from "@angular/material/datepicker";
 import * as moment from "moment";
 import { Subject } from "rxjs";
@@ -12,7 +8,7 @@ import { takeUntil } from "rxjs/operators";
 @Component({
   selector: "app-calendar-header",
   templateUrl: "./calendar-header.component.html",
-  styleUrls: ["./calendar-header.component.scss"],
+  styleUrls: ["./calendar-header.component.scss"]
 })
 export class CalendarHeaderComponent<D> implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -20,7 +16,6 @@ export class CalendarHeaderComponent<D> implements OnDestroy {
   constructor(
     private calendar: MatCalendar<D>, // calendar instance of picker
     private dateAdapter: DateAdapter<D>, // native or moment date adapter
-    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats, // for formatting
     cdr: ChangeDetectorRef
   ) {
     // make sure your header stays in sync with the calendar:
@@ -31,7 +26,9 @@ export class CalendarHeaderComponent<D> implements OnDestroy {
 
   // active date label rendered between the arrow buttons
   get periodLabel(): string {
-    return moment(this.calendar.activeDate).format("MMMM YYYY");
+    return moment(this.calendar.activeDate as moment.MomentInput).format(
+      "MMMM YYYY"
+    );
   }
 
   // called when user clicks on one of the left buttons

@@ -4,13 +4,13 @@ import { NewDepositConstant } from "app/modules/new-deposit/new-deposit/new-depo
 import {
   NgbCarousel,
   NgbSlideEvent,
-  NgbSlideEventSource,
+  NgbSlideEventSource
 } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-news-letter-slider",
   templateUrl: "./news-letter-slider.component.html",
-  styleUrls: ["./news-letter-slider.component.scss"],
+  styleUrls: ["./news-letter-slider.component.scss"]
 })
 export class NewsLetterSliderComponent implements OnInit {
   images = NewDepositConstant.CLIENT_DESCRIPTION;
@@ -29,7 +29,7 @@ export class NewsLetterSliderComponent implements OnInit {
   pauseOnHover = true;
   pauseOnFocus = true;
 
-  @ViewChild("carousel", { static: true }) carousel: NgbCarousel;
+  @ViewChild("carousel", { static: true }) carousel: NgbCarousel | any;
 
   togglePaused() {
     if (this.paused) {

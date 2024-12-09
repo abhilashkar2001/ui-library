@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class OpenAccountService {
   private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
@@ -71,7 +71,7 @@ export class OpenAccountService {
     );
   }
 
-  getExistingCustomer(mobileNo, type?) {
+  getExistingCustomer(mobileNo: any, type?: any) {
     return this.http.get(
       `${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}${
         type ? `&type=${type}` : ""
@@ -79,36 +79,36 @@ export class OpenAccountService {
     );
   }
 
-  saveCustomerInfo(payload) {
+  saveCustomerInfo(payload: any) {
     return this.http.post<any>(`${baseUrl}/origination-matser/save`, payload);
   }
 
-  fetchSubClass(subClass) {
+  fetchSubClass(subClass: any) {
     return this.http.get<any>(
       `${baseUrl}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
 
-  getProcessCycle(processName) {
+  getProcessCycle(processName: any) {
     return this.http.get<any>(
       `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`
     );
   }
-  getProcessStages(id) {
+  getProcessStages(id: any) {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
 
-  getCustomerById(id) {
+  getCustomerById(id: any) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
   }
 
-  getCustByStageId(id) {
+  getCustByStageId(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
     );
   }
 
-  fetchStateCityByZipcode(pincode) {
+  fetchStateCityByZipcode(pincode: any) {
     return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
   }
 
@@ -129,15 +129,15 @@ export class OpenAccountService {
     return this.http.get<any>(`${baseUrl}/boundaries?basisDetailId=${basisId}`);
   }
 
-  getProductDetails(basisId) {
+  getProductDetails(basisId: any) {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
-  checkMobileAndProduct(productCode, mobileNo, accountType) {
+  checkMobileAndProduct(productCode: any, mobileNo: any, accountType: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
     );
   }
-  getOriginationMaster(id) {
+  getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser?originationId=${id}`
     );
@@ -148,11 +148,11 @@ export class OpenAccountService {
   }
 
   // Register a face
-  faceRegister(data): Observable<any> {
+  faceRegister(data: any): Observable<any> {
     return this.http.post<any>(`${baseUrl}/api/faceid/register`, data);
   }
 
-  faceMatch(payload) {
+  faceMatch(payload: any) {
     return this.http.post<any>(`${baseUrl}/api/face-match-from-doc`, payload);
   }
 }

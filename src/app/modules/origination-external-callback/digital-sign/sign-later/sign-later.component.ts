@@ -8,7 +8,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-sign-later",
   templateUrl: "./sign-later.component.html",
-  styleUrls: ["./sign-later.component.scss"],
+  styleUrls: ["./sign-later.component.scss"]
 })
 export class SignLaterComponent implements OnInit {
   signatureId: any;
@@ -22,14 +22,16 @@ export class SignLaterComponent implements OnInit {
     const dialogRef = this.dialog.open(SignNowPopupComponent, {
       disableClose: false,
       width: "60%",
-      data: { signatureId: this.signatureId, title: "Sign Now" },
+      data: { signatureId: this.signatureId, title: "Sign Now" }
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res?.result?.signatureId) {
         const signPayload = {
-          originationId: JSON.parse(sessionStorage.getItem("originationId")),
+          originationId: JSON.parse(
+            <string>sessionStorage.getItem("originationId")
+          ),
           signatureId: res?.result?.signatureId,
-          screenCode: this.sessionStorageService.getScreenId(),
+          screenCode: this.sessionStorageService.getScreenId()
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
@@ -39,9 +41,9 @@ export class SignLaterComponent implements OnInit {
                 width: "40%",
                 data: {
                   screenType: "Sign Now",
-                  title: "Digital sign has been successfully recorded!",
+                  title: "Digital sign has been successfully recorded!"
                 },
-                disableClose: true,
+                disableClose: true
               });
               sucessDialog.afterClosed().subscribe((_) => {
                 setTimeout(() => {

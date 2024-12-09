@@ -6,7 +6,7 @@
           [src]="slide.imageUrl"
           class="slide"
           (click)="currentIndex = i"
-          [ngClass]="currentIndex == i && 'glaze'"
+          [ngClass]="{ glaze: currentIndex == i }"
         />
       </ng-container>
     </div>
@@ -17,7 +17,7 @@
     <span
       *ngFor="let slide of slides; let i = index"
       class="dot"
-      [ngClass]="i === currentIndex && 'dot-selected'"
+      [ngClass]="{ 'dot-selected': i === currentIndex }"
       (click)="currentSlide(i)"
     ></span>
   </div>

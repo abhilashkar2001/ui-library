@@ -1,15 +1,11 @@
 import {
   Directive,
-  ElementRef,
-  Attribute,
   OnInit,
   Input,
-  Renderer2,
   NgZone,
   SimpleChanges,
   OnChanges,
-  OnDestroy,
-  ChangeDetectorRef
+  OnDestroy
 } from "@angular/core";
 import HighlightJS from "highlight.js";
 import { HttpClient } from "@angular/common/http";
@@ -24,19 +20,14 @@ import { takeUntil } from "rxjs/operators";
   selector: "[egretHighlight]"
 })
 export class EgretHighlightDirective implements OnInit, OnChanges, OnDestroy {
-  constructor(
-    private el: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private _zone: NgZone,
-    private http: HttpClient
-  ) {
+  constructor(private _zone: NgZone, private http: HttpClient) {
     this.unsubscribeAll = new Subject();
   }
   // Inner highlighted html
-  highlightedCode: string = '';
+  highlightedCode: string = "";
 
-  @Input() path: string = '';
-  @Input("egretHighlight") code: string = '';
+  @Input() path: string = "";
+  @Input("egretHighlight") code: string = "";
   private unsubscribeAll: Subject<any>;
   @Input() languages: string[] = [];
 
@@ -45,19 +36,19 @@ export class EgretHighlightDirective implements OnInit, OnChanges, OnDestroy {
       this.highlightElement(this.code);
     }
     if (this.path) {
-      this.highlightedCode = "Loading..."
+      this.highlightedCode = "Loading...";
       this.http
         .get(this.path, { responseType: "text" })
         .pipe(takeUntil(this.unsubscribeAll))
-        .subscribe(response => {
+        .subscribe((response) => {
           this.highlightElement(response, this.languages);
         });
     }
   }
 
   ngOnDestroy() {
-      this.unsubscribeAll.next(1);
-      this.unsubscribeAll.complete();
+    this.unsubscribeAll.next(1);
+    this.unsubscribeAll.complete();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,7 +62,7 @@ export class EgretHighlightDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  highlightElement(code: string, languages?: string[]) {
+  highlightElement(code: string, _languages?: string[]) {
     this._zone.runOutsideAngular(() => {
       const res = HighlightJS.highlightAuto(code);
       this.highlightedCode = res.value;

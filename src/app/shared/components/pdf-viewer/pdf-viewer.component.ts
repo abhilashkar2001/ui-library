@@ -6,12 +6,12 @@ import { DownloadService } from "app/shared/services/download.service";
 @Component({
   selector: "app-pdf-viewer",
   templateUrl: "./pdf-viewer.component.html",
-  styleUrls: ["./pdf-viewer.component.scss"],
+  styleUrls: ["./pdf-viewer.component.scss"]
 })
 export class PdfViewerComponent implements OnInit {
   @Input() fileName: string;
   @Input() fileUrl: string;
-  dataLocalUrl;
+  dataLocalUrl: any;
 
   constructor(
     private domSanitizer: DomSanitizer,

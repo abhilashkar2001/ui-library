@@ -16,7 +16,7 @@
           [items]="creditCardList"
           bindValueKey="cardNo"
           bindLabelKey="cardValue"
-          [control]="desiredLimitForm.get('cardNumber')"
+          [control]="desiredLimitForm.get('cardNumber') | formcontrol"
           [inputLabel]="'Card Number' | translate"
         ></app-searchable-select>
       </div>
@@ -40,7 +40,9 @@
     <div fxLayout="row" fxLayoutGap="10" fxFlex="100">
       <div class="row" fxFlex="17">
         <app-ic-custom-input
-          [control]="desiredLimitForm.get('eligibleCreditLimit')"
+          [formControl]="
+            desiredLimitForm.get('eligibleCreditLimit') | formcontrol
+          "
           inputLabel="Eligible Credit Limit"
           [country]="selectedCurrency"
           customClass="customTotalField"
@@ -53,7 +55,7 @@
       <div fxFlex="70" fxLayout="column">
         <div class="custom-slider">
           <mat-slider
-            [formControl]="desiredLimitForm.get('eligibleCreditLimit').value"
+            [formControl]="desiredLimitForm.get('eligibleCreditLimit')?.value"
             [max]="max"
             [min]="min"
             fxFlex="100"
@@ -80,7 +82,7 @@
           buttonType="filled"
           [disabled]="desiredLimitForm.invalid"
           (onClick)="proceedToOtp()"
-          [disabled]="!desiredLimitForm.get('eligibleCreditLimit').value"
+          [disabled]="!desiredLimitForm.get('eligibleCreditLimit')?.value"
         ></app-ic-action-button>
       </div>
     </div>
@@ -97,7 +99,10 @@
         <div fxFlex="75" fxLayoutGap="10">
           <div class="row" fxFlex="33">
             <mat-form-field>
-              <input matInput [formControl]="desiredLimitForm.get('otp')" />
+              <input
+                matInput
+                [formControl]="desiredLimitForm.get('otp') | formcontrol"
+              />
             </mat-form-field>
           </div>
           <span class="gray-text" fxLayoutAlign="center center"
@@ -115,7 +120,7 @@
             buttonName="Submit"
             buttonType="filled"
             (click)="submit()"
-            [disabled]="!desiredLimitForm.get('otp').value"
+            [disabled]="!desiredLimitForm.get('otp')?.value"
           ></app-ic-action-button>
         </div>
       </div>

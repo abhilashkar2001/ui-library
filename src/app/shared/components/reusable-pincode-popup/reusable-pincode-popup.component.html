@@ -17,7 +17,7 @@
           inputLabel="Country"
           bindLabelKey="countryName"
           bindValueKey="countryId"
-          [control]="pincodeForm.get('countryId')"
+          [control]="pincodeForm.get('countryId') | formcontrol"
           (selectionChange)="fetchStateByCountry($event)"
         ></app-searchable-select>
       </div>
@@ -38,8 +38,8 @@
           />
           <mat-error
             *ngIf="
-              pincodeForm.get('pincode').hasError('touched') ||
-              pincodeForm.get('pincode').hasError('required')
+              pincodeForm.get('pincode')?.hasError('touched') ||
+              pincodeForm.get('pincode')?.hasError('required')
             "
           >
             <small>Pincode is Required</small>
@@ -65,8 +65,8 @@
           </mat-select>
           <mat-error
             *ngIf="
-              pincodeForm.get('stateId').hasError('touched') ||
-              pincodeForm.get('stateId').hasError('required')
+              pincodeForm.get('stateId')?.hasError('touched') ||
+              pincodeForm.get('stateId')?.hasError('required')
             "
           >
             <small>State is Required</small>
@@ -92,8 +92,8 @@
           </mat-select>
           <mat-error
             *ngIf="
-              pincodeForm.get('cityId').hasError('touched') ||
-              pincodeForm.get('cityId').hasError('required')
+              pincodeForm.get('cityId')?.hasError('touched') ||
+              pincodeForm.get('cityId')?.hasError('required')
             "
           >
             <small>City is Required</small>
@@ -139,12 +139,14 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header
               ><b>{{ column.header }}</b>
               <div fxLayout="column" class="arrow-wrapper">
-                <div
-                  [ngClass]="
-                    sortValue == column?.columnDef && orderBy == 'asc'
-                      ? 'higlightSort upArrow'
-                      : 'upArrow'
-                  "
+                <!-- <div
+                  [ngClass]="{
+                    'higlightSort upArrow':
+                      sortValue === column?.columnDef && orderBy === 'asc',
+                    upArrow: !(
+                      sortValue === column?.columnDef && orderBy === 'asc'
+                    )
+                  }"
                 ></div>
                 <div
                   [ngClass]="
@@ -152,7 +154,7 @@
                       ? 'higlightSort customIcon'
                       : 'customIcon'
                   "
-                ></div>
+                ></div> -->
               </div>
             </mat-header-cell>
             <mat-cell

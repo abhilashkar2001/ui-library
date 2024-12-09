@@ -6,7 +6,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-otp",
   templateUrl: "./otp.component.html",
-  styleUrls: ["./otp.component.scss"],
+  styleUrls: ["./otp.component.scss"]
 })
 export class OtpComponent implements OnInit {
   @Output() otpVerified = new EventEmitter<any>();
@@ -18,11 +18,11 @@ export class OtpComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "80px",
-      height: "80px",
-    },
+      height: "80px"
+    }
   };
-  otpResendTrigger: boolean;
-  invalidOtp: boolean;
+  otpResendTrigger: boolean | any;
+  invalidOtp: boolean | any;
   otpSent: boolean = false;
   yourOtp: any;
   otpAvailable: boolean = false;
@@ -41,7 +41,7 @@ export class OtpComponent implements OnInit {
     this.getOtp();
   }
 
-  onOtpChange(otp) {
+  onOtpChange(otp: any) {
     this.otp = otp;
     this.yourOtp = this.otp.toString();
     this.otpAvailable =

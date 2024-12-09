@@ -11,7 +11,7 @@
         <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
         <div fxLayout="row">
           <app-ic-custom-pay-from
-            [control]="billingCycleForm.get('cardNo')"
+            [control]="billingCycleForm.get('cardNo') | formcontrol"
             [inputLabel]="'Card No' | translate"
             bindValueKey="cardNumber"
             bindLabelKey="cardNumber"
@@ -32,7 +32,7 @@
       </div>
       <div fxFlex="24.5">
         <app-ic-custom-input
-          [control]="billingCycleForm.get('billingCycleDate')"
+          [control]="billingCycleForm.get('billingCycleDate') | formcontrol"
           [inputLabel]="'Current Billing cycle' | translate"
           [readonly]="true"
         ></app-ic-custom-input>

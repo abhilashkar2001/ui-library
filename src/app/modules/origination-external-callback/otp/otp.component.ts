@@ -9,23 +9,23 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-otp",
   templateUrl: "./otp.component.html",
-  styleUrls: ["./otp.component.scss"],
+  styleUrls: ["./otp.component.scss"]
 })
 export class OtpComponent implements OnInit {
-  currentUser: User;
-  otpType = "Email";
+  currentUser: User | any;
+  otpType: any = "Email";
 
   otpForm: FormGroup;
   ngOtpConfig: any = {
     length: 6,
     allowNumbersOnly: false,
-    isPasswordInput: true,
+    isPasswordInput: true
   };
 
   cardArr: string[] = ["Email", "Mobile"];
   screenName: any = "";
   customerId: any;
-  reducedMob: number;
+  reducedMob: number | any;
   constructor(
     private tokenStorageService: TokenStorageService,
     private otpService: OtpService,
@@ -37,7 +37,7 @@ export class OtpComponent implements OnInit {
     this.otpForm = new FormGroup({
       email: new FormControl(""),
       mobile: new FormControl(""),
-      otp: new FormControl("", [Validators.required, Validators.minLength(6)]),
+      otp: new FormControl("", [Validators.required, Validators.minLength(6)])
     });
   }
 
@@ -47,17 +47,19 @@ export class OtpComponent implements OnInit {
       this.screenName = params["type"];
     });
     if (this.screenName != "" && this.screenName != undefined) {
-      this.customerId = JSON.parse(sessionStorage.getItem("customerId"));
-      this.otpForm.get("mobile").patchValue(sessionStorage.getItem("mobile"));
-      this.reducedMob = this.otpForm.get("mobile").value % 1000;
+      this.customerId = JSON.parse(
+        <string>sessionStorage.getItem("customerId")
+      );
+      this.otpForm.get("mobile")?.patchValue(sessionStorage.getItem("mobile"));
+      this.reducedMob = this.otpForm.get("mobile")?.value % 1000;
       setTimeout(() => {
         this.generateOtp();
       }, 100);
     }
   }
-  resetOrExit(value) {
+  resetOrExit(value: any) {
     if (value == "Reset") {
-      this.otpForm.get("otp").reset("");
+      this.otpForm.get("otp")?.reset("");
     } else {
       this.route.navigate(["/home"]);
     }
@@ -69,14 +71,14 @@ export class OtpComponent implements OnInit {
         this.snack.open("Otp sent successfully", "Ok", {
           horizontalPosition: "right",
           verticalPosition: "top",
-          duration: 2000,
+          duration: 2000
         });
       }
     });
   }
 
-  onOtpChange(otp) {
-    this.otpForm.get("otp").setValue(otp);
+  onOtpChange(otp: any) {
+    this.otpForm.get("otp")?.setValue(otp);
   }
 
   resendOtp() {
@@ -84,12 +86,12 @@ export class OtpComponent implements OnInit {
     this.clearOtp();
   }
   clearOtp() {
-    this.otpForm.get("otp").patchValue("");
+    this.otpForm.get("otp")?.patchValue("");
     this.cdr.detectChanges();
   }
 
   verifyOtp() {
-    this.otpService.verifyOTP(this.otpForm.value).subscribe((res) => {
+    this.otpService.verifyOTP(this.otpForm.value).subscribe(() => {
       if (this.screenName != "" && this.screenName != undefined) {
         this.route.navigate([`/origination/document-upload`]);
       } else {

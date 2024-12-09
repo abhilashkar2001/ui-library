@@ -3,11 +3,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 @Component({
   selector: "app-reusable-favourities",
   templateUrl: "./reusable-favourities.component.html",
-  styleUrls: ["./reusable-favourities.component.scss"],
+  styleUrls: ["./reusable-favourities.component.scss"]
 })
 export class ReusableFavouritiesComponent implements OnInit {
   @Output() rediectTo: EventEmitter<any> = new EventEmitter<any>();
-  @Input() items: any[];
+  @Input() items: any[] | any;
   profileName = "payeeName";
   favouritesCard: any[] = [];
   constructor() {}
@@ -15,10 +15,10 @@ export class ReusableFavouritiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getFavouritiesData();
   }
-  redirectTo(event) {
+  redirectTo(event: any) {
     this.rediectTo.emit(event);
   }
-  getData(e) {
+  getData(e: any) {
     return e ? `${e[0]?.toUpperCase()}` : "";
   }
 

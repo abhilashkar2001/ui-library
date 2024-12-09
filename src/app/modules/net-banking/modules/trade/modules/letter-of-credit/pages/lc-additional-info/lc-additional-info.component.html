@@ -135,8 +135,8 @@
             />
             <mat-error
               *ngIf="
-                address.get('cityName').touched &&
-                address.get('cityName').hasError('required')
+                address.get('cityName')?.touched &&
+                address.get('cityName')?.hasError('required')
               "
               >City is required!</mat-error
             >

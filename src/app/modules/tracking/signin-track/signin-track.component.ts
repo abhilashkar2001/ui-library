@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-signin-track",
   templateUrl: "./signin-track.component.html",
-  styleUrls: ["./signin-track.component.scss"],
+  styleUrls: ["./signin-track.component.scss"]
 })
 export class SigninTrackComponent implements OnInit {
   screenTitle = "Tracking Status";
@@ -17,22 +17,22 @@ export class SigninTrackComponent implements OnInit {
       screenName: "Application No/ Mobile No.",
       route: null,
       fileUrl: null,
-      sequence: 1,
+      sequence: 1
     },
     {
       screenCode: 17720,
       screenName: "OTP Verification",
       route: null,
       fileUrl: null,
-      sequence: 3,
+      sequence: 3
     },
     {
       screenCode: 17723,
       screenName: "Tracking Status",
       route: null,
       fileUrl: null,
-      sequence: 2,
-    },
+      sequence: 2
+    }
   ];
 
   isShowOtpField: boolean = false;
@@ -44,8 +44,8 @@ export class SigninTrackComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "70px",
-      height: "70px",
-    },
+      height: "70px"
+    }
   };
   otp: any;
   yourOtp: any;
@@ -58,23 +58,23 @@ export class SigninTrackComponent implements OnInit {
     private route: Router
   ) {}
 
-  signForm: FormGroup;
+  signForm!: FormGroup;
 
   ngOnInit(): void {
     this.signForm = this.fb.group({
-      mobile: "",
+      mobile: ""
       // otp: "",
     });
   }
 
-  onOtpChange(otp) {
+  onOtpChange(otp: any) {
     this.otp = otp;
     this.yourOtp = this.otp.toString();
     this.otpAvailable =
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }
   getOtp() {
-    this.api.getOtp(this.signForm.value.mobile).subscribe((resp) => {
+    this.api.getOtp(this.signForm.value.mobile).subscribe(() => {
       this.isShowOtpField = true;
       this.selectedStep = 1;
     });
@@ -84,7 +84,7 @@ export class SigninTrackComponent implements OnInit {
     this.api
       .verifyOtp({
         mobile: this.signForm.value.mobile,
-        otp: this.yourOtp,
+        otp: this.yourOtp
       })
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {

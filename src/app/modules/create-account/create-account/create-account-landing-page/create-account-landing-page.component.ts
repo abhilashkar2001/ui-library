@@ -3,7 +3,6 @@ import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ErrorNotifierPopupComponent } from "app/shared/components/error-notifier-popup/error-notifier-popup.component";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { SharedService } from "app/shared/shared.service";
@@ -14,6 +13,7 @@ import { AppHostDirective } from "app/shared/directives/app-host.directive";
 import { EmailService } from "app/shared/services/email.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { MatDialog } from "@angular/material/dialog";
+import { CommonService } from "app/shared/services/common-service/common.service";
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;
@@ -21,18 +21,18 @@ const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
 @Component({
   selector: "app-create-account-landing-page",
   templateUrl: "./create-account-landing-page.component.html",
-  styleUrls: ["./create-account-landing-page.component.scss"],
+  styleUrls: ["./create-account-landing-page.component.scss"]
 })
 export class CreateAccountLandingPageComponent {
-  stepper: MatStepper;
+  stepper: MatStepper | any;
   screenList: any;
   screenTitle = "";
   selectedStep: number = 0;
-  currentStep: string;
+  currentStep: string | any;
   originationId: any;
   basisId: any;
   productDetails: any;
-  processDetails: { processCycleCode: string; processStageId: number };
+  processDetails: { processCycleCode: string; processStageId: number } | any;
   personalDetails: any = [];
   ownership: any;
   screenName: string = CreateAccountConstant.SCREEN_NAME;
@@ -45,26 +45,27 @@ export class CreateAccountLandingPageComponent {
   isLoading: boolean = false;
   dynamicScreen = CreateAccountConstant.DYNAMIC_SCREEN;
   @ViewChild("container") container: any;
-  @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
+  @ViewChild(AppHostDirective, { static: true }) appAppHost:
+    | AppHostDirective
+    | any;
   componentRef: any;
   currentComponentInfo: any;
-  existingCustomerId: number;
+  existingCustomerId: number | any;
   mobileVerifyInfo = {
     basisName: "",
     productDuplicationKey: PRODUCT_DUPLICATION_KEY,
     applicationType: "Create Account application",
-    individual: "",
+    individual: ""
   };
   originationModel: any;
   view: any;
   kycDoc: any = [];
   docCustomerDetails: any;
-  noOfDirectors: number;
+  noOfDirectors: number | any;
 
   constructor(
     private router: Router,
     private openAccountService: OpenAccountService,
-    private commonService: CommonService,
     private dialog: MatDialog,
     private loanApi: LoanService,
     private tokenStore: TokenStorageService,
@@ -72,12 +73,13 @@ export class CreateAccountLandingPageComponent {
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
     private emailService: EmailService,
-    private sessionService: SessionStorageService
+    private sessionService: SessionStorageService,
+    private commonService: CommonService
   ) {
-    commonService.updateData(router.url);
+    this.commonService.updateData(router.url);
   }
 
-  showComponent(screenName) {
+  showComponent(screenName: any) {
     if (
       this.dynamicScreen.some((item) =>
         screenName.toLowerCase().includes(item.key)
@@ -122,15 +124,13 @@ export class CreateAccountLandingPageComponent {
             });
 
             if (this.componentRef.instance?.onMobileExitEvent)
-              this.componentRef.instance?.onMobileExitEvent.subscribe(
-                (resp) => {
-                  this.router.navigate(["/account/landing"]);
-                  console.log("................");
-                }
-              );
+              this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
+                this.router.navigate(["/account/landing"]);
+                console.log("................");
+              });
 
             if (this.componentRef.instance?.onBackEvent)
-              this.componentRef.instance?.onBackEvent.subscribe((_) => {
+              this.componentRef.instance?.onBackEvent.subscribe(() => {
                 this.goBack();
               });
           });
@@ -141,14 +141,14 @@ export class CreateAccountLandingPageComponent {
       const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
         data: {
           isStageAvilable: false,
-          errorMessage: `${screenName} stage is not avilable. Please move to next stage.`,
+          errorMessage: `${screenName} stage is not avilable. Please move to next stage.`
         },
         width: "750px",
         disableClose: true,
         panelClass: "popup-dialog-class",
-        backdropClass: "bdrop",
+        backdropClass: "bdrop"
       });
-      dialogRef.afterClosed().subscribe((resp) => {
+      dialogRef.afterClosed().subscribe(() => {
         this.next();
       });
     }
@@ -162,23 +162,27 @@ export class CreateAccountLandingPageComponent {
     this.getProductDetails();
     var sessionStep = sessionStorage.getItem("accountstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
+    const sessionData = JSON.parse(
+      <string>localStorage.getItem("basisDetails")
+    );
     this.openAccountService
       .getProcessCycle(sessionData.processCycleCode)
       .subscribe((resp) => {
         this.processDetails = {
           processCycleCode: resp.data.processCycleCode,
-          processStageId: resp.data.processStageList[0]?.id,
+          processStageId: resp.data.processStageList[0]?.id
         };
 
         this.getScreenDetails(resp);
       });
     //this is for existing customer.
     this.existingCustomerId = parseInt(
-      sessionStorage.getItem("userCustomerId")
+      <string>sessionStorage.getItem("userCustomerId")
     );
     //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
-    let customStageId = parseInt(sessionStorage.getItem("customerStageId"));
+    let customStageId = parseInt(
+      <string>sessionStorage.getItem("customerStageId")
+    );
     var originationId = sessionStorage.getItem("originationId");
     if (originationId) this.getOriginationMaster(parseInt(originationId));
     else if (customStageId) {
@@ -188,7 +192,7 @@ export class CreateAccountLandingPageComponent {
     }
   }
 
-  getOriginationMaster(originationId) {
+  getOriginationMaster(originationId: any) {
     this.openAccountService
       .getOriginationMaster(originationId)
       .subscribe((resp) => {
@@ -208,13 +212,16 @@ export class CreateAccountLandingPageComponent {
    * it will check the updateMasterSave key if its true it will call master-save or else it will move to next screen.
    * @param value inputValue of child screen
    */
-  updateAccount = (value: Partial<any>) => {
+  updateAccount = (value: Partial<any> | any) => {
     console.log(value);
-    const sessionData = JSON.parse(localStorage.getItem("basisDetails"));
+    const sessionData = JSON.parse(
+      <string>localStorage.getItem("basisDetails")
+    );
     console.log(value, "master data");
     let originationModel = {
       applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
-      originationId: parseInt(sessionStorage.getItem("originationId")) ?? null,
+      originationId:
+        parseInt(<string>sessionStorage.getItem("originationId")) ?? null,
       accountType: sessionData.accountType,
       basisDetailsId: sessionData.basisDetailsId,
       branchCode: this.tokenStore.getUser().branchCode,
@@ -223,8 +230,8 @@ export class CreateAccountLandingPageComponent {
       productDescription: this.productDetails.basisDetailStory,
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
-      ownership: JSON.parse(sessionStorage.getItem("ownershipId")),
-      department: this.currentUser?.department,
+      ownership: JSON.parse(<string>sessionStorage.getItem("ownershipId")),
+      department: this.currentUser?.department
     };
     if (value.kycDoc) {
       this.kycDoc = value.kycDoc;
@@ -239,7 +246,7 @@ export class CreateAccountLandingPageComponent {
 
     if (value?.personalInfo) {
       this.personalDetails = value.personalInfo;
-      this.personalDetails.forEach((item) => {
+      this.personalDetails.forEach((item: any) => {
         if (item.primaryCustomer) this.personalDoc = item?.documentInfo;
       });
     }
@@ -247,7 +254,7 @@ export class CreateAccountLandingPageComponent {
       console.log(value);
       this.getMasterSave({
         originationModel: originationModel,
-        corporateCustomer: value?.companyDetails?.corporateCustomer,
+        corporateCustomer: value?.companyDetails?.corporateCustomer
       });
       return;
     }
@@ -257,32 +264,34 @@ export class CreateAccountLandingPageComponent {
       } else {
         let FinalOriginationModel = {
           ...originationModel,
-          ownership: JSON.parse(sessionStorage.getItem("ownershipId")),
+          ownership: JSON.parse(<string>sessionStorage.getItem("ownershipId"))
         };
         this.submitCheckList(value, FinalOriginationModel, customerInfo);
       }
     } else this.next();
   };
 
-  submitCheckList(value, originationModel, customerInfo) {
+  submitCheckList(value: any, originationModel: any, customerInfo: any) {
     if (value?.isCheckListDoc) {
       const payload = {
         documentIds: value?.otherLoanDoc,
         originationId: this.originationModel?.originationId,
-        screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+        screenCode: parseInt(
+          <string>sessionStorage.getItem("currentScreenCode")
+        )
       };
       this.loanApi.saveChecklist(payload).subscribe((resp) => {
         if (resp?.statusCode === 201) {
           this.getMasterSave({
             originationModel: originationModel,
-            customerInfo: customerInfo,
+            customerInfo: customerInfo
           });
         }
       });
     } else
       this.getMasterSave({
         originationModel: originationModel,
-        customerInfo: customerInfo,
+        customerInfo: customerInfo
       });
   }
 
@@ -292,9 +301,9 @@ export class CreateAccountLandingPageComponent {
    * @param docIds is a document model
    * @returns payload of customerInfo.
    */
-  modelFactoryForCustomer(customerInfo, docIds) {
+  modelFactoryForCustomer(customerInfo: any, docIds: any) {
     let custResp: any = [...customerInfo];
-    custResp.forEach((item, i) => {
+    custResp.forEach((i: any) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
       custResp[i].documentId = [docIds[i]];
@@ -319,7 +328,7 @@ export class CreateAccountLandingPageComponent {
       if (this.noOfDirectors)
         custResp[i].corpDirectorModel = {
           sharePercentage: 100 / this.noOfDirectors,
-          isManagingDirector: custResp[i]?.primaryCustomer,
+          isManagingDirector: custResp[i]?.primaryCustomer
         };
 
       const customerId = sessionStorage.getItem("userCustomerId");
@@ -339,7 +348,7 @@ export class CreateAccountLandingPageComponent {
    * NOTE :- Once Workflow formulla Ready thn conditionally need to add verifyWorkflow api.
    * @param payload
    */
-  getMasterSave(payload) {
+  getMasterSave(payload: any) {
     console.log(payload);
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200 || resp?.statusCode == 201) {
@@ -366,7 +375,7 @@ export class CreateAccountLandingPageComponent {
     });
   }
 
-  getCustomerbyStageId(customStageId) {
+  getCustomerbyStageId(customStageId: any) {
     this.openAccountService
       .getCustByStageId(parseInt(customStageId))
       .subscribe((resp) => {
@@ -386,7 +395,7 @@ export class CreateAccountLandingPageComponent {
           if (resp?.statusCode === 200) {
             this.ownership = resp.data[OWNERSHIP];
             this.ownershipId = this.ownership.find(
-              (r) => r?.values.toLowerCase() === "self"
+              (r: any) => r?.values.toLowerCase() === "self"
             )?.id;
             sessionStorage.setItem("ownershipId", this.ownershipId);
             resolve(this.ownershipId);
@@ -397,7 +406,7 @@ export class CreateAccountLandingPageComponent {
     });
   }
 
-  getCustomerById(customerId) {
+  getCustomerById(customerId: any) {
     this.openAccountService.getCustomerById(customerId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.personalDetails = resp.data;
@@ -405,11 +414,11 @@ export class CreateAccountLandingPageComponent {
     });
   }
 
-  getScreenDetails(resp) {
+  getScreenDetails(resp: any) {
     this.openAccountService
       .getProcessStages(resp.data.processStageList[0].id)
       .subscribe((response) => {
-        this.screenList = response.data.screens.sort((s1, s2) => {
+        this.screenList = response.data.screens.sort((s1: any, s2: any) => {
           return s1.sequence - s2.sequence;
         });
         sessionStorage.setItem(
@@ -434,7 +443,7 @@ export class CreateAccountLandingPageComponent {
             this.mobileVerifyInfo = {
               ...this.mobileVerifyInfo,
               basisName: this.productDetails.basisName,
-              individual: resp?.data[0]?.individual,
+              individual: resp?.data[0]?.individual
             };
           }
         }
@@ -484,17 +493,11 @@ export class CreateAccountLandingPageComponent {
    * @param payload
    * @param e
    */
-  masterSave(payload, e) {
+  masterSave(payload: any) {
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.originationId = resp.data.originationModel.originationId;
         //Note:- properties should be update once complete forumulla list recieves.
-        var accountPayload = {
-          properties: {},
-          screenCode: this.screenList[2].screenCode,
-          processStageId: this.processDetails.processStageId,
-          processCycleCode: this.processDetails.processCycleCode,
-        };
 
         //Note:- Once workflow formula we will get this should be called.
         // this.workFlowVerify(accountPayload, resp, e);
@@ -511,17 +514,17 @@ export class CreateAccountLandingPageComponent {
    * @param resp
    * @param e
    */
-  workFlowVerify(accountPayload, resp, e) {
+  workFlowVerify(accountPayload: any, e: any) {
     this.loanApi.verifyWorkFlow(accountPayload).subscribe((workres) => {
       if (workres?.autoAction) {
         e.loadingBtnText = LOADING_TEXT;
         e.isLoading = false;
         this.saveCofig(workres);
-      } else this.done(resp);
+      } else this.done();
     });
   }
 
-  done(resp?) {
+  done() {
     const payload: any = {};
     payload.properties = {};
     payload.screenCode = null;
@@ -535,12 +538,12 @@ export class CreateAccountLandingPageComponent {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
           data: {
             originationId: this.originationId,
-            isComplete: resp?.data?.isComplete,
+            isComplete: resp?.data?.isComplete
           },
           width: "750px",
           disableClose: true,
           panelClass: ["popup-dialog-class", "scroll-card"],
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
@@ -597,9 +600,9 @@ Best regards, `
     }, 200);
   }
 
-  saveCofig(resp) {
+  saveCofig(resp: any) {
     const accountBasisDetails = JSON.parse(
-      localStorage.getItem("basisDetails")
+      <string>localStorage.getItem("basisDetails")
     );
     const payload = {
       originationId: this.originationId,
@@ -607,10 +610,10 @@ Best regards, `
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: accountBasisDetails?.basisDetailsId,
       processCycleCode: accountBasisDetails?.processCycleCode,
-      currentStage: parseInt(sessionStorage.getItem("currentStage")),
+      currentStage: parseInt(<string>sessionStorage.getItem("currentStage")),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
-      targetScreen: parseInt(resp?.targetScreen),
+      targetScreen: parseInt(resp?.targetScreen)
     };
 
     this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
@@ -620,7 +623,7 @@ Best regards, `
     });
   }
 
-  verfyStep(verifyStep, currentStep) {
+  verfyStep(verifyStep: any, currentStep: any) {
     if (currentStep?.toLowerCase().includes(verifyStep)) return true;
     else return false;
   }

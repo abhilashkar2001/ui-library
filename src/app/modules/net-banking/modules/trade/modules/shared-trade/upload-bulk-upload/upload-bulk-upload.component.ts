@@ -1,17 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ViewExcelDocComponent } from "app/shared/components/view-excel-doc/view-excel-doc.component";
-import { BulkUpload } from "app/shared/services/bulk-upload/bulk-upload-service";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as XLSX from "xlsx";
 
@@ -19,13 +10,12 @@ type AOA = any[][];
 @Component({
   selector: "app-upload-bulk-upload",
   templateUrl: "./upload-bulk-upload.component.html",
-  styleUrls: ["./upload-bulk-upload.component.scss"],
+  styleUrls: ["./upload-bulk-upload.component.scss"]
 })
 export class UploadBulkUploadComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
 
   @Input("screenName") screenName: any = "";
   @Input() showNewBeneficiary: boolean = false;
@@ -35,7 +25,7 @@ export class UploadBulkUploadComponent implements OnInit {
 
   @Output() customSaveBulkUpload = new EventEmitter<any>();
   @Output() downloadBulkUpload = new EventEmitter<any>();
-  maintTemplateUpload: FormGroup;
+  maintTemplateUpload!: FormGroup;
   fileFormat: string[] = ["Excel"];
   file: any;
   screenList: any;
@@ -44,13 +34,13 @@ export class UploadBulkUploadComponent implements OnInit {
   currentUser: any;
   otp: any;
   currentDate = new Date();
-  tableHeader: any[];
-  tableBody: any[];
+  tableHeader: any[] | any;
+  tableBody: any[] | any;
   data: AOA = [
     [1, 2],
-    [3, 4],
+    [3, 4]
   ];
-  corporateId: string;
+  corporateId: string | any;
 
   constructor(
     private router: Router,
@@ -62,7 +52,9 @@ export class UploadBulkUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    this.corporateId = JSON.parse(
+      <string>sessionStorage.getItem("corporateId")
+    );
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;
     });
@@ -73,20 +65,20 @@ export class UploadBulkUploadComponent implements OnInit {
   goBack() {
     this.router.navigate(["/user/dashboard/fund-transfer/bulk-upload"]);
   }
-  droppedFiles(evt) {
+  droppedFiles(evt: any) {
     this.file = evt.target?.files[0];
     this.uploadFileArrlrngth.push(this.addfiles(evt));
   }
-  Onfilechange(evt) {
+  Onfilechange(evt: any) {
     this.file = evt.target.files[0];
 
     let filesObject: any = {
       files: evt.target.files[0],
-      name: evt.target.files[0].name,
+      name: evt.target.files[0].name
     };
     this.uploadFileArrlrngth.push(this.addfiles(filesObject));
 
-    const target: DataTransfer = <DataTransfer>evt.target;
+    const target: DataTransfer | any = <DataTransfer>evt.target;
     if (target.files.length !== 1) throw new Error("Cannot use multiple files");
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
@@ -95,8 +87,8 @@ export class UploadBulkUploadComponent implements OnInit {
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: "binary" });
 
       /* grab first sheet */
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      const wsname: string | any = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet | any = wb.Sheets[wsname];
 
       /* save data */
       this.data = <AOA>XLSX.utils.sheet_to_json(ws, { header: 1 });
@@ -105,10 +97,10 @@ export class UploadBulkUploadComponent implements OnInit {
     reader.readAsBinaryString(target.files[0]);
   }
 
-  convertExcel(data) {
+  convertExcel(data: any) {
     const [keys, ...values] = data;
-    const obj = values.map((array) =>
-      array.reduce((a, v, i) => ({ ...a, [keys[i]]: v }), {})
+    const obj = values.map((array: any) =>
+      array.reduce((a: any, v: any, i: any) => ({ ...a, [keys[i]]: v }), {})
     );
     this.tableHeader = keys;
     this.tableBody = obj;
@@ -121,8 +113,8 @@ export class UploadBulkUploadComponent implements OnInit {
       data: {
         tableHeader: this.tableHeader,
         tableBody: this.tableBody,
-        fileName: this.file.name,
-      },
+        fileName: this.file.name
+      }
     });
   }
 
@@ -131,29 +123,29 @@ export class UploadBulkUploadComponent implements OnInit {
       productType: [""],
       beneficiary: [""],
       processingDate: [this.currentDate],
-      uplodedFileArray: this.fb.array([]),
+      uplodedFileArray: this.fb.array([])
     });
     this.maintTemplateUpload.valueChanges.subscribe((res) => {
       const uploadedDocs = {
-        ...res.uplodedFileArray,
+        ...res.uplodedFileArray
       };
       this.updateParentModel(
         {
-          uploadedDocs: uploadedDocs,
+          uploadedDocs: uploadedDocs
         },
         uploadedDocs?.uplodedFileArray?.length > 0 ? true : false
       );
     });
   }
 
-  get uploadFileArrlrngth() {
+  get uploadFileArrlrngth(): any {
     return this.maintTemplateUpload.get("uplodedFileArray") as FormArray;
   }
 
-  addfiles(filesData?): FormGroup {
+  addfiles(filesData?: any): FormGroup {
     return this.fb.group({
       files: filesData.files,
-      name: filesData.name,
+      name: filesData.name
     });
   }
 
@@ -167,13 +159,12 @@ export class UploadBulkUploadComponent implements OnInit {
     const productType = this.maintTemplateUpload.value.productType;
     const processingDate = this.maintTemplateUpload.value.processingDate;
     const corpCustomerId = this.corporateId;
-    const screenName = this.screenName;
     this.customSaveBulkUpload.emit({
       formData,
       userName,
       productType,
       corpCustomerId,
-      processingDate,
+      processingDate
     });
     // this emit should be remove after trade api intigeration done
   }
@@ -196,7 +187,7 @@ export class UploadBulkUploadComponent implements OnInit {
 
   sortByAlphabetically(screens: any) {
     screens &&
-      screens.sort((a, b) => {
+      screens.sort((a: any, b: any) => {
         if (a.label < b.label) {
           return -1;
         }

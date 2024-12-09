@@ -18,7 +18,7 @@ export class TrackingService {
     return this.http.post(`${this.baseUrl}/auth/verifyOTP`, otpObject);
   }
 
-  getProductList(mobile, filterItem) {
+  getProductList(mobile: any, filterItem: any) {
     let endPoint = "";
     if (filterItem)
       Object.keys(filterItem).forEach((item) => {
@@ -31,12 +31,12 @@ export class TrackingService {
     );
   }
 
-  getOriginationMaster(id) {
+  getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${this.baseUrl}/origination-matser?originationId=${id}`
     );
   }
-  applicationDetails(applicationId) {
+  applicationDetails(applicationId: any) {
     return this.http.get<any>(
       `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`
     );

@@ -1,25 +1,20 @@
-import { Location } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { LoanService } from "app/shared/services/loan/loan.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-loan-terms-conditions",
   templateUrl: "./loan-terms-conditions.component.html",
-  styleUrls: ["./loan-terms-conditions.component.scss"],
+  styleUrls: ["./loan-terms-conditions.component.scss"]
 })
 export class LoanTermsConditionsComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   stepperTitle: string;
 
-  constructor(
-    private location: Location,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private loanApi: LoanService
-  ) {
+  constructor(private activatedRoute: ActivatedRoute) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
   }
 

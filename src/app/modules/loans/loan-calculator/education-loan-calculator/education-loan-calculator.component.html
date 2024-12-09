@@ -31,12 +31,12 @@
   </div>
   <div *ngIf="educationIndex == 0">
     <app-expense-details
-      (customCalculatorValues)="customExpenseDetails($event)"
+      (customCalculatorValues)="customExpenseDetails()"
     ></app-expense-details>
   </div>
   <div *ngIf="educationIndex == 1">
     <app-know-your-emi
-      (customCalculatorValues)="customEmiDetails($event)"
+      (customCalculatorValues)="customEmiDetails()"
       (customBack)="back()"
     ></app-know-your-emi>
   </div>

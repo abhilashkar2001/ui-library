@@ -1,17 +1,34 @@
 <div class="create-card-account">
-    <app-card-stepper (customSelectionChange)="getTabDetails($event)"
-        [optionalSteps]="optionalSteps"></app-card-stepper>
-    <div class="col-2-section">
-        <app-card-mobile-verification *ngIf="stepsDetails && stepsDetails.isMobileVerificationStep"
-            (onConfirmEvent)="onConfirm($event)" (onBackEvent)="onBack($event)"></app-card-mobile-verification>
-        <app-card-cibil-score *ngIf="stepsDetails && stepsDetails.isCIBILScoreStep" (onConfirmEvent)="onConfirm($event)"
-            (isDifferentMobileNumber)="addMoreSteps($event)" (onBackEvent)="onBack($event)"></app-card-cibil-score>
-        <app-card-select-kyc *ngIf="stepsDetails && stepsDetails.isSelectKYCStep" (onConfirmEvent)="onConfirm($event)"
-            (onBackEvent)="onBack($event)"></app-card-select-kyc>
-        <app-card-personal-details *ngIf="stepsDetails && stepsDetails.isPersonalDetailsStep"
-            (onConfirmEvent)="onConfirm($event)" (onBackEvent)="onBack($event)"></app-card-personal-details>
-        <app-card-terms-conditions *ngIf="stepsDetails && stepsDetails.isTermsCondtionsStep"
-            (onConfirmEvent)="onConfirm($event)" (onBackEvent)="onBack($event)"></app-card-terms-conditions>
-    </div>
-
+  <app-card-stepper
+    (customSelectionChange)="getTabDetails($event)"
+    [optionalSteps]="optionalSteps"
+  ></app-card-stepper>
+  <div class="col-2-section">
+    <app-card-mobile-verification
+      *ngIf="stepsDetails && stepsDetails.isMobileVerificationStep"
+      (onConfirmEvent)="onConfirm()"
+      (onBackEvent)="onBack()"
+    ></app-card-mobile-verification>
+    <app-card-cibil-score
+      *ngIf="stepsDetails && stepsDetails.isCIBILScoreStep"
+      (onConfirmEvent)="onConfirm()"
+      (isDifferentMobileNumber)="addMoreSteps($event)"
+      (onBackEvent)="onBack()"
+    ></app-card-cibil-score>
+    <app-card-select-kyc
+      *ngIf="stepsDetails && stepsDetails.isSelectKYCStep"
+      (onConfirmEvent)="onConfirm()"
+      (onBackEvent)="onBack()"
+    ></app-card-select-kyc>
+    <app-card-personal-details
+      *ngIf="stepsDetails && stepsDetails.isPersonalDetailsStep"
+      (onConfirmEvent)="onConfirm()"
+      (onBackEvent)="onBack()"
+    ></app-card-personal-details>
+    <app-card-terms-conditions
+      *ngIf="stepsDetails && stepsDetails.isTermsCondtionsStep"
+      (onConfirmEvent)="onConfirm()"
+      (onBackEvent)="onBack()"
+    ></app-card-terms-conditions>
+  </div>
 </div>

@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-
 import { RoutePartsService } from "./shared/services/route-parts.service";
-
 import { filter } from "rxjs/operators";
 import { UILibIconService } from "./shared/services/ui-lib-icon.service";
-import { LayoutService } from "./shared/services/layout.service";
 import {
   ThemeChangeService,
   ThemeOption
@@ -28,14 +25,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     private activeRoute: ActivatedRoute,
     private routePartsService: RoutePartsService,
     private iconService: UILibIconService,
-    private layoutService: LayoutService,
     private themeChangeService: ThemeChangeService
   ) {
     this.listOfThemeColors = this.themeChangeService.themeColors;
 
     this.themeChangeService.setCurrentTheme(this.listOfThemeColors[0]);
 
-    iconService.init();
+    this.iconService.init();
   }
 
   ngOnInit() {
@@ -47,7 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   changePageTitle() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe(() => {
         const routeParts = this.routePartsService.generateRouteParts(
           this.activeRoute.snapshot
         );

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SharedService {
   protected baseUrl = environment.microServiceURL;
@@ -16,10 +16,10 @@ export class SharedService {
     );
   }
 
-  uploadDocument(formData) {
+  uploadDocument(formData: any) {
     return this.http.post<any>(`${this.baseUrl}/upload-document`, formData, {
       reportProgress: true,
-      observe: "events",
+      observe: "events"
     });
   }
 
@@ -27,16 +27,16 @@ export class SharedService {
   // public readAadharData(data) {
   //   return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
   // }
-  public readAadharFrontData(data) {
+  public readAadharFrontData(data: any) {
     return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-front`, data);
   }
 
   // Aadhaar Back API
-  public readAadhaarBackData(data) {
+  public readAadhaarBackData(data: any) {
     return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-back`, data);
   }
 
-  deleteDocument(documentId) {
+  deleteDocument(documentId: any) {
     return this.http.delete(`${this.baseUrl}/upload-document/${documentId}`);
   }
 }

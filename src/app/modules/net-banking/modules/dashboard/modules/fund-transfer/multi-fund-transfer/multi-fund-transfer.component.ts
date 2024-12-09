@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { GenericValueService } from "app/shared/services/generic-value.service";
 import { FundTransferService } from "../fund-transfer.service";
 import { debounceTime } from "rxjs/operators";
-import { numberToWords } from "number-to-words";
+import { toWords } from "number-to-words";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
 import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
@@ -16,14 +16,14 @@ import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-multi-fund-transfer",
   templateUrl: "./multi-fund-transfer.component.html",
-  styleUrls: ["./multi-fund-transfer.component.scss"],
+  styleUrls: ["./multi-fund-transfer.component.scss"]
 })
 export class MultiFundTransferComponent implements OnInit {
-  multiTransferForm: FormGroup;
+  multiTransferForm!: FormGroup;
   genericValue = { TRANSFERMODE: [] };
-  selectedAccounts: any[];
+  selectedAccounts: any[] | any;
   purpose = ["Salary", "Vendor"];
-  fromAccount = [];
+  fromAccount: any = [];
   transferMode = [];
   transferTo = [];
   benificiaryEmail = [];
@@ -36,10 +36,10 @@ export class MultiFundTransferComponent implements OnInit {
   custAccounts: any;
   totalAmount: number = 0;
   totalAmountInWords: string = "Zero";
-  dialogRef: MatDialogRef<CustomSuccessPopupComponent>;
-  dialogRef1: MatDialogRef<AllInOnePopupComponent>;
+  dialogRef: MatDialogRef<CustomSuccessPopupComponent> | any;
+  dialogRef1: MatDialogRef<AllInOnePopupComponent> | any;
   customerInfo: any;
-  editedAmountIndex: number;
+  editedAmountIndex: number | any;
   debitAmount: number[] = [];
   corporateId: any;
   constructor(
@@ -61,12 +61,18 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    this.corporateId = JSON.parse(
+      <string>sessionStorage.getItem("corporateId")
+    );
     this.initMultiTransferForm();
     this.fetchGenericValues();
-    this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
-    this.custAccounts.forEach((element) => {
+    this.custAccounts = JSON.parse(
+      <string>sessionStorage.getItem("listOfAccounts")
+    );
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
+    this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
     });
     this.fetchBenificiary();
@@ -89,11 +95,11 @@ export class MultiFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""],
+      remarks: [""]
     });
     this.multiTransferForm
       .get("debitAmount")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         if (resp) {
           this.totalAmount = 0;
@@ -132,22 +138,22 @@ export class MultiFundTransferComponent implements OnInit {
       });
   }
 
-  selectMultiAcc(event) {
+  selectMultiAcc(event: any) {
     this.selectedAccounts = event;
-    this.selectedAccounts = event.map((account) => ({
+    this.selectedAccounts = event.map((account: any) => ({
       accountNo: account,
-      amount: this.multiTransferForm.value.debitAmount,
+      amount: this.multiTransferForm.value.debitAmount
     }));
     if (
-      this.multiTransferForm.get("debitAmount").value &&
+      this.multiTransferForm.get("debitAmount")?.value &&
       this.selectedAccounts.length > 1
     ) {
       this.totalAmount =
-        this.multiTransferForm.get("debitAmount").value *
+        this.multiTransferForm.get("debitAmount")?.value *
         this.selectedAccounts.length;
       this.convertTotalAmountToAlphabet();
     } else {
-      this.totalAmount = this.multiTransferForm.get("debitAmount").value;
+      this.totalAmount = this.multiTransferForm.get("debitAmount")?.value;
       this.convertTotalAmountToAlphabet();
     }
   }
@@ -171,21 +177,19 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   convertTotalAmountToAlphabet() {
-    this.totalAmountInWords = numberToWords.toWords(this.totalAmount);
+    this.totalAmountInWords = toWords(this.totalAmount);
     this.totalAmountInWords =
       this.totalAmountInWords.charAt(0).toUpperCase() +
       this.totalAmountInWords.slice(1);
   }
 
   getOTP() {
-    this.api
-      .getOtp(this.customerInfo.mobileNumber)
-      .subscribe((response: any) => {});
+    this.api.getOtp(this.customerInfo.mobileNumber).subscribe(() => {});
   }
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary"
     ]);
   }
 
@@ -193,12 +197,12 @@ export class MultiFundTransferComponent implements OnInit {
     this.multiTransferForm.reset();
   }
 
-  delete(account) {
+  delete(account: any) {
     this.multiTransferForm
       .get("transferTo")
-      .patchValue(
+      ?.patchValue(
         this.multiTransferForm.value.transferTo.filter(
-          (item) => item != account
+          (item: any) => item != account
         )
       );
     const index = this.selectedAccounts.indexOf(account);
@@ -212,7 +216,7 @@ export class MultiFundTransferComponent implements OnInit {
     const initialAmount = this.selectedAccounts[index].amount;
     const dividedAmount =
       (this.totalAmount - initialAmount) / (this.selectedAccounts.length - 1);
-    this.selectedAccounts.forEach((item, i) => {
+    this.selectedAccounts.forEach((item: any, i: any) => {
       if (i != index) item.amount = dividedAmount;
     });
   }
@@ -225,7 +229,7 @@ export class MultiFundTransferComponent implements OnInit {
   //   this.selectedAccounts[i].amount = event;
   // }
 
-  saveData(payload) {
+  saveData(payload: any) {
     payload.forEach((value: any) => delete value.transferTo);
     this.fundTransferService
       .saveFundTransferData(payload)
@@ -235,14 +239,14 @@ export class MultiFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data,
+              reffNo: resp?.data
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop",
+            backdropClass: "bdrop"
           });
-          this.dialogRef.afterClosed().subscribe((result) => {
+          this.dialogRef.afterClosed().subscribe((result: any) => {
             console.log(result);
             if (result == "Done") {
               this.cancel();
@@ -259,8 +263,8 @@ export class MultiFundTransferComponent implements OnInit {
   submit() {
     if (!this.multiTransferForm.valid) return;
 
-    let payload = [];
-    this.selectedAccounts.forEach((element) => {
+    let payload: any = [];
+    this.selectedAccounts.forEach((element: any) => {
       let obj = { ...this.multiTransferForm.value };
       obj.creditAccount = element.accountNo;
       obj.debitAmount = element.amount;
@@ -277,9 +281,9 @@ export class MultiFundTransferComponent implements OnInit {
       disableClose: true,
       panelClass: "popup-dialog-class",
 
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
-    this.dialogRef1.afterClosed().subscribe((result) => {
+    this.dialogRef1.afterClosed().subscribe((result: any) => {
       if (result == "verified") {
         this.saveData(payload);
       } else {
@@ -288,9 +292,9 @@ export class MultiFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
-        this.dialogRef.afterClosed().subscribe((result) => {
+        this.dialogRef.afterClosed().subscribe((result: any) => {
           if (result == "Failed") {
             this.dialogRef.close();
           }

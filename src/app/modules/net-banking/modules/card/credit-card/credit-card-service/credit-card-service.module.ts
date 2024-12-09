@@ -39,7 +39,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     AlertSubscriptionComponent,
     UnbilledTransactionComponent,
     AddOnCardComponent,
-    CalculateEmiComponent,
+    CalculateEmiComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +54,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     ReactiveFormsModule,
     MatCardModule,
     MatSlideToggleModule,
-  ],
+    FormsModule
+  ]
 })
 export class CreditCardServiceModule {}

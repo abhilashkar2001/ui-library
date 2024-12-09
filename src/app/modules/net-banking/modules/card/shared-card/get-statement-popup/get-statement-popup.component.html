@@ -12,7 +12,7 @@
             [items]="monthList"
             bindLabelKey="label"
             bindValueKey="id"
-            [control]="getStatementForm.get('month')"
+            [control]="getStatementForm.get('month') | formcontrol"
           ></app-searchable-select>
         </div>
         <div fxFlex="49">
@@ -21,7 +21,7 @@
             [items]="yearList"
             bindLabelKey="label"
             bindValueKey="label"
-            [control]="getStatementForm.get('year')"
+            [control]="getStatementForm.get('year') | formcontrol"
           ></app-searchable-select>
         </div>
       </div>
@@ -30,7 +30,7 @@
         [items]="formatList"
         bindLabelKey="label"
         bindValueKey="label"
-        [control]="getStatementForm.get('format')"
+        [control]="getStatementForm.get('format') | formcontrol"
       ></app-searchable-select>
     </div>
     <div fxLayoutAlign="center center" class="mTB10">

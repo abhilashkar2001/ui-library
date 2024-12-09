@@ -1,39 +1,47 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoanRepaymentStore } from './loan-repayment.store';
-import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
-import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { findCurrency, removeSpecCharsOnly } from 'app/shared/helpers/utils';
-import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { TokenStorageService } from 'app/shared/token-storage.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { LoanRepaymentStore } from "./loan-repayment.store";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { GenericValueService } from "app/shared/services/generic-value.service";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { findCurrency, removeSpecCharsOnly } from "app/shared/helpers/utils";
+import { Router } from "@angular/router";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { TokenStorageService } from "app/shared/token-storage.service";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
-  selector: 'app-loan-repayment',
-  templateUrl: './loan-repayment.component.html',
-  styleUrls: ['./loan-repayment.component.scss']
+  selector: "app-loan-repayment",
+  templateUrl: "./loan-repayment.component.html",
+  styleUrls: ["./loan-repayment.component.scss"]
 })
 export class LoanRepaymentComponent implements OnInit {
   repaymentForm: FormGroup | undefined;
-  accountDetails = LoanRepaymentStore.loanAccountDetails;
-  genericValue = { PAYMENTTYPE: [] };
-  loanDetails: LoanDetailsModel[];
-  installmentDetails: LoanInstallmentModel;
+  accountDetails: any = LoanRepaymentStore.loanAccountDetails;
+  genericValue: any = { PAYMENTTYPE: [] };
+  loanDetails: LoanDetailsModel[] | any;
+  installmentDetails: LoanInstallmentModel | any;
   currentCurrency: any;
   profileInfo: any;
-  constructor(private fb: FormBuilder, private genericValueService: GenericValueService, private sesssionStorageService: SessionStorageService, private loanService: LoanService, private router: Router, private serviceCallHandler: ServiceCallHandler, private tokenService: TokenStorageService) { }
+  constructor(
+    private fb: FormBuilder,
+    private genericValueService: GenericValueService,
+    private sesssionStorageService: SessionStorageService,
+    private loanService: LoanService,
+    private router: Router,
+    private serviceCallHandler: ServiceCallHandler,
+    private tokenService: TokenStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.loanDetails = this.sesssionStorageService.getLoanInfo()
+    this.loanDetails = this.sesssionStorageService.getLoanInfo();
     this.profileInfo = this.tokenService.getUser();
     this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
-    this.buildLoanRepayment()
-    this.fetchGenericValues()
+    this.buildLoanRepayment();
+    this.fetchGenericValues();
   }
 
   buildLoanRepayment() {
@@ -49,23 +57,24 @@ export class LoanRepaymentComponent implements OnInit {
       transferType: "Loan Repayment",
       source: "I",
       exchangeRate: [""],
-      equivalentAmount: [""],
+      equivalentAmount: [""]
     });
-    this.repaymentForm.get('creditAccount')?.patchValue(this.loanDetails[0]?.cbsAccountNumber)
-    this.fetchInstallment()
+    this.repaymentForm
+      .get("creditAccount")
+      ?.patchValue(this.loanDetails[0]?.cbsAccountNumber);
+    this.fetchInstallment();
     this.repaymentForm
       .get("creditAmount")
-      .valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
+      ?.valueChanges.pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe((res) => {
-        this.repaymentForm.get("totalTransactionAmount").patchValue(res);
-        const exchangeRate = this.repaymentForm.get("exchangeRate")?.value
-          ? Number(this.repaymentForm.get("exchangeRate")?.value)
+        this.repaymentForm?.get("totalTransactionAmount")?.patchValue(res);
+        const exchangeRate = this.repaymentForm?.get("exchangeRate")?.value
+          ? Number(this.repaymentForm?.get("exchangeRate")?.value)
           : 1;
         const equi = Number(res) * exchangeRate;
-        this.repaymentForm.get("equivalentAmount").patchValue(equi);
+        this.repaymentForm?.get("equivalentAmount")?.patchValue(equi);
       });
   }
-
 
   /**
    * Fetch the generic data
@@ -87,35 +96,31 @@ export class LoanRepaymentComponent implements OnInit {
    */
 
   fetchInstallment() {
-    this.loanService.fetchLoanInstallment(this.repaymentForm?.value?.creditAccount).subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
-      if (res?.statusCode == 200) {
-        this.installmentDetails = res?.data;
-        this.getChargeDetails(this.installmentDetails?.originationId);
-
-      }
-    })
+    this.loanService
+      .fetchLoanInstallment(this.repaymentForm?.value?.creditAccount)
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel> | any) => {
+        if (res?.statusCode == 200) {
+          this.installmentDetails = res?.data;
+          this.getChargeDetails(this.installmentDetails?.originationId);
+        }
+      });
   }
-
-
 
   /**
    * To get the Charge details
    * @param data
    */
-  getChargeDetails(data) {
-    this.loanService
-      .getLoanChargeInfoDetails(data)
-      .subscribe((res) => {
-        if (res?.statusCode == 200) {
-          let chargeData = res?.data;
-          const totalCharge = chargeData?.find(
-            (res: any) => res?.tag == "total"
-          )?.amount;
-          this.repaymentForm.get("totalChargeAmount").patchValue(totalCharge);
-        }
-      });
+  getChargeDetails(data: any) {
+    this.loanService.getLoanChargeInfoDetails(data).subscribe((res) => {
+      if (res?.statusCode == 200) {
+        let chargeData = res?.data;
+        const totalCharge = chargeData?.find(
+          (res: any) => res?.tag == "total"
+        )?.amount;
+        this.repaymentForm?.get("totalChargeAmount")?.patchValue(totalCharge);
+      }
+    });
   }
-
 
   getDecimalValue(value: string) {
     return removeSpecCharsOnly(
@@ -124,20 +129,20 @@ export class LoanRepaymentComponent implements OnInit {
     );
   }
 
-
   /**
    * save repayment method
    */
 
   saveRepayment() {
     let payload = {
-      ...this.repaymentForm.value,
+      ...this.repaymentForm?.value,
       creditAmount: this.getDecimalValue(
         this.repaymentForm?.value?.creditAmount
       )
     };
     payload.debitCurrency = this.loanDetails?.find(
-      (res) => res?.cbsAccountNumber == this.repaymentForm?.value?.debitAccount
+      (res: any) =>
+        res?.cbsAccountNumber == this.repaymentForm?.value?.debitAccount
     )?.currencyCode;
     let loanRepaymentArr = [
       {
@@ -175,15 +180,15 @@ export class LoanRepaymentComponent implements OnInit {
           {
             header: "Send From",
             details: [
-              { "Payment Type": this.repaymentForm.value.paymentType },
-              { Amount: this.repaymentForm.value.debitAccount },
+              { "Payment Type": this.repaymentForm?.value.paymentType },
+              { Amount: this.repaymentForm?.value.debitAccount },
               {
                 Amount:
-                  this.getDecimalValue(this.repaymentForm.value.tenureYear) +
+                  this.getDecimalValue(this.repaymentForm?.value.tenureYear) +
                   "Year"
               },
               { Payee: "" },
-              { "Account No": this.repaymentForm.value.debitAccount },
+              { "Account No": this.repaymentForm?.value.debitAccount },
               { "Total Charge Amount": "" },
               { "Total Transaction Amount": "" },
               { Remark: "" }
@@ -201,7 +206,4 @@ export class LoanRepaymentComponent implements OnInit {
 
     this.router.navigate(["/user/loan/loan-service/payment-summary"]);
   }
-
-
-
 }

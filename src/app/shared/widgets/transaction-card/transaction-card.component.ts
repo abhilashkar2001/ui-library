@@ -8,12 +8,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 @Component({
   selector: "app-transaction-card",
   templateUrl: "./transaction-card.component.html",
-  styleUrls: ["./transaction-card.component.scss"],
+  styleUrls: ["./transaction-card.component.scss"]
 })
 export class TransactionCardComponent implements OnInit {
-  @Input("transactionList") transactionList =
+  @Input("transactionList") transactionList: any =
     TransactionCardConstant.transactionCard;
-  selectedTab;
+  selectedTab: any;
   constructor(
     private iconService: IconService,
     private router: Router,
@@ -35,8 +35,8 @@ export class TransactionCardComponent implements OnInit {
   /**
    * Add svg icon to mat icon registry, if it is not present in mat icon registry
    */
-  addSvgIcon(item) {
-    item.forEach((item) => {
+  addSvgIcon(item: any) {
+    item.forEach((item: any) => {
       this.iconService
         .addIconIfNotExists(item?.icon, item?.src)
         .subscribe((exists) => {

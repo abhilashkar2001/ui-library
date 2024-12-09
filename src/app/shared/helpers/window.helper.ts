@@ -13,7 +13,7 @@ export class BrowserWindowRef extends WindowRef {
   constructor() {
     super();
   }
-  get nativeWindow(): Window {
+  override get nativeWindow(): Window {
     return _window();
   }
 }
@@ -26,7 +26,4 @@ export const windowProvider: FactoryProvider = {
   useFactory: _window,
   deps: []
 };
-export const WINDOW_PROVIDERS = [
-  browserWindowProvider,
-  windowProvider
-];
+export const WINDOW_PROVIDERS = [browserWindowProvider, windowProvider];

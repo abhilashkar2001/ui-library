@@ -11,12 +11,13 @@ import { LoanServiceDashboardComponent } from "./loan-services/loan-service-dash
 import { LoanSummaryComponent } from "./loan-summary/loan-summary.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { MatCardModule } from "@angular/material/card";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 
 @NgModule({
   declarations: [
     LoanDashboardComponent,
     LoanServiceDashboardComponent,
-    LoanSummaryComponent,
+    LoanSummaryComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { MatCardModule } from "@angular/material/card";
     SharedMaterialModule,
     MatCardModule,
     TranslateModule,
-  ],
+    ClipboardModule
+  ]
 })
 export class LoanModule {}

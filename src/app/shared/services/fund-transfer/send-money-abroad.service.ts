@@ -3,26 +3,26 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SendMoneyAbroadService {
   protected basePath = environment.microServiceURL;
   constructor(private httpClient: HttpClient) {}
 
-  sendMoneyAbroadProceed(payload) {
+  sendMoneyAbroadProceed(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/sendMoneyAbroad`,
       payload
     );
   }
 
-  payFrom(mobileNo) {
+  payFrom(mobileNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/fundTransfer/fetchCustInfo?mobileNo=${mobileNo}`
     );
   }
 
-  fetchExchangeRate(curr, pairCurrency) {
+  fetchExchangeRate(curr: any, pairCurrency: any) {
     return this.httpClient.get(
       `${this.basePath}/exchangeRate/fetchRateData?currency=${curr}&pairCurrency=${pairCurrency}`
     );

@@ -5,10 +5,12 @@ import { MatDialogRef } from "@angular/material/dialog";
 @Component({
   selector: "app-select-new-card-popup",
   templateUrl: "./select-new-card-popup.component.html",
-  styleUrls: ["./select-new-card-popup.component.scss"],
+  styleUrls: ["./select-new-card-popup.component.scss"]
 })
 export class SelectNewCardPopupComponent implements OnInit {
-  @ViewChild("widgetsContent", { static: true }) widgetsContent: ElementRef;
+  @ViewChild("widgetsContent", { static: true }) widgetsContent:
+    | ElementRef
+    | any;
   cardList = CreditCardStore.cardList;
   currentIndex: number = 0;
   direction: string = ""; // To handle the transition direction

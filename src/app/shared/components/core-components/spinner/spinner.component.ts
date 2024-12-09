@@ -5,11 +5,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: "app-spinner",
   templateUrl: "./spinner.component.html",
-  styleUrls: ["./spinner.component.scss"],
+  styleUrls: ["./spinner.component.scss"]
 })
 export class SpinnerComponent implements OnInit {
-  show: boolean;
-  typeSelected: string;
+  show: boolean | any;
+  typeSelected: string | any;
   constructor(
     private _loaderService: LoaderService,
     private spinner: NgxSpinnerService

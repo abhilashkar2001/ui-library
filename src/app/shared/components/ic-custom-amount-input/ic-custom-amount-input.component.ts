@@ -5,7 +5,7 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { AbstractControl, FormControl } from "@angular/forms";
 import { createMask } from "app/shared/directives/input-mask/constants";
@@ -15,7 +15,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-ic-custom-amount-input",
   templateUrl: "./ic-custom-amount-input.component.html",
-  styleUrls: ["./ic-custom-amount-input.component.scss"],
+  styleUrls: ["./ic-custom-amount-input.component.scss"]
 })
 export class IcCustomAmountInput implements OnChanges {
   @Input("direction") direction: string | undefined | null;
@@ -33,7 +33,7 @@ export class IcCustomAmountInput implements OnChanges {
   @Input("hintText") hintText: string | undefined;
   @Input("readonly") readonly: boolean = false;
   @Input("isdCode") isdCode: any;
-  @Input("currencyCode") currencyCode: string | undefined;
+  @Input("currencyCode") currencyCode: string | any;
   @Input("suffixDropdown") suffixDropdown: any;
   @Input("verify") verifyBtn: boolean = false;
   @Input("verifyMob") verifyMobBtn: boolean = false;
@@ -92,7 +92,7 @@ export class IcCustomAmountInput implements OnChanges {
 
       onUnMask: (maskedValue: string) => {
         return maskedValue;
-      },
+      }
     });
     this.currencyCode = this.profileInfo.branchCrncyCode;
   }

@@ -10,7 +10,7 @@
       inputLabel="Date Of Birth"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['valueDate']"
+      [control]="amdmentFormGroup.controls['valueDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -26,7 +26,7 @@
       inputLabel="Request date"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['requestDate']"
+      [control]="amdmentFormGroup.controls['requestDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -35,7 +35,7 @@
       inputLabel="Effective Date"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['effectiveDate']"
+      [control]="amdmentFormGroup.controls['effectiveDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -50,7 +50,7 @@
       inputLabel="New Expiry date"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['newExpireDate']"
+      [control]="amdmentFormGroup.controls['newExpireDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -59,7 +59,7 @@
       inputLabel="Current Expiry date"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['currentExpireDate']"
+      [control]="amdmentFormGroup.controls['currentExpireDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -68,7 +68,7 @@
       inputLabel="New Claim Period (MM/DD)"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['newClaimPeriod']"
+      [control]="amdmentFormGroup.controls['newClaimPeriod'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -77,7 +77,7 @@
       inputLabel="Current Claim Period (MM/DD)"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['currentClaimPeriod']"
+      [control]="amdmentFormGroup.controls['currentClaimPeriod'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -86,7 +86,7 @@
       inputLabel="New Expiry Date(INC. Claim Period)"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['newExpireIncDate']"
+      [control]="amdmentFormGroup.controls['newExpireIncDate'] | formcontrol"
       mandatory=""
     ></app-input-date-picker>
   </div>
@@ -95,7 +95,9 @@
       inputLabel="Current Expiry Date(INC. Claim Period)"
       [maxDate]="today"
       maxDateDesc="Date can not be future dates"
-      [control]="amdmentFormGroup.controls['currentExpireIncDate']"
+      [control]="
+        amdmentFormGroup.controls['currentExpireIncDate'] | formcontrol
+      "
       mandatory=""
     ></app-input-date-picker>
   </div>

@@ -2,11 +2,11 @@ import { Injectable, ViewContainerRef, TemplateRef } from "@angular/core";
 import { MatSidenav } from "@angular/material/sidenav";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SidenavService {
-  private panel: MatSidenav;
-  private vcf: ViewContainerRef;
+  private panel: MatSidenav | any;
+  private vcf: ViewContainerRef | any;
 
   constructor() {}
 

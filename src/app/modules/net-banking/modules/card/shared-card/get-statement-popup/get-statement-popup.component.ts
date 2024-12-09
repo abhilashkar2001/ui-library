@@ -6,16 +6,16 @@ import { CardService } from "../../card.service";
 import {
   MatDialogRef,
   MatDialog,
-  MAT_DIALOG_DATA,
+  MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 
 @Component({
   selector: "app-get-statement-popup",
   templateUrl: "./get-statement-popup.component.html",
-  styleUrls: ["./get-statement-popup.component.scss"],
+  styleUrls: ["./get-statement-popup.component.scss"]
 })
 export class GetStatementPopupComponent implements OnInit {
-  getStatementForm: FormGroup;
+  getStatementForm!: FormGroup;
   creditCardDetails: any;
   monthList = [
     { id: 1, value: "Jan", label: "Jan" },
@@ -29,13 +29,13 @@ export class GetStatementPopupComponent implements OnInit {
     { id: 9, value: "Sep", label: "Sep" },
     { id: 10, value: "Oct", label: "Oct" },
     { id: 11, value: "Nov", label: "Nov" },
-    { id: 12, value: "Dec", label: "Dec" },
+    { id: 12, value: "Dec", label: "Dec" }
   ];
   yearList = [
     { id: 1, value: "2024", label: "2024" },
     { id: 2, value: "2023", label: "2023" },
     { id: 3, value: "2022", label: "2022" },
-    { id: 4, value: "2021", label: "2021" },
+    { id: 4, value: "2021", label: "2021" }
   ];
   formatList = [{ id: 1, value: "PDF", label: "PDF" }];
 
@@ -57,15 +57,15 @@ export class GetStatementPopupComponent implements OnInit {
     this.getStatementForm = this.formBuilder.group({
       month: [""],
       year: [""],
-      format: [""],
+      format: [""]
     });
   }
   downLoad() {
     if (this.getStatementForm.valid) {
       console.log(this.getStatementForm);
       console.log(this.getStatementForm.value);
-      let month: number = this.getStatementForm.get("month").value;
-      let year: number = this.getStatementForm.get("year").value;
+      let month: number = this.getStatementForm.get("month")?.value;
+      let year: number = this.getStatementForm.get("year")?.value;
       this.downloadCardService
         .downloadCreditInfoAsPdf(
           this.creditCardDetails?.[0]?.cardNumber,
@@ -105,11 +105,11 @@ export class GetStatementPopupComponent implements OnInit {
   //   });
   // }
 
-  errorPopUp(res) {
+  errorPopUp(res: any) {
     let errPayload = {
       error: res?.error,
       message: res?.message,
-      statusCode: res?.status,
+      statusCode: res?.status
     };
     this.dialog.open(NewErrorPopupComponent, {
       width: "45%",
@@ -117,8 +117,8 @@ export class GetStatementPopupComponent implements OnInit {
       disableClose: true,
       data: {
         type: "customError",
-        errPayload,
-      },
+        errPayload
+      }
     });
   }
 

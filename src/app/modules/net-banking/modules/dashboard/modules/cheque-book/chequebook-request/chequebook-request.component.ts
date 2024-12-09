@@ -7,10 +7,10 @@ import { ChequeService } from "../cheque-service";
 @Component({
   selector: "app-chequebook-request",
   templateUrl: "./chequebook-request.component.html",
-  styleUrls: ["./chequebook-request.component.scss"],
+  styleUrls: ["./chequebook-request.component.scss"]
 })
 export class ChequebookRequestComponent implements OnInit {
-  chequebookRequestForm: FormGroup;
+  chequebookRequestForm!: FormGroup;
   customerInfo: any;
   accountNumberList: any[] = [];
   selectedAccInfo: any;
@@ -23,7 +23,7 @@ export class ChequebookRequestComponent implements OnInit {
 
   deliveryOptions: any[] = [
     { label: "Branch Near Me", value: "Branch Near Me" },
-    { label: "My Address", value: "My Address" },
+    { label: "My Address", value: "My Address" }
   ];
   branches: any[] = [];
   addressTypesList: any[] = [{ addressTypes: "Communication Address" }];
@@ -45,18 +45,18 @@ export class ChequebookRequestComponent implements OnInit {
   fetchGenericInfo() {
     this.accountService.fetchGeneric().subscribe((resp: any) => {
       this.noOfLeaves = resp?.data?.NOOFLEAVES;
-      this.instrumentType = resp?.data?.INSTRUMENTTYPE?.find((i) =>
+      this.instrumentType = resp?.data?.INSTRUMENTTYPE?.find((i: any) =>
         i?.values?.toLowerCase()?.includes("cheque")
       )?.id;
     });
   }
 
   fetchCustomerInfo() {
-    const custInfo = sessionStorage.getItem("customer-Info");
+    const custInfo: any = sessionStorage.getItem("customer-Info");
     this.customerInfo = JSON.parse(custInfo);
 
     this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem("listOfAccounts")
     );
   }
   buildRequestForm() {
@@ -72,24 +72,24 @@ export class ChequebookRequestComponent implements OnInit {
       country: [""],
       state: [""],
       city: [""],
-      pin: [""],
+      pin: [""]
     });
 
     const selectedAccountNo = sessionStorage.getItem("selectAccNo");
 
     if (selectedAccountNo) {
-      this.chequebookRequestForm.get("accountNo").setValue(selectedAccountNo);
-      this.handleAccountNumberChange(selectedAccountNo);
+      this.chequebookRequestForm.get("accountNo")?.setValue(selectedAccountNo);
+      this.handleAccountNumberChange();
     }
   }
 
-  handleAccountNumberChange(event) {
+  handleAccountNumberChange() {
     this.selectedAccInfo = this.accountNumberList?.find(
-      (i) => i?.accountNo === this.chequebookRequestForm.get("accountNo").value
+      (i) => i?.accountNo === this.chequebookRequestForm.get("accountNo")?.value
     );
 
     this.accountService
-      .getChequeNoByAccNo(this.chequebookRequestForm.get("accountNo").value)
+      .getChequeNoByAccNo(this.chequebookRequestForm.get("accountNo")?.value)
       .subscribe(
         (resp) => {
           this.chequeNumber = resp?.data;
@@ -99,7 +99,7 @@ export class ChequebookRequestComponent implements OnInit {
 
     this.accountService
       .fetchInfoByoriginationAccNo(
-        this.chequebookRequestForm.get("accountNo").value
+        this.chequebookRequestForm.get("accountNo")?.value
       )
       .subscribe(
         (resp: any) => {
@@ -121,22 +121,22 @@ export class ChequebookRequestComponent implements OnInit {
       );
   }
 
-  changeAddressType(event) {
+  changeAddressType() {
     const selectedAddress = this.addressList?.[0];
     this.chequebookRequestForm
       .get("address1")
-      .setValue(selectedAddress?.address1);
+      ?.setValue(selectedAddress?.address1);
     this.chequebookRequestForm
       .get("address2")
-      .setValue(selectedAddress?.address2);
+      ?.setValue(selectedAddress?.address2);
     this.chequebookRequestForm
       .get("country")
-      .setValue(selectedAddress?.countryName);
+      ?.setValue(selectedAddress?.countryName);
     this.chequebookRequestForm
       .get("state")
-      .setValue(selectedAddress?.stateName);
-    this.chequebookRequestForm.get("city").setValue(selectedAddress?.cityName);
-    this.chequebookRequestForm.get("pin").setValue(selectedAddress?.pincode);
+      ?.setValue(selectedAddress?.stateName);
+    this.chequebookRequestForm.get("city")?.setValue(selectedAddress?.cityName);
+    this.chequebookRequestForm.get("pin")?.setValue(selectedAddress?.pincode);
   }
 
   goBack() {
@@ -144,12 +144,6 @@ export class ChequebookRequestComponent implements OnInit {
   }
 
   saveChequeDetails() {
-    const payload = {
-      chequeBookNo: this.chequeNumber,
-      accountNo: this.chequebookRequestForm.get("accountNo").value,
-      noOfChequeLeaves: this.chequebookRequestForm.get("leavesNo").value,
-      isEdit: false,
-    };
     // const chequeDetails = resp?.data;
     const requestFormValue: any = this.chequebookRequestForm.value;
     const insPayload = {
@@ -160,7 +154,7 @@ export class ChequebookRequestComponent implements OnInit {
       instrumentType: this.instrumentType,
       accountNumber: requestFormValue?.accountNo,
       chequeBookNumber: this.chequeNumber,
-      numberOfLeaves: requestFormValue?.leavesNo,
+      numberOfLeaves: requestFormValue?.leavesNo
       // chequeDetails,
     };
 
@@ -168,7 +162,9 @@ export class ChequebookRequestComponent implements OnInit {
       (resp: any) => {
         console.log("Saved Resp---- ", resp);
         let leaves = requestFormValue?.leavesNo;
-        const leavesValues = this.noOfLeaves.find((item) => item.id === leaves);
+        const leavesValues = this.noOfLeaves.find(
+          (item: any) => item.id === leaves
+        );
 
         let paymentDetailsArr = [
           {
@@ -181,24 +177,24 @@ export class ChequebookRequestComponent implements OnInit {
                 header: "Account Details",
                 details: [
                   {
-                    Name: this.customerInfo?.customerName,
+                    Name: this.customerInfo?.customerName
                   },
                   {
-                    "Account No": requestFormValue?.accountNo,
+                    "Account No": requestFormValue?.accountNo
                   },
                   {
                     "Account Type":
-                      this.customerInfo?.accounts?.[0]?.accountType,
-                  },
-                ],
+                      this.customerInfo?.accounts?.[0]?.accountType
+                  }
+                ]
               },
               {
                 header: "Cheque Book Detail",
                 details: [
                   {
-                    "No of Leaves Per Book": leavesValues?.values,
-                  },
-                ],
+                    "No of Leaves Per Book": leavesValues?.values
+                  }
+                ]
               },
               {
                 header: "Communication Address",
@@ -207,20 +203,20 @@ export class ChequebookRequestComponent implements OnInit {
                     ? [{ Branch: requestFormValue?.branch }]
                     : [
                         {
-                          "Address Line 1": requestFormValue?.address1,
+                          "Address Line 1": requestFormValue?.address1
                         },
                         {
-                          "Address Line 2": requestFormValue?.address2,
+                          "Address Line 2": requestFormValue?.address2
                         },
                         { Country: requestFormValue?.country },
                         { state: requestFormValue?.state },
                         { City: requestFormValue?.city },
-                        { "PIN Code": requestFormValue?.pin },
-                      ],
-              },
+                        { "PIN Code": requestFormValue?.pin }
+                      ]
+              }
             ],
-            qrToggle: false,
-          },
+            qrToggle: false
+          }
         ];
 
         const revPayload = { id: resp?.data?.id };

@@ -15,7 +15,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-offer-letter",
   templateUrl: "./offer-letter.component.html",
-  styleUrls: ["./offer-letter.component.scss"],
+  styleUrls: ["./offer-letter.component.scss"]
 })
 export class OfferLetterComponent implements OnInit {
   currentUser: any;
@@ -25,7 +25,7 @@ export class OfferLetterComponent implements OnInit {
   customerInfo: any;
   download: any;
   staticData = {
-    CUSTOMERRESPONSE: [],
+    CUSTOMERRESPONSE: []
   };
   CUSTOMERRESPONSE: any[] = [];
   constructor(
@@ -42,7 +42,9 @@ export class OfferLetterComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
-    this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.originationId = JSON.parse(
+      <string>sessionStorage.getItem("originationId")
+    );
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.generatePdf();
     this.fetchGenericValues();
@@ -86,7 +88,7 @@ export class OfferLetterComponent implements OnInit {
     window.URL.revokeObjectURL(url);
   }
 
-  saveCustomerResponse(response) {
+  saveCustomerResponse(response: any) {
     const payload: any = {};
     payload.dateOfOfferAcceptOrReject = moment(new Date()).format(
       "DD-MMM-YYYY"
@@ -113,14 +115,16 @@ export class OfferLetterComponent implements OnInit {
     const dialogRef = this.dialog.open(SignNowPopupComponent, {
       disableClose: false,
       width: "60%",
-      data: { signatureId: this.signatureId, title: "Sign Now" },
+      data: { signatureId: this.signatureId, title: "Sign Now" }
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res?.result?.signatureId) {
         const signPayload = {
-          originationId: JSON.parse(sessionStorage.getItem("originationId")),
+          originationId: JSON.parse(
+            <string>sessionStorage.getItem("originationId")
+          ),
           signatureId: res?.result?.signatureId,
-          screenCode: this.sessionStorageService.getScreenId(),
+          screenCode: this.sessionStorageService.getScreenId()
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
@@ -155,9 +159,9 @@ export class OfferLetterComponent implements OnInit {
           width: "40%",
           data: {
             screenType: "Sign Now",
-            title: "Digital sign has been successfully recorded!",
+            title: "Digital sign has been successfully recorded!"
           },
-          disableClose: true,
+          disableClose: true
         });
         sucessDialog.afterClosed().subscribe((_) => {
           setTimeout(() => {

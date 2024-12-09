@@ -6,7 +6,7 @@
   <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="row">
       <app-ic-custom-pay-from
-        [control]="transferMoneyForm.get('debitAccount')"
+        [control]="transferMoneyForm.get('debitAccount') | formcontrol"
         [inputLabel]="'Pay From' | translate"
         bindValueKey="accountNo"
         bindLabelKey="accountNo"
@@ -22,7 +22,7 @@
     <div fxFlex="100" fxLayout="row wrap">
       <div fxFlex="30" class="input_wrapper">
         <app-searchable-select
-          [control]="transferMoneyForm.get('creditAccount')"
+          [control]="transferMoneyForm.get('creditAccount') | formcontrol"
           [inputLabel]="'Transfer To' | translate"
           [items]="transferType"
           bindLabelKey="nickName"
@@ -89,7 +89,7 @@
             [items]="transferType"
             bindValueKey="accountNo"
             bindLabelKey="accountNo"
-            [control]="transferMoneyForm.get('creditAccount')"
+            [control]="transferMoneyForm.get('creditAccount') | formcontrol"
             [currencyCode]="selectedTransferAccount?.accountCurrecny"
             [inputLabel]="'Transfer To' | translate"
             [showOutsideLabel]="true"
@@ -110,7 +110,7 @@
         <div fxFlex="25" class="input_wrapper">
           <app-searchable-select
             [items]="genericValue?.PAYMENTMODE"
-            [control]="transferMoneyForm.get('paymentMode')"
+            [control]="transferMoneyForm.get('paymentMode') | formcontrol"
             [inputLabel]="'Payment Mode' | translate"
             bindLabelKey="values"
             bindValueKey="id"
@@ -120,19 +120,21 @@
         <div fxFlex="25" class="input_wrapper">
           <app-ic-radio-button
             [optiions]="transferOptions"
-            [control]="transferMoneyForm.get('paymentType')"
+            [control]="transferMoneyForm.get('paymentType') | formcontrol"
             displayLabel="Transfer Type"
             layout="column"
           >
           </app-ic-radio-button>
         </div>
         <ng-container
-          *ngIf="transferMoneyForm.get('paymentType').value === 'later'"
+          *ngIf="transferMoneyForm.get('paymentType')?.value === 'later'"
         >
           <div fxFlex="25" class="input_wrapper">
             <app-ic-radio-button
               [optiions]="recurringOptions"
-              [control]="transferMoneyForm.get('recurringPayment')"
+              [control]="
+                transferMoneyForm.get('recurringPayment') | formcontrol
+              "
               displayLabel="Recurring Payment"
               layout="column"
             >
@@ -161,12 +163,12 @@
             </mat-form-field>
           </div>
           <ng-container
-            *ngIf="transferMoneyForm.get('recurringPayment').value == true"
+            *ngIf="transferMoneyForm.get('recurringPayment')?.value == true"
           >
             <div fxFlex="25" class="input_wrapper">
               <app-searchable-select
                 [items]="genericValue?.SCHEDULEPAYMENT"
-                [control]="transferMoneyForm.get('frequency')"
+                [control]="transferMoneyForm.get('frequency') | formcontrol"
                 [inputLabel]="'Frequency' | translate"
                 bindLabelKey="values"
                 bindValueKey="id"
@@ -175,7 +177,9 @@
             </div>
             <div fxFlex="25" class="input_wrapper">
               <app-ic-custom-input
-                [control]="transferMoneyForm.get('noOfInstalment')"
+                [control]="
+                  transferMoneyForm.get('noOfInstalment') | formcontrol
+                "
                 [inputLabel]="'No. of Installments' | translate"
               ></app-ic-custom-input>
             </div>
@@ -185,7 +189,7 @@
       <div class="wrapper_row" fxLayout="row wrap" fxFlex="100">
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="transferMoneyForm.get('remark')"
+            [control]="transferMoneyForm.get('remark') | formcontrol"
             [inputLabel]="'Remark' | translate"
           ></app-ic-custom-input>
         </div>
@@ -199,7 +203,7 @@
         </app-ic-action-button>
         <app-ic-action-button
           (onClick)="submit()"
-          [disabled]="transferMoneyForm?.invalid"
+          [disabled]="transferMoneyForm.invalid"
           [buttonName]="'Proceed' | translate"
           buttonType="filled"
         ></app-ic-action-button>

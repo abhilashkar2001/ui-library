@@ -1,7 +1,10 @@
 import * as moment from "moment";
 import { StaticData } from "../models/static.constant";
 
-export function getIndexBy(array: Array<{}>, { name, value }): number {
+export function getIndexBy(
+  array: Array<{}> | any,
+  { name, value }: any
+): number {
   for (let i = 0; i < array.length; i++) {
     if (array[i][name] === value) {
       return i;
@@ -24,7 +27,7 @@ function currentYPosition() {
   return 0;
 }
 
-function elmYPosition(elm) {
+function elmYPosition(elm: any) {
   var y = elm.offsetTop;
   var node = elm;
   while (node.offsetParent && node.offsetParent !== document.body) {
@@ -34,13 +37,13 @@ function elmYPosition(elm) {
   return y;
 }
 
-export function scrollTo(selector) {
+export function scrollTo(selector: any) {
   var elm = document.querySelector(selector);
   if (!selector || !elm) {
     return;
   }
-  var startY = currentYPosition();
-  var stopY = elmYPosition(elm);
+  var startY: any = currentYPosition();
+  var stopY: any = elmYPosition(elm);
   var distance = stopY > startY ? stopY - startY : startY - stopY;
   if (distance < 100) {
     window.scrollTo(0, stopY);
@@ -67,7 +70,7 @@ export function scrollTo(selector) {
     }
     return;
   }
-  for (let i = startY; i > stopY; i -= step) {
+  for (let i: any = startY; i > stopY; i -= step) {
     setTimeout(
       (function (leapY) {
         return () => {
@@ -86,7 +89,7 @@ export const DEFAULT_LOCALE = {
   country: "United States",
   dateFormat: "MM/DD/YYYY",
   locale: "en-US",
-  currency: "USD",
+  currency: "USD"
 };
 export function pluckOnlyDate(date: any) {
   return moment(date).format("YYYY-MM-DD");
@@ -110,12 +113,11 @@ export function removeSpecCharsOnly(separator: any, val: any) {
   return Number(money);
 }
 
-export function findCurrency(currencyCode) {
+export function findCurrency(currencyCode: any) {
   return StaticData.currencyList[currencyCode];
 }
 
-
-export function handleDownload(data, pdfName) {
+export function handleDownload(data: any, pdfName: any) {
   const blob = new Blob([data], { type: "application/octet-stream" });
   const url = window.URL.createObjectURL(blob);
 

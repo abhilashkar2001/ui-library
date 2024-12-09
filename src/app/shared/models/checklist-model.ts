@@ -34,13 +34,13 @@ export interface DocInfoModel {
 
 export interface ChecklistRouteObjModel {
   checklistItem: string[] | string | any;
-  processStageId: number | string;
-  screenId: number | string;
-  processCycleCode: string;
+  processStageId: number | string | any;
+  screenId: number | string | any;
+  processCycleCode: string | any;
 }
 
 export class ChecklistPayloadModel {
-  originationId: number;
-  documentIds: number[];
-  screenCode: number | string;
+  originationId: number | any;
+  documentIds: number[] | any;
+  screenCode: number | string | any;
 }

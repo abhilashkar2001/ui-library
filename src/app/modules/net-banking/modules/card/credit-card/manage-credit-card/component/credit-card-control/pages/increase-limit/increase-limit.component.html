@@ -12,7 +12,7 @@
             [items]="creditCardList"
             bindValueKey="cardNo"
             bindLabelKey="cardValue"
-            [control]="increaseLimitForm.get('cardNo')"
+            [control]="increaseLimitForm.get('cardNo') | formcontrol"
             [inputLabel]="'Card Number' | translate"
             (selectionChange)="getCreditCardLimitByNo($event)"
           ></app-searchable-select>
@@ -22,7 +22,9 @@
         </div>
         <div class="row" fxFlex="50">
           <app-ic-custom-input
-            [control]="increaseLimitForm.get('eligibleCreditLimit')"
+            [control]="
+              increaseLimitForm.get('eligibleCreditLimit') | formcontrol
+            "
             [inputLabel]="'Eligible Credit Limit' | translate"
             [country]="selectedCurrency"
             customClass="customTotalField"
@@ -41,7 +43,7 @@
           [buttonName]="'Proceed' | translate"
           buttonType="filled"
           (onClick)="proceedToOtp()"
-          [disabled]="!increaseLimitForm.get('eligibleCreditLimit').value"
+          [disabled]="!increaseLimitForm.get('eligibleCreditLimit')?.value"
         ></app-ic-action-button>
         <!-- [disabled]="increaseLimitForm.invalid" -->
       </div>
@@ -59,7 +61,10 @@
         <div fxFlex="75" fxLayoutGap="10">
           <div class="row" fxFlex="33">
             <mat-form-field>
-              <input matInput [formControl]="increaseLimitForm.get('otp')" />
+              <input
+                matInput
+                [formControl]="increaseLimitForm.get('otp') | formcontrol"
+              />
             </mat-form-field>
           </div>
           <span class="gray-text" fxLayoutAlign="center center">{{
@@ -77,7 +82,7 @@
             [buttonName]="'Submit' | translate"
             buttonType="filled"
             (onClick)="submitEligibleLimit()"
-            [disabled]="!increaseLimitForm.get('otp').value"
+            [disabled]="!increaseLimitForm.get('otp')?.value"
           ></app-ic-action-button>
         </div>
       </div>

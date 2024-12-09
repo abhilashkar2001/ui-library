@@ -44,7 +44,7 @@
     <button
       *ngFor="let page of visiblePages"
       class="pagebtn"
-      [ngClass]="value.page === page && 'selected'"
+      [ngClass]="{ selected: value.page === page }"
       (click)="page != '...' && selectPage(page, '')"
     >
       {{ page }}

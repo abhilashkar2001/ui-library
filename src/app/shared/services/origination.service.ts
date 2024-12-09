@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import {
   ChecklistInfoModel,
-  ChecklistPayloadModel,
+  ChecklistPayloadModel
 } from "../models/checklist-model";
 import { PrimaryCustomerInfo } from "../models/primary-customer.model";
 import { IcHttpResponseModel } from "../models/ic-http-response.model";
@@ -11,7 +11,7 @@ import { IcHttpResponseModel } from "../models/ic-http-response.model";
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class OriginationService {
   constructor(private http: HttpClient) {}
@@ -31,7 +31,7 @@ export class OriginationService {
     const options = {
       params: screenId
         ? new HttpParams().set("screenCode", screenId).set("stageId", stageId)
-        : {},
+        : {}
     };
     return this.http.get<IcHttpResponseModel<ChecklistInfoModel[]>>(
       `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
@@ -63,14 +63,14 @@ export class OriginationService {
     );
   }
 
-  verifyWorkflow(properties) {
+  verifyWorkflow(properties: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/workflow/verify`,
       properties
     );
   }
 
-  getCompletedtages(originationId) {
+  getCompletedtages(originationId: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`
     );

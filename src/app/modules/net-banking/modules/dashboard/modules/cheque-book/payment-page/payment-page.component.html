@@ -9,11 +9,11 @@
     <div fxLayoutGap="20">
       <div class="quick_btn btn" fxLayoutAlign="center center" fxFlex="50">
         <mat-icon class="extend-icon" svgIcon="share-icon"></mat-icon>
-        <span (click)="getPdf(false)"> Share </span>
+        <span> Share </span>
       </div>
       <div fxLayoutAlign="center center" fxFlex="50" class="payee_btn btn">
         <mat-icon class="extend-icon" svgIcon="download-icon"></mat-icon>
-        <span (click)="getPdf(true)"> Download </span>
+        <span> Download </span>
       </div>
     </div>
   </div>
@@ -31,11 +31,11 @@
     ></ng-container>
     <ng-template #otp>
       <div fxFlex="49.5">
-        <app-schedule-summary
+        <!-- <app-schedule-summary
           [viewPayee]="paymentDetails[0]?.benificiaryMasterId ? true : false"
           [payeeDetails]="paymentDetails[0]?.summary[0]?.details"
           [retailBeneficiaryMasterId]="paymentDetails[0]?.benificiaryMasterId"
-        ></app-schedule-summary>
+        ></app-schedule-summary> -->
       </div>
     </ng-template>
   </div>

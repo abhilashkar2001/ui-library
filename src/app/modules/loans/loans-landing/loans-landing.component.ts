@@ -6,7 +6,7 @@ import { LoanService } from "app/shared/services/loan/loan.service";
 @Component({
   selector: "app-loans-landing",
   templateUrl: "./loans-landing.component.html",
-  styleUrls: ["./loans-landing.component.scss"],
+  styleUrls: ["./loans-landing.component.scss"]
 })
 export class LoansLandingComponent implements OnInit {
   carowselData = [];
@@ -40,17 +40,16 @@ export class LoansLandingComponent implements OnInit {
     });
   }
 
-  customApplyLoan(e) {
+  customApplyLoan(e: any) {
     this.router.navigate(["/loan/loan-type"], {
-      queryParams: { subClass: e },
+      queryParams: { subClass: e }
     });
   }
-  customApply(e) {
+  customApply() {
     const targetElement =
       this.el.nativeElement.querySelector("#custom-carousel");
     const targetPosition = targetElement.getBoundingClientRect().top;
-    const scrollPosition =
-      targetPosition > 200 ? targetPosition - 120 : targetPosition;
+    targetPosition > 200 ? targetPosition - 120 : targetPosition;
     if (targetElement) {
       // targetElement.scrollIntoView({
       //   top: scrollPosition,

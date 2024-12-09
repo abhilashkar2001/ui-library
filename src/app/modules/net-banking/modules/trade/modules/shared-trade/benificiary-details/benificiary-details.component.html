@@ -24,8 +24,8 @@
             <input matInput type="text" formControlName="beneficiary" />
             <mat-error
               *ngIf="
-                benificiaryDetailsForm.get('beneficiary').touched &&
-                benificiaryDetailsForm.get('beneficiary').hasError('required')
+                benificiaryDetailsForm.get('beneficiary')?.touched &&
+                benificiaryDetailsForm.get('beneficiary')?.hasError('required')
               "
               >Beneficiary is required!</mat-error
             >
@@ -92,8 +92,8 @@
               />
               <mat-error
                 *ngIf="
-                  address.get('stateName').touched &&
-                  address.get('stateName').hasError('required')
+                  address.get('stateName')?.touched &&
+                  address.get('stateName')?.hasError('required')
                 "
                 >State is required!</mat-error
               >
@@ -111,8 +111,8 @@
               />
               <mat-error
                 *ngIf="
-                  address.get('cityName').touched &&
-                  address.get('cityName').hasError('required')
+                  address.get('cityName')?.touched &&
+                  address.get('cityName')?.hasError('required')
                 "
                 >City is required!</mat-error
               >
@@ -152,7 +152,7 @@
             />
 
             <mat-error
-              *ngIf="benificiaryDetailsForm.get('email').hasError('pattern')"
+              *ngIf="benificiaryDetailsForm.get('email')?.hasError('pattern')"
             >
               Please enter Valid Email
             </mat-error>

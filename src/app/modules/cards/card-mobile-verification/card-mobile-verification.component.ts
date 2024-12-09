@@ -7,7 +7,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 @Component({
   selector: "app-card-mobile-verification",
   templateUrl: "./card-mobile-verification.component.html",
-  styleUrls: ["./card-mobile-verification.component.scss"],
+  styleUrls: ["./card-mobile-verification.component.scss"]
 })
 export class CardMobileVerificationComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
@@ -15,25 +15,25 @@ export class CardMobileVerificationComponent implements OnInit {
 
   phone: any;
   otp: any;
-  showOtpSection: boolean;
+  showOtpSection: boolean | any;
   stepperTitle: string;
 
   constructor(
-    private router: Router,
     private location: Location,
     private openAccountService: OpenAccountService,
     private activatedRoute: ActivatedRoute,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
-    this.commonService.updateData(router.url);
+    this.commonService.updateData(this.router.url);
   }
 
   ngOnInit(): void {}
 
   getOTP(event: any) {
     this.phone = event.phone;
-    this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
+    this.openAccountService.getOtp(this.phone).subscribe(() => {
       this.showOtpSection = true;
     });
   }
@@ -56,7 +56,7 @@ export class CardMobileVerificationComponent implements OnInit {
   onVerify() {
     this.openAccountService
       .verifyOtp({ mobile: this.phone, otp: this.otp })
-      .subscribe((response) => {
+      .subscribe(() => {
         this.onConfirmEvent.emit();
       });
   }

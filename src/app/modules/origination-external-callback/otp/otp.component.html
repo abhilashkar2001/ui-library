@@ -72,7 +72,7 @@
               type="text"
               matInput
               [formControlName]="otpType?.toLowerCase()"
-              (input)="otpForm.get('otp').setValue('')"
+              (input)="otpForm.get('otp')?.setValue('')"
             />
             <button
               matSuffix
@@ -100,7 +100,7 @@
       <ng-otp-input
         #ngOtpInput
         [config]="ngOtpConfig"
-        [formCtrl]="otpForm.controls['otp']"
+        [formControl]="otpForm.get('otp') | formcontrol"
         (onInputChange)="onOtpChange($event)"
       ></ng-otp-input>
     </div>

@@ -8,7 +8,7 @@ import { InternetBankingService } from "app/shared/services/internet-banking.ser
 @Component({
   selector: "app-bulk-upload",
   templateUrl: "./bulk-upload.component.html",
-  styleUrls: ["./bulk-upload.component.scss"],
+  styleUrls: ["./bulk-upload.component.scss"]
 })
 export class BulkUploadComponent implements OnInit {
   columns: any = BulkUploadConstant.UPLOAD_SUMMARY;
@@ -19,7 +19,7 @@ export class BulkUploadComponent implements OnInit {
   pageSize: number = 5;
   sortValue = "";
   sortDirection = "";
-  filterBy: FilterBy;
+  filterBy: FilterBy | any;
   module: any;
   bulkUploadData: any;
   staticData: any = {
@@ -28,10 +28,10 @@ export class BulkUploadComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
 
   constructor(
@@ -46,17 +46,17 @@ export class BulkUploadComponent implements OnInit {
     this.route.navigate(["/user/dashboard"]);
   }
 
-  navigateToBulkUpload(id) {
+  navigateToBulkUpload(id: any) {
     this.route.navigate(["user/dashboard/fund-transfer/bulk-upload", id]);
   }
 
-  customEditForm(event) {
+  customEditForm(event: any) {
     console.log(event);
 
     this.navigateToBulkUpload(event?.element?.id || "addNew");
   }
 
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -66,7 +66,6 @@ export class BulkUploadComponent implements OnInit {
     this.bulkService
       .getSummary(
         event.filterBy,
-        event.filterValue,
         event.page,
         event.size,
         this.sortValue,

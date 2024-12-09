@@ -35,7 +35,7 @@
             (click)="getOtp()"
             type="button"
             mat-raised-button
-            [disabled]="!verifyNumFirm.get('verifyMobile').valid"
+            [disabled]="!verifyNumFirm.get('verifyMobile')?.valid"
             matSuffix
             class="getOtp"
           >
@@ -46,8 +46,8 @@
       <div
         class="errorTxt col-12"
         *ngIf="
-          !verifyNumFirm.get('verifyMobile').valid &&
-          verifyNumFirm.get('verifyMobile').touched
+          !verifyNumFirm.get('verifyMobile')?.valid &&
+          verifyNumFirm.get('verifyMobile')?.touched
         "
       >
         Mobile Number is Required!

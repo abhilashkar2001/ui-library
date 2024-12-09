@@ -8,28 +8,30 @@ import * as moment from "moment";
 @Component({
   selector: "app-process-offer-letter",
   templateUrl: "./process-offer-letter.component.html",
-  styleUrls: ["./process-offer-letter.component.scss"],
+  styleUrls: ["./process-offer-letter.component.scss"]
 })
 export class ProcessOfferLetterComponent implements OnInit {
   currentUser: any;
   currentTab: any;
-  revisiteForm: FormGroup;
+  revisiteForm!: FormGroup;
   originationId: any;
   constructor(
     private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
     private route: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
-    this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.originationId = JSON.parse(
+      <string>sessionStorage.getItem("originationId")
+    );
     this.fetchOfferDetails();
   }
 
-  buildRevisiteForm(data?) {
+  buildRevisiteForm(data?: any) {
     this.revisiteForm = this.fb.group({
       id: [data?.id ?? ""],
       amount: [data?.approvedLoanAmount ?? ""],
@@ -42,7 +44,7 @@ export class ProcessOfferLetterComponent implements OnInit {
       requestedLoanTenureDay: [""],
       requestedLoanTenureMonth: [""],
       requestedLoanTenureYear: [""],
-      remark: [],
+      remark: []
     });
   }
 
@@ -77,6 +79,6 @@ export class ProcessOfferLetterComponent implements OnInit {
 
   /**This function is for reset the formvalues */
   reset() {
-    this.revisiteForm.reset()
+    this.revisiteForm.reset();
   }
 }

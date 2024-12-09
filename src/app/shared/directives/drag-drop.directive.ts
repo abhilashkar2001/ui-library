@@ -1,21 +1,15 @@
-import {
-  Directive,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Output,
-} from "@angular/core";
+import { Directive, EventEmitter, HostListener, Output } from "@angular/core";
 
 export class FileHandle {
-  files: File;
-  name: string;
+  files: File | any;
+  name: string | any;
 }
 @Directive({
-  selector: "[appDragDrop]",
+  selector: "[appDragDrop]"
 })
 export class DragDropDirective {
   acceptableFile = ["jpeg", "jpg", "png"];
-  error: string;
+  error: string | any;
   constructor() {}
   @Output() onFileDropped = new EventEmitter<any>();
 
@@ -36,7 +30,7 @@ export class DragDropDirective {
     event.preventDefault();
     event.stopPropagation();
     if (event.dataTransfer.files && this.checkAcceptability(event)) {
-      let files: FileList = event.dataTransfer.files;
+      let files: FileList | any = event.dataTransfer.files;
       console.log(files);
       let exportfile = new FileHandle();
       exportfile.files = files[0];
@@ -47,7 +41,7 @@ export class DragDropDirective {
     }
   }
 
-  checkAcceptability(event) {
+  checkAcceptability(event: any) {
     for (const value of this.acceptableFile) {
       if (event.dataTransfer.files[0].name.toLowerCase().includes(value)) {
         return true;

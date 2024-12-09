@@ -10,28 +10,28 @@ import { MatDialogRef } from "@angular/material/dialog";
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: "LL",
+    dateInput: "LL"
   },
   display: {
-    dateInput: "DD-MM-YYYY",
-  },
+    dateInput: "DD-MM-YYYY"
+  }
 };
 @Component({
   selector: "app-created-duration-model",
   templateUrl: "./created-duration-model.component.html",
   styleUrls: ["./created-duration-model.component.scss"],
-  providers: [DatePipe],
+  providers: [DatePipe]
 })
 export class CreatedDurationModelComponent implements OnInit {
   readonly calendarHeaderComponent = CalendarHeaderComponent;
-  fromDate: string;
-  maxDate: Date;
-  toDate: string;
-  value: string[];
+  fromDate: string | any;
+  maxDate: Date | any;
+  toDate: string | any;
+  value: string[] | any;
   selectedDate: any;
   todayDate: Date = new Date();
   tomorrowDate: Date = new Date();
-  maxFromDate: Date = null;
+  maxFromDate: Date | any = null;
   fromMask: any;
   toMask: any;
   constructor(
@@ -57,11 +57,11 @@ export class CreatedDurationModelComponent implements OnInit {
   close() {
     this.value = [
       this.convertDate(this.fromDate),
-      this.convertDate(this.toDate),
+      this.convertDate(this.toDate)
     ];
     this.dialogRef.close(this.value);
-    sessionStorage.setItem("fromDate", this.convertDate(this.fromDate));
-    sessionStorage.setItem("toDate", this.convertDate(this.toDate));
+    sessionStorage.setItem("fromDate", this.value[0]);
+    sessionStorage.setItem("toDate", this.value[1]);
   }
 
   getToDateValidity() {
@@ -81,7 +81,9 @@ export class CreatedDurationModelComponent implements OnInit {
 
   dateDispatchEventFrom(key: string, event: MatDatepickerInputEvent<Date>) {
     let convertDate = pluckOnlyDate(event?.value);
-    this[key] = convertDate;
+    console.log(key);
+
+    key = convertDate;
   }
 
   /**
@@ -90,13 +92,17 @@ export class CreatedDurationModelComponent implements OnInit {
    * @param event
    */
 
-  dateDispatchEventTo(key: string, event: MatDatepickerInputEvent<Date>) {
+  dateDispatchEventTo(key: string | any, event: MatDatepickerInputEvent<Date>) {
     let convertDate = pluckOnlyDate(event?.value);
-    this[key] = convertDate;
+    key = convertDate;
+    console.log(key);
+
+    // convertDate = key;
   }
-  convertDate(value) {
+  convertDate(value: any) {
     let date = moment(value).format("YYYY-MM-DD");
     if (date) return date;
+    return;
   }
 
   goBack() {

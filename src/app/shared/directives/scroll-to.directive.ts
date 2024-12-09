@@ -1,8 +1,8 @@
-import { Directive, ElementRef, Attribute, OnInit, HostListener } from '@angular/core';
+import { Directive, Attribute, OnInit, HostListener } from "@angular/core";
 
-@Directive({ selector: '[scrollTo]' })
+@Directive({ selector: "[scrollTo]" })
 export class ScrollToDirective implements OnInit {
-  constructor( @Attribute('scrollTo') public elmID: string, private el: ElementRef) { }
+  constructor(@Attribute("scrollTo") public elmID: string) {}
 
   ngOnInit() {}
 
@@ -15,10 +15,10 @@ export class ScrollToDirective implements OnInit {
     // Internet Explorer 6, 7 and 8
     if (document.body.scrollTop) return document.body.scrollTop;
     return 0;
-  };
+  }
 
-  elmYPosition(eID) {
-    var elm = document.getElementById(eID);
+  elmYPosition(eID: any) {
+    var elm: any = document.getElementById(eID);
     var y = elm.offsetTop;
     var node: any = elm;
     while (node.offsetParent && node.offsetParent != document.body) {
@@ -26,12 +26,11 @@ export class ScrollToDirective implements OnInit {
       y += node.offsetTop;
     }
     return y;
-  };
+  }
 
-  @HostListener('click', ['$event'])
+  @HostListener("click", ["$event"])
   smoothScroll() {
-    if(!this.elmID)
-      return;
+    if (!this.elmID) return;
     var startY = this.currentYPosition();
     var stopY = this.elmYPosition(this.elmID);
     var distance = stopY > startY ? stopY - startY : startY - stopY;
@@ -60,5 +59,5 @@ export class ScrollToDirective implements OnInit {
       timer++;
     }
     return false;
-  };
+  }
 }

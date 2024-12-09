@@ -12,14 +12,14 @@ import { ChequeService } from "app/modules/net-banking/modules/dashboard/modules
 @Component({
   selector: "app-self-transfer",
   templateUrl: "./self-transfer.component.html",
-  styleUrls: ["./self-transfer.component.scss"],
+  styleUrls: ["./self-transfer.component.scss"]
 })
 export class SelfTransferComponent implements OnInit, AfterViewInit {
-  selfTransferForm: FormGroup;
+  selfTransferForm: FormGroup | any;
   purposeItems = [
     { label: "Deposit", value: "Deposit" },
     { label: "Loan", value: "Loan" },
-    { label: "Credit Card", value: "Credit Card" },
+    { label: "Credit Card", value: "Credit Card" }
   ];
   currenctUser: any;
   roughNo: any;
@@ -29,9 +29,9 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
   payFrom: any = [];
   listAccounts: any;
   listOfAccounts: any;
-  genericValue = { TYPE: [] };
+  genericValue: any = { TYPE: [] };
   filteredAccountList: any[] = [];
-  toAccountBalance: number;
+  toAccountBalance: number | any;
   toAccount: any;
   creditAccountDetails: any;
   selectedCurrency: any;
@@ -65,26 +65,26 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
       if (this.fetchedDetails?.paymentType)
         this.selfTransferForm
           .get("type")
-          .setValue(this.fetchedDetails?.paymentType);
+          ?.setValue(this.fetchedDetails?.paymentType);
 
       if (this.fetchedDetails?.creditAccount)
         this.selfTransferForm
           .get("payTo")
-          .setValue(this.fetchedDetails?.creditAccount);
+          ?.setValue(this.fetchedDetails?.creditAccount);
 
       if (this.fetchedDetails?.creditAmount)
         this.selfTransferForm
           .get("amount")
-          .setValue(this.fetchedDetails?.creditAmount);
+          ?.setValue(this.fetchedDetails?.creditAmount);
 
       if (this.fetchedDetails?.remarks)
         this.selfTransferForm
           .get("remark")
-          .setValue(this.fetchedDetails?.remarks);
+          ?.setValue(this.fetchedDetails?.remarks);
     }
     if (this.customerInfo?.accounts) {
       this.categoryTypes = [];
-      this.customerInfo?.accounts.filter((element) => {
+      this.customerInfo?.accounts.filter((element: any) => {
         if (element?.type === "Accounts") {
           this.categoryTypes.push({ value: element.accountType });
         }
@@ -93,7 +93,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.checkDebitDetails(this.selfTransferForm.get("payFrom").value);
+    this.checkDebitDetails(this.selfTransferForm.get("payFrom")?.value);
   }
 
   fetchGenericValues() {
@@ -123,7 +123,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
       debitAccount: [""],
       debitCurrency: [""],
       debitBranch: [""],
-      corpCustomerId: [this.customerInfo?.customerId],
+      corpCustomerId: [this.customerInfo?.customerId]
     });
   }
 
@@ -134,14 +134,14 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
     }
   }
 
-  checkCreditDetails(value) {
-    const val = this.listAccounts.find((item) => item.accountNo === value);
+  checkCreditDetails(value: any) {
+    const val = this.listAccounts.find((item: any) => item.accountNo === value);
     this.toAccount = val;
-    this.selfTransferForm.get("creditAccount").patchValue(val?.accountNo);
+    this.selfTransferForm.get("creditAccount")?.patchValue(val?.accountNo);
     this.selfTransferForm
       .get("creditCurrency")
-      .patchValue(val?.accountCurrency);
-    this.selfTransferForm.get("creditBranch").patchValue(val?.accountBranch);
+      ?.patchValue(val?.accountCurrency);
+    this.selfTransferForm.get("creditBranch")?.patchValue(val?.accountBranch);
     this.getCreditAccountDetails(value);
     this.dashboardService.fetchBalance(value).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
@@ -152,36 +152,38 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateFilteredPayToList(value) {
-    const filteredAccount = [];
+  updateFilteredPayToList(value: any) {
+    const filteredAccount: any = [];
     this.toAccountBalance = 0;
     this.customerInfo.accounts
-      ?.filter((account) => account.accountType == value)
-      .forEach((account) =>
-        account?.accountList?.forEach((item) => {
+      ?.filter((account: any) => account.accountType == value)
+      .forEach((account: any) =>
+        account?.accountList?.forEach((item: any) => {
           filteredAccount.push(item);
         })
       );
     this.filteredAccountList = filteredAccount.filter(
-      (item) => item?.accountNo != this.selfTransferForm.value.payFrom
+      (item: any) => item?.accountNo != this.selfTransferForm.value.payFrom
     );
   }
 
-  checkDebitDetails(value) {
-    const val = this.listAccounts.find((item) => item.accountNo === value);
-    this.selfTransferForm.get("debitAccount").patchValue(val?.accountNo);
-    this.selfTransferForm.get("debitCurrency").patchValue(val?.accountCurrency);
-    this.selfTransferForm.get("debitBranch").patchValue(val?.accountBranch);
+  checkDebitDetails(value: any) {
+    const val = this.listAccounts.find((item: any) => item.accountNo === value);
+    this.selfTransferForm.get("debitAccount")?.patchValue(val?.accountNo);
+    this.selfTransferForm
+      .get("debitCurrency")
+      ?.patchValue(val?.accountCurrency);
+    this.selfTransferForm.get("debitBranch")?.patchValue(val?.accountBranch);
     this.getAccountDetails(val?.accountNo);
   }
 
-  getAccountDetails(accountNumber) {
+  getAccountDetails(accountNumber: any) {
     if (accountNumber)
       this.selfService.getAccountDetails(accountNumber).subscribe((res) => {
         this.accountDetails = res?.data;
       });
   }
-  getCreditAccountDetails(accountNumber) {
+  getCreditAccountDetails(accountNumber: any) {
     this.selfService.getAccountDetails(accountNumber).subscribe((res) => {
       this.creditAccountDetails = res?.data;
     });
@@ -195,7 +197,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
     let payload: any = {
       ...this.selfTransferForm.value,
       debitAmount: this.selfTransferForm.value.amount,
-      creditAmount: this.selfTransferForm.value.amount,
+      creditAmount: this.selfTransferForm.value.amount
     };
 
     let paymentDetailsArr = [
@@ -214,31 +216,31 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
             details: [
               { "Payee Name": this.creditAccountDetails?.customerName },
               {
-                "Account No": this.selfTransferForm.get("payTo").value,
+                "Account No": this.selfTransferForm.get("payTo")?.value
               },
               { "Account Type": this.accountDetails?.accountType },
               { "Bank Name": this.creditAccountDetails?.bankName },
               {
                 Amount:
                   getCurrencySymbol(this.toAccount?.accountCurrency, "narrow") +
-                  this.selfTransferForm.get("amount").value,
+                  this.selfTransferForm.get("amount")?.value
               },
-              { Remarks: this.selfTransferForm.get("remark").value },
-            ],
+              { Remarks: this.selfTransferForm.get("remark")?.value }
+            ]
           },
           {
             header: "Send From",
             details: [
               { "Payee Name": this.accountDetails?.customerName },
-              { "Account No": this.selfTransferForm.get("payFrom").value },
+              { "Account No": this.selfTransferForm.get("payFrom")?.value },
               {
-                "Account Type": this.accountDetails?.accountType,
-              },
-            ],
-          },
+                "Account Type": this.accountDetails?.accountType
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
 
     this.serviceCallHandler.put(
@@ -255,7 +257,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
     // });
   }
 
-  payAccount(event) {
+  payAccount(event: any) {
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.accountType = listOfAccounts.find(
       (res) => res?.accountNo == event

@@ -14,7 +14,7 @@
         <app-searchable-select
           fxFlex="100"
           class="icon_input_wrapper"
-          [control]="disbursementScheduleForm.get('loanAccNo')"
+          [control]="disbursementScheduleForm.get('loanAccNo') | formcontrol"
           [items]="loanDetails"
           bindValueKey="cbsAccountNumber"
           bindLabelKey="cbsAccountNumber"
@@ -31,10 +31,7 @@
         fxLayoutGap="16px"
         fxLayoutAlign="end center"
       >
-        <h3
-          class="disbursementRqstLink"
-          (click)="route('loan/loan-service/disbursement-request')"
-        >
+        <h3 class="disbursementRqstLink">
           <u>{{ "Disbursement Request" | translate }}</u>
         </h3>
         <app-ic-action-button

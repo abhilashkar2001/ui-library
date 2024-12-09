@@ -1,17 +1,17 @@
 import { Directive, ElementRef, HostListener, Input } from "@angular/core";
 
 @Directive({
-  selector: "[decimalinput]",
+  selector: "[decimalinput]"
 })
 export class DecimalInputDirective {
   @Input()
-  numLength: number;
+  numLength: number | any;
   @Input()
-  allowedDecimalIndex: number;
+  allowedDecimalIndex: number | any;
   constructor(private el: ElementRef) {}
 
   @HostListener("input", ["$event"])
-  onInput(event: KeyboardEvent): void {
+  onInput(): void {
     const input = this.el.nativeElement as HTMLInputElement;
     let value = input.value;
     value = value.replace(/[^0-9.]/g, "");

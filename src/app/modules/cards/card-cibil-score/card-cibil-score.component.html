@@ -7,7 +7,7 @@
       *ngIf="showCibilScoreResult"
       [flow]="'cards'"
       [isDifferentMobile]="isDifferentMobile"
-      (onBackEvent)="onBackCIBILScoreResult($event)"
+      (onBackEvent)="onBackCIBILScoreResult()"
       (onConfirmEvent)="onConfirm()"
     ></app-cibil-score-result>
     <div *ngIf="!showCibilScoreResult">
@@ -74,7 +74,7 @@
             <span class="text-info-1">91569345343</span>
           </div>
         </div>
-        <app-kyc [type]="'cibil-score'" (onVerifyEvent)="onVerify()"></app-kyc>
+        <!-- <app-kyc [type]="'cibil-score'" (onVerifyEvent)="onVerify()"></app-kyc> -->
       </div>
     </div>
   </div>

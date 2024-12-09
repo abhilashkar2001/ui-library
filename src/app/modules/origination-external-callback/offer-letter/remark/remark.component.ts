@@ -8,28 +8,30 @@ import * as moment from "moment";
 @Component({
   selector: "app-remark",
   templateUrl: "./remark.component.html",
-  styleUrls: ["./remark.component.scss"],
+  styleUrls: ["./remark.component.scss"]
 })
 export class RemarkComponent implements OnInit {
   currentuser: any;
   originationId: any;
-  revisiteForm: FormGroup;
+  revisiteForm!: FormGroup;
 
   constructor(
     private tokenStorageService: TokenStorageService,
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
     private route: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.originationId = JSON.parse(
+      <string>sessionStorage.getItem("originationId")
+    );
     this.currentuser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
     this.fetchOfferDetails();
   }
 
-  buildRevisiteForm(data?) {
+  buildRevisiteForm(data?: any) {
     this.revisiteForm = this.fb.group({
       id: [data?.id ?? ""],
       amount: [data?.approvedLoanAmount ?? ""],
@@ -42,7 +44,7 @@ export class RemarkComponent implements OnInit {
       requestedLoanTenureDay: [""],
       requestedLoanTenureMonth: [""],
       requestedLoanTenureYear: [""],
-      remark: [],
+      remark: []
     });
   }
 
@@ -77,7 +79,6 @@ export class RemarkComponent implements OnInit {
 
   /**Reseting the remarks data */
   resetRemark() {
-    this.revisiteForm.get("remark").reset();
-
+    this.revisiteForm.get("remark")?.reset();
   }
 }

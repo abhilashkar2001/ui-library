@@ -5,21 +5,18 @@ import { NETBANKING } from "app/modules/net-banking/modules/dashboard/net-bankin
 @Component({
   selector: "app-sub-nav-bar",
   templateUrl: "./sub-nav-bar.component.html",
-  styleUrls: ["./sub-nav-bar.component.scss"],
+  styleUrls: ["./sub-nav-bar.component.scss"]
 })
 export class SubNavBarComponent implements OnInit {
   navigationItems = NETBANKING.navigationItems;
 
-
-
   activeItem = "";
 
-  constructor(private route: Router, private cdr: ChangeDetectorRef) { }
+  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigateByUrl(url) {
+  navigateByUrl(url: any) {
     if (url?.link) {
       this.activeItem = url.label;
       this.cdr.detectChanges();

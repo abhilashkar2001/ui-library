@@ -11,7 +11,7 @@ const CORPORATE_ID = "corporateId";
 export const VALIDITY_IN_SECS = "validityInSecs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class TokenStorageService {
   private sessionStore = window.sessionStorage;
@@ -21,7 +21,7 @@ export class TokenStorageService {
     "userInfo",
     "auth-user",
     "auth-token",
-    "validityInSecs",
+    "validityInSecs"
   ];
   constructor() {}
 
@@ -37,35 +37,35 @@ export class TokenStorageService {
     this.sessionStore.setItem(TOKEN_KEY, token);
   }
 
-  public getToken(): string {
+  public getToken(): string | any {
     return this.sessionStore.getItem(TOKEN_KEY);
   }
 
-  public saveUser(user) {
+  public saveUser(user: any) {
     this.sessionStore.removeItem(USER_KEY);
     this.sessionStore.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  saveLastLoginSession(time) {
+  saveLastLoginSession(time: any) {
     this.sessionStore.setItem("LAST_LOGIN", JSON.stringify(time));
   }
 
   getLastLoginSession() {
-    let parseTime = this.sessionStore.getItem("LAST_LOGIN");
+    let parseTime: any = this.sessionStore.getItem("LAST_LOGIN");
     return JSON.parse(parseTime);
   }
 
-  saveLanguage(language) {
+  saveLanguage(language: any) {
     this.sessionStore.setItem("LANGUAGE", JSON.stringify(language));
   }
 
   getLanguage() {
-    let parseLanguage = this.sessionStore.getItem("LANGUAGE");
+    let parseLanguage: any = this.sessionStore.getItem("LANGUAGE");
     return JSON.parse(parseLanguage);
   }
 
   public getUser() {
-    return JSON.parse(this.sessionStore.getItem(USER_KEY));
+    return JSON.parse(<string>this.sessionStore.getItem(USER_KEY));
   }
 
   public isLoggedIn(): boolean {
@@ -79,13 +79,13 @@ export class TokenStorageService {
     );
   }
 
-  public saveJwtUser(user) {
+  public saveJwtUser(user: any) {
     this.sessionStore.removeItem(JWT_USER);
     this.sessionStore.setItem(JWT_USER, JSON.stringify(user));
   }
 
   getJwtUser() {
-    return JSON.parse(this.sessionStore.getItem(JWT_USER));
+    return JSON.parse(<string>this.sessionStore.getItem(JWT_USER));
   }
   getLogedCountry() {
     let userInfo = this.sessionStore.getItem("userInfo");
@@ -95,7 +95,7 @@ export class TokenStorageService {
       return null;
     }
   }
-  setValidityInSecs(validityInSecs) {
+  setValidityInSecs(validityInSecs: any) {
     this.sessionStore.removeItem(VALIDITY_IN_SECS);
     this.sessionStore.setItem(VALIDITY_IN_SECS, validityInSecs);
   }
@@ -104,34 +104,34 @@ export class TokenStorageService {
     return this.sessionStore.getItem(VALIDITY_IN_SECS);
   }
 
-  setRememberMe(rememberMe) {
+  setRememberMe(rememberMe: any) {
     this.sessionStore.removeItem(IS_REMEMBER);
     this.sessionStore.setItem(IS_REMEMBER, rememberMe);
   }
 
   getCorporateId() {
-    return JSON.parse(this.sessionStore.getItem(CORPORATE_ID));
+    return JSON.parse(<string>this.sessionStore.getItem(CORPORATE_ID));
   }
-  setCorporateId(corporateId) {
+  setCorporateId(corporateId: any) {
     this.sessionStore.removeItem(CORPORATE_ID);
     this.sessionStore.setItem(CORPORATE_ID, JSON.stringify(corporateId));
   }
 
   getRememberMe() {
-    return JSON.parse(this.sessionStore.getItem(IS_REMEMBER));
+    return JSON.parse(<string>this.sessionStore.getItem(IS_REMEMBER));
   }
 
-  saveUserOtherInfo(info) {
+  saveUserOtherInfo(info: any) {
     this.sessionStore.setItem(
       USER_INFO,
       JSON.stringify({
         ...info,
-        currencySymbol: this.currencyList[info.currency].symbol,
+        currencySymbol: this.currencyList[info.currency].symbol
       })
     );
   }
   getUserOtherInfo() {
-    return JSON.parse(this.sessionStore.getItem(USER_INFO));
+    return JSON.parse(<string>this.sessionStore.getItem(USER_INFO));
   }
 
   cleanUpSessionPartially() {

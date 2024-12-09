@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { EducationLoan } from "../education-calculator.constant";
 import { EducationCalculatorService } from "../education-calculator.service";
@@ -13,7 +6,7 @@ import { EducationCalculatorService } from "../education-calculator.service";
 @Component({
   selector: "app-expense-details",
   templateUrl: "./expense-details.component.html",
-  styleUrls: ["./expense-details.component.scss"],
+  styleUrls: ["./expense-details.component.scss"]
 })
 export class ExpenseDetailsComponent implements OnInit {
   max = 100000;
@@ -23,12 +16,12 @@ export class ExpenseDetailsComponent implements OnInit {
   minTutionFee = EducationLoan.TUTION_FEES.minTutionFee;
   maxTutionFee = EducationLoan.TUTION_FEES.maxTutionFee;
   ammountValue = 0;
-  loanForm: FormGroup;
+  loanForm!: FormGroup | any;
   @Input() fdName = "rdCalculator";
   @Output() customCalculatorValues = new EventEmitter<any>();
   amount = new FormControl("");
   email = new FormControl("");
-  thumbLabel: boolean = true;
+  thumbLabel: boolean | any = true;
   constructor(
     private fb: FormBuilder,
     private educationApi: EducationCalculatorService
@@ -43,18 +36,18 @@ export class ExpenseDetailsComponent implements OnInit {
       }
     });
   }
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.value;
     this.loanForm.get("amount").setValue(e.value);
   }
-  onCostOfLivingChange(e) {
+  onCostOfLivingChange(e: any) {
     this.loanForm.get("costOfLiving").setValue(e.value);
   }
-  onTutionFeeChange(e) {
+  onTutionFeeChange(e: any) {
     this.loanForm.get("tutionFee").setValue(e.value);
   }
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.loanForm = this.fb.group({
       amount: [data ? data?.amount : 0],
       tenureYear: "",
@@ -62,7 +55,7 @@ export class ExpenseDetailsComponent implements OnInit {
       tenureDays: "",
       interestRate: "",
       costOfLiving: [data ? data?.costOfLiving : 0],
-      tutionFee: [data ? data?.tutionFee : 0],
+      tutionFee: [data ? data?.tutionFee : 0]
     });
   }
 
@@ -75,10 +68,10 @@ export class ExpenseDetailsComponent implements OnInit {
   formatDurationLabel(value: number) {
     return `${value} Months`;
   }
-  formatFeesLabel(value) {
+  formatFeesLabel(value: any) {
     return `₹ ${value}`;
   }
-  formatCostOFLabel(value) {
+  formatCostOFLabel(value: any) {
     return `₹ ${value}`;
   }
 }

@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { ImageDialogComponent } from "app/shared/components/image-dialog/image-dialog.component";
@@ -18,16 +18,18 @@ import { environment } from "environments/environment";
 @Component({
   selector: "app-loan-summary",
   templateUrl: "./loan-summary.component.html",
-  styleUrls: ["./loan-summary.component.scss"],
+  styleUrls: ["./loan-summary.component.scss"]
 })
 export class LoanSummaryComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   stepperTitle: any;
   loanSummaryDetails: any;
-  @Input() loanSummary;
+  @Input() loanSummary: any;
   endPoints = environment.microServiceURL;
   currencySymboll = "₹";
   otherUserInfo: any;
@@ -45,32 +47,34 @@ export class LoanSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.getLoanSummary().then((resp) => {
+    this.getLoanSummary().then(() => {
       this.getOriginationMasterData();
       this.getCheckListDoc();
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.loanSummaryDetails = changes.loanSummary.currentValue;
+    this.loanSummaryDetails = changes["loanSummary"]?.currentValue;
   }
   getCheckListDoc() {
     var originationId = sessionStorage.getItem("originationId");
     this.loanService
       .getSavedChecklist(
         originationId,
-        parseInt(sessionStorage.getItem("otherDocScreenCode")),
-        parseInt(sessionStorage.getItem("currentStage"))
+        Number(sessionStorage.getItem("otherDocScreenCode")),
+        Number(sessionStorage.getItem("currentStage"))
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
-          this.checkListDoc = resp.data.filter((item) => item.docInfoModel);
+          this.checkListDoc = resp.data.filter(
+            (item: any) => item.docInfoModel
+          );
           this.cdr.detectChanges();
         }
       });
   }
 
   getLoanSummary() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       var originationId = sessionStorage.getItem("originationId");
       this.loanService
         .getLoanSummary(originationId)
@@ -101,7 +105,7 @@ export class LoanSummaryComponent implements OnInit {
   onBack() {
     this.onBackEvent.emit();
   }
-  getFileUrl(url) {
+  getFileUrl(url: any) {
     if (url.includes("https")) {
       return "assets/images/account-img1.png";
     } else {
@@ -123,14 +127,14 @@ export class LoanSummaryComponent implements OnInit {
 
   viewFiles(imageUrl: any, imageName: any): void {
     console.log(imageName);
-    const dialogRef = this.dialog.open(ImageDialogComponent, {
+    this.dialog.open(ImageDialogComponent, {
       data: {
         imageUrl,
-        imageName: imageName.fileName,
+        imageName: imageName.fileName
       },
       width: "900px",
       height: "560px",
-      panelClass: "imageViewDialog",
+      panelClass: "imageViewDialog"
     });
   }
 }

@@ -5,7 +5,7 @@
       [items]="creditList"
       bindValueKey="cardNumber"
       bindLabelKey="cardNumber"
-      [control]="unbilledForm.get('creditNumber')"
+      [control]="unbilledForm.get('creditNumber') | formcontrol"
       (selectionChange)="patchDetails($event)"
     ></app-searchable-select>
   </div>

@@ -1,10 +1,10 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "app-add-new-popup",
   templateUrl: "./add-new-popup.component.html",
-  styleUrls: ["./add-new-popup.component.scss"],
+  styleUrls: ["./add-new-popup.component.scss"]
 })
 export class AddNewPopupComponent implements OnInit {
   checkToggle: boolean = false;
@@ -15,14 +15,14 @@ export class AddNewPopupComponent implements OnInit {
       templateName: "rohit_template",
       date: "4 Aug 2024",
       applicant: "Rohit Sharma",
-      type: "Bg Issuance",
+      type: "Bg Issuance"
     },
     {
       templateName: "hardik_template",
       date: "4 Aug 2024",
       applicant: "Hardik Pandya",
-      type: "Bg Issuance",
-    },
+      type: "Bg Issuance"
+    }
   ];
   constructor(
     private dialogRef: MatDialogRef<AddNewPopupComponent>,
@@ -32,13 +32,13 @@ export class AddNewPopupComponent implements OnInit {
   ngOnInit(): void {
     this.isSaveTemplate = this.data?.isSaveTemplate;
   }
-  customerToggle(event) {
+  customerToggle(event: any) {
     this.checkToggle = event;
   }
   onSubmit() {
     console.log(this.templateName);
     this.dialogRef.close({
-      templateName: this.templateName,
+      templateName: this.templateName
     });
   }
 

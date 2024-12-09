@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
   SimpleChanges,
-  OnDestroy,
+  OnDestroy
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -15,12 +15,12 @@ import { takeUntil } from "rxjs/operators";
 @Component({
   selector: "app-staging-success-area",
   templateUrl: "./staging-success-area.component.html",
-  styleUrls: ["./staging-success-area.component.scss"],
+  styleUrls: ["./staging-success-area.component.scss"]
 })
 export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
   @Input() originationId: any;
   @Input() isComplete: any;
-  updatedResult: any[] = [];
+  updatedResult: any[] | any = [];
   interval: any;
   private destroy$ = new Subject<void>();
 
@@ -45,7 +45,7 @@ export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges | any) {
     console.log(changes);
 
     if (changes?.isComplete.currentValue == true) {
@@ -56,11 +56,13 @@ export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
   fetchDetails() {
     this.originationSVC
       .getCompletedtages(this.originationId)
-      .pipe(takeUntil(this.destroy$)) 
+      .pipe(takeUntil(this.destroy$))
       .subscribe((res: any) => {
         if (res?.data) {
           this.updatedResult = res?.data;
-          let i = res?.data.findIndex((e) => e.moduleStatus == "COMPLETED");
+          let i = res?.data.findIndex(
+            (e: any) => e.moduleStatus == "COMPLETED"
+          );
           if (i >= 0) return;
 
           this.interval = setTimeout(() => {

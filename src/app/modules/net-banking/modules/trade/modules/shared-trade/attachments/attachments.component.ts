@@ -12,23 +12,22 @@ const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
   selector: "app-attachments",
   templateUrl: "./attachments.component.html",
-  styleUrls: ["./attachments.component.scss"],
+  styleUrls: ["./attachments.component.scss"]
 })
 export class AttachmentsComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
-  attachementInfoForm: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
+  attachementInfoForm!: FormGroup;
   titles: any[] = [
     "BG Text",
     "Contract Copy",
     "Declaration",
     "Approvals",
     "Others",
-    "CQW",
+    "CQW"
   ];
-  fileNamelength: number;
+  fileNamelength: number | any;
   showUplodad: boolean = false;
 
   slectedFiles: File[] = [];
@@ -58,14 +57,14 @@ export class AttachmentsComponent implements OnInit {
       });
   }
 
-  fetchAttachments(id) {
+  fetchAttachments(id: any) {
     this.bgService
       .fetchAttachments(id)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           const data = res?.data[0]?.attachmentModel;
           this.attachMentModel.clear();
-          data?.forEach((item) => {
+          data?.forEach((item: any) => {
             this.attachMentModel.push(this.createDocArray(item));
           });
         }
@@ -73,12 +72,12 @@ export class AttachmentsComponent implements OnInit {
   }
 
   /**Buildform*/
-  buildAttachmentInfoForm(data?: any) {
+  buildAttachmentInfoForm() {
     this.attachementInfoForm = this.formBuilder.group({
-      attachMentModel: this.formBuilder.array([]),
+      attachMentModel: this.formBuilder.array([])
     });
 
-    this.attachementInfoForm.valueChanges.subscribe((res) => {
+    this.attachementInfoForm.valueChanges.subscribe(() => {
       console.log(this.attachMentModel["controls"]);
       this.updateParentModel(this.attachMentModel.value, this.checkform());
     });
@@ -87,17 +86,17 @@ export class AttachmentsComponent implements OnInit {
   checkform() {
     return this.attachementInfoForm.valid;
   }
-  public get attachMentModel(): FormArray {
+  public get attachMentModel(): FormArray | any {
     return this.attachementInfoForm?.get("attachMentModel") as FormArray;
   }
 
   //customerArray
-  createDocArray(data?) {
+  createDocArray(data?: any) {
     return this.formBuilder.group({
       title: [data ? data.title : "", ,],
       titleDescription: [data ? data.titleDescription : "", ,],
       fileUplodedArray: this.formBuilder.array([]),
-      id: [data?.id ?? null],
+      id: [data?.id ?? null]
     });
   }
 
@@ -107,26 +106,26 @@ export class AttachmentsComponent implements OnInit {
     // Initialize file length as 0 for each iteration
     this.fileNamelength = 0;
     for (let i = 0; i < this.attachMentModel["controls"]?.length; i++) {
-      this.attachementInfoForm.valueChanges.subscribe((res) => {
+      this.attachementInfoForm.valueChanges.subscribe(() => {
         this.callUpdateAttachmentModel(i);
       });
     }
   }
 
-  callUpdateAttachmentModel(i) {
+  callUpdateAttachmentModel(i: any) {
     const fileUplodedArrayControls =
       this.attachMentModel["controls"][i].get("fileUplodedArray")["controls"];
     if (fileUplodedArrayControls && fileUplodedArrayControls.length > 0) {
       const documentIdControl = fileUplodedArrayControls[0].get("documentId");
       if (documentIdControl) {
-        let attachMentModel = [];
-        this.attachMentModel.value.forEach((element) => {
+        let attachMentModel: any = [];
+        this.attachMentModel.value.forEach((element: any) => {
           if (element.fileUplodedArray?.length > 0) {
             const obj = {
               title: element.title,
               documentId: element.fileUplodedArray[0].documentId,
               titleDescription: element.titleDescription,
-              attachmentId: null,
+              attachmentId: null
             };
             attachMentModel.push(obj);
           }
@@ -135,7 +134,7 @@ export class AttachmentsComponent implements OnInit {
               {
                 applicantId: null,
                 masterId: null,
-                attachMentModel: attachMentModel,
+                attachMentModel: attachMentModel
               },
               this.checkform()
             );
@@ -150,24 +149,23 @@ export class AttachmentsComponent implements OnInit {
     this.attachMentModel.removeAt(index);
   }
 
-  public getArray(i) {
-    return this.attachMentModel.controls[i].get(
+  public getArray(i: any) {
+    return this.attachMentModel.controls[i]?.get(
       "fileUplodedArray"
     ) as FormArray;
   }
 
-  fileName(event, index) {
+  fileName(event: any, index: any) {
     this.showUplodad = true;
     this.slectedFiles = event.target.files;
     // const file: File = event.target.files[0];
-    Array.from(event?.target?.files).forEach((file: File) => {
+    Array.from(event?.target?.files).forEach((file: File | any) => {
       console.log("Uploading file:", file.name);
       this.uploadDocument(file, index);
     });
   }
 
-  uploadDocument(file, index) {
-    let lengthForPAyload;
+  uploadDocument(file: any, index: any) {
     let formData = new FormData();
     let data = {
       // documentName: "Others Document",
@@ -176,7 +174,7 @@ export class AttachmentsComponent implements OnInit {
       documentSide: index,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "Attachments",
+      verificationType: "Attachments"
     };
     formData.append("data", JSON.stringify(data));
     formData.append("file", file);
@@ -191,7 +189,7 @@ export class AttachmentsComponent implements OnInit {
           documentSide: res?.data?.documentSide,
           noOfSignatures: null,
           fileType: res?.data?.fileType,
-          fileName: res?.data?.fileName,
+          fileName: res?.data?.fileName
         };
         this.getArray(index).push(this.addFiles(form));
       }
@@ -209,21 +207,24 @@ export class AttachmentsComponent implements OnInit {
       noOfSignatures: [data ? data?.noOfSignatures : null],
       fileType: [data ? data?.fileType : ""],
       fileName: [data ? data?.fileName : ""],
-      fileUrl: [data ? `${MICROSERVICE_URL}${data?.fileUrl}` : ""],
+      fileUrl: [data ? `${MICROSERVICE_URL}${data?.fileUrl}` : ""]
     });
   }
 
   /**Check for the title dropdown should not show again */
-  titleChange(event) {
+  titleChange(event: any) {
     const selectedValue = event.value;
     let count = 0;
-    this.attachMentModel.controls.forEach((eachFormGroup, i) => {
+    this.attachMentModel.controls.forEach((eachFormGroup: any, i: any) => {
       if (selectedValue == eachFormGroup.value.title) {
         count++;
       }
       if (count > 1) {
-        this.attachMentModel.at(i).get("title").setValue("");
-        this.attachMentModel.at(i).get("title").setErrors({ titleError: true });
+        this.attachMentModel.at(i).get("title")?.setValue("");
+        this.attachMentModel
+          .at(i)
+          .get("title")
+          ?.setErrors({ titleError: true });
       }
     });
   }

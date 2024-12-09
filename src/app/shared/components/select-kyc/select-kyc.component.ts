@@ -4,13 +4,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 @Component({
   selector: "app-select-kyc",
   templateUrl: "./select-kyc.component.html",
-  styleUrls: ["./select-kyc.component.scss"],
+  styleUrls: ["./select-kyc.component.scss"]
 })
 export class SelectKycComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
   @Output() customgoBack = new EventEmitter<{}>();
-  kycForm: FormGroup;
+  kycForm!: FormGroup;
   isShowOtp: boolean = false;
   isResend: boolean = false;
   otp: string = "";
@@ -22,8 +22,8 @@ export class SelectKycComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "50px",
-      height: "50px",
-    },
+      height: "50px"
+    }
   };
   isChecked: boolean = false;
   yourOtp: any = "";
@@ -31,10 +31,10 @@ export class SelectKycComponent implements OnInit {
   getOtpBtn: boolean = true;
   documentTypeArray: any;
   staticData = {
-    DOCUMENTTYPE: [],
+    DOCUMENTTYPE: []
   };
-  displaySecond: string;
-  resendLink: boolean;
+  displaySecond: string | any;
+  resendLink: boolean | any;
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class SelectKycComponent implements OnInit {
     }, 200);
   }
 
-  onOtpChange(e) {
+  onOtpChange(e: any) {
     this.yourOtp = e.toString();
   }
 
@@ -55,19 +55,19 @@ export class SelectKycComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(12),
-        ]),
-      ],
+          Validators.maxLength(12)
+        ])
+      ]
     });
     this.customFormGroupEmit.emit(this.kycForm);
   }
 
-  verify() {
-    const payload = {
-      mobile: this.kycForm.value.verifyNationalID,
-      otp: this.yourOtp,
-    };
-  }
+  // verify() {
+  //   const payload = {
+  //     mobile: this.kycForm.value.verifyNationalID,
+  //     otp: this.yourOtp
+  //   };
+  // }
   getOtp() {
     this.isShowOtp = true;
     this.getOtpBtn = false;
@@ -99,14 +99,14 @@ export class SelectKycComponent implements OnInit {
   }
 
   isvalid() {
-    if (this.kycForm.get("verifyNationalID").valid && this.getOtpBtn) {
+    if (this.kycForm.get("verifyNationalID")?.valid && this.getOtpBtn) {
       return false;
     } else {
       return true;
     }
   }
 
-  timer(minute) {
+  timer(minute: any) {
     let seconds: number = minute * 60;
     let textSec: any = "0";
     let statSec: number = 60;

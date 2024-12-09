@@ -3,7 +3,7 @@ import {
   Input,
   OnInit,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 
 import { AduitLogDetailsComponent } from "../aduit-log-details/aduit-log-details.component";
@@ -14,15 +14,17 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-audit-log-table",
   templateUrl: "./audit-log-table.component.html",
-  styleUrls: ["./audit-log-table.component.scss"],
+  styleUrls: ["./audit-log-table.component.scss"]
 })
 export class AuditLogTableComponent implements OnInit {
-  @Input() columns;
-  @Input() dummyData;
-  @Input() isShowCancel;
-  @Input() auditInfo;
-  @ViewChild(AduitLogDetailsComponent) childComponent: AduitLogDetailsComponent;
-  auditlogHistory: any[];
+  @Input() columns: any;
+  @Input() dummyData: any;
+  @Input() isShowCancel: any;
+  @Input() auditInfo: any;
+  @ViewChild(AduitLogDetailsComponent) childComponent:
+    | AduitLogDetailsComponent
+    | any;
+  auditlogHistory: any[] | any;
   auditLogData: any[] = [];
   auditLogDataObject: any;
 
@@ -38,7 +40,7 @@ export class AuditLogTableComponent implements OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges | any) {
     if (changes.auditInfo) {
       this.auditInfo = changes.auditInfo.currentValue;
       this.auditInfo = { ...this.auditInfo, page: 1, pageSize: 2 };
@@ -47,36 +49,36 @@ export class AuditLogTableComponent implements OnInit {
 
   getSortedHistory() {
     var array = this.auditLogDataObject?.data;
-    var childArray = [];
+    var childArray: any = [];
     !!array?.data.length &&
-      array?.data?.forEach((element) => {
+      array?.data?.forEach((element: any) => {
         let obj = {
           ...element[0],
-          action: element[2] == "MOD" ? "Modified" : "New",
+          action: element[2] == "MOD" ? "Modified" : "New"
         };
         childArray.push(obj);
       });
     childArray.sort(
-      (a, b) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated)
+      (a: any, b: any) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated)
     );
 
     return childArray;
   }
 
-  customExpand(event) {
+  customExpand(event: any) {
     if (event.action === "dialog") {
-      const dialogRef = this.dialog.open(AuditLogPopupComponent, {
+      this.dialog.open(AuditLogPopupComponent, {
         data: {
           isShowCancel: true,
           dummyData: this.auditlogHistory,
           columns: this.columns,
-          auditInfo: { ...this.auditInfo, page: 1, pageSize: 5 },
+          auditInfo: { ...this.auditInfo, page: 1, pageSize: 5 }
         },
         disableClose: true,
         height: "450px",
         width: "80%",
         panelClass: "auditLogClass",
-        backdropClass: "auditLog-backdrop",
+        backdropClass: "auditLog-backdrop"
       });
     }
   }

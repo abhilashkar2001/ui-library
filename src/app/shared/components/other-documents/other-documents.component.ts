@@ -3,17 +3,16 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 import { SharedService } from "app/shared/shared.service";
@@ -26,34 +25,36 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-other-documents",
   templateUrl: "./other-documents.component.html",
-  styleUrls: ["./other-documents.component.scss"],
+  styleUrls: ["./other-documents.component.scss"]
 })
 export class OtherDocumentsComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
-  denominationArray: any[] = [];
-  createDocumentForm: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any> | any) => void | any)
+    | any;
+  denominationArray: any[] | any = [];
+  createDocumentForm!: FormGroup;
   count = 0;
   isEven: boolean = false;
-  selectedImage: File;
-  parenIndex: number;
+  selectedImage: File | any;
+  parenIndex: number | any;
   currencyArr: any;
   imageUrl: any;
   kycToggle = "kyc";
   files: any[] = [];
   documentIds = [
     {
-      docIds: [],
-    },
+      docIds: []
+    }
   ];
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() onCustomSubmit = new EventEmitter<any>();
   @Output() onBackEvent = new EventEmitter<any>();
   @Input() personalDoc: any[] = [];
   verificationType = "kyc";
-  documentControls: FormGroup;
+  documentControls!: FormGroup;
   @Input() isMasterSave = false;
   staticData = {
-    DOCUMENTNAME: [],
+    DOCUMENTNAME: []
   };
   baseUrl = environment.microServiceURL;
   documentList: any = [];
@@ -66,8 +67,8 @@ export class OtherDocumentsComponent implements OnInit {
   genericScreenInfo = {
     screenName: "Select KYC",
     staticData: {
-      DOCUMENTNAME: [],
-    },
+      DOCUMENTNAME: []
+    }
   };
   ocrProcess: boolean = true;
   constructor(
@@ -83,7 +84,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngAfterViewInit() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.personalDoc?.currentValue) {
       this.documentList = changes?.personalDoc?.currentValue;
     }
@@ -91,13 +92,15 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.documentList = this.personalDoc;
-    var originationId = parseInt(sessionStorage.getItem("originationId"));
+    var originationId = parseInt(
+      <string>sessionStorage.getItem("originationId")
+    );
     if (originationId) this.getDataFromOriginationMaster(originationId);
     // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }
 
-  getCustomerId(id) {
+  getCustomerId(id: any) {
     this.openAccountService.getCustByStageId(id).subscribe((resp) => {
       if (resp?.statusCode == 200) {
         this.documentList = resp?.data[0]?.documnentsInfo?.documents[0]?.docs;
@@ -105,7 +108,7 @@ export class OtherDocumentsComponent implements OnInit {
     });
   }
 
-  getDataFromOriginationMaster(id) {
+  getDataFromOriginationMaster(id: any) {
     this.loanService.getOriginationMaster(id).subscribe((resp: any) => {
       if (resp?.statusCode == 200 && resp?.data) {
         this.documentList =
@@ -113,7 +116,7 @@ export class OtherDocumentsComponent implements OnInit {
       }
     });
   }
-  onDocumentToggle(value) {
+  onDocumentToggle(value: any) {
     this.kycToggle = value;
     this.getGenericDetails();
   }
@@ -130,12 +133,12 @@ export class OtherDocumentsComponent implements OnInit {
         });
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
-      otherDocument: this.fb.array([]),
+      otherDocument: this.fb.array([])
     });
     if (data?.length > 0) {
-      data.forEach((item, i) => {
+      data.forEach((item: any, i: any) => {
         this.hideSelect.push(item?.docs[0].documentName);
         this.showDocument(item?.docs, i);
         this.customDocumentForm.emit(this.createDocumentForm);
@@ -152,59 +155,59 @@ export class OtherDocumentsComponent implements OnInit {
     return this.createDocumentForm.get("otherDocument") as FormArray;
   }
 
-  showDocument(data, i) {
+  showDocument(data: any, i: any) {
     this.documentControls = this.fb.group({
       documentNumber: [data ? data[0].documentNumber : "", Validators.required],
       documentType: [data ? data[0].documentName : "", Validators.required],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([]),
+      docIds: new FormControl([])
     });
     this.otherDocument().push(this.documentControls);
     if (data) {
       this.otherDocument()
-        .controls[i].get("fileInfo")
-        .setValue(this.calculateDoc(data, i));
+        .controls[i]?.get("fileInfo")
+        ?.setValue(this.calculateDoc(data, i));
     }
   }
 
-  calculateDoc(data, i) {
-    var docArr = [];
-    var docIds = [];
-    data.forEach((item, ind) => {
+  calculateDoc(data: any, i: any) {
+    var docArr: any = [];
+    var docIds: any = [];
+    data.forEach((item: any, ind: any) => {
       console.log(item, ind);
       var docItem = {
         progress: 100,
-        name: item.fileName,
+        name: item.fileName
       };
       docArr.push({
         docId: item.documentId,
         doc: docItem,
-        url: this.mapEndPoints(item.fileUrl),
+        url: this.mapEndPoints(item.fileUrl)
       });
       docIds.push(item.documentId);
     });
-    this.otherDocument().controls[i].get("docIds").setValue(docIds);
+    this.otherDocument().controls[i]?.get("docIds")?.setValue(docIds);
     return docArr;
   }
 
-  newDenom(data?): FormGroup {
+  newDenom(): FormGroup {
     return this.fb.group({
       documentNumber: ["", Validators.required],
       documentType: ["", Validators.required],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([]),
+      docIds: new FormControl([])
     });
   }
 
   getFileInfo(indx: any): any[] {
-    return this.otherDocument().controls[indx].get("fileInfo")?.value;
+    return this.otherDocument().controls[indx]?.get("fileInfo")?.value;
   }
 
   /**
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number, i, doc) {
+  deleteFile(index: number, i: any) {
     let documentId =
       this.createDocumentForm.value.otherDocument[i].docIds[index];
     this.CommonService.deleteDocument(documentId).subscribe((res) => {
@@ -213,14 +216,14 @@ export class OtherDocumentsComponent implements OnInit {
         this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
       }
     });
-    this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
+    this.otherDocument().controls[i]?.get("fileInfo")?.value.splice(index, 1);
   }
 
-  addDocument(data?) {
-    this.otherDocument().push(this.newDenom(data));
+  addDocument() {
+    this.otherDocument().push(this.newDenom());
   }
 
-  mapEndPoints(url) {
+  mapEndPoints(url: any) {
     return `${this.baseUrl}${url}`;
   }
   removeCurrency(i: number) {
@@ -228,17 +231,17 @@ export class OtherDocumentsComponent implements OnInit {
     this.hideSelect.splice(i, 1);
   }
 
-  fileBrowseHandler(event: any, indx: number) {
+  fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
-  browseFiles(i) {
+  browseFiles(i: any) {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
     inputElement.accept = "image/*";
     inputElement.addEventListener("change", (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
-        const file = target.files[0];
+        const file: any = target.files[0];
         console.log(file, "file");
         if (file.type.startsWith("image/")) {
           this.selectedImage = file;
@@ -253,7 +256,7 @@ export class OtherDocumentsComponent implements OnInit {
     inputElement.click();
     this.uploadFilesSimulator(0);
   }
-  uploadImage(file, i) {
+  uploadImage(file: any, i: any) {
     let formData = new FormData();
     let data = {
       documentName: this.createDocumentForm.value.otherDocument[i].documentType,
@@ -263,7 +266,7 @@ export class OtherDocumentsComponent implements OnInit {
       documentSide: 1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc",
+      verificationType: "kyc"
     };
 
     formData.append("data", JSON.stringify(data));
@@ -277,22 +280,22 @@ export class OtherDocumentsComponent implements OnInit {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
-          panelClass: "snackbar-error",
+          panelClass: "snackbar-error"
         });
       }
     });
   }
   updateDocId(indx: any): any[] {
-    return this.otherDocument().controls[indx].get("docIds")?.value;
+    return this.otherDocument().controls[indx]?.get("docIds")?.value;
   }
 
-  displayImage(indx, file) {
+  displayImage(indx: any, file: any) {
     const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
+    reader.onload = (event: ProgressEvent<FileReader> | any) => {
       this.imageUrl = event.target.result as string;
       this.getFileInfo(indx).push({
         url: this.imageUrl,
-        name: file.name,
+        name: file.name
       });
     };
     reader.readAsDataURL(this.selectedImage);
@@ -319,16 +322,16 @@ export class OtherDocumentsComponent implements OnInit {
     }, 1000);
   }
 
-  onConfirmEvent(event?) {
-    var docIds = [];
+  onConfirmEvent(event?: any) {
+    var docIds: any = [];
     let customerDetails: any;
-    event.documentDetails.otherDocument.forEach((element) => {
+    event.documentDetails.otherDocument.forEach((element: any) => {
       const docId = {
-        docIds: element.docIds,
+        docIds: element.docIds
       };
       docIds.push(docId);
       if (!customerDetails) {
-        element.fileInfo.forEach((item) => {
+        element.fileInfo.forEach((item: any) => {
           if (item.applicantName && item.dateOfBirth && !customerDetails) {
             customerDetails = item;
             return;
@@ -337,13 +340,13 @@ export class OtherDocumentsComponent implements OnInit {
       }
     });
     this.onCustomSubmit.emit({
-      documentDetails: event.documentDetails,
+      documentDetails: event.documentDetails
     });
 
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: this.isMasterSave,
-      customerDetails: customerDetails,
+      customerDetails: customerDetails
     });
   }
 
@@ -351,13 +354,13 @@ export class OtherDocumentsComponent implements OnInit {
     this.onBackEvent.emit();
   }
 
-  onDocumentSelection(event, index) {
+  onDocumentSelection(event: any, index: any) {
     if (!this.hideSelect.hasOwnProperty(index)) {
       if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
     } else this.hideSelect[index] = event;
   }
 
-  isDocumentOptionDisabled2(item) {
+  isDocumentOptionDisabled2(item: any) {
     return this.hideSelect.includes(item);
   }
 
@@ -370,7 +373,7 @@ export class OtherDocumentsComponent implements OnInit {
       : false;
   }
 
-  onFileDropped(event, i) {
+  onFileDropped(event: any, i: any) {
     console.log(event);
     if (event.files.type.startsWith("image/")) {
       this.selectedImage = event.files;
@@ -387,7 +390,7 @@ export class OtherDocumentsComponent implements OnInit {
    */
   checkDocValidity() {
     let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-      (docItem) => docItem.fileInfo?.length > 0
+      (docItem: any) => docItem.fileInfo?.length > 0
     );
     return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
   }
@@ -397,7 +400,7 @@ export class OtherDocumentsComponent implements OnInit {
    * @param documentTypeItem
    * @returns
    */
-  documentTypeTrackByFun(documentTypeItem) {
+  documentTypeTrackByFun(documentTypeItem: any) {
     return documentTypeItem;
   }
 }

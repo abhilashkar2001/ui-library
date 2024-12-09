@@ -1,34 +1,31 @@
-import { filter } from "rxjs/operators";
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { environment } from "environments/environment";
-import { Location } from "@angular/common";
 import * as moment from "moment";
 
 @Component({
   selector: "app-loan-account-type",
   templateUrl: "./loan-account-type.component.html",
-  styleUrls: ["./loan-account-type.component.scss"],
+  styleUrls: ["./loan-account-type.component.scss"]
 })
 export class LoanAccountTypeComponent implements OnInit {
   loanType: string = "Personal";
-  selectedCalculator: boolean;
-  basisClass: string;
+  selectedCalculator: boolean | any;
+  basisClass: string | any;
   subLoanList: any = [];
   isShowCalculator: boolean = false;
   endPoints = environment.microServiceURL;
   selectedLoan: any;
   basisId: any;
-  calculatorInfo: {};
+  calculatorInfo: any | {};
 
   constructor(
     private router: Router,
     private commonService: CommonService,
     private loanService: LoanService,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
     private el: ElementRef
   ) {
     //   this.basisClass = this.activatedRoute.snapshot["queryParams"]["basisClass"];
@@ -50,7 +47,7 @@ export class LoanAccountTypeComponent implements OnInit {
       .getSubLoanTypes(this.basisClass)
       .subscribe((response: any) => {
         this.subLoanList = response.data.filter(
-          (item) => !!item?.productDetails
+          (item: any) => !!item?.productDetails
         );
       });
   }
@@ -66,7 +63,7 @@ export class LoanAccountTypeComponent implements OnInit {
   loanCalculatorsData(event: any) {
     this.commonService.loanCalculatorsDataSave(event);
   }
-  getFileUrl(url) {
+  getFileUrl(url: any) {
     if (url.includes("https")) {
       return "assets/images/normal_loan.svg";
     } else {
@@ -74,14 +71,14 @@ export class LoanAccountTypeComponent implements OnInit {
     }
   }
 
-  customApply(event) {
+  customApply(event: any) {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
       this.isShowCalculator = event.isShowCalculator;
       this.calculatorInfo = {
         interestRate: parseInt(event.selectedLoan?.interestRate ?? "0"),
-        productCode: event.selectedLoan.productCode,
+        productCode: event.selectedLoan.productCode
       };
       this.basisClass = event.subClass;
       this.basisId = event.selectedLoan.basisId;
@@ -102,19 +99,19 @@ export class LoanAccountTypeComponent implements OnInit {
     }
   }
 
-  goForCalculator(subAccount) {
+  goForCalculator(subAccount: any) {
     this.isShowCalculator = true;
     this.selectedLoan = subAccount;
     console.log(this.selectedLoan);
     const payload = JSON.stringify({
       processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
       basisName: this.selectedLoan?.productDetails[0].basisName,
-      basisId: this.selectedLoan?.productDetails[0].basisId,
+      basisId: this.selectedLoan?.productDetails[0].basisId
     });
 
     sessionStorage.setItem("loanBasisDetails", payload);
   }
-  customCalculatorValues(event) {
+  customCalculatorValues(event: any) {
     this.selectedLoan = event;
     let emiStartDate = new Date();
     emiStartDate.setDate(emiStartDate.getDate() + 1);
@@ -126,7 +123,7 @@ export class LoanAccountTypeComponent implements OnInit {
       totalPayableAmount: parseFloat(this.selectedLoan.totalPayableAmount),
       disbursementType: "",
       accountNumber: null,
-      emiStartDate: moment(emiStartDate).format(),
+      emiStartDate: moment(emiStartDate).format()
       // originationId: 9821,
     };
     this.loanService.submitLoanDetail(payload).subscribe((resp) => {
@@ -143,7 +140,7 @@ export class LoanAccountTypeComponent implements OnInit {
       }
     });
   }
-  showCalculator(event) {
+  showCalculator(event: any) {
     console.log(event);
     // this.isShowCalculator = event;
   }

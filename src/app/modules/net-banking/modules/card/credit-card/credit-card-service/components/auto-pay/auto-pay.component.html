@@ -7,7 +7,7 @@
           <span class="light-blue-title">{{ "Pay From" | translate }}</span>
           <div fxLayout="column">
             <app-ic-custom-pay-from
-              [control]="autoPayForm.get('payFromAccountNo')"
+              [control]="autoPayForm.get('payFromAccountNo') | formcontrol"
               [inputLabel]="'Account No' | translate"
               bindValueKey="accountNo"
               bindLabelKey="accountNo"
@@ -20,7 +20,7 @@
           <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
           <div fxLayout="row">
             <app-ic-custom-pay-from
-              [control]="autoPayForm.get('creditAccount')"
+              [control]="autoPayForm.get('creditAccount') | formcontrol"
               [inputLabel]="'Card No' | translate"
               bindValueKey="cardNumber"
               bindLabelKey="cardNumber"
@@ -45,7 +45,7 @@
       <div class="row" fxFlex="25">
         <app-ic-radio-button
           [optiions]="autoPayOptions"
-          [control]="autoPayForm.get('autoPay')"
+          [control]="autoPayForm.get('autoPay') | formcontrol"
           [displayLabel]="'Auto Pay' | translate"
           layout="column"
         >
@@ -54,7 +54,7 @@
       <div class="row" fxFlex="25">
         <app-ic-radio-button
           [optiions]="amountDueOptions"
-          [control]="autoPayForm.get('amountDue')"
+          [control]="autoPayForm.get('amountDue') | formcontrol"
           [displayLabel]="'Amount to be paid' | translate"
           layout="column"
         >
@@ -63,7 +63,7 @@
       <div
         fxFlex="25"
         class="input_wrapper"
-        *ngIf="autoPayForm.get('amountDue').value === 'minimumDue'"
+        *ngIf="autoPayForm.get('amountDue')?.value === 'minimumDue'"
       >
         <app-ic-custom-amount-input
           [inputLabel]="'Amount'"

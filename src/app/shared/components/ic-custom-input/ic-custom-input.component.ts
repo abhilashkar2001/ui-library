@@ -7,21 +7,21 @@ import { DomSanitizer } from "@angular/platform-browser";
 @Component({
   selector: "app-ic-custom-input",
   templateUrl: "./ic-custom-input.component.html",
-  styleUrls: ["./ic-custom-input.component.scss"],
+  styleUrls: ["./ic-custom-input.component.scss"]
 })
 export class IcCustomInputComponent implements OnInit {
-  @Input("control") control: AbstractControl;
-  @Input("isdControl") isdControl: AbstractControl;
-  @Input("inputLabel") inputLabel: string;
-  @Input("matSuffix") matSuffix: string;
-  @Input("customClass") customClass: string;
-  @Input("hintText") hintText: string;
-  @Input("readonly") readonly: boolean;
-  @Input("isdCode") isdCode;
+  @Input("control") control: AbstractControl | any;
+  @Input("isdControl") isdControl: AbstractControl | any;
+  @Input("inputLabel") inputLabel: string | any;
+  @Input("matSuffix") matSuffix: string | any;
+  @Input("customClass") customClass: string | any;
+  @Input("hintText") hintText: string | any;
+  @Input("readonly") readonly: boolean | any;
+  @Input("isdCode") isdCode: any;
   @Input("country") country: any;
-  currencySymbol: string;
-  @Input("showInfoIcon") showInfoIcon: boolean;
-  @Input("hide") hide: boolean;
+  currencySymbol: string | any;
+  @Input("showInfoIcon") showInfoIcon: boolean | any;
+  @Input("hide") hide: boolean | any;
   @Input("skipLabel") skipLabel: boolean = false;
   @Output()
   bankSearch = new EventEmitter<string>();

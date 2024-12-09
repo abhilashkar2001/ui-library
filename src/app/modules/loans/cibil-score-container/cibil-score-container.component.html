@@ -5,7 +5,7 @@
   &nbsp;
   <app-cibil-score-result
     *ngIf="showCibilScoreResult"
-    (onBackEvent)="onBackCIBILScoreResult($event)"
+    (onBackEvent)="onBackCIBILScoreResult()"
     (onCibilConfirmEvent)="onConfirmFromCibilScoreResult()"
   ></app-cibil-score-result>
   <div *ngIf="!showCibilScoreResult">

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 
 @Component({
   selector: "app-card-select-kyc",
   templateUrl: "./card-select-kyc.component.html",
-  styleUrls: ["./card-select-kyc.component.scss"],
+  styleUrls: ["./card-select-kyc.component.scss"]
 })
 export class CardSelectKycComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
@@ -20,12 +20,12 @@ export class CardSelectKycComponent implements OnInit {
     private commonService: CommonService
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
-    commonService.isUserUsingDifferentMobile(true);
+    this.commonService.isUserUsingDifferentMobile(true);
   }
 
   ngOnInit(): void {}
 
-  onVerify(event: any) {
+  onVerify() {
     this.onConfirmEvent.emit();
   }
 
@@ -40,5 +40,5 @@ export class CardSelectKycComponent implements OnInit {
     this.onBackEvent.emit();
   }
 
-  onKycSubmit(event: any) {}
+  onKycSubmit() {}
 }

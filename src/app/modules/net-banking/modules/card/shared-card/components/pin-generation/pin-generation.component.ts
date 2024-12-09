@@ -12,15 +12,15 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-pin-generation",
   templateUrl: "./pin-generation.component.html",
-  styleUrls: ["./pin-generation.component.scss"],
+  styleUrls: ["./pin-generation.component.scss"]
 })
 export class PinGenerationComponent implements OnInit {
-  pinGenerationForm: FormGroup;
+  pinGenerationForm!: FormGroup;
   listOfAccounts: any[] = [];
   customerId: any;
   accountDetails: any;
   otp: boolean = false;
-  title: string;
+  title: string | any;
   typeofCard: any;
 
   constructor(
@@ -32,9 +32,12 @@ export class PinGenerationComponent implements OnInit {
     private router: Router
   ) {
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.updateItemsBasedOnUrl(event.url);
+      .pipe(
+        filter((event) => event instanceof NavigationEnd) // Regular filter
+      )
+      .subscribe((event) => {
+        const navEndEvent = event as NavigationEnd; // Type assertion
+        this.updateItemsBasedOnUrl(navEndEvent.url);
       });
   }
 
@@ -49,7 +52,7 @@ export class PinGenerationComponent implements OnInit {
     this.pinGenerationForm = this.fb.group({
       selectCard: [""],
       cvv: [""],
-      otp: [""],
+      otp: [""]
     });
   }
 
@@ -83,7 +86,7 @@ export class PinGenerationComponent implements OnInit {
     this.openDialog(GeneratePinComponent, {
       width: "500px",
       disableClose: true,
-      panelClass: "custom-dialog-class", // Pass form values
+      panelClass: "custom-dialog-class" // Pass form values
     }).subscribe((result) => {
       if (result) {
         this.setPin(result.pin);
@@ -99,8 +102,8 @@ export class PinGenerationComponent implements OnInit {
     if (this.accountDetails) {
       this.pinGenerationForm
         ?.get("selectCard")
-        .patchValue(this.accountDetails?.cardNumber);
-      this.pinGenerationForm?.get("cvv").patchValue(this.accountDetails?.cvv);
+        ?.patchValue(this.accountDetails?.cardNumber);
+      this.pinGenerationForm?.get("cvv")?.patchValue(this.accountDetails?.cvv);
       this.typeofCard = this.accountDetails?.typeOfCard;
     }
   }
@@ -114,14 +117,14 @@ export class PinGenerationComponent implements OnInit {
             auth: {
               type: "Success",
               status: "Created",
-              msg: "Your New ATM PIN is set",
-            },
+              msg: "Your New ATM PIN is set"
+            }
           },
           disableClose: true,
           panelClass: "popup-dialog-class",
           backdropClass: "bdrop",
-          width: "25%",
-        }).subscribe((res) => {
+          width: "25%"
+        }).subscribe(() => {
           this.router.navigate(["/user/card/credit-card/dashboard"]);
         });
       }

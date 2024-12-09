@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
-import { Form, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { LoanService } from "app/shared/services/loan/loan.service";
@@ -20,20 +20,20 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-loan-flow",
   templateUrl: "./loan-flow.component.html",
-  styleUrls: ["./loan-flow.component.scss"],
+  styleUrls: ["./loan-flow.component.scss"]
 })
 export class LoanFlowComponent implements OnInit {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  createLoan: FormGroup;
-  customVerifyNumber: FormGroup;
-  cibilScoreForm: FormGroup;
-  documentForm: FormGroup;
-  kycDetailsForm: FormGroup;
-  customPersonalDetails: FormGroup;
-  @ViewChild("stepper") stepper;
+  createLoan!: FormGroup;
+  customVerifyNumber!: FormGroup;
+  cibilScoreForm!: FormGroup;
+  documentForm!: FormGroup;
+  kycDetailsForm!: FormGroup;
+  customPersonalDetails!: FormGroup;
+  @ViewChild("stepper") stepper: any;
   selectedStep: number = 0;
   isLinear = true;
-  cuurrentStep: string;
+  cuurrentStep: string | any;
   screenList: any = [];
   screenTitle = "Personal Loan";
   originationId: any;
@@ -43,14 +43,14 @@ export class LoanFlowComponent implements OnInit {
   originalScreenList: any = [];
   createLoanAccountNumber: any;
   customerInfo: any;
-  docIds: any[];
+  docIds: any[] | any;
   originationModel: any;
   basisId: any;
   productDetails: any;
-  processDetails: { processCycleCode: string; processStageId: number };
+  processDetails: { processCycleCode: string; processStageId: number } | any;
   personalDetails: any = [];
   staticData = {
-    OWNERSHIP: [],
+    OWNERSHIP: []
   };
   currentUser: any;
   otherUserInfo: any;
@@ -58,14 +58,16 @@ export class LoanFlowComponent implements OnInit {
   isLoading: boolean = false;
   dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
   @ViewChild("container") container: any;
-  @ViewChild(AppHostDirective, { static: true }) appAppHost: AppHostDirective;
+  @ViewChild(AppHostDirective, { static: true }) appAppHost:
+    | AppHostDirective
+    | any;
   componentRef: any;
   currentComponentInfo: any;
   mobileVerifyInfo = {
     basisName: "",
     productDuplicationKey: "Loan",
     applicationType: "loan application",
-    individual: false,
+    individual: false
   };
   personalDoc: any[] = [];
   loanAccountInfo: any;
@@ -75,7 +77,7 @@ export class LoanFlowComponent implements OnInit {
   disbursementDetails: any;
   nationalIdDocumentList: any[] = [];
   view: any;
-  noOfDirectors: number;
+  noOfDirectors: number | any;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -96,7 +98,7 @@ export class LoanFlowComponent implements OnInit {
    *  & find componentName and load the component.
    * @param screenName current scrrenName.
    */
-  showComponent(screenName) {
+  showComponent(screenName: any) {
     if (this.view) this.view.clear();
     if (
       this.dynamicScreen.some((element) =>
@@ -130,36 +132,38 @@ export class LoanFlowComponent implements OnInit {
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
 
-            this.componentRef.instance?.onCustomSubmit.subscribe((data) => {
-              if (data?.value?.accountNumber)
-                this.createLoanAccountNumber = data.value.accountNumber;
+            this.componentRef.instance?.onCustomSubmit.subscribe(
+              (data: any) => {
+                if (data?.value?.accountNumber)
+                  this.createLoanAccountNumber = data.value.accountNumber;
 
-              if (data?.personalInfo) {
-                this.personalDetails = data.personalInfo;
-                this.personalDetails.forEach((item) => {
-                  if (item.primaryCustomer)
-                    this.personalDoc = item?.documentInfo;
-                });
-              }
+                if (data?.personalInfo) {
+                  this.personalDetails = data.personalInfo;
+                  this.personalDetails.forEach((item: any) => {
+                    if (item.primaryCustomer)
+                      this.personalDoc = item?.documentInfo;
+                  });
+                }
 
-              if (
-                screenName.toLowerCase().includes("personal") ||
-                screenName.toLowerCase().includes("director")
-              ) {
-                this.customSavePersonal(data);
-              } else if (screenName.toLowerCase().includes("company")) {
-                this.customSaveCompany(data);
-              } else if (screenName.toLowerCase().includes("signature")) {
-                this.next();
+                if (
+                  screenName.toLowerCase().includes("personal") ||
+                  screenName.toLowerCase().includes("director")
+                ) {
+                  this.customSavePersonal(data);
+                } else if (screenName.toLowerCase().includes("company")) {
+                  this.customSaveCompany(data);
+                } else if (screenName.toLowerCase().includes("signature")) {
+                  this.next();
+                }
               }
-            });
+            );
             if (this.componentRef.instance?.onMobileExitEvent)
-              this.componentRef.instance?.onMobileExitEvent.subscribe((_) => {
+              this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
                 this.router.navigate(["/loan/landing"]);
               });
 
             if (this.componentRef.instance?.onBackEvent)
-              this.componentRef.instance?.onBackEvent.subscribe((_) => {
+              this.componentRef.instance?.onBackEvent.subscribe(() => {
                 this.goBack();
               });
           });
@@ -169,10 +173,10 @@ export class LoanFlowComponent implements OnInit {
       const dialogRef = this.dialog.open(ReusableAlertPopupComponent, {
         data: {
           msg: `${screenName} stage is not avilable, please move to next stage`,
-          isNextButton: true,
+          isNextButton: true
         },
         width: "40%",
-        panelClass: "popup-dialog-class",
+        panelClass: "popup-dialog-class"
       });
       dialogRef.afterClosed().subscribe((_) => {
         this.next();
@@ -185,43 +189,49 @@ export class LoanFlowComponent implements OnInit {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
-    const isLoan = value?.isForLoan ?? true;
+    const isLoan = value?.["isForLoan"] ?? true;
     // if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
-    if (value?.disbursementDetails)
-      this.disbursementDetails = value.disbursementDetails;
-    if (value.kycDoc) {
-      this.kycDoc = value.kycDoc;
+    if (value?.["disbursementDetails"])
+      this.disbursementDetails = value["disbursementDetails"];
+    if (value["kycDoc"]) {
+      this.kycDoc = value["kycDoc"];
       console.log(value, "........");
-      this.docCustomerDetails = value.customerDetails;
+      this.docCustomerDetails = value["customerDetails"];
     }
     let originationModel = {
-      ...this.factorizedPayload(),
+      ...this.factorizedPayload()
     };
     let customerInfo = this.modelFactoryForCustomer(
       this.personalDetails,
-      value?.kycDoc ?? null
+      value?.["kycDoc"] ?? null
     );
-    if (value.updateMasterSave && isLoan && this.personalDetails?.length > 0) {
-      if (value?.isCheckListDoc) {
+    if (
+      value["updateMasterSave"] &&
+      isLoan &&
+      this.personalDetails?.length > 0
+    ) {
+      if (value?.["isCheckListDoc"]) {
         const payload = {
-          documentIds: value?.otherLoanDoc,
+          documentIds: value?.["otherLoanDoc"],
           originationId:
             this.originationModel?.originationId ??
             sessionStorage.getItem("originationId"),
-          screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+          screenCode: parseInt(
+            <string>sessionStorage.getItem("currentScreenCode")
+          )
         };
         this.loanApi.saveChecklist(payload).subscribe((resp) => {
           if (resp?.statusCode === 201) {
             sessionStorage.setItem(
               "otherDocScreenCode",
-              sessionStorage.getItem("currentScreenCode")
+              <string>sessionStorage.getItem("currentScreenCode")
             );
-            this.calculateDisbursementPayload(value.loanDisbursement);
+            this.calculateDisbursementPayload(value["loanDisbursement"]);
             this.loanApi
               .submitLoanDetail(
-                this.calculateDisbursementPayload(value.loanDisbursement)
+                this.calculateDisbursementPayload(value["loanDisbursement"])
               )
-              .subscribe((resp) => {});
+              .subscribe(() => {});
 
             this.next();
           }
@@ -229,7 +239,7 @@ export class LoanFlowComponent implements OnInit {
       } else
         this.getMasterSave({
           originationModel: originationModel,
-          customerInfo: customerInfo,
+          customerInfo: customerInfo
         });
     } else {
       if (!isLoan) return;
@@ -237,14 +247,14 @@ export class LoanFlowComponent implements OnInit {
     }
   };
 
-  calculateDisbursementPayload(data) {
+  calculateDisbursementPayload(data: any) {
     const store = this.tokenStore.getUser();
     var payload: any = {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
       bankCode: store.bankCode,
       branchCode: store.branchCode,
-      originationId: parseInt(sessionStorage.getItem("originationId")),
+      originationId: parseInt(<string>sessionStorage.getItem("originationId"))
     };
     if (
       data.disbursementTypeValue.includes(
@@ -263,7 +273,7 @@ export class LoanFlowComponent implements OnInit {
     payload.disbursementAccInfo = {
       accountNo: data.accountNumber,
       bankCode: store.bankCode,
-      branchCode: store.branchCode,
+      branchCode: store.branchCode
     };
     return payload;
   }
@@ -274,24 +284,26 @@ export class LoanFlowComponent implements OnInit {
     this.basisId = this.route.snapshot.params["id"];
     var sessionStep = sessionStorage.getItem("loanstep");
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
-    this.getAllLoanStep().then((resp) => {
+    this.getAllLoanStep().then(() => {
       this.getProductDetails();
       var originationId = sessionStorage.getItem("originationId");
-      var customerId = JSON.parse(sessionStorage.getItem("userCustomerId"));
-      var customerStageId = JSON.parse(
-        sessionStorage.getItem("customerStageIds")
+      var customerId: any = JSON.parse(
+        <string>sessionStorage.getItem("userCustomerId")
       );
-      var id = parseInt(sessionStorage.getItem("loanDisburseId"));
+      var customerStageId: any = JSON.parse(
+        <string>sessionStorage.getItem("customerStageIds")
+      );
+      var id = parseInt(<string>sessionStorage.getItem("loanDisburseId"));
       if (id) this.getLoanById(id);
       if (originationId) this.getOriginationMaster(parseInt(originationId));
       else if (customerStageId) {
-        this.getCustByStageId(customerStageId);
+        this.getCustByStageId();
       } else if (customerId) {
-        this.getCustomerById(customerId);
+        this.getCustomerById();
       }
     });
   }
-  getLoanById(id) {
+  getLoanById(id: any) {
     this.loanApi.getLoanById(id).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.disbursementDetails = resp.data;
@@ -299,7 +311,7 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
-  getCustomerById(customerId) {
+  getCustomerById() {
     setTimeout(() => {
       this.fetchCustomersbyId().then((resp) => {
         this.personalDetails = resp;
@@ -308,7 +320,7 @@ export class LoanFlowComponent implements OnInit {
     }, 500);
   }
 
-  getCustByStageId(customerStageId) {
+  getCustByStageId() {
     setTimeout(() => {
       this.fetchCustomers().then((resp) => {
         this.personalDetails = resp;
@@ -327,14 +339,14 @@ export class LoanFlowComponent implements OnInit {
         this.mobileVerifyInfo = {
           ...this.mobileVerifyInfo,
           basisName: this.productDetails.basisName,
-          individual: resp?.data[0]?.individual,
+          individual: resp?.data[0]?.individual
         };
         this.cdr.detectChanges();
       }
     });
   }
 
-  getOriginationMaster(id) {
+  getOriginationMaster(id: any) {
     this.loanApi.getOriginationMaster(parseInt(id)).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.customerInfo = resp.data[0]?.customerInfo;
@@ -348,8 +360,8 @@ export class LoanFlowComponent implements OnInit {
       }
     });
   }
-  updateNationalId(resp) {
-    resp.data[0].customerInfo.forEach((customer) => {
+  updateNationalId(resp: any) {
+    resp.data[0].customerInfo.forEach((customer: any) => {
       if (customer?.primaryCustomer) {
         if (customer?.documnentsInfo) {
           this.nationalIdDocumentList = customer?.documnentsInfo?.documents;
@@ -364,7 +376,7 @@ export class LoanFlowComponent implements OnInit {
   getAllLoanStep() {
     return new Promise((resolve) => {
       const sessionData = JSON.parse(
-        sessionStorage.getItem("loanBasisDetails")
+        <string>sessionStorage.getItem("loanBasisDetails")
       );
       this.screenTitle = sessionData.basisName;
       this.screenTitle = sessionData.basisName;
@@ -373,7 +385,7 @@ export class LoanFlowComponent implements OnInit {
         .subscribe((resp) => {
           this.processDetails = {
             processCycleCode: resp.data.processCycleCode,
-            processStageId: resp.data.processStageList[0]?.id,
+            processStageId: resp.data.processStageList[0]?.id
           };
           sessionStorage.setItem(
             "currentStage",
@@ -385,9 +397,9 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
-  getProcessStages(id) {
+  getProcessStages(id: any) {
     this.openAccountService.getProcessStages(id).subscribe((resp) => {
-      this.screenList = resp.data.screens.sort((s1, s2) => {
+      this.screenList = resp.data.screens.sort((s1: any, s2: any) => {
         return s1.sequence - s2.sequence;
       });
       this.factory();
@@ -400,17 +412,17 @@ export class LoanFlowComponent implements OnInit {
    * @param docIds is a document model
    * @returns payload of customerInfo.
    */
-  modelFactoryForCustomer(customerInfo, docIds) {
+  modelFactoryForCustomer(customerInfo: any, docIds: any) {
     let custResp: any =
       customerInfo?.length > 1 ? customerInfo : [...customerInfo];
-    custResp.forEach((item, i) => {
+    custResp.forEach((item: any, i: any) => {
       custResp[i].documentId = [];
       custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
       if (this.noOfDirectors)
         custResp[i].corpDirectorModel = {
           sharePercentage: 100 / this.noOfDirectors,
-          isManagingDirector: custResp[i]?.primaryCustomer,
+          isManagingDirector: custResp[i]?.primaryCustomer
         };
       delete custResp[i]?.biometricInfo;
       delete custResp[i]?.documnentsInfo;
@@ -426,10 +438,16 @@ export class LoanFlowComponent implements OnInit {
    * @returns a payload object for the orgination model.
    */
   factorizedPayload() {
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
-    const originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    const sessionData: any = JSON.parse(
+      <string>sessionStorage.getItem("loanBasisDetails")
+    );
+    const loanData = JSON.parse(<string>sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(
+      <string>sessionStorage.getItem("ownershipId")
+    );
+    const originationId = JSON.parse(
+      <string>sessionStorage.getItem("originationId")
+    );
     if (loanData) {
       let payload = {
         originationId:
@@ -449,13 +467,13 @@ export class LoanFlowComponent implements OnInit {
         branchId: this.currentUser.branchId,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
-        department: this.currentUser?.department,
+        department: this.currentUser?.department
       };
       return payload;
     } else return;
   }
 
-  stepperSelectionChange(event) {
+  stepperSelectionChange(event: any) {
     const lastStep = this.selectedStep;
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
@@ -490,17 +508,17 @@ export class LoanFlowComponent implements OnInit {
     }
   }
 
-  getCustInfoPayload(event, prefixValue) {
-    return new Promise((resolve, reject) => {
-      var customer = [];
-      event.forEach((element, i) => {
+  getCustInfoPayload(event: any, prefixValue: any) {
+    return new Promise((resolve) => {
+      var customer: any = [];
+      event.forEach((element: any, i: any) => {
         if (element.primaryCustomer) {
           sessionStorage.setItem(
             "customerData",
             JSON.stringify({
               name: `${prefixValue}. ${element.firstName} ${element.lastName}`,
               cifNumber:
-                element.kycStatus === "APPROVED" ? element.customerNo : "",
+                element.kycStatus === "APPROVED" ? element.customerNo : ""
             })
           );
         }
@@ -509,13 +527,13 @@ export class LoanFlowComponent implements OnInit {
         if (element?.documentId) {
           docIds.push(element.documentId);
         } else {
-          element?.documnentsInfo?.documents.forEach((item) => {
-            let docItemId = [];
-            item.docs.forEach((docItem) => {
+          element?.documnentsInfo?.documents.forEach((item: any) => {
+            let docItemId: any = [];
+            item.docs.forEach((docItem: any) => {
               docItemId.push(docItem.documentId);
             });
             const docId = {
-              docIds: docItemId,
+              docIds: docItemId
             };
             docIds.push(docId);
           });
@@ -526,7 +544,7 @@ export class LoanFlowComponent implements OnInit {
           middleName: "",
           dateOfBirth: moment(element.dateOfBirth).format(),
           documentId: [this.kycDoc[i]],
-          biometricId: [this.sessionService.getItem("biometricId")],
+          biometricId: [this.sessionService.getItem("biometricId")]
         };
         customer.push(cus);
       });
@@ -535,9 +553,13 @@ export class LoanFlowComponent implements OnInit {
   }
 
   getOriginationModelForLoan() {
-    const sessionData = JSON.parse(sessionStorage.getItem("loanBasisDetails"));
-    const loanData = JSON.parse(sessionStorage.getItem("loanAmmount"));
-    const ownershipId = JSON.parse(sessionStorage.getItem("ownershipId"));
+    const sessionData = JSON.parse(
+      <string>sessionStorage.getItem("loanBasisDetails")
+    );
+    const loanData = JSON.parse(<string>sessionStorage.getItem("loanAmmount"));
+    const ownershipId = JSON.parse(
+      <string>sessionStorage.getItem("ownershipId")
+    );
     return {
       originationId:
         this.originationModel?.originationId ??
@@ -558,12 +580,12 @@ export class LoanFlowComponent implements OnInit {
       branchId: this.currentUser.branchId,
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
-      department: this.currentUser?.department,
+      department: this.currentUser?.department
     };
   }
 
   // company details save
-  customSaveCompany(data) {
+  customSaveCompany(data: any) {
     let payload = data?.companyDetails.value;
     payload.originationModel = this.getOriginationModelForLoan();
     this.openAccountService
@@ -584,10 +606,10 @@ export class LoanFlowComponent implements OnInit {
   }
 
   // on Personal details saved
-  customSavePersonal(event) {
+  customSavePersonal(event: any) {
     console.log(event);
     const payload = event.personalDetails.value.customer;
-    payload.forEach((item) => {
+    payload.forEach((item: any) => {
       delete item.prefixValue;
       item.customerId = null;
     });
@@ -598,7 +620,7 @@ export class LoanFlowComponent implements OnInit {
     ).then((data) => {
       const payloadData = {
         originationModel: { ...this.factorizedPayload() },
-        customerInfo: data,
+        customerInfo: data
       };
       this.openAccountService
         .saveCustomerInfo(payloadData)
@@ -608,8 +630,8 @@ export class LoanFlowComponent implements OnInit {
             this.personalDetails = resp.data?.customerInfo;
             this.loanAccountInfo = resp.data?.loanAccountInfo;
             this.originationValue$ = resp.data;
-            let customId = [];
-            resp.data?.customerInfo?.forEach(async (item, i) => {
+            let customId: any = [];
+            resp.data?.customerInfo?.forEach(async (item: any) => {
               customId.push(item.customerId || item?.customerStagingId);
               if (item.primaryCustomer)
                 sessionStorage.setItem(
@@ -621,7 +643,7 @@ export class LoanFlowComponent implements OnInit {
               duration: 4000,
               verticalPosition: "top",
               horizontalPosition: "right",
-              panelClass: "snackbar-error",
+              panelClass: "snackbar-error"
             });
             sessionStorage.setItem(
               "customerStageIds",
@@ -634,12 +656,10 @@ export class LoanFlowComponent implements OnInit {
             );
             sessionStorage.removeItem("loanDoc");
             if (!this.mobileVerifyInfo.individual) {
-              const formdataMap: Map<
-                string,
-                Record<string, any>
-              > = this.dataService.getChecklistDocument();
+              const formdataMap: Map<string, Record<string, any>> | any =
+                this.dataService.getChecklistDocument();
               const docIds: number[] = [];
-              formdataMap.forEach(async (item) => {
+              formdataMap.forEach(async (item: any) => {
                 docIds.push(item?.documentId);
                 let formData = new FormData();
                 formData.append("fileName", item?.file);
@@ -662,8 +682,8 @@ export class LoanFlowComponent implements OnInit {
                     this.originationModel?.originationId ??
                     sessionStorage.getItem("originationId"),
                   screenCode: parseInt(
-                    sessionStorage.getItem("otherDocScreenCode")
-                  ),
+                    <string>sessionStorage?.getItem("otherDocScreenCode")
+                  )
                 };
                 await this.loanApi.saveChecklist(payload).toPromise();
                 console.log(this.dataService.getDisbursementDetails());
@@ -685,22 +705,24 @@ export class LoanFlowComponent implements OnInit {
   }
 
   updateWebDisbursment() {
-    const originationId = sessionStorage.getItem("originationId");
+    const originationId: any = sessionStorage.getItem("originationId");
     var mapPayload = {
-      id: parseInt(sessionStorage.getItem("loanDisburseId")),
-      originationId: parseInt(originationId),
+      id: parseInt(<string>sessionStorage.getItem("loanDisburseId")),
+      originationId: parseInt(originationId)
     };
 
-    this.loanApi.updateOrigination(mapPayload).subscribe((data) => {
+    this.loanApi.updateOrigination(mapPayload).subscribe(() => {
       this.next();
     });
   }
 
   fetchCustomersbyId() {
-    const customIds = JSON.parse(sessionStorage.getItem("userCustomerId"));
-    return new Promise((resolve, reject) => {
-      const promises = customIds.map((id) => {
-        return new Promise((innerResolve, innerReject) => {
+    const customIds = JSON.parse(
+      <string>sessionStorage.getItem("userCustomerId")
+    );
+    return new Promise((resolve) => {
+      const promises = customIds.map((id: any) => {
+        return new Promise((innerResolve) => {
           this.openAccountService.getCustomerById(id).subscribe((resp) => {
             if (resp?.statusCode === 200)
               innerResolve({
@@ -711,9 +733,9 @@ export class LoanFlowComponent implements OnInit {
                   ...resp.data[0].contact,
                   contactId: null,
                   address: [
-                    { ...resp.data[0].contact.address[0], addressId: null },
-                  ],
-                },
+                    { ...resp.data[0].contact.address[0], addressId: null }
+                  ]
+                }
               });
             else innerResolve(null); // or handle rejection if needed
           });
@@ -729,10 +751,12 @@ export class LoanFlowComponent implements OnInit {
   }
 
   fetchCustomers() {
-    const customIds = JSON.parse(sessionStorage.getItem("customerStageIds"));
-    return new Promise((resolve, reject) => {
-      const promises = customIds.map((id) => {
-        return new Promise((innerResolve, innerReject) => {
+    const customIds = JSON.parse(
+      <string>sessionStorage.getItem("customerStageIds")
+    );
+    return new Promise((resolve) => {
+      const promises = customIds.map((id: any) => {
+        return new Promise((innerResolve) => {
           this.loanApi.getCustByStageId(id).subscribe((resp) => {
             if (resp?.statusCode === 200)
               innerResolve({
@@ -743,9 +767,9 @@ export class LoanFlowComponent implements OnInit {
                   ...resp.data[0].contact,
                   contactId: null,
                   address: [
-                    { ...resp.data[0].contact.address[0], addressId: null },
-                  ],
-                },
+                    { ...resp.data[0].contact.address[0], addressId: null }
+                  ]
+                }
               });
             else innerResolve(null); // or handle rejection if needed
           });
@@ -760,14 +784,14 @@ export class LoanFlowComponent implements OnInit {
     });
   }
 
-  saveCustomerInfo(resp, docIds) {
+  saveCustomerInfo(resp: any, docIds: any) {
     var custResp: any = [...resp];
     let customerDetails = this.modelFactoryForCustomer(custResp, docIds);
     const existingCustomerId = JSON.parse(
-      sessionStorage.getItem("userCustomerId")
+      <string>sessionStorage.getItem("userCustomerId")
     );
     if (existingCustomerId) {
-      customerDetails.forEach((item, i) => {
+      customerDetails.forEach((i: any) => {
         if (i >= existingCustomerId.length) {
           delete customerDetails[i].existingCustomerId;
           customerDetails[i].customerId = null;
@@ -779,13 +803,13 @@ export class LoanFlowComponent implements OnInit {
     }
     const payload = {
       originationModel: this.factorizedPayload(),
-      customerInfo: customerDetails,
+      customerInfo: customerDetails
     };
     console.log(payload, ".......");
     this.getMasterSave(payload);
   }
 
-  getMasterSave(payload) {
+  getMasterSave(payload: any) {
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode == 200 && resp?.data) {
         sessionStorage.setItem(
@@ -800,7 +824,9 @@ export class LoanFlowComponent implements OnInit {
   //once all workflow formula we will get it will call on summary save api
   verifyWorkFlow() {
     console.log(this.screenList);
-    const loanAmmount = JSON.parse(sessionStorage.getItem("loanAmmount"));
+    const loanAmmount = JSON.parse(
+      <string>sessionStorage.getItem("loanAmmount")
+    );
 
     const properties = {
       loanAmount: loanAmmount.loanAmount,
@@ -810,13 +836,13 @@ export class LoanFlowComponent implements OnInit {
       gender: "",
       nationality: "",
       residenceType: "",
-      screenCode: this.screenList[this.selectedStep].screenCode,
+      screenCode: this.screenList[this.selectedStep].screenCode
     };
     const loanPayload = {
       properties: properties,
       screenCode: this.screenList[2].screenCode,
       processStageId: this.processDetails.processStageId,
-      processCycleCode: this.processDetails.processCycleCode,
+      processCycleCode: this.processDetails.processCycleCode
     };
     this.loanApi.verifyWorkFlow(loanPayload).subscribe((resp) => {
       if (resp?.autoAction) this.saveApprovalConfig(resp);
@@ -825,9 +851,9 @@ export class LoanFlowComponent implements OnInit {
     this.onFlowDone();
   }
 
-  saveApprovalConfig(resp) {
+  saveApprovalConfig(resp: any) {
     const loanBasisDetails = JSON.parse(
-      sessionStorage.getItem("loanBasisDetails")
+      <string>sessionStorage.getItem("loanBasisDetails")
     );
     const payload = {
       originationId: this.originationId,
@@ -835,10 +861,10 @@ export class LoanFlowComponent implements OnInit {
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: loanBasisDetails?.basisId,
       processCycleCode: loanBasisDetails?.processCycleCode,
-      currentStage: parseInt(sessionStorage.getItem("currentStage")),
+      currentStage: parseInt(<string>sessionStorage.getItem("currentStage")),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
-      targetScreen: parseInt(resp?.targetScreen),
+      targetScreen: parseInt(resp?.targetScreen)
     };
     this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
@@ -867,12 +893,12 @@ export class LoanFlowComponent implements OnInit {
             type: "loan",
             isComplete: resp?.data?.isComplete,
             message:
-              "Your loan application is sent. The bank will contact you soon.",
+              "Your loan application is sent. The bank will contact you soon."
           },
           width: "750px",
           disableClose: true,
           panelClass: ["popup-dialog-class", "scroll-card"],
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
@@ -895,12 +921,12 @@ export class LoanFlowComponent implements OnInit {
     }, 200);
   }
 
-  verfyStep(verifyStep, currentStep) {
+  verfyStep(verifyStep: any, currentStep: any) {
     if (currentStep?.toLowerCase().includes(verifyStep)) return true;
     else return false;
   }
 
-  getOwnershipIdByGeneric(value) {
+  getOwnershipIdByGeneric(value: any) {
     let ownership = [];
     this.sharedService
       .genericValue("Common", Object.keys(this.staticData))
@@ -908,7 +934,7 @@ export class LoanFlowComponent implements OnInit {
         if (resp?.statusCode === 200) {
           ownership = resp.data["OWNERSHIP"];
           this.ownerShipId = ownership.find(
-            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
+            (r: any) => r?.values?.toLowerCase() === value?.toLowerCase()
           )?.id;
         }
       });

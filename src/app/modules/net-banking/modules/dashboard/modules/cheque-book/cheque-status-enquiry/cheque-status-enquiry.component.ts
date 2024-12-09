@@ -7,12 +7,12 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-cheque-status-enquiry",
   templateUrl: "./cheque-status-enquiry.component.html",
-  styleUrls: ["./cheque-status-enquiry.component.scss"],
+  styleUrls: ["./cheque-status-enquiry.component.scss"]
 })
 export class ChequeStatusEnquiryComponent implements OnInit {
   chequeStatusCols = ChequeStore.recentColumns;
-  chequeStatusData: any[] = [];
-  chqueInquiryForm: FormGroup;
+  chequeStatusData: any[] | any = [];
+  chqueInquiryForm!: FormGroup;
 
   customerInfo: any;
   accountNumberList: any[] = [];
@@ -22,11 +22,11 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   inquiryChequeOptions: any[] = [
     { label: "Number", value: "Number" },
     { label: "Range", value: "Range" },
-    { label: "Status", value: "Status" },
+    { label: "Status", value: "Status" }
   ];
   selectList: any[] = [
     { label: "Not Used", value: "N" },
-    { label: "Used", value: "Yes" },
+    { label: "Used", value: "Yes" }
   ];
 
   fetchedData: any;
@@ -44,7 +44,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
 
   fetchCustomerInfo() {
     this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem("listOfAccounts")
     );
   }
 
@@ -55,19 +55,19 @@ export class ChequeStatusEnquiryComponent implements OnInit {
       fromChequeBookNo: [""],
       toChequeBookNo: [""],
       chequeNumber: [""],
-      select: [""],
+      select: [""]
     });
     const selectedAccountNo = sessionStorage.getItem("selectAccNo");
 
     if (selectedAccountNo) {
-      this.chqueInquiryForm.get("accountNo").setValue(selectedAccountNo);
-      this.handleAccountNumberChange(selectedAccountNo);
+      this.chqueInquiryForm.get("accountNo")?.setValue(selectedAccountNo);
+      this.handleAccountNumberChange();
     }
   }
 
-  handleAccountNumberChange(event) {
+  handleAccountNumberChange() {
     this.chequeService
-      .getChequeNoByAccNo(this.chqueInquiryForm.get("accountNo").value)
+      .getChequeNoByAccNo(this.chqueInquiryForm.get("accountNo")?.value)
       .subscribe(
         (resp) => {
           this.chequeNumber = resp?.data;
@@ -90,10 +90,10 @@ export class ChequeStatusEnquiryComponent implements OnInit {
       toChequeBookNo: chqueInquiryValue?.toChequeBookNo,
       accountNo: chqueInquiryValue?.accountNo,
       chequeBookNumber: chqueInquiryValue?.chequeNumber,
-      status: chqueInquiryValue?.select,
+      status: chqueInquiryValue?.select
     };
 
-    this.chequeService.inquiryCheque(payload).subscribe(
+    this.chequeService.inquiryCheque(payload)?.subscribe(
       (resp) => {
         console.log(resp);
         this.fetchedData = resp?.data;
@@ -104,7 +104,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
             chequeNumber: i.leavesNumber,
             status: i?.status,
             reason: i?.reason,
-            amount: i?.amount,
+            amount: i?.amount
           }));
       },
       (error) => {

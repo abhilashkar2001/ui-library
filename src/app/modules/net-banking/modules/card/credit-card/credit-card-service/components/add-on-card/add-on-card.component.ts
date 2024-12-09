@@ -12,14 +12,14 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-add-on-card",
   templateUrl: "./add-on-card.component.html",
-  styleUrls: ["./add-on-card.component.scss"],
+  styleUrls: ["./add-on-card.component.scss"]
 })
 export class AddOnCardComponent implements OnInit {
-  addonCardForm: FormGroup;
-  cardList: AccountList[];
-  typeofCard: string;
-  currencyCode: string;
-  accountDetails: AccountList;
+  addonCardForm!: FormGroup;
+  cardList: AccountList[] | any;
+  typeofCard: string | any;
+  currencyCode: string | any;
+  accountDetails: AccountList | any;
   profileInfo: any;
   items = CreditCardStore.relationShipDetail;
   constructor(
@@ -44,17 +44,17 @@ export class AddOnCardComponent implements OnInit {
       accountNo: [""],
       nameRequired: [""],
       relationShip: [""],
-      dateOfBirth: [""],
+      dateOfBirth: [""]
     });
   }
-  payFromCurrencyCode(value) {
-    this.addonCardForm?.get("debitCurrency").setValue(value);
+  payFromCurrencyCode(value: any) {
+    this.addonCardForm?.get("debitCurrency")?.setValue(value);
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
@@ -81,31 +81,31 @@ export class AddOnCardComponent implements OnInit {
             details: [
               { "Name on Card": this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber,
+                "Card Number": this.accountDetails?.cardNumber
               },
               {
-                "Card Name": this.accountDetails?.cardName,
+                "Card Name": this.accountDetails?.cardName
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit,
-              },
-            ],
+                "Credit Limit": this.accountDetails?.totalCreditLimit
+              }
+            ]
           },
           {
             header: "Card Control",
             details: [
               { "Name Required": payload?.nameRequired },
               {
-                "Date Of Birth": payload?.dateOfBirth,
+                "Date Of Birth": payload?.dateOfBirth
               },
               {
-                Relationship: payload?.relationShip,
-              },
-            ],
-          },
+                Relationship: payload?.relationShip
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

@@ -10,17 +10,16 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-others-info",
   templateUrl: "./others-info.component.html",
-  styleUrls: ["./others-info.component.scss"],
+  styleUrls: ["./others-info.component.scss"]
 })
 export class OthersInfoComponent implements OnInit {
-  @Input("bgType") bgType; // 'BG Issuance' - Dynamically both names it should be work
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
-  otherInfoForm: FormGroup;
+  @Input("bgType") bgType: any; // 'BG Issuance' - Dynamically both names it should be work
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
+  otherInfoForm!: FormGroup | any;
   countries: any;
-  @Input("tradeDetails") tradeDetails;
+  @Input("tradeDetails") tradeDetails: any;
   feeAccArray: any[] = ["dummy Option 1", "dummy Option 2"];
   constructor(
     private fb: FormBuilder,
@@ -45,17 +44,17 @@ export class OthersInfoComponent implements OnInit {
   fetchOtherInfo(bgMasterId: number) {
     this.bgService
       .fetchOtherInfo(bgMasterId)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           this.otherInfoForm.patchValue(res?.data[0]);
         }
       });
   }
 
-  buildOtherInfoForm(item) {
+  buildOtherInfoForm(item: any) {
     this.otherInfoForm = this.fb.group({
       specifyCounterGuarantee: [
-        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "yes",
+        item.specifyCounterGuarantee ? item.specifyCounterGuarantee : "yes"
       ],
       swiftCode: [item.swiftCode ? item.swiftCode : ""],
       bankName: [item.bankName ? item.bankName : ""],
@@ -67,74 +66,74 @@ export class OthersInfoComponent implements OnInit {
               item.contactInfo?.address[0]?.address1
                 ? item.contactInfo?.address[0]?.address1
                 : "",
-              Validators.required,
+              Validators.required
             ],
             address2: [
               item.contactInfo?.address[0]?.address2
                 ? item.contactInfo?.address[0]?.address2
-                : "",
+                : ""
             ],
             countryName: [
               item.contactInfo?.address[0]?.countryName
                 ? item.contactInfo?.address[0]?.countryName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             pincode: [
               item.contactInfo?.address[0]?.pincode
                 ? item.contactInfo?.address[0]?.pincode
                 : "",
-              Validators.required,
+              Validators.required
             ],
             stateName: [
               item.contactInfo?.address[0]?.stateName
                 ? item.contactInfo?.address[0]?.stateName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             cityName: [
               item.contactInfo?.address[0]?.cityName
                 ? item.contactInfo?.address[0]?.cityName
                 : "",
-              Validators.required,
+              Validators.required
             ],
             cityId: [
               item?.contactInfo?.address[0]?.cityId ?? "",
-              [Validators.required],
-            ],
-          }),
-        ]),
+              [Validators.required]
+            ]
+          })
+        ])
       }),
       ...(this.bgType === "BG Issuance"
         ? {
             textualDescription: [
-              item.textualDescription ? item.textualDescription : "",
+              item.textualDescription ? item.textualDescription : ""
             ],
-            introToBank: [item.introToBank ? item.introToBank : ""],
+            introToBank: [item.introToBank ? item.introToBank : ""]
           }
         : {
             counterGuarantee: [
-              item.counterGuarantee ? item.counterGuarantee : "",
+              item.counterGuarantee ? item.counterGuarantee : ""
             ],
             deliveryMode: [item.deliveryMode ? item.deliveryMode : ""],
             deliveryBranch: [item.deliveryBranch ? item.deliveryBranch : ""],
             margin: [item.margin ? item.margin : ""],
-            feeAccount: [item.feeAccount ? item.feeAccount : ""],
+            feeAccount: [item.feeAccount ? item.feeAccount : ""]
           }),
       branchName: [item.branchName ? item.branchName : ""],
       deliveryInstruction: [
-        item.deliveryInstruction ? item.deliveryInstruction : "",
-      ],
+        item.deliveryInstruction ? item.deliveryInstruction : ""
+      ]
     });
-    this.otherInfoForm.valueChanges.subscribe((res) => {
+    this.otherInfoForm.valueChanges.subscribe(() => {
       this.updateParentModel(
         {
           otherInfoModel: {
             ...this.otherInfoForm.value,
             contactInfo: !this.otherInfoForm.value.contactInfo.address[0].cityId
               ? null
-              : this.otherInfoForm.value.contactInfo,
-          },
+              : this.otherInfoForm.value.contactInfo
+          }
         },
         this.checkform()
       );
@@ -144,7 +143,7 @@ export class OthersInfoComponent implements OnInit {
     return this.otherInfoForm.valid;
   }
 
-  get addressControl(): FormArray {
+  get addressControl(): FormArray | any {
     return this.Contact.get("address") as FormArray;
   }
 
@@ -158,11 +157,11 @@ export class OthersInfoComponent implements OnInit {
     });
   }
 
-  populatePincodeData(i) {
+  populatePincodeData(i: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "popup-class-approve",
+      panelClass: "popup-class-approve"
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {

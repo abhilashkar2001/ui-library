@@ -49,16 +49,14 @@
         </div>
         <div class="mat-slider-card">
           <div class="selected-value">
-            <span class="text-field"> Months {{ courseSlider.value }}</span>
+            <span class="text-field"> Months {{ courseSlider }}</span>
           </div>
           <mat-slider
-            #courseSlider
             class="example-margin"
-            (change)="loanCalculation($event)"
             [max]="72"
             [min]="6"
             [step]="step"
-            [(ngModel)]="courseSlider.value"
+            [(ngModel)]="courseSlider"
           >
           </mat-slider>
           <div class="selected-value">
@@ -79,12 +77,11 @@
         </div>
         <div class="mat-slider-card">
           <div class="selected-value">
-            <span class="text-field"> &#8377;{{ tuttionFeeSlider.value }}</span>
+            <span class="text-field"> &#8377;{{ tuttionFeeSlider }}</span>
           </div>
           <mat-slider
             #tuttionFeeSlider
             class="example-margin"
-            (change)="loanCalculation($event)"
             [max]="1000000"
             [min]="5000"
             [step]="step"
@@ -109,12 +106,11 @@
         </div>
         <div class="mat-slider-card">
           <div class="selected-value">
-            <span class="text-field"> &#8377;{{ slider.value }}</span>
+            <span class="text-field"> &#8377;{{ slider }}</span>
           </div>
           <mat-slider
             #slider
             class="example-margin"
-            (change)="loanCalculation($event)"
             [max]="1000000"
             [min]="5000"
             [step]="step"
@@ -181,12 +177,11 @@
           </div>
           <div class="mat-slider-card">
             <div class="selected-value">
-              <span class="text-field"> &#8377;{{ slider.value }}</span>
+              <span class="text-field"> &#8377;{{ slider }}</span>
             </div>
             <mat-slider
               #slider
               class="example-margin"
-              (change)="loanCalculation($event)"
               [max]="100000"
               [min]="5000"
               [step]="step"
@@ -311,9 +306,7 @@
             </div>
             <div class="mat-slider-card">
               <div class="selected-value">
-                <span class="text-field">
-                  &#8377;{{ incomeSlabSlider.value }}</span
-                >
+                <span class="text-field"> &#8377;{{ incomeSlabSlider }}</span>
               </div>
               <mat-slider min="200" max="500" #incomeSlabSlider>
                 <input value="300" matSliderStartThumb />
@@ -338,14 +331,13 @@
           </div>
           <div class="mat-slider-card">
             <div class="selected-value">
-              <span class="text-field"> &#8377;{{ slider.value }}</span>
+              <span class="text-field"> &#8377;{{ slider }}</span>
             </div>
             <mat-slider
               #slider
               thumbLabel
               [displayWith]="formatLabel"
               showTickMarks
-              (change)="loanCalculation($event)"
               [max]="100000"
               [min]="5000"
               [step]="step"

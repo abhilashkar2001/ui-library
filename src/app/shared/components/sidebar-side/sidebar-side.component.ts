@@ -10,11 +10,11 @@ import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
   templateUrl: "./sidebar-side.component.html"
 })
 export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
-  public menuItems: any[];
-  public hasIconTypeMenuItem: boolean;
-  public iconTypeMenuTitle: string;
-  private menuItemsSub: Subscription;
-  public layoutConf: ILayoutConf;
+  public menuItems: any[] | any;
+  public hasIconTypeMenuItem: boolean | any;
+  public iconTypeMenuTitle: string | any;
+  private menuItemsSub: Subscription | any;
+  public layoutConf: ILayoutConf | any;
 
   constructor(
     private navService: NavigationService,
@@ -25,11 +25,11 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.iconTypeMenuTitle = this.navService.iconTypeMenuTitle;
-    this.menuItemsSub = this.navService.menuItems$.subscribe(menuItem => {
+    this.menuItemsSub = this.navService.menuItems$.subscribe((menuItem) => {
       this.menuItems = menuItem;
       //Checks item list has any icon type.
       this.hasIconTypeMenuItem = !!this.menuItems.filter(
-        item => item.type === "icon"
+        (item: any) => item.type === "icon"
       ).length;
     });
     this.layoutConf = this.layout.layoutConf;
@@ -41,17 +41,15 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   toggleCollapse() {
-    if (
-      this.layoutConf.sidebarCompactToggle
-    ) {
-        this.layout.publishLayoutChange({
+    if (this.layoutConf.sidebarCompactToggle) {
+      this.layout.publishLayoutChange({
         sidebarCompactToggle: false
       });
     } else {
-        this.layout.publishLayoutChange({
-            // sidebarStyle: "compact",
-            sidebarCompactToggle: true
-          });
+      this.layout.publishLayoutChange({
+        // sidebarStyle: "compact",
+        sidebarCompactToggle: true
+      });
     }
   }
 }

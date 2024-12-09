@@ -13,15 +13,17 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-create-loan",
   templateUrl: "./create-loan.component.html",
-  styleUrls: ["./create-loan.component.scss"],
+  styleUrls: ["./create-loan.component.scss"]
 })
 export class CreateLoanComponent implements OnInit {
-  personalLoanDetailsForm: FormGroup;
+  personalLoanDetailsForm!: FormGroup | any;
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   @Input("mobileVerifyInfo") mobileVerifyInfo: any;
 
   // variables with static data.
@@ -32,20 +34,20 @@ export class CreateLoanComponent implements OnInit {
   holderTypeArray: any[] = [{}];
   disbursementTypeArray: any[] = [{}];
   staticOwnership = {
-    OWNERSHIP: [],
+    OWNERSHIP: []
   };
 
-  disbursementType: string;
+  disbursementType: string | any;
   loanDetails: any;
   isDisabledMode: boolean = true;
   isReadOnly: boolean = true;
-  loanCustomerId: string;
+  loanCustomerId: string | any;
   accountList: any;
   currentDate = new Date();
   productDetails: any;
   otherUserInfo: any;
   ownerShipId: any;
-  valueChangesSubscription: Subscription;
+  valueChangesSubscription: Subscription | any;
 
   constructor(
     private fb: FormBuilder,
@@ -61,21 +63,21 @@ export class CreateLoanComponent implements OnInit {
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currencySymboll = this.otherUserInfo?.currency;
-    const basisId = sessionStorage.getItem("loanBasisDetails");
+    const basisId: any = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();
     this.loanCustomerId = sessionStorage.getItem("customerId");
     if (this.loanCustomerId) this.getCustomerById();
-    var id = parseInt(sessionStorage.getItem("loanDisburseId"));
+    var id = parseInt(<string>sessionStorage.getItem("loanDisburseId"));
     if (id) this.getLoanById(id);
     else this.initialForm();
   }
 
-  getProductDetails(basisId) {
+  getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0].lendingParameters.find(
-          (el) => el.currency == this.otherUserInfo.currency
+          (el: any) => el.currency == this.otherUserInfo.currency
         );
       }
     });
@@ -93,7 +95,7 @@ export class CreateLoanComponent implements OnInit {
       });
   }
 
-  getAccountList(customerNo) {
+  getAccountList(customerNo: any) {
     this.loanApi.getAccountList(customerNo).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.accountList = resp.data.accountInfo;
@@ -126,7 +128,7 @@ export class CreateLoanComponent implements OnInit {
    * Api call to fetch webDisbursement by id.
    * @param id webdisbursementId
    */
-  getLoanById(id) {
+  getLoanById(id: any) {
     this.loanApi.getLoanById(id).subscribe(
       (resp) => {
         if (resp.statusCode === 200) {
@@ -134,7 +136,7 @@ export class CreateLoanComponent implements OnInit {
             ...resp?.data,
             tenureDays: sessionStorage.getItem("tenureDays") || 0,
             tenureYear: sessionStorage.getItem("tenureYear") || 0,
-            tenureMonth: sessionStorage.getItem("tenureMonth") || 0,
+            tenureMonth: sessionStorage.getItem("tenureMonth") || 0
           });
           if (
             this.holderTypeArray?.length > 0 &&
@@ -147,7 +149,7 @@ export class CreateLoanComponent implements OnInit {
           this.initialForm();
         }
       },
-      (Error) => {
+      () => {
         this.initialForm();
       }
     );
@@ -166,7 +168,7 @@ export class CreateLoanComponent implements OnInit {
    * building  personalLoanDetailsForm form. & changeDetiction.
    * @param data is formData
    */
-  initialForm(data?) {
+  initialForm(data?: any) {
     var holderType = sessionStorage.getItem("loanHolderType");
     this.personalLoanDetailsForm = this.fb.group({
       loanAmount: [data ? data.principalAmount : "", Validators.required],
@@ -181,7 +183,7 @@ export class CreateLoanComponent implements OnInit {
       holderType: [holderType ? holderType : "", Validators.required],
       totalPayableAmount: [
         data ? data.totalPayableAmount : "",
-        Validators.required,
+        Validators.required
       ],
       disbursementType: [data ? data?.disbursementType : ""],
       accountNumber: [data ? data?.accountNumber : ""],
@@ -190,14 +192,14 @@ export class CreateLoanComponent implements OnInit {
       accountType: this.loanEnum.INTERNAL,
       ifscCode: [data ? data?.ifscCode : ""],
       branchCode: [data ? data?.branchCode : ""],
-      confirmAccountNumber: "",
+      confirmAccountNumber: ""
     });
     // if (data) this.disbursementType = data?.disbursementType.toLowerCase();
 
     this.personalLoanDetailsForm
       .get("accountNumber")
       .valueChanges.pipe(debounceTime(500))
-      .subscribe((resp) => {
+      .subscribe((resp: any) => {
         if (
           resp &&
           this.personalLoanDetailsForm.value.accountType ===
@@ -229,7 +231,7 @@ export class CreateLoanComponent implements OnInit {
       tenureMonth$,
       tenureYear$,
       loanAmount$
-    ).subscribe(([loanAmount]) => {
+    ).subscribe((loanAmount) => {
       if (loanAmount)
         this.personalLoanDetailsForm
           .get("principlAmount")
@@ -252,8 +254,8 @@ export class CreateLoanComponent implements OnInit {
     }
   }
 
-  calculateTenure(years, months, days) {
-    return new Promise((resolve, reject) => {
+  calculateTenure(years: any, months: any, days: any) {
+    return new Promise((resolve) => {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
@@ -279,7 +281,7 @@ export class CreateLoanComponent implements OnInit {
           this.personalLoanDetailsForm.value.interestRate
         ),
         numberOfMonths: result,
-        firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY"),
+        firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY")
       };
       this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
         this.personalLoanDetailsForm
@@ -314,7 +316,7 @@ export class CreateLoanComponent implements OnInit {
    * api call for account number validation, if account Number not present then invalidAccount error will throw in html.
    */
 
-  validateAccountNumber(resp) {
+  validateAccountNumber(resp: any) {
     this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
       if (!data) {
         this.personalLoanDetailsForm
@@ -330,21 +332,23 @@ export class CreateLoanComponent implements OnInit {
    *
    * @param event is disbursement change value
    */
-  onDisbursementSelectionChanged(event) {
-    this.disbursementType = this.staticData["DISBURSEMENTTYPE"]
+  onDisbursementSelectionChanged() {
+    this.disbursementType = (
+      this.staticData["DISBURSEMENTTYPE"] as { id: any; values: string }[]
+    )
       .filter(
-        (item) =>
+        (item: any) =>
           item?.id ==
           this.personalLoanDetailsForm.controls["disbursementType"].value
       )[0]
-      .values.toLowerCase();
+      ?.values.toLowerCase();
 
     if (
       this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
     ) {
       this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
-        Validators.required,
+        Validators.required
       ]);
     } else {
       this.personalLoanDetailsForm.controls["accountNumber"].clearValidators();
@@ -366,21 +370,23 @@ export class CreateLoanComponent implements OnInit {
     }
     const loanAmmount = JSON.stringify({
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
-      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
+      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`
     });
     sessionStorage.setItem("loanAmmount", loanAmmount);
-    const holder = this.staticData["HOLDERTYPE"]
+    const holder: any = (
+      this.staticData["HOLDERTYPE"] as { id: any; values: string }[]
+    )
       .filter(
-        (item) =>
+        (item: any) =>
           item?.id == this.personalLoanDetailsForm.controls["holderType"].value
       )[0]
-      .values.toLowerCase();
+      ?.values.toLowerCase();
     sessionStorage.setItem("loanHolderType", holder);
     this.getOwnershipIdByGeneric(holder);
     this.snack.open(`Create Loan Details Saved !`, "OK", {
       duration: 4000,
       verticalPosition: "top",
-      horizontalPosition: "right",
+      horizontalPosition: "right"
     });
     sessionStorage.setItem("loanDisburseId", this.calculatePayload().id);
     sessionStorage.setItem(
@@ -397,7 +403,7 @@ export class CreateLoanComponent implements OnInit {
     );
     this.updateParentModel({
       updateMasterSave: false,
-      disbursementDetails: this.calculatePayload(),
+      disbursementDetails: this.calculatePayload()
     });
     this.onCustomSubmit.emit(this.personalLoanDetailsForm);
   }
@@ -425,7 +431,7 @@ export class CreateLoanComponent implements OnInit {
       ).format(),
       bankCode: this.personalLoanDetailsForm.value.bankCode,
       branchCode: this.personalLoanDetailsForm.value.branchCode,
-      ifscCode: this.personalLoanDetailsForm.value.ifscCode,
+      ifscCode: this.personalLoanDetailsForm.value.ifscCode
     };
     if (this.personalLoanDetailsForm.value?.id) {
       payload.id = this.personalLoanDetailsForm.value?.id;
@@ -445,7 +451,7 @@ export class CreateLoanComponent implements OnInit {
     payload.disbursementAccInfo = {
       accountNo: this.personalLoanDetailsForm.value.accountNumber,
       bankCode: this.personalLoanDetailsForm.value.bankCode,
-      branchCode: this.personalLoanDetailsForm.value.branchCode,
+      branchCode: this.personalLoanDetailsForm.value.branchCode
     };
     console.log(payload, ".payload");
     return payload;
@@ -465,7 +471,11 @@ export class CreateLoanComponent implements OnInit {
     this.isReadOnly = false;
   }
 
-  calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {
+  calculateTotalDays(
+    loanTenureYear: any,
+    loanTenureMonth: any,
+    loanTenureDay: any
+  ) {
     const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
     return d;
   }
@@ -498,7 +508,7 @@ export class CreateLoanComponent implements OnInit {
     return totalDays <= MinimumAllowedDays;
   }
 
-  getOwnershipIdByGeneric(value) {
+  getOwnershipIdByGeneric(value: any) {
     let ownership = [];
     this.sharedService
       .genericValue("Common", Object.keys(this.staticOwnership))
@@ -506,7 +516,7 @@ export class CreateLoanComponent implements OnInit {
         if (resp?.statusCode === 200) {
           ownership = resp.data["OWNERSHIP"];
           this.ownerShipId = ownership.find(
-            (r) => r?.values?.toLowerCase() === value?.toLowerCase()
+            (r: any) => r?.values?.toLowerCase() === value?.toLowerCase()
           )?.id;
           sessionStorage.setItem("ownershipId", this.ownerShipId);
         }

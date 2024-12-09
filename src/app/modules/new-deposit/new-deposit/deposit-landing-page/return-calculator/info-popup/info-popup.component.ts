@@ -6,12 +6,12 @@ import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
 @Component({
   selector: "app-info-popup",
   templateUrl: "./info-popup.component.html",
-  styleUrls: ["./info-popup.component.scss"],
+  styleUrls: ["./info-popup.component.scss"]
 })
 export class InfoPopupComponent implements OnInit {
   interestdetailsArray: any[] = [];
   dataSource = new MatTableDataSource();
-  data = [];
+  data: any = [];
   constructor(
     private dialogRef: MatDialogRef<InfoPopupComponent>,
     private newdepositService: NewDepositService
@@ -23,9 +23,7 @@ export class InfoPopupComponent implements OnInit {
   getinterestdetails() {
     this.newdepositService.getInterestDetails().subscribe((res) => {
       this.interestdetailsArray = res;
-      for (const key in this.interestdetailsArray[0]) {
-        this.data.push(key);
-      }
+      this.data = Object.keys(this.interestdetailsArray[0]); // Safer and more explicit
       console.log(this.data);
     });
   }

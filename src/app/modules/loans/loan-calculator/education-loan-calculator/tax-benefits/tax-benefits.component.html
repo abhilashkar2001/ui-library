@@ -70,11 +70,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="loanForm.value.requiredLoan"
+              [(ngModel)]="loanForm.value.requiredLoan"
               [max]="max"
               [min]="min"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onSliderChange($event)"
               [displayWith]="formatLoanLabel"
               discrete

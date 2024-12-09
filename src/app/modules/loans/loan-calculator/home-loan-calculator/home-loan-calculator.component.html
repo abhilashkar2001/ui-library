@@ -49,11 +49,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="loanForm.value.amount"
+              [(ngModel)]="loanForm.value.amount"
               [max]="max"
               [min]="min"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onSliderChange($event)"
               discrete
             >
@@ -232,11 +232,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="hlBalanceForm.value.outstandingAmount"
+              [(ngModel)]="hlBalanceForm.value.outstandingAmount"
               [max]="max"
               [min]="min"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onOutstandingSliderChange($event)"
               discrete
             >
@@ -266,11 +266,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="hlBalanceForm.value.emiAmountValue"
+              [formControl]="hlBalanceForm.value.emiAmountValue"
               [max]="maxEmiAmount"
               [min]="minEmiAmount"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onEmiSliderChange($event)"
               discrete
             >

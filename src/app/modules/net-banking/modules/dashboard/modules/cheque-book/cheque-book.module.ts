@@ -15,6 +15,7 @@ import { PaymentPageComponent } from "./payment-page/payment-page.component";
 import { OtpComponent } from "./otp/otp.component";
 import { NgOtpInputModule } from "ng-otp-input";
 import { FeedbackComponent } from "./feedback/feedback.component";
+import { SharedPipesModule } from "../../../../../../shared/pipes/shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { FeedbackComponent } from "./feedback/feedback.component";
     PaymentDetailsComponent,
     PaymentPageComponent,
     OtpComponent,
-    FeedbackComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +36,7 @@ import { FeedbackComponent } from "./feedback/feedback.component";
     ReactiveFormsModule,
     SharedComponentsModule,
     NgOtpInputModule,
-  ],
+    SharedPipesModule
+  ]
 })
 export class ChequeBookModule {}

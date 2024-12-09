@@ -7,15 +7,17 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 @Component({
   selector: "app-cibil-score-container",
   templateUrl: "./cibil-score-container.component.html",
-  styleUrls: ["./cibil-score-container.component.scss"],
+  styleUrls: ["./cibil-score-container.component.scss"]
 })
 export class CibilScoreContainerComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit = new EventEmitter<any>();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
-  @Input() createLoanAccountNumber;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
+  @Input() createLoanAccountNumber: any;
   hideInfo: boolean = true;
 
   isDifferentMobile: boolean = false;
@@ -23,7 +25,7 @@ export class CibilScoreContainerComponent implements OnInit {
   selectedOption: "different" | "same" = "same";
   optionalSteps: any;
   phone: any;
-  showOtpSection: boolean;
+  showOtpSection: boolean | any;
   otpSent: boolean = false;
   invalidOtp: boolean = false;
   otp: any;
@@ -43,13 +45,13 @@ export class CibilScoreContainerComponent implements OnInit {
   customerConsent() {
     const dialogRef = this.dialog.open(ReusableAlertPopupComponent, {
       data: {
-        msg: "Can I use the same verified number to check the credit bureau",
+        msg: "Can I use the same verified number to check the credit bureau"
       },
       width: "750px",
       height: "400px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
@@ -70,20 +72,20 @@ export class CibilScoreContainerComponent implements OnInit {
     this.commonService.isUserUsingDifferentMobile(this.isDifferentMobile);
     let tempRow = [
       { stepName: "Personal Details" },
-      { stepName: "Select KYC" },
+      { stepName: "Select KYC" }
     ];
     this.isDifferentMobile
       ? this.isDifferentMobileNumber.emit({
           steps: tempRow,
-          isDifferentMobile: true,
+          isDifferentMobile: true
         })
       : this.isDifferentMobileNumber.emit({
           steps: [],
-          isDifferentMobile: false,
+          isDifferentMobile: false
         });
   }
 
-  onBackCIBILScoreResult(event: any) {
+  onBackCIBILScoreResult() {
     this.showCibilScoreResult = false;
   }
 
@@ -116,7 +118,7 @@ export class CibilScoreContainerComponent implements OnInit {
     this.phone = event.phone;
     sessionStorage.setItem("loanPhone", this.phone);
     this.showOtpSection = true;
-    this.openAccountService.getOtp(this.phone).subscribe((response: any) => {
+    this.openAccountService.getOtp(this.phone).subscribe(() => {
       this.otpSent = true;
       setTimeout(() => {
         this.otpSent = false;
@@ -137,7 +139,7 @@ export class CibilScoreContainerComponent implements OnInit {
     this.isOtpAllowed = this.otp && this.otp?.length >= 6 ? true : false;
   }
 
-  otpTimer(event) {
+  otpTimer(event: any) {
     if (event.seconds == "00:00") {
       this.isOtpAllowed = false;
     }

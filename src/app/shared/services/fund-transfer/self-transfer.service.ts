@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SelfTransferService {
   protected basePath = environment.microServiceURL;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  saveSelfTranfer(payload) {
+  saveSelfTranfer(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/retail-fund-transfer/transfer-money`,
       payload

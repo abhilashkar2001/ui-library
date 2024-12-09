@@ -11,7 +11,7 @@
       >
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
           <ng-container *ngFor="let item of items">
-            <li (click)="onNavTabClick(item)">
+            <li (click)="onNavTabClick()">
               <a
                 [routerLink]="[item.route]"
                 routerLinkActive="highlight_label"

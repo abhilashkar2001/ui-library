@@ -4,7 +4,7 @@ import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
+  MAT_DATE_LOCALE
 } from "@angular/material/core";
 import { MatCalendarCellClassFunction } from "@angular/material/datepicker";
 import { MatDialog } from "@angular/material/dialog";
@@ -13,17 +13,17 @@ import * as moment from "moment";
 
 export const MATERIAL_DATEPICKER_FORMATS = {
   parse: {
-    dateInput: "DD/MMM/YYYY",
+    dateInput: "DD/MMM/YYYY"
   },
   display: {
     dateInput: "DD/MMM/YYYY",
     monthYearLabel: "MMMM YYYY",
     dateA11yLabel: "DD/MMM/YYYY",
-    monthYearA11yLabel: "MMMM YYYY",
-  },
+    monthYearA11yLabel: "MMMM YYYY"
+  }
 };
 class CustomDateAdapter extends MomentDateAdapter {
-  getDayOfWeekNames(style: "long" | "short" | "narrow") {
+  override getDayOfWeekNames(_style: "long" | "short" | "narrow") {
     return ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   }
 }
@@ -37,10 +37,10 @@ class CustomDateAdapter extends MomentDateAdapter {
     {
       provide: DateAdapter,
       useClass: CustomDateAdapter,
-      deps: [MAT_DATE_LOCALE],
+      deps: [MAT_DATE_LOCALE]
     },
-    { provide: MAT_DATE_FORMATS, useValue: MATERIAL_DATEPICKER_FORMATS },
-  ],
+    { provide: MAT_DATE_FORMATS, useValue: MATERIAL_DATEPICKER_FORMATS }
+  ]
 })
 export class ScheduleKycVideoComponent implements OnInit {
   minDate: Date;
@@ -58,7 +58,7 @@ export class ScheduleKycVideoComponent implements OnInit {
   kycInfo = {
     name: "Saanvi",
     mobile: "82919918388",
-    dateOfSchedule: "12th Jun",
+    dateOfSchedule: "12th Jun"
   };
   description = "Web Conferencing details provided upon confirmation";
   timeZone = "India Standard Time (5:41pm)";
@@ -79,7 +79,7 @@ export class ScheduleKycVideoComponent implements OnInit {
     }
     return "";
   };
-  onSelect(event) {
+  onSelect(event: any) {
     this.selectedDate = this.convertDate(event);
     this.formatedSelectedDate = new Date(this.selectedDate).toLocaleDateString(
       "en-US",
@@ -87,12 +87,13 @@ export class ScheduleKycVideoComponent implements OnInit {
     );
     this.selectedTimeSlot = "";
   }
-  convertDate(value) {
+  convertDate(value: any) {
     let date = moment(value).format("YYYY-MM-DD");
     if (date) return date;
+    return;
   }
 
-  generateTimeSlots(startTime, endTime, interval) {
+  generateTimeSlots(startTime: any, endTime: any, interval: any) {
     let timeSlots = [];
     let currentTime = new Date("01/01/2024 " + startTime);
     const endTimeObj = new Date("01/01/2024 " + endTime);
@@ -111,7 +112,7 @@ export class ScheduleKycVideoComponent implements OnInit {
         time: formattedTime,
         available: true, // You can set this based on your availability logic
         selected: false,
-        booked: false,
+        booked: false
       });
 
       currentTime.setMinutes(currentTime.getMinutes() + interval);
@@ -120,13 +121,13 @@ export class ScheduleKycVideoComponent implements OnInit {
     return timeSlots;
   }
 
-  onTimeSelected(timeSlot) {
+  onTimeSelected(timeSlot: any) {
     this.selectedTimeSlot = timeSlot.time;
     console.log(timeSlot);
   }
 
   scheduleAppointment() {
-    let dialogRef = this.dialog.open(SuccessPopupComponent, {
+    this.dialog.open(SuccessPopupComponent, {
       data: {
         status: false,
         isStageAvilable: true,
@@ -135,13 +136,13 @@ export class ScheduleKycVideoComponent implements OnInit {
         generatedLink: "dk",
         appontment: {
           selectedDate: this.selectedDate,
-          selectedTime: this.selectedTimeSlot,
-        },
+          selectedTime: this.selectedTimeSlot
+        }
       },
       width: "50%",
       disableClose: true,
       panelClass: "popup-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
   }
 }

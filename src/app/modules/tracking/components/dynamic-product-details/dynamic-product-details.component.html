@@ -29,9 +29,8 @@
                 class="mb-24"
                 *ngFor="let item of dynamicKeyHelper[product.key].keyPair"
               >
-                <ng-container
-                  *ngIf="item.type == 'personal'; else showOtherInfo"
-                >
+                <!-- else showOtherInfo -> 'the else was commented, so i am commenting this part as well; this is used in the below ng-container ' -->
+                <ng-container *ngIf="item.type == 'personal'">
                   <ng-container
                     *ngFor="
                       let personal of product.values;

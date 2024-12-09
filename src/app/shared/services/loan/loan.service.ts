@@ -6,7 +6,7 @@ import { Observable, Subject } from "rxjs";
 const baseUrl = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class LoanService {
   private addNewUploadSubject = new Subject<void>();
@@ -21,7 +21,7 @@ export class LoanService {
     return this.addNewUploadSubject.asObservable();
   }
 
-  getLoanTypes(categoray): Observable<any> | any {
+  getLoanTypes(categoray: any): Observable<any> | any {
     return this.http.get(
       `${baseUrl}/basis-class/fetchAllWebsiteProduct?category=${categoray}`
     );
@@ -49,31 +49,31 @@ export class LoanService {
     );
   }
 
-  submitLoanDetail(payload) {
+  submitLoanDetail(payload: any) {
     return this.http.post<any>(`${baseUrl}/webDisbursement`, payload);
   }
-  getLoanById(id) {
+  getLoanById(id: any) {
     return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
   }
   saveLoanPersonal(loanDetails: any): Observable<any> | any {
     return this.http.post(`${baseUrl}/customer/joint`, loanDetails);
   }
 
-  getProcessStage(processCode) {
+  getProcessStage(processCode: any) {
     // https://192.168.0.127:8765/process_cycle/stages?processCycleCode
     return this.http.get<any>(
       `${baseUrl}/process_cycle/stages?processCycleCode=${processCode}`
     );
   }
-  updateOrigination(data) {
+  updateOrigination(data: any) {
     return this.http.put<any>(`${baseUrl}/webDisbursement`, data);
   }
 
-  verifyWorkFlow(flowData) {
+  verifyWorkFlow(flowData: any) {
     return this.http.post<any>(`${baseUrl}/workflow/verify`, flowData);
   }
 
-  saveLoanApprovalConfig(approvalDetails) {
+  saveLoanApprovalConfig(approvalDetails: any) {
     return this.http.post<any>(
       `${baseUrl}/loan-account/saveLoanApprovalConfig`,
       approvalDetails
@@ -85,9 +85,9 @@ export class LoanService {
       `${baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
     );
   }
-  triggerloanDetailsEmail(formdata) {
+  triggerloanDetailsEmail(formdata: any) {
     return this.http.post(`${baseUrl}/email`, formdata, {
-      responseType: "text",
+      responseType: "text"
     });
   }
   getAllState() {
@@ -101,50 +101,50 @@ export class LoanService {
     );
   }
 
-  getAccountList(customerNumber) {
+  getAccountList(customerNumber: any) {
     return this.http.get<any>(
       `${baseUrl}/customer/accountInfo?customerNo=${customerNumber}`
     );
   }
-  getOriginationMaster(id) {
+  getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser?originationId=${id}`
     );
   }
 
-  checkAccountNumberAvilable(accountNumber) {
+  checkAccountNumberAvilable(accountNumber: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/accountNumber?accountNumber=${accountNumber}`
     );
   }
 
-  getProductDetails(basisId) {
+  getProductDetails(basisId: any) {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
 
-  getProductAspectDetails(basisId) {
+  getProductAspectDetails(basisId: any) {
     return this.http.get<any>(
       `${baseUrl}/aspects-lending?basisDetailId=${basisId}`
     );
   }
 
-  checkMobileAndProduct(productCode, mobileNo, accountType) {
+  checkMobileAndProduct(productCode: any, mobileNo: any, accountType: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
     );
   }
 
-  getProductInterestDetails(basisId) {
+  getProductInterestDetails(basisId: any) {
     return this.http.get<any>(
       `${baseUrl}/interestDetail/formulaElement?basisId=${basisId}`
     );
   }
 
-  fetchStateCityByZipcode(pincode) {
+  fetchStateCityByZipcode(pincode: any) {
     return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
   }
 
-  getCustomerByCif(id) {
+  getCustomerByCif(id: any) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerNo=${id}`);
   }
   stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
@@ -153,34 +153,34 @@ export class LoanService {
       personalDetails
     );
   }
-  getCustByStageId(id) {
+  getCustByStageId(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
     );
   }
 
-  getEmiCalculation(payload) {
+  getEmiCalculation(payload: any) {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 
-  fetchInterestDetails(basisId) {
+  fetchInterestDetails(basisId: any) {
     return this.http.get<any>(
       `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`
     );
   }
-  getCheckListDoc(stageId, screenCode) {
+  getCheckListDoc(stageId: any, screenCode: any) {
     return this.http.get<any>(
       `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`
     );
   }
 
-  saveChecklist(payload) {
+  saveChecklist(payload: any) {
     return this.http.post<any>(
       `${baseUrl}/origination-matser/saveChecklist`,
       payload
     );
   }
-  getSavedChecklist(originationId, screenCode, stageId) {
+  getSavedChecklist(originationId: any, screenCode?: any, stageId?: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenCode}&stageId=${stageId}`
     );

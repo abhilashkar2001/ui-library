@@ -13,35 +13,35 @@ import * as moment from "moment";
 @Component({
   selector: "app-prepaid-reload",
   templateUrl: "./prepaid-reload.component.html",
-  styleUrls: ["./prepaid-reload.component.scss"],
+  styleUrls: ["./prepaid-reload.component.scss"]
 })
 export class PrepaidReloadComponent implements OnInit {
-  reloadForm: FormGroup | undefined;
+  reloadForm!: FormGroup;
   prepaidRegister: any[] = [
     { label: "Prepaid Register", value: true },
-    { label: "Prepaid Non - Register", value: false },
+    { label: "Prepaid Non - Register", value: false }
   ];
   setUpPayment: any[] = [
     { label: "Yes", value: true },
-    { label: "No", value: false },
+    { label: "No", value: false }
   ];
   staticData = {
-    SCHEDULEPAYMENT: [],
+    SCHEDULEPAYMENT: []
   };
   genericValue: any;
-  cardList: AccountList[];
+  cardList: AccountList[] | any;
   profileInfo: AuthUser;
   customerInfo: any;
-  accountDetails:AccountList
+  accountDetails: AccountList | any;
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
-    private cardService:CardService,
+    private cardService: CardService,
     private sessionStorage: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private tokenService: TokenStorageService,
-    private router:Router
+    private router: Router
   ) {
     this.profileInfo = this.tokenService.getUser();
   }
@@ -67,7 +67,7 @@ export class PrepaidReloadComponent implements OnInit {
       schedulePayment: [""],
       frequency: [""],
       noOfInstallments: [""],
-      remarks: [""],
+      remarks: [""]
     });
   }
 
@@ -80,24 +80,28 @@ export class PrepaidReloadComponent implements OnInit {
       });
   }
 
-  selectedCard(event:number){
-    if(event){
-    this.accountDetails = this.cardList.find(
-      (card) => card.cardNumber == event
-    );
-    this.reloadForm.get('currencyCode')?.setValue(this.accountDetails?.currencyCode)
+  selectedCard(event: number) {
+    if (event) {
+      this.accountDetails = this.cardList.find(
+        (card: any) => card.cardNumber == event
+      );
+      this.reloadForm
+        .get("currencyCode")
+        ?.setValue(this.accountDetails?.currencyCode);
     }
   }
 
   proceed() {
     let payload: any = {
       ...this.reloadForm.value,
-      corporateId: this.profileInfo?.corporateCustomerId,
+      corporateId: this.profileInfo?.corporateCustomerId
     };
-    payload.cvv=Number(payload.cvv)
-    payload.noOfInstallments=Number(payload.noOfInstallments)
-    payload.schedulePayment=moment(payload.schedulePayment).format("DD-MMM-YYYY")
-    delete payload.confirmCardNo
+    payload.cvv = Number(payload.cvv);
+    payload.noOfInstallments = Number(payload.noOfInstallments);
+    payload.schedulePayment = moment(payload.schedulePayment).format(
+      "DD-MMM-YYYY"
+    );
+    delete payload.confirmCardNo;
     let creditPaymentArr = [
       {
         eventType: "mmidTransfer",
@@ -110,43 +114,44 @@ export class PrepaidReloadComponent implements OnInit {
             header: "Card Controls",
             details: [
               {
-                "Name on card": this.customerInfo?.customerName,
+                "Name on card": this.customerInfo?.customerName
               },
               {
-                "Card Number":
-                  this.reloadForm?.get("payFrom")?.value,
+                "Card Number": this.reloadForm?.get("payFrom")?.value
               },
               {
-                "Card Name": this.accountDetails?.cardName,
-              },
-            ],
+                "Card Name": this.accountDetails?.cardName
+              }
+            ]
           },
           {
             header: "Payment Details",
             details: [
               { Name: this.customerInfo?.customerName },
               {
-                "Account No": this.reloadForm.get("payFrom")?.value,
+                "Account No": this.reloadForm.get("payFrom")?.value
               },
               {
-                "Payment Amount": this.customerInfo?.accounts[0]?.accountType,
+                "Payment Amount": this.customerInfo?.accounts[0]?.accountType
               },
               {
-                "Schedule Payment": this.reloadForm.get('schedulePayment').value
+                "Schedule Payment":
+                  this.reloadForm.get("schedulePayment")?.value
               },
               {
-                "Frequency":this.reloadForm.get('frequency').value ,
+                Frequency: this.reloadForm.get("frequency")?.value
               },
               {
-                "No of installments": this.reloadForm.get('noOfInstallments').value,
+                "No of installments":
+                  this.reloadForm.get("noOfInstallments")?.value
               },
               {
-                "Remarks": this.reloadForm.get('remarks').value,
-              },
-            ],
-          },
-        ],
-      },
+                Remarks: this.reloadForm.get("remarks")?.value
+              }
+            ]
+          }
+        ]
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ManageDebitCardComponent } from "./manage-debit-card.component";
 import { FlexLayoutModule, CoreModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
@@ -12,7 +11,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
-  declarations: [ManageDebitCardComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ManageDebitCardRoutingModule,
@@ -26,7 +25,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     CoreModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatSlideToggleModule,
-  ],
+    MatSlideToggleModule
+  ]
 })
 export class ManageDebitCardModule {}

@@ -10,10 +10,10 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
   max = 100000;
   min = 1000;
   ammountValue = 0;
-  loanForm: FormGroup;
+  loanForm!: FormGroup | any;
   amount = new FormControl("");
   email = new FormControl("");
-  thumbLabel: boolean = true;
+  thumbLabel: boolean | any = true;
   @Input() fdName = "rdCalculator";
   @Output() customCalculatorValues = new EventEmitter<any>();
   constructor(private fb: FormBuilder) {}
@@ -31,7 +31,8 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
   }
-  onSliderChange(e) {
+
+  onSliderChange(e: any) {
     this.ammountValue = e.srcElement.ariaValueText;
     this.loanForm.get("amount").setValue(e.srcElement.ariaValueText);
   }

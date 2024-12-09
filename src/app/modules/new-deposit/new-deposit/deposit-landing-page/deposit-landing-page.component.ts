@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-deposit-landing-page",
   templateUrl: "./deposit-landing-page.component.html",
-  styleUrls: ["./deposit-landing-page.component.scss"],
+  styleUrls: ["./deposit-landing-page.component.scss"]
 })
 export class DepositLandingPageComponent implements OnInit {
   depositName = "fdCalculator";
@@ -19,7 +19,7 @@ export class DepositLandingPageComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
   }
-  customDepositChange(event) {
+  customDepositChange(event: any) {
     this.depositName = event;
     if (this.depositName == "rdCalculator") {
       this.fdRdName = "RD";

@@ -8,37 +8,37 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-payment-details",
   templateUrl: "./payment-details.component.html",
-  styleUrls: ["./payment-details.component.scss"],
+  styleUrls: ["./payment-details.component.scss"]
 })
 export class PaymentDetailsComponent implements OnInit {
   @Input("paymentDetails") paymentDetails: any;
-  @Input() status: string;
-  operationType: string;
+  @Input() status: string | any;
+  operationType: string | any;
   @Input("response") response: any;
   docCol = [
     {
       headerDef: "documentName",
-      headerCell: "Document Name",
+      headerCell: "Document Name"
     },
     {
       headerDef: "documentNumber",
-      headerCell: "Document Number",
+      headerCell: "Document Number"
     },
     {
       headerDef: "fileUpload",
-      headerCell: "File Upload",
+      headerCell: "File Upload"
     },
     {
       headerDef: "addressProof",
-      headerCell: "Address Proof",
+      headerCell: "Address Proof"
     },
     {
       headerDef: "primary",
-      headerCell: "Primary",
-    },
+      headerCell: "Primary"
+    }
   ];
 
-  paymentDetailsArr = [
+  paymentDetailsArr: any = [
     {
       eventType: "addPayee",
       operationType: "Transfer_Money",
@@ -58,7 +58,7 @@ export class PaymentDetailsComponent implements OnInit {
       payerDetails: {
         payerName: "Srihari.G",
         accountNo: "9872627",
-        bank: "WBC",
+        bank: "WBC"
       },
       summary: [
         {
@@ -71,8 +71,8 @@ export class PaymentDetailsComponent implements OnInit {
             { "Bank Code": "HDFC78566" },
             { "Nick Name": "Sri" },
             { "Mobile No": "87876789890" },
-            { "Email ID": "Sri@gmail.com" },
-          ],
+            { "Email ID": "Sri@gmail.com" }
+          ]
         },
         {
           header: "Send To",
@@ -84,8 +84,8 @@ export class PaymentDetailsComponent implements OnInit {
             { "Bank Code": "HDFC78566" },
             { "Nick Name": "Sri" },
             { "Mobile No": "87876789890" },
-            { "Email ID": "Sri@gmail.com" },
-          ],
+            { "Email ID": "Sri@gmail.com" }
+          ]
         },
         {
           header: "Send From",
@@ -97,15 +97,15 @@ export class PaymentDetailsComponent implements OnInit {
             { "Bank Code": "HDFC78566" },
             { "Nick Name": "Sri" },
             { "Mobile No": "87876789890" },
-            { "Email ID": "Sri@gmail.com" },
-          ],
-        },
+            { "Email ID": "Sri@gmail.com" }
+          ]
+        }
       ],
-      qrToggle: true,
-    },
+      qrToggle: true
+    }
   ];
-  download: Blob;
-  key: string;
+  download: Blob | any;
+  key: string | any;
   masterId: any;
   customerInfo: any;
   profileInfo: any;
@@ -131,7 +131,7 @@ export class PaymentDetailsComponent implements OnInit {
     );
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes) {
       if (changes?.status?.currentValue) {
         this.paymentDetailsArr[0].status = changes.status.currentValue;
@@ -142,7 +142,9 @@ export class PaymentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.paymentDetailsArr = this.paymentDetails;
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
     this.profileInfo = this.tokenStorageService.getUser();
   }
   done() {
@@ -158,7 +160,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   pay() {
     this.router.navigate(["/send-money/dashboard/transfer-money"], {
-      state: { paymentDetails: this.paymentDetails },
+      state: { paymentDetails: this.paymentDetails }
     });
   }
 }

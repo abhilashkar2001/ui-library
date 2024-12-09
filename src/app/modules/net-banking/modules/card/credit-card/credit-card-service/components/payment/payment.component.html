@@ -10,7 +10,7 @@
             <span class="light-blue-title">{{ "Pay From" | translate }}</span>
             <div fxLayout="column">
               <app-ic-custom-pay-from
-                [control]="paymentDetails.get('debitAccount')"
+                [control]="paymentDetails.get('debitAccount') | formcontrol"
                 [inputLabel]="'Account No' | translate"
                 bindValueKey="accountNo"
                 bindLabelKey="accountNo"
@@ -25,7 +25,7 @@
             }}</span>
             <div fxLayout="row">
               <app-ic-custom-pay-from
-                [control]="paymentDetails.get('creditAccount')"
+                [control]="paymentDetails.get('creditAccount') | formcontrol"
                 [inputLabel]="'Card No' | translate"
                 bindValueKey="cardNumber"
                 bindLabelKey="cardNumber"
@@ -51,7 +51,7 @@
           <div fxLayout="column" fxFlex="25">
             <app-ic-radio-button
               [optiions]="options"
-              [control]="paymentDetails.get('amountPaid')"
+              [control]="paymentDetails.get('amountPaid') | formcontrol"
               [displayLabel]="'Amount To be paid' | translate"
               layout="column"
               radiolayout="column"
@@ -63,16 +63,22 @@
             <app-ic-custom-input
               [readonly]="true"
               [inputLabel]="'Payment Amount' | translate"
-              [control]="paymentDetails.get('cardFundTransfer.totalDue')"
+              [control]="
+                paymentDetails.get('cardFundTransfer.totalDue') | formcontrol
+              "
             >
             </app-ic-custom-input>
             <app-ic-custom-input
               [readonly]="true"
-              [control]="paymentDetails.get('cardFundTransfer.minimumDue')"
+              [control]="
+                paymentDetails.get('cardFundTransfer.minimumDue') | formcontrol
+              "
             >
             </app-ic-custom-input>
             <app-ic-custom-input
-              [control]="paymentDetails.get('cardFundTransfer.other')"
+              [control]="
+                paymentDetails.get('cardFundTransfer.other') | formcontrol
+              "
             >
             </app-ic-custom-input>
           </div>
@@ -80,7 +86,9 @@
         <div fxLayout="row" fxLayoutGap="30px" class="mt-12">
           <app-ic-radio-button
             [optiions]="autoPay"
-            [control]="paymentDetails.get('cardFundTransfer.autoPay')"
+            [control]="
+              paymentDetails.get('cardFundTransfer.autoPay') | formcontrol
+            "
             [displayLabel]="'Setup for autoPay for this biller' | translate"
             layout="column"
           >
@@ -89,7 +97,10 @@
             <mat-label class="ml-20 custom-label">Select Amount</mat-label>
             <app-searchable-select
               [items]="selectedAmount"
-              [control]="paymentDetails.get('cardFundTransfer.selectAmount')"
+              [control]="
+                paymentDetails.get('cardFundTransfer.selectAmount')
+                  | formcontrol
+              "
               bindValueKey="value"
               bindLabelKey="label"
             >
@@ -98,7 +109,10 @@
 
           <app-ic-custom-input
             [inputLabel]="'Enter Maximum AutoPay Amount' | translate"
-            [control]="paymentDetails.get('cardFundTransfer.maxAutopayAmount')"
+            [control]="
+              paymentDetails.get('cardFundTransfer.maxAutopayAmount')
+                | formcontrol
+            "
           >
           </app-ic-custom-input>
         </div>

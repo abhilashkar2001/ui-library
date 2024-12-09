@@ -7,7 +7,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-qrcode",
   templateUrl: "./qrcode.component.html",
-  styleUrls: ["./qrcode.component.scss"],
+  styleUrls: ["./qrcode.component.scss"]
 })
 export class QrcodeComponent implements OnInit {
   accountList: any[] = [];
@@ -15,7 +15,7 @@ export class QrcodeComponent implements OnInit {
   imagesrc: any = "";
   baseImageblob: any;
   selectedAccountBank: any = "";
-  qrform: FormGroup;
+  qrform!: FormGroup;
   accountType: any;
 
   constructor(
@@ -31,7 +31,7 @@ export class QrcodeComponent implements OnInit {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     if (this.customerInfo?.accounts[0]?.accountList) {
       this.accountType = this.customerInfo?.accounts[0]?.accountType;
-      this.customerInfo?.accounts[0]?.accountList?.map((res) => {
+      this.customerInfo?.accounts[0]?.accountList?.map((res: any) => {
         this.accountList.push(res?.accountNo);
       });
       this.selectedAccountBank =
@@ -39,22 +39,22 @@ export class QrcodeComponent implements OnInit {
       this.generateQr(this.customerInfo?.accounts[0].accountList[0].accountNo);
       this.qrform
         .get("accountValue")
-        .patchValue(this.customerInfo?.accounts[0].accountList[0].accountNo);
+        ?.patchValue(this.customerInfo?.accounts[0].accountList[0].accountNo);
     }
   }
   buildForm() {
     this.qrform = this.fb.group({
-      accountValue: [""],
+      accountValue: [""]
     });
   }
 
-  cahngeAccount(accnum) {
+  cahngeAccount(accnum: any) {
     console.log(accnum);
 
     this.imagesrc = "";
     this.generateQr(accnum?.value);
   }
-  generateQr(accnum) {
+  generateQr(accnum: any) {
     this.accService.generateAccountQr(accnum).subscribe((res) => {
       this.baseImageblob = res;
       let reader = new FileReader();

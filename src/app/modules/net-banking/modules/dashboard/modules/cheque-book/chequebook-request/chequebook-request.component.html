@@ -6,10 +6,10 @@
         [items]="accountNumberList"
         bindValueKey="accountNo"
         bindLabelKey="accountNo"
-        [control]="chequebookRequestForm.get('accountNo')"
-        skipLabel="false"
+        [control]="chequebookRequestForm.get('accountNo') | formcontrol"
+        [skipLabel]="false"
         showOutsideLabel="true"
-        (selectionChange)="handleAccountNumberChange($event)"
+        (selectionChange)="handleAccountNumberChange()"
       ></app-searchable-select>
       <span class="message" *ngIf="chequeNumber"
         >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
@@ -24,7 +24,7 @@
           [items]="noOfLeaves"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="chequebookRequestForm.get('leavesNo')"
+          [control]="chequebookRequestForm.get('leavesNo') | formcontrol"
           inputLabel="No of Leaves Per Book*"
           showOutsideLabel="true"
         ></app-searchable-select>
@@ -41,7 +41,9 @@
           }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
-            [formControl]="chequebookRequestForm.get('deliveryLocation')"
+            [formControl]="
+              chequebookRequestForm.get('deliveryLocation') | formcontrol
+            "
           >
             <mat-radio-button
               *ngFor="let option of deliveryOptions"
@@ -55,7 +57,7 @@
 
     <ng-container
       *ngIf="
-        chequebookRequestForm.get('deliveryLocation').value ===
+        chequebookRequestForm.get('deliveryLocation')?.value ===
           'Branch Near Me';
         else showMyAddress
       "
@@ -66,7 +68,7 @@
             [items]="branches"
             bindLabelKey="branchName"
             bindValueKey="branchCode"
-            [control]="chequebookRequestForm.get('branch')"
+            [control]="chequebookRequestForm.get('branch') | formcontrol"
             inputLabel="Branch"
             showOutsideLabel="true"
           ></app-searchable-select>
@@ -81,29 +83,29 @@
             [items]="addressTypesList"
             bindValueKey="addressTypes"
             bindLabelKey="addressTypes"
-            [control]="chequebookRequestForm.get('type')"
+            [control]="chequebookRequestForm.get('type') | formcontrol"
             inputLabel="Type"
-            (selectionChange)="changeAddressType($event)"
+            (selectionChange)="changeAddressType()"
             showOutsideLabel="true"
           ></app-searchable-select>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('address1')"
+            [control]="chequebookRequestForm.get('address1') | formcontrol"
             inputLabel="Address Line 1"
             [readonly]="true"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('address2')"
+            [control]="chequebookRequestForm.get('address2') | formcontrol"
             inputLabel="Address Line 2"
             [readonly]="true"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('country')"
+            [control]="chequebookRequestForm.get('country') | formcontrol"
             inputLabel="Country"
             [readonly]="true"
           ></app-ic-custom-input>
@@ -113,21 +115,21 @@
       <div class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('state')"
+            [control]="chequebookRequestForm.get('state') | formcontrol"
             inputLabel="State"
             [readonly]="true"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('city')"
+            [control]="chequebookRequestForm.get('city') | formcontrol"
             inputLabel="City"
             [readonly]="true"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="chequebookRequestForm.get('pin')"
+            [control]="chequebookRequestForm.get('pin') | formcontrol"
             inputLabel="PIN Code"
             [readonly]="true"
           ></app-ic-custom-input>

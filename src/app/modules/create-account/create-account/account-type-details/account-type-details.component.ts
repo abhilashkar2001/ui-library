@@ -5,38 +5,36 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
 import { environment } from "environments/environment";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-account-type-details",
   templateUrl: "./account-type-details.component.html",
-  styleUrls: ["./account-type-details.component.scss"],
+  styleUrls: ["./account-type-details.component.scss"]
 })
 export class AccountTypeDetailsComponent implements OnChanges, OnInit {
-  @Input() subClassList;
+  @Input() subClassList: any;
   @Output() customApply = new EventEmitter<any>();
   basisClass: any = "";
   endPoints = environment.microServiceURL;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private snackBar: MatSnackBar
   ) {
     this.basisClass = this.route.snapshot.params["id"];
   }
 
   ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     this.subClassList = changes?.subClassList?.currentValue;
   }
 
-  getFileUrl(url) {
+  getFileUrl(url: any) {
     if (url.includes("https")) {
       return "assets/images/normal_loan.svg";
     } else {
@@ -44,33 +42,33 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     }
   }
 
-  checkProduct(event) {
+  checkProduct(event: any) {
     if (event?.basisId) {
       this.applyForAccount(event);
     } else if (event?.productDetails === null) {
       this.snackBar.open("No Products Available", "Ok", {
         duration: 3000,
         verticalPosition: "top",
-        horizontalPosition: "right",
+        horizontalPosition: "right"
       });
     } else if (event?.productDetails?.length > 1) {
       this.customApply.emit({
         classDetails: event,
-        subClass: event?.subClass,
+        subClass: event?.subClass
       });
     } else if (event?.clasDetails.productDetails?.length == 1) {
       this.customApply.emit({
         classDetails: event.clasDetails,
-        subClass: event?.subClass,
+        subClass: event?.subClass
       });
     }
   }
 
-  applyForAccount(event) {
+  applyForAccount(event: any) {
     const payload = JSON.stringify({
       accountType: event.basisName,
       basisDetailsId: event.basisId,
-      processCycleCode: event.processCycleCode,
+      processCycleCode: event.processCycleCode
     });
     localStorage.setItem("basisDetails", payload);
     // const url = this.location.prepareExternalUrl(
@@ -82,7 +80,7 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     this.router.navigate([`/account/open/${event.basisId}`]);
   }
 
-  apply(event) {
+  apply(event: any) {
     this.checkProduct(event);
   }
 }

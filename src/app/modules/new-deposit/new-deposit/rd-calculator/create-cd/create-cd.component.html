@@ -6,7 +6,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Deposit Amount</mat-label>
           <input
@@ -18,8 +18,8 @@
           />
           <mat-error
             *ngIf="
-              this.createRdForm.controls.amount.hasError('required') &&
-              this.createRdForm.controls.amount.touched
+              this.createRdForm.controls['amount']?.hasError('required') &&
+              this.createRdForm.controls['amount']?.touched
             "
           >
             Deposit Amount is required
@@ -80,7 +80,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Maturity Date</mat-label>
           <input
@@ -97,8 +97,9 @@
           <mat-datepicker #picker></mat-datepicker>
           <mat-error
             *ngIf="
-              this.createRdForm.controls.maturityDate.hasError('required') &&
-              this.createRdForm.controls.maturityDate.touched
+              this.createRdForm.controls['maturityDate']?.hasError(
+                'required'
+              ) && this.createRdForm.controls['maturityDate']?.touched
             "
           >
             Maturity Date is required
@@ -109,7 +110,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Interest Rate</mat-label>
           <input
@@ -121,8 +122,8 @@
           />
           <mat-error
             *ngIf="
-              this.createRdForm.controls.intrestRate.hasError('required') &&
-              this.createRdForm.controls.intrestRate.touched
+              this.createRdForm.controls['intrestRate']?.hasError('required') &&
+              this.createRdForm.controls['intrestRate']?.touched
             "
           >
             Intrest Rate is required
@@ -133,7 +134,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Maturity Ammount</mat-label>
           <input
@@ -145,8 +146,9 @@
           />
           <mat-error
             *ngIf="
-              this.createRdForm.controls.maturityAmount.hasError('required') &&
-              this.createRdForm.controls.maturityAmount.touched
+              this.createRdForm.controls['maturityAmount']?.hasError(
+                'required'
+              ) && this.createRdForm.controls['maturityAmount']?.touched
             "
           >
             Maturity Amount is required
@@ -157,7 +159,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Deposit Holder Type</mat-label>
           <mat-select formControlName="ownership" [disabled]="!isEnabledEdit">
@@ -170,8 +172,8 @@
           </mat-select>
           <mat-error
             *ngIf="
-              this.createRdForm.controls.ownership.hasError('required') &&
-              this.createRdForm.controls.ownership.touched
+              this.createRdForm.controls['ownership']?.hasError('required') &&
+              this.createRdForm.controls['ownership']?.touched
             "
           >
             Deposit Holder Type is required
@@ -182,7 +184,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Customer Type</mat-label>
           <mat-select
@@ -198,8 +200,9 @@
           </mat-select>
           <mat-error
             *ngIf="
-              this.createRdForm.controls.typeOfCustomer.hasError('required') &&
-              this.createRdForm.controls.typeOfCustomer.touched
+              this.createRdForm.controls['typeOfCustomer']?.hasError(
+                'required'
+              ) && this.createRdForm.controls['typeOfCustomer']?.touched
             "
           >
             Customer Type is required
@@ -210,7 +213,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Payout Type</mat-label>
           <mat-select
@@ -226,8 +229,9 @@
           </mat-select>
           <mat-error
             *ngIf="
-              this.createRdForm.controls.intrestPayout.hasError('required') &&
-              this.createRdForm.controls.intrestPayout.touched
+              this.createRdForm.controls['intrestPayout']?.hasError(
+                'required'
+              ) && this.createRdForm.controls['intrestPayout']?.touched
             "
           >
             Payout Type is required
@@ -238,7 +242,7 @@
         <mat-form-field
           appearance="outline"
           class="full-width"
-          [ngClass]="isEnabledEdit == false && 'disableField'"
+          [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
         >
           <mat-label>Payment Type</mat-label>
           <mat-select
@@ -255,8 +259,8 @@
           </mat-select>
           <mat-error
             *ngIf="
-              this.createRdForm.controls.paymentType.hasError('required') &&
-              this.createRdForm.controls.paymentType.touched
+              this.createRdForm.controls['paymentType']?.hasError('required') &&
+              this.createRdForm.controls['paymentType']?.touched
             "
           >
             Payment Type is required

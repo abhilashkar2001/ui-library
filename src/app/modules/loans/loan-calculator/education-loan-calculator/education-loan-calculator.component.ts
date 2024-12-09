@@ -4,24 +4,25 @@ import { EducationLoan } from "./education-calculator.constant";
 @Component({
   selector: "app-education-loan-calculator",
   templateUrl: "./education-loan-calculator.component.html",
-  styleUrls: ["./education-loan-calculator.component.scss"],
+  styleUrls: ["./education-loan-calculator.component.scss"]
 })
 export class EducationLoanCalculatorComponent implements OnInit {
   educationSteeper = EducationLoan.EDUCATION_STEEPER;
-  educationIndex = 0;
+  educationIndex: any = 0;
 
   constructor() {}
 
   ngOnInit(): void {}
-  customExpenseDetails(event) {
+  customExpenseDetails() {
     this.next();
   }
 
   next() {
     this.educationIndex += 1;
-    this.educationSteeper[this.educationIndex].isCompleted = true;
+    if (this.educationIndex)
+      this.educationSteeper[this.educationIndex].isCompleted = true;
   }
-  customEmiDetails(e) {
+  customEmiDetails() {
     this.next();
   }
 

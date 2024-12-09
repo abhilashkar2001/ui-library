@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class countryStateService {
   protected basePath = environment.microServiceURL;
@@ -13,7 +13,7 @@ export class countryStateService {
 
   constructor(private httpClient: HttpClient) {}
 
-  setCountryDetails(value) {
+  setCountryDetails(value: any) {
     this.subjectMaintenanceData.next(value);
   }
 
@@ -25,7 +25,7 @@ export class countryStateService {
     return this.httpClient.get<any>(`${this.basePath}/country`);
   }
 
-  getState(filterBy, page, size, sortName, direction) {
+  getState(filterBy: any, page: any, size: any, sortName: any, direction: any) {
     var filterEndpoint = "";
     if (filterBy) {
       const keys = Object.keys(filterBy);
@@ -62,7 +62,7 @@ export class countryStateService {
     );
   }
 
-  getStateByCountry(countryId) {
+  getStateByCountry(countryId: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/state?countryId=${countryId}&authStatus=AUTHORIZED&recordStatus=OPEN`
     );
@@ -72,7 +72,7 @@ export class countryStateService {
     return this.httpClient.post<any>(`${this.basePath}/country`, payload);
   }
 
-  deleteCountry(id) {
+  deleteCountry(id: any) {
     return this.httpClient.delete<any>(`${this.basePath}/country?id=${id}`);
   }
 
@@ -81,13 +81,13 @@ export class countryStateService {
   }
 
   getStateByCountryId(
-    filterBy,
-    filterValue,
-    page,
-    size,
-    countryId,
-    sortName,
-    direction
+    filterBy: any,
+    filterValue: any,
+    page: any,
+    size: any,
+    countryId: any,
+    sortName: any,
+    direction: any
   ) {
     const filter = `${filterBy}=${filterValue}`;
     const pagination = `page=${page}&size=${size}`;
@@ -108,12 +108,12 @@ export class countryStateService {
     );
   }
 
-  upsertState(statePayload) {
+  upsertState(statePayload: any) {
     console.log(statePayload);
     return this.httpClient.post<any>(`${this.basePath}/state`, statePayload);
   }
 
-  deleteState(stateId, countryId?: string) {
+  deleteState(stateId: any, countryId?: string) {
     return this.httpClient.delete<any>(
       `${this.basePath}/state?countryId=${countryId}&id=${stateId}`
     );
@@ -122,22 +122,28 @@ export class countryStateService {
   /**
    * Once upload and auditlog api avialable end points need to update.
    */
-  uploadExelFile(file) {
+  uploadExelFile(file: any) {
     return this.httpClient.post<any>(`${this.basePath}/country`, file);
   }
 
   // city
-  upsertCities(payload) {
+  upsertCities(payload: any) {
     return this.httpClient.post<any>(`${this.basePath}/city`, payload);
   }
 
-  getRevisons(id, className) {
+  getRevisons(id: any, className: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname=${className}`
     );
   }
 
-  getDataByCityPage(filterBy, page, size, sortName, direction) {
+  getDataByCityPage(
+    filterBy: any,
+    page: any,
+    size: any,
+    sortName: any,
+    direction: any
+  ) {
     var filterEndpoint = "";
     if (filterBy) {
       const keys = Object.keys(filterBy);
@@ -165,50 +171,50 @@ export class countryStateService {
     );
   }
 
-  getCityById(cityId) {
+  getCityById(cityId: any) {
     return this.httpClient.get<any>(`${this.basePath}/city?cityId=${cityId}`);
   }
-  deleteCity(cityId) {
+  deleteCity(cityId: any) {
     return this.httpClient.delete<any>(`${this.basePath}/city?id=${cityId}`);
   }
 
-  checkduplicate(code) {
+  checkduplicate(code: any) {
     return this.httpClient.get(
       `${this.basePath}/country/dupCountry?countryCode=${code}`
     );
   }
 
-  checkduplicateCountryCode(code) {
+  checkduplicateCountryCode(code: any) {
     return this.httpClient.get(
       `${this.basePath}/country/dupCountryCode?countryCode2=${code}`
     );
   }
 
-  checkduplicateState(code) {
+  checkduplicateState(code: any) {
     return this.httpClient.get(
       `${this.basePath}/state/checkStateCode?stateCode=${code}`
     );
   }
 
-  checkDuplicateCountryName(countryName) {
+  checkDuplicateCountryName(countryName: any) {
     return this.httpClient.get(
       `${this.basePath}/country/name-exist?countryName=${countryName}`
     );
   }
 
-  checkDuplicateStateName(stateName) {
+  checkDuplicateStateName(stateName: any) {
     return this.httpClient.get(
       `${this.basePath}/state/isname-exist?stateName=${stateName}`
     );
   }
 
-  checkDuplicatePincode(pincode) {
+  checkDuplicatePincode(pincode: any) {
     return this.httpClient.get(
       `${this.basePath}/city/pincode-exist?pincode=${pincode}`
     );
   }
 
-  checkDuplicateCity(city) {
+  checkDuplicateCity(city: any) {
     return this.httpClient.get(
       `${this.basePath}/city/checkCityName?cityName=${city}`
     );
@@ -219,13 +225,13 @@ export class countryStateService {
       `${this.basePath}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
-  getCityByState(stateId) {
+  getCityByState(stateId: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/city?stateId=${stateId}&authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
 
-  fetchZipcodeList(payload, page, size) {
+  fetchZipcodeList(payload: any, page: any, size: any) {
     const pagination = `page=${page ?? 1}&size=${size ?? 5}`;
     return this.httpClient.get(
       `${this.basePath}/city/fetch-PinCodeDetail?${pagination}${

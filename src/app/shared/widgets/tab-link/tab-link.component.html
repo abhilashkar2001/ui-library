@@ -2,7 +2,9 @@
   <ng-contaier *ngFor="let tab of tabs; let i = index" (click)="navigate(tab)">
     <div
       class="label-text"
-      [ngClass]="selectedTab?.screenName == tab?.screenName && 'label-selected'"
+      [ngClass]="{
+        'label-selected': selectedTab?.screenName == tab?.screenName
+      }"
     >
       {{ tab?.screenName | translate }}
     </div>

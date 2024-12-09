@@ -25,7 +25,7 @@
           <span class="light-blue-title">{{ title | translate }}</span>
           <div fxLayout="row">
             <app-ic-custom-pay-from
-              [control]="pinGenerationForm.get('selectCard')"
+              [control]="pinGenerationForm.get('selectCard') | formcontrol"
               [inputLabel]="'Card No' | translate"
               bindValueKey="cardNumber"
               bindLabelKey="cardNumber"
@@ -47,7 +47,7 @@
 
         <div fxFlex="20" class="input_wrapper">
           <app-ic-custom-input
-            [control]="pinGenerationForm.get('cvv')"
+            [control]="pinGenerationForm.get('cvv') | formcontrol"
             [inputLabel]="'Enter CVV' | translate"
           ></app-ic-custom-input>
         </div>
@@ -76,7 +76,7 @@
     >
       <div fxFlex="20" class="input_wrapper">
         <app-ic-custom-input
-          [control]="pinGenerationForm.get('otp')"
+          [control]="pinGenerationForm.get('otp') | formcontrol"
         ></app-ic-custom-input>
       </div>
       <div fxFlex class="input_wrapper" class="resend_otp_section">

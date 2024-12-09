@@ -8,7 +8,7 @@ import {
   QueryList,
   SimpleChanges,
   ViewChild,
-  ViewChildren,
+  ViewChildren
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
@@ -30,28 +30,30 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-common-personal-details",
   templateUrl: "./common-personal-details.component.html",
-  styleUrls: ["./common-personal-details.component.scss"],
+  styleUrls: ["./common-personal-details.component.scss"]
 })
 export class CommonPersonalDetailsComponent implements OnInit {
-  customerDetailsForm: FormGroup;
+  customerDetailsForm!: FormGroup;
   @Output() onCustomSubmit = new EventEmitter<{}>();
   @Output() onBackEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
   @Input() isHideField = false;
   @Input() basisId: any;
   @Input() personalDetails: any;
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   @Input() docCustomerDetails: any;
   isDone = true;
   selectedStep: number = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
-  @Input() customerInfo;
+  @Input() customerInfo: any;
   @Input() mobileVerifyInfo: any = {};
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
-    secondCtrl: [""],
+    secondCtrl: [""]
   });
   isLinear = true;
   holderType: any;
@@ -79,7 +81,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   genderPrefixMap = new Map([
     ["male", "Mr"],
     ["female", "Ms"],
-    ["female", "Mrs"],
+    ["female", "Mrs"]
   ]);
   constructor(
     private fb: FormBuilder,
@@ -101,8 +103,8 @@ export class CommonPersonalDetailsComponent implements OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getAllRequisite().then((res) => {
+  ngOnChanges(changes: SimpleChanges | any): void {
+    this.getAllRequisite().then(() => {
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
       } else this.buildCustomerDetailsForm();
@@ -115,7 +117,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     this.holderType =
       sessionStorage.getItem("loanHolderType")?.toLowerCase() || "Self";
     this.loanCustomerId = sessionStorage.getItem("originationId");
-    this.getAllRequisite().then((res) => {
+    this.getAllRequisite().then(() => {
       if (this.personalDetails?.length > 0) {
         this.getGenericDetails();
         this.buildCustomerDetailsForm(this.personalDetails);
@@ -126,133 +128,271 @@ export class CommonPersonalDetailsComponent implements OnInit {
           setTimeout(() => {
             if (this.docCustomerDetails instanceof Array) {
               this.docCustomerDetails.forEach((item, index) => {
-                this.customerDetailsForm
-                  .get("customer")
-                  ["controls"][index].get("dateOfBirth")
-                  .setValue(
+                const customerFormGroup = this.customerDetailsForm.get(
+                  "customer"
+                ) as FormGroup;
+                const customerIndex: any = customerFormGroup.controls[index];
+                customerIndex
+                  .get("dateOfBirth")
+                  ?.setValue(
                     moment(item?.dateOfBirth, "DD/MM/YYYY").format(
                       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
                     )
                   );
+
+                // this.customerDetailsForm
+                //   .get("customer")
+                //   ["controls"][index].get("dateOfBirth")
+                //   .setValue(
+                //     moment(item?.dateOfBirth, "DD/MM/YYYY").format(
+                //       "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+                //     )
+                //   );
                 const applicantNameArray = item?.applicantName
                   ? item?.applicantName?.split(" ")
                   : [];
                 if (applicantNameArray && applicantNameArray?.length >= 3) {
-                  this.customerDetailsForm
-                    .get("customer")
-                    ["controls"][index].get("firstName")
+                  const cstomerFormGroup = this.customerDetailsForm.get(
+                    "customer"
+                  ) as FormGroup;
+                  const cstomerIndex: any = cstomerFormGroup.controls[index];
+                  cstomerIndex
+                    .get("firstName")
                     .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
-                  this.customerDetailsForm
-                    .get("customer")
-                    ["controls"][index].get("lastName")
+
+                  // this.customerDetailsForm
+                  //   .get("customer")
+                  //   ["controls"][index].get("firstName")
+                  //   .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
+
+                  const customerFormGroup = this.customerDetailsForm.get(
+                    "customer"
+                  ) as FormGroup;
+                  const customerIndex: any = customerFormGroup.controls[index];
+                  customerIndex
+                    .get("lastName")
                     .setValue(
                       applicantNameArray?.[applicantNameArray.length - 1]
                     );
+
+                  // this.customerDetailsForm
+                  //   .get("customer")
+                  //   ["controls"][index].get("lastName")
+                  //   .setValue(
+                  //     applicantNameArray?.[applicantNameArray.length - 1]
+                  //   );
                 } else {
-                  this.customerDetailsForm
-                    .get("customer")
-                    ["controls"][index].get("firstName")
+                  const customerFormGroup = this.customerDetailsForm.get(
+                    "customer"
+                  ) as FormGroup;
+                  const customerIndex: any = customerFormGroup.controls[index];
+                  customerIndex
+                    .get("firstName")
                     .setValue(applicantNameArray?.[0]);
-                  this.customerDetailsForm
-                    .get("customer")
-                    ["controls"][index].get("lastName")
+
+                  // this.customerDetailsForm
+                  //   .get("customer")
+                  //   ["controls"][index].get("firstName")
+                  //   .setValue(applicantNameArray?.[0]);
+                  const customerFormGrp = this.customerDetailsForm.get(
+                    "customer"
+                  ) as FormGroup;
+                  const customerIdx: any = customerFormGrp.controls[index];
+                  customerIdx
+                    .get("lastName")
                     .setValue(
                       applicantNameArray?.[applicantNameArray.length - 1]
                     );
+
+                  // this.customerDetailsForm
+                  //   .get("customer")
+                  //   ["controls"][index].get("lastName")
+                  //   .setValue(
+                  //     applicantNameArray?.[applicantNameArray.length - 1]
+                  //   );
                 }
                 let gender = this.genderArray.find(
                   (e) => e.values.toLowerCase() === item?.gender?.toLowerCase()
                 )?.id;
-                this.customerDetailsForm
-                  .get("customer")
-                  ["controls"][index].get("gender")
-                  .setValue(gender);
+                const customerFormGrp = this.customerDetailsForm.get(
+                  "customer"
+                ) as FormGroup;
+                const customerIdx: any = customerFormGrp.controls[index];
+                customerIdx.get("gender").setValue(gender);
+                // this.customerDetailsForm
+                //   .get("customer")
+                //   ["controls"][index].get("gender")
+                //   .setValue(gender);
                 if (item?.gender?.toLowerCase()) {
                   let prefix = this.prefixArray.filter(
                     (val: any) =>
                       val?.values ==
                       this.genderPrefixMap.get(item?.gender?.toLowerCase())
                   );
-                  this.customerDetailsForm
-                    .get("customer")
-                    ["controls"][index].get("prefix")
-                    .setValue(prefix[0]?.id);
+                  const customerFormGrp = this.customerDetailsForm.get(
+                    "customer"
+                  ) as FormGroup;
+                  const customerIdx: any = customerFormGrp.controls[index];
+                  customerIdx.get("prefix").setValue(prefix[0]?.id);
+                  // this.customerDetailsForm
+                  //   .get("customer")
+                  //   ["controls"][index].get("prefix")
+                  //   .setValue(prefix[0]?.id);
                 }
 
-                const address = this.customer
-                  .at(index)
-                  .get("contact")
-                  .get("address")["controls"][0] as FormGroup;
-                address
-                  .get("pincode")
-                  .patchValue(
-                    JSON.parse(sessionStorage.getItem("backData"))[index]
-                      .pincode
-                  );
-                address
-                  .get("address1")
-                  .patchValue(
-                    JSON.parse(sessionStorage.getItem("backData"))[index]
-                      .address1
-                  );
+                const customerControl = this.customer.at(index) as FormGroup;
+
+                if (customerControl) {
+                  const contactControl = customerControl.get(
+                    "contact"
+                  ) as FormGroup;
+
+                  if (contactControl) {
+                    const addressArray = contactControl.get(
+                      "address"
+                    ) as FormArray;
+
+                    if (addressArray && addressArray.controls?.[0]) {
+                      const address = addressArray.controls[0] as FormGroup;
+
+                      const backData = JSON.parse(
+                        sessionStorage.getItem("backData") || "[]"
+                      );
+                      const addressData = backData?.[index];
+
+                      if (address && addressData) {
+                        address
+                          .get("pincode")
+                          ?.patchValue(addressData.pincode || "");
+                        address
+                          .get("address1")
+                          ?.patchValue(addressData.address1 || "");
+                      }
+                    }
+                  }
+                }
 
                 // sessionStorage.removeItem("backData");
               });
               return;
             }
-            this.customerDetailsForm
-              .get("customer")
-              ["controls"][0].get("dateOfBirth")
+            const customerFormGroup = this.customerDetailsForm.get(
+              "customer"
+            ) as FormGroup;
+            const customerIndex: any = customerFormGroup.controls[0];
+            customerIndex
+              .get("dateOfBirth")
               .setValue(
                 moment(
                   this.docCustomerDetails?.dateOfBirth,
                   "DD/MM/YYYY"
                 ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
               );
+
+            // this.customerDetailsForm
+            //   .get("customer")
+            //   ["controls"][0].get("dateOfBirth")
+            //   .setValue(
+            //     moment(
+            //       this.docCustomerDetails?.dateOfBirth,
+            //       "DD/MM/YYYY"
+            //     ).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+            //   );
             const applicantNameArray = this.docCustomerDetails?.applicantName
               ? this.docCustomerDetails?.applicantName?.split(" ")
               : [];
             if (applicantNameArray && applicantNameArray?.length >= 3) {
-              this.customerDetailsForm
-                .get("customer")
-                ["controls"][0].get("firstName")
+              const customerFormGroup = this.customerDetailsForm.get(
+                "customer"
+              ) as FormGroup;
+              const customerIndex: any = customerFormGroup.controls[0];
+              customerIndex
+                .get("firstName")
                 .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
-              this.customerDetailsForm
-                .get("customer")
-                ["controls"][0].get("lastName")
+
+              // this.customerDetailsForm
+              //   .get("customer")
+              //   ["controls"][0].get("firstName")
+              //   .setValue(applicantNameArray?.slice(0, 2)?.join(" "));
+              const customerFormGrp = this.customerDetailsForm.get(
+                "customer"
+              ) as FormGroup;
+              const customerIdx: any = customerFormGrp.controls[0];
+              customerIdx
+                .get("lastName")
                 .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
+
+              // this.customerDetailsForm
+              //   .get("customer")
+              //   ["controls"][0].get("lastName")
+              //   .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             } else {
-              this.customerDetailsForm
-                .get("customer")
-                ["controls"][0].get("firstName")
-                .setValue(applicantNameArray?.[0]);
-              this.customerDetailsForm
-                .get("customer")
-                ["controls"][0].get("lastName")
+              const customerFormGroup = this.customerDetailsForm.get(
+                "customer"
+              ) as FormGroup;
+              const customerIndex: any = customerFormGroup.controls[0];
+              customerIndex.get("firstName").setValue(applicantNameArray?.[0]);
+
+              // this.customerDetailsForm
+              //   .get("customer")
+              //   ["controls"][0].get("firstName")
+              //   .setValue(applicantNameArray?.[0]);
+
+              const customerFormGrp = this.customerDetailsForm.get(
+                "customer"
+              ) as FormGroup;
+              const customerIdx: any = customerFormGrp.controls[0];
+              customerIdx
+                .get("lastName")
                 .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
+
+              // this.customerDetailsForm
+              //   .get("customer")
+              //   ["controls"][0].get("lastName")
+              //   .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             }
             let gender = this.genderArray.find(
               (e) =>
                 e.values.toLowerCase() ===
                 this.docCustomerDetails?.gender?.toLowerCase()
             )?.id;
-            this.customerDetailsForm
-              .get("customer")
-              ["controls"][0].get("gender")
-              .setValue(gender);
-            const address = this.customer.at(0).get("contact").get("address")[
-              "controls"
-            ][0] as FormGroup;
-            address
-              .get("pincode")
-              .patchValue(
-                JSON.parse(sessionStorage.getItem("backData"))[0].pincode
-              );
-            address
-              .get("address1")
-              .patchValue(
-                JSON.parse(sessionStorage.getItem("backData"))[0].address1
-              );
+
+            const customerFormGrp = this.customerDetailsForm.get(
+              "customer"
+            ) as FormGroup;
+            const customerIdx: any = customerFormGrp.controls[0];
+            customerIdx.get("gender").setValue(gender);
+
+            // this.customerDetailsForm
+            //   .get("customer")
+            //   ["controls"][0].get("gender")
+            //   .setValue(gender);
+
+            const customerControl = this.customer.at(0) as FormGroup;
+            if (!customerControl) {
+              throw new Error("Customer control is missing.");
+            }
+
+            const contactControl = customerControl.get("contact") as FormGroup;
+            if (!contactControl) {
+              throw new Error("Contact control is missing.");
+            }
+
+            const addressArray = contactControl.get("address") as FormArray;
+            if (!addressArray || !addressArray.controls?.[0]) {
+              throw new Error("Address array or controls are missing.");
+            }
+
+            const address = addressArray.controls[0] as FormGroup;
+            const backData = JSON.parse(
+              sessionStorage.getItem("backData") || "[]"
+            );
+            if (!backData?.[0]) {
+              throw new Error("Back data is missing.");
+            }
+
+            address.get("pincode")?.patchValue(backData[0].pincode || "");
+            address.get("address1")?.patchValue(backData[0].address1 || "");
 
             // sessionStorage.removeItem("backData");
           }, 100);
@@ -263,7 +403,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
   async getAllRequisite() {
     return new Promise((resolve) => {
       forkJoin({
-        countries: this.api.getCountryDetails(),
+        countries: this.api.getCountryDetails()
       }).subscribe(
         (res) => {
           console.log(res, "......");
@@ -277,12 +417,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
     });
   }
 
-  getState(resp) {
+  getState(resp: any) {
     if (resp?.statusCode === 200) {
       this.listCityState = resp.data;
     }
   }
-  getCity(resp) {
+  getCity(resp: any) {
     if (resp?.statusCode === 200) {
       this.countryArray = resp.data;
     }
@@ -312,16 +452,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
   }
-  getCountry(resp) {
+  getCountry(resp: any) {
     if (resp?.statusCode === 200) {
       if (resp?.data) {
         this.countryArray = resp?.data;
-        resp?.data.forEach((element) => {
+        resp?.data.forEach((element: any) => {
           if (element.nationality != null) this.nationalityArray.push(element);
         });
         this.countriesIsdCodes = resp?.data;
         const indiaIsdCode = this.countriesIsdCodes.find(
-          (item) =>
+          (item: any) =>
             item?.countryName == this.tokenStore.getUserOtherInfo().country
         );
         if (indiaIsdCode) {
@@ -336,10 +476,10 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
   }
 
-  buildCustomerDetailsForm(data?) {
+  buildCustomerDetailsForm(data?: any) {
     this.customerDetailsForm = this.fb.group({
       loanCustomerId: "",
-      customer: this.fb.array([]),
+      customer: this.fb.array([])
     });
 
     if (data?.length > 0) {
@@ -358,7 +498,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
   }
 
-  renderApplicant(data, applicantLength) {
+  renderApplicant(data: any, applicantLength: any) {
     for (let i = 0; i < applicantLength; i++)
       this.addCustomer(i, data && data[i]);
   }
@@ -367,14 +507,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
     return this.customerDetailsForm.get("customer") as FormArray;
   }
 
-  newCustomer(data?): FormGroup {
+  newCustomer(data?: any): FormGroup {
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ""],
       customerStagingId: data?.customerStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ""],
       primaryCustomer: [
-        data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
+        data ? data.primaryCustomer : this.customer.length == 0 ? true : false
       ],
       prefix: [data ? data.prefix : "", Validators.required],
       firstName: [data ? data.firstName : "", Validators.required],
@@ -395,23 +535,23 @@ export class CommonPersonalDetailsComponent implements OnInit {
             Validators.required,
             Validators.pattern(
               "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-            ),
-          ],
+            )
+          ]
         ],
         mobile: [
           data?.contact ? data?.contact.mobile : "",
-          [Validators.required],
+          [Validators.required]
         ],
         mobtCode: [
           data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
-          [Validators.required],
+          [Validators.required]
         ],
-        address: this.fb.array([]),
-      }),
+        address: this.fb.array([])
+      })
     });
   }
 
-  addAddress(i, address?) {
+  addAddress(i: any, address?: any) {
     const jk = this.customer.at(i).get("contact") as FormGroup;
     const pk = jk.get("address") as FormArray;
     const addressArrayControl = pk;
@@ -424,27 +564,27 @@ export class CommonPersonalDetailsComponent implements OnInit {
         pincode: [address?.pincode ?? "", [Validators.required]],
         stateName: [address?.stateName ?? ""],
         cityId: [address?.cityId ?? ""],
-        cityName: [address?.cityName ?? ""],
+        cityName: [address?.cityName ?? ""]
       })
     );
   }
 
-  calculateId(data) {
-    var docIds = [];
-    data?.documnentsInfo?.documents.forEach((item) => {
-      let docItemId = [];
-      item.docs.forEach((docItem) => {
+  calculateId(data: any) {
+    var docIds: any = [];
+    data?.documnentsInfo?.documents.forEach((item: any) => {
+      let docItemId: any = [];
+      item.docs.forEach((docItem: any) => {
         docItemId.push(docItem.documentId);
       });
       const docId = {
-        docIds: docItemId,
+        docIds: docItemId
       };
       docIds.push(docId);
     });
     return docIds;
   }
 
-  async addCustomer(i, data?) {
+  async addCustomer(i: any, data?: any) {
     await this.customer.push(this.newCustomer(data));
     this.addAddress(i, data ? data.contact?.address[0] : {});
     this.debounceZipCodeAndCif();
@@ -457,14 +597,18 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
   }
 
-  fetchStateCity(i) {
-    const addressControl = this.customer.at(i).get("contact").get("address")[
-      "controls"
-    ][0] as FormGroup;
+  fetchStateCity(i: any) {
+    const customer = this.customer.at(i).get("contact") as FormGroup;
+    const address: any = customer.get("address");
+
+    const addressControl = address.controls[0];
+    //   this.customer.at(i).get("contact").get("address")[
+    //   "controls"
+    // ][0] as FormGroup;
     addressControl
       ?.get("pincode")
       .valueChanges.pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe((value) => {
+      .subscribe((value: any) => {
         if (value) {
           if (value.toString().length) {
             setTimeout(() => {
@@ -475,13 +619,13 @@ export class CommonPersonalDetailsComponent implements OnInit {
                     addressControl.patchValue(res?.data?.[0]);
                     addressControl
                       .get("countryName")
-                      .patchValue(res?.data?.[0]?.countryName);
+                      ?.patchValue(res?.data?.[0]?.countryName);
                     addressControl
                       .get("cityName")
-                      .patchValue(res?.data?.[0]?.city);
+                      ?.patchValue(res?.data?.[0]?.city);
                     addressControl
                       .get("stateName")
-                      .patchValue(res?.data?.[0]?.state);
+                      ?.patchValue(res?.data?.[0]?.state);
                   }
                 });
             }, 1000);
@@ -489,16 +633,16 @@ export class CommonPersonalDetailsComponent implements OnInit {
         }
       });
   }
-  getCustomerByCif(i) {
+  getCustomerByCif(i: any) {
     this.customer.controls[i]
-      .get("customerNo")
-      .valueChanges.pipe(debounceTime(500))
+      ?.get("customerNo")
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
         if (value) {
           this.loanApi.getCustomerByCif(value).subscribe((resp) => {
             console.log(this.customer);
             if (resp && resp?.statusCode === 200) {
-              this.customer.controls[i].patchValue(
+              this.customer.controls[i]?.patchValue(
                 this.FactoryPopulate(resp.data[0])
               );
               this.customerDetailsForm.markAllAsTouched();
@@ -512,12 +656,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
       });
   }
 
-  debounceValue(delay: number, value: number, i): void {
+  debounceValue(delay: number, value: number, i: any): void {
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }
     this.debounceTimeout = setTimeout(() => {
-      const mobileControl = this.customer.at(i).get("contact").get("mobile");
+      const mobileControl = this.customer.at(i).get("contact")?.get("mobile");
       if (i == 0)
         this.openApi
           .checkMobileAndProduct(
@@ -533,47 +677,56 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }, delay);
   }
 
-  checkProductDuplicacy(event, i) {
+  checkProductDuplicacy(event: any, i: any) {
     this.debounceValue(500, event.target.value, i);
   }
 
-  checkMobileValidtiy(i) {
-    const mobileControl = this.customer.at(i).get("contact").get("mobile");
-    const mobileNo = parseInt(sessionStorage.getItem("mobileNo"));
+  checkMobileValidtiy(i: any) {
+    const mobileControl: any = this.customer
+      .at(i)
+      .get("contact")
+      ?.get("mobile");
+    const mobileNo = parseInt(<string>sessionStorage.getItem("mobileNo"));
     if (mobileNo) {
       if (i === 0) {
         mobileControl.markAllAsTouched();
         mobileControl.patchValue(mobileNo);
       }
     }
-    mobileControl.valueChanges.pipe(debounceTime(500)).subscribe((resp) => {
-      if (String(resp)?.length != this.maxMobileLength && i != 0) {
-        mobileControl.setErrors({
-          ...mobileControl.errors,
-          invalidLength: true,
-        });
-      }
-    });
+    mobileControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((resp: any) => {
+        if (String(resp)?.length != this.maxMobileLength && i != 0) {
+          mobileControl.setErrors({
+            ...mobileControl.errors,
+            invalidLength: true
+          });
+        }
+      });
   }
 
-  allreadyProduct(mobileControl) {
+  allreadyProduct(mobileControl: any) {
     const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
       data: {
         errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
-        errorMessageHint: "Please visit bank for more information.",
+        errorMessageHint: "Please visit bank for more information."
       },
       width: "650px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
-    dialogRef.afterClosed().subscribe((data) => {
+    dialogRef.afterClosed().subscribe(() => {
       mobileControl.setValue("");
     });
   }
 
-  resetExceptCif(i) {
-    this.customerDetailsForm.get("customer")["controls"][i].patchValue({
+  resetExceptCif(i: any) {
+    const customerFormGroup = this.customerDetailsForm.get(
+      "customer"
+    ) as FormGroup;
+    const customerIndex: any = customerFormGroup.controls[i];
+    customerIndex.patchValue({
       primaryCustomer: false,
       prefix: "",
       firstName: "",
@@ -589,23 +742,31 @@ export class CommonPersonalDetailsComponent implements OnInit {
       state: "",
       cityId: "",
       source: "",
-      kycStatus: "",
+      kycStatus: ""
     });
   }
-  pincodeExpansion(i) {
+  pincodeExpansion() {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "dialog-class"
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        const addressControl = this.customer
-          .at(i)
-          .get("contact")
-          .get("address")["controls"][0] as FormGroup;
+        const customerFormGroup = this.customerDetailsForm.get(
+          "customer"
+        ) as FormGroup;
+        const customerAddress: any = customerFormGroup.controls[
+          "address"
+        ] as FormGroup;
+        customerAddress.controls[0];
+        const addressControl = customerAddress.controls[0];
+        // this.customer
+        // .at(i)
+        // .get("contact")
+        // .get("address")["controls"][0] as FormGroup;
         addressControl.patchValue(res);
-        addressControl.get("countryName").patchValue(res.countryName);
+        addressControl.get("countryName")?.patchValue(res.countryName);
       }
     });
   }
@@ -619,7 +780,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     }
 
     let prefixValue = null;
-    this.customerDetailsForm.value.customer.forEach((element, i) => {
+    this.customerDetailsForm.value.customer.forEach((element: any) => {
       this.prefixArray.forEach((el) => {
         if (element.primaryCustomer && el.id == element.prefix) {
           prefixValue = el.values;
@@ -630,14 +791,14 @@ export class CommonPersonalDetailsComponent implements OnInit {
     this.onCustomSubmit.emit({
       status: true,
       prefixValue: prefixValue,
-      personalDetails: this.customerDetailsForm,
+      personalDetails: this.customerDetailsForm
     });
 
     this?.updateParentModel({
       personalDetails: this.customerDetailsForm.value,
       updateMasterSave: true,
       prefixValue: prefixValue,
-      isForLoan: false,
+      isForLoan: false
     });
   }
 
@@ -648,19 +809,19 @@ export class CommonPersonalDetailsComponent implements OnInit {
   isAnyPrimaryCustomer() {
     if (
       this.customerDetailsForm.value.customer.some(
-        (item) => item?.primaryCustomer == true
+        (item: any) => item?.primaryCustomer == true
       )
     ) {
       return false;
     } else {
       this.dialog.open(ErrorNotifierPopupComponent, {
         data: {
-          errorMessage: "Please select primary customer",
+          errorMessage: "Please select primary customer"
         },
         width: "650px",
         disableClose: true,
         panelClass: "popup-dialog-class",
-        backdropClass: "bdrop",
+        backdropClass: "bdrop"
       });
       return true;
     }
@@ -669,11 +830,11 @@ export class CommonPersonalDetailsComponent implements OnInit {
   goBack() {
     this.onBackEvent.emit();
   }
-  saveCustomer(i) {
+  saveCustomer(i: any) {
     this.closePanel(i);
     console.log(this.customerDetailsForm);
   }
-  closePanel(index) {
+  closePanel(index: any) {
     this.panels.forEach((panel, i) => {
       if (i == index) {
         panel.close();
@@ -681,7 +842,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     });
   }
 
-  FactoryPopulate(resp) {
+  FactoryPopulate(resp: any) {
     return {
       customerId: resp?.customerId,
       primaryCustomer: "",
@@ -703,18 +864,18 @@ export class CommonPersonalDetailsComponent implements OnInit {
             countryName: resp.contact.address[0].countryName,
             pincode: resp.contact.address[0].pincode,
             state: resp.contact.address[0].stateName,
-            cityId: resp.contact.address[0].cityId,
-          },
-        ],
+            cityId: resp.contact.address[0].cityId
+          }
+        ]
       },
       source: resp.source,
       kycStatus: resp.kycStatus,
       mobile: resp.contact.mobile,
-      mobtCode: parseInt(resp.contact.mobtCode),
+      mobtCode: parseInt(resp.contact.mobtCode)
     };
   }
   checkPrimaryCustomer() {
-    return this.customerDetailsForm.value.customer.some((item, i) => {
+    return this.customerDetailsForm.value.customer.some((item: any, i: any) => {
       if (item.primaryCustomer) {
         this.primaryCustIndex = i;
         return item.primaryCustomer;
@@ -729,7 +890,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     });
   }
 
-  dateOfBirthSelected(selectedDate, i) {
+  dateOfBirthSelected(selectedDate: any, i: any) {
     let dateOfBirth = moment(selectedDate).format("YYYY-MMM-DD");
     console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
     if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
@@ -740,29 +901,39 @@ export class CommonPersonalDetailsComponent implements OnInit {
       this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
     }
   }
-  showAgeValidation(i) {
+  showAgeValidation(i: any) {
     setTimeout(() => {
-      this.customerDetailsForm
-        .get("customer")
-        ["controls"][i].get("dateOfBirth")
-        .setValue(null);
-      this.customerDetailsForm
-        .get("customer")
-        ["controls"][i].get("dateOfBirth")
-        .setErrors({ invalidDob: true });
+      const customerFormGroup = this.customerDetailsForm.get(
+        "customer"
+      ) as FormGroup;
+      const customerIndex: any = customerFormGroup.controls[i];
+      customerIndex.get("dateOfBirth").setValue(null);
+      // this.customerDetailsForm
+      //   .get("customer")
+      //   ["controls"][i].get("dateOfBirth")
+      //   .setValue(null);
+      const customerFormGrp = this.customerDetailsForm.get(
+        "customer"
+      ) as FormGroup;
+      const customerIdx: any = customerFormGrp.controls[i];
+      customerIdx.get("dateOfBirth").setErrors({ invalidDob: true });
+      // this.customerDetailsForm
+      //   .get("customer")
+      //   ["controls"][i].get("dateOfBirth")
+      //   .setErrors({ invalidDob: true });
     }, 100);
   }
-  calculateAge(dateOfBirth) {
+  calculateAge(dateOfBirth: any) {
     return moment().diff(dateOfBirth, "years");
   }
 
   CheckGenderandPrefix(index: number) {
     const personalInfoGroup = this.customer.at(index);
     const prefix = this.prefixArray.filter(
-      (item) => item.id === personalInfoGroup.get("prefix").value
+      (item) => item.id === personalInfoGroup.get("prefix")?.value
     )[0].values;
     const gender = this.genderArray.filter(
-      (item) => item.id === personalInfoGroup.get("gender").value
+      (item) => item.id === personalInfoGroup.get("gender")?.value
     )[0]?.values;
     if (prefix && gender) {
       if (
@@ -772,12 +943,12 @@ export class CommonPersonalDetailsComponent implements OnInit {
       ) {
         console.log("Prefix and Gender match!");
       } else {
-        personalInfoGroup.get("prefix").patchValue("");
-        personalInfoGroup.get("gender").patchValue("");
+        personalInfoGroup.get("prefix")?.patchValue("");
+        personalInfoGroup.get("gender")?.patchValue("");
         this.snack.open("Prefix and Gender does not match!", "OK", {
           duration: 2000,
           verticalPosition: "top",
-          horizontalPosition: "right",
+          horizontalPosition: "right"
         });
       }
     }

@@ -6,12 +6,12 @@ import { ReusableNodatafoundComponent } from "app/shared/components/reusable-nod
 @Component({
   selector: "app-external-link",
   templateUrl: "./external-link.component.html",
-  styleUrls: ["./external-link.component.scss"],
+  styleUrls: ["./external-link.component.scss"]
 })
 export class ExternalLinkComponent implements OnInit {
-  @Input("title") title;
-  @Input("types") types: string[];
-  @Input("screenName") screenName;
+  @Input("title") title: any;
+  @Input("types") types: string[] | any;
+  @Input("screenName") screenName: any;
 
   constructor(private router: Router, private dialog: MatDialog) {
     console.log(this.types);
@@ -26,7 +26,7 @@ export class ExternalLinkComponent implements OnInit {
         data: screenName,
         width: "40%",
         height: "auto",
-        disableClose: true,
+        disableClose: true
       });
     else this.router.navigate([route]);
   }

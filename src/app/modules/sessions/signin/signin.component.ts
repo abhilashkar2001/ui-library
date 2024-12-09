@@ -14,11 +14,11 @@ import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: "app-signin",
   templateUrl: "./signin.component.html",
-  styleUrls: ["./signin.component.scss"],
+  styleUrls: ["./signin.component.scss"]
 })
 export class SigninComponent implements OnInit {
   appData: ApplicationData = SessionsConstants.APPLICATION_DATA;
-  signinForm: FormGroup;
+  signinForm!: FormGroup;
   hide = true;
   config = {
     allowNumbersOnly: false,
@@ -28,8 +28,8 @@ export class SigninComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "70px",
-      height: "70px",
-    },
+      height: "70px"
+    }
   };
   authType: string = "signIn";
   otp: any;
@@ -56,7 +56,7 @@ export class SigninComponent implements OnInit {
       username: ["", Validators.required],
       password: ["", Validators.required],
       // otpRequired: [true],
-      appType: ["CORP"],
+      appType: ["CORP"]
     });
   }
 
@@ -72,7 +72,7 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  onOtpChange(otp) {
+  onOtpChange(otp: any) {
     this.otp = otp;
   }
   goBack() {
@@ -80,11 +80,6 @@ export class SigninComponent implements OnInit {
   }
 
   onVerify() {
-    let payload = {
-      username: this.signinForm.value.username,
-      otp: this.otp,
-      tokenRequired: true,
-    };
     this.getProfile();
     // this.commonService.verifyOTP(payload).subscribe((res: any) => {
     //   if (res.data !== "Invalid OTP") {
@@ -100,10 +95,10 @@ export class SigninComponent implements OnInit {
     // });
   }
 
-  fetchThemeAndLanguange(userId: number) {
+  fetchThemeAndLanguange() {
     return new Promise((resolve, reject) => {
       this.themingService.fetchCurrentTheme(2456).subscribe(
-        (res: IcHttpResponseModel<any>) => {
+        (res: IcHttpResponseModel<any> | any) => {
           resolve(res);
         },
         (err) => reject(err)
@@ -117,7 +112,7 @@ export class SigninComponent implements OnInit {
         let errPayload = {
           error: res?.error,
           message: res?.message,
-          statusCode: res?.status,
+          statusCode: res?.status
         };
         this.dialog.open(NewErrorPopupComponent, {
           width: "45%",
@@ -125,13 +120,13 @@ export class SigninComponent implements OnInit {
           disableClose: true,
           data: {
             type: "customError",
-            errPayload,
-          },
+            errPayload
+          }
         });
       } else {
         console.log(res);
         this.tokenService.saveUser(res);
-        const result: any = await this.fetchThemeAndLanguange(res?.userId);
+        const result: any = await this.fetchThemeAndLanguange();
         if (result?.data?.length) {
           sessionStorage.setItem(
             "userThemeLang",

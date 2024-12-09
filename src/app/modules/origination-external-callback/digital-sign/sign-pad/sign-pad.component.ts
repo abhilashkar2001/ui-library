@@ -3,9 +3,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -13,15 +12,17 @@ import { DomSanitizer } from "@angular/platform-browser";
 @Component({
   selector: "app-sign-pad",
   templateUrl: "./sign-pad.component.html",
-  styleUrls: ["./sign-pad.component.scss"],
+  styleUrls: ["./sign-pad.component.scss"]
 })
 export class SignPadComponent implements AfterViewInit {
   @Output() public signpadImage = new EventEmitter();
-  @ViewChild("canvas", { static: true }) canvas: ElementRef<HTMLCanvasElement>;
-  private ctx: CanvasRenderingContext2D;
+  @ViewChild("canvas", { static: true }) canvas:
+    | ElementRef<HTMLCanvasElement>
+    | any;
+  private ctx: CanvasRenderingContext2D | any;
   private isDrawing: boolean = false;
-  private lastX: number;
-  private lastY: number;
+  private lastX: number | any;
+  private lastY: number | any;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -81,7 +82,7 @@ export class SignPadComponent implements AfterViewInit {
   saveSignature() {
     // Create a new canvas with white background
     const newCanvas = document.createElement("canvas");
-    const newCtx = newCanvas.getContext("2d");
+    const newCtx: any = newCanvas.getContext("2d");
     newCanvas.width = this.canvas.nativeElement.width;
     newCanvas.height = this.canvas.nativeElement.height;
     newCtx.fillStyle = "white";

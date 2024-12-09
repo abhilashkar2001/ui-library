@@ -24,15 +24,15 @@
         </div>
         <mat-error
           class="custom_error"
-          *ngIf="emailForm.get('email').hasError('pattern')"
+          *ngIf="emailForm.get('email')?.hasError('pattern')"
         >
           <p class="error_message">Invalid email address</p>
         </mat-error>
         <mat-error
           class="custom_error"
           *ngIf="
-            emailForm.get('email').touched &&
-            emailForm.get('email').hasError('required')
+            emailForm.get('email')?.touched &&
+            emailForm.get('email')?.hasError('required')
           "
         >
           <p class="error_message">Email address is required</p>

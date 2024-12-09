@@ -2,31 +2,31 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChange,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { LoanService } from "app/shared/services/loan/loan.service";
 
 @Component({
   selector: "app-national-id-upload",
   templateUrl: "./national-id-upload.component.html",
-  styleUrls: ["./national-id-upload.component.scss"],
+  styleUrls: ["./national-id-upload.component.scss"]
 })
 export class NationalIdUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
-  @Input("numberOfDirectors") numberOfDirectors: number;
+  @Input("numberOfDirectors") numberOfDirectors: number | any;
 
   custId: any;
   stepperTitle: any;
   documentTypeArray: any[] = [{}];
   staticData = {
-    DOCUMENTTYPE: [],
+    DOCUMENTTYPE: []
   };
   screenName: string = "Loan Document";
   verificationType: string = "Other Document";
@@ -34,8 +34,8 @@ export class NationalIdUploadComponent implements OnInit {
   genericScreenInfo = {
     screenName: "Loan Document",
     staticData: {
-      DOCUMENTNAME: [],
-    },
+      DOCUMENTNAME: []
+    }
   };
   ocrProcess: boolean = true;
   checkListDocList: any = {
@@ -48,9 +48,9 @@ export class NationalIdUploadComponent implements OnInit {
         mandatoryForNxtStg: false,
         mandatoryForApproval: false,
         docRequired: true,
-        documentTypes: null,
-      },
-    ],
+        documentTypes: null
+      }
+    ]
   };
 
   constructor(private loanApi: LoanService) {}
@@ -72,7 +72,7 @@ export class NationalIdUploadComponent implements OnInit {
           mandatoryForNxtStg: false,
           mandatoryForApproval: false,
           docRequired: true,
-          documentTypes: null,
+          documentTypes: null
         });
       }
     }
@@ -86,7 +86,7 @@ export class NationalIdUploadComponent implements OnInit {
   //   console.log(changes, "nationalIdDocumentList");
   // }
 
-  getOrigination(originationId) {
+  getOrigination(originationId: any) {
     this.loanApi
       .getOriginationMaster(parseInt(originationId))
       .subscribe((resp) => {
@@ -100,15 +100,15 @@ export class NationalIdUploadComponent implements OnInit {
         }
       });
   }
-  onSubmit(event) {
+  onSubmit(event: any) {
     console.log(event, "......");
-    var docIds = [];
-    let customerDetails = [];
+    var docIds: any = [];
+    let customerDetails: any = [];
     if (this.numberOfDirectors) {
-      event.documentDetails.otherDocument.forEach((element) => {
+      event.documentDetails.otherDocument.forEach((element: any) => {
         if (element.docIds?.length > 0) {
           const docId = {
-            docIds: element.docIds,
+            docIds: element.docIds
           };
           docIds.push(docId);
           customerDetails.push(element.fileInfo[0]);
@@ -116,15 +116,15 @@ export class NationalIdUploadComponent implements OnInit {
         }
       });
     } else {
-      event.documentDetails.otherDocument.forEach((element) => {
+      event.documentDetails.otherDocument.forEach((element: any) => {
         if (element.docIds?.length > 0) {
           const docId = {
-            docIds: element.docIds,
+            docIds: element.docIds
           };
           docIds.push(docId);
           console.log(customerDetails);
           console.log(element);
-          element.fileInfo.forEach((item) => {
+          element.fileInfo.forEach((item: any) => {
             console.log(item, ".......");
             if (item.applicantName || item.gender || item.dateOfBirth) {
               console.log(";;;;;;;");
@@ -140,7 +140,7 @@ export class NationalIdUploadComponent implements OnInit {
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: true,
-      customerDetails: customerDetails,
+      customerDetails: customerDetails
     });
     this.onCustomSubmit.emit();
   }

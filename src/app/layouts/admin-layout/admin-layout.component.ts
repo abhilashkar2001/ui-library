@@ -1,14 +1,12 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { UserActiveState } from "app/shared/helpers/userActiveState";
 import { ThemeService } from "app/shared/services/theme.service";
 @Component({
   selector: "app-admin-layout",
-  templateUrl: "./admin-layout.template.html",
+  templateUrl: "./admin-layout.template.html"
 })
 export class AdminLayoutComponent implements OnInit, AfterViewInit {
   constructor(
-    private router: Router,
     public themeService: ThemeService,
     private userActiveState: UserActiveState
   ) {
@@ -21,7 +19,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy() {}
 
-  scrollToTop(e) {
+  scrollToTop() {
     window.scrollTo(0, 0);
   }
 }

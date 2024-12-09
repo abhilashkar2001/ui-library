@@ -5,7 +5,7 @@
       <span class="light-blue-title">{{ title | translate }}</span>
       <div fxLayout="row">
         <app-searchable-select
-          [control]="blockCardForm.get('creditAccount')"
+          [control]="blockCardForm.get('creditAccount') | formcontrol"
           [inputLabel]="'Card No' | translate"
           bindValueKey="cardNumber"
           bindLabelKey="cardNumber"
@@ -32,7 +32,7 @@
           layout="column"
           labelClass="blueLabel"
           [displayLabel]="'Reason' | translate"
-          [control]="blockCardForm.get('reason')"
+          [control]="blockCardForm.get('reason') | formcontrol"
         >
         </app-ic-radio-button>
       </div>

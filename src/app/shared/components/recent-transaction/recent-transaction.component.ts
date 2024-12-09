@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatIconRegistry } from "@angular/material/icon";
@@ -20,20 +20,20 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-recent-transaction",
   templateUrl: "./recent-transaction.component.html",
-  styleUrls: ["./recent-transaction.component.scss"],
+  styleUrls: ["./recent-transaction.component.scss"]
 })
 export class RecentTransactionComponent implements OnInit {
   @Output() tabChanged = new EventEmitter<any>();
-  @Input("customerInfo") customerInfo;
-  @Input("selectedAcc") selectedAcc;
+  @Input("customerInfo") customerInfo: any;
+  @Input("selectedAcc") selectedAcc: any;
 
-  @Input("showMoneyStatusIcon") showMoneyStatusIcon;
+  @Input("showMoneyStatusIcon") showMoneyStatusIcon: any;
   @Input("recentTransTabs")
-  recentTransTabs;
-  @Input("recentTransCols") recentTransCols;
-  @Input("recentTransData") recentTransData;
-  @Input("event") event;
-  @Input("cardInfo") cardInfo;
+  recentTransTabs: any;
+  @Input("recentTransCols") recentTransCols: any;
+  @Input("recentTransData") recentTransData: any;
+  @Input("event") event: any;
+  @Input("cardInfo") cardInfo: any;
   selectedRecentTab: any;
   searchValue: FormControl = new FormControl("");
   selectedDate: FormControl = new FormControl("");
@@ -43,13 +43,13 @@ export class RecentTransactionComponent implements OnInit {
     { value: "ONEWEEK", label: "Last 7 days" },
     { value: "CURRENTMONTH", label: "Current Month" },
     { value: "LASTTHREEMONTH", label: "Last 3 Month" },
-    { value: "DATERANGE", label: "Select Date Range" },
+    { value: "DATERANGE", label: "Select Date Range" }
   ];
 
-  fromDate: string;
-  toDate: string;
-  createdDate: string;
-  cardList: CardModel[];
+  fromDate: string | any;
+  toDate: string | any;
+  createdDate: string | any;
+  cardList: CardModel[] | any;
   profileInfo: any;
   page: any;
   recentTransMetaData: any;
@@ -85,7 +85,7 @@ export class RecentTransactionComponent implements OnInit {
     );
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.recentTransData) {
       if (changes.recentTransData.currentValue) {
         this.recentTransData = changes.recentTransData.currentValue;
@@ -116,7 +116,7 @@ export class RecentTransactionComponent implements OnInit {
       this.selectedRecentTab = this.recentTransTabs[0];
   }
 
-  changeRecentTransTabs(i) {
+  changeRecentTransTabs(i: any) {
     this.selectedRecentTab = this.recentTransTabs[i];
     this.tabChanged.emit(this.selectedRecentTab);
     this.recentTransTabChange(this.selectedRecentTab);
@@ -124,7 +124,7 @@ export class RecentTransactionComponent implements OnInit {
   filterSearchValue() {
     this.recentTransTabChange(this.selectedRecentTab);
   }
-  recentTransTabChange(event) {
+  recentTransTabChange(event: any) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
     if (event == "Account") {
       this.fetRecntTransaction("Account");
@@ -139,23 +139,23 @@ export class RecentTransactionComponent implements OnInit {
     } else this.recentTransData = [];
   }
 
-  createpayload(event?) {
+  createpayload() {
     let payload: any;
     if (this.selectedDate.value == "DATERANGE") {
       payload = {
         searchValue: this.searchValue.value,
         fromDate: this.fromDate,
-        toDate: this.toDate,
+        toDate: this.toDate
       };
     } else {
       payload = {
         searchValue: this.searchValue.value,
-        createdDate: this.selectedDate.value,
+        createdDate: this.selectedDate.value
       };
     }
     return payload;
   }
-  fetRecntTransaction(event?) {
+  fetRecntTransaction(event?: any) {
     let customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
 
@@ -163,11 +163,11 @@ export class RecentTransactionComponent implements OnInit {
     this.pageSize = event?.value?.pageSize;
 
     this.cardService
-      .fetchAllRecentTransaction(customer.customerId, this.createpayload(event))
+      .fetchAllRecentTransaction(customer.customerId, this.createpayload())
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.recentTransData = resp?.data;
-          this.recentTransData.forEach((element) => {
+          this.recentTransData.forEach((element: any) => {
             element.action = "Repay";
             const date = new Date(element.created);
             const formattedDate = date.toISOString().split("T")[0];
@@ -177,7 +177,7 @@ export class RecentTransactionComponent implements OnInit {
           this.recentTransMetaData = resp?.meta || {
             page: this.page,
             size: this.pageSize,
-            totalElements: resp?.data?.length,
+            totalElements: resp?.data?.length
           };
         }
       });
@@ -210,7 +210,7 @@ export class RecentTransactionComponent implements OnInit {
       });
   }
 
-  fetRecntTransactionScreenWise(screen) {
+  fetRecntTransactionScreenWise(screen: any) {
     let customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
     console.log(this.createpayload());
@@ -224,7 +224,7 @@ export class RecentTransactionComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.recentTransData = resp?.data;
-          this.recentTransData.forEach((element) => {
+          this.recentTransData.forEach((element: any) => {
             // if (element.creditAmount != null) {
             //   if (selectedAcc == element?.debitAccount)
 
@@ -250,7 +250,7 @@ export class RecentTransactionComponent implements OnInit {
       width: "40%",
       maxWidth: "max-content",
       disableClose: true,
-      panelClass: "popup-class-approve",
+      panelClass: "popup-class-approve"
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -263,7 +263,7 @@ export class RecentTransactionComponent implements OnInit {
 
   gotoBillTransaction() {
     this.router.navigate([
-      "/user/card/credit-card/service/unbilled-transaction",
+      "/user/card/credit-card/service/unbilled-transaction"
     ]);
   }
 }

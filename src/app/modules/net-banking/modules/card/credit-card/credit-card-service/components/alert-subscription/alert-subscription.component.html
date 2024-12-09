@@ -6,7 +6,7 @@
         <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
         <div fxLayout="row">
           <app-ic-custom-pay-from
-            [control]="alertSubscriptionForm.get('creditAccount')"
+            [control]="alertSubscriptionForm.get('creditAccount') | formcontrol"
             [inputLabel]="'Card No' | translate"
             bindValueKey="cardNumber"
             bindLabelKey="cardNumber"

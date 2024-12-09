@@ -9,7 +9,7 @@
           [items]="loanDetails"
           bindValueKey="cbsAccountNumber"
           bindLabelKey="cbsAccountNumber"
-          [control]="_parentForm.get('debitAccount')"
+          [control]="_parentForm.get('debitAccount') | formcontrol"
           (selectionChange)="onSelectionChange($event)"
         >
           <span class="label-text">{{
@@ -24,7 +24,7 @@
           <div>
             <app-ic-toggle-slide
               labelPosition="before"
-              [control]="_parentForm.get('chequeFavouringSame')"
+              [control]="_parentForm.get('chequeFavouringSame') | formcontrol"
               [label]="
                 'Cheque Favouring Same as Previous disbursement' | translate
               "
@@ -32,7 +32,7 @@
           </div>
 
           <div
-            *ngIf="_parentForm.get('chequeFavouringSame').value == true"
+            *ngIf="_parentForm.get('chequeFavouringSame')?.value == true"
             fxLayout="row"
             fxLayoutAlign="space-between center"
             class="padding-box"
@@ -41,12 +41,12 @@
               <app-ic-custom-input
                 [readonly]="true"
                 [inputLabel]="'Name of Payee' | translate"
-                [control]="this._parentForm.get('payeeName')"
+                [control]="this._parentForm.get('payeeName') | formcontrol"
               ></app-ic-custom-input>
             </div>
             <div fxFlex="49">
               <app-input-date-picker
-                [control]="this._parentForm.get('specificDate')"
+                [control]="this._parentForm.get('specificDate') | formcontrol"
                 [inputLabel]="'Specific Date' | translate"
                 [showOutsideLabel]="true"
               ></app-input-date-picker>
@@ -58,12 +58,12 @@
           <div>
             <app-ic-toggle-slide
               labelPosition="before"
-              [control]="_parentForm.get('ownContribution')"
+              [control]="_parentForm.get('ownContribution') | formcontrol"
               [label]="'Own Contribution with this disbursement' | translate"
             ></app-ic-toggle-slide>
           </div>
           <div
-            *ngIf="_parentForm.get('ownContribution').value == true"
+            *ngIf="_parentForm.get('ownContribution')?.value == true"
             fxLayout="row"
             fxLayoutAlign="space-between center"
             class="padding-box"
@@ -81,7 +81,7 @@
               <app-input-date-picker
                 [inputLabel]="'Transfer Date' | translate"
                 [showOutsideLabel]="true"
-                [control]="_parentForm.get('transferDate')"
+                [control]="_parentForm.get('transferDate') | formcontrol"
               ></app-input-date-picker>
             </div>
           </div>
@@ -109,20 +109,20 @@
           </div>
           <div fxFlex="24">
             <app-ic-custom-input
-              [control]="_parentForm.get('purpose')"
+              [control]="_parentForm.get('purpose') | formcontrol"
               [inputLabel]="'Purpose' | translate"
             ></app-ic-custom-input>
           </div>
           <div fxFlex="24">
             <app-input-date-picker
-              [control]="_parentForm.get('preferredDate')"
+              [control]="_parentForm.get('preferredDate') | formcontrol"
               [inputLabel]="'Preferred Date' | translate"
               [showOutsideLabel]="true"
             ></app-input-date-picker>
           </div>
           <div fxFlex="24">
             <app-ic-custom-input
-              [control]="_parentForm.get('remark')"
+              [control]="_parentForm.get('remark') | formcontrol"
               [inputLabel]="'Remark' | translate"
             ></app-ic-custom-input>
           </div>
@@ -184,7 +184,6 @@
                       let file of document.controls['files'].controls;
                       let j = index
                     "
-                    (click)="openImage(i)"
                   >
                     {{ file.value.fileName }},
                   </div>
@@ -199,7 +198,7 @@
                     type="file"
                     accept="image/*"
                     class="hide_file"
-                    (change)="onFileSelected($event, i, document.get('files'))"
+                    (change)="onFileSelected($event, i)"
                     multiple="multiple"
                   />
                 </div>
@@ -215,7 +214,7 @@
       <!-- terms and condition checkbox -->
       <mat-checkbox
         class="customCheckBox"
-        [formControl]="_parentForm.get('acceptTermsConditions')"
+        [formControl]="_parentForm.get('acceptTermsConditions') | formcontrol"
         >{{ "I accept" | translate }}
         <span class="light-blue-title-sml">{{
           "Terms and Condition" | translate

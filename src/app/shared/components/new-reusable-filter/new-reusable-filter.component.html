@@ -52,7 +52,7 @@
         type="text"
         #searchVal
         appNoInitialSpace
-        placeholder="{{ showOnlySearchTitles || 'Refrence Number' }}"
+        placeholder="{{ 'Refrence Number' }}"
         formControlName="searchValue"
         class="searchInput"
         notAllowFirstSpace
@@ -218,17 +218,17 @@
         fxFlex.xs="45"
         *ngIf="stateModuleFilter"
       >
-        <mat-label>{{ FilternameState.name }}</mat-label>
+        <!-- <mat-label>{{ FilternameState.name }}</mat-label> -->
         <mat-select
           formControlName="FilternameState"
           (selectionChange)="getFilterValue($event.value)"
           disableOptionCentering
         >
           <mat-option [value]="">Select</mat-option>
-          <mat-option
+          <!-- <mat-option
             *ngFor="let item of FilternameState.options"
             [value]="item.value"
-            >{{ item.option }}</mat-option
+            >{{ item.option }}</mat-option -->
           >
         </mat-select>
       </mat-form-field>

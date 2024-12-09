@@ -10,13 +10,14 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { SharedTradeModule } from "../shared-trade/shared-trade.module";
 
 @NgModule({
   declarations: [
     AddEditBenificiaryComponent,
     BeneficiaryBulkUploadComponent,
     BenificiaryBulkUploadSummaryComponent,
-    BeneficiarySummaryComponent,
+    BeneficiarySummaryComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     SharedMaterialModule,
     SharedComponentsModule,
     BenificiaryMaintenanceRoutingModule,
-  ],
+    SharedTradeModule
+  ]
 })
 export class BenificiaryMaintenanceModule {}

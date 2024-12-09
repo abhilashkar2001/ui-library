@@ -3,7 +3,7 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import * as faceapi from "face-api.js";
@@ -11,7 +11,7 @@ import * as faceapi from "face-api.js";
 @Component({
   selector: "app-scan",
   templateUrl: "./scan.component.html",
-  styleUrls: ["./scan.component.scss"],
+  styleUrls: ["./scan.component.scss"]
 })
 export class ScanComponent implements OnInit {
   WIDTH = 0;
@@ -34,7 +34,7 @@ export class ScanComponent implements OnInit {
   disableVideo: boolean = false;
   resData: any;
   isScanned: boolean = false;
-  rescann: boolean;
+  rescann: boolean | any;
   perscentageCheck: boolean = true;
 
   constructor(
@@ -56,7 +56,7 @@ export class ScanComponent implements OnInit {
     this.dialogRef.close({
       message: "Confirm",
       isScanned: isScanned,
-      image: this.scannedImage,
+      image: this.scannedImage
     });
   }
 
@@ -100,7 +100,7 @@ export class ScanComponent implements OnInit {
         this.displaySize = {
           width: this.videoInput.width,
 
-          height: this.videoInput.height,
+          height: this.videoInput.height
         };
 
         faceapi.matchDimensions(this.canvas, this.displaySize);
@@ -121,7 +121,7 @@ export class ScanComponent implements OnInit {
           );
           let color = "red";
           if (this.resizedDetections?.length > 0) {
-            this.resizedDetections.forEach((detection) => {
+            this.resizedDetections.forEach((detection: any) => {
               const box = detection.detection.box;
               const faceWidth = box.width;
               const imageWidth = this.displaySize.width;
@@ -150,7 +150,7 @@ export class ScanComponent implements OnInit {
           gradient.addColorStop(1, color); // End color
           context.strokeStyle = gradient;
           context.lineJoin = "round";
-          this.resizedDetections.forEach((detection) => {
+          this.resizedDetections.forEach((detection: any) => {
             const box = detection.detection.box;
             const borderRadius = 10;
             // Draw the detection frame border with gradient stroke style and rounded corners

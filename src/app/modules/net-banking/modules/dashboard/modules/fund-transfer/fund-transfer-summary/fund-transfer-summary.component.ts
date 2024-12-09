@@ -9,7 +9,7 @@ import { NETBANKING } from "../../../net-banking-dashboard/net-banking-dashboard
 @Component({
   selector: "app-fund-transfer-summary",
   templateUrl: "./fund-transfer-summary.component.html",
-  styleUrls: ["./fund-transfer-summary.component.scss"],
+  styleUrls: ["./fund-transfer-summary.component.scss"]
 })
 export class FundTransferSummaryComponent implements OnInit {
   columns: any = NETBANKING.PENDING_SUMMARY;
@@ -20,7 +20,7 @@ export class FundTransferSummaryComponent implements OnInit {
   pageSize: number = 5;
   sortValue = "";
   sortDirection = "";
-  filterBy: FilterBy;
+  filterBy: FilterBy | any;
   module: any;
   summaryData: any;
   staticData: any = {
@@ -29,10 +29,10 @@ export class FundTransferSummaryComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
   uploadType: any;
   constructor(
@@ -50,7 +50,7 @@ export class FundTransferSummaryComponent implements OnInit {
     }, 300);
   }
 
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -60,11 +60,8 @@ export class FundTransferSummaryComponent implements OnInit {
     this.fundTransferService
       .getSummary(
         event.filterBy,
-        event.filterValue,
         event.page,
         event.size,
-        this.sortValue,
-        event.direction,
         this.module,
         this.uploadType
       )
@@ -73,12 +70,12 @@ export class FundTransferSummaryComponent implements OnInit {
       });
   }
 
-  editRecord(element) {
+  editRecord() {
     if (this.uploadType == "SINGLE")
       this.router.navigate(["user/dashboard/fund-transfer/single"]);
   }
 
-  openPopUp(event) {
+  openPopUp(event: any) {
     const id = event.element;
     if (id === "addNew") {
       if (this.uploadType == "SINGLE")
@@ -91,7 +88,7 @@ export class FundTransferSummaryComponent implements OnInit {
     this.router.navigate(["user/dashboard/fund-transfer/single"]);
   }
 
-  CustomGoBack(data) {
+  CustomGoBack() {
     this.router.navigate(["/user/dashboard"]);
   }
 }

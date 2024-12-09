@@ -6,13 +6,13 @@ import { LoanAccounts } from "../models/loan-account.model";
 export const RETURN_TO_SUMMARY = "returnToSummary";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SessionStorageService {
   //WINDOW SESSION STORAGE
   private session = window.sessionStorage;
 
-  constructor() { }
+  constructor() {}
 
   /**
    * stringfy the item and stored
@@ -30,7 +30,7 @@ export class SessionStorageService {
    * @returns retun parsed object
    */
   getItem(key: string): any {
-    const value = this.session.getItem(key);
+    const value: any = this.session.getItem(key);
     try {
       return JSON.parse(value);
     } catch (e) {
@@ -76,7 +76,7 @@ export class SessionStorageService {
     return this.getItem(SessionStorageEnum.CUSTOMER_INFO);
   }
 
-  setCustomerInfo(customerInfo) {
+  setCustomerInfo(customerInfo: any) {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_INFO);
     this.setItem(SessionStorageEnum.CUSTOMER_INFO, customerInfo);
   }
@@ -140,18 +140,16 @@ export class SessionStorageService {
    * set the loan info in session storage
    * @param loanInfo
    */
-  public setLoanInfo(loanInfo): void {
+  public setLoanInfo(loanInfo: any): void {
     this.setItem(SessionStorageEnum.LOAN_INFO, loanInfo);
   }
 
   /**
- * this method will remove loan info from session storage
- */
+   * this method will remove loan info from session storage
+   */
   public removeLoanInfo(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_INFO);
   }
-
-
 
   /**
    * fetch the list of card stored in session storeage
@@ -166,7 +164,7 @@ export class SessionStorageService {
    * set the list of card in session storage
    * @param listOfCards
    */
-  public setListOfCards(listOfCards): void {
+  public setListOfCards(listOfCards: any): void {
     this.setItem(SessionStorageEnum.LIST_OF_CARDS, listOfCards);
   }
 

@@ -1,15 +1,14 @@
-import { Directive, ElementRef, HostListener, Input } from "@angular/core";
-import { NgControl } from "@angular/forms";
+import { Directive, ElementRef, HostListener } from "@angular/core";
 
 @Directive({
-  selector: "[numbersOnly]",
+  selector: "[numbersOnly]"
 })
 export class NumberDirective {
   regexStructure = "^[0-9]*$";
 
   constructor(private _el: ElementRef) {}
 
-  @HostListener("ion-input", ["$event"]) onInputChange(event) {
+  @HostListener("ion-input", ["$event"]) onInputChange(event: any) {
     const initalValue = this._el.nativeElement.value;
     this._el.nativeElement.value = initalValue.replace(/[^0-9]*/g, "");
     if (initalValue !== this._el.nativeElement.value) {
@@ -17,7 +16,7 @@ export class NumberDirective {
     }
   }
 
-  @HostListener("keypress", ["$event"]) onKeyPress(event) {
+  @HostListener("keypress", ["$event"]) onKeyPress(event: any) {
     return new RegExp(this.regexStructure).test(event.key);
   }
 }

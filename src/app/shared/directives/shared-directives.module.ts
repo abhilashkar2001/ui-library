@@ -9,7 +9,7 @@ import { DropdownLinkDirective } from "./dropdown-link.directive";
 import { EgretSideNavToggleDirective } from "./egret-side-nav-toggle.directive";
 import {
   EgretSidenavHelperDirective,
-  EgretSidenavTogglerDirective,
+  EgretSidenavTogglerDirective
 } from "./egret-sidenav-helper/egret-sidenav-helper.directive";
 import { EgretHighlightDirective } from "./egret-highlight.directive";
 import { AutoFocusDirective } from "./auto-focus.directive";
@@ -25,7 +25,6 @@ import { NoSpaceDirective } from "./noSpace.directive";
 import { AppHostDirective } from "./app-host.directive";
 import { MinMaxDirective } from "./restrictNum-directive";
 import { IcImgFallbackDirective } from "./ic-img-fallback.directive";
-import { InputMaskModule } from "./input-mask/input-mask.module";
 import { Webhost } from "./appHost.directive";
 
 const directives = [
@@ -51,12 +50,12 @@ const directives = [
   AppHostDirective,
   MinMaxDirective,
   Webhost,
-  IcImgFallbackDirective,
+  IcImgFallbackDirective
 ];
 
 @NgModule({
-  imports: [CommonModule ],
+  imports: [CommonModule],
   declarations: directives,
-  exports: directives,
+  exports: directives
 })
 export class SharedDirectivesModule {}

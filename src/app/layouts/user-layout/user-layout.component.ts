@@ -5,7 +5,7 @@ import {
   ViewChild,
   HostListener,
   ViewContainerRef,
-  ChangeDetectorRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import {
   Router,
@@ -13,7 +13,7 @@ import {
   RouteConfigLoadStart,
   RouteConfigLoadEnd,
   ResolveStart,
-  ResolveEnd,
+  ResolveEnd
 } from "@angular/router";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
@@ -26,22 +26,22 @@ import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: "app-user-layout",
   templateUrl: "./user-layout.component.html",
-  styleUrls: ["./user-layout.component.scss"],
+  styleUrls: ["./user-layout.component.scss"]
 })
 export class UserLayoutComponent implements OnInit, AfterViewInit {
   public isModuleLoading: Boolean = false;
-  private moduleLoaderSub: Subscription;
-  private layoutConfSub: Subscription;
+  private moduleLoaderSub: Subscription | any;
+  private layoutConfSub: Subscription | any;
   private routerEventSub: Subscription;
 
-  @ViewChild("panel", { static: true }) private sidePanel: MatSidenav;
+  @ViewChild("panel", { static: true }) private sidePanel: MatSidenav | any;
   @ViewChild("content", { static: true, read: ViewContainerRef })
-  private vcf: ViewContainerRef;
+  private vcf: ViewContainerRef | any;
   public customPanelClass: string = "panel-end-drawer";
   public layoutConf: any = {};
   public adminContainerClasses: any = {};
   public moduleContainerClass: any = {};
-  module: string;
+  module: string | any;
 
   constructor(
     private router: Router,
@@ -52,20 +52,23 @@ export class UserLayoutComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {
     // Close sidenav after route change in mobile
-    this.routerEventSub = router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+    this.routerEventSub = this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        ) // Type guard
+      )
       .subscribe((routeChange: NavigationEnd) => {
-        let isRefresh = this.router.url.split("/").slice(1)[0];
         this.layout.adjustLayout({ route: routeChange.url });
       });
 
     // Translator init
-    const browserLang: string = translate.getBrowserLang();
+    const browserLang: string | any = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : "en");
   }
 
   ngOnInit() {
-    this.layoutConfSub = this.layout.layoutConf$.subscribe((layoutConf) => {
+    this.layoutConfSub = this.layout.layoutConf$.subscribe(() => {
       // this obj should be removed, it should be dynamic
       this.layoutConf = {
         breadcrumb: "simple",
@@ -81,7 +84,7 @@ export class UserLayoutComponent implements OnInit, AfterViewInit {
         sidebarStyle: "full",
         topbarColor: "white",
         topbarFixed: true,
-        useBreadcrumb: true,
+        useBreadcrumb: true
       };
 
       this.adminContainerClasses = this.updateAdminContainerClasses(
@@ -106,18 +109,18 @@ export class UserLayoutComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateAdminContainerClasses(layoutConf) {
+  updateAdminContainerClasses(layoutConf: any) {
     return {
       "sidebar-full": layoutConf.sidebarStyle === "full",
       "sidebar-opened":
         layoutConf.sidebarStyle !== "closed" &&
         layoutConf.navigationPos === "side",
-      "sidebar-closed": layoutConf.sidebarStyle === "closed",
+      "sidebar-closed": layoutConf.sidebarStyle === "closed"
     };
   }
 
   @HostListener("window:resize", ["$event"])
-  onResize(event) {
+  onResize(event: any) {
     this.layout.adjustLayout(event);
   }
 

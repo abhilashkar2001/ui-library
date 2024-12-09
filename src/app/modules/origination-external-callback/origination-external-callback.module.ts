@@ -18,6 +18,7 @@ import { RemarkComponent } from "./offer-letter/remark/remark.component";
 import { ChecklistDocumentComponent } from "./checklist-document/checklist-document.component";
 import { DobVerificationComponent } from "./dob-verification/dob-verification.component";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
+import { SharedPipesModule } from "../../shared/pipes/shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     DocumentUploadComponent,
     RemarkComponent,
     ChecklistDocumentComponent,
-    DobVerificationComponent,
+    DobVerificationComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +43,7 @@ import { SharedComponentsModule } from "app/shared/components/shared-components.
     SharedComponentsModule,
     NgOtpInputModule,
     OriginationExternalCallbackRoutingModule,
-  ],
+    SharedPipesModule
+  ]
 })
 export class OriginationExternalCallbackModule {}

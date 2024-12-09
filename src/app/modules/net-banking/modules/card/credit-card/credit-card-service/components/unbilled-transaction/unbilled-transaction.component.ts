@@ -9,17 +9,17 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-unbilled-transaction",
   templateUrl: "./unbilled-transaction.component.html",
-  styleUrls: ["./unbilled-transaction.component.scss"],
+  styleUrls: ["./unbilled-transaction.component.scss"]
 })
 export class UnbilledTransactionComponent implements OnInit {
-  unbilledForm: FormGroup;
+  unbilledForm!: FormGroup;
   currencyCode = "INR";
   creditList: any;
   unbilledHeader = CreditCardStore.unbilledHeader;
   unbilledValues: any;
   accountDetails: any;
   typeofCard: any;
-  recentTransData: any[];
+  recentTransData: any[] | any;
   profileInfo: any;
 
   constructor(
@@ -40,7 +40,7 @@ export class UnbilledTransactionComponent implements OnInit {
   buildUnbilledForm() {
     this.unbilledForm = this.fb.group({
       creditNumber: [""],
-      cardType: [""],
+      cardType: [""]
     });
   }
 
@@ -51,16 +51,16 @@ export class UnbilledTransactionComponent implements OnInit {
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.creditList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.unbilledForm
         ?.get("creditNumber")
-        .patchValue(this.accountDetails?.cardNumber);
+        ?.patchValue(this.accountDetails?.cardNumber);
       this.unbilledForm
         ?.get("cardType")
-        .patchValue(this.accountDetails?.cardType);
+        ?.patchValue(this.accountDetails?.cardType);
       this.fetchTransactions();
     }
   }
@@ -70,8 +70,8 @@ export class UnbilledTransactionComponent implements OnInit {
     this.cardService
       .fetchCardRecentTransaction(
         this.profileInfo?.corporateCustomerId,
-        this.unbilledForm?.get("creditNumber").value,
-        this.unbilledForm?.get("cardType").value
+        this.unbilledForm?.get("creditNumber")?.value,
+        this.unbilledForm?.get("cardType")?.value
       )
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {

@@ -14,36 +14,36 @@ export class DocumentUploadService {
     formData.append("file", file);
     return this.httpClient.post("https://file.io", formData, {
       reportProgress: true,
-      observe: "events",
+      observe: "events"
     });
   }
 
-  uploadDocuments(formData) {
+  uploadDocuments(formData: any) {
     return this.httpClient.post<any>(
       `${MICROSERVICE_URL}/upload-document`,
       formData
     );
   }
 
-  uploadDocumentsWitProgressBar(formData) {
+  uploadDocumentsWitProgressBar(formData: any) {
     return this.httpClient.post<any>(
       `${MICROSERVICE_URL}/upload-document`,
       formData,
       {
         reportProgress: true,
-        observe: "events",
+        observe: "events"
       }
     );
   }
 
-  uploadMandateSign(payload) {
+  uploadMandateSign(payload: any) {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/acc-mandate-details/saveMandateSign`,
       payload
     );
   }
 
-  getSignatureInfo(customerId) {
+  getSignatureInfo(customerId: any) {
     return this.httpClient.get(`
     ${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${customerId}
     `);

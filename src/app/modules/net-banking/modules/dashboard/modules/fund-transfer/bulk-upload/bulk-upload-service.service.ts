@@ -3,27 +3,27 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class BulkUploadServiceService {
   basePath = environment.microServiceURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  processBulkTransaction(payload) {
+  processBulkTransaction(payload: any) {
     return this.http.post<any>(
       `${this.basePath}/corporate-net-banking/approve-fund-transfer`,
       payload
     );
   }
 
-  getLevelApprovalStatus(bulkTransactionId, className: string) {
+  getLevelApprovalStatus(bulkTransactionId: any, className: string) {
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=${className}&id=${bulkTransactionId}`
     );
   }
 
-  getBulkUploadRecords(id, filters?) {
+  getBulkUploadRecords(id: any, filters?: any) {
     var filterBy = "";
     if (filters?.filterBy) {
       const keys = Object.keys(filters.filterBy);
@@ -47,21 +47,26 @@ export class BulkUploadServiceService {
     );
   }
 
-  updateRemark(remarkData) {
+  updateRemark(remarkData: any) {
     return this.http.put<any>(
       `${this.basePath}/corporate-net-banking/updateStatusAndRemark`,
       remarkData
     );
   }
 
-  downloadBulkUpload(id) {
+  downloadBulkUpload(id: any) {
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking/download?id=${id}`,
       { responseType: "blob" as "json" }
     );
   }
 
-  uploadExcel(formData, userName, type: string, corpCustomerId: string, processingDate) {
+  uploadExcel(
+    formData: any,
+    userName: any,
+    type: string,
+    corpCustomerId: string
+  ) {
     return this.http.post(
       `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}&corpCustomerId=${corpCustomerId}`,
       formData
@@ -79,7 +84,7 @@ export class BulkUploadServiceService {
     return this.http.get(
       `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
       {
-        responseType: "blob",
+        responseType: "blob"
       }
     );
   }

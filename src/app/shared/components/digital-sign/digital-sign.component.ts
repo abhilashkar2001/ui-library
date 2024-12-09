@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { SignNowPopupComponent } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component";
 import { environment } from "environments/environment";
 import { BranchService } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service";
@@ -17,21 +8,23 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-digital-sign",
   templateUrl: "./digital-sign.component.html",
-  styleUrls: ["./digital-sign.component.scss"],
+  styleUrls: ["./digital-sign.component.scss"]
 })
 export class DigitalSignComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
-  @Input("numberOfDirectors") numberOfDirectors: number;
+  @Input("numberOfDirectors") numberOfDirectors: number | any;
 
   image: string = "";
   MICROSERVICE_URL = environment.microServiceURL;
   isLoading: boolean = false;
   loadingBtnText: string = "Saving...";
   signatureId: any;
-  customerId: number;
+  customerId: number | any;
 
   constructor(
     private dialog: MatDialog,
@@ -48,7 +41,7 @@ export class DigitalSignComponent implements OnInit {
     const dialogRef = this.dialog.open(SignNowPopupComponent, {
       disableClose: false,
       width: "60%",
-      data: { title: "Sign Now", check: check },
+      data: { title: "Sign Now", check: check }
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);
@@ -80,7 +73,7 @@ export class DigitalSignComponent implements OnInit {
   onSubmit() {
     const signPayload = {
       customerId: this.customerId,
-      signatureIds: [this.signatureId],
+      signatureIds: [this.signatureId]
     };
     this.branchService.saveCustomerSign(signPayload).subscribe((res) => {
       if ((res?.statusCode == 200 || res?.statusCode == 201) && res?.data)

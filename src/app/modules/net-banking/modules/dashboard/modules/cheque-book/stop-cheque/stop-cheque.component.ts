@@ -7,13 +7,13 @@ import { ChequeService } from "../cheque-service";
 @Component({
   selector: "app-stop-cheque",
   templateUrl: "./stop-cheque.component.html",
-  styleUrls: ["./stop-cheque.component.scss"],
+  styleUrls: ["./stop-cheque.component.scss"]
 })
 export class StopChequeComponent implements OnInit {
-  stopChequeForm: FormGroup;
+  stopChequeForm!: FormGroup;
   stopChequeOptions: any[] = [
     { label: "Number", value: "Number" },
-    { label: "Range", value: "Range" },
+    { label: "Range", value: "Range" }
   ];
 
   customerInfo: any;
@@ -36,11 +36,11 @@ export class StopChequeComponent implements OnInit {
   }
 
   fetchCustomerInfo() {
-    const custInfo = sessionStorage.getItem("customer-Info");
+    const custInfo: any = sessionStorage.getItem("customer-Info");
     this.customerInfo = JSON.parse(custInfo);
 
     this.accountNumberList = JSON.parse(
-      sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem("listOfAccounts")
     );
   }
 
@@ -51,17 +51,17 @@ export class StopChequeComponent implements OnInit {
       chequeNo: [""],
       from: [""],
       to: [""],
-      reason: [""],
+      reason: [""]
     });
     const selectedAccountNo = sessionStorage.getItem("selectAccNo");
 
     if (selectedAccountNo) {
-      this.stopChequeForm.get("accountNo").setValue(selectedAccountNo);
+      this.stopChequeForm.get("accountNo")?.setValue(selectedAccountNo);
       this.handleAccountNumberChange(selectedAccountNo);
     }
   }
 
-  handleAccountNumberChange(event) {
+  handleAccountNumberChange(event: any) {
     this.chequeNumber = true;
     const accDetails = this.accountNumberList?.find(
       (acc) => acc?.accountNo == event
@@ -79,7 +79,7 @@ export class StopChequeComponent implements OnInit {
       stopChequeBy: stopChequeValue?.stopChequeBy,
       accountNo: stopChequeValue?.accountNo,
       chequeBookNumber: stopChequeValue?.chequeNo,
-      reason: stopChequeValue?.reason,
+      reason: stopChequeValue?.reason
     };
 
     const payloadRange = {
@@ -87,7 +87,7 @@ export class StopChequeComponent implements OnInit {
       accountNo: stopChequeValue?.accountNo,
       fromChequeBook: stopChequeValue?.from,
       toChequeBookNo: stopChequeValue?.to,
-      reason: stopChequeValue?.reason,
+      reason: stopChequeValue?.reason
     };
 
     const payload =
@@ -104,15 +104,15 @@ export class StopChequeComponent implements OnInit {
             header: "Account Details",
             details: [
               {
-                Name: this.customerInfo?.customerName,
+                Name: this.customerInfo?.customerName
               },
               {
-                "Account No": stopChequeValue?.accountNo,
+                "Account No": stopChequeValue?.accountNo
               },
               {
-                "Account Type": this.customerInfo?.accounts?.[0]?.accountType,
-              },
-            ],
+                "Account Type": this.customerInfo?.accounts?.[0]?.accountType
+              }
+            ]
           },
           {
             header: "Cheque Book Detail",
@@ -120,27 +120,27 @@ export class StopChequeComponent implements OnInit {
               stopChequeValue?.stopChequeBy === "Number"
                 ? [
                     {
-                      "Cheque Book Number": stopChequeValue?.chequeNo,
+                      "Cheque Book Number": stopChequeValue?.chequeNo
                     },
                     {
-                      Reason: stopChequeValue?.reason,
-                    },
+                      Reason: stopChequeValue?.reason
+                    }
                   ]
                 : [
                     {
-                      From: stopChequeValue?.fromChequeBook,
+                      From: stopChequeValue?.fromChequeBook
                     },
                     {
-                      To: stopChequeValue?.toChequeBookNo,
+                      To: stopChequeValue?.toChequeBookNo
                     },
                     {
-                      Reason: stopChequeValue?.reason,
-                    },
-                  ],
-          },
+                      Reason: stopChequeValue?.reason
+                    }
+                  ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
 
     this.serviceCallHandler.put(

@@ -7,7 +7,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-success-popup",
   templateUrl: "./success-popup.component.html",
-  styleUrls: ["./success-popup.component.scss"],
+  styleUrls: ["./success-popup.component.scss"]
 })
 export class SuccessPopupComponent implements OnInit {
   originationId: any;
@@ -66,15 +66,14 @@ export class SuccessPopupComponent implements OnInit {
     }
   }
 
-  onClickAction(type, operation) {
+  onClickAction(type: any, operation: any) {
     this.shareOrDownload({ type: type, operation: operation });
   }
 
-  shareOrDownload(event) {
-    const formData = new FormData();
+  shareOrDownload(event: any) {
     let report;
-    let downloadServiceMethod;
-    let pdfFileName;
+    let downloadServiceMethod: any;
+    let pdfFileName: any;
 
     if (this.loanSummaryDetails) {
       downloadServiceMethod = this.downloadService.downloadloanDetailDoc(
@@ -100,7 +99,7 @@ export class SuccessPopupComponent implements OnInit {
       const blob = new Blob([resp], { type: "application/pdf" });
 
       report = new File([blob], pdfFileName, {
-        type: "application/pdf",
+        type: "application/pdf"
       });
 
       if (event.operation == "Share") {

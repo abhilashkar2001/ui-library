@@ -118,6 +118,8 @@ import { ExternalLinkComponent } from "../widgets/external-link/external-link.co
 import { ChartPage } from "./chart/chart.page";
 import { MaturityChartComponent } from "./maturity-chart/maturity-chart.component";
 import { PopupSuccessComponent } from "./popup-success/popup-success.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { SidebarSideComponent } from "./sidebar-side/sidebar-side.component";
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
@@ -211,6 +213,7 @@ const components = [
   ChartPage,
   MaturityChartComponent,
   PopupSuccessComponent,
+  SidebarSideComponent
 ];
 
 @NgModule({
@@ -232,13 +235,15 @@ const components = [
     MatIconModule,
     NgxSpinnerModule,
     InputMaskModule,
+    MatIconModule,
+    MatFormFieldModule
   ],
   declarations: components,
   exports: components,
   providers: [
     CustomDateAdapter,
-    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedComponentsModule {}

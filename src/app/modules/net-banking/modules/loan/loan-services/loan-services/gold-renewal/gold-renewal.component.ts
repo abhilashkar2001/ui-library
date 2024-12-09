@@ -1,42 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { LoanTopUpStore } from '../topup-loan/topup-loan.store';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { removeSpecCharsOnly } from 'app/shared/helpers/utils';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { LoanTopUpStore } from "../topup-loan/topup-loan.store";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { removeSpecCharsOnly } from "app/shared/helpers/utils";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { Router } from "@angular/router";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
 
 @Component({
-  selector: 'app-gold-renewal',
-  templateUrl: './gold-renewal.component.html',
-  styleUrls: ['./gold-renewal.component.scss']
+  selector: "app-gold-renewal",
+  templateUrl: "./gold-renewal.component.html",
+  styleUrls: ["./gold-renewal.component.scss"]
 })
 export class GoldRenewalComponent implements OnInit {
-  goldRenewalForm: FormGroup | undefined;
+  goldRenewalForm!: FormGroup;
   accountDetails = LoanTopUpStore.loanAccountDetails;
   chartSectionDetails = LoanTopUpStore.ChartDetails;
   minTenure: number = 3;
   maxTenureInYears: number = 2;
   maxTenure: number = 730;
   renewalAmount: number[] = [100, 50, 25];
-  loanDetails: LoanDetailsModel[]
-  installmentDetails: LoanInstallmentModel;
+  loanDetails: LoanDetailsModel[] | any;
+  installmentDetails: LoanInstallmentModel | any;
   calculatedData: any;
-  amount: number;
+  amount: number | any;
   profileInfo: any;
   currentCurrency: any;
-  corpCustId: number;
+  corpCustId: number | any;
 
-  constructor(private loanService: LoanService, private fb: FormBuilder,
+  constructor(
+    private loanService: LoanService,
+    private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.corpCustId = this.sessionStorageService.getCustomerInfo()?.customerId;
@@ -70,26 +72,25 @@ export class GoldRenewalComponent implements OnInit {
       });
   }
 
-
   //when the input values changes, slider value changes
   onInputChange() {
     let year = this.goldRenewalForm.value.tenureYear;
     let month = this.goldRenewalForm.value.tenureMonth;
     let day = this.goldRenewalForm.value.tenureDay;
     const totalDays = year * 365 + month * 30 + day * 1;
-    this.goldRenewalForm.get("tenure").setValue(totalDays);
+    this.goldRenewalForm.get("tenure")?.setValue(totalDays);
   }
 
   //on the slider change, the input values should change
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     let maxTenure = e.value;
     let years = Math.floor(maxTenure / 365);
     let remainingDays = maxTenure % 365;
     let months = Math.floor(remainingDays / 30);
     remainingDays = remainingDays % 30;
-    this.goldRenewalForm.get("tenureYear").setValue(years);
-    this.goldRenewalForm.get("tenureMonth").setValue(months);
-    this.goldRenewalForm.get("tenureDay").setValue(remainingDays);
+    this.goldRenewalForm.get("tenureYear")?.setValue(years);
+    this.goldRenewalForm.get("tenureMonth")?.setValue(months);
+    this.goldRenewalForm.get("tenureDay")?.setValue(remainingDays);
   }
 
   getDecimalValue(value: string) {
@@ -103,7 +104,7 @@ export class GoldRenewalComponent implements OnInit {
   fetchLoanInstallment() {
     this.loanService
       .fetchLoanInstallment(this.goldRenewalForm?.value?.debitAccount)
-      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel> | any) => {
         if (res?.statusCode == 200 && res?.data)
           this.installmentDetails = res?.data;
       });
@@ -112,11 +113,11 @@ export class GoldRenewalComponent implements OnInit {
   //calculate the gold new renewal
   calculateTenure() {
     let numberOfMonths =
-      this.goldRenewalForm.value.tenureYear * 12 +
-      this.goldRenewalForm.value.tenureMonth;
+      this.goldRenewalForm?.value.tenureYear * 12 +
+      this.goldRenewalForm?.value.tenureMonth;
     this.amount =
-      (this.goldRenewalForm.value.renewalAmount / 100) *
-      this.installmentDetails.loanAmount +
+      (this.goldRenewalForm?.value.renewalAmount / 100) *
+        this.installmentDetails.loanAmount +
       this.installmentDetails.loanAmount;
     let payload = {
       firstRepaymentDate: new Date(),
@@ -135,17 +136,16 @@ export class GoldRenewalComponent implements OnInit {
     });
   }
 
-
   //save gold renewal
   saveGoldRenewal() {
     let payload = {
-      ...this.goldRenewalForm.value,
+      ...this.goldRenewalForm?.value,
       renewalAmount: this.getDecimalValue(
-        this.goldRenewalForm.value.renewalAmount
+        this.goldRenewalForm?.value.renewalAmount
       )
     };
     payload.debitCurrency = this.loanDetails?.find(
-      (res) =>
+      (res: any) =>
         res?.cbsAccountNumber == this.goldRenewalForm?.value?.debitAccount
     )?.currencyCode;
 
@@ -192,10 +192,10 @@ export class GoldRenewalComponent implements OnInit {
             details: [
               {
                 "Renewal Amount": this.getDecimalValue(
-                  this.goldRenewalForm.value.renewalAmount
+                  this.goldRenewalForm?.value.renewalAmount
                 )
               },
-              { Tenure: this.goldRenewalForm.value.tenureYear + "Year" },
+              { Tenure: this.goldRenewalForm?.value.tenureYear + "Year" },
               { "Interest Rate": "" }
             ]
           }
@@ -210,6 +210,4 @@ export class GoldRenewalComponent implements OnInit {
     );
     this.router.navigate(["/user/loan/loan-service/payment-summary"]);
   }
-
-
 }

@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { MatSort } from "@angular/material/sort";
@@ -18,87 +18,83 @@ import { MatTableDataSource } from "@angular/material/table";
   selector: "app-aduit-log-details",
   templateUrl: "./aduit-log-details.component.html",
   styleUrls: ["./aduit-log-details.component.scss"],
-  providers: [DatePipe],
+  providers: [DatePipe]
 })
 export class AduitLogDetailsComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort | any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   selectedFilterIndex: number = 0;
   filterValue: string = "";
-  selectedFilterBy: string;
+  selectedFilterBy: string | any;
   dataSource = new MatTableDataSource();
   displayedColumns: any;
-  @Input() isShowCancel;
+  @Input() isShowCancel: any;
   // Remove this @Input when real time api integarate
   @Input() dummyData: any[] = [];
-  @Input() auditlogHistory;
-  @Input() auditInfo;
+  @Input() auditlogHistory: any;
+  @Input() auditInfo: any;
   totalLength: number = 0;
 
   columns = [
     {
       columnDef: "Id",
       header: "EMP ID",
-      cell: (element: any) => `${element.Id}`,
+      cell: (element: any) => `${element.Id}`
     },
     {
       columnDef: "name",
       header: "Name",
-      cell: (element: any) => `${element.name}`,
+      cell: (element: any) => `${element.name}`
     },
 
     {
       columnDef: "dateTime",
       header: "Date & Time",
-      cell: (element: any) => `${element.lastUpdated}`,
+      cell: (element: any) => `${element.lastUpdated}`
     },
     {
       columnDef: "action",
       header: "Action",
-      cell: (element: any) => `${element.action}`,
+      cell: (element: any) => `${element.action}`
     },
     {
       columnDef: "authStatus",
       header: "Approved",
-      cell: (element: any) => `${element.authStatus}`,
+      cell: (element: any) => `${element.authStatus}`
     },
     {
       columnDef: "recordStatus",
       header: "Active Status",
-      cell: (element: any) => `${element.recordStatus}`,
+      cell: (element: any) => `${element.recordStatus}`
     },
     {
       columnDef: "oneTimeAuth",
       header: "Qualified",
-      cell: (element: any) => `${element.oneTimeAuth}`,
+      cell: (element: any) => `${element.oneTimeAuth}`
     },
     {
       columnDef: "version",
       header: "Version",
-      cell: (element: any) => `${element.version}`,
-    },
+      cell: (element: any) => `${element.version}`
+    }
   ];
 
   @Output() customExpand = new EventEmitter<{ action: any }>();
 
-  constructor(
-    private datePipe: DatePipe,
-    private api: AuditLogService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private api: AuditLogService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     //console.log("action", this.auditInfo);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges | any) {
     if (changes.auditInfo) {
       this.auditInfo = changes.auditInfo.currentValue;
       this.getAuditDetails(this.auditInfo);
     }
   }
-  getAuditDetails(auditInfo) {
+  getAuditDetails(auditInfo: any) {
     console.log(this.auditInfo);
     if (auditInfo?.id || this.auditInfo?.id) {
       if (this.auditInfo?.id) this.auditInfo = auditInfo;
@@ -123,31 +119,31 @@ export class AduitLogDetailsComponent implements OnInit {
     }
   }
 
-  getSortedHistory(data) {
+  getSortedHistory(data: any) {
     var array = data;
-    var childArray = [];
-    array?.forEach((element) => {
+    var childArray: any = [];
+    array?.forEach((element: any) => {
       childArray.push(element[0]);
     });
     return childArray.sort(
-      (a, b) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated)
+      (a: any, b: any) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated)
     );
   }
 
-  openDialog(action) {
+  openDialog(action: any) {
     this.customExpand.emit({ action: action });
   }
-  calculateWidth(item) {
+  calculateWidth(item: any) {
     return this.auditlogHistory?.length > 2
       ? 100 / (item?.length + 1)
       : 100 / item?.length + "%";
   }
-  handlePageEvent(event) {
+  handlePageEvent(event: any) {
     if (event?.value)
       this.getAuditDetails({
         ...this.auditInfo,
         page: event.value.page,
-        pageSize: event.value.pageSize,
+        pageSize: event.value.pageSize
       });
   }
 }

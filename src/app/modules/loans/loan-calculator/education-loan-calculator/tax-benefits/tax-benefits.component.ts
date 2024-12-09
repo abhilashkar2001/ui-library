@@ -6,17 +6,17 @@ import { EducationCalculatorService } from "../education-calculator.service";
 @Component({
   selector: "app-tax-benefits",
   templateUrl: "./tax-benefits.component.html",
-  styleUrls: ["./tax-benefits.component.scss"],
+  styleUrls: ["./tax-benefits.component.scss"]
 })
 export class TaxBenefitsComponent implements OnInit {
   min = 5000;
   max = 100000;
   rangeValues: number[] = [20, 80];
   ammountValue = 0;
-  loanForm: FormGroup;
+  loanForm!: FormGroup | any;
   @Output() customCalculatorValues = new EventEmitter<any>();
   @Output() customBack = new EventEmitter<any>();
-  thumbLabel: boolean = true;
+  thumbLabel: boolean | any = true;
   value: number = 8000;
   highValue: number = 60000;
   options: Options = {
@@ -24,7 +24,7 @@ export class TaxBenefitsComponent implements OnInit {
     ceil: 100000,
     translate: (value: number): string => {
       return `₹ ${value}`;
-    },
+    }
   };
   expenseDetails: any;
   constructor(
@@ -51,7 +51,7 @@ export class TaxBenefitsComponent implements OnInit {
       );
     });
   }
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.value;
     this.loanForm.get("requiredLoan").setValue(e.value);
@@ -64,7 +64,7 @@ export class TaxBenefitsComponent implements OnInit {
       tenureMonth: "",
       tenureDays: "",
       interestRate: "",
-      requiredLoan: "",
+      requiredLoan: ""
     });
   }
   updateDeposit() {
@@ -73,10 +73,10 @@ export class TaxBenefitsComponent implements OnInit {
   applyForLoan() {
     this.customCalculatorValues.emit(this.loanForm.value);
   }
-  formatLoanLabel(value) {
+  formatLoanLabel(value: any) {
     return `₹ ${value}`;
   }
-  setGaugeValue(gauge, value) {
+  setGaugeValue(gauge: any, value: any) {
     if (value < 0 || value > 1) {
       return;
     }
@@ -87,11 +87,11 @@ export class TaxBenefitsComponent implements OnInit {
       }turn)`;
   }
 
-  calCulateGauge(percent) {
+  calCulateGauge(percent: any) {
     const gaugeElement = document.querySelector(".gauge");
     this.setGaugeValue(gaugeElement, percent);
   }
-  onValueChange(e) {
+  onValueChange(e: any) {
     console.log(e);
     this.loanForm.get("amount").setValue(`${e.value}-${e.highValue}`);
   }

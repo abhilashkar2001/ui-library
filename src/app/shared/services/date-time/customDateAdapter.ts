@@ -7,14 +7,14 @@ import * as moment from "moment";
 const defaultLocale = "en-US";
 const defaultDateFormatter = "DD-MM-YYYY";
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CustomDateAdapter extends MomentDateAdapter {
   constructor(private _dateTimeService: DateTimeService) {
     super(_dateTimeService.locale);
   }
 
-  public format(date: moment.Moment): string {
+  public override format(date: moment.Moment): string {
     const locale = this._dateTimeService.locale ?? defaultLocale;
     const format = this._dateTimeService.format ?? defaultDateFormatter;
     const result = date.locale(locale).format(format);

@@ -54,11 +54,11 @@
     <div fxFlex="100">
       <mat-slider
         class="custom-slider"
-        [value]="depositForm.value.amount"
+        [(ngModel)]="depositForm.value.amount"
         [max]="max"
         [min]="min"
         fxFlex="100"
-        [thumbLabel]="thumbLabel"
+        [step]="thumbLabel"
         (change)="onSliderChange($event)"
         discrete
         [displayWith]="formatLoanLabel"

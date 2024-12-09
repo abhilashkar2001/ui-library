@@ -7,7 +7,7 @@ import { InternetBankingService } from "app/shared/services/internet-banking.ser
 @Component({
   selector: "app-pending-for-approval",
   templateUrl: "./pending-for-approval.component.html",
-  styleUrls: ["./pending-for-approval.component.scss"],
+  styleUrls: ["./pending-for-approval.component.scss"]
 })
 export class PendingForApprovalComponent implements OnInit {
   columns: any = PendingForApprovalConstant.PENDING_SUMMARY;
@@ -18,7 +18,7 @@ export class PendingForApprovalComponent implements OnInit {
   pageSize: number = 5;
   sortValue = "";
   sortDirection = "";
-  filterBy: FilterBy;
+  filterBy: FilterBy | any;
   module: any;
   pendingForApprovalUpdatedData: any;
   staticData: any = {
@@ -27,10 +27,10 @@ export class PendingForApprovalComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
 
   constructor(
@@ -40,10 +40,10 @@ export class PendingForApprovalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  CustomGoBack(data) {
+  CustomGoBack() {
     this.route.navigate(["/user/dashboard"]);
   }
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -53,7 +53,6 @@ export class PendingForApprovalComponent implements OnInit {
     this.bulkService
       .getSummary(
         event.filterBy,
-        event.filterValue,
         event.page,
         event.size,
         this.sortValue,
@@ -65,11 +64,11 @@ export class PendingForApprovalComponent implements OnInit {
       });
   }
 
-  editRecord(element) {
+  editRecord(element: any) {
     console.log(element, "..........");
     this.route.navigate([
       "user/dashboard/fund-transfer/bulk-upload",
-      element.element.id,
+      element.element.id
     ]);
   }
 }

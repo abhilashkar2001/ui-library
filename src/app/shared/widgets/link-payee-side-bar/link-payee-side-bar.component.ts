@@ -10,13 +10,13 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-link-payee-side-bar",
   templateUrl: "./link-payee-side-bar.component.html",
-  styleUrls: ["./link-payee-side-bar.component.scss"],
+  styleUrls: ["./link-payee-side-bar.component.scss"]
 })
 export class LinkPayeeSideBarComponent implements OnInit {
-  @Input() viewPayee;
+  @Input() viewPayee: any;
   @Input() screenname: string = "";
-  @Input() externalLinks;
-  @ViewChild("focusButton") focusButton: ElementRef<HTMLButtonElement>;
+  @Input() externalLinks: any;
+  @ViewChild("focusButton") focusButton: ElementRef<HTMLButtonElement> | any;
 
   constructor(
     private router: Router,
@@ -53,15 +53,15 @@ export class LinkPayeeSideBarComponent implements OnInit {
       autoFocus: true,
       position: {
         top: "120px", // Adjust top position
-        right: "200px", // Adjust left position
-      },
+        right: "200px" // Adjust left position
+      }
     });
   }
 
   addFund() {
     this.dialog.open(QrcodeComponent, {
       width: "60%",
-      panelClass: "qrcodeClass",
+      panelClass: "qrcodeClass"
     });
   }
 

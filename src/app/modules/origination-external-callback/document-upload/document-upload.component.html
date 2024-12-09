@@ -6,7 +6,7 @@
   >
     <div
       formArrayName="documents"
-      *ngFor="let document of documents().controls; let documentIndex = index"
+      *ngFor="let document of documents.controls; let documentIndex = index"
     >
       <mat-card [formGroupName]="documentIndex" class="document">
         <div fxLayout="row" fxLayoutAlign="space-between ">
@@ -47,17 +47,15 @@
               </mat-select>
               <mat-error
                 *ngIf="
-                  document.controls['documentName'].hasError('required') ||
-                  document.controls['documentName'].hasError('touched')
+                  document.get('documentName')?.hasError('required') ||
+                  document.get('documentName')?.hasError('touched')
                 "
               >
                 {{ "Please Enter Document Name" }}
               </mat-error>
               <mat-error
                 *ngIf="
-                  document.controls['documentName'].hasError(
-                    'doumentAlreadyExist'
-                  )
+                  document.get('documentName')?.hasError('doumentAlreadyExist')
                 "
               >
                 {{ "Document is already selected" }}
@@ -79,8 +77,8 @@
               />
               <mat-error
                 *ngIf="
-                  document.controls['documentNumber'].hasError('required') &&
-                  document.controls['documentNumber'].touched
+                  document.get('documentNumber')?.hasError('required') &&
+                  document.get('documentNumber')?.touched
                 "
               >
                 {{ "Please Enter Document Number" }}
@@ -178,7 +176,6 @@
                       mat-raised-button
                       class="sm-btn scanColor"
                       [disableRipple]="true"
-                      (click)="otherimgscan(documentIndex, pageIndex)"
                     >
                       {{ "Scan" }}
                     </button>
@@ -244,7 +241,6 @@
                   color="primary"
                   class="sm-btn scanColor"
                   [disableRipple]="true"
-                  (click)="otherimgscan(documentIndex, pageIndex)"
                 >
                   {{ "Scan" }}
                 </button>

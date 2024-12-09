@@ -164,7 +164,7 @@
             </ng-container>
             <ng-container *ngIf="item?.header == 'Document Upload'">
               <ng-container>
-                {{ chunk }}
+                <!-- {{ chunk }} -->
                 <app-reusable-table
                   [columnNames]="docCol"
                   [data]="item.detalis"
@@ -221,7 +221,7 @@
       <ng-container
         *ngIf="details?.status == 'success' && details?.qrToggle == true"
       >
-        <button mat-flat-button (click)="generateQR()" class="filled_btn">
+        <button mat-flat-button class="filled_btn">
           {{ "Generate QR" }}
         </button>
       </ng-container>

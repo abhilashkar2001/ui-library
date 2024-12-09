@@ -7,16 +7,15 @@ import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pi
 @Component({
   selector: "app-amendment-lc-info",
   templateUrl: "./amendment-lc-info.component.html",
-  styleUrls: ["./amendment-lc-info.component.scss"],
+  styleUrls: ["./amendment-lc-info.component.scss"]
 })
 export class AmendmentLcInfoComponent implements OnInit {
   countryArr: any[] = [];
   component: string = "Amendment LC Info";
-  amendmentLcInfoForm: FormGroup;
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  amendmentLcInfoForm!: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
@@ -28,7 +27,7 @@ export class AmendmentLcInfoComponent implements OnInit {
     this.buildForm();
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.amendmentLcInfoForm = this.fb.group({
       applicantsDetails: this.fb.group({
         lcNumber: [data?.lcNumber ?? ""],
@@ -37,14 +36,14 @@ export class AmendmentLcInfoComponent implements OnInit {
         customerMode: [data?.customerMode ?? ""],
         issuingBranch: [data?.issuingBranch ?? ""],
         contactInfo: this.fb.group({
-          address: this.fb.array([]),
-        }),
+          address: this.fb.array([])
+        })
       }),
       beneficiaryDetails: this.fb.group({
         beneficiary: [data?.beneficiary ?? ""],
         contactInfo: this.fb.group({
-          address: this.fb.array([]),
-        }),
+          address: this.fb.array([])
+        })
       }),
       advisingBank: this.fb.group({
         bankName: [data?.bankName ?? ""],
@@ -52,20 +51,20 @@ export class AmendmentLcInfoComponent implements OnInit {
         swiftCode: [data?.swiftCode ?? ""],
         deliveryVia: [data?.deliveryVia ?? ""],
         contactInfo: this.fb.group({
-          address: this.fb.array([]),
-        }),
-      }),
+          address: this.fb.array([])
+        })
+      })
     });
     this.applicantAddress.push(this.buildAddressFormGroup(data?.address));
     this.beneficiaryAddress.push(this.buildAddressFormGroup(data?.address));
     this.advisingBankAddress.push(this.buildAddressFormGroup(data?.address));
-    this.amendmentLcInfoForm.valueChanges.subscribe((res) => {
+    this.amendmentLcInfoForm.valueChanges.subscribe(() => {
       let payload: any = {};
       payload = {
         lcType: "Amendment",
         lcInfo: this.amendmentLcInfoForm.value.applicantsDetails,
         beneficiary: this.amendmentLcInfoForm.value.beneficiaryDetails,
-        advisingBank: this.amendmentLcInfoForm.value.advisingBank,
+        advisingBank: this.amendmentLcInfoForm.value.advisingBank
       };
       console.log(payload);
 
@@ -73,7 +72,7 @@ export class AmendmentLcInfoComponent implements OnInit {
     });
   }
 
-  buildAddressFormGroup(data?) {
+  buildAddressFormGroup(data?: any) {
     return this.fb.group({
       address1: [data?.address1 || ""],
       address2: [data?.address2 || ""],
@@ -81,7 +80,7 @@ export class AmendmentLcInfoComponent implements OnInit {
       pincode: [data?.pincode || ""],
       stateName: [data?.stateName || ""],
       cityId: [data?.cityId || ""],
-      cityName: [data?.cityName || ""],
+      cityName: [data?.cityName || ""]
     });
   }
 
@@ -89,10 +88,10 @@ export class AmendmentLcInfoComponent implements OnInit {
     return this.amendmentLcInfoForm.get("applicantsDetails") as FormGroup;
   }
 
-  get applicantAddress() {
+  get applicantAddress(): any {
     return this.applicantsDetails
       .get("contactInfo")
-      .get("address") as FormArray;
+      ?.get("address") as FormArray;
   }
 
   get beneficiaryDetails() {
@@ -102,17 +101,17 @@ export class AmendmentLcInfoComponent implements OnInit {
   get beneficiaryAddress() {
     return this.beneficiaryDetails
       .get("contactInfo")
-      .get("address") as FormArray;
+      ?.get("address") as FormArray;
   }
 
   get advisingBankDetails() {
     return this.amendmentLcInfoForm.get("advisingBank") as FormGroup;
   }
 
-  get advisingBankAddress() {
+  get advisingBankAddress(): any {
     return this.advisingBankDetails
       .get("contactInfo")
-      .get("address") as FormArray;
+      ?.get("address") as FormArray;
   }
 
   getCountrys() {
@@ -123,11 +122,11 @@ export class AmendmentLcInfoComponent implements OnInit {
     });
   }
 
-  pincodeExpansion(formGroup) {
+  pincodeExpansion(formGroup: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "dialog-class"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

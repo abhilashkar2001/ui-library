@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class AuditLogService {
   protected baseUrl = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
-  getAuditLogHistory(id, className, page, pageSize) {
+  getAuditLogHistory(id: any, className: any, page: any, pageSize: any) {
     return this.http.get<any>(
       `${
         this.baseUrl

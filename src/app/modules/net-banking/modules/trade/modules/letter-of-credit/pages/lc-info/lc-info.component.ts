@@ -7,14 +7,13 @@ import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pi
 @Component({
   selector: "app-lc-info",
   templateUrl: "./lc-info.component.html",
-  styleUrls: ["./lc-info.component.scss"],
+  styleUrls: ["./lc-info.component.scss"]
 })
 export class LcInfoComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
-  lcInfoForm: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
+  lcInfoForm!: FormGroup;
   countryArr: any[] = [];
 
   constructor(
@@ -28,7 +27,7 @@ export class LcInfoComponent implements OnInit {
     this.buildForm();
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.lcInfoForm = this.fb.group({
       type: [data?.type ?? ""],
       domesticOrForegin: [data?.domesticOrForegin ?? "domesticLC"],
@@ -63,9 +62,9 @@ export class LcInfoComponent implements OnInit {
             pincode: [data?.address?.pincode ?? ""],
             stateName: [data?.address?.stateName ?? ""],
             cityId: [data?.address?.cityId ?? ""],
-            cityName: [data?.address?.cityName ?? ""],
-          }),
-        ]),
+            cityName: [data?.address?.cityName ?? ""]
+          })
+        ])
       }),
       beneficiaryDetails: this.fb.group({
         beneficiary: [data?.beneficiary ?? ""],
@@ -77,18 +76,18 @@ export class LcInfoComponent implements OnInit {
             pincode: [data?.address?.pincode ?? ""],
             stateName: [data?.address?.stateName ?? ""],
             cityId: [data?.address?.cityId ?? ""],
-            cityName: [data?.address?.cityName ?? ""],
-          }),
-        ]),
-      }),
+            cityName: [data?.address?.cityName ?? ""]
+          })
+        ])
+      })
     });
 
     this.lcInfoForm.valueChanges.subscribe((res) => {
       this.updateParentModel(
         {
           lcInfo: {
-            ...res,
-          },
+            ...res
+          }
         },
         this.checkForm()
       );
@@ -99,7 +98,7 @@ export class LcInfoComponent implements OnInit {
     return this.lcInfoForm.get("bankDetails") as FormGroup;
   }
 
-  get bankAddressControl() {
+  get bankAddressControl(): any {
     return this.bankDetails.get("address") as FormArray;
   }
 
@@ -107,7 +106,7 @@ export class LcInfoComponent implements OnInit {
     return this.lcInfoForm.get("beneficiaryDetails") as FormGroup;
   }
 
-  get beneficiaryAddressControl() {
+  get beneficiaryAddressControl(): any {
     return this.beneficiaryDetails.get("address") as FormArray;
   }
 
@@ -124,11 +123,11 @@ export class LcInfoComponent implements OnInit {
     });
   }
 
-  pincodeExpansion(formGroup) {
+  pincodeExpansion(formGroup: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "dialog-class"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

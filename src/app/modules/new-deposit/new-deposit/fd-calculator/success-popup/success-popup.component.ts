@@ -1,20 +1,19 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Component, OnInit } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-success-popup",
   templateUrl: "./success-popup.component.html",
-  styleUrls: ["./success-popup.component.scss"],
+  styleUrls: ["./success-popup.component.scss"]
 })
 export class SuccessPopupComponent implements OnInit {
   depositId: any;
-  constructor(
-    private dialogRef: MatDialogRef<SuccessPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any
-  ) {}
+  constructor(private dialogRef: MatDialogRef<SuccessPopupComponent>) {}
 
   ngOnInit(): void {
-    this.depositId = parseInt(sessionStorage.getItem("depositOriginationId"));
+    this.depositId = parseInt(
+      <string>sessionStorage.getItem("depositOriginationId")
+    );
   }
   done() {
     this.dialogRef.close();

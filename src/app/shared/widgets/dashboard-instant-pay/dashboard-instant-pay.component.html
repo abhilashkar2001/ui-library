@@ -27,7 +27,7 @@
         bindValueKey="accountNo"
         bindLabelKey="accountNo"
         [currencyCode]="'INR'"
-        [control]="payeeForm.get('accountNumber')"
+        [control]="payeeForm.get('accountNumber') | formcontrol"
         (selectionChange)="getCurrencySymbol($event)"
       >
       </app-searchable-select>
@@ -71,7 +71,7 @@
         bindValueKey="accountNo"
         displayLabel="accountNo"
         [currencyCode]="selectedPayee?.accountCurrecny"
-        [control]="payeeForm.get('benificiaryAccountNo')"
+        [control]="payeeForm.get('benificiaryAccountNo') | formcontrol"
       >
       </app-searchable-select>
     </div>
@@ -83,7 +83,7 @@
         bindValueKey="accountNo"
         displayLabel="accountNo"
         [currencyCode]="selectedPayee?.accountCurrecny"
-        [control]="payeeForm.get('benificiaryAccountNo')"
+        [control]="payeeForm.get('benificiaryAccountNo') | formcontrol"
       >
       </app-searchable-select>
     </div>
@@ -108,8 +108,8 @@
         </div>
         <mat-error
           *ngIf="
-            payeeForm.get('amount').touched &&
-            payeeForm.get('amount').hasError('notEnoughAmount')
+            payeeForm.get('amount')?.touched &&
+            payeeForm.get('amount')?.hasError('notEnoughAmount')
           "
         >
           {{ "No enough balance to transfer" }}

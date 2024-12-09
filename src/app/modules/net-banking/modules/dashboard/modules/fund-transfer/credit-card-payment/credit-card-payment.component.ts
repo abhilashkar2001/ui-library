@@ -14,18 +14,18 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-credit-card-payment",
   templateUrl: "./credit-card-payment.component.html",
-  styleUrls: ["./credit-card-payment.component.scss"],
+  styleUrls: ["./credit-card-payment.component.scss"]
 })
 export class CreditCardPaymentComponent implements OnInit {
   today = new Date();
   showSendAdviceBlock: boolean = false;
   showNarrationBlock: boolean = false;
-  creditCardForm: FormGroup;
+  creditCardForm!: FormGroup;
   selectList = [];
   aanList = [
     { label: "000037560058", value: "000037560058" },
     { label: "000037560078", value: "000037560078" },
-    { label: "000037560069", value: "000037560069" },
+    { label: "000037560069", value: "000037560069" }
   ];
   customerInfo: any;
 
@@ -57,10 +57,10 @@ export class CreditCardPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.buildCreditCardForm();
     // Subscribe to value changes of the remitter checkbox
-    this.creditCardForm.get("remitter").valueChanges.subscribe((value) => {
+    this.creditCardForm.get("remitter")?.valueChanges.subscribe((value) => {
       this.showSendAdviceBlock = value;
     });
-    this.creditCardForm.get("narration").valueChanges.subscribe((value) => {
+    this.creditCardForm.get("narration")?.valueChanges.subscribe((value) => {
       this.showNarrationBlock = value;
     });
     this.fetchCustomerInfo();
@@ -80,13 +80,17 @@ export class CreditCardPaymentComponent implements OnInit {
       narration: [false],
       remitterNarration: [""],
       creditAmount: [""],
-      creditAccount: ["", [Validators.required]],
+      creditAccount: ["", [Validators.required]]
     });
   }
 
   fetchCustomerInfo() {
-    this.selectList = JSON.parse(sessionStorage.getItem("listOfAccounts"));
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
+    this.selectList = JSON.parse(
+      <string>sessionStorage.getItem("listOfAccounts")
+    );
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
   }
 
   close() {
@@ -104,13 +108,13 @@ export class CreditCardPaymentComponent implements OnInit {
     let dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile,
+        mobile: this.tokenStorageService.getUser()?.mobile
       },
       width: "50%",
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     dialogRef1.afterClosed().subscribe((result) => {
       if (result == "verified") {
@@ -121,7 +125,7 @@ export class CreditCardPaymentComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Failed") {
@@ -134,10 +138,10 @@ export class CreditCardPaymentComponent implements OnInit {
   getOTP() {
     this.api
       .getOtp(this.tokenStorageService.getUser()?.mobile)
-      .subscribe((response: any) => {});
+      .subscribe(() => {});
   }
 
-  saveData(payload) {
+  saveData(payload: any) {
     this.fundTransferService.saveCreditCard(payload).subscribe((res) => {
       if (res?.statusCode == 200) {
         let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
@@ -145,7 +149,7 @@ export class CreditCardPaymentComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
         dialogRef.afterClosed().subscribe((result) => {
           console.log(result);

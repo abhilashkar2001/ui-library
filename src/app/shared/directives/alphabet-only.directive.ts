@@ -1,15 +1,18 @@
-import { Directive, HostListener, ElementRef } from '@angular/core';
+import { Directive, HostListener } from "@angular/core";
 
 @Directive({
-    selector: '[appAlphabetOnly]'
+  selector: "[appAlphabetOnly]"
 })
-
 export class AlphabetOnlyDirective {
-    key: any;
-    @HostListener('keydown', ['$event']) onKeydown(event: KeyboardEvent) {
-        this.key = event.keyCode;
-        if ((this.key >= 15 && this.key <= 64) || (this.key >= 123) || (this.key >= 96 && this.key <= 105)) {
-            event.preventDefault();
-        }
+  key: any;
+  @HostListener("keydown", ["$event"]) onKeydown(event: KeyboardEvent) {
+    this.key = event.keyCode;
+    if (
+      (this.key >= 15 && this.key <= 64) ||
+      this.key >= 123 ||
+      (this.key >= 96 && this.key <= 105)
+    ) {
+      event.preventDefault();
     }
+  }
 }

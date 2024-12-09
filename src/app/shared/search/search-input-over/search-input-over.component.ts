@@ -11,7 +11,7 @@ import { UntypedFormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { SearchService } from "../search.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { AutoFocusDirective } from "app/shared/directives/auto-focus.directive";
 
 @Component({
@@ -20,21 +20,17 @@ import { AutoFocusDirective } from "app/shared/directives/auto-focus.directive";
   styleUrls: ["./search-input-over.component.scss"]
 })
 export class SearchInputOverComponent implements OnInit, OnDestroy {
-  isOpen: boolean;
-  @ViewChildren(AutoFocusDirective) searchInput;
-  @Input('resultPage') resultPage: string;
-  @Input('placeholder') placeholder: string = "Search here";
+  isOpen: boolean | any;
+  @ViewChildren(AutoFocusDirective) searchInput: any;
+  @Input("resultPage") resultPage: string | any;
+  @Input("placeholder") placeholder: string = "Search here";
   @Output("search") search = new EventEmitter();
   searchCtrl = new UntypedFormControl();
-  searchCtrlSub: Subscription;
-  constructor(
-      private searchService: SearchService,
-      private router: Router
-  ) {}
+  searchCtrlSub: Subscription | any;
+  constructor(private searchService: SearchService, private router: Router) {}
 
   ngOnInit() {
-    this.searchCtrl.valueChanges.pipe(debounceTime(200))
-    .subscribe(value => {
+    this.searchCtrl.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
       this.search.emit(value);
       this.searchService.searchTerm.next(value);
     });
@@ -46,8 +42,8 @@ export class SearchInputOverComponent implements OnInit, OnDestroy {
     }
   }
   navigateToResult() {
-    if(this.resultPage) {
-        this.router.navigateByUrl(this.resultPage);
+    if (this.resultPage) {
+      this.router.navigateByUrl(this.resultPage);
     }
   }
   open() {
@@ -56,7 +52,7 @@ export class SearchInputOverComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       this.searchInput.first.focus();
-    })
+    });
   }
   close() {
     this.isOpen = false;

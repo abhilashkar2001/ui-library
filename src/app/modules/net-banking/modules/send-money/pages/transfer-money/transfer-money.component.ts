@@ -16,19 +16,19 @@ import * as moment from "moment";
 @Component({
   selector: "app-transfer-money",
   templateUrl: "./transfer-money.component.html",
-  styleUrls: ["./transfer-money.component.scss"],
+  styleUrls: ["./transfer-money.component.scss"]
 })
 export class TransferMoneyComponent implements OnInit {
-  transferMoneyForm: FormGroup;
+  transferMoneyForm!: FormGroup;
   proceedTransferMoney: boolean = false;
   transferType: any[] = [];
   recurringOptions: any[] = [
     { label: "Yes", value: true },
-    { label: "No", value: false },
+    { label: "No", value: false }
   ];
   transferOptions: any[] = [
     { label: "Now", value: "now" },
-    { label: "Later", value: "later" },
+    { label: "Later", value: "later" }
   ];
   customerInfo: any;
   profileInfo: any;
@@ -38,14 +38,14 @@ export class TransferMoneyComponent implements OnInit {
   accountNo: any;
   staticData = {
     SCHEDULEPAYMENT: [],
-    PAYMENTMODE: [],
+    PAYMENTMODE: []
   };
   genericValue: any;
   accountType: any;
   bankName: any;
   selectedCurrency: any;
   fetchingDetails: any;
-  currencyCode: string;
+  currencyCode: string | any;
 
   constructor(
     private fb: FormBuilder,
@@ -69,7 +69,7 @@ export class TransferMoneyComponent implements OnInit {
     );
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
-      this.payeeDetails = navigation.extras.state.paymentDetails;
+      this.payeeDetails = navigation.extras.state["paymentDetails"];
       if (this.payeeDetails) {
         this.proceedTransferMoney = true;
         this.accountNo =
@@ -96,26 +96,26 @@ export class TransferMoneyComponent implements OnInit {
       if (this.fetchingDetails?.creditAccount) {
         this.transferMoneyForm
           .get("creditAccount")
-          .setValue(this.fetchingDetails?.creditAccount);
+          ?.setValue(this.fetchingDetails?.creditAccount);
         this.proceedTransferMoney = true;
       }
 
       if (this.fetchingDetails?.creditAmount) {
         this.transferMoneyForm
           .get("creditAmount")
-          .setValue(this.fetchingDetails?.creditAmount);
+          ?.setValue(this.fetchingDetails?.creditAmount);
       }
 
       if (this.fetchingDetails?.paymentMode) {
         this.transferMoneyForm
           .get("paymentMode")
-          .setValue(this.fetchingDetails?.paymentMode);
+          ?.setValue(this.fetchingDetails?.paymentMode);
       }
 
       if (this.fetchingDetails?.remarks) {
         this.transferMoneyForm
           .get("remark")
-          .setValue(this.fetchingDetails?.remarks);
+          ?.setValue(this.fetchingDetails?.remarks);
       }
     }
   }
@@ -142,24 +142,24 @@ export class TransferMoneyComponent implements OnInit {
       payeeName: "",
       amount: [""],
       corpCustomerId: [],
-      corpBeneficiaryId: [],
+      corpBeneficiaryId: []
     });
   }
 
-  proceedToTransferMoney(event?) {
+  proceedToTransferMoney(event?: any) {
     if (event) {
       this.transferMoneyForm.get("creditAccount")?.patchValue(event?.accountNo);
       this.transferMoneyForm.get("amount")?.patchValue(event?.account);
     }
     if (
-      !this.transferMoneyForm.get("creditAccount").value &&
-      !this.transferMoneyForm.get("debitAccount").value
+      !this.transferMoneyForm.get("creditAccount")?.value &&
+      !this.transferMoneyForm.get("debitAccount")?.value
     ) {
-      this.transferMoneyForm.get("debitAccount").touched;
-      this.transferMoneyForm.get("creditAccount").touched;
+      this.transferMoneyForm.get("debitAccount")?.touched;
+      this.transferMoneyForm.get("creditAccount")?.touched;
     } else this.proceedTransferMoney = true;
   }
-  changeFav(eve) {
+  changeFav(eve: any) {
     this.filterFav = [];
     this.transferType.forEach((res) => {
       if (res?.bankType == eve && res?.isFavorite == true) {
@@ -188,7 +188,7 @@ export class TransferMoneyComponent implements OnInit {
       });
   }
 
-  payAccount(event) {
+  payAccount(event: any) {
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.accountType = listOfAccounts?.find(
       (res) => res?.accountNo == event
@@ -198,7 +198,7 @@ export class TransferMoneyComponent implements OnInit {
     )?.accountCurrency;
   }
 
-  setTransfer(event) {
+  setTransfer(event: any) {
     this.selectedTransferAccount = this.transferType.find(
       (res) => res?.accountNo == event || event?.accountNo
     );
@@ -225,10 +225,10 @@ export class TransferMoneyComponent implements OnInit {
     let payload = { ...this.transferMoneyForm.value };
     payload.payeeName = this.customerInfo?.customerName;
     let paymentMode = this.genericValue?.PAYMENTMODE.find(
-      (res) => this.transferMoneyForm.get("paymentMode").value == res?.id
+      (res: any) => this.transferMoneyForm.get("paymentMode")?.value == res?.id
     )?.values;
     let frequency = this.genericValue?.SCHEDULEPAYMENT.find(
-      (res) => this.transferMoneyForm.get("frequency").value == res?.id
+      (res: any) => this.transferMoneyForm.get("frequency")?.value == res?.id
     )?.values;
     payload.bankId = this.profileInfo.bankId;
     payload.corpCustomerId = this.customerInfo.customerId;
@@ -251,52 +251,52 @@ export class TransferMoneyComponent implements OnInit {
             details: [
               { Name: this.customerInfo?.customerName },
               {
-                "Account No": this.transferMoneyForm.get("debitAccount").value,
+                "Account No": this.transferMoneyForm.get("debitAccount")?.value
               },
-              { "Account Type": this.customerInfo?.accounts[0]?.accountType },
-            ],
+              { "Account Type": this.customerInfo?.accounts[0]?.accountType }
+            ]
           },
           {
             header: "Send To",
             details: [
               { Name: this.selectedTransferAccount?.payeeName },
               {
-                "Account No": this.transferMoneyForm.get("creditAccount").value,
+                "Account No": this.transferMoneyForm.get("creditAccount")?.value
               },
               {
-                "Account Type": this.accountType,
+                "Account Type": this.accountType
               },
               {
-                "Bank Name": this.bankName,
+                "Bank Name": this.bankName
               },
               { "Bank Code": this.selectedTransferAccount?.bankCode },
-              { Amount: this.transferMoneyForm.get("creditAmount").value },
+              { Amount: this.transferMoneyForm.get("creditAmount")?.value },
               {
-                "Payment Mode": paymentMode,
+                "Payment Mode": paymentMode
               },
-              this.transferMoneyForm.get("paymentType").value != "now"
+              this.transferMoneyForm.get("paymentType")?.value != "now"
                 ? {
                     "Schedule Payment": moment(
                       new Date(
-                        this.transferMoneyForm.get("schedulePaymentDate").value
+                        this.transferMoneyForm.get("schedulePaymentDate")?.value
                       )
-                    ).format("DD-MM-YYYY"),
+                    ).format("DD-MM-YYYY")
                   }
                 : "",
 
               frequency ? { Frequency: frequency } : "",
-              this.transferMoneyForm.get("noOfInstalment").value
+              this.transferMoneyForm.get("noOfInstalment")?.value
                 ? {
                     "No of instalments":
-                      this.transferMoneyForm.get("noOfInstalment").value,
+                      this.transferMoneyForm.get("noOfInstalment")?.value
                   }
                 : "",
-              { Remarks: this.transferMoneyForm.get("remark").value },
-            ],
-          },
+              { Remarks: this.transferMoneyForm.get("remark")?.value }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
 
     this.serviceCallHandler.put(
@@ -304,7 +304,7 @@ export class TransferMoneyComponent implements OnInit {
       payload,
       paymentDetailsArr,
       (payload) =>
-        this.transferMoneyForm.get("paymentType").value == "now"
+        this.transferMoneyForm.get("paymentType")?.value == "now"
           ? this.transferMoneyService.saveTransferMoney(payload)
           : this.schedulePaymentService.save(payload)
     );

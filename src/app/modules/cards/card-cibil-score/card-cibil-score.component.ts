@@ -1,12 +1,11 @@
-import { Location } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { CommonService } from "app/shared/services/common-service/common.service";
 
 @Component({
   selector: "app-card-cibil-score",
   templateUrl: "./card-cibil-score.component.html",
-  styleUrls: ["./card-cibil-score.component.scss"],
+  styleUrls: ["./card-cibil-score.component.scss"]
 })
 export class CardCibilScoreComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
@@ -19,9 +18,7 @@ export class CardCibilScoreComponent implements OnInit {
   selectedOption: "different" | "same" = "same";
 
   constructor(
-    private router: Router,
     private commonService: CommonService,
-    private location: Location,
     private activatedRoute: ActivatedRoute
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
@@ -37,7 +34,7 @@ export class CardCibilScoreComponent implements OnInit {
     this.onBackEvent.emit();
   }
 
-  onBackCIBILScoreResult(event: any) {
+  onBackCIBILScoreResult() {
     this.showCibilScoreResult = false;
   }
 
@@ -46,16 +43,16 @@ export class CardCibilScoreComponent implements OnInit {
     this.commonService.isUserUsingDifferentMobile(this.isDifferentMobile);
     let tempRow = [
       { stepName: "Personal Details" },
-      { stepName: "Select KYC" },
+      { stepName: "Select KYC" }
     ];
     this.isDifferentMobile
       ? this.isDifferentMobileNumber.emit({
           steps: tempRow,
-          isDifferentMobile: true,
+          isDifferentMobile: true
         })
       : this.isDifferentMobileNumber.emit({
           steps: [],
-          isDifferentMobile: false,
+          isDifferentMobile: false
         });
   }
 

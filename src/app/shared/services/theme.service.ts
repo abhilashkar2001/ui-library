@@ -3,7 +3,7 @@ import {
   Inject,
   Renderer2,
   RendererFactory2,
-  EventEmitter,
+  EventEmitter
 } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 
@@ -21,16 +21,16 @@ export class ThemeService {
     {
       name: "egret-navy",
       baseColor: "#10174c",
-      isActive: false,
+      isActive: false
     },
     {
       name: "egret-navy-dark",
       baseColor: "#0081ff",
-      isActive: false,
-    },
+      isActive: false
+    }
   ];
 
-  public activatedTheme: ITheme;
+  public activatedTheme: ITheme | any;
   private renderer: Renderer2;
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -46,7 +46,7 @@ export class ThemeService {
     this.renderer.addClass(this.document.body, themeName);
   }
 
-  changeTheme(prevTheme, themeName: string) {
+  changeTheme(prevTheme: any, themeName: string) {
     this.renderer.removeClass(this.document.body, prevTheme);
     this.renderer.addClass(this.document.body, themeName);
     this.flipActiveFlag(themeName);

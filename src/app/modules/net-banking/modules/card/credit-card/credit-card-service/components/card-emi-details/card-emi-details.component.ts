@@ -13,13 +13,13 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-card-emi-details",
   templateUrl: "./card-emi-details.component.html",
-  styleUrls: ["./card-emi-details.component.scss"],
+  styleUrls: ["./card-emi-details.component.scss"]
 })
 export class CardEmiDetailsComponent implements OnInit {
-  cardEmiDetailsForm: FormGroup;
+  cardEmiDetailsForm!: FormGroup;
   creditEmiHeader = CreditCardStore.creditEmiHeader;
   creditEmiValues: EmiDetails[] = [];
-  customerId: string;
+  customerId: string | any;
   listOfAccounts: string[] = [];
   creditCardNo: any;
 
@@ -37,7 +37,7 @@ export class CardEmiDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.initializeCustomerId();
     this.buildCardEmiDetailsForm();
-    this.fetchListOfCards(this.customerId);
+    this.fetchListOfCards();
   }
 
   private registerIcons(): void {
@@ -56,11 +56,11 @@ export class CardEmiDetailsComponent implements OnInit {
 
   private buildCardEmiDetailsForm(): void {
     this.cardEmiDetailsForm = this.fb.group({
-      creditNumber: [""],
+      creditNumber: [""]
     });
   }
 
-  private fetchListOfCards(customerId): void {
+  private fetchListOfCards(): void {
     this.listOfAccounts = this.sessionStorageService?.getListOfCards();
   }
 
@@ -81,8 +81,8 @@ export class CardEmiDetailsComponent implements OnInit {
   }
   downLoad() {
     if (this.cardEmiDetailsForm.valid) {
-      let month: number = this.cardEmiDetailsForm.get("month").value;
-      let year: number = this.cardEmiDetailsForm.get("year").value;
+      let month: number = this.cardEmiDetailsForm.get("month")?.value;
+      let year: number = this.cardEmiDetailsForm.get("year")?.value;
       this.cardService
         .downloadCreditInfoAsPdf(this.creditCardNo, month, year)
         .subscribe(
@@ -104,11 +104,11 @@ export class CardEmiDetailsComponent implements OnInit {
     link.click();
     window.URL.revokeObjectURL(url);
   }
-  errorPopUp(res) {
+  errorPopUp(res: any) {
     let errPayload = {
       error: res?.error,
       message: res?.message,
-      statusCode: res?.status,
+      statusCode: res?.status
     };
     this.dialog.open(NewErrorPopupComponent, {
       width: "45%",
@@ -116,8 +116,8 @@ export class CardEmiDetailsComponent implements OnInit {
       disableClose: true,
       data: {
         type: "customError",
-        errPayload,
-      },
+        errPayload
+      }
     });
   }
 }

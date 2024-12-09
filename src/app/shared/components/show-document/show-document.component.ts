@@ -6,7 +6,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-show-document",
   templateUrl: "./show-document.component.html",
-  styleUrls: ["./show-document.component.scss"],
+  styleUrls: ["./show-document.component.scss"]
 })
 export class ShowDocumentComponent implements OnInit {
   @Input() document: any;
@@ -17,13 +17,13 @@ export class ShowDocumentComponent implements OnInit {
     // console.log("...");
   }
 
-  ngOnChanges(changes): void {
+  ngOnChanges(): void {
     // console.log(changes);
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
 
-  getFileUrl(url) {
+  getFileUrl(url: any) {
     if (url.includes("https")) {
       return "assets/images/account-img1.png";
     } else {
@@ -34,15 +34,15 @@ export class ShowDocumentComponent implements OnInit {
   }
   viewFiles(imageUrl: any, imageName: any): void {
     console.log(imageName);
-    const dialogRef = this.dialog.open(ImageDialogComponent, {
+    this.dialog.open(ImageDialogComponent, {
       data: {
         imageUrl,
         imageName: imageName.fileName,
-        fileInfo: imageName,
+        fileInfo: imageName
       },
       width: "60%",
       height: "560px",
-      panelClass: "imageViewDialog",
+      panelClass: "imageViewDialog"
     });
   }
 }

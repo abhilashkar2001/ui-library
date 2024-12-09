@@ -2,7 +2,7 @@
   <div class="section-1" fxLayout="column" fxFlex="60">
     <div fxLayout="row warp" fxLayoutAlign="start center" fxFlex="100">
       <app-ic-custom-pay-from
-        [control]="instantLoanForm.get('cardNo')"
+        [control]="instantLoanForm.get('cardNo') | formcontrol"
         [items]="listOfAccounts"
         [inputLabel]="'Card No.' | translate"
         bindValueKey="cardNumber"
@@ -15,7 +15,7 @@
       <div fxFlex="100">
         <app-ic-custom-input
           fxFlex="30"
-          [control]="instantLoanForm.get('amount')"
+          [control]="instantLoanForm.get('amount') | formcontrol"
           customClass="customTotalField"
           customLabelClass="customLabelClass"
         ></app-ic-custom-input>
@@ -51,7 +51,7 @@
                 type="number"
                 name="tenureYear"
                 maxlength="2"
-                [formControl]="instantLoanForm.get('tenureYears')"
+                [formControl]="instantLoanForm.get('tenureYears') | formcontrol"
                 placeholder="Enter"
                 class="pl-3 tenure_input"
                 numbersOnly
@@ -69,7 +69,9 @@
                 type="number"
                 name="tenureMonth"
                 maxlength="2"
-                [formControl]="instantLoanForm.get('tenureMonths')"
+                [formControl]="
+                  instantLoanForm.get('tenureMonths') | formcontrol
+                "
                 placeholder="Enter"
                 class="pl-3 tenure_input"
                 numbersOnly
@@ -85,7 +87,7 @@
                 type="number"
                 name="tenureDays"
                 maxlength="2"
-                [formControl]="instantLoanForm.get('tenureDays')"
+                [formControl]="instantLoanForm.get('tenureDays') | formcontrol"
                 placeholder="Enter"
                 class="pl-3 tenure_input"
                 numbersOnly
@@ -121,7 +123,7 @@
         <div class="py-12" fxLayout="row">
           <div class="custom_dropDown_accountNo">Account No</div>
           <app-ic-custom-pay-from
-            [control]="instantLoanForm.get('accountNo')"
+            [control]="instantLoanForm.get('accountNo') | formcontrol"
             [items]="items"
             bindValueKey="accountNo"
             bindLabelKey="accountNo"
@@ -131,7 +133,7 @@
         <div class="py-12" fxLayout="row">
           <div class="custom_dropDown_label">Purpose of Loan</div>
           <app-searchable-select
-            [control]="instantLoanForm.get('loanPorpose')"
+            [control]="instantLoanForm.get('loanPorpose') | formcontrol"
             [items]="purpose"
             [inputLabel]="'Purpose of Loan' | translate"
             bindValueKey="purpose"

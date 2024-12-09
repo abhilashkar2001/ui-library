@@ -17,7 +17,9 @@
                   placeholder="Enter"
                   class="pl-3 tenure_input"
                   (input)="calculateSliderValue()"
-                  [formControl]="calculateEmiForm.get('tenureYears')"
+                  [formControl]="
+                    calculateEmiForm.get('tenureYears') | formcontrol
+                  "
                   numbersOnly
                 />
                 <span matSuffix class="suffixLabel">Year</span>
@@ -34,7 +36,9 @@
                   placeholder="Enter"
                   class="pl-3 tenure_input"
                   (input)="calculateSliderValue()"
-                  [formControl]="calculateEmiForm.get('tenureMonths')"
+                  [formControl]="
+                    calculateEmiForm.get('tenureMonths') | formcontrol
+                  "
                   numbersOnly
                 />
                 <span class="suffixLabel">Month</span>
@@ -50,7 +54,9 @@
                   maxlength="2"
                   placeholder="Enter"
                   class="pl-3 tenure_input"
-                  [formControl]="calculateEmiForm.get('tenureDays')"
+                  [formControl]="
+                    calculateEmiForm.get('tenureDays') | formcontrol
+                  "
                   (input)="calculateSliderValue()"
                   numbersOnly
                 />
@@ -65,7 +71,7 @@
             class="custom-slider"
             [max]="maxTenure"
             [min]="minTenure"
-            (input)="onSliderChangeForTenure($event.value)"
+            (input)="onSliderChangeForTenure($event)"
             discrete
             thumbLabel
             [formControl]="sliderValue"

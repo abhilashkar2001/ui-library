@@ -4,7 +4,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 @Component({
   selector: "app-select-single-transfer",
   templateUrl: "./select-single-transfer.component.html",
-  styleUrls: ["./select-single-transfer.component.scss"],
+  styleUrls: ["./select-single-transfer.component.scss"]
 })
 export class SelectSingleTransferComponent implements OnInit {
   checkToggle: boolean = true;
@@ -13,7 +13,7 @@ export class SelectSingleTransferComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  customerToggle(event) {
+  customerToggle(event: any) {
     this.checkToggle = event;
   }
   onSubmit() {

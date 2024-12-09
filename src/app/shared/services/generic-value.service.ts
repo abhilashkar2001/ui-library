@@ -9,7 +9,7 @@ import { IcHttpResponseModel } from "../models/ic-http-response.model";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class GenericValueService extends GenericValue {
   genericValue: any;
@@ -19,7 +19,7 @@ export class GenericValueService extends GenericValue {
   }
 
   loadGenericValue(
-    screenName,
+    screenName: any,
     genericName: string[]
   ): Observable<IcHttpResponseModel<GenericValueInfoModel>> {
     console.log(this.genericValue);
@@ -38,7 +38,7 @@ export class GenericValueService extends GenericValue {
     }
   }
 
-  fetchGenericValue(screenName, genericName) {
+  fetchGenericValue(screenName: any, genericName: any) {
     return this.http
       .get(
         `${MICROSERVICE_URL}/generic-value?screenName=${screenName}&genericName=${genericName}`
@@ -51,7 +51,7 @@ export class GenericValueService extends GenericValue {
     if (data) {
       this.genericValue = {
         ...data,
-        ...{ data: { ...this.genericValue?.data, ...data?.data } },
+        ...{ data: { ...this.genericValue?.data, ...data?.data } }
       };
     }
     return this.genericValue;

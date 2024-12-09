@@ -4,20 +4,20 @@ import { ChartStore } from "../chart/chart.store";
 @Component({
   selector: "app-maturity-chart",
   templateUrl: "./maturity-chart.component.html",
-  styleUrls: ["./maturity-chart.component.scss"],
+  styleUrls: ["./maturity-chart.component.scss"]
 })
 export class MaturityChartComponent implements OnInit {
-  @Input("chartData") chartData;
-  @Input("chartSectionDetails") chartSectionDetails;
-  @Input("autoCheck") autoCheck;
-  @Input("buttonData") buttonData;
-  @Input() labelOne: string;
-  @Input() labelTwo: string;
-  @Input("data") data;
+  @Input("chartData") chartData: any;
+  @Input("chartSectionDetails") chartSectionDetails: any;
+  @Input("autoCheck") autoCheck: any;
+  @Input("buttonData") buttonData: any;
+  @Input() labelOne: string | any;
+  @Input() labelTwo: string | any;
+  @Input("data") data: any;
   @Input("loanDetailsSection") loanDetailsSection: boolean = false;
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() cancle: EventEmitter<any> = new EventEmitter<any>();
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(): void {
     const interest = this.data?.maturityAmount - this.data?.depositAmount;
@@ -28,24 +28,24 @@ export class MaturityChartComponent implements OnInit {
       data: [
         {
           name: this.labelOne ?? "Interest",
-          data: [0, interest],
+          data: [0, interest]
         },
         {
           name: this.labelTwo ?? "Deposit Amount",
-          data: [this.data?.depositAmount, this.data?.depositAmount],
-        },
+          data: [this.data?.depositAmount, this.data?.depositAmount]
+        }
       ],
 
       xAxis: {
         labels: {
-          enabled: false,
+          enabled: false
         },
         categories: ["", ""],
-        lineColor: "#DEDEDE",
+        lineColor: "#DEDEDE"
       },
-      colors: ["#00205C", "#FFFFFF"],
+      colors: ["#00205C", "#FFFFFF"]
     };
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

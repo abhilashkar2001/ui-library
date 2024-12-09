@@ -7,16 +7,15 @@ import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pi
 @Component({
   selector: "app-lc-additional-info",
   templateUrl: "./lc-additional-info.component.html",
-  styleUrls: ["./lc-additional-info.component.scss"],
+  styleUrls: ["./lc-additional-info.component.scss"]
 })
 export class LcAdditionalInfoComponent implements OnInit {
-  lcAdditionalInfoForm: FormGroup;
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  lcAdditionalInfoForm!: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
 
-  @Input("tradeDetails") tradeDetails;
+  @Input("tradeDetails") tradeDetails: any;
   countryArr: any;
   constructor(
     private fb: FormBuilder,
@@ -37,7 +36,7 @@ export class LcAdditionalInfoComponent implements OnInit {
     });
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.lcAdditionalInfoForm = this.fb.group({
       lcTransfer: [data?.lcTransfer ?? "yes"],
       additionalCondition: [data?.additionalCondition ?? ""],
@@ -47,13 +46,13 @@ export class LcAdditionalInfoComponent implements OnInit {
       allChargesThanBankCharge: [data?.allChargesThanBankCharge ?? ""],
       remarks: [data?.remarks ?? ""],
       contactInfo: this.fb.group({
-        address: this.fb.array([]),
-      }),
+        address: this.fb.array([])
+      })
     });
 
     this.updateAddress();
 
-    this.lcAdditionalInfoForm.valueChanges.subscribe((res) => {
+    this.lcAdditionalInfoForm.valueChanges.subscribe(() => {
       this.updateParentModel(
         {
           lcAdditionalInfo: {
@@ -61,8 +60,8 @@ export class LcAdditionalInfoComponent implements OnInit {
             contactInfo: !this.lcAdditionalInfoForm.value.contactInfo.address[0]
               .cityId
               ? null
-              : this.lcAdditionalInfoForm.value.contactInfo,
-          },
+              : this.lcAdditionalInfoForm.value.contactInfo
+          }
         },
         this.checkForm()
       );
@@ -73,7 +72,7 @@ export class LcAdditionalInfoComponent implements OnInit {
     return this.lcAdditionalInfoForm.valid;
   }
 
-  get addressControle() {
+  get addressControle(): any {
     return this.Contact.get("address") as FormArray;
   }
 
@@ -81,7 +80,7 @@ export class LcAdditionalInfoComponent implements OnInit {
     return this.lcAdditionalInfoForm.get("contactInfo") as FormGroup;
   }
 
-  updateAddress(address?) {
+  updateAddress(address?: any) {
     const newAddress = this.fb.group({
       address1: [address?.address1 ?? "", [Validators.required]],
       address2: [address?.address2 ?? ""],
@@ -90,16 +89,16 @@ export class LcAdditionalInfoComponent implements OnInit {
       pincode: [address?.pincode ?? "", [Validators.required]],
       stateName: [address?.stateName ?? ""],
       cityId: [address?.cityId ?? ""],
-      cityName: [address?.cityName ?? ""],
+      cityName: [address?.cityName ?? ""]
     });
     this.addressControle.push(newAddress);
   }
 
-  pincodeExpansion(address) {
+  pincodeExpansion(address: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "dialog-class",
+      panelClass: "dialog-class"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

@@ -3,7 +3,7 @@ import {
   state,
   style,
   transition,
-  trigger,
+  trigger
 } from "@angular/animations";
 import {
   Component,
@@ -12,7 +12,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { CommonService } from "app/shared/services/common-service/common.service";
@@ -30,12 +30,12 @@ import { MatDialog } from "@angular/material/dialog";
       state(
         "void",
         style({
-          opacity: 0,
+          opacity: 0
         })
       ),
-      transition("void <=> *", animate(1000)),
-    ]),
-  ],
+      transition("void <=> *", animate(1000))
+    ])
+  ]
 })
 export class CommonMobileVerificationComponent implements OnInit {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
@@ -43,17 +43,19 @@ export class CommonMobileVerificationComponent implements OnInit {
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onMobileExitEvent: EventEmitter<any> = new EventEmitter();
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Input() showOtpSection: boolean;
-  @Input() invalidOtp: boolean;
-  @Input() otpSent: boolean;
+  @Input() showOtpSection: boolean | any;
+  @Input() invalidOtp: boolean | any;
+  @Input() otpSent: boolean | any;
   @Input() hideInfo = false;
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
-  otpForm: FormGroup;
-  phone: string;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
+  otpForm!: FormGroup;
+  phone: string | any;
   otp: any;
   agreed: boolean = false;
   resendLink: boolean = false;
-  displaySecond: string;
+  displaySecond: string | any;
   getOtpBtn: boolean = true;
   @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
   config = {
@@ -64,8 +66,8 @@ export class CommonMobileVerificationComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "80px",
-      height: "80px",
-    },
+      height: "80px"
+    }
   };
   validNumber: boolean = true;
   countriesIsdCodes: any = [];
@@ -74,7 +76,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   selectedIsd: any;
   defaultIsdCodeValue: any;
   resendOtp: number = 0;
-  maxMobileLength: number;
+  maxMobileLength: number | any;
   intervalId: any;
   otpAvailable: boolean = false;
   yourOtp: any;
@@ -97,7 +99,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.loadCountries();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (this.otpSent) {
       this.otpTimer();
     }
@@ -106,7 +108,7 @@ export class CommonMobileVerificationComponent implements OnInit {
 
   onGetOTP() {
     this.ngOtpInput.otpForm.reset();
-    this.api.getOtp(this.otpForm.value.phone).subscribe((response: any) => {
+    this.api.getOtp(this.otpForm.value.phone).subscribe(() => {
       this.otpSent = true;
       this.showOtpSection = true;
       this.getOtpBtn = true;
@@ -132,7 +134,7 @@ export class CommonMobileVerificationComponent implements OnInit {
         if (resp?.data) {
           this.countriesIsdCodes = resp?.data;
           const indiaIsdCode = this.countriesIsdCodes.find(
-            (item) => item?.countryName.toLowerCase() == "india"
+            (item: any) => item?.countryName.toLowerCase() == "india"
           );
           if (indiaIsdCode) {
             this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
@@ -142,14 +144,14 @@ export class CommonMobileVerificationComponent implements OnInit {
               this.countriesIsdCodes[0].countryTelIsdCode;
             this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
           }
-          this.otpForm.get("isdCode").setValue(this.defaultIsdCodeValue);
+          this.otpForm.get("isdCode")?.setValue(this.defaultIsdCodeValue);
         }
       },
       (err) => console.error("Error: ", err)
     );
   }
 
-  onOtpChange(otp) {
+  onOtpChange(otp: any) {
     this.otp = otp;
     this.yourOtp = this.otp.toString();
     this.otpAvailable =
@@ -166,18 +168,18 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.agreed = !this.agreed;
     this.enteredOTP.emit({
       otp: this.otp,
-      agreed: this.agreed,
+      agreed: this.agreed
     });
   }
 
   buildFormGroup() {
     this.otpForm = this.fb.group({
       phone: [""],
-      isdCode: [""],
+      isdCode: [""]
     });
     this.otpForm
       .get("phone")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         const regExp = /^[0]+$/;
         if (resp?.length == this.maxMobileLength) {
@@ -186,7 +188,7 @@ export class CommonMobileVerificationComponent implements OnInit {
         } else {
           this.isValidMobile = false;
           this.validNumber = true;
-          this.otpForm.get("phone").setErrors({ invalidLength: true });
+          this.otpForm.get("phone")?.setErrors({ invalidLength: true });
         }
       });
   }
@@ -217,20 +219,21 @@ export class CommonMobileVerificationComponent implements OnInit {
     }, 1000);
   }
 
-  otpTimerReset(event) {
+  otpTimerReset(event: any) {
     if (event.seconds == "00:00") {
       this.isLoading = false;
       this.otpAvailable = false;
     }
   }
 
-  onIsdCodeSelected(isdCode) {
+  onIsdCodeSelected(isdCode: any) {
     this.selectedIsd = isdCode;
   }
   setMobileLength() {
     if (this.otpForm.get("isdCode")) {
       const countryRecord = this.countriesIsdCodes.find(
-        (item) => item.countryTelIsdCode == this.otpForm.get("isdCode").value
+        (item: any) =>
+          item.countryTelIsdCode == this.otpForm.get("isdCode")?.value
       );
       this.maxMobileLength = countryRecord.mobileLength;
     }
@@ -267,7 +270,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     this.onMobileExitEvent.emit();
   }
 
-  onVerifyExistingProduct(event) {
+  onVerifyExistingProduct(event: any) {
     let type = !this.mobileVerifyInfo?.individual ? "corporate" : "";
     // this.isLoading = true;
     this.api
@@ -304,7 +307,7 @@ export class CommonMobileVerificationComponent implements OnInit {
                     this.mobileVerifyInfo.applicationType === "loan application"
                   ) {
                     let customerIds: any[] = [];
-                    resp.data.forEach((element) => {
+                    resp.data.forEach((element: any) => {
                       customerIds.push(element.customerId);
                     });
                     sessionStorage.setItem(
@@ -320,16 +323,16 @@ export class CommonMobileVerificationComponent implements OnInit {
                   this.onCustomSubmit.emit({ personalInfo: resp.data });
                   this?.updateParentModel({
                     personalInfo: resp.data,
-                    updateMasterSave: false,
+                    updateMasterSave: false
                   });
                 }
               } else {
                 this.onCustomSubmit.emit({
-                  personalInfo: resp?.data,
+                  personalInfo: resp?.data
                 });
                 this?.updateParentModel({
                   personalInfo: resp?.data,
-                  updateMasterSave: false,
+                  updateMasterSave: false
                 });
                 sessionStorage.setItem("mobileNo", event.phone);
               }
@@ -337,17 +340,21 @@ export class CommonMobileVerificationComponent implements OnInit {
         }
       });
   }
-  allreadyProduct(errorMessage, errorMessageHint, showCancelBtn) {
+  allreadyProduct(
+    errorMessage: any,
+    errorMessageHint: any,
+    showCancelBtn: any
+  ) {
     const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
       data: {
         errorMessage: errorMessage,
         errorMessageHint: errorMessageHint,
-        showCancelBtn: showCancelBtn,
+        showCancelBtn: showCancelBtn
       },
       width: "650px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

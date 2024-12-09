@@ -6,28 +6,28 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
 
 @Component({
   selector: "app-commmon-steeper",
   templateUrl: "./commmon-steeper.component.html",
-  styleUrls: ["./commmon-steeper.component.scss"],
+  styleUrls: ["./commmon-steeper.component.scss"]
 })
 export class CommmonSteeperComponent implements OnChanges, OnInit {
-  @Input() screenList;
-  @Input() screenTitle;
+  @Input() screenList: any;
+  @Input() screenTitle: any;
   @Input() screenIndex = 0;
   @Input() customClass = "";
   isLinear = true;
-  @ViewChild("stepper") myStepper: MatStepper;
+  @ViewChild("stepper") myStepper: MatStepper | any;
   @Output() customSelectionChange = new EventEmitter<any>();
   selectStep = 0;
   constructor() {}
 
   ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.screenIndex) {
       this.screenIndex = changes?.screenIndex?.currentValue;
       setTimeout(() => {
@@ -35,10 +35,10 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
       }, 200);
     } else {
       this.screenList = changes?.screenList?.currentValue;
-      this.screenList = this.screenList?.map((obj) => ({
+      this.screenList = this.screenList?.map((obj: any) => ({
         ...obj,
         completed: false,
-        isEditable: false,
+        isEditable: false
       }));
       setTimeout(() => {
         this.next();
@@ -56,7 +56,7 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
     // const el = document.querySelector(".mat-step-label-selected");
     // if (el) el.scrollIntoView();
   }
-  stepperSelectionChange(event) {
+  stepperSelectionChange(event: any) {
     this.customSelectionChange.emit(event);
   }
 }

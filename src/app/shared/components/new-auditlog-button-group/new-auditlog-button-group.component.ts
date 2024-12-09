@@ -5,7 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { DataService } from "app/shared/services/table-service/data.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
@@ -13,14 +13,14 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-new-auditlog-button-group",
   templateUrl: "./new-auditlog-button-group.component.html",
-  styleUrls: ["./new-auditlog-button-group.component.scss"],
+  styleUrls: ["./new-auditlog-button-group.component.scss"]
 })
 export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
-  @Input() isEdit;
-  @Input() istitle;
-  @Input() maintTitle;
-  @Input() auditLogData;
-  @Input() hideDelete: boolean;
+  @Input() isEdit: any;
+  @Input() istitle: any;
+  @Input() maintTitle: any;
+  @Input() auditLogData: any;
+  @Input() hideDelete: boolean | any;
   @Input() hideEdit: boolean = false;
   @Input() hideActive: boolean = false;
   @Input() hideApprove: boolean = false;
@@ -50,10 +50,10 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   goBack() {
     this.customgoBack.emit({});
   }
-  updateRecord(operation) {
+  updateRecord(operation: any) {
     this.customUpdateRecord.emit({ operation: operation });
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.auditLogData?.currentValue) {
       this.auditLogData = changes.auditLogData.currentValue;
       console.log(this.auditLogData, "auditLogData");

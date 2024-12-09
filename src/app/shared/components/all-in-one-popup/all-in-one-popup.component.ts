@@ -1,32 +1,21 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "app-all-in-one-popup",
   templateUrl: "./all-in-one-popup.component.html",
-  styleUrls: ["./all-in-one-popup.component.scss"],
+  styleUrls: ["./all-in-one-popup.component.scss"]
 })
 export class AllInOnePopupComponent implements OnInit {
   hide: boolean = true;
-  confirmationForm: FormGroup;
+  confirmationForm!: FormGroup;
   remark: any = "";
 
   constructor(
     private dialogRef: MatDialogRef<AllInOnePopupComponent>,
     private fb: FormBuilder,
-    private commonService: CommonService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private snack: MatSnackBar,
-    private dialog: MatDialog,
-    private tokenStorageService: TokenStorageService
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
@@ -35,15 +24,11 @@ export class AllInOnePopupComponent implements OnInit {
   buildForm() {
     this.confirmationForm = this.fb.group({
       transactionPassword: [""],
-      oneTimePassword: [""],
+      oneTimePassword: [""]
     });
   }
 
   submit() {
-    let payload = {
-      mobile: this.tokenStorageService.getUser()?.mobile,
-      otp: this.confirmationForm.value.oneTimePassword,
-    };
     // this.commonService.verifyOTP(payload).subscribe((res: any) => {
     // if (res.data !== "Invalid OTP") {
     this.dialogRef.close("verified");

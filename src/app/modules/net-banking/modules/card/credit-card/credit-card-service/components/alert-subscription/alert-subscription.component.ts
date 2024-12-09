@@ -11,14 +11,14 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-alert-subscription",
   templateUrl: "./alert-subscription.component.html",
-  styleUrls: ["./alert-subscription.component.scss"],
+  styleUrls: ["./alert-subscription.component.scss"]
 })
 export class AlertSubscriptionComponent implements OnInit {
-  alertSubscriptionForm: FormGroup;
+  alertSubscriptionForm!: FormGroup;
   cardList: any = [];
   accountDetails: any;
   typeofCard: any;
-  alertData = CreditCardStore.alertData;
+  alertData: any = CreditCardStore.alertData;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -35,18 +35,18 @@ export class AlertSubscriptionComponent implements OnInit {
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.alertSubscriptionForm
         ?.get("cardNo")
-        .patchValue(this.accountDetails?.cardNumber);
+        ?.patchValue(this.accountDetails?.cardNumber);
     }
   }
   buildAlertSubscription() {
     this.alertSubscriptionForm = this.formbuilder.group({
-      cardNo: [""],
+      cardNo: [""]
     });
   }
   proceed() {
@@ -60,14 +60,14 @@ export class AlertSubscriptionComponent implements OnInit {
             auth: {
               type: "Success",
               status: "Alert Subscription!",
-              msg: "Any update you’ll received notification",
-            },
+              msg: "Any update you’ll received notification"
+            }
           },
           disableClose: true,
           panelClass: "popup-dialog-class",
           backdropClass: "bdrop",
-          width: "25%",
-        }).subscribe((res) => {
+          width: "25%"
+        }).subscribe(() => {
           this.router.navigate(["/user/card/credit-card/dashboard"]);
         });
       }

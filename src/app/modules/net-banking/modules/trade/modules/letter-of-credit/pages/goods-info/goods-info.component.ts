@@ -4,14 +4,13 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 @Component({
   selector: "app-goods-info",
   templateUrl: "./goods-info.component.html",
-  styleUrls: ["./goods-info.component.scss"],
+  styleUrls: ["./goods-info.component.scss"]
 })
 export class GoodsInfoComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
-  goodsInfoForm: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
+  goodsInfoForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
@@ -20,7 +19,7 @@ export class GoodsInfoComponent implements OnInit {
     this.buildGoodsInfo();
   }
 
-  buildGoodsInfo(info?) {
+  buildGoodsInfo() {
     this.goodsInfoForm = this.fb.group({
       partialShipmentOption: [""],
       transshipmentOption: [""],
@@ -43,15 +42,15 @@ export class GoodsInfoComponent implements OnInit {
       docToBeWithIn: [""],
       dayFromDateOf: [""],
       // countryOfOrigin: [""],
-      countryId: [""],
+      countryId: [""]
     });
 
     this.goodsInfoForm.valueChanges.subscribe((res) => {
       this.updateParentModel(
         {
           goodsInfo: {
-            ...res,
-          },
+            ...res
+          }
         },
         this.checkForm()
       );

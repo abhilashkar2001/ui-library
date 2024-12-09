@@ -1,10 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import {
-  Router,
-  NavigationEnd,
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-} from "@angular/router";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { RoutePartsService } from "../../../services/route-parts.service";
 import { LayoutService } from "../../../services/layout.service";
 import { Subscription } from "rxjs";
@@ -13,7 +8,7 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-breadcrumb",
   templateUrl: "./breadcrumb.component.html",
-  styleUrls: ["./breadcrumb.component.scss"],
+  styleUrls: ["./breadcrumb.component.scss"]
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
   routeParts: any[];
@@ -31,7 +26,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
     this.routerEventSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe(() => {
         this.routeParts = this.routePartsService.generateRouteParts(
           this.activeRoute.snapshot
         );
@@ -43,6 +38,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
               return (item.url = `${urlSegment.path}`);
             }
             item.url += `/${urlSegment.path}`;
+            return;
           });
           if (i === 0) {
             return item;

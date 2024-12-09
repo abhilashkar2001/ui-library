@@ -5,7 +5,7 @@
       <div class="row" fxFlex="100" class="blue-box" fxLayoutGap="30px">
         <div fxLayout="column" fxFlex="40">
           <app-searchable-select
-            [control]="repaymentForm.get('creditAccount')"
+            [control]="repaymentForm.get('creditAccount') | formcontrol"
             [inputLabel]="'Loan Account Number'"
             bindValueKey="cbsAccountNumber"
             bindLabelKey="cbsAccountNumber"
@@ -22,7 +22,7 @@
           >
         </div>
         <div *ngIf="accountDetails?.length > 4">
-          <mat-icon svgIcon="arrow-down" (click)="toggleExpand()"></mat-icon>
+          <mat-icon svgIcon="arrow-down"></mat-icon>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
 
       <!-- account number -->
       <app-ic-custom-pay-from
-        [control]="repaymentForm.get('debitAccount')"
+        [control]="repaymentForm.get('debitAccount') | formcontrol"
         [inputLabel]="'Account Number' | translate"
         fxFlex="35"
       ></app-ic-custom-pay-from>
@@ -43,7 +43,7 @@
         <div fxFlex="25" class="input_wrapper">
           <app-searchable-select
             [items]="genericValue?.PAYMENTTYPE"
-            [control]="repaymentForm.get('paymentType')"
+            [control]="repaymentForm.get('paymentType') | formcontrol"
             [inputLabel]="'Payment Type'"
             bindLabelKey="values"
             [showOutsideLabel]="true"
@@ -53,14 +53,14 @@
 
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="repaymentForm.get('creditAmount')"
+            [control]="repaymentForm.get('creditAmount') | formcontrol"
             [inputLabel]="'Loan Repayment Amount' | translate"
           ></app-ic-custom-input>
         </div>
 
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="repaymentForm.get('totalChargeAmount')"
+            [control]="repaymentForm.get('totalChargeAmount') | formcontrol"
             [inputLabel]="'Total Charge Amount' | translate"
             matSuffix="info"
             [readonly]="true"
@@ -69,7 +69,9 @@
 
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="repaymentForm.get('totalTransactionAmount')"
+            [control]="
+              repaymentForm.get('totalTransactionAmount') | formcontrol
+            "
             [inputLabel]="'Total Transaction Amount'"
             [hintText]="
               'Equivalent Amount:  ' +

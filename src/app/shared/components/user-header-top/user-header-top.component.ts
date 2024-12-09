@@ -3,7 +3,7 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  ChangeDetectorRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import { ThemeService } from "../../../shared/services/theme.service";
 import { LayoutService } from "../../services/layout.service";
@@ -13,7 +13,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import {
   ThemeChangeService,
-  ThemeOption,
+  ThemeOption
 } from "app/shared/services/theme-change.service";
 import { TranslateService } from "@ngx-translate/core";
 import { MatIconRegistry } from "@angular/material/icon";
@@ -21,13 +21,13 @@ import { MatIconRegistry } from "@angular/material/icon";
 @Component({
   selector: "app-user-header-top",
   templateUrl: "./user-header-top.component.html",
-  styleUrls: ["./user-header-top.component.scss"],
+  styleUrls: ["./user-header-top.component.scss"]
 })
 export class UserHeaderTopComponent implements OnInit, OnDestroy {
   layoutConf: any;
 
-  @Input() notificPanel;
-  @Input() mainMenuPanel;
+  @Input() notificPanel: any;
+  @Input() mainMenuPanel: any;
   // header properties start
   currentUser: any;
   roleName: any;
@@ -38,13 +38,13 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
 
   // Theme change variables
   listOfThemeColors: ThemeOption[] = [];
-  selectedTheme: ThemeOption;
+  selectedTheme: ThemeOption | any;
   currentLangTheme: any;
   languageList = [
     { code: "en", name: "English" },
-    { code: "es", name: "Spanish" },
+    { code: "es", name: "Spanish" }
   ];
-  selectedLanguage: { code: string; name: string };
+  selectedLanguage: { code: string; name: string } | any;
   constructor(
     private layout: LayoutService,
     public themeService: ThemeService,
@@ -87,7 +87,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
         userId: this.currentUser.userId,
         language: this.tokenStorageService.getLanguage(),
         color: theme.theme as unknown as any,
-        id: this.currentLangTheme?.id ?? null,
+        id: this.currentLangTheme?.id ?? null
       })
       .subscribe((res) => console.log(res));
 
@@ -108,7 +108,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  setLang(lng) {
+  setLang(lng: any) {
     this.translate.use(lng.code);
   }
 
@@ -137,7 +137,7 @@ export class UserHeaderTopComponent implements OnInit, OnDestroy {
         userId: this.currentUser.userId,
         language: lang,
         color: this.selectedTheme.theme,
-        id: this.currentLangTheme?.id ?? null,
+        id: this.currentLangTheme?.id ?? null
       })
       .subscribe(() => console.log("ddd"));
   }

@@ -6,13 +6,12 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { SharedCardModule } from "../../shared-card/shared-card.module";
 import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { DebitCardServiceComponent } from "./debit-card-service/debit-card-service.component";
 import { DebitCardServiceRoutingModule } from "./debit-card-service-routing.module";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @NgModule({
-  declarations: [DebitCardServiceComponent],
+  declarations: [],
   imports: [
     CommonModule,
     DebitCardServiceRoutingModule,
@@ -25,7 +24,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatSlideToggleModule,
-  ],
+    MatSlideToggleModule
+  ]
 })
 export class DebitCardServiceModule {}

@@ -13,8 +13,8 @@
 
           <mat-error
             *ngIf="
-              corporateCustomer.controls['companyName'].hasError('required') &&
-              corporateCustomer.controls['companyName'].touched
+              corporateCustomer.controls['companyName']?.hasError('required') &&
+              corporateCustomer.controls['companyName']?.touched
             "
             class="form-error-msg"
           >
@@ -28,7 +28,7 @@
           bindLabelKey="values"
           bindValueKey="id"
           inputLabel="Company Type"
-          [control]="corporateCustomer.controls['companyType']"
+          [control]="corporateCustomer.controls['companyType'] | formcontrol"
         ></app-searchable-select>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
@@ -38,9 +38,9 @@
 
           <mat-error
             *ngIf="
-              corporateCustomer.controls['numberOfDirectors'].hasError(
+              corporateCustomer.controls['numberOfDirectors']?.hasError(
                 'required'
-              ) && corporateCustomer.controls['numberOfDirectors'].touched
+              ) && corporateCustomer.controls['numberOfDirectors']?.touched
             "
             class="form-error-msg"
           >
@@ -54,7 +54,7 @@
           inputLabel="Segment"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="corporateCustomer.controls['segment']"
+          [control]="corporateCustomer.controls['segment'] | formcontrol"
         ></app-searchable-select>
       </div>
     </div>
@@ -72,7 +72,10 @@
           inputLabel="Country of Incorporation"
           bindLabelKey="countryName"
           bindValueKey="countryCode"
-          [control]="corporateCustomer.controls['countryOfIncorporationCode']"
+          [control]="
+            corporateCustomer.controls['countryOfIncorporationCode']
+              | formcontrol
+          "
         ></app-searchable-select>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25">
@@ -92,9 +95,9 @@
           <mat-datepicker #incorporationDate></mat-datepicker>
           <mat-error
             *ngIf="
-              corporateCustomer.controls['dateOfIncorporation'].hasError(
+              corporateCustomer.controls['dateOfIncorporation']?.hasError(
                 'required'
-              ) && corporateCustomer.controls['dateOfIncorporation'].touched
+              ) && corporateCustomer.controls['dateOfIncorporation']?.touched
             "
             class="form-error-msg"
           >
@@ -108,8 +111,8 @@
           <input required matInput formControlName="registrationNumber" />
           <mat-error
             *ngIf="
-              corporateCustomer.controls['registrationNumber'].touched &&
-              corporateCustomer.controls['registrationNumber'].hasError(
+              corporateCustomer.controls['registrationNumber']?.touched &&
+              corporateCustomer.controls['registrationNumber']?.hasError(
                 'required'
               )
             "
@@ -130,8 +133,8 @@
 
           <mat-error
             *ngIf="
-              corporateCustomer.controls['tinNumber'].hasError('required') &&
-              corporateCustomer.controls['tinNumber'].touched
+              corporateCustomer.controls['tinNumber']?.hasError('required') &&
+              corporateCustomer.controls['tinNumber']?.touched
             "
             class="form-error-msg"
           >
@@ -145,7 +148,7 @@
           inputLabel="Source of Income"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="corporateCustomer.controls['sourceOfIncome']"
+          [control]="corporateCustomer.controls['sourceOfIncome'] | formcontrol"
         ></app-searchable-select>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
@@ -160,7 +163,9 @@
           inputLabel="Parent Company"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="corporateCustomer.controls['parentCompanyId']"
+          [control]="
+            corporateCustomer.controls['parentCompanyId'] | formcontrol
+          "
         ></app-searchable-select>
       </div>
     </div>

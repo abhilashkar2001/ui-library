@@ -5,14 +5,14 @@ import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class BgSummaryServiceService {
   basePath = environment.microServiceURL;
 
   constructor(private http: HttpClient) {}
 
-  getSummaryDetails(filterBy, page, size, url) {
+  getSummaryDetails(filterBy: any, page: any, size: any, url: any) {
     var filterEndpoint = "";
     if (filterBy) {
       const keys = Object.keys(filterBy);
@@ -28,7 +28,7 @@ export class BgSummaryServiceService {
     return this.http.get<any>(`${this.basePath}/${url}${payload}`);
   }
 
-  getBgUrl(moduleName) {
+  getBgUrl(moduleName: any) {
     switch (moduleName) {
       case "BG Issuance":
         return "bgIssuance/fetchApplicantInfo";
@@ -38,6 +38,7 @@ export class BgSummaryServiceService {
       default:
         break;
     }
+    return;
   }
 
   fetchApplicantInfo(bgMasterId: number) {

@@ -3,59 +3,59 @@ export class PendingForApprovalConstant {
     {
       columnDef: "refNumber",
       header: "Ref Number",
-      cell: (element: any) => element.refNumber,
+      cell: (element: any) => element.refNumber
     },
     {
       columnDef: "fileName",
       header: "File Name",
-      cell: (element: any) => element.fileName,
+      cell: (element: any) => element.fileName
     },
     {
       columnDef: "actionBy",
       header: "Action By",
-      cell: (element: any) => element.lastUpdatedBy,
+      cell: (element: any) => element.lastUpdatedBy
     },
     {
       columnDef: "lastupdated",
       header: "Date & Time",
-      cell: (element: any) => `${element?.lastupdated}`,
+      cell: (element: any) => `${element?.lastupdated}`
     },
     {
       columnDef: "authStatus",
       header: "Approved",
-      cell: (element: any) => `${element?.authStatus}`,
-    },
+      cell: (element: any) => `${element?.authStatus}`
+    }
   ];
   static readonly PENDING_SUMMARY = [
     {
       columnDef: "transactionReferenceNo",
       header: "Ref Number",
-      cell: (element: any) => element.transactionReferenceNo,
+      cell: (element: any) => element.transactionReferenceNo
     },
     {
       columnDef: "productType",
       header: "Produt Type",
-      cell: (element: any) => element.productType,
+      cell: (element: any) => element.productType
     },
     {
       columnDef: "lastUpdated",
       header: "Date & Time",
-      cell: (element: any) => element.lastUpdated,
+      cell: (element: any) => element.lastUpdated
     },
     {
       columnDef: "totalAmount",
       header: "Amount",
-      cell: (element: any) => `${element?.totalAmount}`,
+      cell: (element: any) => `${element?.totalAmount}`
     },
     {
       columnDef: "lastUpdatedBy",
       header: "Initiated By",
-      cell: (element: any) => `${element?.lastUpdatedBy}`,
+      cell: (element: any) => `${element?.lastUpdatedBy}`
     },
     {
       columnDef: "fileName",
       header: "File Name",
-      cell: (element: any) => `${element?.fileName}`,
+      cell: (element: any) => `${element?.fileName}`
     },
     {
       columnDef: "status",
@@ -64,7 +64,7 @@ export class PendingForApprovalConstant {
         let pendingCount = 0;
         let approvedCount = 0;
         let rejectedCount = 0;
-        element.corpFundDetails.forEach((element) => {
+        element.corpFundDetails.forEach((element: any) => {
           switch (element.uploadstatus) {
             case null:
             case "PENDING":
@@ -87,8 +87,8 @@ export class PendingForApprovalConstant {
         } else {
           return "Pending";
         }
-      },
-    },
+      }
+    }
   ];
   static readonly staticData = [
     {
@@ -99,7 +99,7 @@ export class PendingForApprovalConstant {
       addressLine2: "ewnewoind",
       addressLine1: "ekmd",
       destinationAccount: 3322,
-      soucrceAccount: 3223243,
+      soucrceAccount: 3223243
     },
     {
       screenNumber: 2,
@@ -109,7 +109,7 @@ export class PendingForApprovalConstant {
       addressLine2: "xnewuihdh",
       addressLine1: "iuqend",
       destinationAccount: 3322,
-      soucrceAccount: 3223243,
+      soucrceAccount: 3223243
     },
     {
       screenNumber: 3,
@@ -119,7 +119,7 @@ export class PendingForApprovalConstant {
       addressLine2: "ewhj",
       addressLine1: "wiokqmo",
       destinationAccount: 3322,
-      soucrceAccount: 3223243,
+      soucrceAccount: 3223243
     },
     {
       screenNumber: 4,
@@ -129,8 +129,8 @@ export class PendingForApprovalConstant {
       addressLine2: "dsk",
       addressLine1: "ekmd",
       destinationAccount: 7838723322,
-      soucrceAccount: 3222283243,
-    },
+      soucrceAccount: 3222283243
+    }
   ];
 
   static readonly STATIC_SUMMARY = [
@@ -139,28 +139,28 @@ export class PendingForApprovalConstant {
       fileName: "ashjds",
       actionBy: "Indkjsd ia",
       lastupdated: "03/1/2023",
-      authStatus: "Unapproved",
+      authStatus: "Unapproved"
     },
     {
       refNumber: 2,
       fileName: "32hj",
       actionBy: "jay",
       lastupdated: "03/1/2023",
-      authStatus: "Approved",
+      authStatus: "Approved"
     },
     {
       refNumber: 3,
       fileName: "32j",
       actionBy: "shah",
       lastupdated: "03/1/2023",
-      authStatus: "Approved",
+      authStatus: "Approved"
     },
     {
       refNumber: 4,
       fileName: "jh32",
       actionBy: "Ronaldo",
       lastupdated: "03/1/2023",
-      authStatus: "unApproved",
-    },
+      authStatus: "unApproved"
+    }
   ];
 }

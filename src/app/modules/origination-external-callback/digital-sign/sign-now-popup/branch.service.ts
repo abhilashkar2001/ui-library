@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "environments/environment";
-import { catchError, map } from "rxjs/operators";
 import { BehaviorSubject, Observable } from "rxjs";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class BranchService {
   private sendSign = new BehaviorSubject("");
@@ -35,10 +34,10 @@ export class BranchService {
     formData.append("file", file);
     return this.httpClient.post("https://file.io", formData, {
       reportProgress: true,
-      observe: "events",
+      observe: "events"
     });
   }
-  saveUploadSignature(payload) {
+  saveUploadSignature(payload: any) {
     return this.httpClient.post(`${MICROSERVICE_URL}/upload-document`, payload);
   }
   saveDigitalSignDetails(payload: any): Observable<any> {
@@ -48,22 +47,22 @@ export class BranchService {
     );
   }
 
-  saveSignLater(id) {
+  saveSignLater(id: any) {
     return this.httpClient.get<any>(
       `${MICROSERVICE_URL}/signLaterSendEmail?originationId=${id}`
     );
   }
-  fetchApproveDetailsService(id) {
+  fetchApproveDetailsService(id: any) {
     return this.httpClient.get<any>(
       `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/approvalStageSummary?originationId=${id}`
     );
   }
-  fetchSignImage(id) {
+  fetchSignImage(id: any) {
     return this.httpClient.get<any>(
       `${MICROSERVICE_URL}/origination-matser/fetchDigitalSign?originationId=${id}`
     );
   }
-  sendEditsign(signid) {
+  sendEditsign(signid: any) {
     this.sendSign.next(signid);
   }
   saveCustomerSign(payload: any): Observable<any> {
@@ -72,7 +71,7 @@ export class BranchService {
       payload
     );
   }
-  fetchCustomerSign(id) {
+  fetchCustomerSign(id: any) {
     return this.httpClient.get<any>(
       `${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${id}`
     );

@@ -3,10 +3,10 @@ import { Component, Input, OnInit } from "@angular/core";
 @Component({
   selector: "app-toolbar-title",
   templateUrl: "./toolbar-title.component.html",
-  styleUrls: ["./toolbar-title.component.scss"],
+  styleUrls: ["./toolbar-title.component.scss"]
 })
 export class ToolbarTitleComponent implements OnInit {
-  @Input("title") title: string;
+  @Input("title") title: string | any;
   constructor() {}
 
   ngOnInit(): void {}

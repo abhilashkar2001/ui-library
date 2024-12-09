@@ -29,14 +29,14 @@
     *ngIf="verifyStep('mobile')"
   >
     <app-verify-number
-      (customSaveVerify)="customSaveVerify($event)"
+      (customSaveVerify)="customSaveVerify()"
     ></app-verify-number>
   </div>
   <div class="align_fdForm" fxFlex="60" *ngIf="verifyStep('personal')">
     <app-common-personal-details
       (customSavePersonal)="customSavePersonal($event)"
-       (personalBack)="goBack()"
-       [customerInfo]="customerInfo"
+      (personalBack)="goBack()"
+      [customerInfo]="customerInfo"
     ></app-common-personal-details>
   </div>
   <div
@@ -48,13 +48,13 @@
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
       (customDocumentForm)="customDocumentForm($event)"
-        (onBackEvent)="goBack()"
+      (onBackEvent)="goBack()"
     ></app-other-documents>
   </div>
   <div class="align_fdForm" fxFlex="60" *ngIf="verifyStep('book')">
     <app-book-fd
       [depositType]="depositType"
-      (customSaveDocument)="customSaveRD($event)"
+      (customSaveDocument)="customSaveRD()"
       (customDocumentForm)="rdForm($event)"
       (customBookFdBack)="goBack()"
     ></app-book-fd>

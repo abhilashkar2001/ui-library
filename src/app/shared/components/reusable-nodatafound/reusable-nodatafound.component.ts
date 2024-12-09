@@ -4,11 +4,11 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-reusable-nodatafound",
   templateUrl: "./reusable-nodatafound.component.html",
-  styleUrls: ["./reusable-nodatafound.component.scss"],
+  styleUrls: ["./reusable-nodatafound.component.scss"]
 })
 export class ReusableNodatafoundComponent implements OnInit {
   @Input("displayLabel") displayLabel: any;
-  @Input("displayExternalLink") displayExternalLink: boolean;
+  @Input("displayExternalLink") displayExternalLink: boolean | any;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {}

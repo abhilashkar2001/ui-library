@@ -6,7 +6,7 @@
         <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
         <div fxLayout="row">
           <app-ic-custom-pay-from
-            [control]="addonCardForm.get('cardNumber')"
+            [control]="addonCardForm.get('cardNumber') | formcontrol"
             [inputLabel]="'Card No' | translate"
             bindValueKey="cardNumber"
             bindLabelKey="cardNumber"
@@ -31,21 +31,21 @@
     <div>
       <div fxFlex="25" class="input_wrapper">
         <app-ic-custom-input
-          [control]="addonCardForm.get('nameRequired')"
+          [control]="addonCardForm.get('nameRequired') | formcontrol"
           [inputLabel]="'Name Required' | translate"
         ></app-ic-custom-input>
       </div>
       <div fxFlex="25" class="input_wrapper">
         <mat-label class="ml-20 custom-label">Date of Birth</mat-label>
         <app-input-date-picker
-          [control]="addonCardForm.get('dateOfBirth')"
+          [control]="addonCardForm.get('dateOfBirth') | formcontrol"
         ></app-input-date-picker>
       </div>
       <div fxFlex="25" class="input_wrapper">
         <mat-label class="ml-20 custom-label">Relationship</mat-label>
         <app-searchable-select
           [items]="items"
-          [control]="addonCardForm.get('relationShip')"
+          [control]="addonCardForm.get('relationShip') | formcontrol"
           bindLabelKey="label"
           bindValueKey="value"
         ></app-searchable-select>

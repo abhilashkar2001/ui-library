@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class LoanCalulationService {
   totalPayableAmount: any = 0;
@@ -19,7 +19,13 @@ export class LoanCalulationService {
    *
    *
    */
-  async calculateAmortize(principal, rateOfInterest, years, months, days) {
+  async calculateAmortize(
+    principal: any,
+    rateOfInterest: any,
+    years: any,
+    months: any,
+    days: any
+  ) {
     let obj: any;
     await this.calculateTenure(years, months, days, "Month").then(
       (val: any) => {
@@ -34,7 +40,7 @@ export class LoanCalulationService {
             ratePerMonth,
             val.finalTenure,
             EMI
-          ),
+          )
         ];
 
         // calculating total payable amount.
@@ -43,7 +49,7 @@ export class LoanCalulationService {
         obj = {
           monthlyInterestArr: this.monthlyInterestArr,
           emiAmount: EMI,
-          totalPayableAmount: this.totalPayableAmount,
+          totalPayableAmount: this.totalPayableAmount
         };
       }
     );
@@ -58,7 +64,7 @@ export class LoanCalulationService {
    * @param EMI =emi amount
    * @returns month wise record
    */
-  calculatePrincipalInterestMonthly(p, r, t, EMI) {
+  calculatePrincipalInterestMonthly(p: any, r: any, t: any, EMI: any) {
     // for 1st month record
     const interestComponent = p * r;
     let monthlyInterestArr = [];
@@ -66,18 +72,18 @@ export class LoanCalulationService {
       interestComponent: interestComponent,
       principalComponent: EMI - interestComponent,
       emiAmmount: EMI,
-      osLoan: p,
+      osLoan: p
     });
 
     //for next remaning months record
     for (let i = 0; i < t - 1; i++) {
       let osLoan =
         monthlyInterestArr[i].osLoan - monthlyInterestArr[i].principalComponent;
-      let obj = {
+      let obj: any = {
         interestComponent: osLoan * r,
         principalComponent: EMI - osLoan * r,
         emiAmmount: EMI,
-        osLoan: osLoan,
+        osLoan: osLoan
       };
       monthlyInterestArr.push(obj);
     }
@@ -92,7 +98,7 @@ export class LoanCalulationService {
    * @param n = tenure by month
    * @returns emi amount
    */
-  calculateEMI(P, R, n) {
+  calculateEMI(P: any, R: any, n: any) {
     var EMI = (P * R * Math.pow(1 + R, n)) / (Math.pow(1 + R, n) - 1);
     return EMI;
   }
@@ -108,11 +114,11 @@ export class LoanCalulationService {
    * @returns
    */
   async getInterestPayable(
-    principal,
-    rateOfInterest,
-    years,
-    months,
-    days,
+    principal: any,
+    rateOfInterest: any,
+    years: any,
+    months: any,
+    days: any,
     tenureType = "Month" //this should be dynamic , later on will add.
   ) {
     let finalInterest: any;
@@ -137,7 +143,7 @@ export class LoanCalulationService {
       ),
       totalPayableAmmount:
         parseFloat(finalInterest[0] + "." + finalInterest[1].slice(0, 3)) +
-        principal,
+        principal
     };
   }
 
@@ -149,8 +155,8 @@ export class LoanCalulationService {
    * @param tenureType
    * @returns total months - totalMonthsIncludingDays.
    */
-  calculateTenure(years, months, days, tenureType) {
-    return new Promise((resolve, reject) => {
+  calculateTenure(years: any, months: any, days: any, tenureType: any) {
+    return new Promise((resolve) => {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
@@ -166,8 +172,8 @@ export class LoanCalulationService {
    * @param noOfDay
    * @returns
    */
-  getFinalTenure(tenureType, tenure, noOfDay?) {
-    let n = 0;
+  getFinalTenure(tenureType: any, tenure: any, noOfDay?: any) {
+    let n: any = 0;
     switch (tenureType) {
       case "Half Year":
         n = 2;
@@ -177,14 +183,13 @@ export class LoanCalulationService {
         break;
       case "Month":
         return { finalTenure: tenure, NoOf: 12 };
-        break;
       case "Daily":
         n = noOfDay;
         break;
       default:
         n = tenure;
     }
-    // return { finalTenure: tenure, NoOf: n };
+    return { finalTenure: tenure, NoOf: n }; // Include `n` here
   }
 
   /**
@@ -193,7 +198,12 @@ export class LoanCalulationService {
    * @param rateOfInterest
    * @param tenure
    */
-  calculateCompoundInterest(principal, rateOfInterest, tenure, NoOf) {
+  calculateCompoundInterest(
+    principal: any,
+    rateOfInterest: any,
+    tenure: any,
+    NoOf: any
+  ) {
     rateOfInterest = rateOfInterest / (NoOf * 100);
     return principal * Math.pow(1 + rateOfInterest, tenure) - principal;
   }

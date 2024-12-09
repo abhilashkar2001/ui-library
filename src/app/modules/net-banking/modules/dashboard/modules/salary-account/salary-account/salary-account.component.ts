@@ -6,27 +6,27 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-salary-account",
   templateUrl: "./salary-account.component.html",
-  styleUrls: ["./salary-account.component.scss"],
+  styleUrls: ["./salary-account.component.scss"]
 })
 export class SalaryAccountComponent implements OnInit {
   columns: any = [
     {
       columnDef: "corporateId",
       header: "Corporate Id",
-      cell: (element: any) => element.corporateId,
+      cell: (element: any) => element.corporateId
     },
     {
       columnDef: "empNo",
       header: "Employee Number",
-      cell: (element: any) => element.empNo,
+      cell: (element: any) => element.empNo
     },
     {
       columnDef: "lastName",
       header: "Name ",
-      cell: (element: any) => element.lastName,
-    },
+      cell: (element: any) => element.lastName
+    }
   ];
-  salaryData: Object;
+  salaryData: Object | any;
   customerId: any;
   constructor(
     private api: SalaryAccountService,

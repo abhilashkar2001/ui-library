@@ -34,7 +34,6 @@
               [inputLabel]="'Deposite Amount' | translate"
               customClass="customTotalField"
               customLabelClass="customLabelClass"
-              [numbersOnly]="true"
               customDirectives="appTwoDigitDecimaNumber"
             ></app-ic-custom-input>
           </div>
@@ -42,14 +41,12 @@
           <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
             <div>
               <mat-slider
-                [value]="topUpForm.value.topUpAmount"
+                [(ngModel)]="topUpForm.value.topUpAmount"
                 [max]="max"
                 [min]="min"
                 fxFlex="100"
-                [thumbLabel]="thumbLabel"
                 (change)="onSliderChange($event, 'amount')"
                 discrete
-                [displayWith]="formatCurrencyLabel"
               >
                 <input matSliderThumb #slider />
               </mat-slider>
@@ -59,8 +56,8 @@
               fxFlex="100"
               fxLayoutAlign="space-between center"
             >
-              <div>{{ "Min" | translate }} {{ currencySymbol }} {{ min }}</div>
-              <div>{{ "Max" | translate }} {{ currencySymbol }} {{ max }}</div>
+              <div>{{ "Min" | translate }} {{ min }}</div>
+              <div>{{ "Max" | translate }}{{ max }}</div>
             </div>
           </div>
           <!-- Tenure -->
@@ -95,7 +92,6 @@
                       name="tenureMonth"
                       maxlength="2"
                       [formControl]="topUpForm.get('tenureMonth')"
-                      (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
                       numbersOnly
@@ -110,7 +106,6 @@
                       name="tenureDay"
                       maxlength="2"
                       [formControl]="topUpForm.get('tenureDay')"
-                      (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
                       numbersOnly
@@ -127,14 +122,12 @@
             <div>
               <mat-slider
                 class="custom-slider-label"
-                [value]="topUpForm.value.tenure"
+                [(ngModel)]="topUpForm.value.tenure"
                 [max]="maxTenure"
                 [min]="minTenure"
                 fxFlex="100"
-                [thumbLabel]="thumbLabel"
                 discrete
                 (change)="onSliderChange($event, 'tenure')"
-                [displayWith]="formatLabel"
               >
                 <input matSliderThumb #slider />
               </mat-slider>
@@ -205,7 +198,6 @@
 
         <app-maturity-chart
           fxFlex="50"
-          [chartData]="chartData"
           [chartSectionDetails]="chartSectionDetails"
           [autoCheck]="false"
           [data]="calculatedData"

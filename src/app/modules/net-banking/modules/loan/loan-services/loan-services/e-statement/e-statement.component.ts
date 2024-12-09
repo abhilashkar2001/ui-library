@@ -1,43 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { loanServiceStore } from '../../../loan-tabs';
-import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
-import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { loanServiceStore } from "../../../loan-tabs";
+import { LoanDetailsModel } from "app/shared/models/loan-details.model";
+import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { GenericValueService } from "app/shared/services/generic-value.service";
+import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
+import { LoanService } from "app/shared/services/net-loan-service/loan.service";
+import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-e-statement',
-  templateUrl: './e-statement.component.html',
-  styleUrls: ['./e-statement.component.scss']
+  selector: "app-e-statement",
+  templateUrl: "./e-statement.component.html",
+  styleUrls: ["./e-statement.component.scss"]
 })
 export class EStatementComponent implements OnInit {
-
   estatementForm!: FormGroup;
   accNoArr = loanServiceStore.loanAccNoArr;
   freqArr = loanServiceStore.frequencyArr;
   formatArr = loanServiceStore.formatArr;
-  loanDetails: LoanDetailsModel[];
-  installmentDetails: LoanInstallmentModel;
-  genericValue = { FREQUENCY: [], FORMAT: [] };
+  loanDetails: LoanDetailsModel[] | any;
+  installmentDetails: LoanInstallmentModel | any;
+  genericValue: any = { FREQUENCY: [], FORMAT: [] };
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private genericValueService: GenericValueService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
-    private loanService: LoanService) { }
+    private loanService: LoanService
+  ) {}
 
   ngOnInit(): void {
-    this.loanDetails = this.sessionStorageService.getLoanInfo()
-    this.buildeStatementForm()
-    this.fetchGenericValues()
+    this.loanDetails = this.sessionStorageService.getLoanInfo();
+    this.buildeStatementForm();
+    this.fetchGenericValues();
   }
-
 
   buildeStatementForm() {
     this.estatementForm = this.fb.group({
@@ -45,7 +45,7 @@ export class EStatementComponent implements OnInit {
       loanType: [""],
       email: [""],
       frequency: [""],
-      format: [""],
+      format: [""]
     });
     this.estatementForm
       ?.get("accountNumber")
@@ -72,15 +72,14 @@ export class EStatementComponent implements OnInit {
   fetchLoanInstallment() {
     this.loanService
       .fetchLoanInstallment(this.estatementForm?.value?.accountNumber)
-      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           this.installmentDetails = res?.data;
-          this.estatementForm.get("email").setValue(res?.data?.email);
-          this.estatementForm.get("loanType").setValue(res?.data?.loanType);
+          this.estatementForm.get("email")?.setValue(res?.data?.email);
+          this.estatementForm.get("loanType")?.setValue(res?.data?.loanType);
         }
       });
   }
-
 
   saveEStatement() {
     let payload = { ...this.estatementForm.value };
@@ -100,28 +99,27 @@ export class EStatementComponent implements OnInit {
               { Name: this.installmentDetails?.customerName },
               {
                 "Loan Account Number":
-                  this.estatementForm?.get("accountNumber")?.value,
+                  this.estatementForm?.get("accountNumber")?.value
               },
               { Type: this.installmentDetails?.loanType },
               { "Loan Amount": this.installmentDetails?.loanAmount },
               {
-                Email: this.installmentDetails?.email,
+                Email: this.installmentDetails?.email
               },
               {
-                Frequency: this.estatementForm?.value?.frequency,
+                Frequency: this.estatementForm?.value?.frequency
               },
               {
-                Format: this.estatementForm?.value?.format,
-              },
-            ],
-          },
-        ],
-      },
+                Format: this.estatementForm?.value?.format
+              }
+            ]
+          }
+        ]
+      }
     ];
     this.serviceCallHandler.put("serviceHandler", payload, eArr, (payload) =>
       this.loanService.saveEStatement(payload)
     );
     this.router.navigate(["/user/loan/loan-service/payment-summary"]);
   }
-
 }

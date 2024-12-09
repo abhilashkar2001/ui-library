@@ -49,10 +49,12 @@
           >
             <span class="verification">{{ "OTP Authentication" }}</span>
             <span class="phoneNumber">
-              <ng-container *ngIf="!this.otpResendTrigger">
+              <!-- *ngIf="!this.otpResendTrigger" this was used in the below ng-container, but the otpResendTrigger was not declared in ts file  -->
+              <ng-container>
                 An authentication code has been sent to
               </ng-container>
-              <ng-container *ngIf="this.otpResendTrigger">
+              <!-- *ngIf="this.otpResendTrigger" this was used in the below ng-container, but the otpResendTrigger was not declared in ts file -->
+              <ng-container>
                 An authentication code has been Re-sent to
               </ng-container>
               <br />

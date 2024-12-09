@@ -7,7 +7,7 @@ import { ChequeStore } from "../cheque.store";
 @Component({
   selector: "app-cheque",
   templateUrl: "./cheque.component.html",
-  styleUrls: ["./cheque.component.scss"],
+  styleUrls: ["./cheque.component.scss"]
 })
 export class ChequeComponent implements OnInit {
   items = ChequeStore.tabScreens.filter((item) =>
@@ -20,7 +20,7 @@ export class ChequeComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    const navigation = this.route.getCurrentNavigation();
+    const navigation: any = this.route.getCurrentNavigation();
     if (navigation?.extras?.state) {
       this.selected = navigation?.extras?.state?.screenName;
     }
@@ -38,7 +38,7 @@ export class ChequeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeTabs(index) {
+  changeTabs(index: any) {
     console.log(index);
     this.selected = this.tabScreens[index].screenName;
     console.log(this.selected);

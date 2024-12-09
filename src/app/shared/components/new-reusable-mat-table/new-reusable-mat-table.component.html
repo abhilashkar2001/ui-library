@@ -71,7 +71,7 @@
       [className]="className"
       [componentName]="componentName"
       [bulkUploadFileName]="bulkUploadFileName"
-      (customDownloadRecord)="downloadRecord($event)"
+      (customDownloadRecord)="downloadRecord()"
       [showOnlySearchTitle]="showOnlySearchTitle"
       [requiredSpecialFields]="requiredSpecialFields"
       [excelData]="this.maintenanceData?.data[0]?.corpFundDetails"
@@ -361,9 +361,9 @@
                   }}"
                   matTooltipPosition="right"
                   [ngClass]="
-                    showInfoIcon &&
-                    column.header == 'Approved' &&
-                    'approved_container'
+                    showInfoIcon && column.header == 'Approved'
+                      ? 'approved_container'
+                      : ''
                   "
                 >
                   {{

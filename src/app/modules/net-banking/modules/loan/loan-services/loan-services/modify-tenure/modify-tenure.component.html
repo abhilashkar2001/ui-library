@@ -6,7 +6,7 @@
         <!-- loan account number -->
         <div fxFlex="40" fxLayout="column">
           <app-searchable-select
-            [control]="modifyTenureForm.get('debitAccount')"
+            [control]="modifyTenureForm.get('debitAccount') | formcontrol"
             [inputLabel]="'Loan Account Number' | translate"
             bindValueKey="cbsAccountNumber"
             bindLabelKey="cbsAccountNumber"
@@ -39,7 +39,9 @@
                       matInput
                       name="tenureYear"
                       maxlength="2"
-                      [formControl]="modifyTenureForm.get('tenureYear')"
+                      [formControl]="
+                        modifyTenureForm.get('tenureYear') | formcontrol
+                      "
                       placeholder="Enter"
                       class="pl-3 tenure_input"
                       numbersOnly
@@ -55,7 +57,9 @@
                       matInput
                       name="tenureMonth"
                       maxlength="2"
-                      [formControl]="modifyTenureForm.get('tenureMonth')"
+                      [formControl]="
+                        modifyTenureForm.get('tenureMonth') | formcontrol
+                      "
                       (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
@@ -70,7 +74,9 @@
                       matInput
                       name="tenureDay"
                       maxlength="2"
-                      [formControl]="modifyTenureForm.get('tenureDay')"
+                      [formControl]="
+                        modifyTenureForm.get('tenureDay') | formcontrol
+                      "
                       (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
@@ -111,7 +117,7 @@
           <!-- reason for modification -->
           <div fxFlex="100">
             <app-searchable-select
-              [control]="modifyTenureForm.get('reason')"
+              [control]="modifyTenureForm.get('reason') | formcontrol"
               [inputLabel]="'Reason for modification' | translate"
               bindValueKey="id"
               bindLabelKey="values"
@@ -123,7 +129,7 @@
           <!-- remarks -->
           <div fxFlex="100">
             <app-ic-custom-input
-              [control]="modifyTenureForm.get('remarks')"
+              [control]="modifyTenureForm.get('remarks') | formcontrol"
               [inputLabel]="'Remarks' | translate"
             ></app-ic-custom-input>
           </div>
@@ -131,7 +137,9 @@
           <!-- terms and condition checkbox -->
           <mat-checkbox
             class="customCheckBox"
-            [formControl]="modifyTenureForm.get('acceptTermsConditions')"
+            [formControl]="
+              modifyTenureForm.get('acceptTermsConditions') | formcontrol
+            "
             >{{ "I accept" | translate }}
             <span class="light-blue-title-sml">{{
               "Terms and Condition" | translate

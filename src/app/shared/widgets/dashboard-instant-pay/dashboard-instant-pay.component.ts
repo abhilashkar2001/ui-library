@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatIconRegistry } from "@angular/material/icon";
@@ -21,16 +21,16 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-dashboard-instant-pay",
   templateUrl: "./dashboard-instant-pay.component.html",
-  styleUrls: ["./dashboard-instant-pay.component.scss"],
+  styleUrls: ["./dashboard-instant-pay.component.scss"]
 })
 export class DashboardInstantPayComponent implements OnInit {
-  @Input("accountNumberList") accountNumberList;
-  payeeDetails: Payee[];
+  @Input("accountNumberList") accountNumberList: any;
+  payeeDetails: Payee[] | any;
   @Output() paymentDone = new EventEmitter<any>();
-  @Input("instantPay") instantPay;
-  @Input("accountBlock") accountBlock;
-  @Input("balance") totalBalance;
-  payeeForm: FormGroup;
+  @Input("instantPay") instantPay: any;
+  @Input("accountBlock") accountBlock: any;
+  @Input("balance") totalBalance: any;
+  payeeForm!: FormGroup;
   selectedPayee: any;
   customerId: any;
   accountBalance: number = 0;
@@ -62,7 +62,7 @@ export class DashboardInstantPayComponent implements OnInit {
 
     const selectedAccount = this.sessionStorageService.getSelectedAccountNo();
     if (selectedAccount) {
-      this.payeeForm.get("accountNumber").setValue(selectedAccount);
+      this.payeeForm.get("accountNumber")?.setValue(selectedAccount);
       this.cardService
         .fetchAccountBalance(selectedAccount)
         .subscribe((res: any) => {
@@ -71,7 +71,7 @@ export class DashboardInstantPayComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.accountNumberList) {
       this.accountNumberList = changes.accountNumberList.currentValue;
     }
@@ -81,23 +81,23 @@ export class DashboardInstantPayComponent implements OnInit {
     this.payeeForm = this.fb.group({
       accountNumber: ["", [Validators.required]],
       amount: ["", [Validators.required]],
-      benificiaryAccountNo: ["", [Validators.required]],
+      benificiaryAccountNo: ["", [Validators.required]]
     });
 
     this.payeeForm
       .get("accountNumber")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         this.accountBalance =
-          this.accountNumberList?.find((item) => item.accountNo == resp)
+          this.accountNumberList?.find((item: any) => item.accountNo == resp)
             ?.accountBalance ?? 0;
       });
     this.payeeForm
       .get("amount")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         if (resp > this.accountBalance) {
-          this.payeeForm.get("amount").setErrors({ notEnoughAmount: true });
+          this.payeeForm.get("amount")?.setErrors({ notEnoughAmount: true });
         }
       });
   }
@@ -116,17 +116,17 @@ export class DashboardInstantPayComponent implements OnInit {
         }
       });
   }
-  onPayeeSelect(payee) {
+  onPayeeSelect(payee: any) {
     this.selectedPayee = payee;
-    this.payeeForm.get("benificiaryAccountNo").setValue(payee?.accountNo);
+    this.payeeForm.get("benificiaryAccountNo")?.setValue(payee?.accountNo);
     this.cdr.markForCheck();
   }
   openAllPayee() {
     this.router.navigate([`/send-money/payee/view-payee/dashboard/domestic`]);
   }
-  getCurrencySymbol(data) {
+  getCurrencySymbol(data: any) {
     this.currencySymbol = this.accountNumberList.find(
-      (acc) => acc?.accountNo == data
+      (acc: any) => acc?.accountNo == data
     )?.accountCurrency;
   }
 
@@ -139,7 +139,7 @@ export class DashboardInstantPayComponent implements OnInit {
       debitAccount: this.payeeForm.value.accountNumber,
       debitAmount: this.payeeForm.value.amount,
       debitBranch: this.accountNumberList.find(
-        (item) => item.accountNo == this.payeeForm.value.accountNumber
+        (item: any) => item.accountNo == this.payeeForm.value.accountNumber
       )?.accountBranch,
       creditAccount: this.selectedPayee.accountNo,
       beneficiaryName: this.selectedPayee.payeeName,
@@ -149,7 +149,7 @@ export class DashboardInstantPayComponent implements OnInit {
       narrative: "",
       source: "M",
       creditBranch: this.selectedPayee?.branchCode,
-      transferType: "transfer money",
+      transferType: "transfer money"
     };
 
     let paymentDetailsArr = [
@@ -166,29 +166,29 @@ export class DashboardInstantPayComponent implements OnInit {
             details: [
               { Name: this.customerDetils?.customerName },
               {
-                "Account No": this.payeeForm.get("accountNumber").value,
-              },
-            ],
+                "Account No": this.payeeForm.get("accountNumber")?.value
+              }
+            ]
           },
           {
             header: "Send To",
             details: [
               { Name: this.selectedPayee?.payeeName },
               {
-                "Account No": this.selectedPayee.accountNo,
+                "Account No": this.selectedPayee.accountNo
               },
               {
-                "Account Type": this.selectedPayee.accountType,
+                "Account Type": this.selectedPayee.accountType
               },
               {
-                "Bank Name": this.selectedPayee?.bankName,
+                "Bank Name": this.selectedPayee?.bankName
               },
               { "Bank Code": this.selectedPayee?.bankCode },
-              { Amount: this.payeeForm.get("amount").value },
-            ],
-          },
-        ],
-      },
+              { Amount: this.payeeForm.get("amount")?.value }
+            ]
+          }
+        ]
+      }
     ];
 
     this.serviceCallHandler.put(

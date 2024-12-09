@@ -4,7 +4,7 @@ import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ChequeService {
   protected basePath = environment.microServiceURL;
@@ -20,7 +20,7 @@ export class ChequeService {
   //       `${this.basePath}/fundTransfer/fetchCustInfo?mobileNo=${this.mobileNo}`
   //     );
   //   }
-  fetchAccountDetailByAccNo(accNo) {
+  fetchAccountDetailByAccNo(accNo: any) {
     return this.httpClient.get(
       `${this.basePath}/fundTransfer/fetchCustInfo?accountNumber=${accNo}`
     );
@@ -31,20 +31,20 @@ export class ChequeService {
     );
   }
 
-  fetchBalance(originationAccNo) {
+  fetchBalance(originationAccNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/flex-service/queryBalance?originationAccNo=${originationAccNo}`
     );
   }
 
-  fetchBenificiary(payload) {
+  fetchBenificiary(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/retail-beneficiary/fetchBenificiary`,
       payload
     );
   }
 
-  fetchInfoByoriginationAccNo(accNo) {
+  fetchInfoByoriginationAccNo(accNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/account/info?originationAccNo=${accNo}`
     );
@@ -57,35 +57,35 @@ export class ChequeService {
   getStateByCountry(id: any) {
     return this.httpClient.get(`${this.basePath}/state?countryId=${id}`);
   }
-  getCityByState(stateId) {
+  getCityByState(stateId: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/city?stateId=${stateId}&authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
-  fetchBranches(bankCode) {
+  fetchBranches(bankCode: any) {
     return this.httpClient.get(
       `${this.basePath}/branch?bankCode=${bankCode}&oneTimeAuth=Y&recordStatus=OPEN`
     );
   }
 
-  fetchAddress(originationId) {
+  fetchAddress(originationId: any) {
     return this.httpClient.get(
       `${this.basePath}/nominee-details/fetchGuardianAddress?originationId=${originationId}&isSame=true`
     );
   }
 
-  getChequeNoByAccNo(accNo) {
+  getChequeNoByAccNo(accNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/flex-service/chequeBookNo-by-accountNo?accountNo=${accNo}`
     );
   }
-  savedemandDraft(payload) {
+  savedemandDraft(payload: any) {
     return this.httpClient.post(
       `${this.basePath}/retail-fund-transfer/demandDraft`,
       payload
     );
   }
-  saveChequeDetails(payload) {
+  saveChequeDetails(payload: any) {
     if (payload.isEdit) payload.isEdit = true;
     else payload.isEdit = false;
 
@@ -96,11 +96,11 @@ export class ChequeService {
     );
   }
 
-  saveRequestChequeToInstrument(payload) {
+  saveRequestChequeToInstrument(payload: any) {
     return this.httpClient.post(`${this.basePath}/instrumentMaint`, payload);
   }
 
-  inquiryCheque(payload) {
+  inquiryCheque(payload: any) {
     const {
       inquiryChequeBy,
       page,
@@ -109,7 +109,7 @@ export class ChequeService {
       toChequeBookNo,
       accountNo,
       chequeBookNumber,
-      status,
+      status
     } = payload;
 
     if (inquiryChequeBy === "Number") {
@@ -127,16 +127,17 @@ export class ChequeService {
         `${this.basePath}/instrumentMaint/internet-cheque-book?inquiryChequeBy=${inquiryChequeBy}&page=${page}&size=${size}&accountNo=${accountNo}&status=${status}`
       );
     }
+    return;
   }
 
-  stopCheque(payload) {
+  stopCheque(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/instrumentStatus/stop-cheque`,
       payload
     );
   }
 
-  auditLogRevisions(payload) {
+  auditLogRevisions(payload: any) {
     const { id } = payload;
     return this.httpClient.post<any>(
       `${this.basePath}/auditLog/revisions?id=${id}&classname=IcInstrumentMaint&authStatus=AUTHORIZED&module=maintenance`,
@@ -144,13 +145,13 @@ export class ChequeService {
     );
   }
 
-  fetchAccountDetails(accountNo) {
+  fetchAccountDetails(accountNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/retail-fund-transfer/fetchAccountDetails?accountNo=${accountNo}`
     );
   }
 
-  fetchAccountStatement(accountNo) {
+  fetchAccountStatement(accountNo: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/transaction/accountSummary?accountNumber=${accountNo}`
     );
@@ -162,14 +163,14 @@ export class ChequeService {
   ): Observable<Blob> {
     const headers = new HttpHeaders({
       "Content-Type": "application/pdf",
-      Accept: "application/pdf",
+      Accept: "application/pdf"
     });
 
     return this.httpClient.get(
       `${this.basePath}/fundTransfer/AccountDownload?operationType=${operationType}&accountNumber=${accountNo}`,
       {
         responseType: "blob",
-        headers: headers,
+        headers: headers
       }
     );
   }
@@ -190,26 +191,26 @@ export class ChequeService {
   downloadAccountInformation(mobileNo: any): Observable<Blob> {
     const headers = new HttpHeaders({
       "Content-Type": "application/pdf",
-      Accept: "application/pdf",
+      Accept: "application/pdf"
     });
     return this.httpClient.get(
       `${this.basePath}/retail-fund-transfer/downloadAccountInfo?mobNumber=${mobileNo}`,
       {
         responseType: "blob",
-        headers: headers,
+        headers: headers
       }
     );
   }
 
-  eStatementSubscribe(payload) {
+  eStatementSubscribe(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/estatement/save`,
       payload
     );
   }
-  downloadPregeneratedStatement(payload) {
+  downloadPregeneratedStatement(payload: any) {
     const httpOptions = {
-      responseType: "blob" as "json",
+      responseType: "blob" as "json"
     };
     return this.httpClient.get<any>(
       `${this.basePath}/fundTransfer/AccountDownload?accountNumber=${payload.accountNumber}&operationType=Generated_Statement&statement=${payload.statementOption}&year=${payload.year}`,
@@ -221,7 +222,7 @@ export class ChequeService {
       `${this.basePath}/transaction/accountSummary?accountNumber=${accountNo}&year=${year}`
     );
   }
-  generateAccountQr(accnum) {
+  generateAccountQr(accnum: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/task-summary/get-qr-code?originationAccNo=${accnum}`,
       "",
@@ -229,7 +230,7 @@ export class ChequeService {
     );
   }
 
-  saveFeedback(payload) {
+  saveFeedback(payload: any) {
     return this.httpClient.post(
       `${this.basePath}/transaction/customerFeedbackInfo`,
       payload

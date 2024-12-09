@@ -7,13 +7,12 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import {
   MatTreeFlatDataSource,
-  MatTreeFlattener,
-  MatTreeModule,
+  MatTreeFlattener
 } from "@angular/material/tree";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
@@ -22,10 +21,10 @@ import { DrawerConstant } from "./custom-drawer.constant";
 @Component({
   selector: "app-custom-drawer",
   templateUrl: "./custom-drawer.component.html",
-  styleUrls: ["./custom-drawer.component.scss"],
+  styleUrls: ["./custom-drawer.component.scss"]
 })
 export class CustomDrawerComponent implements OnInit, OnChanges {
-  @Input() menuType: string;
+  @Input() menuType: any;
   TREE_DATA: any[] = [];
   currentMenu = "";
   @Output() drawerToggled = new EventEmitter<any>();
@@ -72,7 +71,7 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
       roleName: node.roleName,
       path: node.path,
       id: node?.id,
-      children: node.children || [],
+      children: node.children || []
     };
   };
 
@@ -92,13 +91,13 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
 
   hasChild = (_: number, node: any) => node.expandable;
 
-  getNode(node) {
+  getNode(node: any) {
     console.log(node, "nodeee");
     this.currentMenu = node.name;
 
     if (node.path) {
       this.router.navigate([`user/${node.path}`], {
-        queryParams: { type: node.name },
+        queryParams: { type: node.name }
       });
     }
     this.cdr.detectChanges();

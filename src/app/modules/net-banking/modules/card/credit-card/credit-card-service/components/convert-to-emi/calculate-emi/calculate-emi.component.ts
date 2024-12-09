@@ -12,16 +12,16 @@ import { ServiceCallHandler } from "app/shared/service-call.handler";
   styleUrls: ["./calculate-emi.component.scss"]
 })
 export class CalculateEmiComponent implements OnInit {
-  calculateEmiForm: FormGroup;
+  calculateEmiForm!: FormGroup;
   minTenure = 7;
   maxTenure = 3650;
   thumbLabel = true;
   sliderValue = new FormControl(0);
 
-  emiData = ConvertEmiStore.emiDetails;
-  amount: number;
+  emiData: any = ConvertEmiStore.emiDetails;
+  amount: number | any;
   totalMonths = 0;
-  obj: CardDetails;
+  obj: CardDetails | any;
 
   constructor(
     private fb: FormBuilder,
@@ -58,13 +58,14 @@ export class CalculateEmiComponent implements OnInit {
   }
 
   calculateSliderValue() {
-    const m = this.calculateEmiForm.get("tenureMonths").value;
-    const d = this.calculateEmiForm.get("tenureDays").value;
-    const y = this.calculateEmiForm.get("tenureYears").value;
+    const m = this.calculateEmiForm.get("tenureMonths")?.value;
+    const d = this.calculateEmiForm.get("tenureDays")?.value;
+    const y = this.calculateEmiForm.get("tenureYears")?.value;
     this.onSliderChangeForTenure(y * 365 + m * 30 + d);
   }
 
-  onSliderChangeForTenure(tenureInDays: number) {
+  onSliderChangeForTenure(event: Event) {
+    const tenureInDays: any = (event.target as HTMLInputElement)?.value;
     this.totalMonths = 0;
     // this.sliderValue.value = tenureInDays;
     console.log(this.sliderValue.value);
@@ -86,7 +87,7 @@ export class CalculateEmiComponent implements OnInit {
     this.calculateEmi(payload);
     this.updateTenureForm(years, months, remainingDays % 30);
   }
-  calculateEmi(payload) {
+  calculateEmi(_: any) {
     // this.emiService.calculateEmi(payload).subscribe((response) => {
     //   if (response && response.statusCode === 200) {
     //     this.emiData[6].value = response.data.monthlyPayment;
@@ -96,7 +97,7 @@ export class CalculateEmiComponent implements OnInit {
 
   private getTomorrowDate(): string {
     const today = new Date();
-    const tomorrow = new Date(today);
+    const tomorrow: any = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     return tomorrow.toISOString().split("T")[0]; // Format as YYYY-MM-DD
   }

@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatIconRegistry } from "@angular/material/icon";
@@ -21,24 +21,24 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-new-reusable-filter",
   templateUrl: "./new-reusable-filter.component.html",
-  styleUrls: ["./new-reusable-filter.component.scss"],
+  styleUrls: ["./new-reusable-filter.component.scss"]
 })
 export class NewReusableFilterComponent implements OnInit {
-  @ViewChild("searchVal") searchVal: ElementRef;
-  @Input() className;
-  @Input() module;
-  @Input() newFilter;
-  @Input() createdBy;
-  @Input() countryModuleFilter;
-  @Input() stateModuleFilter;
-  @Input() bulkUploadFileName;
+  @ViewChild("searchVal") searchVal: ElementRef | any;
+  @Input() className: any;
+  @Input() module: any;
+  @Input() newFilter: any;
+  @Input() createdBy: any;
+  @Input() countryModuleFilter: any;
+  @Input() stateModuleFilter: any;
+  @Input() bulkUploadFileName: any;
   @Input() componentName: string = "";
-  @Input() showOnlySearchTitle: string;
-  @Input() requiredSpecialFields;
-  @Input() excelData;
+  @Input() showOnlySearchTitle: string | any;
+  @Input() requiredSpecialFields: any;
+  @Input() excelData: any;
 
   @Output() customDataByPage = new EventEmitter<{
-    filterValue;
+    filterValue: any;
   }>();
 
   @Output() customDownloadRecord = new EventEmitter<any>();
@@ -48,45 +48,45 @@ export class NewReusableFilterComponent implements OnInit {
   tableHeader: any[] = [
     {
       headerDef: "debitAccount",
-      headerCell: "Source Account",
+      headerCell: "Source Account"
     },
     {
       headerDef: "creditAccount",
-      headerCell: "Destination Account",
+      headerCell: "Destination Account"
     },
     {
       headerDef: "transferMode",
-      headerCell: "Transfer Mode",
+      headerCell: "Transfer Mode"
     },
     {
       headerDef: "transferType",
-      headerCell: "Transfer Type",
+      headerCell: "Transfer Type"
     },
     {
       headerDef: "customerName",
-      headerCell: "Full Name",
+      headerCell: "Full Name"
     },
     {
       headerDef: "ifscCode",
-      headerCell: "IFSC Code",
+      headerCell: "IFSC Code"
     },
     {
       headerDef: "debitAmount",
-      headerCell: "Amount",
-    },
+      headerCell: "Amount"
+    }
   ];
-  tableBody: any[];
+  tableBody: any[] | any;
 
   actionDateOptions = [
     { value: "ONEDAY", label: "Today" },
     { value: "ONEWEEK", label: "Last 7 days" },
     { value: "CURRENTMONTH", label: "Current Month" },
     { value: "LASTTHREEMONTH", label: "Last 3 Month" },
-    { value: "DATERANGE", label: "Select Date Range" },
+    { value: "DATERANGE", label: "Select Date Range" }
   ];
 
-  filterForm: FormGroup;
-  fxFlexForCol1: number;
+  filterForm: FormGroup | any;
+  fxFlexForCol1: number | any;
   private basePath = environment.microServiceURL;
   userImage = "/assets/images/profile-user.png";
   fromDate: any;
@@ -94,20 +94,20 @@ export class NewReusableFilterComponent implements OnInit {
   statusOptions: any = [
     {
       authStatus: "AUTHORIZED",
-      recordStatus: "OPEN",
+      recordStatus: "OPEN"
     },
     {
       authStatus: "AUTHORIZED",
-      recordStatus: "CLOSE",
+      recordStatus: "CLOSE"
     },
     {
       authStatus: "UNAUTHORIZED",
-      recordStatus: "CLOSE",
+      recordStatus: "CLOSE"
     },
     {
       authStatus: "UNAUTHORIZED",
-      recordStatus: "OPEN",
-    },
+      recordStatus: "OPEN"
+    }
   ];
   filteredOptions$: any[] = [];
 
@@ -148,12 +148,12 @@ export class NewReusableFilterComponent implements OnInit {
       Auditstatus: "",
       savedData: "",
       requestAssignedTo: "",
-      transactionStatus: "",
+      transactionStatus: ""
     });
     this.filterFormControl.valueChanges
       .pipe(debounceTime(500))
       .subscribe((value) => {
-        const pk = this.createdBy.filter((item) => {
+        const pk = this.createdBy.filter((item: any) => {
           return item.username.toLowerCase().includes(value.toLowerCase());
         });
 
@@ -162,7 +162,7 @@ export class NewReusableFilterComponent implements OnInit {
       });
   }
 
-  stopClosing(event) {
+  stopClosing(event: any) {
     event.stopPropagation();
   }
 
@@ -183,29 +183,29 @@ export class NewReusableFilterComponent implements OnInit {
                 fromDate: this.fromDate,
                 toDate: this.toDate,
                 createdDate: "",
-                searchValue: this.encodeURIComponent(value.trim()),
-              },
+                searchValue: this.encodeURIComponent(value.trim())
+              }
             });
           } else {
             this.customDataByPage.emit({
               filterValue: {
                 ...finalFilter,
-                searchValue: this.encodeURIComponent(value.trim()),
-              },
+                searchValue: this.encodeURIComponent(value.trim())
+              }
             });
           }
         });
     }
   }
 
-  encodeURIComponent(str) {
+  encodeURIComponent(str: any) {
     return str.replace(
       /[!'()*%#$`^&{}[\]\\|+]/g,
-      (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase()
+      (c: any) => "%" + c.charCodeAt(0).toString(16).toUpperCase()
     );
   }
 
-  getFilterValueByStatus(event) {
+  getFilterValueByStatus(event: any) {
     if (this.filterForm.value.createdDate == "DATERANGE") {
       if (event === "DATERANGE") this.openDuration();
       else {
@@ -214,8 +214,8 @@ export class NewReusableFilterComponent implements OnInit {
             ...this.filterForm.value,
             fromDate: this.fromDate,
             toDate: this.toDate,
-            createdDate: "",
-          },
+            createdDate: ""
+          }
         });
       }
     } else {
@@ -227,13 +227,13 @@ export class NewReusableFilterComponent implements OnInit {
         filterValue: {
           ...this.filterForm.value,
           authStatus: event?.authStatus,
-          recordStatus: event?.recordStatus,
-        },
+          recordStatus: event?.recordStatus
+        }
       });
     }
   }
 
-  getFilterValue(event) {
+  getFilterValue(event: any) {
     if (this.filterForm.value.createdDate == "DATERANGE") {
       if (event === "DATERANGE") this.openDuration();
       else {
@@ -242,8 +242,8 @@ export class NewReusableFilterComponent implements OnInit {
             ...this.filterForm.value,
             fromDate: this.fromDate,
             toDate: this.toDate,
-            createdDate: "",
-          },
+            createdDate: ""
+          }
         });
       }
     } else {
@@ -252,7 +252,7 @@ export class NewReusableFilterComponent implements OnInit {
         sessionStorage.removeItem("toDate");
       }
       this.customDataByPage.emit({
-        filterValue: this.filterForm.value,
+        filterValue: this.filterForm.value
       });
     }
   }
@@ -262,7 +262,7 @@ export class NewReusableFilterComponent implements OnInit {
       width: "50%",
       height: "80%",
       disableClose: true,
-      panelClass: "myapp-no-padding-dialog",
+      panelClass: "myapp-no-padding-dialog"
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -273,8 +273,8 @@ export class NewReusableFilterComponent implements OnInit {
             ...this.filterForm.value,
             fromDate: result[0],
             toDate: result[1],
-            createdDate: "",
-          },
+            createdDate: ""
+          }
         });
       }
     });
@@ -286,25 +286,19 @@ export class NewReusableFilterComponent implements OnInit {
       sessionStorage.removeItem("fromDate");
       sessionStorage.removeItem("toDate");
     }
-    this.filterForm.get("authStatus").setValue("");
-    this.filterForm.get("recordStatus").setValue("");
+    this.filterForm.get("authStatus")?.setValue("");
+    this.filterForm.get("recordStatus")?.setValue("");
     this.customDataByPage.emit({
       filterValue: {
         ...this.filterForm.value,
         page: 1,
         pageSize: 5,
         sort: "lastUpdated",
-        sortOrder: "DESC",
-      },
+        sortOrder: "DESC"
+      }
     });
   }
 
-  private saveFilterValuesToLocal() {
-    const filterValues = {
-      authStatus: "",
-      recordStatus: "",
-    };
-  }
   getCreatedBy() {
     this.tableservice
       .getCreatedBy(this.className, this.module)
@@ -356,8 +350,8 @@ export class NewReusableFilterComponent implements OnInit {
       data: {
         tableHeader: this.tableHeader,
         tableBody: this.excelData,
-        fileName: this.bulkUploadFileName,
-      },
+        fileName: this.bulkUploadFileName
+      }
     });
   }
 }

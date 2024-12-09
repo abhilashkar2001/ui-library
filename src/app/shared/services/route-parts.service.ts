@@ -1,31 +1,32 @@
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, Params } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Params } from "@angular/router";
 
 interface IRoutePart {
-  title: string,
-  breadcrumb: string,
-  params?: Params,
-  url: string,
-  urlSegments: any[]
+  title: string;
+  breadcrumb: string;
+  params?: Params;
+  url: string;
+  urlSegments: any[];
 }
 
 @Injectable()
 export class RoutePartsService {
-  public routeParts: IRoutePart[];
-  constructor(private router: Router) {}
+  public routeParts: IRoutePart[] | any;
+  constructor() {}
 
-  ngOnInit() {
-  }
-  generateRouteParts(snapshot: ActivatedRouteSnapshot): IRoutePart[] {
+  ngOnInit() {}
+  generateRouteParts(snapshot: ActivatedRouteSnapshot | any): IRoutePart[] {
     var routeParts = <IRoutePart[]>[];
     if (snapshot) {
       if (snapshot.firstChild) {
-        routeParts = routeParts.concat(this.generateRouteParts(snapshot.firstChild));
+        routeParts = routeParts.concat(
+          this.generateRouteParts(snapshot.firstChild)
+        );
       }
-      if (snapshot.data['title'] && snapshot.url.length) {
+      if (snapshot.data["title"] && snapshot.url.length) {
         routeParts.push({
-          title: snapshot.data['title'], 
-          breadcrumb: snapshot.data['breadcrumb'], 
+          title: snapshot.data["title"],
+          breadcrumb: snapshot.data["breadcrumb"],
           url: snapshot.url[0].path,
           urlSegments: snapshot.url,
           params: snapshot.params

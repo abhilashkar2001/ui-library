@@ -11,14 +11,14 @@ import {
   Optional,
   PLATFORM_ID,
   Renderer2,
-  Self,
+  Self
 } from "@angular/core";
 import {
   AbstractControl,
   ControlValueAccessor,
   NgControl,
   ValidationErrors,
-  Validator,
+  Validator
 } from "@angular/forms";
 import _Inputmask from "inputmask";
 import type Inputmask from "inputmask";
@@ -32,10 +32,11 @@ const InputmaskConstructor =
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: "[inputMask]",
+  selector: "[inputMask]"
 })
 export class InputMaskDirective<T = any>
-  implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+  implements OnInit, OnDestroy, ControlValueAccessor, Validator
+{
   // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngAcceptInputType_inputMask: InputmaskOptions<any> | null | undefined;
 
@@ -59,7 +60,7 @@ export class InputMaskDirective<T = any>
   private inputMaskOptions: InputmaskOptions<T> | null = null;
 
   /* The original `onChange` function coming from the `setUpControl`. */
-  private onChange: (value: T | null) => void = () => { };
+  private onChange: (value: T | null) => void = () => {};
 
   private mutationObserver: MutationObserver | null = null;
 
@@ -78,12 +79,12 @@ export class InputMaskDirective<T = any>
   }
 
   @HostListener("input", ["$event.target.value"])
-  onInput = (_: any) => { };
+  onInput = (_: any) => {};
 
   @HostListener("blur", ["$event.target.value"])
-  onTouched = (_: any) => { };
+  onTouched = (_: any) => {};
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.removeInputMaskPlugin();
@@ -162,7 +163,7 @@ export class InputMaskDirective<T = any>
     }
   }
 
-  private get control(): AbstractControl | null | undefined {
+  private get control(): AbstractControl | any {
     return this.ngControl?.control;
   }
 
@@ -172,7 +173,7 @@ export class InputMaskDirective<T = any>
     } else {
       this.defaultInputMaskConfig = {
         ...this.defaultInputMaskConfig,
-        ...config,
+        ...config
       };
       if (this.defaultInputMaskConfig.isAsync) {
         // Create an observer instance linked to the callback function
@@ -195,7 +196,7 @@ export class InputMaskDirective<T = any>
         // Start observing the target node for configured mutations
         this.mutationObserver.observe(this.elementRef.nativeElement, {
           childList: true,
-          subtree: true,
+          subtree: true
         });
       } else {
         this.nativeInputElement = this.elementRef.nativeElement.querySelector(

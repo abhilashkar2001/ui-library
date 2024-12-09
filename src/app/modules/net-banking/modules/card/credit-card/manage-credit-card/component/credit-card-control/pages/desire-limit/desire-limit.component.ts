@@ -12,24 +12,25 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ["./desire-limit.component.scss"]
 })
 export class DesireLimitComponent implements OnInit {
-  desiredLimitForm: FormGroup;
+  desiredLimitForm!: FormGroup;
   selectedCurrency: string = "INR";
   max: number = 140000;
   min: number = 5000;
   currencySymbol = "₹";
   thumbLabel: boolean = true;
   viewOtp: boolean = false;
-  creditCardList: { cardNo: any; cardValue: any }[];
+  creditCardList: { cardNo: any; cardValue: any }[] | any;
   cardNoDetails: any;
   customerID: any;
   mobileNo: any;
   fourDigitNo: any;
   otp: any;
   increaseLimitForm: any;
-  selecetdCardNo: { cardNo: any; cardValue: any }[];
+  selecetdCardNo: { cardNo: any; cardValue: any }[] | any;
   customerInfo: any;
-  cardList: any[];
+  cardList: any[] | any;
   userInfo: any;
+  eligibleCreditAmount: any;
 
   constructor(
     private fb: FormBuilder,
@@ -41,10 +42,12 @@ export class DesireLimitComponent implements OnInit {
   ngOnInit(): void {
     this.customerInfo = this.ss.getCustomerInfo();
     this.cardList = this.ss.getListOfCards();
-    this.userInfo = JSON.parse(sessionStorage.getItem("auth-user"));
+    this.userInfo = JSON.parse(<string>sessionStorage.getItem("auth-user"));
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     this.initCardControlForm();
     this.getCreditCardDetailsList();
+    this.eligibleCreditAmount =
+      this.desiredLimitForm.get("eligibleCreditLimit")?.value || 0;
   }
 
   initCardControlForm() {
@@ -55,24 +58,24 @@ export class DesireLimitComponent implements OnInit {
     });
     this.desiredLimitForm
       .get("cardNumber")
-      .valueChanges.pipe(debounceTime(200))
+      ?.valueChanges.pipe(debounceTime(200))
       .subscribe((val) => {
         console.log(val);
         if (val) {
           this.cardDetailsFetch();
           this.getCreditCardLimitByNo(val);
           this.selecetdCardNo = this.creditCardList.filter(
-            (item) => item?.cardNo == val
+            (item: any) => item?.cardNo == val
           );
           console.log(this.selecetdCardNo);
         }
       });
   }
 
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     this.desiredLimitForm
       .get("eligibleCreditLimit")
-      .setValue(e?.srcElement.ariaValueText);
+      ?.setValue(e?.srcElement.ariaValueText);
   }
 
   // formatCurrencyLabel(value) {
@@ -87,7 +90,7 @@ export class DesireLimitComponent implements OnInit {
     });
   }
   cardDetailsFetch() {
-    let cardNo = this.desiredLimitForm.get("cardNumber").value;
+    let cardNo = this.desiredLimitForm.get("cardNumber")?.value;
     this.service.getDesiredCreditCardList(cardNo).subscribe((res: any) => {
       console.log(res);
       if (res && res.statusCode == 200) {
@@ -119,11 +122,11 @@ export class DesireLimitComponent implements OnInit {
       // this.increaseLimitForm.patchValue({
       //   eligibleCreditLimit: res.data.eligibleCreditLimit
       // });
-      this.desiredLimitForm.get("eligibleCreditLimit").setValue(res?.data);
+      this.desiredLimitForm.get("eligibleCreditLimit")?.setValue(res?.data);
     });
   }
   submit() {
-    this.otp = this.desiredLimitForm.get("otp").value;
+    this.otp = this.desiredLimitForm.get("otp")?.value;
     let payload = {
       mobile: this.mobileNo,
       otp: this.otp

@@ -3,18 +3,13 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpResponse,
+  HttpResponse
 } from "@angular/common/http";
-
 import { tap } from "rxjs/operators";
 import { LoaderService } from "../services/loader.service";
-import { ActivatedRoute, Router } from "@angular/router";
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-  constructor(
-    private _loaderService: LoaderService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private _loaderService: LoaderService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     if (
       !window.location.href.includes("landing") &&
@@ -29,7 +24,7 @@ export class LoaderInterceptor implements HttpInterceptor {
             this._loaderService.HideLoader();
           }
         },
-        (err) => {
+        () => {
           this._loaderService.HideLoader();
         }
       )

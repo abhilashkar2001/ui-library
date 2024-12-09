@@ -5,9 +5,8 @@ import {
   OnChanges,
   Output,
   EventEmitter,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { environment } from "environments/environment";
 import { interval } from "rxjs";
 
@@ -20,33 +19,33 @@ SwiperCore.use([Navigation]);
   selector: "app-carousel",
   templateUrl: "./carousel.component.html",
   styleUrls: ["./carousel.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class CarouselComponent implements OnInit, OnChanges {
   @Input() carowselData: any = {};
-  @Input() flow: string;
+  @Input() flow: string | any;
   @Output() customApplyLoan = new EventEmitter<any>();
   @Input() businessSuiteName: any = "";
   dynamicList: any = [];
   onLoadImagesLen = 4;
   private autoSlideInterval: any;
-  selectedIndex: number;
-  totalListCount: number;
+  selectedIndex: number | any;
+  totalListCount: number | any;
   carouselArrowDisplay: boolean = false;
   swiperConfig: any = {
     spaceBetween: 20,
     breakpoints: {
       768: {
-        slidesPerView: 6,
+        slidesPerView: 6
       },
       576: {
-        slidesPerView: 0,
-      },
-    },
+        slidesPerView: 0
+      }
+    }
   };
   protected baseUrl = environment.microServiceURL;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnChanges() {
     this.dynamicList = this.carowselData;
@@ -67,8 +66,10 @@ export class CarouselComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     setTimeout(() => {
-      const nextIcon = document.getElementsByClassName("swiper-button-next")[0];
-      const prevIcon = document.getElementsByClassName("swiper-button-prev")[0];
+      const nextIcon: any =
+        document.getElementsByClassName("swiper-button-next")[0];
+      const prevIcon: any =
+        document.getElementsByClassName("swiper-button-prev")[0];
       nextIcon.innerHTML = `<img src="assets/images/next_icon.svg" />`;
       prevIcon.innerHTML = `<img src="assets/images/prev_icon.svg" />`;
       this.alignItems();
@@ -131,7 +132,7 @@ export class CarouselComponent implements OnInit, OnChanges {
   moveToSubAccountPage(basisClass: string) {
     this.customApplyLoan.emit(basisClass);
   }
-  mapUrl(data) {
+  mapUrl(data: any) {
     if (
       data.documents.fileUrl &&
       !data.documents.fileUrl.toLowerCase().includes("https")
@@ -140,7 +141,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     else return `assets/images/Frame 5.svg`;
   }
 
-  getbackgroundImage(data) {
+  getbackgroundImage(data: any) {
     let url = "";
     if (
       data.documents.fileUrl &&

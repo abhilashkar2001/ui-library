@@ -8,7 +8,7 @@
           [items]="listOfAccounts"
           bindValueKey="cardNumber"
           bindLabelKey="cardNumber"
-          [control]="cardEmiDetailsForm.get('creditNumber')"
+          [control]="cardEmiDetailsForm.get('creditNumber') | formcontrol"
           (selectionChange)="handleTransactionDetails($event)"
         ></app-searchable-select>
       </div>

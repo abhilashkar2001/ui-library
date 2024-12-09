@@ -5,12 +5,12 @@ import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class InternetBankingService {
   constructor(private http: HttpClient) {}
 
-  getDashboardInfo(id) {
+  getDashboardInfo(id: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/retail-fund-transfer/fetchCorpDashboardAccounts?corporateId=${id}`
     );
@@ -21,15 +21,12 @@ export class InternetBankingService {
   }
 
   getSummary(
-    filterBy,
-    filterValue,
-    page,
-    size,
-    sortName,
-    direction,
-    moduleName,
-    status?,
-    corporateId?
+    filterBy: any,
+    page: any,
+    size: any,
+    moduleName: any,
+    status?: any,
+    corporateId?: any
   ) {
     var filterEndpoint = "";
     if (filterBy) {
@@ -41,10 +38,7 @@ export class InternetBankingService {
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
     }
-    const filter = `${filterEndpoint}`;
     const pagination = `page=${page}&size=${size}`;
-
-    const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?module=${moduleName}&${pagination}`;
     return this.http.get(

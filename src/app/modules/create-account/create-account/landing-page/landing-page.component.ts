@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
+import { Router } from "@angular/router";
 import { HomeService } from "app/shared/services/home-service/home.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-landing-page",
   templateUrl: "./landing-page.component.html",
-  styleUrls: ["./landing-page.component.scss"],
+  styleUrls: ["./landing-page.component.scss"]
 })
 export class LandingPageComponent implements OnInit {
   data: [] = [];
@@ -45,15 +45,13 @@ export class LandingPageComponent implements OnInit {
         if (response) this.data = response.data;
       });
   }
-  customApplyLoan(event) {
+  customApplyLoan(event: any) {
     this.router.navigate(["account/applyAccount", event]);
   }
-  customApply(e) {
+  customApply() {
     const targetElement =
       this.el.nativeElement.querySelector("#custom-carousel");
     const targetPosition = targetElement.getBoundingClientRect().top;
-    const scrollPosition =
-      targetPosition > 200 ? targetPosition - 120 : targetPosition;
     if (targetElement) {
       // targetElement.scrollIntoView({
       //   top: scrollPosition,

@@ -1,18 +1,16 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-new-error-popup",
   templateUrl: "./new-error-popup.component.html",
-  styleUrls: ["./new-error-popup.component.scss"],
+  styleUrls: ["./new-error-popup.component.scss"]
 })
 export class NewErrorPopupComponent implements OnInit {
   errorDetails: any;
   imageUrl: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private location: Location,
     private dialogRef: MatDialogRef<NewErrorPopupComponent>
   ) {}
 

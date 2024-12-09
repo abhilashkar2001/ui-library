@@ -7,7 +7,6 @@ import {
 } from "@angular/forms";
 import { LoanService } from "app/shared/services/loan/loan.service";
 import { debounceTime } from "rxjs/operators";
-import { LoanCalulationService } from "../loan-calculation.service";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 import { Subscription } from "rxjs";
@@ -24,13 +23,13 @@ export class CommonEmiCalculatorComponent implements OnInit {
   maxValue: number = 0;
   minValue: number = 0;
   ammountValue = 0;
-  loanForm: FormGroup;
+  loanForm!: FormGroup | any;
   @Input() fdName = "rdCalculator";
   @Input() calculatorInfo = {};
   @Output() customCalculatorValues = new EventEmitter<any>();
   amount = new FormControl("");
   email = new FormControl("");
-  thumbLabel: boolean = true;
+  thumbLabel: boolean | any = true;
   currencySymboll = "₹";
   productDetails: any;
   interestPayble: number = 0;
@@ -40,11 +39,10 @@ export class CommonEmiCalculatorComponent implements OnInit {
   otherUserInfo: any;
   currency: any = "INR";
   interestRate: number = 10.1;
-  valueChangesSubscription: Subscription;
+  valueChangesSubscription: Subscription | any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
-    private loanCalcService: LoanCalulationService,
     private tokenStore: TokenStorageService,
     private dataService: DataService
   ) {}
@@ -53,25 +51,25 @@ export class CommonEmiCalculatorComponent implements OnInit {
     this.cleanCache();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currency = this.otherUserInfo?.currency;
-    const basisId = sessionStorage.getItem("loanBasisDetails");
+    const basisId: any = sessionStorage.getItem("loanBasisDetails");
     this.getProductDetails(JSON.parse(basisId).basisId);
     setTimeout(() => {
       this.buildForm();
     }, 500);
   }
-  getProductDetails(basisId) {
+  getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0].lendingParameters.find(
-          (el) => el.currency == this.otherUserInfo.currency
+          (el: any) => el.currency == this.otherUserInfo.currency
         );
         this.min = this.productDetails.minimumAmount;
         this.max = this.productDetails.maximumAmount;
         this.maxValue =
-          this.interestRate + this.productDetails?.maxRateVariancePercentage ??
+          this.interestRate + this.productDetails?.maxRateVariancePercentage ||
           0;
         this.minValue = Math.abs(
-          this.interestRate - this.productDetails?.minRateVariancePercentage ??
+          this.interestRate - this.productDetails?.minRateVariancePercentage ||
             0
         );
       }
@@ -79,7 +77,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
 
     this.loanApi.getProductInterestDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        resp.data.forEach((item) => {
+        resp.data.forEach((item: any) => {
           if (item?.isPrimary) {
             this.interestDetails = item;
           }
@@ -87,7 +85,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
       }
     });
   }
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     this.ammountValue = e.srcElement.ariaValueText;
     console.log(e.srcElement.ariaValueText);
     if (
@@ -117,7 +115,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
 
     this.valueChangesSubscription = this.loanForm.valueChanges
       .pipe(debounceTime(500))
-      .subscribe((_) => {
+      .subscribe(() => {
         if (
           this.loanForm.value.interestRate &&
           this.loanForm.value.amount &&
@@ -147,8 +145,8 @@ export class CommonEmiCalculatorComponent implements OnInit {
         }
       });
   }
-  calculateTenure(years, months, days) {
-    return new Promise((resolve, reject) => {
+  calculateTenure(years: any, months: any, days: any) {
+    return new Promise((resolve) => {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
@@ -185,7 +183,11 @@ export class CommonEmiCalculatorComponent implements OnInit {
     this.loanForm.reset();
   }
 
-  calculateTotalDays(loanTenureYear, loanTenureMonth, loanTenureDay) {
+  calculateTotalDays(
+    loanTenureYear: any,
+    loanTenureMonth: any,
+    loanTenureDay: any
+  ) {
     const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
     return d;
   }

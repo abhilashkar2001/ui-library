@@ -10,25 +10,25 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-payment",
   templateUrl: "./payment.component.html",
-  styleUrls: ["./payment.component.scss"],
+  styleUrls: ["./payment.component.scss"]
 })
 export class PaymentComponent implements OnInit {
   options: any[] = [
     { label: "Total due", value: "totaldue" },
     { label: "Minimum due", value: "minimumdue" },
-    { label: "Other", value: "other" },
+    { label: "Other", value: "other" }
   ];
   autoPay: any[] = [
     { label: "Yes", value: "yes" },
-    { label: "No", value: "no" },
+    { label: "No", value: "no" }
   ];
 
   cards: any[] = [];
   selectedAmount: any[] = ["Total due", "Minimum due", "Other"];
-  creditPaymentForm: FormGroup;
+  creditPaymentForm!: FormGroup;
   customerInfo: any;
-  cardList: AccountList[];
-  typeofCard: string;
+  cardList: AccountList[] | any;
+  typeofCard: string | any;
   profileInfo: any;
   constructor(
     private fb: FormBuilder,
@@ -50,7 +50,7 @@ export class PaymentComponent implements OnInit {
   buildCreditPaymentForm() {
     this.creditPaymentForm = this.fb.group({
       source: ["C"],
-      corpFundDetails: this.fb.array([]),
+      corpFundDetails: this.fb.array([])
     });
     this.getFundDetails();
   }
@@ -72,8 +72,8 @@ export class PaymentComponent implements OnInit {
           autoPay: [""],
           selectAmount: [""],
           maxAutopayAmount: [""],
-          cardDetailsId: [""],
-        }),
+          cardDetailsId: [""]
+        })
       })
     );
   }
@@ -82,14 +82,14 @@ export class PaymentComponent implements OnInit {
     return this.creditPaymentForm.get("corpFundDetails") as FormArray;
   }
 
-  payFromCurrencyCode(value) {
+  payFromCurrencyCode(value: any) {
     this.paymentControl.get("debitCurrency")?.setValue(value);
   }
 
   patchDetails(event: any) {
     const account = event;
     const accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
 
     if (accountDetails) {
@@ -118,7 +118,7 @@ export class PaymentComponent implements OnInit {
     const selectedCardNumber =
       this.creditPaymentForm.get("creditAccount")?.value;
     const accountDetails = this.cardList.find(
-      (card) => card.cardNumber === selectedCardNumber
+      (card: any) => card.cardNumber === selectedCardNumber
     );
     if (!accountDetails) {
       console.error("Account details not found for the selected card number.");
@@ -126,7 +126,7 @@ export class PaymentComponent implements OnInit {
     }
     let payload: any = {
       ...this.creditPaymentForm.value,
-      corporateId: this.profileInfo?.corporateCustomerId,
+      corporateId: this.profileInfo?.corporateCustomerId
     };
     const fundDetails = this.paymentControl.at(0);
 
@@ -144,36 +144,36 @@ export class PaymentComponent implements OnInit {
               { "Name on card": this.customerInfo?.customerName },
               { "Card Number": fundDetails.get("creditAccount")?.value },
               { "Card Name": accountDetails.cardName },
-              { "Current Outstanding": accountDetails.currentOutStaning },
-            ],
+              { "Current Outstanding": accountDetails.currentOutStaning }
+            ]
           },
           {
             header: "Payment Details",
             details: [
               { Name: this.customerInfo?.customerName },
               {
-                "Account No": this.creditPaymentForm.get("debitAccount")?.value,
+                "Account No": this.creditPaymentForm.get("debitAccount")?.value
               },
               { "Account Type": this.customerInfo?.accounts[0]?.accountType },
               { "Payment Amount": fundDetails.get("debitAmount")?.value },
               {
                 "Auto type status": fundDetails.get("cardFundTransfer.autoPay")
-                  ?.value,
+                  ?.value
               },
               {
                 "Selected Amount": fundDetails.get(
                   "cardFundTransfer.selectAmount"
-                )?.value,
+                )?.value
               },
               {
                 "Enter Maximum Amount": fundDetails.get(
                   "cardFundTransfer.maxAutopayAmount"
-                )?.value,
-              },
-            ],
-          },
-        ],
-      },
+                )?.value
+              }
+            ]
+          }
+        ]
+      }
     ];
 
     this.serviceCallHandler.put(

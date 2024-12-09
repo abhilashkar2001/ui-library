@@ -1,23 +1,23 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class FdCalculatorServiceService {
   protected base_url = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
-  submitFixedDetails(fixedDetails) {
+  submitFixedDetails(fixedDetails: any) {
     return this.http.post<any>(
       `${this.base_url}/fixed-deposit-details`,
       fixedDetails
     );
   }
 
-  submitFdPersonal(personal) {
+  submitFdPersonal(personal: any) {
     return this.http.post<any>(
       `${this.base_url}/fixed-deposit-details/save-fd-customer-info`,
       personal
@@ -28,7 +28,7 @@ export class FdCalculatorServiceService {
       `${this.base_url}/fixed-deposit-details/account-details?customerId=10056`
     );
   }
-  getFixedDeposit(fixedDepositId) {
+  getFixedDeposit(fixedDepositId: any) {
     return this.http.get<any>(
       `${this.base_url}/fixed-deposit-details?fixedDepositId=${fixedDepositId}`
     );
@@ -38,38 +38,38 @@ export class FdCalculatorServiceService {
       `${this.base_url}/basis-class?businessSuite=${FdServices}`
     );
   }
-  fetchSubClass(subClass) {
+  fetchSubClass(subClass: any) {
     return this.http.get<any>(
       `${this.base_url}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
-  fetchDepositeSummary(originationId, depositType) {
+  fetchDepositeSummary(originationId: any, depositType: any) {
     return this.http.get(
       `${this.base_url}/webSummary/fetchFdAndRdSummary?originationId=${originationId}&screenName=Book ${depositType}&genericName=DOCUMENTTYPE`
     );
   }
-  getOriginationMasterDetails(id) {
+  getOriginationMasterDetails(id: any) {
     return this.http.get<any>(
       `${this.base_url}/origination-matser/fdRdFetch?fdRdMasterId=${id}`
     );
   }
-  saveFdOriginationMaster(payload) {
+  saveFdOriginationMaster(payload: any) {
     return this.http.post<any>(
       `${this.base_url}/origination-matser/save`,
       payload
     );
   }
-  getProcessCycle(processName) {
+  getProcessCycle(processName: any) {
     return this.http.get<any>(
       `${this.base_url}/process_cycle/stages?processCycleCode=${processName}`
     );
   }
-  getProcessStages(id) {
+  getProcessStages(id: any) {
     return this.http.get<any>(
       `${this.base_url}/process_stage/screens?id=${id}`
     );
   }
-  getOriginationMaster(id) {
+  getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${this.base_url}/origination-matser?originationId=${id}`
     );

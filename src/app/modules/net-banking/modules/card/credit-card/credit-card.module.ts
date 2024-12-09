@@ -13,18 +13,9 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { ManageCreditCardComponent } from "./manage-credit-card/manage-credit-card.component";
-import { CreditCardControlComponent } from "./manage-credit-card/component/credit-card-control/credit-card-control.component";
-import { CreditCardUsageLimitComponent } from "./manage-credit-card/component/credit-card-usage-limit/credit-card-usage-limit.component";
-import { CreditCardInternaltionalLimitComponent } from "./manage-credit-card/component/credit-card-internaltional-limit/credit-card-internaltional-limit.component";
 
 @NgModule({
-  declarations: [
-    ManageCreditCardComponent,
-    CreditCardControlComponent,
-    CreditCardUsageLimitComponent,
-    CreditCardInternaltionalLimitComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     CreditCardRoutingModule,

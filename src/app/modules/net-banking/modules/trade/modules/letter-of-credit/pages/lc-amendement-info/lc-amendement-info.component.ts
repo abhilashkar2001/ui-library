@@ -8,16 +8,15 @@ import { countryStateService } from "app/shared/components/reusable-pincode-popu
 @Component({
   selector: "app-lc-amendement-info",
   templateUrl: "./lc-amendement-info.component.html",
-  styleUrls: ["./lc-amendement-info.component.scss"],
+  styleUrls: ["./lc-amendement-info.component.scss"]
 })
 export class LcAmendementInfoComponent implements OnInit {
-  lcAmendInfoForm: FormGroup;
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  lcAmendInfoForm!: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
 
-  @Input("tradeDetails") tradeDetails;
+  @Input("tradeDetails") tradeDetails: any;
 
   isLcAmend: boolean = false;
   countryArr: any;
@@ -53,7 +52,7 @@ export class LcAmendementInfoComponent implements OnInit {
     });
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     console.log(this.componentType, "this.componentType");
     if (this.componentType === "LC Amendment") {
       this.isLcAmend = true;
@@ -79,8 +78,8 @@ export class LcAmendementInfoComponent implements OnInit {
             newPlcOfExpiry: [data?.newPlcOfExpiry ?? ""],
             currPlcOfExpiry: [data?.currPlcOfExpiry ?? ""],
             creditInfo: this.fb.group({
-              credit: this.fb.array([]),
-            }),
+              credit: this.fb.array([])
+            })
           }
         : {
             // for lc physical amend start
@@ -94,23 +93,23 @@ export class LcAmendementInfoComponent implements OnInit {
             newCurrent: [data?.newCurrent ?? ""],
             newAmount: [data?.newAmount ?? ""],
             comment: [data?.comment ?? ""],
-            accountList: [data?.comment ?? []],
-          }),
+            accountList: [data?.comment ?? []]
+          })
     });
 
     this.updateCredit();
 
-    this.lcAmendInfoForm.valueChanges.subscribe((res) => {
+    this.lcAmendInfoForm.valueChanges.subscribe(() => {
       let payload: any = {};
       payload = {
         lcType: "Amendment",
-        amendmentInfo: this.lcAmendInfoForm.value,
+        amendmentInfo: this.lcAmendInfoForm.value
       };
       this.updateParentModel(
         {
           lcAmendmentAmendmentInfo: {
-            payload,
-          },
+            payload
+          }
         },
         this.checkForm()
       );
@@ -121,7 +120,7 @@ export class LcAmendementInfoComponent implements OnInit {
     return this.lcAmendInfoForm.valid;
   }
 
-  get creditControle() {
+  get creditControle(): any {
     return this.Credit.get("credit") as FormArray;
   }
 
@@ -129,12 +128,12 @@ export class LcAmendementInfoComponent implements OnInit {
     return this.lcAmendInfoForm.get("creditInfo") as FormGroup;
   }
 
-  updateCredit(data?) {
+  updateCredit(data?: any) {
     const newAddress = this.fb.group({
       title: [data?.title ?? "", [Validators.required]],
       currency: [data?.currency ?? ""],
       creditAmount: [data?.creditAmount ?? "", [Validators.required]],
-      maxCreditAmount: [data?.maxCreditAmount ?? "", [Validators.required]],
+      maxCreditAmount: [data?.maxCreditAmount ?? "", [Validators.required]]
     });
     this.creditControle.push(newAddress);
   }

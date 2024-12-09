@@ -4,13 +4,12 @@ import { CompanyInformationComponent } from "app/shared/components/company-infor
 import { DigitalSignComponent } from "app/shared/components/digital-sign/digital-sign.component";
 import { NationalIdUploadComponent } from "app/shared/components/national-id-upload/national-id-upload.component";
 import { OtherChecklistDocUploadComponent } from "app/shared/components/other-checklist-doc-upload/other-checklist-doc-upload.component";
-import { OtherDocumentsComponent } from "app/shared/components/other-documents/other-documents.component";
 
 export class CreateAccountConstant {
   static readonly SCREEN_NAME = "Common";
 
   static readonly STATIC_DATA = {
-    OWNERSHIP: [],
+    OWNERSHIP: []
   };
 
   static readonly DYNAMIC_SCREEN = [
@@ -18,44 +17,44 @@ export class CreateAccountConstant {
       id: 1,
       key: "mobile",
       type: "Create Account",
-      component: CommonMobileVerificationComponent,
+      component: CommonMobileVerificationComponent
     },
     {
       id: 2,
       key: "personal",
       type: "Create Account",
-      component: CommonPersonalDetailsComponent,
+      component: CommonPersonalDetailsComponent
     },
     {
       id: 2,
       key: "national",
       type: "Create Account",
-      component: NationalIdUploadComponent,
+      component: NationalIdUploadComponent
     },
     {
       id: 2,
       key: "company",
       type: "Company Information",
-      component: CompanyInformationComponent,
+      component: CompanyInformationComponent
     },
     {
       id: 3,
       key: "document",
       type: "Create Account",
-      component: OtherChecklistDocUploadComponent,
+      component: OtherChecklistDocUploadComponent
     },
     {
       id: 4,
       key: "signature",
       type: "Signature",
-      component: DigitalSignComponent,
+      component: DigitalSignComponent
     },
     {
       id: 5,
       key: "director",
       type: "Create Account",
-      component: CommonPersonalDetailsComponent,
-    },
+      component: CommonPersonalDetailsComponent
+    }
   ];
 }
 
@@ -66,5 +65,5 @@ export enum CreateEnum {
   DUPLICATE_PRODUCT_HINT = "Please visit bank for more information.",
   PRODUCT_DUPLICATION_KEY = "Accounts",
   SOURCE_PAYLOAD_KEY = "Website",
-  LOADING_TEXT = "Saved",
+  LOADING_TEXT = "Saved"
 }

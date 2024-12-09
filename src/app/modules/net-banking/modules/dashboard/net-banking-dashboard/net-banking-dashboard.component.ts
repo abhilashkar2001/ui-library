@@ -5,7 +5,7 @@ import {
   ElementRef,
   OnInit,
   Renderer2,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NETBANKING } from "./net-banking-dashboard.constant";
@@ -27,7 +27,7 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-net-banking-dashboard",
   templateUrl: "./net-banking-dashboard.component.html",
-  styleUrls: ["./net-banking-dashboard.component.scss"],
+  styleUrls: ["./net-banking-dashboard.component.scss"]
 })
 export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   dashboardInfo: any;
@@ -36,32 +36,32 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   dummyHeader = NETBANKING.dummyHeader;
   colorCode = NETBANKING.colorCode;
   navigationItems = NETBANKING.navigationItems;
-  dummyResponse: PendingApprovalSummary[];
+  dummyResponse: PendingApprovalSummary[] | any;
   selectedKey: string | null = null;
-  availableBalance: number[][];
+  availableBalance: number[][] | any;
   availableBalanceForAccount: any;
   genericScreenName: any = "Pending for approval";
   currentIndex = 1;
   transferArray = NETBANKING.transferType[0].types;
-  loanDetails: LoanAccounts;
+  loanDetails: LoanAccounts | any;
   columns = [
     {
       columnDef: "version",
       header: "Version",
-      cell: (element: any) => `${element?.version}`,
+      cell: (element: any) => `${element?.version}`
     },
     {
       columnDef: "lastUpdatedBy",
       header: "Action By",
-      cell: (element: any) => `${element.lastUpdatedBy}`,
-    },
+      cell: (element: any) => `${element.lastUpdatedBy}`
+    }
   ];
 
   activityLogData: any;
-  displayActivityLog: any[];
+  displayActivityLog: any[] | any;
   selectedActivityLog: string = "financial";
   currentUser: any;
-  accountlist: { accountType: string; accountList: Account[] }[];
+  accountlist: any | { accountType: string; accountList: Account[] }[];
   accountNumberList: any = [];
   customerInfo: any;
   selectedAcc: any;
@@ -95,7 +95,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    this.corporateId = JSON.parse(
+      <string>sessionStorage.getItem("corporateId")
+    );
     this.getDashboardInfo();
     this.getActivityLogData();
     this.getDataByPage();
@@ -167,11 +169,11 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
 
   getAccountList() {
-    this.accountlist.forEach((item) => {
+    this.accountlist.forEach((item: any) => {
       if (item?.accountList)
         this.accountNumberList = [
           ...this.accountNumberList,
-          ...item.accountList,
+          ...item.accountList
         ];
     });
     this.cdr.detectChanges();
@@ -192,17 +194,17 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   async fetchAccountList() {
     this.netBankingService
       .fetchAccountDetails(this.currentUser.mobile)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode === 200 && res?.data) {
           this.accountlist = res?.data?.accounts;
-          const listOfAccounts = [];
+          const listOfAccounts: any = [];
           this.accountlist.forEach(async (item: any) => {
             console.log(item);
             if (item?.type == "Accounts") {
-              item?.accountList?.forEach((account) => {
+              item?.accountList?.forEach((account: any) => {
                 listOfAccounts.push({
                   ...account,
-                  accountType: item?.accountType,
+                  accountType: item?.accountType
                 });
               });
             }
@@ -228,10 +230,10 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
         if (resp?.statusCode == 200) {
           this.dashboardInfo = resp?.data?.accounts || {};
           this.availableBalance = [];
-          let keywiseBalance = [];
+          let keywiseBalance: any = [];
           Object.keys(this.dashboardInfo).forEach((key) => {
             let balance;
-            this.dashboardInfo[key]?.accountList.forEach(async (el) => {
+            this.dashboardInfo[key]?.accountList.forEach(async (el: any) => {
               balance = await this.fetchQueryBalance(el?.accountNo);
               keywiseBalance.push(balance);
             });
@@ -242,9 +244,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
             ? sessionStorage.getItem("selectAccNo")
             : resp?.data.accounts?.[0]?.accountList?.[0]?.accountNo;
 
-          const accountList = [];
-          resp?.data?.accounts?.forEach((item) => {
-            item.accountList?.forEach((element) => {
+          const accountList: any = [];
+          resp?.data?.accounts?.forEach((item: any) => {
+            item.accountList?.forEach((element: any) => {
               accountList.push(element);
             });
           });
@@ -258,17 +260,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
   getDataByPage() {
     this.netBankingService
-      .getSummary(
-        null,
-        null,
-        1,
-        3,
-        null,
-        null,
-        "coprateNetBanking",
-        "CREATED",
-        this.corporateId
-      )
+      .getSummary(null, 1, 3, "coprateNetBanking", "CREATED", this.corporateId)
       .subscribe((res: any) => {
         this.dummyResponse = res?.data
           ?.filter(
@@ -283,30 +275,30 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
   openPendingForApprovalSummary() {
     this.router.navigate([
-      "/user/dashboard/fund-transfer/pending-for-approval",
+      "/user/dashboard/fund-transfer/pending-for-approval"
     ]);
   }
-  viewPendingRecord(element) {
+  viewPendingRecord(element: any) {
     console.log(element, "...........");
     this.router.navigate([
       "/user/dashboard/fund-transfer/bulk-upload",
-      element?.id,
+      element?.id
     ]);
   }
-  getActiveTransferType(transfer) {
+  getActiveTransferType(transfer: any) {
     this.currentIndex = transfer.sequence;
     this.transferArray = transfer.types;
   }
-  onDropdownChange(event) {
+  onDropdownChange(event: any) {
     this.displayActivityLog = [];
     if (event === "financial") {
       this.displayActivityLog = this.activityLogData.financial;
-      this.displayActivityLog.forEach((element) => {
+      this.displayActivityLog.forEach((element: any) => {
         element.total = element.pending + element.processed + element.rejected;
       });
     } else {
       this.displayActivityLog = this.activityLogData.nonfinancial;
-      this.displayActivityLog.forEach((element) => {
+      this.displayActivityLog.forEach((element: any) => {
         element.total = element.pending + element.processed + element.rejected;
       });
     }
@@ -328,7 +320,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
       if (res.statusCode == 200) {
         this.activityLogData = res?.data;
         this.displayActivityLog = this.activityLogData.financial;
-        this.displayActivityLog.forEach((element) => {
+        this.displayActivityLog.forEach((element: any) => {
           element.total =
             element.pending + element.processed + element.rejected;
         });
@@ -336,12 +328,12 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openTransfer(transfer) {
+  openTransfer(transfer: any) {
     if (!transfer.route) return;
     if (transfer.label == "Single Transfer") {
       const dialogRef = this.dialog.open(SelectSingleTransferComponent, {
         width: "50%",
-        panelClass: "popup-class",
+        panelClass: "popup-class"
       });
       dialogRef.afterClosed().subscribe((res) => {
         console.log(res);
@@ -366,7 +358,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     this.router.navigate([transfer.route]);
   }
 
-  fetchQueryBalance(accountNo) {
+  fetchQueryBalance(accountNo: any) {
     return new Promise((resolve) => {
       this.netBankingService
         .fetchAccountBalance(accountNo)

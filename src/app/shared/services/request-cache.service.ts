@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 import { HttpRequest, HttpResponse } from "@angular/common/http";
-import { Subject, timer } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+// import { Subject, timer } from "rxjs";
+// import { takeUntil } from "rxjs/operators";
 
-interface CustomHttpResponse<T> extends HttpResponse<T> {
-  expiryTime: number;
-}
+// interface CustomHttpResponse<T> extends HttpResponse<T> {
+//   expiryTime: number;
+// }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class RequestCache {
   private cache$ = new Map<string, HttpResponse<any>>();
-  private cacheCleanup$ = new Subject<void>();
+  // private cacheCleanup$ = new Subject<void>();
 
   constructor() {}
 
@@ -42,21 +42,21 @@ export class RequestCache {
     this.cache$.clear();
   }
 
-  private startCacheCleanup(): void {
-    // Cleanup cache every 1 minute
-    timer(0, 1 * 60 * 1000)
-      .pipe(takeUntil(this.cacheCleanup$))
-      .subscribe(() => {
-        this.cleanupExpiredEntries();
-      });
-  }
+  // private startCacheCleanup(): void {
+  //   // Cleanup cache every 1 minute
+  //   timer(0, 1 * 60 * 1000)
+  //     .pipe(takeUntil(this.cacheCleanup$))
+  //     .subscribe(() => {
+  //       this.cleanupExpiredEntries();
+  //     });
+  // }
 
-  private cleanupExpiredEntries(): void {
-    const now = Date.now();
-    for (const [key, entry] of this.cache$.entries()) {
-      if (entry.body.data.expiryTime < now) {
-        this.cache$.delete(key);
-      }
-    }
-  }
+  // private cleanupExpiredEntries(): void {
+  //   const now = Date.now();
+  //   for (const [key, entry] of this.cache$.entries()) {
+  //     if (entry.body.data.expiryTime < now) {
+  //       this.cache$.delete(key);
+  //     }
+  //   }
+  // }
 }

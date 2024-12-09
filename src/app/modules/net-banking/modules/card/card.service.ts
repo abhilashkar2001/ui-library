@@ -9,7 +9,6 @@ import {
 import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 import { environment } from "environments/environment";
-import { Observable, Subject } from "rxjs";
 
 const baseUrl = environment.microServiceURL;
 
@@ -19,12 +18,22 @@ const baseUrl = environment.microServiceURL;
 export class CardService {
   constructor(private http: HttpClient) {}
 
-  fetchCardRecentTransaction(corporateId, cardNumber, cardType) {
+  fetchCardRecentTransaction(
+    corporateId: any,
+    cardNumber: any,
+    cardType: string
+  ) {
     return this.http.get<any>(
       `${baseUrl}/card/fetchTransactions?corporateId=${corporateId}&cardNo=${cardNumber}&cardType=${cardType}`
     );
   }
-  fetchScreenWiseRecentTrans(transferType, customerId, payload?) {
+  fetchScreenWiseRecentTrans(
+    transferType: any,
+    customerId: any,
+    payload?:
+      | { [key: string]: string | number | boolean | string[] | number[] }
+      | any
+  ) {
     let params = appendFilterParam(payload);
     return this.http.get<any>(
       `${baseUrl}/retail-fund-transfer/fetchRecentTransaction?transferType=${transferType}&fetchScreenWiseRecentTrans=${customerId}${
@@ -32,29 +41,29 @@ export class CardService {
       }`
     );
   }
-  fetchCardSummary(customerId, cardType) {
+  fetchCardSummary(customerId: any, cardType: string) {
     return this.http.get<any>(
       `${baseUrl}/card/fetch-card-summary?corporateId=${customerId}&cardType=${cardType}`
     );
   }
-  saveCreditPaymentDetails(payload) {
+  saveCreditPaymentDetails(payload: any) {
     return this.http.post(`${baseUrl}/card/pay-corp`, payload);
   }
 
-  generateAccountQr(accnum) {
+  generateAccountQr(accnum: any) {
     return this.http.post<any>(
       `${baseUrl}/task-summary/get-qr-code?originationAccNo=${accnum}`,
       "",
       { responseType: "Blob" as "json" }
     );
   }
-  getBalance(accNo) {
+  getBalance(accNo: any) {
     return this.http.get(
       `${baseUrl}/flex-service/queryBalance?originationAccNo=${accNo}
 `
     );
   }
-  instantPay(payload) {
+  instantPay(payload: any) {
     return this.http.post<any>(
       `${baseUrl}/retail-fund-transfer/transfer-money`,
       payload
@@ -70,51 +79,51 @@ export class CardService {
       `${baseUrl}/flex-service/queryBalance?originationAccNo=${accountNo}`
     );
   }
-  fetchPayeeList(payload) {
+  fetchPayeeList(payload: { source: string; customerId: any }) {
     return this.http.post<IcHttpResponseModel<Payee[]>>(
       `${baseUrl}/retail-beneficiary/fetchBenificiary`,
       payload
     );
   }
-  saveAutoPayCreditPaymentDetails(payload) {
+  saveAutoPayCreditPaymentDetails(payload: any) {
     return this.http.post(`${baseUrl}/card/auto-pay`, payload);
   }
-  saveBlockPayCreditPaymentDetails(payload) {
+  saveBlockPayCreditPaymentDetails(payload: any) {
     return this.http.post(`${baseUrl}/card/block-card`, payload);
   }
 
-  saveBillingCycleCreditPaymentDetails(payload) {
+  saveBillingCycleCreditPaymentDetails(payload: any) {
     return this.http.put(`${baseUrl}/card/updateBillingCycle`, payload);
   }
-  eStatementSubscribe(payload) {
+  eStatementSubscribe(payload: any) {
     return this.http.post<any>(`${baseUrl}/estatement/save`, payload);
   }
-  public fetchbycustomerId(customerId) {
+  public fetchbycustomerId(customerId: any) {
     return this.http.get<any>(
       `${baseUrl}/customer-api?customerId=${customerId}`
     );
   }
-  public fetchAlertByCardNo(cardNo) {
+  public fetchAlertByCardNo(cardNo: any) {
     return this.http.get<any>(
       `${baseUrl}/card/alert-subscription?cardNo=${cardNo}`
     );
   }
 
-  saveAddOnCreditPaymentDetails(payload) {
+  saveAddOnCreditPaymentDetails(payload: any) {
     return this.http.put(`${baseUrl}/card/addon-cards`, payload);
   }
-  fetchCardTransactionDetails(cardNo, corporateId) {
+  fetchCardTransactionDetails(cardNo: any, corporateId: any) {
     return this.http.get<IcHttpResponseModel<cardTransactionDetails>>(
       `${baseUrl}/card/fetchTransactions?cardNo=${cardNo}&corporateId=${corporateId}`
     );
   }
-  calculateEmi(obj) {
+  calculateEmi(obj: any) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/loan-repayment/emi-calculation`,
       obj
     );
   }
-  convertToEmi(payload) {
+  convertToEmi(payload: any) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/card/convert-to-emi`,
       payload
@@ -125,7 +134,7 @@ export class CardService {
       `${baseUrl}/card/fetch-cardNo?customerId=${customerId}`
     );
   }
-  fetchEmiDetails(cardNo, customerId) {
+  fetchEmiDetails(cardNo: any, customerId: any) {
     return this.http.get<IcHttpResponseModel<EmiDetails[]>>(
       `${baseUrl}/card/fetch-emi?cardNo=${cardNo}&customerId=${customerId}`
     );
@@ -135,19 +144,19 @@ export class CardService {
       `${baseUrl}/card/fetchCorpCardPaymentDetailsPdf?cardNo=${accountNo}&month=${month}&year=${year}`
     );
   }
-  setPin(cardNumber, cvv, pin) {
+  setPin(cardNumber: any, cvv: any, pin: any) {
     return this.http.put<IcHttpResponseModel<any>>(
       `${baseUrl}/card/set-pin?cardNumber=${cardNumber}&cvv=${cvv}&pin=${pin}`,
       ""
     );
   }
-  savePrepaidReload(payload) {
+  savePrepaidReload(payload: any) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/card/reload-prepaid`,
       payload
     );
   }
-  savePrepaidRefund(payload) {
+  savePrepaidRefund(payload: any) {
     return this.http.post<IcHttpResponseModel<any>>(
       `${baseUrl}/card/refund-prepaid`,
       payload
@@ -164,15 +173,21 @@ export class CardService {
     );
   }
 
-  fdRdCalculatorDetails(bookType, amount, tenureYear, tenureMonth, tenureDay) {
+  fdRdCalculatorDetails(
+    bookType: any,
+    amount: any,
+    tenureYear: any,
+    tenureMonth: any,
+    tenureDay: any
+  ) {
     return this.http.get<any>(
       `${baseUrl}/fdRd/fd-rd-calculator?bookType=${bookType}&amount=${amount}&tenureYears=${tenureYear}&tenureMonths=${tenureMonth}&tenureDays=${tenureDay}`
     );
   }
-  saveUpgradeCreditPaymentDetails(payload) {
+  saveUpgradeCreditPaymentDetails(payload: any) {
     return this.http.post(`${baseUrl}/card/upgrade-card`, payload);
   }
-  fetchAllRecentTransaction(customerId, payload?) {
+  fetchAllRecentTransaction(customerId: any, payload?: any) {
     let params = appendFilterParam(payload);
     return this.http.get<any>(
       `${baseUrl}/retail-fund-transfer/fetchRecentTransaction?customerId=${customerId}${
@@ -181,13 +196,17 @@ export class CardService {
     );
   }
 
-  fetchCreditCardRecentTransaction(customerId, cardNumber, cardType) {
+  fetchCreditCardRecentTransaction(
+    customerId: any,
+    cardNumber: any,
+    cardType: any
+  ) {
     return this.http.get<any>(
       `${baseUrl}/card/fetchTransactions?customerId=${customerId}&cardNo=${cardNumber}&cardType=${cardType}`
     );
   }
 
-  fetchDebitCardRecentTransaction(cardNumber, cardType) {
+  fetchDebitCardRecentTransaction(cardNumber: any, cardType: any) {
     return this.http.get<any>(
       `${baseUrl}/card/debit-transaction?cardNumber=${cardNumber}&cardType=${cardType}`
     );

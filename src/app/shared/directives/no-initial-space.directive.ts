@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from "@angular/core";
 
 @Directive({
-  selector: "[noInitialSpecialCharacters]",
+  selector: "[noInitialSpecialCharacters]"
 })
 export class NoInitialSpecialCharactersDirective {
   constructor(private el: ElementRef) {}
@@ -20,9 +20,9 @@ export class NoInitialSpecialCharactersDirective {
     }
   }
 
-  @HostListener("paste", ["$event"]) onPaste(event: ClipboardEvent) {
+  @HostListener("paste", ["$event"]) onPaste(event: ClipboardEvent | any) {
     // Get the pasted text from the clipboard
-    const pastedText = event.clipboardData.getData("text");
+    const pastedText: any = event.clipboardData.getData("text");
 
     // Check if the pasted text starts with a special character or space
     if (/^[!@#$%^&*(),.?":;_+';/={}|<>-\s]/.test(pastedText)) {

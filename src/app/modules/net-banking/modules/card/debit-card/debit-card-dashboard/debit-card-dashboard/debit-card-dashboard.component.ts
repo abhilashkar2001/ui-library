@@ -9,7 +9,7 @@ import { DebitCardStore } from "../../debit-card.store";
 @Component({
   selector: "app-debit-card-dashboard",
   templateUrl: "./debit-card-dashboard.component.html",
-  styleUrls: ["./debit-card-dashboard.component.scss"],
+  styleUrls: ["./debit-card-dashboard.component.scss"]
 })
 export class DebitCardDashboardComponent implements OnInit {
   cardList: Cards = [];
@@ -48,7 +48,7 @@ export class DebitCardDashboardComponent implements OnInit {
         this.fetRecntTransaction();
       });
   }
-  getDashboardCardDetails(event) {
+  getDashboardCardDetails(event: any) {
     this.displayCard = event;
   }
 
@@ -73,7 +73,7 @@ export class DebitCardDashboardComponent implements OnInit {
         });
   }
 
-  toggleCheck(value) {
+  toggleCheck(value: any) {
     this.isDrawerOpen = value;
   }
 }

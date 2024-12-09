@@ -4,13 +4,13 @@ import { AbstractControl } from "@angular/forms";
 @Component({
   selector: "app-ic-radio-button",
   templateUrl: "./ic-radio-button.component.html",
-  styleUrls: ["./ic-radio-button.component.scss"],
+  styleUrls: ["./ic-radio-button.component.scss"]
 })
 export class IcRadioButtonComponent implements OnInit {
-  @Input("control") control: AbstractControl;
-  @Input("optiions") optiions: any[];
-  @Input("labelClass") labelClass: string;
-  @Input("displayLabel") displayLabel: string;
+  @Input("control") control: AbstractControl | any;
+  @Input("optiions") optiions: any[] | any;
+  @Input("labelClass") labelClass: string | any;
+  @Input("displayLabel") displayLabel: string | any;
   @Input("layout") layout: any = "row";
   @Input("radiolayout") radiolayout: any = "row";
   @Input("gap") gap: string | number = 10;
@@ -20,7 +20,7 @@ export class IcRadioButtonComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onChaage(e) {
+  onChaage(e: any) {
     console.log(e);
   }
 }

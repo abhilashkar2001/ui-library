@@ -9,20 +9,20 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-repayment-schedule",
   templateUrl: "./repayment-schedule.component.html",
-  styleUrls: ["./repayment-schedule.component.scss"],
+  styleUrls: ["./repayment-schedule.component.scss"]
 })
 export class RepaymentScheduleComponent implements OnInit {
-  repaymentScheduleForm: FormGroup | undefined;
+  repaymentScheduleForm: FormGroup | any;
   fetchStatement: boolean = false;
-  loanDetails: LoanDetailsModel[];
-  loanAccountDetails = loanServiceStore.repaymentScheduleDetails;
+  loanDetails: LoanDetailsModel[] | any;
+  loanAccountDetails: any = loanServiceStore.repaymentScheduleDetails;
   repaymentDetails: any;
 
   constructor(
     private fb: FormBuilder,
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loanDetails = this.sessionStorageService.getLoanInfo();
@@ -31,19 +31,19 @@ export class RepaymentScheduleComponent implements OnInit {
 
   buildDisbursementScheduleForm() {
     this.repaymentScheduleForm = this.fb.group({
-      loanAccNo: [""],
+      loanAccNo: [""]
     });
     this.repaymentScheduleForm
       .get("loanAccNo")
-      .setValue(this.loanDetails[0]?.cbsAccountNumber);
+      ?.setValue(this.loanDetails[0]?.cbsAccountNumber);
   }
 
   //fetch details of repayment schedule
   fetchRepaymentSchedule() {
     this.fetchStatement = true;
     this.loanService
-      .fetchRepaymentSchedule(this.repaymentScheduleForm.value.loanAccNo)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .fetchRepaymentSchedule(this.repaymentScheduleForm?.value.loanAccNo)
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data)
           this.repaymentDetails = res?.data;
       });

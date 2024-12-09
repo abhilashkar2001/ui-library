@@ -1,109 +1,132 @@
 <mat-card>
-    <div fxLayout="column">
-        <div
-          class="mt-12"
-          fxFlex="100"
-          fxLayout="row"
-          fxLayoutAlign="space-between center"
+  <div fxLayout="column">
+    <div
+      class="mt-12"
+      fxFlex="100"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <app-ic-custom-pay-from
+        [items]="creditCardList"
+        [control]="internaltionLimitForm.get('cardNo') | formcontrol"
+        bindValueKey="cardNumber"
+        bindLabelKey="cardNumber"
+        [inputLabel]="'Select Card' | translate"
+        (selectionChange)="payAccount($event)"
+        layout="column"
+        layoutAlign="start"
+      ></app-ic-custom-pay-from>
+      <div class="toggle-div" fxLayoutGap="5">
+        <span class="menu-label">{{ getMenuLabel(10) | translate }}</span>
+        <mat-slide-toggle
+          name="isMenu"
+          color="primary"
+          [checked]="internaltionLimitForm.get('enable')?.value"
+          (change)="toggleMenu(10, $event.checked)"
         >
-          <app-ic-custom-pay-from
-           [items]="creditCardList"
-            [control]="internaltionLimitForm?.get('cardNo')"
-            bindValueKey="cardNumber"
-            bindLabelKey="cardNumber"
-            [inputLabel]="'Select Card' | translate"
-            (selectionChange)="payAccount($event)"
-            layout="column"
-            layoutAlign="start"
-          ></app-ic-custom-pay-from>
-          <div class="toggle-div" fxLayoutGap="5">
-            <span class="menu-label">{{ getMenuLabel(10) | translate }}</span>
-            <mat-slide-toggle
-              name="isMenu" 
-              color="primary"
-              [checked]="internaltionLimitForm?.get('enable')?.value"
-              (change)="toggleMenu(10, $event.checked)"
-            >
-            </mat-slide-toggle>
-          </div>
-        </div>
-        <div class="mt-12" fxFlex="100" fxLayout="row wrap">
-          <ng-container *ngFor="let item of limitType; let i = index">
-            <mat-card
-              class="default blue_card_dflt"
-              fxFlex="48.5"
-              fxFlex.sm="100"
-              fxLayout="column"
-            >
-              <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-                <app-ic-custom-input
-                  fxFlex="45"
-                  [control]="internaltionLimitForm?.get(item?.control)"
-                  [inputLabel]="item?.header"
-                  customClass="customTotalField"
-                  customLabelClass="customLabelClassBlue"
-                  inputType="number"
-                  customDirectives="appTwoDigitDecimaNumber"
-                ></app-ic-custom-input>
-                <div class="toggle-div" fxLayoutGap="5">
-                  <span class="menu-label">{{ getMenuLabel(i) | translate }}</span>
-                  <mat-slide-toggle
-                    name="isMenu"
-                    color="primary"
-                    (change)="toggleMenu(i, $event.checked)"
-                    [checked]="internaltionLimitForm?.get(item?.toggleControl)?.value"
-                  >
-                  </mat-slide-toggle>
-                </div>
-              </div>
-              <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
-                <div class="custom-slider">
-                  <mat-slider
-                    [value]="internaltionLimitForm?.value[item?.control]"
-                    [max]="max"
-                    [min]="min"
-                    fxFlex="100"
-                    [thumbLabel]="thumbLabel"
-                    (change)="onSliderChange($event, item?.control)"
-                    discrete
-                    [displayWith]="formatCurrencyLabel"
-                  >
-                    <input matSliderThumb #slider />
-                  </mat-slider>
-                </div>
-                <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-                  <div>Min {{ currencySymbol }} {{ internaltionLimitForm.get(item?.min)?.value }}</div>
-                  <div>Max {{ currencySymbol }} {{ internaltionLimitForm.get(item?.max)?.value }}</div>
-                </div>
-              </div>
-            </mat-card>
-          </ng-container>
-        </div>
-        <div class="custom_card_footer mt-12" fxFlex="100" fxLayoutGap="10">
-          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5">
-            <div class="footer_icon" fxLayoutAlign="end start">
-              <mat-icon svgIcon="info-icon"></mat-icon>&nbsp; Notes
-            </div>
-            <div class="footer_contain">
-              * {{'You can only change the transaction type or transaction limit for one card at a time' | translate}}.<br />
-              * {{'Subject to the maximum daily transaction limits on your Credit Card' | translate}}.<br />
-              * {{'By disabling any transaction type, any‘Per-transaction limit’ set for that transaction type will also get deleted' | translate}}.
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="mt-12" fxFlex="100" fxLayout="row wrap">
+      <ng-container *ngFor="let item of limitType; let i = index">
+        <mat-card
+          class="default blue_card_dflt"
+          fxFlex="48.5"
+          fxFlex.sm="100"
+          fxLayout="column"
+        >
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
+            <app-ic-custom-input
+              fxFlex="45"
+              [control]="internaltionLimitForm.get(item?.control) | formcontrol"
+              [inputLabel]="item?.header"
+              customClass="customTotalField"
+              customLabelClass="customLabelClassBlue"
+              inputType="number"
+              customDirectives="appTwoDigitDecimaNumber"
+            ></app-ic-custom-input>
+            <div class="toggle-div" fxLayoutGap="5">
+              <span class="menu-label">{{ getMenuLabel(i) | translate }}</span>
+              <mat-slide-toggle
+                name="isMenu"
+                color="primary"
+                (change)="toggleMenu(i, $event.checked)"
+                [checked]="
+                  internaltionLimitForm.get(item?.toggleControl)?.value
+                "
+              >
+              </mat-slide-toggle>
             </div>
           </div>
+          <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
+            <div class="custom-slider">
+              <mat-slider
+                [(ngModel)]="internaltionLimitForm.value[item?.control]"
+                [max]="max"
+                [min]="min"
+                fxFlex="100"
+                [step]="thumbLabel"
+                (change)="onSliderChange($event, item?.control)"
+                discrete
+                [displayWith]="formatCurrencyLabel"
+              >
+                <input matSliderThumb #slider />
+              </mat-slider>
+            </div>
+            <div
+              fxLayout="row"
+              fxFlex="100"
+              fxLayoutAlign="space-between center"
+            >
+              <div>
+                Min {{ currencySymbol }}
+                {{ internaltionLimitForm.get(item?.min)?.value }}
+              </div>
+              <div>
+                Max {{ currencySymbol }}
+                {{ internaltionLimitForm.get(item?.max)?.value }}
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </ng-container>
+    </div>
+    <div class="custom_card_footer mt-12" fxFlex="100" fxLayoutGap="10">
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5">
+        <div class="footer_icon" fxLayoutAlign="end start">
+          <mat-icon svgIcon="info-icon"></mat-icon>&nbsp; Notes
         </div>
-        <div fxLayoutAlign="end center" fxLayoutGap="10px">
-          <app-ic-action-button
-            buttonName="Back"
-            buttonType="stroked"
-            (onClick)="cancle()"
-          >
-          </app-ic-action-button>
-          <app-ic-action-button
-            buttonName="Next"
-            buttonType="filled"
-            (onClick)="next()"
-          ></app-ic-action-button>
+        <div class="footer_contain">
+          *
+          {{
+            "You can only change the transaction type or transaction limit for one card at a time"
+              | translate
+          }}.<br />
+          *
+          {{
+            "Subject to the maximum daily transaction limits on your Credit Card"
+              | translate
+          }}.<br />
+          *
+          {{
+            "By disabling any transaction type, any‘Per-transaction limit’ set for that transaction type will also get deleted"
+              | translate
+          }}.
         </div>
       </div>
-    
+    </div>
+    <div fxLayoutAlign="end center" fxLayoutGap="10px">
+      <app-ic-action-button
+        buttonName="Back"
+        buttonType="stroked"
+        (onClick)="cancle()"
+      >
+      </app-ic-action-button>
+      <app-ic-action-button
+        buttonName="Next"
+        buttonType="filled"
+        (onClick)="next()"
+      ></app-ic-action-button>
+    </div>
+  </div>
 </mat-card>

@@ -6,7 +6,7 @@ import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SendMoneyService {
   constructor(private http: HttpClient) {}
@@ -17,7 +17,7 @@ export class SendMoneyService {
     );
   }
 
-  instantPay(payload) {
+  instantPay(payload: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/retail-fund-transfer/transfer-money`,
       payload

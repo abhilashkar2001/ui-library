@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
   TemplateRef,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { CityService } from "app/shared/services/city.service";
@@ -18,7 +18,7 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-company-information",
   templateUrl: "./company-information.component.html",
-  styleUrls: ["./company-information.component.scss"],
+  styleUrls: ["./company-information.component.scss"]
 })
 export class CompanyInformationComponent implements OnInit {
   @Output() onCustomSubmit = new EventEmitter<{}>();
@@ -27,10 +27,12 @@ export class CompanyInformationComponent implements OnInit {
 
   @Input() personalDetails: any;
   @Input() basisId: any;
-  @Input() customerInfo;
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input() customerInfo: any;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
 
-  _parentForm: FormGroup;
+  _parentForm!: FormGroup;
   corporateCustId: any;
   miscellaneousId: any;
   customerCategoryArr: any;
@@ -38,20 +40,22 @@ export class CompanyInformationComponent implements OnInit {
   countryList: any;
   nationalityList: any;
   selectedIndex = 0;
-  @ViewChild("treeTemplate", { static: true }) treeTemplate: TemplateRef<any>;
+  @ViewChild("treeTemplate", { static: true }) treeTemplate:
+    | TemplateRef<any>
+    | any;
 
-  genericValue = {
+  genericValue: any = {
     OWNERSHIP: [],
     FUNDBY: [],
     RESIDENCETYPE: [],
     COMPANYTYPE: [],
     SOURCEOFINCOME: [],
     SEGMENT: [],
-    PARENTCOMPANY: [],
+    PARENTCOMPANY: []
   };
 
   currencyList = [];
-  originationId: number;
+  originationId: number | any;
 
   constructor(
     private fb: FormBuilder,
@@ -69,10 +73,10 @@ export class CompanyInformationComponent implements OnInit {
     this.fetchCountries();
     this.fetchGenericValues();
     this.corporateCustId = JSON.parse(
-      sessionStorage.getItem("corporateCustId")
+      <string>sessionStorage.getItem("corporateCustId")
     );
     this.miscellaneousId = JSON.parse(
-      sessionStorage.getItem("miscellaneousId")
+      <string>sessionStorage.getItem("miscellaneousId")
     );
     if (this.originationId) this.fetchOriginationMaster();
     else this.fetchCompanyDetails();
@@ -80,13 +84,13 @@ export class CompanyInformationComponent implements OnInit {
 
   buildCompanyForm() {
     this._parentForm = this.fb.group({
-      screenCode: parseInt(sessionStorage.getItem("currentScreenCode")),
+      screenCode: parseInt(<string>sessionStorage.getItem("currentScreenCode")),
       originationModel: this.fb.group({
         basisDetailsId: [""],
-        loanAmount: [""],
+        loanAmount: [""]
       }),
       corporateCustomer: this.addCorporateCustomer(),
-      miscellaneous: this.addMiscellaneous(),
+      miscellaneous: this.addMiscellaneous()
     });
   }
 
@@ -110,7 +114,7 @@ export class CompanyInformationComponent implements OnInit {
       organisationChartUrl: [""],
       organisationChartId: [""],
       financialDetails: this.fb.array([]),
-      contact: this.addContact(),
+      contact: this.addContact()
     });
   }
   addMiscellaneous() {
@@ -119,10 +123,10 @@ export class CompanyInformationComponent implements OnInit {
       customerCategoryId: [""],
       customerChargeCategoryId: [""],
       taxCategory: [""],
-      swiftCode: [""],
+      swiftCode: [""]
     });
   }
-  addContact(data?) {
+  addContact(data?: any) {
     return this.fb.group({
       email: [data?.contact?.email ?? ""],
       mobile: [data?.contact?.mobile ?? ""],
@@ -139,15 +143,15 @@ export class CompanyInformationComponent implements OnInit {
           address2: [data?.contact.address[0]?.address2 ?? ""],
           residenceType: [data?.contact.address[0]?.residenceType ?? 7521],
           residenceTypeValue: [
-            data?.contact.address[0]?.residenceTypeValue ?? "",
+            data?.contact.address[0]?.residenceTypeValue ?? ""
           ],
           countryName: [data?.contact.address[0]?.countryName ?? ""],
           pincode: [data?.contact.address[0]?.pincode ?? ""],
           stateName: [data?.contact.address[0]?.stateName ?? ""],
           cityName: [data?.contact.address[0]?.cityName ?? ""],
-          cityId: [data?.contact.address[0]?.cityId ?? 1],
-        }),
-      ]),
+          cityId: [data?.contact.address[0]?.cityId ?? 1]
+        })
+      ])
     });
   }
 
@@ -163,27 +167,27 @@ export class CompanyInformationComponent implements OnInit {
     return this.corporateCustomer.get("contact") as FormGroup;
   }
   get addressControl(): FormArray {
-    return this.corporateCustomer.get("contact").get("address") as FormArray;
+    return this.corporateCustomer.get("contact")?.get("address") as FormArray;
   }
 
   get financialDetails(): FormArray {
     return this.corporateCustomer.get("financialDetails") as FormArray;
   }
 
-  financeInfo(index): FormArray {
+  financeInfo(index: any): FormArray {
     return this.financialDetails.at(index).get("financeInfo") as FormArray;
   }
 
-  pushFinanceMaster(data?) {
+  pushFinanceMaster(data?: any) {
     this.financialDetails.push(
       this.fb.group({
         financeType: [data?.financeType ?? ""],
         financeMasterId: [data?.financeMasterId ?? ""],
-        financeInfo: this.fb.array([]),
+        financeInfo: this.fb.array([])
       })
     );
     if (data?.financeInfo?.length > 0) {
-      data?.financeInfo?.forEach((item) => {
+      data?.financeInfo?.forEach((item: any) => {
         this.financeInfo(this.financialDetails.length - 1).push(
           this.financialInfoForm(item)
         );
@@ -195,11 +199,11 @@ export class CompanyInformationComponent implements OnInit {
     }
   }
 
-  pushFinancialInfo(index) {
+  pushFinancialInfo(index: any) {
     this.financeInfo(index).push(this.financialInfoForm());
   }
 
-  financialInfoForm(data?) {
+  financialInfoForm(data?: any) {
     return this.fb.group({
       financialId: [data?.financialId ?? ""],
       year: [""],
@@ -207,7 +211,7 @@ export class CompanyInformationComponent implements OnInit {
       ammount: [data?.ammount ?? ""],
       documentId: [data?.documentId ?? ""],
       documentName: [data?.documentName ?? ""],
-      doucumentUrl: [data?.doucumentUrl ?? ""],
+      doucumentUrl: [data?.doucumentUrl ?? ""]
     });
   }
 
@@ -225,7 +229,7 @@ export class CompanyInformationComponent implements OnInit {
    * @param event The file change event containing the selected file
    * @param Form The form group to update with the uploaded file information (optional)
    */
-  fileChange(event, Form?) {
+  fileChange(event: any, Form?: any) {
     const file = event.target.files[0];
     let docdata: any = {};
     docdata.fileName = file?.name.split(".")[0];
@@ -244,13 +248,13 @@ export class CompanyInformationComponent implements OnInit {
           const updatedData = res?.data;
           this.corporateCustomer
             .get("organisationChartFileName")
-            .patchValue(updatedData?.fileName);
+            ?.patchValue(updatedData?.fileName);
           this.corporateCustomer
             .get("organisationChartUrl")
-            .patchValue(updatedData?.fileUrl);
+            ?.patchValue(updatedData?.fileUrl);
           this.corporateCustomer
             .get("organisationChartId")
-            .patchValue(updatedData?.documentId);
+            ?.patchValue(updatedData?.documentId);
         }
       }
     });
@@ -283,16 +287,16 @@ export class CompanyInformationComponent implements OnInit {
       });
   }
 
-  getCityandStateByZipcode(index) {
+  getCityandStateByZipcode(index: any) {
     let addressCtrl = this.addressControl.at(index);
-    let pincode = addressCtrl.get("pincode").value;
+    let pincode = addressCtrl.get("pincode")?.value;
     if (pincode) {
       this.cityService.fetchZipcodeDetails(pincode).subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
-          addressCtrl.get("cityName").setValue(res?.data[0]?.city);
-          addressCtrl.get("cityId").setValue(res?.data[0]?.cityId);
-          addressCtrl.get("stateName").setValue(res?.data[0]?.state);
-          addressCtrl.get("countryName").setValue(res?.data[0]?.countryName);
+          addressCtrl.get("cityName")?.setValue(res?.data[0]?.city);
+          addressCtrl.get("cityId")?.setValue(res?.data[0]?.cityId);
+          addressCtrl.get("stateName")?.setValue(res?.data[0]?.state);
+          addressCtrl.get("countryName")?.setValue(res?.data[0]?.countryName);
           const isdCode = this.getISDCode(
             res?.data[0]?.countryName
           )?.countryTelIsdCode;
@@ -309,7 +313,7 @@ export class CompanyInformationComponent implements OnInit {
     this.countryService.getCountries().subscribe((res: any) => {
       if (res?.statusCode === 200 && res?.data) {
         this.countryList = res?.data?.filter(
-          (d) => d?.authStatus === "AUTHORIZED"
+          (d: any) => d?.authStatus === "AUTHORIZED"
         );
         this.nationalityList = res?.data?.filter(
           (nationality: any) => nationality?.nationality
@@ -324,32 +328,32 @@ export class CompanyInformationComponent implements OnInit {
     genericName: string
   ) {
     const genericValue = this.genericValue[genericName].find(
-      (item) => item.id == value
+      (item: any) => item.id == value
     ).values;
-    control.get(key).setValue(genericValue);
+    control.get(key)?.setValue(genericValue);
   }
 
   /**
    * patch isd code in mobile number, alternative number and whatsapp number
    * @param isdCode isd code of the selected country to be patched
    */
-  patchIsdCode(isdCode) {
-    this.corporateCustomer.get("contact.altCode").setValue(isdCode);
-    this.corporateCustomer.get("contact.mobtCode").setValue(isdCode);
-    this.corporateCustomer.get("contact.waptCode").setValue(isdCode);
+  patchIsdCode(isdCode: any) {
+    this.corporateCustomer.get("contact.altCode")?.setValue(isdCode);
+    this.corporateCustomer.get("contact.mobtCode")?.setValue(isdCode);
+    this.corporateCustomer.get("contact.waptCode")?.setValue(isdCode);
   }
 
   /**
    * @param country
    * @returns the desired country from the country list
    */
-  getISDCode(country) {
+  getISDCode(country: any) {
     let countryCode: any = this.countryList?.find(
-      (item) => item?.countryName === country
+      (item: any) => item?.countryName === country
     );
     return countryCode;
   }
-  clearData(addressCtrl) {
+  clearData(addressCtrl: any) {
     addressCtrl.get("cityName").setValue("");
     addressCtrl.get("cityId").setValue("");
     addressCtrl.get("stateName").setValue("");
@@ -365,12 +369,12 @@ export class CompanyInformationComponent implements OnInit {
 
     this.onCustomSubmit.emit({
       status: true,
-      companyDetails: this._parentForm,
+      companyDetails: this._parentForm
     });
     this?.updateParentModel({
       companyDetails: this._parentForm.value,
       updateMasterSave: true,
-      isForLoan: false,
+      isForLoan: false
     });
   }
 }

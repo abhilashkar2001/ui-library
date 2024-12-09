@@ -4,13 +4,13 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-landing-profile",
   templateUrl: "./landing-profile.component.html",
-  styleUrls: ["./landing-profile.component.scss"],
+  styleUrls: ["./landing-profile.component.scss"]
 })
 export class LandingProfileComponent implements OnInit {
-  @Input() imageUrl;
-  @Input() profileHint;
-  @Input() profileHeader;
-  @Input() routeUrl;
+  @Input() imageUrl: any;
+  @Input() profileHint: any;
+  @Input() profileHeader: any;
+  @Input() routeUrl: any;
   @Output() customApply = new EventEmitter<any>();
 
   constructor(private router: Router) {}
@@ -21,7 +21,7 @@ export class LandingProfileComponent implements OnInit {
       this.router.navigate([`${this.routeUrl}`]);
   }
 
-  onApply(e) {
+  onApply(e: any) {
     this.customApply.emit(e);
   }
 }

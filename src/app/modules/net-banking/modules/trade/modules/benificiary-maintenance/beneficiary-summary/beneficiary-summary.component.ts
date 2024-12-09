@@ -3,12 +3,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
 import { beneficiaryConstant } from "./beneficiary.constant";
 import { BeneficiaryService } from "./beneficiary.service";
-import { InternetBankingService } from "app/shared/services/internet-banking.service";
 
 @Component({
   selector: "app-beneficiary-summary",
   templateUrl: "./beneficiary-summary.component.html",
-  styleUrls: ["./beneficiary-summary.component.scss"],
+  styleUrls: ["./beneficiary-summary.component.scss"]
 })
 export class BeneficiarySummaryComponent implements OnInit {
   columns: any = beneficiaryConstant.BENEFICIARY_SUMMARY;
@@ -19,24 +18,23 @@ export class BeneficiarySummaryComponent implements OnInit {
   pageSize: number = 5;
   sortValue = "";
   sortDirection = "";
-  filterBy: FilterBy;
+  filterBy: FilterBy | any;
   filterValue = "";
   searchValue = "";
   module: any;
-  beneficiaryData: Object;
+  beneficiaryData: Object | any;
 
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private bulkService: InternetBankingService,
     private benificiaryApi: BeneficiaryService
   ) {}
 
   ngOnInit(): void {}
-  CustomGoBack(data) {
+  CustomGoBack() {
     this.route.navigate(["/user/trade/dashboard"]);
   }
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -64,23 +62,23 @@ export class BeneficiarySummaryComponent implements OnInit {
       page: this.page,
       size: this.pageSize,
       sort: this.sortValue,
-      direction: this.sortDirection,
+      direction: this.sortDirection
     };
     this.getDataByPage(payload);
   }
 
-  openPopUp(event) {
+  openPopUp(event: any) {
     const id = event.element;
     if (id === "addNew") {
       this.route.navigate([`../add-edit-beneficiary`], {
-        relativeTo: this.activatedRoute,
+        relativeTo: this.activatedRoute
       });
     } else {
       const id = event.element;
 
       this.route.navigate([`../add-edit-beneficiary`], {
         relativeTo: this.activatedRoute,
-        queryParams: { isEdit: "Yes", id: id.id },
+        queryParams: { isEdit: "Yes", id: id.id }
       });
       console.log(id?.id);
     }

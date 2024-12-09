@@ -4,14 +4,12 @@ import { DEFAULT_LOCALE } from "app/shared/helpers/utils";
 import { SearchService } from "app/shared/search/search.service";
 import { CustomizerService } from "../customizer.service";
 
-
-
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class DateTimeService {
-  _format: string;
-  _locale: string;
+  _format: string | any;
+  _locale: string | any;
   currentLocal: any;
 
   public constructor(

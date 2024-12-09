@@ -77,11 +77,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="loanForm.value.amount"
+              [(ngModel)]="loanForm.value.amount"
               [max]="maxMonth"
               [min]="minMonth"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onSliderChange($event)"
               [displayWith]="formatDurationLabel"
             >
@@ -112,11 +112,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="loanForm.value.tutionFee"
+              [(ngModel)]="loanForm.value.tutionFee"
               [max]="maxTutionFee"
               [min]="minTutionFee"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onTutionFeeChange($event)"
               discrete
               [displayWith]="formatFeesLabel"
@@ -148,11 +148,11 @@
           </div>
           <div fxFlex="100">
             <mat-slider
-              [value]="loanForm.value.costOfLiving"
+              [(ngModel)]="loanForm.value.costOfLiving"
               [max]="maxTutionFee"
               [min]="minTutionFee"
               fxFlex="100"
-              [thumbLabel]="thumbLabel"
+              [step]="thumbLabel"
               (change)="onCostOfLivingChange($event)"
               discrete
               [displayWith]="formatCostOFLabel"

@@ -37,8 +37,7 @@
                       <mat-option
                         *ngFor="
                           let documentTypeItem of documentTypeArray;
-                          let docIndex = index;
-                          trackBy: documentTypeTrackByFun
+                          let docIndex = index
                         "
                         [hidden]="
                           isDocumentOptionDisabled2(documentTypeItem.values)
@@ -76,7 +75,7 @@
                     fxFlex="100"
                     #fileInput
                     (onFileDropped)="onFileDropped($event, i)"
-                    (click)="fileBrowseHandler($event, i)"
+                    (click)="fileBrowseHandler(i)"
                   >
                     <div class="drag_drop" fxFlex="90">
                       <h3 class="text-header">Upload Document</h3>

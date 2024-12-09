@@ -12,23 +12,23 @@ import { CardService } from "../../../../card.service";
 @Component({
   selector: "app-auto-pay",
   templateUrl: "./auto-pay.component.html",
-  styleUrls: ["./auto-pay.component.scss"],
+  styleUrls: ["./auto-pay.component.scss"]
 })
 export class AutoPayComponent implements OnInit {
-  autoPayForm: FormGroup;
+  autoPayForm!: FormGroup;
   autoPayOptions: any[] = [
     { label: "Yes", value: true },
-    { label: "No", value: false },
+    { label: "No", value: false }
   ];
   amountDueOptions: any[] = [
     { label: "Total Due", value: "totalDue" },
-    { label: "Minimum Due", value: "minimumDue" },
+    { label: "Minimum Due", value: "minimumDue" }
   ];
-  cardList: AccountList[];
-  typeofCard: string;
-  currencyCode: string;
+  cardList: AccountList[] | any;
+  typeofCard: string | any;
+  currencyCode: string | any;
   profileInfo: any;
-  accountDetails: AccountList;
+  accountDetails: AccountList | any;
 
   constructor(
     private fb: FormBuilder,
@@ -69,18 +69,18 @@ export class AutoPayComponent implements OnInit {
       amountDue: [""],
       totalDue: [false],
       maxAutoPayAmount: [""],
-      cardId: [this.cardList?.[0]?.id || ""],
+      cardId: [this.cardList?.[0]?.id || ""]
     });
   }
 
-  payFromCurrencyCode(value) {
-    this.autoPayForm?.get("debitCurrency").setValue(value);
+  payFromCurrencyCode(value: any) {
+    this.autoPayForm?.get("debitCurrency")?.setValue(value);
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
@@ -104,35 +104,35 @@ export class AutoPayComponent implements OnInit {
             details: [
               { "Name on Card": this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber,
+                "Card Number": this.accountDetails?.cardNumber
               },
               {
-                "Card Name": this.accountDetails?.cardName,
+                "Card Name": this.accountDetails?.cardName
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit,
-              },
-            ],
+                "Credit Limit": this.accountDetails?.totalCreditLimit
+              }
+            ]
           },
           {
             header: "Payment Details",
             details: [
               { "Payee Name": "Kerala water" },
               {
-                "Account Number": payload?.payFromAccountNo,
+                "Account Number": payload?.payFromAccountNo
               },
               {
-                "Account Type ": "Saving Account",
+                "Account Type ": "Saving Account"
               },
               {
-                "Auto Pay Status": payload?.autoPay,
+                "Auto Pay Status": payload?.autoPay
               },
-              { "Amount to be paid": payload?.amountDue },
-            ],
-          },
+              { "Amount to be paid": payload?.amountDue }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

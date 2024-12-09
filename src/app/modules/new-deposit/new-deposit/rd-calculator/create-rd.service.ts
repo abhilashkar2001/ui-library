@@ -3,52 +3,63 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CreateRdService {
   protected baseUrl = environment.microServiceURL;
 
   constructor(private http: HttpClient) {}
 
-  updateRdDetails(rdDetails) {
+  updateRdDetails(rdDetails: any) {
     return this.http.post<any>(`${this.baseUrl}/reccuringDeposite`, rdDetails);
   }
-  getRdfromId(id) {
+  getRdfromId(id: any) {
     return this.http.get(
       `${this.baseUrl}/reccuringDeposite?recurringDepositId=${id}`
     );
   }
-  getBusinessSuite(business) {
-    return this.http.get<any>(`${this.baseUrl}/basis-class?businessSuite=${business}`)
+  getBusinessSuite(business: any) {
+    return this.http.get<any>(
+      `${this.baseUrl}/basis-class?businessSuite=${business}`
+    );
   }
-  getBasisClass(subClass) {
+  getBasisClass(subClass: any) {
     return this.http.get<any>(
       `${this.baseUrl}/details/fetchSubClass?basisClass=${subClass}`
     );
   }
-  saveRdOriginationMaster(payload) { 
-    return this.http.post<any>(`${this.baseUrl}/origination-matser/save`,payload)
+  saveRdOriginationMaster(payload: any) {
+    return this.http.post<any>(
+      `${this.baseUrl}/origination-matser/save`,
+      payload
+    );
   }
 
-  getOriginationMaster(id) {
-    return this.http.get<any>(`${this.baseUrl}/origination-matser?originationId=${id}`)
+  getOriginationMaster(id: any) {
+    return this.http.get<any>(
+      `${this.baseUrl}/origination-matser?originationId=${id}`
+    );
   }
 
-  getRdDetails(id) {
-    return this.http.get<any>(`${this.baseUrl}/origination-matser/fdRdFetch?fdRdMasterId=${id}`)
+  getRdDetails(id: any) {
+    return this.http.get<any>(
+      `${this.baseUrl}/origination-matser/fdRdFetch?fdRdMasterId=${id}`
+    );
   }
-  getProcessCycle(processName) {
+  getProcessCycle(processName: any) {
     return this.http.get<any>(
       `${this.baseUrl}/process_cycle/stages?processCycleCode=${processName}`
     );
   }
-   getProcessStages(id) {
+  getProcessStages(id: any) {
     return this.http.get<any>(`${this.baseUrl}/process_stage/screens?id=${id}`);
   }
-   getCustomerById(id) {
+  getCustomerById(id: any) {
     return this.http.get<any>(`${this.baseUrl}/customer-api?customerId=${id}`);
   }
-  getRdOriginationSummary(id) {
-    return this.http.get<any>(`${this.baseUrl}/webSummary/fetchFdAndRdSummary?originationId=${id}`);
+  getRdOriginationSummary(id: any) {
+    return this.http.get<any>(
+      `${this.baseUrl}/webSummary/fetchFdAndRdSummary?originationId=${id}`
+    );
   }
 }

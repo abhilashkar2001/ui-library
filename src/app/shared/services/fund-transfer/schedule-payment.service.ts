@@ -4,7 +4,7 @@ import { environment } from "environments/environment";
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class SchedulePaymentService {
   constructor(private http: HttpClient) {}
@@ -15,7 +15,7 @@ export class SchedulePaymentService {
     );
   }
 
-  saveScheduleData(payload) {
+  saveScheduleData(payload: any) {
     return this.http.post(
       `${MICROSERVICE_URL}/fundTransfer/save-schedule-payment`,
       payload
@@ -24,7 +24,7 @@ export class SchedulePaymentService {
 
   downloadData() {
     const httpOptions = {
-      responseType: "blob" as "json",
+      responseType: "blob" as "json"
     };
     return this.http.get<any>(
       `${MICROSERVICE_URL}/fundTransfer/downloadScheduledPaymentInfo`,
@@ -38,29 +38,29 @@ export class SchedulePaymentService {
     );
   }
 
-  getPayDetails(mobileNum) {
+  getPayDetails(mobileNum: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/fundTransfer/fetchCustInfo?mobileNo=${mobileNum}`
     );
   }
-  getTransferDetails(payload, customerId) {
+  getTransferDetails(payload: any, customerId: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/retail-beneficiary/fetchBenificiary?customerId=${customerId}`,
       payload
     );
   }
-  save(payload) {
+  save(payload: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/corporate-net-banking/save-corp-schedule-payment`,
       payload
     );
   }
-  getAccounts(cusNo) {
+  getAccounts(cusNo: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/customer/accountInfo?customerNo=${cusNo}`
     );
   }
-  fetchInfoByoriginationAccNo(accNo) {
+  fetchInfoByoriginationAccNo(accNo: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/account/info?originationAccNo=${accNo}`
     );

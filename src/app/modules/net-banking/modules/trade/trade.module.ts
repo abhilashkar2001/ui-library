@@ -8,16 +8,13 @@ import { SharedMaterialModule } from "app/shared/shared-material.module";
 import { SharedComponentsModule } from "app/shared/components/shared-components.module";
 
 @NgModule({
-  declarations: [
-    TradeDashboardComponent,
-    TradeFlowComponent,
-  ],
+  declarations: [TradeDashboardComponent, TradeFlowComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
     SharedMaterialModule,
     SharedComponentsModule,
-    TradeRoutingModule,
-  ],
+    TradeRoutingModule
+  ]
 })
-export class TradeModule { }
+export class TradeModule {}

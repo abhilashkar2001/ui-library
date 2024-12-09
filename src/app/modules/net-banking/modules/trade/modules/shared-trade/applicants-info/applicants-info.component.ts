@@ -10,18 +10,17 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-applicants-info",
   templateUrl: "./applicants-info.component.html",
-  styleUrls: ["./applicants-info.component.scss"],
+  styleUrls: ["./applicants-info.component.scss"]
 })
 export class ApplicantsInfoComponent implements OnInit {
-  applicantForm: FormGroup;
+  applicantForm: FormGroup | any;
   //list of country state and city
   countryArr: any[] = [];
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
   feeAccArray: any[] = ["dummy Option 1", "dummy Option 2", "dummy Option 3"];
-  @Input("tradeDetails") tradeDetails;
+  @Input("tradeDetails") tradeDetails: any;
   @Input("amendmentType") tradetype = "";
   constructor(
     private fb: FormBuilder,
@@ -43,10 +42,10 @@ export class ApplicantsInfoComponent implements OnInit {
     }
   }
 
-  fetchBgInfo(id) {
+  fetchBgInfo(id: any) {
     this.bgService
       .fetchApplicantInfo(id)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data?.length) {
           this.applicantForm.patchValue(res?.data[0]);
         }
@@ -59,7 +58,7 @@ export class ApplicantsInfoComponent implements OnInit {
       }
     });
   }
-  buildFormGroup(item?) {
+  buildFormGroup(item?: any) {
     this.applicantForm = this.fb.group({
       applicant: [item?.applicant ?? ""],
       issuingBranchCode: [item?.issuingBranchCode ?? ""],
@@ -71,17 +70,17 @@ export class ApplicantsInfoComponent implements OnInit {
       margin: [item?.margin ?? ""],
       customerCode: [item?.customerCode ?? ""],
       contactInfo: this.fb.group({
-        address: this.fb.array([]),
-      }),
+        address: this.fb.array([])
+      })
     });
     this.addUserAddress(item?.contactInfo?.address[0] ?? {});
-    this.applicantForm.valueChanges.subscribe((res) => {
+    this.applicantForm.valueChanges.subscribe((res: any) => {
       this.updateParentModel(
         {
           applicantInfo: {
             ...res,
-            contactInfo: this.applicantForm.value.contactInfo,
-          },
+            contactInfo: this.applicantForm.value.contactInfo
+          }
         },
         this.checkForm()
       );
@@ -94,11 +93,11 @@ export class ApplicantsInfoComponent implements OnInit {
   get Contact() {
     return this.applicantForm.get("contactInfo") as FormGroup;
   }
-  get addressControle() {
+  get addressControle(): any {
     return this.Contact.get("address") as FormArray;
   }
 
-  addUserAddress(address?) {
+  addUserAddress(address?: any) {
     const newAddress = this.fb.group({
       address1: [address?.address1 ?? "", [Validators.required]],
       address2: [address?.address2 ?? ""],
@@ -107,15 +106,15 @@ export class ApplicantsInfoComponent implements OnInit {
       pincode: [address?.pincode ?? "", [Validators.required]],
       stateName: [address?.stateName ?? ""],
       cityId: [address?.cityId ?? ""],
-      cityName: [address?.cityName ?? ""],
+      cityName: [address?.cityName ?? ""]
     });
     this.addressControle.push(newAddress);
   }
-  pincodeExpansion(index, formGroup) {
+  pincodeExpansion(formGroup: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: "60%",
       disableClose: true,
-      panelClass: "popup-class-approve",
+      panelClass: "popup-class-approve"
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);

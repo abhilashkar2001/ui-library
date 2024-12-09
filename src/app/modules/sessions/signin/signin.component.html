@@ -6,10 +6,10 @@
       data-aos-delay="200"
       data-aos-duration="500"
     >
-      <h1 class="login_heading">{{ appData?.title }}</h1>
+      <h1 class="login_heading">{{ appData.title }}</h1>
 
       <h2 class="login_subtitle" *ngIf="authType == 'signIn'">
-        {{ appData?.greeting }}
+        {{ appData.greeting }}
       </h2>
 
       <div class="login_form" fxLayout="column" *ngIf="authType == 'signIn'">
@@ -28,7 +28,7 @@
               oninput="this.value = this.value.toUpperCase()"
             />
             <mat-error
-              *ngIf="signinForm.get('corporateId').hasError('required')"
+              *ngIf="signinForm.get('corporateId')?.hasError('required')"
               class=""
             >
               {{ "Corporate Id is Required!" | translate }}
@@ -51,7 +51,7 @@
             <!-- (keypress)="onKeyPress($event)" -->
             <!-- oninput="this.value = this.value.toUpperCase()" -->
             <mat-error
-              *ngIf="signinForm.get('username').hasError('required')"
+              *ngIf="signinForm.get('username')?.hasError('required')"
               class=""
             >
               {{ "Login Id is Required!" | translate }}
@@ -77,7 +77,7 @@
               >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
             >
             <mat-error
-              *ngIf="signinForm.get('password').hasError('required')"
+              *ngIf="signinForm.get('password')?.hasError('required')"
               class=""
             >
               {{ "Password is Required!" | translate }}

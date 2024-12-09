@@ -1,12 +1,10 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  NgZone,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { SwiperComponent } from "swiper/angular";
 
@@ -20,10 +18,9 @@ import SwiperCore, {
   Zoom,
   Autoplay,
   Thumbs,
-  Controller,
+  Controller
 } from "swiper";
 import { BehaviorSubject } from "rxjs";
-import Swiper from "swiper/types/swiper-class";
 import { Router } from "@angular/router";
 import { environment } from "environments/environment";
 
@@ -37,20 +34,20 @@ SwiperCore.use([
   Zoom,
   Autoplay,
   Thumbs,
-  Controller,
+  Controller
 ]);
 
 @Component({
   selector: "app-custom-swiper",
   templateUrl: "./custom-swiper.component.html",
-  styleUrls: ["./custom-swiper.component.scss"],
+  styleUrls: ["./custom-swiper.component.scss"]
 })
 export class CustomSwiperComponent implements OnInit {
   @ViewChild("swiperRef", { static: false }) swiperRef?: SwiperComponent;
   @Input() carowselData: any = {};
   dynamicList: any = [];
   @Output() customApplyLoan = new EventEmitter<any>();
-  show: boolean;
+  show: boolean | any;
   thumbs: any;
   slides$ = new BehaviorSubject<string[]>([""]);
   protected baseUrl = environment.microServiceURL;
@@ -71,11 +68,11 @@ export class CustomSwiperComponent implements OnInit {
   }
 
   thumbsSwiper: any;
-  setThumbsSwiper(swiper) {
+  setThumbsSwiper(swiper: any) {
     this.thumbsSwiper = swiper;
   }
   controlledSwiper: any;
-  setControlledSwiper(swiper) {
+  setControlledSwiper(swiper: any) {
     this.controlledSwiper = swiper;
   }
 
@@ -108,34 +105,34 @@ export class CustomSwiperComponent implements OnInit {
   breakpoints = {
     640: { slidesPerView: 2, spaceBetween: 20 },
     768: { slidesPerView: 4, spaceBetween: 40 },
-    1024: { slidesPerView: 4, spaceBetween: 50 },
+    1024: { slidesPerView: 4, spaceBetween: 50 }
   };
 
-  slides = Array.from({ length: 5 }).map((el, index) => `Slide ${index + 1}`);
+  slides = Array.from({ length: 5 }).map((index: any) => `Slide ${index + 1}`);
   virtualSlides = Array.from({ length: 600 }).map(
-    (el, index) => `Slide ${index + 1}`
+    (index: any) => `Slide ${index + 1}`
   );
 
-  breakPointsToggle: boolean;
+  breakPointsToggle: boolean | any;
   breakpointChange() {
     this.breakPointsToggle = !this.breakPointsToggle;
     this.breakpoints = {
       640: { slidesPerView: 2, spaceBetween: 20 },
       768: { slidesPerView: 4, spaceBetween: 40 },
-      1024: { slidesPerView: this.breakPointsToggle ? 7 : 5, spaceBetween: 50 },
+      1024: { slidesPerView: this.breakPointsToggle ? 7 : 5, spaceBetween: 50 }
     };
   }
 
-  moveToSubAccountPage(imagesdata) {
+  moveToSubAccountPage(imagesdata: any) {
     console.log(imagesdata);
 
     this.router.navigate(["/loan/loan-type"], {
-      queryParams: { subClass: imagesdata.basisClass },
+      queryParams: { subClass: imagesdata.basisClass }
     });
     this.customApplyLoan.emit(imagesdata);
   }
 
-  mapUrl(data) {
+  mapUrl(data: any) {
     if (
       data.documents.fileUrl &&
       !data.documents.fileUrl.toLowerCase().includes("https")

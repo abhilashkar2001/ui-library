@@ -48,13 +48,6 @@
             [buttonName]="month?.month + ' ' + data?.year"
             buttonType="stroked"
             matIcon="download"
-            (onClick)="
-              downloadPreGenerated(
-                preGeneratedStatementForm.value.debitAccount,
-                data?.year,
-                month?.month
-              )
-            "
           ></app-ic-action-button>
         </div>
       </mat-expansion-panel>

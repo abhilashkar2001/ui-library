@@ -6,16 +6,16 @@ import { MatTableDataSource } from "@angular/material/table";
 @Component({
   selector: "app-view-excel-doc",
   templateUrl: "./view-excel-doc.component.html",
-  styleUrls: ["./view-excel-doc.component.scss"],
+  styleUrls: ["./view-excel-doc.component.scss"]
 })
 export class ViewExcelDocComponent implements OnInit {
   excelData: any;
   fileName: any;
-  tableHeader;
-  tableBody;
-  dataSource: MatTableDataSource<any>;
-  displayedColumns: string[];
-  @ViewChild("paginator") paginator: MatPaginator;
+  tableHeader: any;
+  tableBody: any;
+  dataSource: MatTableDataSource<any> | any;
+  displayedColumns: string[] | any;
+  @ViewChild("paginator") paginator: MatPaginator | any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,7 +30,9 @@ export class ViewExcelDocComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.tableBody);
     this.dataSource.paginator = this.paginator;
 
-    this.displayedColumns = this.tableHeader.map((header) => header.headerCell);
+    this.displayedColumns = this.tableHeader.map(
+      (header: any) => header.headerCell
+    );
     console.log(this.displayedColumns);
   }
 

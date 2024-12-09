@@ -7,7 +7,7 @@ import { FooterServiceService } from "app/shared/services/footer-service.service
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.scss"],
+  styleUrls: ["./footer.component.scss"]
 })
 export class FooterComponent implements OnInit {
   socialMedia = FooterConstant.SOCIAL_MEDIA;
@@ -32,7 +32,7 @@ export class FooterComponent implements OnInit {
       this.hideNavItem = resp;
     });
   }
-  opened(path) {
+  opened(path: any) {
     if (path) window.location.href = path;
     else this.scrollToTop.emit({ scroll: true });
   }

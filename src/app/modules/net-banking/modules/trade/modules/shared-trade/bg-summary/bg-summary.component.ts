@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FilterBy } from "app/shared/helpers/utils";
-import { bgConstant, summaryHelper } from "./bg-summary.constant";
+import { bgConstant } from "./bg-summary.constant";
 import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
 import { BgSummaryServiceService } from "./bg-summary-service.service";
 import { DrawerConstant } from "../../../../../../../shared/components/custom-drawer/custom-drawer.constant";
@@ -10,10 +10,10 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-bg-summary",
   templateUrl: "./bg-summary.component.html",
-  styleUrls: ["./bg-summary.component.scss"],
+  styleUrls: ["./bg-summary.component.scss"]
 })
 export class BgSummaryComponent implements OnInit {
-  maintenanceTitle: string;
+  maintenanceTitle: string | any;
   columns: any;
   sort: any;
   size: number = 5;
@@ -22,18 +22,18 @@ export class BgSummaryComponent implements OnInit {
   pageSize: number = 5;
   sortValue = "";
   sortDirection = "";
-  filterBy: FilterBy;
-  bgData: Object;
+  filterBy: FilterBy | any;
+  bgData: Object | any;
   staticData: any = {
     data: bgConstant.bgStaticData,
     meta: {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
   isSummary: boolean = true;
   componentName: any;
@@ -49,17 +49,17 @@ export class BgSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((params: any) => {
+    this.activatedRoute.queryParamMap.subscribe(() => {
       this.isSummary = true;
       this.getDataByPage({ page: 1, size: 5 });
     });
   }
 
-  CustomGoBack(data) {
+  CustomGoBack() {
     this.route.navigate([`${this.summaryDetails.backPath}`]);
   }
 
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -81,15 +81,15 @@ export class BgSummaryComponent implements OnInit {
    * add and edit as per action key.
    * @param event
    */
-  openPopUp(event) {
+  openPopUp(event: any) {
     const id = event.element.applicantId || event.element;
     if (id === "addNew") {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
         width: "50%",
         disableClose: true,
-        panelClass: "popup-class-approve",
+        panelClass: "popup-class-approve"
       });
-      dialogRef.afterClosed().subscribe((res) => {
+      dialogRef.afterClosed().subscribe(() => {
         this.getBGType();
       });
     } else if (id === "bulk") {
@@ -110,7 +110,7 @@ export class BgSummaryComponent implements OnInit {
       width: "50%",
       disableClose: true,
       panelClass: "popup-class-approve",
-      data: this.summaryDetails,
+      data: this.summaryDetails
     });
     dialogRef.afterClosed().subscribe((res) => {
       this.getBGType(res.templateName);
@@ -123,7 +123,7 @@ export class BgSummaryComponent implements OnInit {
    */
   getBGType(id?: number) {
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
-      queryParams: { type: "", id },
+      queryParams: { type: "", id }
     });
   }
 }

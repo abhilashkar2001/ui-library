@@ -4,13 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-audit-log-popup",
   templateUrl: "./audit-log-popup.component.html",
-  styleUrls: ["./audit-log-popup.component.scss"],
+  styleUrls: ["./audit-log-popup.component.scss"]
 })
 export class AuditLogPopupComponent implements OnInit {
   isShowCancel: any;
   dummyData: any;
   columns: any;
-  auditData;
+  auditData: any;
 
   constructor(
     private dialogRef: MatDialogRef<AuditLogPopupComponent>,
@@ -20,7 +20,7 @@ export class AuditLogPopupComponent implements OnInit {
   ngOnInit(): void {
     this.auditData = this.auditLogData;
   }
-  customExpand(event) {
+  customExpand() {
     this.dialogRef.close();
   }
 }

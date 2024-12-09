@@ -278,7 +278,7 @@
                         "
                         class="uploaded_file"
                         ><b
-                          ><u (click)="viewUploadedImage(file.value, i, j)">
+                          ><u>
                             {{
                               j === 0
                                 ? (file.value.fileName | slice : 1 : 20) + "..."
@@ -305,7 +305,6 @@
                           let file of document.controls['files'].controls;
                           let j = index
                         "
-                        (click)="viewUploadedImage(file.value, i, j)"
                       >
                         <span> {{ j + 1 }}. {{ file.value.fileName }} </span>
                       </mat-option>

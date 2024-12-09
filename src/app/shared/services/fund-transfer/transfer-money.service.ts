@@ -5,12 +5,12 @@ import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class TransferMoneyService {
   constructor(private httpClient: HttpClient) {}
 
-  saveTransferMoney(payload) {
+  saveTransferMoney(payload: any) {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/retail-fund-transfer/transfer-money`,
       payload

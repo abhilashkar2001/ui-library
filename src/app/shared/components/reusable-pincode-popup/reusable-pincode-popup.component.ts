@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { countryStateService } from "./countrySateCityService";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
@@ -7,43 +7,43 @@ import { MatTableDataSource } from "@angular/material/table";
 @Component({
   selector: "app-reusable-pincode-popup",
   templateUrl: "./reusable-pincode-popup.component.html",
-  styleUrls: ["./reusable-pincode-popup.component.scss"],
+  styleUrls: ["./reusable-pincode-popup.component.scss"]
 })
 export class ReusablePincodePopupComponent implements OnInit {
-  public pincodeForm: FormGroup;
-  countries: any[];
-  states: any[];
-  cities: any[];
+  public pincodeForm!: FormGroup;
+  countries: any[] | any;
+  states: any[] | any;
+  cities: any[] | any;
   pincodeExpansion: any[] = [];
-  dataSource;
+  dataSource: any;
   emptyData = new MatTableDataSource([{ empty: "empty-row" }]);
-  columns = [
+  columns: any = [
     {
       columnDef: "pinCode",
       header: "Pin Code",
-      cell: (element: any) => `${element.pincode}`,
+      cell: (element: any) => `${element.pincode}`
     },
     {
       columnDef: "countryName",
       header: "Country",
-      cell: (element: any) => `${element.countryName}`,
+      cell: (element: any) => `${element.countryName}`
     },
     {
       columnDef: "stateName",
       header: "State",
-      cell: (element: any) => `${element.stateName}`,
+      cell: (element: any) => `${element.stateName}`
     },
     {
       columnDef: "cityName",
       header: "City",
-      cell: (element: any) => `${element.cityName}`,
-    },
+      cell: (element: any) => `${element.cityName}`
+    }
   ];
-  displayedColumns;
+  displayedColumns: any;
   totalLength: any;
-  tablePageIndex: number;
-  pagesize: number;
-  pageIndex: number;
+  tablePageIndex: number | any;
+  pagesize: number | any;
+  pageIndex: number | any;
   filterValue: any;
   constructor(
     public dialogRef: MatDialogRef<ReusablePincodePopupComponent>,
@@ -53,7 +53,7 @@ export class ReusablePincodePopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.displayedColumns = this.columns.map((c) => c.columnDef);
+    this.displayedColumns = this.columns.map((c: any) => c.columnDef);
     this.buildForm();
     this.fetchAllCountry();
     this.fetchAllState();
@@ -64,7 +64,7 @@ export class ReusablePincodePopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  checkNumberOnly(event) {
+  checkNumberOnly(event: any) {
     const input = event.target as HTMLInputElement;
     input.value = input.value.replace(/[^0-9]/g, "");
   }
@@ -74,7 +74,7 @@ export class ReusablePincodePopupComponent implements OnInit {
       countryId: [""],
       pincode: [""],
       stateId: [""],
-      cityId: [""],
+      cityId: [""]
     });
   }
 
@@ -102,7 +102,7 @@ export class ReusablePincodePopupComponent implements OnInit {
     });
   }
 
-  fetchStateByCountry(countryId) {
+  fetchStateByCountry(countryId: any) {
     this.states = [];
     this.cities = [];
     this.countryStateCityService
@@ -114,11 +114,13 @@ export class ReusablePincodePopupComponent implements OnInit {
       });
   }
 
-  fetchCityByState(stateId) {
+  fetchCityByState(stateId: any) {
     this.cities = [];
     this.pincodeForm
       .get("countryId")
-      .setValue(this.states.find((s) => s?.stateId === stateId)?.countryId);
+      ?.setValue(
+        this.states.find((s: any) => s?.stateId === stateId)?.countryId
+      );
     this.countryStateCityService.getCityByState(stateId).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
         this.cities = res?.data;
@@ -126,10 +128,10 @@ export class ReusablePincodePopupComponent implements OnInit {
     });
   }
 
-  populateStateCountryByCity(cityId) {
-    const city = this.cities.find((s) => s?.cityId === cityId);
-    this.pincodeForm.get("countryId").setValue(city?.countryId);
-    this.pincodeForm.get("stateId").setValue(city?.stateId);
+  populateStateCountryByCity(cityId: any) {
+    const city = this.cities.find((s: any) => s?.cityId === cityId);
+    this.pincodeForm.get("countryId")?.setValue(city?.countryId);
+    this.pincodeForm.get("stateId")?.setValue(city?.stateId);
   }
 
   fetchResultArray() {
@@ -144,7 +146,7 @@ export class ReusablePincodePopupComponent implements OnInit {
       });
   }
 
-  updateTable(data, meta) {
+  updateTable(data: any, meta: any) {
     this.totalLength = meta?.totalElements;
     this.dataSource = new MatTableDataSource(data);
     this.tablePageIndex = meta?.page - 1;
@@ -157,7 +159,7 @@ export class ReusablePincodePopupComponent implements OnInit {
     this.fetchResultArray();
   }
 
-  populateItem(item) {
+  populateItem(item: any) {
     this.dialogRef.close(item);
   }
 }

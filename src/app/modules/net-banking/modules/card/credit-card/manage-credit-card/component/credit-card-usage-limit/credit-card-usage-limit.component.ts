@@ -12,12 +12,12 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-credit-card-usage-limit",
   templateUrl: "./credit-card-usage-limit.component.html",
-  styleUrls: ["./credit-card-usage-limit.component.scss"],
+  styleUrls: ["./credit-card-usage-limit.component.scss"]
 })
 export class CreditCardUsageLimitComponent implements OnInit {
   tabs = DrawerConstant.cardLimitTabs;
 
-  limitForm: FormGroup;
+  limitForm!: FormGroup;
   isEnable: boolean = false;
   menuLabels: { [key: number]: string } = {};
   selectedCurrency: any;
@@ -25,8 +25,8 @@ export class CreditCardUsageLimitComponent implements OnInit {
   min = 5000;
   ammountValue = 0;
   currencySymbol = "₹";
-  thumbLabel: boolean = true;
-  limitType = LimitType.Limits;
+  thumbLabel: boolean | any = true;
+  limitType: any = LimitType.Limits;
   creditCardList: any;
   selecetdCardNo: any;
   selectedTabName: any;
@@ -83,22 +83,22 @@ export class CreditCardUsageLimitComponent implements OnInit {
       tapPayTransaction: [data ? data?.tapPayTransaction : ""],
       tapRequired: [data ? data?.tapRequired : false],
       minTapRequired: [data ? data?.minTapRequired : null],
-      maxTapRequired: [data ? data?.maxTapRequired : null],
+      maxTapRequired: [data ? data?.maxTapRequired : null]
     });
     this.limitForm
       .get("cardNo")
-      .valueChanges.pipe(debounceTime(200))
+      ?.valueChanges.pipe(debounceTime(200))
       .subscribe((val) => {
         console.log(val);
         if (val) {
           this.selecetdCardNo = this.creditCardList.filter(
-            (item) => item?.cardNumber == val
+            (item: any) => item?.cardNumber == val
           );
           console.log(this.selecetdCardNo);
         }
       });
   }
-  payAccount(event) {
+  payAccount(event: any) {
     console.log(event);
     let name = "Domestic";
     this.creditCardService
@@ -115,11 +115,11 @@ export class CreditCardUsageLimitComponent implements OnInit {
     return this.menuLabels[index] || "Disable"; // Default to 'Disable'
   }
 
-  onSliderChange(e, control) {
+  onSliderChange(e: any, control: any) {
     this.ammountValue = e?.value;
-    this.limitForm.get(control).setValue(this.ammountValue);
+    this.limitForm.get(control)?.setValue(this.ammountValue);
   }
-  formatCurrencyLabel(value) {
+  formatCurrencyLabel(value: any) {
     return `₹ ${value}`;
   }
   cancle() {
@@ -147,15 +147,15 @@ export class CreditCardUsageLimitComponent implements OnInit {
             details: [
               { "Card Detail": this.selecetdCardNo[0]?.customerName },
               {
-                "Card Number": this.limitForm?.get("cardNo").value,
+                "Card Number": this.limitForm?.get("cardNo")?.value
               },
               {
-                "Card Name": this.selecetdCardNo[0]?.cardName,
+                "Card Name": this.selecetdCardNo[0]?.cardName
               },
               {
-                "credit limit": this.selecetdCardNo[0]?.totalCreditLimit,
-              },
-            ],
+                "credit limit": this.selecetdCardNo[0]?.totalCreditLimit
+              }
+            ]
           },
           {
             header: "Domestic Limits",
@@ -164,47 +164,47 @@ export class CreditCardUsageLimitComponent implements OnInit {
                 "ATM Withdraw":
                   this.limitForm?.get("atmRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
-                "ATM Withdraw Limit": this.limitForm?.get("atmWithdraw")?.value,
+                "ATM Withdraw Limit": this.limitForm?.get("atmWithdraw")?.value
               },
               {
                 "Merchant Outlets":
                   this.limitForm?.get("merchantRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Merchant Outlets Limit":
-                  this.limitForm?.get("maxOnlineAmount")?.value,
+                  this.limitForm?.get("maxOnlineAmount")?.value
               },
 
               {
                 "Online Transaction":
                   this.limitForm?.get("onlineRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Online Transaction Limit":
-                  this.limitForm?.get("onlineTransaction")?.value,
+                  this.limitForm?.get("onlineTransaction")?.value
               },
               {
                 "Tap & Pay Transaction":
                   this.limitForm?.get("tapRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Tap & Pay Transaction Limit":
-                  this.limitForm?.get("tapPayTransaction")?.value,
-              },
-            ],
-          },
+                  this.limitForm?.get("tapPayTransaction")?.value
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",
@@ -214,7 +214,7 @@ export class CreditCardUsageLimitComponent implements OnInit {
     );
     this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
-  tabChanges(val) {
+  tabChanges(val: any) {
     console.log(val);
     this.selectedTabName = val?.screenName;
   }

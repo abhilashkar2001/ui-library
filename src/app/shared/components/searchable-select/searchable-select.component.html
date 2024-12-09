@@ -12,7 +12,7 @@
   }}</mat-label>
   <mat-select
     [multiple]="multiple"
-    [formControl]="control"
+    [formControl]="control | formcontrol"
     [placeholder]="inputLabel"
     [disabled]="readonly"
     (selectionChange)="selectionChange.emit($event.value)"
@@ -22,7 +22,7 @@
   >
     <div class="search_container">
       <mat-form-field
-        [floatLabel]="'never'"
+        [floatLabel]="$any('never')"
         fxFill
         appearance="outline"
         class="full-width fieldinput search_field"
@@ -58,7 +58,7 @@
       *ngFor="let item of items | searchOptions : filterFormControl.value"
       [value]="item?.value"
       [disabled]="item?.disabled"
-      [ngClass]="item?.label == 'No data found' && 'hide-checkbox'"
+      [ngClass]="{ 'hide-checkbox': item?.label === 'No data found' }"
       [ngStyle]="{
         display: item?.label != 'No data found' && item?.disabled ? 'none' : ''
       }"

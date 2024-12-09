@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-custom-success-popup",
   templateUrl: "./custom-success-popup.component.html",
-  styleUrls: ["./custom-success-popup.component.scss"],
+  styleUrls: ["./custom-success-popup.component.scss"]
 })
 export class CustomSuccessPopupComponent implements OnInit {
   @Output() doneEmit = new EventEmitter<any>();
@@ -25,7 +25,7 @@ export class CustomSuccessPopupComponent implements OnInit {
     }
   }
 
-  done(status) {
+  done(status: any) {
     this.doneEmit.emit(status);
     this.dialogRef.close(status);
   }

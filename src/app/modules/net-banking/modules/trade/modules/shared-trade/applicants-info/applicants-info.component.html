@@ -65,7 +65,6 @@
           bindLabelKey="countryName"
           bindValueKey="countryName"
           [control]="address.get('countryName')"
-          (selectionChange)="onChangeCountry(i)"
           showOutsideLabel="true"
         ></app-searchable-select>
       </div>
@@ -83,7 +82,7 @@
           <mat-icon
             matSuffix
             class="searchIcon-main"
-            (click)="pincodeExpansion(i, address)"
+            (click)="pincodeExpansion(address)"
             >search</mat-icon
           >
         </mat-form-field>

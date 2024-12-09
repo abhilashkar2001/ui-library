@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatTableDataSource } from "@angular/material/table";
@@ -15,22 +15,22 @@ import { ServiceCallHandler } from "app/shared/service-call.handler";
 @Component({
   selector: "app-reusable-table",
   templateUrl: "./reusable-table.component.html",
-  styleUrls: ["./reusable-table.component.scss"],
+  styleUrls: ["./reusable-table.component.scss"]
 })
 export class ReusableTableComponent implements OnInit {
   displayedColumns: string[] = [];
-  @Input("customerInfo") customerInfo;
-  @Input("selectedAcc") selectedAcc;
-  @Input("showMoneyStatusIcon") showMoneyStatusIcon;
-  @Input("columnNames") columnNames;
-  @Input("data") data;
-  @Input("moreAction") moreAction;
+  @Input("customerInfo") customerInfo: any;
+  @Input("selectedAcc") selectedAcc: any;
+  @Input("showMoneyStatusIcon") showMoneyStatusIcon: any;
+  @Input("columnNames") columnNames: any;
+  @Input("data") data: any;
+  @Input("moreAction") moreAction: any;
   @Output()
   rowClicked: EventEmitter<any> = new EventEmitter<any>();
-  @Input("selectedScreen") selectedScreen;
-  dataSource: MatTableDataSource<any>;
+  @Input("selectedScreen") selectedScreen: any;
+  dataSource: MatTableDataSource<any> | any;
   @Output() actionItemClicked: EventEmitter<any> = new EventEmitter<any>();
-  moreContentIndx: number;
+  moreContentIndx: number | any;
   selectedAccountInfo: any;
   @Input() selectedRowIndex: number = -1;
 
@@ -54,7 +54,7 @@ export class ReusableTableComponent implements OnInit {
     );
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.data) {
       console.log(changes.data);
       if (changes.data.currentValue) {
@@ -66,7 +66,7 @@ export class ReusableTableComponent implements OnInit {
       if (changes.columnNames.currentValue) {
         this.columnNames = changes.columnNames.currentValue;
         this.displayedColumns = this.columnNames.map(
-          (column) => column.headerDef
+          (column: any) => column.headerDef
         );
       }
     }
@@ -82,25 +82,27 @@ export class ReusableTableComponent implements OnInit {
     }
     this.selectedAccountInfo =
       this.customerInfo?.accounts?.[0]?.accountList.find(
-        (e) => e.accountNo == this.selectedAcc
+        (e: any) => e.accountNo == this.selectedAcc
       );
   }
 
   ngOnInit(): void {
-    this.displayedColumns = this.columnNames?.map((column) => column.headerDef);
+    this.displayedColumns = this.columnNames?.map(
+      (column: any) => column.headerDef
+    );
     this.dataSource = new MatTableDataSource(this.data);
   }
 
-  onActionItemClick(element, item) {
+  onActionItemClick(element: any, item: any) {
     let clickedData = { ...element, action: item };
     this.actionItemClicked.emit(clickedData);
   }
 
-  openRowDetails(element) {
+  openRowDetails(element: any) {
     this.rowClicked.emit(element);
   }
 
-  clickOnRepay(element) {
+  clickOnRepay(element: any) {
     this.serviceCallHandler.put("serviceHandler", {}, element);
     if (element.transferType == "MMID") {
       this.router.navigate(["/send-money/dashboard/mmid-transfer"]);

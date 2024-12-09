@@ -8,7 +8,7 @@
   </div>
 
   <ng-container *ngIf="roleName?.startsWith('SCB'); else showTextLogo">
-    <div class="branding" (click)="goToHome()">
+    <div class="branding">
       <img
         src="assets/images/logos/scb-transparent-logo.svg"
         alt=""
@@ -23,7 +23,7 @@
   </ng-container>
   <ng-template #showTextLogo>
     <div class="ml-16">
-      <a (click)="goToHome()">&nbsp; {{ currentUser?.bankName }}</a>
+      <a>&nbsp; {{ currentUser?.bankName }}</a>
     </div>
   </ng-template>
 

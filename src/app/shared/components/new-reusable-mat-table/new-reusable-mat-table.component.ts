@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatSort, Sort } from "@angular/material/sort";
@@ -25,47 +25,47 @@ import { MatTableDataSource } from "@angular/material/table";
 @Component({
   selector: "app-new-reusable-mat-table",
   templateUrl: "./new-reusable-mat-table.component.html",
-  styleUrls: ["./new-reusable-mat-table.component.scss"],
+  styleUrls: ["./new-reusable-mat-table.component.scss"]
 })
 export class NewReusableMatTableComponent implements OnInit {
-  @Input() className;
-  @Input() module;
-  @Input() newFilter;
-  @Input() maintenanceTitle;
-  @Input() subTitle;
+  @Input() className: any;
+  @Input() module: any;
+  @Input() newFilter: any;
+  @Input() maintenanceTitle: any;
+  @Input() subTitle: any;
   @Input() CountryModule = false;
   @Input() isUploadBtn = false;
-  @Input() SecurityModule;
-  @Input() countryModuleFilter;
-  @Input() stateModuleFilter;
-  @Input() columns;
-  @Input() filterByOption;
-  @Input() MaintenanceUpdatedData;
-  @Input() UpdatedData;
+  @Input() SecurityModule: any;
+  @Input() countryModuleFilter: any;
+  @Input() stateModuleFilter: any;
+  @Input() columns: any;
+  @Input() filterByOption: any;
+  @Input() MaintenanceUpdatedData: any;
+  @Input() UpdatedData: any;
   @Input() hideFilters: boolean = false;
-  @Input() showOnlySearchTitle;
-  @Input() requiredSpecialFields;
-  @Input() addNewList = [];
-  @Input() InstrumentStatusUpdatedData;
-  @Input() createdBy;
-  @Input() profileImage;
-  @Input() isUpload: boolean;
+  @Input() showOnlySearchTitle: any;
+  @Input() requiredSpecialFields: any;
+  @Input() addNewList: any = [];
+  @Input() InstrumentStatusUpdatedData: any;
+  @Input() createdBy: any;
+  @Input() profileImage: any;
+  @Input() isUpload: boolean | any;
   @Input() tellerOps: boolean = false;
   @Input() holidayTitle: string = "";
   @Input() componentName: string = "";
   @Input() showInfoIcon: boolean = false;
   @Output() customupdateRecord = new EventEmitter<{}>();
   @Output() customDownload = new EventEmitter<{}>();
-  @Output() customEditForm = new EventEmitter<{ element }>();
-  @Output() customDelete = new EventEmitter<{ element }>();
+  @Output() customEditForm = new EventEmitter<{ element: any }>();
+  @Output() customDelete = new EventEmitter<{ element: any }>();
   @Output() customGoBack = new EventEmitter<{}>();
   @Output() customGetSortDetails = new EventEmitter<{}>();
   @Output() getPageNumber = new EventEmitter<{}>();
   @Output() getHolidaySummaryType = new EventEmitter();
 
   @Output() customGetDataByPage = new EventEmitter<{
-    filterBy;
-    filterValue;
+    filterBy: any;
+    filterValue: any;
     page: number;
     size: number;
     sort: string;
@@ -74,13 +74,13 @@ export class NewReusableMatTableComponent implements OnInit {
   }>();
   @Output() customAllSelectionRecord = new EventEmitter<any>();
   @Output() customBulkUpload = new EventEmitter<any>();
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort | any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   holidayType = new FormControl("branch");
   selectedFilterIndex: number = 0;
   filterValue: any = "";
-  selectedFilterBy: string;
+  selectedFilterBy: string | any;
   dataSource = new MatTableDataSource();
   emptyData = new MatTableDataSource([{ empty: "row" }]);
   pagesize = 5;
@@ -90,9 +90,9 @@ export class NewReusableMatTableComponent implements OnInit {
   dataObs: any;
   maintenanceData: any;
   instrumentStatus: any;
-  orderBy: string;
-  tablePageIndex: number;
-  sortValue: string = null;
+  orderBy: string | any;
+  tablePageIndex: number | any;
+  sortValue: string | any = null;
   profileKey = "userName";
   currentUser: any;
   basePath = environment.microServiceURL;
@@ -100,7 +100,7 @@ export class NewReusableMatTableComponent implements OnInit {
   hideClose: boolean = false;
   totalPages = 0;
   @ViewChild(NewReusableFilterComponent)
-  childComponent: NewReusableFilterComponent;
+  childComponent: NewReusableFilterComponent | any;
   // STATIC SETUP FOR TELLER TEMPORARY
   staticBreadCrump = SCREENLIST.staticBreadCrump;
   summaryInfoResp: any[] = [];
@@ -186,7 +186,7 @@ export class NewReusableMatTableComponent implements OnInit {
 
     this.currentUser = this.tokenStorageService.getUser();
 
-    this.displayedColumns = this.columns?.map((c) => c.columnDef);
+    this.displayedColumns = this.columns?.map((c: any) => c.columnDef);
     if (
       this.componentName != "Bulk Upload" &&
       this.componentName != "BG Template"
@@ -195,7 +195,6 @@ export class NewReusableMatTableComponent implements OnInit {
     if (this.componentName == "Bulk Upload")
       this.displayedColumns?.unshift("checkBox");
     this.customUpdateTable(
-      null,
       null,
       this.pageIndex,
       this.pagesize,
@@ -207,11 +206,11 @@ export class NewReusableMatTableComponent implements OnInit {
     this.sortValue = "lastUpdated";
     this.orderBy = "DESC";
   }
-  getData(e) {
+  getData(e: any) {
     return e ? `${e[0]?.toUpperCase()}${e[1]?.toUpperCase()}` : "";
   }
 
-  onHolidayTypeChange(value) {
+  onHolidayTypeChange(value: any) {
     this.getHolidaySummaryType.emit(value);
   }
 
@@ -255,7 +254,6 @@ export class NewReusableMatTableComponent implements OnInit {
 
     this.customUpdateTable(
       this.filterValue,
-      this.filterValue,
       this.calculatePageIndex(),
       this.pagesize,
       this.sortValue,
@@ -264,7 +262,7 @@ export class NewReusableMatTableComponent implements OnInit {
     );
   }
 
-  filterDataPayload(event) {
+  filterDataPayload(event: any) {
     this.pageIndex = event.filterValue.page;
     this.pagesize = event.filterValue.pageSize;
     this.orderBy = event.filterValue.sortOrder;
@@ -273,11 +271,11 @@ export class NewReusableMatTableComponent implements OnInit {
     delete this.filterValue.sort;
     delete this.filterValue.sortOrder;
   }
-  isInvalidSearchValue(searchValue) {
+  isInvalidSearchValue(searchValue: any) {
     return searchValue?.match(/^[^a-zA-Z0-9-!@#$&*()+._/]+$/);
   }
 
-  handleValidSearchValue(searchValue, filterValue) {
+  handleValidSearchValue(searchValue: any, filterValue: any) {
     if (searchValue) {
       this.sortValue = searchValue;
     }
@@ -300,18 +298,18 @@ export class NewReusableMatTableComponent implements OnInit {
   /**
    * Open add / edit screen.
    */
-  openPopUp(element) {
+  openPopUp(element: any) {
     this.tableservice.setEditingStatus(false);
     this.customEditForm.emit({ element });
   }
-  openPopUpInstrument(element) {
+  openPopUpInstrument(element: any) {
     this.customEditForm.emit({ element });
   }
 
   /**
    * Deletion of selected record.
    */
-  deleteItem(element) {
+  deleteItem(element: any) {
     this.customDelete.emit({ element });
   }
 
@@ -319,13 +317,12 @@ export class NewReusableMatTableComponent implements OnInit {
    * Call a customEvent in parent component.
    */
   customUpdateTable(
-    selectedFilterBy,
-    value,
-    page,
-    size,
-    sortName,
-    direction,
-    module
+    value: any,
+    page: any,
+    size: any,
+    sortName: any,
+    direction: any,
+    module: any
   ) {
     if (sortName == "SC2") {
       sortName = "stateCode2";
@@ -339,12 +336,12 @@ export class NewReusableMatTableComponent implements OnInit {
       size: size,
       sort: sortName,
       direction: direction,
-      module: module,
+      module: module
     });
   }
 
-  updateColumn(data) {
-    this.displayedColumns = this.columns?.map((c) => c.columnDef);
+  updateColumn() {
+    this.displayedColumns = this.columns?.map((c: any) => c.columnDef);
     if (
       this.componentName != "Bulk Upload" &&
       this.componentName != "BG Template"
@@ -359,11 +356,12 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    if (changes.columns) {
-      this.updateColumn(changes.columns.currentValue);
+    if (changes["columns"]) {
+      this.updateColumn();
     }
-    if (changes) this.maintenanceData = changes?.UpdatedData?.currentValue;
-    this.instrumentStatus = changes?.InstrumentStatusUpdatedData?.currentValue;
+    if (changes) this.maintenanceData = changes?.["UpdatedData"]?.currentValue;
+    this.instrumentStatus =
+      changes?.["InstrumentStatusUpdatedData"]?.currentValue;
     if (this.maintenanceData?.data?.length > 0)
       this.bulkUploadFileName = this.maintenanceData?.data[0].fileName;
 
@@ -388,7 +386,7 @@ export class NewReusableMatTableComponent implements OnInit {
   /**
    * Updating table here.
    */
-  updateTable(data: any[], meta) {
+  updateTable(data: any[], meta: any) {
     console.log(data, meta);
 
     this.parseUserAvatar(data);
@@ -405,7 +403,7 @@ export class NewReusableMatTableComponent implements OnInit {
    *
    */
   parseUserAvatar(data: any[]) {
-    data?.forEach((item, i) => {
+    data?.forEach((item) => {
       if (item?.profile) {
         item!.profile!.fileUrl = this.getFileUrl(item?.profile?.fileUrl);
       }
@@ -436,7 +434,6 @@ export class NewReusableMatTableComponent implements OnInit {
       this.pagesize = event?.value?.pageSize | event.pageSize;
       this.pageIndex = event?.value?.page | event?.page;
       this.customUpdateTable(
-        null,
         this.filterValue,
         event?.value?.page,
         event?.value?.pageSize,
@@ -450,9 +447,9 @@ export class NewReusableMatTableComponent implements OnInit {
   /**
    * filterchange
    */
-  filterChange(filterby) {
+  filterChange(filterby: any) {
     this.selectedFilterBy = this.filterByOption.find(
-      (item) => item.key == filterby
+      (item: any) => item.key == filterby
     ).key;
   }
 
@@ -465,7 +462,6 @@ export class NewReusableMatTableComponent implements OnInit {
     this.filterValue = "";
     this.customUpdateTable(
       null,
-      null,
       1,
       this.pagesize,
       this.sortValue,
@@ -477,14 +473,14 @@ export class NewReusableMatTableComponent implements OnInit {
   /**
    * Upload file.
    */
-  onFileChange(event) {
+  onFileChange(event: any) {
     this.customupdateRecord.emit({ event });
   }
 
   /**
    * Download all summary table details.
    */
-  downloadSummary(type) {
+  downloadSummary(type: any) {
     const payload = {
       authStatus: this.filterValue?.authStatus ?? null,
       recordStatus: this.filterValue?.recordStatus ?? null,
@@ -496,7 +492,7 @@ export class NewReusableMatTableComponent implements OnInit {
       lastUpdatedBy: this.filterValue?.lastUpdatedBy ?? null,
       sort: this.sortValue ?? null,
       sortOrder: this.orderBy ?? null,
-      userId: this.currentUser?.userId,
+      userId: this.currentUser?.userId
     };
     if (
       this.filterValue?.fromDate != null &&
@@ -519,7 +515,7 @@ export class NewReusableMatTableComponent implements OnInit {
       });
   }
 
-  handleDownload(type, data) {
+  handleDownload(type: any, data: any) {
     const blob = new Blob([data], { type: "application/octet-stream" });
     const url = window.URL.createObjectURL(blob);
 
@@ -542,7 +538,6 @@ export class NewReusableMatTableComponent implements OnInit {
     this.sortValue = sortState.active;
     this.orderBy = sortState.direction === "asc" ? "ASC" : "DESC";
     this.customUpdateTable(
-      this.selectedFilterIndex != 0 ? this.selectedFilterIndex : null,
       this.filterValue,
       this.pageIndex,
       this.pagesize,
@@ -551,7 +546,7 @@ export class NewReusableMatTableComponent implements OnInit {
       "coprateNetBanking"
     );
   }
-  updateRecord(operation, id, obj) {
+  updateRecord(operation: any, id: any, obj: any) {
     this.customupdateRecord.emit({ operation, id, obj });
   }
 
@@ -566,12 +561,11 @@ export class NewReusableMatTableComponent implements OnInit {
     return email;
   }
 
-  customSort(sortValue, direction) {
+  customSort(sortValue: any, direction: any) {
     this.sortValue = sortValue;
     this.orderBy = direction.toUpperCase();
 
     this.customUpdateTable(
-      this.filterValue,
       this.filterValue,
       this.pageIndex,
       this.pagesize,
@@ -583,11 +577,11 @@ export class NewReusableMatTableComponent implements OnInit {
   goBack() {
     this.customGoBack.emit({});
   }
-  customroute(route?) {
+  customroute() {
     this.router.navigate([`/maintenance/dashboard`]);
   }
 
-  getShorendValue(value, length = 15) {
+  getShorendValue(value: any, length = 15) {
     if (value) {
       let truncatedValue: any = value.toString().split(",");
       if (truncatedValue.length > 1) {
@@ -624,7 +618,7 @@ export class NewReusableMatTableComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  downloadRecord(event) {
+  downloadRecord() {
     this.customDownloadRecord.emit();
   }
 }

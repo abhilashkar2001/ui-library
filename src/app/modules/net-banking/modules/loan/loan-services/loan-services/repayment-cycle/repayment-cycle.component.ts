@@ -12,13 +12,13 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-repayment-cycle",
   templateUrl: "./repayment-cycle.component.html",
-  styleUrls: ["./repayment-cycle.component.scss"],
+  styleUrls: ["./repayment-cycle.component.scss"]
 })
 export class RepaymentCycleComponent implements OnInit {
-  repaymentCycleForm: FormGroup;
-  loanDetails: LoanDetailsModel[];
-  installmentDetails: LoanInstallmentModel;
-  genericValue = { REQUESTEDREPAYMENTCYCLE: [] };
+  repaymentCycleForm: FormGroup | any;
+  loanDetails: LoanDetailsModel[] | any;
+  installmentDetails: LoanInstallmentModel | any;
+  genericValue: any = { REQUESTEDREPAYMENTCYCLE: [] };
 
   constructor(
     private fb: FormBuilder,
@@ -27,14 +27,13 @@ export class RepaymentCycleComponent implements OnInit {
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
     private genericValueService: GenericValueService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loanDetails = this.sessionStorageService.getLoanInfo();
     this.buildRepaymentCycleForm();
-    this.fetchGenericValues()
+    this.fetchGenericValues();
   }
-
 
   //fetch generic values
   fetchGenericValues() {
@@ -55,22 +54,19 @@ export class RepaymentCycleComponent implements OnInit {
       debitCurrency: [""],
       currentRepayment: [""],
       repayRequest: [""],
-      transferType: "Repayment Cycle",
+      transferType: "Repayment Cycle"
     });
     this.repaymentCycleForm
       ?.get("debitAccount")
       ?.setValue(this.loanDetails?.[0]?.cbsAccountNumber);
-    this.fetchCurrentRepaymentCycle()
+    this.fetchCurrentRepaymentCycle();
   }
-
-
-
 
   //fetch current repayment cycle
   fetchCurrentRepaymentCycle() {
     this.loanService
       .fetchCurrentRepaymentCycle(this.repaymentCycleForm.value.debitAccount)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           let repaymentCycle = res?.data?.currentRepaymentCycle;
           this.repaymentCycleForm
@@ -85,7 +81,7 @@ export class RepaymentCycleComponent implements OnInit {
   fetchLoanInstallment() {
     this.loanService
       .fetchLoanInstallment(this.repaymentCycleForm?.value?.debitAccount)
-      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           this.installmentDetails = res?.data;
         }
@@ -96,7 +92,7 @@ export class RepaymentCycleComponent implements OnInit {
   saveRepaymentCycle() {
     let payload = { ...this.repaymentCycleForm.value };
     payload.debitCurrency = this.loanDetails?.find(
-      (res) =>
+      (res: any) =>
         res?.cbsAccountNumber ==
         this.repaymentCycleForm?.value?.loanAccountNumber
     )?.currencyCode;
@@ -116,21 +112,21 @@ export class RepaymentCycleComponent implements OnInit {
               { Name: this.installmentDetails?.customerName },
               {
                 "Loan Account Number":
-                  this.repaymentCycleForm?.get("debitAccount")?.value,
+                  this.repaymentCycleForm?.get("debitAccount")?.value
               },
               { Type: this.installmentDetails?.loanType },
               {
                 "Current Repayment cycle":
-                  this.repaymentCycleForm?.get("currentRepayment")?.value,
+                  this.repaymentCycleForm?.get("currentRepayment")?.value
               },
               {
                 "Requested Repayment Cycle":
-                  this.repaymentCycleForm?.get("repayRequest")?.value,
-              },
-            ],
-          },
-        ],
-      },
+                  this.repaymentCycleForm?.get("repayRequest")?.value
+              }
+            ]
+          }
+        ]
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

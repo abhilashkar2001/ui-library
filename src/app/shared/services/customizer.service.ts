@@ -1,14 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Router, NavigationStart } from "@angular/router";
-import { filter } from "rxjs/operators";
 import { LayoutService } from "./layout.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class CustomizerService {
-
-
   colors = [
     {
       class: "black",
@@ -42,7 +38,7 @@ export class CustomizerService {
       class: "blue",
       active: false
     },
-    
+
     {
       class: "indigo",
       active: false
@@ -68,70 +64,101 @@ export class CustomizerService {
       active: false
     }
   ];
-  selectedSidebarColor;
+  selectedSidebarColor: any;
   topbarColors: any[];
   sidebarColors: any[];
   footerColors: any[];
 
-  constructor(
-    private router: Router,     
-    private layout: LayoutService,
-  ) {
+  constructor(private layout: LayoutService) {
     this.topbarColors = this.getTopbarColors();
     this.sidebarColors = this.getSidebarColors();
     this.footerColors = this.getFooterColors();
   }
 
   getSidebarColors() {
-    let sidebarColors = ['black', 'slate', 'white', 'grey', 'brown', 'purple', 'dark-blue',];
-    return this.colors.filter(color => {
-      return sidebarColors.includes(color.class);
-    })
-    .map(c => {
-      c.active = c.class === this.layout.layoutConf.sidebarColor;
-      return {...c};
-    });
+    let sidebarColors = [
+      "black",
+      "slate",
+      "white",
+      "grey",
+      "brown",
+      "purple",
+      "dark-blue"
+    ];
+    return this.colors
+      .filter((color) => {
+        return sidebarColors.includes(color.class);
+      })
+      .map((c) => {
+        c.active = c.class === this.layout.layoutConf.sidebarColor;
+        return { ...c };
+      });
   }
 
   getTopbarColors() {
-    let topbarColors = ['black', 'slate', 'white', 'dark-gray', 'purple', 'dark-blue', 'indigo', 'pink', 'red', 'yellow', 'green'];
-    return this.colors.filter(color => {
-      return topbarColors.includes(color.class);
-    })
-    .map(c => {
-      c.active = c.class === this.layout.layoutConf.topbarColor;
-      return {...c};
-    });
+    let topbarColors = [
+      "black",
+      "slate",
+      "white",
+      "dark-gray",
+      "purple",
+      "dark-blue",
+      "indigo",
+      "pink",
+      "red",
+      "yellow",
+      "green"
+    ];
+    return this.colors
+      .filter((color) => {
+        return topbarColors.includes(color.class);
+      })
+      .map((c) => {
+        c.active = c.class === this.layout.layoutConf.topbarColor;
+        return { ...c };
+      });
   }
 
   getFooterColors() {
-    let footerColors = ['black', 'slate', 'white', 'dark-gray', 'purple', 'dark-blue', 'indigo', 'pink', 'red', 'yellow', 'green'];
-    return this.colors.filter(color => {
-      return footerColors.includes(color.class);
-    })
-    .map(c => {
-      c.active = c.class === this.layout.layoutConf.footerColor;
-      return {...c};
-    });
+    let footerColors = [
+      "black",
+      "slate",
+      "white",
+      "dark-gray",
+      "purple",
+      "dark-blue",
+      "indigo",
+      "pink",
+      "red",
+      "yellow",
+      "green"
+    ];
+    return this.colors
+      .filter((color) => {
+        return footerColors.includes(color.class);
+      })
+      .map((c) => {
+        c.active = c.class === this.layout.layoutConf.footerColor;
+        return { ...c };
+      });
   }
 
-
-  changeSidebarColor(color) {
+  changeSidebarColor(color: any) {
     this.layout.publishLayoutChange({ sidebarColor: color.class });
     this.sidebarColors = this.getSidebarColors();
   }
 
-  changeTopbarColor(color) {
+  changeTopbarColor(color: any) {
     this.layout.publishLayoutChange({ topbarColor: color.class });
     this.topbarColors = this.getTopbarColors();
   }
 
-  changeFooterColor(color) {
+  changeFooterColor(color: any) {
     this.layout.publishLayoutChange({ footerColor: color.class });
     this.footerColors = this.getFooterColors();
   }
 
-  removeClass(el, className) {
+  removeClass(el: any, className: any) {
     if (!el || el.length === 0) return;
     if (!el.length) {
       el.classList.remove(className);
@@ -141,8 +168,8 @@ export class CustomizerService {
       }
     }
   }
-  
-  addClass(el, className) {
+
+  addClass(el: any, className: any) {
     if (!el) return;
     if (!el.length) {
       el.classList.add(className);
@@ -153,7 +180,7 @@ export class CustomizerService {
     }
   }
 
-  findClosest(el, className) {
+  findClosest(el: any, className: any) {
     if (!el) return;
     while (el) {
       var parent = el.parentElement;
@@ -164,14 +191,14 @@ export class CustomizerService {
     }
   }
 
-  hasClass(el, className) {
+  hasClass(el: any, className: any) {
     if (!el) return;
     return (
       ` ${el.className} `.replace(/[\n\t]/g, " ").indexOf(` ${className} `) > -1
     );
   }
 
-  toggleClass(el, className) {
+  toggleClass(el: any, className: any) {
     if (!el) return;
     if (this.hasClass(el, className)) {
       this.removeClass(el, className);

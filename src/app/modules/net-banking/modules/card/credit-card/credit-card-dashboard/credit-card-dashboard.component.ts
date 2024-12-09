@@ -9,7 +9,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-credit-card-dashboard",
   templateUrl: "./credit-card-dashboard.component.html",
-  styleUrls: ["./credit-card-dashboard.component.scss"],
+  styleUrls: ["./credit-card-dashboard.component.scss"]
 })
 export class CreditCardDashboardComponent implements OnInit {
   cardList: Cards = [];
@@ -53,7 +53,7 @@ export class CreditCardDashboardComponent implements OnInit {
         this.fetRecntTransaction();
       });
   }
-  getDashboardCardDetails(event) {
+  getDashboardCardDetails(event: any) {
     this.displayCard = event;
   }
 
@@ -78,7 +78,7 @@ export class CreditCardDashboardComponent implements OnInit {
         });
   }
 
-  toggleCheck(value) {
+  toggleCheck(value: any) {
     this.isDrawerOpen = value;
     console.log(this.isDrawerOpen);
   }

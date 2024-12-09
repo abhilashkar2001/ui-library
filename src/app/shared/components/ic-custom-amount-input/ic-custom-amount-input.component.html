@@ -37,13 +37,15 @@
             matPrefix
             *ngIf="currencyCode && control.value"
             class="currency_code"
-            >{{ currencyCode | currencySymbol }}&nbsp;</span
+            >{{
+              currencyCode | customCurrency : profileInfo.currency : "1.2-2"
+            }}&nbsp;</span
           >
 
           <input
             matInput
             [type]="inputType || 'text'"
-            [formControl]="control"
+            [formControl]="control | formcontrol"
             [readonly]="readonly"
             maxlength="27"
             [inputMask]="currencyMask"

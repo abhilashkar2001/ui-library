@@ -8,7 +8,7 @@
     <div class="w-100" fxLayout="row">
       <app-searchable-select
         fxFlex="24"
-        [control]="interestStatementForm.get('debitAccount')"
+        [control]="interestStatementForm.get('debitAccount') | formcontrol"
         [items]="loanDetails"
         [inputLabel]="'Loan Account No' | translate"
         bindValueKey="cbsAccountNumber"
@@ -38,11 +38,11 @@
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <app-searchable-select
         *ngIf="
-          interestStatementForm.get('statementOption').value ===
+          interestStatementForm.get('statementOption')?.value ===
           'Financial Year'
         "
         fxFlex="24"
-        [control]="interestStatementForm.get('yearDuration')"
+        [control]="interestStatementForm.get('yearDuration') | formcontrol"
         [items]="yearDurationArr"
         [inputLabel]="'Year' | translate"
         bindValueKey="value"
@@ -51,17 +51,17 @@
       </app-searchable-select>
       <div
         *ngIf="
-          interestStatementForm.get('statementOption').value === 'Duration'
+          interestStatementForm.get('statementOption')?.value === 'Duration'
         "
         fxLayout="row"
         fxLayoutGap="16px"
       >
         <app-input-date-picker
-          [control]="interestStatementForm.get('statementFrom')"
+          [control]="interestStatementForm.get('statementFrom') | formcontrol"
           [inputLabel]="'From' | translate"
         ></app-input-date-picker>
         <app-input-date-picker
-          [control]="interestStatementForm.get('statementTo')"
+          [control]="interestStatementForm.get('statementTo') | formcontrol"
           [inputLabel]="'To' | translate"
         ></app-input-date-picker>
       </div>
@@ -87,9 +87,6 @@
         <ng-container *ngIf="interestStatement">
           <tr>
             <td>{{ interestStatement?.accountNo }}</td>
-            <td>{{ card?.schedules?.dueDate }}</td>
-            <td>{{ card?.schedules?.settledAmount }}</td>
-            <td>{{ card?.schedules?.dueAmount }}</td>
             <td
               class="actionBtn"
               fxLayout="row"

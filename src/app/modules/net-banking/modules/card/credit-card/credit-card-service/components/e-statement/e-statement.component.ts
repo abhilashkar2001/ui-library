@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NavigationEnd, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { GenericValueService } from "app/shared/services/generic-value.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
@@ -10,15 +10,15 @@ import { CardService } from "../../../../card.service";
 @Component({
   selector: "app-e-statement",
   templateUrl: "./e-statement.component.html",
-  styleUrls: ["./e-statement.component.scss"],
+  styleUrls: ["./e-statement.component.scss"]
 })
 export class EStatementComponent implements OnInit {
   customerInfo: any;
-  screenName: string;
-  eStatementForm: FormGroup;
+  screenName: string | any;
+  eStatementForm!: FormGroup;
   accountNumberList: any[] = [];
   selectedAccInfo: any;
-  genericValue = { DOCUMENTTYPE: [], SCHEDULEPAYMENT: [] };
+  genericValue: any = { DOCUMENTTYPE: [], SCHEDULEPAYMENT: [] };
   profileInfo: any;
   accountDetails: any;
   typeofCard: any;
@@ -61,7 +61,7 @@ export class EStatementComponent implements OnInit {
       accountType: [""],
       email: ["", [Validators.required]],
       frequency: ["", [Validators.required]],
-      format: ["", [Validators.required]],
+      format: ["", [Validators.required]]
     });
   }
 
@@ -74,32 +74,32 @@ export class EStatementComponent implements OnInit {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.eStatementForm
         ?.get("cardNo")
-        .patchValue(this.accountDetails?.cardNumber);
+        ?.patchValue(this.accountDetails?.cardNumber);
       this.eStatementForm
         ?.get("cardName")
-        .patchValue(this.accountDetails?.cardName);
+        ?.patchValue(this.accountDetails?.cardName);
       this.eStatementForm
         ?.get("accountType")
-        .patchValue(this.accountDetails?.cardType);
-      this.eStatementForm?.get("email").patchValue(this.accountDetails?.email);
+        ?.patchValue(this.accountDetails?.cardType);
+      this.eStatementForm?.get("email")?.patchValue(this.accountDetails?.email);
     }
   }
 
-  handleAccountNumberChange(accountNo) {
+  handleAccountNumberChange(accountNo: any) {
     console.log(accountNo);
     this.selectedAccInfo = this.accountNumberList.find(
       (item) => item?.accountNo == accountNo
     );
     this.eStatementForm
       .get("accountType")
-      .patchValue(this.selectedAccInfo?.cardType);
-    this.eStatementForm.get("email").patchValue(this.profileInfo?.emailId);
+      ?.patchValue(this.selectedAccInfo?.cardType);
+    this.eStatementForm.get("email")?.patchValue(this.profileInfo?.emailId);
   }
 
   proceed() {
     const payload: any = {
       ...this.eStatementForm.value,
-      name: this.customerInfo?.customerName,
+      name: this.customerInfo?.customerName
     };
 
     let summaryDetails = [
@@ -115,24 +115,24 @@ export class EStatementComponent implements OnInit {
             details: [
               { "Name on Card": this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber,
+                "Card Number": this.accountDetails?.cardNumber
               },
               {
-                "Card Name": this.accountDetails?.cardName,
+                "Card Name": this.accountDetails?.cardName
               },
               {
-                Email: payload?.email,
+                Email: payload?.email
               },
               {
-                Frequency: payload?.frequency,
+                Frequency: payload?.frequency
               },
               {
-                Format: payload?.format,
-              },
-            ],
-          },
-        ],
-      },
+                Format: payload?.format
+              }
+            ]
+          }
+        ]
+      }
     ];
 
     this.serviceCallHandler.put(

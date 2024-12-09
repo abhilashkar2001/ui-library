@@ -21,7 +21,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Deposit Amount</mat-label>
             <input
@@ -34,8 +34,8 @@
             />
             <mat-error
               *ngIf="
-                this.createFdForm.controls.amount.hasError('required') &&
-                this.createFdForm.controls.amount.touched
+                this.createFdForm.controls['amount']?.hasError('required') &&
+                this.createFdForm.controls['amount']?.touched
               "
             >
               Deposit Amount is required
@@ -47,7 +47,7 @@
             <legend class="fieldset-title">Deposit Period</legend>
             <div
               fxLayout="row"
-              [ngClass]="isEnabledEdit == false && 'disable-fieldset'"
+              [ngClass]="isEnabledEdit == false ? 'disable-fieldset' : ''"
             >
               <input
                 matInput
@@ -86,7 +86,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Maturity Date</mat-label>
             <input
@@ -101,15 +101,16 @@
             <mat-datepicker-toggle
               matSuffix
               [for]="picker"
-              [ngStyle]="!isEnabledEdit && { 'pointer-events': 'none' }"
+              [ngClass]="!isEnabledEdit ? 'pointer-events' : 'none'"
             >
               <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error
               *ngIf="
-                this.createFdForm.controls.maturityDate.hasError('required') &&
-                this.createFdForm.controls.maturityDate.touched
+                this.createFdForm.controls['maturityDate']?.hasError(
+                  'required'
+                ) && this.createFdForm.controls['maturityDate']?.touched
               "
             >
               Maturity Date is required
@@ -120,7 +121,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Interest Rate</mat-label>
             <input
@@ -133,8 +134,9 @@
             />
             <mat-error
               *ngIf="
-                this.createFdForm.controls.intrestRate.hasError('required') &&
-                this.createFdForm.controls.intrestRate.touched
+                this.createFdForm.controls['intrestRate']?.hasError(
+                  'required'
+                ) && this.createFdForm.controls['intrestRate']?.touched
               "
             >
               Intrest Rate is required
@@ -145,7 +147,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Maturity Amount</mat-label>
             <input
@@ -158,9 +160,9 @@
             />
             <mat-error
               *ngIf="
-                this.createFdForm.controls.maturityAmount.hasError(
+                this.createFdForm.controls['maturityAmount']?.hasError(
                   'required'
-                ) && this.createFdForm.controls.maturityAmount.touched
+                ) && this.createFdForm.controls['maturityAmount']?.touched
               "
             >
               Maturity Amount is required
@@ -171,7 +173,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Deposit Holder Type</mat-label>
             <mat-select
@@ -188,8 +190,8 @@
             </mat-select>
             <mat-error
               *ngIf="
-                this.createFdForm.controls.ownership.hasError('required') &&
-                this.createFdForm.controls.ownership.touched
+                this.createFdForm.controls['ownership']?.hasError('required') &&
+                this.createFdForm.controls['ownership']?.touched
               "
             >
               Deposit Holder Type is required
@@ -200,7 +202,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Customer Type</mat-label>
             <mat-select
@@ -216,9 +218,9 @@
             </mat-select>
             <mat-error
               *ngIf="
-                this.createFdForm.controls.typeOfCustomer.hasError(
+                this.createFdForm.controls['typeOfCustomer']?.hasError(
                   'required'
-                ) && this.createFdForm.controls.typeOfCustomer.touched
+                ) && this.createFdForm.controls['typeOfCustomer']?.touched
               "
             >
               Customer Type is required
@@ -229,7 +231,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Payout Type</mat-label>
             <mat-select
@@ -245,8 +247,9 @@
             </mat-select>
             <mat-error
               *ngIf="
-                this.createFdForm.controls.intrestPayout.hasError('required') &&
-                this.createFdForm.controls.intrestPayout.touched
+                this.createFdForm.controls['intrestPayout']?.hasError(
+                  'required'
+                ) && this.createFdForm.controls['intrestPayout']?.touched
               "
             >
               Payout Type is required
@@ -257,7 +260,7 @@
           <mat-form-field
             appearance="outline"
             class="full-width"
-            [ngClass]="isEnabledEdit == false && 'disableField'"
+            [ngClass]="isEnabledEdit == false ? 'disableField' : ''"
           >
             <mat-label>Payment Type</mat-label>
             <mat-select
@@ -274,8 +277,9 @@
             </mat-select>
             <mat-error
               *ngIf="
-                this.createFdForm.controls.paymentType.hasError('required') &&
-                this.createFdForm.controls.paymentType.touched
+                this.createFdForm.controls['paymentType']?.hasError(
+                  'required'
+                ) && this.createFdForm.controls['paymentType']?.touched
               "
             >
               Payment Type is required
@@ -330,7 +334,7 @@
   <div class="align_fdForm" fxLayout="column" *ngIf="verifyStep('mobile')">
     <app-verify-number
       (customExistingData)="customExistingData($event)"
-      (customSaveVerify)="customSaveVerify($event)"
+      (customSaveVerify)="customSaveVerify()"
       (customVerifyBack)="goBack()"
     ></app-verify-number>
   </div>
@@ -338,14 +342,13 @@
   <div class="align_fdForm" fxLayout="column" *ngIf="verifyStep('kyc')">
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
-      (customDocumentForm)="customDocumentForm($event)"
       (onBackEvent)="goBack()"
     ></app-other-documents>
   </div>
 
   <div class="align_fdForm" *ngIf="verifyStep('personal')">
+    <!-- [existingCustomer]="existingCustomer" -> '[existingCustomer] was not used in 'app-common-personal-details'' -->
     <app-common-personal-details
-      [existingCustomer]="existingCustomer"
       (customSavePersonal)="customSavePersonal($event)"
       (personalBack)="goBack()"
       (customFormGroup)="customFormGroup($event)"

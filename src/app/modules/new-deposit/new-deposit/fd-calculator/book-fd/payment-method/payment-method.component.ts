@@ -1,34 +1,29 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { FdCalculatorServiceService } from "../../fd-calculator-service.service";
 import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-payment-method",
   templateUrl: "./payment-method.component.html",
-  styleUrls: ["./payment-method.component.scss"],
+  styleUrls: ["./payment-method.component.scss"]
 })
 export class PaymentMethodComponent implements OnInit {
-  @Input() depositType: string;
-  @Input() email: string;
-  paymentForm: FormGroup;
-  upiPaymentForm: FormGroup;
-  netBankPaymentForm: FormGroup;
-  tansferPaymentForm: FormGroup;
+  @Input() depositType: string | any;
+  @Input() email: string | any;
+  paymentForm!: FormGroup;
+  upiPaymentForm!: FormGroup;
+  netBankPaymentForm!: FormGroup;
+  tansferPaymentForm!: FormGroup;
   isTransferProceed: boolean = false;
-  originId: string;
+  originId: string | any;
 
-  constructor(
-    private dialog: MatDialog,
-    private fb: FormBuilder,
-    private fdApi: FdCalculatorServiceService
-  ) {}
+  constructor(private dialog: MatDialog, private fb: FormBuilder) {}
 
   cardType = [
     { bankLogo: "assets/images/axis_bank_logo.svg", bankName: "Axis Bank " },
     { bankLogo: "assets/images/hdfc_bank_logo.svg", bankName: "HDFC Bank " },
-    { bankLogo: "assets/images/icici_bank_logo.svg", bankName: "ICICI Bank" },
+    { bankLogo: "assets/images/icici_bank_logo.svg", bankName: "ICICI Bank" }
   ];
   paymentMethod = new FormControl("Card");
   config = {
@@ -39,14 +34,14 @@ export class PaymentMethodComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "80px",
-      height: "80px",
-    },
+      height: "80px"
+    }
   };
 
   ngOnInit(): void {
     this.buildPayentForm();
   }
-  onToggleChange(event) {}
+  onToggleChange() {}
   buildPayentForm() {
     this.paymentForm = this.fb.group({});
     this.upiPaymentForm = this.fb.group({});
@@ -64,12 +59,12 @@ export class PaymentMethodComponent implements OnInit {
       data: {
         originationId: this.originId,
         type: this.depositType,
-        email: this.email,
+        email: this.email
       },
       width: "750px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
   }
 }

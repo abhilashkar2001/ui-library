@@ -1,6 +1,9 @@
 <div fxLayout="row" fxLayoutGap="10px" class="internal-scroll">
   <div *ngFor="let value of items">
-    <mat-card [ngClass]="value?.bankType == Same ? 'other-bank' : 'same-bank'" (click)="redirectTo(value)">
+    <mat-card
+      [ngClass]="value?.bankType == 'Same' ? 'other-bank' : 'same-bank'"
+      (click)="redirectTo(value)"
+    >
       <div fxFlex="29">
         <div class="profile-card" fxLayoutAlign="center center">
           {{ getData(value[profileName]) }}

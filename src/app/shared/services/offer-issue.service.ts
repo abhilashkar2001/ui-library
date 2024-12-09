@@ -5,7 +5,7 @@ import { environment } from "environments/environment";
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class OfferIssueService {
   summary: any;
@@ -30,7 +30,7 @@ export class OfferIssueService {
 
   downloadOfferletter(originationId: number) {
     const httpOptions = {
-      responseType: "blob" as "json",
+      responseType: "blob" as "json"
     };
 
     return this.http.get(
@@ -39,7 +39,7 @@ export class OfferIssueService {
     );
   }
 
-  saveCustomerRequest(payload) {
+  saveCustomerRequest(payload: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/issue-stage/saveCusomerRequest`,
       payload
@@ -53,7 +53,7 @@ export class OfferIssueService {
     );
   }
 
-  fetchOriginationDetails(originationId) {
+  fetchOriginationDetails(originationId: any) {
     return this.http.get<any>(
       `${MICROSERVICE_URL}/origination-matser?originationId=${originationId}`
     );
@@ -66,7 +66,7 @@ export class OfferIssueService {
     );
   }
 
-  public saveCustomeDocuments(data) {
+  public saveCustomeDocuments(data: any) {
     return this.http.post<any>(`${MICROSERVICE_URL}/documents`, data);
   }
 }

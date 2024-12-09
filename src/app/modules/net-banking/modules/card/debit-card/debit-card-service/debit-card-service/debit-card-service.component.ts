@@ -8,12 +8,12 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-debit-card-service",
   templateUrl: "./debit-card-service.component.html",
-  styleUrls: ["./debit-card-service.component.scss"],
+  styleUrls: ["./debit-card-service.component.scss"]
 })
 export class DebitCardServiceComponent implements OnInit {
   tabs: Tabs = DebitCardStore.serviceTabs;
   activatedComponent!: BlockCardComponent;
-  tabname: string = "";
+  tabname: string | any = "";
   selectedTab: TabModel | undefined;
   transactionCard = DebitCardStore.quickLinks;
   serviceLinks = DebitCardStore.Links;
@@ -24,16 +24,17 @@ export class DebitCardServiceComponent implements OnInit {
     this.selectedRoute(route);
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        route = event.urlAfterRedirects;
+      .subscribe((event) => {
+        const navEndEvent = event as NavigationEnd; // Type assertion
+        route = navEndEvent.urlAfterRedirects;
         this.selectedRoute(route);
       });
   }
-  onSelectTab(event) {
+  onSelectTab(event: any) {
     this.selectedTab = event;
   }
 
-  selectedRoute(route) {
+  selectedRoute(route: any) {
     let selectedTabValue = this.tabs.filter((item) => item?.route == route)[0];
     this.tabname = selectedTabValue?.screenName;
   }

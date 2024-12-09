@@ -33,15 +33,15 @@ export class NavigationService {
       name: "Blank page",
       type: "link",
       icon: "dashboard",
-      state: "admin/dashboard",
+      state: "admin/dashboard"
     },
     {
       name: "DOC",
       type: "extLink",
       tooltip: "Documentation",
       icon: "library_books",
-      state: "",
-    },
+      state: ""
+    }
   ];
 
   // Icon menu TITLE at the very top of navigation.
@@ -58,7 +58,7 @@ export class NavigationService {
   // Or you can customize this method to supply different menu for
   // different user type.
   // PLEASE VIEW THE EGRET FULL VERSION CODE
-  publishNavigationChange(menuType: string) {
+  publishNavigationChange() {
     this.menuItems.next(this.defaultMenu);
     // switch (menuType) {
     //   case 'separator-menu':

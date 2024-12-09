@@ -16,10 +16,10 @@ import { ServiceCallHandler } from "app/shared/service-call.handler";
 @Component({
   selector: "app-topup-loan",
   templateUrl: "./topup-loan.component.html",
-  styleUrls: ["./topup-loan.component.scss"],
+  styleUrls: ["./topup-loan.component.scss"]
 })
 export class TopupLoanComponent implements OnInit {
-  topUpForm: FormGroup | undefined;
+  topUpForm: FormGroup | any;
   minTenure: number = 7;
   maxTenureInYears: number = 10;
   maxTenure: number = 3650;
@@ -27,13 +27,13 @@ export class TopupLoanComponent implements OnInit {
   min = 5000;
   chartSectionDetails = LoanTopUpStore.ChartDetails;
   accountDetails = LoanTopUpStore.loanAccountDetails;
-  genericValue = { PURPOSE: [] };
-  installmentDetails: LoanInstallmentModel;
+  genericValue: any = { PURPOSE: [] };
+  installmentDetails: LoanInstallmentModel | any;
   calculatedData: any;
   profileInfo: any;
   currentCurrency: any;
-  loanDetails: LoanDetailsModel[];
-  corpCustId: number;
+  loanDetails: LoanDetailsModel[] | any;
+  corpCustId: number | any;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class TopupLoanComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.corpCustId = this.sessionStorageService.getCustomerInfo()?.customerId;
@@ -66,7 +66,7 @@ export class TopupLoanComponent implements OnInit {
       topUpAmount: ["", [Validators.required]],
       transferType: "Top Up Loan",
       source: "I",
-      corpCustomerId: this.corpCustId,
+      corpCustomerId: this.corpCustId
     });
 
     this.topUpForm
@@ -99,14 +99,14 @@ export class TopupLoanComponent implements OnInit {
   fetchLoanInstallment() {
     this.loanService
       .fetchLoanInstallment(this.topUpForm?.value?.debitAccount)
-      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel>) => {
+      .subscribe((res: IcHttpResponseModel<LoanInstallmentModel> | any) => {
         if (res?.statusCode == 200 && res?.data)
           this.installmentDetails = res?.data;
       });
   }
 
   //when the input values changes, slider value changes
-  onInputChange(e, value) {
+  onInputChange(e: any, value: any) {
     if (value == "tenure") {
       let year = this.topUpForm.value.tenureYear;
       let month = this.topUpForm.value.tenureMonth;
@@ -117,7 +117,7 @@ export class TopupLoanComponent implements OnInit {
   }
 
   //on the slider change, the input values should change
-  onSliderChange(e, value) {
+  onSliderChange(e: any, value: any) {
     if (value == "tenure") {
       let maxTenure = e.value;
       let years = Math.floor(maxTenure / 365);
@@ -135,12 +135,12 @@ export class TopupLoanComponent implements OnInit {
    */
   calculateTenure() {
     let numberOfMonths =
-      this.topUpForm.value.tenureYear * 12 + this.topUpForm.value.tenureMonth;
+      this.topUpForm?.value.tenureYear * 12 + this.topUpForm?.value.tenureMonth;
     let payload = {
       firstRepaymentDate: new Date(),
       interestRate: this.installmentDetails?.interestRate,
       numberOfMonths: numberOfMonths,
-      principleAmount: this.topUpForm.value.topUpAmount,
+      principleAmount: this.topUpForm?.value.topUpAmount
     };
     this.loanService.calculateEMI(payload).subscribe((res: any) => {
       this.calculatedData = {
@@ -148,7 +148,7 @@ export class TopupLoanComponent implements OnInit {
         maturityAmount: res?.data?.monthlyPayment,
         depositAmount: this.installmentDetails?.emiAmount,
         currentMaturityDate: this.installmentDetails?.maturityDate,
-        currentInterest: this.installmentDetails?.totalInterest,
+        currentInterest: this.installmentDetails?.totalInterest
       };
     });
   }
@@ -161,9 +161,9 @@ export class TopupLoanComponent implements OnInit {
 
   //save function to save the details
   saveTopUp() {
-    let payload = { ...this.topUpForm.value };
+    let payload = { ...this.topUpForm?.value };
     payload.debitCurrency = this.loanDetails?.find(
-      (res) => res?.cbsAccountNumber == this.topUpForm?.value?.debitAccount
+      (res: any) => res?.cbsAccountNumber == this.topUpForm?.value?.debitAccount
     )?.currencyCode;
     delete payload.tenure;
     console.log(payload, "payload");
@@ -182,43 +182,43 @@ export class TopupLoanComponent implements OnInit {
               { Name: this.installmentDetails?.customerName },
               {
                 "Loan Account Number":
-                  this.topUpForm?.get("debitAccount")?.value,
+                  this.topUpForm?.get("debitAccount")?.value
               },
               { Type: this.installmentDetails?.loanType },
               { "Loan Amount": this.installmentDetails?.loanAmount },
               {
                 "Outstanding Principal":
-                  this.installmentDetails?.outstandPrincpl,
+                  this.installmentDetails?.outstandPrincpl
               },
               {
-                "Interest Rate": this.installmentDetails?.interestRate,
+                "Interest Rate": this.installmentDetails?.interestRate
               },
               {
-                Duration: this.installmentDetails?.duration,
+                Duration: this.installmentDetails?.duration
               },
               { "Maturity Date": this.installmentDetails?.maturityDate },
               {
                 "Remaining Installments":
-                  this.installmentDetails?.remainingInstall,
+                  this.installmentDetails?.remainingInstall
               },
-              { Status: this.installmentDetails?.status },
-            ],
+              { Status: this.installmentDetails?.status }
+            ]
           },
           {
             header: "Modify Tenure ",
             details: [
               {
                 "Top up Amount": this.getDecimalValue(
-                  this.topUpForm.value.topUpAmount
-                ),
+                  this.topUpForm?.value.topUpAmount
+                )
               },
-              { Tenure: this.topUpForm.value.tenureYear + "Year" },
+              { Tenure: this.topUpForm?.value.tenureYear + "Year" },
               { "Account to be credited": "" },
-              { Purpose: this.topUpForm.value.purpose },
-            ],
-          },
-        ],
-      },
+              { Purpose: this.topUpForm?.value.purpose }
+            ]
+          }
+        ]
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

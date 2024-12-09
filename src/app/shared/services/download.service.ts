@@ -1,28 +1,25 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
-
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class DownloadService {
   baseUrl = environment.microServiceURL;
   constructor(private http: HttpClient) {}
-  downloadloanDetailDoc(originationId) {
+  downloadloanDetailDoc(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/webSummary/download?originationId=${originationId}`,
       { responseType: "arraybuffer" }
     );
   }
-  downloadAccountDetailDoc(originationId) {
+  downloadAccountDetailDoc(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/webSummary/loan-account-info/Download?originationId=${originationId}`,
       { responseType: "arraybuffer" }
     );
   }
-  downloadFdRdDetailDoc(originationId) {
+  downloadFdRdDetailDoc(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/webSummary/FdAndRd/Download?originationId=${originationId}`,
       { responseType: "blob", observe: "response" }
@@ -49,7 +46,7 @@ export class DownloadService {
    */
   fetchFile(fileUrl: string) {
     return this.http.get(`${this.baseUrl}${fileUrl}`, {
-      responseType: "arraybuffer",
+      responseType: "arraybuffer"
     });
   }
 }

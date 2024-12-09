@@ -256,7 +256,7 @@
           *ngIf="
             loanDisbursementForm?.value.confirmAccountNumber !=
               loanDisbursementForm?.value.accountNumber &&
-            loanDisbursementForm.get('confirmAccountNumber').touched
+            loanDisbursementForm.get('confirmAccountNumber')?.touched
           "
         >
           Account Number is not matching

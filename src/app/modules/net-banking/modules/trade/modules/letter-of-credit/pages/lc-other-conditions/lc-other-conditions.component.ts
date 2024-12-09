@@ -1,27 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
-  selector: 'app-lc-other-conditions',
-  templateUrl: './lc-other-conditions.component.html',
-  styleUrls: ['./lc-other-conditions.component.scss']
+  selector: "app-lc-other-conditions",
+  templateUrl: "./lc-other-conditions.component.html",
+  styleUrls: ["./lc-other-conditions.component.scss"]
 })
 export class LcOtherConditionsComponent implements OnInit {
-  lcOtherConditionForm: FormGroup
-  @Input("updateParentModel") updateParentModel: (
-    part: Partial<any>,
-    isFormValid: boolean
-  ) => void;
+  lcOtherConditionForm!: FormGroup;
+  @Input("updateParentModel") updateParentModel:
+    | ((part: Partial<any>, isFormValid: boolean) => void)
+    | any;
 
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.buildForm()
+    this.buildForm();
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.lcOtherConditionForm = this.fb.group({
       plcOfRcptChngTo: [data?.plcOfRcptChngTo ?? ""],
       plcOfRcptChngFrom: [data?.plcOfRcptChngFrom ?? ""],
@@ -36,17 +33,17 @@ export class LcOtherConditionsComponent implements OnInit {
       narrative: [data?.narrative ?? ""],
       margin: [data?.margin ?? ""]
     });
-    this.lcOtherConditionForm.valueChanges.subscribe((res) => {
+    this.lcOtherConditionForm.valueChanges.subscribe(() => {
       let payload: any = {};
       payload = {
         lcType: "Amendment",
         amendmentInfo: this.lcOtherConditionForm.value
-      }
+      };
       this.updateParentModel(
         {
           lcAmendmentAmendmentInfo: {
             payload
-          },
+          }
         },
         this.checkForm()
       );

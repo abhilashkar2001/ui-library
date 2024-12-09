@@ -5,17 +5,17 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-growth-fd-animation",
   templateUrl: "./growth-fd-animation.component.html",
-  styleUrls: ["./growth-fd-animation.component.scss"],
+  styleUrls: ["./growth-fd-animation.component.scss"]
 })
 export class GrowthFdAnimationComponent implements OnInit {
-  @Input() depositName;
+  @Input() depositName: any;
   fdArray = NewDepositConstant.GROWTHFD;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  openFD(fdType) {
+  openFD(fdType: any) {
     var path = "";
     if (fdType == "FD") {
       path = "deposits/home/fdFlow/fdDetails";

@@ -1,8 +1,8 @@
-import { Directive, HostListener, Inject } from '@angular/core';
-import { DropdownLinkDirective } from './dropdown-link.directive';
+import { Directive, HostListener, Inject } from "@angular/core";
+import { DropdownLinkDirective } from "./dropdown-link.directive";
 
 @Directive({
-  selector: '[appDropdownToggle]',
+  selector: "[appDropdownToggle]"
 })
 export class DropdownAnchorDirective {
   protected navlink: DropdownLinkDirective;
@@ -11,8 +11,8 @@ export class DropdownAnchorDirective {
     this.navlink = navlink;
   }
 
-  @HostListener('click', ['$event'])
-  onClick(e: any) {
+  @HostListener("click", ["$event"])
+  onClick() {
     this.navlink.toggle();
   }
 }

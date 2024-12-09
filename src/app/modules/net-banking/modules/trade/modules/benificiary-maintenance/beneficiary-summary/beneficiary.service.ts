@@ -3,20 +3,20 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class BeneficiaryService {
   protected basePath = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
-  uploadBenificiaryExcel(formData) {
+  uploadBenificiaryExcel(formData: any) {
     return this.http.post(
       `${this.basePath}/corp_benieficiary/uploadBeneficiary`,
       formData
     );
   }
 
-  getBulkUploadRecords(refNumber, filters?) {
+  getBulkUploadRecords(refNumber: any, filters?: any) {
     var filterBy = "";
     if (filters?.filterBy) {
       const keys = Object.keys(filters.filterBy);
@@ -40,15 +40,7 @@ export class BeneficiaryService {
     );
   }
 
-  getSummary(
-    filterBy,
-    filterValue,
-    page,
-    size,
-    sortName,
-    direction,
-    moduleName
-  ) {
+  getSummary(filterBy: any, page: any, size: any) {
     var filterEndpoint = "";
     if (filterBy) {
       const keys = Object.keys(filterBy);
@@ -59,10 +51,7 @@ export class BeneficiaryService {
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
     }
-    const filter = `${filterEndpoint}`;
     const pagination = `page=${page}&size=${size}`;
-
-    const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
 
     const payload = `?${pagination}`;
     return this.http.get(
@@ -74,7 +63,7 @@ export class BeneficiaryService {
     return this.http.get(
       `${this.basePath}/corp_benieficiary/downloadTemplate?filename=Upload`,
       {
-        responseType: "blob",
+        responseType: "blob"
       }
     );
   }
@@ -83,16 +72,23 @@ export class BeneficiaryService {
     return this.http.get<any>(`${this.basePath}/country`);
   }
 
-  saveBeneficiary(payload) {
+  saveBeneficiary(payload: any) {
     return this.http.post<any>(`${this.basePath}/corp_benieficiary`, payload);
   }
 
-  getBeneficiaryById(id) {
+  getBeneficiaryById(id: any) {
     return this.http.get<any>(
       `${this.basePath}/corp_benieficiary?benificiaryId=${id}`
     );
   }
-  getDataByPage(filterBy, filterValue, page, size, sortName, direction) {
+  getDataByPage(
+    filterBy: any,
+    filterValue: any,
+    page: any,
+    size: any,
+    sortName: any,
+    direction: any
+  ) {
     const filter = `${filterBy}=${filterValue}`;
     const pagination = `size=${size}&page=${page}`;
     const sortOperation = `sort=${sortName}&sortOrder=${direction}`;
@@ -109,13 +105,13 @@ export class BeneficiaryService {
     return this.http.get<any>(`${this.basePath}/corp_benieficiary${payload}`);
   }
 
-  checkCorpAccountNumber(accNo) {
+  checkCorpAccountNumber(accNo: any) {
     return this.http.get<any>(
       `${this.basePath}/corp_benieficiary/checkExistingAccont?accountNumber=${accNo}`
     );
   }
 
-  fetchBankCode(searchValue) {
+  fetchBankCode(searchValue: any) {
     return this.http.get<any>(
       `${this.basePath}/retail-beneficiary/fetchOtherBankInfo${
         searchValue ? `?searchValue=${searchValue}` : ""

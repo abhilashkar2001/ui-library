@@ -7,7 +7,7 @@ import { BulkUploadServiceService } from "app/modules/net-banking/modules/dashbo
 @Component({
   selector: "app-benificiary-bulk-upload-summary",
   templateUrl: "./benificiary-bulk-upload-summary.component.html",
-  styleUrls: ["./benificiary-bulk-upload-summary.component.scss"],
+  styleUrls: ["./benificiary-bulk-upload-summary.component.scss"]
 })
 export class BenificiaryBulkUploadSummaryComponent implements OnInit {
   columns: any = BeneficiaryBulkUploadConstant.UPLOAD_SUMMARY;
@@ -27,10 +27,10 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
   bulkUploadType: any;
 
@@ -46,17 +46,17 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
     this.route.navigate(["/user/dashboard"]);
   }
 
-  navigateToBulkUpload(id) {
+  navigateToBulkUpload(id: any) {
     this.route.navigate(["user/dashboard/trade/bulk-upload", id]);
   }
 
   bulkUpload() {
     this.navigateToBulkUpload("addNew");
   }
-  editRecord(element) {
+  editRecord(element: any) {
     this.navigateToBulkUpload(element.element.refNumber);
   }
-  getDataByPage(event) {
+  getDataByPage(event: any) {
     this.page = event.page;
     this.pageSize = event.size;
     this.sortDirection = event.direction;
@@ -64,15 +64,7 @@ export class BenificiaryBulkUploadSummaryComponent implements OnInit {
     this.filterBy = event.filterBy;
     this.module = event.module;
     this.benificiaryService
-      .getSummary(
-        event.filterBy,
-        event.filterValue,
-        event.page,
-        event.size,
-        this.sortValue,
-        event.direction,
-        this.module
-      )
+      .getSummary(event.filterBy, event.page, event.size)
       .subscribe((res) => {
         this.bulkUploadData = res;
       });

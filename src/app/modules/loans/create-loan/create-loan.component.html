@@ -8,7 +8,7 @@
       <div
         class=""
         fxFlex="48"
-        [ngClass]="isReadOnly == true && 'disable-mat-form-field'"
+        [ngClass]="{ 'disable-mat-form-field': isReadOnly }"
       >
         <mat-form-field
           appearance="outline"
@@ -46,7 +46,7 @@
 
       <div fxFlex="48" class="MiscellaneousClass">
         <fieldset
-          [ngClass]="isReadOnly == true && 'disable-fieldset'"
+          [ngClass]="{ 'disable-fieldset': isReadOnly }"
           class="fieldset"
         >
           <legend style="width: fit-content">Tenure</legend>

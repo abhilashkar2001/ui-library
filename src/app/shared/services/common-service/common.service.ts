@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CommonService {
   private urlSource = new BehaviorSubject("initial value");
@@ -35,11 +35,11 @@ export class CommonService {
     this.calCulatorsDataSource.next(calcData);
   }
 
-  deleteDocument(documentId) {
+  deleteDocument(documentId: any) {
     return this.http.delete(`${baseUrl}/upload-document/${documentId}`);
   }
 
-  uploadDocument(formData) {
+  uploadDocument(formData: any) {
     return this.http.post<any>(
       `${baseUrl}/upload-document`,
       formData
@@ -54,7 +54,7 @@ export class CommonService {
       `${baseUrl}/country?oneTimeAuth=Y&recordStatus=OPEN`
     );
   }
-  generateOTP(mobile) {
+  generateOTP(mobile: any) {
     return this.http.get<any>(`${baseUrl}/auth/generateOTP?mobile=${mobile}`);
   }
 
@@ -71,7 +71,7 @@ export class CommonService {
       formData,
       {
         reportProgress: true,
-        observe: "events",
+        observe: "events"
       }
     );
   }

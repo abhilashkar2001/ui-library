@@ -7,10 +7,10 @@ import { CreateRdService } from "../create-rd.service";
 @Component({
   selector: "app-create-cd",
   templateUrl: "./create-cd.component.html",
-  styleUrls: ["./create-cd.component.scss"],
+  styleUrls: ["./create-cd.component.scss"]
 })
 export class CreateCdComponent implements OnInit {
-  createRdForm: FormGroup;
+  createRdForm!: FormGroup;
   @Output() customCreatRdForm = new EventEmitter<any>();
   @Output() customSaveCreate = new EventEmitter<{}>();
 
@@ -23,12 +23,12 @@ export class CreateCdComponent implements OnInit {
     TYPESOFCUSTOMER: [],
     INTERESTPAYOUT: [],
     OWNERSHIP: [],
-    PAYMENTTYPE: [],
+    PAYMENTTYPE: []
   };
-  typesOfCustomer: string[];
-  interestPayout: string[];
-  ownership: string[];
-  paymentType: string[];
+  typesOfCustomer: string[] | any;
+  interestPayout: string[] | any;
+  ownership: string[] | any;
+  paymentType: string[] | any;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class CreateCdComponent implements OnInit {
       });
   }
 
-  getRdById(id) {
+  getRdById(id: any) {
     console.log(id);
     this.rdApi.getRdDetails(id).subscribe((resp: any) => {
       if (resp?.statusCode === 200) {
@@ -73,18 +73,18 @@ export class CreateCdComponent implements OnInit {
     });
   }
 
-  customSelectionChange(event) {
+  customSelectionChange() {
     // this.isFixedDepositDetail = event.isFixedDepositDetail;
     // this.isPersonalDetails = event.isPersonalDetails;
     // this.isBookFd = event.isBookFd;
   }
 
-  buildCreateRdForm(data?) {
+  buildCreateRdForm(data?: any) {
     this.createRdForm = this.fb.group({
       amount: [data ? data.amount : "", Validators.required],
       maturityDate: [
         data ? new Date(data.maturityDate) : "",
-        Validators.required,
+        Validators.required
       ],
       intrestRate: [data ? data.intrestRate : "", Validators.required],
       ownership: [data ? data.ownership : "", Validators.required],
@@ -93,11 +93,11 @@ export class CreateCdComponent implements OnInit {
       intrestPayout: [data ? data.intrestPayout : "", Validators.required],
       paymentType: [
         data?.paymentType ? data.paymentType : "",
-        Validators.required,
+        Validators.required
       ],
       autoRenew: [data ? data.autoRenew : false],
       fdRdMasterId: data && data.fdRdMasterId,
-      basisDetailsId: data && data.basisDetailsId,
+      basisDetailsId: data && data.basisDetailsId
     });
     this.customBasicForm = this.createRdForm;
     // setTimeout(() => {
@@ -110,7 +110,7 @@ export class CreateCdComponent implements OnInit {
     this.customCreatRdForm.emit(this.createRdForm);
     this.customSaveCreate.emit({
       satus: true,
-      rdData: this.createRdForm.value,
+      rdData: this.createRdForm.value
     });
   }
 
@@ -121,7 +121,7 @@ export class CreateCdComponent implements OnInit {
   onExit() {
     window.close();
   }
-  onPaymentTypeChange(e) {
+  onPaymentTypeChange(e: any) {
     sessionStorage.setItem("paymentType", e);
   }
 }

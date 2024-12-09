@@ -8,7 +8,7 @@
           [items]="accountNumberList"
           bindValueKey="cardNumber"
           bindLabelKey="cardNumber"
-          [control]="eStatementForm.get('accountNumber')"
+          [control]="eStatementForm.get('accountNumber') | formcontrol"
           (selectionChange)="patchDetails($event)"
         >
         </app-searchable-select>
@@ -16,14 +16,14 @@
       <div fxFlex="25">
         <app-ic-custom-input
           [inputLabel]="'Card Name' | translate"
-          [control]="eStatementForm.get('cardName')"
+          [control]="eStatementForm.get('cardName') | formcontrol"
           [readonly]="true"
         ></app-ic-custom-input>
       </div>
       <div fxFlex="25">
         <app-ic-custom-input
           [inputLabel]="'Email' | translate"
-          [control]="eStatementForm.get('email')"
+          [control]="eStatementForm.get('email') | formcontrol"
         ></app-ic-custom-input>
       </div>
     </div>
@@ -34,7 +34,7 @@
           [inputLabel]="'Frequency' | translate"
           bindLabelKey="values"
           bindValueKey="values"
-          [control]="eStatementForm.get('frequency')"
+          [control]="eStatementForm.get('frequency') | formcontrol"
         >
         </app-searchable-select>
       </div>
@@ -44,7 +44,7 @@
           [inputLabel]="'Format' | translate"
           bindLabelKey="values"
           bindValueKey="values"
-          [control]="eStatementForm.get('format')"
+          [control]="eStatementForm.get('format') | formcontrol"
         >
         </app-searchable-select>
       </div>

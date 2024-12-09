@@ -12,20 +12,20 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-upgrade",
   templateUrl: "./upgrade.component.html",
-  styleUrls: ["./upgrade.component.scss"],
+  styleUrls: ["./upgrade.component.scss"]
 })
 export class UpgradeComponent implements OnInit {
-  upgradeForm: FormGroup;
+  upgradeForm!: FormGroup;
   cardList: any = [];
   upgradeCardDetails: Boolean = false;
   selectedCard: any;
   profileInfo: any;
-  communicationAddress: string;
-  permanentAddress: string;
+  communicationAddress: string | any;
+  permanentAddress: string | any;
   accountDetails: any;
   typeofCard: any;
   selectedAddress: any;
-  title: string;
+  title: string | any;
 
   constructor(
     private fb: FormBuilder,
@@ -38,9 +38,12 @@ export class UpgradeComponent implements OnInit {
   ) {
     this.profileInfo = this.tokenService.getUser();
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.updateItemsBasedOnUrl(event.url);
+      .pipe(
+        filter((event) => event instanceof NavigationEnd) // Regular filter
+      )
+      .subscribe((event) => {
+        const navEndEvent = event as NavigationEnd; // Type assertion
+        this.updateItemsBasedOnUrl(navEndEvent.url);
       });
   }
 
@@ -58,7 +61,7 @@ export class UpgradeComponent implements OnInit {
       cardName: [""],
       joiningFees: [""],
       annualFees: [""],
-      typeOfCard: [""],
+      typeOfCard: [""]
     });
   }
   /**
@@ -76,7 +79,7 @@ export class UpgradeComponent implements OnInit {
     this.upgradeCardDetails = true;
     const dialogRef = this.dialog.open(SelectNewCardPopupComponent, {
       width: "60%",
-      panelClass: "custom-dialog-container",
+      panelClass: "custom-dialog-container"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.upgradeCardDetails === true) {
@@ -84,16 +87,16 @@ export class UpgradeComponent implements OnInit {
         this.selectedCard = resp?.card;
         this.upgradeForm
           ?.get("cardType")
-          .patchValue(this.selectedCard?.cardType);
+          ?.patchValue(this.selectedCard?.cardType);
         this.upgradeForm
           ?.get("cardName")
-          .patchValue(this.selectedCard?.cardName);
+          ?.patchValue(this.selectedCard?.cardName);
         this.upgradeForm
           ?.get("joiningFees")
-          .patchValue(this.selectedCard?.joiningFee);
+          ?.patchValue(this.selectedCard?.joiningFee);
         this.upgradeForm
           ?.get("annualFees")
-          .patchValue(this.selectedCard?.annualFee);
+          ?.patchValue(this.selectedCard?.annualFee);
         this.fetchAddressDetails();
       }
     });
@@ -102,10 +105,10 @@ export class UpgradeComponent implements OnInit {
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
-      this.upgradeForm?.get("id").patchValue(this.accountDetails?.id);
+      this.upgradeForm?.get("id")?.patchValue(this.accountDetails?.id);
       this.typeofCard = this.accountDetails?.typeOfCard;
     }
   }
@@ -124,7 +127,7 @@ export class UpgradeComponent implements OnInit {
   }
 
   handleSingleAddress(address: any, addressType: string) {
-    this.upgradeForm?.get("addressType").patchValue(addressType);
+    this.upgradeForm?.get("addressType")?.patchValue(addressType);
     this.communicationAddress = this.formatAddress(address);
     this.onAddressSelectionChange(addressType);
   }
@@ -132,10 +135,10 @@ export class UpgradeComponent implements OnInit {
   handleMultipleAddresses(addresses: any[]) {
     addresses.forEach((element) => {
       if (element?.addressType === "Communication") {
-        this.upgradeForm?.get("addressType").patchValue("Communication");
+        this.upgradeForm?.get("addressType")?.patchValue("Communication");
         this.communicationAddress = this.formatAddress(element);
       } else if (element?.addressType === "Permanent") {
-        this.upgradeForm?.get("addressType").patchValue("Permanent");
+        this.upgradeForm?.get("addressType")?.patchValue("Permanent");
         this.permanentAddress = this.formatAddress(element);
       }
     });
@@ -148,7 +151,7 @@ export class UpgradeComponent implements OnInit {
       cityName = "",
       countryName = "",
       stateName = "",
-      pincode = "",
+      pincode = ""
     } = address;
     return `${address1}, ${address2}, ${cityName}, ${countryName}, ${stateName}, ${pincode}`;
   }
@@ -188,9 +191,9 @@ export class UpgradeComponent implements OnInit {
                 "Card Name": this.selectedCard?.cardName,
                 "Card Type": this.selectedCard?.cardType,
                 "Joining Fee": this.selectedCard?.joiningFee,
-                "Annual Fee": this.selectedCard?.annualFee,
-              },
-            ],
+                "Annual Fee": this.selectedCard?.annualFee
+              }
+            ]
           },
           {
             header: "Delivery Address",
@@ -200,12 +203,12 @@ export class UpgradeComponent implements OnInit {
               { City: this.selectedAddress?.[3] },
               { State: this.selectedAddress?.[4] },
               { Country: this.selectedAddress?.[5] },
-              { ZipCode: this.selectedAddress?.[6] },
-            ],
-          },
+              { ZipCode: this.selectedAddress?.[6] }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

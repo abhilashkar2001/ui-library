@@ -15,14 +15,14 @@ import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-single-fund-transfer",
   templateUrl: "./single-fund-transfer.component.html",
-  styleUrls: ["./single-fund-transfer.component.scss"],
+  styleUrls: ["./single-fund-transfer.component.scss"]
 })
 export class SingleFundTransferComponent implements OnInit {
-  fundTransferForm: FormGroup;
+  fundTransferForm!: FormGroup;
   purpose = ["Salary", "Vendor"];
-  fromAccount = [];
+  fromAccount: any = [];
   transferMode = [];
-  transferTo = [];
+  transferTo: any = [];
   benificiaryEmail = [];
   benificiaryMobile = [];
   remitter: boolean = false;
@@ -31,8 +31,8 @@ export class SingleFundTransferComponent implements OnInit {
   remitterNarration: boolean = false;
   paymentDetail: boolean = false;
   custAccounts: any;
-  dialogRef: MatDialogRef<CustomSuccessPopupComponent>;
-  dialogRef1: MatDialogRef<AllInOnePopupComponent>;
+  dialogRef: MatDialogRef<CustomSuccessPopupComponent> | any;
+  dialogRef1: MatDialogRef<AllInOnePopupComponent> | any;
   customerInfo: any;
   beneficiaryName: any;
   corporateId: any;
@@ -56,11 +56,17 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(sessionStorage.getItem("corporateId"));
+    this.corporateId = JSON.parse(
+      <string>sessionStorage.getItem("corporateId")
+    );
     this.buildForm();
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
-    this.custAccounts = JSON.parse(sessionStorage.getItem("listOfAccounts"));
-    this.custAccounts.forEach((element) => {
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
+    this.custAccounts = JSON.parse(
+      <string>sessionStorage.getItem("listOfAccounts")
+    );
+    this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
     });
     this.fetchBenificiary();
@@ -88,7 +94,7 @@ export class SingleFundTransferComponent implements OnInit {
       detail1: [""],
       detail2: [""],
       detail3: [""],
-      remarks: [""],
+      remarks: [""]
     });
   }
 
@@ -99,7 +105,7 @@ export class SingleFundTransferComponent implements OnInit {
         if (resp?.statusCode == 200) {
           let list = resp?.data;
           this.transferTo = list?.filter(
-            (item) => item?.name && item?.accountNo
+            (item: any) => item?.name && item?.accountNo
           );
         }
       });
@@ -131,10 +137,10 @@ export class SingleFundTransferComponent implements OnInit {
     }
   }
 
-  changeInToAccount(event) {
+  changeInToAccount(event: any) {
     if (event) {
       this.beneficiaryName = this.transferTo.find(
-        (e) => e.accountNo == event
+        (e: any) => e.accountNo == event
       )?.name;
     }
   }
@@ -145,7 +151,7 @@ export class SingleFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary",
+      "user/dashboard/fund-transfer/fund-transfer-summary"
     ]);
   }
 
@@ -154,12 +160,10 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   getOTP() {
-    this.api
-      .getOtp(this.customerInfo.mobileNumber)
-      .subscribe((response: any) => {});
+    this.api.getOtp(this.customerInfo.mobileNumber).subscribe(() => {});
   }
 
-  saveData(payload) {
+  saveData(payload: any) {
     this.fundTransferService
       .saveFundTransferData(payload)
       .subscribe((resp: any) => {
@@ -168,14 +172,14 @@ export class SingleFundTransferComponent implements OnInit {
             data: {
               msg: "Transaction Successful",
               status: true,
-              reffNo: resp?.data,
+              reffNo: resp?.data
             },
             width: "40%",
             disableClose: true,
             panelClass: "popup-class",
-            backdropClass: "bdrop",
+            backdropClass: "bdrop"
           });
-          this.dialogRef.afterClosed().subscribe((result) => {
+          this.dialogRef.afterClosed().subscribe((result: any) => {
             console.log(result);
             if (result == "Done") {
               this.cancel();
@@ -187,7 +191,7 @@ export class SingleFundTransferComponent implements OnInit {
 
   submit() {
     if (!this.fundTransferForm.valid) return;
-    let payload = [];
+    let payload: any = [];
     let obj = this.fundTransferForm.value;
     obj.uploadType = "SINGLE";
     obj.beneficiaryName = this.beneficiaryName;
@@ -197,15 +201,15 @@ export class SingleFundTransferComponent implements OnInit {
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile,
+        mobile: this.tokenStorageService.getUser()?.mobile
       },
       width: "50%",
       height: "33%",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
-    this.dialogRef1.afterClosed().subscribe((result) => {
+    this.dialogRef1.afterClosed().subscribe((result: any) => {
       if (result == "verified") {
         this.saveData(payload);
       } else {
@@ -214,9 +218,9 @@ export class SingleFundTransferComponent implements OnInit {
           width: "40%",
           disableClose: true,
           panelClass: "popup-class",
-          backdropClass: "bdrop",
+          backdropClass: "bdrop"
         });
-        this.dialogRef.afterClosed().subscribe((result) => {
+        this.dialogRef.afterClosed().subscribe((result: any) => {
           if (result == "Failed") {
             this.dialogRef.close();
           }

@@ -9,29 +9,29 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-send-money",
   templateUrl: "./send-money.component.html",
-  styleUrls: ["./send-money.component.scss"],
+  styleUrls: ["./send-money.component.scss"]
 })
 export class SendMoneyComponent implements OnInit {
   @Input("sendMoneyComponentsChange")
-  tabScreens = SendMoneyStore.tabScreens.slice(0, 6);
+  tabScreens: any = SendMoneyStore.tabScreens.slice(0, 6);
   recentTransTabs = SendMoneyStore.recentTabs;
   recentTransCols = SendMoneyStore.recentColumns;
   recentTransData: any;
-  selected = this.tabScreens[0].screenName;
+  selected: any = this.tabScreens[0].screenName;
   externalLinks = SendMoneyStore.externalLinks;
   startTabIndex = 0;
-  isRotated: boolean;
+  isRotated: boolean | any;
   sendMoneyComponents: boolean = true;
   selectedAccount: any;
   customerInfo: any;
   showMoneyStatusIcon: boolean = true;
-  recentTransKey = [
+  recentTransKey: any = [
     "Transfer Money",
     "Self Transfer",
     "Quick transfer",
     "MMID",
     "Schedule Payment",
-    "Send Money Abroad",
+    "Send Money Abroad"
   ];
   constructor(
     private route: Router,
@@ -46,7 +46,7 @@ export class SendMoneyComponent implements OnInit {
 
     if (route.url) {
       this.selected = this.tabScreens.find(
-        (i) => i?.route === route.url
+        (i: any) => i?.route === route.url
       )?.screenName;
     }
 
@@ -61,7 +61,7 @@ export class SendMoneyComponent implements OnInit {
     //   this.selected = navigation?.extras?.state?.screenName;
     // }
 
-    this.tabScreens.forEach((tab) => {
+    this.tabScreens.forEach((tab: any) => {
       this.matIconRegistry.addSvgIcon(
         tab.icon,
         this.sanitizer.bypassSecurityTrustResourceUrl(tab.src)
@@ -82,27 +82,18 @@ export class SendMoneyComponent implements OnInit {
   ngOnInit(): void {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     // this.selectedAccount = this.sessionStorageService.getSelectedAccountNo();
-    this.fetRecntTransaction(
-      this.recentTransKey[
-        this.tabScreens.findIndex((item) => item?.screenName == this.selected)
-      ]
-    );
+    this.fetRecntTransaction();
   }
 
-  changeTabs(index) {
+  changeTabs(index: any) {
     this.selected = this.tabScreens[index].screenName;
     this.route.navigate([this.tabScreens[index].route]);
-    this.fetRecntTransaction(this.recentTransKey[index]);
+    this.fetRecntTransaction();
   }
 
-  recentTransTabChange(event) {
+  recentTransTabChange(event: any) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
-    if (event == "Account")
-      this.fetRecntTransaction(
-        this.recentTransKey[
-          this.tabScreens.findIndex((item) => item?.screenName == this.selected)
-        ]
-      );
+    if (event == "Account") this.fetRecntTransaction();
     else this.recentTransData = [];
   }
 
@@ -129,8 +120,7 @@ export class SendMoneyComponent implements OnInit {
     return this.tabScreens;
   }
 
-  fetRecntTransaction(screenName) {
-    let customer = this.sessionStorageService.getCustomerInfo();
+  fetRecntTransaction() {
     this.recentTransData = [];
     // this.dashboardService
     //   .fetchScreenWiseRecentTrans(screenName, customer.customerId)

@@ -5,7 +5,7 @@ import { OpenAccountService } from "app/shared/services/open-service/open-accoun
 @Component({
   selector: "app-apply-account",
   templateUrl: "./apply-account.component.html",
-  styleUrls: ["./apply-account.component.scss"],
+  styleUrls: ["./apply-account.component.scss"]
 })
 export class ApplyAccountComponent implements OnInit {
   subClassList: any[] = [];
@@ -28,7 +28,7 @@ export class ApplyAccountComponent implements OnInit {
     });
   }
 
-  customApply(event) {
+  customApply(event: any) {
     this.scrollToTop();
     this.subClassList = event["classDetails"]["productDetails"];
     this.subClass = event.subClass;

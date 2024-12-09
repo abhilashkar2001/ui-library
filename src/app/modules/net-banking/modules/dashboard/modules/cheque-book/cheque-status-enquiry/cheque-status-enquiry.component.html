@@ -6,9 +6,9 @@
         [items]="accountNumberList"
         bindValueKey="accountNo"
         bindLabelKey="accountNo"
-        [control]="chqueInquiryForm.get('accountNo')"
-        skipLabel="false"
-        (selectionChange)="handleAccountNumberChange($event)"
+        [control]="chqueInquiryForm.get('accountNo') | formcontrol"
+        [skipLabel]="false"
+        (selectionChange)="handleAccountNumberChange()"
       ></app-searchable-select>
       <span class="message" *ngIf="chequeNumber"
         >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
@@ -23,7 +23,9 @@
           <mat-label class="mb-8 custom-label">{{ "Account" }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
-            [formControl]="chqueInquiryForm.get('inquiryChequeBy')"
+            [formControl]="
+              chqueInquiryForm.get('inquiryChequeBy') | formcontrol
+            "
           >
             <mat-radio-button
               *ngFor="let option of inquiryChequeOptions"
@@ -37,39 +39,39 @@
     <div fxFlex="100" fxLayoutAlign="space-between center" class="row px-12">
       <div
         fxFlex="30"
-        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value === 'Number'"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Number'"
       >
         <app-ic-custom-input
-          [control]="chqueInquiryForm.get('chequeNumber')"
+          [control]="chqueInquiryForm.get('chequeNumber') | formcontrol"
           inputLabel="Cheque Number"
         ></app-ic-custom-input>
       </div>
 
       <div
         fxFlex="30"
-        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value == 'Status'"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value == 'Status'"
       >
         <app-searchable-select
           [items]="selectList"
           bindLabelKey="label"
           bindValueKey="value"
-          [control]="chqueInquiryForm.get('select')"
+          [control]="chqueInquiryForm.get('select') | formcontrol"
           inputLabel="select"
         ></app-searchable-select>
       </div>
 
       <ng-container
-        *ngIf="chqueInquiryForm.get('inquiryChequeBy').value == 'Range'"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value == 'Range'"
       >
         <div fxFlex="25">
           <app-ic-custom-input
-            [control]="chqueInquiryForm.get('fromChequeBookNo')"
+            [control]="chqueInquiryForm.get('fromChequeBookNo') | formcontrol"
             inputLabel="From Cheque Book No"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25">
           <app-ic-custom-input
-            [control]="chqueInquiryForm.get('toChequeBookNo')"
+            [control]="chqueInquiryForm.get('toChequeBookNo') | formcontrol"
             inputLabel="To Cheque Book No"
           ></app-ic-custom-input>
         </div>

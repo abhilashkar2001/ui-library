@@ -9,12 +9,12 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-add-edit-benificiary",
   templateUrl: "./add-edit-benificiary.component.html",
-  styleUrls: ["./add-edit-benificiary.component.scss"],
+  styleUrls: ["./add-edit-benificiary.component.scss"]
 })
 export class AddEditBenificiaryComponent implements OnInit {
-  benificiaryDetailsForm: FormGroup;
+  benificiaryDetailsForm!: FormGroup | any;
   countryValue: any;
-  id: string;
+  id: string | any;
   isEdit: boolean = false;
   responseItm: any;
   readorWrite: boolean = false;
@@ -25,12 +25,12 @@ export class AddEditBenificiaryComponent implements OnInit {
   bankInfoTableColumn: any = [
     {
       headerDef: "bankCode",
-      headerCell: "Bank Code",
+      headerCell: "Bank Code"
     },
     {
       headerDef: "city",
-      headerCell: "City",
-    },
+      headerCell: "City"
+    }
   ];
   constructor(
     private fb: FormBuilder,
@@ -46,7 +46,9 @@ export class AddEditBenificiaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
     this.buildForm({});
     this.getAllCountry();
     this.route.queryParamMap.subscribe((params: any) => {
@@ -54,19 +56,19 @@ export class AddEditBenificiaryComponent implements OnInit {
       this.isEdit = params.get("isEdit");
       if (this.isEdit && this.id) {
         this.isEdit = true;
-        this.getBeneficiarybyId(this.id);
+        this.getBeneficiarybyId();
         this.readorWrite = true;
         console.log(this.id);
       }
     });
   }
 
-  buildForm(item?) {
+  buildForm(item?: any) {
     this.benificiaryDetailsForm = this.fb.group({
       accountNo: [item ? item.accountNumber : "", Validators.required],
       confirmAccountNumber: [
         item ? item.confirmAccountNumber : "",
-        Validators.required,
+        Validators.required
       ],
       name: [item ? item.payeeName : "", Validators.required],
       nickName: [item ? item.nickName : "", Validators.required],
@@ -77,7 +79,7 @@ export class AddEditBenificiaryComponent implements OnInit {
       beneficiaryStatus: [item.item?.beneficiaryStatus ?? true],
       city: [""],
       ifscCode: [""],
-      countryName: [""],
+      countryName: [""]
     });
     console.log(this.benificiaryDetailsForm);
     console.log(item);
@@ -92,20 +94,20 @@ export class AddEditBenificiaryComponent implements OnInit {
   }
 
   checkAccountNumber() {
-    let accNo = this.benificiaryDetailsForm.get("accountNo").value;
+    let accNo = this.benificiaryDetailsForm.get("accountNo")?.value;
     this.benificiaryApi.checkCorpAccountNumber(accNo).subscribe((res) => {
       this.accountNumberExists = res;
     });
   }
 
-  getBeneficiarybyId(id: string) {
+  getBeneficiarybyId() {
     this.benificiaryApi.getBeneficiaryById(this.id).subscribe((resp: any) => {
       if (resp?.statusCode === 200 || resp.statusCode === 201) {
         this.responseItm = resp.data[0];
         this.benificiaryDetailsForm?.patchValue(this.responseItm);
         this.benificiaryDetailsForm
           .get("confirmAccountNumber")
-          .setValue(this.responseItm?.accountNo);
+          ?.setValue(this.responseItm?.accountNo);
         if (this.responseItm?.accountType == "E")
           this.fetchBankCode(this.responseItm?.bankCode);
       }
@@ -120,13 +122,13 @@ export class AddEditBenificiaryComponent implements OnInit {
       const dialogRef = this.dialog.open(BankCodePopupComponent, {
         data: {
           tableColumns: this.bankInfoTableColumn,
-          bankDetails: this.bankDetails,
+          bankDetails: this.bankDetails
         },
         disableClose: true,
         height: "auto",
         width: "80%",
         panelClass: "search-dialog-container",
-        backdropClass: "auditLog-backdrop",
+        backdropClass: "auditLog-backdrop"
       });
 
       dialogRef.afterClosed().subscribe((value) => {
@@ -138,7 +140,7 @@ export class AddEditBenificiaryComponent implements OnInit {
     }
   }
 
-  fetchBankCode(event): Promise<any> {
+  fetchBankCode(event: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.benificiaryApi.fetchBankCode(event).subscribe(
         (res) => {
@@ -154,9 +156,9 @@ export class AddEditBenificiaryComponent implements OnInit {
   }
   setOtherBankValues(value: any) {
     console.log(value);
-    this.benificiaryDetailsForm.get("ifscCode").patchValue(value?.ifscCode);
-    this.benificiaryDetailsForm.get("city").patchValue(value?.city);
-    this.benificiaryDetailsForm.get("countryName").patchValue(value?.country);
+    this.benificiaryDetailsForm.get("ifscCode")?.patchValue(value?.ifscCode);
+    this.benificiaryDetailsForm.get("city")?.patchValue(value?.city);
+    this.benificiaryDetailsForm.get("countryName")?.patchValue(value?.country);
   }
 
   editRecord() {
@@ -173,12 +175,12 @@ export class AddEditBenificiaryComponent implements OnInit {
 
     let payload: any = {
       ...this.benificiaryDetailsForm.value,
-      corpCustId: this.customerInfo?.customerId,
+      corpCustId: this.customerInfo?.customerId
     };
     if (this.responseItm?.benificiaryId) {
       payload.benificiaryId = this.responseItm.benificiaryId;
     }
-    this.benificiaryApi.saveBeneficiary(payload).subscribe((resp: any) => {
+    this.benificiaryApi.saveBeneficiary(payload).subscribe(() => {
       this.goBack();
     });
   }

@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { TabModel } from "app/shared/models/tab-model";
@@ -18,12 +18,14 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-toolbar-tab",
   templateUrl: "./toolbar-tab.component.html",
-  styleUrls: ["./toolbar-tab.component.scss"],
+  styleUrls: ["./toolbar-tab.component.scss"]
 })
 export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   @Input("items") items: TabModel[] = [];
-  selectedTab!: string;
-  @ViewChild("scrollContainer", { static: false }) scrollContainer: ElementRef;
+  selectedTab!: string | any;
+  @ViewChild("scrollContainer", { static: false }) scrollContainer:
+    | ElementRef
+    | any;
   isScrolled: boolean = false;
   selectedTabIndex: any;
   @Input("showArrow") showArrow: boolean = true;
@@ -43,7 +45,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.items?.currentValue) this.addSvgIcon();
   }
 
@@ -52,8 +54,9 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
     this.selectCurrentRoute(route);
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        route = event.urlAfterRedirects;
+      .subscribe((event) => {
+        const navEndEvent = event as NavigationEnd; // Type assertion
+        route = navEndEvent.urlAfterRedirects;
         this.selectCurrentRoute(route);
       });
   }
@@ -93,7 +96,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
    * On change route the particular tab will be selected
    * @param route
    */
-  selectCurrentRoute(route) {
+  selectCurrentRoute(route: any) {
     const index: number = this.items.findIndex(
       (item: TabModel) => item?.route == route
     );
@@ -130,7 +133,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   scroolToLeft() {
     this.scrollContainer.nativeElement.scrollBy({
       left: -100,
-      behaviour: "smooth",
+      behaviour: "smooth"
     });
   }
 
@@ -140,7 +143,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   scrollToRight() {
     this.scrollContainer.nativeElement.scrollBy({
       left: 100,
-      behaviour: "smooth",
+      behaviour: "smooth"
     });
   }
 
@@ -156,7 +159,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
 
     tabsContainerEl.scrollTo({
       left: offset,
-      behavior: "smooth",
+      behavior: "smooth"
     });
   }
 }

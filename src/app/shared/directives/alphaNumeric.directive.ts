@@ -1,14 +1,14 @@
-import { Directive, HostListener, ElementRef, Input } from "@angular/core";
+import { Directive, HostListener, Input } from "@angular/core";
 @Directive({
-  selector: "[specialIsAlphaNumeric]",
+  selector: "[specialIsAlphaNumeric]"
 })
 export class AlphaNumericDirective {
   regexStr = "^[a-zA-Z0-9_]*$";
-  @Input() isAlphaNumeric: boolean;
+  @Input() isAlphaNumeric: boolean | any;
 
-  constructor(private el: ElementRef) {}
+  constructor() {}
 
-  @HostListener("keypress", ["$event"]) onKeyPress(event) {
+  @HostListener("keypress", ["$event"]) onKeyPress(event: any) {
     return new RegExp(this.regexStr).test(event.key);
   }
 

@@ -5,7 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { CardModel, Cards } from "app/shared/models/card.model";
@@ -17,22 +17,22 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-dashboard-card-preview",
   templateUrl: "./dashboard-card-preview.component.html",
-  styleUrls: ["./dashboard-card-preview.component.scss"],
+  styleUrls: ["./dashboard-card-preview.component.scss"]
 })
 export class DashboardCardPreviewComponent implements OnInit, OnChanges {
   @Input() title!: string;
-  @Input() cardList: Cards;
-  @Input("forexFilter") forexFilter: boolean;
+  @Input() cardList: Cards | any;
+  @Input("forexFilter") forexFilter: boolean | any;
   @Output() selectedCard: EventEmitter<any> = new EventEmitter<any>();
-  displayCard: CardModel;
+  displayCard: CardModel | any;
   currentIndex: number = 0;
   baseUrl = environment.microServiceURL;
-  showDetails: FormControl<boolean> = new FormControl<boolean>(false);
+  showDetails: FormControl<boolean> | any = new FormControl<boolean>(false);
   toggleDetails: boolean = false;
 
   constructor(private dialog: MatDialog) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.cardList.currentValue?.length > 0) {
       this.displayCard = changes?.cardList?.currentValue[0];
       this.selectedCard?.emit(this.displayCard);
@@ -40,7 +40,7 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.showDetails.valueChanges.subscribe((value) => {
+    this.showDetails.valueChanges.subscribe((value: any) => {
       this.handleToggleChange(value);
     });
   }
@@ -77,7 +77,7 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
       disableClose: true,
       height: "auto",
       width: "55%",
-      panelClass: ["popup-class-approve"],
+      panelClass: ["popup-class-approve"]
     });
   }
 }

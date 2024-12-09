@@ -40,24 +40,24 @@ Drilldown(Highcharts);
 
 //  constructor(private chartService: ChartService) {}
 export class ChartPage implements OnInit {
-  @ViewChild("charts") public chartEl: ElementRef;
+  @ViewChild("charts") public chartEl: ElementRef | any;
   @Output() customThreeDView = new EventEmitter<any>();
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
   chartId = "charts190";
-  chart;
-  @Input() chartData;
-  @Input() dynamicCharData;
-  @Input() customId;
+  chart: any;
+  @Input() chartData: any;
+  @Input() dynamicCharData: any;
+  @Input() customId: any;
   @Input() chartTitle = "";
-  @Input() chartMenuList;
-  chartForm: FormGroup;
+  @Input() chartMenuList: any;
+  chartForm!: FormGroup;
   DEFAULT_RANGE_TYPE = "2024";
   // @Input() dateRange = ["Yearly", "Monthly"];
-  rangeSelectorRequired;
+  rangeSelectorRequired: any;
   CURRENT_YEAR: any = new Date().getFullYear();
   CURRENT_MONTH = new Date().getMonth() + 1;
   CURRENT_DATE = new Date();
-  years: number[];
+  years: number[] | any;
   yearItems: number[] = this.generateYears();
   @Input() showField = false;
   @Output() customDateOutput = new EventEmitter<any>();
@@ -85,7 +85,7 @@ export class ChartPage implements OnInit {
     return years;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges | any) {
     console.log(changes, "changes");
     if (changes.dynamicCharData) {
       this.dynamicCharData = {
@@ -120,22 +120,22 @@ export class ChartPage implements OnInit {
         colors: changes.dynamicCharData.currentValue?.colors
           ? changes.dynamicCharData.currentValue.colors
           : [
-            "#2aa7f2",
-            "#504bbc",
-            "#1acd1a",
-            "#f26533",
-            "#6683b3",
-            "#cb63ef",
-            "#2ee0ca",
-            "#fb7670",
-            "#feb56a",
-            "#91e8e1",
-            "#ff5733",
-            "#8a2be2",
-            "#ffd700",
-            "#00ffff",
-            "#ff00ff"
-          ]
+              "#2aa7f2",
+              "#504bbc",
+              "#1acd1a",
+              "#f26533",
+              "#6683b3",
+              "#cb63ef",
+              "#2ee0ca",
+              "#fb7670",
+              "#feb56a",
+              "#91e8e1",
+              "#ff5733",
+              "#8a2be2",
+              "#ffd700",
+              "#00ffff",
+              "#ff00ff"
+            ]
       };
     }
     if (changes.dynamicCharData.currentValue.colors) {
@@ -151,7 +151,7 @@ export class ChartPage implements OnInit {
       this.customId = changes?.customId.currentValue;
     }
   }
-  updatChart(data) {
+  updatChart(data: any) {
     let modifiedData = this.setColor(data);
     let chart = Highcharts.chart(`charts${data?.id}`, modifiedData);
     this.checkNoData(modifiedData, chart);
@@ -172,7 +172,7 @@ export class ChartPage implements OnInit {
     });
   }
 
-  setColor(data) {
+  setColor(data: any) {
     data.colors = [
       "#2aa7f2",
       "#504bbc",
@@ -194,13 +194,13 @@ export class ChartPage implements OnInit {
     return data;
   }
 
-  createChartGauge(data) {
+  createChartGauge(data: any) {
     // let modifiedData = this.setColor(data);
     this.chart = Highcharts.chart(`charts${data?.id}`, data);
     //  this.checkNoData(modifiedData, this.chart);
   }
 
-  checkNoData(data, chart) {
+  checkNoData(data: any, chart: any) {
     if (data.series[0].data?.length == 0) {
       this.showNoData();
       chart.update(data);
@@ -211,19 +211,18 @@ export class ChartPage implements OnInit {
   getId() {
     return `charts${this.dynamicCharData?.id}`;
   }
-  threedView(view) {
+  threedView(view: any) {
     this.customThreeDView.emit(view);
   }
-  onStartDateChange() { }
-  onMonthChange() { }
-  onYearChange() { }
-  dateRangeChange() { }
+  onStartDateChange() {}
+  onMonthChange() {}
+  onYearChange() {}
+  dateRangeChange() {}
 
-  emitDateOutput(action) {
+  emitDateOutput(action: any) {
     this.customDateOutput.emit({
       data: this.chartForm.value,
       type: action
     });
   }
 }
-

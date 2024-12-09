@@ -1,7 +1,7 @@
-import { Injectable, Renderer2 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { getQueryParam } from '../helpers/url.helper';
-import { ThemeService } from './theme.service';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { getQueryParam } from "../helpers/url.helper";
+import { ThemeService } from "./theme.service";
 
 export interface ILayoutConf {
   navigationPos?: string; // side, top
@@ -29,33 +29,33 @@ interface IAdjustScreenOptions {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class LayoutService {
-  public layoutConf: ILayoutConf = {};
+  public layoutConf: ILayoutConf | any = {};
   layoutConfSubject = new BehaviorSubject<ILayoutConf>(this.layoutConf);
   layoutConf$ = this.layoutConfSubject.asObservable();
-  public isMobile: boolean;
-  public currentRoute: string;
+  public isMobile: boolean | any;
+  public currentRoute: string | any;
   public fullWidthRoutes = [];
 
   constructor(private themeService: ThemeService) {
     this.setAppLayout(
       // ******** SET YOUR LAYOUT OPTIONS HERE *********
       {
-        navigationPos: 'top', // side, top
-        sidebarStyle: 'full', // full, compact, closed
-        sidebarColor: 'slate', //
+        navigationPos: "top", // side, top
+        sidebarStyle: "full", // full, compact, closed
+        sidebarColor: "slate", //
         sidebarCompactToggle: false, // applied when "sidebarStyle" is "compact"
-        dir: 'ltr', // ltr, rtl
+        dir: "ltr", // ltr, rtl
         useBreadcrumb: true,
         topbarFixed: true,
         footerFixed: false,
-        topbarColor: 'white', 
-        footerColor: 'slate', 
-        matTheme: 'egret-navy',
-        breadcrumb: 'simple',
-        perfectScrollbar: true,
+        topbarColor: "white",
+        footerColor: "slate",
+        matTheme: "egret-navy",
+        breadcrumb: "simple",
+        perfectScrollbar: true
       }
     );
   }
@@ -65,7 +65,7 @@ export class LayoutService {
     this.applyMatTheme(this.layoutConf.matTheme);
   }
 
-  publishLayoutChange(lc: ILayoutConf, opt: ILayoutChangeOptions = {}) {
+  publishLayoutChange(lc: ILayoutConf, _opt: ILayoutChangeOptions = {}) {
     if (this.layoutConf.matTheme !== lc.matTheme && lc.matTheme) {
       this.themeService.changeTheme(this.layoutConf.matTheme, lc.matTheme);
     }
@@ -74,12 +74,12 @@ export class LayoutService {
     this.layoutConfSubject.next(this.layoutConf);
   }
 
-  applyMatTheme(theme) {
+  applyMatTheme(_theme?: any) {
     this.themeService.applyMatTheme(this.layoutConf.matTheme);
   }
 
   setLayoutFromQuery() {
-    const layoutConfString = getQueryParam('layout');
+    const layoutConfString = getQueryParam("layout");
     const prevTheme = this.layoutConf.matTheme;
     try {
       this.layoutConf = JSON.parse(layoutConfString);
@@ -91,19 +91,19 @@ export class LayoutService {
     let sidebarStyle: string;
     this.isMobile = this.isSm();
     this.currentRoute = options.route || this.currentRoute;
-    sidebarStyle = this.isMobile ? 'closed' : 'full';
+    sidebarStyle = this.isMobile ? "closed" : "full";
 
     if (this.currentRoute) {
       this.fullWidthRoutes.forEach((route) => {
         if (this.currentRoute.indexOf(route) !== -1) {
-          sidebarStyle = 'closed';
+          sidebarStyle = "closed";
         }
       });
     }
 
     this.publishLayoutChange({
       isMobile: this.isMobile,
-      sidebarStyle,
+      sidebarStyle
     });
   }
   isSm() {

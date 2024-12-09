@@ -1,37 +1,34 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
-import { Router } from "@angular/router";
 import { environment } from "environments/environment";
 
 @Component({
   selector: "app-loan-products",
   templateUrl: "./loan-products.component.html",
-  styleUrls: ["./loan-products.component.scss"],
+  styleUrls: ["./loan-products.component.scss"]
 })
 export class LoanProductsComponent implements OnInit {
-  @Input() subLoanList;
+  @Input() subLoanList: any;
   @Output() customApply = new EventEmitter<any>();
   @Output() isShowCalculator = new EventEmitter<any>();
   selectedLoan: any;
   endPoints = environment.microServiceURL;
 
-  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.scrollToTop();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.subLoanList = changes.subLoanList.currentValue;
+    this.subLoanList = changes["subLoanList"]?.currentValue;
     // this.subLoanList.forEach((item) => {
     //   item.isReadMore = false;
     // });
@@ -41,7 +38,7 @@ export class LoanProductsComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  goForCalculator(subAccount) {
+  goForCalculator(subAccount: any) {
     console.log(subAccount);
     this.selectedLoan = subAccount;
     if (this.selectedLoan?.productDetails?.length > 1) {
@@ -49,35 +46,35 @@ export class LoanProductsComponent implements OnInit {
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: false,
-        subClass: this.selectedLoan?.subClass,
+        subClass: this.selectedLoan?.subClass
       });
     } else if (this.selectedLoan?.productDetails?.length == 1) {
       console.log("one product");
       const payload = JSON.stringify({
         processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
         basisName: this.selectedLoan?.productDetails[0].basisName,
-        basisId: this.selectedLoan?.productDetails[0].basisId,
+        basisId: this.selectedLoan?.productDetails[0].basisId
       });
       sessionStorage.setItem("loanBasisDetails", payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
-        isShowCalculator: true,
+        isShowCalculator: true
       });
     } else {
       const payload = JSON.stringify({
         processCycleCode: this.selectedLoan?.processCycleCode,
         basisName: this.selectedLoan?.basisName,
-        basisId: this.selectedLoan?.basisId,
+        basisId: this.selectedLoan?.basisId
       });
       sessionStorage.setItem("loanBasisDetails", payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: true,
-        subClass: this.selectedLoan?.basisName,
+        subClass: this.selectedLoan?.basisName
       });
     }
   }
-  getFileUrl(url) {
+  getFileUrl(url: any) {
     if (url.includes("https")) {
       return "assets/images/normal_loan.svg";
     } else {
@@ -85,9 +82,9 @@ export class LoanProductsComponent implements OnInit {
     }
   }
 
-  readMoreLess(card, i) {
+  readMoreLess(card: any, i: any) {
     console.log(this.subLoanList);
-    this.subLoanList.forEach((otherCard) => {
+    this.subLoanList.forEach((otherCard: any) => {
       if (otherCard !== card) {
         otherCard.isReadMore = false;
       }
@@ -95,7 +92,7 @@ export class LoanProductsComponent implements OnInit {
     this.subLoanList[i].isReadMore = !this.subLoanList[i].isReadMore;
     this.cdr.detectChanges();
   }
-  customClassApply(event) {
+  customClassApply(event: any) {
     this.subLoanList = event?.clasDetails?.productDetails;
     this.scrollToTop();
   }

@@ -45,13 +45,15 @@
         <mat-expansion-panel
           style="border-radius: 8px"
           [ngStyle]="{
-            border: document.get('docRequired').value ? '1px solid #B10000' : ''
+            border: document.get('docRequired')?.value
+              ? '1px solid #B10000'
+              : ''
           }"
         >
           <mat-expansion-panel-header
-            >{{ document.get("documentName").value | titlecase }} &nbsp;
+            >{{ document.get("documentName")?.value | titlecase }} &nbsp;
             <span style="color: #b10000">
-              {{ document.get("docRequired").value ? "*" : "" }}
+              {{ document.get("docRequired")?.value ? "*" : "" }}
             </span>
           </mat-expansion-panel-header>
           <div fxLayout="row wrap" fxLayoutGap="6px">
@@ -61,7 +63,7 @@
                 let files of documentFilesCtrl(i).controls;
                 let fileIndex = index
               "
-              [formGroup]="files"
+              [formGroup]="files | formgroup"
             >
               <div class="card">
                 <div fxLayout="row" class="doc-header">
@@ -125,7 +127,7 @@
                         type="file"
                         class="changeInput"
                         [accept]="
-                          document.get('fileType').value ||
+                          document.get('fileType')?.value ||
                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf'
                         "
                         title=""

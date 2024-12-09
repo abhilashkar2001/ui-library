@@ -1,26 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { DEFAULT_LOCALE } from "app/shared/helpers/utils";
-
 import { BehaviorSubject } from "rxjs";
 import { environment } from "environments/environment";
-import * as moment from "moment";
-import { DataService } from "./data.service";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class TableService {
-  _format: string;
-  _locale: string;
+  _format: string | any;
+  _locale: string | any;
   currentLocal: any;
   protected basePath = environment.microServiceURL;
-  constructor(
-    private http: HttpClient,
-    private tokenService: TokenStorageService,
-    private shareService: DataService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private isEditingSubject = new BehaviorSubject<boolean>(false);
   isEditing$ = this.isEditingSubject.asObservable();
@@ -29,7 +20,7 @@ export class TableService {
     this.isEditingSubject.next(status);
   }
 
-  getCreatedBy(classname, module) {
+  getCreatedBy(classname: any, module: any) {
     return this.http.get(
       `${this.basePath}/auditLog/createdBy?className=${classname}&module=${module}`
     );
@@ -39,7 +30,7 @@ export class TableService {
       `${this.basePath}/fromToTillVault/approvalHistory?className=${className}&id=${id}`
     );
   }
-  downloadRecord(className, type, payload, module) {
+  downloadRecord(className: any, type: any, payload: any, module: any) {
     return this.http.post(
       `${this.basePath}/downaload?className=${className}&module=${module}&type=${type}`,
       payload,

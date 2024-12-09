@@ -6,11 +6,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
   styleUrls: ["./ic-action-button.component.scss"]
 })
 export class IcActionButtonComponent implements OnInit {
-  @Input() buttonName: string;
-  @Input() buttonType: string;
-  @Input() disabled: boolean;
-  @Input("matIcon") matIcon: string;
-  @Input("iconSrc") iconSrc: string;
+  @Input() buttonName: string | any;
+  @Input() buttonType: string | any;
+  @Input() disabled: boolean | any;
+  @Input("matIcon") matIcon: string | any;
+  @Input("iconSrc") iconSrc: string | any;
 
   @Output() onClick = new EventEmitter<any>();
 
@@ -18,7 +18,7 @@ export class IcActionButtonComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  clickHandler(event) {
+  clickHandler(event: any) {
     event.preventDefault();
     this.onClick.emit();
   }

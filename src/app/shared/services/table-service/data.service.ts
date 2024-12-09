@@ -8,13 +8,13 @@ export interface ErrorPayload {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class DataService {
   private refresh = new BehaviorSubject(false);
   isRefresh = this.refresh.asObservable();
 
-  doRefresh(data) {
+  doRefresh(data: any) {
     this.refresh.next(data);
   }
   private subject = new Subject<any>();
@@ -29,7 +29,7 @@ export class DataService {
 
   private auditLogData: any = {};
 
-  setAuditLogData(data) {
+  setAuditLogData(data: any) {
     this.auditLogData = data;
   }
 
@@ -38,10 +38,9 @@ export class DataService {
   }
 
   /** Checklist behavioral subject */
-  private $checklistDocument: BehaviorSubject<Map<
-    string,
-    Record<string, any>
-  > | null> = new BehaviorSubject<Map<string, Record<string, any>>>(new Map());
+  private $checklistDocument: BehaviorSubject<
+    Map<string, Record<string, any>> | null | any
+  > = new BehaviorSubject<Map<string, Record<string, any>>>(new Map());
 
   /**
    * store uploaded checklist document in behaviour subject for save later
@@ -55,7 +54,7 @@ export class DataService {
    * get the list of checklist stored
    * @returns the list of checklist
    */
-  getChecklistDocument(): Map<string, Record<string, any>> {
+  getChecklistDocument(): Map<string, Record<string, any>> | any {
     return this.$checklistDocument.value;
   }
 

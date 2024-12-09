@@ -307,7 +307,7 @@
               maxlength="2"
             />
             <div matSuffix>
-              {{ lcInfoForm.get("tenorDays").value > 1 ? "Days" : "Day" }}
+              {{ lcInfoForm.get("tenorDays")?.value > 1 ? "Days" : "Day" }}
             </div>
           </div>
           <div fxFlex="1" class="vl"></div>

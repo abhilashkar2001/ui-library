@@ -5,17 +5,14 @@ import { IconService } from "app/shared/services/icon.service";
 @Component({
   selector: "app-dashboard-card-details",
   templateUrl: "./dashboard-card-details.component.html",
-  styleUrls: ["./dashboard-card-details.component.scss"],
+  styleUrls: ["./dashboard-card-details.component.scss"]
 })
 export class DashboardCardDetailsComponent implements OnInit {
   @Input("title") title: any;
-  @Input("cardInfo") cardInfo: CardModel | undefined;
-  @Input("detailsItem") detailsItem: HeaderModel[] | undefined;
+  @Input("cardInfo") cardInfo: CardModel | any;
+  @Input("detailsItem") detailsItem: HeaderModel[] | any;
   totalBalance: any;
-  constructor(
-    private iconService: IconService,
-    private router: Router
-  ) {
+  constructor(private iconService: IconService, private router: Router) {
     this.iconService
       .addIconIfNotExists("reward-icon", "assets/images/reward.svg")
       .subscribe(() => {});
@@ -29,7 +26,7 @@ export class DashboardCardDetailsComponent implements OnInit {
   payNow() {
     this.router.navigate(["/user/card/credit-card/service/payment"]);
   }
-  gotoActionPage(value) {
+  gotoActionPage(value: any) {
     console.log(value);
     if (value === "Convert to EMI") {
       this.router.navigate(["/user/card/credit-card/service/convert-to-emi"]);

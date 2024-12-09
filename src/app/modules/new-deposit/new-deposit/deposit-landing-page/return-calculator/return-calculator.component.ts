@@ -1,4 +1,3 @@
-import { filter } from "rxjs/operators";
 import {
   Component,
   EventEmitter,
@@ -29,16 +28,16 @@ export class ReturnCalculatorComponent implements OnInit {
   max = 100000;
   min = 1000;
   ammountValue = 0;
-  depositForm: FormGroup;
-  @Input() rdFdValue;
-  @Input() fdName;
+  depositForm!: FormGroup;
+  @Input() rdFdValue: any;
+  @Input() fdName: any;
   @Output() customCalculatorValues = new EventEmitter<any>();
 
   amount = new FormControl("");
   email = new FormControl("");
-  thumbLabel: boolean = true;
+  thumbLabel: boolean | any = true;
   name = "Angular 5";
-  calculatorValues;
+  calculatorValues: any;
   flexDetails = {
     maturityAmount: 10000,
     intrestRate: 1.9,
@@ -61,11 +60,11 @@ export class ReturnCalculatorComponent implements OnInit {
     OWNERSHIP: [],
     SCHEME: []
   };
-  typesOfCustomer: string[];
-  interestPayout: string[];
-  monthlySavings: string[];
-  ownership: string[];
-  scheme: string[];
+  typesOfCustomer: string[] | any;
+  interestPayout: string[] | any;
+  monthlySavings: string[] | any;
+  ownership: string[] | any;
+  scheme: string[] | any;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -105,7 +104,7 @@ export class ReturnCalculatorComponent implements OnInit {
         }
       });
   }
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges | any) {
     if (changes.rdFdValue) {
       localStorage.removeItem("rdBasisId");
       this.rdFdValue = changes.rdFdValue.currentValue;
@@ -113,7 +112,7 @@ export class ReturnCalculatorComponent implements OnInit {
       if (this.rdFdValue === "rdCalculator")
         this.rdApi.getBusinessSuite("Deposit Service").subscribe((resp) => {
           if (resp?.statusCode === 200) {
-            this.getSubClass(resp.data).then((val) => {
+            this.getSubClass(resp.data).then((val: any) => {
               this.rdBasisId = val[0].productDetails[0].basisId;
               this.rdProcessCycleCode =
                 val[0].productDetails[0].processCycleCode;
@@ -128,9 +127,9 @@ export class ReturnCalculatorComponent implements OnInit {
   }
 
   // getSub Class list
-  getSubClass(data) {
-    return new Promise((resolve, reject) => {
-      const rdClass = data.filter((item) =>
+  getSubClass(data: any) {
+    return new Promise((resolve) => {
+      const rdClass = data.filter((item: any) =>
         item.basisClass.toLowerCase().includes("rd")
       );
       let rdResp = {};
@@ -145,7 +144,7 @@ export class ReturnCalculatorComponent implements OnInit {
   }
 
   fdFlowData() {
-    this.FdCalculatorServiceService.getFdTypes().subscribe((resp) => {
+    this.FdCalculatorServiceService.getFdTypes().subscribe((resp: any) => {
       if (resp?.statusCode == 200) {
         this.FdCalculatorServiceService.fetchSubClass(
           resp?.data[0]?.basisClass
@@ -160,10 +159,10 @@ export class ReturnCalculatorComponent implements OnInit {
     });
   }
 
-  onSliderChange(e) {
+  onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.srcElement.ariaValueText;
-    this.depositForm.get("amount").setValue(this.ammountValue);
+    this.depositForm.get("amount")?.setValue(this.ammountValue);
   }
   buildForm() {
     this.depositForm = this.fb.group({
@@ -187,13 +186,13 @@ export class ReturnCalculatorComponent implements OnInit {
   }
 
   openInterestDialog(): void {
-    const dialogRef = this.dialog.open(InfoPopupComponent, {
+    this.dialog.open(InfoPopupComponent, {
       width: "700px",
       height: "400px"
     });
   }
 
-  openLink(fdType) {
+  openLink(fdType: any) {
     let path;
     this.depositeType = fdType;
     if (fdType == "FD") {
@@ -229,7 +228,7 @@ export class ReturnCalculatorComponent implements OnInit {
     }
   }
 
-  originationModel(basisId) {
+  originationModel(basisId: any) {
     return {
       ...this.depositForm.value,
       basisDetailsId: basisId,
@@ -248,7 +247,7 @@ export class ReturnCalculatorComponent implements OnInit {
     };
   }
 
-  formatLoanLabel(value) {
+  formatLoanLabel(value: any) {
     return `₹ ${value}`;
   }
 }

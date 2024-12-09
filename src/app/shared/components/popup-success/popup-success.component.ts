@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-popup-success",
   templateUrl: "./popup-success.component.html",
-  styleUrls: ["./popup-success.component.scss"],
+  styleUrls: ["./popup-success.component.scss"]
 })
 export class PopupSuccessComponent implements OnInit {
   successOnlyReq: boolean = false;
@@ -21,7 +21,7 @@ export class PopupSuccessComponent implements OnInit {
       this.successOnlyReq = true;
     }
   }
-  close(data?) {
+  close(data?: any) {
     this.dialogRef.close(data);
   }
 }

@@ -82,48 +82,48 @@ export class ThemeChangeService {
     this.currentThemeSubject.next(data);
   }
 
-  setSelectedTheme({
-    color,
-    background,
-    filter,
-    backgroundLight,
-    backgroundDark,
-    borderColor
+  setSelectedTheme(payload: {
+    color: any;
+    background: any;
+    filter: any;
+    backgroundLight: any;
+    backgroundDark: any;
+    borderColor: any;
   }) {
-    color &&
+    payload.color &&
       this.document.documentElement.style.setProperty(
         "--current-theme-color",
-        color
+        payload.color
       );
 
-    background &&
+    payload.background &&
       this.document.documentElement.style.setProperty(
         "--current-theme-background",
-        background
+        payload.background
       );
 
-    filter &&
+    payload.filter &&
       this.document.documentElement.style.setProperty(
         "--current-theme-filter",
-        filter
+        payload.filter
       );
 
-    backgroundLight &&
+    payload.backgroundLight &&
       this.document.documentElement.style.setProperty(
         "--current-theme-background-light",
-        backgroundLight
+        payload.backgroundLight
       );
 
-    backgroundDark &&
+    payload.backgroundDark &&
       this.document.documentElement.style.setProperty(
         "--current-theme-background-dark",
-        backgroundDark
+        payload.backgroundDark
       );
 
-    borderColor &&
+    payload.borderColor &&
       this.document.documentElement.style.setProperty(
         "--current-theme-border-color",
-        borderColor
+        payload.borderColor
       );
   }
   saveCurrentTheme(payload: {

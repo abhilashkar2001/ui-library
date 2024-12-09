@@ -10,19 +10,19 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-dob-verification",
   templateUrl: "./dob-verification.component.html",
-  styleUrls: ["./dob-verification.component.scss"],
+  styleUrls: ["./dob-verification.component.scss"]
 })
 export class DobVerificationComponent implements OnInit {
-  dateOfBirth: string;
+  dateOfBirth: string | any;
   showOTP: boolean = false;
-  originationId: number;
+  originationId: number | any;
   otpSent: boolean = false;
   config = {
     allowNumbersOnly: false,
     length: 6,
     isPasswordInput: true,
     disableAutoFocus: false,
-    placeholder: "",
+    placeholder: ""
   };
   otp: any;
   customerInfo: any;
@@ -64,13 +64,15 @@ export class DobVerificationComponent implements OnInit {
   }
 
   verifyOtp() {
-    const type = JSON.parse(sessionStorage.getItem(SessionStorageEnum.TYPE));
+    const type = JSON.parse(
+      <string>sessionStorage.getItem(SessionStorageEnum.TYPE)
+    );
     this.loginService
       .verifyOtp({
         mobile: this.sessionStorageService?.getCustomerInfo()?.contact?.mobile,
-        otp: this.otp,
+        otp: this.otp
       })
-      .subscribe(async (res: any) => {
+      .subscribe(async () => {
         if (type == "send-link")
           this.router.navigate(["origination/checklist-document"]);
         else if (type == "e-sign") {
@@ -81,7 +83,7 @@ export class DobVerificationComponent implements OnInit {
       });
   }
 
-  onOtpChange(otp) {
+  onOtpChange(otp: any) {
     this.otp = otp;
   }
 }

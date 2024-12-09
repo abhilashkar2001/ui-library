@@ -5,10 +5,9 @@ import {
   OnDestroy,
   Renderer2,
   ElementRef,
-  SimpleChanges,
   QueryList,
   ViewChildren,
-  HostListener,
+  HostListener
 } from "@angular/core";
 import { NavigationService } from "../../../shared/services/navigation.service";
 import { Subscription } from "rxjs";
@@ -16,13 +15,7 @@ import { ThemeService } from "../../../shared/services/theme.service";
 import { LayoutService } from "../../services/layout.service";
 import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import {
-  ActivatedRoute,
-  NavigationCancel,
-  NavigationEnd,
-  NavigationStart,
-  Router,
-} from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
@@ -31,7 +24,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 @Component({
   selector: "app-header-top",
   templateUrl: "./header-top.component.html",
-  styleUrls: ["./header-top.component.scss"],
+  styleUrls: ["./header-top.component.scss"]
 })
 export class HeaderTopComponent implements OnInit, OnDestroy {
   // callbackUrl
@@ -39,7 +32,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   layoutConf: any;
   menuItems: any;
-  menuItemSub: Subscription;
+  menuItemSub: Subscription | any;
   egretThemes: any[] = [];
   hideNavItem: boolean = false;
   showMobilemenu: boolean = false;
@@ -48,40 +41,40 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     {
       name: "EN",
       code: "en",
-      flag: "us",
+      flag: "us"
     },
     {
       name: "ES",
       code: "es",
-      flag: "es",
-    },
+      flag: "es"
+    }
   ];
   currentLang = this.availableLangs[0];
 
-  @Input() notificPanel;
-  @Input() mainMenuPanel;
+  @Input() notificPanel: any;
+  @Input() mainMenuPanel: any;
 
   headerType: any;
 
   items = [
     {
       label: "Open Account",
-      route: "/account",
+      route: "/account"
     },
     {
       label: "Card",
-      route: "/card",
+      route: "/card"
     },
     {
       label: "Deposits",
-      route: "/deposits",
+      route: "/deposits"
     },
     {
       label: "Loan",
-      route: "/loan",
-    },
+      route: "/loan"
+    }
   ];
-  @ViewChildren("element") elReference: QueryList<ElementRef>;
+  @ViewChildren("element") elReference: QueryList<ElementRef> | any;
   expand: number = 0;
 
   constructor(
@@ -132,9 +125,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
         type: "dropDown",
         tooltip: "More",
         icon: "more_horiz",
-        sub: subItems,
+        sub: subItems
       });
       this.menuItems = mainItems;
+      return;
     });
 
     this.showSideBar.getToken().subscribe((resp) => {
@@ -142,10 +136,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     });
   }
 
-  onNavigation(route) {
+  onNavigation(route: any) {
     const item = this.items.findIndex((i) => route.includes(i?.route));
     this.animateUnderline(
-      this.elReference.find((element, index) => index === item)?.nativeElement
+      this.elReference.find((index: any) => index === item)?.nativeElement
     );
   }
 
@@ -165,7 +159,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isDescendant(child: HTMLElement, parent: HTMLElement): boolean {
+  private isDescendant(child: HTMLElement, parent: HTMLElement | any): boolean {
     let node = child.parentNode;
     while (node != null) {
       if (node === parent) {
@@ -188,11 +182,11 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     }
   }
 
-  setLang(lng) {
+  setLang(lng: any) {
     this.currentLang = lng;
     this.translate.use(lng.code);
   }
-  changeTheme(theme) {
+  changeTheme(theme: any) {
     this.layout.publishLayoutChange({ matTheme: theme.name });
   }
 
@@ -207,11 +201,11 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   toggleSidenav() {
     if (this.layoutConf.sidebarStyle === "closed") {
       return this.layout.publishLayoutChange({
-        sidebarStyle: "full",
+        sidebarStyle: "full"
       });
     }
     this.layout.publishLayoutChange({
-      sidebarStyle: "closed",
+      sidebarStyle: "closed"
     });
   }
 
@@ -221,7 +215,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       return this.layout.publishLayoutChange(
         {
           sidebarStyle: "full",
-          sidebarCompactToggle: false,
+          sidebarCompactToggle: false
         },
         { transitionClass: true }
       );
@@ -231,16 +225,16 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     this.layout.publishLayoutChange(
       {
         sidebarStyle: "compact",
-        sidebarCompactToggle: true,
+        sidebarCompactToggle: true
       },
       { transitionClass: true }
     );
   }
 
-  onSearch(e) {
+  onSearch() {
     //   console.log(e)
   }
-  onNavTabClick(item) {
+  onNavTabClick() {
     this.tokenStore.cleanUpSessionPartially();
   }
 
@@ -268,7 +262,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
    */
   redirectToInternet() {
     const url = window.location.href;
-    const baseUrl = url.split("#")[0].split("?")[0];
+    const baseUrl: any = url.split("#")[0]?.split("?")[0];
     const newBaseUrl = baseUrl.replace(
       /:(\d+)/,
       this.externalInternetRoutePort

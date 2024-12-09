@@ -44,7 +44,7 @@ export interface CardTransactionModel {
 export interface HeaderModel {
   key: string;
   label: string;
-  actionItem?: (action?) => string;
+  actionItem?: (action?: any) => string;
   actionKey?: string;
 }
 export interface AccountList {

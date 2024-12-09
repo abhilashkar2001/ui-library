@@ -21,7 +21,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     SharedMaterialModule,
     MatCardModule,
     MatSlideToggleModule,
-    TranslateModule,
-  ],
+    TranslateModule
+  ]
 })
 export class CardModule {}

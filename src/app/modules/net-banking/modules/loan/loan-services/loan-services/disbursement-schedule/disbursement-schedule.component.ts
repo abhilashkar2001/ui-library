@@ -9,22 +9,22 @@ import { SessionStorageService } from "app/shared/services/session-storage.servi
 @Component({
   selector: "app-disbursement-schedule",
   templateUrl: "./disbursement-schedule.component.html",
-  styleUrls: ["./disbursement-schedule.component.scss"],
+  styleUrls: ["./disbursement-schedule.component.scss"]
 })
 export class DisbursementScheduleComponent implements OnInit {
-  disbursementScheduleForm: FormGroup;
-  disbursementList = loanServiceStore.disbursementList;
+  disbursementScheduleForm!: FormGroup;
+  disbursementList: any = loanServiceStore.disbursementList;
   disbursementStatementColumns = loanServiceStore.disbursementStatementColumns;
   disbursementRecords: any;
   fetchStatement: boolean = false;
-  loanDetails: LoanDetailsModel[];
+  loanDetails: LoanDetailsModel[] | any;
   fetchedData: any;
 
   constructor(
     private fb: FormBuilder,
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loanDetails = this.sessionStorageService.getLoanInfo();
@@ -33,7 +33,7 @@ export class DisbursementScheduleComponent implements OnInit {
 
   buildDisbursementScheduleForm() {
     this.disbursementScheduleForm = this.fb.group({
-      loanAccNo: [""],
+      loanAccNo: [""]
     });
     this.disbursementScheduleForm
       ?.get("loanAccNo")
@@ -44,7 +44,7 @@ export class DisbursementScheduleComponent implements OnInit {
     this.fetchStatement = true;
     this.loanService
       .fetchDisbursementSchedule(this.disbursementScheduleForm.value.loanAccNo)
-      .subscribe((res: IcHttpResponseModel<any>) => {
+      .subscribe((res: IcHttpResponseModel<any> | any) => {
         if (res?.statusCode == 200 && res?.data) {
           this.fetchedData = res?.data;
           this.disbursementRecords = res?.data?.childDetails;

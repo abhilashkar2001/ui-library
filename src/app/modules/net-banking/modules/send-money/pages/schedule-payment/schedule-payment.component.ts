@@ -8,21 +8,20 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
 import { SendMoneyService } from "app/shared/services/fund-transfer/send-money.service";
 import { GenericValueService } from "app/shared/services/generic-value.service";
-import { debounceTime } from "rxjs/operators";
 import { findCurrency, removeSpecCharsOnly } from "app/shared/helpers/utils";
 import { IconService } from "app/shared/services/icon.service";
 
 @Component({
   selector: "app-schedule-payment",
   templateUrl: "./schedule-payment.component.html",
-  styleUrls: ["./schedule-payment.component.scss"],
+  styleUrls: ["./schedule-payment.component.scss"]
 })
 export class SchedulePaymentComponent implements OnInit {
-  schedulePaymentForm: FormGroup;
+  schedulePaymentForm: FormGroup | any;
   paymentModes: any[] = [];
   options: any[] = [
     { label: "Yes", value: true },
-    { label: "No", value: false },
+    { label: "No", value: false }
   ];
   frequncyData: any[] = [];
   proceedPayment: boolean = false;
@@ -33,10 +32,10 @@ export class SchedulePaymentComponent implements OnInit {
   debitAccData: any;
   debitAccCurr: any;
   message: any;
-  customerId: number;
+  customerId: number | any;
   genericData = {
     FREQUENCY: [],
-    PAYMENTMODE: [],
+    PAYMENTMODE: []
   };
   filterFav: any[] = [];
   selectedAccNo: any;
@@ -72,9 +71,9 @@ export class SchedulePaymentComponent implements OnInit {
     this.getFavouritiesData();
     this.fetchPayFrom();
   }
-  changeFav(eve) {
+  changeFav(eve: any) {
     this.filterFav = [];
-    this.transferData.forEach((res) => {
+    this.transferData.forEach((res: any) => {
       if (res?.bankType == eve && res?.isFavorite == true) {
         this.filterFav.push(res);
       }
@@ -85,7 +84,7 @@ export class SchedulePaymentComponent implements OnInit {
     this.sendMoneyService.fetchPayeeList().subscribe((res: any) => {
       if (res?.statusCode === 200) {
         this.transferData = res.data;
-        this.transferData.forEach((res) => {
+        this.transferData.forEach((res: any) => {
           if (res?.isFavorite == true) {
             this.filterFav.push(res);
           }
@@ -93,10 +92,10 @@ export class SchedulePaymentComponent implements OnInit {
       }
     });
   }
-  selectTransfer(event) {
+  selectTransfer(event: any) {
     console.log(event);
     this.selectedAccNo = this.transferData.find(
-      (res) => (res.accountNo = event ?? event?.accountNo)
+      (res: any) => (res.accountNo = event ?? event?.accountNo)
     );
     console.log(this.selectedAccNo);
     this.message = "Bank Code - " + this.selectedAccNo.bankCode;
@@ -139,10 +138,10 @@ export class SchedulePaymentComponent implements OnInit {
       payeeName: [],
       transferType: "Schedule Payment",
       corpCustomerId: [],
-      corpBeneficiaryId: [],
+      corpBeneficiaryId: []
     });
   }
-  payAccount(value) {
+  payAccount(value: any) {
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.selectedCurrency = listOfAccounts.find(
       (res) => res?.accountNo == value
@@ -166,9 +165,9 @@ export class SchedulePaymentComponent implements OnInit {
       this.schedulePaymentForm.markAllAsTouched();
       return;
     }
-    let creditAcc = this.schedulePaymentForm.get("creditAccount").value;
+    let creditAcc = this.schedulePaymentForm.get("creditAccount")?.value;
     const transferTo = this.transferData.find(
-      (item) => item.accountNo === creditAcc
+      (item: any) => item.accountNo === creditAcc
     );
     const payload = { ...this.schedulePaymentForm.value };
     payload.creditAccountName = transferTo?.payeeName;
@@ -178,11 +177,11 @@ export class SchedulePaymentComponent implements OnInit {
     payload.corpCustomerId = this.customerId;
     payload.debitAccountType = this.transferToData.accountType;
     payload.corpBeneficiaryId = transferTo?.id;
-    let paymentVal = this.schedulePaymentForm.get("paymentMode").value;
+    let paymentVal = this.schedulePaymentForm.get("paymentMode")?.value;
     const paymentModeVal = this.paymentModes.find(
       (item) => item.id === paymentVal
     );
-    let frequencyVal = this.schedulePaymentForm.get("frequency").value;
+    let frequencyVal = this.schedulePaymentForm.get("frequency")?.value;
     const frequencyValues = this.frequncyData.find(
       (item) => item.id === frequencyVal
     );
@@ -201,10 +200,10 @@ export class SchedulePaymentComponent implements OnInit {
               { Name: this.customerInfo?.customerName },
               {
                 "Account No":
-                  this.schedulePaymentForm.get("debitAccount").value,
+                  this.schedulePaymentForm.get("debitAccount")?.value
               },
-              { "Account Type": "Savings" },
-            ],
+              { "Account Type": "Savings" }
+            ]
           },
           {
             header: "Send To",
@@ -212,37 +211,37 @@ export class SchedulePaymentComponent implements OnInit {
               { Name: transferTo?.payeeName },
               {
                 "Account No":
-                  this.schedulePaymentForm.get("creditAccount").value,
+                  this.schedulePaymentForm.get("creditAccount")?.value
               },
               {
-                "Account Type": this.transferToData.accountType,
+                "Account Type": this.transferToData.accountType
               },
               { "Bank Name": this.transferToData?.bankName },
               { "Bank Code": this.transferToData?.bankCode },
               {
                 Amount: this.getDecimalValue(
-                  this.schedulePaymentForm.get("amount").value
-                ),
+                  this.schedulePaymentForm.get("amount")?.value
+                )
               },
               {
-                "Payment Mode": paymentModeVal?.values,
+                "Payment Mode": paymentModeVal?.values
               },
               {
                 "Schedule Payment": this.schedulePaymentForm.get(
                   "schedulePaymentDate"
-                ).value,
+                )?.value
               },
               { Frequency: frequencyValues?.values },
               {
                 "No of instalments":
-                  this.schedulePaymentForm.get("noOfInstalment").value,
+                  this.schedulePaymentForm.get("noOfInstalment")?.value
               },
-              { Remarks: this.schedulePaymentForm.get("remark").value },
-            ],
-          },
+              { Remarks: this.schedulePaymentForm.get("remark")?.value }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",
@@ -253,12 +252,12 @@ export class SchedulePaymentComponent implements OnInit {
     this.router.navigate(["/user/send-money/payment-summary"], {});
   }
 
-  proceed(value) {
-    let DebitValue = this.schedulePaymentForm?.get("creditAccount").value
-      ? this.schedulePaymentForm?.get("creditAccount").value
+  proceed(value: any) {
+    let DebitValue = this.schedulePaymentForm?.get("creditAccount")?.value
+      ? this.schedulePaymentForm?.get("creditAccount")?.value
       : value?.accountNo;
-    this.schedulePaymentForm?.get("creditAccount").patchValue(DebitValue);
-    this.schedulePaymentForm?.get("amount").patchValue(value?.account);
+    this.schedulePaymentForm?.get("creditAccount")?.patchValue(DebitValue);
+    this.schedulePaymentForm?.get("amount")?.patchValue(value?.account);
     this.proceedPayment = true;
   }
   close() {

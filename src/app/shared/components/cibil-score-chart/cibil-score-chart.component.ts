@@ -4,43 +4,43 @@ import {
   ElementRef,
   Input,
   OnInit,
-  Renderer2,
+  Renderer2
 } from "@angular/core";
 
 @Component({
   selector: "app-cibil-score-chart",
   templateUrl: "./cibil-score-chart.component.html",
-  styleUrls: ["./cibil-score-chart.component.scss"],
+  styleUrls: ["./cibil-score-chart.component.scss"]
 })
 export class CibilScoreChartComponent implements OnInit, AfterViewInit {
-  @Input() cibilScore: number;
+  @Input() cibilScore: number | any;
 
   cibilScoreList = [
     {
       score: "Below 681",
       description: "Need Help",
-      colorCode: "#D57066",
+      colorCode: "#D57066"
     },
     {
       score: "681 - 730",
       description: "Average",
-      colorCode: "#DF9690",
+      colorCode: "#DF9690"
     },
     {
       score: "771 - 770",
       description: "Fair",
-      colorCode: "#E4A037",
+      colorCode: "#E4A037"
     },
     {
       score: "771 - 790",
       description: "Good",
-      colorCode: "#62BB69",
+      colorCode: "#62BB69"
     },
     {
       score: "Above 791",
       description: "Excellent",
-      colorCode: "#D57066",
-    },
+      colorCode: "#D57066"
+    }
   ];
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
@@ -65,7 +65,7 @@ export class CibilScoreChartComponent implements OnInit, AfterViewInit {
     }
   }
 
-  animateCibilScore(cibilScore) {
+  animateCibilScore(cibilScore: any) {
     const markerContainer =
       this.el.nativeElement.querySelector(".marker_container");
     let progressStartValue = 300;

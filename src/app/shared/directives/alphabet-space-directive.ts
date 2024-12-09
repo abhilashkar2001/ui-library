@@ -1,14 +1,14 @@
 import { Directive, HostListener, ElementRef } from "@angular/core";
 
 @Directive({
-  selector: "[alphabetWithSpace]",
+  selector: "[alphabetWithSpace]"
 })
 export class AlphaBetSpaceDirective {
   regexStr = "^[a-zA-Z ]*$";
 
   constructor(private el: ElementRef) {}
 
-  @HostListener("keypress", ["$event"]) onKeyPress(event) {
+  @HostListener("keypress", ["$event"]) onKeyPress(event: any) {
     if (event.target.selectionStart === 0 && event.key === " ") {
       event.preventDefault();
     }
@@ -19,7 +19,7 @@ export class AlphaBetSpaceDirective {
     this.validateFields(event);
   }
 
-  validateFields(event) {
+  validateFields(event: any) {
     setTimeout(() => {
       const currentValue = this.el.nativeElement.value;
       const newValue = currentValue.replace(/[^A-Za-z ]/g, "");

@@ -34,17 +34,13 @@
         fxLayoutGap="16px"
         fxLayoutAlign="end center"
       >
-        <h3
-          class="light-blue-title"
-          (click)="route('loan/loan-service/loan-repayment')"
-        >
+        <h3 class="light-blue-title">
           <u>{{ "Loan Repayment" | translate }}</u>
         </h3>
         <app-ic-action-button
           matIcon="blue-download"
           [buttonName]="'Download' | translate"
           buttonType="blue-stroked"
-          (onClick)="downloadSchedule()"
         ></app-ic-action-button>
       </div>
     </div>
@@ -125,7 +121,7 @@
                     *ngFor="let item of date?.monthly; let j = index"
                   >
                     <div fxFlex="10" class="text-highlighted">
-                      {{ item?.dueDate | date: "shortDate" }}
+                      {{ item?.dueDate | date : "shortDate" }}
                     </div>
 
                     <div fxFlex="10" class="text-highlighted">

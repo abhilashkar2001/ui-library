@@ -4,14 +4,14 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { environment } from "environments/environment";
@@ -26,23 +26,23 @@ const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
   selector: "app-document-upload",
   templateUrl: "./document-upload.component.html",
-  styleUrls: ["./document-upload.component.scss"],
+  styleUrls: ["./document-upload.component.scss"]
 })
 export class DocumentUploadComponent implements OnInit {
-  documentUploadForm: FormGroup;
+  documentUploadForm!: FormGroup;
   documentNames: any[] = [];
   genericvalue = "DOCUMENTNAME";
   currentIndex = 0;
-  percentDone: number;
-  uploadSuccess: boolean;
+  percentDone: number | any;
+  uploadSuccess: boolean | any;
   isUploading: boolean = false;
-  uploadingFile: string;
-  requestSubscription: Subscription;
-  selectedIndex: number;
+  uploadingFile: string | any;
+  requestSubscription: Subscription | any;
+  selectedIndex: number | any;
   noImage = "assets/images/document/upload-icon.svg";
   ACTION_NAME = UploadImage.BROWSE;
 
-  @ViewChild("fileInput") fileInput: ElementRef;
+  @ViewChild("fileInput") fileInput: ElementRef | any;
   customerDetails: any;
   originationId: any;
   customerId: any;
@@ -57,7 +57,9 @@ export class DocumentUploadComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.originationId = JSON.parse(sessionStorage.getItem("originationId"));
+    this.originationId = JSON.parse(
+      <string>sessionStorage.getItem("originationId")
+    );
     this.customerId = sessionStorage.getItem("customerId");
     this.getDocumentName();
     this.buildDocumentUploadForm();
@@ -65,7 +67,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   initialFormLoading() {
-    this.documents().push(this.createDocumentItem(""));
+    this.documents.push(this.createDocumentItem(""));
     for (var i = 0; i < 2; i++) {
       this.documentPages(0).push(this.addNewPage(i, ""));
     }
@@ -81,7 +83,7 @@ export class DocumentUploadComponent implements OnInit {
       });
   }
 
-  change(e, documentIndex: number) {
+  change(e: any, documentIndex: number) {
     const documentNameControl = this.getDocumentFormControl(
       "documentName",
       documentIndex
@@ -97,7 +99,7 @@ export class DocumentUploadComponent implements OnInit {
 
     this.clearDocumentValues(documentIndex);
     let docPresent = 0;
-    this.documents().value.map((val) => {
+    this.documents.value.map((val: any) => {
       if (e?.value == val.documentName) {
         docPresent++;
       }
@@ -119,47 +121,47 @@ export class DocumentUploadComponent implements OnInit {
     controlName: string,
     documentIndex: number
   ): FormControl {
-    return this.documents().at(documentIndex).get(controlName) as FormControl;
+    return this.documents.at(documentIndex).get(controlName) as FormControl;
   }
 
   clearDocumentValues(documentIndex: number): void {
-    const documentControl = this.documents().at(documentIndex);
-    documentControl.get("documentNumber").setValue("");
-    documentControl.get("verifiedMobileNumber").setValue("");
+    const documentControl = this.documents.at(documentIndex);
+    documentControl.get("documentNumber")?.setValue("");
+    documentControl.get("verifiedMobileNumber")?.setValue("");
 
     this.documentPages(documentIndex).controls.forEach((control) => {
       this.fileInput.nativeElement.value = "";
-      control.get("fileUrl").patchValue("");
+      control.get("fileUrl")?.patchValue("");
     });
   }
 
   buildDocumentUploadForm() {
     this.documentUploadForm = this.fb.group({
-      documents: this.fb.array([]),
+      documents: this.fb.array([])
     });
   }
 
-  documents(): FormArray {
+  get documents(): FormArray {
     return this.documentUploadForm.get("documents") as FormArray;
   }
 
-  createDocumentItem(data?) {
+  createDocumentItem(data?: any) {
     return this.fb.group({
       documentName: [
         data?.documentName ? data?.documentName : null,
-        Validators.required,
+        Validators.required
       ],
       documentNumber: [
         data?.documentNumber ? data?.documentNumber : null,
-        Validators.required,
+        Validators.required
       ],
       verifiedMobileNumber: [data?.phoneNumber ?? ""],
-      pages: this.fb.array([]),
+      pages: this.fb.array([])
     });
   }
 
   addDocumentItem() {
-    this.documents().push(this.createDocumentItem());
+    this.documents.push(this.createDocumentItem());
     this.currentIndex++;
     for (var i = 0; i < 2; i++) {
       this.documentPages(this.currentIndex).push(this.addNewPage(i, ""));
@@ -167,26 +169,26 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   removeDocumentItem(index: number) {
-    this.documents().removeAt(index);
+    this.documents.removeAt(index);
     this.currentIndex--;
   }
 
   documentPages(index: number): FormArray {
-    return this.documents().at(index).get("pages") as FormArray;
+    return this.documents.at(index).get("pages") as FormArray;
   }
 
-  addNewPage(side: number, data?): FormGroup {
+  addNewPage(side: number, data?: any): FormGroup {
     return this.fb.group({
       id: [data?.documentId ? data?.documentId : "", Validators.required],
       fileUrl: [
         data?.fileUrl ? `${MICROSERVICE_URL}${data?.fileUrl}` : "",
-        Validators.required,
+        Validators.required
       ],
       documentSide: [side, Validators.required],
       fileNameValue: [""],
       documentTitle: [this.getPageName(side), Validators.required],
       scan: [false],
-      isUploaded: [false],
+      isUploaded: [false]
     });
   }
 
@@ -202,7 +204,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   addDocumentPage(docIndex: number) {
-    let pagesLength = this.documents().at(docIndex).get("pages") as FormArray;
+    let pagesLength = this.documents.at(docIndex).get("pages") as FormArray;
     console.log(pagesLength);
     let count = pagesLength.length;
 
@@ -215,7 +217,7 @@ export class DocumentUploadComponent implements OnInit {
       this.documentPages(index).removeAt(pageIndex);
       return;
     }
-    this.apiService.deleteDocument(documentId).subscribe((res) => {
+    this.apiService.deleteDocument(documentId).subscribe(() => {
       this.documentPages(index).removeAt(pageIndex);
     });
   }
@@ -224,14 +226,14 @@ export class DocumentUploadComponent implements OnInit {
     return this.documentUploadForm.valid;
   }
   //Enter issue
-  checking(event: KeyboardEvent) {
+  checking(event: KeyboardEvent | any) {
     event.preventDefault();
   }
 
-  restrictUpload(event: Event, document: FormGroup) {
+  restrictUpload(event: Event, document: FormGroup | any) {
     if (
-      !document.get("documentName").valid ||
-      !document.get("documentNumber").valid
+      !document.get("documentName")?.valid ||
+      !document.get("documentNumber")?.valid
     ) {
       event.preventDefault();
       document.markAllAsTouched();
@@ -239,30 +241,26 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   onFileSelect(e: any, documentIndex: number, index: number) {
-    const file = e.target.files[0];
     if (
-      !this.documents().at(documentIndex)?.get("documentName")?.value ||
-      !this.documents().at(documentIndex)?.get("documentNumber")?.value
+      !this.documents.at(documentIndex)?.get("documentName")?.value ||
+      !this.documents.at(documentIndex)?.get("documentNumber")?.value
     ) {
       this.fileInput.nativeElement.value = "";
-      this.documents()
-        .at(documentIndex)
-        ?.get("documentNumber")
-        ?.markAsTouched();
-      this.documents().at(documentIndex)?.get("documentName")?.markAsTouched();
+      this.documents.at(documentIndex)?.get("documentNumber")?.markAsTouched();
+      this.documents.at(documentIndex)?.get("documentName")?.markAsTouched();
       return;
     }
     this.documentPages(documentIndex)
       ?.at(index)
       .get("fileNameValue")
-      .patchValue(e.target.files[0].name);
+      ?.patchValue(e.target.files[0].name);
     if (e.target.files[0]) {
       let count = 0;
       setTimeout(() => {
         this.documentPages(documentIndex).controls.forEach(
-          (docControle: FormGroup) => {
+          (docControle: FormGroup | any) => {
             if (
-              docControle.get("fileNameValue").value == e.target.files[0].name
+              docControle.get("fileNameValue")?.value == e.target.files[0].name
             ) {
               count++;
             }
@@ -274,7 +272,7 @@ export class DocumentUploadComponent implements OnInit {
           this.snack.open("File Already Uploaded", "Ok", {
             duration: 3000,
             verticalPosition: "top",
-            horizontalPosition: "right",
+            horizontalPosition: "right"
           });
           return;
         } else {
@@ -295,30 +293,25 @@ export class DocumentUploadComponent implements OnInit {
 
   otherUpload(e: any, documentIndex: number) {
     if (
-      !this.documents().at(documentIndex)?.get("documentName")?.value &&
-      !this.documents().at(documentIndex)?.get("documentNumber")?.value
+      !this.documents.at(documentIndex)?.get("documentName")?.value &&
+      !this.documents.at(documentIndex)?.get("documentNumber")?.value
     ) {
       this.fileInput.nativeElement.value = "";
-      this.documents()
-        .at(documentIndex)
-        ?.get("documentNumber")
-        ?.markAsTouched();
-      this.documents().at(documentIndex)?.get("documentName")?.markAsTouched();
+      this.documents.at(documentIndex)?.get("documentNumber")?.markAsTouched();
+      this.documents.at(documentIndex)?.get("documentName")?.markAsTouched();
 
       return;
     }
     if (e.target.files[0]) {
       let otherCount = 0;
-      let IndexSelected;
       setTimeout(() => {
         this.documentPages(documentIndex).controls.forEach(
-          (docControle: FormGroup, index) => {
+          (docControle: FormGroup | any) => {
             if (
-              docControle.get("fileNameValue").value == e.target.files[0].name
+              docControle.get("fileNameValue")?.value == e.target.files[0].name
             ) {
               otherCount++;
               if (otherCount > 0) {
-                IndexSelected = index;
               }
             }
           }
@@ -327,11 +320,11 @@ export class DocumentUploadComponent implements OnInit {
           this.snack.open("File Already Uploaded", "Ok", {
             duration: 3000,
             verticalPosition: "top",
-            horizontalPosition: "right",
+            horizontalPosition: "right"
           });
           return;
         } else {
-          let pagesLength = this.documents()
+          let pagesLength = this.documents
             .at(documentIndex)
             .get("pages") as FormArray;
           let count = pagesLength.length;
@@ -352,7 +345,7 @@ export class DocumentUploadComponent implements OnInit {
               this.documentPages(documentIndex)
                 .at(count - 1)
                 .get("fileNameValue")
-                .patchValue(e.target.files[0].name);
+                ?.patchValue(e.target.files[0].name);
             };
           } catch (error) {}
         }
@@ -360,36 +353,36 @@ export class DocumentUploadComponent implements OnInit {
     }
   }
 
-  removeImage(docindex, index) {
+  removeImage(docindex: any, index: any) {
     const documentId = this.documentPages(docindex).at(index).get("id")?.value;
     if (!documentId) {
       return;
     }
-    this.apiService.deleteDocument(documentId).subscribe((res) => {
-      this.documentPages(docindex).at(index).get("fileUrl").patchValue("");
-      this.documentPages(docindex).at(index).get("id").patchValue("");
+    this.apiService.deleteDocument(documentId).subscribe(() => {
+      this.documentPages(docindex).at(index).get("fileUrl")?.patchValue("");
+      this.documentPages(docindex).at(index).get("id")?.patchValue("");
     });
   }
 
-  uploadDocument(file, documentIndex, index, base64File) {
+  uploadDocument(file: any, documentIndex: any, index: any, base64File: any) {
     this.uploadingFile = file.name;
     this.isUploading = true;
 
-    let documentName = this.documents()
+    let documentName = this.documents
       .at(documentIndex)
-      .get("documentName").value;
+      .get("documentName")?.value;
     let formData = new FormData();
     let data = {
       documentName: documentName,
       documentType: this.getDocType(documentName),
-      documentNumber: this.documents().at(documentIndex).get("documentNumber")
-        .value,
+      documentNumber: this.documents.at(documentIndex).get("documentNumber")
+        ?.value,
       documentSide:
-        this.documentPages(documentIndex).at(index).get("documentSide").value +
+        this.documentPages(documentIndex).at(index).get("documentSide")?.value +
         1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc Varifiction",
+      verificationType: "kyc Varifiction"
     };
     formData.append("data", JSON.stringify(data));
     formData.append("file", file);
@@ -405,17 +398,17 @@ export class DocumentUploadComponent implements OnInit {
         this.documentPages(documentIndex)
           .at(index)
           .get("id")
-          .patchValue(responseBody?.body?.data?.documentId);
+          ?.patchValue(responseBody?.body?.data?.documentId);
 
-        console.log(this.documents());
+        console.log(this.documents);
         this.documentPages(documentIndex)
           .at(index)
           .get("fileUrl")
-          .patchValue(base64File);
+          ?.patchValue(base64File);
         this.cdr.markForCheck();
       }
     }),
-      (error) => {};
+      () => {};
   }
 
   getDocType(docName: string) {
@@ -435,9 +428,13 @@ export class DocumentUploadComponent implements OnInit {
       this.documentUploadForm.markAllAsTouched();
       return;
     }
-    const documentId = this.documentUploadForm.value.documents.map((item) => ({
-      docIds: item?.pages?.map((page) => page?.id)?.filter((page) => page),
-    }));
+    const documentId = this.documentUploadForm.value.documents.map(
+      (item: any) => ({
+        docIds: item?.pages
+          ?.map((page: any) => page?.id)
+          ?.filter((page: any) => page)
+      })
+    );
 
     const payload: any = {};
     payload.customerId = this.customerId;
@@ -446,9 +443,9 @@ export class DocumentUploadComponent implements OnInit {
       if (res?.statusCode === 200 && res?.data) {
         const dialogref = this.dialog.open(SuccessModalComponent, {
           data: {
-            title: "Document Uploaded Successfully",
+            title: "Document Uploaded Successfully"
           },
-          width: "40%",
+          width: "40%"
         });
         dialogref.afterClosed().subscribe((_) => {
           setTimeout(() => {

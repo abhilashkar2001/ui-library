@@ -2,30 +2,31 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ServiceCallHandler {
   private serviceCallMap: Map<
     string,
-    {
-      payload: Record<string, any>;
-      paymentDetails: Record<string, any>;
-      serviceCallMethod: (payload) => Observable<Record<string, any>>;
-    }
+    | {
+        payload: Record<string, any>;
+        paymentDetails: Record<string, any>;
+        serviceCallMethod: (payload: any) => Observable<Record<string, any>>;
+      }
+    | any
   > = new Map();
 
   constructor() {}
 
   put(
     key: string,
-    payload,
-    paymentDetails,
-    serviceMethod?: (payload) => Observable<Record<string, any>>
+    payload: any,
+    paymentDetails: any,
+    serviceMethod?: (payload: any) => Observable<Record<string, any>>
   ) {
     this.serviceCallMap.set(key, {
       payload: payload,
       paymentDetails: paymentDetails,
-      serviceCallMethod: serviceMethod,
+      serviceCallMethod: serviceMethod
     });
   }
 
@@ -36,12 +37,12 @@ export class ServiceCallHandler {
         return serviceCall.paymentDetails;
       } else if (!serviceCall.serviceCallMethod)
         return throwError("Service Call method not added ");
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         serviceCall.serviceCallMethod(serviceCall.payload).subscribe(
-          (res) => {
+          (res: any) => {
             resolve({ status: "success", res });
           },
-          (err) => resolve({ status: "failed", err })
+          (err: any) => resolve({ status: "failed", err })
         );
       });
     } else {

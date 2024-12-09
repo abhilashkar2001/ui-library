@@ -6,26 +6,20 @@ import { LoanService } from "./loan/loan.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class PdfDownloadServiceService {
   constructor(private api: LoanService, private snack: MatSnackBar) {}
-  sendEmail(successData, suiteHeader) {
+  sendEmail(successData: any) {
     const doc = new jsPDF({
       orientation: "portrait",
       unit: "px",
       format: "a4",
-      compress: true,
+      compress: true
     });
 
     // PAGE FORMAT
-    const pageHeight =
-      doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
 
-    const pageWidth =
-      doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-
-    const head: any = [suiteHeader];
     const body = [];
     var row = [];
     row.push(successData.cbsReferenceNo);
@@ -43,7 +37,7 @@ export class PdfDownloadServiceService {
     formData.append("to", successData?.email);
     const pdfBlob = doc.output("blob");
     const pdfFile = new File([pdfBlob], "Loan Details.pdf", {
-      type: "application/pdf",
+      type: "application/pdf"
     });
     formData.append("filePath", pdfFile, pdfFile.name);
     console.log(formData);
@@ -54,7 +48,7 @@ export class PdfDownloadServiceService {
     // }
   }
 
-  Excel(data: any, title, headeCustom, actionType) {
+  Excel(data: any, title: any, headeCustom: any, actionType: any) {
     var fileData = data;
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet("title");
@@ -64,7 +58,7 @@ export class PdfDownloadServiceService {
       family: 4,
       size: 16,
       underline: "double",
-      bold: true,
+      bold: true
     };
     worksheet.addRow([]);
     worksheet.addRow([]);
@@ -73,23 +67,23 @@ export class PdfDownloadServiceService {
 
     // dynamic Download-->
     console.log(headeCustom);
-    headeCustom?.forEach((item1) => {
+    headeCustom?.forEach((item1: any) => {
       console.log(item1);
-      worksheet.addRow([`${item1.title}`]).eachCell((cell, Number) => {
+      worksheet.addRow([`${item1.title}`]).eachCell((cell) => {
         cell.fill = this.addTitleColour();
         cell.font = { color: { argb: "FFFFFF" }, bold: true };
       });
-      let loanDetailsHead = [];
-      item1.headerInfo.forEach((item, i) => {
+      let loanDetailsHead: any = [];
+      item1.headerInfo.forEach((item: any) => {
         loanDetailsHead.push(item.header);
       });
-      let loanDetailsRow = [];
-      item1.headerInfo.forEach((item) => {
+      let loanDetailsRow: any = [];
+      item1.headerInfo.forEach((item: any) => {
         loanDetailsRow.push(
           data?.loanSummary?.[`${item1.headerKey}`][`${item.headKey}`]
         );
       });
-      worksheet.addRow(loanDetailsHead).eachCell((cell, number) => {
+      worksheet.addRow(loanDetailsHead).eachCell((cell) => {
         cell.fill = this.addDataCell();
         cell.border = this.addDataBorder();
       });
@@ -98,12 +92,12 @@ export class PdfDownloadServiceService {
     });
     workbook.xlsx.writeBuffer().then((data: any) => {
       const blob = new Blob([data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       });
       if (actionType == "download") fs.saveAs(blob, "loan-account");
       else {
         const pdfFile = new File([blob], "Loan Details.xlsx", {
-          type: "application/xlsx",
+          type: "application/xlsx"
         });
 
         // for sending the email
@@ -125,7 +119,7 @@ export class PdfDownloadServiceService {
               duration: 4000,
               verticalPosition: "top",
               horizontalPosition: "right",
-              panelClass: "snackbar-error",
+              panelClass: "snackbar-error"
             }
           );
         });
@@ -138,7 +132,7 @@ export class PdfDownloadServiceService {
       top: { style: "thin" },
       left: { style: "thin" },
       bottom: { style: "thin" },
-      right: { style: "thin" },
+      right: { style: "thin" }
     };
   }
   addDataCell(): any {
@@ -146,7 +140,7 @@ export class PdfDownloadServiceService {
       type: "pattern",
       pattern: "solid",
       fgColor: { argb: "FFFFFF00" },
-      bgColor: { argb: "FF0000FF" },
+      bgColor: { argb: "FF0000FF" }
     };
   }
   addTitleColour(): any {
@@ -154,7 +148,7 @@ export class PdfDownloadServiceService {
       type: "pattern",
       pattern: "solid",
       fgColor: { argb: "004c97" },
-      bgColor: { argb: "FFFFFF" },
+      bgColor: { argb: "FFFFFF" }
     };
   }
 }

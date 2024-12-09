@@ -21,10 +21,10 @@ export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
   isOpen: boolean;
 
   @Input("egretSidenavHelper")
-  id: string;
+  id: string | any;
 
   @Input("isOpen")
-  isOpenBreakpoint: string;
+  isOpenBreakpoint: string | any;
 
   private unsubscribeAll: Subject<any>;
 

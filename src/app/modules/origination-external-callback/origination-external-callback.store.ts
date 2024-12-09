@@ -1,14 +1,14 @@
 export enum UploadImage {
   BROWSE = "Browse",
-  AVATAR = "Avatar",
+  AVATAR = "Avatar"
 }
 
 export class DocumentData {
-  documentName: string;
-  documentType: string;
-  documentSide: number;
-  documentNumber: number;
-  fileName: string;
-  fileType: string;
-  verificationType: string;
+  documentName: string | any;
+  documentType: string | any;
+  documentSide: number | any;
+  documentNumber: number | any;
+  fileName: string | any;
+  fileType: string | any;
+  verificationType: string | any;
 }

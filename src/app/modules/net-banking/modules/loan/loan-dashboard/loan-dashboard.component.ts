@@ -4,7 +4,11 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { LoanService } from "app/shared/services/net-loan-service/loan.service";
 import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { Account, LoanAccount, LoanAccounts } from "app/shared/models/loan-account.model";
+import {
+  Account,
+  LoanAccount,
+  LoanAccounts
+} from "app/shared/models/loan-account.model";
 import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
 
 @Component({
@@ -19,10 +23,10 @@ export class LoanDashboardComponent implements OnInit {
   recentTransTabs = LoanDashboardConstant.recentTabs;
   recentTransCols = LoanDashboardConstant.recentColumns;
   recentTransData: any;
-  closedLoanList = LoanDashboardConstant.closedLoan;  // Need to remove static api
+  closedLoanList = LoanDashboardConstant.closedLoan; // Need to remove static api
   instantApprove = LoanDashboardConstant.instantApproveItems; // Need to remove static store
-  loanDetails: LoanAccounts;
-  loanValues = [
+  loanDetails: LoanAccounts | any;
+  loanValues: any = [
     {
       label: "Next Instalment",
       value: "nextInstallmentAmount"
@@ -45,14 +49,19 @@ export class LoanDashboardComponent implements OnInit {
     }
   ];
   corpCustId: any;
-  loanDetailsAccountData: any
+  loanDetailsAccountData: any;
 
-  constructor(private location: Location, private router: Router, private loanService: LoanService, private sessionService: SessionStorageService) { }
+  constructor(
+    private location: Location,
+    private router: Router,
+    private loanService: LoanService,
+    private sessionService: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId
-    this.fetchListOfCorpLoanNo()
-    this.fetchCorpLoanDetails()
+    this.corpCustId = this.sessionService.getCustomerInfo()?.customerId;
+    this.fetchListOfCorpLoanNo();
+    this.fetchCorpLoanDetails();
   }
 
   /**fetch corpLoandetails of dashboard */
@@ -62,7 +71,7 @@ export class LoanDashboardComponent implements OnInit {
         this.loanDetails = res?.data;
         this.sessionService.setLoanInfo(this.loanDetails);
       }
-    })
+    });
   }
 
   /**
@@ -70,19 +79,21 @@ export class LoanDashboardComponent implements OnInit {
    */
 
   fetchListOfCorpLoanNo() {
-    this.loanService.fetchListofCorpAccountDetails(this.corpCustId).subscribe((res: IcHttpResponseModel<any>) => {
-      if (res?.statusCode == 200) {
-        this.loanDetailsAccountData = res?.data?.accounts
-          ?.filter((account: LoanAccount) => account.type === 'Accounts')
-          ?.flatMap((account: LoanAccount) =>
-            account.accountList.map((acc: Account) => ({
-              ...acc,
-              accountType: account.accountType
-            }))
-          )
-        this.sessionService.setListOfAccounts(this.loanDetailsAccountData)
-      }
-    })
+    this.loanService
+      .fetchListofCorpAccountDetails(this.corpCustId)
+      .subscribe((res: IcHttpResponseModel<any>) => {
+        if (res?.statusCode == 200) {
+          this.loanDetailsAccountData = res?.data?.accounts
+            ?.filter((account: LoanAccount) => account.type === "Accounts")
+            ?.flatMap((account: LoanAccount) =>
+              account.accountList.map((acc: Account) => ({
+                ...acc,
+                accountType: account.accountType
+              }))
+            );
+          this.sessionService.setListOfAccounts(this.loanDetailsAccountData);
+        }
+      });
   }
 
   goBack() {

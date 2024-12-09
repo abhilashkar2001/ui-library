@@ -9,15 +9,15 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-verify-number",
   templateUrl: "./verify-number.component.html",
-  styleUrls: ["./verify-number.component.scss"],
+  styleUrls: ["./verify-number.component.scss"]
 })
 export class VerifyNumberComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
   @Output() customFormGroupEmit = new EventEmitter<{}>();
   @Output() customVerifyBack = new EventEmitter<{}>();
   @Output() customExistingData = new EventEmitter<{}>();
-  dialogRef: MatDialogRef<SuccessPopupComponent>;
-  verifyNumFirm: FormGroup;
+  dialogRef: MatDialogRef<SuccessPopupComponent> | any;
+  verifyNumFirm!: FormGroup;
   isShowOtp: boolean = false;
   isResend: boolean = false;
   otp: string = "";
@@ -29,8 +29,8 @@ export class VerifyNumberComponent implements OnInit {
     placeholder: "",
     inputStyles: {
       width: "50px",
-      height: "50px",
-    },
+      height: "50px"
+    }
   };
   isChecked: boolean = false;
   yourOtp: any = "";
@@ -51,7 +51,7 @@ export class VerifyNumberComponent implements OnInit {
       this.customFormGroupEmit.emit(this.verifyNumFirm);
     }, 200);
   }
-  onOtpChange(e) {
+  onOtpChange(e: any) {
     this.yourOtp = e.toString();
   }
 
@@ -62,9 +62,9 @@ export class VerifyNumberComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(10),
-        ]),
-      ],
+          Validators.maxLength(10)
+        ])
+      ]
     });
     this.customFormGroupEmit.emit(this.verifyNumFirm);
   }
@@ -72,7 +72,7 @@ export class VerifyNumberComponent implements OnInit {
   verify() {
     const payload = {
       mobile: this.verifyNumFirm.value.verifyMobile,
-      otp: this.yourOtp,
+      otp: this.yourOtp
     };
     this.api.verifyOtp(payload).subscribe((resp) => {
       if (resp?.statusCode == 200 || resp) {
@@ -80,7 +80,7 @@ export class VerifyNumberComponent implements OnInit {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
-          panelClass: "snackbar-error",
+          panelClass: "snackbar-error"
         });
         this.verifyCustomer();
       }
@@ -93,7 +93,7 @@ export class VerifyNumberComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200 && resp?.data) {
           this.customExistingData.emit({
-            customerInfo: resp.data[0],
+            customerInfo: resp.data[0]
           });
           this.customSaveVerify.emit(true);
           // this.customFormGroupEmit.emit(this.verifyNumFirm);
@@ -112,7 +112,7 @@ export class VerifyNumberComponent implements OnInit {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
-          panelClass: "snackbar-error",
+          panelClass: "snackbar-error"
         });
         this.timer(1);
       }
@@ -120,7 +120,7 @@ export class VerifyNumberComponent implements OnInit {
     this.isShowOtp = true;
   }
 
-  timer(minute) {
+  timer(minute: any) {
     // let minute = 1;
     let seconds: number = minute * 60;
     let textSec: any = "0";

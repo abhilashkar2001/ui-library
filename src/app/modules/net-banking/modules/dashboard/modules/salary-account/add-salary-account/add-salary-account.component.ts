@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { debounceTime } from "rxjs/operators";
 import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
@@ -13,19 +13,19 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-add-salary-account",
   templateUrl: "./add-salary-account.component.html",
-  styleUrls: ["./add-salary-account.component.scss"],
+  styleUrls: ["./add-salary-account.component.scss"]
 })
 export class AddSalaryAccountComponent implements OnInit {
-  salaryAccountForm: FormGroup;
+  salaryAccountForm!: FormGroup;
   screenName: string = "Common";
-  genericData = {
+  genericData: any = {
     PREFIX: [],
     GENDER: [],
     MARITALSTATUS: [],
     NATIONALITY: [],
     RESIDENCETYPE: [],
     RELATIONSHIPTYPE: [],
-    DOCUMENTNAME: [],
+    DOCUMENTNAME: []
   };
   genederData: any;
   maritalData: any;
@@ -33,7 +33,7 @@ export class AddSalaryAccountComponent implements OnInit {
   residencyData: any;
   countryData: any;
   pincodesData: any;
-  customerInfoForm: FormGroup;
+  customerInfoForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -50,7 +50,7 @@ export class AddSalaryAccountComponent implements OnInit {
     this.fetchGenericValues();
     this.fetchCountry();
     this.customerInfoForm = this.fb.group({
-      documents: this.fb.array([]),
+      documents: this.fb.array([])
     });
     this.addDocuments();
   }
@@ -74,11 +74,11 @@ export class AddSalaryAccountComponent implements OnInit {
       city: [],
       nationality: [],
       mobile: [],
-      mobtCode: [],
+      mobtCode: []
     });
     this.salaryAccountForm
       .get("pincode")
-      .valueChanges.pipe(debounceTime(500))
+      ?.valueChanges.pipe(debounceTime(500))
       .subscribe((res) => {
         if (res) this.zipCode();
       });
@@ -107,17 +107,19 @@ export class AddSalaryAccountComponent implements OnInit {
   }
   zipCode() {
     this.api
-      .getPinCodes(this.salaryAccountForm.get("pincode").value)
+      .getPinCodes(this.salaryAccountForm.get("pincode")?.value)
       .subscribe((res) => {
         this.pincodesData = res.data;
-        this.salaryAccountForm.get("city").setValue(res.data[0].city);
-        this.salaryAccountForm.get("country").setValue(res.data[0].countryName);
-        this.salaryAccountForm.get("state").setValue(res.data[0].state);
+        this.salaryAccountForm.get("city")?.setValue(res.data[0].city);
+        this.salaryAccountForm
+          .get("country")
+          ?.setValue(res.data[0].countryName);
+        this.salaryAccountForm.get("state")?.setValue(res.data[0].state);
       });
   }
   saveRecord() {
     const cityVal = this.pincodesData.find(
-      (item) => item.city == this.salaryAccountForm.value.city
+      (item: any) => item.city == this.salaryAccountForm.value.city
     );
     console.log(cityVal);
 
@@ -132,15 +134,15 @@ export class AddSalaryAccountComponent implements OnInit {
         stateName: this.salaryAccountForm.value.state,
         cityName: this.salaryAccountForm.value.city,
         cityId: cityVal.cityId,
-        addressId: "",
-      },
+        addressId: ""
+      }
     ];
     const Contact = {
       mobile: Number(this.salaryAccountForm.value.mobile),
       email: this.salaryAccountForm.value.email,
       mobtCode: this.salaryAccountForm.value.mobtCode,
       contactId: "",
-      address: Address,
+      address: Address
     };
     var payload: any = {
       customerNo: null,
@@ -158,7 +160,7 @@ export class AddSalaryAccountComponent implements OnInit {
       source: "Website",
       kycStatus: null,
       documentId: null,
-      contact: Contact,
+      contact: Contact
     };
     console.log(payload);
 
@@ -169,11 +171,11 @@ export class AddSalaryAccountComponent implements OnInit {
           data: {
             msg: resp.message,
             status: resp.status,
-            reffNo: resp.data.customerId,
+            reffNo: resp.data.customerId
           },
           width: "60%",
           disableClose: true,
-          panelClass: "dialog-class",
+          panelClass: "dialog-class"
         });
         dialog.afterClosed().subscribe((res) => {
           console.log(res);
@@ -185,35 +187,35 @@ export class AddSalaryAccountComponent implements OnInit {
     });
   }
 
-  get documentCtrl(): FormArray {
+  get documentCtrl(): FormArray | any {
     return this.customerInfoForm.get("documents") as FormArray;
   }
 
-  documentFormArray(data?) {
+  documentFormArray(data?: any) {
     return this.fb.group({
       documentName: [data?.documentType ?? ""],
       isProofOfAddress: [data?.isProofOfAddress ?? false],
-      files: this.fb.array([]),
+      files: this.fb.array([])
     });
   }
 
-  documentFilesCtrl(index): FormArray {
+  documentFilesCtrl(index: any): FormArray {
     return this.documentCtrl.at(index).get("files") as FormArray;
   }
 
-  documentFileFormArray(fileName, fileUrl, documentId) {
+  documentFileFormArray(fileName: any, fileUrl: any, documentId: any) {
     return this.fb.group({
       fileName: [fileName ?? ""],
       fileUrl: [fileUrl ?? ""],
-      documentId: [documentId ?? null],
+      documentId: [documentId ?? null]
     });
   }
 
-  uploadDocument(event, index) {
+  uploadDocument(event: any, index: any) {
     const file = event.target.files[0];
     if (
-      this.documentCtrl.value.some((doc) =>
-        doc?.files?.some((item) => item?.fileName.includes(file?.name))
+      this.documentCtrl.value.some((doc: any) =>
+        doc?.files?.some((item: any) => item?.fileName.includes(file?.name))
       )
     ) {
       this.notificationService.showError(
@@ -227,7 +229,7 @@ export class AddSalaryAccountComponent implements OnInit {
     docdata.fileType = file?.type.split("/")[1];
     docdata.documentName = this.documentCtrl
       .at(index)
-      .get("documentName").value;
+      .get("documentName")?.value;
     const formdata = new FormData();
     formdata.append("file", file);
     formdata.append("data", JSON.stringify(docdata));
@@ -235,8 +237,8 @@ export class AddSalaryAccountComponent implements OnInit {
     this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
       if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
         const docname = this.genericData.DOCUMENTNAME.find(
-          (res) =>
-            res.id == this.documentCtrl.at(index).get("documentName").value
+          (res: any) =>
+            res?.id == this.documentCtrl.at(index)?.get("documentName")?.value
         )?.values;
         const type = docname.toLowerCase();
         const formdata = new FormData();
@@ -258,7 +260,7 @@ export class AddSalaryAccountComponent implements OnInit {
                 {
                   duration: 2000,
                   horizontalPosition: "right",
-                  verticalPosition: "top",
+                  verticalPosition: "top"
                 }
               );
               return;
@@ -274,7 +276,7 @@ export class AddSalaryAccountComponent implements OnInit {
             this.snack.open(`Uploaded ${type} is not a valid ${type}`, "Ok!", {
               duration: 2000,
               horizontalPosition: "right",
-              verticalPosition: "top",
+              verticalPosition: "top"
             });
           }
         });
@@ -282,9 +284,10 @@ export class AddSalaryAccountComponent implements OnInit {
     });
   }
 
-  getDocTypeforScan(docname, index) {
+  getDocTypeforScan(docname: any, index: any) {
     let docType;
-    let fileindex = this.documentCtrl.controls[index].get("files").value.length;
+    let fileindex =
+      this.documentCtrl.controls[index]?.get("files")?.value.length;
     if (docname.includes("adhar") && fileindex == 0) {
       docType = "adhaar";
     }
@@ -307,18 +310,18 @@ export class AddSalaryAccountComponent implements OnInit {
     this.documentCtrl.push(this.documentFormArray());
   }
 
-  removeDocument(i) {
+  removeDocument(i: any) {
     this.documentCtrl.removeAt(i);
   }
 
   setGenericType(
     value: string,
-    control: FormGroup,
+    control: FormGroup | any,
     key: string,
     genericName: string
   ) {
     const genericValue = this.genederData[genericName].find(
-      (item) => item.id == value
+      (item: any) => item.id == value
     ).values;
     control.get(key).setValue(genericValue);
   }

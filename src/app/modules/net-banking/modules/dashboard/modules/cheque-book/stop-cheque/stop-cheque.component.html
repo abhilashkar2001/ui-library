@@ -6,8 +6,8 @@
         [items]="accountNumberList"
         bindValueKey="accountNo"
         bindLabelKey="accountNo"
-        [control]="stopChequeForm.get('accountNo')"
-        skipLabel="false"
+        [control]="stopChequeForm.get('accountNo') | formcontrol"
+        [skipLabel]="false"
         (selectionChange)="handleAccountNumberChange($event)"
       ></app-searchable-select>
       <span class="message" *ngIf="chequeNumber"
@@ -25,7 +25,7 @@
           }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
-            [formControl]="stopChequeForm.get('stopChequeBy')"
+            [formControl]="stopChequeForm.get('stopChequeBy') | formcontrol"
           >
             <mat-radio-button
               *ngFor="let option of stopChequeOptions"
@@ -37,28 +37,30 @@
       </div>
     </div>
 
-    <ng-container *ngIf="stopChequeForm.get('stopChequeBy').value === 'Number'">
+    <ng-container
+      *ngIf="stopChequeForm.get('stopChequeBy')?.value === 'Number'"
+    >
       <div fxFlex="100" fxLayoutGap="20" class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="stopChequeForm.get('chequeNo')"
+            [control]="stopChequeForm.get('chequeNo') | formcontrol"
             inputLabel="Cheque Number"
           ></app-ic-custom-input>
         </div>
       </div>
     </ng-container>
 
-    <ng-container *ngIf="stopChequeForm.get('stopChequeBy').value === 'Range'">
+    <ng-container *ngIf="stopChequeForm.get('stopChequeBy')?.value === 'Range'">
       <div fxFlex="100" fxLayoutGap="20" class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="stopChequeForm.get('from')"
+            [control]="stopChequeForm.get('from') | formcontrol"
             inputLabel="From"
           ></app-ic-custom-input>
         </div>
         <div fxFlex="25" class="input_wrapper">
           <app-ic-custom-input
-            [control]="stopChequeForm.get('to')"
+            [control]="stopChequeForm.get('to') | formcontrol"
             inputLabel="To"
           ></app-ic-custom-input>
         </div>
@@ -68,7 +70,7 @@
     <div class="wrapper_row">
       <div fxFlex="25" class="input_wrapper">
         <app-ic-custom-input
-          [control]="stopChequeForm.get('reason')"
+          [control]="stopChequeForm.get('reason') | formcontrol"
           inputLabel="Reason"
         ></app-ic-custom-input>
       </div>

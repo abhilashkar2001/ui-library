@@ -10,16 +10,16 @@ import { CardService } from "../../../../card.service";
 @Component({
   selector: "app-billing-cycle",
   templateUrl: "./billing-cycle.component.html",
-  styleUrls: ["./billing-cycle.component.scss"],
+  styleUrls: ["./billing-cycle.component.scss"]
 })
 export class BillingCycleComponent implements OnInit {
-  billingCycleForm: FormGroup;
+  billingCycleForm!: FormGroup;
   listOfAccounts: any = [];
   profileInfo: any;
   currencyCode: any;
-  cardList: any[];
+  cardList: any[] | any;
   typeofCard: any;
-  listOfCustomers: any[];
+  listOfCustomers: any[] | any;
   accountDetails: any;
   billingCycleList = CreditCardStore.billCycleList;
 
@@ -49,27 +49,29 @@ export class BillingCycleComponent implements OnInit {
       creditAmount: [""],
       creditCurrency: [""],
       requestDate: [""],
-      billingCycleDate: [""],
+      billingCycleDate: [""]
     });
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.billingCycleForm
         ?.get("cardNo")
-        .patchValue(this.accountDetails?.cardNumber);
+        ?.patchValue(this.accountDetails?.cardNumber);
       const dueDate = this.accountDetails?.dueDate;
       if (dueDate) {
         const dateObj = new Date(dueDate); // Parse the due date
         const day = dateObj.getDate(); // Get the day of the month
         const formattedDay = this.getOrdinalSuffix(day) + " Each Month"; // Add ordinal suffix
 
-        this.billingCycleForm?.get("billingCycleDate").patchValue(formattedDay);
+        this.billingCycleForm
+          ?.get("billingCycleDate")
+          ?.patchValue(formattedDay);
       }
     }
   }
@@ -105,25 +107,25 @@ export class BillingCycleComponent implements OnInit {
             details: [
               { "Name on Card": this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber,
+                "Card Number": this.accountDetails?.cardNumber
               },
               {
-                "Card Name": this.accountDetails?.cardName,
+                "Card Name": this.accountDetails?.cardName
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit,
+                "Credit Limit": this.accountDetails?.totalCreditLimit
               },
               {
-                "Current Billing Cycle": payload?.billingCycleDate,
+                "Current Billing Cycle": payload?.billingCycleDate
               },
               {
-                "Request Billing Cycle": payload?.requestDate,
-              },
-            ],
-          },
+                "Request Billing Cycle": payload?.requestDate
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

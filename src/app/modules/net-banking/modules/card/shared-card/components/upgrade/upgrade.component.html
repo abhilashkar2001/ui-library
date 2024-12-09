@@ -12,7 +12,7 @@
           <span class="light-blue-title">{{ title | translate }}</span>
           <div fxLayout="row">
             <app-ic-custom-pay-from
-              [control]="upgradeForm.get('creditAccount')"
+              [control]="upgradeForm.get('creditAccount') | formcontrol"
               [inputLabel]="'Card No' | translate"
               bindValueKey="cardNumber"
               bindLabelKey="cardNumber"

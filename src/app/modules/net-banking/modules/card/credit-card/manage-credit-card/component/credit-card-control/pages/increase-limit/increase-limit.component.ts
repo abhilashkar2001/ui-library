@@ -8,19 +8,19 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-increase-limit",
   templateUrl: "./increase-limit.component.html",
-  styleUrls: ["./increase-limit.component.scss"],
+  styleUrls: ["./increase-limit.component.scss"]
 })
 export class IncreaseLimitComponent implements OnInit {
-  increaseLimitForm: FormGroup;
+  increaseLimitForm!: FormGroup;
   selectedCurrency: string = "INR";
   viewOtp: boolean = false;
   creditCardList: any;
-  customerID: number;
-  fourDigitNo: string;
-  mobileNo: string;
+  customerID: number | any;
+  fourDigitNo: string | any;
+  mobileNo: string | any;
   otp: any;
   customerInfo: any;
-  cardList: any[];
+  cardList: any[] | any;
   userInfo: any;
   constructor(
     private fb: FormBuilder,
@@ -34,7 +34,7 @@ export class IncreaseLimitComponent implements OnInit {
     this.initIncreaseLimitForm();
     this.getCreditCardDetailsList();
     this.customerInfo = this.ss.getCustomerInfo();
-    this.userInfo = JSON.parse(sessionStorage.getItem("auth-user"));
+    this.userInfo = JSON.parse(<string>sessionStorage.getItem("auth-user"));
     this.cardList = this.ss.getListOfCards();
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     console.log(this.fourDigitNo);
@@ -43,7 +43,7 @@ export class IncreaseLimitComponent implements OnInit {
   getCreditCardDetailsList() {
     const list = this.ss.getListOfCards()?.map((item) => ({
       cardNo: item.cardNumber,
-      cardValue: item.cardNumber,
+      cardValue: item.cardNumber
     }));
     this.creditCardList = list;
   }
@@ -56,7 +56,7 @@ export class IncreaseLimitComponent implements OnInit {
       // this.increaseLimitForm.patchValue({
       //   eligibleCreditLimit: res.data.eligibleCreditLimit
       // });
-      this.increaseLimitForm.get("eligibleCreditLimit").setValue(res.data);
+      this.increaseLimitForm.get("eligibleCreditLimit")?.setValue(res.data);
     });
   }
 
@@ -64,7 +64,7 @@ export class IncreaseLimitComponent implements OnInit {
     this.increaseLimitForm = this.fb.group({
       cardNo: ["", [Validators.required]],
       eligibleCreditLimit: ["", [Validators.required]],
-      otp: [""],
+      otp: [""]
     });
 
     // this.increaseLimitForm.get('cardNo').valueChanges.subscribe(cardNo => {
@@ -85,10 +85,10 @@ export class IncreaseLimitComponent implements OnInit {
   }
 
   submitEligibleLimit() {
-    this.otp = this.increaseLimitForm.get("otp").value;
+    this.otp = this.increaseLimitForm.get("otp")?.value;
     let payload = {
       mobile: this.mobileNo,
-      otp: this.otp,
+      otp: this.otp
     };
     this.creditCardService.verifyOtp(payload).subscribe((res: any) => {
       if (res) {
@@ -101,12 +101,12 @@ export class IncreaseLimitComponent implements OnInit {
               const dialogRef = this.dialog.open(PopupSuccessComponent, {
                 data: {
                   status: "SuccessOnly",
-                  Msg: "Card limit has been set",
+                  Msg: "Card limit has been set"
                 },
                 disableClose: true,
                 panelClass: "popup-dialog-class",
                 backdropClass: "bdrop",
-                width: "25%",
+                width: "25%"
               });
               dialogRef.afterClosed().subscribe((res) => {
                 console.log(res);

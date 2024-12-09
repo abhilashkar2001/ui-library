@@ -9,7 +9,7 @@ interface Config {
 
 @Injectable()
 export class AppLoaderService {
-  dialogRef: MatDialogRef<AppLoaderComponent>;
+  dialogRef: MatDialogRef<AppLoaderComponent> | any;
   constructor(private dialog: MatDialog) {}
 
   public open(
@@ -18,7 +18,7 @@ export class AppLoaderService {
   ): Observable<boolean> {
     this.dialogRef = this.dialog.open(AppLoaderComponent, {
       disableClose: true,
-      backdropClass: "light-backdrop",
+      backdropClass: "light-backdrop"
     });
     this.dialogRef.updateSize(config.width);
     this.dialogRef.componentInstance.title = title;

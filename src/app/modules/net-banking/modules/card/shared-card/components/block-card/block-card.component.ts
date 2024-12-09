@@ -11,24 +11,24 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-block-card",
   templateUrl: "./block-card.component.html",
-  styleUrls: ["./block-card.component.scss"],
+  styleUrls: ["./block-card.component.scss"]
 })
 export class BlockCardComponent implements OnInit {
-  blockCardForm: FormGroup;
+  blockCardForm!: FormGroup;
   reasons: any[] = [
     { label: "Lost/Stolen", value: "Lost/Stolen" },
-    { label: "Damaged", value: "Damaged" },
+    { label: "Damaged", value: "Damaged" }
   ];
   selectedCurrency: any;
-  reIssueToggle: boolean;
-  cardList: AccountList[];
-  typeofCard: string;
-  currencyCode: string;
+  reIssueToggle: boolean | any;
+  cardList: AccountList[] | any;
+  typeofCard: string | any;
+  currencyCode: string | any;
   profileInfo: any;
   communicationAddress: any;
-  permanentAddress: string;
-  accountDetails: AccountList;
-  title: string;
+  permanentAddress: string | any;
+  accountDetails: AccountList | any;
+  title: string | any;
 
   constructor(
     private fb: FormBuilder,
@@ -40,9 +40,12 @@ export class BlockCardComponent implements OnInit {
   ) {
     this.profileInfo = this.tokenService.getUser();
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.updateItemsBasedOnUrl(event.url);
+      .pipe(
+        filter((event) => event instanceof NavigationEnd) // Regular filter
+      )
+      .subscribe((event) => {
+        const navEndEvent = event as NavigationEnd; // Type assertion
+        this.updateItemsBasedOnUrl(navEndEvent.url);
       });
   }
 
@@ -59,7 +62,7 @@ export class BlockCardComponent implements OnInit {
       creditCurrency: [""],
       reason: [""],
       address: [""],
-      reIssueToggle: [""],
+      reIssueToggle: [""]
     });
   }
 
@@ -72,7 +75,7 @@ export class BlockCardComponent implements OnInit {
       this.title = "Credit Card";
     } else if (url.includes("/debit-card")) {
       this.title = "Debit Card";
-    }else if (url.includes("/prepaid-card")) {
+    } else if (url.includes("/prepaid-card")) {
       this.title = "Prepaid Card";
     }
   }
@@ -80,22 +83,22 @@ export class BlockCardComponent implements OnInit {
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
     }
   }
-  payAccount(event) {
+  payAccount(event: any) {
     console.log(event);
     let listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.selectedCurrency = listOfAccounts.find(
       (res) => res?.accountNo == event
     )?.accountCurrency;
   }
-  onReIssuePreferanceChange(e) {
+  onReIssuePreferanceChange(e: any) {
     this.reIssueToggle = e?.checked;
-    this.blockCardForm?.get("reIssueToggle").patchValue(this.reIssueToggle);
+    this.blockCardForm?.get("reIssueToggle")?.patchValue(this.reIssueToggle);
     if (this.reIssueToggle === true) {
       this.fetchAddressDetails();
     }
@@ -169,28 +172,28 @@ export class BlockCardComponent implements OnInit {
             details: [
               { "Card Holder": this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber,
+                "Card Number": this.accountDetails?.cardNumber
               },
               {
-                "Card Name": this.accountDetails?.cardName,
+                "Card Name": this.accountDetails?.cardName
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit,
-              },
-            ],
+                "Credit Limit": this.accountDetails?.totalCreditLimit
+              }
+            ]
           },
           {
             header: "Block Details",
             details: [
               { Reason: payload?.reason },
               {
-                "Re-Issue Card": payload?.reIssueToggle,
-              },
-            ],
-          },
+                "Re-Issue Card": payload?.reIssueToggle
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",

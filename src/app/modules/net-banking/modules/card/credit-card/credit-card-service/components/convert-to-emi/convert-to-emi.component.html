@@ -7,7 +7,7 @@
       <div class="card-selection" fxLayout="row" fxLayoutAlign="space-between">
         <div class="card-selector" fxFlex="30">
           <app-ic-custom-pay-from
-            [control]="convertEmiForm.get('cardNumber')"
+            [control]="convertEmiForm.get('cardNumber') | formcontrol"
             [items]="listOfAccounts"
             bindValueKey="cardNumber"
             bindLabelKey="cardNumber"

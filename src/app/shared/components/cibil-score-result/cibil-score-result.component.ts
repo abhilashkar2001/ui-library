@@ -1,19 +1,16 @@
-import { Location } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Router } from "@angular/router";
-import { CommonService } from "app/shared/services/common-service/common.service";
 import { CibilScorePoorDialgComponent } from "../cibil-score-poor-dialg/cibil-score-poor-dialg.component";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "app-cibil-score-result",
   templateUrl: "./cibil-score-result.component.html",
-  styleUrls: ["./cibil-score-result.component.scss"],
+  styleUrls: ["./cibil-score-result.component.scss"]
 })
 export class CibilScoreResultComponent implements OnInit {
   dialogsaveRef!: MatDialogRef<CibilScorePoorDialgComponent>;
-  @Input() flow: string;
-  @Input() isDifferentMobile: boolean;
+  @Input() flow: string | any;
+  @Input() isDifferentMobile: boolean | any;
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
   @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
@@ -23,36 +20,31 @@ export class CibilScoreResultComponent implements OnInit {
     {
       score: "Below 681",
       description: "Need Help",
-      colorCode: "#D57066",
+      colorCode: "#D57066"
     },
     {
       score: "681 - 730",
       description: "Average",
-      colorCode: "#DF9690",
+      colorCode: "#DF9690"
     },
     {
       score: "771 - 770",
       description: "Fair",
-      colorCode: "#E4A037",
+      colorCode: "#E4A037"
     },
     {
       score: "771 - 790",
       description: "Good",
-      colorCode: "#62BB69",
+      colorCode: "#62BB69"
     },
     {
       score: "Above 791",
       description: "Excellent",
-      colorCode: "#D57066",
-    },
+      colorCode: "#D57066"
+    }
   ];
 
-  constructor(
-    private router: Router,
-    private location: Location,
-    private dialog: MatDialog,
-    private commonService: CommonService
-  ) {
+  constructor() {
     this.dataSource = {
       chart: {
         // caption: "Your CIBIL Score is",
@@ -60,44 +52,44 @@ export class CibilScoreResultComponent implements OnInit {
         // "lowerLimit": "0",
         // "upperLimit": "900",
         showToolTip: "0",
-        theme: "fusion",
+        theme: "fusion"
       },
       colorRange: {
         color: [
           {
             minValue: "0",
             maxValue: "681",
-            code: "#ff0000",
+            code: "#ff0000"
           },
           {
             minValue: "682",
             maxValue: "730",
-            code: "#f78e8e",
+            code: "#f78e8e"
           },
           {
             minValue: "731",
             maxValue: "770",
-            code: "#ffa600",
+            code: "#ffa600"
           },
           {
             minValue: "771",
             maxValue: "790",
-            code: "#21ac21",
+            code: "#21ac21"
           },
           {
             minValue: "791",
             maxValue: "900",
-            code: "#006400",
-          },
-        ],
+            code: "#006400"
+          }
+        ]
       },
       dials: {
         dial: [
           {
-            value: "695",
-          },
-        ],
-      },
+            value: "695"
+          }
+        ]
+      }
     };
   }
 

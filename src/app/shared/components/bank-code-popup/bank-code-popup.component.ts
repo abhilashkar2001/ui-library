@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-bank-code-popup",
   templateUrl: "./bank-code-popup.component.html",
-  styleUrls: ["./bank-code-popup.component.scss"],
+  styleUrls: ["./bank-code-popup.component.scss"]
 })
 export class BankCodePopupComponent implements OnInit {
   tableColumns: any = [];
@@ -20,7 +20,7 @@ export class BankCodePopupComponent implements OnInit {
     this.tableData = this.data?.bankDetails;
   }
 
-  onRowClicked(value) {
+  onRowClicked(value: any) {
     this.dialogRef.close(value);
   }
 

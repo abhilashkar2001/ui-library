@@ -6,7 +6,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -22,23 +22,23 @@ export interface PaginationValue {
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CustomPaginationComponent),
-      multi: true,
-    },
-  ],
+      multi: true
+    }
+  ]
 })
 export class CustomPaginationComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
   @Input() value: PaginationValue = { page: 1, pageSize: 5 };
-  @Input() total;
-  @Input() filterValue;
+  @Input() total: any;
+  @Input() filterValue: any;
   @Input() visibleRangeLength = 5;
   @Input() pageSizes: number[] = [5, 10, 25, 50];
   @Output() customPageEvent = new EventEmitter<{}>();
-  currentPage: number;
-  pageAction: string;
+  currentPage: number | any;
+  pageAction: string | any;
   selectedSize: number = 5;
-  onChange(value: any) {}
+  onChange() {}
   onTouched() {}
 
   registerOnChange(fn: any): void {
@@ -66,26 +66,26 @@ export class CustomPaginationComponent
   ngOnInit(): void {
     // this.updateRecord(this.totalPages, this.value.pageSize, 1);
     this.updateVisiblePages();
-    if(sessionStorage.getItem('fromDate')){
-      sessionStorage.removeItem('fromDate');
-      sessionStorage.removeItem('toDate');
-      }
+    if (sessionStorage.getItem("fromDate")) {
+      sessionStorage.removeItem("fromDate");
+      sessionStorage.removeItem("toDate");
+    }
   }
 
-  updateRecord(totalPages, pageSize, page) {
+  updateRecord(totalPages: any, pageSize: any, page: any) {
     this.totalRecords = this.total;
     this.customPageEvent.emit({ value: this.value, page: page });
     this.lastrecord = totalPages == page ? this.total : pageSize * page;
     this.firstRecord = pageSize * (page - 1) + 1;
   }
 
-  applyReset(totalPages, pageSize, page) {
+  applyReset(totalPages: any, pageSize: any, page: any) {
     this.lastrecord = totalPages == page ? this.total : pageSize * page;
     this.firstRecord = pageSize * (page - 1) + 1;
     this.totalRecords = this.total;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     console.log(changes);
     if (changes.total || changes.value) {
       this.total = changes.total.currentValue;
@@ -103,7 +103,7 @@ export class CustomPaginationComponent
         ...this.value,
         page: 1,
         pageSize:
-          changes?.filterValue?.currentValue?.pageSize || this.selectedSize,
+          changes?.filterValue?.currentValue?.pageSize || this.selectedSize
       };
       this.updateTotalPages();
       this.applyReset(this.totalPages, this.value.pageSize, 1);
@@ -118,18 +118,18 @@ export class CustomPaginationComponent
     this.updateRecord(this.totalPages, this.value.pageSize, this.value.page);
     this.currentPage = page;
     this.updateVisiblePages();
-    this.onChange(this.value);
-    const customtable = document.querySelector("#customtable");
+    this.onChange();
+    const customtable: any = document.querySelector("#customtable");
     customtable.scrollTo(0, 0);
   }
 
-  selectPageSize(pageSize) {
+  selectPageSize(pageSize: any) {
     this.value = { page: 1, pageSize: +pageSize.value };
     this.selectedSize = pageSize.value;
     this.updateTotalPages();
     this.updateRecord(this.totalPages, this.value.pageSize, this.value.page);
     this.updateVisiblePages();
-    this.onChange(this.value);
+    this.onChange();
   }
 
   updateVisiblePages(): void {
@@ -152,7 +152,7 @@ export class CustomPaginationComponent
         this.currentPage != this.totalPages - 2 &&
         this.visiblePages[this.visiblePages.length - 1] != this.totalPages
       ) {
-        if(this.totalPages > 6){
+        if (this.totalPages > 6) {
           this.visiblePages.push("...");
         }
         this.visiblePages.push(this.totalPages);

@@ -1,20 +1,11 @@
-import { Location } from "@angular/common";
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { TokenStorageService } from "app/shared/token-storage.service";
 import * as moment from "moment";
 
 @Component({
   selector: "app-terms-conditions",
   templateUrl: "./terms-conditions.component.html",
-  styleUrls: ["./terms-conditions.component.scss"],
+  styleUrls: ["./terms-conditions.component.scss"]
 })
 export class TermsConditionsComponent implements OnInit {
   @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
@@ -27,16 +18,15 @@ export class TermsConditionsComponent implements OnInit {
   currencySymboll = "₹";
   otherUserInfo: any;
 
-  constructor(
-    private _location: Location,
-    private tokenStore: TokenStorageService
-  ) {}
+  constructor(private tokenStore: TokenStorageService) {}
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.customerData = JSON.parse(sessionStorage.getItem("customerData"));
+    this.customerData = JSON.parse(
+      <string>sessionStorage.getItem("customerData")
+    );
     this.loamAmount = JSON.parse(
-      sessionStorage.getItem("loanAmmount")
+      <string>sessionStorage.getItem("loanAmmount")
     )?.loanAmount;
     this.requestDate = moment(new Date()).format();
   }

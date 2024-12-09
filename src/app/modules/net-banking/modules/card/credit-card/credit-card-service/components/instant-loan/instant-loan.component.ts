@@ -15,7 +15,7 @@ import { CreditCardStore } from "../../../credit-card.store";
   styleUrls: ["./instant-loan.component.scss"]
 })
 export class InstantLoanComponent implements OnInit {
-  instantLoanForm: FormGroup;
+  instantLoanForm!: FormGroup;
   purpose = ["education", "farming"]; // Static purpose options
   loanType: string = "FD";
   currencySymbol = "₹";
@@ -29,13 +29,14 @@ export class InstantLoanComponent implements OnInit {
   calculatedData: any;
   customerId: any;
   listOfAccounts: any[] = [];
-  totalMonths: number;
-  monthlyEmi: number;
-  transactionDetails: cardTransactionDetails;
+  totalMonths: number | any;
+  monthlyEmi: number | any;
+  transactionDetails: cardTransactionDetails | any;
   items: string[] = [];
   accountDetails: any;
   customerInfo: any;
   profileInfo: any;
+  sliderAmount: any;
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +50,7 @@ export class InstantLoanComponent implements OnInit {
   ngOnInit(): void {
     this.initializeAccounts();
     this.buildInstantLoanForm();
+    this.sliderAmount = this.instantLoanForm.get("amount")?.value || 0;
   }
   // Initialize account list from session storage
   private initializeAccounts(): void {
@@ -77,7 +79,7 @@ export class InstantLoanComponent implements OnInit {
     });
   }
 
-  onDepositAmountChange(value): void {
+  onDepositAmountChange(value: any): void {
     this.instantLoanForm
       .get("amount")
       ?.setValue(value.srcElement.ariaValueText);
@@ -85,7 +87,7 @@ export class InstantLoanComponent implements OnInit {
 
   private parseDurationToDays(duration: string): number {
     const regex = /(\d+)\s*year.*?(\d+)\s*month.*?(\d+)\s*day/;
-    const match = duration.match(regex);
+    const match: any = duration.match(regex);
 
     if (!match) {
       throw new Error("Invalid duration format");
@@ -98,7 +100,7 @@ export class InstantLoanComponent implements OnInit {
     return years * 365 + months * 30 + days;
   }
 
-  onSliderChangeForTenure(e): void {
+  onSliderChangeForTenure(e: any): void {
     this.totalMonths = 0;
     const duration = e.srcElement.ariaValueText;
 
@@ -133,7 +135,7 @@ export class InstantLoanComponent implements OnInit {
   }
 
   private getTomorrowDate(): string {
-    const tomorrow = new Date();
+    const tomorrow: any = new Date();
     tomorrow.setDate(new Date().getDate() + 1);
     return tomorrow.toISOString().split("T")[0]; // Format as YYYY-MM-DD
   }
@@ -160,7 +162,7 @@ export class InstantLoanComponent implements OnInit {
   }
 
   // Calculate EMI based on the payload
-  private calculateEmi(payload): void {
+  private calculateEmi(payload: any): void {
     this.apiService.calculateEmi(payload).subscribe((response) => {
       if (response?.statusCode === 200) {
         this.monthlyEmi = response.data.monthlyPayment;
@@ -189,7 +191,9 @@ export class InstantLoanComponent implements OnInit {
         (card) => card?.cardNumber == account
       );
       if (this.accountDetails) {
-        this.instantLoanForm?.get("cardId").patchValue(this.accountDetails?.id);
+        this.instantLoanForm
+          ?.get("cardId")
+          ?.patchValue(this.accountDetails?.id);
       }
       this.fetchTransactionDetails(cardNumber);
     }
@@ -256,7 +260,7 @@ export class InstantLoanComponent implements OnInit {
   }
 
   // Create the EMI details array for the service call handler
-  private createEmiDetailsArray(payload): any[] {
+  private createEmiDetailsArray(payload: any): any[] {
     return [
       {
         eventType: "instaBank",

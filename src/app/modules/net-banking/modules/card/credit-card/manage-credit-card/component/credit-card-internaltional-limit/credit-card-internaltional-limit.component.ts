@@ -12,12 +12,12 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-credit-card-internaltional-limit",
   templateUrl: "./credit-card-internaltional-limit.component.html",
-  styleUrls: ["./credit-card-internaltional-limit.component.scss"],
+  styleUrls: ["./credit-card-internaltional-limit.component.scss"]
 })
 export class CreditCardInternaltionalLimitComponent implements OnInit {
   tabs = DrawerConstant.cardLimitTabs;
 
-  internaltionLimitForm: FormGroup;
+  internaltionLimitForm!: FormGroup;
   isEnable: boolean = false;
   menuLabels: { [key: number]: string } = {};
   selectedCurrency: any;
@@ -25,8 +25,8 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
   min = 5000;
   ammountValue = 0;
   currencySymbol = "₹";
-  thumbLabel: boolean = true;
-  limitType = LimitType.Limits;
+  thumbLabel: boolean | any = true;
+  limitType: any = LimitType.Limits;
   creditCardList: any;
   selecetdCardNo: any;
   selectedTabName: any;
@@ -83,22 +83,22 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
       tapPayTransaction: [data ? data?.tapPayTransaction : ""],
       tapRequired: [data ? data?.tapRequired : false],
       minTapRequired: [data ? data?.minTapRequired : null],
-      maxTapRequired: [data ? data?.maxTapRequired : null],
+      maxTapRequired: [data ? data?.maxTapRequired : null]
     });
     this.internaltionLimitForm
       .get("cardNo")
-      .valueChanges.pipe(debounceTime(200))
+      ?.valueChanges.pipe(debounceTime(200))
       .subscribe((val) => {
         console.log(val);
         if (val) {
           this.selecetdCardNo = this.creditCardList.filter(
-            (item) => item?.cardNumber == val
+            (item: any) => item?.cardNumber == val
           );
           console.log(this.selecetdCardNo);
         }
       });
   }
-  payAccount(event) {
+  payAccount(event: any) {
     console.log(event);
     let name = "International";
     this.creditCardService
@@ -115,11 +115,11 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
     return this.menuLabels[index] || "Disable"; // Default to 'Disable'
   }
 
-  onSliderChange(e, control) {
+  onSliderChange(e: any, control: any) {
     this.ammountValue = e?.value;
-    this.internaltionLimitForm.get(control).setValue(this.ammountValue);
+    this.internaltionLimitForm.get(control)?.setValue(this.ammountValue);
   }
-  formatCurrencyLabel(value) {
+  formatCurrencyLabel(value: any) {
     return `₹ ${value}`;
   }
   cancle() {
@@ -147,15 +147,15 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
             details: [
               { "Card Detail": this.selecetdCardNo[0]?.customerName },
               {
-                "Card Number": this.internaltionLimitForm?.get("cardNo").value,
+                "Card Number": this.internaltionLimitForm?.get("cardNo")?.value
               },
               {
-                "Card Name": this.selecetdCardNo[0]?.cardName,
+                "Card Name": this.selecetdCardNo[0]?.cardName
               },
               {
-                "credit limit": this.selecetdCardNo[0]?.totalCreditLimit,
-              },
-            ],
+                "credit limit": this.selecetdCardNo[0]?.totalCreditLimit
+              }
+            ]
           },
           {
             header: "International Limits",
@@ -164,22 +164,22 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
                 "ATM Withdraw":
                   this.internaltionLimitForm?.get("atmRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "ATM Withdraw Limit":
-                  this.internaltionLimitForm?.get("atmWithdraw")?.value,
+                  this.internaltionLimitForm?.get("atmWithdraw")?.value
               },
               {
                 "Merchant Outlets":
                   this.internaltionLimitForm?.get("merchantRequired")?.value ==
                   true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Merchant Outlets Limit":
-                  this.internaltionLimitForm?.get("maxOnlineAmount")?.value,
+                  this.internaltionLimitForm?.get("maxOnlineAmount")?.value
               },
 
               {
@@ -187,27 +187,27 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
                   this.internaltionLimitForm?.get("onlineRequired")?.value ==
                   true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Online Transaction Limit":
-                  this.internaltionLimitForm?.get("onlineTransaction")?.value,
+                  this.internaltionLimitForm?.get("onlineTransaction")?.value
               },
               {
                 "Tap & Pay Transaction":
                   this.internaltionLimitForm?.get("tapRequired")?.value == true
                     ? "Yes"
-                    : "No",
+                    : "No"
               },
               {
                 "Tap & Pay Transaction Limit":
-                  this.internaltionLimitForm?.get("tapPayTransaction")?.value,
-              },
-            ],
-          },
+                  this.internaltionLimitForm?.get("tapPayTransaction")?.value
+              }
+            ]
+          }
         ],
-        qrToggle: false,
-      },
+        qrToggle: false
+      }
     ];
     this.serviceCallHandler.put(
       "serviceHandler",
@@ -217,7 +217,7 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
     );
     this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
   }
-  tabChanges(val) {
+  tabChanges(val: any) {
     console.log(val);
     this.selectedTabName = val?.screenName;
   }

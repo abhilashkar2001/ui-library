@@ -4,7 +4,7 @@ import { environment } from "environments/environment";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class NewDepositService {
   protected base_url = environment.microServiceURL;
@@ -21,12 +21,12 @@ export class NewDepositService {
   getCreateFdDone() {
     return this.isCreateFdDone$.asObservable();
   }
-  serCreateFdDone(value) {
+  serCreateFdDone(value: any) {
     this.isCreateFdDone$.next(value);
   }
 
   // https://192.168.0.127:8765/auth/generateOTP?mobile=9114386257
-  getOtp(mobile) {
+  getOtp(mobile: any) {
     return this.http.get<any>(
       `${this.base_url}/auth/generateOTP?mobile=${mobile}`
     );
@@ -34,7 +34,7 @@ export class NewDepositService {
   getInterestDetails() {
     return this.http.get<any>(`assets/json/deposit.json`);
   }
-  verifyOtp(payload) {
+  verifyOtp(payload: any) {
     //https://192.168.0.127:8765/auth/verifyOTP
     return this.http.post<any>(`${this.base_url}/auth/verifyOTP`, payload);
   }
@@ -53,10 +53,10 @@ export class NewDepositService {
       `${this.base_url}/state?authStatus=AUTHORIZED&recordStatus=OPEN`
     );
   }
-  uploadDocument(formData) {
+  uploadDocument(formData: any) {
     return this.http.post<any>(`${this.base_url}/upload-document`, formData);
   }
-  submitAllDocument(payload) {
+  submitAllDocument(payload: any) {
     return this.http.post<any>(
       `${this.base_url}/documents?source=web Site`,
       payload

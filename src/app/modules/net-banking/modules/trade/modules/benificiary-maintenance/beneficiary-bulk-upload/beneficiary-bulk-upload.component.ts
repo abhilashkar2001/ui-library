@@ -14,10 +14,10 @@ import { MatDialog } from "@angular/material/dialog";
 @Component({
   selector: "app-beneficiary-bulk-upload",
   templateUrl: "./beneficiary-bulk-upload.component.html",
-  styleUrls: ["./beneficiary-bulk-upload.component.scss"],
+  styleUrls: ["./beneficiary-bulk-upload.component.scss"]
 })
 export class BeneficiaryBulkUploadComponent implements OnInit {
-  public approvalForm: FormGroup;
+  public approvalForm!: FormGroup;
   isEdit = false;
 
   approvalList = [];
@@ -29,10 +29,10 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113,
+      totalPages: 113
     },
     statusCode: 200,
-    status: "OK",
+    status: "OK"
   };
   auditLogObject: any = {};
   bulkId: any;
@@ -45,7 +45,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   pendingLevel = {
     action: "PENDING",
-    userDetais: {},
+    userDetais: {}
   };
   actionType: any;
   transactionIds: any[] = [];
@@ -99,7 +99,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   //   });
   // }
 
-  getBulkUploadDetailsById(filter) {
+  getBulkUploadDetailsById(filter: any) {
     this.benificiaryService
       .getBulkUploadRecords(this.referenceNo, filter)
       .subscribe((resp) => {
@@ -110,21 +110,21 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       });
   }
 
-  getDataByPage(filters) {
+  getDataByPage(filters: any) {
     this.page = filters?.page || 1;
     this.pageSize = filters?.size || 5;
     this.filterBy = filters.filterBy;
     this.getBulkUploadDetailsById(filters);
   }
 
-  customUpdateRecord(event) {
+  customUpdateRecord(event: any) {
     console.log(event, "button action", this.transactionDetails);
     this.actionType = event.operation;
     this.transactionIds = [];
-    this.transactionDetails.forEach((transaction) => {
+    this.transactionDetails.forEach((transaction: any) => {
       this.transactionIds.push({
         ids: transaction.multiJournalId,
-        status: event.operation === "Authorize" ? "APPROVED" : "REJECTED",
+        status: event.operation === "Authorize" ? "APPROVED" : "REJECTED"
       });
     });
 
@@ -134,11 +134,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   openRemark() {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
-        recordStatus: "Approved",
+        recordStatus: "Approved"
       },
       width: "750px",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-dialog-class"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       this.remarks = resp;
@@ -155,11 +155,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorage.getUser()?.mobile,
+        mobile: this.tokenStorage.getUser()?.mobile
       },
       width: "750px",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-dialog-class"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
@@ -172,7 +172,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
                   excelId: this.bulkId,
                   remarks: this.remarks,
                   status:
-                    this.actionType === "Authorize" ? "APPROVED" : "REJECTED",
+                    this.actionType === "Authorize" ? "APPROVED" : "REJECTED"
                 };
                 this.api.updateRemark(obj).subscribe((response) => {
                   if (response?.statusCode === 200)
@@ -185,21 +185,21 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     });
   }
 
-  openSuccessDialog(resp) {
+  openSuccessDialog(resp: any) {
     const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
       data: {
         // referenceNo: this.data.referenceNo,
         isNetBanking: true,
         actionType: this.actionType,
         refrenceNo: resp.data,
-        route: "pending-for-approval",
+        route: "pending-for-approval"
       },
       width: "750px",
       disableClose: true,
       panelClass: "popup-dialog-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
-    dialogRefrence.afterClosed().subscribe((res) => {
+    dialogRefrence.afterClosed().subscribe(() => {
       console.log("........");
     });
   }
@@ -209,11 +209,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     this.router.navigate(["/user/trade/beneficiary"]);
   }
 
-  processTransaction(event) {
+  processTransaction(event: any) {
     this.transactionDetails = event;
   }
 
-  customSaveBulkUpload(event) {
+  customSaveBulkUpload(event: any) {
     this.commonService
       .generateOTP(this.tokenStorage.getUser()?.mobile)
       .subscribe((resp: any) => {
@@ -222,15 +222,15 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       });
   }
 
-  callAllInOnePopup(event) {
+  callAllInOnePopup(event: any) {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.currentUser.mobile,
+        mobile: this.currentUser.mobile
       },
       width: "750px",
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: "popup-dialog-class"
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
@@ -245,7 +245,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     });
   }
 
-  callSuccessPopup(res, reffNo?) {
+  callSuccessPopup(res: any, reffNo?: any) {
     let data =
       res == "success"
         ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
@@ -255,7 +255,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       width: "40%",
       disableClose: true,
       panelClass: "popup-class",
-      backdropClass: "bdrop",
+      backdropClass: "bdrop"
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
@@ -265,7 +265,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     });
   }
 
-  DownloadBulkUpload(event) {
+  DownloadBulkUpload() {
     this.benificiaryService
       .downloadBenificiaryTemplate()
       .subscribe((blob: any) => {

@@ -4,14 +4,13 @@ import { FormGroup } from "@angular/forms";
 import * as moment from "moment";
 import { ActivatedRoute } from "@angular/router";
 import { CreateRdService } from "./create-rd.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
 import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-rd-calculator",
   templateUrl: "./rd-calculator.component.html",
-  styleUrls: ["./rd-calculator.component.scss"],
+  styleUrls: ["./rd-calculator.component.scss"]
 })
 export class RdCalculatorComponent implements OnInit {
   depositType = "RD";
@@ -21,13 +20,13 @@ export class RdCalculatorComponent implements OnInit {
   isBookFd: boolean = false;
   isVerifyNumber: boolean = false;
   isKyc: boolean = false;
-  @Input() customBasicForm: FormGroup;
-  personalDetailsForm: FormGroup;
-  documentDetailsForm: FormGroup;
-  kycDetailsForm: FormGroup;
-  rdDetailsForm: FormGroup;
+  @Input() customBasicForm!: FormGroup;
+  personalDetailsForm!: FormGroup;
+  documentDetailsForm!: FormGroup;
+  kycDetailsForm!: FormGroup;
+  rdDetailsForm!: FormGroup;
 
-  steper_Array = [];
+  steper_Array: any = [];
   isLinear: boolean = true;
   cuurrentStep = "create";
   // CONST KEY & VALUES
@@ -43,7 +42,6 @@ export class RdCalculatorComponent implements OnInit {
     private cdref: ChangeDetectorRef,
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
-    private tokenStore: TokenStorageService,
     private snack: MatSnackBar,
     private openAccountService: OpenAccountService
   ) {}
@@ -65,23 +63,23 @@ export class RdCalculatorComponent implements OnInit {
       this.rdApi
         .getProcessStages(resp.data.processStageList[0].id)
         .subscribe((resp) => {
-          this.screenList = resp.data.screens.sort((s1, s2) => {
+          this.screenList = resp.data.screens.sort((s1: any, s2: any) => {
             return s1.sequence - s2.sequence;
           });
           this.factory();
         });
     });
   }
-  getRdById(id) {
+  getRdById(id: any) {
     this.rdApi.getRdDetails(id).subscribe((resp: any) => {
       if (resp?.statusCode === 200) {
         this.rdDetails = resp.data;
-        this.getOriginationMaster(this.rdDetails.originationId);
+        this.getOriginationMaster();
       }
     });
   }
 
-  getOriginationMaster(id) {
+  getOriginationMaster() {
     this.rdApi
       .getOriginationMaster(this.rdDetails[0].originationId)
       .subscribe((data) => {
@@ -95,32 +93,31 @@ export class RdCalculatorComponent implements OnInit {
     console.log(this.cuurrentStep);
   }
 
-  verifyStep(stepVerify) {
+  verifyStep(stepVerify: any) {
     return this.cuurrentStep.toLowerCase().includes(stepVerify) ? true : false;
   }
 
-  stepperSelectionChange(event) {
+  stepperSelectionChange(event: any) {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
     sessionStorage.setItem("loanstep", event.selectedIndex);
     this.selectedStep = event.selectedIndex;
   }
 
-  submitPersonalDetails(event) {
+  submitPersonalDetails() {
     this.next();
     this.cdref.detectChanges();
   }
 
-  customSaveDocuments(e) {
-    var docIds = [];
+  customSaveDocuments(e: any) {
+    var docIds: any = [];
     console.log(e);
-    e.documentDetails.otherDocument.forEach((element) => {
+    e.documentDetails.otherDocument.forEach((element: any) => {
       const docId = {
-        docIds: element.docIds,
+        docIds: element.docIds
       };
       docIds.push(docId);
     });
     this.docIds = docIds;
-    var id = sessionStorage.getItem("customerId");
 
     //this.rdApi.getCustomerById(parseInt(id)).subscribe((resp) => {
     this.saveCustomerInfo(this.customerInfo, docIds);
@@ -133,9 +130,9 @@ export class RdCalculatorComponent implements OnInit {
     // // });
     // console.log(docIds);
   }
-  saveCustomerInfo(resp, docIds) {
+  saveCustomerInfo(resp: any, docIds: any) {
     var custResp: any = resp;
-    custResp.forEach((item, i) => {
+    custResp.forEach((item: any, i: any) => {
       console.log(custResp[i]);
       custResp[i].documentId = [];
       if (item.primaryCustomer === true) custResp[i].documentId = docIds;
@@ -147,11 +144,11 @@ export class RdCalculatorComponent implements OnInit {
     delete rdData.fdRdMassterId;
     console.log(rdData);
     rdData = {
-      ...rdData,
+      ...rdData
     };
     const payload = {
       originationModel: rdData,
-      customerInfo: custResp,
+      customerInfo: custResp
     };
     this.openAccountService.setData(payload.customerInfo[0]);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
@@ -163,12 +160,12 @@ export class RdCalculatorComponent implements OnInit {
     });
   }
 
-  customSaveRD(event) {
+  customSaveRD() {
     this.next();
     this.cdref.detectChanges();
   }
 
-  customSaveVerify(e) {
+  customSaveVerify() {
     this.next();
   }
   goBack() {
@@ -189,12 +186,12 @@ export class RdCalculatorComponent implements OnInit {
     // el.scrollIntoView();
   }
 
-  customSaveCreate(event) {
+  customSaveCreate(event: any) {
     sessionStorage.setItem("holderType", event.rdData.ownership);
     let jk = {
       ...this.rdDetails[0],
       ...event.rdData,
-      maturityDate: moment(event.rdData.maturityDate).format("YYYY-MMM-DD"),
+      maturityDate: moment(event.rdData.maturityDate).format("YYYY-MMM-DD")
     };
     sessionStorage.setItem("originationId", this.rdDetails[0].originationId);
     this.rdApi
@@ -204,14 +201,14 @@ export class RdCalculatorComponent implements OnInit {
           // this.customerInfo=data.data[0].customerInfo
           const payload = {
             originationModel: jk,
-            customerInfo: this.createPayload(data.data[0].customerInfo),
+            customerInfo: this.createPayload(data.data[0].customerInfo)
           };
-          this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
+          this.rdApi.saveRdOriginationMaster(payload).subscribe(() => {
             this.snack.open(`Recurring Deposit Details Saved`, "!", {
               duration: 4000,
               verticalPosition: "top",
               horizontalPosition: "right",
-              panelClass: "snackbar-error",
+              panelClass: "snackbar-error"
             });
             this.next();
           });
@@ -226,48 +223,48 @@ export class RdCalculatorComponent implements OnInit {
     // this.selectedStep = this.selectedStep + 1;
   }
 
-  customFormGroup(e) {
+  customFormGroup(e: any) {
     this.personalDetailsForm = e;
   }
-  customDocumentForm(event) {
+  customDocumentForm(event: any) {
     console.log(event);
     this.documentDetailsForm = event;
   }
 
-  rdForm(event) {
+  rdForm(event: any) {
     console.log(event);
     this.rdDetailsForm = event;
   }
   // for verify number
-  customFormGroupEmit(event) {
+  customFormGroupEmit(event: any) {
     this.steper_Array[1].stepFormControl = event;
   }
 
-  customkycFormGroupEmit(event) {
+  customkycFormGroupEmit(event: any) {
     this.steper_Array[4].stepFormControl = event;
   }
-  customrdFormGroupEmit(event) {
+  customrdFormGroupEmit(event: any) {
     this.steper_Array[5].stepFormControl = event;
   }
 
-  customSavePersonal(event) {
+  customSavePersonal(event: any) {
     console.log(event);
     let rdData = this.rdDetails[0];
     delete rdData.fdRdMasterId;
     console.log(rdData);
     rdData = {
-      ...rdData,
+      ...rdData
     };
 
     const customer = this.createPayload(event.personalDetails.value.customer);
     const payload = {
       originationModel: rdData,
-      customerInfo: customer,
+      customerInfo: customer
     };
     console.log(payload);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        resp.data?.customerInfo?.forEach((item, i) => {
+        resp.data?.customerInfo?.forEach((item: any) => {
           if (item.primaryCustomer)
             sessionStorage.setItem("customerId", item.customerId);
         });
@@ -275,28 +272,28 @@ export class RdCalculatorComponent implements OnInit {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
-          panelClass: "snackbar-error",
+          panelClass: "snackbar-error"
         });
         this.customerInfo = resp.data?.customerInfo;
         this.next();
       }
     });
   }
-  createPayload(event) {
-    var customer = [];
-    event.forEach((element, i) => {
+  createPayload(event: any) {
+    var customer: any = [];
+    event.forEach((element: any) => {
       console.log(element);
       var docIds = [];
       if (element?.documentId) {
         docIds.push(element.documentId);
       } else {
-        element?.documnentsInfo?.documents.forEach((item) => {
-          let docItemId = [];
-          item.docs.forEach((docItem) => {
+        element?.documnentsInfo?.documents.forEach((item: any) => {
+          let docItemId: any = [];
+          item.docs.forEach((docItem: any) => {
             docItemId.push(docItem.documentId);
           });
           const docId = {
-            docIds: docItemId,
+            docIds: docItemId
           };
           docIds.push(docId);
         });
@@ -332,11 +329,10 @@ export class RdCalculatorComponent implements OnInit {
               countryName:
                 element?.contact?.address[0].countryName ?? element.country,
               pincode: element?.contact?.address[0].pincode ?? element.zipCode,
-              stateName:
-                element?.contact?.address[0].stateName ?? element.state,
-            },
-          ],
-        },
+              stateName: element?.contact?.address[0].stateName ?? element.state
+            }
+          ]
+        }
       };
       customer.push(cus);
     });

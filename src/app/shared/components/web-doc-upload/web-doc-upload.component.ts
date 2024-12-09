@@ -4,21 +4,17 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { LoanService } from "app/shared/services/loan/loan.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { WarningComponent } from "../warning/warning.component";
@@ -28,7 +24,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-web-doc-upload",
   templateUrl: "./web-doc-upload.component.html",
-  styleUrls: ["./web-doc-upload.component.scss"],
+  styleUrls: ["./web-doc-upload.component.scss"]
 })
 export class WebDocUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
@@ -36,17 +32,17 @@ export class WebDocUploadComponent implements OnInit {
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Input() documentTypeArray: any;
-  @Input() verificationType: string;
+  @Input() verificationType: string | any;
   @Input() documentList: any = [];
   @Input() genericScreenInfo: any;
-  @Input() ocrProcess: boolean;
+  @Input() ocrProcess: boolean | any;
 
-  documentControls: FormGroup;
-  createDocumentForm: FormGroup;
+  documentControls!: FormGroup;
+  createDocumentForm!: FormGroup;
   documentIds = [
     {
-      docIds: [],
-    },
+      docIds: []
+    }
   ];
   files: any[] = [];
   uploadedDocResponse: any = [];
@@ -54,15 +50,15 @@ export class WebDocUploadComponent implements OnInit {
   stepperTitle: any;
 
   staticData = {
-    DOCUMENTNAME: [],
+    DOCUMENTNAME: []
   };
-  selectedImage: Blob;
-  imageUrl: string;
+  selectedImage: Blob | any;
+  imageUrl: string | any;
   baseUrl = environment.microServiceURL;
   screenName: string = "Loan Document";
   hideSelect: string[] = [];
   // SAVE BUTTON PROPERTIES
-  isLoading: boolean = false;
+  isLoading: boolean | any = false;
   loadingBtnText: string = "Saving...";
   ocrCheck: boolean = true;
 
@@ -70,11 +66,9 @@ export class WebDocUploadComponent implements OnInit {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
-    private loanApi: LoanService,
     private api: NewDepositService,
     private snack: MatSnackBar,
-    private commonService: CommonService,
-    private loder: AppLoaderService,
+
     private dialog: MatDialog
   ) {
     this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
@@ -83,10 +77,9 @@ export class WebDocUploadComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
-    var originationId = sessionStorage.getItem("originationId");
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.documentList?.currentValue) {
       if (!this.documentTypeArray) {
         this.documentTypeArray = [{}];
@@ -109,12 +102,12 @@ export class WebDocUploadComponent implements OnInit {
       });
   }
 
-  buildForm(data?) {
+  buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
-      otherDocument: this.fb.array([]),
+      otherDocument: this.fb.array([])
     });
     if (data?.length > 0) {
-      data.forEach((item, i) => {
+      data.forEach((item: any, i: any) => {
         this.hideSelect.push(item?.documentType);
         this.showDocument(item, i);
         this.customDocumentForm.emit(this.createDocumentForm);
@@ -131,55 +124,55 @@ export class WebDocUploadComponent implements OnInit {
     return this.createDocumentForm.get("otherDocument") as FormArray;
   }
 
-  showDocument(data, i) {
+  showDocument(data: any, i: any) {
     this.documentControls = this.fb.group({
       documentNumber: [data ? data.documentNumber : ""],
       documentType: [
         data ? parseInt(data.documentType) : "",
-        Validators.required,
+        Validators.required
       ],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([]),
+      docIds: new FormControl([])
     });
     this.otherDocument().push(this.documentControls);
     if (data) {
       this.otherDocument()
-        .controls[i].get("fileInfo")
-        .setValue(this.calculateDoc(data, i));
+        .controls[i]?.get("fileInfo")
+        ?.setValue(this.calculateDoc(data, i));
     }
   }
 
-  calculateDoc(data, i) {
+  calculateDoc(data: any, i: any) {
     var docArr = [];
     var docIds = [];
     // data.forEach((item, ind) => {
     // console.log(item, ind);
     var docItem = {
       progress: 100,
-      name: data.fileName,
+      name: data.fileName
     };
     docArr.push({
       docId: data.documentId,
       doc: docItem,
-      url: this.mapEndPoints(data.fileUrl),
+      url: this.mapEndPoints(data.fileUrl)
     });
     docIds.push(data.documentId);
     // });
-    this.otherDocument().controls[i].get("docIds").setValue(docIds);
+    this.otherDocument().controls[i]?.get("docIds")?.setValue(docIds);
     return docArr;
   }
 
-  newDenom(data?): FormGroup {
+  newDenom(): FormGroup {
     return this.fb.group({
       documentNumber: [""],
       documentType: ["", Validators.required],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([]),
+      docIds: new FormControl([])
     });
   }
 
   getFileInfo(indx: any): any[] {
-    return this.otherDocument().controls[indx].get("fileInfo")?.value;
+    return this.otherDocument().controls[indx]?.get("fileInfo")?.value;
   }
 
   /**
@@ -187,16 +180,14 @@ export class WebDocUploadComponent implements OnInit {
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number, i, doc) {
-    let documentId =
-      this.createDocumentForm.value.otherDocument[i].docIds[index];
+  deleteFile(index: number, i: any, _doc?: any) {
     // this.commonService.deleteDocument(documentId).subscribe((res) => {
     // if (res) {
     // console.log("Document deleted Successfully..");
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
     //   }
     // });
-    this.otherDocument().controls[i].get("fileInfo")?.value.splice(index, 1);
+    this.otherDocument().controls[i]?.get("fileInfo")?.value.splice(index, 1);
   }
 
   deleteDocument(i: number) {
@@ -204,24 +195,24 @@ export class WebDocUploadComponent implements OnInit {
     this.hideSelect.splice(i, 1);
   }
 
-  addDocument(data?) {
-    this.otherDocument().push(this.newDenom(data));
+  addDocument() {
+    this.otherDocument().push(this.newDenom());
   }
 
-  mapEndPoints(url) {
+  mapEndPoints(url: any) {
     return `${this.baseUrl}${url}`;
   }
-  fileBrowseHandler(event: any, indx: number) {
+  fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
-  browseFiles(i) {
+  browseFiles(i: any) {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
     inputElement.accept = "image/*";
     inputElement.addEventListener("change", (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
-        const file = target.files[0];
+        const file: any = target.files[0];
         console.log(file, "file");
         if (file.type.startsWith("image/")) {
           this.selectedImage = file;
@@ -237,7 +228,7 @@ export class WebDocUploadComponent implements OnInit {
     this.uploadFilesSimulator(0);
   }
 
-  getDocTypeforScan(docname) {
+  getDocTypeforScan(docname: any) {
     let docType;
     if (docname == "aadhar card") {
       docType = "adhaar";
@@ -251,13 +242,13 @@ export class WebDocUploadComponent implements OnInit {
     return docType;
   }
 
-  async readDocument(file, i) {
+  async readDocument(file: any, i: any) {
     const formdata = new FormData();
     formdata.append("image", file);
     formdata.append("lang", "eng");
     formdata.append(
       "imageType",
-      this.getDocTypeforScan(this.hideSelect[i].toLowerCase())
+      this.getDocTypeforScan(this.hideSelect[i]?.toLowerCase())
     );
     // try {
     const res: any = await this.sharedService
@@ -278,7 +269,7 @@ export class WebDocUploadComponent implements OnInit {
           duration: 4000,
           verticalPosition: "top",
           horizontalPosition: "right",
-          panelClass: "snackbar-error",
+          panelClass: "snackbar-error"
         });
         console.log(res);
         // if document details not found or document is invalid.
@@ -292,32 +283,33 @@ export class WebDocUploadComponent implements OnInit {
         } else {
           // for aadhar
           const index =
-            this.otherDocument().controls[i].get("fileInfo").value?.length - 1;
+            this.otherDocument().controls[i]?.get("fileInfo")?.value?.length -
+            1;
           console.log(index);
           this.updateFileInfo(index, i, res.data?.name, res.data?.dateOfBirth);
-          if (this.hideSelect[i].toLowerCase().includes("aadhar")) {
+          if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
             if (
               res.data?.adhaarNumber.replace(/\s/g, "") !=
-              this.otherDocument()["controls"][i].get("documentNumber").value
+              this.otherDocument()["controls"][i]?.get("documentNumber")?.value
             ) {
               this.documentDataMissMatch(`Document number`, file, i);
             }
           }
           // for pan card
-          else if (this.hideSelect[i].toLowerCase().includes("pan")) {
+          else if (this.hideSelect[i]?.toLowerCase().includes("pan")) {
             if (
               res.data?.panNumber.replace(/\s/g, "") !=
-              this.otherDocument()["controls"][i].get("documentNumber").value
+              this.otherDocument()["controls"][i]?.get("documentNumber")?.value
             ) {
               this.documentDataMissMatch(`Document number`, file, i);
             }
           }
           // for passport.
-          else if (this.hideSelect[i].toLowerCase().includes("passport")) {
+          else if (this.hideSelect[i]?.toLowerCase().includes("passport")) {
             console.log(res);
             if (
               res.data?.passportNumber.replace(/\s/g, "") !=
-              this.otherDocument()["controls"][i].get("documentNumber").value
+              this.otherDocument()["controls"][i]?.get("documentNumber")?.value
             ) {
               this.documentDataMissMatch(`Document number`, file, i);
             }
@@ -325,6 +317,7 @@ export class WebDocUploadComponent implements OnInit {
         }
       }
     }
+    return;
     // } catch (error) {
     //   // this.loder.close();
     //   this.deleteFile(i, i, file);
@@ -332,15 +325,21 @@ export class WebDocUploadComponent implements OnInit {
     // }
   }
 
-  updateFileInfo(index, i, name, dateOfBirth) {
-    this.otherDocument().controls[i].get("fileInfo").value[index] = {
-      ...this.otherDocument().controls[i].get("fileInfo").value[index],
-      applicantName: name,
-      dateOfBirth: dateOfBirth,
-    };
+  updateFileInfo(index: any, i: any, name: any, dateOfBirth: any): void {
+    const fileInfoControl = this.otherDocument()?.controls[i]?.get("fileInfo");
+
+    if (fileInfoControl && fileInfoControl.value) {
+      fileInfoControl.value[index] = {
+        ...fileInfoControl.value[index],
+        applicantName: name,
+        dateOfBirth: dateOfBirth
+      };
+    } else {
+      console.error(`File info or control is not defined for index ${i}`);
+    }
   }
 
-  documentNotMatched(i, file) {
+  documentNotMatched(i: any, file: any) {
     this.deleteFile(i, i, file);
     // this.loder.close();
     this.snack.open(
@@ -350,21 +349,21 @@ export class WebDocUploadComponent implements OnInit {
         duration: 4000,
         verticalPosition: "top",
         horizontalPosition: "right",
-        panelClass: "snackbar-error",
+        panelClass: "snackbar-error"
       }
     );
   }
 
-  documentDataMissMatch(title, file, i) {
+  documentDataMissMatch(title: any, file: any, i: any) {
     const dialogData = {
       error: ` ${title} doesn't match the document upload.`,
-      message: "Would you like to continue?",
+      message: "Would you like to continue?"
     };
     const dialogRef = this.dialog.open(WarningComponent, {
       width: "40%",
       data: dialogData,
       disableClose: true,
-      panelClass: "",
+      panelClass: ""
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
@@ -374,7 +373,7 @@ export class WebDocUploadComponent implements OnInit {
     });
   }
 
-  uploadImage(file, i) {
+  uploadImage(file: any, i: any) {
     let formData = new FormData();
     let data = {
       documentName: this.createDocumentForm.value.otherDocument[i].documentType,
@@ -384,7 +383,7 @@ export class WebDocUploadComponent implements OnInit {
       documentSide: 1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc",
+      verificationType: "kyc"
     };
 
     formData.append("data", JSON.stringify(data));
@@ -401,16 +400,16 @@ export class WebDocUploadComponent implements OnInit {
     });
   }
   updateDocId(indx: any): any[] {
-    return this.otherDocument().controls[indx].get("docIds")?.value;
+    return this.otherDocument().controls[indx]?.get("docIds")?.value;
   }
 
-  displayImage(indx, file) {
+  displayImage(indx: any, file: any) {
     const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
+    reader.onload = (event: ProgressEvent<FileReader> | any) => {
       this.imageUrl = event.target.result as string;
       this.getFileInfo(indx).push({
         url: this.imageUrl,
-        name: file.name,
+        name: file.name
       });
     };
     reader.readAsDataURL(this.selectedImage);
@@ -437,7 +436,7 @@ export class WebDocUploadComponent implements OnInit {
     }, 1000);
   }
 
-  onFileDropped(event, i) {
+  onFileDropped(event: any, i: any) {
     console.log(event);
     if (event.files.type.startsWith("image/")) {
       this.selectedImage = event.files;
@@ -452,7 +451,7 @@ export class WebDocUploadComponent implements OnInit {
     let isDocUploaded: boolean = false;
     if (this.createDocumentForm) {
       isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-        (docItem) => docItem.fileInfo?.length > 0
+        (docItem: any) => docItem.fileInfo?.length > 0
       );
     }
     if (this.createDocumentForm.invalid || !isDocUploaded) {
@@ -461,7 +460,7 @@ export class WebDocUploadComponent implements OnInit {
     this.isLoading = true;
     this.loadingBtnText = "Saving...";
     this.onCustomSubmit.emit({
-      documentDetails: this.createDocumentForm.value,
+      documentDetails: this.createDocumentForm.value
     });
   }
 
@@ -476,13 +475,14 @@ export class WebDocUploadComponent implements OnInit {
   checkDocValidity() {
     if (this.createDocumentForm) {
       let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-        (docItem) => docItem.fileInfo?.length > 0
+        (docItem: any) => docItem.fileInfo?.length > 0
       );
       return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
     }
+    return;
   }
 
-  onDocumentSelection(event, index) {
+  onDocumentSelection(event: any, index: any) {
     if (!this.hideSelect.hasOwnProperty(index)) {
       if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
     } else this.hideSelect[index] = event;
@@ -490,7 +490,7 @@ export class WebDocUploadComponent implements OnInit {
     console.log(this.hideSelect, "this.hideSelect");
   }
 
-  isDocumentOptionDisabled2(item) {
+  isDocumentOptionDisabled2(item: any) {
     return this.hideSelect.includes(item);
   }
 

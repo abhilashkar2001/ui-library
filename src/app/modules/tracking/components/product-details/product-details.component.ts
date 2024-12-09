@@ -8,12 +8,12 @@ import { catchError } from "rxjs/operators";
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
-  styleUrls: ["./product-details.component.scss"],
+  styleUrls: ["./product-details.component.scss"]
 })
 export class ProductDetailsComponent implements OnInit {
   dynamicDetails: any = [];
   applicationStatus: any = [];
-  mobileNumber: string;
+  mobileNumber: string | any;
   productType: string = "";
 
   statusItems: any[] = [];
@@ -32,11 +32,11 @@ export class ProductDetailsComponent implements OnInit {
     this.getOriginationById(id);
   }
 
-  getOriginationById(id) {
+  getOriginationById(id: any) {
     this.getWebSummary(id);
   }
 
-  getWebSummary(id) {
+  getWebSummary(id: any) {
     const observables = {
       getLoanDocument: this.api
         .getLoanDocument(id)
@@ -51,7 +51,7 @@ export class ProductDetailsComponent implements OnInit {
         ? this.api
             .getLoanSummary(id)
             .pipe(catchError((err) => of({ error: err })))
-        : of(null),
+        : of(null)
     };
 
     forkJoin(observables).subscribe((resp: any) => {
@@ -59,9 +59,9 @@ export class ProductDetailsComponent implements OnInit {
       if (originationDetails?.statusCode === 200) {
         const orginationInfo = originationDetails.data[0];
         const kycDoc = orginationInfo.customerInfo
-          .filter((obj) => obj.primaryCustomer)
-          .flatMap((obj) =>
-            obj.documnentsInfo.documents.flatMap((objDoc) => objDoc.docs)
+          .filter((obj: any) => obj.primaryCustomer)
+          .flatMap((obj: any) =>
+            obj.documnentsInfo.documents.flatMap((objDoc: any) => objDoc.docs)
           );
 
         if (resp?.applicationDetails?.statusCode === 200) {
@@ -71,7 +71,7 @@ export class ProductDetailsComponent implements OnInit {
           );
           this.statusItems = this.applicationStatus.map((item: any) => {
             const val: any = {
-              title: item?.process,
+              title: item?.process
             };
             if (item?.status === "DONE" || item?.status === "APPROVED") {
               val.value = 100;
@@ -92,8 +92,8 @@ export class ProductDetailsComponent implements OnInit {
         if (resp.getLoanDocument?.statusCode === 200) {
           const loanDoc = resp?.getLoanDocument?.data;
           this.loanDocument = loanDoc
-            .filter((obj) => obj.docInfoModel)
-            ?.map((item) => item?.docInfoModel?.[0]);
+            .filter((obj: any) => obj.docInfoModel)
+            ?.map((item: any) => item?.docInfoModel?.[0]);
         }
 
         if (resp.webSummary?.statusCode === 200) {
@@ -103,21 +103,21 @@ export class ProductDetailsComponent implements OnInit {
           this.dynamicDetails = [
             {
               key: "loanAccountInfo",
-              values: { ...loanInfo.loanDetails, tenure: loanTenure },
+              values: { ...loanInfo.loanDetails, tenure: loanTenure }
             },
             { key: "bankAccount", values: loanInfo.bankAccount ?? {} },
             {
               key: "disbursementDetails",
-              values: loanInfo.disbursementDetails ?? {},
+              values: loanInfo.disbursementDetails ?? {}
             },
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
             {
               key: "documnentsInfo",
               // values: loanInfo.documnentsInfo.docInfoModel ?? []
-              values: this.loanDocument ?? [],
+              values: this.loanDocument ?? []
             },
 
-            { key: "docs", values: kycDoc },
+            { key: "docs", values: kycDoc }
           ];
           this.dynamicKeyHelper = this.productType
             .toLowerCase()
@@ -127,7 +127,7 @@ export class ProductDetailsComponent implements OnInit {
         } else {
           this.dynamicDetails = [
             { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
-            { key: "docs", values: kycDoc },
+            { key: "docs", values: kycDoc }
           ];
           this.dynamicKeyHelper = ProductConstant.AccountDynamicKeys;
         }

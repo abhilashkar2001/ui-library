@@ -3,7 +3,7 @@ import {
   Component,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { BranchService } from "./branch.service";
@@ -14,11 +14,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 @Component({
   selector: "app-sign-now-popup",
   templateUrl: "./sign-now-popup.component.html",
-  styleUrls: ["./sign-now-popup.component.scss"],
+  styleUrls: ["./sign-now-popup.component.scss"]
 })
 export class SignNowPopupComponent implements OnInit {
   @ViewChild("signPadRef", { static: false })
-  signPadComponent: SignPadComponent;
+  signPadComponent: SignPadComponent | any;
   signatureImg: any;
   isSign: boolean = true;
   radioFlag: string = "digitan-sign";
@@ -27,20 +27,20 @@ export class SignNowPopupComponent implements OnInit {
     canvasWidth: 700,
     canvasHeight: 300,
     penColor: "black",
-    backgroundColor: "white",
+    backgroundColor: "white"
   };
-  selectedIndex: number;
-  uploadingFile: string;
+  selectedIndex: number | any;
+  uploadingFile: string | any;
   isUploading: boolean = false;
   diasableDone: boolean = true;
-  percentDone: number;
-  uploadSuccess: boolean;
-  requestSubscription: Subscription;
+  percentDone: number | any;
+  uploadSuccess: boolean | any;
+  requestSubscription: Subscription | any;
   signImg: any;
   isStart: boolean = false;
   file: any;
   fileName: any;
-  sinatureId: string | Blob;
+  sinatureId: string | Blob | any;
   title: any;
   check: any;
 
@@ -64,9 +64,9 @@ export class SignNowPopupComponent implements OnInit {
   }
   ngAfterViewInit() {}
 
-  signpadImage(event) {
+  signpadImage(event: any) {
     this.file = new File([event], "E-sign.png", {
-      type: "png",
+      type: "png"
     });
     this.uploadDocument();
   }
@@ -86,7 +86,7 @@ export class SignNowPopupComponent implements OnInit {
     let data = {
       fileName: this.file?.name || "signature",
       fileType: this.file?.type || "jpeg",
-      verificationType: "loan",
+      verificationType: "loan"
     };
     docPayload.append("file", this.file);
     docPayload.append("data", JSON.stringify(data));
@@ -96,7 +96,7 @@ export class SignNowPopupComponent implements OnInit {
       (resp: any) => {
         const data = {
           result: resp?.data,
-          title: this.title,
+          title: this.title
         };
         this.dialogRef.close(data);
       },
@@ -114,7 +114,7 @@ export class SignNowPopupComponent implements OnInit {
    * @param event
    */
 
-  radioEvent(event) {
+  radioEvent(event: any) {
     if (event == "digitan-sign") {
       this.isSign = true;
       this.radioFlag = event;
@@ -129,13 +129,13 @@ export class SignNowPopupComponent implements OnInit {
    */
 
   removeimage() {
-    document.querySelector("#imgforped").classList.add("hidden");
+    document.querySelector("#imgforped")?.classList.add("hidden");
   }
   /**
    * Draw Start Method
    */
   drawStart() {
-    document.querySelector("#imgforped").classList.add("hidden");
+    document.querySelector("#imgforped")?.classList.add("hidden");
   }
 
   /**
@@ -160,7 +160,7 @@ export class SignNowPopupComponent implements OnInit {
    * File Upload Method for uplaoding the file
    * @param file
    */
-  fileUpload(file) {
+  fileUpload(file: any) {
     this.isUploading = true;
     this.requestSubscription = this.branchService
       .uploadAndProgress(file)
@@ -176,7 +176,7 @@ export class SignNowPopupComponent implements OnInit {
       });
   }
 
-  onFileDropped(event) {
+  onFileDropped(event: any) {
     this.file = event;
     this.isStart = true;
     this.isUploading = false;

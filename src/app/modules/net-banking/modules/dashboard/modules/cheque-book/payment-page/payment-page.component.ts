@@ -3,20 +3,19 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ServiceCallHandler } from "app/shared/service-call.handler";
 import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
 
 @Component({
   selector: "app-payment-page",
   templateUrl: "./payment-page.component.html",
-  styleUrls: ["./payment-page.component.scss"],
+  styleUrls: ["./payment-page.component.scss"]
 })
 export class PaymentPageComponent implements OnInit, OnDestroy {
   resp: any;
   paymentDetails: any;
-  status: string;
+  status: string | any;
   response: any;
   scheduleSummary: boolean = false;
-  download: Blob;
+  download: Blob | any;
   payeeFrom: any;
   customerInfo: any;
   profileInfo: any;
@@ -41,7 +40,9 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.customerInfo = JSON.parse(sessionStorage.getItem("customer-Info"));
+    this.customerInfo = JSON.parse(
+      <string>sessionStorage.getItem("customer-Info")
+    );
     this.profileInfo = this.tokenStorageService.getUser();
     this.paymentDetails = this.serviceCallHandler.get("serviceHandler", true);
     if (this.paymentDetails[0]?.eventType == "schedule-payment")
@@ -49,7 +50,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
     else this.scheduleSummary = false;
   }
 
-  async serviceCall(event) {
+  async serviceCall(event: any) {
     if (event) {
       this.resp = await this.serviceCallHandler.get("serviceHandler", false);
       this.status = this.resp?.status;

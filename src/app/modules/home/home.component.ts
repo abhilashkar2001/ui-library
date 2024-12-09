@@ -6,7 +6,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
   profileRes: any;
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     /* send username and password to get Access Token */
     let payload = {
       username: "WEBSITE",
-      password: "Newuser@1",
+      password: "Newuser@1"
     };
     let isRememberMe = true;
     let otpRequired = false;
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
         /* get profile info */
         this.getProfile();
       },
-      (err) => {
+      () => {
         this.router.navigate(["/home/401"]);
       }
     );
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
         this.tokenService.saveUser(this.profileRes);
         this.router.navigate(["/account"]);
       },
-      (err) => {}
+      () => {}
     );
   }
 }

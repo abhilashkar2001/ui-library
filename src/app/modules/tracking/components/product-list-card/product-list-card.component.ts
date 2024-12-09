@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TrackingService } from "../../tracking-service";
 import { FormControl } from "@angular/forms";
@@ -11,7 +11,7 @@ import { ProductListConstant } from "./product-list-card.constant";
   styleUrls: ["./product-list-card.component.scss"]
 })
 export class ProductListCardComponent implements OnInit {
-  productList = [];
+  productList: any = [];
   searchFilter = ProductListConstant.DEFAULT_CATEGORIES;
   categoryList = ProductListConstant.CATEGORY_LIST;
   searchControl: FormControl = new FormControl("");
@@ -42,7 +42,7 @@ export class ProductListCardComponent implements OnInit {
     };
     this.api
       .getProductList(
-        parseInt(sessionStorage.getItem("trackingMobile")),
+        parseInt(<string>sessionStorage.getItem("trackingMobile")),
         filterItem
       )
       .subscribe((resp) => {
@@ -62,7 +62,7 @@ export class ProductListCardComponent implements OnInit {
    * routing to see product details.
    * @param product product info
    */
-  openProduct(product) {
+  openProduct(product: any) {
     this.route.navigate([`tracking/summary/${product?.originationId}`], {
       queryParams: { type: product.type }
     });
@@ -96,7 +96,7 @@ export class ProductListCardComponent implements OnInit {
    * @param product
    * @returns
    */
-  trackByProductId(index: number, product: any) {
+  trackByProductId(index: number) {
     return index;
   }
 }

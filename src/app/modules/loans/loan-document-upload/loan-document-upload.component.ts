@@ -6,18 +6,20 @@ import { SharedService } from "app/shared/shared.service";
 @Component({
   selector: "app-loan-document-upload",
   templateUrl: "./loan-document-upload.component.html",
-  styleUrls: ["./loan-document-upload.component.scss"],
+  styleUrls: ["./loan-document-upload.component.scss"]
 })
 export class LoanDocumentUploadComponent implements OnInit {
   @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
   @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel: (value: Partial<any>) => void;
+  @Input("updateParentModel") updateParentModel:
+    | ((value: Partial<any>) => void)
+    | any;
   @Input() docCustomerDetails: any;
   custId: any;
   stepperTitle: any;
   documentTypeArray: any[] = [{}];
   staticData = {
-    DOCUMENTTYPE: [],
+    DOCUMENTTYPE: []
   };
   screenName: string = "Loan Document";
   verificationType: string = "Other Document";
@@ -25,8 +27,8 @@ export class LoanDocumentUploadComponent implements OnInit {
   genericScreenInfo = {
     screenName: "Loan Document",
     staticData: {
-      DOCUMENTNAME: [],
-    },
+      DOCUMENTNAME: []
+    }
   };
   ocrProcess: boolean = false;
   checkListDocList: any[] = [];
@@ -55,14 +57,14 @@ export class LoanDocumentUploadComponent implements OnInit {
     var originationId = sessionStorage.getItem("originationId");
     this.loanApi
       .getCheckListDoc(
-        parseInt(sessionStorage.getItem("currentStage")),
-        parseInt(sessionStorage.getItem("currentScreenCode"))
+        parseInt(<string>sessionStorage.getItem("currentStage")),
+        parseInt(<string>sessionStorage.getItem("currentScreenCode"))
       )
       .subscribe((resp) => {
         if (resp?.statusCode == 200) {
-          this.checkListDocList = this.groupBy(resp.data, "docRequired");
+          this.checkListDocList = this.groupBy(resp.data);
           let screenCode = parseInt(
-            sessionStorage.getItem("otherDocScreenCode")
+            <string>sessionStorage.getItem("otherDocScreenCode")
           );
           if (screenCode) this.getCheckListDoc(originationId, screenCode);
         } else {
@@ -75,18 +77,18 @@ export class LoanDocumentUploadComponent implements OnInit {
     this.custId = JSON.parse(this.custId);
   }
 
-  getCheckListDoc(originationId, screenCode) {
+  getCheckListDoc(originationId: any, screenCode: any) {
     this.loanApi
       .getSavedChecklist(
         originationId,
         screenCode,
-        parseInt(sessionStorage.getItem("currentStage"))
+        parseInt(<string>sessionStorage.getItem("currentStage"))
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
           this.documentList = resp.data
-            .filter((item) => item.docInfoModel)
-            .map((item) => {
+            .filter((item: any) => item.docInfoModel)
+            .map((item: any) => {
               if (item.hasOwnProperty("docInfoModel")) {
                 item.docs = item.docInfoModel;
                 delete item.docInfoModel;
@@ -98,8 +100,8 @@ export class LoanDocumentUploadComponent implements OnInit {
       });
   }
 
-  groupBy(documents, groupName) {
-    return documents.reduce((result, doc) => {
+  groupBy(documents: any) {
+    return documents.reduce((result: any, doc: any) => {
       const groupName = doc.docRequired
         ? "requiredDocument"
         : "nonRequiredDocument";
@@ -108,7 +110,7 @@ export class LoanDocumentUploadComponent implements OnInit {
     }, {});
   }
 
-  getOrigination(originationId) {
+  getOrigination(originationId: any) {
     this.loanApi
       .getOriginationMaster(parseInt(originationId))
       .subscribe((resp) => {
@@ -133,9 +135,9 @@ export class LoanDocumentUploadComponent implements OnInit {
       });
   }
 
-  onSubmit(event) {
-    var docIds = [];
-    event.documentDetails.otherDocument.forEach((element) => {
+  onSubmit(event: any) {
+    var docIds: any = [];
+    event.documentDetails.otherDocument.forEach((element: any) => {
       if (element.docIds?.length > 0) {
         // const docId = {
         //   docIds: element.docIds,
@@ -149,7 +151,7 @@ export class LoanDocumentUploadComponent implements OnInit {
       otherLoanDoc: docIds,
       updateMasterSave: true,
       isCheckListDoc: true,
-      loanDisbursement: event.loanDisbursement,
+      loanDisbursement: event.loanDisbursement
     });
     this.onCustomSubmit.emit();
     sessionStorage.removeItem("docAppliName");

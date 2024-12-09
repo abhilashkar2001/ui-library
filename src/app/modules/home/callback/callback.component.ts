@@ -8,7 +8,7 @@ import { TokenStorageService } from "app/shared/token-storage.service";
 @Component({
   selector: "app-callback",
   templateUrl: "./callback.component.html",
-  styleUrls: ["./callback.component.scss"],
+  styleUrls: ["./callback.component.scss"]
 })
 export class CallbackComponent implements OnInit {
   constructor(
@@ -24,7 +24,7 @@ export class CallbackComponent implements OnInit {
     /* send username and password to get Access Token */
     let payload = {
       username: "WEBSITE",
-      password: "Newuser@1",
+      password: "Newuser@1"
     };
     let isRememberMe = true;
     let otpRequired = false;
@@ -45,19 +45,22 @@ export class CallbackComponent implements OnInit {
       this.tokenService.saveUser(res);
       sessionStorage.setItem(
         "customerId",
-        this.getParameterByName("customerId")
+        <string>this.getParameterByName("customerId")
       );
-      sessionStorage.setItem("mobile", this.getParameterByName("mobile"));
+      sessionStorage.setItem(
+        "mobile",
+        <string>this.getParameterByName("mobile")
+      );
       sessionStorage.setItem(
         "ReferanceNumber",
-        this.getParameterByName("referanceNumber")
+        <string>this.getParameterByName("referanceNumber")
       );
       sessionStorage.setItem(
         "type",
         JSON.stringify(this.getParameterByName("type"))
       );
       this.sessionStorageService.setScreenId(
-        this.getParameterByName(QueryParamEnum.SCREEN_ID)
+        <string>this.getParameterByName(QueryParamEnum.SCREEN_ID)
       );
       if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
         const checklistObj: ChecklistRouteObjModel = {
@@ -68,7 +71,7 @@ export class CallbackComponent implements OnInit {
           screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
           processCycleCode: this.getParameterByName(
             QueryParamEnum.PROCESS_CYCLE_CODE
-          ),
+          )
         };
         this.sessionStorageService.setChecklistRouteObj(checklistObj);
       }
@@ -77,7 +80,7 @@ export class CallbackComponent implements OnInit {
         this.getParameterByName("mobile") != null
       ) {
         this.router.navigate([`/origination/otp`], {
-          queryParams: { type: `${this.getParameterByName("screen")}` },
+          queryParams: { type: `${this.getParameterByName("screen")}` }
         });
       } else if (this.getParameterByName("route") == "tracking") {
         this.router.navigate([`${this.getParameterByName("route")}`]);
@@ -88,17 +91,17 @@ export class CallbackComponent implements OnInit {
         );
 
         this.sessionStorageService.setProcessCycleCode(
-          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE)
+          <string>this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE)
         );
 
         this.router.navigate([
-          `/origination/${this.getParameterByName("route")}`,
+          `/origination/${this.getParameterByName("route")}`
         ]);
       }
     });
   }
 
-  getParameterByName(name, url = window.location.href) {
+  getParameterByName(name: any, url = window.location.href) {
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);

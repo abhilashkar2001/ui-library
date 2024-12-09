@@ -6,7 +6,7 @@ import { ChequeService } from "../cheque-service";
 @Component({
   selector: "app-feedback",
   templateUrl: "./feedback.component.html",
-  styleUrls: ["./feedback.component.scss"],
+  styleUrls: ["./feedback.component.scss"]
 })
 export class FeedbackComponent implements OnInit {
   value = "";
@@ -15,13 +15,10 @@ export class FeedbackComponent implements OnInit {
   suggestions: FormControl = new FormControl("");
   buttonStatus: any = {
     text: "Submit",
-    loading: false,
+    loading: false
   };
 
-  constructor(
-    private router: Router,
-    private feedbackService: ChequeService
-  ) {}
+  constructor(private router: Router, private feedbackService: ChequeService) {}
 
   ngOnInit(): void {}
 
@@ -62,10 +59,10 @@ export class FeedbackComponent implements OnInit {
 
   complete() {
     const payload = {
-      customerId: JSON.parse(sessionStorage.getItem("customer-Info"))
+      customerId: JSON.parse(<string>sessionStorage.getItem("customer-Info"))
         ?.customerId,
       feedbackRating: this.feedbackRating.value,
-      suggestions: this.suggestions.value,
+      suggestions: this.suggestions.value
     };
     this.feedbackService.saveFeedback(payload).subscribe((res: any) => {
       if (res?.statusCode === 200 || res?.statusCode === 201) {
