@@ -118,6 +118,7 @@ import { ExternalLinkComponent } from "../widgets/external-link/external-link.co
 import { ChartPage } from "./chart/chart.page";
 import { MaturityChartComponent } from "./maturity-chart/maturity-chart.component";
 import { PopupSuccessComponent } from "./popup-success/popup-success.component";
+import { IcustLibraryModule } from "@onerumango/icust-element-library";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { SidebarSideComponent } from "./sidebar-side/sidebar-side.component";
 
@@ -235,6 +236,7 @@ const components = [
     MatIconModule,
     NgxSpinnerModule,
     InputMaskModule,
+    IcustLibraryModule
     MatIconModule,
     MatFormFieldModule
   ],

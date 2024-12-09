@@ -73,40 +73,40 @@ body {
 
 // @import "scss/mixins/mixins";
 // @import "ic-test-css/src/mixins/mixins";
-@import "node_modules/ic-test-css/src/mixins/mixins";
+@import "node_modules/@onerumango/icust-scss-library/src/mixins/mixins";
 
 // @import "scss/colors";
-@import "node_modules/ic-test-css/src/colors";
+@import "node_modules/@onerumango/icust-scss-library/src/colors";
 
 // @import "scss/animations";
-@import "node_modules/ic-test-css/src/animations";
+@import "node_modules/@onerumango/icust-scss-library/src/animations";
 // Open _main.scss and keep files which are required for your current layout.
 // @import "scss/main/main";
 // @import "ic-test-css/src/main/main";
-@import "node_modules/ic-test-css/src/main/main";
+@import "node_modules/@onerumango/icust-scss-library/src/main/main";
 
 // Angular material theme files
 // @import "scss/themes/init";
-@import "node_modules/ic-test-css/src/themes/init";
+@import "node_modules/@onerumango/icust-scss-library/src/themes/init";
 
 @import "scss/utilities/utilities";
 @import "scss/components/components";
 @import "scss/palette";
 
 // @import "scss/page-layouts";
-@import "node_modules/ic-test-css/src/page-layouts";
+@import "node_modules/@onerumango/icust-scss-library/src/page-layouts";
 
 // Open _views.scss and remove unnecessary view related files
 // @import "scss/views/views";
-@import "node_modules/ic-test-css/src/views/views";
+@import "node_modules/@onerumango/icust-scss-library/src/views/views";
 
 @import "scss/button";
 @import "scss/calculator";
 @import "scss/loan-flow.scss";
 // @import "scss/stepper";
-@import "node_modules/ic-test-css/src/stepper";
+@import "node_modules/@onerumango/icust-scss-library/src/stepper";
 // @import "./scss/accordian";
-@import "node_modules/ic-test-css/src/accordian";
+@import "node_modules/@onerumango/icust-scss-library/src/accordian";
 
 @import "https://fonts.googleapis.com/css?family=Manrope";
 
