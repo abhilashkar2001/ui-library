@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
-    "@onerumango/icust-element-library": "^0.0.8",
+    "@onerumango/icust-element-library": "^0.0.96",
     "@onerumango/icust-scss-library": "^1.0.15",
     "@types/webgl2": "^0.0.7",
     "@vladmandic/face-api": "^1.7.14",
