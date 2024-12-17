@@ -1,7 +1,7 @@
 <div fxFlex="100" fxLayout="column" class="new-popup">
   <div fxLayout="row" fxLayoutAlign="space-between center" class="titleMainDiv">
     <div class="title-div">
-      <span>{{"Single Transfer"| translate}}</span>
+      <span>{{ 'Single Transfer' | translate }}</span>
       <!-- <ng-template #showTemplate>Template Name</ng-template> -->
     </div>
   </div>
@@ -15,8 +15,10 @@
           class="customer-type"
           [ngClass]="{ 'customer-type-selected': checkToggle }"
           (click)="customerToggle(true)"
+          (keydown.enter)="customerToggle(true)"
+          tabindex="1"
         >
-          <div>{{"Benificiary Payment" | translate}}</div>
+          <div>{{ 'Benificiary Payment' | translate }}</div>
         </div>
         <div
           fxFlex="50"
@@ -25,17 +27,19 @@
           class="customer-type"
           [ngClass]="{ 'customer-type-selected': !checkToggle }"
           (click)="customerToggle(false)"
+          (keydown.enter)="customerToggle(false)"
+          tabindex="1"
         >
-          <div>{{"Credit Card" | translate}}</div>
+          <div>{{ 'Credit Card' | translate }}</div>
         </div>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
         <button mat-raised-button class="submit-button" (click)="onSubmit()">
-          <span> {{"Submit" | translate}}</span>
+          <span> {{ 'Submit' | translate }}</span>
         </button>
         <button mat-raised-button class="back-button" (click)="onBack()">
-          {{"Back" | translate}}
+          {{ 'Back' | translate }}
         </button>
       </div>
     </div>

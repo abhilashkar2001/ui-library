@@ -1,16 +1,16 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { TranslateModule } from "@ngx-translate/core";
-import { LayoutsModule } from "app/layouts/layouts.module";
-import { SharedComponentsModule } from "app/shared/components/shared-components.module";
-import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { SharedModule } from "app/shared/shared.module";
-import { NetBankingHomeComponent } from "./net-banking-home/net-banking-home.component";
-import { NetBankingRoutingModule } from "./net-banking-routing.module";
-import { MatMenuModule } from "@angular/material/menu";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { TranslateModule } from '@ngx-translate/core';
+import { LayoutsModule } from 'app/layouts/layouts.module';
+import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
+import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { NetBankingHomeComponent } from './net-banking-home/net-banking-home.component';
+import { NetBankingRoutingModule } from './net-banking-routing.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [NetBankingHomeComponent],

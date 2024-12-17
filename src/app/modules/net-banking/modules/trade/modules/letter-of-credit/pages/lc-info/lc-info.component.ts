@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
-import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { countryStateService } from 'app/shared/components/reusable-pincode-popup/countrySateCityService';
+import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 
 @Component({
-  selector: "app-lc-info",
-  templateUrl: "./lc-info.component.html",
-  styleUrls: ["./lc-info.component.scss"]
+  selector: 'app-lc-info',
+  templateUrl: './lc-info.component.html',
+  styleUrls: ['./lc-info.component.scss'],
 })
 export class LcInfoComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel:
+  @Input() updateParentModel:
     | ((part: Partial<any>, isFormValid: boolean) => void)
     | any;
   lcInfoForm!: FormGroup;
@@ -19,7 +19,7 @@ export class LcInfoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cntStService: countryStateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -29,85 +29,85 @@ export class LcInfoComponent implements OnInit {
 
   buildForm(data?: any) {
     this.lcInfoForm = this.fb.group({
-      type: [data?.type ?? ""],
-      domesticOrForegin: [data?.domesticOrForegin ?? "domesticLC"],
+      type: [data?.type ?? ''],
+      domesticOrForegin: [data?.domesticOrForegin ?? 'domesticLC'],
       redClause: [data?.redClause ?? false],
       revolving: [data?.revolving ?? false],
-      currency: [data?.currency ?? "", [Validators.required]],
-      amount: [data?.amount ?? ""],
-      tolerance: [data?.tolerance ?? "", [Validators.required]],
-      additionalAmounts: [data?.additionalAmounts ?? ""],
-      valueDate: [data?.valueDate ?? "", [Validators.required]],
-      requestDate: [data?.requestDate ?? "", [Validators.required]],
-      purpose: [data?.purpose ?? "", [Validators.required]],
-      placeOfExpiry: [data?.placeOfExpiry ?? "", [Validators.required]],
-      expiryDate: [data?.expiryDate ?? "", [Validators.required]],
-      creditAvailable: [data?.creditAvailable ?? "", [Validators.required]],
-      by: [data?.by ?? ""],
-      defferedPaymentDetails: [data?.defferedPaymentDetails ?? ""],
-      invoiceValue: [data?.invoiceValue ?? ""],
-      tenorDays: [data?.tenorDays ?? "", [Validators.required]],
-      tenor: [data?.tenor ?? "", [Validators.required]],
+      currency: [data?.currency ?? '', [Validators.required]],
+      amount: [data?.amount ?? ''],
+      tolerance: [data?.tolerance ?? '', [Validators.required]],
+      additionalAmounts: [data?.additionalAmounts ?? ''],
+      valueDate: [data?.valueDate ?? '', [Validators.required]],
+      requestDate: [data?.requestDate ?? '', [Validators.required]],
+      purpose: [data?.purpose ?? '', [Validators.required]],
+      placeOfExpiry: [data?.placeOfExpiry ?? '', [Validators.required]],
+      expiryDate: [data?.expiryDate ?? '', [Validators.required]],
+      creditAvailable: [data?.creditAvailable ?? '', [Validators.required]],
+      by: [data?.by ?? ''],
+      defferedPaymentDetails: [data?.defferedPaymentDetails ?? ''],
+      invoiceValue: [data?.invoiceValue ?? ''],
+      tenorDays: [data?.tenorDays ?? '', [Validators.required]],
+      tenor: [data?.tenor ?? '', [Validators.required]],
       bankDetails: this.fb.group({
-        advisingBank: [data?.advisingBank ?? ""],
-        branch: [data?.branch ?? ""],
-        swiftCode: [data?.swiftCode ?? ""],
+        advisingBank: [data?.advisingBank ?? ''],
+        branch: [data?.branch ?? ''],
+        swiftCode: [data?.swiftCode ?? ''],
         confirmationOfCredit: [data?.confirmationOfCredit ?? false],
-        drawee: [data?.drawee ?? ""],
+        drawee: [data?.drawee ?? ''],
         address: this.fb.array([
           this.fb.group({
-            address1: [data?.address?.address1 ?? "", [Validators.required]],
-            address2: [data?.address?.address2 ?? ""],
-            countryName: [data?.address?.countryName ?? ""],
-            pincode: [data?.address?.pincode ?? ""],
-            stateName: [data?.address?.stateName ?? ""],
-            cityId: [data?.address?.cityId ?? ""],
-            cityName: [data?.address?.cityName ?? ""]
-          })
-        ])
+            address1: [data?.address?.address1 ?? '', [Validators.required]],
+            address2: [data?.address?.address2 ?? ''],
+            countryName: [data?.address?.countryName ?? ''],
+            pincode: [data?.address?.pincode ?? ''],
+            stateName: [data?.address?.stateName ?? ''],
+            cityId: [data?.address?.cityId ?? ''],
+            cityName: [data?.address?.cityName ?? ''],
+          }),
+        ]),
       }),
       beneficiaryDetails: this.fb.group({
-        beneficiary: [data?.beneficiary ?? ""],
+        beneficiary: [data?.beneficiary ?? ''],
         address: this.fb.array([
           this.fb.group({
-            address1: [data?.address?.address1 ?? ""],
-            address2: [data?.address?.address2 ?? ""],
-            countryName: [data?.address?.countryName ?? ""],
-            pincode: [data?.address?.pincode ?? ""],
-            stateName: [data?.address?.stateName ?? ""],
-            cityId: [data?.address?.cityId ?? ""],
-            cityName: [data?.address?.cityName ?? ""]
-          })
-        ])
-      })
+            address1: [data?.address?.address1 ?? ''],
+            address2: [data?.address?.address2 ?? ''],
+            countryName: [data?.address?.countryName ?? ''],
+            pincode: [data?.address?.pincode ?? ''],
+            stateName: [data?.address?.stateName ?? ''],
+            cityId: [data?.address?.cityId ?? ''],
+            cityName: [data?.address?.cityName ?? ''],
+          }),
+        ]),
+      }),
     });
 
     this.lcInfoForm.valueChanges.subscribe((res) => {
       this.updateParentModel(
         {
           lcInfo: {
-            ...res
-          }
+            ...res,
+          },
         },
-        this.checkForm()
+        this.checkForm(),
       );
     });
   }
 
   get bankDetails() {
-    return this.lcInfoForm.get("bankDetails") as FormGroup;
+    return this.lcInfoForm.get('bankDetails') as FormGroup;
   }
 
   get bankAddressControl(): any {
-    return this.bankDetails.get("address") as FormArray;
+    return this.bankDetails.get('address') as FormArray;
   }
 
   get beneficiaryDetails() {
-    return this.lcInfoForm.get("beneficiaryDetails") as FormGroup;
+    return this.lcInfoForm.get('beneficiaryDetails') as FormGroup;
   }
 
   get beneficiaryAddressControl(): any {
-    return this.beneficiaryDetails.get("address") as FormArray;
+    return this.beneficiaryDetails.get('address') as FormArray;
   }
 
   checkForm() {
@@ -125,18 +125,18 @@ export class LcInfoComponent implements OnInit {
 
   pincodeExpansion(formGroup: any) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
-      width: "60%",
+      width: '60%',
       disableClose: true,
-      panelClass: "dialog-class"
+      panelClass: 'dialog-class',
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);
       if (res) {
-        formGroup.get("countryName").patchValue(res?.countryName);
-        formGroup.get("stateName").patchValue(res?.stateName);
-        formGroup.get("cityId").patchValue(res?.cityId);
-        formGroup.get("cityName").patchValue(res?.cityName);
-        formGroup.get("pincode").patchValue(res?.pincode);
+        formGroup.get('countryName').patchValue(res?.countryName);
+        formGroup.get('stateName').patchValue(res?.stateName);
+        formGroup.get('cityId').patchValue(res?.cityId);
+        formGroup.get('cityName').patchValue(res?.cityName);
+        formGroup.get('pincode').patchValue(res?.pincode);
       }
     });
   }

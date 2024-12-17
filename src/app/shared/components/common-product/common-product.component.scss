@@ -38,7 +38,7 @@
       position: relative;
       display: inline-flex;
       color: #004c97;
-      font-family: "Nunito", sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 30px;
       font-style: normal;
       font-weight: 700;
@@ -145,8 +145,11 @@
 $btnBackground: #06113c;
 
 .confirm-button:hover {
-  box-shadow: 0px 0px 0px 2.5px #fff, 0px 0px 0px 5px $btnBackground,
-    0px 0px 0px 10px white, 0px 0px 0px 0px $btnBackground;
+  box-shadow:
+    0px 0px 0px 2.5px #fff,
+    0px 0px 0px 5px $btnBackground,
+    0px 0px 0px 10px white,
+    0px 0px 0px 0px $btnBackground;
   background: rgba(219, 236, 255, 0.8392156863) !important;
   color: $btnBackground !important;
   margin-top: 5px;

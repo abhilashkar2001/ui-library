@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class BulkUploadServiceService {
   basePath = environment.microServiceURL;
@@ -13,18 +13,18 @@ export class BulkUploadServiceService {
   processBulkTransaction(payload: any) {
     return this.http.post<any>(
       `${this.basePath}/corporate-net-banking/approve-fund-transfer`,
-      payload
+      payload,
     );
   }
 
   getLevelApprovalStatus(bulkTransactionId: any, className: string) {
     return this.http.get<any>(
-      `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=${className}&id=${bulkTransactionId}`
+      `${this.basePath}/corporate-net-banking/fetchApprovalHistory?className=${className}&id=${bulkTransactionId}`,
     );
   }
 
   getBulkUploadRecords(id: any, filters?: any) {
-    var filterBy = "";
+    let filterBy = '';
     if (filters?.filterBy) {
       const keys = Object.keys(filters.filterBy);
       keys.forEach((key) => {
@@ -34,30 +34,30 @@ export class BulkUploadServiceService {
     }
     const page = filters?.page
       ? `page=${filters?.page}&size=${filters?.size}`
-      : "";
-    const sort = filters?.sort ? `&sort=${filters?.sort}` : "";
+      : '';
+    const sort = filters?.sort ? `&sort=${filters?.sort}` : '';
     const direction = filters?.direction
       ? `&sortOrder=${filters?.direction}`
-      : "";
-    var filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
-    if (!filters) filterEndpoint = "";
+      : '';
+    let filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
+    if (!filters) filterEndpoint = '';
 
     return this.http.get<any>(
-      `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}${filterEndpoint}`
+      `${this.basePath}/corporate-net-banking?module=coprateNetBankingInfo&buklUploadId=${id}${filterEndpoint}`,
     );
   }
 
   updateRemark(remarkData: any) {
     return this.http.put<any>(
       `${this.basePath}/corporate-net-banking/updateStatusAndRemark`,
-      remarkData
+      remarkData,
     );
   }
 
   downloadBulkUpload(id: any) {
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking/download?id=${id}`,
-      { responseType: "blob" as "json" }
+      { responseType: 'blob' as 'json' },
     );
   }
 
@@ -65,18 +65,18 @@ export class BulkUploadServiceService {
     formData: any,
     userName: any,
     type: string,
-    corpCustomerId: string
+    corpCustomerId: string,
   ) {
     return this.http.post(
       `${this.basePath}/corporate-net-banking/upload?productType=${type}&userName=${userName}&corpCustomerId=${corpCustomerId}`,
-      formData
+      formData,
     );
   }
 
   downloadBulkuploadParentSummary() {
     return this.http.get<any>(
       `${this.basePath}/corporate-net-banking/downloadBulk`,
-      { responseType: "blob" as "json" }
+      { responseType: 'blob' as 'json' },
     );
   }
 
@@ -84,8 +84,8 @@ export class BulkUploadServiceService {
     return this.http.get(
       `${this.basePath}/corporate-net-banking/downloadTemplate?filename=Upload`,
       {
-        responseType: "blob"
-      }
+        responseType: 'blob',
+      },
     );
   }
 }

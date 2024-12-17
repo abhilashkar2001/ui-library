@@ -1,7 +1,7 @@
-import { Directive, ElementRef, HostListener, Input } from "@angular/core";
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: "[decimalinput]"
+  selector: '[appDecimalinput]',
 })
 export class DecimalInputDirective {
   @Input()
@@ -10,12 +10,12 @@ export class DecimalInputDirective {
   allowedDecimalIndex: number | any;
   constructor(private el: ElementRef) {}
 
-  @HostListener("input", ["$event"])
+  @HostListener('input', ['$event'])
   onInput(): void {
     const input = this.el.nativeElement as HTMLInputElement;
     let value = input.value;
-    value = value.replace(/[^0-9.]/g, "");
-    const decimalIndex = value.indexOf(".");
+    value = value.replace(/[^0-9.]/g, '');
+    const decimalIndex = value.indexOf('.');
 
     if (decimalIndex === -1) {
       if (value.length > this.numLength) {
@@ -25,7 +25,7 @@ export class DecimalInputDirective {
       if (value.length - decimalIndex > this.allowedDecimalIndex) {
         value = value.substring(
           0,
-          decimalIndex + (this.allowedDecimalIndex + 1)
+          decimalIndex + (this.allowedDecimalIndex + 1),
         );
       }
     }

@@ -1,13 +1,13 @@
 export interface PendingApprovalSummary {
   id: number;
-  bulkRefNo: any;
+  bulkRefNo: number;
   fileName: string;
   productType?: string;
-  processingDate: any;
+  processingDate: Date;
   totalAmount: number;
   transactionReferenceNo: string;
   status: string;
-  remarks: any;
+  remarks: string;
   corpFundDetails: CorpFundDetail[];
   recordStatus: string;
   authStatus: string;
@@ -17,7 +17,7 @@ export interface PendingApprovalSummary {
   createdBy: string;
   lastUpdated: string;
   lastUpdatedBy: string;
-  empId: any;
+  empId: number;
   version: number;
 }
 
@@ -31,22 +31,22 @@ export interface CorpFundDetail {
   creditCurrency: any;
   creditBranch: any;
   creditAmount: number;
-  beneficiaryName: any;
+  beneficiaryName: string;
   transferMode: string;
   transferType: string;
   ifscCode: string;
   icustRefNo: string;
-  cbsRefNo: any;
+  cbsRefNo: number;
   status: any;
   updatedBy: any;
-  updatedDate: any;
+  updatedDate: Date;
   addressLine1?: string;
   addressLine2?: string;
   customerName: string;
   pinCode?: string;
   countryName?: string;
-  bulkRefNo: any;
-  fileName: any;
+  bulkRefNo: number;
+  fileName: string;
   uploadstatus: string;
-  corpCustId: any;
+  corpCustId: number;
 }

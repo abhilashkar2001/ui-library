@@ -1,17 +1,17 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-reusable-alert-popup",
-  templateUrl: "./reusable-alert-popup.component.html",
-  styleUrls: ["./reusable-alert-popup.component.scss"],
+  selector: 'app-reusable-alert-popup',
+  templateUrl: './reusable-alert-popup.component.html',
+  styleUrls: ['./reusable-alert-popup.component.scss'],
 })
 export class ReusableAlertPopupComponent implements OnInit {
   message: any;
-  isNextButton: boolean = false;
+  isNextButton = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<ReusableAlertPopupComponent>
+    private dialogRef: MatDialogRef<ReusableAlertPopupComponent>,
   ) {}
 
   ngOnInit(): void {

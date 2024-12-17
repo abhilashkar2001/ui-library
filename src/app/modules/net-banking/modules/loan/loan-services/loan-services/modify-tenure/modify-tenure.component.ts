@@ -1,26 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
-import { LoanTopUpStore } from "../topup-loan/topup-loan.store";
-import { GenericValueService } from "app/shared/services/generic-value.service";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { LoanDetailsModel } from "app/shared/models/loan-details.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
+import { LoanTopUpStore } from '../topup-loan/topup-loan.store';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-modify-tenure",
-  templateUrl: "./modify-tenure.component.html",
-  styleUrls: ["./modify-tenure.component.scss"]
+  selector: 'app-modify-tenure',
+  templateUrl: './modify-tenure.component.html',
+  styleUrls: ['./modify-tenure.component.scss'],
 })
 export class ModifyTenureComponent implements OnInit {
   modifyTenureForm!: FormGroup;
-  minTenure: number = 7;
-  maxTenureInYears: number = 10;
-  maxTenure: number = 3650;
+  minTenure = 7;
+  maxTenureInYears = 10;
+  maxTenure = 3650;
   chartSectionDetails = LoanTopUpStore.ChartDetails;
   accountDetails = LoanTopUpStore.loanAccountDetails;
   installmentDetails: LoanInstallmentModel | any;
@@ -35,7 +35,7 @@ export class ModifyTenureComponent implements OnInit {
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
     private router: Router,
-    private serviceCallHandler: ServiceCallHandler
+    private serviceCallHandler: ServiceCallHandler,
   ) {}
 
   ngOnInit(): void {
@@ -48,21 +48,21 @@ export class ModifyTenureComponent implements OnInit {
   //building the form
   buildModifyTenure() {
     this.modifyTenureForm = this.fb.group({
-      debitAccount: [""],
-      debitCurrency: [""],
-      tenureYear: [""],
-      tenureMonth: [""],
-      tenureDay: [""],
-      reason: [""],
-      remarks: [""],
-      tenure: [""],
-      acceptTermsConditions: [""],
-      transferType: "Modify Tenure",
-      source: "I",
-      corpCustomerId: this.corpCustId
+      debitAccount: [''],
+      debitCurrency: [''],
+      tenureYear: [''],
+      tenureMonth: [''],
+      tenureDay: [''],
+      reason: [''],
+      remarks: [''],
+      tenure: [''],
+      acceptTermsConditions: [''],
+      transferType: 'Modify Tenure',
+      source: 'I',
+      corpCustomerId: this.corpCustId,
     });
     this.modifyTenureForm
-      .get("debitAccount")
+      .get('debitAccount')
       ?.setValue?.(this.loanDetails[0]?.cbsAccountNumber);
     this.modifyTenureForm.valueChanges
       .pipe(debounceTime(1000), distinctUntilChanged())
@@ -75,11 +75,11 @@ export class ModifyTenureComponent implements OnInit {
   //fetch generic values
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .loadGenericValue('Common', Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           Object.keys(res?.data).forEach(
-            (k) => (this.genericValue[k] = res.data[k])
+            (k) => (this.genericValue[k] = res.data[k]),
           );
         }
       });
@@ -98,35 +98,35 @@ export class ModifyTenureComponent implements OnInit {
 
   //when the input values changes, slider value changes
   onTenureChange() {
-    let year = this.modifyTenureForm.value.tenureYear;
-    let month = this.modifyTenureForm.value.tenureMonth;
-    let day = this.modifyTenureForm.value.tenureDay;
+    const year = this.modifyTenureForm.value.tenureYear;
+    const month = this.modifyTenureForm.value.tenureMonth;
+    const day = this.modifyTenureForm.value.tenureDay;
     const totalDays = year * 365 + month * 30 + day * 1;
-    this.modifyTenureForm.get("tenure")?.setValue(totalDays);
+    this.modifyTenureForm.get('tenure')?.setValue(totalDays);
   }
 
   //on the slider change, the input values should change
   onSliderChangeForTenure(e: any) {
-    let maxTenure = e.value;
-    let years = Math.floor(maxTenure / 365);
+    const maxTenure = e.value;
+    const years = Math.floor(maxTenure / 365);
     let remainingDays = maxTenure % 365;
-    let months = Math.floor(remainingDays / 30);
+    const months = Math.floor(remainingDays / 30);
     remainingDays = remainingDays % 30;
-    this.modifyTenureForm.get("tenureYear")?.setValue(years);
-    this.modifyTenureForm.get("tenureMonth")?.setValue(months);
-    this.modifyTenureForm.get("tenureDay")?.setValue(remainingDays);
+    this.modifyTenureForm.get('tenureYear')?.setValue(years);
+    this.modifyTenureForm.get('tenureMonth')?.setValue(months);
+    this.modifyTenureForm.get('tenureDay')?.setValue(remainingDays);
     this.calculateTenure();
   }
 
   calculateTenure() {
-    let numberOfMonths =
+    const numberOfMonths =
       this.modifyTenureForm.value.tenureYear * 12 +
       this.modifyTenureForm.value.tenureMonth;
-    let payload = {
+    const payload = {
       firstRepaymentDate: new Date(),
       interestRate: this.installmentDetails?.interestRate || 10,
       numberOfMonths: numberOfMonths,
-      principleAmount: this.installmentDetails?.loanAmount
+      principleAmount: this.installmentDetails?.loanAmount,
     };
 
     this.loanService.calculateEMI(payload).subscribe((res: any) => {
@@ -135,69 +135,69 @@ export class ModifyTenureComponent implements OnInit {
         maturityAmount: res?.data?.monthlyPayment,
         depositAmount: this.installmentDetails?.emiAmount,
         currentMaturityDate: this.installmentDetails?.maturityDate,
-        currentInterest: this.installmentDetails?.totalInterest
+        currentInterest: this.installmentDetails?.totalInterest,
       };
     });
   }
 
   //save function to save the details
   saveModifyTenure() {
-    let payload: any = { ...this.modifyTenureForm.value };
-    let modifyTenureArr = [
+    const payload: any = { ...this.modifyTenureForm.value };
+    const modifyTenureArr = [
       {
-        eventType: "modifyTenure",
-        operationType: "Loan",
-        status: "confirm",
-        masterId: "benificiaryMasterId",
-        statusHeader: "Comfirm Details",
-        statusNews: "Modify Tenure Successfully!",
+        eventType: 'modifyTenure',
+        operationType: 'Loan',
+        status: 'confirm',
+        masterId: 'benificiaryMasterId',
+        statusHeader: 'Comfirm Details',
+        statusNews: 'Modify Tenure Successfully!',
         summary: [
           {
-            header: "Loan Details",
+            header: 'Loan Details',
             details: [
               { Name: this.installmentDetails?.customerName },
               {
-                "Loan Account Number":
-                  this.modifyTenureForm?.get("debitAccount")?.value
+                'Loan Account Number':
+                  this.modifyTenureForm?.get('debitAccount')?.value,
               },
               { Type: this.installmentDetails?.loanType },
-              { "Loan Amount": this.installmentDetails?.loanAmount },
+              { 'Loan Amount': this.installmentDetails?.loanAmount },
               {
-                "Outstanding Principal":
-                  this.installmentDetails?.outstandPrincpl
+                'Outstanding Principal':
+                  this.installmentDetails?.outstandPrincpl,
               },
               {
-                "Interest Rate": this.installmentDetails?.interestRate
+                'Interest Rate': this.installmentDetails?.interestRate,
               },
               {
-                Duration: this.installmentDetails?.duration
+                Duration: this.installmentDetails?.duration,
               },
-              { "Maturity Date": this.installmentDetails?.maturityDate },
+              { 'Maturity Date': this.installmentDetails?.maturityDate },
               {
-                "Remaining Installments":
-                  this.installmentDetails?.remainingInstall
+                'Remaining Installments':
+                  this.installmentDetails?.remainingInstall,
               },
-              { Status: this.installmentDetails?.status }
-            ]
+              { Status: this.installmentDetails?.status },
+            ],
           },
           {
-            header: "Modify Tenure ",
+            header: 'Modify Tenure ',
             details: [
-              { Tenure: this.modifyTenureForm.value.tenureYear + "Year" },
-              { "New Monthly Payment": "" },
-              { "New Interest Rate": "" },
-              { Purpose: this.modifyTenureForm.value.remarks }
-            ]
-          }
-        ]
-      }
+              { Tenure: this.modifyTenureForm.value.tenureYear + 'Year' },
+              { 'New Monthly Payment': '' },
+              { 'New Interest Rate': '' },
+              { Purpose: this.modifyTenureForm.value.remarks },
+            ],
+          },
+        ],
+      },
     ];
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       modifyTenureArr,
-      (payload) => this.loanService.saveService(payload)
+      (payload) => this.loanService.saveService(payload),
     );
-    this.router.navigate(["/user/loan/loan-service/payment-summary"]);
+    this.router.navigate(['/user/loan/loan-service/payment-summary']);
   }
 }

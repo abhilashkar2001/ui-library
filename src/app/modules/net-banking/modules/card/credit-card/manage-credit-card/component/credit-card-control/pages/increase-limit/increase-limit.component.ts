@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { CreditcardService } from "../../../../creditcard.service";
-import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { CreditcardService } from '../../../../creditcard.service';
+import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-increase-limit",
-  templateUrl: "./increase-limit.component.html",
-  styleUrls: ["./increase-limit.component.scss"]
+  selector: 'app-increase-limit',
+  templateUrl: './increase-limit.component.html',
+  styleUrls: ['./increase-limit.component.scss'],
 })
 export class IncreaseLimitComponent implements OnInit {
   increaseLimitForm!: FormGroup;
-  selectedCurrency: string = "INR";
-  viewOtp: boolean = false;
+  selectedCurrency = 'INR';
+  viewOtp = false;
   creditCardList: any;
   customerID: number | any;
   fourDigitNo: string | any;
@@ -27,14 +27,14 @@ export class IncreaseLimitComponent implements OnInit {
     private creditCardService: CreditcardService,
     private ss: SessionStorageService,
     // private otpService: OTPService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.initIncreaseLimitForm();
     this.getCreditCardDetailsList();
     this.customerInfo = this.ss.getCustomerInfo();
-    this.userInfo = JSON.parse(<string>sessionStorage.getItem("auth-user"));
+    this.userInfo = JSON.parse(<string>sessionStorage.getItem('auth-user'));
     this.cardList = this.ss.getListOfCards();
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     console.log(this.fourDigitNo);
@@ -43,28 +43,28 @@ export class IncreaseLimitComponent implements OnInit {
   getCreditCardDetailsList() {
     const list = this.ss.getListOfCards()?.map((item) => ({
       cardNo: item.cardNumber,
-      cardValue: item.cardNumber
+      cardValue: item.cardNumber,
     }));
     this.creditCardList = list;
   }
 
   getCreditCardLimitByNo(e: any) {
-    console.log("e  === ", e);
+    console.log('e  === ', e);
     // const ccNo:number = this.increaseLimitForm.get('cardNo').value;
     this.creditCardService.getEligibleAmount(e).subscribe((res: any) => {
-      console.log("res : ", res);
+      console.log('res : ', res);
       // this.increaseLimitForm.patchValue({
       //   eligibleCreditLimit: res.data.eligibleCreditLimit
       // });
-      this.increaseLimitForm.get("eligibleCreditLimit")?.setValue(res.data);
+      this.increaseLimitForm.get('eligibleCreditLimit')?.setValue(res.data);
     });
   }
 
   initIncreaseLimitForm() {
     this.increaseLimitForm = this.fb.group({
-      cardNo: ["", [Validators.required]],
-      eligibleCreditLimit: ["", [Validators.required]],
-      otp: [""]
+      cardNo: ['', [Validators.required]],
+      eligibleCreditLimit: ['', [Validators.required]],
+      otp: [''],
     });
 
     // this.increaseLimitForm.get('cardNo').valueChanges.subscribe(cardNo => {
@@ -85,10 +85,10 @@ export class IncreaseLimitComponent implements OnInit {
   }
 
   submitEligibleLimit() {
-    this.otp = this.increaseLimitForm.get("otp")?.value;
-    let payload = {
+    this.otp = this.increaseLimitForm.get('otp')?.value;
+    const payload = {
       mobile: this.mobileNo,
-      otp: this.otp
+      otp: this.otp,
     };
     this.creditCardService.verifyOtp(payload).subscribe((res: any) => {
       if (res) {
@@ -100,17 +100,17 @@ export class IncreaseLimitComponent implements OnInit {
             if (resp) {
               const dialogRef = this.dialog.open(PopupSuccessComponent, {
                 data: {
-                  status: "SuccessOnly",
-                  Msg: "Card limit has been set"
+                  status: 'SuccessOnly',
+                  Msg: 'Card limit has been set',
                 },
                 disableClose: true,
-                panelClass: "popup-dialog-class",
-                backdropClass: "bdrop",
-                width: "25%"
+                panelClass: 'popup-dialog-class',
+                backdropClass: 'bdrop',
+                width: '25%',
               });
               dialogRef.afterClosed().subscribe((res) => {
                 console.log(res);
-                if (res == "Yes") {
+                if (res == 'Yes') {
                   this.increaseLimitForm.reset();
                   this.viewOtp = false;
                 }

@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { SuccessModalComponent } from "./success-modal.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SuccessModalComponent } from './success-modal.component';
 
-describe("SuccessModalComponent", () => {
+describe('SuccessModalComponent', () => {
   let component: SuccessModalComponent;
   let fixture: ComponentFixture<SuccessModalComponent>;
 
@@ -15,7 +15,7 @@ describe("SuccessModalComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

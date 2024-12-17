@@ -1,52 +1,52 @@
-.main-div{
-    margin-right: 30px;
+.main-div {
+  margin-right: 30px;
 }
-.radion-btn-algn{
-position: relative;
-bottom: 7PX;
+.radion-btn-algn {
+  position: relative;
+  bottom: 7px;
 }
-.cancel-btn{
-    width: 158px;
-    height: 43px;
-    border-radius: 8px;
-    border: 1px solid #00205c;
-    color: #00205C;
+.cancel-btn {
+  width: 158px;
+  height: 43px;
+  border-radius: 8px;
+  border: 1px solid #00205c;
+  color: #00205c;
 }
-.payment-details{
-    // top: 15px;
-    position: relative;
-    color:#377DFF; 
-    font-size: 16px;
+.payment-details {
+  // top: 15px;
+  position: relative;
+  color: #377dff;
+  font-size: 16px;
 }
-.proceed-btn{
-    width: 158px;
-    height: 43px;
-    border-radius: 8px;
-    background-color: #00205c;
-    color: white;
-}
-
-.custom-margin{
-    margin-top: -3%;
-}
-.recurring-algn{
-    margin-top: -3.5%;
-}
-.custom-transfer{
-    margin-top: 4%;
+.proceed-btn {
+  width: 158px;
+  height: 43px;
+  border-radius: 8px;
+  background-color: #00205c;
+  color: white;
 }
 
-.btn-algn{
-    margin-top: 15px
+.custom-margin {
+  margin-top: -3%;
 }
-.favourites-algn{
-    margin-bottom: 10px;
+.recurring-algn {
+  margin-top: -3.5%;
 }
-.favourites{
-    color: #377DFF;
-    font-size: 16px;
+.custom-transfer {
+  margin-top: 4%;
 }
-::ng-deep .mat-dialog-container{
-    padding: 0px !important;
-    border-radius: 12px !important;
-  }
+
+.btn-algn {
+  margin-top: 15px;
+}
+.favourites-algn {
+  margin-bottom: 10px;
+}
+.favourites {
+  color: #377dff;
+  font-size: 16px;
+}
+::ng-deep .mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 12px !important;
+}

@@ -30,7 +30,7 @@
           fxLayoutAlign="center start"
           class="refNoDiv mt-12 mr-12"
         >
-          <div class="refNoheading">{{ "Reference No" }}</div>
+          <div class="refNoheading">{{ 'Reference No' }}</div>
           <div class="refNoValue">{{ refNumber }}</div>
         </div>
       </div>
@@ -47,13 +47,13 @@
           [ngStyle]="{
             border: document.get('docRequired')?.value
               ? '1px solid #B10000'
-              : ''
+              : '',
           }"
         >
           <mat-expansion-panel-header
-            >{{ document.get("documentName")?.value | titlecase }} &nbsp;
+            >{{ document.get('documentName')?.value | titlecase }} &nbsp;
             <span style="color: #b10000">
-              {{ document.get("docRequired")?.value ? "*" : "" }}
+              {{ document.get('docRequired')?.value ? '*' : '' }}
             </span>
           </mat-expansion-panel-header>
           <div fxLayout="row wrap" fxLayoutGap="6px">
@@ -121,7 +121,7 @@
                       class="sm-btn uploadColor"
                       [disableRipple]="true"
                     >
-                      {{ "Upload" }}
+                      {{ 'Upload' }}
                       <input
                         #fileInput
                         type="file"

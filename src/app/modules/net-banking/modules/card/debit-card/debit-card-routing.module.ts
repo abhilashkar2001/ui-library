@@ -1,31 +1,31 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadChildren: () =>
-      import("./debit-card-dashboard/debit-card-dashboard.module").then(
-        (m) => m.DebitCardDashboardModule
+      import('./debit-card-dashboard/debit-card-dashboard.module').then(
+        (m) => m.DebitCardDashboardModule,
       ),
   },
   {
-    path: "service",
+    path: 'service',
     loadChildren: () =>
-      import("./debit-card-service/debit-card-service.module").then(
-        (m) => m.DebitCardServiceModule
+      import('./debit-card-service/debit-card-service.module').then(
+        (m) => m.DebitCardServiceModule,
       ),
   },
   {
-    path: "manage-card",
+    path: 'manage-card',
     loadChildren: () =>
-      import("./manage-debit-card/manage-debit-card.module").then(
-        (m) => m.ManageDebitCardModule
+      import('./manage-debit-card/manage-debit-card.module').then(
+        (m) => m.ManageDebitCardModule,
       ),
   },
 ];

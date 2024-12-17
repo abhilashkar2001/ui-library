@@ -8,9 +8,8 @@ describe('IcCustomInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IcCustomInputComponent ]
-    })
-    .compileComponents();
+      declarations: [IcCustomInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IcCustomInputComponent);
     component = fixture.componentInstance;

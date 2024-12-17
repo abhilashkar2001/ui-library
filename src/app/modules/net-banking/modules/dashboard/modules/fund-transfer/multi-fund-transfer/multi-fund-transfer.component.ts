@@ -1,41 +1,41 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { GenericValueService } from "app/shared/services/generic-value.service";
-import { FundTransferService } from "../fund-transfer.service";
-import { debounceTime } from "rxjs/operators";
-import { toWords } from "number-to-words";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatCheckboxChange } from "@angular/material/checkbox";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { FundTransferService } from '../fund-transfer.service';
+import { debounceTime } from 'rxjs/operators';
+import { toWords } from 'number-to-words';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
+import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-multi-fund-transfer",
-  templateUrl: "./multi-fund-transfer.component.html",
-  styleUrls: ["./multi-fund-transfer.component.scss"]
+  selector: 'app-multi-fund-transfer',
+  templateUrl: './multi-fund-transfer.component.html',
+  styleUrls: ['./multi-fund-transfer.component.scss'],
 })
 export class MultiFundTransferComponent implements OnInit {
   multiTransferForm!: FormGroup;
   genericValue = { TRANSFERMODE: [] };
   selectedAccounts: any[] | any;
-  purpose = ["Salary", "Vendor"];
+  purpose = ['Salary', 'Vendor'];
   fromAccount: any = [];
   transferMode = [];
   transferTo = [];
   benificiaryEmail = [];
   benificiaryMobile = [];
-  remitter: boolean = false;
-  beneficiary: boolean = false;
-  beneficiaryNarration: boolean = false;
-  remitterNarration: boolean = false;
-  paymentDetail: boolean = false;
+  remitter = false;
+  beneficiary = false;
+  beneficiaryNarration = false;
+  remitterNarration = false;
+  paymentDetail = false;
   custAccounts: any;
-  totalAmount: number = 0;
-  totalAmountInWords: string = "Zero";
+  totalAmount = 0;
+  totalAmountInWords = 'Zero';
   dialogRef: MatDialogRef<CustomSuccessPopupComponent> | any;
   dialogRef1: MatDialogRef<AllInOnePopupComponent> | any;
   customerInfo: any;
@@ -50,27 +50,27 @@ export class MultiFundTransferComponent implements OnInit {
     private dialog: MatDialog,
     private api: OpenAccountService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/single-trans.svg"
-      )
+        'assets/images/single-trans.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
     this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem("corporateId")
+      <string>sessionStorage.getItem('corporateId'),
     );
     this.initMultiTransferForm();
     this.fetchGenericValues();
     this.custAccounts = JSON.parse(
-      <string>sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem('listOfAccounts'),
     );
     this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem("customer-Info")
+      <string>sessionStorage.getItem('customer-Info'),
     );
     this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
@@ -80,25 +80,25 @@ export class MultiFundTransferComponent implements OnInit {
 
   initMultiTransferForm() {
     this.multiTransferForm = this.fb.group({
-      purposeOfPayment: ["", Validators.required],
-      debitAccount: ["", Validators.required],
-      debitAmount: ["", Validators.required],
-      transferMode: [""],
-      trransferOn: ["", Validators.required],
-      remmitterEmail: [""],
-      remmitterMobile: [""],
-      benificiaryEmail: [""],
-      benificiaryMobile: [""],
-      remmitterNarration: [""],
-      benificiaryNarration: [""],
-      transferTo: [""],
-      detail1: [""],
-      detail2: [""],
-      detail3: [""],
-      remarks: [""]
+      purposeOfPayment: ['', Validators.required],
+      debitAccount: ['', Validators.required],
+      debitAmount: ['', Validators.required],
+      transferMode: [''],
+      trransferOn: ['', Validators.required],
+      remmitterEmail: [''],
+      remmitterMobile: [''],
+      benificiaryEmail: [''],
+      benificiaryMobile: [''],
+      remmitterNarration: [''],
+      benificiaryNarration: [''],
+      transferTo: [''],
+      detail1: [''],
+      detail2: [''],
+      detail3: [''],
+      remarks: [''],
     });
     this.multiTransferForm
-      .get("debitAmount")
+      .get('debitAmount')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         if (resp) {
@@ -120,7 +120,7 @@ export class MultiFundTransferComponent implements OnInit {
 
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .loadGenericValue('Common', Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           this.transferMode = res?.data?.TRANSFERMODE;
@@ -142,37 +142,37 @@ export class MultiFundTransferComponent implements OnInit {
     this.selectedAccounts = event;
     this.selectedAccounts = event.map((account: any) => ({
       accountNo: account,
-      amount: this.multiTransferForm.value.debitAmount
+      amount: this.multiTransferForm.value.debitAmount,
     }));
     if (
-      this.multiTransferForm.get("debitAmount")?.value &&
+      this.multiTransferForm.get('debitAmount')?.value &&
       this.selectedAccounts.length > 1
     ) {
       this.totalAmount =
-        this.multiTransferForm.get("debitAmount")?.value *
+        this.multiTransferForm.get('debitAmount')?.value *
         this.selectedAccounts.length;
       this.convertTotalAmountToAlphabet();
     } else {
-      this.totalAmount = this.multiTransferForm.get("debitAmount")?.value;
+      this.totalAmount = this.multiTransferForm.get('debitAmount')?.value;
       this.convertTotalAmountToAlphabet();
     }
   }
 
   onCheckBox(checkbox: string, event: MatCheckboxChange) {
     if (event.checked) {
-      if (checkbox === "Remitter") this.remitter = true;
-      else if (checkbox === "Beneficiary") this.beneficiary = true;
-      else if (checkbox === "RemitterNarration") this.remitterNarration = true;
-      else if (checkbox === "BeneficiaryNarration")
+      if (checkbox === 'Remitter') this.remitter = true;
+      else if (checkbox === 'Beneficiary') this.beneficiary = true;
+      else if (checkbox === 'RemitterNarration') this.remitterNarration = true;
+      else if (checkbox === 'BeneficiaryNarration')
         this.beneficiaryNarration = true;
-      else if (checkbox === "paymentDetail") this.paymentDetail = true;
+      else if (checkbox === 'paymentDetail') this.paymentDetail = true;
     } else {
-      if (checkbox === "Remitter") this.remitter = false;
-      else if (checkbox === "Beneficiary") this.beneficiary = false;
-      else if (checkbox === "RemitterNarration") this.remitterNarration = false;
-      else if (checkbox === "BeneficiaryNarration")
+      if (checkbox === 'Remitter') this.remitter = false;
+      else if (checkbox === 'Beneficiary') this.beneficiary = false;
+      else if (checkbox === 'RemitterNarration') this.remitterNarration = false;
+      else if (checkbox === 'BeneficiaryNarration')
         this.beneficiaryNarration = false;
-      else if (checkbox === "paymentDetail") this.paymentDetail = false;
+      else if (checkbox === 'paymentDetail') this.paymentDetail = false;
     }
   }
 
@@ -189,7 +189,7 @@ export class MultiFundTransferComponent implements OnInit {
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary"
+      'user/dashboard/fund-transfer/fund-transfer-summary',
     ]);
   }
 
@@ -199,11 +199,11 @@ export class MultiFundTransferComponent implements OnInit {
 
   delete(account: any) {
     this.multiTransferForm
-      .get("transferTo")
+      .get('transferTo')
       ?.patchValue(
         this.multiTransferForm.value.transferTo.filter(
-          (item: any) => item != account
-        )
+          (item: any) => item != account,
+        ),
       );
     const index = this.selectedAccounts.indexOf(account);
     if (index > -1) {
@@ -237,18 +237,18 @@ export class MultiFundTransferComponent implements OnInit {
         if (resp?.statusCode == 200) {
           this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
             data: {
-              msg: "Transaction Successful",
+              msg: 'Transaction Successful',
               status: true,
-              reffNo: resp?.data
+              reffNo: resp?.data,
             },
-            width: "40%",
+            width: '40%',
             disableClose: true,
-            panelClass: "popup-class",
-            backdropClass: "bdrop"
+            panelClass: 'popup-class',
+            backdropClass: 'bdrop',
           });
           this.dialogRef.afterClosed().subscribe((result: any) => {
             console.log(result);
-            if (result == "Done") {
+            if (result == 'Done') {
               this.cancel();
             }
           });
@@ -263,39 +263,39 @@ export class MultiFundTransferComponent implements OnInit {
   submit() {
     if (!this.multiTransferForm.valid) return;
 
-    let payload: any = [];
+    const payload: any = [];
     this.selectedAccounts.forEach((element: any) => {
-      let obj = { ...this.multiTransferForm.value };
+      const obj = { ...this.multiTransferForm.value };
       obj.creditAccount = element.accountNo;
       obj.debitAmount = element.amount;
 
-      obj.uploadType = "MULTI";
+      obj.uploadType = 'MULTI';
       payload.push(obj);
     });
 
     this.getOTP();
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: { remark: true, mobile: this.customerInfo.mobileNumber },
-      width: "50%",
-      height: "33%",
+      width: '50%',
+      height: '33%',
       disableClose: true,
-      panelClass: "popup-dialog-class",
+      panelClass: 'popup-dialog-class',
 
-      backdropClass: "bdrop"
+      backdropClass: 'bdrop',
     });
     this.dialogRef1.afterClosed().subscribe((result: any) => {
-      if (result == "verified") {
+      if (result == 'verified') {
         this.saveData(payload);
       } else {
         this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-          data: { msg: "Transaction failed", status: false },
-          width: "40%",
+          data: { msg: 'Transaction failed', status: false },
+          width: '40%',
           disableClose: true,
-          panelClass: "popup-class",
-          backdropClass: "bdrop"
+          panelClass: 'popup-class',
+          backdropClass: 'bdrop',
         });
         this.dialogRef.afterClosed().subscribe((result: any) => {
-          if (result == "Failed") {
+          if (result == 'Failed') {
             this.dialogRef.close();
           }
         });

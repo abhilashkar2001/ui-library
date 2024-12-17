@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { FundTransferService } from "../fund-transfer.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { TranslateService } from "@ngx-translate/core";
-import { NETBANKING } from "../../../net-banking-dashboard/net-banking-dashboard.constant";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { FundTransferService } from '../fund-transfer.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NETBANKING } from '../../../net-banking-dashboard/net-banking-dashboard.constant';
 
 @Component({
-  selector: "app-fund-transfer-summary",
-  templateUrl: "./fund-transfer-summary.component.html",
-  styleUrls: ["./fund-transfer-summary.component.scss"]
+  selector: 'app-fund-transfer-summary',
+  templateUrl: './fund-transfer-summary.component.html',
+  styleUrls: ['./fund-transfer-summary.component.scss'],
 })
 export class FundTransferSummaryComponent implements OnInit {
   columns: any = NETBANKING.PENDING_SUMMARY;
   sort: any;
-  size: number = 5;
+  size = 5;
   sortOrder: any;
-  page: number = 1;
-  pageSize: number = 5;
-  sortValue = "";
-  sortDirection = "";
+  page = 1;
+  pageSize = 5;
+  sortValue = '';
+  sortDirection = '';
   filterBy: FilterBy | any;
   module: any;
   summaryData: any;
@@ -29,23 +29,23 @@ export class FundTransferSummaryComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113
+      totalPages: 113,
     },
     statusCode: 200,
-    status: "OK"
+    status: 'OK',
   };
   uploadType: any;
   constructor(
     private router: Router,
     private fundTransferService: FundTransferService,
     private tokenStorageService: TokenStorageService,
-    public translate: TranslateService
+    public translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
-    this.uploadType = sessionStorage.getItem("uploadType");
+    this.uploadType = sessionStorage.getItem('uploadType');
     setTimeout(() => {
-      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
   }
@@ -63,7 +63,7 @@ export class FundTransferSummaryComponent implements OnInit {
         event.page,
         event.size,
         this.module,
-        this.uploadType
+        this.uploadType,
       )
       .subscribe((res) => {
         this.summaryData = res;
@@ -71,24 +71,24 @@ export class FundTransferSummaryComponent implements OnInit {
   }
 
   editRecord() {
-    if (this.uploadType == "SINGLE")
-      this.router.navigate(["user/dashboard/fund-transfer/single"]);
+    if (this.uploadType == 'SINGLE')
+      this.router.navigate(['user/dashboard/fund-transfer/single']);
   }
 
   openPopUp(event: any) {
     const id = event.element;
-    if (id === "addNew") {
-      if (this.uploadType == "SINGLE")
-        this.router.navigate(["user/dashboard/fund-transfer/single"]);
-      else this.router.navigate(["user/dashboard/fund-transfer/multi"]);
+    if (id === 'addNew') {
+      if (this.uploadType == 'SINGLE')
+        this.router.navigate(['user/dashboard/fund-transfer/single']);
+      else this.router.navigate(['user/dashboard/fund-transfer/multi']);
     }
   }
 
   goToTransfer() {
-    this.router.navigate(["user/dashboard/fund-transfer/single"]);
+    this.router.navigate(['user/dashboard/fund-transfer/single']);
   }
 
   CustomGoBack() {
-    this.router.navigate(["/user/dashboard"]);
+    this.router.navigate(['/user/dashboard']);
   }
 }

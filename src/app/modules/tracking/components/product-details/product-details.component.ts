@@ -1,34 +1,37 @@
-import { Component, OnInit } from "@angular/core";
-import { TrackingService } from "../../tracking-service";
-import { ActivatedRoute } from "@angular/router";
-import { forkJoin, of } from "rxjs";
-import { ProductConstant } from "./product.store";
-import { catchError } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { TrackingService } from '../../tracking-service';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { ProductConstant } from './product.store';
+import { catchError } from 'rxjs/operators';
 
 @Component({
-  selector: "app-product-details",
-  templateUrl: "./product-details.component.html",
-  styleUrls: ["./product-details.component.scss"]
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
   dynamicDetails: any = [];
   applicationStatus: any = [];
   mobileNumber: string | any;
-  productType: string = "";
+  productType = '';
 
   statusItems: any[] = [];
   dynamicKeyHelper = {};
 
   loanDocument: any[] = [];
 
-  constructor(private api: TrackingService, private route: ActivatedRoute) {}
+  constructor(
+    private api: TrackingService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params["id"];
+    const id = this.route.snapshot.params['id'];
     this.route.queryParamMap.subscribe((params: any) => {
-      this.productType = params.get("type");
+      this.productType = params.get('type');
     });
-    this.mobileNumber = sessionStorage.getItem("trackingMobile");
+    this.mobileNumber = sessionStorage.getItem('trackingMobile');
     this.getOriginationById(id);
   }
 
@@ -47,11 +50,11 @@ export class ProductDetailsComponent implements OnInit {
       originationDetails: this.api
         .getOriginationMaster(id)
         .pipe(catchError((err) => of({ error: err }))),
-      webSummary: this.productType.toLowerCase().includes("loan")
+      webSummary: this.productType.toLowerCase().includes('loan')
         ? this.api
             .getLoanSummary(id)
             .pipe(catchError((err) => of({ error: err })))
-        : of(null)
+        : of(null),
     };
 
     forkJoin(observables).subscribe((resp: any) => {
@@ -61,28 +64,28 @@ export class ProductDetailsComponent implements OnInit {
         const kycDoc = orginationInfo.customerInfo
           .filter((obj: any) => obj.primaryCustomer)
           .flatMap((obj: any) =>
-            obj.documnentsInfo.documents.flatMap((objDoc: any) => objDoc.docs)
+            obj.documnentsInfo.documents.flatMap((objDoc: any) => objDoc.docs),
           );
 
         if (resp?.applicationDetails?.statusCode === 200) {
           this.applicationStatus = resp?.applicationDetails?.data;
           this.applicationStatus = this.applicationStatus.filter(
-            (item: any) => item?.process
+            (item: any) => item?.process,
           );
           this.statusItems = this.applicationStatus.map((item: any) => {
             const val: any = {
-              title: item?.process
+              title: item?.process,
             };
-            if (item?.status === "DONE" || item?.status === "APPROVED") {
+            if (item?.status === 'DONE' || item?.status === 'APPROVED') {
               val.value = 100;
             }
-            if (item?.status === "PENDING") {
+            if (item?.status === 'PENDING') {
               val.value = 50;
             }
-            if (item?.status === "ONGOING") {
+            if (item?.status === 'ONGOING') {
               val.value = 20;
             }
-            if (item?.status === "REJECT") {
+            if (item?.status === 'REJECT') {
               val.value = 0;
             }
             return val;
@@ -102,32 +105,32 @@ export class ProductDetailsComponent implements OnInit {
 
           this.dynamicDetails = [
             {
-              key: "loanAccountInfo",
-              values: { ...loanInfo.loanDetails, tenure: loanTenure }
+              key: 'loanAccountInfo',
+              values: { ...loanInfo.loanDetails, tenure: loanTenure },
             },
-            { key: "bankAccount", values: loanInfo.bankAccount ?? {} },
+            { key: 'bankAccount', values: loanInfo.bankAccount ?? {} },
             {
-              key: "disbursementDetails",
-              values: loanInfo.disbursementDetails ?? {}
+              key: 'disbursementDetails',
+              values: loanInfo.disbursementDetails ?? {},
             },
-            { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
+            { key: 'customerInfo', values: orginationInfo.customerInfo ?? {} },
             {
-              key: "documnentsInfo",
+              key: 'documnentsInfo',
               // values: loanInfo.documnentsInfo.docInfoModel ?? []
-              values: this.loanDocument ?? []
+              values: this.loanDocument ?? [],
             },
 
-            { key: "docs", values: kycDoc }
+            { key: 'docs', values: kycDoc },
           ];
           this.dynamicKeyHelper = this.productType
             .toLowerCase()
-            .includes("loan")
+            .includes('loan')
             ? ProductConstant.LoanDynamicKeys
             : ProductConstant.AccountDynamicKeys;
         } else {
           this.dynamicDetails = [
-            { key: "customerInfo", values: orginationInfo.customerInfo ?? {} },
-            { key: "docs", values: kycDoc }
+            { key: 'customerInfo', values: orginationInfo.customerInfo ?? {} },
+            { key: 'docs', values: kycDoc },
           ];
           this.dynamicKeyHelper = ProductConstant.AccountDynamicKeys;
         }

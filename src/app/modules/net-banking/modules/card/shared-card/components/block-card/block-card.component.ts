@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { NavigationEnd, Router } from "@angular/router";
-import { AccountList } from "app/shared/models/card.model";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { CardService } from "../../../card.service";
-import { filter } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
+import { AccountList } from 'app/shared/models/card.model';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { CardService } from '../../../card.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: "app-block-card",
-  templateUrl: "./block-card.component.html",
-  styleUrls: ["./block-card.component.scss"]
+  selector: 'app-block-card',
+  templateUrl: './block-card.component.html',
+  styleUrls: ['./block-card.component.scss'],
 })
 export class BlockCardComponent implements OnInit {
   blockCardForm!: FormGroup;
   reasons: any[] = [
-    { label: "Lost/Stolen", value: "Lost/Stolen" },
-    { label: "Damaged", value: "Damaged" }
+    { label: 'Lost/Stolen', value: 'Lost/Stolen' },
+    { label: 'Damaged', value: 'Damaged' },
   ];
   selectedCurrency: any;
   reIssueToggle: boolean | any;
@@ -36,12 +36,12 @@ export class BlockCardComponent implements OnInit {
     private tokenService: TokenStorageService,
     private creditCardService: CardService,
     private serviceCallHandler: ServiceCallHandler,
-    private router: Router
+    private router: Router,
   ) {
     this.profileInfo = this.tokenService.getUser();
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd) // Regular filter
+        filter((event) => event instanceof NavigationEnd), // Regular filter
       )
       .subscribe((event) => {
         const navEndEvent = event as NavigationEnd; // Type assertion
@@ -56,13 +56,13 @@ export class BlockCardComponent implements OnInit {
   }
   buildBlockCard() {
     this.blockCardForm = this.fb.group({
-      source: ["I"],
-      creditAccount: [""],
-      creditAmount: [""],
-      creditCurrency: [""],
-      reason: [""],
-      address: [""],
-      reIssueToggle: [""]
+      source: ['I'],
+      creditAccount: [''],
+      creditAmount: [''],
+      creditCurrency: [''],
+      reason: [''],
+      address: [''],
+      reIssueToggle: [''],
     });
   }
 
@@ -71,19 +71,19 @@ export class BlockCardComponent implements OnInit {
    * @param url -url of the activated route
    */
   private updateItemsBasedOnUrl(url: string) {
-    if (url.includes("/credit-card")) {
-      this.title = "Credit Card";
-    } else if (url.includes("/debit-card")) {
-      this.title = "Debit Card";
-    } else if (url.includes("/prepaid-card")) {
-      this.title = "Prepaid Card";
+    if (url.includes('/credit-card')) {
+      this.title = 'Credit Card';
+    } else if (url.includes('/debit-card')) {
+      this.title = 'Debit Card';
+    } else if (url.includes('/prepaid-card')) {
+      this.title = 'Prepaid Card';
     }
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card: any) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account,
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
@@ -91,14 +91,14 @@ export class BlockCardComponent implements OnInit {
   }
   payAccount(event: any) {
     console.log(event);
-    let listOfAccounts = this.sessionStorageService.getListOfAccounts();
+    const listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.selectedCurrency = listOfAccounts.find(
-      (res) => res?.accountNo == event
+      (res) => res?.accountNo == event,
     )?.accountCurrency;
   }
   onReIssuePreferanceChange(e: any) {
     this.reIssueToggle = e?.checked;
-    this.blockCardForm?.get("reIssueToggle")?.patchValue(this.reIssueToggle);
+    this.blockCardForm?.get('reIssueToggle')?.patchValue(this.reIssueToggle);
     if (this.reIssueToggle === true) {
       this.fetchAddressDetails();
     }
@@ -111,43 +111,43 @@ export class BlockCardComponent implements OnInit {
         if (res?.data?.[0]?.contact?.address?.length === 1) {
           this.communicationAddress = this.communicationAddress =
             res?.data?.[0]?.contact?.address?.[0]?.address1 +
-            " ," +
+            ' ,' +
             res?.data?.[0]?.contact?.address?.[0]?.address2 +
-            " ," +
+            ' ,' +
             res?.data?.[0]?.contact?.address?.[0]?.cityName +
-            " ," +
+            ' ,' +
             res?.data?.[0]?.contact?.address?.[0]?.countryName +
-            " ," +
+            ' ,' +
             res?.data?.[0]?.contact?.address?.[0]?.stateName +
-            "-" +
+            '-' +
             res?.data?.[0]?.contact?.address?.[0]?.pincode;
         } else {
           res?.data?.forEach((element: any) => {
-            if (element?.addressType === "Communication") {
+            if (element?.addressType === 'Communication') {
               this.communicationAddress =
                 element?.address1 +
-                " ," +
+                ' ,' +
                 element?.address2 +
-                " ," +
+                ' ,' +
                 element?.cityName +
-                " ," +
+                ' ,' +
                 element?.countryName +
-                " ," +
+                ' ,' +
                 element?.stateName +
-                "-" +
+                '-' +
                 element?.pincode;
-            } else if (element?.addressType === "Permanent") {
+            } else if (element?.addressType === 'Permanent') {
               this.permanentAddress =
                 element?.address1 +
-                " ," +
+                ' ,' +
                 element?.address2 +
-                " ," +
+                ' ,' +
                 element?.cityName +
-                " ," +
+                ' ,' +
                 element?.countryName +
-                " ," +
+                ' ,' +
                 element?.stateName +
-                "-" +
+                '-' +
                 element?.pincode;
             }
           });
@@ -157,52 +157,52 @@ export class BlockCardComponent implements OnInit {
 
   proceed() {
     if (!this.blockCardForm?.valid) return;
-    let payload = { ...this.blockCardForm.value };
-    let paymentDetailsArr = [
+    const payload = { ...this.blockCardForm.value };
+    const paymentDetailsArr = [
       {
-        eventType: "mmidTransfer",
-        operationType: "Block_Card",
-        status: "confirm",
-        masterId: "retailFundTransferMasterId",
-        statusHeader: "Comfirm Payment",
-        statusNews: "Block Card Successfully!",
+        eventType: 'mmidTransfer',
+        operationType: 'Block_Card',
+        status: 'confirm',
+        masterId: 'retailFundTransferMasterId',
+        statusHeader: 'Comfirm Payment',
+        statusNews: 'Block Card Successfully!',
         summary: [
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Card Holder": this.accountDetails?.customerName },
+              { 'Card Holder': this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber
+                'Card Number': this.accountDetails?.cardNumber,
               },
               {
-                "Card Name": this.accountDetails?.cardName
+                'Card Name': this.accountDetails?.cardName,
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit
-              }
-            ]
+                'Credit Limit': this.accountDetails?.totalCreditLimit,
+              },
+            ],
           },
           {
-            header: "Block Details",
+            header: 'Block Details',
             details: [
               { Reason: payload?.reason },
               {
-                "Re-Issue Card": payload?.reIssueToggle
-              }
-            ]
-          }
+                'Re-Issue Card': payload?.reIssueToggle,
+              },
+            ],
+          },
         ],
-        qrToggle: false
-      }
+        qrToggle: false,
+      },
     ];
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       paymentDetailsArr,
       (payload) =>
-        this.creditCardService.saveBlockPayCreditPaymentDetails(payload)
+        this.creditCardService.saveBlockPayCreditPaymentDetails(payload),
       // Service call completion callback
     );
-    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
+    this.router.navigate(['/user/card/credit-card/service/payment-summary']);
   }
 }

@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
 
 @Component({
-  selector: "app-process-offer-letter",
-  templateUrl: "./process-offer-letter.component.html",
-  styleUrls: ["./process-offer-letter.component.scss"]
+  selector: 'app-process-offer-letter',
+  templateUrl: './process-offer-letter.component.html',
+  styleUrls: ['./process-offer-letter.component.scss'],
 })
 export class ProcessOfferLetterComponent implements OnInit {
   currentUser: any;
@@ -19,32 +19,32 @@ export class ProcessOfferLetterComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
-    private route: Router
+    private route: Router,
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
     this.originationId = JSON.parse(
-      <string>sessionStorage.getItem("originationId")
+      <string>sessionStorage.getItem('originationId'),
     );
     this.fetchOfferDetails();
   }
 
   buildRevisiteForm(data?: any) {
     this.revisiteForm = this.fb.group({
-      id: [data?.id ?? ""],
-      amount: [data?.approvedLoanAmount ?? ""],
-      rateOfInterest: [data?.rateOfInterest ?? ""],
-      loanTenureDay: [data?.loanTenurDay ?? ""],
-      loanTenureMonth: [data?.loanTenurMonth ?? ""],
-      loanTenureYear: [data?.loanTenurYear ?? ""],
-      requestedAmount: [""],
-      requestedRateOfInterest: [""],
-      requestedLoanTenureDay: [""],
-      requestedLoanTenureMonth: [""],
-      requestedLoanTenureYear: [""],
-      remark: []
+      id: [data?.id ?? ''],
+      amount: [data?.approvedLoanAmount ?? ''],
+      rateOfInterest: [data?.rateOfInterest ?? ''],
+      loanTenureDay: [data?.loanTenurDay ?? ''],
+      loanTenureMonth: [data?.loanTenurMonth ?? ''],
+      loanTenureYear: [data?.loanTenurYear ?? ''],
+      requestedAmount: [''],
+      requestedRateOfInterest: [''],
+      requestedLoanTenureDay: [''],
+      requestedLoanTenureMonth: [''],
+      requestedLoanTenureYear: [''],
+      remark: [],
     });
   }
 
@@ -57,12 +57,12 @@ export class ProcessOfferLetterComponent implements OnInit {
     payload.loanTenureYear = formValue.requestedLoanTenureYear;
     payload.loanTenureDay = formValue.requestedLoanTenureDay;
     payload.remarks = formValue.remarks;
-    payload.date = moment(new Date()).format("DD-MMM-YYYY");
+    payload.date = moment(new Date()).format('DD-MMM-YYYY');
     payload.originationId = this.originationId;
     payload.id = formValue.id;
     this.offerIssueService.saveCustomerRequest(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
-        this.route.navigate(["home"]);
+        this.route.navigate(['home']);
       }
     });
   }

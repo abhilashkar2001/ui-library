@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { CommonMobileVerificationComponent } from "./common-mobile-verification.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonMobileVerificationComponent } from './common-mobile-verification.component';
 
-describe("MobileVerificationComponent", () => {
+describe('MobileVerificationComponent', () => {
   let component: CommonMobileVerificationComponent;
   let fixture: ComponentFixture<CommonMobileVerificationComponent>;
 
@@ -14,7 +14,7 @@ describe("MobileVerificationComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

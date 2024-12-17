@@ -12,7 +12,7 @@
     (click)="updateRecord('Authorize')"
     *ngIf="!isTransactionActionDone"
   >
-    {{ "Approve" | translate }}
+    {{ 'Approve' | translate }}
   </button>
 
   <!-- Reject Button-->
@@ -23,7 +23,7 @@
     (click)="updateRecord('Reject')"
     *ngIf="!isTransactionActionDone"
   >
-    {{ "Reject" | translate }}
+    {{ 'Reject' | translate }}
   </button>
 
   <!-- Reverse Button-->
@@ -110,6 +110,6 @@
 
   <!-- Exit Button -->
   <button class="exitButton" mat-raised-button (click)="goBack()">
-    {{ "Exit" | translate }}
+    {{ 'Exit' | translate }}
   </button>
 </div>

@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { Cards, HeaderModel } from "app/shared/models/card.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { QuickLinkTabModel } from "app/shared/models/tab-model";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { CardService } from "../../../card.service";
-import { DebitCardStore } from "../../debit-card.store";
+import { Component, OnInit } from '@angular/core';
+import { Cards, HeaderModel } from 'app/shared/models/card.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { QuickLinkTabModel } from 'app/shared/models/tab-model';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { CardService } from '../../../card.service';
+import { DebitCardStore } from '../../debit-card.store';
 
 @Component({
-  selector: "app-debit-card-dashboard",
-  templateUrl: "./debit-card-dashboard.component.html",
-  styleUrls: ["./debit-card-dashboard.component.scss"]
+  selector: 'app-debit-card-dashboard',
+  templateUrl: './debit-card-dashboard.component.html',
+  styleUrls: ['./debit-card-dashboard.component.scss'],
 })
 export class DebitCardDashboardComponent implements OnInit {
   cardList: Cards = [];
@@ -21,12 +21,12 @@ export class DebitCardDashboardComponent implements OnInit {
   cardSummaryDetails: any;
   profileInfo: any;
   displayCard: any;
-  isDrawerOpen = "close";
+  isDrawerOpen = 'close';
 
   constructor(
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
   ) {
     this.profileInfo = this.tokenService.getUser();
   }
@@ -41,7 +41,7 @@ export class DebitCardDashboardComponent implements OnInit {
       this.sessionStorageService.removeListOfCards();
     }
     this.cardService
-      .fetchCardSummary(this.profileInfo?.corporateCustomerId, "Debit Card")
+      .fetchCardSummary(this.profileInfo?.corporateCustomerId, 'Debit Card')
       .subscribe((res) => {
         this.cardSummaryDetails = res?.data;
         this.sessionStorageService.setListOfCards(this.cardSummaryDetails);
@@ -53,10 +53,10 @@ export class DebitCardDashboardComponent implements OnInit {
   }
 
   fetRecntTransaction() {
-    console.log("hgfg");
+    console.log('hgfg');
 
     this.recentTransData = [];
-    let cardNumber =
+    const cardNumber =
       this.cardSummaryDetails?.[0]?.cardNumber ||
       this.cardList?.[0]?.cardNumber;
     if (cardNumber)
@@ -64,7 +64,7 @@ export class DebitCardDashboardComponent implements OnInit {
         .fetchCardRecentTransaction(
           this.profileInfo?.corporateCustomerId,
           cardNumber,
-          "Debit Card"
+          'Debit Card',
         )
         .subscribe((resp: any) => {
           if (resp?.statusCode == 200) {

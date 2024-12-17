@@ -20,7 +20,7 @@
     <div class="row wrapper_row" fxLayout="column" fxLayoutGap="20">
       <div fxFlex="100">
         <div fxLayout="column" fxLayoutGap="20">
-          <mat-label class="mb-8 custom-label">{{ "Account" }}</mat-label>
+          <mat-label class="mb-8 custom-label">{{ 'Account' }}</mat-label>
           <mat-radio-group
             fxLayoutGap="20"
             [formControl]="
@@ -49,7 +49,7 @@
 
       <div
         fxFlex="30"
-        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value == 'Status'"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Status'"
       >
         <app-searchable-select
           [items]="selectList"
@@ -61,7 +61,7 @@
       </div>
 
       <ng-container
-        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value == 'Range'"
+        *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Range'"
       >
         <div fxFlex="25">
           <app-ic-custom-input
@@ -79,14 +79,14 @@
 
       <div fxFlex="40" fxLayoutGap="20" class="d-flex">
         <button mat-raised-button class="exit-button" (click)="goBack()">
-          {{ "Cancel" }}
+          {{ 'Cancel' }}
         </button>
         <button
           mat-raised-button
           (click)="fetchChequeDetails()"
           class="submit-button"
         >
-          {{ "Proceed" }}
+          {{ 'Proceed' }}
         </button>
       </div>
     </div>

@@ -29,7 +29,7 @@ mat-form-field {
   ::placeholder,
   mat-label,
   mat-option {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     // font-weight: 600;
     color: #102245;
     opacity: 0.8;
@@ -96,7 +96,7 @@ mat-form-field {
 }
 
 input {
-  font-family: "Poppins", sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
   color: #102245 !important;
   letter-spacing: -0.26px;
   font-weight: 500 !important;
@@ -110,13 +110,13 @@ input {
 }
 
 .mat-option {
-  font: 14px "Poppins";
+  font: 14px 'Poppins';
   font-weight: 600;
 }
 .mat-error {
   color: #ff3d57;
   font-weight: bold;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-size: 10px;
 }
 .mat-select-panel-wrap {
@@ -149,7 +149,7 @@ input {
   border-radius: 8px !important;
   color: #102245 !important;
   font-weight: 600;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-size: 14px !important;
   display: flex !important;
 }
@@ -218,7 +218,7 @@ input {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   opacity: 0.7;
 }
 

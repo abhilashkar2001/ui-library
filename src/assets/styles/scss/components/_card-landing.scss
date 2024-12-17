@@ -14,7 +14,7 @@
     left: 40px;
     z-index: 2;
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 50%;
       right: 0px;
@@ -74,7 +74,7 @@
 
           span {
             color: #004c97;
-            font-family: "Nunito", sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 33px;
             font-weight: 700;
             line-height: 1.5;
@@ -82,7 +82,7 @@
             position: relative;
             z-index: 1;
             &::before {
-              content: "";
+              content: '';
               position: absolute;
               top: 50%;
               left: 0;
@@ -125,7 +125,7 @@
 
       .card-description {
         color: #424545;
-        font-family: "Poppins", sans-serif;
+        font-family: 'Poppins', sans-serif;
         font-size: 16px;
         font-weight: 400;
         padding: 0 10px;

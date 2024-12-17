@@ -1,29 +1,29 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { DownloadService } from "app/shared/services/download.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { DownloadService } from 'app/shared/services/download.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 @Component({
-  selector: "app-success-popup",
-  templateUrl: "./success-popup.component.html",
-  styleUrls: ["./success-popup.component.scss"]
+  selector: 'app-success-popup',
+  templateUrl: './success-popup.component.html',
+  styleUrls: ['./success-popup.component.scss'],
 })
 export class SuccessPopupComponent implements OnInit {
-  originationId: any;
-  email: any;
+  originationId!: number;
+  email!: string;
   loanSummaryDetails: any;
   accountData: any;
   fdRdDetails: any;
   depositType: any;
-  isStageAvilable: boolean = true;
-  currentStageName: string = "";
+  isStageAvilable = true;
+  currentStageName = '';
   isNetBanking: false;
-  referenceNo: any = "";
+  referenceNo: any = '';
   actionType: any;
-  message: string = "Application is submitted successfully.";
-  typeOfPopup: string = "";
-  generatedLink: string = "";
+  message = 'Application is submitted successfully.';
+  typeOfPopup = '';
+  generatedLink = '';
   appontment: any;
   isComplete: any;
   constructor(
@@ -33,7 +33,7 @@ export class SuccessPopupComponent implements OnInit {
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService,
-    private router: Router
+    private router: Router,
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
@@ -47,16 +47,16 @@ export class SuccessPopupComponent implements OnInit {
     if (this.data?.generatedLink) this.generatedLink = this.data.generatedLink;
     if (this.data?.appontment) this.appontment = this.data.appontment;
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
-    if (this.data?.type) this.typeOfPopup = this.data.type ?? "";
+    if (this.data?.type) this.typeOfPopup = this.data.type ?? '';
     this.email = this.data?.email;
-    if (sessionStorage.getItem("loanBasisDetails")) {
+    if (sessionStorage.getItem('loanBasisDetails')) {
       this.openAccountService.getData().subscribe((resp: any) => {
         if (resp) {
           this.loanSummaryDetails = resp;
           this.email = resp.email;
         }
       });
-    } else if (localStorage.getItem("basisDetails")) {
+    } else if (localStorage.getItem('basisDetails')) {
       this.openAccountService.getData().subscribe((res: any) => {
         if (res) {
           this.accountData = res;
@@ -73,41 +73,41 @@ export class SuccessPopupComponent implements OnInit {
   shareOrDownload(event: any) {
     let report;
     let downloadServiceMethod: any;
-    let pdfFileName: any;
+    let pdfFileName: string;
 
     if (this.loanSummaryDetails) {
       downloadServiceMethod = this.downloadService.downloadloanDetailDoc(
-        this.originationId
+        this.originationId,
       );
-      pdfFileName = "Loan Details.pdf";
+      pdfFileName = 'Loan Details.pdf';
     } else if (this.accountData) {
       downloadServiceMethod = this.downloadService.downloadAccountDetailDoc(
-        this.originationId
+        this.originationId,
       );
-      pdfFileName = "Account Details.pdf";
+      pdfFileName = 'Account Details.pdf';
     } else if (this.depositType) {
       downloadServiceMethod = this.downloadService.downloadFdRdDetailDoc(
-        this.originationId
+        this.originationId,
       );
       pdfFileName =
-        this.depositType == "FD"
-          ? "Fixed Deposit Details.pdf"
-          : "Reccuring Deposit Details.pdf";
+        this.depositType == 'FD'
+          ? 'Fixed Deposit Details.pdf'
+          : 'Reccuring Deposit Details.pdf';
     }
 
     downloadServiceMethod.subscribe((resp: any) => {
-      const blob = new Blob([resp], { type: "application/pdf" });
+      const blob = new Blob([resp], { type: 'application/pdf' });
 
       report = new File([blob], pdfFileName, {
-        type: "application/pdf"
+        type: 'application/pdf',
       });
 
-      if (event.operation == "Share") {
+      if (event.operation == 'Share') {
         //Send email to be implementated from service that's why
         //existing ui implementation removed by Abhilsh
       } else {
         const url = window.URL.createObjectURL(report);
-        const a = document.createElement("a");
+        const a = document.createElement('a');
         a.href = url;
         a.download = pdfFileName;
         document.body.appendChild(a);
@@ -123,9 +123,9 @@ export class SuccessPopupComponent implements OnInit {
       this.router.navigate([`/user/dashboard/${this.data.route}`]);
       this.dialogRef.close();
     } else {
-      localStorage.removeItem("basisDetails");
-      localStorage.removeItem("customerData");
-      sessionStorage.removeItem("loanBasisDetails");
+      localStorage.removeItem('basisDetails');
+      localStorage.removeItem('customerData');
+      sessionStorage.removeItem('loanBasisDetails');
       this.dialogRef.close(true);
       window.close();
     }
@@ -134,7 +134,7 @@ export class SuccessPopupComponent implements OnInit {
     this.dialogRef.close(false);
   }
   onClick() {
-    this.dialogRef.close("tracking");
-    this.router.navigate(["tracking"]);
+    this.dialogRef.close('tracking');
+    this.router.navigate(['tracking']);
   }
 }

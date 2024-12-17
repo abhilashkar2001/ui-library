@@ -11,7 +11,7 @@
     <mat-cell
       *matCellDef="let element"
       class="column-val"
-      (click)="i == 0 && openRowDetails(element)"
+      (click)="i === 0 && openRowDetails(element)"
     >
       <ng-container [ngSwitch]="column?.headerCell">
         <ng-container *ngSwitchCase="'Account No'">
@@ -29,13 +29,13 @@
         <ng-container *ngSwitchCase="'Amount'">
           <div fxLayout="row" fxLayoutGap="5px">
             <mat-icon
-              *ngIf="element[column?.headerDef] != null && showMoneyStatusIcon"
+              *ngIf="element[column?.headerDef] !== null && showMoneyStatusIcon"
               class="status-icon"
               svgIcon="debited-icon"
             ></mat-icon>
             <span>{{
               -element[column?.headerDef]
-                | currency : selectedAccountInfo?.accountCurrency
+                | currency: selectedAccountInfo?.accountCurrency
             }}</span>
           </div>
         </ng-container>
@@ -49,7 +49,7 @@
               class="repay_btn"
               (click)="clickOnRepay(element)"
             >
-              {{ "Repay" }}
+              {{ 'Repay' }}
             </button>
           </ng-container>
           <ng-template #vertPart>
@@ -69,18 +69,18 @@
         </ng-container>
         <ng-container *ngSwitchCase="'Full Refund'">
           <mat-checkbox
-                  [checked]="element[column?.headerDef]"
-                  [readonly]="true"
-                >
+            [checked]="element[column?.headerDef]"
+            [readonly]="true"
+          >
           </mat-checkbox>
         </ng-container>
         <ng-container *ngSwitchCase="'Download'">
           <button mat-flat-button class="download-btn">
-            {{ "Download" }}
+            {{ 'Download' }}
           </button>
         </ng-container>
         <ng-container *ngSwitchCase="'Repay'">
-          <button mat-flat-button class="repay_btn">{{ "Repay" }}</button>
+          <button mat-flat-button class="repay_btn">{{ 'Repay' }}</button>
         </ng-container>
         <ng-container *ngSwitchCase="'Address Proof'">
           <mat-slide-toggle
@@ -116,7 +116,7 @@
   <!-- Data rows -->
   <mat-row
     *matRowDef="let row; let idx = index; columns: displayedColumns"
-    [ngClass]="{ highlight: selectedRowIndex == idx }"
+    [ngClass]="{ highlight: selectedRowIndex === idx }"
   >
   </mat-row>
 </mat-table>

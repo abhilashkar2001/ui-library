@@ -1,5 +1,5 @@
-@import "node_modules/@onerumango/icust-scss-library/src/main.scss";
-@import "node_modules/@onerumango/icust-scss-library/src/customize.scss";
+@import 'node_modules/@onerumango/icust-scss-library/src/main.scss';
+@import 'node_modules/@onerumango/icust-scss-library/src/customize.scss';
 
 .calculator_container {
   padding: 28px 90px 28px 28px;
@@ -51,7 +51,7 @@
   color: #004c97;
   font-size: 18px;
   font-weight: 600;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .category {
@@ -85,23 +85,23 @@
   }
 
   .maturityTitle {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 20px;
     font-weight: 500;
   }
   .maturityDesc {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 33px;
     font-weight: 600;
     color: #004c97;
   }
   .maturityLabel {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 500;
   }
   .maturityVal {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
     font-weight: 500;
     color: #004c97;
@@ -140,7 +140,7 @@
   border: none;
   outline: none;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 0.4px;
   color: #fff !important;
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%) !important;

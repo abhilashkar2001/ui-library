@@ -3,6 +3,7 @@
     *ngIf="documentUploadForm"
     [formGroup]="documentUploadForm"
     (keydown.enter)="checking($event)"
+    tabindex="0"
   >
     <div
       formArrayName="documents"
@@ -12,27 +13,27 @@
         <div fxLayout="row" fxLayoutAlign="space-between ">
           <span class="card-title">
             {{
-              documentIndex == 0
-                ? "Primary Document"
-                : "Document -" + documentIndex
+              documentIndex === 0
+                ? 'Primary Document'
+                : 'Document -' + documentIndex
             }}
           </span>
           <button
-            *ngIf="documentIndex != 0"
+            *ngIf="documentIndex !== 0"
             mat-raised-button
             type="button"
             color="light"
             class="danger"
             (click)="removeDocumentItem(documentIndex)"
           >
-            {{ "Delete" }}
+            {{ 'Delete' }}
           </button>
         </div>
 
         <div fxLayout="row" fxLayoutGap="15px" class="mt-12">
           <div fxFlex="32.5">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>{{ "Document Name" }}</mat-label>
+              <mat-label>{{ 'Document Name' }}</mat-label>
               <mat-option [value]="">Select</mat-option>
               <mat-select
                 formControlName="documentName"
@@ -51,21 +52,21 @@
                   document.get('documentName')?.hasError('touched')
                 "
               >
-                {{ "Please Enter Document Name" }}
+                {{ 'Please Enter Document Name' }}
               </mat-error>
               <mat-error
                 *ngIf="
                   document.get('documentName')?.hasError('doumentAlreadyExist')
                 "
               >
-                {{ "Document is already selected" }}
+                {{ 'Document is already selected' }}
               </mat-error>
             </mat-form-field>
           </div>
 
           <div fxFlex="32.5">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label class="autolabel">{{ "Document Number" }}</mat-label>
+              <mat-label class="autolabel">{{ 'Document Number' }}</mat-label>
 
               <input
                 formControlName="documentNumber"
@@ -81,7 +82,7 @@
                   document.get('documentNumber')?.touched
                 "
               >
-                {{ "Please Enter Document Number" }}
+                {{ 'Please Enter Document Number' }}
               </mat-error>
             </mat-form-field>
           </div>
@@ -104,14 +105,20 @@
               <div class="card">
                 <div class="document-wrapper">
                   <div fxLayout="row" class="doc-header">
-                    <ng-container *ngIf="page.get('fileUrl')?.value != ''">
-                      <img class="action-icon" src="assets/images/tick.svg" />
+                    <ng-container *ngIf="page.get('fileUrl')?.value !== ''">
+                      <img
+                        class="action-icon"
+                        src="assets/images/tick.svg"
+                        alt="tick img"
+                      />
                     </ng-container>
 
                     <span fxFlex></span>
                     <ng-container
                       container
-                      *ngIf="page.get('fileUrl')?.value != '' && pageIndex <= 1"
+                      *ngIf="
+                        page.get('fileUrl')?.value !== '' && pageIndex <= 1
+                      "
                     >
                       <button
                         class="btn-box"
@@ -126,7 +133,7 @@
                         class="btn-box"
                         mat-icon-button
                         (click)="removeDocumentPage(documentIndex, pageIndex)"
-                        [disabled]="pageIndex == 0"
+                        [disabled]="pageIndex === 0"
                       >
                         <mat-icon class="danger1">delete</mat-icon>
                       </button>
@@ -142,14 +149,15 @@
                       <img
                         class="customFileShow"
                         [src]="
-                          page.get('fileUrl')?.value != ''
+                          page.get('fileUrl')?.value !== ''
                             ? page.get('fileUrl')?.value
                             : 'assets/images/upload-icon.svg'
                         "
+                        alt="upload img"
                       />
                     </div>
                     <span class="pagetitle">{{
-                      page.get("documentTitle")?.value
+                      page.get('documentTitle')?.value
                     }}</span>
                   </div>
                 </div>
@@ -158,7 +166,7 @@
                     <mat-progress-bar
                       mode="determinate"
                       [value]="percentDone"
-                      *ngIf="selectedIndex == pageIndex && isUploading"
+                      *ngIf="selectedIndex === pageIndex && isUploading"
                     ></mat-progress-bar>
                   </div>
                 </ng-container>
@@ -177,14 +185,14 @@
                       class="sm-btn scanColor"
                       [disableRipple]="true"
                     >
-                      {{ "Scan" }}
+                      {{ 'Scan' }}
                     </button>
                     <button
                       mat-raised-button
                       class="sm-btn uploadColor"
                       [disableRipple]="true"
                     >
-                      {{ "Upload" }}
+                      {{ 'Upload' }}
                       <input
                         #fileInput
                         type="file"
@@ -220,14 +228,14 @@
                   class="otherpage"
                 >
                   <span>{{
-                    documentPages(documentIndex).length != 1 &&
-                    documentPages(documentIndex).length != 0
-                      ? "Add Other side"
-                      : documentPages(documentIndex).length == 0
-                      ? "Add FrontSide"
-                      : documentPages(documentIndex).length == 1
-                      ? "Add Backside"
-                      : "Add Other side"
+                    documentPages(documentIndex).length !== 1 &&
+                    documentPages(documentIndex).length !== 0
+                      ? 'Add Other side'
+                      : documentPages(documentIndex).length === 0
+                        ? 'Add FrontSide'
+                        : documentPages(documentIndex).length === 1
+                          ? 'Add Backside'
+                          : 'Add Other side'
                   }}</span>
                 </button>
               </div>
@@ -242,7 +250,7 @@
                   class="sm-btn scanColor"
                   [disableRipple]="true"
                 >
-                  {{ "Scan" }}
+                  {{ 'Scan' }}
                 </button>
                 <button
                   mat-raised-button
@@ -250,7 +258,7 @@
                   class="sm-btn uploadColor"
                   [disableRipple]="true"
                 >
-                  {{ "Upload" }}
+                  {{ 'Upload' }}
                   <input
                     #fileInput
                     type="file"
@@ -272,12 +280,17 @@
   <mat-card class="document">
     <div
       [ngClass]="
-        currentIndex < documentNames.length - 1
+        (documentNames?.length ?? 0) > currentIndex
           ? 'add-doc-btn'
           : 'disable-acc-doc'
       "
     >
-      <span (click)="addDocumentItem()">{{ "Add Another Document" }}</span>
+      <span
+        (click)="addDocumentItem()"
+        (keydown.enter)="addDocumentItem()"
+        tabindex="0"
+        >{{ 'Add Another Document' }}
+      </span>
     </div>
   </mat-card>
 

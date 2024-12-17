@@ -8,9 +8,8 @@ describe('StopChequeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StopChequeComponent ]
-    })
-    .compileComponents();
+      declarations: [StopChequeComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StopChequeComponent);
     component = fixture.componentInstance;

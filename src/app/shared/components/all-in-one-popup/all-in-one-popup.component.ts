@@ -1,21 +1,21 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-all-in-one-popup",
-  templateUrl: "./all-in-one-popup.component.html",
-  styleUrls: ["./all-in-one-popup.component.scss"]
+  selector: 'app-all-in-one-popup',
+  templateUrl: './all-in-one-popup.component.html',
+  styleUrls: ['./all-in-one-popup.component.scss'],
 })
 export class AllInOnePopupComponent implements OnInit {
-  hide: boolean = true;
+  hide = true;
   confirmationForm!: FormGroup;
-  remark: any = "";
+  remark: any = '';
 
   constructor(
     private dialogRef: MatDialogRef<AllInOnePopupComponent>,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
   ngOnInit(): void {
@@ -23,15 +23,15 @@ export class AllInOnePopupComponent implements OnInit {
   }
   buildForm() {
     this.confirmationForm = this.fb.group({
-      transactionPassword: [""],
-      oneTimePassword: [""]
+      transactionPassword: [''],
+      oneTimePassword: [''],
     });
   }
 
   submit() {
     // this.commonService.verifyOTP(payload).subscribe((res: any) => {
     // if (res.data !== "Invalid OTP") {
-    this.dialogRef.close("verified");
+    this.dialogRef.close('verified');
     // } else {
     //   this.snack.open(res.message, "OK", {
     //     duration: 4000,

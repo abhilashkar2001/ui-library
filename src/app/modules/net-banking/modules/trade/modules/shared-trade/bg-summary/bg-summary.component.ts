@@ -1,41 +1,41 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { bgConstant } from "./bg-summary.constant";
-import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
-import { BgSummaryServiceService } from "./bg-summary-service.service";
-import { DrawerConstant } from "../../../../../../../shared/components/custom-drawer/custom-drawer.constant";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { bgConstant } from './bg-summary.constant';
+import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
+import { BgSummaryServiceService } from './bg-summary-service.service';
+import { DrawerConstant } from '../../../../../../../shared/components/custom-drawer/custom-drawer.constant';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-bg-summary",
-  templateUrl: "./bg-summary.component.html",
-  styleUrls: ["./bg-summary.component.scss"]
+  selector: 'app-bg-summary',
+  templateUrl: './bg-summary.component.html',
+  styleUrls: ['./bg-summary.component.scss'],
 })
 export class BgSummaryComponent implements OnInit {
   maintenanceTitle: string | any;
   columns: any;
   sort: any;
-  size: number = 5;
+  size = 5;
   sortOrder: any;
-  page: number = 1;
-  pageSize: number = 5;
-  sortValue = "";
-  sortDirection = "";
+  page = 1;
+  pageSize = 5;
+  sortValue = '';
+  sortDirection = '';
   filterBy: FilterBy | any;
-  bgData: Object | any;
+  bgData: object | any;
   staticData: any = {
     data: bgConstant.bgStaticData,
     meta: {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113
+      totalPages: 113,
     },
     statusCode: 200,
-    status: "OK"
+    status: 'OK',
   };
-  isSummary: boolean = true;
+  isSummary = true;
   componentName: any;
   tradeMenus = DrawerConstant.DRAWER_MENU;
   matchedObject: any;
@@ -45,7 +45,7 @@ export class BgSummaryComponent implements OnInit {
     private route: Router,
     private api: BgSummaryServiceService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class BgSummaryComponent implements OnInit {
         event.filterBy,
         event.page,
         event.size,
-        this.summaryDetails.summaryUrl
+        this.summaryDetails.summaryUrl,
       )
       .subscribe((res) => {
         this.bgData = res;
@@ -83,19 +83,20 @@ export class BgSummaryComponent implements OnInit {
    */
   openPopUp(event: any) {
     const id = event.element.applicantId || event.element;
-    if (id === "addNew") {
+    if (id === 'addNew') {
       const dialogRef = this.dialog.open(AddNewPopupComponent, {
-        width: "50%",
+        width: '50%',
         disableClose: true,
-        panelClass: "popup-class-approve"
+        panelClass: 'popup-class-approve',
       });
       dialogRef.afterClosed().subscribe(() => {
         this.getBGType();
       });
-    } else if (id === "bulk") {
-    } else if (id === "template") {
+    } else if (id === 'bulk') {
+      return;
+    } else if (id === 'template') {
       this.openTemplatePopup();
-    } else if (id === "new") {
+    } else if (id === 'new') {
       this.getBGType();
     } else {
       this.getBGType(event?.element?.bgMasterId);
@@ -107,10 +108,10 @@ export class BgSummaryComponent implements OnInit {
    */
   openTemplatePopup() {
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
-      width: "50%",
+      width: '50%',
       disableClose: true,
-      panelClass: "popup-class-approve",
-      data: this.summaryDetails
+      panelClass: 'popup-class-approve',
+      data: this.summaryDetails,
     });
     dialogRef.afterClosed().subscribe((res) => {
       this.getBGType(res.templateName);
@@ -123,7 +124,7 @@ export class BgSummaryComponent implements OnInit {
    */
   getBGType(id?: number) {
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {
-      queryParams: { type: "", id }
+      queryParams: { type: '', id },
     });
   }
 }

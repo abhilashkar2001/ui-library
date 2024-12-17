@@ -8,7 +8,7 @@ describe('ExpenseTaxBenefitCalculatorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ExpenseTaxBenefitCalculatorComponent]
+      declarations: [ExpenseTaxBenefitCalculatorComponent],
     });
     fixture = TestBed.createComponent(ExpenseTaxBenefitCalculatorComponent);
     component = fixture.componentInstance;

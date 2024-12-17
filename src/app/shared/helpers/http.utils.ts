@@ -1,4 +1,4 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 
 export function appendFilterParam(paramsObj: {
   [key: string]: string | number | boolean | string[] | number[];
@@ -10,7 +10,7 @@ export function appendFilterParam(paramsObj: {
       if (
         !key ||
         !paramsObj[key] ||
-        paramsObj[key]?.toString()?.includes("All")
+        paramsObj[key]?.toString()?.includes('All')
       )
         return;
       params = params.set(key, paramsObj[key] as string);

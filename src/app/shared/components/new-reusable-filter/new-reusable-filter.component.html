@@ -30,11 +30,18 @@
     <div
       fxLayout="row"
       fxFlex="72"
-      *ngIf="componentName == 'Bulk Upload'"
+      *ngIf="componentName === 'Bulk Upload'"
       class="bulkUpload_url"
       (click)="viewExcel()"
+      (keydown.enter)="viewExcel()"
+      tabindex="0"
     >
-      <img src="assets/images/xls_logo.svg" width="57px" height="57px" />
+      <img
+        src="assets/images/xls_logo.svg"
+        alt="xlx logo"
+        width="57px"
+        height="57px"
+      />
       <span fxLayoutAlign="center center">{{ bulkUploadFileName }}</span>
     </div>
 
@@ -42,10 +49,10 @@
     <mat-form-field
       appearance="outline"
       fxFlex="{{ fxFlexForCol1 }}"
-      *ngIf="componentName != 'Bulk Upload'"
+      *ngIf="componentName !== 'Bulk Upload'"
     >
       <mat-label>{{
-        showOnlySearchTitle || "Refrence Number" | translate
+        showOnlySearchTitle || 'Refrence Number' | translate
       }}</mat-label>
       <input
         matInput
@@ -69,7 +76,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>{{ "Audit Status" | translate }}</mat-label>
+        <mat-label>{{ 'Audit Status' | translate }}</mat-label>
         <mat-select formControlName="Auditstatus" disableOptionCentering>
           <!-- <mat-option
             *ngFor="let option of statusOptions"
@@ -87,7 +94,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>{{ "Saved Data" | translate }}</mat-label>
+        <mat-label>{{ 'Saved Data' | translate }}</mat-label>
         <mat-select formControlName="savedData" disableOptionCentering>
           <!-- <mat-option
             *ngFor="let option of statusOptions"
@@ -105,7 +112,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>{{ "Request Assigned to" | translate }}</mat-label>
+        <mat-label>{{ 'Request Assigned to' | translate }}</mat-label>
         <mat-select formControlName="requestAssignedTo" disableOptionCentering>
           <mat-option [value]="">Select</mat-option>
           <mat-option> </mat-option>
@@ -118,7 +125,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>{{ "Transaction Status" | translate }}</mat-label>
+        <mat-label>{{ 'Transaction Status' | translate }}</mat-label>
         <mat-select formControlName="transactionStatus" disableOptionCentering>
           <mat-option [value]="">Select</mat-option>
           <mat-option></mat-option>
@@ -134,7 +141,7 @@
         fxFlex.sm="22"
         fxFlex.xs="45"
       >
-        <mat-label>{{ "Status" | translate }}</mat-label>
+        <mat-label>{{ 'Status' | translate }}</mat-label>
         <mat-select formControlName="status" disableOptionCentering>
           <mat-option [value]="">Select</mat-option>
           <mat-option
@@ -150,9 +157,9 @@
       <mat-form-field
         appearance="outline"
         fxFlex="13"
-        *ngIf="componentName != 'Bulk Upload'"
+        *ngIf="componentName !== 'Bulk Upload'"
       >
-        <mat-label>{{ "From Date" | translate }}</mat-label>
+        <mat-label>{{ 'From Date' | translate }}</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
           matSuffix
@@ -170,9 +177,9 @@
       <mat-form-field
         appearance="outline"
         fxFlex="13"
-        *ngIf="componentName != 'Bulk Upload'"
+        *ngIf="componentName !== 'Bulk Upload'"
       >
-        <mat-label>{{ "To Date" | translate }}</mat-label>
+        <mat-label>{{ 'To Date' | translate }}</mat-label>
         <mat-datepicker-toggle
           class="date-toggle"
           matSuffix
@@ -240,7 +247,7 @@
           (click)="downloadRecord()"
         >
           <mat-icon svgIcon="download-icon" class="btn_icon"></mat-icon>
-          {{ "Download" | translate }}
+          {{ 'Download' | translate }}
         </button>
       </div>
     </ng-container>

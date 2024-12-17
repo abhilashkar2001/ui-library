@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-payment-method",
-  templateUrl: "./payment-method.component.html",
-  styleUrls: ["./payment-method.component.scss"]
+  selector: 'app-payment-method',
+  templateUrl: './payment-method.component.html',
+  styleUrls: ['./payment-method.component.scss'],
 })
 export class PaymentMethodComponent implements OnInit {
   @Input() depositType: string | any;
@@ -15,27 +15,30 @@ export class PaymentMethodComponent implements OnInit {
   upiPaymentForm!: FormGroup;
   netBankPaymentForm!: FormGroup;
   tansferPaymentForm!: FormGroup;
-  isTransferProceed: boolean = false;
+  isTransferProceed = false;
   originId: string | any;
 
-  constructor(private dialog: MatDialog, private fb: FormBuilder) {}
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+  ) {}
 
   cardType = [
-    { bankLogo: "assets/images/axis_bank_logo.svg", bankName: "Axis Bank " },
-    { bankLogo: "assets/images/hdfc_bank_logo.svg", bankName: "HDFC Bank " },
-    { bankLogo: "assets/images/icici_bank_logo.svg", bankName: "ICICI Bank" }
+    { bankLogo: 'assets/images/axis_bank_logo.svg', bankName: 'Axis Bank ' },
+    { bankLogo: 'assets/images/hdfc_bank_logo.svg', bankName: 'HDFC Bank ' },
+    { bankLogo: 'assets/images/icici_bank_logo.svg', bankName: 'ICICI Bank' },
   ];
-  paymentMethod = new FormControl("Card");
+  paymentMethod = new FormControl('Card');
   config = {
     allowNumbersOnly: false,
     length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
-    placeholder: "",
+    placeholder: '',
     inputStyles: {
-      width: "80px",
-      height: "80px"
-    }
+      width: '80px',
+      height: '80px',
+    },
   };
 
   ngOnInit(): void {
@@ -53,18 +56,18 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   continuePayment() {
-    if (sessionStorage.getItem("depositOriginationId"))
-      this.originId = sessionStorage.getItem("depositOriginationId");
+    if (sessionStorage.getItem('depositOriginationId'))
+      this.originId = sessionStorage.getItem('depositOriginationId');
     this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originId,
         type: this.depositType,
-        email: this.email
+        email: this.email,
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop"
+      panelClass: 'popup-dialog-class',
+      backdropClass: 'bdrop',
     });
   }
 }

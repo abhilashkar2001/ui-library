@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("../../../images/white-background.png");
+  background-image: url('../../../images/white-background.png');
   .ng_otp_field .otp-input {
     width: 60px;
     height: 60px;
@@ -43,7 +43,7 @@
     padding: 50px 20px 20px 150px;
   }
   .bank-title {
-    font-family: "Big Caslon";
+    font-family: 'Big Caslon';
     color: #004b94;
   }
   .toggle-card {
@@ -86,7 +86,7 @@
     border-radius: 4px;
     opacity: 1;
     color: #d68c00;
-    font-family: "Poppins";
+    font-family: 'Poppins';
   }
 
   .mat-raised-button,
@@ -96,7 +96,7 @@
     width: 150px;
     max-width: 150px;
     height: 45px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 
     .mat-button-ripple {
       border-radius: 36px !important;
@@ -105,21 +105,21 @@
     }
   }
   .title-text {
-    font-family: "Poppins";
+    font-family: 'Poppins';
     color: #004c97;
     font-weight: 600;
   }
   .text-highlighted {
     color: #004c97;
-    font-family: "Poppins";
+    font-family: 'Poppins';
   }
   .text-normal {
     color: #00000f;
-    font-family: "Poppins";
+    font-family: 'Poppins';
   }
 
   .sub-heading {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0px;
@@ -135,12 +135,12 @@
   }
   .text-label {
     color: #102245 !important;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     // font-weight: 600;
   }
   .text-light {
     color: #00000f;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     opacity: 70%;
     font-weight: 600;
     margin-bottom: 10px;
@@ -163,7 +163,7 @@
     ::placeholder,
     mat-label,
     mat-option {
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
       color: rgb(16, 34, 69);
       opacity: 0.5;
@@ -227,13 +227,13 @@
   }
 
   .mat-option {
-    font: 14px "Poppins";
+    font: 14px 'Poppins';
     font-weight: 600;
   }
   .mat-error {
     color: #ff3d57;
     font-weight: bold;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     font-size: 10px;
   }
   .mat-select-panel-wrap {

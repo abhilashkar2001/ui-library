@@ -1,27 +1,27 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 const MICROSERVICE_URL = environment.microServiceURL;
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class DocumentUploadService {
   constructor(private httpClient: HttpClient) {}
 
   // SIMULATE
   uploadAndProgress(file: File) {
     console.log(file);
-    var formData = new FormData();
-    formData.append("file", file);
-    return this.httpClient.post("https://file.io", formData, {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post('https://file.io', formData, {
       reportProgress: true,
-      observe: "events"
+      observe: 'events',
     });
   }
 
   uploadDocuments(formData: any) {
     return this.httpClient.post<any>(
       `${MICROSERVICE_URL}/upload-document`,
-      formData
+      formData,
     );
   }
 
@@ -31,15 +31,15 @@ export class DocumentUploadService {
       formData,
       {
         reportProgress: true,
-        observe: "events"
-      }
+        observe: 'events',
+      },
     );
   }
 
   uploadMandateSign(payload: any) {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/acc-mandate-details/saveMandateSign`,
-      payload
+      payload,
     );
   }
 

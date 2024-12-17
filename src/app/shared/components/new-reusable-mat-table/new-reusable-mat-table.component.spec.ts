@@ -6,12 +6,10 @@ describe('NewReusableMatTableComponent', () => {
   let component: NewReusableMatTableComponent;
   let fixture: ComponentFixture<NewReusableMatTableComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ NewReusableMatTableComponent ]
-    })
-    .compileComponents();
-
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NewReusableMatTableComponent],
+    });
     fixture = TestBed.createComponent(NewReusableMatTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

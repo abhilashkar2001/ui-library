@@ -20,7 +20,7 @@
                   [formControl]="
                     calculateEmiForm.get('tenureYears') | formcontrol
                   "
-                  numbersOnly
+                  appNumbersOnly
                 />
                 <span matSuffix class="suffixLabel">Year</span>
               </div>
@@ -39,7 +39,7 @@
                   [formControl]="
                     calculateEmiForm.get('tenureMonths') | formcontrol
                   "
-                  numbersOnly
+                  appNumbersOnly
                 />
                 <span class="suffixLabel">Month</span>
               </div>
@@ -58,7 +58,7 @@
                     calculateEmiForm.get('tenureDays') | formcontrol
                   "
                   (input)="calculateSliderValue()"
-                  numbersOnly
+                  appNumbersOnly
                 />
                 <span class="suffixLabel">Days</span>
               </div>
@@ -81,9 +81,9 @@
         </div>
         <div fxLayout="row" fxFlex="50" fxLayoutAlign="space-between center">
           <div class="tenurelimit">
-            {{ "Min " }}{{ minTenure }} {{ "days" }}
+            {{ 'Min ' }}{{ minTenure }} {{ 'days' }}
           </div>
-          <div class="tenurelimit">{{ "Max " }} 10 {{ "Years" }}</div>
+          <div class="tenurelimit">{{ 'Max ' }} 10 {{ 'Years' }}</div>
         </div>
         <div
           fxLayout="row wrap"

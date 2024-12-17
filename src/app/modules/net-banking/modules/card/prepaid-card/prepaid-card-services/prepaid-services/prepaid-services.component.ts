@@ -1,24 +1,27 @@
-import { Component, OnInit } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
-import { PaymentComponent } from "../../../credit-card/credit-card-service/components/payment/payment.component";
-import { TabModel, Tabs } from "app/shared/models/tab-model";
-import { IconService } from "app/shared/services/icon.service";
-import { filter } from "rxjs/operators";
-import { PrepaidCardStore } from "../../prepaid-card.store";
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { PaymentComponent } from '../../../credit-card/credit-card-service/components/payment/payment.component';
+import { TabModel, Tabs } from 'app/shared/models/tab-model';
+import { IconService } from 'app/shared/services/icon.service';
+import { filter } from 'rxjs/operators';
+import { PrepaidCardStore } from '../../prepaid-card.store';
 
 @Component({
-  selector: "app-prepaid-services",
-  templateUrl: "./prepaid-services.component.html",
-  styleUrls: ["./prepaid-services.component.scss"]
+  selector: 'app-prepaid-services',
+  templateUrl: './prepaid-services.component.html',
+  styleUrls: ['./prepaid-services.component.scss'],
 })
 export class PrepaidServicesComponent implements OnInit {
   tabs: Tabs = PrepaidCardStore.prepaidCardTab;
   activatedComponent!: PaymentComponent;
-  tabname: string | any = "";
+  tabname: string | any = '';
   selectedTab: TabModel | undefined;
-  constructor(private router: Router, private iconService: IconService) {
+  constructor(
+    private router: Router,
+    private iconService: IconService,
+  ) {
     this.iconService
-      .addIconIfNotExists("feather-info", "assets/images/svg/feather-info.svg")
+      .addIconIfNotExists('feather-info', 'assets/images/svg/feather-info.svg')
       .subscribe((exists) => {
         if (exists) {
           console.log(`Icon arrow-back already exists.`);
@@ -34,8 +37,8 @@ export class PrepaidServicesComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd
-        ) // Type guard
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ), // Type guard
       )
       .subscribe((event: NavigationEnd) => {
         route = event.urlAfterRedirects;
@@ -47,7 +50,9 @@ export class PrepaidServicesComponent implements OnInit {
   }
 
   selectedRoute(route: any) {
-    let selectedTabValue = this.tabs.filter((item) => item?.route == route)[0];
+    const selectedTabValue = this.tabs.filter(
+      (item) => item?.route == route,
+    )[0];
     this.tabname = selectedTabValue?.screenName;
   }
 

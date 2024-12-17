@@ -8,7 +8,7 @@ describe('HLLoanEmiCalculatorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HLLoanEmiCalculatorComponent]
+      declarations: [HLLoanEmiCalculatorComponent],
     });
     fixture = TestBed.createComponent(HLLoanEmiCalculatorComponent);
     component = fixture.componentInstance;

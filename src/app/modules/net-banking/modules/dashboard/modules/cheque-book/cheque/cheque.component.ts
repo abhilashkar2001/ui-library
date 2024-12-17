@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { ChequeStore } from "../cheque.store";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ChequeStore } from '../cheque.store';
 
 @Component({
-  selector: "app-cheque",
-  templateUrl: "./cheque.component.html",
-  styleUrls: ["./cheque.component.scss"]
+  selector: 'app-cheque',
+  templateUrl: './cheque.component.html',
+  styleUrls: ['./cheque.component.scss'],
 })
 export class ChequeComponent implements OnInit {
   items = ChequeStore.tabScreens.filter((item) =>
-    item?.screenName?.toLowerCase()?.includes("cheque")
+    item?.screenName?.toLowerCase()?.includes('cheque'),
   );
   tabScreens = this.items;
   selected: string = this.tabScreens[0]?.screenName;
   constructor(
     private route: Router,
     private matIconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {
     const navigation: any = this.route.getCurrentNavigation();
     if (navigation?.extras?.state) {
@@ -27,11 +27,11 @@ export class ChequeComponent implements OnInit {
     this.tabScreens.forEach((tab) => {
       this.matIconRegistry.addSvgIcon(
         tab.icon,
-        this.sanitizer.bypassSecurityTrustResourceUrl(tab.src)
+        this.sanitizer.bypassSecurityTrustResourceUrl(tab.src),
       );
       this.matIconRegistry.addSvgIcon(
         tab.selectedIcon,
-        this.sanitizer.bypassSecurityTrustResourceUrl(tab.selectedSrc)
+        this.sanitizer.bypassSecurityTrustResourceUrl(tab.selectedSrc),
       );
     });
   }

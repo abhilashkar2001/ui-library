@@ -6,9 +6,17 @@ import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
 import { ForceNativeScrollDirective } from './perfect-scrollbar-force-native-scroll.directive';
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [PerfectScrollbarComponent, PerfectScrollbarDirective, ForceNativeScrollDirective],
-    exports: [CommonModule, PerfectScrollbarComponent, PerfectScrollbarDirective, ForceNativeScrollDirective]
+  imports: [CommonModule],
+  declarations: [
+    PerfectScrollbarComponent,
+    PerfectScrollbarDirective,
+    ForceNativeScrollDirective,
+  ],
+  exports: [
+    CommonModule,
+    PerfectScrollbarComponent,
+    PerfectScrollbarDirective,
+    ForceNativeScrollDirective,
+  ],
 })
-export class PerfectScrollbarModule {
-}
+export class PerfectScrollbarModule {}

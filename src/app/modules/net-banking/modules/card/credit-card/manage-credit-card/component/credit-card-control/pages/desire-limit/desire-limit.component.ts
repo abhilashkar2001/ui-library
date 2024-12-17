@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { CreditcardService } from "../../../../creditcard.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { debounceTime } from "rxjs/operators";
-import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { CreditcardService } from '../../../../creditcard.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-desire-limit",
-  templateUrl: "./desire-limit.component.html",
-  styleUrls: ["./desire-limit.component.scss"]
+  selector: 'app-desire-limit',
+  templateUrl: './desire-limit.component.html',
+  styleUrls: ['./desire-limit.component.scss'],
 })
 export class DesireLimitComponent implements OnInit {
   desiredLimitForm!: FormGroup;
-  selectedCurrency: string = "INR";
-  max: number = 140000;
-  min: number = 5000;
-  currencySymbol = "₹";
-  thumbLabel: boolean = true;
-  viewOtp: boolean = false;
+  selectedCurrency = 'INR';
+  max = 140000;
+  min = 5000;
+  currencySymbol = '₹';
+  thumbLabel = true;
+  viewOtp = false;
   creditCardList: { cardNo: any; cardValue: any }[] | any;
   cardNoDetails: any;
   customerID: any;
@@ -36,28 +36,28 @@ export class DesireLimitComponent implements OnInit {
     private fb: FormBuilder,
     private service: CreditcardService,
     private ss: SessionStorageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.customerInfo = this.ss.getCustomerInfo();
     this.cardList = this.ss.getListOfCards();
-    this.userInfo = JSON.parse(<string>sessionStorage.getItem("auth-user"));
+    this.userInfo = JSON.parse(<string>sessionStorage.getItem('auth-user'));
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     this.initCardControlForm();
     this.getCreditCardDetailsList();
     this.eligibleCreditAmount =
-      this.desiredLimitForm.get("eligibleCreditLimit")?.value || 0;
+      this.desiredLimitForm.get('eligibleCreditLimit')?.value || 0;
   }
 
   initCardControlForm() {
     this.desiredLimitForm = this.fb.group({
-      cardNumber: ["", [Validators.required]],
-      eligibleCreditLimit: ["", [Validators.required]],
-      otp: [""]
+      cardNumber: ['', [Validators.required]],
+      eligibleCreditLimit: ['', [Validators.required]],
+      otp: [''],
     });
     this.desiredLimitForm
-      .get("cardNumber")
+      .get('cardNumber')
       ?.valueChanges.pipe(debounceTime(200))
       .subscribe((val) => {
         console.log(val);
@@ -65,7 +65,7 @@ export class DesireLimitComponent implements OnInit {
           this.cardDetailsFetch();
           this.getCreditCardLimitByNo(val);
           this.selecetdCardNo = this.creditCardList.filter(
-            (item: any) => item?.cardNo == val
+            (item: any) => item?.cardNo == val,
           );
           console.log(this.selecetdCardNo);
         }
@@ -74,7 +74,7 @@ export class DesireLimitComponent implements OnInit {
 
   onSliderChange(e: any) {
     this.desiredLimitForm
-      .get("eligibleCreditLimit")
+      .get('eligibleCreditLimit')
       ?.setValue(e?.srcElement.ariaValueText);
   }
 
@@ -86,11 +86,11 @@ export class DesireLimitComponent implements OnInit {
     this.viewOtp = true;
     this.service.generateOTP(this.userInfo?.mobile).subscribe((res: any) => {
       this.otp = res.data;
-      this.increaseLimitForm.get("otp").setValue(this.otp);
+      this.increaseLimitForm.get('otp').setValue(this.otp);
     });
   }
   cardDetailsFetch() {
-    let cardNo = this.desiredLimitForm.get("cardNumber")?.value;
+    const cardNo = this.desiredLimitForm.get('cardNumber')?.value;
     this.service.getDesiredCreditCardList(cardNo).subscribe((res: any) => {
       console.log(res);
       if (res && res.statusCode == 200) {
@@ -104,7 +104,7 @@ export class DesireLimitComponent implements OnInit {
     if (Array.isArray(cardList)) {
       const list = cardList.map((item) => ({
         cardNo: item.cardNumber,
-        cardValue: item.cardNumber
+        cardValue: item.cardNumber,
       }));
       this.creditCardList = list;
     } else {
@@ -115,21 +115,21 @@ export class DesireLimitComponent implements OnInit {
   }
 
   getCreditCardLimitByNo(e: any) {
-    console.log("e  === ", e);
+    console.log('e  === ', e);
     // const ccNo:number = this.increaseLimitForm.get('cardNo').value;
     this.service.getEligibleAmount(e).subscribe((res: any) => {
-      console.log("res : ", res);
+      console.log('res : ', res);
       // this.increaseLimitForm.patchValue({
       //   eligibleCreditLimit: res.data.eligibleCreditLimit
       // });
-      this.desiredLimitForm.get("eligibleCreditLimit")?.setValue(res?.data);
+      this.desiredLimitForm.get('eligibleCreditLimit')?.setValue(res?.data);
     });
   }
   submit() {
-    this.otp = this.desiredLimitForm.get("otp")?.value;
-    let payload = {
+    this.otp = this.desiredLimitForm.get('otp')?.value;
+    const payload = {
       mobile: this.mobileNo,
-      otp: this.otp
+      otp: this.otp,
     };
     this.service.verifyOtp(payload).subscribe((res: any) => {
       if (res) {
@@ -141,17 +141,17 @@ export class DesireLimitComponent implements OnInit {
             if (resp) {
               const dialogRef = this.dialog.open(PopupSuccessComponent, {
                 data: {
-                  status: "SuccessOnly",
-                  Msg: "Card limit has been set"
+                  status: 'SuccessOnly',
+                  Msg: 'Card limit has been set',
                 },
                 disableClose: true,
-                panelClass: "popup-dialog-class",
-                backdropClass: "bdrop",
-                width: "25%"
+                panelClass: 'popup-dialog-class',
+                backdropClass: 'bdrop',
+                width: '25%',
               });
               dialogRef.afterClosed().subscribe((res) => {
                 console.log(res);
-                if (res == "Yes") {
+                if (res == 'Yes') {
                   this.desiredLimitForm.reset();
                   this.cardNoDetails = [];
                   this.viewOtp = false;

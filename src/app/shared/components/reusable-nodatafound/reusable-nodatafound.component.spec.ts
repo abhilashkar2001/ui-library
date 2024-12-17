@@ -8,9 +8,8 @@ describe('ReusableNodatafoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReusableNodatafoundComponent ]
-    })
-    .compileComponents();
+      declarations: [ReusableNodatafoundComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReusableNodatafoundComponent);
     component = fixture.componentInstance;

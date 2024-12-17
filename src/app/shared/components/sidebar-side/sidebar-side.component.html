@@ -19,6 +19,8 @@
           class="sidebar-compact-switch"
           [ngClass]="{ active: layoutConf.sidebarCompactToggle }"
           (click)="toggleCollapse()"
+          (keydown.enter)="toggleCollapse()"
+          tabindex="0"
           *ngIf="layoutConf.sidebarStyle !== 'compact'"
         >
           <span></span>

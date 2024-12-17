@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class CommonService {
-  private urlSource = new BehaviorSubject("initial value");
+  private urlSource = new BehaviorSubject('initial value');
   public changedUrl = this.urlSource.asObservable();
   private userMobileSource = new BehaviorSubject(false);
   public userMobileNumber = this.userMobileSource.asObservable();
@@ -19,7 +19,7 @@ export class CommonService {
 
   isExisitingUser(phoneNumber: number): Observable<any> | any {
     return this.http.get(
-      `${baseUrl}/fetchExistingCustomer?mobile=${phoneNumber}`
+      `${baseUrl}/fetchExistingCustomer?mobile=${phoneNumber}`,
     );
   }
 
@@ -42,7 +42,7 @@ export class CommonService {
   uploadDocument(formData: any) {
     return this.http.post<any>(
       `${baseUrl}/upload-document`,
-      formData
+      formData,
       // {
       //   reportProgress: true,
       //   observe: "events",
@@ -51,7 +51,7 @@ export class CommonService {
   }
   getAllCountries() {
     return this.http.get<any>(
-      `${baseUrl}/country?oneTimeAuth=Y&recordStatus=OPEN`
+      `${baseUrl}/country?oneTimeAuth=Y&recordStatus=OPEN`,
     );
   }
   generateOTP(mobile: any) {
@@ -64,15 +64,15 @@ export class CommonService {
 
   uploadAndProgress(file: File) {
     console.log(file);
-    var formData = new FormData();
-    formData.append("file", file);
+    const formData = new FormData();
+    formData.append('file', file);
     return this.http.post(
       `${baseUrl}/upload-document/uploadProgress`,
       formData,
       {
         reportProgress: true,
-        observe: "events"
-      }
+        observe: 'events',
+      },
     );
   }
 }

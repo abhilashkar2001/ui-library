@@ -5,14 +5,14 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { environment } from "environments/environment";
+  SimpleChanges,
+} from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: "app-loan-products",
-  templateUrl: "./loan-products.component.html",
-  styleUrls: ["./loan-products.component.scss"]
+  selector: 'app-loan-products',
+  templateUrl: './loan-products.component.html',
+  styleUrls: ['./loan-products.component.scss'],
 })
 export class LoanProductsComponent implements OnInit {
   @Input() subLoanList: any;
@@ -28,7 +28,7 @@ export class LoanProductsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.subLoanList = changes["subLoanList"]?.currentValue;
+    this.subLoanList = changes['subLoanList']?.currentValue;
     // this.subLoanList.forEach((item) => {
     //   item.isReadMore = false;
     // });
@@ -42,41 +42,41 @@ export class LoanProductsComponent implements OnInit {
     console.log(subAccount);
     this.selectedLoan = subAccount;
     if (this.selectedLoan?.productDetails?.length > 1) {
-      console.log("multiply product");
+      console.log('multiply product');
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: false,
-        subClass: this.selectedLoan?.subClass
+        subClass: this.selectedLoan?.subClass,
       });
     } else if (this.selectedLoan?.productDetails?.length == 1) {
-      console.log("one product");
+      console.log('one product');
       const payload = JSON.stringify({
         processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
         basisName: this.selectedLoan?.productDetails[0].basisName,
-        basisId: this.selectedLoan?.productDetails[0].basisId
+        basisId: this.selectedLoan?.productDetails[0].basisId,
       });
-      sessionStorage.setItem("loanBasisDetails", payload);
+      sessionStorage.setItem('loanBasisDetails', payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
-        isShowCalculator: true
+        isShowCalculator: true,
       });
     } else {
       const payload = JSON.stringify({
         processCycleCode: this.selectedLoan?.processCycleCode,
         basisName: this.selectedLoan?.basisName,
-        basisId: this.selectedLoan?.basisId
+        basisId: this.selectedLoan?.basisId,
       });
-      sessionStorage.setItem("loanBasisDetails", payload);
+      sessionStorage.setItem('loanBasisDetails', payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: true,
-        subClass: this.selectedLoan?.basisName
+        subClass: this.selectedLoan?.basisName,
       });
     }
   }
   getFileUrl(url: any) {
-    if (url.includes("https")) {
-      return "assets/images/normal_loan.svg";
+    if (url.includes('https')) {
+      return 'assets/images/normal_loan.svg';
     } else {
       return `${this.endPoints}${url}`;
     }

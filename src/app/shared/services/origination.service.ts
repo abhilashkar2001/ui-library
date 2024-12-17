@@ -1,17 +1,17 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import {
   ChecklistInfoModel,
-  ChecklistPayloadModel
-} from "../models/checklist-model";
-import { PrimaryCustomerInfo } from "../models/primary-customer.model";
-import { IcHttpResponseModel } from "../models/ic-http-response.model";
+  ChecklistPayloadModel,
+} from '../models/checklist-model';
+import { PrimaryCustomerInfo } from '../models/primary-customer.model';
+import { IcHttpResponseModel } from '../models/ic-http-response.model';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class OriginationService {
   constructor(private http: HttpClient) {}
@@ -26,16 +26,16 @@ export class OriginationService {
   fetchChecklistItem(
     originationId: number,
     screenId: number | string,
-    stageId: number | string
+    stageId: number | string,
   ) {
     const options = {
       params: screenId
-        ? new HttpParams().set("screenCode", screenId).set("stageId", stageId)
-        : {}
+        ? new HttpParams().set('screenCode', screenId).set('stageId', stageId)
+        : {},
     };
     return this.http.get<IcHttpResponseModel<ChecklistInfoModel[]>>(
       `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
-      options
+      options,
     );
   }
 
@@ -47,7 +47,7 @@ export class OriginationService {
   saveChecklist(payload: ChecklistPayloadModel) {
     return this.http.post<IcHttpResponseModel<ChecklistInfoModel>>(
       `${MICROSERVICE_URL}/origination-matser/saveChecklist`,
-      payload
+      payload,
     );
   }
 
@@ -59,20 +59,20 @@ export class OriginationService {
    */
   validateDateOfBirth(originationId: number, dateOfBirth: string) {
     return this.http.get<IcHttpResponseModel<PrimaryCustomerInfo>>(
-      `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`
+      `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`,
     );
   }
 
   verifyWorkflow(properties: any) {
     return this.http.post<any>(
       `${MICROSERVICE_URL}/workflow/verify`,
-      properties
+      properties,
     );
   }
 
   getCompletedtages(originationId: any) {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`
+      `${MICROSERVICE_URL}/task-summary/requestStatus?originationId=${originationId}`,
     );
   }
 }

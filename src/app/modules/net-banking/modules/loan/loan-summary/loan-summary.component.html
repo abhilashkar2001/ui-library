@@ -29,7 +29,7 @@
       </div>
       <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="end center">
         <h3 class="light-blue-title">
-          <u>{{ "Interest Rate History" | translate }}</u>
+          <u>{{ 'Interest Rate History' | translate }}</u>
         </h3>
         <app-ic-action-button
           [buttonName]="'View Schedule' | translate"
@@ -100,10 +100,10 @@
                 <ng-container
                   *ngIf="details.headerCell.includes('Tenure'); else detail"
                 >
-                  {{ summaryDetails[details.headerDef] ?? "-" }} Months
+                  {{ summaryDetails[details.headerDef] ?? '-' }} Months
                 </ng-container>
                 <ng-template #detail>
-                  ₹ {{ summaryDetails[details.headerDef] ?? "-" }}
+                  ₹ {{ summaryDetails[details.headerDef] ?? '-' }}
                 </ng-template>
               </div>
             </div>

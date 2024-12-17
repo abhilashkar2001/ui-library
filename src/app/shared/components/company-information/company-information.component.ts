@@ -5,32 +5,30 @@ import {
   OnInit,
   Output,
   TemplateRef,
-  ViewChild
-} from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
-import { CityService } from "app/shared/services/city.service";
-import { CountryService } from "app/shared/services/country-service";
-import { DocumentUploadService } from "app/shared/services/document-upload.service";
-import { GenericValueService } from "app/shared/services/generic-value.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+  ViewChild,
+} from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CityService } from 'app/shared/services/city.service';
+import { CountryService } from 'app/shared/services/country-service';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-company-information",
-  templateUrl: "./company-information.component.html",
-  styleUrls: ["./company-information.component.scss"]
+  selector: 'app-company-information',
+  templateUrl: './company-information.component.html',
+  styleUrls: ['./company-information.component.scss'],
 })
 export class CompanyInformationComponent implements OnInit {
-  @Output() onCustomSubmit = new EventEmitter<{}>();
-  @Output() onBackEvent = new EventEmitter<{}>();
+  @Output() CustomSubmit = new EventEmitter<{}>();
+  @Output() backEvent = new EventEmitter<{}>();
   @Output() customFormGroup = new EventEmitter<{}>();
 
   @Input() personalDetails: any;
   @Input() basisId: any;
   @Input() customerInfo: any;
-  @Input("updateParentModel") updateParentModel:
-    | ((value: Partial<any>) => void)
-    | any;
+  @Input() updateParentModel: ((value: Partial<any>) => void) | any;
 
   _parentForm!: FormGroup;
   corporateCustId: any;
@@ -40,7 +38,7 @@ export class CompanyInformationComponent implements OnInit {
   countryList: any;
   nationalityList: any;
   selectedIndex = 0;
-  @ViewChild("treeTemplate", { static: true }) treeTemplate:
+  @ViewChild('treeTemplate', { static: true }) treeTemplate:
     | TemplateRef<any>
     | any;
 
@@ -51,7 +49,7 @@ export class CompanyInformationComponent implements OnInit {
     COMPANYTYPE: [],
     SOURCEOFINCOME: [],
     SEGMENT: [],
-    PARENTCOMPANY: []
+    PARENTCOMPANY: [],
   };
 
   currencyList = [];
@@ -64,7 +62,7 @@ export class CompanyInformationComponent implements OnInit {
     private countryService: CountryService,
     private genericValueService: GenericValueService,
     private openAccountService: OpenAccountService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -73,10 +71,10 @@ export class CompanyInformationComponent implements OnInit {
     this.fetchCountries();
     this.fetchGenericValues();
     this.corporateCustId = JSON.parse(
-      <string>sessionStorage.getItem("corporateCustId")
+      <string>sessionStorage.getItem('corporateCustId'),
     );
     this.miscellaneousId = JSON.parse(
-      <string>sessionStorage.getItem("miscellaneousId")
+      <string>sessionStorage.getItem('miscellaneousId'),
     );
     if (this.originationId) this.fetchOriginationMaster();
     else this.fetchCompanyDetails();
@@ -84,117 +82,117 @@ export class CompanyInformationComponent implements OnInit {
 
   buildCompanyForm() {
     this._parentForm = this.fb.group({
-      screenCode: parseInt(<string>sessionStorage.getItem("currentScreenCode")),
+      screenCode: parseInt(<string>sessionStorage.getItem('currentScreenCode')),
       originationModel: this.fb.group({
-        basisDetailsId: [""],
-        loanAmount: [""]
+        basisDetailsId: [''],
+        loanAmount: [''],
       }),
       corporateCustomer: this.addCorporateCustomer(),
-      miscellaneous: this.addMiscellaneous()
+      miscellaneous: this.addMiscellaneous(),
     });
   }
 
   addCorporateCustomer() {
     return this.fb.group({
-      corporateCustId: [this.corporateCustomer ?? ""],
-      currencyCode: "INR",
-      companyName: ["", [Validators.required]],
-      companyType: [" ", [Validators.required]],
-      numberOfDirectors: ["", [Validators.required]],
-      segment: [""],
-      natureOfBusiness: [""],
-      countryOfIncorporationCode: ["", [Validators.required]],
-      dateOfIncorporation: ["", [Validators.required]],
-      registrationNumber: ["", [Validators.required]],
-      tinNumber: ["", [Validators.required]],
-      sourceOfIncome: ["", [Validators.required]],
-      others: [""],
-      parentCompanyId: [""],
-      organisationChartFileName: [""],
-      organisationChartUrl: [""],
-      organisationChartId: [""],
+      corporateCustId: [this.corporateCustomer ?? ''],
+      currencyCode: 'INR',
+      companyName: ['', [Validators.required]],
+      companyType: [' ', [Validators.required]],
+      numberOfDirectors: ['', [Validators.required]],
+      segment: [''],
+      natureOfBusiness: [''],
+      countryOfIncorporationCode: ['', [Validators.required]],
+      dateOfIncorporation: ['', [Validators.required]],
+      registrationNumber: ['', [Validators.required]],
+      tinNumber: ['', [Validators.required]],
+      sourceOfIncome: ['', [Validators.required]],
+      others: [''],
+      parentCompanyId: [''],
+      organisationChartFileName: [''],
+      organisationChartUrl: [''],
+      organisationChartId: [''],
       financialDetails: this.fb.array([]),
-      contact: this.addContact()
+      contact: this.addContact(),
     });
   }
   addMiscellaneous() {
     return this.fb.group({
-      miscellaneousId: [this.miscellaneous ?? ""],
-      customerCategoryId: [""],
-      customerChargeCategoryId: [""],
-      taxCategory: [""],
-      swiftCode: [""]
+      miscellaneousId: [this.miscellaneous ?? ''],
+      customerCategoryId: [''],
+      customerChargeCategoryId: [''],
+      taxCategory: [''],
+      swiftCode: [''],
     });
   }
   addContact(data?: any) {
     return this.fb.group({
-      email: [data?.contact?.email ?? ""],
-      mobile: [data?.contact?.mobile ?? ""],
-      mobtCode: [Number(data?.contact?.mobtCode) ?? ""],
-      whatsappNo: [data?.contact?.whatsappNo ?? ""],
-      waptCode: [Number(data?.contact?.waptCode) ?? ""],
-      alternativeNumber: [data?.contact?.alternativeNumber ?? ""],
-      altCode: [Number(data?.contact?.altCode) ?? ""],
-      telephone: [data?.contact?.telephone ?? ""],
-      contactId: [data?.contact?.contactId ?? ""],
+      email: [data?.contact?.email ?? ''],
+      mobile: [data?.contact?.mobile ?? ''],
+      mobtCode: [Number(data?.contact?.mobtCode) ?? ''],
+      whatsappNo: [data?.contact?.whatsappNo ?? ''],
+      waptCode: [Number(data?.contact?.waptCode) ?? ''],
+      alternativeNumber: [data?.contact?.alternativeNumber ?? ''],
+      altCode: [Number(data?.contact?.altCode) ?? ''],
+      telephone: [data?.contact?.telephone ?? ''],
+      contactId: [data?.contact?.contactId ?? ''],
       address: this.fb.array([
         this.fb.group({
-          address1: [data?.contact.address[0]?.address1 ?? "Akshay Tech Park"],
-          address2: [data?.contact.address[0]?.address2 ?? ""],
+          address1: [data?.contact.address[0]?.address1 ?? 'Akshay Tech Park'],
+          address2: [data?.contact.address[0]?.address2 ?? ''],
           residenceType: [data?.contact.address[0]?.residenceType ?? 7521],
           residenceTypeValue: [
-            data?.contact.address[0]?.residenceTypeValue ?? ""
+            data?.contact.address[0]?.residenceTypeValue ?? '',
           ],
-          countryName: [data?.contact.address[0]?.countryName ?? ""],
-          pincode: [data?.contact.address[0]?.pincode ?? ""],
-          stateName: [data?.contact.address[0]?.stateName ?? ""],
-          cityName: [data?.contact.address[0]?.cityName ?? ""],
-          cityId: [data?.contact.address[0]?.cityId ?? 1]
-        })
-      ])
+          countryName: [data?.contact.address[0]?.countryName ?? ''],
+          pincode: [data?.contact.address[0]?.pincode ?? ''],
+          stateName: [data?.contact.address[0]?.stateName ?? ''],
+          cityName: [data?.contact.address[0]?.cityName ?? ''],
+          cityId: [data?.contact.address[0]?.cityId ?? 1],
+        }),
+      ]),
     });
   }
 
   get corporateCustomer(): FormGroup {
-    return this._parentForm?.get("corporateCustomer") as FormGroup;
+    return this._parentForm?.get('corporateCustomer') as FormGroup;
   }
 
   get miscellaneous(): FormGroup {
-    return this._parentForm?.get("miscellaneous") as FormGroup;
+    return this._parentForm?.get('miscellaneous') as FormGroup;
   }
 
   get contact(): FormGroup {
-    return this.corporateCustomer.get("contact") as FormGroup;
+    return this.corporateCustomer.get('contact') as FormGroup;
   }
   get addressControl(): FormArray {
-    return this.corporateCustomer.get("contact")?.get("address") as FormArray;
+    return this.corporateCustomer.get('contact')?.get('address') as FormArray;
   }
 
   get financialDetails(): FormArray {
-    return this.corporateCustomer.get("financialDetails") as FormArray;
+    return this.corporateCustomer.get('financialDetails') as FormArray;
   }
 
   financeInfo(index: any): FormArray {
-    return this.financialDetails.at(index).get("financeInfo") as FormArray;
+    return this.financialDetails.at(index).get('financeInfo') as FormArray;
   }
 
   pushFinanceMaster(data?: any) {
     this.financialDetails.push(
       this.fb.group({
-        financeType: [data?.financeType ?? ""],
-        financeMasterId: [data?.financeMasterId ?? ""],
-        financeInfo: this.fb.array([])
-      })
+        financeType: [data?.financeType ?? ''],
+        financeMasterId: [data?.financeMasterId ?? ''],
+        financeInfo: this.fb.array([]),
+      }),
     );
     if (data?.financeInfo?.length > 0) {
       data?.financeInfo?.forEach((item: any) => {
         this.financeInfo(this.financialDetails.length - 1).push(
-          this.financialInfoForm(item)
+          this.financialInfoForm(item),
         );
       });
     } else {
       this.financeInfo(this.financialDetails.length - 1).push(
-        this.financialInfoForm()
+        this.financialInfoForm(),
       );
     }
   }
@@ -205,13 +203,13 @@ export class CompanyInformationComponent implements OnInit {
 
   financialInfoForm(data?: any) {
     return this.fb.group({
-      financialId: [data?.financialId ?? ""],
-      year: [""],
-      currencyCode: [data?.currencyCode ?? ""],
-      ammount: [data?.ammount ?? ""],
-      documentId: [data?.documentId ?? ""],
-      documentName: [data?.documentName ?? ""],
-      doucumentUrl: [data?.doucumentUrl ?? ""]
+      financialId: [data?.financialId ?? ''],
+      year: [''],
+      currencyCode: [data?.currencyCode ?? ''],
+      ammount: [data?.ammount ?? ''],
+      documentId: [data?.documentId ?? ''],
+      documentName: [data?.documentName ?? ''],
+      doucumentUrl: [data?.doucumentUrl ?? ''],
     });
   }
 
@@ -231,29 +229,29 @@ export class CompanyInformationComponent implements OnInit {
    */
   fileChange(event: any, Form?: any) {
     const file = event.target.files[0];
-    let docdata: any = {};
-    docdata.fileName = file?.name.split(".")[0];
-    docdata.fileType = file?.type.split("/")[1];
+    const docdata: any = {};
+    docdata.fileName = file?.name.split('.')[0];
+    docdata.fileType = file?.type.split('/')[1];
     const formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("data", JSON.stringify(docdata));
-    formdata.append("module", "document");
+    formdata.append('file', file);
+    formdata.append('data', JSON.stringify(docdata));
+    formdata.append('module', 'document');
     this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
       if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
         if (Form) {
-          Form.get("documentName").setValue(res?.data?.fileName);
-          Form.get("documentId").setValue(res?.data?.documentId);
-          Form.get("doucumentUrl").setValue(res?.data?.fileUrl);
+          Form.get('documentName').setValue(res?.data?.fileName);
+          Form.get('documentId').setValue(res?.data?.documentId);
+          Form.get('doucumentUrl').setValue(res?.data?.fileUrl);
         } else {
           const updatedData = res?.data;
           this.corporateCustomer
-            .get("organisationChartFileName")
+            .get('organisationChartFileName')
             ?.patchValue(updatedData?.fileName);
           this.corporateCustomer
-            .get("organisationChartUrl")
+            .get('organisationChartUrl')
             ?.patchValue(updatedData?.fileUrl);
           this.corporateCustomer
-            .get("organisationChartId")
+            .get('organisationChartId')
             ?.patchValue(updatedData?.documentId);
         }
       }
@@ -277,28 +275,28 @@ export class CompanyInformationComponent implements OnInit {
   /** fetch all generic value form generic value maintenance for dropdown values */
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .loadGenericValue('Common', Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           Object.keys(res?.data).forEach(
-            (k) => (this.genericValue[k] = res.data[k])
+            (k) => (this.genericValue[k] = res.data[k]),
           );
         }
       });
   }
 
   getCityandStateByZipcode(index: any) {
-    let addressCtrl = this.addressControl.at(index);
-    let pincode = addressCtrl.get("pincode")?.value;
+    const addressCtrl = this.addressControl.at(index);
+    const pincode = addressCtrl.get('pincode')?.value;
     if (pincode) {
       this.cityService.fetchZipcodeDetails(pincode).subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
-          addressCtrl.get("cityName")?.setValue(res?.data[0]?.city);
-          addressCtrl.get("cityId")?.setValue(res?.data[0]?.cityId);
-          addressCtrl.get("stateName")?.setValue(res?.data[0]?.state);
-          addressCtrl.get("countryName")?.setValue(res?.data[0]?.countryName);
+          addressCtrl.get('cityName')?.setValue(res?.data[0]?.city);
+          addressCtrl.get('cityId')?.setValue(res?.data[0]?.cityId);
+          addressCtrl.get('stateName')?.setValue(res?.data[0]?.state);
+          addressCtrl.get('countryName')?.setValue(res?.data[0]?.countryName);
           const isdCode = this.getISDCode(
-            res?.data[0]?.countryName
+            res?.data[0]?.countryName,
           )?.countryTelIsdCode;
           this.patchIsdCode(isdCode);
         } else {
@@ -313,10 +311,10 @@ export class CompanyInformationComponent implements OnInit {
     this.countryService.getCountries().subscribe((res: any) => {
       if (res?.statusCode === 200 && res?.data) {
         this.countryList = res?.data?.filter(
-          (d: any) => d?.authStatus === "AUTHORIZED"
+          (d: any) => d?.authStatus === 'AUTHORIZED',
         );
         this.nationalityList = res?.data?.filter(
-          (nationality: any) => nationality?.nationality
+          (nationality: any) => nationality?.nationality,
         );
       }
     });
@@ -325,10 +323,10 @@ export class CompanyInformationComponent implements OnInit {
     value: string,
     control: FormGroup,
     key: string,
-    genericName: string
+    genericName: string,
   ) {
     const genericValue = this.genericValue[genericName].find(
-      (item: any) => item.id == value
+      (item: any) => item.id == value,
     ).values;
     control.get(key)?.setValue(genericValue);
   }
@@ -338,9 +336,9 @@ export class CompanyInformationComponent implements OnInit {
    * @param isdCode isd code of the selected country to be patched
    */
   patchIsdCode(isdCode: any) {
-    this.corporateCustomer.get("contact.altCode")?.setValue(isdCode);
-    this.corporateCustomer.get("contact.mobtCode")?.setValue(isdCode);
-    this.corporateCustomer.get("contact.waptCode")?.setValue(isdCode);
+    this.corporateCustomer.get('contact.altCode')?.setValue(isdCode);
+    this.corporateCustomer.get('contact.mobtCode')?.setValue(isdCode);
+    this.corporateCustomer.get('contact.waptCode')?.setValue(isdCode);
   }
 
   /**
@@ -348,33 +346,33 @@ export class CompanyInformationComponent implements OnInit {
    * @returns the desired country from the country list
    */
   getISDCode(country: any) {
-    let countryCode: any = this.countryList?.find(
-      (item: any) => item?.countryName === country
+    const countryCode: any = this.countryList?.find(
+      (item: any) => item?.countryName === country,
     );
     return countryCode;
   }
   clearData(addressCtrl: any) {
-    addressCtrl.get("cityName").setValue("");
-    addressCtrl.get("cityId").setValue("");
-    addressCtrl.get("stateName").setValue("");
-    addressCtrl.get("pincode").setValue("");
+    addressCtrl.get('cityName').setValue('');
+    addressCtrl.get('cityId').setValue('');
+    addressCtrl.get('stateName').setValue('');
+    addressCtrl.get('pincode').setValue('');
   }
 
   goBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   onConfirm() {
     if (this._parentForm.invalid) return;
 
-    this.onCustomSubmit.emit({
+    this.CustomSubmit.emit({
       status: true,
-      companyDetails: this._parentForm
+      companyDetails: this._parentForm,
     });
     this?.updateParentModel({
       companyDetails: this._parentForm.value,
       updateMasterSave: true,
-      isForLoan: false
+      isForLoan: false,
     });
   }
 }

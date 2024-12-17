@@ -8,8 +8,8 @@ export class PersonalDetailsConstant {
 }
 
 export enum PersonalDetailsEnum {
-  RESIDENCETYPE = "RESIDENCETYPE",
-  GENDER = "GENDER",
-  PREFIX = "PREFIX",
-  MARITALSTATUS = "MARITALSTATUS",
+  RESIDENCETYPE = 'RESIDENCETYPE',
+  GENDER = 'GENDER',
+  PREFIX = 'PREFIX',
+  MARITALSTATUS = 'MARITALSTATUS',
 }

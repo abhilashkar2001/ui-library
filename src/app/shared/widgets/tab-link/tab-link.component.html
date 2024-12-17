@@ -3,14 +3,14 @@
     <div
       class="label-text"
       [ngClass]="{
-        'label-selected': selectedTab?.screenName == tab?.screenName
+        'label-selected': selectedTab?.screenName === tab?.screenName,
       }"
     >
-      {{ tab?.screenName | translate }}
+      {{ tab.screenName | translate }}
     </div>
     <div
       [ngClass]="
-        selectedTab?.screenName == tab?.screenName ? 'horizontal-line' : ''
+        selectedTab?.screenName === tab?.screenName ? 'horizontal-line' : ''
       "
       class="mt-8"
     ></div>

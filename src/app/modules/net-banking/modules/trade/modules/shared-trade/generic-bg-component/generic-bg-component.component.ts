@@ -1,34 +1,34 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-import { AddNewPopupComponent } from "app/shared/components/add-new-popup/add-new-popup.component";
-import { Webhost } from "app/shared/directives/appHost.directive";
-import { BehaviorSubject } from "rxjs";
-import { GenericBgServiceService } from "./generic-bg-service.service";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
+import { WebhostDirective } from 'app/shared/directives/appHost.directive';
+import { BehaviorSubject } from 'rxjs';
+import { GenericBgServiceService } from './generic-bg-service.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-generic-bg-component",
-  templateUrl: "./generic-bg-component.component.html",
-  styleUrls: ["./generic-bg-component.component.scss"]
+  selector: 'app-generic-bg-component',
+  templateUrl: './generic-bg-component.component.html',
+  styleUrls: ['./generic-bg-component.component.scss'],
 })
 export class GenericBgComponentComponent implements OnInit {
-  @Input("componentName") componentName = "";
+  @Input() componentName = '';
   tabs: any;
   account$: BehaviorSubject<any> = new BehaviorSubject<any>({});
   tradeDetails: BehaviorSubject<any> = new BehaviorSubject<any>({});
   shareTradeDetails = this.tradeDetails.asObservable();
   currentStep$: BehaviorSubject<any> = new BehaviorSubject(null);
   isCurrentFormValid$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
+    false,
   );
-  @ViewChild(Webhost, { static: true })
-  host!: Webhost;
+  @ViewChild(WebhostDirective, { static: true })
+  host!: WebhostDirective;
   componentRef: any;
   bgType: any;
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private api: GenericBgServiceService
+    private api: GenericBgServiceService,
   ) {}
 
   ngOnInit(): void {}
@@ -38,7 +38,7 @@ export class GenericBgComponentComponent implements OnInit {
     view.clear();
     if (this.currentStep$.value?.componrnt) {
       this.componentRef = view.createComponent(
-        this.currentStep$.value.componrnt
+        this.currentStep$.value.componrnt,
       );
       this.componentRef.instance.bgType = this.bgType;
       this.currentStep$.subscribe((resp) => {
@@ -72,11 +72,11 @@ export class GenericBgComponentComponent implements OnInit {
   saveTemplet() {
     const dialogRef = this.dialog.open(AddNewPopupComponent, {
       data: {
-        isSaveTemplate: true
+        isSaveTemplate: true,
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class"
+      panelClass: 'popup-dialog-class',
     });
     dialogRef.afterClosed().subscribe((resp) => {
       this.saveTemplate(resp.templateName);
@@ -88,11 +88,11 @@ export class GenericBgComponentComponent implements OnInit {
       applicantModel: {
         ...this.account$.value.applicantInfo,
         saveTemplate: true,
-        templateName: templateName
+        templateName: templateName,
       },
       bgInfoModel: this.account$.value?.benificiaryDetails ?? null,
       otherInfoModel: this.account$.value?.otherInfoModel ?? null,
-      attachmentModel: this.account$.value?.attachMentModel ?? null
+      attachmentModel: this.account$.value?.attachMentModel ?? null,
     };
     this.api.saveTemplate(payload).subscribe(() => {});
   }
@@ -100,16 +100,16 @@ export class GenericBgComponentComponent implements OnInit {
   updateRecord(event: any) {
     console.log(
       event,
-      "........",
+      '........',
       this.currentStep$.value?.id,
-      this.account$.value
+      this.account$.value,
     );
 
     let payload;
     if (this.currentStep$?.value?.id == 1) {
       const applicantInfo = this.account$.value?.applicantInfo;
       const applicantInfoPayload = {
-        lcType: "Issuance",
+        lcType: 'Issuance',
         applicantInfo: {
           applicant: applicantInfo?.applicant,
           applicantReference: applicantInfo?.applicantReferences,
@@ -126,22 +126,22 @@ export class GenericBgComponentComponent implements OnInit {
               address2: i?.address2,
               addressType: i?.residenceType,
               pincode: i?.pincode,
-              cityId: i?.cityId
-            }))
-          }
-        }
+              cityId: i?.cityId,
+            })),
+          },
+        },
       };
       payload = applicantInfoPayload;
     } else if (this.currentStep$.value?.id == 2) {
       const lcInfo = this.account$.value?.lcInfo;
       const lcInfopayload = {
-        lcType: "Issuance",
-        lcMasterId: sessionStorage.getItem("lcMasterId"),
+        lcType: 'Issuance',
+        lcMasterId: sessionStorage.getItem('lcMasterId'),
         lcInfo: {
           type: lcInfo?.type,
-          domesticOrForeignLc: lcInfo?.domesticOrForegin === "domesticLC",
-          redClause: lcInfo?.redClause == "true",
-          revolving: lcInfo?.revolving == "true",
+          domesticOrForeignLc: lcInfo?.domesticOrForegin === 'domesticLC',
+          redClause: lcInfo?.redClause == 'true',
+          revolving: lcInfo?.revolving == 'true',
           amount: Number(lcInfo?.amount),
           maxCrAmtOrTolerance: lcInfo?.tolerance,
           additionalAmounts: Number(lcInfo?.additionalAmounts),
@@ -163,11 +163,11 @@ export class GenericBgComponentComponent implements OnInit {
               address: lcInfo?.beneficiaryDetails?.address?.map((i: any) => ({
                 address1: i?.address1,
                 address2: i?.address2,
-                addressType: "Home",
+                addressType: 'Home',
                 pincode: i?.pincode,
-                cityId: i?.cityId
-              }))
-            }
+                cityId: i?.cityId,
+              })),
+            },
           },
           bankDetails: {
             // deliveryVia: lcInfo?.bankDetails?.,
@@ -178,37 +178,37 @@ export class GenericBgComponentComponent implements OnInit {
               address: lcInfo?.bankDetails?.address?.map((i: any) => ({
                 address1: i?.address1,
                 address2: i?.address2,
-                addressType: "Home",
+                addressType: 'Home',
                 pincode: i?.pincode,
-                cityId: i?.cityId
-              }))
-            }
-          }
-        }
+                cityId: i?.cityId,
+              })),
+            },
+          },
+        },
       };
       payload = lcInfopayload;
     } else if (this.currentStep$.value?.id == 3) {
       payload = {
-        lcType: "Issuance",
-        lcMasterId: sessionStorage.getItem("lcMasterId"),
-        ...this.account$?.value?.goodsInfo
+        lcType: 'Issuance',
+        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        ...this.account$?.value?.goodsInfo,
       };
     } else if (this.currentStep$.value?.id == 4) {
       const docPayload = {
-        lcType: "Issuance",
-        lcMasterId: sessionStorage.getItem("lcMasterId"),
+        lcType: 'Issuance',
+        lcMasterId: sessionStorage.getItem('lcMasterId'),
         documentInfo: {
-          documentId: this.account$.value?.documentId
-        }
+          documentId: this.account$.value?.documentId,
+        },
       };
       payload = docPayload;
     } else if (this.currentStep$.value?.id == 5) {
       const lcAdditionalInfo = this.account$.value?.lcAdditionalInfo;
       const additionalPayload = {
-        lcType: "Issuence",
-        lcMasterId: sessionStorage.getItem("lcMasterId"),
+        lcType: 'Issuence',
+        lcMasterId: sessionStorage.getItem('lcMasterId'),
         additionalInfo: {
-          lcTransfer: lcAdditionalInfo?.lcTransfer === "Yes",
+          lcTransfer: lcAdditionalInfo?.lcTransfer === 'Yes',
           additionalCondition: lcAdditionalInfo?.additionalCondition,
           advisingBank: {
             advThroughBank: lcAdditionalInfo?.bankAdvise,
@@ -223,23 +223,23 @@ export class GenericBgComponentComponent implements OnInit {
                   address2: i?.address2,
                   addressType: i?.residenceType,
                   pincode: i?.pincode,
-                  cityId: i?.cityId
-                })
-              )
-            }
-          }
-        }
+                  cityId: i?.cityId,
+                }),
+              ),
+            },
+          },
+        },
       };
       payload = additionalPayload;
     } else if (this.currentStep$.value?.id == 6) {
       const attachmentPayload = {
-        lcType: "Issuence",
-        lcMasterId: sessionStorage.getItem("lcMasterId"),
+        lcType: 'Issuence',
+        lcMasterId: sessionStorage.getItem('lcMasterId'),
         attachment: {
           documentIds: this.account$.value?.attachMentModel?.map(
-            (i: any) => i?.documentId
-          )
-        }
+            (i: any) => i?.documentId,
+          ),
+        },
       };
       payload = attachmentPayload;
     }
@@ -249,21 +249,21 @@ export class GenericBgComponentComponent implements OnInit {
         console.log(resp);
         if (resp?.data?.lcMasterId && this.currentStep$.value?.id == 1) {
           this.account$.value.lcMasterId = resp?.data?.lcMasterId;
-          sessionStorage.setItem("lcMasterId", resp?.data?.lcMasterId);
+          sessionStorage.setItem('lcMasterId', resp?.data?.lcMasterId);
         }
       },
-      (err) => console.error("Error: ", err)
+      (err) => console.error('Error: ', err),
     );
 
     const nextTab = this.tabs.find(
-      (i: any) => i?.id == this.currentStep$?.value?.id + 1
+      (i: any) => i?.id == this.currentStep$?.value?.id + 1,
     );
 
     if (nextTab?.id) {
       this.navigatetotab(nextTab);
     } else {
       this.router.navigateByUrl(
-        "/user/dashboard/trade/bgSummary?type=LC%20Issuance"
+        '/user/dashboard/trade/bgSummary?type=LC%20Issuance',
       );
     }
   }

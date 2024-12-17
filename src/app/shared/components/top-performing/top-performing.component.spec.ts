@@ -8,7 +8,7 @@ describe('TopPerformingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TopPerformingComponent]
+      declarations: [TopPerformingComponent],
     });
     fixture = TestBed.createComponent(TopPerformingComponent);
     component = fixture.componentInstance;

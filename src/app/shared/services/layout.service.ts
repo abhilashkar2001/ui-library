@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { getQueryParam } from "../helpers/url.helper";
-import { ThemeService } from "./theme.service";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { getQueryParam } from '../helpers/url.helper';
+import { ThemeService } from './theme.service';
 
 export interface ILayoutConf {
   navigationPos?: string; // side, top
@@ -29,7 +29,7 @@ interface IAdjustScreenOptions {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class LayoutService {
   public layoutConf: ILayoutConf | any = {};
@@ -43,20 +43,20 @@ export class LayoutService {
     this.setAppLayout(
       // ******** SET YOUR LAYOUT OPTIONS HERE *********
       {
-        navigationPos: "top", // side, top
-        sidebarStyle: "full", // full, compact, closed
-        sidebarColor: "slate", //
+        navigationPos: 'top', // side, top
+        sidebarStyle: 'full', // full, compact, closed
+        sidebarColor: 'slate', //
         sidebarCompactToggle: false, // applied when "sidebarStyle" is "compact"
-        dir: "ltr", // ltr, rtl
+        dir: 'ltr', // ltr, rtl
         useBreadcrumb: true,
         topbarFixed: true,
         footerFixed: false,
-        topbarColor: "white",
-        footerColor: "slate",
-        matTheme: "egret-navy",
-        breadcrumb: "simple",
-        perfectScrollbar: true
-      }
+        topbarColor: 'white',
+        footerColor: 'slate',
+        matTheme: 'egret-navy',
+        breadcrumb: 'simple',
+        perfectScrollbar: true,
+      },
     );
   }
 
@@ -79,31 +79,36 @@ export class LayoutService {
   }
 
   setLayoutFromQuery() {
-    const layoutConfString = getQueryParam("layout");
+    const layoutConfString = getQueryParam('layout');
     const prevTheme = this.layoutConf.matTheme;
+
     try {
-      this.layoutConf = JSON.parse(layoutConfString);
-      this.themeService.changeTheme(prevTheme, this.layoutConf.matTheme);
-    } catch (e) {}
+      if (typeof layoutConfString === 'string') {
+        this.layoutConf = JSON.parse(layoutConfString);
+        this.themeService.changeTheme(prevTheme, this.layoutConf.matTheme);
+      }
+    } catch (e) {
+      console.error('Failed to parse layout configuration:', e);
+    }
   }
 
   adjustLayout(options: IAdjustScreenOptions = {}) {
     let sidebarStyle: string;
     this.isMobile = this.isSm();
     this.currentRoute = options.route || this.currentRoute;
-    sidebarStyle = this.isMobile ? "closed" : "full";
+    sidebarStyle = this.isMobile ? 'closed' : 'full';
 
     if (this.currentRoute) {
       this.fullWidthRoutes.forEach((route) => {
         if (this.currentRoute.indexOf(route) !== -1) {
-          sidebarStyle = "closed";
+          sidebarStyle = 'closed';
         }
       });
     }
 
     this.publishLayoutChange({
       isMobile: this.isMobile,
-      sidebarStyle
+      sidebarStyle,
     });
   }
   isSm() {

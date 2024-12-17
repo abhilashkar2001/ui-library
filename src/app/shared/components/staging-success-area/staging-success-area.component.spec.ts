@@ -8,9 +8,8 @@ describe('StagingSuccessAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StagingSuccessAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [StagingSuccessAreaComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StagingSuccessAreaComponent);
     component = fixture.componentInstance;

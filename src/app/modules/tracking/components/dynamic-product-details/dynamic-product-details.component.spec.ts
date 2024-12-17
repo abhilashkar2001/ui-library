@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { DynamicProductDetailsComponent } from "./dynamic-product-details.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DynamicProductDetailsComponent } from './dynamic-product-details.component';
 
-describe("LoanProductDetailsComponent", () => {
+describe('LoanProductDetailsComponent', () => {
   let component: DynamicProductDetailsComponent;
   let fixture: ComponentFixture<DynamicProductDetailsComponent>;
 
@@ -15,7 +15,7 @@ describe("LoanProductDetailsComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,22 +1,22 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { countryStateService } from "app/shared/components/reusable-pincode-popup/countrySateCityService";
-import { ReusablePincodePopupComponent } from "app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { countryStateService } from 'app/shared/components/reusable-pincode-popup/countrySateCityService';
+import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 
 @Component({
-  selector: "app-benificiary-details",
-  templateUrl: "./benificiary-details.component.html",
-  styleUrls: ["./benificiary-details.component.scss"]
+  selector: 'app-benificiary-details',
+  templateUrl: './benificiary-details.component.html',
+  styleUrls: ['./benificiary-details.component.scss'],
 })
 export class BenificiaryDetailsComponent implements OnInit {
   @Input() benificiaryDetailsForm!: FormGroup;
-  @Input() componentName: string = "";
+  @Input() componentName = '';
   countries: any;
 
   constructor(
     private countryService: countryStateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class BenificiaryDetailsComponent implements OnInit {
   }
 
   onSave() {
-    console.log("on save benificiary");
+    console.log('on save benificiary');
   }
 
   getAllCountry() {
@@ -34,25 +34,25 @@ export class BenificiaryDetailsComponent implements OnInit {
   }
   populatePincodeData() {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
-      width: "60%",
+      width: '60%',
       disableClose: true,
-      panelClass: "dialog-class"
+      panelClass: 'dialog-class',
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        const control: any = this.addressControle["controls"][0];
-        control.get("countryName").setValue(res.countryName);
-        control.get("stateName").setValue(res.stateName);
-        control.get("cityId").setValue(res.cityId);
-        control.get("cityName").patchValue(res?.cityName);
-        control.get("pincode").setValue(res.pincode);
+        const control: any = this.addressControle['controls'][0];
+        control.get('countryName').setValue(res.countryName);
+        control.get('stateName').setValue(res.stateName);
+        control.get('cityId').setValue(res.cityId);
+        control.get('cityName').patchValue(res?.cityName);
+        control.get('pincode').setValue(res.pincode);
       }
     });
   }
   get addressControle(): any {
-    return this.Contact.get("address") as FormArray;
+    return this.Contact.get('address') as FormArray;
   }
   get Contact() {
-    return this.benificiaryDetailsForm.get("contactInfo") as FormGroup;
+    return this.benificiaryDetailsForm.get('contactInfo') as FormGroup;
   }
 }

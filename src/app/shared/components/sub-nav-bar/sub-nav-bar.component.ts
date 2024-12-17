@@ -1,20 +1,21 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { NETBANKING } from "app/modules/net-banking/modules/dashboard/net-banking-dashboard/net-banking-dashboard.constant";
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { NETBANKING } from 'app/modules/net-banking/modules/dashboard/net-banking-dashboard/net-banking-dashboard.constant';
 
 @Component({
-  selector: "app-sub-nav-bar",
-  templateUrl: "./sub-nav-bar.component.html",
-  styleUrls: ["./sub-nav-bar.component.scss"]
+  selector: 'app-sub-nav-bar',
+  templateUrl: './sub-nav-bar.component.html',
+  styleUrls: ['./sub-nav-bar.component.scss'],
 })
-export class SubNavBarComponent implements OnInit {
+export class SubNavBarComponent {
   navigationItems = NETBANKING.navigationItems;
 
-  activeItem = "";
+  activeItem = '';
 
-  constructor(private route: Router, private cdr: ChangeDetectorRef) {}
-
-  ngOnInit(): void {}
+  constructor(
+    private route: Router,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   navigateByUrl(url: any) {
     if (url?.link) {

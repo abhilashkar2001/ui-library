@@ -1,29 +1,29 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { LoanAccountTypeComponent, LoansComponent } from ".";
-import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
-import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoanAccountTypeComponent, LoansComponent } from '.';
+import { LoansLandingComponent } from './loans-landing/loans-landing.component';
+import { LoanFlowComponent } from './loan-flow/loan-flow.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: LoansComponent,
     children: [
       {
-        path: "",
-        redirectTo: "landing",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'landing',
+        pathMatch: 'full',
       },
       {
-        path: "landing",
+        path: 'landing',
         component: LoansLandingComponent,
       },
       {
-        path: "loan-type",
+        path: 'loan-type',
         component: LoanAccountTypeComponent,
       },
       {
-        path: "create-loan/:id",
+        path: 'create-loan/:id',
         component: LoanFlowComponent,
       },
     ],

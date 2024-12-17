@@ -8,23 +8,26 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  Renderer2
-} from "@angular/core";
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
-  selector: "[src-fallback]"
+  selector: '[appSrcfallback]',
 })
 export class IcImgFallbackDirective implements OnDestroy {
-  @Input("src-fallback") imgSrc!: string;
-  @Output("loaded") loaded = new EventEmitter<boolean>();
+  @Input('appSrcfallback') imgSrc!: string;
+  @Output() loaded = new EventEmitter<boolean>();
   private nativeElement: HTMLElement;
-  private isApplied: boolean = false;
-  private ERROR_EVENT_TYPE: string = "error";
-  private LOAD_EVENT_TYPE: string = "load";
-  private cancelOnError!: Function;
-  private cancelOnLoad!: Function;
+  private isApplied = false;
+  private ERROR_EVENT_TYPE = 'error';
+  private LOAD_EVENT_TYPE = 'load';
+  private cancelOnError!: () => void;
+  private cancelOnLoad!: () => void;
 
-  constructor(el: ElementRef, private renderer: Renderer2) {
+  constructor(
+    el: ElementRef,
+    private renderer: Renderer2,
+  ) {
     this.nativeElement = el.nativeElement;
 
     this.onError = this.onError.bind(this);
@@ -38,9 +41,9 @@ export class IcImgFallbackDirective implements OnDestroy {
   }
 
   private onError() {
-    if (this.nativeElement.getAttribute("src") !== this.imgSrc) {
+    if (this.nativeElement.getAttribute('src') !== this.imgSrc) {
       this.isApplied = true;
-      this.renderer.setAttribute(this.nativeElement, "src", this.imgSrc);
+      this.renderer.setAttribute(this.nativeElement, 'src', this.imgSrc);
     } else {
       this.removeOnLoadEvent();
     }
@@ -66,12 +69,12 @@ export class IcImgFallbackDirective implements OnDestroy {
     this.cancelOnError = this.renderer.listen(
       this.nativeElement,
       this.ERROR_EVENT_TYPE,
-      this.onError
+      this.onError,
     );
     this.cancelOnLoad = this.renderer.listen(
       this.nativeElement,
       this.LOAD_EVENT_TYPE,
-      this.onLoad
+      this.onLoad,
     );
   }
 }

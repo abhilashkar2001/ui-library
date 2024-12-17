@@ -1,6 +1,6 @@
 export enum UploadImage {
-  BROWSE = "Browse",
-  AVATAR = "Avatar"
+  BROWSE = 'Browse',
+  AVATAR = 'Avatar',
 }
 
 export class DocumentData {

@@ -42,7 +42,7 @@ $chart_inner_size: 300px;
       );
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         height: $chart_inner_size;
         width: $chart_inner_size;
@@ -65,7 +65,7 @@ $chart_inner_size: 300px;
           color: #444;
           font-size: 20px;
           font-weight: 600;
-          font-family: "Poppins", sans-serif;
+          font-family: 'Poppins', sans-serif;
           margin-bottom: 0;
           margin-top: 20px;
           position: relative;
@@ -78,7 +78,7 @@ $chart_inner_size: 300px;
         }
 
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           top: -1px;
           left: 0;
@@ -88,7 +88,7 @@ $chart_inner_size: 300px;
           border-radius: 0 0 50px 50px;
         }
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           top: -1px;
           right: 0;
@@ -154,7 +154,7 @@ $chart_inner_size: 300px;
         rgba(0, 0, 0, 0.09);
       border: 4.737px solid #fff;
       font-size: 16px;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
       line-height: 1.5;
       margin-top: 10px;
@@ -185,7 +185,7 @@ $chart_inner_size: 300px;
         transition: all 0.28s;
 
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           bottom: 100%;
           left: 57%;

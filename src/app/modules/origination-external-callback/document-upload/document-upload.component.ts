@@ -1,48 +1,53 @@
-import { HttpEventType, HttpResponse } from "@angular/common/http";
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
-  ViewChild
-} from "@angular/core";
+  ViewChild,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-import { Subscription } from "rxjs";
-import { environment } from "environments/environment";
-import { UploadImage } from "../origination-external-callback.store";
-import { SharedService } from "app/shared/shared.service";
-import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+  Validators,
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { environment } from 'environments/environment';
+import { UploadImage } from '../origination-external-callback.store';
+import { SharedService } from 'app/shared/shared.service';
+import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { SuccessModalComponent } from '../digital-sign/success-modal/success-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  GenericValueData,
+  GenericValueInfoModel,
+} from 'app/shared/models/generic-value.model';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
-  selector: "app-document-upload",
-  templateUrl: "./document-upload.component.html",
-  styleUrls: ["./document-upload.component.scss"]
+  selector: 'app-document-upload',
+  templateUrl: './document-upload.component.html',
+  styleUrls: ['./document-upload.component.scss'],
 })
 export class DocumentUploadComponent implements OnInit {
   documentUploadForm!: FormGroup;
-  documentNames: any[] = [];
-  genericvalue = "DOCUMENTNAME";
+  documentNames: GenericValueData[] | undefined;
+  genericvalue = 'DOCUMENTNAME';
   currentIndex = 0;
   percentDone: number | any;
   uploadSuccess: boolean | any;
-  isUploading: boolean = false;
+  isUploading = false;
   uploadingFile: string | any;
   requestSubscription: Subscription | any;
   selectedIndex: number | any;
-  noImage = "assets/images/document/upload-icon.svg";
+  noImage = 'assets/images/document/upload-icon.svg';
   ACTION_NAME = UploadImage.BROWSE;
 
-  @ViewChild("fileInput") fileInput: ElementRef | any;
+  @ViewChild('fileInput') fileInput: ElementRef | any;
   customerDetails: any;
   originationId: any;
   customerId: any;
@@ -53,44 +58,44 @@ export class DocumentUploadComponent implements OnInit {
     private snack: MatSnackBar,
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.originationId = JSON.parse(
-      <string>sessionStorage.getItem("originationId")
+      <string>sessionStorage.getItem('originationId'),
     );
-    this.customerId = sessionStorage.getItem("customerId");
+    this.customerId = sessionStorage.getItem('customerId');
     this.getDocumentName();
     this.buildDocumentUploadForm();
     this.initialFormLoading();
   }
 
   initialFormLoading() {
-    this.documents.push(this.createDocumentItem(""));
-    for (var i = 0; i < 2; i++) {
-      this.documentPages(0).push(this.addNewPage(i, ""));
+    this.documents.push(this.createDocumentItem(''));
+    for (let i = 0; i < 2; i++) {
+      this.documentPages(0).push(this.addNewPage(i, ''));
     }
   }
 
   getDocumentName() {
     this.apiService
-      .genericValue("Common", [this.genericvalue])
-      .subscribe((res) => {
+      .genericValue('Common', [this.genericvalue])
+      .subscribe((res: IcHttpResponseModel<GenericValueInfoModel>) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.documentNames = res?.data?.DOCUMENTNAME;
+          this.documentNames = res?.data?.['DOCUMENTNAME'];
         }
       });
   }
 
   change(e: any, documentIndex: number) {
     const documentNameControl = this.getDocumentFormControl(
-      "documentName",
-      documentIndex
+      'documentName',
+      documentIndex,
     );
     const documentNumberControl = this.getDocumentFormControl(
-      "documentNumber",
-      documentIndex
+      'documentNumber',
+      documentIndex,
     );
 
     documentNameControl.valueChanges.subscribe(() => {
@@ -105,66 +110,68 @@ export class DocumentUploadComponent implements OnInit {
       }
     });
     if (docPresent > 1) {
-      documentNameControl.setValue("");
+      documentNameControl.setValue('');
       documentNameControl.setErrors({ doumentAlreadyExist: true });
       this.cdr.markForCheck();
     }
     if (e?.value) {
-      const index = this.documentNames.findIndex(
-        (item: any) => item.name === e?.value
-      );
-      if (this.documentNames[index]) this.documentNames[index].selected = true;
+      const index =
+        this.documentNames?.findIndex(
+          (item: GenericValueData) => item.values === e?.value,
+        ) || 0;
+      if (this.documentNames && this.documentNames[index])
+        this.documentNames[index]!.selected = true;
     }
   }
 
   getDocumentFormControl(
     controlName: string,
-    documentIndex: number
+    documentIndex: number,
   ): FormControl {
     return this.documents.at(documentIndex).get(controlName) as FormControl;
   }
 
   clearDocumentValues(documentIndex: number): void {
     const documentControl = this.documents.at(documentIndex);
-    documentControl.get("documentNumber")?.setValue("");
-    documentControl.get("verifiedMobileNumber")?.setValue("");
+    documentControl.get('documentNumber')?.setValue('');
+    documentControl.get('verifiedMobileNumber')?.setValue('');
 
     this.documentPages(documentIndex).controls.forEach((control) => {
-      this.fileInput.nativeElement.value = "";
-      control.get("fileUrl")?.patchValue("");
+      this.fileInput.nativeElement.value = '';
+      control.get('fileUrl')?.patchValue('');
     });
   }
 
   buildDocumentUploadForm() {
     this.documentUploadForm = this.fb.group({
-      documents: this.fb.array([])
+      documents: this.fb.array([]),
     });
   }
 
   get documents(): FormArray {
-    return this.documentUploadForm.get("documents") as FormArray;
+    return this.documentUploadForm.get('documents') as FormArray;
   }
 
   createDocumentItem(data?: any) {
     return this.fb.group({
       documentName: [
         data?.documentName ? data?.documentName : null,
-        Validators.required
+        Validators.required,
       ],
       documentNumber: [
         data?.documentNumber ? data?.documentNumber : null,
-        Validators.required
+        Validators.required,
       ],
-      verifiedMobileNumber: [data?.phoneNumber ?? ""],
-      pages: this.fb.array([])
+      verifiedMobileNumber: [data?.phoneNumber ?? ''],
+      pages: this.fb.array([]),
     });
   }
 
   addDocumentItem() {
     this.documents.push(this.createDocumentItem());
     this.currentIndex++;
-    for (var i = 0; i < 2; i++) {
-      this.documentPages(this.currentIndex).push(this.addNewPage(i, ""));
+    for (let i = 0; i < 2; i++) {
+      this.documentPages(this.currentIndex).push(this.addNewPage(i, ''));
     }
   }
 
@@ -174,37 +181,37 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   documentPages(index: number): FormArray {
-    return this.documents.at(index).get("pages") as FormArray;
+    return this.documents.at(index).get('pages') as FormArray;
   }
 
   addNewPage(side: number, data?: any): FormGroup {
     return this.fb.group({
-      id: [data?.documentId ? data?.documentId : "", Validators.required],
+      id: [data?.documentId ? data?.documentId : '', Validators.required],
       fileUrl: [
-        data?.fileUrl ? `${MICROSERVICE_URL}${data?.fileUrl}` : "",
-        Validators.required
+        data?.fileUrl ? `${MICROSERVICE_URL}${data?.fileUrl}` : '',
+        Validators.required,
       ],
       documentSide: [side, Validators.required],
-      fileNameValue: [""],
+      fileNameValue: [''],
       documentTitle: [this.getPageName(side), Validators.required],
       scan: [false],
-      isUploaded: [false]
+      isUploaded: [false],
     });
   }
 
   getPageName(side: number) {
     switch (side) {
       case 0:
-        return "Front Side";
+        return 'Front Side';
       case 1:
-        return "Back Side";
+        return 'Back Side';
       default:
-        return "Other";
+        return 'Other';
     }
   }
 
   addDocumentPage(docIndex: number) {
-    let pagesLength = this.documents.at(docIndex).get("pages") as FormArray;
+    const pagesLength = this.documents.at(docIndex).get('pages') as FormArray;
     console.log(pagesLength);
     let count = pagesLength.length;
 
@@ -212,7 +219,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   removeDocumentPage(index: number, pageIndex: number) {
-    const documentId = this.documentPages(index).at(pageIndex).get("id")?.value;
+    const documentId = this.documentPages(index).at(pageIndex).get('id')?.value;
     if (!documentId) {
       this.documentPages(index).removeAt(pageIndex);
       return;
@@ -232,8 +239,8 @@ export class DocumentUploadComponent implements OnInit {
 
   restrictUpload(event: Event, document: FormGroup | any) {
     if (
-      !document.get("documentName")?.valid ||
-      !document.get("documentNumber")?.valid
+      !document.get('documentName')?.valid ||
+      !document.get('documentNumber')?.valid
     ) {
       event.preventDefault();
       document.markAllAsTouched();
@@ -242,17 +249,17 @@ export class DocumentUploadComponent implements OnInit {
 
   onFileSelect(e: any, documentIndex: number, index: number) {
     if (
-      !this.documents.at(documentIndex)?.get("documentName")?.value ||
-      !this.documents.at(documentIndex)?.get("documentNumber")?.value
+      !this.documents.at(documentIndex)?.get('documentName')?.value ||
+      !this.documents.at(documentIndex)?.get('documentNumber')?.value
     ) {
-      this.fileInput.nativeElement.value = "";
-      this.documents.at(documentIndex)?.get("documentNumber")?.markAsTouched();
-      this.documents.at(documentIndex)?.get("documentName")?.markAsTouched();
+      this.fileInput.nativeElement.value = '';
+      this.documents.at(documentIndex)?.get('documentNumber')?.markAsTouched();
+      this.documents.at(documentIndex)?.get('documentName')?.markAsTouched();
       return;
     }
     this.documentPages(documentIndex)
       ?.at(index)
-      .get("fileNameValue")
+      .get('fileNameValue')
       ?.patchValue(e.target.files[0].name);
     if (e.target.files[0]) {
       let count = 0;
@@ -260,19 +267,19 @@ export class DocumentUploadComponent implements OnInit {
         this.documentPages(documentIndex).controls.forEach(
           (docControle: FormGroup | any) => {
             if (
-              docControle.get("fileNameValue")?.value == e.target.files[0].name
+              docControle.get('fileNameValue')?.value == e.target.files[0].name
             ) {
               count++;
             }
-          }
+          },
         );
 
         if (count > 1) {
           this.removeImage(documentIndex, index);
-          this.snack.open("File Already Uploaded", "Ok", {
+          this.snack.open('File Already Uploaded', 'Ok', {
             duration: 3000,
-            verticalPosition: "top",
-            horizontalPosition: "right"
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
           });
           return;
         } else {
@@ -282,10 +289,12 @@ export class DocumentUploadComponent implements OnInit {
             const fReader = new FileReader();
             fReader.readAsDataURL(file);
             fReader.onloadend = (_event: any) => {
-              let base64File = _event.target.result;
+              const base64File = _event.target.result;
               this.uploadDocument(file, documentIndex, index, base64File);
             };
-          } catch (error) {}
+          } catch (error) {
+            console.log(error);
+          }
         }
       }, 100);
     }
@@ -293,12 +302,12 @@ export class DocumentUploadComponent implements OnInit {
 
   otherUpload(e: any, documentIndex: number) {
     if (
-      !this.documents.at(documentIndex)?.get("documentName")?.value &&
-      !this.documents.at(documentIndex)?.get("documentNumber")?.value
+      !this.documents.at(documentIndex)?.get('documentName')?.value &&
+      !this.documents.at(documentIndex)?.get('documentNumber')?.value
     ) {
-      this.fileInput.nativeElement.value = "";
-      this.documents.at(documentIndex)?.get("documentNumber")?.markAsTouched();
-      this.documents.at(documentIndex)?.get("documentName")?.markAsTouched();
+      this.fileInput.nativeElement.value = '';
+      this.documents.at(documentIndex)?.get('documentNumber')?.markAsTouched();
+      this.documents.at(documentIndex)?.get('documentName')?.markAsTouched();
 
       return;
     }
@@ -308,59 +317,59 @@ export class DocumentUploadComponent implements OnInit {
         this.documentPages(documentIndex).controls.forEach(
           (docControle: FormGroup | any) => {
             if (
-              docControle.get("fileNameValue")?.value == e.target.files[0].name
+              docControle.get('fileNameValue')?.value == e.target.files[0].name
             ) {
               otherCount++;
-              if (otherCount > 0) {
-              }
             }
-          }
+          },
         );
         if (otherCount > 1) {
-          this.snack.open("File Already Uploaded", "Ok", {
+          this.snack.open('File Already Uploaded', 'Ok', {
             duration: 3000,
-            verticalPosition: "top",
-            horizontalPosition: "right"
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
           });
           return;
         } else {
-          let pagesLength = this.documents
+          const pagesLength = this.documents
             .at(documentIndex)
-            .get("pages") as FormArray;
-          let count = pagesLength.length;
+            .get('pages') as FormArray;
+          const count = pagesLength.length;
           this.selectedIndex = count;
           try {
             const fileOther = e.target.files[0];
             const fReader = new FileReader();
             fReader.readAsDataURL(fileOther);
             fReader.onloadend = (_event: any) => {
-              let base64FileOther = _event.target.result;
+              const base64FileOther = _event.target.result;
               this.addDocumentPage(documentIndex);
               this.uploadDocument(
                 fileOther,
                 documentIndex,
                 count,
-                base64FileOther
+                base64FileOther,
               );
               this.documentPages(documentIndex)
                 .at(count - 1)
-                .get("fileNameValue")
+                .get('fileNameValue')
                 ?.patchValue(e.target.files[0].name);
             };
-          } catch (error) {}
+          } catch (error) {
+            console.log(error);
+          }
         }
       }, 100);
     }
   }
 
   removeImage(docindex: any, index: any) {
-    const documentId = this.documentPages(docindex).at(index).get("id")?.value;
+    const documentId = this.documentPages(docindex).at(index).get('id')?.value;
     if (!documentId) {
       return;
     }
     this.apiService.deleteDocument(documentId).subscribe(() => {
-      this.documentPages(docindex).at(index).get("fileUrl")?.patchValue("");
-      this.documentPages(docindex).at(index).get("id")?.patchValue("");
+      this.documentPages(docindex).at(index).get('fileUrl')?.patchValue('');
+      this.documentPages(docindex).at(index).get('id')?.patchValue('');
     });
   }
 
@@ -368,57 +377,56 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadingFile = file.name;
     this.isUploading = true;
 
-    let documentName = this.documents
+    const documentName = this.documents
       .at(documentIndex)
-      .get("documentName")?.value;
-    let formData = new FormData();
-    let data = {
+      .get('documentName')?.value;
+    const formData = new FormData();
+    const data = {
       documentName: documentName,
       documentType: this.getDocType(documentName),
-      documentNumber: this.documents.at(documentIndex).get("documentNumber")
+      documentNumber: this.documents.at(documentIndex).get('documentNumber')
         ?.value,
       documentSide:
-        this.documentPages(documentIndex).at(index).get("documentSide")?.value +
+        this.documentPages(documentIndex).at(index).get('documentSide')?.value +
         1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc Varifiction"
+      verificationType: 'kyc Varifiction',
     };
-    formData.append("data", JSON.stringify(data));
-    formData.append("file", file);
-    formData.append("module", "document");
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', file);
+    formData.append('module', 'document');
     this.apiService.uploadDocument(formData).subscribe((event: any) => {
       if (event.type === HttpEventType.UploadProgress) {
         this.percentDone = Math.round((100 * event.loaded) / event.total);
       } else if (event instanceof HttpResponse) {
-        let responseBody: any = event;
+        const responseBody: any = event;
         this.uploadSuccess = true;
         this.percentDone = 0;
         this.isUploading = false;
         this.documentPages(documentIndex)
           .at(index)
-          .get("id")
+          .get('id')
           ?.patchValue(responseBody?.body?.data?.documentId);
 
         console.log(this.documents);
         this.documentPages(documentIndex)
           .at(index)
-          .get("fileUrl")
+          .get('fileUrl')
           ?.patchValue(base64File);
         this.cdr.markForCheck();
       }
-    }),
-      () => {};
+    });
   }
 
   getDocType(docName: string) {
     let docType;
-    if (docName === "Aadhar Card" || docName === "Aadhar card") {
-      docType = "Aadhar card";
-    } else if (docName === "Pan Card" || docName === "Pan card") {
-      docType = "Pan card";
-    } else if (docName === "Passport") {
-      docType = "Passport";
+    if (docName === 'Aadhar Card' || docName === 'Aadhar card') {
+      docType = 'Aadhar card';
+    } else if (docName === 'Pan Card' || docName === 'Pan card') {
+      docType = 'Pan card';
+    } else if (docName === 'Passport') {
+      docType = 'Passport';
     }
     return docType;
   }
@@ -432,8 +440,8 @@ export class DocumentUploadComponent implements OnInit {
       (item: any) => ({
         docIds: item?.pages
           ?.map((page: any) => page?.id)
-          ?.filter((page: any) => page)
-      })
+          ?.filter((page: any) => page),
+      }),
     );
 
     const payload: any = {};
@@ -443,11 +451,11 @@ export class DocumentUploadComponent implements OnInit {
       if (res?.statusCode === 200 && res?.data) {
         const dialogref = this.dialog.open(SuccessModalComponent, {
           data: {
-            title: "Document Uploaded Successfully"
+            title: 'Document Uploaded Successfully',
           },
-          width: "40%"
+          width: '40%',
         });
-        dialogref.afterClosed().subscribe((_) => {
+        dialogref.afterClosed().subscribe(() => {
           setTimeout(() => {
             window.close();
           }, 5000);

@@ -48,7 +48,7 @@
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
       (customDocumentForm)="customDocumentForm($event)"
-      (onBackEvent)="goBack()"
+      (backEvent)="goBack()"
     ></app-other-documents>
   </div>
   <div class="align_fdForm" fxFlex="60" *ngIf="verifyStep('book')">

@@ -3,39 +3,36 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { AbstractControl, FormControl } from "@angular/forms";
+  SimpleChanges,
+} from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
-  selector: "app-searchable-select",
-  templateUrl: "./searchable-select.component.html",
-  styleUrls: ["./searchable-select.component.scss"]
+  selector: 'app-searchable-select',
+  templateUrl: './searchable-select.component.html',
+  styleUrls: ['./searchable-select.component.scss'],
 })
-export class SearchableSelectComponent implements OnInit, OnChanges {
-  filterFormControl: FormControl = new FormControl("");
+export class SearchableSelectComponent implements OnChanges {
+  filterFormControl: FormControl = new FormControl('');
   @Input() control: AbstractControl = new FormControl();
   @Input() items: any[] | any;
-  @Input() searchPlaceholder: string = "Search";
+  @Input() searchPlaceholder = 'Search';
   @Input() bindValueKey: string | any;
   @Input() bindLabelKey: string | any;
   @Input() inputLabel: string | any;
   @Input() readonly: boolean | any;
-  @Input() multiple: boolean = false;
-  @Input() customClass: string = "";
-  @Input() skipLabel: boolean = false;
-  @Input() duplicateValue: boolean = false;
-  @Input() customDocOptionWidth: string = "";
+  @Input() multiple = false;
+  @Input() customClass = '';
+  @Input() skipLabel = false;
+  @Input() duplicateValue = false;
+  @Input() customDocOptionWidth = '';
   @Input() customInputHeight: string | any;
   @Input() displayLabel: string | any;
   @Input() showOutsideLabel: any = false;
   @Input() currencyCode: any;
 
   @Output() selectionChange = new EventEmitter();
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.items && this.bindLabelKey && this.bindValueKey) {
@@ -44,7 +41,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges {
           label: i[this.bindLabelKey] ?? i,
           value: i[this.bindValueKey] ?? i,
           display: i[this.displayLabel] ?? i,
-          disabled: i?.disabled ?? false
+          disabled: i?.disabled ?? false,
         }))
         .sort((a: any, b: any) => {
           const labelA = String(a.label);
@@ -53,9 +50,8 @@ export class SearchableSelectComponent implements OnInit, OnChanges {
         });
     }
   }
-  ngOnInit(): void {}
 
   trimWhitespaces(value: any) {
-    if (!!value.trim()) return;
+    if (value.trim()) return;
   }
 }

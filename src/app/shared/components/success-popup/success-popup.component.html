@@ -14,7 +14,7 @@
   <div
     fxLayout="row"
     fxLayoutAlign="center center"
-    *ngIf="typeOfPopup == 'scheduleCall'"
+    *ngIf="typeOfPopup === 'scheduleCall'"
   >
     <div fxFlex="90" fxLayout="row" fxLayoutAlign="space-between center">
       <mat-card
@@ -34,7 +34,7 @@
   </div>
   <div
     class="alertText"
-    *ngIf="isStageAvilable && typeOfPopup != 'scheduleCall'"
+    *ngIf="isStageAvilable && typeOfPopup !== 'scheduleCall'"
   >
     <div>We will review and get back to you.</div>
   </div>

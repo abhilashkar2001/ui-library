@@ -8,9 +8,8 @@ describe('ToolbarTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarTabComponent ]
-    })
-    .compileComponents();
+      declarations: [ToolbarTabComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ToolbarTabComponent);
     component = fixture.componentInstance;

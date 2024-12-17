@@ -1,23 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { TrackingService } from "../../tracking-service";
-import { FormControl } from "@angular/forms";
-import { debounceTime } from "rxjs/operators";
-import { ProductListConstant } from "./product-list-card.constant";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TrackingService } from '../../tracking-service';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { ProductListConstant } from './product-list-card.constant';
 
 @Component({
-  selector: "app-product-list-card",
-  templateUrl: "./product-list-card.component.html",
-  styleUrls: ["./product-list-card.component.scss"]
+  selector: 'app-product-list-card',
+  templateUrl: './product-list-card.component.html',
+  styleUrls: ['./product-list-card.component.scss'],
 })
 export class ProductListCardComponent implements OnInit {
   productList: any = [];
   searchFilter = ProductListConstant.DEFAULT_CATEGORIES;
   categoryList = ProductListConstant.CATEGORY_LIST;
-  searchControl: FormControl = new FormControl("");
-  searchParam: string = "";
+  searchControl: FormControl = new FormControl('');
+  searchParam = '';
 
-  constructor(private route: Router, private api: TrackingService) {}
+  constructor(
+    private route: Router,
+    private api: TrackingService,
+  ) {}
 
   ngOnInit(): void {
     this.searchControl.valueChanges
@@ -36,14 +39,14 @@ export class ProductListCardComponent implements OnInit {
     const filterItem = {
       category:
         this.searchFilter === ProductListConstant.DEFAULT_CATEGORIES
-          ? ""
+          ? ''
           : this.searchFilter,
-      searchParam: this.searchParam
+      searchParam: this.searchParam,
     };
     this.api
       .getProductList(
-        parseInt(<string>sessionStorage.getItem("trackingMobile")),
-        filterItem
+        parseInt(<string>sessionStorage.getItem('trackingMobile')),
+        filterItem,
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
@@ -64,7 +67,7 @@ export class ProductListCardComponent implements OnInit {
    */
   openProduct(product: any) {
     this.route.navigate([`tracking/summary/${product?.originationId}`], {
-      queryParams: { type: product.type }
+      queryParams: { type: product.type },
     });
   }
 
@@ -75,18 +78,18 @@ export class ProductListCardComponent implements OnInit {
    */
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
-      case "pending":
-        return "highlightPending";
-      case "ongoing":
-        return "highlightOngoing";
-      case "approved":
-        return "highlightApproved";
-      case "rejected":
-        return "highlightRejected";
-      case "expired":
-        return "highlightExpired";
+      case 'pending':
+        return 'highlightPending';
+      case 'ongoing':
+        return 'highlightOngoing';
+      case 'approved':
+        return 'highlightApproved';
+      case 'rejected':
+        return 'highlightRejected';
+      case 'expired':
+        return 'highlightExpired';
       default:
-        return "";
+        return '';
     }
   }
 

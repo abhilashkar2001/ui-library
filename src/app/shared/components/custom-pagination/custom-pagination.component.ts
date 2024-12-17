@@ -6,25 +6,25 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+  SimpleChanges,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface PaginationValue {
   page: number;
   pageSize: number;
 }
 @Component({
-  selector: "app-custom-pagination",
-  templateUrl: "./custom-pagination.component.html",
-  styleUrls: ["./custom-pagination.component.scss"],
+  selector: 'app-custom-pagination',
+  templateUrl: './custom-pagination.component.html',
+  styleUrls: ['./custom-pagination.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CustomPaginationComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CustomPaginationComponent
   implements OnInit, OnChanges, ControlValueAccessor
@@ -37,7 +37,7 @@ export class CustomPaginationComponent
   @Output() customPageEvent = new EventEmitter<{}>();
   currentPage: number | any;
   pageAction: string | any;
-  selectedSize: number = 5;
+  selectedSize = 5;
   onChange() {}
   onTouched() {}
 
@@ -57,18 +57,18 @@ export class CustomPaginationComponent
     this.updateVisiblePages();
   }
 
-  totalPages: number = 20;
+  totalPages = 20;
   visiblePages: any;
-  totalRecords: number = 0;
-  lastrecord: number = 0;
-  firstRecord: number = 0;
+  totalRecords = 0;
+  lastrecord = 0;
+  firstRecord = 0;
 
   ngOnInit(): void {
     // this.updateRecord(this.totalPages, this.value.pageSize, 1);
     this.updateVisiblePages();
-    if (sessionStorage.getItem("fromDate")) {
-      sessionStorage.removeItem("fromDate");
-      sessionStorage.removeItem("toDate");
+    if (sessionStorage.getItem('fromDate')) {
+      sessionStorage.removeItem('fromDate');
+      sessionStorage.removeItem('toDate');
     }
   }
 
@@ -103,7 +103,7 @@ export class CustomPaginationComponent
         ...this.value,
         page: 1,
         pageSize:
-          changes?.filterValue?.currentValue?.pageSize || this.selectedSize
+          changes?.filterValue?.currentValue?.pageSize || this.selectedSize,
       };
       this.updateTotalPages();
       this.applyReset(this.totalPages, this.value.pageSize, 1);
@@ -119,7 +119,7 @@ export class CustomPaginationComponent
     this.currentPage = page;
     this.updateVisiblePages();
     this.onChange();
-    const customtable: any = document.querySelector("#customtable");
+    const customtable: any = document.querySelector('#customtable');
     customtable.scrollTo(0, 0);
   }
 
@@ -137,14 +137,14 @@ export class CustomPaginationComponent
     const startIndex = Math.max(
       Math.min(
         this.value.page - Math.ceil(length / 2),
-        this.totalPages - length
+        this.totalPages - length,
       ),
-      0
+      0,
     );
     if (length > 0) {
       this.visiblePages = Array.from(
         new Array(length).keys(),
-        (item) => item + startIndex + 1
+        (item) => item + startIndex + 1,
       );
       if (
         this.currentPage != this.totalPages &&
@@ -153,7 +153,7 @@ export class CustomPaginationComponent
         this.visiblePages[this.visiblePages.length - 1] != this.totalPages
       ) {
         if (this.totalPages > 6) {
-          this.visiblePages.push("...");
+          this.visiblePages.push('...');
         }
         this.visiblePages.push(this.totalPages);
       }

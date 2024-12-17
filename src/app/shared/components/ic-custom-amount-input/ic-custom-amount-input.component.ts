@@ -5,63 +5,59 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { AbstractControl, FormControl } from "@angular/forms";
-import { createMask } from "app/shared/directives/input-mask/constants";
-import { findCurrency } from "app/shared/helpers/utils";
-import { TokenStorageService } from "app/shared/token-storage.service";
+  SimpleChanges,
+} from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { createMask } from 'app/shared/directives/input-mask/constants';
+import { findCurrency } from 'app/shared/helpers/utils';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-ic-custom-amount-input",
-  templateUrl: "./ic-custom-amount-input.component.html",
-  styleUrls: ["./ic-custom-amount-input.component.scss"]
+  selector: 'app-ic-custom-amount-input',
+  templateUrl: './ic-custom-amount-input.component.html',
+  styleUrls: ['./ic-custom-amount-input.component.scss'],
 })
 export class IcCustomAmountInput implements OnChanges {
-  @Input("direction") direction: string | undefined | null;
-  @Input("control") control!: AbstractControl | undefined | null;
-  @Input("isdControl") isdControl: AbstractControl | undefined | null =
-    new FormControl("");
-  @Input("suffixDropdownControl") suffixDropdownControl:
-    | AbstractControl
-    | undefined
-    | null;
-  @Input("inputLabel") inputLabel: string = "";
-  @Input("matSuffix") matSuffix: string | undefined;
-  @Input("customLabelClass") customLabelClass: string | undefined;
-  @Input("customClass") customClass: string | undefined;
-  @Input("hintText") hintText: string | undefined;
-  @Input("readonly") readonly: boolean = false;
-  @Input("isdCode") isdCode: any;
-  @Input("currencyCode") currencyCode: string | any;
-  @Input("suffixDropdown") suffixDropdown: any;
-  @Input("verify") verifyBtn: boolean = false;
-  @Input("verifyMob") verifyMobBtn: boolean = false;
-  @Input("errorMessage") errorMessage: string = "";
-  @Input("country") country: any;
-  @Input("showInfoIcon") showInfoIcon: boolean = false;
-  @Input("hide") hide: boolean = false;
+  @Input() direction: string | undefined | null;
+  @Input() control!: AbstractControl | undefined | null;
+  @Input() isdControl: AbstractControl | undefined | null = new FormControl('');
+  @Input() suffixDropdownControl: AbstractControl | undefined | null;
+  @Input() inputLabel = '';
+  @Input() matSuffix: string | undefined;
+  @Input() customLabelClass: string | undefined;
+  @Input() customClass: string | undefined;
+  @Input() hintText: string | undefined;
+  @Input() readonly = false;
+  @Input() isdCode: any;
+  @Input() currencyCode: string | any;
+  @Input() suffixDropdown: any;
+  @Input('verify') verifyBtn = false;
+  @Input('verifyMob') verifyMobBtn = false;
+  @Input() errorMessage = '';
+  @Input() country: any;
+  @Input() showInfoIcon = false;
+  @Input() hide = false;
   @Input() inputType: string | undefined; // New input for desired input type
-  @Input() proceedButton: boolean = false;
-  @Input("maxAmount") maxAmount: number | undefined;
-  @Input("minAmount") minAmount: number | undefined;
+  @Input() proceedButton = false;
+  @Input() maxAmount: number | undefined;
+  @Input() minAmount: number | undefined;
 
   @Output() onChange = new EventEmitter<any>();
   @Output() onKeyUp = new EventEmitter<any>();
 
-  isRequired: boolean = false;
+  isRequired = false;
   currencyMask: any;
   currentCurrency: any;
   profileInfo: any;
   constructor(
     private cdr: ChangeDetectorRef,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
   ) {
     this.profileInfo = this.tokenService.getUser();
     this.currentCurrency = findCurrency(this.profileInfo.branchCrncyCode);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["currencyCode"]?.currentValue) {
+    if (changes['currencyCode']?.currentValue) {
       this.cdr.markForCheck();
     }
   }
@@ -70,12 +66,12 @@ export class IcCustomAmountInput implements OnChanges {
     if (this.control) this.isRequired = this.checkIfRequired(this.control);
 
     this.currencyMask = createMask({
-      alias: "numeric",
+      alias: 'numeric',
       groupSeparator: `${this.currentCurrency?.thousandsSeparator}`,
       // prefix: `${this.currentCurrency?.symbol} `,
       digits: 3,
       digitsOptional: false,
-      placeholder: "0",
+      placeholder: '0',
       allowMinus: false,
       autoUnmask: false,
       unmaskAsNumber: false,
@@ -92,13 +88,13 @@ export class IcCustomAmountInput implements OnChanges {
 
       onUnMask: (maskedValue: string) => {
         return maskedValue;
-      }
+      },
     });
     this.currencyCode = this.profileInfo.branchCrncyCode;
   }
   formatLargeNumber(value: string): string {
-    let plainValue = value.replace(/,/g, "");
-    return plainValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const plainValue = value.replace(/,/g, '');
+    return plainValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   checkIfRequired(control: AbstractControl): boolean {
@@ -106,7 +102,7 @@ export class IcCustomAmountInput implements OnChanges {
       return false;
     }
     const validator = control.validator({} as FormControl);
-    return validator && validator["required"] ? true : false;
+    return validator && validator['required'] ? true : false;
   }
 
   handleChange(event: any) {

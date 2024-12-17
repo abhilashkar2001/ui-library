@@ -6,7 +6,7 @@
   <h3>Repayment Cycle</h3>
   <mat-card>
     <div fxLayout="row" fxLayoutGap="52px" fxLayoutAlign="start center">
-      <h3>{{ "Loan Account Number" | translate }}</h3>
+      <h3>{{ 'Loan Account Number' | translate }}</h3>
       <app-searchable-select
         fxFlex="24"
         [control]="repaymentCycleForm.get('debitAccount')"
@@ -19,7 +19,7 @@
       <h5 class="loanImfo">{{ installmentDetails?.loanType }}</h5>
     </div>
     <div fxLayout="row" fxLayoutGap="31px" fxLayoutAlign="start center">
-      <h3>{{ "Current Repayment cycle" | translate }}</h3>
+      <h3>{{ 'Current Repayment cycle' | translate }}</h3>
       <app-ic-custom-input
         fxFlex="24"
         [control]="repaymentCycleForm.get('currentRepayment')"
@@ -27,7 +27,7 @@
       ></app-ic-custom-input>
     </div>
     <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start center">
-      <h3>{{ "Request Repayment cycle" | translate }}</h3>
+      <h3>{{ 'Request Repayment cycle' | translate }}</h3>
       <app-searchable-select
         fxFlex="24"
         [control]="repaymentCycleForm.get('repayRequest')"

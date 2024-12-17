@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 const MICROSERVICE_URL = environment.microServiceURL;
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class BranchService {
-  private sendSign = new BehaviorSubject("");
+  private sendSign = new BehaviorSubject('');
 
   constructor(private httpClient: HttpClient) {}
   getEditSign = this.sendSign.asObservable();
@@ -18,7 +18,7 @@ export class BranchService {
   }
 
   getUploadSign() {
-    console.log("get value", this.uploadSign.asObservable());
+    console.log('get value', this.uploadSign.asObservable());
     return this.uploadSign.asObservable();
   }
 
@@ -30,11 +30,11 @@ export class BranchService {
    */
   uploadAndProgress(file: File) {
     console.log(file);
-    var formData = new FormData();
-    formData.append("file", file);
-    return this.httpClient.post("https://file.io", formData, {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post('https://file.io', formData, {
       reportProgress: true,
-      observe: "events"
+      observe: 'events',
     });
   }
   saveUploadSignature(payload: any) {
@@ -43,23 +43,23 @@ export class BranchService {
   saveDigitalSignDetails(payload: any): Observable<any> {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/origination-matser/saveDigitalSign`,
-      payload
+      payload,
     );
   }
 
   saveSignLater(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/signLaterSendEmail?originationId=${id}`
+      `${MICROSERVICE_URL}/signLaterSendEmail?originationId=${id}`,
     );
   }
   fetchApproveDetailsService(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/approvalStageSummary?originationId=${id}`
+      `${MICROSERVICE_URL}/fetchOfferAcceptRejectSummary/approvalStageSummary?originationId=${id}`,
     );
   }
   fetchSignImage(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/origination-matser/fetchDigitalSign?originationId=${id}`
+      `${MICROSERVICE_URL}/origination-matser/fetchDigitalSign?originationId=${id}`,
     );
   }
   sendEditsign(signid: any) {
@@ -68,12 +68,12 @@ export class BranchService {
   saveCustomerSign(payload: any): Observable<any> {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/signature/saveCustStageSignature`,
-      payload
+      payload,
     );
   }
   fetchCustomerSign(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${id}`
+      `${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${id}`,
     );
   }
 }

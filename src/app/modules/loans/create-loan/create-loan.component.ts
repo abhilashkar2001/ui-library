@@ -1,30 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoanService } from "app/shared/services/loan/loan.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import * as moment from "moment";
-import { debounceTime } from "rxjs/operators";
-import { CreateLoanConstant, CreateLoanEnum } from "./create-loan.constant";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { SharedService } from "app/shared/shared.service";
-import { merge, Subscription } from "rxjs";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import * as moment from 'moment';
+import { debounceTime } from 'rxjs/operators';
+import { CreateLoanConstant, CreateLoanEnum } from './create-loan.constant';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { SharedService } from 'app/shared/shared.service';
+import { merge, Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-create-loan",
-  templateUrl: "./create-loan.component.html",
-  styleUrls: ["./create-loan.component.scss"]
+  selector: 'app-create-loan',
+  templateUrl: './create-loan.component.html',
+  styleUrls: ['./create-loan.component.scss'],
 })
 export class CreateLoanComponent implements OnInit {
   personalLoanDetailsForm!: FormGroup | any;
   loanEnum = CreateLoanEnum;
   // decorates for component communication.
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel:
-    | ((value: Partial<any>) => void)
-    | any;
-  @Input("mobileVerifyInfo") mobileVerifyInfo: any;
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input() updateParentModel: ((value: Partial<any>) => void) | any;
+  @Input() mobileVerifyInfo: any;
 
   // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
@@ -34,13 +32,13 @@ export class CreateLoanComponent implements OnInit {
   holderTypeArray: any[] = [{}];
   disbursementTypeArray: any[] = [{}];
   staticOwnership = {
-    OWNERSHIP: []
+    OWNERSHIP: [],
   };
 
   disbursementType: string | any;
   loanDetails: any;
-  isDisabledMode: boolean = true;
-  isReadOnly: boolean = true;
+  isDisabledMode = true;
+  isReadOnly = true;
   loanCustomerId: string | any;
   accountList: any;
   currentDate = new Date();
@@ -55,7 +53,7 @@ export class CreateLoanComponent implements OnInit {
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
     private tokenStore: TokenStorageService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
@@ -63,12 +61,12 @@ export class CreateLoanComponent implements OnInit {
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currencySymboll = this.otherUserInfo?.currency;
-    const basisId: any = sessionStorage.getItem("loanBasisDetails");
+    const basisId: any = sessionStorage.getItem('loanBasisDetails');
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();
-    this.loanCustomerId = sessionStorage.getItem("customerId");
+    this.loanCustomerId = sessionStorage.getItem('customerId');
     if (this.loanCustomerId) this.getCustomerById();
-    var id = parseInt(<string>sessionStorage.getItem("loanDisburseId"));
+    const id = parseInt(<string>sessionStorage.getItem('loanDisburseId'));
     if (id) this.getLoanById(id);
     else this.initialForm();
   }
@@ -77,7 +75,7 @@ export class CreateLoanComponent implements OnInit {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0].lendingParameters.find(
-          (el: any) => el.currency == this.otherUserInfo.currency
+          (el: any) => el.currency == this.otherUserInfo.currency,
         );
       }
     });
@@ -112,8 +110,8 @@ export class CreateLoanComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
-          this.holderTypeArray = resp.data["HOLDERTYPE"];
-          this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
+          this.holderTypeArray = resp.data['HOLDERTYPE'];
+          this.disbursementTypeArray = resp.data['DISBURSEMENTTYPE'];
           if (
             this.personalLoanDetailsForm &&
             !this.mobileVerifyInfo?.individual
@@ -134,13 +132,13 @@ export class CreateLoanComponent implements OnInit {
         if (resp.statusCode === 200) {
           this.initialForm({
             ...resp?.data,
-            tenureDays: sessionStorage.getItem("tenureDays") || 0,
-            tenureYear: sessionStorage.getItem("tenureYear") || 0,
-            tenureMonth: sessionStorage.getItem("tenureMonth") || 0
+            tenureDays: sessionStorage.getItem('tenureDays') || 0,
+            tenureYear: sessionStorage.getItem('tenureYear') || 0,
+            tenureMonth: sessionStorage.getItem('tenureMonth') || 0,
           });
           if (
             this.holderTypeArray?.length > 0 &&
-            !this.personalLoanDetailsForm.get("holderType").value &&
+            !this.personalLoanDetailsForm.get('holderType').value &&
             !this.mobileVerifyInfo?.individual
           ) {
             this.setJointAsHolderType();
@@ -151,7 +149,7 @@ export class CreateLoanComponent implements OnInit {
       },
       () => {
         this.initialForm();
-      }
+      },
     );
   }
 
@@ -160,44 +158,44 @@ export class CreateLoanComponent implements OnInit {
    */
   setJointAsHolderType() {
     const jointHolderId = this.holderTypeArray.find(
-      (item) => item?.values === "Joint"
+      (item) => item?.values === 'Joint',
     )?.id;
-    this.personalLoanDetailsForm.get("holderType").setValue(jointHolderId);
+    this.personalLoanDetailsForm.get('holderType').setValue(jointHolderId);
   }
   /**
    * building  personalLoanDetailsForm form. & changeDetiction.
    * @param data is formData
    */
   initialForm(data?: any) {
-    var holderType = sessionStorage.getItem("loanHolderType");
+    const holderType = sessionStorage.getItem('loanHolderType');
     this.personalLoanDetailsForm = this.fb.group({
-      loanAmount: [data ? data.principalAmount : "", Validators.required],
-      tenureYear: [data ? data?.tenureYear : ""],
-      tenureMonth: [data ? data?.tenureMonth : ""],
-      tenureDays: [data ? data?.tenureDays : ""],
-      emiStartDate: [data ? data?.emiStartDate : "", Validators.required],
-      emiAmount: [data ? data?.emiAmount : "", [Validators.required]],
-      interestRate: [data ? data.interestRate : "", Validators.required],
-      interestPayable: [data ? data.interestPayable : "", Validators.required],
-      principlAmount: [data ? data.principalAmount : "", Validators.required],
-      holderType: [holderType ? holderType : "", Validators.required],
+      loanAmount: [data ? data.principalAmount : '', Validators.required],
+      tenureYear: [data ? data?.tenureYear : ''],
+      tenureMonth: [data ? data?.tenureMonth : ''],
+      tenureDays: [data ? data?.tenureDays : ''],
+      emiStartDate: [data ? data?.emiStartDate : '', Validators.required],
+      emiAmount: [data ? data?.emiAmount : '', [Validators.required]],
+      interestRate: [data ? data.interestRate : '', Validators.required],
+      interestPayable: [data ? data.interestPayable : '', Validators.required],
+      principlAmount: [data ? data.principalAmount : '', Validators.required],
+      holderType: [holderType ? holderType : '', Validators.required],
       totalPayableAmount: [
-        data ? data.totalPayableAmount : "",
-        Validators.required
+        data ? data.totalPayableAmount : '',
+        Validators.required,
       ],
-      disbursementType: [data ? data?.disbursementType : ""],
-      accountNumber: [data ? data?.accountNumber : ""],
+      disbursementType: [data ? data?.disbursementType : ''],
+      accountNumber: [data ? data?.accountNumber : ''],
       id: data?.id,
-      bankCode: [data ? data?.bankCode : ""],
+      bankCode: [data ? data?.bankCode : ''],
       accountType: this.loanEnum.INTERNAL,
-      ifscCode: [data ? data?.ifscCode : ""],
-      branchCode: [data ? data?.branchCode : ""],
-      confirmAccountNumber: ""
+      ifscCode: [data ? data?.ifscCode : ''],
+      branchCode: [data ? data?.branchCode : ''],
+      confirmAccountNumber: '',
     });
     // if (data) this.disbursementType = data?.disbursementType.toLowerCase();
 
     this.personalLoanDetailsForm
-      .get("accountNumber")
+      .get('accountNumber')
       .valueChanges.pipe(debounceTime(500))
       .subscribe((resp: any) => {
         if (
@@ -210,19 +208,19 @@ export class CreateLoanComponent implements OnInit {
       });
 
     const interestRate$ = this.personalLoanDetailsForm
-      .get("interestRate")
+      .get('interestRate')
       .valueChanges.pipe(debounceTime(500));
     const tenureDays$ = this.personalLoanDetailsForm
-      .get("tenureDays")
+      .get('tenureDays')
       .valueChanges.pipe(debounceTime(500));
     const tenureYear$ = this.personalLoanDetailsForm
-      .get("tenureYear")
+      .get('tenureYear')
       .valueChanges.pipe(debounceTime(500));
     const tenureMonth$ = this.personalLoanDetailsForm
-      .get("tenureMonth")
+      .get('tenureMonth')
       .valueChanges.pipe(debounceTime(500));
     const loanAmount$ = this.personalLoanDetailsForm
-      .get("loanAmount")
+      .get('loanAmount')
       .valueChanges.pipe(debounceTime(500));
 
     merge(
@@ -230,12 +228,12 @@ export class CreateLoanComponent implements OnInit {
       tenureDays$,
       tenureMonth$,
       tenureYear$,
-      loanAmount$
+      loanAmount$,
     ).subscribe((loanAmount) => {
       if (loanAmount)
         this.personalLoanDetailsForm
-          .get("principlAmount")
-          .setValue(this.personalLoanDetailsForm.get("loanAmount").value);
+          .get('principlAmount')
+          .setValue(this.personalLoanDetailsForm.get('loanAmount').value);
       if (
         this.personalLoanDetailsForm.value.interestRate &&
         this.personalLoanDetailsForm.value.loanAmount &&
@@ -271,27 +269,27 @@ export class CreateLoanComponent implements OnInit {
     this.calculateTenure(
       parseInt(this.personalLoanDetailsForm.value.tenureYear) || 0,
       parseInt(this.personalLoanDetailsForm.value.tenureMonth) || 0,
-      parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0
+      parseInt(this.personalLoanDetailsForm.value.tenureDays) || 0,
     ).then((result) => {
       const payload = {
         principleAmount: parseInt(
-          this.personalLoanDetailsForm.value.loanAmount
+          this.personalLoanDetailsForm.value.loanAmount,
         ),
         interestRate: parseFloat(
-          this.personalLoanDetailsForm.value.interestRate
+          this.personalLoanDetailsForm.value.interestRate,
         ),
         numberOfMonths: result,
-        firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY")
+        firstRepaymentDate: moment(new Date()).format('DD-MM-YYYY'),
       };
       this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
         this.personalLoanDetailsForm
-          .get("interestPayable")
+          .get('interestPayable')
           .setValue(Math.round(resp.data.totalInterest));
         this.personalLoanDetailsForm
-          .get("totalPayableAmount")
+          .get('totalPayableAmount')
           .setValue(Math.round(resp.data.totalRepaymentAmount));
         this.personalLoanDetailsForm
-          .get("emiAmount")
+          .get('emiAmount')
           .setValue(Math.round(resp.data.monthlyPayment));
       });
     });
@@ -301,15 +299,15 @@ export class CreateLoanComponent implements OnInit {
    * account number validation.
    */
   onChange() {
-    this.personalLoanDetailsForm.get("accountNumber").setValue(null);
+    this.personalLoanDetailsForm.get('accountNumber').setValue(null);
     if (
       this.personalLoanDetailsForm.value.accountNumber &&
       this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
     ) {
       this.validateAccountNumber(
-        this.personalLoanDetailsForm.value.accountNumber
+        this.personalLoanDetailsForm.value.accountNumber,
       );
-    } else this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
+    } else this.personalLoanDetailsForm.get('accountNumber').setErrors(null);
   }
 
   /**
@@ -320,10 +318,10 @@ export class CreateLoanComponent implements OnInit {
     this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
       if (!data) {
         this.personalLoanDetailsForm
-          .get("accountNumber")
+          .get('accountNumber')
           .setErrors({ invalidAccount: true });
       } else {
-        this.personalLoanDetailsForm.get("accountNumber").setErrors(null);
+        this.personalLoanDetailsForm.get('accountNumber').setErrors(null);
       }
     });
   }
@@ -334,12 +332,12 @@ export class CreateLoanComponent implements OnInit {
    */
   onDisbursementSelectionChanged() {
     this.disbursementType = (
-      this.staticData["DISBURSEMENTTYPE"] as { id: any; values: string }[]
+      this.staticData['DISBURSEMENTTYPE'] as { id: any; values: string }[]
     )
       .filter(
         (item: any) =>
           item?.id ==
-          this.personalLoanDetailsForm.controls["disbursementType"].value
+          this.personalLoanDetailsForm.controls['disbursementType'].value,
       )[0]
       ?.values.toLowerCase();
 
@@ -347,15 +345,15 @@ export class CreateLoanComponent implements OnInit {
       this.disbursementType.includes(this.loanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.personalLoanDetailsForm.value.accountType === this.loanEnum.INTERNAL
     ) {
-      this.personalLoanDetailsForm.controls["accountNumber"].setValidators([
-        Validators.required
+      this.personalLoanDetailsForm.controls['accountNumber'].setValidators([
+        Validators.required,
       ]);
     } else {
-      this.personalLoanDetailsForm.controls["accountNumber"].clearValidators();
+      this.personalLoanDetailsForm.controls['accountNumber'].clearValidators();
     }
 
     this.personalLoanDetailsForm.controls[
-      "accountNumber"
+      'accountNumber'
     ].updateValueAndValidity();
   }
 
@@ -370,42 +368,42 @@ export class CreateLoanComponent implements OnInit {
     }
     const loanAmmount = JSON.stringify({
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
-      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`
+      loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
     });
-    sessionStorage.setItem("loanAmmount", loanAmmount);
+    sessionStorage.setItem('loanAmmount', loanAmmount);
     const holder: any = (
-      this.staticData["HOLDERTYPE"] as { id: any; values: string }[]
+      this.staticData['HOLDERTYPE'] as { id: any; values: string }[]
     )
       .filter(
         (item: any) =>
-          item?.id == this.personalLoanDetailsForm.controls["holderType"].value
+          item?.id == this.personalLoanDetailsForm.controls['holderType'].value,
       )[0]
       ?.values.toLowerCase();
-    sessionStorage.setItem("loanHolderType", holder);
+    sessionStorage.setItem('loanHolderType', holder);
     this.getOwnershipIdByGeneric(holder);
-    this.snack.open(`Create Loan Details Saved !`, "OK", {
+    this.snack.open(`Create Loan Details Saved !`, 'OK', {
       duration: 4000,
-      verticalPosition: "top",
-      horizontalPosition: "right"
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
     });
-    sessionStorage.setItem("loanDisburseId", this.calculatePayload().id);
+    sessionStorage.setItem('loanDisburseId', this.calculatePayload().id);
     sessionStorage.setItem(
-      "tenureYear",
-      this.personalLoanDetailsForm.value.tenureYear
+      'tenureYear',
+      this.personalLoanDetailsForm.value.tenureYear,
     );
     sessionStorage.setItem(
-      "tenureMonth",
-      this.personalLoanDetailsForm.value.tenureMonth
+      'tenureMonth',
+      this.personalLoanDetailsForm.value.tenureMonth,
     );
     sessionStorage.setItem(
-      "tenureDays",
-      this.personalLoanDetailsForm.value.tenureDays
+      'tenureDays',
+      this.personalLoanDetailsForm.value.tenureDays,
     );
     this.updateParentModel({
       updateMasterSave: false,
-      disbursementDetails: this.calculatePayload()
+      disbursementDetails: this.calculatePayload(),
     });
-    this.onCustomSubmit.emit(this.personalLoanDetailsForm);
+    this.CustomSubmit.emit(this.personalLoanDetailsForm);
   }
 
   /**
@@ -413,25 +411,25 @@ export class CreateLoanComponent implements OnInit {
    * @returns payload
    */
   calculatePayload() {
-    var payload: any = {
+    const payload: any = {
       emiAmount: parseInt(this.personalLoanDetailsForm.value.emiAmount),
       interestRate: this.personalLoanDetailsForm.value.interestRate,
       interestPayable: parseInt(
-        this.personalLoanDetailsForm.value.interestPayable
+        this.personalLoanDetailsForm.value.interestPayable,
       ),
       principalAmount: parseInt(
-        this.personalLoanDetailsForm.value.principlAmount
+        this.personalLoanDetailsForm.value.principlAmount,
       ),
       totalPayableAmount: parseInt(
-        this.personalLoanDetailsForm.value.totalPayableAmount
+        this.personalLoanDetailsForm.value.totalPayableAmount,
       ),
       disbursementType: this.personalLoanDetailsForm.value.disbursementType,
       emiStartDate: moment(
-        this.personalLoanDetailsForm.value.emiStartDate
+        this.personalLoanDetailsForm.value.emiStartDate,
       ).format(),
       bankCode: this.personalLoanDetailsForm.value.bankCode,
       branchCode: this.personalLoanDetailsForm.value.branchCode,
-      ifscCode: this.personalLoanDetailsForm.value.ifscCode
+      ifscCode: this.personalLoanDetailsForm.value.ifscCode,
     };
     if (this.personalLoanDetailsForm.value?.id) {
       payload.id = this.personalLoanDetailsForm.value?.id;
@@ -451,9 +449,9 @@ export class CreateLoanComponent implements OnInit {
     payload.disbursementAccInfo = {
       accountNo: this.personalLoanDetailsForm.value.accountNumber,
       bankCode: this.personalLoanDetailsForm.value.bankCode,
-      branchCode: this.personalLoanDetailsForm.value.branchCode
+      branchCode: this.personalLoanDetailsForm.value.branchCode,
     };
-    console.log(payload, ".payload");
+    console.log(payload, '.payload');
     return payload;
   }
 
@@ -461,7 +459,7 @@ export class CreateLoanComponent implements OnInit {
    * navigating back screen.
    */
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   /**
@@ -474,36 +472,36 @@ export class CreateLoanComponent implements OnInit {
   calculateTotalDays(
     loanTenureYear: any,
     loanTenureMonth: any,
-    loanTenureDay: any
+    loanTenureDay: any,
   ) {
     const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
     return d;
   }
 
   get validateTenure() {
-    let totalDays = this.calculateTotalDays(
+    const totalDays = this.calculateTotalDays(
       this.personalLoanDetailsForm.value.tenureYear || 0,
       this.personalLoanDetailsForm.value.tenureMonth || 0,
-      this.personalLoanDetailsForm.value.tenureDays || 0
+      this.personalLoanDetailsForm.value.tenureDays || 0,
     );
-    let totalAllowedDays = this.calculateTotalDays(
+    const totalAllowedDays = this.calculateTotalDays(
       this.productDetails?.maximumTenorYear || 0,
       this.productDetails?.maximumTenorMonth || 0,
-      this.productDetails?.maximumTenorDay || 0
+      this.productDetails?.maximumTenorDay || 0,
     );
     return totalDays >= totalAllowedDays;
   }
 
   get validateMinimumTenure() {
-    let totalDays = this.calculateTotalDays(
+    const totalDays = this.calculateTotalDays(
       this.personalLoanDetailsForm.value.tenureYear || 0,
       this.personalLoanDetailsForm.value.tenureMonth || 0,
-      this.personalLoanDetailsForm.value.tenureDays || 0
+      this.personalLoanDetailsForm.value.tenureDays || 0,
     );
-    let MinimumAllowedDays = this.calculateTotalDays(
+    const MinimumAllowedDays = this.calculateTotalDays(
       this.productDetails?.minimumTenorYear || 0,
       this.productDetails?.minimumTenorMonth || 0,
-      this.productDetails?.minimumTenorDay || 0
+      this.productDetails?.minimumTenorDay || 0,
     );
     return totalDays <= MinimumAllowedDays;
   }
@@ -511,14 +509,14 @@ export class CreateLoanComponent implements OnInit {
   getOwnershipIdByGeneric(value: any) {
     let ownership = [];
     this.sharedService
-      .genericValue("Common", Object.keys(this.staticOwnership))
+      .genericValue('Common', Object.keys(this.staticOwnership))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          ownership = resp.data["OWNERSHIP"];
+          ownership = resp.data['OWNERSHIP'];
           this.ownerShipId = ownership.find(
-            (r: any) => r?.values?.toLowerCase() === value?.toLowerCase()
+            (r: any) => r?.values?.toLowerCase() === value?.toLowerCase(),
           )?.id;
-          sessionStorage.setItem("ownershipId", this.ownerShipId);
+          sessionStorage.setItem('ownershipId', this.ownerShipId);
         }
       });
   }

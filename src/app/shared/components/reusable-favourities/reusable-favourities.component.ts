@@ -1,25 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: "app-reusable-favourities",
-  templateUrl: "./reusable-favourities.component.html",
-  styleUrls: ["./reusable-favourities.component.scss"]
+  selector: 'app-reusable-favourities',
+  templateUrl: './reusable-favourities.component.html',
+  styleUrls: ['./reusable-favourities.component.scss'],
 })
-export class ReusableFavouritiesComponent implements OnInit {
+export class ReusableFavouritiesComponent {
   @Output() rediectTo: EventEmitter<any> = new EventEmitter<any>();
   @Input() items: any[] | any;
-  profileName = "payeeName";
+  profileName = 'payeeName';
   favouritesCard: any[] = [];
-  constructor() {}
 
-  ngOnInit(): void {
-    // this.getFavouritiesData();
-  }
   redirectTo(event: any) {
     this.rediectTo.emit(event);
   }
   getData(e: any) {
-    return e ? `${e[0]?.toUpperCase()}` : "";
+    return e ? `${e[0]?.toUpperCase()}` : '';
   }
 
   // getFavouritiesData() {

@@ -16,7 +16,12 @@ egret-sidebar {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 
-  transition-property: transform, width, min-width, max-width, -webkit-transform;
+  transition-property:
+    transform,
+    width,
+    min-width,
+    max-width,
+    -webkit-transform;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
 
@@ -44,5 +49,5 @@ egret-sidebar {
   left: 0;
   right: 0;
   z-index: 999;
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }

@@ -2,11 +2,11 @@
   <mat-icon (click)="close()" class="closebtn">clear</mat-icon>
   <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10">
     <div class="scantitle">
-      {{ "Scan your" }} {{ dialogData.name }}
-      {{ "to complete the verfication" }}
+      {{ 'Scan your' }} {{ dialogData.name }}
+      {{ 'to complete the verfication' }}
     </div>
     <div class="scansub">
-      {{ "Hold the device still, Look at the camera!" }}
+      {{ 'Hold the device still, Look at the camera!' }}
     </div>
   </div>
   <div class="video-container" fxLayoutAlign="center">
@@ -30,7 +30,7 @@
       *ngIf="scannedImage && !rescann"
       (click)="done()"
     >
-      {{ "DONE" }}
+      {{ 'DONE' }}
     </button>
     <button
       mat-stoked-button
@@ -39,7 +39,7 @@
       [ngClass]="perscentageCheck ? 'gray_Class' : ''"
       (click)="captureImage()"
     >
-      {{ "Scan" }}
+      {{ 'Scan' }}
     </button>
     <button
       mat-stroked-button
@@ -47,10 +47,10 @@
       *ngIf="scannedImage && !rescann"
       (click)="rescan()"
     >
-      {{ "Re-Scan" }}
+      {{ 'Re-Scan' }}
     </button>
     <button mat-stoked-button id="btn3" (click)="close()">
-      {{ "Back" }}
+      {{ 'Back' }}
     </button>
   </div>
 </div>

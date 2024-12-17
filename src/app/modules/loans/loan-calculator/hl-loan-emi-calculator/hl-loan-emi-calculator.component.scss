@@ -1,71 +1,71 @@
 .loan-emi-calculator .emi-result {
-    left: 68.5%;
+  left: 68.5%;
 }
 
 .row {
-    .col {
-        .space-between {
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            padding: 5px;
-            background: #FFF;
-            box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.09);
+  .col {
+    .space-between {
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+      background: #fff;
+      box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.09);
 
-            .plan-text {
-                color: rgba(43, 43, 43, 0.62);
-                font-family: Poppins;
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-            }
+      .plan-text {
+        color: rgba(43, 43, 43, 0.62);
+        font-family: Poppins;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
 
-            .text-value {
-                color: #000;
-                font-family: Poppins;
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-            }
-        }
+      .text-value {
+        color: #000;
+        font-family: Poppins;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
     }
+  }
 }
 
-
-
 .tenure-duration {
-    background-color: white;
-    border: none !important;
-    box-shadow: 0px 3px 10px #00000017;
-    border-radius: 8px;
-    margin-top: 5px;
+  background-color: white;
+  border: none !important;
+  box-shadow: 0px 3px 10px #00000017;
+  border-radius: 8px;
+  margin-top: 5px;
 }
 
 .inputSelect {
-    width: 90px !important;
-    background: #fffefe 0% 0% no-repeat padding-box;
-    border-radius: 8px;
-    opacity: 1;
-    margin-top: 0px;
-    // display: flow-root;
+  width: 90px !important;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  opacity: 1;
+  margin-top: 0px;
+  // display: flow-root;
 }
 
 ::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: 0px;
+  padding: 0px;
 }
 
-::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-outline {
-    color: white !important;
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
 }
 
 .vl {
-    height: 45px;
-    border-left: 1px solid #707070;
-    opacity: 0.45;
+  height: 45px;
+  border-left: 1px solid #707070;
+  opacity: 0.45;
 }
 
 ::ng-deep .inputSelect .mat-input-element {
-    margin-left: 25pt !important;
+  margin-left: 25pt !important;
 }

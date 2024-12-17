@@ -1,25 +1,35 @@
-import { Injectable } from "@angular/core";
-import { SessionStorageEnum } from "app/enum/session-storage.enum";
-import { ChecklistRouteObjModel } from "../models/checklist-model";
-import { LoanAccounts } from "../models/loan-account.model";
+import { Injectable } from '@angular/core';
+import { SessionStorageEnum } from 'app/enum/session-storage.enum';
+import { ChecklistRouteObjModel } from '../models/checklist-model';
+import { LoanAccounts } from '../models/loan-account.model';
+import {
+  GETCUSTOMERINFO,
+  GETLISTOFACCOUNTS,
+} from '../models/session-storage.model';
 
-export const RETURN_TO_SUMMARY = "returnToSummary";
+export const RETURN_TO_SUMMARY = 'returnToSummary';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class SessionStorageService {
   //WINDOW SESSION STORAGE
   private session = window.sessionStorage;
-
-  constructor() {}
 
   /**
    * stringfy the item and stored
    * @param key
    * @param value
    */
-  setItem(key: string, value: any) {
+  setItem(
+    key: string,
+    value:
+      | string
+      | number
+      | ChecklistRouteObjModel
+      | string[]
+      | GETCUSTOMERINFO,
+  ) {
     this.session.removeItem(key);
     this.session.setItem(key, JSON.stringify(value));
   }
@@ -29,10 +39,12 @@ export class SessionStorageService {
    * @param key of the item to be stored in session storage
    * @returns retun parsed object
    */
-  getItem(key: string): any {
-    const value: any = this.session.getItem(key);
+  getItem(key: string) {
+    const value = this.session.getItem(key);
     try {
-      return JSON.parse(value);
+      if (value) {
+        return JSON.parse(value);
+      }
     } catch (e) {
       return value;
     }
@@ -76,7 +88,7 @@ export class SessionStorageService {
     return this.getItem(SessionStorageEnum.CUSTOMER_INFO);
   }
 
-  setCustomerInfo(customerInfo: any) {
+  setCustomerInfo(customerInfo: GETCUSTOMERINFO) {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_INFO);
     this.setItem(SessionStorageEnum.CUSTOMER_INFO, customerInfo);
   }
@@ -87,7 +99,7 @@ export class SessionStorageService {
    */
   public getCheklistRouteObj() {
     const checklistRouteObj = this.getItem(
-      SessionStorageEnum.CHECKLIST_ROUTE_OBJ
+      SessionStorageEnum.CHECKLIST_ROUTE_OBJ,
     );
     return checklistRouteObj;
   }
@@ -114,7 +126,7 @@ export class SessionStorageService {
    */
   public getProcessCycleCode(): string {
     const processCycleCode: string = this.getItem(
-      SessionStorageEnum.PROCESS_CYCLE_CODE
+      SessionStorageEnum.PROCESS_CYCLE_CODE,
     );
     return processCycleCode;
   }
@@ -179,7 +191,7 @@ export class SessionStorageService {
    * This method will get the list of account stored in session storage
    * @returns will parse the list of account array getting from session storage and return
    */
-  public getListOfAccounts(): any[] {
+  public getListOfAccounts(): GETLISTOFACCOUNTS[] {
     const listOfAccounts = this.getItem(SessionStorageEnum.LIST_OF_ACCOUNTS);
     return listOfAccounts;
   }

@@ -5,30 +5,30 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { CardModel, Cards } from "app/shared/models/card.model";
-import { environment } from "environments/environment";
-import { GetStatementPopupComponent } from "../../get-statement-popup/get-statement-popup.component";
-import { MatDialog } from "@angular/material/dialog";
+  SimpleChanges,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { CardModel, Cards } from 'app/shared/models/card.model';
+import { environment } from 'environments/environment';
+import { GetStatementPopupComponent } from '../../get-statement-popup/get-statement-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 // import { CardModel, Cards } from "app/@core/models/card.model";
 
 @Component({
-  selector: "app-dashboard-card-preview",
-  templateUrl: "./dashboard-card-preview.component.html",
-  styleUrls: ["./dashboard-card-preview.component.scss"]
+  selector: 'app-dashboard-card-preview',
+  templateUrl: './dashboard-card-preview.component.html',
+  styleUrls: ['./dashboard-card-preview.component.scss'],
 })
 export class DashboardCardPreviewComponent implements OnInit, OnChanges {
   @Input() title!: string;
   @Input() cardList: Cards | any;
-  @Input("forexFilter") forexFilter: boolean | any;
+  @Input() forexFilter: boolean | any;
   @Output() selectedCard: EventEmitter<any> = new EventEmitter<any>();
   displayCard: CardModel | any;
-  currentIndex: number = 0;
+  currentIndex = 0;
   baseUrl = environment.microServiceURL;
   showDetails: FormControl<boolean> | any = new FormControl<boolean>(false);
-  toggleDetails: boolean = false;
+  toggleDetails = false;
 
   constructor(private dialog: MatDialog) {}
 
@@ -75,9 +75,9 @@ export class DashboardCardPreviewComponent implements OnInit, OnChanges {
     this.dialog.open(GetStatementPopupComponent, {
       data: {},
       disableClose: true,
-      height: "auto",
-      width: "55%",
-      panelClass: ["popup-class-approve"]
+      height: 'auto',
+      width: '55%',
+      panelClass: ['popup-class-approve'],
     });
   }
 }

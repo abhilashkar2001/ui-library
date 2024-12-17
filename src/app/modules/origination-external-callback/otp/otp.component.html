@@ -6,8 +6,8 @@
   >
     <h1 class="apply-poppinsfamily">
       {{
-        screenName && screenName != ""
-          ? screenName + " Document Uplaod"
+        screenName && screenName !== ''
+          ? screenName + ' Document Uplaod'
           : (currentUser?.bankName | titlecase)
       }}
     </h1>
@@ -16,9 +16,9 @@
       fxLayout="column"
       fxLayoutAlign="center start"
       class="refNoDiv"
-      *ngIf="screenName && screenName != ''"
+      *ngIf="screenName && screenName !== ''"
     >
-      <div class="refNoheading">{{ "Reference No" }}</div>
+      <div class="refNoheading">{{ 'Reference No' }}</div>
       <div class="refNoValue">{{ customerId }}</div>
     </div>
   </div>
@@ -26,15 +26,15 @@
   <div class="subhead_container">
     <h3 *ngIf="!screenName" class="text-label mb-16">OTP Type</h3>
     <div
-      *ngIf="screenName && screenName != ''"
+      *ngIf="screenName && screenName !== ''"
       fxLayout="column"
       fxLayoutAlign="center center"
     >
       <h3 class="OtpHeading">
         {{
-          "An OTP has been sent to the Registered Mobile Number (XXXXX XX" +
+          'An OTP has been sent to the Registered Mobile Number (XXXXX XX' +
             reducedMob +
-            ")"
+            ')'
         }}
       </h3>
       <img src="assets/images/mobileVerifyImage.png" alt="" srcset="" />
@@ -91,8 +91,8 @@
       <h2 [ngClass]="!screenName ? 'text-label' : 'VerifyOtpText'">
         {{
           !screenName
-            ? "Enter OTP to verify"
-            : "Please Enter Your OTP to verify"
+            ? 'Enter OTP to verify'
+            : 'Please Enter Your OTP to verify'
         }}
       </h2>
     </div>
@@ -114,7 +114,7 @@
         fxFlex="20"
         (click)="resetOrExit(!screenName ? 'Reset' : 'Exit')"
       >
-        {{ !screenName ? "Reset" : "Exit" }}
+        {{ !screenName ? 'Reset' : 'Exit' }}
       </button>
       <button
         mat-raised-button

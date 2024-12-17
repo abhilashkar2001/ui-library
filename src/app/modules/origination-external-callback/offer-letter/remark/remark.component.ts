@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
 
 @Component({
-  selector: "app-remark",
-  templateUrl: "./remark.component.html",
-  styleUrls: ["./remark.component.scss"]
+  selector: 'app-remark',
+  templateUrl: './remark.component.html',
+  styleUrls: ['./remark.component.scss'],
 })
 export class RemarkComponent implements OnInit {
   currentuser: any;
@@ -19,12 +19,12 @@ export class RemarkComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
-    private route: Router
+    private route: Router,
   ) {}
 
   ngOnInit(): void {
     this.originationId = JSON.parse(
-      <string>sessionStorage.getItem("originationId")
+      <string>sessionStorage.getItem('originationId'),
     );
     this.currentuser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
@@ -33,18 +33,18 @@ export class RemarkComponent implements OnInit {
 
   buildRevisiteForm(data?: any) {
     this.revisiteForm = this.fb.group({
-      id: [data?.id ?? ""],
-      amount: [data?.approvedLoanAmount ?? ""],
-      rateOfInterest: [data?.rateOfInterest ?? ""],
-      loanTenureDay: [data?.loanTenurDay ?? ""],
-      loanTenureMonth: [data?.loanTenurMonth ?? ""],
-      loanTenureYear: [data?.loanTenurYear ?? ""],
-      requestedAmount: [""],
-      requestedRateOfInterest: [""],
-      requestedLoanTenureDay: [""],
-      requestedLoanTenureMonth: [""],
-      requestedLoanTenureYear: [""],
-      remark: []
+      id: [data?.id ?? ''],
+      amount: [data?.approvedLoanAmount ?? ''],
+      rateOfInterest: [data?.rateOfInterest ?? ''],
+      loanTenureDay: [data?.loanTenurDay ?? ''],
+      loanTenureMonth: [data?.loanTenurMonth ?? ''],
+      loanTenureYear: [data?.loanTenurYear ?? ''],
+      requestedAmount: [''],
+      requestedRateOfInterest: [''],
+      requestedLoanTenureDay: [''],
+      requestedLoanTenureMonth: [''],
+      requestedLoanTenureYear: [''],
+      remark: [],
     });
   }
 
@@ -67,18 +67,18 @@ export class RemarkComponent implements OnInit {
     payload.loanTenureYear = formValue.requestedLoanTenureYear;
     payload.loanTenureDay = formValue.requestedLoanTenureDay;
     payload.remarks = formValue.remarks;
-    payload.date = moment(new Date()).format("DD-MMM-YYYY");
+    payload.date = moment(new Date()).format('DD-MMM-YYYY');
     payload.originationId = this.originationId;
     payload.id = formValue.id;
     this.offerIssueService.saveCustomerRequest(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
-        this.route.navigate(["home"]);
+        this.route.navigate(['home']);
       }
     });
   }
 
   /**Reseting the remarks data */
   resetRemark() {
-    this.revisiteForm.get("remark")?.reset();
+    this.revisiteForm.get('remark')?.reset();
   }
 }

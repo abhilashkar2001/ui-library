@@ -1,29 +1,29 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { LoanDetailsModel } from "app/shared/models/loan-details.model";
-import { loanServiceStore } from "../../../loan-tabs";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { loanServiceStore } from '../../../loan-tabs';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-disbursement-schedule",
-  templateUrl: "./disbursement-schedule.component.html",
-  styleUrls: ["./disbursement-schedule.component.scss"]
+  selector: 'app-disbursement-schedule',
+  templateUrl: './disbursement-schedule.component.html',
+  styleUrls: ['./disbursement-schedule.component.scss'],
 })
 export class DisbursementScheduleComponent implements OnInit {
   disbursementScheduleForm!: FormGroup;
   disbursementList: any = loanServiceStore.disbursementList;
   disbursementStatementColumns = loanServiceStore.disbursementStatementColumns;
   disbursementRecords: any;
-  fetchStatement: boolean = false;
+  fetchStatement = false;
   loanDetails: LoanDetailsModel[] | any;
   fetchedData: any;
 
   constructor(
     private fb: FormBuilder,
     private loanService: LoanService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -33,10 +33,10 @@ export class DisbursementScheduleComponent implements OnInit {
 
   buildDisbursementScheduleForm() {
     this.disbursementScheduleForm = this.fb.group({
-      loanAccNo: [""]
+      loanAccNo: [''],
     });
     this.disbursementScheduleForm
-      ?.get("loanAccNo")
+      ?.get('loanAccNo')
       ?.setValue(this.loanDetails[0]?.cbsAccountNumber);
   }
 

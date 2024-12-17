@@ -8,9 +8,8 @@ describe('FdRdCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FdRdCalculatorComponent ]
-    })
-    .compileComponents();
+      declarations: [FdRdCalculatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FdRdCalculatorComponent);
     component = fixture.componentInstance;

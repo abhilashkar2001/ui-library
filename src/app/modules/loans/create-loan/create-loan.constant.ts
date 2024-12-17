@@ -1,6 +1,6 @@
 export class CreateLoanConstant {
-  static readonly CURRENCY_SYMBOLL = "₹";
-  static readonly SCREEN_NAME = "Create Loan";
+  static readonly CURRENCY_SYMBOLL = '₹';
+  static readonly SCREEN_NAME = 'Create Loan';
   static readonly GENERIC_SATIC_KEYS = {
     HOLDERTYPE: [],
     DISBURSEMENTTYPE: [],
@@ -8,17 +8,17 @@ export class CreateLoanConstant {
 
   static readonly ACCOUNT_TYPE = [
     {
-      name: "Internal Account",
-      value: "internal",
+      name: 'Internal Account',
+      value: 'internal',
     },
     {
-      name: "External Account",
-      value: "external",
+      name: 'External Account',
+      value: 'external',
     },
   ];
 }
 export enum CreateLoanEnum {
-  INTERNAL = "internal",
-  EXTERNAL = "external",
-  ACCOUNT_INCLUDES_KEY = "account",
+  INTERNAL = 'internal',
+  EXTERNAL = 'external',
+  ACCOUNT_INCLUDES_KEY = 'account',
 }

@@ -1,10 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
-import { BehaviorSubject } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class NewDepositService {
   protected base_url = environment.microServiceURL;
@@ -28,7 +28,7 @@ export class NewDepositService {
   // https://192.168.0.127:8765/auth/generateOTP?mobile=9114386257
   getOtp(mobile: any) {
     return this.http.get<any>(
-      `${this.base_url}/auth/generateOTP?mobile=${mobile}`
+      `${this.base_url}/auth/generateOTP?mobile=${mobile}`,
     );
   }
   getInterestDetails() {
@@ -40,17 +40,17 @@ export class NewDepositService {
   }
   getCountryDetails() {
     return this.http.get<any>(
-      `${this.base_url}/country?oneTimeAuth=Y&recordStatus=OPEN`
+      `${this.base_url}/country?oneTimeAuth=Y&recordStatus=OPEN`,
     );
   }
   getCityDetails() {
     return this.http.get<any>(
-      `${this.base_url}/city?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.base_url}/city?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
   getStateDetails() {
     return this.http.get<any>(
-      `${this.base_url}/state?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.base_url}/state?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
   uploadDocument(formData: any) {
@@ -59,12 +59,12 @@ export class NewDepositService {
   submitAllDocument(payload: any) {
     return this.http.post<any>(
       `${this.base_url}/documents?source=web Site`,
-      payload
+      payload,
     );
   }
   genericValue(screenName: string, genericName: string[]) {
     return this.http.get<any>(
-      `${this.base_url}/generic-value?screenName=${screenName}&genericName=${genericName}`
+      `${this.base_url}/generic-value?screenName=${screenName}&genericName=${genericName}`,
     );
   }
 }

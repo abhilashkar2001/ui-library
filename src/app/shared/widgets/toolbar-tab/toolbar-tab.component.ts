@@ -8,34 +8,35 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
-} from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
-import { TabModel } from "app/shared/models/tab-model";
-import { IconService } from "app/shared/services/icon.service";
-import { filter } from "rxjs/operators";
+  ViewChild,
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { TabModel } from 'app/shared/models/tab-model';
+import { IconService } from 'app/shared/services/icon.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: "app-toolbar-tab",
-  templateUrl: "./toolbar-tab.component.html",
-  styleUrls: ["./toolbar-tab.component.scss"]
+  selector: 'app-toolbar-tab',
+  templateUrl: './toolbar-tab.component.html',
+  styleUrls: ['./toolbar-tab.component.scss'],
 })
 export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input("items") items: TabModel[] = [];
-  selectedTab!: string | any;
-  @ViewChild("scrollContainer", { static: false }) scrollContainer:
-    | ElementRef
-    | any;
-  isScrolled: boolean = false;
-  selectedTabIndex: any;
-  @Input("showArrow") showArrow: boolean = true;
+  @Input() items: TabModel[] = [];
+  selectedTab: string | undefined;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+  isScrolled = false;
+  selectedTabIndex!: number;
+  @Input() showArrow = true;
   @Output()
-  onTabSelect: EventEmitter<TabModel> = new EventEmitter<TabModel>();
+  tabSelect: EventEmitter<TabModel> = new EventEmitter<TabModel>();
 
-  constructor(private iconService: IconService, private router: Router) {
+  constructor(
+    private iconService: IconService,
+    private router: Router,
+  ) {
     //This will add arrow back icon in mat icon registry
     this.iconService
-      .addIconIfNotExists("arrow-back", "assets/images/arrow-back.svg")
+      .addIconIfNotExists('arrow-back', 'assets/images/arrow-back.svg')
       .subscribe((exists) => {
         if (exists) {
           console.log(`Icon arrow-back already exists.`);
@@ -45,8 +46,8 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges | any): void {
-    if (changes?.items?.currentValue) this.addSvgIcon();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.['items']?.currentValue) this.addSvgIcon();
   }
 
   ngOnInit(): void {
@@ -96,14 +97,14 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
    * On change route the particular tab will be selected
    * @param route
    */
-  selectCurrentRoute(route: any) {
+  selectCurrentRoute(route: string) {
     const index: number = this.items.findIndex(
-      (item: TabModel) => item?.route == route
+      (item: TabModel) => item?.route == route,
     );
     if (index) {
       this.selectedTab = this.items[index]?.screenName;
       this.selectedTabIndex = index;
-      this.onTabSelect.emit(this.items[index]);
+      this.tabSelect.emit(this.items[index]);
     }
   }
 
@@ -133,7 +134,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   scroolToLeft() {
     this.scrollContainer.nativeElement.scrollBy({
       left: -100,
-      behaviour: "smooth"
+      behaviour: 'smooth',
     });
   }
 
@@ -143,12 +144,12 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
   scrollToRight() {
     this.scrollContainer.nativeElement.scrollBy({
       left: 100,
-      behaviour: "smooth"
+      behaviour: 'smooth',
     });
   }
 
   centerSelectedTab() {
-    const tabsContainerEl = this.scrollContainer.nativeElement;
+    const tabsContainerEl = this.scrollContainer?.nativeElement;
     const selectedTabEl = tabsContainerEl.children[this.selectedTabIndex];
 
     const containerWidth = tabsContainerEl?.offsetWidth;
@@ -159,7 +160,7 @@ export class ToolbarTabComponent implements OnInit, OnChanges, AfterViewInit {
 
     tabsContainerEl.scrollTo({
       left: offset,
-      behavior: "smooth"
+      behavior: 'smooth',
     });
   }
 }

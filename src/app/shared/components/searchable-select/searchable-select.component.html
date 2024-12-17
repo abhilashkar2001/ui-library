@@ -55,16 +55,17 @@
     </mat-select-trigger>
     <mat-option *ngIf="!multiple" [value]="null">None</mat-option>
     <mat-option
-      *ngFor="let item of items | searchOptions : filterFormControl.value"
+      *ngFor="let item of items | searchOptions: filterFormControl.value"
       [value]="item?.value"
       [disabled]="item?.disabled"
       [ngClass]="{ 'hide-checkbox': item?.label === 'No data found' }"
       [ngStyle]="{
-        display: item?.label != 'No data found' && item?.disabled ? 'none' : ''
+        display:
+          item?.label !== 'No data found' && item?.disabled ? 'none' : '',
       }"
     >
       {{ item?.label }}
-      <span *ngIf="displayLabel && item?.label != 'No data found'">
+      <span *ngIf="displayLabel && item?.label !== 'No data found'">
         ({{ item?.display }})</span
       >
     </mat-option>

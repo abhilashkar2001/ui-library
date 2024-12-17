@@ -13,7 +13,7 @@
         class="custom-tree-node"
         [ngClass]="[
           currentMenu == node.name ? 'active-node highlight_blue' : '',
-          node.roleName == 'parent-node' ? 'align-node' : '',
+          node.roleName === 'parent-node' ? 'align-node' : '',
         ]"
       >
         <!-- use a disabled button to provide padding for tree leaf -->
@@ -34,11 +34,11 @@
         style="padding: 0%"
         [ngClass]="[
           currentMenu == node.name &&
-          node.roleName != 'parent-node' &&
-          node.roleName != 'child-node'
+          node.roleName !== 'parent-node' &&
+          node.roleName !== 'child-node'
             ? 'active-node'
             : '',
-          node.roleName == 'parent-node' ? 'align-node' : '',
+          node.roleName === 'parent-node' ? 'align-node' : '',
         ]"
       >
         <div
@@ -50,7 +50,7 @@
         </div>
         <button mat-icon-button matTreeNodeToggle style="cursor: pointer">
           <mat-icon class="mat-icon-rtl-mirror">
-            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+            {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
           </mat-icon>
         </button>
       </mat-tree-node>

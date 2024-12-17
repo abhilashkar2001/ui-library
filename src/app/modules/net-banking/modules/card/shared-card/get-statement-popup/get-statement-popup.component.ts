@@ -1,43 +1,43 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { CardService } from "../../card.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { CardService } from '../../card.service';
 import {
   MatDialogRef,
   MatDialog,
-  MAT_DIALOG_DATA
-} from "@angular/material/dialog";
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
-  selector: "app-get-statement-popup",
-  templateUrl: "./get-statement-popup.component.html",
-  styleUrls: ["./get-statement-popup.component.scss"]
+  selector: 'app-get-statement-popup',
+  templateUrl: './get-statement-popup.component.html',
+  styleUrls: ['./get-statement-popup.component.scss'],
 })
 export class GetStatementPopupComponent implements OnInit {
   getStatementForm!: FormGroup;
   creditCardDetails: any;
   monthList = [
-    { id: 1, value: "Jan", label: "Jan" },
-    { id: 2, value: "Feb", label: "Feb" },
-    { id: 3, value: "Mar", label: "Mar" },
-    { id: 4, value: "Apr", label: "Apr" },
-    { id: 5, value: "May", label: "May" },
-    { id: 6, value: "June", label: "June" },
-    { id: 7, value: "Jul", label: "Jul" },
-    { id: 8, value: "Aug", label: "Aug" },
-    { id: 9, value: "Sep", label: "Sep" },
-    { id: 10, value: "Oct", label: "Oct" },
-    { id: 11, value: "Nov", label: "Nov" },
-    { id: 12, value: "Dec", label: "Dec" }
+    { id: 1, value: 'Jan', label: 'Jan' },
+    { id: 2, value: 'Feb', label: 'Feb' },
+    { id: 3, value: 'Mar', label: 'Mar' },
+    { id: 4, value: 'Apr', label: 'Apr' },
+    { id: 5, value: 'May', label: 'May' },
+    { id: 6, value: 'June', label: 'June' },
+    { id: 7, value: 'Jul', label: 'Jul' },
+    { id: 8, value: 'Aug', label: 'Aug' },
+    { id: 9, value: 'Sep', label: 'Sep' },
+    { id: 10, value: 'Oct', label: 'Oct' },
+    { id: 11, value: 'Nov', label: 'Nov' },
+    { id: 12, value: 'Dec', label: 'Dec' },
   ];
   yearList = [
-    { id: 1, value: "2024", label: "2024" },
-    { id: 2, value: "2023", label: "2023" },
-    { id: 3, value: "2022", label: "2022" },
-    { id: 4, value: "2021", label: "2021" }
+    { id: 1, value: '2024', label: '2024' },
+    { id: 2, value: '2023', label: '2023' },
+    { id: 3, value: '2022', label: '2022' },
+    { id: 4, value: '2021', label: '2021' },
   ];
-  formatList = [{ id: 1, value: "PDF", label: "PDF" }];
+  formatList = [{ id: 1, value: 'PDF', label: 'PDF' }];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,7 +45,7 @@ export class GetStatementPopupComponent implements OnInit {
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private downloadCardService: CardService,
-    private ss: SessionStorageService
+    private ss: SessionStorageService,
   ) {}
 
   ngOnInit() {
@@ -55,22 +55,22 @@ export class GetStatementPopupComponent implements OnInit {
 
   buildStatementForm() {
     this.getStatementForm = this.formBuilder.group({
-      month: [""],
-      year: [""],
-      format: [""]
+      month: [''],
+      year: [''],
+      format: [''],
     });
   }
   downLoad() {
     if (this.getStatementForm.valid) {
       console.log(this.getStatementForm);
       console.log(this.getStatementForm.value);
-      let month: number = this.getStatementForm.get("month")?.value;
-      let year: number = this.getStatementForm.get("year")?.value;
+      const month: number = this.getStatementForm.get('month')?.value;
+      const year: number = this.getStatementForm.get('year')?.value;
       this.downloadCardService
         .downloadCreditInfoAsPdf(
           this.creditCardDetails?.[0]?.cardNumber,
           month,
-          year
+          year,
         )
         .subscribe(
           (res: Blob) => {
@@ -80,17 +80,17 @@ export class GetStatementPopupComponent implements OnInit {
           },
           (errorResponse) => {
             this.errorPopUp(errorResponse);
-          }
+          },
         );
     }
   }
 
   downloadFile(blobData: Blob): void {
-    const blob = new Blob([blobData], { type: "application/pdf" });
+    const blob = new Blob([blobData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.download = "credit_info.pdf";
+    link.download = 'credit_info.pdf';
     link.click();
     window.URL.revokeObjectURL(url);
   }
@@ -106,19 +106,19 @@ export class GetStatementPopupComponent implements OnInit {
   // }
 
   errorPopUp(res: any) {
-    let errPayload = {
+    const errPayload = {
       error: res?.error,
       message: res?.message,
-      statusCode: res?.status
+      statusCode: res?.status,
     };
     this.dialog.open(NewErrorPopupComponent, {
-      width: "45%",
-      height: "50%",
+      width: '45%',
+      height: '50%',
       disableClose: true,
       data: {
-        type: "customError",
-        errPayload
-      }
+        type: 'customError',
+        errPayload,
+      },
     });
   }
 

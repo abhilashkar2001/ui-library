@@ -1,27 +1,30 @@
-import { Injectable } from "@angular/core";
-import { LocalStoreService } from "../local-store.service";
-import { Router } from "@angular/router";
-import { User } from "../../models/user.model";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { LocalStoreService } from '../local-store.service';
+import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class JwtAuthService {
   token: any;
-  isAuthenticated: Boolean | any;
+  isAuthenticated: boolean | any;
   user: User = {};
   user$ = new BehaviorSubject<User>(this.user);
-  signingIn: Boolean | any;
+  signingIn: boolean | any;
   return: string | any;
-  JWT_TOKEN = "JWT_TOKEN";
-  APP_USER = "EGRET_USER";
+  JWT_TOKEN = 'JWT_TOKEN';
+  APP_USER = 'EGRET_USER';
 
-  constructor(private ls: LocalStoreService, private router: Router) {}
+  constructor(
+    private ls: LocalStoreService,
+    private router: Router,
+  ) {}
 
   public signout() {
     this.setUserAndToken(null, null, false);
-    this.router.navigateByUrl("sessions/signin");
+    this.router.navigateByUrl('sessions/signin');
   }
 
   getUser() {
@@ -29,9 +32,9 @@ export class JwtAuthService {
   }
 
   setUserAndToken(
-    token: String | any,
+    token: string | any,
     user: User | any,
-    isAuthenticated: Boolean
+    isAuthenticated: boolean,
   ) {
     this.isAuthenticated = isAuthenticated;
     this.token = token;

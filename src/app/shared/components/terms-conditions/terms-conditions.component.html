@@ -11,15 +11,13 @@
   </div>
   <div class="col-3">
     <span class="content-header">Date and Time of Request</span>
-    <span class="content">{{
-      requestDate | date : "dd MMM yyyy | HH:mm"
-    }}</span>
+    <span class="content">{{ requestDate | date: 'dd MMM yyyy | HH:mm' }}</span>
   </div>
   <div class="col-4">
     <span class="content-header">Loan Amount</span>
     <span class="content">
       <span class="currencySymbol">{{ otherUserInfo?.currency }} </span>&nbsp;{{
-        loamAmount | customCurrency : otherUserInfo.currency : "1.2-2"
+        loamAmount | customCurrency: otherUserInfo.currency : '1.2-2'
       }}</span
     >
   </div>

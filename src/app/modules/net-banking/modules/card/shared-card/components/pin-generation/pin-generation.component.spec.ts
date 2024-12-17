@@ -8,9 +8,8 @@ describe('PinGenerationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PinGenerationComponent ]
-    })
-    .compileComponents();
+      declarations: [PinGenerationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PinGenerationComponent);
     component = fixture.componentInstance;

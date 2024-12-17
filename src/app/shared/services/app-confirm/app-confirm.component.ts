@@ -1,8 +1,8 @@
-import { Component, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-confirm",
+  selector: 'app-confirm',
   template: `<h1 matDialogTitle class="mb-8">{{ data.title }}</h1>
     <div mat-dialog-content class="mb-16">{{ data.message }}</div>
     <div mat-dialog-actions class="pb-16">
@@ -29,6 +29,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 export class AppComfirmComponent {
   constructor(
     public dialogRef: MatDialogRef<AppComfirmComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 }

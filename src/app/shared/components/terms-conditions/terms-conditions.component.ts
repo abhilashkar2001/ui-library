@@ -1,21 +1,21 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
 
 @Component({
-  selector: "app-terms-conditions",
-  templateUrl: "./terms-conditions.component.html",
-  styleUrls: ["./terms-conditions.component.scss"]
+  selector: 'app-terms-conditions',
+  templateUrl: './terms-conditions.component.html',
+  styleUrls: ['./terms-conditions.component.scss'],
 })
 export class TermsConditionsComponent implements OnInit {
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  checked: boolean = false;
-  customerName: any;
+  @Output() confirmEvent: EventEmitter<undefined> = new EventEmitter();
+  @Output() backEvent: EventEmitter<undefined> = new EventEmitter();
+  checked = false;
+  customerName: string | undefined;
   customerData: any;
-  requestDate: any;
-  loamAmount: any;
-  currencySymboll = "₹";
+  requestDate!: Date | string;
+  loamAmount!: number;
+  currencySymboll = '₹';
   otherUserInfo: any;
 
   constructor(private tokenStore: TokenStorageService) {}
@@ -23,10 +23,10 @@ export class TermsConditionsComponent implements OnInit {
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.customerData = JSON.parse(
-      <string>sessionStorage.getItem("customerData")
+      <string>sessionStorage.getItem('customerData'),
     );
     this.loamAmount = JSON.parse(
-      <string>sessionStorage.getItem("loanAmmount")
+      <string>sessionStorage.getItem('loanAmmount'),
     )?.loanAmount;
     this.requestDate = moment(new Date()).format();
   }
@@ -39,10 +39,10 @@ export class TermsConditionsComponent implements OnInit {
   }
 
   onConfirm() {
-    this.onConfirmEvent.emit();
+    this.confirmEvent.emit();
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 }

@@ -1,11 +1,11 @@
 <div fxFlex="100" class="chartPart" fxLayout="column">
   <div fxFlex="15" fxLayout="row">
     <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center">
-      <div class="label-l">{{ (labelOne || "Deposit Amount") | translate }}</div>
+      <div class="label-l">{{ labelOne || 'Deposit Amount' | translate }}</div>
       <div class="labelval-l" *ngIf="data">₹{{ data?.depositAmount }}</div>
     </div>
     <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center">
-      <div class="label-l">{{ (labelTwo || "Maturity Amount") | translate }}</div>
+      <div class="label-l">{{ labelTwo || 'Maturity Amount' | translate }}</div>
       <div class="labelval-l" *ngIf="data">₹{{ data?.maturityAmount }}</div>
     </div>
   </div>
@@ -28,25 +28,27 @@
           *ngIf="data"
         >
           <ng-container *ngIf="details.headerCell.includes('Interest Rate')">
-            {{ data[details.headerDef] ?? "-" }}% p.a
+            {{ data[details.headerDef] ?? '-' }}% p.a
           </ng-container>
-          <ng-container *ngIf="details.headerCell == 'Interest Amount'">
-            ₹{{ data[details.headerDef] ?? "-" }}
+          <ng-container *ngIf="details.headerCell === 'Interest Amount'">
+            ₹{{ data[details.headerDef] ?? '-' }}
           </ng-container>
           <ng-container
             *ngIf="
               !details.headerCell.includes('Interest Rate') &&
-              details.headerCell != 'Interest Amount'
+              details.headerCell != 'Interest Amoun====================t'
             "
           >
-            {{ data[details.headerDef] ?? "-" }}
+            {{ data[details.headerDef] ?? '-' }}
           </ng-container>
         </div>
       </div>
     </ng-container>
     <ng-container *ngIf="autoCheck">
       <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center">
-        <mat-checkbox class="customCheckBox">{{'Auto Renew' |translate}}</mat-checkbox>
+        <mat-checkbox class="customCheckBox">{{
+          'Auto Renew' | translate
+        }}</mat-checkbox>
       </div>
     </ng-container>
   </div>

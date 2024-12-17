@@ -1,18 +1,18 @@
 .chartPart {
   border-radius: 12px;
-  background-image: url("/assets/images/calc-bg.svg");
+  background-image: url('/assets/images/calc-bg.svg');
   background-repeat: no-repeat;
   background-size: cover;
   .label-l {
     color: #606c8d;
     font-size: 17px;
-    font-family: "Raleway";
+    font-family: 'Raleway';
     font-weight: 600;
   }
   .labelval-l {
     color: #060606;
     font-size: 17px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     font-weight: 600;
     word-break: break-all;
   }
@@ -36,19 +36,19 @@
   .label {
     color: #606c8d;
     font-size: 15px;
-    font-family: "Raleway";
+    font-family: 'Raleway';
     font-weight: 600;
   }
   .labelval {
     color: #060606;
     font-size: 15px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     font-weight: 600;
     word-break: break-all;
   }
   .blueVal {
     font-size: 15px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     font-weight: 600;
     word-break: break-all;
     color: #377dff;

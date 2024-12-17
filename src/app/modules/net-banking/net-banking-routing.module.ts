@@ -1,46 +1,46 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { NetBankingHomeComponent } from "./net-banking-home/net-banking-home.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NetBankingHomeComponent } from './net-banking-home/net-banking-home.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: NetBankingHomeComponent,
     children: [
       {
-        path: "",
-        redirectTo: "dashboard",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
       },
       {
-        path: "dashboard",
+        path: 'dashboard',
         loadChildren: () =>
-          import("./modules/dashboard/dashboard.module").then(
-            (m) => m.DashboardModule
+          import('./modules/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule,
           ),
       },
       {
-        path: "trade",
+        path: 'trade',
         loadChildren: () =>
-          import("./modules/trade/trade.module").then((m) => m.TradeModule),
+          import('./modules/trade/trade.module').then((m) => m.TradeModule),
       },
       {
-        path: "loan",
+        path: 'loan',
         loadChildren: () =>
-          import("./modules/loan/loan.module").then((m) => m.LoanModule),
+          import('./modules/loan/loan.module').then((m) => m.LoanModule),
       },
       {
-        path: "card",
+        path: 'card',
         loadChildren: () =>
-          import("./modules/card/card.module").then((m) => m.CardModule),
+          import('./modules/card/card.module').then((m) => m.CardModule),
       },
       {
-        path: "send-money",
+        path: 'send-money',
         loadChildren: () =>
-          import("./modules/send-money/send-money.module").then(
-            (m) => m.SendMoneyModule
+          import('./modules/send-money/send-money.module').then(
+            (m) => m.SendMoneyModule,
           ),
-        data: { preload: false, title: "Home", breadcrumb: "Home" },
+        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
       },
     ],
   },

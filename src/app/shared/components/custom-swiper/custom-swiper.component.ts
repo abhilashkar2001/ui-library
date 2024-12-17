@@ -4,9 +4,9 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
-} from "@angular/core";
-import { SwiperComponent } from "swiper/angular";
+  ViewChild,
+} from '@angular/core';
+import { SwiperComponent } from 'swiper/angular';
 
 // import Swiper core and required components
 import SwiperCore, {
@@ -18,11 +18,11 @@ import SwiperCore, {
   Zoom,
   Autoplay,
   Thumbs,
-  Controller
-} from "swiper";
-import { BehaviorSubject } from "rxjs";
-import { Router } from "@angular/router";
-import { environment } from "environments/environment";
+  Controller,
+} from 'swiper';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from 'environments/environment';
 
 // install Swiper components
 SwiperCore.use([
@@ -34,22 +34,22 @@ SwiperCore.use([
   Zoom,
   Autoplay,
   Thumbs,
-  Controller
+  Controller,
 ]);
 
 @Component({
-  selector: "app-custom-swiper",
-  templateUrl: "./custom-swiper.component.html",
-  styleUrls: ["./custom-swiper.component.scss"]
+  selector: 'app-custom-swiper',
+  templateUrl: './custom-swiper.component.html',
+  styleUrls: ['./custom-swiper.component.scss'],
 })
 export class CustomSwiperComponent implements OnInit {
-  @ViewChild("swiperRef", { static: false }) swiperRef?: SwiperComponent;
+  @ViewChild('swiperRef', { static: false }) swiperRef?: SwiperComponent;
   @Input() carowselData: any = {};
   dynamicList: any = [];
   @Output() customApplyLoan = new EventEmitter<any>();
   show: boolean | any;
   thumbs: any;
-  slides$ = new BehaviorSubject<string[]>([""]);
+  slides$ = new BehaviorSubject<string[]>(['']);
   protected baseUrl = environment.microServiceURL;
   constructor(private router: Router) {}
   ngOnInit() {}
@@ -64,7 +64,7 @@ export class CustomSwiperComponent implements OnInit {
     // if (this.dynamicList && this.dynamicList.length) {
     //   this.caroselPayload();
     // }
-    console.log("Carowsel: ", this.dynamicList);
+    console.log('Carowsel: ', this.dynamicList);
   }
 
   thumbsSwiper: any;
@@ -78,12 +78,12 @@ export class CustomSwiperComponent implements OnInit {
 
   indexNumber = 1;
   exampleConfig = { slidesPerView: 3 };
-  slidesPerView: number = 4;
+  slidesPerView = 4;
   pagination: any = false;
 
   togglePagination() {
     if (!this.pagination) {
-      this.pagination = { type: "fraction" };
+      this.pagination = { type: 'fraction' };
     } else {
       this.pagination = false;
     }
@@ -105,12 +105,12 @@ export class CustomSwiperComponent implements OnInit {
   breakpoints = {
     640: { slidesPerView: 2, spaceBetween: 20 },
     768: { slidesPerView: 4, spaceBetween: 40 },
-    1024: { slidesPerView: 4, spaceBetween: 50 }
+    1024: { slidesPerView: 4, spaceBetween: 50 },
   };
 
   slides = Array.from({ length: 5 }).map((index: any) => `Slide ${index + 1}`);
   virtualSlides = Array.from({ length: 600 }).map(
-    (index: any) => `Slide ${index + 1}`
+    (index: any) => `Slide ${index + 1}`,
   );
 
   breakPointsToggle: boolean | any;
@@ -119,15 +119,15 @@ export class CustomSwiperComponent implements OnInit {
     this.breakpoints = {
       640: { slidesPerView: 2, spaceBetween: 20 },
       768: { slidesPerView: 4, spaceBetween: 40 },
-      1024: { slidesPerView: this.breakPointsToggle ? 7 : 5, spaceBetween: 50 }
+      1024: { slidesPerView: this.breakPointsToggle ? 7 : 5, spaceBetween: 50 },
     };
   }
 
   moveToSubAccountPage(imagesdata: any) {
     console.log(imagesdata);
 
-    this.router.navigate(["/loan/loan-type"], {
-      queryParams: { subClass: imagesdata.basisClass }
+    this.router.navigate(['/loan/loan-type'], {
+      queryParams: { subClass: imagesdata.basisClass },
     });
     this.customApplyLoan.emit(imagesdata);
   }
@@ -135,7 +135,7 @@ export class CustomSwiperComponent implements OnInit {
   mapUrl(data: any) {
     if (
       data.documents.fileUrl &&
-      !data.documents.fileUrl.toLowerCase().includes("https")
+      !data.documents.fileUrl.toLowerCase().includes('https')
     )
       return `${this.baseUrl}${data.documents.fileUrl}`;
     else return `assets/images/Frame 5.svg`;

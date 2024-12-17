@@ -8,9 +8,8 @@ describe('NewErrorPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewErrorPopupComponent ]
-    })
-    .compileComponents();
+      declarations: [NewErrorPopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NewErrorPopupComponent);
     component = fixture.componentInstance;

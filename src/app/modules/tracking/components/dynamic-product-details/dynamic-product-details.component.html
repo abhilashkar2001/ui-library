@@ -6,7 +6,7 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
       <!-- Personal Info Summary Start -->
       <ng-container
-        *ngIf="product.key == 'customerInfo'; else showOtherThanPersonal"
+        *ngIf="product.key === 'customerInfo'; else showOtherThanPersonal"
       >
         <mat-accordion class="persoanl_expansion" fxFlex="100">
           <mat-expansion-panel
@@ -30,7 +30,7 @@
                 *ngFor="let item of dynamicKeyHelper[product.key].keyPair"
               >
                 <!-- else showOtherInfo -> 'the else was commented, so i am commenting this part as well; this is used in the below ng-container ' -->
-                <ng-container *ngIf="item.type == 'personal'">
+                <ng-container *ngIf="item.type === 'personal'">
                   <ng-container
                     *ngFor="
                       let personal of product.values;
@@ -75,12 +75,12 @@
       <div fxFlex="100" fxLayout="row wrap">
         <ng-template #showOtherThanPersonal>
           <div
-            [fxFlex]="item.type == 'document' ? '100' : '19'"
+            [fxFlex]="item.type === 'document' ? '100' : '19'"
             class="mb-24"
             *ngFor="let item of dynamicKeyHelper[product.key]?.keyPair"
           >
             <!-- Document Info Starts-->
-            <ng-container *ngIf="item.type == 'document'; else showOther">
+            <ng-container *ngIf="item.type === 'document'; else showOther">
               <div
                 fxFlex="19"
                 *ngFor="let docItem of product.values; let docIndex = index"
@@ -103,17 +103,17 @@
                 <p class="label_title">{{ item.label }}</p>
                 <p
                   class="label_value"
-                  *ngIf="item.type != 'currency' && item.type != 'maskText'"
+                  *ngIf="item.type !== 'currency' && item.type !== 'maskText'"
                 >
                   {{ product.values[item?.valueKey] }}
                 </p>
                 <p class="label_value" *ngIf="item.type === 'currency'">
                   {{
-                    product.values[item?.valueKey] | currency : "INR" : "symbol"
+                    product.values[item?.valueKey] | currency: 'INR' : 'symbol'
                   }}
                 </p>
-                <p class="label_value" *ngIf="item.type == 'maskText'">
-                  {{ product.values[item?.valueKey] | textMask : 4 }}
+                <p class="label_value" *ngIf="item.type === 'maskText'">
+                  {{ product.values[item?.valueKey] | textMask: 4 }}
                 </p>
               </div>
               <!-- </ng-template> -->

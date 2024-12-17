@@ -8,7 +8,7 @@ describe('CibilScorePoorDialgComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CibilScorePoorDialgComponent]
+      declarations: [CibilScorePoorDialgComponent],
     });
     fixture = TestBed.createComponent(CibilScorePoorDialgComponent);
     component = fixture.componentInstance;

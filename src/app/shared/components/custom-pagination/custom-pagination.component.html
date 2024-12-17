@@ -5,7 +5,7 @@
   class="paginationOuter"
 >
   <div fxLayout="row" class="selectPage">
-    <label class="pageLabel">{{ "Items Per Page:" | translate }}</label
+    <label class="pageLabel">{{ 'Items Per Page:' | translate }}</label
     >&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="pageSize">
       <mat-select
@@ -36,7 +36,9 @@
       (click)="selectPage(value.page - 1, 'prev')"
     >
       <div
-        [ngClass]="pageAction == 'prev' ? 'highlightAction upArrow' : 'upArrow'"
+        [ngClass]="
+          pageAction === 'prev' ? 'highlightAction upArrow' : 'upArrow'
+        "
       ></div>
       <mat-icon>keyboard_arrow_left</mat-icon>
       &nbsp;Prev
@@ -45,7 +47,7 @@
       *ngFor="let page of visiblePages"
       class="pagebtn"
       [ngClass]="{ selected: value.page === page }"
-      (click)="page != '...' && selectPage(page, '')"
+      (click)="page !== '...' && selectPage(page, '')"
     >
       {{ page }}
     </button>
@@ -55,10 +57,12 @@
       [disabled]="value.page === totalPages"
       (click)="selectPage(value.page + 1, 'next')"
     >
-      {{ "Next" | translate }} &nbsp; <mat-icon>keyboard_arrow_right</mat-icon>
+      {{ 'Next' | translate }} &nbsp; <mat-icon>keyboard_arrow_right</mat-icon>
       <div
         [ngClass]="
-          pageAction == 'next' ? 'customIcon highlightAction' : 'customIcon'
+          pageAction == 'next'
+            ? 'c====================ustomIcon highlightAction'
+            : 'customIcon'
         "
       ></div>
     </button>

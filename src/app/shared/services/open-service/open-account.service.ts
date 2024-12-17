@@ -1,11 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class OpenAccountService {
   private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
@@ -30,7 +30,7 @@ export class OpenAccountService {
   stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
     return this.http.post(
       `${baseUrl}/origination-matser/customerStagingSave`,
-      personalDetails
+      personalDetails,
     );
   }
 
@@ -41,7 +41,7 @@ export class OpenAccountService {
   uploadMultipleDocument(documentObjects: any): Observable<any> | any {
     return this.http.post(
       `${baseUrl}/documents?source=web Site`,
-      documentObjects
+      documentObjects,
     );
   }
 
@@ -67,15 +67,15 @@ export class OpenAccountService {
 
   getSubAccountsOfAccounts(subAccount: string) {
     return this.http.get(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}`
+      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}`,
     );
   }
 
   getExistingCustomer(mobileNo: any, type?: any) {
     return this.http.get(
       `${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}${
-        type ? `&type=${type}` : ""
-      }`
+        type ? `&type=${type}` : ''
+      }`,
     );
   }
 
@@ -85,13 +85,13 @@ export class OpenAccountService {
 
   fetchSubClass(subClass: any) {
     return this.http.get<any>(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subClass}`
+      `${baseUrl}/details/fetchSubClass?basisClass=${subClass}`,
     );
   }
 
   getProcessCycle(processName: any) {
     return this.http.get<any>(
-      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`,
     );
   }
   getProcessStages(id: any) {
@@ -104,7 +104,7 @@ export class OpenAccountService {
 
   getCustByStageId(id: any) {
     return this.http.get<any>(
-      `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`
+      `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`,
     );
   }
 
@@ -134,17 +134,17 @@ export class OpenAccountService {
   }
   checkMobileAndProduct(productCode: any, mobileNo: any, accountType: any) {
     return this.http.get<any>(
-      `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`
+      `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`,
     );
   }
   getOriginationMaster(id: any) {
     return this.http.get<any>(
-      `${baseUrl}/origination-matser?originationId=${id}`
+      `${baseUrl}/origination-matser?originationId=${id}`,
     );
   }
 
   fetchCompanyDetails() {
-    return this.http.get("assets/json/company-information.json");
+    return this.http.get('assets/json/company-information.json');
   }
 
   // Register a face

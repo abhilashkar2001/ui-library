@@ -8,9 +8,8 @@ describe('CalculateEmiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalculateEmiComponent ]
-    })
-    .compileComponents();
+      declarations: [CalculateEmiComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CalculateEmiComponent);
     component = fixture.componentInstance;

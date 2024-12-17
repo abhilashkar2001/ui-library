@@ -2,7 +2,7 @@
   class="product-container"
   [ngStyle]="{
     'flex-direction': productIndex % 2 !== 0 ? 'row-reverse' : 'row',
-    padding: productIndex % 2 !== 0 ? '20px' : ''
+    padding: productIndex % 2 !== 0 ? '20px' : '',
   }"
 >
   <div class="img-section" fxFlex="50">
@@ -60,7 +60,7 @@
           *ngIf="subAccount?.featureInfo?.length > 2"
           class="more-less-text"
           (click)="readMoreLess()"
-          >View {{ subAccount?.isReadMore ? "Less" : "More" }}</a
+          >View {{ subAccount?.isReadMore ? 'Less' : 'More' }}</a
         >
       </div>
     </div>

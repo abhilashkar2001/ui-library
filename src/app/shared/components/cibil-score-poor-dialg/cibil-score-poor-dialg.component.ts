@@ -1,12 +1,12 @@
-import { Location } from "@angular/common";
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { Location } from '@angular/common';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-cibil-score-poor-dialg",
-  templateUrl: "./cibil-score-poor-dialg.component.html",
-  styleUrls: ["./cibil-score-poor-dialg.component.scss"],
+  selector: 'app-cibil-score-poor-dialg',
+  templateUrl: './cibil-score-poor-dialg.component.html',
+  styleUrls: ['./cibil-score-poor-dialg.component.scss'],
 })
 export class CibilScorePoorDialgComponent implements OnInit {
   header: any;
@@ -17,7 +17,7 @@ export class CibilScorePoorDialgComponent implements OnInit {
     private dialogRef: MatDialogRef<CibilScorePoorDialgComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private router: Router,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class CibilScorePoorDialgComponent implements OnInit {
   }
 
   done() {
-    this.router.navigate(["/cards"]);
+    this.router.navigate(['/cards']);
     this.close();
   }
 

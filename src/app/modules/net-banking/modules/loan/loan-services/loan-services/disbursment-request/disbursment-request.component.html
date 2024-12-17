@@ -13,7 +13,7 @@
           (selectionChange)="onSelectionChange($event)"
         >
           <span class="label-text">{{
-            _parentForm.get("loanType")?.value
+            _parentForm.get('loanType')?.value
           }}</span>
         </app-ic-custom-pay-from>
       </div>
@@ -91,7 +91,7 @@
       <!-- Disbursment Request -->
       <div fxLayout="column" class="mt-16">
         <span class="light-blue-title-md"
-          >{{ "Disbursement Requested" | translate }}
+          >{{ 'Disbursement Requested' | translate }}
         </span>
         <div
           fxLayout="row"
@@ -133,7 +133,7 @@
       <mat-card class="mat-card-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <span class="light-blue-title-md">{{
-            "Document Upload" | translate
+            'Document Upload' | translate
           }}</span>
           <div>
             <app-ic-action-button
@@ -170,7 +170,7 @@
             </div>
             <div fxFlex="45">
               <mat-label class="ml-16 customLabelClass">
-                {{ "File Upload" | translate }}
+                {{ 'File Upload' | translate }}
               </mat-label>
               <div fxLayoutAlign="flex-end" class="chooseDiv ml-0">
                 <ng-container
@@ -193,7 +193,7 @@
                   fxLayoutAlign="center center"
                   class="chooseBtn"
                 >
-                  {{ "Upload" | translate }}
+                  {{ 'Upload' | translate }}
                   <input
                     type="file"
                     accept="image/*"
@@ -215,9 +215,9 @@
       <mat-checkbox
         class="customCheckBox"
         [formControl]="_parentForm.get('acceptTermsConditions') | formcontrol"
-        >{{ "I accept" | translate }}
+        >{{ 'I accept' | translate }}
         <span class="light-blue-title-sml">{{
-          "Terms and Condition" | translate
+          'Terms and Condition' | translate
         }}</span></mat-checkbox
       >
 

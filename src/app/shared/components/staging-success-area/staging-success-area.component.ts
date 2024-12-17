@@ -2,25 +2,25 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnInit,
   SimpleChanges,
-  OnDestroy
-} from "@angular/core";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { OriginationService } from "app/shared/services/origination.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+  OnDestroy,
+} from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { STAGINGSUCCESSAREA } from 'app/shared/models/staging-success-area.model';
+import { OriginationService } from 'app/shared/services/origination.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: "app-staging-success-area",
-  templateUrl: "./staging-success-area.component.html",
-  styleUrls: ["./staging-success-area.component.scss"]
+  selector: 'app-staging-success-area',
+  templateUrl: './staging-success-area.component.html',
+  styleUrls: ['./staging-success-area.component.scss'],
 })
-export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
+export class StagingSuccessAreaComponent implements OnDestroy {
   @Input() originationId: any;
   @Input() isComplete: any;
-  updatedResult: any[] | any = [];
+  updatedResult!: STAGINGSUCCESSAREA[];
   interval: any;
   private destroy$ = new Subject<void>();
 
@@ -28,23 +28,22 @@ export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
     private originationSVC: OriginationService,
     private cdr: ChangeDetectorRef,
     private domSanitizer: DomSanitizer,
-    private matIconRegistry: MatIconRegistry
+    private matIconRegistry: MatIconRegistry,
   ) {
     this.matIconRegistry.addSvgIcon(
-      "approveIcon",
+      'approveIcon',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/approve-icon.svg"
-      )
+        'assets/images/approve-icon.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
-      "rejectIcon",
+      'rejectIcon',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/reject-icon.svg"
-      )
+        'assets/images/reject-icon.svg',
+      ),
     );
   }
 
-  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges | any) {
     console.log(changes);
 
@@ -60,8 +59,8 @@ export class StagingSuccessAreaComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res?.data) {
           this.updatedResult = res?.data;
-          let i = res?.data.findIndex(
-            (e: any) => e.moduleStatus == "COMPLETED"
+          const i = res?.data.findIndex(
+            (e: any) => e.moduleStatus == 'COMPLETED',
           );
           if (i >= 0) return;
 

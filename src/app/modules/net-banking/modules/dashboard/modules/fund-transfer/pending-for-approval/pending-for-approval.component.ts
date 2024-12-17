@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { PendingForApprovalConstant } from "./pending-for-approval.constant";
-import { Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { InternetBankingService } from "app/shared/services/internet-banking.service";
+import { Component } from '@angular/core';
+import { PendingForApprovalConstant } from './pending-for-approval.constant';
+import { Router } from '@angular/router';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { InternetBankingService } from 'app/shared/services/internet-banking.service';
 
 @Component({
-  selector: "app-pending-for-approval",
-  templateUrl: "./pending-for-approval.component.html",
-  styleUrls: ["./pending-for-approval.component.scss"]
+  selector: 'app-pending-for-approval',
+  templateUrl: './pending-for-approval.component.html',
+  styleUrls: ['./pending-for-approval.component.scss'],
 })
-export class PendingForApprovalComponent implements OnInit {
+export class PendingForApprovalComponent {
   columns: any = PendingForApprovalConstant.PENDING_SUMMARY;
   sort: any;
-  size: number = 5;
+  size = 5;
   sortOrder: any;
-  page: number = 1;
-  pageSize: number = 5;
-  sortValue = "";
-  sortDirection = "";
+  page = 1;
+  pageSize = 5;
+  sortValue = '';
+  sortDirection = '';
   filterBy: FilterBy | any;
   module: any;
   pendingForApprovalUpdatedData: any;
@@ -27,21 +27,19 @@ export class PendingForApprovalComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113
+      totalPages: 113,
     },
     statusCode: 200,
-    status: "OK"
+    status: 'OK',
   };
 
   constructor(
     private route: Router,
-    private bulkService: InternetBankingService
+    private bulkService: InternetBankingService,
   ) {}
 
-  ngOnInit(): void {}
-
   CustomGoBack() {
-    this.route.navigate(["/user/dashboard"]);
+    this.route.navigate(['/user/dashboard']);
   }
   getDataByPage(event: any) {
     this.page = event.page;
@@ -57,7 +55,7 @@ export class PendingForApprovalComponent implements OnInit {
         event.size,
         this.sortValue,
         event.direction,
-        this.module
+        this.module,
       )
       .subscribe((res) => {
         this.pendingForApprovalUpdatedData = res;
@@ -65,10 +63,10 @@ export class PendingForApprovalComponent implements OnInit {
   }
 
   editRecord(element: any) {
-    console.log(element, "..........");
+    console.log(element, '..........');
     this.route.navigate([
-      "user/dashboard/fund-transfer/bulk-upload",
-      element.element.id
+      'user/dashboard/fund-transfer/bulk-upload',
+      element.element.id,
     ]);
   }
 }

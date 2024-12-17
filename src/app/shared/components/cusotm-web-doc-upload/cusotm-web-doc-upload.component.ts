@@ -5,47 +5,47 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { LoanService } from "app/shared/services/loan/loan.service";
-import { SharedService } from "app/shared/shared.service";
-import { environment } from "environments/environment";
-import { WarningComponent } from "../warning/warning.component";
-import { CustomWebDocUploadServiceService } from "./custom-web-doc-upload-service.service";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { debounceTime } from "rxjs/operators";
-import { Subscription } from "rxjs";
-import { DataService } from "app/shared/services/table-service/data.service";
-import { ScanComponent } from "../scan/scan.component";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SharedService } from 'app/shared/shared.service';
+import { environment } from 'environments/environment';
+import { WarningComponent } from '../warning/warning.component';
+import { CustomWebDocUploadServiceService } from './custom-web-doc-upload-service.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { debounceTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { DataService } from 'app/shared/services/table-service/data.service';
+import { ScanComponent } from '../scan/scan.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 enum CreateLoanEnum {
-  INTERNAL = "internal",
-  EXTERNAL = "external",
-  ACCOUNT_INCLUDES_KEY = "new acc",
-  ACCOUNT_EXISTING_KEY = "existing acc"
+  INTERNAL = 'internal',
+  EXTERNAL = 'external',
+  ACCOUNT_INCLUDES_KEY = 'new acc',
+  ACCOUNT_EXISTING_KEY = 'existing acc',
 }
 @Component({
-  selector: "app-cusotm-web-doc-upload",
-  templateUrl: "./cusotm-web-doc-upload.component.html",
-  styleUrls: ["./cusotm-web-doc-upload.component.scss"]
+  selector: 'app-cusotm-web-doc-upload',
+  templateUrl: './cusotm-web-doc-upload.component.html',
+  styleUrls: ['./cusotm-web-doc-upload.component.scss'],
 })
 export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() customSaveDocument = new EventEmitter<any>();
   @Input() documentTypeArray: any;
@@ -54,9 +54,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Input() genericScreenInfo: any;
   @Input() ocrProcess: boolean | any;
   @Input() checkListDocList: any;
-  @Input() isOtherDocVisible: boolean = true;
+  @Input() isOtherDocVisible = true;
   @Input() docAppliName: any;
-  @Input() individual: boolean = true;
+  @Input() individual = true;
   loanEnum = CreateLoanEnum;
 
   documentControls!: FormGroup;
@@ -64,8 +64,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   loanDisbursementForm!: FormGroup;
   documentIds = [
     {
-      docIds: []
-    }
+      docIds: [],
+    },
   ];
   files: any[] = [];
   uploadedDocResponse: any = [];
@@ -74,17 +74,17 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   staticData: any = {
     DOCUMENTNAME: [],
-    DISBURSEMENTTYPE: []
+    DISBURSEMENTTYPE: [],
   };
   selectedImage: Blob | any;
   imageUrl: string | any;
   baseUrl = environment.microServiceURL;
-  screenName: string = "Loan Document";
-  hideSelect: string[] = ["aadhar card"];
+  screenName = 'Loan Document';
+  hideSelect: string[] = ['aadhar card'];
   // SAVE BUTTON PROPERTIES
   isLoading: boolean | any = false;
-  loadingBtnText: string = "Saving...";
-  ocrCheck: boolean = true;
+  loadingBtnText = 'Saving...';
+  ocrCheck = true;
   nationalIdGeneric: any;
 
   @Input() isShowDisbursement = false;
@@ -94,21 +94,21 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   accountList: any;
   accountTypeArr = [
     {
-      name: "Internal Account",
-      value: "internal"
+      name: 'Internal Account',
+      value: 'internal',
     },
     {
-      name: "External Account",
-      value: "external"
-    }
+      name: 'External Account',
+      value: 'external',
+    },
   ];
   defaultDisbursement: any;
-  ocrPass: boolean = false;
+  ocrPass = false;
   nationalIdNo: any;
   documentInfo: any;
   addNewButtonClicked: Subscription | any;
   backData: any[] = [];
-  image = "";
+  image = '';
   faceId: any;
   frontAadhar: any;
 
@@ -125,21 +125,21 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private dataService: DataService,
-    private sessionService: SessionStorageService
+    private sessionService: SessionStorageService,
   ) {
-    this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
+    this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     // this.buildDocumentForm();
     this.matIconRegistry.addSvgIcon(
-      "cancel-icon",
+      'cancel-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/cancel_icon.svg"
-      )
+        'assets/images/cancel_icon.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
-    this.loanCustomerId = sessionStorage.getItem("customerId");
+    this.loanCustomerId = sessionStorage.getItem('customerId');
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     console.log(this.ocrProcess);
     this.addNewUploadField();
@@ -159,7 +159,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.documentList = changes.documentList.currentValue;
       this.createDocumentForm.value.otherDocument.forEach((i: any) => {
         this.otherDocument()
-          .controls[i]?.get("fileInfo")
+          .controls[i]?.get('fileInfo')
           ?.setValue(this.calculateDoc(this.documentList[i].docs, i));
       });
     }
@@ -170,20 +170,20 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   buildLoanDisbursementForm(data?: any) {
     this.loanDisbursementForm = this.fb.group({
       disbursementType: [
-        data ? data?.disbursementType : "",
-        Validators.required
+        data ? data?.disbursementType : '',
+        Validators.required,
       ],
-      accountNumber: [data ? data?.accountNumber : ""],
+      accountNumber: [data ? data?.accountNumber : ''],
       id: data?.id,
-      bankCode: [data ? data?.bankCode : ""],
+      bankCode: [data ? data?.bankCode : ''],
       accountType: CreateLoanEnum.INTERNAL,
-      ifscCode: [data ? data?.ifscCode : ""],
-      branchCode: [data ? data?.branchCode : ""],
-      confirmAccountNumber: "",
-      disbursementTypeValue: ""
+      ifscCode: [data ? data?.ifscCode : ''],
+      branchCode: [data ? data?.branchCode : ''],
+      confirmAccountNumber: '',
+      disbursementTypeValue: '',
     });
     this.loanDisbursementForm
-      .get("accountNumber")
+      .get('accountNumber')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe(() => {});
   }
@@ -193,26 +193,26 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
    * @param event is disbursement change value
    */
   onDisbursementSelectionChanged(event: any) {
-    this.disbursementType = this.staticData["DISBURSEMENTTYPE"]
+    this.disbursementType = this.staticData['DISBURSEMENTTYPE']
       .filter((item: any) => item?.id == event)[0]
       .values.toLowerCase();
-    console.log(this.disbursementType, " this.disbursementType ");
+    console.log(this.disbursementType, ' this.disbursementType ');
     this.loanDisbursementForm
-      .get("disbursementTypeValue")
-      ?.setValue(" this.disbursementType");
+      .get('disbursementTypeValue')
+      ?.setValue(' this.disbursementType');
     if (
       this.disbursementType.includes(CreateLoanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.loanDisbursementForm.value.accountType === CreateLoanEnum.INTERNAL
     ) {
-      this.loanDisbursementForm.controls["accountNumber"]?.setValidators([
-        Validators.required
+      this.loanDisbursementForm.controls['accountNumber']?.setValidators([
+        Validators.required,
       ]);
     } else {
-      this.loanDisbursementForm.controls["accountNumber"]?.clearValidators();
+      this.loanDisbursementForm.controls['accountNumber']?.clearValidators();
     }
 
     this.loanDisbursementForm.controls[
-      "accountNumber"
+      'accountNumber'
     ]?.updateValueAndValidity();
   }
 
@@ -225,7 +225,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.loanDisbursementForm.value.accountType === this.loanEnum.INTERNAL
     ) {
       this.validateAccountNumber(this.loanDisbursementForm.value.accountNumber);
-    } else this.loanDisbursementForm.get("accountNumber")?.setErrors(null);
+    } else this.loanDisbursementForm.get('accountNumber')?.setErrors(null);
   }
   /**
    * api call for account number validation, if account Number not present then invalidAccount error will throw in html.
@@ -235,10 +235,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
       if (!data) {
         this.loanDisbursementForm
-          .get("accountNumber")
+          .get('accountNumber')
           ?.setErrors({ invalidAccount: true });
       } else {
-        this.loanDisbursementForm.get("accountNumber")?.setErrors(null);
+        this.loanDisbursementForm.get('accountNumber')?.setErrors(null);
       }
     });
   }
@@ -265,20 +265,20 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   getGenericDetails() {
     this.sharedService
-      .genericValue("Common", Object.keys(this.staticData))
+      .genericValue('Common', Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
-          this.documentTypeArray = resp.data["DOCUMENTNAME"];
-          this.disbursementTypeArray = resp.data["DISBURSEMENTTYPE"];
+          this.documentTypeArray = resp.data['DOCUMENTNAME'];
+          this.disbursementTypeArray = resp.data['DISBURSEMENTTYPE'];
           this.nationalIdGeneric = this.documentTypeArray.filter((item: any) =>
-            item.values.toLowerCase().includes("aadhar")
+            item.values.toLowerCase().includes('aadhar'),
           )[0].id;
           this.defaultDisbursement = this.disbursementTypeArray?.find(
-            (res) => res?.values == "Cash"
+            (res) => res?.values == 'Cash',
           )?.id;
           this.loanDisbursementForm
-            ?.get("disbursementType")
+            ?.get('disbursementType')
             ?.setValue(this.defaultDisbursement);
         }
       });
@@ -286,39 +286,39 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
-      otherDocument: this.fb.array([])
+      otherDocument: this.fb.array([]),
     });
 
     // else {
     if (data?.length > 0) {
-      console.log(data, "data checking");
+      console.log(data, 'data checking');
 
       data.forEach((item: any) => {
         this.hideSelect.push(item?.documentType);
         this.addDocument(item);
         this.customDocumentForm.emit(this.createDocumentForm);
-        console.log(this.createDocumentForm.value, "data");
+        console.log(this.createDocumentForm.value, 'data');
       });
     }
     if (this.isOtherDocVisible) this.addDocument();
   }
 
   otherDocument(): FormArray {
-    return this.createDocumentForm?.get("otherDocument") as FormArray;
+    return this.createDocumentForm?.get('otherDocument') as FormArray;
   }
 
   showDocument(data: any, i: any) {
     console.log(data);
     this.documentControls = this.fb.group({
-      documentNumber: [data ? data.documentNumber : ""],
-      documentType: [data ? data.document : ""],
+      documentNumber: [data ? data.documentNumber : ''],
+      documentType: [data ? data.document : ''],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([])
+      docIds: new FormControl([]),
     });
     this.otherDocument().push(this.documentControls);
     if (data) {
       this.otherDocument()
-        .controls[i]?.get("fileInfo")
+        .controls[i]?.get('fileInfo')
         ?.setValue(this.calculateDoc(data, i));
     }
   }
@@ -328,10 +328,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       .getNewUploadClicked()
       .subscribe(() => {
         const documentControls = this.fb.group({
-          documentNumber: [""],
-          documentType: [""],
+          documentNumber: [''],
+          documentType: [''],
           fileInfo: new FormControl([]),
-          docIds: new FormControl([])
+          docIds: new FormControl([]),
         });
         this.otherDocument().push(documentControls);
       });
@@ -340,43 +340,43 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   calculateDoc(data: any, i: any) {
     console.log(data);
 
-    var docArr: any = [];
-    var docIds: any = [];
-    var docItem = {
+    const docArr: any = [];
+    const docIds: any = [];
+    const docItem = {
       progress: 100,
-      name: data.fileName
+      name: data.fileName,
     };
     data.forEach((item: any) => {
       docArr.push({
         docId: item.documentId,
         doc: docItem,
         url: this.mapEndPoints(item.fileUrl),
-        name: item.fileName
+        name: item.fileName,
       });
       docIds.push(item.documentId);
     });
-    this.otherDocument().controls[i]?.get("docIds")?.setValue(docIds);
+    this.otherDocument().controls[i]?.get('docIds')?.setValue(docIds);
     return docArr;
   }
 
   getFileUrl(file: any) {
-    if (file.name.endsWith("pdf") || file.name.endsWith("xlsx")) {
-      return "assets/images/file_icon.svg";
+    if (file.name.endsWith('pdf') || file.name.endsWith('xlsx')) {
+      return 'assets/images/file_icon.svg';
     } else return file.url;
   }
 
   newDenom(data?: any): FormGroup {
     return this.fb.group({
-      documentNumber: [""],
-      documentType: [data ? data.document : ""],
+      documentNumber: [''],
+      documentType: [data ? data.document : ''],
       fileInfo: new FormControl([]),
       docIds: new FormControl([]),
-      docRequired: data?.docRequired ?? false
+      docRequired: data?.docRequired ?? false,
     });
   }
 
   getFileInfo(indx: any): any[] {
-    return this.otherDocument().controls[indx]?.get("fileInfo")?.value;
+    return this.otherDocument().controls[indx]?.get('fileInfo')?.value;
   }
 
   /**
@@ -386,7 +386,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
    */
   deleteFile(index: number, i: any, _doc: any) {
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
-    this.otherDocument().controls[i]?.get("fileInfo")?.value.splice(index, 1);
+    this.otherDocument().controls[i]?.get('fileInfo')?.value.splice(index, 1);
   }
 
   deleteDocument(i: number) {
@@ -407,10 +407,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   browseFiles(i: any) {
-    const inputElement = document.createElement("input");
-    inputElement.type = "file";
-    if (!this.isOtherDocVisible) inputElement.accept = "image/*";
-    inputElement.addEventListener("change", (event: Event) => {
+    const inputElement = document.createElement('input');
+    inputElement.type = 'file';
+    if (!this.isOtherDocVisible) inputElement.accept = 'image/*';
+    inputElement.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file: any = target.files[0];
@@ -429,18 +429,18 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   getDocTypeforScan(docname: any, index: any) {
     let docType;
-    if (docname == "aadhar card" && index == 0) {
-      docType = "adhaar";
+    if (docname == 'aadhar card' && index == 0) {
+      docType = 'adhaar';
     }
-    if (docname == "aadhar card" && index == 1) docType = "adhaar_back";
-    if (docname == "pan card") {
-      docType = "pan";
+    if (docname == 'aadhar card' && index == 1) docType = 'adhaar_back';
+    if (docname == 'pan card') {
+      docType = 'pan';
     }
-    if (docname == "passport" && index == 0) {
+    if (docname == 'passport' && index == 0) {
       docType = docname;
     }
-    if (docname == "passport" && index == 1) {
-      docType = "passport_back";
+    if (docname == 'passport' && index == 1) {
+      docType = 'passport_back';
     }
     return docType;
   }
@@ -449,29 +449,29 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.ocrPass = false;
     const formdata = new FormData();
     const backFormdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("image", file);
-    formdata.append("lang", "eng");
+    formdata.append('file', file);
+    formdata.append('image', file);
+    formdata.append('lang', 'eng');
     formdata.append(
-      "imageType",
-      this.getDocTypeforScan(this.hideSelect[0]?.toLowerCase(), i)
+      'imageType',
+      this.getDocTypeforScan(this.hideSelect[0]?.toLowerCase(), i),
     );
-    backFormdata.append("file", file);
-    if (formdata.get("imageType") !== "adhaar_back") this.frontAadhar = file;
+    backFormdata.append('file', file);
+    if (formdata.get('imageType') !== 'adhaar_back') this.frontAadhar = file;
 
     try {
-      let service =
-        formdata.get("imageType") === "adhaar_back"
+      const service =
+        formdata.get('imageType') === 'adhaar_back'
           ? this.sharedService.readAadhaarBackData(backFormdata)
           : this.sharedService.readAadharFrontData(formdata);
 
       const res: any = await service.toPromise();
       if (res?.statusCode == 200) {
         const convertedResp: any = {};
-        for (let item of res?.data?.data) {
-          convertedResp[item?.label === "dob" ? "dateOfBirth" : item?.label] =
+        for (const item of res?.data?.data) {
+          convertedResp[item?.label === 'dob' ? 'dateOfBirth' : item?.label] =
             item.value;
-          if (item?.label === "gender") {
+          if (item?.label === 'gender') {
             convertedResp[item?.label] = item?.value;
           }
         }
@@ -481,45 +481,46 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         if (this.documentInfo?.address && this.documentInfo?.pincode) {
           this.backData.push({
             address1: this.documentInfo?.address,
-            pincode: this.documentInfo?.pincode
+            pincode: this.documentInfo?.pincode,
           });
-          sessionStorage.setItem("backData", JSON.stringify(this.backData));
+          sessionStorage.setItem('backData', JSON.stringify(this.backData));
         }
 
-        if (res?.data?.aadhaarNumber != "Details not found") {
+        if (res?.data?.aadhaarNumber != 'Details not found') {
           this.nationalIdNo = res?.data?.aadhaarNumber;
         }
         if (
           Object.keys(res?.data).filter(
             (value) =>
-              res?.data[value] != "Detail not found" && res?.data[value] != null
+              res?.data[value] != 'Detail not found' &&
+              res?.data[value] != null,
           )?.length < 1
         ) {
           this.documentNotMatched(i, file);
           return -1;
         } else {
           // this.loder.close();
-          this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
+          this.snack.open(`Document Uploaded Successfully` + ' !', 'OK', {
             duration: 4000,
-            verticalPosition: "top",
-            horizontalPosition: "right",
-            panelClass: "snackbar-error"
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'snackbar-error',
           });
           this.ocrPass = true;
           // if document details not found or document is invalid.
           if (
-            (res.data?.aadhaarNumber == "Detail not found" ||
-              res.data?.panNumber == "Detail not found" ||
-              res.data?.passportNumber == "Detail not found") &&
-            res.data?.dateOfBirth == "Detail not found"
+            (res.data?.aadhaarNumber == 'Detail not found' ||
+              res.data?.panNumber == 'Detail not found' ||
+              res.data?.passportNumber == 'Detail not found') &&
+            res.data?.dateOfBirth == 'Detail not found'
           ) {
             this.documentNotMatched(i, file);
           } else {
             // for aadhar
             const index =
-              this.otherDocument()?.controls[i]?.get("fileInfo")?.value
+              this.otherDocument()?.controls[i]?.get('fileInfo')?.value
                 ?.length - 1;
-            console.log(index, "idx");
+            console.log(index, 'idx');
 
             if (index) {
               this.updateFileInfo(
@@ -527,34 +528,34 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                 i,
                 res.data?.name,
                 res.data?.dateOfBirth,
-                res.data?.gender
+                res.data?.gender,
               );
             }
-            if (this.hideSelect[i]?.toLowerCase().includes("aadhar")) {
+            if (this.hideSelect[i]?.toLowerCase().includes('aadhar')) {
               if (
-                res.data?.aadhaarNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i]?.get("documentNumber")
+                res.data?.aadhaarNumber.replace(/\s/g, '') !=
+                this.otherDocument()['controls'][i]?.get('documentNumber')
                   ?.value
               ) {
                 // this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for pan card
-            else if (this.hideSelect[i]?.toLowerCase().includes("pan")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes('pan')) {
               if (
-                res.data?.panNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"]?.[i]?.get("documentNumber")
+                res.data?.panNumber.replace(/\s/g, '') !=
+                this.otherDocument()['controls']?.[i]?.get('documentNumber')
                   ?.value
               ) {
                 this.documentDataMissMatch(`Document number`, file, i);
               }
             }
             // for passport.
-            else if (this.hideSelect[i]?.toLowerCase().includes("passport")) {
+            else if (this.hideSelect[i]?.toLowerCase().includes('passport')) {
               console.log(res);
               if (
-                res.data?.passportNumber.replace(/\s/g, "") !=
-                this.otherDocument()["controls"][i]?.get("documentNumber")
+                res.data?.passportNumber.replace(/\s/g, '') !=
+                this.otherDocument()['controls'][i]?.get('documentNumber')
                   ?.value
               ) {
                 this.documentDataMissMatch(`Document number`, file, i);
@@ -572,19 +573,19 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   updateFileInfo(index: any, i: any, name: any, dateOfBirth: any, gender: any) {
-    const fileInfoControl = this.otherDocument()?.controls[i]?.get("fileInfo");
+    const fileInfoControl = this.otherDocument()?.controls[i]?.get('fileInfo');
     if (fileInfoControl && fileInfoControl.value) {
       fileInfoControl.value[index] = {
         ...fileInfoControl.value[index],
         applicantName: name,
         dateOfBirth: dateOfBirth,
-        gender: gender
+        gender: gender,
       };
     }
 
     console.log(
-      this.otherDocument().controls[i]?.get("fileInfo")?.value,
-      "///////"
+      this.otherDocument().controls[i]?.get('fileInfo')?.value,
+      '///////',
     );
   }
 
@@ -592,45 +593,45 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.deleteFile(i, i, file);
     // this.loder.close();
     this.snack.open(
-      `Uploaded Document is not valid or details not found` + " !",
-      "OK",
+      `Uploaded Document is not valid or details not found` + ' !',
+      'OK',
       {
         duration: 4000,
-        verticalPosition: "top",
-        horizontalPosition: "right",
-        panelClass: "snackbar-error"
-      }
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: 'snackbar-error',
+      },
     );
   }
 
   documentDataMissMatch(title: any, file: any, i: any) {
     const dialogData = {
       error: ` ${title} doesn't match the document upload.`,
-      message: "Would you like to continue?"
+      message: 'Would you like to continue?',
     };
     const dialogRef = this.dialog.open(WarningComponent, {
-      width: "40%",
+      width: '40%',
       data: dialogData,
       disableClose: true,
-      panelClass: ""
+      panelClass: '',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
-      if (result != "Ok") {
+      if (result != 'Ok') {
         this.deleteFile(i, i, file);
       }
     });
   }
 
   uploadImage(file: any, i: any) {
-    let formData = new FormData();
-    let data = {
+    const formData = new FormData();
+    const data = {
       ...(this.isOtherDocVisible
         ? {
             documentNameForChecklist:
-              this.createDocumentForm.value.otherDocument[i].documentType
+              this.createDocumentForm.value.otherDocument[i].documentType,
           }
-        : ""),
+        : ''),
       documentName: !this.isOtherDocVisible ? this.nationalIdGeneric : null,
       documentType: !this.isOtherDocVisible
         ? this.nationalIdGeneric
@@ -641,26 +642,26 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc"
+      verificationType: 'kyc',
     };
 
-    formData.append("data", JSON.stringify(data));
-    formData.append("file", file);
-    formData.append("module", "document");
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', file);
+    formData.append('module', 'document');
     // this.loder.open();
     this.ocrPass = false;
     if (this.ocrCheck) {
       this.readDocument(
         file,
-        this.createDocumentForm.value.otherDocument[i]?.docIds?.length
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length,
       )
         .then(() => {
           if (this.ocrPass) {
             const updatedData = {
               ...data,
-              documentNumber: this.nationalIdNo
+              documentNumber: this.nationalIdNo,
             };
-            formData.set("data", JSON.stringify(updatedData));
+            formData.set('data', JSON.stringify(updatedData));
 
             this.api.uploadDocument(formData).subscribe((resp) => {
               if (resp?.statusCode === 200) {
@@ -668,13 +669,13 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                 this.updateDocId(i).push(resp.data.documentId);
                 this.documentIds.push(this.createDocumentForm.value);
                 console.log(
-                  this.otherDocument()?.controls[i]?.get("fileInfo")?.value,
-                  i
+                  this.otherDocument()?.controls[i]?.get('fileInfo')?.value,
+                  i,
                 );
                 const index =
-                  this.otherDocument()?.controls[i]?.get("fileInfo")?.value
+                  this.otherDocument()?.controls[i]?.get('fileInfo')?.value
                     ?.length - 1;
-                console.log(index, "idx");
+                console.log(index, 'idx');
 
                 // if (index)
                 this.updateFileInfo(
@@ -682,15 +683,15 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                   i,
                   this.documentInfo?.name,
                   this.documentInfo?.dateOfBirth,
-                  this.documentInfo?.gender
+                  this.documentInfo?.gender,
                 );
                 if (this.isOtherDocVisible)
                   this.extractDoc(
                     this.createDocumentForm.value.otherDocument[i].documentType,
-                    parseInt(<string>sessionStorage.getItem("originationId")),
+                    parseInt(<string>sessionStorage.getItem('originationId')),
                     file,
                     resp.data.documentId,
-                    sessionStorage.getItem("customerStagingId")
+                    sessionStorage.getItem('customerStagingId'),
                   );
                 // else this.loder.close();
               }
@@ -709,10 +710,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
           if (this.isOtherDocVisible)
             this.extractDoc(
               this.createDocumentForm.value.otherDocument[i].documentType,
-              parseInt(<string>sessionStorage.getItem("originationId")),
+              parseInt(<string>sessionStorage.getItem('originationId')),
               file,
               resp.data.documentId,
-              sessionStorage.getItem("customerStagingId")
+              sessionStorage.getItem('customerStagingId'),
             );
         }
       });
@@ -725,16 +726,16 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
               docName:
                 this.createDocumentForm.value.otherDocument[i].documentType,
               originationId: parseInt(
-                <string>sessionStorage.getItem("originationId")
+                <string>sessionStorage.getItem('originationId'),
               ),
               file: file,
               documentId: resp.data.documentId,
-              customerStagingId: sessionStorage.getItem("customerStagingId")
-            }
+              customerStagingId: sessionStorage.getItem('customerStagingId'),
+            },
           );
           sessionStorage.setItem(
-            "otherDocScreenCode",
-            <string>sessionStorage.getItem("currentScreenCode")
+            'otherDocScreenCode',
+            <string>sessionStorage.getItem('currentScreenCode'),
           );
         }
       });
@@ -747,17 +748,17 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     originationId: any,
     file: any,
     documentId: any,
-    customerStagingId: any
+    customerStagingId: any,
   ) {
-    let formData = new FormData();
-    formData.append("fileName", file);
+    const formData = new FormData();
+    formData.append('fileName', file);
     this.docapi
       .getCheckListDoc(
         docName,
         originationId,
         formData,
         documentId,
-        customerStagingId
+        customerStagingId,
       )
       .subscribe((resp) => {
         if (resp) {
@@ -774,7 +775,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   updateDocId(indx: any): any[] {
-    return this.otherDocument().controls[indx]?.get("docIds")?.value;
+    return this.otherDocument().controls[indx]?.get('docIds')?.value;
   }
 
   displayImage(indx: any, file: any, size: any) {
@@ -785,12 +786,12 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.getFileInfo(indx).push({
         url: this.imageUrl,
         name: file.name,
-        progress: "100%",
-        size: `${sizeinKb}kb`
+        progress: '100%',
+        size: `${sizeinKb}kb`,
       });
       setTimeout(() => {
         this.getFileInfo(indx)[this.getFileInfo(indx)?.length - 1].progress =
-          "0%";
+          '0%';
       }, 1000);
     };
     reader.readAsDataURL(this.selectedImage);
@@ -819,7 +820,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   onFileDropped(event: any, i: any) {
     console.log(event);
-    if (event.files.type.startsWith("image/")) {
+    if (event.files.type.startsWith('image/')) {
       this.selectedImage = event.files;
       this.displayImage(i, event.files, event.files?.size);
       this.uploadImage(event.files, i);
@@ -829,8 +830,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.loanDisbursementForm, ".....");
-    let isDocUploaded: boolean = false;
+    console.log(this.loanDisbursementForm, '.....');
+    let isDocUploaded = false;
     if (this.createDocumentForm) {
       isDocUploaded = this.createDocumentForm.value.otherDocument
         .filter((docItem: any) => docItem.documentType)
@@ -843,20 +844,20 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     }
     console.log(isDocUploaded);
     this.isLoading = true;
-    this.loadingBtnText = "Saving...";
+    this.loadingBtnText = 'Saving...';
     if (this.loanDisbursementForm) {
-      this.onCustomSubmit.emit({
+      this.CustomSubmit.emit({
         documentDetails: this.createDocumentForm.value,
-        loanDisbursement: this.loanDisbursementForm.value ?? {}
+        loanDisbursement: this.loanDisbursementForm.value ?? {},
       });
     } else
-      this.onCustomSubmit.emit({
-        documentDetails: this.createDocumentForm.value
+      this.CustomSubmit.emit({
+        documentDetails: this.createDocumentForm.value,
       });
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   /**
@@ -865,8 +866,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
    */
   checkDocValidity() {
     if (this.createDocumentForm) {
-      let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-        (docItem: any) => docItem.fileInfo?.length > 0
+      const isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+        (docItem: any) => docItem.fileInfo?.length > 0,
       );
       return (this.createDocumentForm.invalid || !isDocUploaded) &&
         this.individual
@@ -881,7 +882,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
     } else this.hideSelect[index] = event;
 
-    console.log(this.hideSelect, "this.hideSelect");
+    console.log(this.hideSelect, 'this.hideSelect');
   }
 
   isDocumentOptionDisabled2(item: any) {
@@ -900,18 +901,18 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   openDialog(check?: string) {
     const dialogRef = this.dialog.open(ScanComponent, {
       disableClose: false,
-      width: "60%",
-      data: { title: "Sign Now", check: check }
+      width: '60%',
+      data: { title: 'Sign Now', check: check },
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res.image) {
-        let timestamp = new Date();
-        var seconds = timestamp.getSeconds();
+        const timestamp = new Date();
+        const seconds = timestamp.getSeconds();
         fetch(res.image)
           .then((res) => res.blob())
           .then((blob) => {
             const file = new File([blob], `${seconds}_FaceScan.png`, {
-              type: "image/png"
+              type: 'image/png',
             });
             this.validateFace(file);
           });
@@ -920,38 +921,38 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   uploadFace(file: any) {
-    let form = new FormData();
-    form.append("file", file);
+    const form = new FormData();
+    form.append('file', file);
     this.openApi.faceRegister(form).subscribe((res) => {
       this.faceId = res?.data?.data?.biometricId;
       this.image = res?.data?.data?.fileUrl;
-      this.sessionService.setItem("biometricId", this.faceId);
+      this.sessionService.setItem('biometricId', this.faceId);
     });
   }
 
   validateFace(file: any) {
-    let form = new FormData();
-    form.append("faceImage", file);
-    form.append("docImage", this.frontAadhar);
+    const form = new FormData();
+    form.append('faceImage', file);
+    form.append('docImage', this.frontAadhar);
     this.openApi.faceMatch(form).subscribe((res) => {
       console.log(res);
-      if (res?.data?.message === "Face matched successfully")
+      if (res?.data?.message === 'Face matched successfully')
         this.uploadFace(file);
-      else if (res?.data?.message == "Face did not match") {
+      else if (res?.data?.message == 'Face did not match') {
         const dialogData = {
           error: `Captured face is not matching with the National id image.`,
-          message: "Would you like to continue?"
+          message: 'Would you like to continue?',
         };
         const dialogRef = this.dialog.open(WarningComponent, {
-          width: "50%",
+          width: '50%',
           data: dialogData,
           disableClose: true,
-          panelClass: ""
+          panelClass: '',
         });
         dialogRef.afterClosed().subscribe((result) => {
-          if (result != "Ok") {
+          if (result != 'Ok') {
             this.openDialog();
-          } else if (result == "Ok") this.uploadFace(file);
+          } else if (result == 'Ok') this.uploadFace(file);
         });
       }
     });

@@ -1,30 +1,30 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoanDetailsModel } from "app/shared/models/loan-details.model";
-import { loanServiceStore } from "../../../loan-tabs";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { IconService } from "app/shared/services/icon.service";
-import { handleDownload } from "app/shared/helpers/utils";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { loanServiceStore } from '../../../loan-tabs';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { IconService } from 'app/shared/services/icon.service';
+import { handleDownload } from 'app/shared/helpers/utils';
 
 @Component({
-  selector: "app-view-statement",
-  templateUrl: "./view-statement.component.html",
-  styleUrls: ["./view-statement.component.scss"]
+  selector: 'app-view-statement',
+  templateUrl: './view-statement.component.html',
+  styleUrls: ['./view-statement.component.scss'],
 })
 export class ViewStatementComponent implements OnInit {
   viewStatementForm: FormGroup | any;
   viewStatementHeadingsArr = loanServiceStore.viewStatementHeadings;
-  fetchStatement: boolean = false;
+  fetchStatement = false;
   loanDetails: LoanDetailsModel[] | any;
   //need to remove the static data
   loanViewOptionArr = [
-    { value: "ONEDAY", label: "Today" },
-    { value: "ONEWEEK", label: "Last 7 days" },
-    { value: "CURRENTMONTH", label: "Current Month" },
-    { value: "LASTTHREEMONTH", label: "Last 3 Month" },
-    { value: "DATERANGE", label: "Select Date Range" }
+    { value: 'ONEDAY', label: 'Today' },
+    { value: 'ONEWEEK', label: 'Last 7 days' },
+    { value: 'CURRENTMONTH', label: 'Current Month' },
+    { value: 'LASTTHREEMONTH', label: 'Last 3 Month' },
+    { value: 'DATERANGE', label: 'Select Date Range' },
   ];
   fetchedData: any;
 
@@ -32,10 +32,10 @@ export class ViewStatementComponent implements OnInit {
     private fb: FormBuilder,
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
-    private iconService: IconService
+    private iconService: IconService,
   ) {
     this.iconService
-      .addIconIfNotExists("blue-download", "assets/images/blue-download.svg")
+      .addIconIfNotExists('blue-download', 'assets/images/blue-download.svg')
       .subscribe((_) => {});
   }
 
@@ -46,9 +46,9 @@ export class ViewStatementComponent implements OnInit {
 
   buildViewStatementForm() {
     this.viewStatementForm = this.fb.group({
-      statementOption: ["Active Loan"],
-      loanAccNo: ["", [Validators.required]],
-      viewOption: [""]
+      statementOption: ['Active Loan'],
+      loanAccNo: ['', [Validators.required]],
+      viewOption: [''],
     });
   }
 
@@ -67,7 +67,7 @@ export class ViewStatementComponent implements OnInit {
     this.loanService
       .downloadViewStatement(this.viewStatementForm.value.loanAccNo)
       .subscribe((res: Blob | any) => {
-        handleDownload(res, "View Statement");
+        handleDownload(res, 'View Statement');
       });
   }
 }

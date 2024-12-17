@@ -8,9 +8,8 @@ describe('PrepaidReloadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrepaidReloadComponent ]
-    })
-    .compileComponents();
+      declarations: [PrepaidReloadComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PrepaidReloadComponent);
     component = fixture.componentInstance;

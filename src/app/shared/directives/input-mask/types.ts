@@ -1,4 +1,4 @@
-import type Inputmask from "inputmask";
+import type Inputmask from 'inputmask';
 
 export type InputmaskOptions<T> = Inputmask.Options & {
   parser?: (value: any) => T;

@@ -1,26 +1,26 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { FooterConstant } from "./footer.constant";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { FooterServiceService } from "app/shared/services/footer-service.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { FooterConstant } from './footer.constant';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { FooterServiceService } from 'app/shared/services/footer-service.service';
 
 @Component({
-  selector: "app-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.scss"]
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
   socialMedia = FooterConstant.SOCIAL_MEDIA;
   footerPages = FooterConstant.FOOTER_PAGES;
   helpSection = FooterConstant.FOOTER_HELP_SECTION;
-  hideNavItem: boolean = false;
+  hideNavItem = false;
   userDetails: any;
   @Output() scrollToTop = new EventEmitter<any>();
-  isHideFooter: boolean = false;
+  isHideFooter = false;
   constructor(
     private showSideBar: NewDepositService,
     private store: TokenStorageService,
-    private footerService: FooterServiceService
+    private footerService: FooterServiceService,
   ) {}
 
   ngOnInit(): void {

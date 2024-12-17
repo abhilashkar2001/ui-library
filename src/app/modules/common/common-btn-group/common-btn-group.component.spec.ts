@@ -8,9 +8,8 @@ describe('CommonBtnGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommonBtnGroupComponent ]
-    })
-    .compileComponents();
+      declarations: [CommonBtnGroupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommonBtnGroupComponent);
     component = fixture.componentInstance;

@@ -8,9 +8,8 @@ describe('ReusablePincodePopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReusablePincodePopupComponent ]
-    })
-    .compileComponents();
+      declarations: [ReusablePincodePopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReusablePincodePopupComponent);
     component = fixture.componentInstance;

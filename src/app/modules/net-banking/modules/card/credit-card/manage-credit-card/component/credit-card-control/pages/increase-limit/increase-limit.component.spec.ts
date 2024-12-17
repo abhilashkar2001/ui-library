@@ -8,9 +8,8 @@ describe('IncreaseLimitComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IncreaseLimitComponent ]
-    })
-    .compileComponents();
+      declarations: [IncreaseLimitComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IncreaseLimitComponent);
     component = fixture.componentInstance;

@@ -1,22 +1,32 @@
 <div fxLayout="column" fxFlex="100" fxLayoutGap="8px">
   <div fxLayoutGap="20" fxLayoutAlign="end center">
-    <div
+    <button
       fxLayoutAlign="center center"
       class="quick_btn btn"
-      [fxFlex]="screenname == 'account' ? '50' : '100'"
+      [fxFlex]="screenname === 'account' ? '50' : '100'"
       (click)="openQuickLink()"
+      (keydown.enter)="openQuickLink()"
+      tabIndex="0"
     >
       <mat-icon class="extend-icon" svgIcon="extend-icon"></mat-icon>
-      {{ "Quick Link" | translate }}
-    </div>
+      {{ 'Quick Link' | translate }}
+    </button>
   </div>
-  <div class="mtcd" *ngIf="viewPayee != true">
+  <div class="mtcd" *ngIf="viewPayee !== true">
     <app-dashboard-instant-pay [instantPay]="false"></app-dashboard-instant-pay>
   </div>
   <div class="mtcd">
-    <app-external-link
-      [title]="'External Link' | translate"
-      [types]="externalLinks"
-    ></app-external-link>
+    <ng-container *ngIf="externalLinksFromStore; else externalLink">
+      <app-external-link
+        [title]="'External Link' | translate"
+        [storeTypes]="externalLinksFromStore"
+      ></app-external-link>
+    </ng-container>
+    <ng-template #externalLink>
+      <app-external-link
+        [title]="'External Link' | translate"
+        [Externaltypes]="externalLinks"
+      ></app-external-link>
+    </ng-template>
   </div>
 </div>

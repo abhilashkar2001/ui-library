@@ -11,7 +11,7 @@
       ></app-ic-custom-pay-from>
     </div>
     <div fxLayout="column" fxFlex="100" class="deposit-section">
-      <span class="text-poppins">{{ "Loan Amount" | translate }}</span>
+      <span class="text-poppins">{{ 'Loan Amount' | translate }}</span>
       <div fxFlex="100">
         <app-ic-custom-input
           fxFlex="30"
@@ -35,12 +35,12 @@
         </mat-slider>
       </div>
       <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-        <div>{{ "Min " }}{{ currencySymbol }} {{ amountmin }}</div>
-        <div>{{ "Max " }}{{ currencySymbol }} {{ amountmax }}</div>
+        <div>{{ 'Min ' }}{{ currencySymbol }} {{ amountmin }}</div>
+        <div>{{ 'Max ' }}{{ currencySymbol }} {{ amountmax }}</div>
       </div>
     </div>
     <div fxLayout="column" fxFlex="100" class="py-12">
-      <span class="text-poppins pb-12">{{ "Tenure" | translate }}</span>
+      <span class="text-poppins pb-12">{{ 'Tenure' | translate }}</span>
       <div>
         <fieldset class="fieldset mb-12" fxFlex="50">
           <div fxFlex="100" fxLayout="row" class="parentYearDiv">
@@ -54,11 +54,11 @@
                 [formControl]="instantLoanForm.get('tenureYears') | formcontrol"
                 placeholder="Enter"
                 class="pl-3 tenure_input"
-                numbersOnly
+                appNumbersOnly
                 (input)="onSliderChangeForTenure($event)"
               />
               <span matSuffix class="suffixLabel">{{
-                "Year" | translate
+                'Year' | translate
               }}</span>
             </div>
             <div class="vertical-seperator"></div>
@@ -74,10 +74,10 @@
                 "
                 placeholder="Enter"
                 class="pl-3 tenure_input"
-                numbersOnly
+                appNumbersOnly
                 (input)="onSliderChangeForTenure($event)"
               />
-              <span class="suffixLabel">{{ "Month" | translate }}</span>
+              <span class="suffixLabel">{{ 'Month' | translate }}</span>
             </div>
             <div class="vertical-seperator"></div>
             <div fxFlex="33" fxLayoutAlign="start center">
@@ -90,7 +90,7 @@
                 [formControl]="instantLoanForm.get('tenureDays') | formcontrol"
                 placeholder="Enter"
                 class="pl-3 tenure_input"
-                numbersOnly
+                appNumbersOnly
                 (input)="onSliderChangeForTenure($event)"
               />
             </div>
@@ -111,14 +111,14 @@
         </mat-slider>
       </div>
       <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
-        <div>{{ "Min " }}{{ minTenure }} {{ "days" }}</div>
-        <div>{{ "Max " }}{{ maxTenure }} {{ "days" }}</div>
+        <div>{{ 'Min ' }}{{ minTenure }} {{ 'days' }}</div>
+        <div>{{ 'Max ' }}{{ maxTenure }} {{ 'days' }}</div>
       </div>
     </div>
     <div class="card_payable" fxLayout="row warp" fxLayoutAlign="start center">
       <div fxLayout="column" fxLayoutAlign="space-between start" fxFlex="100">
         <span class="light-blue-title">{{
-          "Credit Loan Amount" | translate
+          'Credit Loan Amount' | translate
         }}</span>
         <div class="py-12" fxLayout="row">
           <div class="custom_dropDown_accountNo">Account No</div>

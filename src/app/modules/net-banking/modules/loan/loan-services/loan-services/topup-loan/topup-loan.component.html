@@ -56,14 +56,14 @@
               fxFlex="100"
               fxLayoutAlign="space-between center"
             >
-              <div>{{ "Min" | translate }} {{ min }}</div>
-              <div>{{ "Max" | translate }}{{ max }}</div>
+              <div>{{ 'Min' | translate }} {{ min }}</div>
+              <div>{{ 'Max' | translate }}{{ max }}</div>
             </div>
           </div>
           <!-- Tenure -->
           <div fxFlex="100" class="mt-12" fxLayout="column">
             <mat-label class="customLabelClass">{{
-              "Tenure" | translate
+              'Tenure' | translate
             }}</mat-label>
             <div>
               <fieldset class="fieldset mb-12" fxFlex="45">
@@ -78,10 +78,10 @@
                       (change)="onInputChange($event, 'tenure')"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
                     <span matSuffix class="suffixLabel">{{
-                      "Year" | translate
+                      'Year' | translate
                     }}</span>
                   </div>
                   <div class="vertical-seperator"></div>
@@ -94,9 +94,9 @@
                       [formControl]="topUpForm.get('tenureMonth')"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
-                    <span class="suffixLabel">{{ "Month" | translate }}</span>
+                    <span class="suffixLabel">{{ 'Month' | translate }}</span>
                   </div>
                   <div class="vertical-seperator"></div>
                   <div fxFlex="33" fxLayoutAlign="start center">
@@ -108,9 +108,9 @@
                       [formControl]="topUpForm.get('tenureDay')"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
-                    <span class="suffixLabel">{{ "Day" | translate }}</span>
+                    <span class="suffixLabel">{{ 'Day' | translate }}</span>
                   </div>
                 </div>
               </fieldset>
@@ -137,14 +137,14 @@
               fxFlex="100"
               fxLayoutAlign="space-between center"
             >
-              <div>{{ "Min" | translate }} {{ minTenure }}days</div>
-              <div>{{ "Max" | translate }} {{ maxTenureInYears }}year</div>
+              <div>{{ 'Min' | translate }} {{ minTenure }}days</div>
+              <div>{{ 'Max' | translate }} {{ maxTenureInYears }}year</div>
             </div>
           </div>
 
           <div fxFlex="100" fxLayout="row" fxLayoutGap="5px">
             <div fxFlex="50" class="blue-box blue-border">
-              <p class="label">{{ "Account to be credited" | translate }}</p>
+              <p class="label">{{ 'Account to be credited' | translate }}</p>
               <span class="light-blue-title">SA | 8739872378623</span>
             </div>
 
@@ -171,9 +171,9 @@
           <mat-checkbox
             class="customCheckBox"
             [formControl]="topUpForm.get('acceptTermsConditions')"
-            >{{ "I accept" | translate }}
+            >{{ 'I accept' | translate }}
             <span class="light-blue-title-sml">{{
-              "Terms and Condition" | translate
+              'Terms and Condition' | translate
             }}</span></mat-checkbox
           >
 

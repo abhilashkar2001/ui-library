@@ -1,11 +1,11 @@
 // date-time.service
-import { Injectable } from "@angular/core";
-import { DEFAULT_LOCALE } from "app/shared/helpers/utils";
-import { SearchService } from "app/shared/search/search.service";
-import { CustomizerService } from "../customizer.service";
+import { Injectable } from '@angular/core';
+import { DEFAULT_LOCALE } from 'app/shared/helpers/utils';
+import { SearchService } from 'app/shared/search/search.service';
+import { CustomizerService } from '../customizer.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class DateTimeService {
   _format: string | any;
@@ -14,7 +14,7 @@ export class DateTimeService {
 
   public constructor(
     private tokenService: CustomizerService,
-    private shareService: SearchService
+    private shareService: SearchService,
   ) {
     this.currentLocal = this.tokenService.getLogedCountry() ?? DEFAULT_LOCALE;
     this.shareService.isRefresh.subscribe((opt) => {

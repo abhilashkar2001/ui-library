@@ -5,7 +5,7 @@ export interface PrimaryCustomerInfo {
   prefixValue: string;
   prefix: number;
   firstName: string;
-  middleName: any;
+  middleName: string;
   lastName: string;
   gender: number;
   genderValue: string;
@@ -13,20 +13,20 @@ export interface PrimaryCustomerInfo {
   maritalStatus: number;
   maritalStatusValue: string;
   nationality: string;
-  nationalityValue: any;
+  nationalityValue: string;
   residenceStatus: any;
-  residenceStatusValue: any;
+  residenceStatusValue: string;
   kycRefNo: string;
   kycStatus: string;
-  userRefNo: any;
-  kycCbsRefNo: any;
-  icustKycRefNo: any;
-  icustCustRefNo: any;
+  userRefNo: number;
+  kycCbsRefNo: number;
+  icustKycRefNo: number;
+  icustCustRefNo: number;
   icustRefNo: string;
-  custCbsRefNo: any;
+  custCbsRefNo: number;
   onboardingStatus: any;
   operationType: any;
-  profileId: any;
+  profileId: number;
   primaryCustomer: boolean;
   existingCustomer: any;
   profileUrl: any;
@@ -37,46 +37,46 @@ export interface PrimaryCustomerInfo {
   contact: Contact;
   jointCustomerInfo: any;
   biometricVerification: any[];
-  documentId: any;
-  biometricId: any;
+  documentId: number;
+  biometricId: number;
   signatureModel: any;
   source: any;
   pepStatus: any;
-  rmId: any;
-  agentId: any;
+  rmId: number;
+  agentId: number;
   isTaxResident: any;
   fatcaInfo: any;
   riskFactor: any;
-  riskFactorValue: any;
-  communicationPhone: any;
-  communicationPhoneValue: any;
-  rekycIds: any;
+  riskFactorValue: string;
+  communicationPhone: number;
+  communicationPhoneValue: string;
+  rekycIds: number;
   videoVerification: any;
-  corporateId: any;
-  empNo: any;
+  corporateId: number;
+  empNo: number;
   kycGeneratedFromFlex: boolean;
   cifGeneratedFromFlex: boolean;
 }
 
 export interface DocumentInfo {
   documentId: number;
-  documentName: any;
+  documentName: string;
   documentType: string;
   fileName: string;
   fileType: string;
   documentSide: number;
   verificationType: string;
   fileUrl: string;
-  idNumber: any;
+  idNumber: number;
   phoneNumber: string;
   documentNumber: string;
-  issueDate: any;
-  expiryDate: any;
-  dob: any;
+  issueDate: Date;
+  expiryDate: Date;
+  dob: Date;
   documentDesc: any;
-  isProofOfAddress: any;
-  documentNameValue: any;
-  documentNameForChecklist: any;
+  isProofOfAddress: string;
+  documentNameValue: string;
+  documentNameForChecklist: string;
 }
 
 export interface Contact {
@@ -86,12 +86,12 @@ export interface Contact {
   mobtCode: string;
   waptCode: string;
   altCode: string;
-  fax: any;
+  fax: number;
   email: string;
   whatsappNo: string;
   alternativeNumber: string;
-  residencePhone: any;
-  officePhone: any;
+  residencePhone: number;
+  officePhone: number;
   address: Address[];
 }
 
@@ -99,7 +99,7 @@ export interface Address {
   addressId: number;
   address1: string;
   address2: string;
-  addressType: any;
+  addressType: string;
   residenceType: number;
   residenceTypeValue: string;
   countryName: string;

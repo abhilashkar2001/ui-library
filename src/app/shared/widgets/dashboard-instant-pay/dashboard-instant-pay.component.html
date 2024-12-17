@@ -3,7 +3,7 @@
 >
   <div class="addPayee_title" fxLayout="row" fxLayoutAlign="space-between">
     <h2 [ngClass]="!instantPay ? 'heading-allPayee' : ''">
-      {{ (instantPay ? "Instant Pay" : "All Payee") | translate }}
+      {{ (instantPay ? 'Instant Pay' : 'All Payee') | translate }}
     </h2>
     <mat-card
       class="extend-card"
@@ -31,6 +31,7 @@
         (selectionChange)="getCurrencySymbol($event)"
       >
       </app-searchable-select>
+      <p>{{ accountNumberList | json }}</p>
     </div>
     <div fxFLex="100" fxLayout="row wrap" fxLayoutAlign="start start">
       <div
@@ -40,14 +41,21 @@
         class="addPayee_box"
         *ngFor="let payee of payeeDetails?.slice(0, 4)"
         (click)="onPayeeSelect(payee)"
+        (keydown.enter)="onPayeeSelect(payee)"
+        tabindex="0"
         [ngClass]="{
           selectedPayee:
-            selectedPayee?.retailBeneficiaryId == payee?.retailBeneficiaryId
+            selectedPayee.retailBeneficiaryId === payee?.retailBeneficiaryId,
         }"
       >
-        <ng-container *ngIf="payee?.profileUrl; else showNameImg">
+        <ng-container *ngIf="payee?.profilePicUrl; else showNameImg">
           <div class="createdByImg">
-            <img [src]="payee?.profileUrl" alt="" height="100%" width="100%" />
+            <img
+              [src]="payee?.profilePicUrl"
+              alt=""
+              height="100%"
+              width="100%"
+            />
           </div>
         </ng-container>
         <ng-template #showNameImg>
@@ -70,7 +78,7 @@
         bindLabelKey="payeeName"
         bindValueKey="accountNo"
         displayLabel="accountNo"
-        [currencyCode]="selectedPayee?.accountCurrecny"
+        [currencyCode]="selectedPayee.accountCurrecny"
         [control]="payeeForm.get('benificiaryAccountNo') | formcontrol"
       >
       </app-searchable-select>
@@ -82,7 +90,7 @@
         bindLabelKey="payeeName"
         bindValueKey="accountNo"
         displayLabel="accountNo"
-        [currencyCode]="selectedPayee?.accountCurrecny"
+        [currencyCode]="selectedPayee.accountCurrecny"
         [control]="payeeForm.get('benificiaryAccountNo') | formcontrol"
       >
       </app-searchable-select>
@@ -102,7 +110,12 @@
               <input matInput type="text" formControlName="amount" />
             </div>
           </mat-form-field>
-          <div class="next_go" (click)="doPay()">
+          <div
+            class="next_go"
+            (click)="doPay()"
+            (keydown.enter)="doPay()"
+            tabindex="1"
+          >
             <mat-icon>arrow_forward</mat-icon>
           </div>
         </div>
@@ -112,7 +125,7 @@
             payeeForm.get('amount')?.hasError('notEnoughAmount')
           "
         >
-          {{ "No enough balance to transfer" }}
+          {{ 'No enough balance to transfer' }}
         </mat-error>
       </div>
     </form>

@@ -8,9 +8,8 @@ describe('AgricultureEmiCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AgricultureEmiCalculatorComponent ]
-    })
-    .compileComponents();
+      declarations: [AgricultureEmiCalculatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AgricultureEmiCalculatorComponent);
     component = fixture.componentInstance;

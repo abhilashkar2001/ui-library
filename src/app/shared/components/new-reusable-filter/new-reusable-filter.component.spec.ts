@@ -6,12 +6,10 @@ describe('NewReusableFilterComponent', () => {
   let component: NewReusableFilterComponent;
   let fixture: ComponentFixture<NewReusableFilterComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ NewReusableFilterComponent ]
-    })
-    .compileComponents();
-
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NewReusableFilterComponent],
+    });
     fixture = TestBed.createComponent(NewReusableFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

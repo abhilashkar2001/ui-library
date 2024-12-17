@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="light-blue-title">{{ "Payment Details" | translate }}</div>
+    <div class="light-blue-title">{{ 'Payment Details' | translate }}</div>
     <div *ngIf="!proceedPayment; else showSchedulePayment" fxLayout="column">
       <div fxFlex="100" fxLayout="row wrap">
         <div fxFlex="30" class="input_wrapper">
@@ -32,7 +32,7 @@
           ></app-searchable-select>
           <div fxLayout="row" fxLayoutGap="10px">
             <mat-label class="light-blue-title">{{
-              "Favourites" | translate
+              'Favourites' | translate
             }}</mat-label>
             <mat-radio-group
               color="primary"
@@ -42,10 +42,10 @@
               (change)="changeFav($event.value)"
             >
               <mat-radio-button value="Same">{{
-                "Same Bank" | translate
+                'Same Bank' | translate
               }}</mat-radio-button>
               <mat-radio-button value="Other">{{
-                "Other Bank" | translate
+                'Other Bank' | translate
               }}</mat-radio-button>
             </mat-radio-group>
           </div>
@@ -106,13 +106,13 @@
               schedulePaymentForm.get('amount').hasError('required') &&
               schedulePaymentForm.get('amount').touched
             "
-            >{{ "Amount is Required" | translate }}</mat-error
+            >{{ 'Amount is Required' | translate }}</mat-error
           >
         </div>
         <div
           fxFlex="25"
           class="input_wrapper"
-          *ngIf="schedulePaymentForm.get('paymentType').value == 'Same'"
+          *ngIf="schedulePaymentForm.get('paymentType').value === 'Same'"
         >
           <app-searchable-select
             [control]="schedulePaymentForm.get('paymentMode')"
@@ -137,7 +137,7 @@
       <div class="wrapper_row" fxLayout="row wrap" fxFlex="100">
         <div fxFlex="25" class="input_wrapper" fxLayout="column">
           <mat-label class="ml-16">{{
-            "Schedule Payment" | translate
+            'Schedule Payment' | translate
           }}</mat-label>
           <mat-form-field>
             <div fxLayout="row" fxLayoutAlign="space-between">

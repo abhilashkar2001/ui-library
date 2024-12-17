@@ -3,9 +3,9 @@ import {
   Inject,
   Renderer2,
   RendererFactory2,
-  EventEmitter
-} from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+  EventEmitter,
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 export interface ITheme {
   name: string;
@@ -19,22 +19,22 @@ export class ThemeService {
 
   public egretThemes: ITheme[] = [
     {
-      name: "egret-navy",
-      baseColor: "#10174c",
-      isActive: false
+      name: 'egret-navy',
+      baseColor: '#10174c',
+      isActive: false,
     },
     {
-      name: "egret-navy-dark",
-      baseColor: "#0081ff",
-      isActive: false
-    }
+      name: 'egret-navy-dark',
+      baseColor: '#0081ff',
+      isActive: false,
+    },
   ];
 
-  public activatedTheme: ITheme | any;
+  public activatedTheme: ITheme | undefined;
   private renderer: Renderer2;
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    rendererFactory: RendererFactory2
+    rendererFactory: RendererFactory2,
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
@@ -46,7 +46,7 @@ export class ThemeService {
     this.renderer.addClass(this.document.body, themeName);
   }
 
-  changeTheme(prevTheme: any, themeName: string) {
+  changeTheme(prevTheme: string, themeName: string) {
     this.renderer.removeClass(this.document.body, prevTheme);
     this.renderer.addClass(this.document.body, themeName);
     this.flipActiveFlag(themeName);

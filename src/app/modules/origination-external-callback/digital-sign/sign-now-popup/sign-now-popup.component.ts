@@ -3,41 +3,41 @@ import {
   Component,
   Inject,
   OnInit,
-  ViewChild
-} from "@angular/core";
-import { Subscription } from "rxjs";
-import { BranchService } from "./branch.service";
-import { HttpEventType, HttpResponse } from "@angular/common/http";
-import { SignPadComponent } from "../sign-pad/sign-pad.component";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { BranchService } from './branch.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { SignPadComponent } from '../sign-pad/sign-pad.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-sign-now-popup",
-  templateUrl: "./sign-now-popup.component.html",
-  styleUrls: ["./sign-now-popup.component.scss"]
+  selector: 'app-sign-now-popup',
+  templateUrl: './sign-now-popup.component.html',
+  styleUrls: ['./sign-now-popup.component.scss'],
 })
 export class SignNowPopupComponent implements OnInit {
-  @ViewChild("signPadRef", { static: false })
+  @ViewChild('signPadRef', { static: false })
   signPadComponent: SignPadComponent | any;
   signatureImg: any;
-  isSign: boolean = true;
-  radioFlag: string = "digitan-sign";
+  isSign = true;
+  radioFlag = 'digitan-sign';
   signaturePadOptions: Object = {
     minWidth: 2,
     canvasWidth: 700,
     canvasHeight: 300,
-    penColor: "black",
-    backgroundColor: "white"
+    penColor: 'black',
+    backgroundColor: 'white',
   };
   selectedIndex: number | any;
   uploadingFile: string | any;
-  isUploading: boolean = false;
-  diasableDone: boolean = true;
+  isUploading = false;
+  diasableDone = true;
   percentDone: number | any;
   uploadSuccess: boolean | any;
   requestSubscription: Subscription | any;
   signImg: any;
-  isStart: boolean = false;
+  isStart = false;
   file: any;
   fileName: any;
   sinatureId: string | Blob | any;
@@ -48,25 +48,25 @@ export class SignNowPopupComponent implements OnInit {
     private dialogRef: MatDialogRef<SignNowPopupComponent>,
     private cdr: ChangeDetectorRef,
     private branchService: BranchService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.title = data?.title;
     this.check = data?.check;
   }
 
   ngOnInit(): void {
-    if (this.data?.check == "Upload") {
-      this.radioEvent("upload");
+    if (this.data?.check == 'Upload') {
+      this.radioEvent('upload');
     } else {
-      this.radioEvent("digitan-sign");
+      this.radioEvent('digitan-sign');
     }
     this.cdr.markForCheck();
   }
   ngAfterViewInit() {}
 
   signpadImage(event: any) {
-    this.file = new File([event], "E-sign.png", {
-      type: "png"
+    this.file = new File([event], 'E-sign.png', {
+      type: 'png',
     });
     this.uploadDocument();
   }
@@ -81,26 +81,26 @@ export class SignNowPopupComponent implements OnInit {
   }
 
   uploadDocument() {
-    console.log("file", this.file);
+    console.log('file', this.file);
     const docPayload = new FormData();
-    let data = {
-      fileName: this.file?.name || "signature",
-      fileType: this.file?.type || "jpeg",
-      verificationType: "loan"
+    const data = {
+      fileName: this.file?.name || 'signature',
+      fileType: this.file?.type || 'jpeg',
+      verificationType: 'loan',
     };
-    docPayload.append("file", this.file);
-    docPayload.append("data", JSON.stringify(data));
-    docPayload.append("module", "signature");
-    docPayload.append("signatureId", this.sinatureId);
+    docPayload.append('file', this.file);
+    docPayload.append('data', JSON.stringify(data));
+    docPayload.append('module', 'signature');
+    docPayload.append('signatureId', this.sinatureId);
     this.branchService.saveUploadSignature(docPayload).subscribe(
       (resp: any) => {
         const data = {
           result: resp?.data,
-          title: this.title
+          title: this.title,
         };
         this.dialogRef.close(data);
       },
-      (err) => console.log("Error: ", err)
+      (err) => console.log('Error: ', err),
     );
   }
 
@@ -115,7 +115,7 @@ export class SignNowPopupComponent implements OnInit {
    */
 
   radioEvent(event: any) {
-    if (event == "digitan-sign") {
+    if (event == 'digitan-sign') {
       this.isSign = true;
       this.radioFlag = event;
     } else {
@@ -129,13 +129,13 @@ export class SignNowPopupComponent implements OnInit {
    */
 
   removeimage() {
-    document.querySelector("#imgforped")?.classList.add("hidden");
+    document.querySelector('#imgforped')?.classList.add('hidden');
   }
   /**
    * Draw Start Method
    */
   drawStart() {
-    document.querySelector("#imgforped")?.classList.add("hidden");
+    document.querySelector('#imgforped')?.classList.add('hidden');
   }
 
   /**

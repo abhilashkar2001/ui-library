@@ -1,124 +1,123 @@
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
 .mat-form-field-appearance-outline .mat-form-field-outline-end {
-    border: none !important;
+  border: none !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-gap {
-    border: none !important;
+  border: none !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
-    border: none !important;
+  border: none !important;
 }
 
 ::ng-deep .mat-form-field {
-    box-shadow: 0px 3px 10px 0px #00000017;
-    border-radius: 12px;
-    height: 60px;
+  box-shadow: 0px 3px 10px 0px #00000017;
+  border-radius: 12px;
+  height: 60px;
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: #004c97;
+  background-color: #004c97;
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: #051a2d;
+  background-color: #051a2d;
 }
 
 .pb-25 {
-    padding-bottom: 25px;
+  padding-bottom: 25px;
 }
 
 .standard-flex {
-    display: flex;
+  display: flex;
 
-    mat-form-field.custom-field {
-        width: 300px;
-        margin-right: 20px;
-        margin-bottom: 20px;
+  mat-form-field.custom-field {
+    width: 300px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  .plain-text {
+    color: rgba(16, 34, 69, 0.43);
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-right: 5px;
+  }
+
+  mat-form-field.custom-field-80 {
+    position: absolute;
+    width: 622px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+    .standard-search {
+      position: relative;
+      margin-left: -200px;
+      cursor: pointer;
     }
 
-    .plain-text {
-        color: rgba(16, 34, 69, 0.43);
+    .vertical-separator {
+      height: 43px;
+      width: 1px;
+      border: #b4b4b466 1px solid;
+      margin: 0px 10px;
+      position: relative;
+      top: -33px;
+      float: right;
+      right: 139px;
+    }
+
+    .locate-container {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      float: right;
+      bottom: 28px;
+
+      .locate {
+        display: inline-flex;
+        justify-content: space-around;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        background: white;
+        color: #004c97;
         font-family: Poppins;
         font-size: 16px;
         font-style: normal;
         font-weight: 500;
-        line-height: normal;
-        margin-right: 5px;
+      }
     }
-
-    mat-form-field.custom-field-80 {
-        position: absolute;
-        width: 622px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-
-        .standard-search {
-            position: relative;
-            margin-left: -200px;
-            cursor: pointer;
-        }
-
-        .vertical-separator {
-            height: 43px;
-            width: 1px;
-            border: #b4b4b466 1px solid;
-            margin: 0px 10px;
-            position: relative;
-            top: -33px;
-            float: right;
-            right: 139px;
-        }
-
-        .locate-container {
-            display: flex;
-            flex-direction: row;
-            position: relative;
-            float: right;
-            bottom: 28px;
-
-            .locate {
-                display: inline-flex;
-                justify-content: space-around;
-                text-decoration: none;
-                border: none;
-                cursor: pointer;
-                background: white;
-                color: #004c97;
-                font-family: Poppins;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 500;
-            }
-        }
-    }
+  }
 }
 
 .text-header {
-    color: #004c97;
-    font-family: Poppins;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 9px;
+  color: #004c97;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 9px;
 }
 
 .custom-mat-label {
-    font-family: Poppins;
-    font-weight: 500;
-    font-size: 16px;
-    color: #1022456e;
-    opacity: 0.5;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 16px;
+  color: #1022456e;
+  opacity: 0.5;
 }
 
-
 .mt-100 {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
 .mr-5 {
-    margin-right: 5px;
-    margin-top: -1px;
+  margin-right: 5px;
+  margin-top: -1px;
 }

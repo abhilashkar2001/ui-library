@@ -19,21 +19,17 @@ import '@angular/localize/init';
  */
 
 /***************************************************************************************************
-* BROWSER POLYFILLS
-*/  // Run `npm install --save classlist.js`.
-
+ * BROWSER POLYFILLS
+ */ // Run `npm install --save classlist.js`.
 
 /** Evergreen browsers require these. **/
 // import 'core-js/es6/reflect';
 // import 'core-js/es7/reflect';  // Run `npm install --save web-animations-js`.
 
-
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js';  // Included with Angular CLI.
-
-
+import 'zone.js'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

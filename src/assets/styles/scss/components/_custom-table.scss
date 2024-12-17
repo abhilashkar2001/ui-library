@@ -1,4 +1,4 @@
-@import "node_modules/@onerumango/icust-scss-library/src/themes/variables";
+@import 'node_modules/@onerumango/icust-scss-library/src/themes/variables';
 // Title: New and Upload Button
 .addNewButton,
 .uploadButton {
@@ -54,7 +54,8 @@
   .data_table {
     min-width: 845px;
     background-color: unset;
-    box-shadow: 0 8px 12px rgba(47, 60, 74, 0.04),
+    box-shadow:
+      0 8px 12px rgba(47, 60, 74, 0.04),
       0 2px 6px rgba(47, 60, 74, 0.08) !important;
     border-radius: 10px;
     margin: 0 0.4rem 3px 0.4rem;
@@ -101,7 +102,7 @@
         b {
           font-size: 15px;
           font-weight: 500;
-          font-family: "Poppins", sans-serif;
+          font-family: 'Poppins', sans-serif;
           margin-left: 2px;
         }
 
@@ -150,7 +151,7 @@ mat-header-cell,
 mat-cell {
   font-weight: 600 !important;
   word-break: break-word;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 0 10px;
   cursor: pointer;
   &.mat-cell:not(.no_data):first-of-type {
@@ -222,7 +223,7 @@ mat-cell {
   position: relative;
 
   &:not(:last-of-type)::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 100%;
     left: 50%;
@@ -265,7 +266,7 @@ mat-cell {
 .Eid {
   color: #b4b4b4 !important;
   font-size: 11px !important;
-  font-family: poppins, "Regular";
+  font-family: poppins, 'Regular';
   letter-spacing: 0px;
   text-transform: capitalize;
 }
@@ -332,7 +333,7 @@ mat-cell {
     transform: translateX(-50%);
 
     &::after {
-      content: " ";
+      content: ' ';
       position: absolute;
       bottom: 100%;
       left: 48%;
@@ -348,15 +349,15 @@ mat-cell {
 }
 
 mat-header-cell {
-  font-family: "Poppins" !important;
+  font-family: 'Poppins' !important;
   font-weight: 500 !important;
 }
 
 mat-paginator {
-  font-family: "Poppins" !important;
+  font-family: 'Poppins' !important;
 }
 
 mat-form-field {
-  font-family: "Poppins" !important;
+  font-family: 'Poppins' !important;
   font-weight: 600;
 }

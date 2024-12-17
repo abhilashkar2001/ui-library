@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { AppLoaderComponent } from "./app-loader.component";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppLoaderComponent } from './app-loader.component';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 interface Config {
   width?: string;
@@ -13,12 +13,12 @@ export class AppLoaderService {
   constructor(private dialog: MatDialog) {}
 
   public open(
-    title: string = "Please wait",
-    config: Config = { width: "200px" }
+    title = 'Please wait',
+    config: Config = { width: '200px' },
   ): Observable<boolean> {
     this.dialogRef = this.dialog.open(AppLoaderComponent, {
       disableClose: true,
-      backdropClass: "light-backdrop"
+      backdropClass: 'light-backdrop',
     });
     this.dialogRef.updateSize(config.width);
     this.dialogRef.componentInstance.title = title;

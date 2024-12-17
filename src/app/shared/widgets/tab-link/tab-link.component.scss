@@ -15,7 +15,9 @@
 }
 
 .label-text {
-  font: normal normal normal 16px/19px "Poppins", sans-serif;
+  font:
+    normal normal normal 16px/19px 'Poppins',
+    sans-serif;
   letter-spacing: 0px;
   color: #575d67;
   opacity: 1;
@@ -23,6 +25,8 @@
 }
 
 .label-selected {
-  font: normal normal bold 16px/19px "Poppins", sans-serif;
+  font:
+    normal normal bold 16px/19px 'Poppins',
+    sans-serif;
   color: var(--current-theme-background);
 }

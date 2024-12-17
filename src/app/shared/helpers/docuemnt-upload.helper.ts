@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export abstract class DocumentUploadFormGroup {
   _parentForm: FormGroup | any;
@@ -10,7 +10,7 @@ export abstract class DocumentUploadFormGroup {
    * @returns the control of document in customer form array
    */
   get documentCtrl(): FormArray | any {
-    return this._parentForm.get("documents") as FormArray;
+    return this._parentForm.get('documents') as FormArray;
   }
 
   /**
@@ -20,9 +20,9 @@ export abstract class DocumentUploadFormGroup {
    */
   documentFormArray(data?: any): FormGroup {
     return this.fb.group({
-      documentName: [data?.documentName ?? "", [Validators.required]],
-      isProofOfAddress: [data?.isProofOfAddress ?? ""],
-      files: this.fb.array([])
+      documentName: [data?.documentName ?? '', [Validators.required]],
+      isProofOfAddress: [data?.isProofOfAddress ?? ''],
+      files: this.fb.array([]),
     });
   }
 
@@ -33,7 +33,7 @@ export abstract class DocumentUploadFormGroup {
    * @returns retuns the form control of file in document form array
    */
   documentFilesCtrl(documentIndex: number): FormArray {
-    return this.documentCtrl.at(documentIndex).get("files") as FormArray;
+    return this.documentCtrl.at(documentIndex).get('files') as FormArray;
   }
 
   /**
@@ -43,9 +43,9 @@ export abstract class DocumentUploadFormGroup {
    */
   documentFileFormArray(data?: any) {
     return this.fb.group({
-      fileName: [data?.fileName ?? ""],
-      fileUrl: [data?.fileUrl ?? ""],
-      documentId: [data?.documentId ?? null, [Validators.required]]
+      fileName: [data?.fileName ?? ''],
+      fileUrl: [data?.fileUrl ?? ''],
+      documentId: [data?.documentId ?? null, [Validators.required]],
     });
   }
 
@@ -66,11 +66,11 @@ export abstract class DocumentUploadFormGroup {
           if (document?.docs?.length > 0) {
             document?.docs?.forEach((item: any) => {
               this.documentFilesCtrl(docIndex).push(
-                this.documentFileFormArray(item)
+                this.documentFileFormArray(item),
               );
             });
           }
-        }
+        },
       );
     } else {
       this.documentCtrl.push(this.documentFormArray());

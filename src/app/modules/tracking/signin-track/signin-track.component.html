@@ -47,7 +47,7 @@
             fxLayout="column"
             class="default otp_custom_card mx-auto d-flex flex-column"
           >
-            <span class="verification">{{ "OTP Authentication" }}</span>
+            <span class="verification">{{ 'OTP Authentication' }}</span>
             <span class="phoneNumber">
               <!-- *ngIf="!this.otpResendTrigger" this was used in the below ng-container, but the otpResendTrigger was not declared in ts file  -->
               <ng-container>
@@ -72,7 +72,7 @@
             >
             <div class="verify1">
               <span (click)="getOtp()" class="addcolor resend">{{
-                "Resend"
+                'Resend'
               }}</span>
             </div>
           </mat-card>
@@ -91,7 +91,7 @@
               (click)="getOtp()"
               *ngIf="!isShowOtpField"
             >
-              {{ "Get Otp" }}
+              {{ 'Get Otp' }}
             </button>
             <button
               mat-flat-button
@@ -100,10 +100,10 @@
               (click)="verifyOtp()"
               [disabled]="!otpAvailable"
             >
-              {{ "Submit" }}
+              {{ 'Submit' }}
             </button>
             <button mat-flat-button class="stroked_btn btn">
-              {{ "Back" }}
+              {{ 'Back' }}
             </button>
           </div>
         </div>

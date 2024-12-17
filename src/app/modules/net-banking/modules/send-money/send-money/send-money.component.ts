@@ -1,18 +1,18 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { SendMoneyStore } from "../send-money-store";
-import { ActivatedRoute, Router } from "@angular/router";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { SendMoneyStore } from '../send-money-store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 // import { DashboardService } from "app/@core/services/dashboard.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-send-money",
-  templateUrl: "./send-money.component.html",
-  styleUrls: ["./send-money.component.scss"]
+  selector: 'app-send-money',
+  templateUrl: './send-money.component.html',
+  styleUrls: ['./send-money.component.scss'],
 })
 export class SendMoneyComponent implements OnInit {
-  @Input("sendMoneyComponentsChange")
+  @Input('sendMoneyComponentsChange')
   tabScreens: any = SendMoneyStore.tabScreens.slice(0, 6);
   recentTransTabs = SendMoneyStore.recentTabs;
   recentTransCols = SendMoneyStore.recentColumns;
@@ -21,17 +21,17 @@ export class SendMoneyComponent implements OnInit {
   externalLinks = SendMoneyStore.externalLinks;
   startTabIndex = 0;
   isRotated: boolean | any;
-  sendMoneyComponents: boolean = true;
+  sendMoneyComponents = true;
   selectedAccount: any;
   customerInfo: any;
-  showMoneyStatusIcon: boolean = true;
+  showMoneyStatusIcon = true;
   recentTransKey: any = [
-    "Transfer Money",
-    "Self Transfer",
-    "Quick transfer",
-    "MMID",
-    "Schedule Payment",
-    "Send Money Abroad"
+    'Transfer Money',
+    'Self Transfer',
+    'Quick transfer',
+    'MMID',
+    'Schedule Payment',
+    'Send Money Abroad',
   ];
   constructor(
     private route: Router,
@@ -40,18 +40,18 @@ export class SendMoneyComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     // private dashboardService: DashboardService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {
     // const navigation = this.route.getCurrentNavigation();
 
     if (route.url) {
       this.selected = this.tabScreens.find(
-        (i: any) => i?.route === route.url
+        (i: any) => i?.route === route.url,
       )?.screenName;
     }
 
     this.activatedRoute.queryParamMap.subscribe((param) => {
-      const screenName = param.get("screenName");
+      const screenName = param.get('screenName');
       if (screenName) {
         this.selected = screenName;
       }
@@ -64,17 +64,17 @@ export class SendMoneyComponent implements OnInit {
     this.tabScreens.forEach((tab: any) => {
       this.matIconRegistry.addSvgIcon(
         tab.icon,
-        this.sanitizer.bypassSecurityTrustResourceUrl(tab.src)
+        this.sanitizer.bypassSecurityTrustResourceUrl(tab.src),
       );
       this.matIconRegistry.addSvgIcon(
         tab.selectedIcon,
-        this.sanitizer.bypassSecurityTrustResourceUrl(tab.selectedSrc)
+        this.sanitizer.bypassSecurityTrustResourceUrl(tab.selectedSrc),
       );
       this.matIconRegistry.addSvgIcon(
-        "arrow-back",
+        'arrow-back',
         this.sanitizer.bypassSecurityTrustResourceUrl(
-          "assets/images/svg/arrow-back.svg"
-        )
+          'assets/images/svg/arrow-back.svg',
+        ),
       );
     });
   }
@@ -93,7 +93,7 @@ export class SendMoneyComponent implements OnInit {
 
   recentTransTabChange(event: any) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
-    if (event == "Account") this.fetRecntTransaction();
+    if (event == 'Account') this.fetRecntTransaction();
     else this.recentTransData = [];
   }
 
@@ -111,7 +111,7 @@ export class SendMoneyComponent implements OnInit {
   updateVisibleTabs() {
     this.tabScreens = SendMoneyStore.tabScreens.slice(
       this.startTabIndex,
-      this.startTabIndex + 6
+      this.startTabIndex + 6,
     );
     this.cdr.detectChanges();
   }

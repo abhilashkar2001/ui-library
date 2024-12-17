@@ -1,25 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: "app-card-personal-details",
-  templateUrl: "./card-personal-details.component.html",
-  styleUrls: ["./card-personal-details.component.scss"]
+  selector: 'app-card-personal-details',
+  templateUrl: './card-personal-details.component.html',
+  styleUrls: ['./card-personal-details.component.scss'],
 })
-export class CardPersonalDetailsComponent implements OnInit {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+export class CardPersonalDetailsComponent {
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() confirmEvent: EventEmitter<any> = new EventEmitter();
 
   stepperTitle: any;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
   onConfirm() {
-    this.onConfirmEvent.emit();
+    this.confirmEvent.emit();
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 }

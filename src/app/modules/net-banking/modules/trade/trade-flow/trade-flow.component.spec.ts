@@ -8,9 +8,8 @@ describe('TradeFlowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradeFlowComponent ]
-    })
-    .compileComponents();
+      declarations: [TradeFlowComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TradeFlowComponent);
     component = fixture.componentInstance;

@@ -2,46 +2,46 @@ export class ChartConstant {
   static readonly COLUMN_DRILLDOWN = {
     id: 3223,
     chart: {
-      type: "column",
+      type: 'column',
     },
     title: {
-      text: "",
-      align: "left",
+      text: '',
+      align: 'left',
     },
     subtitle: {
       text:
         'Source: <a target="_blank" ' +
         'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>',
-      align: "left",
+      align: 'left',
     },
     xAxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "March",
-        "April",
-        "May",
-        "June",
-        "Jully",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        'Jan',
+        'Feb',
+        'March',
+        'April',
+        'May',
+        'June',
+        'Jully',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ],
       crosshair: true,
       accessibility: {
-        description: "Countries",
+        description: 'Countries',
       },
     },
     yAxis: {
       min: 0,
       title: {
-        text: "",
+        text: '',
       },
     },
     tooltip: {
-      valueSuffix: "",
+      valueSuffix: '',
     },
     plotOptions: {
       column: {

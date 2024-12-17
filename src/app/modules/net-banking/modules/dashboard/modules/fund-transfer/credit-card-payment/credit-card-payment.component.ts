@@ -1,31 +1,31 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { FundTransferService } from "../fund-transfer.service";
-import { Router } from "@angular/router";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { TranslateService } from "@ngx-translate/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FundTransferService } from '../fund-transfer.service';
+import { Router } from '@angular/router';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
+import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-credit-card-payment",
-  templateUrl: "./credit-card-payment.component.html",
-  styleUrls: ["./credit-card-payment.component.scss"]
+  selector: 'app-credit-card-payment',
+  templateUrl: './credit-card-payment.component.html',
+  styleUrls: ['./credit-card-payment.component.scss'],
 })
 export class CreditCardPaymentComponent implements OnInit {
   today = new Date();
-  showSendAdviceBlock: boolean = false;
-  showNarrationBlock: boolean = false;
+  showSendAdviceBlock = false;
+  showNarrationBlock = false;
   creditCardForm!: FormGroup;
   selectList = [];
   aanList = [
-    { label: "000037560058", value: "000037560058" },
-    { label: "000037560078", value: "000037560078" },
-    { label: "000037560069", value: "000037560069" }
+    { label: '000037560058', value: '000037560058' },
+    { label: '000037560078', value: '000037560078' },
+    { label: '000037560069', value: '000037560069' },
   ];
   customerInfo: any;
 
@@ -38,63 +38,63 @@ export class CreditCardPaymentComponent implements OnInit {
     private dialog: MatDialog,
     private api: OpenAccountService,
     private tokenStorageService: TokenStorageService,
-    public translate: TranslateService
+    public translate: TranslateService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/card_payment.svg"
-      )
+        'assets/images/card_payment.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/calendar.svg"
-      )
+        'assets/images/calendar.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
     this.buildCreditCardForm();
     // Subscribe to value changes of the remitter checkbox
-    this.creditCardForm.get("remitter")?.valueChanges.subscribe((value) => {
+    this.creditCardForm.get('remitter')?.valueChanges.subscribe((value) => {
       this.showSendAdviceBlock = value;
     });
-    this.creditCardForm.get("narration")?.valueChanges.subscribe((value) => {
+    this.creditCardForm.get('narration')?.valueChanges.subscribe((value) => {
       this.showNarrationBlock = value;
     });
     this.fetchCustomerInfo();
     setTimeout(() => {
-      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
   }
   buildCreditCardForm() {
     this.creditCardForm = this.formBuilder.group({
-      debitAccount: ["", Validators.required],
-      debitAmount: ["", Validators.required],
-      transferOn: ["", Validators.required],
+      debitAccount: ['', Validators.required],
+      debitAmount: ['', Validators.required],
+      transferOn: ['', Validators.required],
       remitter: [false],
-      remitterEmail: [""],
-      remitterMobile: [""],
+      remitterEmail: [''],
+      remitterMobile: [''],
       narration: [false],
-      remitterNarration: [""],
-      creditAmount: [""],
-      creditAccount: ["", [Validators.required]]
+      remitterNarration: [''],
+      creditAmount: [''],
+      creditAccount: ['', [Validators.required]],
     });
   }
 
   fetchCustomerInfo() {
     this.selectList = JSON.parse(
-      <string>sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem('listOfAccounts'),
     );
     this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem("customer-Info")
+      <string>sessionStorage.getItem('customer-Info'),
     );
   }
 
   close() {
-    this.router.navigate(["/user/dashboard"]);
+    this.router.navigate(['/user/dashboard']);
   }
 
   clear() {
@@ -102,33 +102,33 @@ export class CreditCardPaymentComponent implements OnInit {
   }
 
   submit() {
-    let payload = { ...this.creditCardForm.value };
+    const payload = { ...this.creditCardForm.value };
     payload.creditAmount = payload.debitAmount;
     this.getOTP();
-    let dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
+    const dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile
+        mobile: this.tokenStorageService.getUser()?.mobile,
       },
-      width: "50%",
-      height: "33%",
+      width: '50%',
+      height: '33%',
       disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop"
+      panelClass: 'popup-dialog-class',
+      backdropClass: 'bdrop',
     });
     dialogRef1.afterClosed().subscribe((result) => {
-      if (result == "verified") {
+      if (result == 'verified') {
         this.saveData(payload);
       } else {
-        let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-          data: { msg: "Payment failed!!!", status: false },
-          width: "40%",
+        const dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+          data: { msg: 'Payment failed!!!', status: false },
+          width: '40%',
           disableClose: true,
-          panelClass: "popup-class",
-          backdropClass: "bdrop"
+          panelClass: 'popup-class',
+          backdropClass: 'bdrop',
         });
         dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Failed") {
+          if (result == 'Failed') {
             dialogRef.close();
           }
         });
@@ -144,16 +144,16 @@ export class CreditCardPaymentComponent implements OnInit {
   saveData(payload: any) {
     this.fundTransferService.saveCreditCard(payload).subscribe((res) => {
       if (res?.statusCode == 200) {
-        let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-          data: { msg: "Payment Successful", status: true, reffNo: res?.data },
-          width: "40%",
+        const dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+          data: { msg: 'Payment Successful', status: true, reffNo: res?.data },
+          width: '40%',
           disableClose: true,
-          panelClass: "popup-class",
-          backdropClass: "bdrop"
+          panelClass: 'popup-class',
+          backdropClass: 'bdrop',
         });
         dialogRef.afterClosed().subscribe((result) => {
           console.log(result);
-          if (result == "Done") {
+          if (result == 'Done') {
             this.close();
           }
         });

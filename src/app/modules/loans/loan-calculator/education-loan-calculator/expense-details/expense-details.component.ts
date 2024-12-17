@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { EducationLoan } from "../education-calculator.constant";
-import { EducationCalculatorService } from "../education-calculator.service";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { EducationLoan } from '../education-calculator.constant';
+import { EducationCalculatorService } from '../education-calculator.service';
 
 @Component({
-  selector: "app-expense-details",
-  templateUrl: "./expense-details.component.html",
-  styleUrls: ["./expense-details.component.scss"]
+  selector: 'app-expense-details',
+  templateUrl: './expense-details.component.html',
+  styleUrls: ['./expense-details.component.scss'],
 })
 export class ExpenseDetailsComponent implements OnInit {
   max = 100000;
@@ -17,14 +17,14 @@ export class ExpenseDetailsComponent implements OnInit {
   maxTutionFee = EducationLoan.TUTION_FEES.maxTutionFee;
   ammountValue = 0;
   loanForm!: FormGroup | any;
-  @Input() fdName = "rdCalculator";
+  @Input() fdName = 'rdCalculator';
   @Output() customCalculatorValues = new EventEmitter<any>();
-  amount = new FormControl("");
-  email = new FormControl("");
+  amount = new FormControl('');
+  email = new FormControl('');
   thumbLabel: boolean | any = true;
   constructor(
     private fb: FormBuilder,
-    private educationApi: EducationCalculatorService
+    private educationApi: EducationCalculatorService,
   ) {}
 
   ngOnInit(): void {
@@ -39,23 +39,23 @@ export class ExpenseDetailsComponent implements OnInit {
   onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.value;
-    this.loanForm.get("amount").setValue(e.value);
+    this.loanForm.get('amount').setValue(e.value);
   }
   onCostOfLivingChange(e: any) {
-    this.loanForm.get("costOfLiving").setValue(e.value);
+    this.loanForm.get('costOfLiving').setValue(e.value);
   }
   onTutionFeeChange(e: any) {
-    this.loanForm.get("tutionFee").setValue(e.value);
+    this.loanForm.get('tutionFee').setValue(e.value);
   }
   buildForm(data?: any) {
     this.loanForm = this.fb.group({
       amount: [data ? data?.amount : 0],
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      interestRate: "",
+      tenureYear: '',
+      tenureMonth: '',
+      tenureDays: '',
+      interestRate: '',
       costOfLiving: [data ? data?.costOfLiving : 0],
-      tutionFee: [data ? data?.tutionFee : 0]
+      tutionFee: [data ? data?.tutionFee : 0],
     });
   }
 

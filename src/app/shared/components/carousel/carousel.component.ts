@@ -5,43 +5,43 @@ import {
   OnChanges,
   Output,
   EventEmitter,
-  ViewEncapsulation
-} from "@angular/core";
-import { environment } from "environments/environment";
-import { interval } from "rxjs";
+  ViewEncapsulation,
+} from '@angular/core';
+import { environment } from 'environments/environment';
+import { interval } from 'rxjs';
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation } from "swiper";
+import SwiperCore, { Navigation } from 'swiper';
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
 @Component({
-  selector: "app-carousel",
-  templateUrl: "./carousel.component.html",
-  styleUrls: ["./carousel.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-carousel',
+  templateUrl: './carousel.component.html',
+  styleUrls: ['./carousel.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CarouselComponent implements OnInit, OnChanges {
   @Input() carowselData: any = {};
   @Input() flow: string | any;
   @Output() customApplyLoan = new EventEmitter<any>();
-  @Input() businessSuiteName: any = "";
+  @Input() businessSuiteName: any = '';
   dynamicList: any = [];
   onLoadImagesLen = 4;
   private autoSlideInterval: any;
   selectedIndex: number | any;
   totalListCount: number | any;
-  carouselArrowDisplay: boolean = false;
+  carouselArrowDisplay = false;
   swiperConfig: any = {
     spaceBetween: 20,
     breakpoints: {
       768: {
-        slidesPerView: 6
+        slidesPerView: 6,
       },
       576: {
-        slidesPerView: 0
-      }
-    }
+        slidesPerView: 0,
+      },
+    },
   };
   protected baseUrl = environment.microServiceURL;
 
@@ -54,12 +54,12 @@ export class CarouselComponent implements OnInit, OnChanges {
 
   alignItems() {
     if (this.dynamicList?.length > 0) {
-      var swiperwrapper: any =
-        document.getElementsByClassName("swiper-wrapper")[0];
+      const swiperwrapper: any =
+        document.getElementsByClassName('swiper-wrapper')[0];
       if (this.dynamicList?.length <= 5) {
-        swiperwrapper.style.justifyContent = "center";
+        swiperwrapper.style.justifyContent = 'center';
       } else {
-        swiperwrapper.style.justifyContent = "normal";
+        swiperwrapper.style.justifyContent = 'normal';
       }
     }
   }
@@ -67,9 +67,9 @@ export class CarouselComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     setTimeout(() => {
       const nextIcon: any =
-        document.getElementsByClassName("swiper-button-next")[0];
+        document.getElementsByClassName('swiper-button-next')[0];
       const prevIcon: any =
-        document.getElementsByClassName("swiper-button-prev")[0];
+        document.getElementsByClassName('swiper-button-prev')[0];
       nextIcon.innerHTML = `<img src="assets/images/next_icon.svg" />`;
       prevIcon.innerHTML = `<img src="assets/images/prev_icon.svg" />`;
       this.alignItems();
@@ -104,7 +104,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     this.dynamicList = [];
     const endIndex = Math.min(
       this.selectedIndex + this.onLoadImagesLen,
-      this.totalListCount
+      this.totalListCount,
     );
     for (let i = this.selectedIndex; i < endIndex; i++) {
       this.dynamicList.push(this.carowselData[i]);
@@ -135,21 +135,21 @@ export class CarouselComponent implements OnInit, OnChanges {
   mapUrl(data: any) {
     if (
       data.documents.fileUrl &&
-      !data.documents.fileUrl.toLowerCase().includes("https")
+      !data.documents.fileUrl.toLowerCase().includes('https')
     )
       return `${this.baseUrl}${data.documents.fileUrl}`;
     else return `assets/images/Frame 5.svg`;
   }
 
   getbackgroundImage(data: any) {
-    let url = "";
+    let url = '';
     if (
       data.documents.fileUrl &&
-      !data.documents.fileUrl.toLowerCase().includes("https")
+      !data.documents.fileUrl.toLowerCase().includes('https')
     )
       url = `${this.baseUrl}${data.documents.fileUrl}`;
     else url = `assets/images/Frame 5.svg`;
 
-    return { "background-image": "url(" + url + ")" };
+    return { 'background-image': 'url(' + url + ')' };
   }
 }

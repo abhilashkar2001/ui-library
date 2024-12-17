@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SharedModule } from "app/shared/shared.module";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { CommonBtnGroupComponent } from "./common-btn-group/common-btn-group.component";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'app/shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { CommonBtnGroupComponent } from './common-btn-group/common-btn-group.component';
 
 @NgModule({
   declarations: [CommonBtnGroupComponent],
@@ -15,7 +15,7 @@ import { CommonBtnGroupComponent } from "./common-btn-group/common-btn-group.com
     SharedModule,
 
     FlexLayoutModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
 export class CommonButtonGroupModule {}

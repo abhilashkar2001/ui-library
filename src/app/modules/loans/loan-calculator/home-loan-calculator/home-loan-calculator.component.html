@@ -3,7 +3,7 @@
     <button
       fxFlex="50"
       class="col-md-6"
-      [ngClass]="loanToggled == 'home' ? 'toggled' : ''"
+      [ngClass]="loanToggled === 'home' ? 'toggled' : ''"
       (click)="loanToggled = 'home'"
       mat-raised-button
     >
@@ -12,7 +12,7 @@
     <button
       fxFlex="50"
       class="col-md-6"
-      [ngClass]="loanToggled == 'hl' ? 'toggled' : ''"
+      [ngClass]="loanToggled === 'hl' ? 'toggled' : ''"
       (click)="loanToggled = 'hl'"
       mat-raised-button
     >
@@ -21,7 +21,7 @@
   </div>
 
   <!-- Home Loan -->
-  <div fxFlex="row" fxFlex="100%" *ngIf="loanToggled == 'home'">
+  <div fxFlex="row" fxFlex="100%" *ngIf="loanToggled === 'home'">
     <div
       fxFlex="70"
       fxLayout="column"
@@ -126,7 +126,7 @@
                 class="full-width field-changedInput"
               >
                 <mat-label class="custom-mat-label">Percentage</mat-label>
-                <input matInput numbersOnly formControlName="interestRate" />
+                <input matInput appNumbersOnly formControlName="interestRate" />
               </mat-form-field>
             </div>
           </div>
@@ -204,7 +204,7 @@
   </div>
 
   <!-- HL Balance Transfer -->
-  <div fxFlex="row" fxFlex="100%" *ngIf="loanToggled == 'hl'">
+  <div fxFlex="row" fxFlex="100%" *ngIf="loanToggled === 'hl'">
     <div
       fxFlex="70"
       fxLayout="column"
@@ -392,7 +392,7 @@
                 class="full-width field-changedInput"
               >
                 <mat-label class="custom-mat-label">Percentage</mat-label>
-                <input matInput numbersOnly formControlName="interestRate" />
+                <input matInput appNumbersOnly formControlName="interestRate" />
               </mat-form-field>
             </div>
           </div>

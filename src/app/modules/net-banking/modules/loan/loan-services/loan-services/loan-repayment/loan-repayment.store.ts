@@ -1,37 +1,37 @@
 export class LoanRepaymentStore {
   static readonly loanAccountDetails: HeaderModel[] = [
     {
-      headerCell: "Current Due",
-      headerDef: "totalAmtDue"
+      headerCell: 'Current Due',
+      headerDef: 'totalAmtDue',
     },
     {
-      headerCell: "Due Date",
-      headerDef: "installmentDate"
+      headerCell: 'Due Date',
+      headerDef: 'installmentDate',
     },
     {
-      headerCell: "Duration",
-      headerDef: "duration"
+      headerCell: 'Duration',
+      headerDef: 'duration',
     },
     {
-      headerCell: "Principal Outstanding",
-      headerDef: "outstandPrincpl"
+      headerCell: 'Principal Outstanding',
+      headerDef: 'outstandPrincpl',
     },
     {
-      headerCell: "EMI Amount",
-      headerDef: "emiAmount"
+      headerCell: 'EMI Amount',
+      headerDef: 'emiAmount',
     },
     {
-      headerCell: "Arrear",
-      headerDef: "arrear"
+      headerCell: 'Arrear',
+      headerDef: 'arrear',
     },
     {
-      headerCell: "Interest Rate",
-      headerDef: "interestRate"
+      headerCell: 'Interest Rate',
+      headerDef: 'interestRate',
     },
     {
-      headerCell: "Loan Breakup Dues",
-      headerDef: ""
-    }
+      headerCell: 'Loan Breakup Dues',
+      headerDef: '',
+    },
   ];
 }
 

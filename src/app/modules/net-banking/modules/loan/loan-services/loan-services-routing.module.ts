@@ -16,81 +16,78 @@ import { GoldRenewalComponent } from './loan-services/gold-renewal/gold-renewal.
 import { LoanServiceDashboardComponent } from './loan-service-dashboard/loan-service-dashboard.component';
 import { PaymentPageComponent } from '../../dashboard/modules/cheque-book/payment-page/payment-page.component';
 
-
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: LoanServiceDashboardComponent,
     children: [
       {
-        path: "",
-        redirectTo: "repayment-cycle",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'repayment-cycle',
+        pathMatch: 'full',
       },
       {
-        path: "repayment-cycle",
+        path: 'repayment-cycle',
         component: RepaymentCycleComponent,
       },
       {
-        path: "e-statement",
+        path: 'e-statement',
         component: EStatementComponent,
       },
       {
-        path: "disbursement-request",
+        path: 'disbursement-request',
         component: DisbursmentRequestComponent,
       },
       {
-        path: "disbursement-schedule",
+        path: 'disbursement-schedule',
         component: DisbursementScheduleComponent,
       },
       {
-        path: "pre-generated-statement",
+        path: 'pre-generated-statement',
         component: PreGeneratedStatementComponent,
       },
       {
-        path: "view-statement",
+        path: 'view-statement',
         component: ViewStatementComponent,
       },
       {
-        path: "request-certificate",
+        path: 'request-certificate',
         component: RequestCertificateComponent,
       },
       {
-        path: "interest-statement",
+        path: 'interest-statement',
         component: InterestStatementComponent,
       },
       {
-        path: "modify-tenure",
+        path: 'modify-tenure',
         component: ModifyTenureComponent,
       },
       {
-        path: "loan-repayment",
+        path: 'loan-repayment',
         component: LoanRepaymentComponent,
       },
       {
-        path: "loan-topUP",
+        path: 'loan-topUP',
         component: TopupLoanComponent,
       },
       {
-        path: "repayment-schedule",
+        path: 'repayment-schedule',
         component: RepaymentScheduleComponent,
       },
       {
-        path: "gold-renewal",
+        path: 'gold-renewal',
         component: GoldRenewalComponent,
       },
       {
-        path: "payment-summary",
+        path: 'payment-summary',
         component: PaymentPageComponent,
       },
     ],
   },
 ];
 
-
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LoanServicesRoutingModule { }
+export class LoanServicesRoutingModule {}

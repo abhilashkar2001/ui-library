@@ -8,9 +8,8 @@ describe('PrepaidServicesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrepaidServicesComponent ]
-    })
-    .compileComponents();
+      declarations: [PrepaidServicesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PrepaidServicesComponent);
     component = fixture.componentInstance;

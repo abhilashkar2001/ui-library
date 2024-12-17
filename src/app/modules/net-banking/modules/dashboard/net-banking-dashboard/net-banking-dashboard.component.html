@@ -1,10 +1,10 @@
 <div class="parent-div" fxLayout="column">
   <div fxLayout="row" fxLayoutAlign="space-between center" class="searchDiv">
-    <div class="overView mb-8">{{ "Account Overview" | translate }}</div>
+    <div class="overView mb-8">{{ 'Account Overview' | translate }}</div>
     <div>
       <mat-form-field appearance="outline">
         <mat-label class="custom-mat-label">{{
-          "Search" | translate
+          'Search' | translate
         }}</mat-label>
         <input
           matInput
@@ -33,7 +33,7 @@
         class="account_info_card"
         [ngClass]="{
           'account-Card-btn': selectedKey !== key,
-          'selected-account-Card': selectedKey === key
+          'selected-account-Card': selectedKey === key,
         }"
         (click)="cardDetails(key)"
         fxFlex="35"
@@ -54,7 +54,7 @@
                 {{ dashboardInfo[key]?.type | translate }}
               </div>
               <div class="availableTag">
-                {{ "Available Balance" | translate }}
+                {{ 'Available Balance' | translate }}
               </div>
               <div class="balanceAmount" fxLayout="row">
                 ₹
@@ -73,15 +73,15 @@
         >
           <div fxLayout="row" fxFlex="100" fxLayoutGap="60px">
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{ "Account Number" | translate }}</div>
+              <div class="label">{{ 'Account Number' | translate }}</div>
               <div class="labelVal">{{ info.accountNo }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{ "Type" | translate }}</div>
+              <div class="label">{{ 'Type' | translate }}</div>
               <div class="labelVal">{{ dashboardInfo[key]?.accountType }}</div>
             </div>
             <div fxLayout="column" fxFlex="33" fxLayoutGap="2px">
-              <div class="label">{{ "Balance" | translate }}</div>
+              <div class="label">{{ 'Balance' | translate }}</div>
               <div class="labelVal">
                 {{ availableBalance[key][i] }}
               </div>
@@ -142,7 +142,7 @@
             fxLayout="row"
             fxLayoutAlign="space-between center"
           >
-            <div class="cardType">{{ "Pending Approval" | translate }}</div>
+            <div class="cardType">{{ 'Pending Approval' | translate }}</div>
             <div>
               <mat-card
                 class="matcard-div"
@@ -220,9 +220,9 @@
       <div class="activityLog">
         <div fxLayout="column" fxLayoutGap="10px">
           <div class="activityLog_header" fxLayoutGap="5px">
-            <div class="activityLog_name">{{ "Activity log" | translate }}</div>
+            <div class="activityLog_name">{{ 'Activity log' | translate }}</div>
             <div class="availableTag">
-              {{ "Most liked by demo bank user" | translate }}
+              {{ 'Most liked by demo bank user' | translate }}
             </div>
           </div>
           <div fxLayout="column" fxLayoutGap="5px">
@@ -237,10 +237,10 @@
               >
                 <mat-option [value]="">Select</mat-option>
                 <mat-option value="financial">{{
-                  "Financial" | translate
+                  'Financial' | translate
                 }}</mat-option>
                 <mat-option value="nonfinancial">{{
-                  "Non-Financial" | translate
+                  'Non-Financial' | translate
                 }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -295,7 +295,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{ "Processed" | translate }}
+                                {{ 'Processed' | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.processed || 0 }}
@@ -309,7 +309,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{ "Pending" | translate }}
+                                {{ 'Pending' | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.pending || 0 }}
@@ -323,7 +323,7 @@
                                 class="processedName"
                                 [style.color]="key.valColor"
                               >
-                                {{ "Rejected" | translate }}
+                                {{ 'Rejected' | translate }}
                               </div>
                               <div class="processedName">
                                 {{ obj.rejected || 0 }}

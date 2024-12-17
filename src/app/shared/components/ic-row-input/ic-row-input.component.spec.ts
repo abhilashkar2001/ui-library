@@ -8,9 +8,8 @@ describe('IcRowInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IcRowInputComponent ]
-    })
-    .compileComponents();
+      declarations: [IcRowInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IcRowInputComponent);
     component = fixture.componentInstance;

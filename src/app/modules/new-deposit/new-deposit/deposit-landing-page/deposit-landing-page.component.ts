@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-deposit-landing-page",
-  templateUrl: "./deposit-landing-page.component.html",
-  styleUrls: ["./deposit-landing-page.component.scss"]
+  selector: 'app-deposit-landing-page',
+  templateUrl: './deposit-landing-page.component.html',
+  styleUrls: ['./deposit-landing-page.component.scss'],
 })
 export class DepositLandingPageComponent implements OnInit {
-  depositName = "fdCalculator";
-  fdRdName = "FD";
-  fdRdFullName = "Fixed";
+  depositName = 'fdCalculator';
+  fdRdName = 'FD';
+  fdRdFullName = 'Fixed';
   lat = 51.678418;
   lng = 7.809007;
-  imageUrl = "assets/images/deposit-landing-image.svg";
-  routeUrl = "";
+  imageUrl = 'assets/images/deposit-landing-image.svg';
+  routeUrl = '';
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -21,12 +21,12 @@ export class DepositLandingPageComponent implements OnInit {
   }
   customDepositChange(event: any) {
     this.depositName = event;
-    if (this.depositName == "rdCalculator") {
-      this.fdRdName = "RD";
-      this.fdRdFullName = "Recurring";
+    if (this.depositName == 'rdCalculator') {
+      this.fdRdName = 'RD';
+      this.fdRdFullName = 'Recurring';
     } else {
-      this.fdRdName = "FD";
-      this.fdRdFullName = "Fixed ";
+      this.fdRdName = 'FD';
+      this.fdRdFullName = 'Fixed ';
     }
   }
 

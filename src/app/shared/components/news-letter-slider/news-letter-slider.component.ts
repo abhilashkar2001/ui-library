@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { NewDepositConstant } from "app/modules/new-deposit/new-deposit/new-deposit.constant";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NewDepositConstant } from 'app/modules/new-deposit/new-deposit/new-deposit.constant';
 
 import {
   NgbCarousel,
   NgbSlideEvent,
-  NgbSlideEventSource
-} from "@ng-bootstrap/ng-bootstrap";
+  NgbSlideEventSource,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-news-letter-slider",
-  templateUrl: "./news-letter-slider.component.html",
-  styleUrls: ["./news-letter-slider.component.scss"]
+  selector: 'app-news-letter-slider',
+  templateUrl: './news-letter-slider.component.html',
+  styleUrls: ['./news-letter-slider.component.scss'],
 })
 export class NewsLetterSliderComponent implements OnInit {
   images = NewDepositConstant.CLIENT_DESCRIPTION;
@@ -29,7 +29,7 @@ export class NewsLetterSliderComponent implements OnInit {
   pauseOnHover = true;
   pauseOnFocus = true;
 
-  @ViewChild("carousel", { static: true }) carousel: NgbCarousel | any;
+  @ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
 
   togglePaused() {
     if (this.paused) {

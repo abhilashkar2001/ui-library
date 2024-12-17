@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { NavigationService } from "../../../shared/services/navigation.service";
-import { ThemeService } from "../../services/theme.service";
-import { Subscription } from "rxjs";
-import { ILayoutConf, LayoutService } from "app/shared/services/layout.service";
-import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavigationService } from '../../../shared/services/navigation.service';
+import { ThemeService } from '../../services/theme.service';
+import { Subscription } from 'rxjs';
+import { ILayoutConf, LayoutService } from 'app/shared/services/layout.service';
+import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 
 @Component({
-  selector: "app-sidebar-side",
-  templateUrl: "./sidebar-side.component.html"
+  selector: 'app-sidebar-side',
+  templateUrl: './sidebar-side.component.html',
 })
-export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SidebarSideComponent implements OnInit, OnDestroy {
   public menuItems: any[] | any;
   public hasIconTypeMenuItem: boolean | any;
   public iconTypeMenuTitle: string | any;
@@ -20,7 +20,7 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
     private navService: NavigationService,
     public themeService: ThemeService,
     private layout: LayoutService,
-    public jwtAuth: JwtAuthService
+    public jwtAuth: JwtAuthService,
   ) {}
 
   ngOnInit() {
@@ -29,12 +29,12 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
       this.menuItems = menuItem;
       //Checks item list has any icon type.
       this.hasIconTypeMenuItem = !!this.menuItems.filter(
-        (item: any) => item.type === "icon"
+        (item: any) => item.type === 'icon',
       ).length;
     });
     this.layoutConf = this.layout.layoutConf;
   }
-  ngAfterViewInit() {}
+
   ngOnDestroy() {
     if (this.menuItemsSub) {
       this.menuItemsSub.unsubscribe();
@@ -43,12 +43,12 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   toggleCollapse() {
     if (this.layoutConf.sidebarCompactToggle) {
       this.layout.publishLayoutChange({
-        sidebarCompactToggle: false
+        sidebarCompactToggle: false,
       });
     } else {
       this.layout.publishLayoutChange({
         // sidebarStyle: "compact",
-        sidebarCompactToggle: true
+        sidebarCompactToggle: true,
       });
     }
   }

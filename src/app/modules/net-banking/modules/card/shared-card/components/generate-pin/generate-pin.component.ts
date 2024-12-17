@@ -1,27 +1,27 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-generate-pin",
-  templateUrl: "./generate-pin.component.html",
-  styleUrls: ["./generate-pin.component.scss"],
+  selector: 'app-generate-pin',
+  templateUrl: './generate-pin.component.html',
+  styleUrls: ['./generate-pin.component.scss'],
 })
 export class GeneratePinComponent implements OnInit {
   @Output() pinGenerated: EventEmitter<any> = new EventEmitter();
 
-  otp: string = "";
-  otpAvailable: boolean = false;
+  otp = '';
+  otpAvailable = false;
 
-  hideNewPin: boolean = true;
-  hideConfPin: boolean = true;
+  hideNewPin = true;
+  hideConfPin = true;
 
   newPinConfig = this.createPinConfig(this.hideNewPin);
   confPinConfig = this.createPinConfig(this.hideConfPin);
 
   constructor(
     public dialogRef: MatDialogRef<GeneratePinComponent>,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -37,10 +37,10 @@ export class GeneratePinComponent implements OnInit {
       length: 4,
       isPasswordInput: isPasswordInput,
       disableAutoFocus: false,
-      placeholder: "",
+      placeholder: '',
       inputStyles: {
-        width: "80px",
-        height: "80px",
+        width: '80px',
+        height: '80px',
       },
     };
   }
@@ -79,7 +79,7 @@ export class GeneratePinComponent implements OnInit {
   submit(): void {
     if (this.otpAvailable) {
       this.dialogRef.close({ pin: this.otp });
-      this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
+      this.router.navigate(['/user/card/credit-card/service/payment-summary']);
     }
   }
 }

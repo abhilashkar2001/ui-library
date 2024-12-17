@@ -8,9 +8,8 @@ describe('BankCodePopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BankCodePopupComponent ]
-    })
-    .compileComponents();
+      declarations: [BankCodePopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BankCodePopupComponent);
     component = fixture.componentInstance;

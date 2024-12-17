@@ -6,7 +6,7 @@
         mat-raised-button
         class="confirm-button"
         (click)="onSave()"
-        *ngIf="componentName != 'BG Issuance'"
+        *ngIf="componentName !== 'BG Issuance'"
       >
         Save
       </button>
@@ -123,12 +123,12 @@
         <div
           fxLayout="column"
           fxFlex="74"
-          *ngIf="componentName != 'Amendment LC Info'"
+          *ngIf="componentName !== 'Amendment LC Info'"
         >
           <mat-label class="custom-label">Purpose</mat-label>
           <mat-form-field
             appearance="outline"
-            *ngIf="componentName == 'BG Issuance'"
+            *ngIf="componentName === 'BG Issuance'"
           >
             <input matInput type="text" formControlName="purpose" />
           </mat-form-field>
@@ -137,8 +137,8 @@
           fxLayout="row"
           fxLayoutGap="2%"
           *ngIf="
-            componentName != 'BG Issuance' &&
-            componentName != 'Amendment LC Info'
+            componentName !== 'BG Issuance' &&
+            componentName !== 'Amendment LC= Info'
           "
         >
           <mat-form-field appearance="outline" fxFlex="100">
@@ -146,8 +146,8 @@
             <input
               matInput
               type="text"
-              noInitialSpecialCharacters
-              noSpace
+              appNoInitialSpecialCharacters
+              appNoSpace
               formControlName="email"
             />
 
@@ -167,7 +167,7 @@
         </div>
       </div>
     </div>
-    <code *ngIf="componentName == 'BG Issuance'"
+    <code *ngIf="componentName === 'BG Issuance'"
       >Note: The bank has the discretion to modify the limit, Margin %, Margin
       type details provided as the part of the request</code
     >

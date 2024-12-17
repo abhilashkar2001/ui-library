@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="start center">
   <mat-label class="text-gray"
-    >{{ inputLabel }}<span>{{ validator ? "*" : "" }}</span></mat-label
+    >{{ inputLabel }}<span>{{ validator ? '*' : '' }}</span></mat-label
   >
   <div class="ml-48 mt-8">
-    <ng-container *ngIf="type == 'select'; else showInput">
+    <ng-container *ngIf="type === 'select'; else showInput">
       <app-searchable-select
         [items]="items"
         [inputLabel]="inputLabel"

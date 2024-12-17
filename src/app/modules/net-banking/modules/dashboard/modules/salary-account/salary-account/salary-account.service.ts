@@ -1,10 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class SalaryAccountService {
   constructor(private http: HttpClient) {}
@@ -14,12 +14,12 @@ export class SalaryAccountService {
   saveCustomerDetails(payload: any) {
     return this.http.post(
       `${MICROSERVICE_URL}/customer/customer-info`,
-      payload
+      payload,
     );
   }
   getGenericValue(screenName: any, genericvalues: any) {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/generic-value?screenName=${screenName}&genericName=${genericvalues}`
+      `${MICROSERVICE_URL}/generic-value?screenName=${screenName}&genericName=${genericvalues}`,
     );
   }
   getCountry() {
@@ -27,7 +27,7 @@ export class SalaryAccountService {
   }
   getPinCodes(id: any) {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/city/fetchByPinCode?pincode=${id}`
+      `${MICROSERVICE_URL}/city/fetchByPinCode?pincode=${id}`,
     );
   }
 }

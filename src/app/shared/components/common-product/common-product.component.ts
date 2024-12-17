@@ -5,15 +5,15 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { environment } from "environments/environment";
+  SimpleChanges,
+} from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: "app-common-product",
-  templateUrl: "./common-product.component.html",
-  styleUrls: ["./common-product.component.scss"]
+  selector: 'app-common-product',
+  templateUrl: './common-product.component.html',
+  styleUrls: ['./common-product.component.scss'],
 })
 export class CommonProductComponent implements OnInit {
   endPoints = environment.microServiceURL;
@@ -21,20 +21,23 @@ export class CommonProductComponent implements OnInit {
   @Input() productIndex = 0;
   @Output() onApply = new EventEmitter<any>();
   @Output() customClassApply = new EventEmitter<any>();
-  constructor(private cdr: ChangeDetectorRef, private snackBar: MatSnackBar) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {}
   goForCalculator(product: any) {
     console.log(product);
     if (product?.productDetails === null) {
-      this.snackBar.open("No Products Available", "Ok", {
+      this.snackBar.open('No Products Available', 'Ok', {
         duration: 3000,
-        verticalPosition: "top",
-        horizontalPosition: "right"
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
       });
     } else if (product?.productDetails?.length == 1) {
       this.customClassApply.emit({
-        clasDetails: product
+        clasDetails: product,
       });
     } else {
       this.onApply.emit(product);
@@ -45,12 +48,12 @@ export class CommonProductComponent implements OnInit {
   }
   getFileUrl(url: any) {
     if (url) {
-      if (url.includes("https")) {
-        return "assets/images/normal_loan.svg";
+      if (url.includes('https')) {
+        return 'assets/images/normal_loan.svg';
       } else {
         return `${this.endPoints}${url}`;
       }
-    } else return "assets/images/normal_loan.svg";
+    } else return 'assets/images/normal_loan.svg';
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -58,7 +61,7 @@ export class CommonProductComponent implements OnInit {
       this.productIndex = changes.productIndex.currentValue;
     if (changes) {
       this.subAccount = Object.assign(changes.subAccount.currentValue, {
-        isReadMore: false
+        isReadMore: false,
       });
       console.log(this.subAccount);
     }

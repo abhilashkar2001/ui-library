@@ -28,7 +28,7 @@
           <!-- Tenure -->
           <div fxFlex="100" class="mt-12" fxLayout="column">
             <mat-label class="customLabelClass">{{
-              "Tenure" | translate
+              'Tenure' | translate
             }}</mat-label>
             <div>
               <fieldset class="fieldset mb-12" fxFlex="45">
@@ -44,10 +44,10 @@
                       "
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
                     <span matSuffix class="suffixLabel">{{
-                      "Year" | translate
+                      'Year' | translate
                     }}</span>
                   </div>
                   <div class="vertical-seperator"></div>
@@ -63,9 +63,9 @@
                       (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
-                    <span class="suffixLabel">{{ "Month" }}</span>
+                    <span class="suffixLabel">{{ 'Month' }}</span>
                   </div>
                   <div class="vertical-seperator"></div>
                   <div fxFlex="33" fxLayoutAlign="start center">
@@ -80,9 +80,9 @@
                       (change)="onTenureChange()"
                       placeholder="Enter"
                       class="pl-3 tenure_input"
-                      numbersOnly
+                      appNumbersOnly
                     />
-                    <span class="suffixLabel">{{ "Day" | translate }}</span>
+                    <span class="suffixLabel">{{ 'Day' | translate }}</span>
                   </div>
                 </div>
               </fieldset>
@@ -109,8 +109,8 @@
               fxFlex="100"
               fxLayoutAlign="space-between center"
             >
-              <div>{{ "Min" | translate }} {{ minTenure }}days</div>
-              <div>{{ "Max" | translate }} {{ maxTenureInYears }}year</div>
+              <div>{{ 'Min' | translate }} {{ minTenure }}days</div>
+              <div>{{ 'Max' | translate }} {{ maxTenureInYears }}year</div>
             </div>
           </div>
 
@@ -140,9 +140,9 @@
             [formControl]="
               modifyTenureForm.get('acceptTermsConditions') | formcontrol
             "
-            >{{ "I accept" | translate }}
+            >{{ 'I accept' | translate }}
             <span class="light-blue-title-sml">{{
-              "Terms and Condition" | translate
+              'Terms and Condition' | translate
             }}</span></mat-checkbox
           >
 

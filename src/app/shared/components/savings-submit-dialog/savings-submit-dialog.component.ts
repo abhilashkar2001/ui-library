@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-savings-submit-dialog",
-  templateUrl: "./savings-submit-dialog.component.html",
-  styleUrls: ["./savings-submit-dialog.component.scss"],
+  selector: 'app-savings-submit-dialog',
+  templateUrl: './savings-submit-dialog.component.html',
+  styleUrls: ['./savings-submit-dialog.component.scss'],
 })
 export class SavingsSubmitDialogComponent implements OnInit {
   header: any;
@@ -16,7 +16,7 @@ export class SavingsSubmitDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SavingsSubmitDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -28,12 +28,12 @@ export class SavingsSubmitDialogComponent implements OnInit {
   }
 
   done() {
-    if (this.data.flow && this.data.flow === "cards") {
-      this.router.navigate(["/cards"]);
-    } else if (this.data.flow === "loans") {
-      this.router.navigate(["/loans"]);
+    if (this.data.flow && this.data.flow === 'cards') {
+      this.router.navigate(['/cards']);
+    } else if (this.data.flow === 'loans') {
+      this.router.navigate(['/loans']);
     } else {
-      this.router.navigate(["/"]);
+      this.router.navigate(['/']);
     }
     this.close();
   }

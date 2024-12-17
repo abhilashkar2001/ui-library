@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class SelfTransferService {
   protected basePath = environment.microServiceURL;
@@ -12,13 +12,13 @@ export class SelfTransferService {
   saveSelfTranfer(payload: any) {
     return this.httpClient.post<any>(
       `${this.basePath}/retail-fund-transfer/transfer-money`,
-      payload
+      payload,
     );
   }
 
   getAccountDetails(accountNumber: number) {
     return this.httpClient.get<any>(
-      `${this.basePath}/fundTransfer/fetchCustInfo?accountNumber=${accountNumber}`
+      `${this.basePath}/fundTransfer/fetchCustInfo?accountNumber=${accountNumber}`,
     );
   }
 }

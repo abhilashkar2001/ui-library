@@ -5,15 +5,15 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { DataService } from "app/shared/services/table-service/data.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+  SimpleChanges,
+} from '@angular/core';
+import { DataService } from 'app/shared/services/table-service/data.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-new-auditlog-button-group",
-  templateUrl: "./new-auditlog-button-group.component.html",
-  styleUrls: ["./new-auditlog-button-group.component.scss"]
+  selector: 'app-new-auditlog-button-group',
+  templateUrl: './new-auditlog-button-group.component.html',
+  styleUrls: ['./new-auditlog-button-group.component.scss'],
 })
 export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   @Input() isEdit: any;
@@ -21,12 +21,12 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   @Input() maintTitle: any;
   @Input() auditLogData: any;
   @Input() hideDelete: boolean | any;
-  @Input() hideEdit: boolean = false;
-  @Input() hideActive: boolean = false;
-  @Input() hideApprove: boolean = false;
-  @Input() tellerOps: boolean = false;
-  @Input() isDisabledEditBtn: boolean = false;
-  @Input() isTransactionActionDone: boolean = false;
+  @Input() hideEdit = false;
+  @Input() hideActive = false;
+  @Input() hideApprove = false;
+  @Input() tellerOps = false;
+  @Input() isDisabledEditBtn = false;
+  @Input() isTransactionActionDone = false;
   @Output()
   customeditRecord = new EventEmitter<{}>();
   @Output() customgoBack = new EventEmitter<{}>();
@@ -34,7 +34,7 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   currentUser: any;
   constructor(
     private dataService: DataService,
-    public tokenStorageService: TokenStorageService
+    public tokenStorageService: TokenStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.auditLogData?.currentValue) {
       this.auditLogData = changes.auditLogData.currentValue;
-      console.log(this.auditLogData, "auditLogData");
+      console.log(this.auditLogData, 'auditLogData');
     }
   }
 

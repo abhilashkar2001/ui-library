@@ -43,7 +43,7 @@
           </div>
         </ng-container>
 
-        <ng-container *ngIf="bgType != 'BG Issuance'">
+        <ng-container *ngIf="bgType !== 'BG Issuance'">
           <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="19">
             <mat-label class="custom-label">
               Counter Guarantee Issuing Bank
@@ -200,7 +200,7 @@
   </mat-card>
   <mat-card
     class="full-width default-card mx-0"
-    *ngIf="bgType != 'BG Issuance'"
+    *ngIf="bgType !== 'BG Issuance'"
   >
     <div fxLayout="column" fxFlex="100">
       <div class="sub-head" fxLayout="row" fxLayoutAlign="space-between center">

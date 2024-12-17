@@ -1,12 +1,12 @@
-import { Location } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { Location } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-otp",
-  templateUrl: "./otp.component.html",
-  styleUrls: ["./otp.component.scss"]
+  selector: 'app-otp',
+  templateUrl: './otp.component.html',
+  styleUrls: ['./otp.component.scss'],
 })
 export class OtpComponent implements OnInit {
   @Output() otpVerified = new EventEmitter<any>();
@@ -15,25 +15,25 @@ export class OtpComponent implements OnInit {
     length: 6,
     isPasswordInput: true,
     disableAutoFocus: false,
-    placeholder: "",
+    placeholder: '',
     inputStyles: {
-      width: "80px",
-      height: "80px"
-    }
+      width: '80px',
+      height: '80px',
+    },
   };
   otpResendTrigger: boolean | any;
   invalidOtp: boolean | any;
-  otpSent: boolean = false;
+  otpSent = false;
   yourOtp: any;
-  otpAvailable: boolean = false;
+  otpAvailable = false;
   otp: any;
-  otpSection: boolean = true;
-  otpVerfied: boolean = false;
+  otpSection = true;
+  otpVerfied = false;
   customerInfo: any;
   constructor(
     private loginService: OpenAccountService,
     private _location: Location,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
   ) {}
 
   ngOnInit(): void {

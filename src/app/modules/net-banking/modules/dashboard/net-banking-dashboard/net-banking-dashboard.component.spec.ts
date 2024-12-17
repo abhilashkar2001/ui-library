@@ -8,9 +8,8 @@ describe('NetBankingDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NetBankingDashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [NetBankingDashboardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NetBankingDashboardComponent);
     component = fixture.componentInstance;

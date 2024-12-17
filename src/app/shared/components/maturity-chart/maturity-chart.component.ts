@@ -1,49 +1,49 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ChartStore } from "../chart/chart.store";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChartStore } from '../chart/chart.store';
 
 @Component({
-  selector: "app-maturity-chart",
-  templateUrl: "./maturity-chart.component.html",
-  styleUrls: ["./maturity-chart.component.scss"]
+  selector: 'app-maturity-chart',
+  templateUrl: './maturity-chart.component.html',
+  styleUrls: ['./maturity-chart.component.scss'],
 })
 export class MaturityChartComponent implements OnInit {
-  @Input("chartData") chartData: any;
-  @Input("chartSectionDetails") chartSectionDetails: any;
-  @Input("autoCheck") autoCheck: any;
-  @Input("buttonData") buttonData: any;
+  @Input() chartData: any;
+  @Input() chartSectionDetails: any;
+  @Input() autoCheck: any;
+  @Input() buttonData: any;
   @Input() labelOne: string | any;
   @Input() labelTwo: string | any;
-  @Input("data") data: any;
-  @Input("loanDetailsSection") loanDetailsSection: boolean = false;
+  @Input() data: any;
+  @Input() loanDetailsSection = false;
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() cancle: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
 
   ngOnChanges(): void {
     const interest = this.data?.maturityAmount - this.data?.depositAmount;
-    let chartClone = ChartStore.chartData;
+    const chartClone = ChartStore.chartData;
     this.chartData = {
       ...chartClone,
       id: 1002,
       data: [
         {
-          name: this.labelOne ?? "Interest",
-          data: [0, interest]
+          name: this.labelOne ?? 'Interest',
+          data: [0, interest],
         },
         {
-          name: this.labelTwo ?? "Deposit Amount",
-          data: [this.data?.depositAmount, this.data?.depositAmount]
-        }
+          name: this.labelTwo ?? 'Deposit Amount',
+          data: [this.data?.depositAmount, this.data?.depositAmount],
+        },
       ],
 
       xAxis: {
         labels: {
-          enabled: false
+          enabled: false,
         },
-        categories: ["", ""],
-        lineColor: "#DEDEDE"
+        categories: ['', ''],
+        lineColor: '#DEDEDE',
       },
-      colors: ["#00205C", "#FFFFFF"]
+      colors: ['#00205C', '#FFFFFF'],
     };
   }
 

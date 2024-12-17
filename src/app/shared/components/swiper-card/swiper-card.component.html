@@ -6,7 +6,10 @@
           [src]="slide.imageUrl"
           class="slide"
           (click)="currentIndex = i"
-          [ngClass]="{ glaze: currentIndex == i }"
+          (keydown.enter)="currentIndex = i"
+          tabindex="0"
+          alt="image URL"
+          [ngClass]="{ glaze: currentIndex === i }"
         />
       </ng-container>
     </div>
@@ -19,6 +22,8 @@
       class="dot"
       [ngClass]="{ 'dot-selected': i === currentIndex }"
       (click)="currentSlide(i)"
+      (keydown.enter)="currentSlide(i)"
+      tabindex="0"
     ></span>
   </div>
 </main>

@@ -28,7 +28,7 @@
               formControlName="loanAmount"
               maxlength="22"
               appNoLeadingSpace
-              decimalinput
+              appDecimalinput
               [numLength]="18"
               [allowedDecimalIndex]="3"
             />
@@ -56,7 +56,7 @@
                 fxFlex="50"
                 matInput
                 name="year"
-                numbersOnly
+                appNumbersOnly
                 placeholder="Year"
                 formControlName="tenureYear"
                 class="pl-3 tenure_input"
@@ -67,9 +67,9 @@
                 <span class="suffixLabel">{{
                   personalLoanDetailsForm.value.tenureYear
                     ? personalLoanDetailsForm.value.tenureYear > 1
-                      ? "Years"
-                      : "Year"
-                    : ""
+                      ? 'Years'
+                      : 'Year'
+                    : ''
                 }}</span>
               </ng-container>
             </div>
@@ -79,7 +79,7 @@
                 fxFlex="50"
                 matInput
                 name="month"
-                numbersOnly
+                appNumbersOnly
                 placeholder="Month"
                 formControlName="tenureMonth"
                 class="pl-3 tenure_input"
@@ -90,9 +90,9 @@
                 <span class="suffixLabel">{{
                   personalLoanDetailsForm.value.tenureMonth
                     ? personalLoanDetailsForm.value.tenureMonth > 1
-                      ? "Months"
-                      : "Month"
-                    : ""
+                      ? 'Months'
+                      : 'Month'
+                    : ''
                 }}</span>
               </ng-container>
             </div>
@@ -102,7 +102,7 @@
                 fxFlex="50"
                 matInput
                 name="day"
-                numbersOnly
+                appNumbersOnly
                 placeholder="Day"
                 formControlName="tenureDays"
                 class="pl-3 tenure_input"
@@ -116,9 +116,9 @@
                   >{{
                     personalLoanDetailsForm.value.tenureDays
                       ? personalLoanDetailsForm.value.tenureDays > 1
-                        ? "Days"
-                        : "Day"
-                      : ""
+                        ? 'Days'
+                        : 'Day'
+                      : ''
                   }}</span
                 >
               </ng-container>

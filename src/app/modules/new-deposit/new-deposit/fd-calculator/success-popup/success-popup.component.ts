@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-success-popup",
-  templateUrl: "./success-popup.component.html",
-  styleUrls: ["./success-popup.component.scss"]
+  selector: 'app-success-popup',
+  templateUrl: './success-popup.component.html',
+  styleUrls: ['./success-popup.component.scss'],
 })
 export class SuccessPopupComponent implements OnInit {
   depositId: any;
@@ -12,7 +12,7 @@ export class SuccessPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.depositId = parseInt(
-      <string>sessionStorage.getItem("depositOriginationId")
+      <string>sessionStorage.getItem('depositOriginationId'),
     );
   }
   done() {

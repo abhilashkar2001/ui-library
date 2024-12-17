@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { PaymentComponent } from "../components/payment/payment.component";
-import { NavigationEnd, Router } from "@angular/router";
-import { TabModel, Tabs } from "app/shared/models/tab-model";
-import { CreditCardStore } from "../../credit-card.store";
-import { filter } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { PaymentComponent } from '../components/payment/payment.component';
+import { NavigationEnd, Router } from '@angular/router';
+import { TabModel, Tabs } from 'app/shared/models/tab-model';
+import { CreditCardStore } from '../../credit-card.store';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: "app-credit-card-service",
-  templateUrl: "./credit-card-service.component.html",
-  styleUrls: ["./credit-card-service.component.scss"]
+  selector: 'app-credit-card-service',
+  templateUrl: './credit-card-service.component.html',
+  styleUrls: ['./credit-card-service.component.scss'],
 })
 export class CreditCardServiceComponent implements OnInit {
   tabs: Tabs = CreditCardStore.serviceTabs;
   activatedComponent!: PaymentComponent;
-  tabname: string | any = "";
+  tabname: string | any = '';
   selectedTab: TabModel | undefined;
   transactionCard = CreditCardStore.quickLinks;
   serviceLinks = CreditCardStore.Links;
@@ -45,7 +45,9 @@ export class CreditCardServiceComponent implements OnInit {
   }
 
   selectedRoute(route: any) {
-    let selectedTabValue = this.tabs.filter((item) => item?.route == route)[0];
+    const selectedTabValue = this.tabs.filter(
+      (item) => item?.route == route,
+    )[0];
     this.tabname = selectedTabValue?.screenName;
   }
 

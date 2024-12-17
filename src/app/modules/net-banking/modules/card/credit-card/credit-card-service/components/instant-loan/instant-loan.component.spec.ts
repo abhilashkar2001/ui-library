@@ -8,9 +8,8 @@ describe('InstantLoanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InstantLoanComponent ]
-    })
-    .compileComponents();
+      declarations: [InstantLoanComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InstantLoanComponent);
     component = fixture.componentInstance;

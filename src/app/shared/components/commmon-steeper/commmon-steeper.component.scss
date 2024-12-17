@@ -92,19 +92,19 @@
   padding: 0 2%;
 }
 .steps-average-text {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #004c97;
 }
 .stepper-title {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   font-weight: 500;
   line-height: 33px;
 }
 .screen-title {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 26px;
   font-weight: 600;
   line-height: 1.4;
@@ -201,7 +201,7 @@
   border-radius: 10px;
   // margin-left: -22px !important;
   height: 60px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 ::ng-deep .mat-vertical-stepper-header {
@@ -232,7 +232,7 @@
     font-weight: 400 !important;
     padding-left: 33px !important;
     font-size: 18px !important;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
@@ -254,7 +254,7 @@
 ::ng-deep
   .mat-step-header.mat-vertical-stepper-header
   .mat-step-icon-state-edit {
-  background-image: url("/assets/images/Group_13808.svg") !important;
+  background-image: url('/assets/images/Group_13808.svg') !important;
   background-position: center;
   background-size: 26px 30px;
   width: 60px;

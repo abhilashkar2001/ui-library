@@ -1,12 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class LocalStoreService {
   private ls = window.localStorage;
-
-  constructor() {}
 
   public setItem(key: any, value: any) {
     value = JSON.stringify(value);

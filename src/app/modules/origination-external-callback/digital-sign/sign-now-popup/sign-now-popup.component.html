@@ -2,7 +2,7 @@
   <div
     fxLayout="row"
     class="mt-12 ml-12"
-    *ngIf="title == 'Sign Now'"
+    *ngIf="title === 'Sign Now'"
     fxLayoutAlign="start center"
   >
     <span class="ml-20"
@@ -12,7 +12,7 @@
     >
     <h2 class="ml-12 text-normal">Digital Signing</h2>
   </div>
-  <div fxLayout="row" class="mt-12 ml-12" *ngIf="title == 'Physical Sign'">
+  <div fxLayout="row" class="mt-12 ml-12" *ngIf="title === 'Physical Sign'">
     <span
       ><mat-icon class="ml-12" (click)="closeDialog()"
         >arrow_back</mat-icon
@@ -24,14 +24,14 @@
     fxLayout="row"
     fxLayoutAlign="space-between center"
     fxLayoutGap="12px"
-    *ngIf="title == 'Sign Now'"
+    *ngIf="title === 'Sign Now'"
   >
     <mat-card
       fxFlex="50%"
       (click)="radioEvent('digitan-sign')"
       class="signnow"
       [ngClass]="
-        this.radioFlag == 'digitan-sign' ? 'actionSelected' : 'actionIcon'
+        this.radioFlag === 'digitan-sign' ? 'actionSelected' : 'actionIcon'
       "
     >
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
@@ -39,7 +39,7 @@
           <span
             id="iconspan"
             [ngClass]="
-              this.radioFlag == 'digitan-sign' ? 'actionTitle' : 'gray-btn'
+              this.radioFlag === 'digitan-sign' ? 'actionTitle' : 'gray-btn'
             "
           >
             trip_origin
@@ -48,7 +48,7 @@
         <span
           class="text-center text-normal text-bold"
           [ngClass]="
-            this.radioFlag == 'digitan-sign' ? 'actionTitle' : 'gray-btn'
+            this.radioFlag === 'digitan-sign' ? 'actionTitle' : 'gray-btn'
           "
           >Digital Sign</span
         >
@@ -58,26 +58,26 @@
       class="back-white"
       fxFlex="50%"
       (click)="radioEvent('upload')"
-      [ngClass]="this.radioFlag == 'upload' ? 'actionSelected' : 'actionIcon'"
+      [ngClass]="this.radioFlag === 'upload' ? 'actionSelected' : 'actionIcon'"
     >
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
         <mat-icon class="margin-left">
           <span
             id="iconspan"
-            [ngClass]="this.radioFlag == 'upload' ? 'actionTitle' : 'gray-btn'"
+            [ngClass]="this.radioFlag === 'upload' ? 'actionTitle' : 'gray-btn'"
           >
             trip_origin
           </span>
         </mat-icon>
         <span
           class="text-normal"
-          [ngClass]="this.radioFlag == 'upload' ? 'actionTitle' : 'gray-btn'"
+          [ngClass]="this.radioFlag === 'upload' ? 'actionTitle' : 'gray-btn'"
           >Upload</span
         >
       </div>
     </mat-card>
   </div>
-  <div *ngIf="this.radioFlag == 'digitan-sign' && title == 'Sign Now'">
+  <div *ngIf="this.radioFlag === 'digitan-sign' && title === 'Sign Now'">
     <mat-card class="mt-16 signcard">
       <mat-card-content>
         <div class="full-width" fxLayoutAlign="center center">
@@ -89,7 +89,7 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div *ngIf="this.radioFlag == 'upload' || title == 'Physical Sign'">
+  <div *ngIf="this.radioFlag === 'upload' || title === 'Physical Sign'">
     <mat-card class="mt-16 uploadcard">
       <mat-card-content>
         <div fxLayout="column" fxLayoutAlign="center center">
@@ -103,7 +103,11 @@
           <h5>
             <strong class="text-normal"
               >Drag and Drop file here or
-              <span class="textdesign" (click)="fileSelect.click()"
+              <span
+                class="textdesign"
+                (click)="fileSelect.click()"
+                (keydown.enter)="fileSelect.click()"
+                tabindex="0"
                 ><u>Choose file</u></span
               >
             </strong>
@@ -153,7 +157,7 @@
     fxLayoutGap="20px"
   >
     <button
-      *ngIf="radioFlag == 'upload' || title == 'Physical Sign'"
+      *ngIf="radioFlag === 'upload' || title === 'Physical Sign'"
       class="sign_popup_btn done"
       mat-raised-button
       type="button"
@@ -164,7 +168,7 @@
       Done
     </button>
     <button
-      *ngIf="radioFlag == 'digitan-sign' && title == 'Sign Now'"
+      *ngIf="radioFlag === 'digitan-sign' && title === 'Sign Now'"
       class="sign_popup_btn done"
       mat-raised-button
       type="button"

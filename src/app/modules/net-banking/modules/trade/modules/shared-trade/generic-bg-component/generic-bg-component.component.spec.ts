@@ -8,9 +8,8 @@ describe('GenericBgComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenericBgComponentComponent ]
-    })
-    .compileComponents();
+      declarations: [GenericBgComponentComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GenericBgComponentComponent);
     component = fixture.componentInstance;

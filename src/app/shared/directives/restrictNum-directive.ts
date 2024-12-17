@@ -1,18 +1,21 @@
-import { Directive, Input, ElementRef, HostListener } from "@angular/core";
-import { NgControl } from "@angular/forms";
+import { Directive, Input, ElementRef, HostListener } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: "[minMax]"
+  selector: '[appMinMax]',
 })
 export class MinMaxDirective {
   @Input() min: number | any;
   @Input() max: number | any;
 
-  constructor(private ref: ElementRef, private ngControl: NgControl) {}
+  constructor(
+    private ref: ElementRef,
+    private ngControl: NgControl,
+  ) {}
 
-  @HostListener("input", ["$event"])
+  @HostListener('input', ['$event'])
   onInput(): void {
-    let val = parseFloat(this.ref.nativeElement.value);
+    const val = parseFloat(this.ref.nativeElement.value);
     this.debounceValue(this.updateInputValue, 400, val);
   }
 
@@ -26,7 +29,11 @@ export class MinMaxDirective {
     }
   };
 
-  debounceValue(func: Function, delay: number, value: number): void {
+  debounceValue(
+    func: (value: number) => void,
+    delay: number,
+    value: number,
+  ): void {
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }

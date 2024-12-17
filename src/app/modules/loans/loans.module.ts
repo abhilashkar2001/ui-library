@@ -1,9 +1,9 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
-  NO_ERRORS_SCHEMA
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   CibilScoreContainerComponent,
   CreateLoanComponent,
@@ -16,26 +16,26 @@ import {
   LoansComponent,
   LoansRoutingModule,
   NormalLoanEmiCalculatorComponent,
-  LoanTermsConditionsComponent
-} from ".";
+  LoanTermsConditionsComponent,
+} from '.';
 
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
-import { LoansLandingComponent } from "./loans-landing/loans-landing.component";
-import { SharedModule } from "app/shared/shared.module";
-import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { SharedComponentsModule } from "app/shared/components/shared-components.module";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { LoanFlowComponent } from "./loan-flow/loan-flow.component";
-import { CommonEmiCalculatorComponent } from "./loan-calculator/common-emi-calculator/common-emi-calculator.component";
-import { LoanProductsComponent } from "./loan-account-type/loan-products/loan-products.component";
-import { AgricultureEmiCalculatorComponent } from "./loan-calculator/agriculture-emi-calculator/agriculture-emi-calculator.component";
-import { HomeLoanCalculatorComponent } from "./loan-calculator/home-loan-calculator/home-loan-calculator.component";
-import { ExpenseDetailsComponent } from "./loan-calculator/education-loan-calculator/expense-details/expense-details.component";
-import { EducationLoanCalculatorComponent } from "./loan-calculator/education-loan-calculator/education-loan-calculator.component";
-import { KnowYourEmiComponent } from "./loan-calculator/education-loan-calculator/know-your-emi/know-your-emi.component";
-import { TaxBenefitsComponent } from "./loan-calculator/education-loan-calculator/tax-benefits/tax-benefits.component";
-import { NationalIdUploadComponent } from "../../shared/components/national-id-upload/national-id-upload.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoansLandingComponent } from './loans-landing/loans-landing.component';
+import { SharedModule } from 'app/shared/shared.module';
+import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LoanFlowComponent } from './loan-flow/loan-flow.component';
+import { CommonEmiCalculatorComponent } from './loan-calculator/common-emi-calculator/common-emi-calculator.component';
+import { LoanProductsComponent } from './loan-account-type/loan-products/loan-products.component';
+import { AgricultureEmiCalculatorComponent } from './loan-calculator/agriculture-emi-calculator/agriculture-emi-calculator.component';
+import { HomeLoanCalculatorComponent } from './loan-calculator/home-loan-calculator/home-loan-calculator.component';
+import { ExpenseDetailsComponent } from './loan-calculator/education-loan-calculator/expense-details/expense-details.component';
+import { EducationLoanCalculatorComponent } from './loan-calculator/education-loan-calculator/education-loan-calculator.component';
+import { KnowYourEmiComponent } from './loan-calculator/education-loan-calculator/know-your-emi/know-your-emi.component';
+import { TaxBenefitsComponent } from './loan-calculator/education-loan-calculator/tax-benefits/tax-benefits.component';
+import { NationalIdUploadComponent } from '../../shared/components/national-id-upload/national-id-upload.component';
 @NgModule({
   declarations: [
     LoansComponent,
@@ -59,7 +59,7 @@ import { NationalIdUploadComponent } from "../../shared/components/national-id-u
     ExpenseDetailsComponent,
     KnowYourEmiComponent,
     TaxBenefitsComponent,
-    NationalIdUploadComponent
+    NationalIdUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -70,8 +70,8 @@ import { NationalIdUploadComponent } from "../../shared/components/national-id-u
     SharedMaterialModule,
     LoansRoutingModule,
     SharedComponentsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
-  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LoansModule {}

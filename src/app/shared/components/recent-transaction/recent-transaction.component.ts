@@ -4,46 +4,46 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Router } from "@angular/router";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
-import { CardService } from "app/modules/net-banking/modules/card/card.service";
-import { CardModel } from "app/shared/models/card.model";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { MatDialog } from "@angular/material/dialog";
+  SimpleChanges,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { CreatedDurationModelComponent } from '../created-duration-model/created-duration-model.component';
+import { CardService } from 'app/modules/net-banking/modules/card/card.service';
+import { CardModel } from 'app/shared/models/card.model';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-recent-transaction",
-  templateUrl: "./recent-transaction.component.html",
-  styleUrls: ["./recent-transaction.component.scss"]
+  selector: 'app-recent-transaction',
+  templateUrl: './recent-transaction.component.html',
+  styleUrls: ['./recent-transaction.component.scss'],
 })
 export class RecentTransactionComponent implements OnInit {
   @Output() tabChanged = new EventEmitter<any>();
-  @Input("customerInfo") customerInfo: any;
-  @Input("selectedAcc") selectedAcc: any;
+  @Input() customerInfo: any;
+  @Input() selectedAcc: any;
 
-  @Input("showMoneyStatusIcon") showMoneyStatusIcon: any;
-  @Input("recentTransTabs")
+  @Input() showMoneyStatusIcon: any;
+  @Input()
   recentTransTabs: any;
-  @Input("recentTransCols") recentTransCols: any;
-  @Input("recentTransData") recentTransData: any;
-  @Input("event") event: any;
-  @Input("cardInfo") cardInfo: any;
+  @Input() recentTransCols: any;
+  @Input() recentTransData: any;
+  @Input() event: any;
+  @Input() cardInfo: any;
   selectedRecentTab: any;
-  searchValue: FormControl = new FormControl("");
-  selectedDate: FormControl = new FormControl("");
+  searchValue: FormControl = new FormControl('');
+  selectedDate: FormControl = new FormControl('');
 
   actionDateOptions = [
-    { value: "ONEDAY", label: "Today" },
-    { value: "ONEWEEK", label: "Last 7 days" },
-    { value: "CURRENTMONTH", label: "Current Month" },
-    { value: "LASTTHREEMONTH", label: "Last 3 Month" },
-    { value: "DATERANGE", label: "Select Date Range" }
+    { value: 'ONEDAY', label: 'Today' },
+    { value: 'ONEWEEK', label: 'Last 7 days' },
+    { value: 'CURRENTMONTH', label: 'Current Month' },
+    { value: 'LASTTHREEMONTH', label: 'Last 3 Month' },
+    { value: 'DATERANGE', label: 'Select Date Range' },
   ];
 
   fromDate: string | any;
@@ -62,26 +62,26 @@ export class RecentTransactionComponent implements OnInit {
     private cardService: CardService,
     private dialog: MatDialog,
     private router: Router,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
   ) {
     this.profileInfo = this.tokenService.getUser();
     this.matIconRegistry.addSvgIcon(
-      "search-icon",
+      'search-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/search-icon.svg"
-      )
+        'assets/images/search-icon.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
-      "filter-icon",
+      'filter-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/filter-icon.svg"
-      )
+        'assets/images/filter-icon.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
-      "extend-icon",
+      'extend-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/extend-arrow.svg"
-      )
+        'assets/images/extend-arrow.svg',
+      ),
     );
   }
 
@@ -101,9 +101,9 @@ export class RecentTransactionComponent implements OnInit {
         this.selectedAcc = changes.selectedAcc.currentValue;
       }
     }
-    if (this.event == "Credit Card") {
+    if (this.event == 'Credit Card') {
       this.fetchRecentTransactionCreditCards();
-    } else if (this.event == "Debit Card") {
+    } else if (this.event == 'Debit Card') {
       this.fetchRecentTransactionDebitCards();
     } else {
       this.fetRecntTransaction();
@@ -126,37 +126,37 @@ export class RecentTransactionComponent implements OnInit {
   }
   recentTransTabChange(event: any) {
     //For now only "Account" tab is working.Once Other tabs functionality will come then for rest tab will call api
-    if (event == "Account") {
-      this.fetRecntTransaction("Account");
-    } else if (event == "MMID") {
-      this.fetRecntTransactionScreenWise("MMID");
-    } else if (event == "Abroad") {
-      this.fetRecntTransactionScreenWise("Send Money Abroad");
-    } else if (event === "Credit Card") {
+    if (event == 'Account') {
+      this.fetRecntTransaction('Account');
+    } else if (event == 'MMID') {
+      this.fetRecntTransactionScreenWise('MMID');
+    } else if (event == 'Abroad') {
+      this.fetRecntTransactionScreenWise('Send Money Abroad');
+    } else if (event === 'Credit Card') {
       this.fetchRecentTransactionCreditCards();
-    } else if (event === "Debit Card") {
+    } else if (event === 'Debit Card') {
       this.fetchRecentTransactionDebitCards();
     } else this.recentTransData = [];
   }
 
   createpayload() {
     let payload: any;
-    if (this.selectedDate.value == "DATERANGE") {
+    if (this.selectedDate.value == 'DATERANGE') {
       payload = {
         searchValue: this.searchValue.value,
         fromDate: this.fromDate,
-        toDate: this.toDate
+        toDate: this.toDate,
       };
     } else {
       payload = {
         searchValue: this.searchValue.value,
-        createdDate: this.selectedDate.value
+        createdDate: this.selectedDate.value,
       };
     }
     return payload;
   }
   fetRecntTransaction(event?: any) {
-    let customer = this.sessionStorageService.getCustomerInfo();
+    const customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
 
     this.page = event?.value?.page;
@@ -168,29 +168,29 @@ export class RecentTransactionComponent implements OnInit {
         if (resp?.statusCode == 200) {
           this.recentTransData = resp?.data;
           this.recentTransData.forEach((element: any) => {
-            element.action = "Repay";
+            element.action = 'Repay';
             const date = new Date(element.created);
-            const formattedDate = date.toISOString().split("T")[0];
+            const formattedDate = date.toISOString().split('T')[0];
             element.created = formattedDate;
           });
 
           this.recentTransMetaData = resp?.meta || {
             page: this.page,
             size: this.pageSize,
-            totalElements: resp?.data?.length
+            totalElements: resp?.data?.length,
           };
         }
       });
   }
 
   fetchRecentTransactionCreditCards() {
-    let customerInfo = this.sessionStorageService.getCustomerInfo();
+    const customerInfo = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
     this.cardService
       .fetchCreditCardRecentTransaction(
         customerInfo?.customerId,
         this.cardInfo?.cardNumber,
-        "Credit Card"
+        'Credit Card',
       )
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
@@ -202,7 +202,7 @@ export class RecentTransactionComponent implements OnInit {
   fetchRecentTransactionDebitCards() {
     this.recentTransData = [];
     this.cardService
-      .fetchDebitCardRecentTransaction(this.cardInfo?.cardNumber, "Debit Card")
+      .fetchDebitCardRecentTransaction(this.cardInfo?.cardNumber, 'Debit Card')
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
           this.recentTransData = resp?.data;
@@ -211,7 +211,7 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   fetRecntTransactionScreenWise(screen: any) {
-    let customer = this.sessionStorageService.getCustomerInfo();
+    const customer = this.sessionStorageService.getCustomerInfo();
     this.recentTransData = [];
     console.log(this.createpayload());
 
@@ -219,7 +219,7 @@ export class RecentTransactionComponent implements OnInit {
       .fetchScreenWiseRecentTrans(
         screen,
         customer.customerId,
-        this.createpayload()
+        this.createpayload(),
       )
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
@@ -231,9 +231,9 @@ export class RecentTransactionComponent implements OnInit {
             //     element.creditAmount = -element?.creditAmount;
             //   else element.creditAmount = +element?.creditAmount;
             // }
-            element.action = "Repay";
+            element.action = 'Repay';
             const date = new Date(element.created);
-            const formattedDate = date.toISOString().split("T")[0];
+            const formattedDate = date.toISOString().split('T')[0];
             element.created = formattedDate;
           });
         }
@@ -241,16 +241,16 @@ export class RecentTransactionComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    if (event === "DATERANGE") this.openDuration();
+    if (event === 'DATERANGE') this.openDuration();
     this.recentTransTabChange(this.selectedRecentTab);
   }
 
   openDuration() {
     const dialogRef = this.dialog.open(CreatedDurationModelComponent, {
-      width: "40%",
-      maxWidth: "max-content",
+      width: '40%',
+      maxWidth: 'max-content',
       disableClose: true,
-      panelClass: "popup-class-approve"
+      panelClass: 'popup-class-approve',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -263,7 +263,7 @@ export class RecentTransactionComponent implements OnInit {
 
   gotoBillTransaction() {
     this.router.navigate([
-      "/user/card/credit-card/service/unbilled-transaction"
+      '/user/card/credit-card/service/unbilled-transaction',
     ]);
   }
 }

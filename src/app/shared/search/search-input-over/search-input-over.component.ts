@@ -5,29 +5,33 @@ import {
   EventEmitter,
   OnDestroy,
   Input,
-  ViewChildren
-} from "@angular/core";
-import { UntypedFormControl } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { debounceTime } from "rxjs/operators";
-import { SearchService } from "../search.service";
-import { Router } from "@angular/router";
-import { AutoFocusDirective } from "app/shared/directives/auto-focus.directive";
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { SearchService } from '../search.service';
+import { Router } from '@angular/router';
+import { AutoFocusDirective } from 'app/shared/directives/auto-focus.directive';
 
 @Component({
-  selector: "egret-search-input-over",
-  templateUrl: "./search-input-over.component.html",
-  styleUrls: ["./search-input-over.component.scss"]
+  selector: 'app-egret-search-input-over',
+  templateUrl: './search-input-over.component.html',
+  styleUrls: ['./search-input-over.component.scss'],
 })
 export class SearchInputOverComponent implements OnInit, OnDestroy {
-  isOpen: boolean | any;
-  @ViewChildren(AutoFocusDirective) searchInput: any;
-  @Input("resultPage") resultPage: string | any;
-  @Input("placeholder") placeholder: string = "Search here";
-  @Output("search") search = new EventEmitter();
+  isOpen: boolean | undefined;
+  @ViewChildren(AutoFocusDirective) searchInput!: QueryList<AutoFocusDirective>;
+  @Input() resultPage: string | undefined;
+  @Input() placeholder = 'Search here';
+  @Output() search = new EventEmitter();
   searchCtrl = new UntypedFormControl();
-  searchCtrlSub: Subscription | any;
-  constructor(private searchService: SearchService, private router: Router) {}
+  searchCtrlSub: Subscription | undefined;
+  constructor(
+    private searchService: SearchService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.searchCtrl.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
@@ -51,7 +55,7 @@ export class SearchInputOverComponent implements OnInit, OnDestroy {
     this.navigateToResult();
 
     setTimeout(() => {
-      this.searchInput.first.focus();
+      this.searchInput?.first.focus();
     });
   }
   close() {

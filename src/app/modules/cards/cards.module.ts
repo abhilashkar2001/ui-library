@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   CardCibilScoreComponent,
   CardDiverseComponent,
@@ -12,13 +12,13 @@ import {
   CardsComponent,
   CreateCardLandingPageComponent,
   cardsRoutes,
-} from ".";
+} from '.';
 
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SharedModule } from "app/shared/shared.module";
-import { SharedMaterialModule } from "app/shared/shared-material.module";
-import { CardLandingComponent } from "./card-landing/card-landing.component";
-import { RouterModule } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'app/shared/shared.module';
+import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { CardLandingComponent } from './card-landing/card-landing.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [

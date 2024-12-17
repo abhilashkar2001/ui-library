@@ -8,9 +8,8 @@ describe('NewAuditlogButtonGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewAuditlogButtonGroupComponent ]
-    })
-    .compileComponents();
+      declarations: [NewAuditlogButtonGroupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NewAuditlogButtonGroupComponent);
     component = fixture.componentInstance;

@@ -24,7 +24,7 @@
                         type="text"
                         formControlName="customerNo"
                         name="customerNo"
-                        numbersOnly
+                        appNumbersOnly
                       />
                     </mat-form-field>
                   </div>
@@ -192,7 +192,7 @@
                         formControlName="pincode"
                         (input)="getCityandStateByZipcode(i)"
                         name="pincode"
-                        numbersOnly
+                        appNumbersOnly
                       />
                     </mat-form-field>
                   </div>
@@ -235,7 +235,7 @@
                     style="margin-top: 50px"
                     class="col-12"
                   >
-                    <div *ngIf="this.holderType != 'Self'">
+                    <div *ngIf="this.holderType !== 'Self'">
                       <button
                         type="button"
                         [disabled]="!customer.valid"
@@ -256,7 +256,7 @@
     </div>
   </form>
 
-  <div *ngIf="this.holderType != 'Self'">
+  <div *ngIf="this.holderType !== 'Self'">
     <div class="add_applicant" (click)="addCustomer()">
       Add Another Applicant
     </div>

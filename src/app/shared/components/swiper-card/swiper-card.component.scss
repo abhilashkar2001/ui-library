@@ -46,5 +46,7 @@
   width: 100%;
   flex-shrink: 0;
   padding-top: 15px;
-  transition: transform 0.5s ease, filter 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
 }

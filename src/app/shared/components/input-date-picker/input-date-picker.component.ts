@@ -1,36 +1,36 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
-  MatDatepickerInputEvent
-} from "@angular/material/datepicker";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { createMask } from "app/shared/directives/input-mask/constants";
-import { pluckOnlyDate } from "app/shared/helpers/utils";
-import { CustomerServiceService } from "app/shared/services/customer-service.service";
-import { DateTimeService } from "app/shared/services/date-time/date-time.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+  MatDatepickerInputEvent,
+} from '@angular/material/datepicker';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { createMask } from 'app/shared/directives/input-mask/constants';
+import { pluckOnlyDate } from 'app/shared/helpers/utils';
+import { CustomerServiceService } from 'app/shared/services/customer-service.service';
+import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: "app-input-date-picker",
-  templateUrl: "./input-date-picker.component.html",
-  styleUrls: ["./input-date-picker.component.scss"]
+  selector: 'app-input-date-picker',
+  templateUrl: './input-date-picker.component.html',
+  styleUrls: ['./input-date-picker.component.scss'],
 })
 export class InputDatePickerComponent implements OnInit {
   @Input() control: FormControl = new FormControl();
-  @Input() inputLabel: string | any;
-  @Input() minDate: Date | any;
-  @Input() minDateDesc: string | any;
-  @Input() maxDate: Date | any;
-  @Input() maxDateDesc: string | any;
-  @Input() mandatory: string | any;
+  @Input() inputLabel!: string;
+  @Input() minDate!: Date;
+  @Input() minDateDesc: string | undefined;
+  @Input() maxDate!: Date;
+  @Input() maxDateDesc: string | undefined;
+  @Input() mandatory: string | undefined;
   @Input() showOutsideLabel = false;
-  @Input() skipLabel: boolean = false;
+  @Input() skipLabel = false;
 
-  refactoredMinDate: Date | any;
+  refactoredMinDate!: Date;
 
   dateMask: any;
   controlValue: any;
@@ -42,18 +42,18 @@ export class InputDatePickerComponent implements OnInit {
   dateClass: MatCalendarCellClassFunction<Date> = (date, view) => {
     const cellDate = new Date(date);
     if (cellDate.getFullYear() !== this.selectedYear) {
-      return "";
+      return '';
     }
-    if (view === "month") {
+    if (view === 'month') {
       const monthIndex = cellDate.getMonth();
       const dayOfMonth = cellDate.getDate();
       const monthData = this.holidayInfo[monthIndex];
       if (monthData) {
-        const holidays = monthData.holidays.split(",").map(Number);
-        return holidays.includes(dayOfMonth) ? "custom-date-class" : "";
+        const holidays = monthData.holidays.split(',').map(Number);
+        return holidays.includes(dayOfMonth) ? 'custom-date-class' : '';
       }
     }
-    return "";
+    return '';
   };
 
   constructor(
@@ -62,20 +62,20 @@ export class InputDatePickerComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private customerservice: CustomerServiceService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/calendar.svg"
-      )
+        'assets/images/calendar.svg',
+      ),
     );
     this.dateMask = createMask<Date>({
-      alias: "datetime",
+      alias: 'datetime',
       inputFormat: this.dateService?.format?.toLocaleLowerCase(),
       formatter: (value: string) => {
         return moment(value).format(this.dateService?.format);
-      }
+      },
     });
   }
 
@@ -88,7 +88,7 @@ export class InputDatePickerComponent implements OnInit {
   initEvents(): void {
     const handleClick = () => {
       const displayedYearElement: any = document.querySelector(
-        ".mat-calendar-period-button"
+        '.mat-calendar-period-button',
       );
       if (displayedYearElement) {
         const displayedYearText = displayedYearElement.textContent.trim();
@@ -103,23 +103,23 @@ export class InputDatePickerComponent implements OnInit {
           }
         } else {
           console.error(
-            "Failed to extract year from displayed year text:",
-            displayedYearText
+            'Failed to extract year from displayed year text:',
+            displayedYearText,
           );
         }
       }
     };
 
     setTimeout(() => {
-      const prev = document.querySelector(".mat-calendar-previous-button");
-      const next = document.querySelector(".mat-calendar-next-button");
+      const prev = document.querySelector('.mat-calendar-previous-button');
+      const next = document.querySelector('.mat-calendar-next-button');
 
       if (prev) {
-        prev.addEventListener("click", handleClick);
+        prev.addEventListener('click', handleClick);
       }
 
       if (next) {
-        next.addEventListener("click", handleClick);
+        next.addEventListener('click', handleClick);
       }
     }, 150);
   }
@@ -148,7 +148,7 @@ export class InputDatePickerComponent implements OnInit {
    * @param event
    */
   dateDispatchEvent(event: MatDatepickerInputEvent<Date>) {
-    let convertDate = pluckOnlyDate(event?.value);
+    const convertDate = pluckOnlyDate(event?.value);
     this.control?.patchValue(convertDate);
   }
   populateDate() {
@@ -157,7 +157,7 @@ export class InputDatePickerComponent implements OnInit {
         this.control?.patchValue(pluckOnlyDate(this.control?.value));
       } else this.control?.patchValue(null);
     }, 1000);
-    if (this.mandatory?.toLowerCase() == "required") {
+    if (this.mandatory?.toLowerCase() == 'required') {
       setTimeout(() => {
         this.control?.setErrors({ matDatepickerParse: null });
         this.control?.clearValidators();
@@ -198,8 +198,8 @@ export class InputDatePickerComponent implements OnInit {
           }
         },
         (error) => {
-          console.error("Error:", error);
-        }
+          console.error('Error:', error);
+        },
       );
   }
 }

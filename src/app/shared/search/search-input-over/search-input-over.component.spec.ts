@@ -8,9 +8,8 @@ describe('SearchInputOverComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchInputOverComponent ]
-    })
-    .compileComponents();
+      declarations: [SearchInputOverComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

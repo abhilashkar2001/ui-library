@@ -1,74 +1,74 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { OfferLetterComponent } from "./offer-letter/offer-letter/offer-letter.component";
-import { ProcessOfferLetterComponent } from "./offer-letter/process-offer-letter/process-offer-letter.component";
-import { OtpComponent } from "./otp/otp.component";
-import { SignLaterComponent } from "./digital-sign/sign-later/sign-later.component";
-import { DocumentUploadComponent } from "./document-upload/document-upload.component";
-import { RemarkComponent } from "./offer-letter/remark/remark.component";
-import { DobVerificationComponent } from "./dob-verification/dob-verification.component";
-import { ChecklistDocumentComponent } from "./checklist-document/checklist-document.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { OfferLetterComponent } from './offer-letter/offer-letter/offer-letter.component';
+import { ProcessOfferLetterComponent } from './offer-letter/process-offer-letter/process-offer-letter.component';
+import { OtpComponent } from './otp/otp.component';
+import { SignLaterComponent } from './digital-sign/sign-later/sign-later.component';
+import { DocumentUploadComponent } from './document-upload/document-upload.component';
+import { RemarkComponent } from './offer-letter/remark/remark.component';
+import { DobVerificationComponent } from './dob-verification/dob-verification.component';
+import { ChecklistDocumentComponent } from './checklist-document/checklist-document.component';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "offer-letter",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'offer-letter',
+    pathMatch: 'full',
   },
   {
-    path: "offer-letter",
+    path: 'offer-letter',
     component: OfferLetterComponent,
     data: {
-      title: "Offer Letter",
+      title: 'Offer Letter',
     },
   },
   {
-    path: "process-offer",
+    path: 'process-offer',
     component: ProcessOfferLetterComponent,
     data: {
-      title: "Offer Letter",
+      title: 'Offer Letter',
     },
   },
   {
-    path: "otp",
+    path: 'otp',
     component: OtpComponent,
     data: {
-      title: "OTP",
+      title: 'OTP',
     },
   },
   {
-    path: "remark",
+    path: 'remark',
     component: RemarkComponent,
     data: {
-      title: "Remark",
+      title: 'Remark',
     },
   },
   {
-    path: "digital-sign",
+    path: 'digital-sign',
     component: SignLaterComponent,
     data: {
-      title: "Digital Sign",
+      title: 'Digital Sign',
     },
   },
   {
-    path: "document-upload",
+    path: 'document-upload',
     component: DocumentUploadComponent,
     data: {
-      title: "Document Upload",
+      title: 'Document Upload',
     },
   },
   {
-    path: "dob-verification",
+    path: 'dob-verification',
     component: DobVerificationComponent,
     data: {
-      title: "Verification",
+      title: 'Verification',
     },
   },
   {
-    path: "checklist-document",
+    path: 'checklist-document',
     component: ChecklistDocumentComponent,
     data: {
-      title: "Verification",
+      title: 'Verification',
     },
   },
 ];

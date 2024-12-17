@@ -1,25 +1,25 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { NewDepositService } from "../../new-deposit.service";
-import { FormGroup } from "@angular/forms";
-import * as moment from "moment";
-import { ActivatedRoute } from "@angular/router";
-import { CreateRdService } from "./create-rd.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { NewDepositService } from '../../new-deposit.service';
+import { FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { CreateRdService } from './create-rd.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-rd-calculator",
-  templateUrl: "./rd-calculator.component.html",
-  styleUrls: ["./rd-calculator.component.scss"]
+  selector: 'app-rd-calculator',
+  templateUrl: './rd-calculator.component.html',
+  styleUrls: ['./rd-calculator.component.scss'],
 })
 export class RdCalculatorComponent implements OnInit {
-  depositType = "RD";
+  depositType = 'RD';
   selectedStep = 0; // should be 0
-  isFixedDepositDetail: boolean = true; // should be true
-  isPersonalDetails: boolean = false;
-  isBookFd: boolean = false;
-  isVerifyNumber: boolean = false;
-  isKyc: boolean = false;
+  isFixedDepositDetail = true; // should be true
+  isPersonalDetails = false;
+  isBookFd = false;
+  isVerifyNumber = false;
+  isKyc = false;
   @Input() customBasicForm!: FormGroup;
   personalDetailsForm!: FormGroup;
   documentDetailsForm!: FormGroup;
@@ -27,10 +27,10 @@ export class RdCalculatorComponent implements OnInit {
   rdDetailsForm!: FormGroup;
 
   steper_Array: any = [];
-  isLinear: boolean = true;
-  cuurrentStep = "create";
+  isLinear = true;
+  cuurrentStep = 'create';
   // CONST KEY & VALUES
-  REPORT_TITLE = "Recurring Deposit";
+  REPORT_TITLE = 'Recurring Deposit';
   rdDetails: any;
   screenList: any = [];
   docIds: any[] = [];
@@ -43,16 +43,16 @@ export class RdCalculatorComponent implements OnInit {
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
     private snack: MatSnackBar,
-    private openAccountService: OpenAccountService
+    private openAccountService: OpenAccountService,
   ) {}
 
   ngOnInit(): void {
     this.showSideBar.setToken(true);
-    var sessionStep = sessionStorage.getItem("rdStep");
+    const sessionStep = sessionStorage.getItem('rdStep');
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     console.log(this.route.snapshot.params);
-    var id = this.route.snapshot.params["id"];
-    this.processCycleCode = this.route.snapshot.params["processCode"];
+    const id = this.route.snapshot.params['id'];
+    this.processCycleCode = this.route.snapshot.params['processCode'];
     if (id) this.getRdById(parseInt(id));
     // var sessionStep = parseInt(sessionStorage.getItem("selectedStep"));
     //if (sessionStep) this.selectedStep = sessionStep;
@@ -99,7 +99,7 @@ export class RdCalculatorComponent implements OnInit {
 
   stepperSelectionChange(event: any) {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
-    sessionStorage.setItem("loanstep", event.selectedIndex);
+    sessionStorage.setItem('loanstep', event.selectedIndex);
     this.selectedStep = event.selectedIndex;
   }
 
@@ -109,11 +109,11 @@ export class RdCalculatorComponent implements OnInit {
   }
 
   customSaveDocuments(e: any) {
-    var docIds: any = [];
+    const docIds: any = [];
     console.log(e);
     e.documentDetails.otherDocument.forEach((element: any) => {
       const docId = {
-        docIds: element.docIds
+        docIds: element.docIds,
       };
       docIds.push(docId);
     });
@@ -131,7 +131,7 @@ export class RdCalculatorComponent implements OnInit {
     // console.log(docIds);
   }
   saveCustomerInfo(resp: any, docIds: any) {
-    var custResp: any = resp;
+    const custResp: any = resp;
     custResp.forEach((item: any, i: any) => {
       console.log(custResp[i]);
       custResp[i].documentId = [];
@@ -144,17 +144,17 @@ export class RdCalculatorComponent implements OnInit {
     delete rdData.fdRdMassterId;
     console.log(rdData);
     rdData = {
-      ...rdData
+      ...rdData,
     };
     const payload = {
       originationModel: rdData,
-      customerInfo: custResp
+      customerInfo: custResp,
     };
     this.openAccountService.setData(payload.customerInfo[0]);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
       sessionStorage.setItem(
-        "depositOriginationId",
-        resp.data.originationModel.originationId
+        'depositOriginationId',
+        resp.data.originationModel.originationId,
       );
       this.next();
     });
@@ -179,7 +179,7 @@ export class RdCalculatorComponent implements OnInit {
   next() {
     const num = this.selectedStep + 1;
     this.selectedStep = num;
-    sessionStorage.setItem("rdStep", String(this.selectedStep));
+    sessionStorage.setItem('rdStep', String(this.selectedStep));
     this.factory();
     // for scrolling ssequenceebar and get current state.
     // const el = document.querySelector(".mat-step-label-selected");
@@ -187,13 +187,13 @@ export class RdCalculatorComponent implements OnInit {
   }
 
   customSaveCreate(event: any) {
-    sessionStorage.setItem("holderType", event.rdData.ownership);
-    let jk = {
+    sessionStorage.setItem('holderType', event.rdData.ownership);
+    const jk = {
       ...this.rdDetails[0],
       ...event.rdData,
-      maturityDate: moment(event.rdData.maturityDate).format("YYYY-MMM-DD")
+      maturityDate: moment(event.rdData.maturityDate).format('YYYY-MMM-DD'),
     };
-    sessionStorage.setItem("originationId", this.rdDetails[0].originationId);
+    sessionStorage.setItem('originationId', this.rdDetails[0].originationId);
     this.rdApi
       .getOriginationMaster(this.rdDetails[0].originationId)
       .subscribe((data) => {
@@ -201,14 +201,14 @@ export class RdCalculatorComponent implements OnInit {
           // this.customerInfo=data.data[0].customerInfo
           const payload = {
             originationModel: jk,
-            customerInfo: this.createPayload(data.data[0].customerInfo)
+            customerInfo: this.createPayload(data.data[0].customerInfo),
           };
           this.rdApi.saveRdOriginationMaster(payload).subscribe(() => {
-            this.snack.open(`Recurring Deposit Details Saved`, "!", {
+            this.snack.open(`Recurring Deposit Details Saved`, '!', {
               duration: 4000,
-              verticalPosition: "top",
-              horizontalPosition: "right",
-              panelClass: "snackbar-error"
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: 'snackbar-error',
             });
             this.next();
           });
@@ -253,26 +253,26 @@ export class RdCalculatorComponent implements OnInit {
     delete rdData.fdRdMasterId;
     console.log(rdData);
     rdData = {
-      ...rdData
+      ...rdData,
     };
 
     const customer = this.createPayload(event.personalDetails.value.customer);
     const payload = {
       originationModel: rdData,
-      customerInfo: customer
+      customerInfo: customer,
     };
     console.log(payload);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         resp.data?.customerInfo?.forEach((item: any) => {
           if (item.primaryCustomer)
-            sessionStorage.setItem("customerId", item.customerId);
+            sessionStorage.setItem('customerId', item.customerId);
         });
-        this.snack.open(`Personal Details Saved` + " !", "OK", {
+        this.snack.open(`Personal Details Saved` + ' !', 'OK', {
           duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error"
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'snackbar-error',
         });
         this.customerInfo = resp.data?.customerInfo;
         this.next();
@@ -280,20 +280,20 @@ export class RdCalculatorComponent implements OnInit {
     });
   }
   createPayload(event: any) {
-    var customer: any = [];
+    const customer: any = [];
     event.forEach((element: any) => {
       console.log(element);
-      var docIds = [];
+      const docIds = [];
       if (element?.documentId) {
         docIds.push(element.documentId);
       } else {
         element?.documnentsInfo?.documents.forEach((item: any) => {
-          let docItemId: any = [];
+          const docItemId: any = [];
           item.docs.forEach((docItem: any) => {
             docItemId.push(docItem.documentId);
           });
           const docId = {
-            docIds: docItemId
+            docIds: docItemId,
           };
           docIds.push(docId);
         });
@@ -304,7 +304,7 @@ export class RdCalculatorComponent implements OnInit {
         firstName: element.firstName,
         lastName: element.lastName,
         customerId: element?.customerId,
-        middleName: "",
+        middleName: '',
         gender: element.gender,
         jointCustomerInfo: [],
         documentId: element.primaryCustomer ? docIds : [],
@@ -321,7 +321,7 @@ export class RdCalculatorComponent implements OnInit {
             {
               address1:
                 element?.contact?.address[0].address1 ?? element.address1,
-              address2: "",
+              address2: '',
               residenceType:
                 element?.contact?.address[0].residenceType ??
                 element.residenceType,
@@ -329,10 +329,11 @@ export class RdCalculatorComponent implements OnInit {
               countryName:
                 element?.contact?.address[0].countryName ?? element.country,
               pincode: element?.contact?.address[0].pincode ?? element.zipCode,
-              stateName: element?.contact?.address[0].stateName ?? element.state
-            }
-          ]
-        }
+              stateName:
+                element?.contact?.address[0].stateName ?? element.state,
+            },
+          ],
+        },
       };
       customer.push(cus);
     });

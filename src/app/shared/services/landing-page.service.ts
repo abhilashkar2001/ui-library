@@ -3,10 +3,7 @@ import { DOCUMENT } from '@angular/common';
 
 @Injectable()
 export class LandingPageService {
-
-  constructor(
-    @Inject(DOCUMENT) private document: Document
-  ) { }
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
   public addFix() {
     this.document.documentElement.classList.add('landing');
@@ -16,5 +13,4 @@ export class LandingPageService {
     this.document.documentElement.classList.remove('landing');
     this.document.body.classList.remove('landing');
   }
-
 }

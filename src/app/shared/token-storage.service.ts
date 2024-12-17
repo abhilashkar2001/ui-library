@@ -1,29 +1,32 @@
-import { Injectable } from "@angular/core";
-import { StaticData } from "./models/static.constant";
+import { Injectable } from '@angular/core';
+import { StaticData } from './models/static.constant';
+import { Time } from 'highcharts';
+import { COUNTRYCURRENCY } from './models/country-currency.mode';
+import { CurrencyList } from './models/currency.models';
+import { Data } from '@angular/router';
 
-const TOKEN_KEY = "auth-token";
-const USER_KEY = "auth-user";
-const JWT_USER = "jwt-user";
-const IS_REMEMBER = "isRemember";
-const USER_INFO = "userInfo";
-const CORPORATE_ID = "corporateId";
+const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'auth-user';
+const JWT_USER = 'jwt-user';
+const IS_REMEMBER = 'isRemember';
+const USER_INFO = 'userInfo';
+const CORPORATE_ID = 'corporateId';
 
-export const VALIDITY_IN_SECS = "validityInSecs";
+export const VALIDITY_IN_SECS = 'validityInSecs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class TokenStorageService {
   private sessionStore = window.sessionStorage;
   private localStore = window.localStorage;
-  currencyList = StaticData.currencyList;
+  currencyList: CurrencyList = StaticData.currencyList;
   aliveProperties: string[] = [
-    "userInfo",
-    "auth-user",
-    "auth-token",
-    "validityInSecs"
+    'userInfo',
+    'auth-user',
+    'auth-token',
+    'validityInSecs',
   ];
-  constructor() {}
 
   signOut() {
     this.localStore.removeItem(USER_KEY);
@@ -37,7 +40,7 @@ export class TokenStorageService {
     this.sessionStore.setItem(TOKEN_KEY, token);
   }
 
-  public getToken(): string | any {
+  public getToken(): string | null {
     return this.sessionStore.getItem(TOKEN_KEY);
   }
 
@@ -46,22 +49,23 @@ export class TokenStorageService {
     this.sessionStore.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  saveLastLoginSession(time: any) {
-    this.sessionStore.setItem("LAST_LOGIN", JSON.stringify(time));
+  saveLastLoginSession(time: Time) {
+    this.sessionStore.setItem('LAST_LOGIN', JSON.stringify(time));
   }
 
   getLastLoginSession() {
-    let parseTime: any = this.sessionStore.getItem("LAST_LOGIN");
-    return JSON.parse(parseTime);
+    const parseTime: Date | string | null =
+      this.sessionStore.getItem('LAST_LOGIN');
+    if (parseTime) return JSON.parse(parseTime);
   }
 
-  saveLanguage(language: any) {
-    this.sessionStore.setItem("LANGUAGE", JSON.stringify(language));
+  saveLanguage(language: string) {
+    this.sessionStore.setItem('LANGUAGE', JSON.stringify(language));
   }
 
   getLanguage() {
-    let parseLanguage: any = this.sessionStore.getItem("LANGUAGE");
-    return JSON.parse(parseLanguage);
+    const parseLanguage: string | null = this.sessionStore.getItem('LANGUAGE');
+    if (parseLanguage) return JSON.parse(parseLanguage);
   }
 
   public getUser() {
@@ -79,16 +83,11 @@ export class TokenStorageService {
     );
   }
 
-  public saveJwtUser(user: any) {
-    this.sessionStore.removeItem(JWT_USER);
-    this.sessionStore.setItem(JWT_USER, JSON.stringify(user));
-  }
-
   getJwtUser() {
     return JSON.parse(<string>this.sessionStore.getItem(JWT_USER));
   }
   getLogedCountry() {
-    let userInfo = this.sessionStore.getItem("userInfo");
+    const userInfo = this.sessionStore.getItem('userInfo');
     if (userInfo) {
       return JSON.parse(userInfo);
     } else {
@@ -104,15 +103,10 @@ export class TokenStorageService {
     return this.sessionStore.getItem(VALIDITY_IN_SECS);
   }
 
-  setRememberMe(rememberMe: any) {
-    this.sessionStore.removeItem(IS_REMEMBER);
-    this.sessionStore.setItem(IS_REMEMBER, rememberMe);
-  }
-
   getCorporateId() {
     return JSON.parse(<string>this.sessionStore.getItem(CORPORATE_ID));
   }
-  setCorporateId(corporateId: any) {
+  setCorporateId(corporateId: number) {
     this.sessionStore.removeItem(CORPORATE_ID);
     this.sessionStore.setItem(CORPORATE_ID, JSON.stringify(corporateId));
   }
@@ -121,13 +115,13 @@ export class TokenStorageService {
     return JSON.parse(<string>this.sessionStore.getItem(IS_REMEMBER));
   }
 
-  saveUserOtherInfo(info: any) {
+  saveUserOtherInfo(info: COUNTRYCURRENCY | Data) {
     this.sessionStore.setItem(
       USER_INFO,
       JSON.stringify({
         ...info,
-        currencySymbol: this.currencyList[info.currency].symbol
-      })
+        currencySymbol: this.currencyList[info.currency]?.symbol,
+      }),
     );
   }
   getUserOtherInfo() {
@@ -135,8 +129,8 @@ export class TokenStorageService {
   }
 
   cleanUpSessionPartially() {
-    var keys = Object.keys(sessionStorage);
-    var propertiesToKeep = this.aliveProperties;
+    const keys = Object.keys(sessionStorage);
+    const propertiesToKeep = this.aliveProperties;
     // Iterate through keys and delete the ones not in propertiesToKeep
     keys.forEach(function (key) {
       if (!propertiesToKeep.includes(key)) {

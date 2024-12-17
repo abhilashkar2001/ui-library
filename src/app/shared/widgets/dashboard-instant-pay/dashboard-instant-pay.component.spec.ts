@@ -8,9 +8,8 @@ describe('DashboardInstantPayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardInstantPayComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardInstantPayComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardInstantPayComponent);
     component = fixture.componentInstance;

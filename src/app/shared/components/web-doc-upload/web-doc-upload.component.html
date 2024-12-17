@@ -74,8 +74,10 @@
                     class="doc_upload"
                     fxFlex="100"
                     #fileInput
-                    (onFileDropped)="onFileDropped($event, i)"
+                    (FileDropped)="onFileDropped($event, i)"
                     (click)="fileBrowseHandler(i)"
+                    (keydown.enter)="fileBrowseHandler(i)"
+                    tabindex="0"
                   >
                     <div class="drag_drop" fxFlex="90">
                       <h3 class="text-header">Upload Document</h3>
@@ -97,7 +99,7 @@
                   >
                     <div class="upload_img" fxFlex="100">
                       <div class="img_box">
-                        <img [src]="file?.url" />
+                        <img [src]="file?.url" alt="file URL" />
                       </div>
                       <div class="img_container">
                         <p class="img_name">{{ file?.name }}</p>

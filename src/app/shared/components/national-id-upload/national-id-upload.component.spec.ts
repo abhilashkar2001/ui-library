@@ -8,9 +8,8 @@ describe('NationalIdUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NationalIdUploadComponent ]
-    })
-    .compileComponents();
+      declarations: [NationalIdUploadComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NationalIdUploadComponent);
     component = fixture.componentInstance;

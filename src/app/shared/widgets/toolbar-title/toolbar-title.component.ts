@@ -1,13 +1,10 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: "app-toolbar-title",
-  templateUrl: "./toolbar-title.component.html",
-  styleUrls: ["./toolbar-title.component.scss"]
+  selector: 'app-toolbar-title',
+  templateUrl: './toolbar-title.component.html',
+  styleUrls: ['./toolbar-title.component.scss'],
 })
-export class ToolbarTitleComponent implements OnInit {
-  @Input("title") title: string | any;
-  constructor() {}
-
-  ngOnInit(): void {}
+export class ToolbarTitleComponent {
+  @Input() title!: string;
 }

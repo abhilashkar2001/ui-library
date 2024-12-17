@@ -2,7 +2,7 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  background: url("/assets/images/otp.svg") no-repeat;
+  background: url('/assets/images/otp.svg') no-repeat;
   height: 100vh;
 
   .exit-button {
@@ -74,7 +74,7 @@
         color: white;
         width: 225px !important;
         max-width: 225px !important;
-        font-family: "Poppins";
+        font-family: 'Poppins';
         height: 40px;
         border: none;
       }

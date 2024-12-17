@@ -1,68 +1,68 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { TrackingService } from "../tracking-service";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TrackingService } from '../tracking-service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-signin-track",
-  templateUrl: "./signin-track.component.html",
-  styleUrls: ["./signin-track.component.scss"]
+  selector: 'app-signin-track',
+  templateUrl: './signin-track.component.html',
+  styleUrls: ['./signin-track.component.scss'],
 })
 export class SigninTrackComponent implements OnInit {
-  screenTitle = "Tracking Status";
+  screenTitle = 'Tracking Status';
   selectedStep = 0;
   screenList = [
     {
       screenCode: 17717,
-      screenName: "Application No/ Mobile No.",
+      screenName: 'Application No/ Mobile No.',
       route: null,
       fileUrl: null,
-      sequence: 1
+      sequence: 1,
     },
     {
       screenCode: 17720,
-      screenName: "OTP Verification",
+      screenName: 'OTP Verification',
       route: null,
       fileUrl: null,
-      sequence: 3
+      sequence: 3,
     },
     {
       screenCode: 17723,
-      screenName: "Tracking Status",
+      screenName: 'Tracking Status',
       route: null,
       fileUrl: null,
-      sequence: 2
-    }
+      sequence: 2,
+    },
   ];
 
-  isShowOtpField: boolean = false;
+  isShowOtpField = false;
   config = {
     allowNumbersOnly: true,
     length: 6,
     isPasswordInput: true,
     disableAutoFocus: false,
-    placeholder: "",
+    placeholder: '',
     inputStyles: {
-      width: "70px",
-      height: "70px"
-    }
+      width: '70px',
+      height: '70px',
+    },
   };
   otp: any;
   yourOtp: any;
-  otpAvailable: boolean = false;
-  invalidOtp: boolean = false;
+  otpAvailable = false;
+  invalidOtp = false;
 
   constructor(
     private fb: FormBuilder,
     private api: TrackingService,
-    private route: Router
+    private route: Router,
   ) {}
 
   signForm!: FormGroup;
 
   ngOnInit(): void {
     this.signForm = this.fb.group({
-      mobile: ""
+      mobile: '',
       // otp: "",
     });
   }
@@ -84,13 +84,13 @@ export class SigninTrackComponent implements OnInit {
     this.api
       .verifyOtp({
         mobile: this.signForm.value.mobile,
-        otp: this.yourOtp
+        otp: this.yourOtp,
       })
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.invalidOtp = false;
-          sessionStorage.setItem("trackingMobile", this.signForm.value.mobile);
-          this.route.navigate(["/tracking/summary"]);
+          sessionStorage.setItem('trackingMobile', this.signForm.value.mobile);
+          this.route.navigate(['/tracking/summary']);
         } else if (resp?.statusCode === 401) {
           this.invalidOtp = true;
         }

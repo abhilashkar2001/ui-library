@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ExportBillDispatchRoutingModule } from './export-bill-dispatch-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ExportBillDispatchRoutingModule
-  ]
+  imports: [CommonModule, ExportBillDispatchRoutingModule],
 })
-export class ExportBillDispatchModule { }
+export class ExportBillDispatchModule {}

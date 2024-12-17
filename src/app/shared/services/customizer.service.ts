@@ -1,68 +1,68 @@
-import { Injectable } from "@angular/core";
-import { LayoutService } from "./layout.service";
+import { Injectable } from '@angular/core';
+import { LayoutService } from './layout.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class CustomizerService {
   colors = [
     {
-      class: "black",
-      active: false
+      class: 'black',
+      active: false,
     },
     {
-      class: "white",
-      active: false
+      class: 'white',
+      active: false,
     },
     {
-      class: "dark-blue",
-      active: false
+      class: 'dark-blue',
+      active: false,
     },
     {
-      class: "grey",
-      active: false
+      class: 'grey',
+      active: false,
     },
     {
-      class: "brown",
-      active: false
+      class: 'brown',
+      active: false,
     },
     {
-      class: "gray",
-      active: false
+      class: 'gray',
+      active: false,
     },
     {
-      class: "purple",
-      active: false
+      class: 'purple',
+      active: false,
     },
     {
-      class: "blue",
-      active: false
+      class: 'blue',
+      active: false,
     },
 
     {
-      class: "indigo",
-      active: false
+      class: 'indigo',
+      active: false,
     },
     {
-      class: "yellow",
-      active: false
+      class: 'yellow',
+      active: false,
     },
     {
-      class: "green",
-      active: false
+      class: 'green',
+      active: false,
     },
     {
-      class: "pink",
-      active: false
+      class: 'pink',
+      active: false,
     },
     {
-      class: "red",
-      active: false
+      class: 'red',
+      active: false,
     },
     {
-      class: "slate",
-      active: false
-    }
+      class: 'slate',
+      active: false,
+    },
   ];
   selectedSidebarColor: any;
   topbarColors: any[];
@@ -76,14 +76,14 @@ export class CustomizerService {
   }
 
   getSidebarColors() {
-    let sidebarColors = [
-      "black",
-      "slate",
-      "white",
-      "grey",
-      "brown",
-      "purple",
-      "dark-blue"
+    const sidebarColors = [
+      'black',
+      'slate',
+      'white',
+      'grey',
+      'brown',
+      'purple',
+      'dark-blue',
     ];
     return this.colors
       .filter((color) => {
@@ -96,18 +96,18 @@ export class CustomizerService {
   }
 
   getTopbarColors() {
-    let topbarColors = [
-      "black",
-      "slate",
-      "white",
-      "dark-gray",
-      "purple",
-      "dark-blue",
-      "indigo",
-      "pink",
-      "red",
-      "yellow",
-      "green"
+    const topbarColors = [
+      'black',
+      'slate',
+      'white',
+      'dark-gray',
+      'purple',
+      'dark-blue',
+      'indigo',
+      'pink',
+      'red',
+      'yellow',
+      'green',
     ];
     return this.colors
       .filter((color) => {
@@ -120,18 +120,18 @@ export class CustomizerService {
   }
 
   getFooterColors() {
-    let footerColors = [
-      "black",
-      "slate",
-      "white",
-      "dark-gray",
-      "purple",
-      "dark-blue",
-      "indigo",
-      "pink",
-      "red",
-      "yellow",
-      "green"
+    const footerColors = [
+      'black',
+      'slate',
+      'white',
+      'dark-gray',
+      'purple',
+      'dark-blue',
+      'indigo',
+      'pink',
+      'red',
+      'yellow',
+      'green',
     ];
     return this.colors
       .filter((color) => {
@@ -163,7 +163,7 @@ export class CustomizerService {
     if (!el.length) {
       el.classList.remove(className);
     } else {
-      for (var i = 0; i < el.length; i++) {
+      for (let i = 0; i < el.length; i++) {
         el[i].classList.remove(className);
       }
     }
@@ -174,7 +174,7 @@ export class CustomizerService {
     if (!el.length) {
       el.classList.add(className);
     } else {
-      for (var i = 0; i < el.length; i++) {
+      for (let i = 0; i < el.length; i++) {
         el[i].classList.add(className);
       }
     }
@@ -183,7 +183,7 @@ export class CustomizerService {
   findClosest(el: any, className: any) {
     if (!el) return;
     while (el) {
-      var parent = el.parentElement;
+      const parent = el.parentElement;
       if (parent && this.hasClass(parent, className)) {
         return parent;
       }
@@ -194,7 +194,7 @@ export class CustomizerService {
   hasClass(el: any, className: any) {
     if (!el) return;
     return (
-      ` ${el.className} `.replace(/[\n\t]/g, " ").indexOf(` ${className} `) > -1
+      ` ${el.className} `.replace(/[\n\t]/g, ' ').indexOf(` ${className} `) > -1
     );
   }
 
@@ -207,7 +207,7 @@ export class CustomizerService {
     }
   }
   getLogedCountry() {
-    let userInfo = sessionStorage.getItem("userInfo");
+    const userInfo = sessionStorage.getItem('userInfo');
     if (userInfo) {
       return JSON.parse(userInfo);
     } else {

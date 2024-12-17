@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { HttpRequest, HttpResponse } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
 // import { Subject, timer } from "rxjs";
 // import { takeUntil } from "rxjs/operators";
 
@@ -8,13 +8,11 @@ import { HttpRequest, HttpResponse } from "@angular/common/http";
 // }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class RequestCache {
   private cache$ = new Map<string, HttpResponse<any>>();
   // private cacheCleanup$ = new Subject<void>();
-
-  constructor() {}
 
   get(req: HttpRequest<any>): HttpResponse<any> | undefined {
     const cachedResponse = this.cache$.get(req.urlWithParams);

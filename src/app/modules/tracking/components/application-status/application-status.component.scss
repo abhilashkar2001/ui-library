@@ -63,7 +63,7 @@ ul.approved_history_container {
   border-radius: 8px;
   padding-left: 0 !important;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 1%;
     right: 17%;
@@ -92,7 +92,7 @@ ul.approved_history_container {
     height: 100%;
 
     p {
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 500;
       margin: 0;
       line-height: 1.5;

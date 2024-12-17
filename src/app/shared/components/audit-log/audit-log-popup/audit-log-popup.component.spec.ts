@@ -8,9 +8,8 @@ describe('AuditLogPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuditLogPopupComponent ]
-    })
-    .compileComponents();
+      declarations: [AuditLogPopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AuditLogPopupComponent);
     component = fixture.componentInstance;

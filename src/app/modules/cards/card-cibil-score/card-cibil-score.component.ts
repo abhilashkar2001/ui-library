@@ -1,27 +1,27 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { CommonService } from "app/shared/services/common-service/common.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonService } from 'app/shared/services/common-service/common.service';
 
 @Component({
-  selector: "app-card-cibil-score",
-  templateUrl: "./card-cibil-score.component.html",
-  styleUrls: ["./card-cibil-score.component.scss"]
+  selector: 'app-card-cibil-score',
+  templateUrl: './card-cibil-score.component.html',
+  styleUrls: ['./card-cibil-score.component.scss'],
 })
 export class CardCibilScoreComponent implements OnInit {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() confirmEvent: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
 
-  isDifferentMobile: boolean = false;
-  showCibilScoreResult: boolean = false;
+  isDifferentMobile = false;
+  showCibilScoreResult = false;
   stepperTitle: string;
-  selectedOption: "different" | "same" = "same";
+  selectedOption: 'different' | 'same' = 'same';
 
   constructor(
     private commonService: CommonService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
-    this.stepperTitle = this.activatedRoute.snapshot["queryParams"]["title"];
+    this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
   }
 
   ngOnInit(): void {}
@@ -31,7 +31,7 @@ export class CardCibilScoreComponent implements OnInit {
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   onBackCIBILScoreResult() {
@@ -39,20 +39,20 @@ export class CardCibilScoreComponent implements OnInit {
   }
 
   radioChange(event: any) {
-    this.isDifferentMobile = event.value === "same" ? false : true;
+    this.isDifferentMobile = event.value === 'same' ? false : true;
     this.commonService.isUserUsingDifferentMobile(this.isDifferentMobile);
-    let tempRow = [
-      { stepName: "Personal Details" },
-      { stepName: "Select KYC" }
+    const tempRow = [
+      { stepName: 'Personal Details' },
+      { stepName: 'Select KYC' },
     ];
     this.isDifferentMobile
       ? this.isDifferentMobileNumber.emit({
           steps: tempRow,
-          isDifferentMobile: true
+          isDifferentMobile: true,
         })
       : this.isDifferentMobileNumber.emit({
           steps: [],
-          isDifferentMobile: false
+          isDifferentMobile: false,
         });
   }
 
@@ -61,6 +61,6 @@ export class CardCibilScoreComponent implements OnInit {
   }
 
   onConfirm() {
-    this.onConfirmEvent.emit();
+    this.confirmEvent.emit();
   }
 }

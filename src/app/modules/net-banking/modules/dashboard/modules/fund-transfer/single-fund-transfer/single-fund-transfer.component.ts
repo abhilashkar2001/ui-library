@@ -1,35 +1,35 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { FundTransferService } from "../fund-transfer.service";
-import { Router } from "@angular/router";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { TranslateService } from "@ngx-translate/core";
-import { MatCheckboxChange } from "@angular/material/checkbox";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FundTransferService } from '../fund-transfer.service';
+import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TranslateService } from '@ngx-translate/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-single-fund-transfer",
-  templateUrl: "./single-fund-transfer.component.html",
-  styleUrls: ["./single-fund-transfer.component.scss"]
+  selector: 'app-single-fund-transfer',
+  templateUrl: './single-fund-transfer.component.html',
+  styleUrls: ['./single-fund-transfer.component.scss'],
 })
 export class SingleFundTransferComponent implements OnInit {
   fundTransferForm!: FormGroup;
-  purpose = ["Salary", "Vendor"];
+  purpose = ['Salary', 'Vendor'];
   fromAccount: any = [];
   transferMode = [];
   transferTo: any = [];
   benificiaryEmail = [];
   benificiaryMobile = [];
-  remitter: boolean = false;
-  beneficiary: boolean = false;
-  beneficiaryNarration: boolean = false;
-  remitterNarration: boolean = false;
-  paymentDetail: boolean = false;
+  remitter = false;
+  beneficiary = false;
+  beneficiaryNarration = false;
+  remitterNarration = false;
+  paymentDetail = false;
   custAccounts: any;
   dialogRef: MatDialogRef<CustomSuccessPopupComponent> | any;
   dialogRef1: MatDialogRef<AllInOnePopupComponent> | any;
@@ -45,26 +45,26 @@ export class SingleFundTransferComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
-    public translate: TranslateService
+    public translate: TranslateService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/single-trans.svg"
-      )
+        'assets/images/single-trans.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
     this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem("corporateId")
+      <string>sessionStorage.getItem('corporateId'),
     );
     this.buildForm();
     this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem("customer-Info")
+      <string>sessionStorage.getItem('customer-Info'),
     );
     this.custAccounts = JSON.parse(
-      <string>sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem('listOfAccounts'),
     );
     this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
@@ -72,29 +72,29 @@ export class SingleFundTransferComponent implements OnInit {
     this.fetchBenificiary();
     this.fetchGeneric();
     setTimeout(() => {
-      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
   }
 
   buildForm() {
     this.fundTransferForm = this.fb.group({
-      purposeOfPayment: ["", Validators.required],
-      debitAccount: ["", Validators.required],
-      debitAmount: ["", Validators.required],
-      transferMode: [""],
-      creditAccount: ["", Validators.required],
-      trransferOn: ["", Validators.required],
-      remmitterEmail: [""],
-      remmitterMobile: [""],
-      benificiaryEmail: [""],
-      benificiaryMobile: [""],
-      remmitterNarration: [""],
-      benificiaryNarration: [""],
-      detail1: [""],
-      detail2: [""],
-      detail3: [""],
-      remarks: [""]
+      purposeOfPayment: ['', Validators.required],
+      debitAccount: ['', Validators.required],
+      debitAmount: ['', Validators.required],
+      transferMode: [''],
+      creditAccount: ['', Validators.required],
+      trransferOn: ['', Validators.required],
+      remmitterEmail: [''],
+      remmitterMobile: [''],
+      benificiaryEmail: [''],
+      benificiaryMobile: [''],
+      remmitterNarration: [''],
+      benificiaryNarration: [''],
+      detail1: [''],
+      detail2: [''],
+      detail3: [''],
+      remarks: [''],
     });
   }
 
@@ -103,9 +103,9 @@ export class SingleFundTransferComponent implements OnInit {
       .fetchBenificiary(this.customerInfo?.customerId)
       .subscribe((resp: any) => {
         if (resp?.statusCode == 200) {
-          let list = resp?.data;
+          const list = resp?.data;
           this.transferTo = list?.filter(
-            (item: any) => item?.name && item?.accountNo
+            (item: any) => item?.name && item?.accountNo,
           );
         }
       });
@@ -113,7 +113,7 @@ export class SingleFundTransferComponent implements OnInit {
 
   fetchGeneric() {
     this.fundTransferService
-      .fetchGeneric("Common", "TRANSFERMODE")
+      .fetchGeneric('Common', 'TRANSFERMODE')
       .subscribe((resp: any) => {
         this.transferMode = resp?.data?.TRANSFERMODE;
       });
@@ -121,37 +121,37 @@ export class SingleFundTransferComponent implements OnInit {
 
   onCheckBox(checkbox: string, event: MatCheckboxChange) {
     if (event.checked) {
-      if (checkbox === "Remitter") this.remitter = true;
-      else if (checkbox === "Beneficiary") this.beneficiary = true;
-      else if (checkbox === "RemitterNarration") this.remitterNarration = true;
-      else if (checkbox === "BeneficiaryNarration")
+      if (checkbox === 'Remitter') this.remitter = true;
+      else if (checkbox === 'Beneficiary') this.beneficiary = true;
+      else if (checkbox === 'RemitterNarration') this.remitterNarration = true;
+      else if (checkbox === 'BeneficiaryNarration')
         this.beneficiaryNarration = true;
-      else if (checkbox === "paymentDetail") this.paymentDetail = true;
+      else if (checkbox === 'paymentDetail') this.paymentDetail = true;
     } else {
-      if (checkbox === "Remitter") this.remitter = false;
-      else if (checkbox === "Beneficiary") this.beneficiary = false;
-      else if (checkbox === "RemitterNarration") this.remitterNarration = false;
-      else if (checkbox === "BeneficiaryNarration")
+      if (checkbox === 'Remitter') this.remitter = false;
+      else if (checkbox === 'Beneficiary') this.beneficiary = false;
+      else if (checkbox === 'RemitterNarration') this.remitterNarration = false;
+      else if (checkbox === 'BeneficiaryNarration')
         this.beneficiaryNarration = false;
-      else if (checkbox === "paymentDetail") this.paymentDetail = false;
+      else if (checkbox === 'paymentDetail') this.paymentDetail = false;
     }
   }
 
   changeInToAccount(event: any) {
     if (event) {
       this.beneficiaryName = this.transferTo.find(
-        (e: any) => e.accountNo == event
+        (e: any) => e.accountNo == event,
       )?.name;
     }
   }
 
   goToBeneificiary() {
-    this.router.navigate(["user/trade/beneficiary/add-edit-beneficiary"]);
+    this.router.navigate(['user/trade/beneficiary/add-edit-beneficiary']);
   }
 
   cancel() {
     this.router.navigate([
-      "user/dashboard/fund-transfer/fund-transfer-summary"
+      'user/dashboard/fund-transfer/fund-transfer-summary',
     ]);
   }
 
@@ -170,18 +170,18 @@ export class SingleFundTransferComponent implements OnInit {
         if (resp?.statusCode == 200) {
           this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
             data: {
-              msg: "Transaction Successful",
+              msg: 'Transaction Successful',
               status: true,
-              reffNo: resp?.data
+              reffNo: resp?.data,
             },
-            width: "40%",
+            width: '40%',
             disableClose: true,
-            panelClass: "popup-class",
-            backdropClass: "bdrop"
+            panelClass: 'popup-class',
+            backdropClass: 'bdrop',
           });
           this.dialogRef.afterClosed().subscribe((result: any) => {
             console.log(result);
-            if (result == "Done") {
+            if (result == 'Done') {
               this.cancel();
             }
           });
@@ -191,9 +191,9 @@ export class SingleFundTransferComponent implements OnInit {
 
   submit() {
     if (!this.fundTransferForm.valid) return;
-    let payload: any = [];
-    let obj = this.fundTransferForm.value;
-    obj.uploadType = "SINGLE";
+    const payload: any = [];
+    const obj = this.fundTransferForm.value;
+    obj.uploadType = 'SINGLE';
     obj.beneficiaryName = this.beneficiaryName;
     payload.push(obj);
 
@@ -201,27 +201,27 @@ export class SingleFundTransferComponent implements OnInit {
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile
+        mobile: this.tokenStorageService.getUser()?.mobile,
       },
-      width: "50%",
-      height: "33%",
+      width: '50%',
+      height: '33%',
       disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop"
+      panelClass: 'popup-dialog-class',
+      backdropClass: 'bdrop',
     });
     this.dialogRef1.afterClosed().subscribe((result: any) => {
-      if (result == "verified") {
+      if (result == 'verified') {
         this.saveData(payload);
       } else {
         this.dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
-          data: { msg: "Transaction failed", status: false },
-          width: "40%",
+          data: { msg: 'Transaction failed', status: false },
+          width: '40%',
           disableClose: true,
-          panelClass: "popup-class",
-          backdropClass: "bdrop"
+          panelClass: 'popup-class',
+          backdropClass: 'bdrop',
         });
         this.dialogRef.afterClosed().subscribe((result: any) => {
-          if (result == "Failed") {
+          if (result == 'Failed') {
             this.dialogRef.close();
           }
         });

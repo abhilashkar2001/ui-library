@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { CreditCardStore } from "../../../credit-card.store";
-import { Router } from "@angular/router";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { CardService } from "../../../../card.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CreditCardStore } from '../../../credit-card.store';
+import { Router } from '@angular/router';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { CardService } from '../../../../card.service';
 
 @Component({
-  selector: "app-billing-cycle",
-  templateUrl: "./billing-cycle.component.html",
-  styleUrls: ["./billing-cycle.component.scss"]
+  selector: 'app-billing-cycle',
+  templateUrl: './billing-cycle.component.html',
+  styleUrls: ['./billing-cycle.component.scss'],
 })
 export class BillingCycleComponent implements OnInit {
   billingCycleForm!: FormGroup;
@@ -29,7 +29,7 @@ export class BillingCycleComponent implements OnInit {
     private tokenService: TokenStorageService,
     private cardService: CardService,
     private serviceCallHandler: ServiceCallHandler,
-    private router: Router
+    private router: Router,
   ) {
     this.profileInfo = this.tokenService.getUser();
   }
@@ -43,98 +43,98 @@ export class BillingCycleComponent implements OnInit {
 
   buildFormGroup() {
     this.billingCycleForm = this.formBuilder.group({
-      source: ["I"],
+      source: ['I'],
       corporateId: [this.profileInfo?.corporateCustomerId],
-      cardNo: [""],
-      creditAmount: [""],
-      creditCurrency: [""],
-      requestDate: [""],
-      billingCycleDate: [""]
+      cardNo: [''],
+      creditAmount: [''],
+      creditCurrency: [''],
+      requestDate: [''],
+      billingCycleDate: [''],
     });
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card: any) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account,
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.billingCycleForm
-        ?.get("cardNo")
+        ?.get('cardNo')
         ?.patchValue(this.accountDetails?.cardNumber);
       const dueDate = this.accountDetails?.dueDate;
       if (dueDate) {
         const dateObj = new Date(dueDate); // Parse the due date
         const day = dateObj.getDate(); // Get the day of the month
-        const formattedDay = this.getOrdinalSuffix(day) + " Each Month"; // Add ordinal suffix
+        const formattedDay = this.getOrdinalSuffix(day) + ' Each Month'; // Add ordinal suffix
 
         this.billingCycleForm
-          ?.get("billingCycleDate")
+          ?.get('billingCycleDate')
           ?.patchValue(formattedDay);
       }
     }
   }
 
   getOrdinalSuffix(day: number): string {
-    if (day > 3 && day < 21) return day + "th"; // For 11th, 12th, 13th, etc.
+    if (day > 3 && day < 21) return day + 'th'; // For 11th, 12th, 13th, etc.
     switch (day % 10) {
       case 1:
-        return day + "st";
+        return day + 'st';
       case 2:
-        return day + "nd";
+        return day + 'nd';
       case 3:
-        return day + "rd";
+        return day + 'rd';
       default:
-        return day + "th";
+        return day + 'th';
     }
   }
 
   proceed() {
     if (!this.billingCycleForm?.valid) return;
-    let payload = { ...this.billingCycleForm.value };
-    let paymentDetailsArr = [
+    const payload = { ...this.billingCycleForm.value };
+    const paymentDetailsArr = [
       {
-        eventType: "mmidTransfer",
-        operationType: "Billing_Cycle",
-        status: "confirm",
-        masterId: "retailFundTransferMasterId",
-        statusHeader: "Comfirm Payment",
-        statusNews: "Billing Cycle Request!",
+        eventType: 'mmidTransfer',
+        operationType: 'Billing_Cycle',
+        status: 'confirm',
+        masterId: 'retailFundTransferMasterId',
+        statusHeader: 'Comfirm Payment',
+        statusNews: 'Billing Cycle Request!',
         summary: [
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Name on Card": this.accountDetails?.customerName },
+              { 'Name on Card': this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber
+                'Card Number': this.accountDetails?.cardNumber,
               },
               {
-                "Card Name": this.accountDetails?.cardName
+                'Card Name': this.accountDetails?.cardName,
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit
+                'Credit Limit': this.accountDetails?.totalCreditLimit,
               },
               {
-                "Current Billing Cycle": payload?.billingCycleDate
+                'Current Billing Cycle': payload?.billingCycleDate,
               },
               {
-                "Request Billing Cycle": payload?.requestDate
-              }
-            ]
-          }
+                'Request Billing Cycle': payload?.requestDate,
+              },
+            ],
+          },
         ],
-        qrToggle: false
-      }
+        qrToggle: false,
+      },
     ];
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       paymentDetailsArr,
       (payload) =>
-        this.cardService.saveBillingCycleCreditPaymentDetails(payload)
+        this.cardService.saveBillingCycleCreditPaymentDetails(payload),
       // Service call completion callback
     );
-    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
+    this.router.navigate(['/user/card/credit-card/service/payment-summary']);
   }
 }

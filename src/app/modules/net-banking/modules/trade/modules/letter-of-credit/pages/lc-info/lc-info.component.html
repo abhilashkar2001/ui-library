@@ -76,7 +76,7 @@
         <mat-form-field>
           <input
             formControlName="amount"
-            numbersOnly
+            appNumbersOnly
             maxlength="8"
             matInput
             type="text"
@@ -141,7 +141,7 @@
         <mat-form-field>
           <input
             formControlName="additionalAmounts"
-            numbersOnly
+            appNumbersOnly
             maxlength="8"
             matInput
             type="text"
@@ -284,7 +284,7 @@
           <mat-form-field fxFlex="70" style="z-index: 2"
             ><input
               formControlName="invoiceValue"
-              numbersOnly
+              appNumbersOnly
               maxlength="8"
               matInput
               type="text"
@@ -303,11 +303,11 @@
             <input
               matInput
               formControlName="tenorDays"
-              numbersOnly
+              appNumbersOnly
               maxlength="2"
             />
             <div matSuffix>
-              {{ lcInfoForm.get("tenorDays")?.value > 1 ? "Days" : "Day" }}
+              {{ lcInfoForm.get('tenorDays')?.value > 1 ? 'Days' : 'Day' }}
             </div>
           </div>
           <div fxFlex="1" class="vl"></div>
@@ -396,7 +396,7 @@
           <mat-form-field>
             <input
               formControlName="pincode"
-              numbersOnly
+              appNumbersOnly
               maxlength="8"
               matInput
               type="text"
@@ -529,7 +529,7 @@
           <mat-form-field>
             <input
               formControlName="pincode"
-              numbersOnly
+              appNumbersOnly
               maxlength="8"
               matInput
               type="text"

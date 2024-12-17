@@ -6,26 +6,26 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
-} from "@angular/core";
-import { MatIconRegistry } from "@angular/material/icon";
-import { MatSort, Sort } from "@angular/material/sort";
-import { DomSanitizer } from "@angular/platform-browser";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { environment } from "environments/environment";
-import { SCREENLIST } from "./screens";
-import { Router } from "@angular/router";
-import { FormControl } from "@angular/forms";
-import { NewReusableFilterComponent } from "../new-reusable-filter/new-reusable-filter.component";
-import { TableService } from "app/shared/services/table-service/table-service";
-import { SelectionModel } from "@angular/cdk/collections";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+  ViewChild,
+} from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { MatSort, Sort } from '@angular/material/sort';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { environment } from 'environments/environment';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { SCREENLIST } from './screen';
+import { TableService } from 'app/shared/services/table-service/table-service';
+import { NewReusableFilterComponent } from '../new-reusable-filter/new-reusable-filter.component';
 
 @Component({
-  selector: "app-new-reusable-mat-table",
-  templateUrl: "./new-reusable-mat-table.component.html",
-  styleUrls: ["./new-reusable-mat-table.component.scss"]
+  selector: 'app-new-reusable-mat-table',
+  templateUrl: './new-reusable-mat-table.component.html',
+  styleUrls: ['./new-reusable-mat-table.component.scss'],
 })
 export class NewReusableMatTableComponent implements OnInit {
   @Input() className: any;
@@ -42,7 +42,7 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() filterByOption: any;
   @Input() MaintenanceUpdatedData: any;
   @Input() UpdatedData: any;
-  @Input() hideFilters: boolean = false;
+  @Input() hideFilters = false;
   @Input() showOnlySearchTitle: any;
   @Input() requiredSpecialFields: any;
   @Input() addNewList: any = [];
@@ -50,17 +50,17 @@ export class NewReusableMatTableComponent implements OnInit {
   @Input() createdBy: any;
   @Input() profileImage: any;
   @Input() isUpload: boolean | any;
-  @Input() tellerOps: boolean = false;
-  @Input() holidayTitle: string = "";
-  @Input() componentName: string = "";
-  @Input() showInfoIcon: boolean = false;
-  @Output() customupdateRecord = new EventEmitter<{}>();
-  @Output() customDownload = new EventEmitter<{}>();
+  @Input() tellerOps = false;
+  @Input() holidayTitle = '';
+  @Input() componentName = '';
+  @Input() showInfoIcon = false;
+  @Output() customupdateRecord = new EventEmitter<object>();
+  @Output() customDownload = new EventEmitter<object>();
   @Output() customEditForm = new EventEmitter<{ element: any }>();
   @Output() customDelete = new EventEmitter<{ element: any }>();
-  @Output() customGoBack = new EventEmitter<{}>();
-  @Output() customGetSortDetails = new EventEmitter<{}>();
-  @Output() getPageNumber = new EventEmitter<{}>();
+  @Output() customGoBack = new EventEmitter<object>();
+  @Output() customGetSortDetails = new EventEmitter<object>();
+  @Output() getPageNumber = new EventEmitter<object>();
   @Output() getHolidaySummaryType = new EventEmitter();
 
   @Output() customGetDataByPage = new EventEmitter<{
@@ -77,15 +77,15 @@ export class NewReusableMatTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
-  holidayType = new FormControl("branch");
-  selectedFilterIndex: number = 0;
-  filterValue: any = "";
+  holidayType = new FormControl('branch');
+  selectedFilterIndex = 0;
+  filterValue: any = '';
   selectedFilterBy: string | any;
   dataSource = new MatTableDataSource();
-  emptyData = new MatTableDataSource([{ empty: "row" }]);
+  emptyData = new MatTableDataSource([{ empty: 'row' }]);
   pagesize = 5;
   totalLength = 0;
-  pageIndex: number = 1;
+  pageIndex = 1;
   displayedColumns: any;
   dataObs: any;
   maintenanceData: any;
@@ -93,11 +93,11 @@ export class NewReusableMatTableComponent implements OnInit {
   orderBy: string | any;
   tablePageIndex: number | any;
   sortValue: string | any = null;
-  profileKey = "userName";
+  profileKey = 'userName';
   currentUser: any;
   basePath = environment.microServiceURL;
-  userImage = "/assets/images/profile-user.png";
-  hideClose: boolean = false;
+  userImage = '/assets/images/profile-user.png';
+  hideClose = false;
   totalPages = 0;
   @ViewChild(NewReusableFilterComponent)
   childComponent: NewReusableFilterComponent | any;
@@ -105,7 +105,7 @@ export class NewReusableMatTableComponent implements OnInit {
   staticBreadCrump = SCREENLIST.staticBreadCrump;
   summaryInfoResp: any[] = [];
   selection = new SelectionModel<any>(true, []);
-  bulkUploadFileName: any = "";
+  bulkUploadFileName: any = '';
   @Output() customDownloadRecord = new EventEmitter<any>();
 
   constructor(
@@ -114,31 +114,31 @@ export class NewReusableMatTableComponent implements OnInit {
     public tokenStorageService: TokenStorageService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private tableservice: TableService
+    private tableservice: TableService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `download-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/upload.svg"
-      )
+        'assets/images/upload.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `upload-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/upload.svg"
-      )
+        'assets/images/upload.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `auth-enabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/Authorize-enabled.svg"
-      )
+        'assets/images/Authorize-enabled.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `auth-disabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/Authorize-disabled.svg"
-      )
+        'assets/images/Authorize-disabled.svg',
+      ),
     );
     // this.matIconRegistry.addSvgIcon(
     //   `delete-enabled`,
@@ -149,35 +149,35 @@ export class NewReusableMatTableComponent implements OnInit {
     this.matIconRegistry.addSvgIcon(
       `reopen-enabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/activate.svg"
-      )
+        'assets/images/activate.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `close-enabled`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/close_enabled.svg"
-      )
+        'assets/images/close_enabled.svg',
+      ),
     );
     this.matIconRegistry.addSvgIcon(
       `transaction`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/transaction.svg"
-      )
+        'assets/images/transaction.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
-    console.log("requiredSpecialFields", this.requiredSpecialFields);
+    console.log('requiredSpecialFields', this.requiredSpecialFields);
 
-    if (this.holidayTitle.toLowerCase().includes("branch")) {
-      this.holidayType.setValue("branch");
-    } else if (this.holidayTitle.toLowerCase().includes("currency")) {
-      this.holidayType.setValue("currency");
-    } else if (this.holidayTitle.toLowerCase().includes("clearing")) {
-      this.holidayType.setValue("clearing");
+    if (this.holidayTitle.toLowerCase().includes('branch')) {
+      this.holidayType.setValue('branch');
+    } else if (this.holidayTitle.toLowerCase().includes('currency')) {
+      this.holidayType.setValue('currency');
+    } else if (this.holidayTitle.toLowerCase().includes('clearing')) {
+      this.holidayType.setValue('clearing');
     }
 
-    const isMatch = SCREENLIST.listOfScreens.find((screen) => {
+    const isMatch = SCREENLIST.listOfScreens.find((screen: any) => {
       return screen.screenName === this.maintenanceTitle;
     });
     if (isMatch) {
@@ -188,26 +188,26 @@ export class NewReusableMatTableComponent implements OnInit {
 
     this.displayedColumns = this.columns?.map((c: any) => c.columnDef);
     if (
-      this.componentName != "Bulk Upload" &&
-      this.componentName != "BG Template"
+      this.componentName != 'Bulk Upload' &&
+      this.componentName != 'BG Template'
     )
-      this.displayedColumns?.push("action");
-    if (this.componentName == "Bulk Upload")
-      this.displayedColumns?.unshift("checkBox");
+      this.displayedColumns?.push('action');
+    if (this.componentName == 'Bulk Upload')
+      this.displayedColumns?.unshift('checkBox');
     this.customUpdateTable(
       null,
       this.pageIndex,
       this.pagesize,
       null,
       null,
-      "coprateNetBanking"
+      'coprateNetBanking',
     );
 
-    this.sortValue = "lastUpdated";
-    this.orderBy = "DESC";
+    this.sortValue = 'lastUpdated';
+    this.orderBy = 'DESC';
   }
   getData(e: any) {
-    return e ? `${e[0]?.toUpperCase()}${e[1]?.toUpperCase()}` : "";
+    return e ? `${e[0]?.toUpperCase()}${e[1]?.toUpperCase()}` : '';
   }
 
   onHolidayTypeChange(value: any) {
@@ -216,13 +216,12 @@ export class NewReusableMatTableComponent implements OnInit {
 
   // Get Approval Hostory
   getApprovalHistory(id: number) {
-    this.tableservice.getApprovalHistory(this.className, id).subscribe(
-      (resp: any) => {
+    this.tableservice
+      .getApprovalHistory(this.className, id)
+      .subscribe((resp: any) => {
         this.summaryInfoResp = resp?.data;
         this.cdr.detectChanges();
-      },
-      (err) => console.error("Error: ", err)
-    );
+      });
   }
 
   /**
@@ -230,24 +229,29 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   customSearch(event: any) {
     this.filterValue = { ...event.filterValue };
-    if (event.filterValue?.page) {
-      this.sortValue = event.filterValue.sort;
-      this.filterDataPayload(event);
-    } else if (event.filterValue?.page && event.filterValue.searchValue) {
-      this.filterDataPayload(event);
-      this.sortValue = event.filterValue.searchValue;
-    } else if (
+
+    if (
       event.filterValue?.page &&
       event.filterValue.searchValue &&
       event.filterValue.fromDate
     ) {
+      // Case: All conditions are present - page, searchValue, and fromDate
       this.filterDataPayload(event);
       this.sortValue = event.filterValue.searchValue;
+    } else if (event.filterValue?.page && event.filterValue.searchValue) {
+      // Case: Only page and searchValue are present
+      this.filterDataPayload(event);
+      this.sortValue = event.filterValue.searchValue;
+    } else if (event.filterValue?.page) {
+      // Case: Only page is present
+      this.sortValue = event.filterValue.sort;
+      this.filterDataPayload(event);
     } else if (
       event.filterValue.searchValue &&
       !event.filterValue?.page &&
       !event.filterValue.fromDate
     ) {
+      // Case: Only searchValue is present and no page or fromDate
       this.sortValue = event.filterValue.searchValue;
       delete this.filterValue.page;
     }
@@ -258,7 +262,7 @@ export class NewReusableMatTableComponent implements OnInit {
       this.pagesize,
       this.sortValue,
       this.orderBy,
-      "coprateNetBanking"
+      'coprateNetBanking',
     );
   }
 
@@ -322,12 +326,12 @@ export class NewReusableMatTableComponent implements OnInit {
     size: any,
     sortName: any,
     direction: any,
-    module: any
+    module: any,
   ) {
-    if (sortName == "SC2") {
-      sortName = "stateCode2";
+    if (sortName == 'SC2') {
+      sortName = 'stateCode2';
     }
-    console.log("inside custom");
+    console.log('inside custom');
 
     this.customGetDataByPage.emit({
       filterBy: value,
@@ -336,19 +340,19 @@ export class NewReusableMatTableComponent implements OnInit {
       size: size,
       sort: sortName,
       direction: direction,
-      module: module
+      module: module,
     });
   }
 
   updateColumn() {
     this.displayedColumns = this.columns?.map((c: any) => c.columnDef);
     if (
-      this.componentName != "Bulk Upload" &&
-      this.componentName != "BG Template"
+      this.componentName != 'Bulk Upload' &&
+      this.componentName != 'BG Template'
     )
-      this.displayedColumns?.push("action");
-    if (this.componentName == "Bulk Upload")
-      this.displayedColumns?.unshift("checkBox");
+      this.displayedColumns?.push('action');
+    if (this.componentName == 'Bulk Upload')
+      this.displayedColumns?.unshift('checkBox');
   }
 
   /**
@@ -356,31 +360,31 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    if (changes["columns"]) {
+    if (changes['columns']) {
       this.updateColumn();
     }
-    if (changes) this.maintenanceData = changes?.["UpdatedData"]?.currentValue;
+    if (changes) this.maintenanceData = changes?.['UpdatedData']?.currentValue;
     this.instrumentStatus =
-      changes?.["InstrumentStatusUpdatedData"]?.currentValue;
+      changes?.['InstrumentStatusUpdatedData']?.currentValue;
     if (this.maintenanceData?.data?.length > 0)
       this.bulkUploadFileName = this.maintenanceData?.data[0].fileName;
 
     if (this.maintenanceData?.statusCode == 200) {
       this.updateTable(
-        this.componentName == "Bulk Upload"
+        this.componentName == 'Bulk Upload'
           ? this.maintenanceData.data[0].corpFundDetails
           : this.maintenanceData.data,
-        this.maintenanceData.meta
+        this.maintenanceData.meta,
       );
     } else if (this.instrumentStatus?.statusCode === 200) {
       this.updateTable([], {});
     } else if (this.maintenanceData?.statusCode === 204) {
       this.updateTable([], {});
-    } else if (this.maintenanceData == "" || this.maintenanceData == null) {
+    } else if (this.maintenanceData == '' || this.maintenanceData == null) {
       this.updateTable([], {});
     }
 
-    console.log(this.maintenanceData, "this.maintenanceData ");
+    console.log(this.maintenanceData, 'this.maintenanceData ');
   }
 
   /**
@@ -439,7 +443,7 @@ export class NewReusableMatTableComponent implements OnInit {
         event?.value?.pageSize,
         this.sortValue,
         this.orderBy,
-        "coprateNetBanking"
+        'coprateNetBanking',
       );
     }
   }
@@ -449,7 +453,7 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   filterChange(filterby: any) {
     this.selectedFilterBy = this.filterByOption.find(
-      (item: any) => item.key == filterby
+      (item: any) => item.key == filterby,
     ).key;
   }
 
@@ -457,16 +461,16 @@ export class NewReusableMatTableComponent implements OnInit {
    * Clearing the filter, and refreshing table with updated new data.
    */
   clearFilter() {
-    this.dataSource.filter = "";
+    this.dataSource.filter = '';
     this.selectedFilterIndex = 0;
-    this.filterValue = "";
+    this.filterValue = '';
     this.customUpdateTable(
       null,
       1,
       this.pagesize,
       this.sortValue,
       this.orderBy,
-      "coprateNetBanking"
+      'coprateNetBanking',
     );
   }
 
@@ -492,7 +496,7 @@ export class NewReusableMatTableComponent implements OnInit {
       lastUpdatedBy: this.filterValue?.lastUpdatedBy ?? null,
       sort: this.sortValue ?? null,
       sortOrder: this.orderBy ?? null,
-      userId: this.currentUser?.userId
+      userId: this.currentUser?.userId,
     };
     if (
       this.filterValue?.fromDate != null &&
@@ -506,21 +510,21 @@ export class NewReusableMatTableComponent implements OnInit {
     this.tableservice
       .downloadRecord(
         this.className,
-        type == "xlsx" ? "excel" : type,
+        type == 'xlsx' ? 'excel' : type,
         payload,
-        this.module
+        this.module,
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.handleDownload(type, res);
       });
   }
 
   handleDownload(type: any, data: any) {
-    const blob = new Blob([data], { type: "application/octet-stream" });
+    const blob = new Blob([data], { type: 'application/octet-stream' });
     const url = window.URL.createObjectURL(blob);
 
     // Create a link element and simulate a click to trigger the download
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
     link.download = `${this.maintenanceTitle}.${type}`;
     document.body.appendChild(link);
@@ -536,14 +540,14 @@ export class NewReusableMatTableComponent implements OnInit {
    */
   announceSortChange(sortState: Sort) {
     this.sortValue = sortState.active;
-    this.orderBy = sortState.direction === "asc" ? "ASC" : "DESC";
+    this.orderBy = sortState.direction === 'asc' ? 'ASC' : 'DESC';
     this.customUpdateTable(
       this.filterValue,
       this.pageIndex,
       this.pagesize,
       sortState.active,
       this.orderBy,
-      "coprateNetBanking"
+      'coprateNetBanking',
     );
   }
   updateRecord(operation: any, id: any, obj: any) {
@@ -551,9 +555,9 @@ export class NewReusableMatTableComponent implements OnInit {
   }
 
   maskEmail(email: string, length?: number): string {
-    const atIndex = email.indexOf("@");
+    const atIndex = email.indexOf('@');
     if (atIndex > 0) {
-      const maskedPart = "X".repeat(atIndex);
+      const maskedPart = 'X'.repeat(atIndex);
       const visiblePart = email.substring(atIndex);
       if (length !== 1) return (maskedPart + visiblePart).substring(0, 10);
       else return maskedPart + visiblePart;
@@ -571,7 +575,7 @@ export class NewReusableMatTableComponent implements OnInit {
       this.pagesize,
       this.sortValue,
       this.orderBy,
-      "coprateNetBanking"
+      'coprateNetBanking',
     );
   }
   goBack() {
@@ -583,9 +587,9 @@ export class NewReusableMatTableComponent implements OnInit {
 
   getShorendValue(value: any, length = 15) {
     if (value) {
-      let truncatedValue: any = value.toString().split(",");
+      let truncatedValue: any = value.toString().split(',');
       if (truncatedValue.length > 1) {
-        return truncatedValue.slice(0, 3).join(",").slice(0, length) + "...";
+        return truncatedValue.slice(0, 3).join(',').slice(0, length) + '...';
         // return truncatedValue[0] + "...";
       } else {
         truncatedValue = truncatedValue?.[0];

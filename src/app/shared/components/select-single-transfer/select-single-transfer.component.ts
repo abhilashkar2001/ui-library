@@ -1,17 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-select-single-transfer",
-  templateUrl: "./select-single-transfer.component.html",
-  styleUrls: ["./select-single-transfer.component.scss"]
+  selector: 'app-select-single-transfer',
+  templateUrl: './select-single-transfer.component.html',
+  styleUrls: ['./select-single-transfer.component.scss'],
 })
-export class SelectSingleTransferComponent implements OnInit {
-  checkToggle: boolean = true;
+export class SelectSingleTransferComponent {
+  checkToggle = true;
 
   constructor(private dialogRef: MatDialogRef<SelectSingleTransferComponent>) {}
-
-  ngOnInit(): void {}
 
   customerToggle(event: any) {
     this.checkToggle = event;
@@ -21,6 +19,6 @@ export class SelectSingleTransferComponent implements OnInit {
   }
 
   onBack() {
-    this.dialogRef.close("Cancel");
+    this.dialogRef.close('Cancel');
   }
 }

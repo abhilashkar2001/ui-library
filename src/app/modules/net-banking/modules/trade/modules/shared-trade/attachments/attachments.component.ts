@@ -1,34 +1,34 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
-import { Router } from "@angular/router";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { GenericValueService } from "app/shared/services/generic-value.service";
-import { environment } from "environments/environment";
-import { BgSummaryServiceService } from "../bg-summary/bg-summary-service.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { CommonService } from 'app/shared/services/common-service/common.service';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { environment } from 'environments/environment';
+import { BgSummaryServiceService } from '../bg-summary/bg-summary-service.service';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Component({
-  selector: "app-attachments",
-  templateUrl: "./attachments.component.html",
-  styleUrls: ["./attachments.component.scss"]
+  selector: 'app-attachments',
+  templateUrl: './attachments.component.html',
+  styleUrls: ['./attachments.component.scss'],
 })
 export class AttachmentsComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel:
+  @Input() updateParentModel:
     | ((part: Partial<any>, isFormValid: boolean) => void)
     | any;
   attachementInfoForm!: FormGroup;
   titles: any[] = [
-    "BG Text",
-    "Contract Copy",
-    "Declaration",
-    "Approvals",
-    "Others",
-    "CQW"
+    'BG Text',
+    'Contract Copy',
+    'Declaration',
+    'Approvals',
+    'Others',
+    'CQW',
   ];
   fileNamelength: number | any;
-  showUplodad: boolean = false;
+  showUplodad = false;
 
   slectedFiles: File[] = [];
   constructor(
@@ -36,13 +36,13 @@ export class AttachmentsComponent implements OnInit {
     private commonService: CommonService,
     private bgService: BgSummaryServiceService,
     private router: Router,
-    private genericValueService: GenericValueService
+    private genericValueService: GenericValueService,
   ) {}
 
   ngOnInit(): void {
     this.buildAttachmentInfoForm();
     this.addTitleCategory();
-    const id = this.router.routerState.root.snapshot.queryParams["id"];
+    const id = this.router.routerState.root.snapshot.queryParams['id'];
     this.fetchGenericValue();
     if (id) {
       this.fetchAttachments(id);
@@ -51,7 +51,7 @@ export class AttachmentsComponent implements OnInit {
 
   fetchGenericValue() {
     this.genericValueService
-      .loadGenericValue("Common", ["TITLE"])
+      .loadGenericValue('Common', ['TITLE'])
       .subscribe((res) => {
         console.log(res);
       });
@@ -74,11 +74,11 @@ export class AttachmentsComponent implements OnInit {
   /**Buildform*/
   buildAttachmentInfoForm() {
     this.attachementInfoForm = this.formBuilder.group({
-      attachMentModel: this.formBuilder.array([])
+      attachMentModel: this.formBuilder.array([]),
     });
 
     this.attachementInfoForm.valueChanges.subscribe(() => {
-      console.log(this.attachMentModel["controls"]);
+      console.log(this.attachMentModel['controls']);
       this.updateParentModel(this.attachMentModel.value, this.checkform());
     });
   }
@@ -87,16 +87,16 @@ export class AttachmentsComponent implements OnInit {
     return this.attachementInfoForm.valid;
   }
   public get attachMentModel(): FormArray | any {
-    return this.attachementInfoForm?.get("attachMentModel") as FormArray;
+    return this.attachementInfoForm?.get('attachMentModel') as FormArray;
   }
 
   //customerArray
   createDocArray(data?: any) {
     return this.formBuilder.group({
-      title: [data ? data.title : "", ,],
-      titleDescription: [data ? data.titleDescription : "", ,],
+      title: [data ? data.title : '', ,],
+      titleDescription: [data ? data.titleDescription : '', ,],
       fileUplodedArray: this.formBuilder.array([]),
-      id: [data?.id ?? null]
+      id: [data?.id ?? null],
     });
   }
 
@@ -105,7 +105,7 @@ export class AttachmentsComponent implements OnInit {
     this.attachMentModel.push(this.createDocArray(data));
     // Initialize file length as 0 for each iteration
     this.fileNamelength = 0;
-    for (let i = 0; i < this.attachMentModel["controls"]?.length; i++) {
+    for (let i = 0; i < this.attachMentModel['controls']?.length; i++) {
       this.attachementInfoForm.valueChanges.subscribe(() => {
         this.callUpdateAttachmentModel(i);
       });
@@ -114,18 +114,18 @@ export class AttachmentsComponent implements OnInit {
 
   callUpdateAttachmentModel(i: any) {
     const fileUplodedArrayControls =
-      this.attachMentModel["controls"][i].get("fileUplodedArray")["controls"];
+      this.attachMentModel['controls'][i].get('fileUplodedArray')['controls'];
     if (fileUplodedArrayControls && fileUplodedArrayControls.length > 0) {
-      const documentIdControl = fileUplodedArrayControls[0].get("documentId");
+      const documentIdControl = fileUplodedArrayControls[0].get('documentId');
       if (documentIdControl) {
-        let attachMentModel: any = [];
+        const attachMentModel: any = [];
         this.attachMentModel.value.forEach((element: any) => {
           if (element.fileUplodedArray?.length > 0) {
             const obj = {
               title: element.title,
               documentId: element.fileUplodedArray[0].documentId,
               titleDescription: element.titleDescription,
-              attachmentId: null
+              attachmentId: null,
             };
             attachMentModel.push(obj);
           }
@@ -134,9 +134,9 @@ export class AttachmentsComponent implements OnInit {
               {
                 applicantId: null,
                 masterId: null,
-                attachMentModel: attachMentModel
+                attachMentModel: attachMentModel,
               },
-              this.checkform()
+              this.checkform(),
             );
           }, 200);
         });
@@ -151,7 +151,7 @@ export class AttachmentsComponent implements OnInit {
 
   public getArray(i: any) {
     return this.attachMentModel.controls[i]?.get(
-      "fileUplodedArray"
+      'fileUplodedArray',
     ) as FormArray;
   }
 
@@ -160,36 +160,36 @@ export class AttachmentsComponent implements OnInit {
     this.slectedFiles = event.target.files;
     // const file: File = event.target.files[0];
     Array.from(event?.target?.files).forEach((file: File | any) => {
-      console.log("Uploading file:", file.name);
+      console.log('Uploading file:', file.name);
       this.uploadDocument(file, index);
     });
   }
 
   uploadDocument(file: any, index: any) {
-    let formData = new FormData();
-    let data = {
+    const formData = new FormData();
+    const data = {
       // documentName: "Others Document",
-      documentType: "",
-      documentNumber: "",
+      documentType: '',
+      documentNumber: '',
       documentSide: index,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "Attachments"
+      verificationType: 'Attachments',
     };
-    formData.append("data", JSON.stringify(data));
-    formData.append("file", file);
-    formData.append("module", "document");
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', file);
+    formData.append('module', 'document');
     this.commonService.uploadDocument(formData).subscribe((res) => {
       if (res?.data) {
-        let form = {
+        const form = {
           files: file,
           documentId: res?.data?.documentId,
           documentName: res?.data?.documentName,
-          documentType: "",
+          documentType: '',
           documentSide: res?.data?.documentSide,
           noOfSignatures: null,
           fileType: res?.data?.fileType,
-          fileName: res?.data?.fileName
+          fileName: res?.data?.fileName,
         };
         this.getArray(index).push(this.addFiles(form));
       }
@@ -199,15 +199,15 @@ export class AttachmentsComponent implements OnInit {
   /**Add file array  */
   addFiles(data?: any): FormGroup {
     return this.formBuilder.group({
-      files: [data ? data?.files : ""],
-      documentId: [data ? data?.documentId : ""],
-      documentName: [data ? data?.documentName : ""],
-      documentType: [data ? data?.documentType : ""],
-      documentSide: [data ? data?.documentSide : ""],
+      files: [data ? data?.files : ''],
+      documentId: [data ? data?.documentId : ''],
+      documentName: [data ? data?.documentName : ''],
+      documentType: [data ? data?.documentType : ''],
+      documentSide: [data ? data?.documentSide : ''],
       noOfSignatures: [data ? data?.noOfSignatures : null],
-      fileType: [data ? data?.fileType : ""],
-      fileName: [data ? data?.fileName : ""],
-      fileUrl: [data ? `${MICROSERVICE_URL}${data?.fileUrl}` : ""]
+      fileType: [data ? data?.fileType : ''],
+      fileName: [data ? data?.fileName : ''],
+      fileUrl: [data ? `${MICROSERVICE_URL}${data?.fileUrl}` : ''],
     });
   }
 
@@ -220,10 +220,10 @@ export class AttachmentsComponent implements OnInit {
         count++;
       }
       if (count > 1) {
-        this.attachMentModel.at(i).get("title")?.setValue("");
+        this.attachMentModel.at(i).get('title')?.setValue('');
         this.attachMentModel
           .at(i)
-          .get("title")
+          .get('title')
           ?.setErrors({ titleError: true });
       }
     });

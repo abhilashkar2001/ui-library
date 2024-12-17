@@ -1,4 +1,4 @@
-@import "node_modules/@onerumango/icust-scss-library/src/mixins/_common-mixin.scss";
+@import 'node_modules/@onerumango/icust-scss-library/src/mixins/_common-mixin.scss';
 
 $dark_blue: #06113c;
 $text_blue: #3c4f9a;
@@ -26,7 +26,7 @@ section.hero_section {
   .hero_title {
     font-size: 60px;
     font-weight: bold;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
     color: $dark_blue;
     @media screen and (max-width: $mobile) {
       font-size: 2rem;
@@ -35,7 +35,7 @@ section.hero_section {
   .hero_subtitle {
     width: 65%;
     font-size: 17px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 1.5rem 0;
     color: #4c5371;
     @media screen and (max-width: $laptop) {
@@ -78,7 +78,7 @@ section.hero_section {
       h2,
       p {
         color: $dark_blue;
-        font-family: "Nunito", sans-serif;
+        font-family: 'Nunito', sans-serif;
         margin: 0;
       }
       h2 {

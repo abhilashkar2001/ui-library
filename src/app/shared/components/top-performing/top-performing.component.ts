@@ -1,20 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { TopPerformingConstant } from "./top-performing.constant";
+import { Component } from '@angular/core';
+import { TopPerformingConstant } from './top-performing.constant';
 
 @Component({
-  selector: "app-top-performing",
-  templateUrl: "./top-performing.component.html",
-  styleUrls: ["./top-performing.component.scss"],
+  selector: 'app-top-performing',
+  templateUrl: './top-performing.component.html',
+  styleUrls: ['./top-performing.component.scss'],
 })
-export class TopPerformingComponent implements OnInit {
-  panelOpenState: boolean = false;
-  closeOthers: boolean = false;
+export class TopPerformingComponent {
+  panelOpenState = false;
+  closeOthers = false;
   stocks = TopPerformingConstant.STOCKS;
-  isStocksIsReadMore: boolean = false;
+  isStocksIsReadMore = false;
   moneyMarket = TopPerformingConstant.MONEY_MARKET;
-  isMoneyMarketReadMore: boolean = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  isMoneyMarketReadMore = false;
 }

@@ -25,12 +25,12 @@
                     class="doc_upload"
                     fxFlex="100"
                     #fileInput
-                    (onFileDropped)="onFileDropped($event, i)"
+                    (FileDropped)="onFileDropped($event, i)"
                     [ngClass]="[
                       denomDetai.value.documentType &&
                       denomDetai.value.docRequired
                         ? ''
-                        : 'drop_list_class'
+                        : 'drop_list_class',
                     ]"
                   >
                     <div class="drag_drop" fxFlex="90">
@@ -172,20 +172,6 @@
         </mat-radio-group>
       </div>
 
-      <!-- <div
-        fxFlex="48"
-        class=""
-        *ngIf="
-          loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY
-        "
-      >
-        <mat-form-field appearance="outline" class="full-width custom-field">
-          <mat-label class="custom-mat-label">IFSC Code</mat-label>
-          <input matInput specialIsAlphaNumeric formControlName="ifscCode" />
-        </mat-form-field>
-      </div> -->
-
       <div
         class="enabled-mat-form-field"
         fxFlex="48"
@@ -202,7 +188,7 @@
               !accountList?.length
             "
             matInput
-            numbersOnly
+            appNumbersOnly
             formControlName="accountNumber"
           />
           <mat-select
@@ -249,7 +235,11 @@
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Confirm Account Number</mat-label>
-          <input matInput numbersOnly formControlName="confirmAccountNumber" />
+          <input
+            matInput
+            appNumbersOnly
+            formControlName="confirmAccountNumber"
+          />
         </mat-form-field>
         <mat-error
           class="custom-error"
@@ -273,7 +263,7 @@
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Bank Code</mat-label>
-          <input matInput specialIsAlphaNumeric formControlName="bankCode" />
+          <input matInput appSpecialIsAlphaNumeric formControlName="bankCode" />
         </mat-form-field>
       </div>
 
@@ -287,7 +277,11 @@
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
           <mat-label class="custom-mat-label">Branch Code</mat-label>
-          <input matInput specialIsAlphaNumeric formControlName="branchCode" />
+          <input
+            matInput
+            appSpecialIsAlphaNumeric
+            formControlName="branchCode"
+          />
         </mat-form-field>
       </div>
     </form>
@@ -322,12 +316,12 @@
             alt=""
           />
           <mat-hint *ngIf="!image" matSuffix class="signiter">{{
-            "Face Scan"
+            'Face Scan'
           }}</mat-hint>
         </div>
         <div class="scan-title" fxFlex="20" [fxLayoutAlign]="'center center'">
           <span class="scan-btn" (click)="openDialog()">
-            {{ !image ? "Scan" : "Re-Scan" }}
+            {{ !image ? 'Scan' : 'Re-Scan' }}
           </span>
         </div>
       </div>

@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { LoaderService } from "app/shared/services/loader.service";
-import { NgxSpinnerService } from "ngx-spinner";
+import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'app/shared/services/loader.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: "app-spinner",
-  templateUrl: "./spinner.component.html",
-  styleUrls: ["./spinner.component.scss"]
+  selector: 'app-spinner',
+  templateUrl: './spinner.component.html',
+  styleUrls: ['./spinner.component.scss'],
 })
 export class SpinnerComponent implements OnInit {
   show: boolean | any;
   typeSelected: string | any;
   constructor(
     private _loaderService: LoaderService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit() {

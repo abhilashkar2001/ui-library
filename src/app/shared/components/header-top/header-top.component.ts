@@ -7,47 +7,47 @@ import {
   ElementRef,
   QueryList,
   ViewChildren,
-  HostListener
-} from "@angular/core";
-import { NavigationService } from "../../../shared/services/navigation.service";
-import { Subscription } from "rxjs";
-import { ThemeService } from "../../../shared/services/theme.service";
-import { LayoutService } from "../../services/layout.service";
-import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { NavigationEnd, Router } from "@angular/router";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { DomSanitizer } from "@angular/platform-browser";
-import { TranslateService } from "@ngx-translate/core";
-import { MatIconRegistry } from "@angular/material/icon";
+  HostListener,
+} from '@angular/core';
+import { NavigationService } from '../../../shared/services/navigation.service';
+import { Subscription } from 'rxjs';
+import { ThemeService } from '../../../shared/services/theme.service';
+import { LayoutService } from '../../services/layout.service';
+import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
+import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
-  selector: "app-header-top",
-  templateUrl: "./header-top.component.html",
-  styleUrls: ["./header-top.component.scss"]
+  selector: 'app-header-top',
+  templateUrl: './header-top.component.html',
+  styleUrls: ['./header-top.component.scss'],
 })
 export class HeaderTopComponent implements OnInit, OnDestroy {
   // callbackUrl
-  externalInternetRoutePort = ":4211";
+  externalInternetRoutePort = ':4211';
 
   layoutConf: any;
   menuItems: any;
   menuItemSub: Subscription | any;
   egretThemes: any[] = [];
-  hideNavItem: boolean = false;
-  showMobilemenu: boolean = false;
+  hideNavItem = false;
+  showMobilemenu = false;
 
   public availableLangs = [
     {
-      name: "EN",
-      code: "en",
-      flag: "us"
+      name: 'EN',
+      code: 'en',
+      flag: 'us',
     },
     {
-      name: "ES",
-      code: "es",
-      flag: "es"
-    }
+      name: 'ES',
+      code: 'es',
+      flag: 'es',
+    },
   ];
   currentLang = this.availableLangs[0];
 
@@ -58,24 +58,24 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   items = [
     {
-      label: "Open Account",
-      route: "/account"
+      label: 'Open Account',
+      route: '/account',
     },
     {
-      label: "Card",
-      route: "/card"
+      label: 'Card',
+      route: '/card',
     },
     {
-      label: "Deposits",
-      route: "/deposits"
+      label: 'Deposits',
+      route: '/deposits',
     },
     {
-      label: "Loan",
-      route: "/loan"
-    }
+      label: 'Loan',
+      route: '/loan',
+    },
   ];
-  @ViewChildren("element") elReference: QueryList<ElementRef> | any;
-  expand: number = 0;
+  @ViewChildren('element') elReference: QueryList<ElementRef> | any;
+  expand = 0;
 
   constructor(
     private layout: LayoutService,
@@ -89,13 +89,13 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private router: Router,
     private tokenStore: TokenStorageService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/menu_web.svg"
-      )
+        'assets/images/menu_web.svg',
+      ),
     );
   }
 
@@ -112,20 +112,20 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     this.egretThemes = this.themeService.egretThemes;
     this.menuItemSub = this.navService.menuItems$.subscribe((res) => {
       res = res.filter(
-        (item) => item.type !== "icon" && item.type !== "separator"
+        (item) => item.type !== 'icon' && item.type !== 'separator',
       );
-      let limit = 4;
-      let mainItems: any[] = res.slice(0, limit);
+      const limit = 4;
+      const mainItems: any[] = res.slice(0, limit);
       if (res.length <= limit) {
         return (this.menuItems = mainItems);
       }
-      let subItems: any[] = res.slice(limit, res.length - 1);
+      const subItems: any[] = res.slice(limit, res.length - 1);
       mainItems.push({
-        name: "More",
-        type: "dropDown",
-        tooltip: "More",
-        icon: "more_horiz",
-        sub: subItems
+        name: 'More',
+        type: 'dropDown',
+        tooltip: 'More',
+        icon: 'more_horiz',
+        sub: subItems,
       });
       this.menuItems = mainItems;
       return;
@@ -139,7 +139,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   onNavigation(route: any) {
     const item = this.items.findIndex((i) => route.includes(i?.route));
     this.animateUnderline(
-      this.elReference.find((index: any) => index === item)?.nativeElement
+      this.elReference.find((index: any) => index === item)?.nativeElement,
     );
   }
 
@@ -151,10 +151,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     this.showMobilemenu = !this.showMobilemenu;
   }
 
-  @HostListener("document:click", ["$event"])
+  @HostListener('document:click', ['$event'])
   clickOutsideDropdown(event: Event) {
     const target = event.target as HTMLElement;
-    if (!this.isDescendant(target, document.querySelector("nav"))) {
+    if (!this.isDescendant(target, document.querySelector('nav'))) {
       this.showMobilemenu = false;
     }
   }
@@ -173,10 +173,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   // animate the nav link underline
   animateUnderline(elem: any) {
     if (elem) {
-      const underlineElem = this.el.nativeElement.querySelector("#underline");
+      const underlineElem = this.el.nativeElement.querySelector('#underline');
       const { left, width } = elem.getBoundingClientRect();
-      this.renderer.setStyle(underlineElem, "left", left + "px");
-      this.renderer.setStyle(underlineElem, "width", width + "px");
+      this.renderer.setStyle(underlineElem, 'left', left + 'px');
+      this.renderer.setStyle(underlineElem, 'width', width + 'px');
       this.showMobilemenu = false;
       window.scrollTo(0, 0);
     }
@@ -199,35 +199,35 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   toggleSidenav() {
-    if (this.layoutConf.sidebarStyle === "closed") {
+    if (this.layoutConf.sidebarStyle === 'closed') {
       return this.layout.publishLayoutChange({
-        sidebarStyle: "full"
+        sidebarStyle: 'full',
       });
     }
     this.layout.publishLayoutChange({
-      sidebarStyle: "closed"
+      sidebarStyle: 'closed',
     });
   }
 
   toggleCollapse() {
     // compact --> full
-    if (this.layoutConf.sidebarStyle === "compact") {
+    if (this.layoutConf.sidebarStyle === 'compact') {
       return this.layout.publishLayoutChange(
         {
-          sidebarStyle: "full",
-          sidebarCompactToggle: false
+          sidebarStyle: 'full',
+          sidebarCompactToggle: false,
         },
-        { transitionClass: true }
+        { transitionClass: true },
       );
     }
 
     // * --> compact
     this.layout.publishLayoutChange(
       {
-        sidebarStyle: "compact",
-        sidebarCompactToggle: true
+        sidebarStyle: 'compact',
+        sidebarCompactToggle: true,
       },
-      { transitionClass: true }
+      { transitionClass: true },
     );
   }
 
@@ -239,7 +239,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   goToHomePage() {
-    this.router.navigate(["/account/landing"]);
+    this.router.navigate(['/account/landing']);
   }
   openDropdown(i: number) {
     if (this.expand == i) {
@@ -262,11 +262,11 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
    */
   redirectToInternet() {
     const url = window.location.href;
-    const baseUrl: any = url.split("#")[0]?.split("?")[0];
+    const baseUrl: any = url.split('#')[0]?.split('?')[0];
     const newBaseUrl = baseUrl.replace(
       /:(\d+)/,
-      this.externalInternetRoutePort
+      this.externalInternetRoutePort,
     );
-    window.open(`${newBaseUrl}`, "_blank");
+    window.open(`${newBaseUrl}`, '_blank');
   }
 }

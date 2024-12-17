@@ -42,7 +42,7 @@
   color: #004c97;
   font-size: 18px;
   font-weight: 600;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 // /
@@ -197,7 +197,7 @@ mat-slider {
 }
 
 ::ng-deep .ngx-slider .ngx-slider-pointer {
-  background-image: url("/assets/images/Ellipse_169.svg") !important;
+  background-image: url('/assets/images/Ellipse_169.svg') !important;
   background-repeat: no-repeat !important;
   border-radius: 0px !important;
   background-color: unset !important;

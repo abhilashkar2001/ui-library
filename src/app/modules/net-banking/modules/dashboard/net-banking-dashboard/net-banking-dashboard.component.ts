@@ -5,29 +5,29 @@ import {
   ElementRef,
   OnInit,
   Renderer2,
-  ViewChild
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { NETBANKING } from "./net-banking-dashboard.constant";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { Account } from "app/shared/models/account-list-by-subclass.model";
-import { FlexBalanceModel } from "app/shared/models/flex-balance.model";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatIconRegistry } from "@angular/material/icon";
-import { SelectSingleTransferComponent } from "app/shared/components/select-single-transfer/select-single-transfer.component";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { PendingApprovalSummary } from "app/shared/models/pending-approval.model";
-import { TranslateService } from "@ngx-translate/core";
-import { InternetBankingService } from "app/shared/services/internet-banking.service";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { LoanAccounts } from "app/shared/models/loan-account.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { MatDialog } from "@angular/material/dialog";
+  ViewChild,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { NETBANKING } from './net-banking-dashboard.constant';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Account } from 'app/shared/models/account-list-by-subclass.model';
+import { FlexBalanceModel } from 'app/shared/models/flex-balance.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+import { SelectSingleTransferComponent } from 'app/shared/components/select-single-transfer/select-single-transfer.component';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { PendingApprovalSummary } from 'app/shared/models/pending-approval.model';
+import { TranslateService } from '@ngx-translate/core';
+import { InternetBankingService } from 'app/shared/services/internet-banking.service';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { LoanAccounts } from 'app/shared/models/loan-account.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-net-banking-dashboard",
-  templateUrl: "./net-banking-dashboard.component.html",
-  styleUrls: ["./net-banking-dashboard.component.scss"]
+  selector: 'app-net-banking-dashboard',
+  templateUrl: './net-banking-dashboard.component.html',
+  styleUrls: ['./net-banking-dashboard.component.scss'],
 })
 export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   dashboardInfo: any;
@@ -40,26 +40,26 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   selectedKey: string | null = null;
   availableBalance: number[][] | any;
   availableBalanceForAccount: any;
-  genericScreenName: any = "Pending for approval";
+  genericScreenName: any = 'Pending for approval';
   currentIndex = 1;
   transferArray = NETBANKING.transferType[0].types;
   loanDetails: LoanAccounts | any;
   columns = [
     {
-      columnDef: "version",
-      header: "Version",
-      cell: (element: any) => `${element?.version}`
+      columnDef: 'version',
+      header: 'Version',
+      cell: (element: any) => `${element?.version}`,
     },
     {
-      columnDef: "lastUpdatedBy",
-      header: "Action By",
-      cell: (element: any) => `${element.lastUpdatedBy}`
-    }
+      columnDef: 'lastUpdatedBy',
+      header: 'Action By',
+      cell: (element: any) => `${element.lastUpdatedBy}`,
+    },
   ];
 
   activityLogData: any;
   displayActivityLog: any[] | any;
-  selectedActivityLog: string = "financial";
+  selectedActivityLog = 'financial';
   currentUser: any;
   accountlist: any | { accountType: string; accountList: Account[] }[];
   accountNumberList: any = [];
@@ -68,8 +68,8 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   accountsInfo: any;
   corporateId: any;
 
-  @ViewChild("targetElContainer") targetElContainer!: ElementRef;
-  @ViewChild("targetElement") targetElement!: ElementRef;
+  @ViewChild('targetElContainer') targetElContainer!: ElementRef;
+  @ViewChild('targetElement') targetElement!: ElementRef;
   tableContainerSize: number = window.innerWidth;
 
   constructor(
@@ -83,26 +83,26 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     public translate: TranslateService,
     public loanService: LoanService,
     private renderer: Renderer2,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {
     this.currentUser = tokenStorageService.getUser();
     this.matIconRegistry.addSvgIcon(
       `search-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/search_icon.svg"
-      )
+        'assets/images/search_icon.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
     this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem("corporateId")
+      <string>sessionStorage.getItem('corporateId'),
     );
     this.getDashboardInfo();
     this.getActivityLogData();
     this.getDataByPage();
     setTimeout(() => {
-      let lang = this.tokenStorageService.getLanguage() ?? "en";
+      const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
   }
@@ -119,7 +119,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     if (targetElement > targetElContainer) {
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_shadow"
+        'scroll_more_shadow',
       );
     }
   }
@@ -132,38 +132,38 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     if (isScrolledToEnd) {
       this.renderer.removeClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_shadow"
+        'scroll_more_shadow',
       );
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_left_shadow"
+        'scroll_more_left_shadow',
       );
     } else if (target.scrollLeft > 1) {
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_left_shadow"
+        'scroll_more_left_shadow',
       );
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_shadow"
+        'scroll_more_shadow',
       );
     } else if (target.scrollLeft <= 1) {
       this.renderer.removeClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_left_shadow"
+        'scroll_more_left_shadow',
       );
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_shadow"
+        'scroll_more_shadow',
       );
     } else {
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_shadow"
+        'scroll_more_shadow',
       );
       this.renderer.addClass(
         this.targetElContainer.nativeElement,
-        "scroll_more_left_shadow"
+        'scroll_more_left_shadow',
       );
     }
   }
@@ -173,7 +173,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
       if (item?.accountList)
         this.accountNumberList = [
           ...this.accountNumberList,
-          ...item.accountList
+          ...item.accountList,
         ];
     });
     this.cdr.detectChanges();
@@ -185,7 +185,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
       .subscribe((res: IcHttpResponseModel<LoanAccounts>) => {
         if (res?.statusCode == 200 && res?.data) {
           this.loanDetails = res?.data;
-          console.log(this.loanDetails, "checkloandetailss");
+          console.log(this.loanDetails, 'checkloandetailss');
           // this.sessionStorageService.setLoanInfo(this.loanDetails);
         }
       });
@@ -200,11 +200,11 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
           const listOfAccounts: any = [];
           this.accountlist.forEach(async (item: any) => {
             console.log(item);
-            if (item?.type == "Accounts") {
+            if (item?.type == 'Accounts') {
               item?.accountList?.forEach((account: any) => {
                 listOfAccounts.push({
                   ...account,
-                  accountType: item?.accountType
+                  accountType: item?.accountType,
                 });
               });
             }
@@ -230,7 +230,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
         if (resp?.statusCode == 200) {
           this.dashboardInfo = resp?.data?.accounts || {};
           this.availableBalance = [];
-          let keywiseBalance: any = [];
+          const keywiseBalance: any = [];
           Object.keys(this.dashboardInfo).forEach((key) => {
             let balance;
             this.dashboardInfo[key]?.accountList.forEach(async (el: any) => {
@@ -239,9 +239,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
             });
             this.availableBalance.push(keywiseBalance);
           });
-          sessionStorage.setItem("customer-Info", JSON.stringify(resp?.data));
-          this.selectedAcc = sessionStorage.getItem("selectAccNo")
-            ? sessionStorage.getItem("selectAccNo")
+          sessionStorage.setItem('customer-Info', JSON.stringify(resp?.data));
+          this.selectedAcc = sessionStorage.getItem('selectAccNo')
+            ? sessionStorage.getItem('selectAccNo')
             : resp?.data.accounts?.[0]?.accountList?.[0]?.accountNo;
 
           const accountList: any = [];
@@ -252,19 +252,19 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
           });
           if (accountList)
             sessionStorage.setItem(
-              "listOfAccounts",
-              JSON.stringify(accountList)
+              'listOfAccounts',
+              JSON.stringify(accountList),
             );
         }
       });
   }
   getDataByPage() {
     this.netBankingService
-      .getSummary(null, 1, 3, "coprateNetBanking", "CREATED", this.corporateId)
+      .getSummary(null, 1, 3, 'coprateNetBanking', 'CREATED', this.corporateId)
       .subscribe((res: any) => {
         this.dummyResponse = res?.data
           ?.filter(
-            (resp: any) => resp?.lastUpdatedBy != this.currentUser?.userName
+            (resp: any) => resp?.lastUpdatedBy != this.currentUser?.userName,
           )
           ?.slice(0, 3);
       });
@@ -275,14 +275,14 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
   openPendingForApprovalSummary() {
     this.router.navigate([
-      "/user/dashboard/fund-transfer/pending-for-approval"
+      '/user/dashboard/fund-transfer/pending-for-approval',
     ]);
   }
   viewPendingRecord(element: any) {
-    console.log(element, "...........");
+    console.log(element, '...........');
     this.router.navigate([
-      "/user/dashboard/fund-transfer/bulk-upload",
-      element?.id
+      '/user/dashboard/fund-transfer/bulk-upload',
+      element?.id,
     ]);
   }
   getActiveTransferType(transfer: any) {
@@ -291,7 +291,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
   onDropdownChange(event: any) {
     this.displayActivityLog = [];
-    if (event === "financial") {
+    if (event === 'financial') {
       this.displayActivityLog = this.activityLogData.financial;
       this.displayActivityLog.forEach((element: any) => {
         element.total = element.pending + element.processed + element.rejected;
@@ -307,10 +307,10 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   transformLabel(label: string): string {
     if (/[A-Z]/.test(label)) {
       return label
-        .replace(/[A-Z]/g, (match, offset) => (offset === 0 ? "" : " ") + match)
-        .split(" ")
+        .replace(/[A-Z]/g, (match, offset) => (offset === 0 ? '' : ' ') + match)
+        .split(' ')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
+        .join(' ');
     } else {
       return label.charAt(0).toUpperCase() + label.slice(1);
     }
@@ -330,29 +330,29 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
 
   openTransfer(transfer: any) {
     if (!transfer.route) return;
-    if (transfer.label == "Single Transfer") {
+    if (transfer.label == 'Single Transfer') {
       const dialogRef = this.dialog.open(SelectSingleTransferComponent, {
-        width: "50%",
-        panelClass: "popup-class"
+        width: '50%',
+        panelClass: 'popup-class',
       });
       dialogRef.afterClosed().subscribe((res) => {
         console.log(res);
 
-        if (res == "Cancel") return;
+        if (res == 'Cancel') return;
         if (res === true) {
           this.router.navigate([transfer.route]);
           if (transfer.type) {
-            sessionStorage.setItem("uploadType", transfer.type);
+            sessionStorage.setItem('uploadType', transfer.type);
           }
         } else {
-          this.router.navigate(["user/dashboard/fund-transfer/credit-card"]);
+          this.router.navigate(['user/dashboard/fund-transfer/credit-card']);
         }
       });
       return;
-    } else if (transfer.label == "Multi Transfer") {
-      if ((transfer.type = "MULTI")) {
+    } else if (transfer.label == 'Multi Transfer') {
+      if ((transfer.type = 'MULTI')) {
         this.router.navigate([transfer.route]);
-        sessionStorage.setItem("uploadType", transfer.type);
+        sessionStorage.setItem('uploadType', transfer.type);
       }
     }
     this.router.navigate([transfer.route]);

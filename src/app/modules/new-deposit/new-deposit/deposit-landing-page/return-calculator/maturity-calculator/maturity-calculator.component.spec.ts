@@ -8,9 +8,8 @@ describe('MaturityCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MaturityCalculatorComponent ]
-    })
-    .compileComponents();
+      declarations: [MaturityCalculatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MaturityCalculatorComponent);
     component = fixture.componentInstance;

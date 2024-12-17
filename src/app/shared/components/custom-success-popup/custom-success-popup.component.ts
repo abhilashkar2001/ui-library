@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-custom-success-popup",
-  templateUrl: "./custom-success-popup.component.html",
-  styleUrls: ["./custom-success-popup.component.scss"]
+  selector: 'app-custom-success-popup',
+  templateUrl: './custom-success-popup.component.html',
+  styleUrls: ['./custom-success-popup.component.scss'],
 })
 export class CustomSuccessPopupComponent implements OnInit {
   @Output() doneEmit = new EventEmitter<any>();
@@ -13,7 +13,7 @@ export class CustomSuccessPopupComponent implements OnInit {
   referenceNo: any;
   constructor(
     private dialogRef: MatDialogRef<CustomSuccessPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any
+    @Inject(MAT_DIALOG_DATA) private data: any,
   ) {}
 
   ngOnInit(): void {

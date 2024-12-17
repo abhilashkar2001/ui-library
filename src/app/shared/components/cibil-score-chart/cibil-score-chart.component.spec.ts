@@ -8,9 +8,8 @@ describe('CibilScoreChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CibilScoreChartComponent ]
-    })
-    .compileComponents();
+      declarations: [CibilScoreChartComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CibilScoreChartComponent);
     component = fixture.componentInstance;

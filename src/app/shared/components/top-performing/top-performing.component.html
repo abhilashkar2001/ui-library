@@ -35,16 +35,19 @@
                     ? '/assets/images/system-uicons_graph-increase.png'
                     : '/assets/images/system-uicons_graph-increase (1).png'
                 "
+                alt="graph image"
               /><span class="range-text-green">{{ market?.value }}</span>
             </div>
           </div>
           <div
             class="read-text"
             (click)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
+            (keydown.enter)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
+            tabindex="0"
             fxLayoutAlign="center center"
           >
             View
-            {{ isMoneyMarketReadMore ? "Less" : "All" }}
+            {{ isMoneyMarketReadMore ? 'Less' : 'All' }}
           </div>
         </mat-expansion-panel>
       </mat-accordion>
@@ -76,16 +79,19 @@
                     ? '/assets/images/system-uicons_graph-increase.png'
                     : '/assets/images/system-uicons_graph-increase (1).png'
                 "
+                alt="graph image"
               /><span class="range-text-green">{{ stock?.value }}</span>
             </div>
           </div>
           <div
             class="read-text"
             (click)="isStocksIsReadMore = !isStocksIsReadMore"
+            (keydown.enter)="isStocksIsReadMore = !isStocksIsReadMore"
+            tabindex="1"
             fxLayoutAlign="center center"
           >
             View
-            {{ isStocksIsReadMore ? "Less" : "All" }}
+            {{ isStocksIsReadMore ? 'Less' : 'All' }}
           </div>
         </mat-expansion-panel>
       </mat-accordion>

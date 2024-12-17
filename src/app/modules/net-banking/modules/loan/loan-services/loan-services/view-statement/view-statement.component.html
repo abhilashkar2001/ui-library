@@ -8,7 +8,7 @@
   <mat-card>
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-between">
       <div fxLayout="row" fxLayoutGap="24px">
-        <h4 class="sub-heading">{{ "Statements" | translate }}</h4>
+        <h4 class="sub-heading">{{ 'Statements' | translate }}</h4>
         <mat-radio-group
           aria-label="Select an option"
           formControlName="statementOption"
@@ -16,12 +16,12 @@
           <mat-radio-button
             [value]="'Active Loan'"
             class="radioChecked radiobtn text-gray px-16"
-            >{{ "Active Loan" | translate }}</mat-radio-button
+            >{{ 'Active Loan' | translate }}</mat-radio-button
           >
           <mat-radio-button
             [value]="'Closed Loan'"
             class="radioChecked radiobtn text-gray px-16"
-            >{{ "Closed Loan" | translate }}</mat-radio-button
+            >{{ 'Closed Loan' | translate }}</mat-radio-button
           >
         </mat-radio-group>
       </div>
@@ -79,7 +79,7 @@
         <tr *ngFor="let data of fetchedData">
           <td *ngFor="let item of viewStatementHeadingsArr">
             <span *ngIf="item?.headerDef.includes('Date'); else showData">
-              {{ data[item?.headerDef] | date: "shortDate" }}</span
+              {{ data[item?.headerDef] | date: 'shortDate' }}</span
             >
             <ng-template #showData>{{ data[item?.headerDef] }}</ng-template>
           </td>

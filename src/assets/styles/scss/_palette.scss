@@ -1,7 +1,7 @@
 @each $colorName, $matColor in $material-colors {
   $color500: map-get($matColor, 500);
   $foreground500: map-get(map-get($matColor, contrast), 500);
-  .#{''+$colorName+''} {
+  .#{'' + $colorName + ''} {
     background-color: $color500 !important;
 
     // Material CDK Table
@@ -22,14 +22,14 @@
     }
   }
   // Text color
-  .text-#{''+$colorName+''} {
+  .text-#{'' + $colorName + ''} {
     color: $color500;
   }
   // Sidebar backgrounds
-  .sidebar-#{''+$colorName+''} {
+  .sidebar-#{'' + $colorName + ''} {
     .branding {
-        background: $color500 !important;
-        color: $foreground500 !important;
+      background: $color500 !important;
+      color: $foreground500 !important;
     }
     .navigation-hold {
       background: $color500 !important;
@@ -44,22 +44,18 @@
         color: $foreground500 !important;
       }
       a:hover {
-        background: rgba(darken($color500, 20), .2) !important;
+        background: rgba(darken($color500, 20), 0.2) !important;
       }
       .app-user .app-user-photo,
       .sidenav-hold .sidenav li.open a .mat-icon:not(.menu-caret) {
         border-color: $foreground500 !important;
       }
       .icon-menu .mat-raised-button {
-        background: rgba($color500, .96) !important;
-      }
-      .app-user {
-        // background: darken($color500, 5) !important;
+        background: rgba($color500, 0.96) !important;
       }
       li.open {
-        // background: rgba($color500, .3) !important;
         > a {
-          background: rgba(darken($color500, 20), .2) !important;
+          background: rgba(darken($color500, 20), 0.2) !important;
         }
       }
       .text-muted {
@@ -67,44 +63,32 @@
       }
     }
   }
-  // Header backgrounds
-  // .topbar-#{''+$colorName+''} {
-  //   .topbar.mat-toolbar {
-  //     background: $color500 !important;
-  //     color: $foreground500 !important;
-  //   }
-  // }
 
   // Footer background
-  .footer-#{''+$colorName+''} {
+  .footer-#{'' + $colorName + ''} {
     .main-footer {
       background: $color500 !important;
       color: $foreground500 !important;
     }
   }
 
-
   // Generate classes for each color shades
   $contrastMap: map-get($matColor, contrast);
   @each $shade, $value in $matColor {
     @if $shade == contrast {
-
-
     } @else {
-      .#{''+$colorName+''}-#{$shade} {
+      .#{'' + $colorName + ''}-#{$shade} {
         background-color: $value !important;
       }
       // Foreground text color
-      .#{''+$colorName+''}-#{$shade}-fg {
+      .#{'' + $colorName + ''}-#{$shade}-fg {
         color: map-get($contrastMap, $shade) !important;
       }
 
       // Text color
-      .text-#{''+$colorName+''}-#{$shade} {
+      .text-#{'' + $colorName + ''}-#{$shade} {
         color: $value !important;
       }
     }
-
   }
-
 }

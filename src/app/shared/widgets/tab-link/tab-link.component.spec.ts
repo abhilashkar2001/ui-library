@@ -8,9 +8,8 @@ describe('TabLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TabLinkComponent ]
-    })
-    .compileComponents();
+      declarations: [TabLinkComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TabLinkComponent);
     component = fixture.componentInstance;

@@ -13,6 +13,7 @@ export declare type QuickLinkTabs = QuickLinkTabModel[];
 export interface TabModel {
   screenName: string;
   route?: string;
+  key?: string;
   src: string;
   selectedSrc: string;
   icon: string;

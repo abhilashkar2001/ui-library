@@ -1,38 +1,38 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { beneficiaryConstant } from "./beneficiary.constant";
-import { BeneficiaryService } from "./beneficiary.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { beneficiaryConstant } from './beneficiary.constant';
+import { BeneficiaryService } from './beneficiary.service';
 
 @Component({
-  selector: "app-beneficiary-summary",
-  templateUrl: "./beneficiary-summary.component.html",
-  styleUrls: ["./beneficiary-summary.component.scss"]
+  selector: 'app-beneficiary-summary',
+  templateUrl: './beneficiary-summary.component.html',
+  styleUrls: ['./beneficiary-summary.component.scss'],
 })
 export class BeneficiarySummaryComponent implements OnInit {
   columns: any = beneficiaryConstant.BENEFICIARY_SUMMARY;
   sort: any;
-  size: number = 5;
+  size = 5;
   sortOrder: any;
-  page: number = 1;
-  pageSize: number = 5;
-  sortValue = "";
-  sortDirection = "";
+  page = 1;
+  pageSize = 5;
+  sortValue = '';
+  sortDirection = '';
   filterBy: FilterBy | any;
-  filterValue = "";
-  searchValue = "";
+  filterValue = '';
+  searchValue = '';
   module: any;
   beneficiaryData: Object | any;
 
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private benificiaryApi: BeneficiaryService
+    private benificiaryApi: BeneficiaryService,
   ) {}
 
   ngOnInit(): void {}
   CustomGoBack() {
-    this.route.navigate(["/user/trade/dashboard"]);
+    this.route.navigate(['/user/trade/dashboard']);
   }
   getDataByPage(event: any) {
     this.page = event.page;
@@ -48,7 +48,7 @@ export class BeneficiarySummaryComponent implements OnInit {
         event.page,
         event.size,
         this.sortValue,
-        event.direction
+        event.direction,
       )
       .subscribe((res) => {
         this.beneficiaryData = res;
@@ -62,28 +62,28 @@ export class BeneficiarySummaryComponent implements OnInit {
       page: this.page,
       size: this.pageSize,
       sort: this.sortValue,
-      direction: this.sortDirection
+      direction: this.sortDirection,
     };
     this.getDataByPage(payload);
   }
 
   openPopUp(event: any) {
     const id = event.element;
-    if (id === "addNew") {
+    if (id === 'addNew') {
       this.route.navigate([`../add-edit-beneficiary`], {
-        relativeTo: this.activatedRoute
+        relativeTo: this.activatedRoute,
       });
     } else {
       const id = event.element;
 
       this.route.navigate([`../add-edit-beneficiary`], {
         relativeTo: this.activatedRoute,
-        queryParams: { isEdit: "Yes", id: id.id }
+        queryParams: { isEdit: 'Yes', id: id.id },
       });
       console.log(id?.id);
     }
-    if (id === "bulk") {
-      this.route.navigate([`user/dashboard/trade/bulk-upload`, "addNew"]);
+    if (id === 'bulk') {
+      this.route.navigate([`user/dashboard/trade/bulk-upload`, 'addNew']);
     }
   }
 }

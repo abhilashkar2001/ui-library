@@ -8,9 +8,8 @@ describe('ReusableAlertPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReusableAlertPopupComponent ]
-    })
-    .compileComponents();
+      declarations: [ReusableAlertPopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReusableAlertPopupComponent);
     component = fixture.componentInstance;

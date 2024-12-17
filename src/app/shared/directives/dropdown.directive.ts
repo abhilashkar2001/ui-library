@@ -1,9 +1,9 @@
-import { Directive } from "@angular/core";
-import { Router } from "@angular/router";
-import { DropdownLinkDirective } from "./dropdown-link.directive";
+import { Directive } from '@angular/core';
+import { Router } from '@angular/router';
+import { DropdownLinkDirective } from './dropdown-link.directive';
 
 @Directive({
-  selector: "[appDropdown]"
+  selector: '[appDropdown]',
 })
 export class AppDropdownDirective {
   protected navlinks: Array<DropdownLinkDirective> = [];
@@ -30,8 +30,6 @@ export class AppDropdownDirective {
   public getUrl() {
     return this.router.url;
   }
-
-  public ngOnInit(): any {}
 
   constructor(private router: Router) {}
 }

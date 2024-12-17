@@ -1,7 +1,7 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: "searchOptions",
+  name: 'searchOptions',
 })
 export class SearchOptionsPipe implements PipeTransform {
   transform(items: any[], filter: string): any {
@@ -23,10 +23,10 @@ export class SearchOptionsPipe implements PipeTransform {
         item?.display
           ?.toString()
           ?.toLowerCase()
-          ?.startsWith(filter?.toLowerCase())
+          ?.startsWith(filter?.toLowerCase()),
     );
     if (filteredItems.length === 0) {
-      return [{ label: "No data found", value: null, disabled: true }];
+      return [{ label: 'No data found', value: null, disabled: true }];
     }
 
     return filteredItems;

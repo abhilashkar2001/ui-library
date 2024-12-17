@@ -7,5 +7,12 @@ export interface Account {
   customerName: string;
   currencyCode: string;
   branchName: string;
-  accountBalance: any;
+  accountBalance: number;
+}
+
+export interface ACCNUMLIST {
+  accountBalance?: number;
+  accountCurrency?: undefined;
+  accountBranch?: string;
+  accountNo?: number;
 }

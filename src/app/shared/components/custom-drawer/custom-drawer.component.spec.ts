@@ -8,9 +8,8 @@ describe('CustomDrawerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomDrawerComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomDrawerComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomDrawerComponent);
     component = fixture.componentInstance;

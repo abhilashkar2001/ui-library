@@ -1,57 +1,57 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-import { LoanService } from "app/shared/services/loan/loan.service";
-import { debounceTime } from "rxjs/operators";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
-import { Subscription } from "rxjs";
-import { DataService } from "app/shared/services/table-service/data.service";
+  Validators,
+} from '@angular/forms';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { debounceTime } from 'rxjs/operators';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { DataService } from 'app/shared/services/table-service/data.service';
 
 @Component({
-  selector: "app-common-emi-calculator",
-  templateUrl: "./common-emi-calculator.component.html",
-  styleUrls: ["./common-emi-calculator.component.scss"]
+  selector: 'app-common-emi-calculator',
+  templateUrl: './common-emi-calculator.component.html',
+  styleUrls: ['./common-emi-calculator.component.scss'],
 })
 export class CommonEmiCalculatorComponent implements OnInit {
   max = 1000000;
   min = 10000;
-  maxValue: number = 0;
-  minValue: number = 0;
+  maxValue = 0;
+  minValue = 0;
   ammountValue = 0;
   loanForm!: FormGroup | any;
-  @Input() fdName = "rdCalculator";
+  @Input() fdName = 'rdCalculator';
   @Input() calculatorInfo = {};
   @Output() customCalculatorValues = new EventEmitter<any>();
-  amount = new FormControl("");
-  email = new FormControl("");
+  amount = new FormControl('');
+  email = new FormControl('');
   thumbLabel: boolean | any = true;
-  currencySymboll = "₹";
+  currencySymboll = '₹';
   productDetails: any;
-  interestPayble: number = 0;
-  totalPayableAmmount: number = 0;
+  interestPayble = 0;
+  totalPayableAmmount = 0;
   emiAmount: any = 0;
   interestDetails: any;
   otherUserInfo: any;
-  currency: any = "INR";
-  interestRate: number = 10.1;
+  currency: any = 'INR';
+  interestRate = 10.1;
   valueChangesSubscription: Subscription | any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
     private tokenStore: TokenStorageService,
-    private dataService: DataService
+    private dataService: DataService,
   ) {}
 
   ngOnInit(): void {
     this.cleanCache();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currency = this.otherUserInfo?.currency;
-    const basisId: any = sessionStorage.getItem("loanBasisDetails");
+    const basisId: any = sessionStorage.getItem('loanBasisDetails');
     this.getProductDetails(JSON.parse(basisId).basisId);
     setTimeout(() => {
       this.buildForm();
@@ -61,7 +61,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0].lendingParameters.find(
-          (el: any) => el.currency == this.otherUserInfo.currency
+          (el: any) => el.currency == this.otherUserInfo.currency,
         );
         this.min = this.productDetails.minimumAmount;
         this.max = this.productDetails.maximumAmount;
@@ -70,7 +70,7 @@ export class CommonEmiCalculatorComponent implements OnInit {
           0;
         this.minValue = Math.abs(
           this.interestRate - this.productDetails?.minRateVariancePercentage ||
-            0
+            0,
         );
       }
     });
@@ -92,10 +92,10 @@ export class CommonEmiCalculatorComponent implements OnInit {
       Number(this.ammountValue) == 0 ||
       Number(this.ammountValue) < this.min
     ) {
-      this.loanForm.get("amount").setValue(this.min);
+      this.loanForm.get('amount').setValue(this.min);
       return;
     }
-    this.loanForm.get("amount").setValue(e.srcElement.ariaValueText);
+    this.loanForm.get('amount').setValue(e.srcElement.ariaValueText);
   }
 
   ngOnDestroy(): void {
@@ -107,10 +107,10 @@ export class CommonEmiCalculatorComponent implements OnInit {
   buildForm() {
     this.loanForm = this.fb.group({
       amount: [this.min],
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      interestRate: [this.interestRate, [Validators.required]]
+      tenureYear: '',
+      tenureMonth: '',
+      tenureDays: '',
+      interestRate: [this.interestRate, [Validators.required]],
     });
 
     this.valueChangesSubscription = this.loanForm.valueChanges
@@ -126,18 +126,18 @@ export class CommonEmiCalculatorComponent implements OnInit {
           this.calculateTenure(
             parseInt(this.loanForm.value.tenureYear) || 0,
             parseInt(this.loanForm.value.tenureMonth) || 0,
-            parseInt(this.loanForm.value.tenureDays) || 0
+            parseInt(this.loanForm.value.tenureDays) || 0,
           ).then((result) => {
             const payload = {
               principleAmount: parseInt(this.loanForm.value.amount),
               interestRate: parseFloat(this.loanForm.value.interestRate),
               numberOfMonths: result,
-              firstRepaymentDate: moment(new Date()).format("DD-MM-YYYY")
+              firstRepaymentDate: moment(new Date()).format('DD-MM-YYYY'),
             };
             this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
               this.interestPayble = Math.round(resp.data.totalInterest);
               this.totalPayableAmmount = Math.round(
-                resp.data.totalRepaymentAmount
+                resp.data.totalRepaymentAmount,
               );
               this.emiAmount = Math.round(resp.data.monthlyPayment);
             });
@@ -170,14 +170,14 @@ export class CommonEmiCalculatorComponent implements OnInit {
     ) {
       return;
     }
-    sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
-    sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
-    sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
+    sessionStorage.setItem('tenureDays', this.loanForm.value.tenureDays);
+    sessionStorage.setItem('tenureYear', this.loanForm.value.tenureYear);
+    sessionStorage.setItem('tenureMonth', this.loanForm.value.tenureMonth);
     const obj = {
       ...this.loanForm.value,
       interestPayable: this.interestPayble,
       totalPayableAmount: this.totalPayableAmmount,
-      emiAmount: this.emiAmount
+      emiAmount: this.emiAmount,
     };
     this.customCalculatorValues.emit(obj);
     this.loanForm.reset();
@@ -186,47 +186,47 @@ export class CommonEmiCalculatorComponent implements OnInit {
   calculateTotalDays(
     loanTenureYear: any,
     loanTenureMonth: any,
-    loanTenureDay: any
+    loanTenureDay: any,
   ) {
     const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
     return d;
   }
 
   get validateMinimumTenure() {
-    let totalDays = this.calculateTotalDays(
+    const totalDays = this.calculateTotalDays(
       this.loanForm.value.tenureYear || 0,
       this.loanForm.value.tenureMonth || 0,
-      this.loanForm.value.tenureDays || 0
+      this.loanForm.value.tenureDays || 0,
     );
-    let MinimumAllowedDays = this.calculateTotalDays(
+    const MinimumAllowedDays = this.calculateTotalDays(
       this.productDetails?.minimumTenorYear || 0,
       this.productDetails?.minimumTenorMonth || 0,
-      this.productDetails?.minimumTenorDay || 0
+      this.productDetails?.minimumTenorDay || 0,
     );
     return totalDays <= MinimumAllowedDays;
   }
 
   get validateTenure() {
-    let totalDays = this.calculateTotalDays(
+    const totalDays = this.calculateTotalDays(
       this.loanForm.value.tenureYear || 0,
       this.loanForm.value.tenureMonth || 0,
-      this.loanForm.value.tenureDays || 0
+      this.loanForm.value.tenureDays || 0,
     );
-    let totalAllowedDays = this.calculateTotalDays(
+    const totalAllowedDays = this.calculateTotalDays(
       this.productDetails?.maximumTenorYear || 0,
       this.productDetails?.maximumTenorMonth || 0,
-      this.productDetails?.maximumTenorDay || 0
+      this.productDetails?.maximumTenorDay || 0,
     );
     return totalDays >= totalAllowedDays;
   }
 
   cleanCache() {
-    sessionStorage.removeItem("userCustomerId");
-    sessionStorage.removeItem("customerStageId");
-    sessionStorage.removeItem("customerId");
-    sessionStorage.removeItem("customerStageIds");
-    sessionStorage.removeItem("originationId");
-    sessionStorage.removeItem("otherDocScreenCode");
+    sessionStorage.removeItem('userCustomerId');
+    sessionStorage.removeItem('customerStageId');
+    sessionStorage.removeItem('customerId');
+    sessionStorage.removeItem('customerStageIds');
+    sessionStorage.removeItem('originationId');
+    sessionStorage.removeItem('otherDocScreenCode');
     this.dataService.removeChecklistDocument();
     this.dataService.removeDisbursementDetails();
   }

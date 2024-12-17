@@ -62,7 +62,7 @@
           justify-content: center;
           text-align: center;
           object-fit: cover;
-          font-family: "Poppins", sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 29px;
           font-weight: 600;
           letter-spacing: 0px;
@@ -73,7 +73,7 @@
       .details_div {
         #name {
           font-size: 20px;
-          font-family: "Raleway", sans-serif;
+          font-family: 'Raleway', sans-serif;
           font-weight: 700;
         }
         .ref_no_div {
@@ -85,7 +85,7 @@
           align-items: center;
           padding: 10px;
           .ref_no {
-            font-family: "Poppins", sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 16px;
             color: #00205c;
@@ -101,7 +101,7 @@
         .summary_pallet {
           .summary_heading {
             text-align: left;
-            font-family: "Poppins", sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 19px;
             font-weight: 700;
             letter-spacing: 0px;
@@ -114,14 +114,14 @@
           .summary_contain {
             .label {
               color: #606c8d;
-              font-family: "Raleway", sans-serif;
+              font-family: 'Raleway', sans-serif;
               font-size: 13px;
               font-weight: 700;
             }
             .labelval {
               color: #2f2f2f;
               font-size: 15px;
-              font-family: "Poppins", sans-serif;
+              font-family: 'Poppins', sans-serif;
               font-weight: 800;
               padding-left: 2px;
               padding-bottom: 10px;
@@ -143,7 +143,7 @@
       }
     }
     .footer_contain {
-      font-family: "Poppins";
+      font-family: 'Poppins';
       font-size: 12px;
     }
   }

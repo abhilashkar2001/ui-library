@@ -8,7 +8,7 @@
     <button (click)="goBack()" mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <label class="text-large">{{ "Benificiary Maintenance" }}</label>
+    <label class="text-large">{{ 'Benificiary Maintenance' }}</label>
   </div>
 </div>
 
@@ -32,7 +32,7 @@
           *ngIf="
             benificiaryDetailsForm.get('accountNo').value && accountNumberExists
           "
-          >{{ "Account Number Already Exists" }}</mat-error
+          >{{ 'Account Number Already Exists' }}</mat-error
         >
       </div>
       <div fxFlex="22">
@@ -54,7 +54,7 @@
               benificiaryDetailsForm.get('confirmAccountNumber').value
           "
         >
-          {{ "Please enter correct Account Number" }}</mat-error
+          {{ 'Please enter correct Account Number' }}</mat-error
         >
       </div>
       <mat-form-field
@@ -89,7 +89,7 @@
           class="middleAlign"
           fxLayoutAlign="space-between start"
         >
-          <h4 class="mb-1 toggleText">{{ "Account" }}</h4>
+          <h4 class="mb-1 toggleText">{{ 'Account' }}</h4>
           <mat-radio-group
             class="full-width"
             fxLayout="row"
@@ -193,7 +193,7 @@
           class="middleAlign"
           fxLayoutAlign="space-between start"
         >
-          <h4 class="mb-1 toggleText">{{ "Benificiary Status" }}</h4>
+          <h4 class="mb-1 toggleText">{{ 'Benificiary Status' }}</h4>
           <mat-radio-group
             class="full-width"
             fxLayout="row"
@@ -235,7 +235,7 @@
         *ngIf="isEdit && !saveTheEdit"
         mat-raised-button
       >
-        {{ "Edit" }}
+        {{ 'Edit' }}
       </button>
     </div>
     <button-loading
@@ -252,7 +252,7 @@
         (click)="goBack()"
         mat-raised-button
       >
-        {{ "Cancel" }}
+        {{ 'Cancel' }}
       </button>
     </div>
   </div>

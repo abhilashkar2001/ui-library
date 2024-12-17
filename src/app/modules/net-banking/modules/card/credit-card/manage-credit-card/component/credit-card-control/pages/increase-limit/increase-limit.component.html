@@ -52,10 +52,10 @@
       <mat-divider></mat-divider>
       <span class="otp-Disclamer"
         >{{
-          "You will receive an OTP on your registered mobile number" | translate
+          'You will receive an OTP on your registered mobile number' | translate
         }}
         *******{{ fourDigitNo }} /
-        {{ "email ID. Please enter the same to continue." | translate }}</span
+        {{ 'email ID. Please enter the same to continue.' | translate }}</span
       >
       <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
         <div fxFlex="75" fxLayoutGap="10">
@@ -68,13 +68,13 @@
             </mat-form-field>
           </div>
           <span class="gray-text" fxLayoutAlign="center center">{{
-            "Didn’t receive the OTP?" | translate
+            'Didn’t receive the OTP?' | translate
           }}</span>
           <span
             class="resend-btn"
             fxLayoutAlign="center center"
             (click)="proceedToOtp()"
-            >{{ "Resend Code" | translate }}</span
+            >{{ 'Resend Code' | translate }}</span
           >
         </div>
         <div>

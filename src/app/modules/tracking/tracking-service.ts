@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class TrackingService {
   baseUrl = environment.microServiceURL;
@@ -11,7 +11,7 @@ export class TrackingService {
 
   getOtp(phoneNumber: number) {
     return this.http.get<any>(
-      `${this.baseUrl}/auth/generateOTP?mobile=${phoneNumber}`
+      `${this.baseUrl}/auth/generateOTP?mobile=${phoneNumber}`,
     );
   }
   verifyOtp(otpObject: any) {
@@ -19,7 +19,7 @@ export class TrackingService {
   }
 
   getProductList(mobile: any, filterItem: any) {
-    let endPoint = "";
+    let endPoint = '';
     if (filterItem)
       Object.keys(filterItem).forEach((item) => {
         if (filterItem[item]) {
@@ -27,28 +27,28 @@ export class TrackingService {
         }
       });
     return this.http.get<any>(
-      `${this.baseUrl}/origination-matser/fetchByMobile?mobileNumber=${mobile}${endPoint}`
+      `${this.baseUrl}/origination-matser/fetchByMobile?mobileNumber=${mobile}${endPoint}`,
     );
   }
 
   getOriginationMaster(id: any) {
     return this.http.get<any>(
-      `${this.baseUrl}/origination-matser?originationId=${id}`
+      `${this.baseUrl}/origination-matser?originationId=${id}`,
     );
   }
   applicationDetails(applicationId: any) {
     return this.http.get<any>(
-      `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`
+      `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`,
     );
   }
   getLoanSummary(originationId: any) {
     return this.http.get(
-      `${this.baseUrl}/webSummary?originationId=${originationId}`
+      `${this.baseUrl}/webSummary?originationId=${originationId}`,
     );
   }
   getLoanDocument(originationId: any) {
     return this.http.get(
-      `${this.baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`
+      `${this.baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
     );
   }
 }

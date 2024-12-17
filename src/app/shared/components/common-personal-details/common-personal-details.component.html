@@ -34,7 +34,7 @@
                         type="text"
                         formControlName="customerNo"
                         name="customerNo"
-                        specialIsAlphaNumeric
+                        appSpecialIsAlphaNumeric
                         maxlength="20"
                       />
                     </mat-form-field>
@@ -182,8 +182,8 @@
                       <mat-label>Email</mat-label>
                       <input
                         matInput
-                        noInitialSpecialCharacters
-                        noSpace
+                        appNoInitialSpecialCharacters
+                        appNoSpace
                         [disabled]="!customerDetailsForm.valid"
                         [formControl]="
                           customer.get('contact')?.get('email') | formcontrol
@@ -255,7 +255,7 @@
                               customer.get('contact')?.get('mobile')
                                 | formcontrol
                             "
-                            numbersOnly
+                            appNumbersOnly
                             [maxlength]="maxMobileLength"
                             placeholder="Mobile Number"
                             [readonly]="
@@ -392,7 +392,7 @@
                             type="text"
                             formControlName="address1"
                             name="address1"
-                            noInitialSpecialCharacters
+                            appNoInitialSpecialCharacters
                           />
                           <mat-error
                             *ngIf="
@@ -452,7 +452,7 @@
                             type="text"
                             formControlName="pincode"
                             name="pincode"
-                            numbersOnly
+                            appNumbersOnly
                             maxlength="10"
                           />
                           <mat-icon
@@ -551,10 +551,10 @@
     </div>
   </form>
 
-  <div *ngIf="!isHideField && holderType == 'joint'">
+  <div *ngIf="!isHideField && holderType === 'joint'">
     <div
       class="add_applicant"
-      (click)="holderType == 'joint' && addCustomer(customer.controls.length)"
+      (click)="holderType === 'joint' && addCustomer(customer.controls.length)"
     >
       Add Another Applicant
     </div>

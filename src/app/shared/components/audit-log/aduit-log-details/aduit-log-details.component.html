@@ -34,46 +34,46 @@
         <td class="col">{{ auditLogDataObject?.lastUpdatedBy }}</td>
 
         <td class="col">
-          {{ auditLogDataObject?.lastUpdated | date : "dd MMM yyyy | HH:mm" }}
+          {{ auditLogDataObject?.lastUpdated | date: 'dd MMM yyyy | HH:mm' }}
         </td>
         <td class="col">{{ auditLogDataObject?.action }}</td>
         <td
           [ngClass]="[
-            auditLogDataObject?.authStatus == 'AUTHORIZED'
+            auditLogDataObject?.authStatus === 'AUTHORIZED'
               ? 'higlightApprove'
               : '',
-            auditLogDataObject?.authStatus == 'UNAUTHORIZED'
+            auditLogDataObject?.authStatus === 'UNAUTHORIZED'
               ? 'higlightUnapprove'
-              : ''
+              : '',
           ]"
         >
           {{
-            auditLogDataObject?.authStatus === "AUTHORIZED"
-              ? "Approved"
-              : "Unapproved"
+            auditLogDataObject?.authStatus === 'AUTHORIZED'
+              ? 'Approved'
+              : 'Unapproved'
           }}
         </td>
         <td class="col">
           <div
             [ngClass]="[
-              auditLogDataObject?.recordStatus == 'OPEN'
+              auditLogDataObject?.recordStatus === 'OPEN'
                 ? 'higlightActive alignStatus'
                 : '',
 
-              auditLogDataObject?.recordStatus == 'CLOSE'
+              auditLogDataObject?.recordStatus === 'CLOSE'
                 ? 'higlightInactive alignStatus'
-                : ''
+                : '',
             ]"
           >
             {{
-              auditLogDataObject?.recordStatus === "OPEN"
-                ? "Active"
-                : "Inactive"
+              auditLogDataObject?.recordStatus === 'OPEN'
+                ? 'Active'
+                : 'Inactive'
             }}
           </div>
         </td>
         <td class="col">
-          {{ auditLogDataObject?.oneTimeAuth == "Y" ? "Yes" : "No" }}
+          {{ auditLogDataObject?.oneTimeAuth === 'Y' ? 'Yes' : 'No' }}
         </td>
         <td class="col">{{ auditLogDataObject?.revisionNumber }}</td>
         <td class="col" *ngIf="auditlogHistory?.length > 2"></td>

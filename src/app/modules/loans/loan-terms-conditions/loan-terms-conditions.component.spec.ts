@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { TermsConditionsComponent } from "app/shared/components/terms-conditions/terms-conditions.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TermsConditionsComponent } from 'app/shared/components/terms-conditions/terms-conditions.component';
 
-describe("TermsConditionsComponent", () => {
+describe('TermsConditionsComponent', () => {
   let component: TermsConditionsComponent;
   let fixture: ComponentFixture<TermsConditionsComponent>;
 
@@ -14,7 +14,7 @@ describe("TermsConditionsComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

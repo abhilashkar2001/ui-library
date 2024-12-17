@@ -8,9 +8,8 @@ describe('ReusableFavouritiesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReusableFavouritiesComponent ]
-    })
-    .compileComponents();
+      declarations: [ReusableFavouritiesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReusableFavouritiesComponent);
     component = fixture.componentInstance;

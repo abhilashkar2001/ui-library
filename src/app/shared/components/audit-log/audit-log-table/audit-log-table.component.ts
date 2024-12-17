@@ -3,18 +3,18 @@ import {
   Input,
   OnInit,
   SimpleChanges,
-  ViewChild
-} from "@angular/core";
+  ViewChild,
+} from '@angular/core';
 
-import { AduitLogDetailsComponent } from "../aduit-log-details/aduit-log-details.component";
-import { DataService } from "app/shared/services/table-service/data.service";
-import { AuditLogPopupComponent } from "../audit-log-popup/audit-log-popup.component";
-import { MatDialog } from "@angular/material/dialog";
+import { AduitLogDetailsComponent } from '../aduit-log-details/aduit-log-details.component';
+import { DataService } from 'app/shared/services/table-service/data.service';
+import { AuditLogPopupComponent } from '../audit-log-popup/audit-log-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-audit-log-table",
-  templateUrl: "./audit-log-table.component.html",
-  styleUrls: ["./audit-log-table.component.scss"]
+  selector: 'app-audit-log-table',
+  templateUrl: './audit-log-table.component.html',
+  styleUrls: ['./audit-log-table.component.scss'],
 })
 export class AuditLogTableComponent implements OnInit {
   @Input() columns: any;
@@ -28,7 +28,10 @@ export class AuditLogTableComponent implements OnInit {
   auditLogData: any[] = [];
   auditLogDataObject: any;
 
-  constructor(private dialog: MatDialog, private dataService: DataService) {}
+  constructor(
+    private dialog: MatDialog,
+    private dataService: DataService,
+  ) {}
 
   ngOnInit(): void {
     this.dataService.getClickEvent().subscribe(() => {
@@ -48,41 +51,41 @@ export class AuditLogTableComponent implements OnInit {
   }
 
   getSortedHistory() {
-    var array = this.auditLogDataObject?.data;
-    var childArray: any = [];
+    const array = this.auditLogDataObject?.data;
+    const childArray: any = [];
     !!array?.data.length &&
       array?.data?.forEach((element: any) => {
-        let obj = {
+        const obj = {
           ...element[0],
-          action: element[2] == "MOD" ? "Modified" : "New"
+          action: element[2] == 'MOD' ? 'Modified' : 'New',
         };
         childArray.push(obj);
       });
     childArray.sort(
-      (a: any, b: any) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated)
+      (a: any, b: any) => Date.parse(b.lastUpdated) - Date.parse(a.lastUpdated),
     );
 
     return childArray;
   }
 
   customExpand(event: any) {
-    if (event.action === "dialog") {
+    if (event.action === 'dialog') {
       this.dialog.open(AuditLogPopupComponent, {
         data: {
           isShowCancel: true,
           dummyData: this.auditlogHistory,
           columns: this.columns,
-          auditInfo: { ...this.auditInfo, page: 1, pageSize: 5 }
+          auditInfo: { ...this.auditInfo, page: 1, pageSize: 5 },
         },
         disableClose: true,
-        height: "450px",
-        width: "80%",
-        panelClass: "auditLogClass",
-        backdropClass: "auditLog-backdrop"
+        height: '450px',
+        width: '80%',
+        panelClass: 'auditLogClass',
+        backdropClass: 'auditLog-backdrop',
       });
     }
   }
-  getAuditHistory(data: any = "") {
+  getAuditHistory(data: any = '') {
     this.childComponent.getAuditDetails(data);
   }
 }

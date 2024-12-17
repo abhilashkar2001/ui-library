@@ -8,9 +8,8 @@ describe('IcCustomPayFromComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IcCustomPayFromComponent ]
-    })
-    .compileComponents();
+      declarations: [IcCustomPayFromComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IcCustomPayFromComponent);
     component = fixture.componentInstance;

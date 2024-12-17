@@ -5,7 +5,7 @@
   background-color: #f2f7ff;
 }
 .customCheckBox {
-  font-family: "Raleway" !important;
+  font-family: 'Raleway' !important;
   font-size: small !important;
   font-weight: 600 !important;
 }
@@ -39,7 +39,7 @@ img.info_icon {
       visibility 0.28s;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 3px;
       left: 21px;
@@ -54,12 +54,12 @@ img.info_icon {
       color: #fff;
       display: flex;
       align-items: center;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
     }
     .content_list {
       margin-bottom: 0;
       opacity: 0.75;
-      font-family: "Work Sans", sans-serif;
+      font-family: 'Work Sans', sans-serif;
     }
   }
   &:hover + .info_content_container {
@@ -73,7 +73,7 @@ img.info_icon {
   margin: 0;
   .add_content {
     text-align: left;
-    font-family: "Work Sans", sans-serif;
+    font-family: 'Work Sans', sans-serif;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0px;

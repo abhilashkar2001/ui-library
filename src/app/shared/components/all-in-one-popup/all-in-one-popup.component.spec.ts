@@ -8,9 +8,8 @@ describe('AllInOnePopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllInOnePopupComponent ]
-    })
-    .compileComponents();
+      declarations: [AllInOnePopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AllInOnePopupComponent);
     component = fixture.componentInstance;

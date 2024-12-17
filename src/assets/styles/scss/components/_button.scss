@@ -31,7 +31,9 @@
     border-top-color: #777676;
   }
   100% {
-    box-shadow: 0 0 0 0.4em darken(#777676, 10%), 0 0 0 3.6em transparent;
+    box-shadow:
+      0 0 0 0.4em darken(#777676, 10%),
+      0 0 0 3.6em transparent;
   }
 }
 .button {
@@ -67,9 +69,9 @@
   border-radius: 8px;
   background: var(--current-theme-background) !important;
   color: white !important;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 
-  &[disabled="true"] {
+  &[disabled='true'] {
     background-color: #d6d6d6 !important;
   }
 }
@@ -78,9 +80,9 @@
   height: 43px !important;
   border-radius: 8px;
   border: 1px solid #00205c !important;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 
-  &[disabled="true"] {
+  &[disabled='true'] {
     background-color: #d6d6d6 !important;
   }
 }

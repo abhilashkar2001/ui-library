@@ -15,7 +15,7 @@
     <div fxFlex="32.33" fxLayout="row" class="Select_add">
       <div fxFlex="85" fxLayout="row" class="selection_left">
         <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
-          <mat-label class="label_input">{{ "Title" }}</mat-label>
+          <mat-label class="label_input">{{ 'Title' }}</mat-label>
           <mat-select
             (selectionChange)="titleChange($event)"
             appearance="outline"
@@ -28,7 +28,7 @@
             }}</mat-option>
           </mat-select>
           <mat-error *ngIf="title.controls['title'].hasError('titleError')">
-            {{ "Title is already present" }}</mat-error
+            {{ 'Title is already present' }}</mat-error
           >
         </mat-form-field>
       </div>
@@ -50,7 +50,7 @@
 
     <div fxFlex="32.33" fxLayout="row" class="Select_add">
       <mat-form-field fxFlex="100" class="borderColor" appearance="outline">
-        <mat-label class="label_input">{{ "Title Description" }}</mat-label>
+        <mat-label class="label_input">{{ 'Title Description' }}</mat-label>
         <input matInput formControlName="titleDescription" />
       </mat-form-field>
     </div>
@@ -74,15 +74,15 @@
                 fxFlex="100"
                 class="uploaded_file"
                 >{{
-                  control.get("fileName").value
-                    ? control.get("fileName").value.split("_")[1]
-                    : ""
+                  control.get('fileName').value
+                    ? control.get('fileName').value.split('_')[1]
+                    : ''
                 }}</span
               >
             </div>
             <ng-template #showDefault>
               <span class="fileName" class="fileUploaded">{{
-                "File Upload(Max file size 3MB)"
+                'File Upload(Max file size 3MB)'
               }}</span>
             </ng-template>
           </div>

@@ -8,9 +8,8 @@ describe('CommmonSteeperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommmonSteeperComponent ]
-    })
-    .compileComponents();
+      declarations: [CommmonSteeperComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommmonSteeperComponent);
     component = fixture.componentInstance;

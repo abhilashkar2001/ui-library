@@ -1,19 +1,19 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { AbstractControl, FormControl } from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
-  selector: "app-ic-row-input",
-  templateUrl: "./ic-row-input.component.html",
-  styleUrls: ["./ic-row-input.component.scss"]
+  selector: 'app-ic-row-input',
+  templateUrl: './ic-row-input.component.html',
+  styleUrls: ['./ic-row-input.component.scss'],
 })
 export class IcRowInputComponent implements OnInit {
-  @Input("control") control: AbstractControl | any = new FormControl("");
-  @Input("inputLabel") inputLabel: string | any;
-  @Input("type") type: string | any;
-  @Input("items") items: any[] | any;
-  @Input("bindLabelKey") bindLabelKey: string | any;
-  @Input("bindValueKey") bindValueKey: string | any;
-  @Input("readonly") readonly: boolean | any;
+  @Input() control: AbstractControl | any = new FormControl('');
+  @Input() inputLabel: string | any;
+  @Input() type: string | any;
+  @Input() items: any[] | any;
+  @Input() bindLabelKey: string | any;
+  @Input() bindValueKey: string | any;
+  @Input() readonly: boolean | any;
 
   constructor() {}
 

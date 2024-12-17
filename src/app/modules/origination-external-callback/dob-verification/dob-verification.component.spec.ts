@@ -8,9 +8,8 @@ describe('DobVerificationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DobVerificationComponent ]
-    })
-    .compileComponents();
+      declarations: [DobVerificationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DobVerificationComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
-import { ModuleWithProviders, NgModule } from "@angular/core";
-import { InputMaskConfig, INPUT_MASK_CONFIG } from "./config";
-import { InputMaskDirective } from "./input-mask.directive";
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { InputMaskConfig, INPUT_MASK_CONFIG } from './config';
+import { InputMaskDirective } from './input-mask.directive';
 
 @NgModule({
   declarations: [InputMaskDirective],
@@ -14,7 +14,7 @@ import { InputMaskDirective } from "./input-mask.directive";
 })
 export class InputMaskModule {
   static forRoot(
-    config?: Partial<InputMaskConfig>
+    config?: Partial<InputMaskConfig>,
   ): ModuleWithProviders<InputMaskModule> {
     return {
       ngModule: InputMaskModule,

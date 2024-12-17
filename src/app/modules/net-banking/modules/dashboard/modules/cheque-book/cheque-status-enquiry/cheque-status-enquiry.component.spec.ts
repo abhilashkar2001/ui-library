@@ -8,9 +8,8 @@ describe('ChequeStatusEnquiryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChequeStatusEnquiryComponent ]
-    })
-    .compileComponents();
+      declarations: [ChequeStatusEnquiryComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChequeStatusEnquiryComponent);
     component = fixture.componentInstance;

@@ -8,10 +8,6 @@ import { Observable } from 'rxjs';
 export class SearchService {
   public searchTerm: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchTerm$: Observable<string> = this.searchTerm.asObservable();
-
-  constructor() {
-
-  }
   private refresh = new BehaviorSubject(false);
   isRefresh = this.refresh.asObservable();
 }

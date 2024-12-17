@@ -1,30 +1,30 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { ConvertEmiStore } from "./convert-emi.store";
-import { CardService } from "../../../../card.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { ConvertEmiStore } from './convert-emi.store';
+import { CardService } from '../../../../card.service';
 import {
   cardTransactionDetails,
-  TransactionDetail
-} from "app/shared/models/emi-converter.model";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import * as moment from "moment";
-import { TokenStorageService } from "app/shared/token-storage.service";
+  TransactionDetail,
+} from 'app/shared/models/emi-converter.model';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import * as moment from 'moment';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-convert-to-emi",
-  templateUrl: "./convert-to-emi.component.html",
-  styleUrls: ["./convert-to-emi.component.scss"]
+  selector: 'app-convert-to-emi',
+  templateUrl: './convert-to-emi.component.html',
+  styleUrls: ['./convert-to-emi.component.scss'],
 })
 export class ConvertToEmiComponent implements OnInit {
   convertEmiForm!: FormGroup;
   listOfAccounts: string[] = [];
-  currencyCode: string = "";
+  currencyCode = '';
   notes = ConvertEmiStore.notes;
   viewColumnData = ConvertEmiStore.transactionDetailsHeaders;
   transactionDetails: TransactionDetail[] = [];
-  totalTransactionAmount: number = 0;
+  totalTransactionAmount = 0;
   customerId: number | any;
   corporateId: string | any;
   constructor(
@@ -32,7 +32,7 @@ export class ConvertToEmiComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private router: Router,
     private emiService: CardService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class ConvertToEmiComponent implements OnInit {
   // Build the form group for EMI conversion
   private buildEmiForm(): void {
     this.convertEmiForm = this.formBuilder.group({
-      cardNumber: [""]
+      cardNumber: [''],
     });
   }
 
@@ -85,14 +85,14 @@ export class ConvertToEmiComponent implements OnInit {
       cardNumber: item?.cardFundTransfer?.cardDetails?.cardNumber,
       cardId: item?.cardFundTransfer?.cardDetails?.id,
       nameOnCard: item?.cardFundTransfer?.cardDetails?.nameOnCard,
-      maturityDate: item?.cardFundTransfer?.cardDetails?.dueDate
+      maturityDate: item?.cardFundTransfer?.cardDetails?.dueDate,
     }));
   }
 
   // Navigate to the EMI calculation route
   proceed(): void {
     const selectedTransactions = this.transactionDetails.filter(
-      (item) => item.convertToEmi
+      (item) => item.convertToEmi,
     );
     const noOfElements = selectedTransactions.length;
 
@@ -105,12 +105,12 @@ export class ConvertToEmiComponent implements OnInit {
         cardNumber: selectedTransactions[0]?.cardNumber,
         cardId: selectedTransactions[0]?.cardId,
         nameOnCard: selectedTransactions[0]?.nameOnCard,
-        maturityDate: moment(maturityDateString, "DD-MMM-YYYY").isValid()
-          ? moment(maturityDateString, "DD-MMM-YYYY").format("YYYY-MM-DD")
-          : ""
+        maturityDate: moment(maturityDateString, 'DD-MMM-YYYY').isValid()
+          ? moment(maturityDateString, 'DD-MMM-YYYY').format('YYYY-MM-DD')
+          : '',
       };
-      this.router.navigate(["/card/credit-card/service/calculate-emi"], {
-        state: payload
+      this.router.navigate(['/card/credit-card/service/calculate-emi'], {
+        state: payload,
       });
     }
   }

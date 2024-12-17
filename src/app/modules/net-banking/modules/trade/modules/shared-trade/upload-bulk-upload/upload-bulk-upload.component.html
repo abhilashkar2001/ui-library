@@ -7,8 +7,8 @@
             <div fxFlex="35" *ngIf="screenName === 'beneficiary' || screenName">
               <h2>
                 {{
-                  screenName === "beneficiary"
-                    ? "Beneficiary Upload"
+                  screenName === 'beneficiary'
+                    ? 'Beneficiary Upload'
                     : screenName
                 }}
               </h2>
@@ -23,7 +23,7 @@
                   class="full-width fieldinput"
                 >
                   <mat-label class="custom-mat-label">
-                    {{ "Product Type" }}
+                    {{ 'Product Type' }}
                   </mat-label>
                   <mat-select
                     name="productTYpe"
@@ -73,7 +73,7 @@
                   (click)="downloadTemplate($event)"
                   class="verify-btn mt-0"
                 >
-                  {{ "Download Template" }}
+                  {{ 'Download Template' }}
                 </button>
               </div>
             </ng-container>
@@ -88,7 +88,7 @@
           fxLayoutAlign="center center"
           class="w-100 p-16 file-upload"
           appDragDrop
-          (onFileDropped)="droppedFiles($event)"
+          (FileDropped)="droppedFiles($event)"
         >
           <img
             src="assets/images/upload-logo.svg"
@@ -97,12 +97,12 @@
             (click)="file.click()"
           />
           <span class="HeadingForUpload"
-            >{{ "Drag and Drop files here or" }}
+            >{{ 'Drag and Drop files here or' }}
             <span class="chooseFiles" (click)="file.click()">{{
-              "Choose file"
+              'Choose file'
             }}</span></span
           >
-          <span class="sizeAlert">{{ "Maximum size : 25 MB" }}</span>
+          <span class="sizeAlert">{{ 'Maximum size : 25 MB' }}</span>
           <input
             type="file"
             #file
@@ -155,14 +155,14 @@
             type="button"
             (click)="goToScreen()"
           >
-            {{ "Continue" }}
+            {{ 'Continue' }}
           </button>
           &nbsp;&nbsp;
         </div>
 
         <div>
           <button class="exitButton" mat-raised-button (click)="goBack()">
-            {{ "Cancel" }}
+            {{ 'Cancel' }}
           </button>
         </div>
       </div>

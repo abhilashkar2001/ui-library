@@ -1,26 +1,27 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { cardTransactionDetails } from "app/shared/models/emi-converter.model";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { CardService } from "../../../../card.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { CreditCardStore } from "../../../credit-card.store";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { cardTransactionDetails } from 'app/shared/models/emi-converter.model';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { CardService } from '../../../../card.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { CreditCardStore } from '../../../credit-card.store';
+import { GETLISTOFACCOUNTS } from 'app/shared/models/session-storage.model';
 
 @Component({
-  selector: "app-instant-loan",
-  templateUrl: "./instant-loan.component.html",
-  styleUrls: ["./instant-loan.component.scss"]
+  selector: 'app-instant-loan',
+  templateUrl: './instant-loan.component.html',
+  styleUrls: ['./instant-loan.component.scss'],
 })
 export class InstantLoanComponent implements OnInit {
   instantLoanForm!: FormGroup;
-  purpose = ["education", "farming"]; // Static purpose options
-  loanType: string = "FD";
-  currencySymbol = "₹";
-  amountmax: number = 1000000;
-  amountmin: number = 10000;
+  purpose = ['education', 'farming']; // Static purpose options
+  loanType = 'FD';
+  currencySymbol = '₹';
+  amountmax = 1000000;
+  amountmin = 10000;
   // thumbLabel: boolean = true;
   maxTenure = 3650;
   minTenure = 7;
@@ -32,7 +33,7 @@ export class InstantLoanComponent implements OnInit {
   totalMonths: number | any;
   monthlyEmi: number | any;
   transactionDetails: cardTransactionDetails | any;
-  items: string[] = [];
+  items: string[] | GETLISTOFACCOUNTS[] = [];
   accountDetails: any;
   customerInfo: any;
   profileInfo: any;
@@ -44,13 +45,13 @@ export class InstantLoanComponent implements OnInit {
     private router: Router,
     private apiService: CardService,
     private tokenStorage: TokenStorageService,
-    private serviceCallHandler: ServiceCallHandler
+    private serviceCallHandler: ServiceCallHandler,
   ) {}
 
   ngOnInit(): void {
     this.initializeAccounts();
     this.buildInstantLoanForm();
-    this.sliderAmount = this.instantLoanForm.get("amount")?.value || 0;
+    this.sliderAmount = this.instantLoanForm.get('amount')?.value || 0;
   }
   // Initialize account list from session storage
   private initializeAccounts(): void {
@@ -67,21 +68,21 @@ export class InstantLoanComponent implements OnInit {
   // Build the form for instant loan
   private buildInstantLoanForm(): void {
     this.instantLoanForm = this.fb.group({
-      cardNo: [""],
-      accountNo: [""],
-      amount: [""],
-      tenureDays: [""],
-      tenureYears: [""],
-      tenureMonths: [""],
-      creditLoanAmount: [""],
-      loanPorpose: [""],
-      cardId: [""]
+      cardNo: [''],
+      accountNo: [''],
+      amount: [''],
+      tenureDays: [''],
+      tenureYears: [''],
+      tenureMonths: [''],
+      creditLoanAmount: [''],
+      loanPorpose: [''],
+      cardId: [''],
     });
   }
 
   onDepositAmountChange(value: any): void {
     this.instantLoanForm
-      .get("amount")
+      .get('amount')
       ?.setValue(value.srcElement.ariaValueText);
   }
 
@@ -90,7 +91,7 @@ export class InstantLoanComponent implements OnInit {
     const match: any = duration.match(regex);
 
     if (!match) {
-      throw new Error("Invalid duration format");
+      throw new Error('Invalid duration format');
     }
 
     const years = parseInt(match[1], 10);
@@ -116,14 +117,14 @@ export class InstantLoanComponent implements OnInit {
       this.instantLoanForm.patchValue({
         tenureYears: years,
         tenureMonths: months,
-        tenureDays: remainingDays % 30
+        tenureDays: remainingDays % 30,
       });
 
       const payload = {
         principleAmount: parseFloat(this.instantLoanForm.value.amount),
         interestRate: 7.28, // Static interest rate
         numberOfMonths: this.totalMonths,
-        firstRepaymentDate: tomorrow
+        firstRepaymentDate: tomorrow,
       };
 
       this.calculateEmi(payload);
@@ -137,7 +138,7 @@ export class InstantLoanComponent implements OnInit {
   private getTomorrowDate(): string {
     const tomorrow: any = new Date();
     tomorrow.setDate(new Date().getDate() + 1);
-    return tomorrow.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    return tomorrow.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   }
 
   // Fetch EMI details
@@ -148,14 +149,14 @@ export class InstantLoanComponent implements OnInit {
         this.instantLoanForm.value.amount,
         this.instantLoanForm.value.tenureYears,
         this.instantLoanForm.value.tenureMonths,
-        this.instantLoanForm.value.tenureDays
+        this.instantLoanForm.value.tenureDays,
       )
       .subscribe((res: any) => {
         if (res && res.statusCode === 200) {
           this.calculatedData = {
             ...res?.data,
             depositAmount: this.instantLoanForm.value.amount,
-            monthlyEmi: this.monthlyEmi
+            monthlyEmi: this.monthlyEmi,
           };
         }
       });
@@ -173,7 +174,7 @@ export class InstantLoanComponent implements OnInit {
 
   // Format slider label for tenure
   formatLabel(value: number | null): string {
-    if (!value) return "";
+    if (!value) return '';
 
     const years = Math.floor(value / 365);
     const remainingDays = value % 365;
@@ -188,11 +189,11 @@ export class InstantLoanComponent implements OnInit {
     if (cardNumber) {
       const account = cardNumber;
       this.accountDetails = this.listOfAccounts?.find(
-        (card) => card?.cardNumber == account
+        (card) => card?.cardNumber == account,
       );
       if (this.accountDetails) {
         this.instantLoanForm
-          ?.get("cardId")
+          ?.get('cardId')
           ?.patchValue(this.accountDetails?.id);
       }
       this.fetchTransactionDetails(cardNumber);
@@ -203,14 +204,14 @@ export class InstantLoanComponent implements OnInit {
   private fetchTransactionDetails(accountNo: string): void {
     this.apiService.fetchCardTransactionDetails(
       accountNo,
-      this.profileInfo?.corporateCustomerId
+      this.profileInfo?.corporateCustomerId,
     );
     this.profileInfo?.corporateCustomerId.subscribe(
       (response: IcHttpResponseModel<cardTransactionDetails>) => {
         if (response?.statusCode === 200) {
           this.transactionDetails = response.data;
         }
-      }
+      },
     );
   }
 
@@ -220,19 +221,19 @@ export class InstantLoanComponent implements OnInit {
     const instaArray = this.createEmiDetailsArray(payload);
 
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       instaArray,
-      (convertedPayload) => this.apiService.convertToEmi(convertedPayload)
+      (convertedPayload) => this.apiService.convertToEmi(convertedPayload),
     );
 
-    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
+    this.router.navigate(['/user/card/credit-card/service/payment-summary']);
   }
 
   // Construct the payload for the API call
   private constructPayload() {
     return {
-      type: "Insta Loan",
+      type: 'Insta Loan',
       cardId: this.instantLoanForm?.value?.cardId,
       nameOnCard:
         this.transactionDetails?.cardFundTransfer?.cardDetails?.nameOnCard,
@@ -248,14 +249,14 @@ export class InstantLoanComponent implements OnInit {
       monthlyEmi: this.monthlyEmi,
       accountNo: this.instantLoanForm.value.accountNo,
       purposeOfLoan: this.instantLoanForm.value.loanPorpose,
-      eligibleAmount: "",
+      eligibleAmount: '',
       loanAmount: this.instantLoanForm.value.creditLoanAmount,
       payableAmount: this.calculatedData?.maturityAmount,
       intrestRate: this.calculatedData?.intrestRate,
       intrestAmount: this.calculatedData?.intrestAmount,
       payeeName:
         this.transactionDetails?.cardFundTransfer?.cardDetails?.customerName,
-      accountType: "savings"
+      accountType: 'savings',
     };
   }
 
@@ -263,34 +264,34 @@ export class InstantLoanComponent implements OnInit {
   private createEmiDetailsArray(payload: any): any[] {
     return [
       {
-        eventType: "instaBank",
-        statusHeader: "Confirm Details",
-        statusNews: "Saved Insta bank successfully!",
+        eventType: 'instaBank',
+        statusHeader: 'Confirm Details',
+        statusNews: 'Saved Insta bank successfully!',
         summary: [
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Name On Card": payload.nameOnCard },
-              { "Card Number": payload.cardNo },
-              { "Card Name": payload.cardName },
-              { "Eligible Amount": payload.eligibleAmount }
-            ]
+              { 'Name On Card': payload.nameOnCard },
+              { 'Card Number': payload.cardNo },
+              { 'Card Name': payload.cardName },
+              { 'Eligible Amount': payload.eligibleAmount },
+            ],
           },
           {
-            header: "Loan Details",
+            header: 'Loan Details',
             details: [
               { Amount: payload.loanAmount },
-              { "Interest Rate": payload.interestRate },
-              { "Interest Amount": payload.intrestAmount },
+              { 'Interest Rate': payload.interestRate },
+              { 'Interest Amount': payload.intrestAmount },
               { Tenure: payload.tenure },
-              { "Maturity Date": payload.maturityDate },
-              { "Monthly Emi": payload.monthlyEmi },
-              { "Card Id": payload.cardId }
-            ]
-          }
+              { 'Maturity Date': payload.maturityDate },
+              { 'Monthly Emi': payload.monthlyEmi },
+              { 'Card Id': payload.cardId },
+            ],
+          },
         ],
-        qrToggle: false
-      }
+        qrToggle: false,
+      },
     ];
   }
 }

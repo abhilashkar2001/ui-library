@@ -1,28 +1,28 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class DownloadService {
   baseUrl = environment.microServiceURL;
   constructor(private http: HttpClient) {}
-  downloadloanDetailDoc(originationId: any) {
+  downloadloanDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/download?originationId=${originationId}`,
-      { responseType: "arraybuffer" }
+      { responseType: 'arraybuffer' },
     );
   }
-  downloadAccountDetailDoc(originationId: any) {
+  downloadAccountDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/loan-account-info/Download?originationId=${originationId}`,
-      { responseType: "arraybuffer" }
+      { responseType: 'arraybuffer' },
     );
   }
-  downloadFdRdDetailDoc(originationId: any) {
+  downloadFdRdDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/FdAndRd/Download?originationId=${originationId}`,
-      { responseType: "blob", observe: "response" }
+      { responseType: 'blob', observe: 'response' },
     );
   }
 
@@ -32,7 +32,7 @@ export class DownloadService {
    * @param fileName name of the file
    */
   public saveFile(fileUrl: string, fileName: string): void {
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = environment.microServiceURL + fileUrl;
     link.download = fileName;
     link.click();
@@ -46,7 +46,7 @@ export class DownloadService {
    */
   fetchFile(fileUrl: string) {
     return this.http.get(`${this.baseUrl}${fileUrl}`, {
-      responseType: "arraybuffer"
+      responseType: 'arraybuffer',
     });
   }
 }

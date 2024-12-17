@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { FilterBy } from "app/shared/helpers/utils";
-import { BulkUploadServiceService } from "./bulk-upload-service.service";
-import { BulkUploadConstant } from "../add-bulk-upload/bulk.upload.constant";
-import { InternetBankingService } from "app/shared/services/internet-banking.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FilterBy } from 'app/shared/helpers/utils';
+import { BulkUploadServiceService } from './bulk-upload-service.service';
+import { BulkUploadConstant } from '../add-bulk-upload/bulk.upload.constant';
+import { InternetBankingService } from 'app/shared/services/internet-banking.service';
 
 @Component({
-  selector: "app-bulk-upload",
-  templateUrl: "./bulk-upload.component.html",
-  styleUrls: ["./bulk-upload.component.scss"]
+  selector: 'app-bulk-upload',
+  templateUrl: './bulk-upload.component.html',
+  styleUrls: ['./bulk-upload.component.scss'],
 })
 export class BulkUploadComponent implements OnInit {
   columns: any = BulkUploadConstant.UPLOAD_SUMMARY;
   sort: any;
-  size: number = 5;
+  size = 5;
   sortOrder: any;
-  page: number = 1;
-  pageSize: number = 5;
-  sortValue = "";
-  sortDirection = "";
+  page = 1;
+  pageSize = 5;
+  sortValue = '';
+  sortDirection = '';
   filterBy: FilterBy | any;
   module: any;
   bulkUploadData: any;
@@ -28,32 +28,32 @@ export class BulkUploadComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113
+      totalPages: 113,
     },
     statusCode: 200,
-    status: "OK"
+    status: 'OK',
   };
 
   constructor(
     private route: Router,
     private bulkService: InternetBankingService,
-    private bulkuploadService: BulkUploadServiceService
+    private bulkuploadService: BulkUploadServiceService,
   ) {}
 
   ngOnInit(): void {}
 
   customGoBack() {
-    this.route.navigate(["/user/dashboard"]);
+    this.route.navigate(['/user/dashboard']);
   }
 
   navigateToBulkUpload(id: any) {
-    this.route.navigate(["user/dashboard/fund-transfer/bulk-upload", id]);
+    this.route.navigate(['user/dashboard/fund-transfer/bulk-upload', id]);
   }
 
   customEditForm(event: any) {
     console.log(event);
 
-    this.navigateToBulkUpload(event?.element?.id || "addNew");
+    this.navigateToBulkUpload(event?.element?.id || 'addNew');
   }
 
   getDataByPage(event: any) {
@@ -70,7 +70,7 @@ export class BulkUploadComponent implements OnInit {
         event.size,
         this.sortValue,
         event.direction,
-        this.module
+        this.module,
       )
       .subscribe((res) => {
         this.bulkUploadData = res;
@@ -81,11 +81,11 @@ export class BulkUploadComponent implements OnInit {
     this.bulkuploadService
       .downloadBulkuploadParentSummary()
       .subscribe((data) => {
-        let blob = new Blob([data], { type: "application/octet-stream" });
-        var downloadURL = window.URL.createObjectURL(blob);
-        var link = document.createElement("a");
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+        const downloadURL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
         link.href = downloadURL;
-        link.download = "report.xlsx";
+        link.download = 'report.xlsx';
         link.click();
       });
   }

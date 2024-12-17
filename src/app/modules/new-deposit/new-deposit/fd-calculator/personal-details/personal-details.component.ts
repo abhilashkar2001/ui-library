@@ -6,19 +6,19 @@ import {
   Output,
   QueryList,
   ViewChild,
-  ViewChildren
-} from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatAccordion, MatExpansionPanel } from "@angular/material/expansion";
-import * as moment from "moment";
-import { NewDepositService } from "../../../new-deposit.service";
-import { PersonalDetailsService } from "./personal-details.service";
-import { debounceTime } from "rxjs/operators";
+  ViewChildren,
+} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
+import * as moment from 'moment';
+import { NewDepositService } from '../../../new-deposit.service';
+import { PersonalDetailsService } from './personal-details.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: "app-personal-details",
-  templateUrl: "./personal-details.component.html",
-  styleUrls: ["./personal-details.component.scss"]
+  selector: 'app-personal-details',
+  templateUrl: './personal-details.component.html',
+  styleUrls: ['./personal-details.component.scss'],
 })
 export class PersonalDetailsComponent implements OnInit {
   @Input() existingCustomer: any;
@@ -27,13 +27,13 @@ export class PersonalDetailsComponent implements OnInit {
   @Output() customFormGroup = new EventEmitter<{}>();
 
   isDone = true;
-  selectedStep: number = 0;
+  selectedStep = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
 
   firstFormGroup = this.fb.group({});
   secondFormGroup = this.fb.group({
-    secondCtrl: [""]
+    secondCtrl: [''],
   });
   isLinear = true;
   holderType: any;
@@ -46,7 +46,7 @@ export class PersonalDetailsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
-    private personalDetailsService: PersonalDetailsService
+    private personalDetailsService: PersonalDetailsService,
   ) {}
 
   panelOpened(index: number) {
@@ -72,9 +72,9 @@ export class PersonalDetailsComponent implements OnInit {
     } else {
       this.buildCustomerDetailsForm();
     }
-    this.holderType = sessionStorage.getItem("holderType") || "Self";
+    this.holderType = sessionStorage.getItem('holderType') || 'Self';
     this.fixedDepositId = parseInt(
-      <string>sessionStorage.getItem("fixedDepositId")
+      <string>sessionStorage.getItem('fixedDepositId'),
     );
     this.getCountry();
   }
@@ -88,12 +88,12 @@ export class PersonalDetailsComponent implements OnInit {
 
   buildCustomerDetailsForm(data?: any) {
     this.customerDetailsForm = this.fb.group({
-      fixedDepositId: "",
-      customer: this.fb.array([])
+      fixedDepositId: '',
+      customer: this.fb.array([]),
     });
     setTimeout(() => {
-      if (this.holderType == "Self") this.addCustomer(data);
-      else if (this.holderType == "Joint") {
+      if (this.holderType == 'Self') this.addCustomer(data);
+      else if (this.holderType == 'Joint') {
         for (let i = 0; i <= 1; i++) {
           if (i == 0) {
             this.addCustomer(data);
@@ -107,27 +107,27 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   get customer(): FormArray {
-    return this.customerDetailsForm.get("customer") as FormArray;
+    return this.customerDetailsForm.get('customer') as FormArray;
   }
 
   newCustomer(data?: any): FormGroup {
     return this.fb.group({
-      customerId: [data ? data.customerId : ""],
-      customerNo: [data ? data.customerNo : ""],
-      primaryCustomer: [data ? data.primaryCustomer : ""],
-      prefix: [data ? data.prefix : "", Validators.required],
-      firstName: [data ? data.firstName : "", Validators.required],
-      lastName: [data ? data.lastName : "", Validators.required],
-      dateOfBirth: [data ? data.dateOfBirth : "", Validators.required],
-      email: [data ? data.email : "", [Validators.required, Validators.email]],
-      gender: [data ? data.gender : "", Validators.required],
-      nationality: [data ? data.nationality : "", Validators.required],
-      address1: [data ? data.address1 : ""],
-      residenceType: [data ? data.residenceType : "", Validators.required],
-      countryName: [data ? data.countryName : "", Validators.required],
-      pincode: [data ? data.pincode : "", Validators.required],
-      stateName: [data ? data.stateName : "", Validators.required],
-      cityId: [data ? data.cityId : "", Validators.required]
+      customerId: [data ? data.customerId : ''],
+      customerNo: [data ? data.customerNo : ''],
+      primaryCustomer: [data ? data.primaryCustomer : ''],
+      prefix: [data ? data.prefix : '', Validators.required],
+      firstName: [data ? data.firstName : '', Validators.required],
+      lastName: [data ? data.lastName : '', Validators.required],
+      dateOfBirth: [data ? data.dateOfBirth : '', Validators.required],
+      email: [data ? data.email : '', [Validators.required, Validators.email]],
+      gender: [data ? data.gender : '', Validators.required],
+      nationality: [data ? data.nationality : '', Validators.required],
+      address1: [data ? data.address1 : ''],
+      residenceType: [data ? data.residenceType : '', Validators.required],
+      countryName: [data ? data.countryName : '', Validators.required],
+      pincode: [data ? data.pincode : '', Validators.required],
+      stateName: [data ? data.stateName : '', Validators.required],
+      cityId: [data ? data.cityId : '', Validators.required],
     });
   }
 
@@ -143,43 +143,43 @@ export class PersonalDetailsComponent implements OnInit {
     console.log(this.customerDetailsForm.value);
     this.customSavePersonal.emit({
       status: true,
-      personalDetails: customer
+      personalDetails: customer,
     });
   }
   createPayload() {
-    var contact = {};
-    var customer: any = [];
+    let contact = {};
+    const customer: any = [];
     this.customerDetailsForm.value.customer.forEach((element: any) => {
       const address = {
         address1: element.address1,
-        address2: "",
+        address2: '',
         residenceType: element.residenceType,
         countryName: element.countryName,
         stateName: element.stateName,
-        cityId: element.cityId
+        cityId: element.cityId,
         // parseInt(element.cityId),
       };
       contact = {
         email: element.email,
-        address: [address]
+        address: [address],
       };
-      var customerDetails = {
+      const customerDetails = {
         prefix: element.prefix,
         firstName: element.firstName,
-        middleName: "",
+        middleName: '',
         customerNo: element.customerNo,
         lastName: element.lastName,
         gender: element.gender,
-        dateOfBirth: moment(element.dateOfBirth).format("YYYY-MM-DD"),
+        dateOfBirth: moment(element.dateOfBirth).format('YYYY-MM-DD'),
         nationality: element.nationality,
-        contact: contact
+        contact: contact,
       };
       customer.push(customerDetails);
     });
 
     const payload = {
       fixedDepositId: this.fixedDepositId,
-      customer: customer
+      customer: customer,
     };
 
     return payload;
@@ -201,7 +201,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   getCityandStateByZipcode(indx: any) {
     (<FormGroup>this.customer.controls[indx])
-      .get("pincode")
+      .get('pincode')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((value) => {
         if (value) {
@@ -212,10 +212,10 @@ export class PersonalDetailsComponent implements OnInit {
                 if (res) {
                   this.listCityState = res?.data;
                   this.customer.controls[indx]
-                    ?.get("stateName")
+                    ?.get('stateName')
                     ?.patchValue(res?.data?.[0]?.state);
                   this.customer.controls[indx]
-                    ?.get("cityId")
+                    ?.get('cityId')
                     ?.patchValue(res?.data?.[0]?.cityId);
                 }
               });

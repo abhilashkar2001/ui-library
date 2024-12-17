@@ -12,7 +12,7 @@
       fxLayoutGap="90px"
       fxLayoutAlign="start center"
     >
-      <h3>{{ "Loan Account Number" | translate }}</h3>
+      <h3>{{ 'Loan Account Number' | translate }}</h3>
       <div>
         <app-searchable-select
           fxFlex="100"
@@ -35,7 +35,7 @@
         fxLayoutAlign="end center"
       >
         <h3 class="light-blue-title">
-          <u>{{ "Loan Repayment" | translate }}</u>
+          <u>{{ 'Loan Repayment' | translate }}</u>
         </h3>
         <app-ic-action-button
           matIcon="blue-download"
@@ -65,15 +65,15 @@
               class="emi-table-header p-12 text-gray full-width"
               fxLayoutAlign="space-between center"
             >
-              <span fxFlex="11">{{ "Date" | translate }}</span>
-              <span fxFlex="11">{{ "Sequence" | translate }}</span>
-              <span fxFlex="11">{{ "OS Loan" | translate }}</span>
-              <span fxFlex="11">{{ "Principal" | translate }}</span>
-              <span fxFlex="11">{{ "Interest" | translate }}</span>
-              <span fxFlex="11">{{ "EMI" | translate }}</span>
-              <span fxFlex="11">{{ "Amount Paid" | translate }}</span>
-              <span fxFlex="11">{{ "Pending Due" | translate }}</span>
-              <span fxFlex="11">{{ "Status" | translate }}</span>
+              <span fxFlex="11">{{ 'Date' | translate }}</span>
+              <span fxFlex="11">{{ 'Sequence' | translate }}</span>
+              <span fxFlex="11">{{ 'OS Loan' | translate }}</span>
+              <span fxFlex="11">{{ 'Principal' | translate }}</span>
+              <span fxFlex="11">{{ 'Interest' | translate }}</span>
+              <span fxFlex="11">{{ 'EMI' | translate }}</span>
+              <span fxFlex="11">{{ 'Amount Paid' | translate }}</span>
+              <span fxFlex="11">{{ 'Pending Due' | translate }}</span>
+              <span fxFlex="11">{{ 'Status' | translate }}</span>
             </div>
             <ng-container
               *ngFor="let date of repaymentDetails?.yearly; let i = index"
@@ -121,7 +121,7 @@
                     *ngFor="let item of date?.monthly; let j = index"
                   >
                     <div fxFlex="10" class="text-highlighted">
-                      {{ item?.dueDate | date : "shortDate" }}
+                      {{ item?.dueDate | date: 'shortDate' }}
                     </div>
 
                     <div fxFlex="10" class="text-highlighted">

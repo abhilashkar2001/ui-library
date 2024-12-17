@@ -8,9 +8,8 @@ describe('OtherChecklistDocUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OtherChecklistDocUploadComponent ]
-    })
-    .compileComponents();
+      declarations: [OtherChecklistDocUploadComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OtherChecklistDocUploadComponent);
     component = fixture.componentInstance;

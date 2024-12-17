@@ -1,28 +1,28 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 const baseUrl = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class CreditcardService {
   constructor(private httpClient: HttpClient) {}
   saveCreditLimitDetails(cardNo: any, amt: any) {
     return this.httpClient.put<any>(
       `${baseUrl}/card/update-eligibal-limit?cardNumber=${cardNo}&creditLimit=${amt}`,
-      {}
+      {},
     );
   }
 
   getEligibleAmount(cardNo: number) {
     return this.httpClient.get(
-      `${baseUrl}/card/eligibal-limit?cardNumber=${cardNo}`
+      `${baseUrl}/card/eligibal-limit?cardNumber=${cardNo}`,
     );
   }
   generateOTP(mobile: any) {
     return this.httpClient.get<any>(
-      `${baseUrl}/auth/generateOTP?mobile=${mobile}`
+      `${baseUrl}/auth/generateOTP?mobile=${mobile}`,
     );
   }
   verifyOtp(otpObject: any) {
@@ -30,14 +30,14 @@ export class CreditcardService {
   }
   getDesiredCreditCardList(cardNo: number) {
     return this.httpClient.get(
-      `${baseUrl}/card/desired-limit?cardNumber=${cardNo}`
+      `${baseUrl}/card/desired-limit?cardNumber=${cardNo}`,
     );
   }
 
   saveDesiredLimit(cardNo: number, amt: number) {
     return this.httpClient.put<any>(
       `${baseUrl}/card/update-eligibal-limit?cardNumber=${cardNo}&creditLimit=${amt}`,
-      {}
+      {},
     );
   }
 
@@ -47,13 +47,13 @@ export class CreditcardService {
 
   getCreditCardList(customerID: number) {
     return this.httpClient.get(
-      `${baseUrl}/card/fetch-cardNo?customerId=${customerID}`
+      `${baseUrl}/card/fetch-cardNo?customerId=${customerID}`,
     );
   }
 
   fetchAccountDetails(cardNo: number, name: string) {
     return this.httpClient.get(
-      `${baseUrl}/card/fetch-usage-limits?cardNumber=${cardNo}&usageType=${name}`
+      `${baseUrl}/card/fetch-usage-limits?cardNumber=${cardNo}&usageType=${name}`,
     );
   }
 }

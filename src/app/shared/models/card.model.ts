@@ -78,30 +78,30 @@ export interface AccountList {
 }
 
 export interface Payee {
-  benificiaryId: any;
+  benificiaryId: number;
   benificiaryMasterId: number;
-  isFavorite: any;
+  isFavorite: boolean;
   accountNo?: string;
   payeeName: string;
   nickName?: string;
-  bankType: any;
+  bankType: string;
   mobileNumber?: string;
   emailId?: string;
-  bankName: any;
-  bankCode: any;
-  branchName: any;
-  branchCode: any;
+  bankName: string;
+  bankCode: string;
+  branchName: string;
+  branchCode: string;
   mobileCode?: string;
-  profilePicUrl: any;
+  profilePicUrl: File | string;
   customerId?: number;
   payeeFrom?: string;
   swiftCode?: string;
   purpose: any;
-  confirmAccountNumber: any;
+  confirmAccountNumber: number;
   account: any;
   visibility: any;
   beneficiaryStatus: any;
-  countryCode: any;
+  countryCode: string;
   recordStatus: any;
   authStatus: any;
   action: any;
@@ -110,10 +110,11 @@ export interface Payee {
   createdBy: any;
   lastUpdated: any;
   lastUpdatedBy: any;
-  empId: any;
+  empId: number;
   version: any;
   countryName?: string;
-  refNumber: any;
+  refNumber: number;
   source?: string;
   icustRefNo: string;
+  retailBeneficiaryId?: number;
 }

@@ -8,9 +8,8 @@ describe('CommonLevelStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommonLevelStatusComponent ]
-    })
-    .compileComponents();
+      declarations: [CommonLevelStatusComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommonLevelStatusComponent);
     component = fixture.componentInstance;

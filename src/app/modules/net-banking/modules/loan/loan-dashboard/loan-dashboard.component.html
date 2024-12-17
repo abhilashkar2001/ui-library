@@ -11,10 +11,10 @@
           <mat-icon class="cursor-pointer mr-16" (click)="goBack()"
             >arrow_back</mat-icon
           >
-          {{ "My Loan" }}
+          {{ 'My Loan' }}
         </h1>
         <div class="toogle-div">
-          <span>{{ "Statistics" }}</span>
+          <span>{{ 'Statistics' }}</span>
           <mat-slide-toggle [(ngModel)]="isStatics"> </mat-slide-toggle>
         </div>
       </div>
@@ -37,6 +37,7 @@
                   <img
                     src="assets/images/bank-profile-logo.svg"
                     class="current_theme_filter"
+                    alt="current theme filter"
                   />
                 </div>
                 <div fxFlex="75" fxLayout="column">
@@ -62,14 +63,14 @@
                   class="transfer_btn"
                   (click)="route('user/loan/summary')"
                 >
-                  {{ "View Summary" }}
+                  {{ 'View Summary' }}
                 </button>
                 <button
                   mat-raised-button
                   class="add_btn"
                   (click)="route('/loan/loan-service/loan-repayment')"
                 >
-                  {{ "Pay Now" }}
+                  {{ 'Pay Now' }}
                 </button>
               </div>
             </div>
@@ -81,8 +82,8 @@
                 <p class="label">{{ item?.label }}</p>
                 <span
                   [ngClass]="
-                    item?.label == 'Maturity Date' ||
-                    item?.label == 'Current rate of interest'
+                    item?.label === 'Maturity Date' ||
+                    item?.label === 'Current rate of inte=rest'
                       ? 'diffValue'
                       : 'value'
                   "
@@ -95,20 +96,6 @@
         </div>
       </div>
       <!-- Overview Account Ends Here -->
-
-      <!-- Static data starts here -->
-      <!-- <div *ngIf="isStatics" style="max-height: 250px" fxLayout="row">
-        <div class="flex-item" fxFlex="30">
-          <ng-container *ngFor="let item of staticDataArr; let i = index">
-            <app-dashboard-overview-card
-              [cardInfo]="item"
-            ></app-dashboard-overview-card>
-          </ng-container>
-        </div>
-        <div fxFlex="70">
-          <app-chart [dynamicCharData]="staticsAccountData"> </app-chart>
-        </div>
-      </div> -->
     </mat-card>
 
     <!-- Transcation tab starts here -->
@@ -134,7 +121,7 @@
       <section class="mtcd">
         <div fxLayout="column">
           <div fxLayoutAlign="space-between center">
-            <h3 class="bill_type">{{ "Closed Loan" }}</h3>
+            <h3 class="bill_type">{{ 'Closed Loan' }}</h3>
           </div>
           <mat-divider></mat-divider>
 
@@ -154,16 +141,12 @@
                 />
               </div>
               <div fxLayout="column" class="bill_info">
-                <label class="bill_type">{{ closedLoan?.loanType }}</label>
-                <label class="bill_number"
-                  >{{ closedLoan.accNo }} / {{ closedLoan.date }}</label
-                >
+                <span class="bill_type">{{ closedLoan?.loanType }}</span>
+                <span class="bill_number">
+                  {{ closedLoan.accNo }} / {{ closedLoan.date }}
+                </span>
               </div>
             </div>
-            <!-- <div fxLayout="column">
-              <label class="due_date">Due on {{ closedLoan.date }}</label>
-              <button mat-raised-button class="pay_btn">Pay</button>
-            </div> -->
           </div>
         </div>
       </section>

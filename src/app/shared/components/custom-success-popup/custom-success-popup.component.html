@@ -5,7 +5,7 @@
     </div>
     <div class="alertImage">
       <ng-container *ngIf="status; else error">
-        <ng-container *ngIf="status == 'rejected'; else showStatus">
+        <ng-container *ngIf="status === 'rejected'; else showStatus">
           <img class="summaryIcon" src="assets/images/failed.svg" alt="..." />
         </ng-container>
         <ng-template #showStatus>

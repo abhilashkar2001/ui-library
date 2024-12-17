@@ -4,7 +4,7 @@
     <ng-container *ngFor="let item of applicationInfo; let indx = index">
       <li *ngIf="item">
         <div class="count_div">
-          <div class="dateLabel">{{ item?.processDate | date : "dd MMM" }}</div>
+          <div class="dateLabel">{{ item?.processDate | date: 'dd MMM' }}</div>
           <p class="count"></p>
         </div>
         <div class="list_body" fxFlex="85">
@@ -35,18 +35,18 @@
                 <div
                   class="statusVal"
                   [ngClass]="[
-                    item?.status?.toLowerCase() == 'schedule'
+                    item?.status?.toLowerCase() === 'schedule'
                       ? 'scheduleStatus'
                       : '',
-                    item?.status?.toLowerCase() == 'ongoing'
+                    item?.status?.toLowerCase() === 'ongoing'
                       ? 'inProgressStatus'
                       : '',
-                    item?.status?.toLowerCase() == 'reject'
+                    item?.status?.toLowerCase() === 'reject'
                       ? 'rejectStatus'
                       : '',
-                    item?.status?.toLowerCase() == 'pending'
+                    item?.status?.toLowerCase() === 'pending'
                       ? 'pendingStatus'
-                      : ''
+                      : '',
                   ]"
                 >
                   {{ item.status }}

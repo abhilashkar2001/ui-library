@@ -19,11 +19,10 @@
           Use other Documents
         </button>
       </div>
-      <!-- <app-kyc *ngIf="showKyc" (onSubmitEvent)="onVerify($event)" (onBackEvent)="onBack()"></app-kyc> -->
       <app-other-documents
         *ngIf="!showKyc"
         (onSubmitEvent)="onSubmit($event)"
-        (onBackEvent)="onBack()"
+        (backEvent)="onBack()"
       ></app-other-documents>
     </div>
   </div>

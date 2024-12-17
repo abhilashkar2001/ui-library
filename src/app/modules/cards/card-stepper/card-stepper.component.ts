@@ -6,21 +6,21 @@ import {
   Output,
   ViewChild,
   OnChanges,
-  AfterViewInit
-} from "@angular/core";
-import { MatStepper } from "@angular/material/stepper";
-import { cardStepperConstant } from "assets/json/loan-stepper.contant";
+  AfterViewInit,
+} from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
+import { cardStepperConstant } from 'assets/json/loan-stepper.contant';
 
 @Component({
-  selector: "app-card-stepper",
-  templateUrl: "./card-stepper.component.html",
-  styleUrls: ["./card-stepper.component.scss"]
+  selector: 'app-card-stepper',
+  templateUrl: './card-stepper.component.html',
+  styleUrls: ['./card-stepper.component.scss'],
 })
 export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectionIndex = 0;
   @Input() optionalSteps: any;
   @Output() customSelectionChange = new EventEmitter<{}>();
-  @ViewChild("stepper") private myStepper: MatStepper | any;
+  @ViewChild('stepper') private myStepper: MatStepper | any;
   loanstepper: any = cardStepperConstant;
   isLinear = true;
 
@@ -58,7 +58,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isTermsCondtionsStep: false,
             isCIBILScoreStep: false,
             isSelectKYCStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 1:
@@ -68,7 +68,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isTermsCondtionsStep: false,
             isCIBILScoreStep: true,
             isSelectKYCStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 2:
@@ -78,7 +78,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isTermsCondtionsStep: false,
             isCIBILScoreStep: false,
             isSelectKYCStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 3:
@@ -88,7 +88,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isTermsCondtionsStep: false,
             isCIBILScoreStep: false,
             isSelectKYCStep: true,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 4:
@@ -98,7 +98,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isTermsCondtionsStep: true,
             isCIBILScoreStep: false,
             isSelectKYCStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         default: {
@@ -111,7 +111,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isMobileVerificationStep: true,
             isTermsCondtionsStep: false,
             isCIBILScoreStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 1:
@@ -119,7 +119,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isMobileVerificationStep: false,
             isTermsCondtionsStep: false,
             isCIBILScoreStep: true,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         case 2:
@@ -127,7 +127,7 @@ export class CardStepperComponent implements OnInit, OnChanges, AfterViewInit {
             isMobileVerificationStep: false,
             isTermsCondtionsStep: true,
             isCIBILScoreStep: false,
-            stepper: this.myStepper
+            stepper: this.myStepper,
           };
           break;
         default: {

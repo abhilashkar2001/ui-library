@@ -8,9 +8,8 @@ describe('LcOtherConditionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LcOtherConditionsComponent ]
-    })
-    .compileComponents();
+      declarations: [LcOtherConditionsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LcOtherConditionsComponent);
     component = fixture.componentInstance;

@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-expense-tax-benefit-calculator",
-  templateUrl: "./expense-tax-benefit-calculator.component.html",
-  styleUrls: ["./expense-tax-benefit-calculator.component.scss"]
+  selector: 'app-expense-tax-benefit-calculator',
+  templateUrl: './expense-tax-benefit-calculator.component.html',
+  styleUrls: ['./expense-tax-benefit-calculator.component.scss'],
 })
 export class ExpenseTaxBenefitCalculatorComponent implements OnInit {
   courseSlider: any = 12;
@@ -14,9 +14,9 @@ export class ExpenseTaxBenefitCalculatorComponent implements OnInit {
   step: any = 5;
   thumbLabel = true;
   amount = this.min;
-  interestRate: number = 2.0;
-  year: number = 1;
-  months: number = 1;
+  interestRate = 2.0;
+  year = 1;
+  months = 1;
   totalInterest = 0;
   totalAmount = 0;
   emiAmount: any = 0;
@@ -27,7 +27,7 @@ export class ExpenseTaxBenefitCalculatorComponent implements OnInit {
 
   formatLabel(value: number): string {
     if (value >= 1000) {
-      return Math.round(value / 1000) + "K";
+      return Math.round(value / 1000) + 'K';
     }
 
     return `${value}`;

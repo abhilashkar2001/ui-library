@@ -8,9 +8,8 @@ describe('CreditCardInternaltionalLimitComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditCardInternaltionalLimitComponent ]
-    })
-    .compileComponents();
+      declarations: [CreditCardInternaltionalLimitComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreditCardInternaltionalLimitComponent);
     component = fixture.componentInstance;

@@ -3,22 +3,22 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild
-} from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import * as faceapi from "face-api.js";
+  ViewChild,
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import * as faceapi from 'face-api.js';
 
 @Component({
-  selector: "app-scan",
-  templateUrl: "./scan.component.html",
-  styleUrls: ["./scan.component.scss"]
+  selector: 'app-scan',
+  templateUrl: './scan.component.html',
+  styleUrls: ['./scan.component.scss'],
 })
 export class ScanComponent implements OnInit {
   WIDTH = 0;
   HEIGHT = 0;
-  @ViewChild("video", { static: true })
+  @ViewChild('video', { static: true })
   public video!: ElementRef;
-  @ViewChild("canvas", { static: true })
+  @ViewChild('canvas', { static: true })
   public canvasRef!: ElementRef;
   imageData: any;
   scannedImage: any;
@@ -31,37 +31,37 @@ export class ScanComponent implements OnInit {
   displaySize: any;
   videoInput: any;
   flag = true;
-  disableVideo: boolean = false;
+  disableVideo = false;
   resData: any;
-  isScanned: boolean = false;
+  isScanned = false;
   rescann: boolean | any;
-  perscentageCheck: boolean = true;
+  perscentageCheck = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private elRef: ElementRef,
-    public dialogRef: MatDialogRef<ScanComponent>
+    public dialogRef: MatDialogRef<ScanComponent>,
   ) {}
 
   async ngOnInit() {
     this.dialogData;
     this.startVideo();
-    faceapi.nets.tinyFaceDetector.loadFromUri("../../assets/models"),
-      await faceapi.nets.faceLandmark68Net.loadFromUri("../../assets/models");
-    await faceapi.nets.faceRecognitionNet.loadFromUri("../../assets/models");
-    await faceapi.nets.faceExpressionNet.loadFromUri("../../assets/models");
+    faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
+      await faceapi.nets.faceLandmark68Net.loadFromUri('../../assets/models');
+    await faceapi.nets.faceRecognitionNet.loadFromUri('../../assets/models');
+    await faceapi.nets.faceExpressionNet.loadFromUri('../../assets/models');
   }
 
   closeClick(isScanned: boolean) {
     this.dialogRef.close({
-      message: "Confirm",
+      message: 'Confirm',
       isScanned: isScanned,
-      image: this.scannedImage
+      image: this.scannedImage,
     });
   }
 
   startVideo() {
-    let newVariable = window.navigator as any;
+    const newVariable = window.navigator as any;
 
     this.videoInput = this.video.nativeElement;
 
@@ -70,7 +70,7 @@ export class ScanComponent implements OnInit {
 
       (stream: any) => (this.videoInput.srcObject = stream),
 
-      (err: any) => console.log(err)
+      (err: any) => console.log(err),
     );
 
     this.face_detect();
@@ -78,29 +78,29 @@ export class ScanComponent implements OnInit {
 
   face_detect() {
     this.elRef.nativeElement
-      .querySelector("video")
-      .addEventListener("play", async () => {
+      .querySelector('video')
+      .addEventListener('play', async () => {
         this.canvas = await faceapi.createCanvasFromMedia(this.videoInput);
 
         this.canvasEl = this.canvasRef.nativeElement;
 
         this.canvasEl.appendChild(this.canvas);
 
-        this.canvas.setAttribute("id", "canvass");
+        this.canvas.setAttribute('id', 'canvass');
 
         this.canvas.setAttribute(
-          "style",
+          'style',
           `position: relative;
         
          top: -10px;
 
-         left: 0px;`
+         left: 0px;`,
         );
 
         this.displaySize = {
           width: this.videoInput.width,
 
-          height: this.videoInput.height
+          height: this.videoInput.height,
         };
 
         faceapi.matchDimensions(this.canvas, this.displaySize);
@@ -109,7 +109,7 @@ export class ScanComponent implements OnInit {
           this.detection = await faceapi
             .detectAllFaces(
               this.videoInput,
-              new faceapi.TinyFaceDetectorOptions()
+              new faceapi.TinyFaceDetectorOptions(),
             )
             .withFaceLandmarks()
             .withFaceExpressions();
@@ -117,9 +117,9 @@ export class ScanComponent implements OnInit {
           this.resizedDetections = faceapi.resizeResults(
             this.detection,
 
-            this.displaySize
+            this.displaySize,
           );
-          let color = "red";
+          let color = 'red';
           if (this.resizedDetections?.length > 0) {
             this.resizedDetections.forEach((detection: any) => {
               const box = detection.detection.box;
@@ -135,21 +135,21 @@ export class ScanComponent implements OnInit {
           }
 
           this.canvas
-            .getContext("2d")
+            .getContext('2d')
             .clearRect(0, 0, this.canvas.width, this.canvas.height);
-          const context = this.canvas.getContext("2d");
+          const context = this.canvas.getContext('2d');
           context.clearRect(0, 0, this.canvas.width, this.canvas.height);
           const gradient = context.createLinearGradient(
             0,
             0,
             this.canvas.width,
-            this.canvas.height
+            this.canvas.height,
           );
           gradient.addColorStop(0, color); // Start color
           gradient.addColorStop(0.5, color); // Start color
           gradient.addColorStop(1, color); // End color
           context.strokeStyle = gradient;
-          context.lineJoin = "round";
+          context.lineJoin = 'round';
           this.resizedDetections.forEach((detection: any) => {
             const box = detection.detection.box;
             const borderRadius = 10;
@@ -163,18 +163,18 @@ export class ScanComponent implements OnInit {
               box.y,
               box.x + box.width,
               box.y + borderRadius,
-              borderRadius
+              borderRadius,
             );
             context.lineTo(
               box.x + box.width,
-              box.y + box.height - borderRadius
+              box.y + box.height - borderRadius,
             );
             context.arcTo(
               box.x + box.width,
               box.y + box.height,
               box.x + box.width - borderRadius,
               box.y + box.height,
-              borderRadius
+              borderRadius,
             );
             context.lineTo(box.x + borderRadius, box.y + box.height);
             context.arcTo(
@@ -182,7 +182,7 @@ export class ScanComponent implements OnInit {
               box.y + box.height,
               box.x,
               box.y + box.height - borderRadius,
-              borderRadius
+              borderRadius,
             );
             context.lineTo(box.x, box.y + borderRadius);
             context.arcTo(
@@ -190,7 +190,7 @@ export class ScanComponent implements OnInit {
               box.y,
               box.x + borderRadius,
               box.y,
-              borderRadius
+              borderRadius,
             );
             context.closePath();
             context.lineWidth = 2;
@@ -212,41 +212,41 @@ export class ScanComponent implements OnInit {
     // Adjust color based on your threshold values
     if (percentage > 34) {
       this.perscentageCheck = false;
-      return "green";
+      return 'green';
     } else if (percentage > 18 && percentage <= 34) {
       this.perscentageCheck = false;
-      return "yellow";
+      return 'yellow';
     } else {
       this.perscentageCheck = true;
-      return "red";
+      return 'red';
     }
   }
   captureImage() {
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
 
     canvas.width = this.videoInput.videoWidth;
 
     canvas.height = this.videoInput.videoHeight;
 
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
     context!.drawImage(this.videoInput, 0, 0, canvas.width, canvas.height);
 
-    this.imageData = canvas.toDataURL("image/jpeg");
+    this.imageData = canvas.toDataURL('image/jpeg');
 
     this.scannedImage = this.imageData;
 
-    console.log("Image captured:", this.scannedImage);
+    console.log('Image captured:', this.scannedImage);
 
     this.flag = false;
 
     this.disableVideo = true;
 
-    let mainDiv: any = document.getElementById("mainDiv");
+    const mainDiv: any = document.getElementById('mainDiv');
     mainDiv.remove();
 
     if (this.scannedImage && this.videoInput) {
-      console.log("captured");
+      console.log('captured');
       this.videoInput.srcObject = null;
     }
     this.videoInput.srcObject = null;
@@ -256,7 +256,7 @@ export class ScanComponent implements OnInit {
     this.closeClick(true);
   }
   rescan() {
-    this.dialogRef.close("reScan");
+    this.dialogRef.close('reScan');
     this.rescann = true;
   }
   close() {

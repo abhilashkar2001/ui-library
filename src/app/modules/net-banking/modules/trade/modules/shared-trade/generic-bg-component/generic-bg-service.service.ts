@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class GenericBgServiceService {
   basePath = environment.microServiceURL;
@@ -12,7 +12,7 @@ export class GenericBgServiceService {
 
   fetchPincode(pincode: any) {
     return this.http.get<any>(
-      `${this.basePath}/city/fetchByPinCode?pincode=${pincode}`
+      `${this.basePath}/city/fetchByPinCode?pincode=${pincode}`,
     );
   }
 

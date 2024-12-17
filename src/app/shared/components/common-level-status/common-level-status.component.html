@@ -4,22 +4,26 @@
   style="background-color: #d1cccc17; overflow: unset"
 >
   <ng-container *ngFor="let levelItem of approvalList; let i = index">
-    <div [fxFlex]="i == approvalList?.length - 1 ? '6%' : '33%'" fxLayout="row">
+    <div
+      [fxFlex]="i === approvalList?.length - 1 ? '6%' : '33%'"
+      fxLayout="row"
+    >
       <div
         fxLayout="column"
-        [fxFlex]="i == approvalList?.length - 1 ? '100%' : '20%'"
+        [fxFlex]="i === approvalList?.length - 1 ? '100%' : '20%'"
         fxLayoutAlign="center start"
       >
         <!-- for CREATED action need to update src path -->
         <img
+          alt="level img"
           [src]="
-            levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
+            levelItem?.action === 'APPROVED' || levelItem?.action === 'CREATED'
               ? 'assets/images/level_complete.svg'
-              : levelItem?.action == 'REJECTED'
-              ? 'assets/images/level_rejected.svg'
-              : levelItem?.action == 'PENDING'
-              ? 'assets/images/level_pending.svg'
-              : 'assets/images/level_pending.svg'
+              : levelItem?.action === 'REJECTED'
+                ? 'assets/images/level_rejected.svg'
+                : levelItem?.action === 'PENDING'
+                  ? 'assets/images/level_pending.svg'
+                  : 'assets/images/level_pending.svg'
           "
           width="41px"
           height="41px"
@@ -28,11 +32,11 @@
         <div
           class="level_status info_icon_container"
           [ngClass]="[
-            levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
+            levelItem?.action === 'APPROVED' || levelItem?.action === 'CREATED'
               ? 'bgGreen'
               : '',
-            levelItem?.action == 'REJECTED' ? 'bgRed' : '',
-            levelItem?.action == 'PENDING' ? 'bgBlue' : ''
+            levelItem?.action === 'REJECTED' ? 'bgRed' : '',
+            levelItem?.action === 'PENDING' ? 'bgBlue' : '',
           ]"
         >
           <span fxLayoutAlign="center center" class="status_text"
@@ -49,11 +53,11 @@
                   <p
                     class="level_status"
                     [ngClass]="[
-                      levelItem?.action == 'APPROVED' ||
+                      levelItem?.action === 'APPROVED' ||
                       levelItem?.action === 'CREATED'
                         ? 'bgGreen'
                         : '',
-                      levelItem?.action == 'Rejected' ? 'bgRed' : ''
+                      levelItem?.action === 'Rejected' ? 'bgRed' : '',
                     ]"
                   >
                     {{ levelItem.action }}
@@ -72,7 +76,7 @@
       <div
         fxFlex="80"
         fxLayoutAlign="center center"
-        *ngIf="i != approvalList?.length - 1"
+        *ngIf="i !== approvalList?.length - 1"
         class="px-16"
       >
         <div class="progress_fill" fxFlex="100">
@@ -80,21 +84,22 @@
             class="progress_fill"
             [ngClass]="[
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].action == 'REJECTED'
+              approvalList[i + 1].action === 'REJECTED'
                 ? 'returnRed'
                 : '',
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].action == 'PENDING'
+              approvalList[i + 1].action === 'PENDING'
                 ? 'returnPending'
                 : '',
-              levelItem?.action == 'APPROVED' || levelItem?.action === 'CREATED'
+              levelItem?.action === 'APPROVED' ||
+              levelItem?.action === 'CREATED'
                 ? 'bgGreen'
                 : '',
-              levelItem?.action == 'REJECTED' ? 'bgRed' : ''
+              levelItem?.action === 'REJECTED' ? 'bgRed' : '',
             ]"
             [fxFlex]="
               i < approvalList?.length - 1 &&
-              approvalList[i + 1].action == 'PENDING'
+              approvalList[i + 1].action === 'PENDING'
                 ? 75
                 : 100
             "

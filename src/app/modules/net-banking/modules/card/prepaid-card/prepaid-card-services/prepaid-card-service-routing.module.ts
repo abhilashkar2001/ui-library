@@ -1,35 +1,35 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { PrepaidServicesComponent } from "./prepaid-services/prepaid-services.component";
-import { PrepaidReloadComponent } from "./components/prepaid-reload/prepaid-reload.component";
-import { PrepaidRefundComponent } from "./components/prepaid-refund/prepaid-refund.component";
-import { BlockCardComponent } from "../../shared-card/components/block-card/block-card.component";
-import { PinGenerationComponent } from "../../shared-card/components/pin-generation/pin-generation.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PrepaidServicesComponent } from './prepaid-services/prepaid-services.component';
+import { PrepaidReloadComponent } from './components/prepaid-reload/prepaid-reload.component';
+import { PrepaidRefundComponent } from './components/prepaid-refund/prepaid-refund.component';
+import { BlockCardComponent } from '../../shared-card/components/block-card/block-card.component';
+import { PinGenerationComponent } from '../../shared-card/components/pin-generation/pin-generation.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: PrepaidServicesComponent,
     children: [
       {
-        path: "",
-        redirectTo: "reload",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'reload',
+        pathMatch: 'full',
       },
       {
-        path: "reload",
+        path: 'reload',
         component: PrepaidReloadComponent,
       },
       {
-        path: "pin-generation",
+        path: 'pin-generation',
         component: PinGenerationComponent,
       },
       {
-        path: "block-card",
+        path: 'block-card',
         component: BlockCardComponent,
       },
       {
-        path: "refund",
+        path: 'refund',
         component: PrepaidRefundComponent,
       },
     ],

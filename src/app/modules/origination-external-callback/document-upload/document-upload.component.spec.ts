@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocumentUploadComponent } from "./document-upload.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule } from "@angular/material/select";
+import { DocumentUploadComponent } from './document-upload.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
-describe("DocumentUploadComponent", () => {
+describe('DocumentUploadComponent', () => {
   let component: DocumentUploadComponent;
   let fixture: ComponentFixture<DocumentUploadComponent>;
 
@@ -16,8 +16,8 @@ describe("DocumentUploadComponent", () => {
         ReactiveFormsModule,
         FormsModule,
         MatInputModule,
-        MatSelectModule
-      ]
+        MatSelectModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DocumentUploadComponent);
@@ -25,7 +25,7 @@ describe("DocumentUploadComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

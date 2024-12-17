@@ -9,12 +9,12 @@
       {{ details?.statusHeader }}
     </div>
     <div class="icon_section text-label">
-      <ng-container *ngIf="details?.status == 'confirm'">
+      <ng-container *ngIf="details?.status === 'confirm'">
         <button mat-icon-button (click)="edit()">
           <mat-icon svgIcon="edit-icon"></mat-icon>
         </button>
       </ng-container>
-      <ng-container *ngIf="details?.status == 'confirm-payee'">
+      <ng-container *ngIf="details?.status === 'confirm-payee'">
         <button mat-icon-button>
           <mat-icon svgIcon="fav-icon"></mat-icon>
         </button>
@@ -27,9 +27,9 @@
       </ng-container>
       <ng-container
         *ngIf="
-          details?.status == 'success' ||
-          details?.status == 'failed' ||
-          details?.status == 'request'
+          details?.status === 'success' ||
+          details?.status === 'failed' ||
+          details?.status === 'request'
         "
       >
         <!-- <button mat-icon-button>
@@ -45,10 +45,10 @@
     <!-- Image section starts -->
     <ng-container
       *ngIf="
-        (details?.status == 'confirm' &&
-          details?.eventType != 'mmidTransfer') ||
-        details?.status == 'request' ||
-        details?.status == 'confirm-payee'
+        (details?.status === 'confirm' &&
+          details?.eventType !== 'mmidTran=sfer') ||
+        details?.status === 'request' ||
+        details?.status === 'confirm-=payee'
       "
     >
       <div
@@ -56,9 +56,9 @@
         class="expected-time"
         *ngIf="paymentDetailsArr[0].eventType === 'chequeBookRequest'"
       >
-        <span class="expected-title">{{ "Expected Time to deliver:" }}</span>
+        <span class="expected-title">{{ 'Expected Time to deliver:' }}</span>
         <span>{{
-          "Physical cheque book will be delivered in 5 working days"
+          'Physical cheque book will be delivered in 5 working days'
         }}</span>
       </div>
       <div
@@ -66,7 +66,7 @@
         fxLayout="row"
         fxLayoutAlign="start center"
         fxLayoutGap="10"
-        *ngIf="paymentDetailsArr[0].eventType != 'chequeBookRequest'"
+        *ngIf="paymentDetailsArr[0].eventType !== 'chequeBookRequest'"
       >
         <div class="img_div d-flex" fxFlex="10">
           <div class="img_content img_txt">
@@ -95,7 +95,7 @@
       </div>
     </ng-container>
     <ng-container
-      *ngIf="details?.status == 'success' || details?.status == 'failed'"
+      *ngIf="details?.status === 'success' || details?.status === 'failed'"
     >
       <div
         class="news_pallet"
@@ -105,11 +105,11 @@
       >
         <div class="img_div d-flex" fxFlex="10">
           <!-- if status is Succesful -->
-          <ng-container *ngIf="details?.status == 'success'">
+          <ng-container *ngIf="details?.status === 'success'">
             <img src="assets/images/payment-success.png" alt="img.success" />
           </ng-container>
           <!-- if status is failed -->
-          <ng-container *ngIf="details?.status == 'failed'">
+          <ng-container *ngIf="details?.status === 'failed'">
             <img src="assets/images/payment-failed.png" alt="img.success" />
           </ng-container>
         </div>
@@ -143,7 +143,7 @@
             <div class="summary_heading" fxFlex="100">
               {{ item?.header }}
             </div>
-            <ng-container *ngIf="item?.header != 'Document Upload'">
+            <ng-container *ngIf="item?.header !== 'Document Upload'">
               <div
                 class="summary_contain standard-padding"
                 fxFlex="100"
@@ -162,7 +162,7 @@
                 </ng-container>
               </div>
             </ng-container>
-            <ng-container *ngIf="item?.header == 'Document Upload'">
+            <ng-container *ngIf="item?.header === 'Document Upload'">
               <ng-container>
                 <!-- {{ chunk }} -->
                 <app-reusable-table
@@ -180,13 +180,13 @@
   </div>
   <!-- Footer section starts -->
   <div class="custom_card_footer" fxLayoutAlign="space-between center">
-    <ng-container *ngIf="details?.status != 'confirm-payee'">
+    <ng-container *ngIf="details?.status !== 'confirm-payee'">
       <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5">
         <div class="footer_icon" fxLayoutAlign="end start">
           <mat-icon svgIcon="info-icon"></mat-icon>
         </div>
         <div class="footer_contain">
-          <ng-container *ngIf="details?.status == 'confirm'; else contactInfo">
+          <ng-container *ngIf="details?.status === 'confirm'; else contactInfo">
             As per RBI guidelines, credit will be effected based solely on the
             Payee Account Number information and the Payee Name particulars will
             not be used therefore. Check account number twice.
@@ -198,7 +198,7 @@
       </div>
     </ng-container>
     <div
-      *ngIf="details?.status == 'confirm-payee'"
+      *ngIf="details?.status === 'confirm-payee'"
       fxLayout="row"
       fxLayoutGap="10"
     >
@@ -214,19 +214,19 @@
       ></app-ic-action-button>
     </div>
     <div
-      *ngIf="details?.status == 'failed' || details?.status == 'success'"
+      *ngIf="details?.status === 'failed' || details?.status === 'success'"
       fxLayout="row"
       fxLayoutGap="10"
     >
       <ng-container
-        *ngIf="details?.status == 'success' && details?.qrToggle == true"
+        *ngIf="details?.status === 'success' && details?.qrToggle === true"
       >
         <button mat-flat-button class="filled_btn">
-          {{ "Generate QR" }}
+          {{ 'Generate QR' }}
         </button>
       </ng-container>
       <button mat-flat-button (click)="done()" class="filled_btn">
-        {{ "Done" }}
+        {{ 'Done' }}
       </button>
     </div>
   </div>

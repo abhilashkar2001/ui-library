@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
-import { debounceTime } from "rxjs/operators";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { OCRService } from "app/shared/services/ocr.service";
-import { NotificationService } from "app/shared/services/notification.service";
-import { DocumentUploadService } from "app/shared/services/document-upload.service";
-import { SalaryAccountService } from "../salary-account/salary-account.service";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs/operators';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
+import { OCRService } from 'app/shared/services/ocr.service';
+import { NotificationService } from 'app/shared/services/notification.service';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { SalaryAccountService } from '../salary-account/salary-account.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-add-salary-account",
-  templateUrl: "./add-salary-account.component.html",
-  styleUrls: ["./add-salary-account.component.scss"]
+  selector: 'app-add-salary-account',
+  templateUrl: './add-salary-account.component.html',
+  styleUrls: ['./add-salary-account.component.scss'],
 })
 export class AddSalaryAccountComponent implements OnInit {
   salaryAccountForm!: FormGroup;
-  screenName: string = "Common";
+  screenName = 'Common';
   genericData: any = {
     PREFIX: [],
     GENDER: [],
@@ -25,7 +25,7 @@ export class AddSalaryAccountComponent implements OnInit {
     NATIONALITY: [],
     RESIDENCETYPE: [],
     RELATIONSHIPTYPE: [],
-    DOCUMENTNAME: []
+    DOCUMENTNAME: [],
   };
   genederData: any;
   maritalData: any;
@@ -42,7 +42,7 @@ export class AddSalaryAccountComponent implements OnInit {
     private snack: MatSnackBar,
     private ocrService: OCRService,
     private notificationService: NotificationService,
-    private documentUploadService: DocumentUploadService
+    private documentUploadService: DocumentUploadService,
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class AddSalaryAccountComponent implements OnInit {
     this.fetchGenericValues();
     this.fetchCountry();
     this.customerInfoForm = this.fb.group({
-      documents: this.fb.array([])
+      documents: this.fb.array([]),
     });
     this.addDocuments();
   }
@@ -74,17 +74,17 @@ export class AddSalaryAccountComponent implements OnInit {
       city: [],
       nationality: [],
       mobile: [],
-      mobtCode: []
+      mobtCode: [],
     });
     this.salaryAccountForm
-      .get("pincode")
+      .get('pincode')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((res) => {
         if (res) this.zipCode();
       });
   }
   goBack() {
-    this.router.navigate(["user/dashboard/salary-account"]);
+    this.router.navigate(['user/dashboard/salary-account']);
   }
   fetchGenericValues() {
     this.api
@@ -107,49 +107,49 @@ export class AddSalaryAccountComponent implements OnInit {
   }
   zipCode() {
     this.api
-      .getPinCodes(this.salaryAccountForm.get("pincode")?.value)
+      .getPinCodes(this.salaryAccountForm.get('pincode')?.value)
       .subscribe((res) => {
         this.pincodesData = res.data;
-        this.salaryAccountForm.get("city")?.setValue(res.data[0].city);
+        this.salaryAccountForm.get('city')?.setValue(res.data[0].city);
         this.salaryAccountForm
-          .get("country")
+          .get('country')
           ?.setValue(res.data[0].countryName);
-        this.salaryAccountForm.get("state")?.setValue(res.data[0].state);
+        this.salaryAccountForm.get('state')?.setValue(res.data[0].state);
       });
   }
   saveRecord() {
     const cityVal = this.pincodesData.find(
-      (item: any) => item.city == this.salaryAccountForm.value.city
+      (item: any) => item.city == this.salaryAccountForm.value.city,
     );
     console.log(cityVal);
 
     const Address = [
       {
         address1: this.salaryAccountForm.value.address,
-        address2: "",
-        addressType: "",
+        address2: '',
+        addressType: '',
         residenceType: this.salaryAccountForm.value.residenceType,
         countryName: this.salaryAccountForm.value.country,
         pincode: this.salaryAccountForm.value.pincode,
         stateName: this.salaryAccountForm.value.state,
         cityName: this.salaryAccountForm.value.city,
         cityId: cityVal.cityId,
-        addressId: ""
-      }
+        addressId: '',
+      },
     ];
     const Contact = {
       mobile: Number(this.salaryAccountForm.value.mobile),
       email: this.salaryAccountForm.value.email,
       mobtCode: this.salaryAccountForm.value.mobtCode,
-      contactId: "",
-      address: Address
+      contactId: '',
+      address: Address,
     };
-    var payload: any = {
+    const payload: any = {
       customerNo: null,
       customerId: null,
       corporateId: this.salaryAccountForm.value.corporateId,
       empNo: this.salaryAccountForm.value.empNo,
-      onboardingStatus: "",
+      onboardingStatus: '',
       primaryCustomer: true,
       prefix: this.salaryAccountForm.value.prefix,
       firstName: this.salaryAccountForm.value.firstName,
@@ -157,10 +157,10 @@ export class AddSalaryAccountComponent implements OnInit {
       dateOfBirth: this.salaryAccountForm.value.dateOfBirth,
       gender: this.salaryAccountForm.value.gender,
       nationality: this.salaryAccountForm.value.nationality,
-      source: "Website",
+      source: 'Website',
       kycStatus: null,
       documentId: null,
-      contact: Contact
+      contact: Contact,
     };
     console.log(payload);
 
@@ -171,15 +171,15 @@ export class AddSalaryAccountComponent implements OnInit {
           data: {
             msg: resp.message,
             status: resp.status,
-            reffNo: resp.data.customerId
+            reffNo: resp.data.customerId,
           },
-          width: "60%",
+          width: '60%',
           disableClose: true,
-          panelClass: "dialog-class"
+          panelClass: 'dialog-class',
         });
         dialog.afterClosed().subscribe((res) => {
           console.log(res);
-          if (res == "Done") {
+          if (res == 'Done') {
             this.goBack();
           }
         });
@@ -188,26 +188,26 @@ export class AddSalaryAccountComponent implements OnInit {
   }
 
   get documentCtrl(): FormArray | any {
-    return this.customerInfoForm.get("documents") as FormArray;
+    return this.customerInfoForm.get('documents') as FormArray;
   }
 
   documentFormArray(data?: any) {
     return this.fb.group({
-      documentName: [data?.documentType ?? ""],
+      documentName: [data?.documentType ?? ''],
       isProofOfAddress: [data?.isProofOfAddress ?? false],
-      files: this.fb.array([])
+      files: this.fb.array([]),
     });
   }
 
   documentFilesCtrl(index: any): FormArray {
-    return this.documentCtrl.at(index).get("files") as FormArray;
+    return this.documentCtrl.at(index).get('files') as FormArray;
   }
 
   documentFileFormArray(fileName: any, fileUrl: any, documentId: any) {
     return this.fb.group({
-      fileName: [fileName ?? ""],
-      fileUrl: [fileUrl ?? ""],
-      documentId: [documentId ?? null]
+      fileName: [fileName ?? ''],
+      fileUrl: [fileUrl ?? ''],
+      documentId: [documentId ?? null],
     });
   }
 
@@ -215,53 +215,53 @@ export class AddSalaryAccountComponent implements OnInit {
     const file = event.target.files[0];
     if (
       this.documentCtrl.value.some((doc: any) =>
-        doc?.files?.some((item: any) => item?.fileName.includes(file?.name))
+        doc?.files?.some((item: any) => item?.fileName.includes(file?.name)),
       )
     ) {
       this.notificationService.showError(
-        "This document is already uploaded",
-        "Please upload another document"
+        'This document is already uploaded',
+        'Please upload another document',
       );
       return;
     }
-    let docdata: any = {};
-    docdata.fileName = file?.name.split(".")[0];
-    docdata.fileType = file?.type.split("/")[1];
+    const docdata: any = {};
+    docdata.fileName = file?.name.split('.')[0];
+    docdata.fileType = file?.type.split('/')[1];
     docdata.documentName = this.documentCtrl
       .at(index)
-      .get("documentName")?.value;
+      .get('documentName')?.value;
     const formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("data", JSON.stringify(docdata));
-    formdata.append("module", "document");
+    formdata.append('file', file);
+    formdata.append('data', JSON.stringify(docdata));
+    formdata.append('module', 'document');
     this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
       if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
         const docname = this.genericData.DOCUMENTNAME.find(
           (res: any) =>
-            res?.id == this.documentCtrl.at(index)?.get("documentName")?.value
+            res?.id == this.documentCtrl.at(index)?.get('documentName')?.value,
         )?.values;
         const type = docname.toLowerCase();
         const formdata = new FormData();
-        formdata.append("image", file);
-        formdata.append("lang", "eng");
-        formdata.append("imageType", this.getDocTypeforScan(type, index));
+        formdata.append('image', file);
+        formdata.append('lang', 'eng');
+        formdata.append('imageType', this.getDocTypeforScan(type, index));
         this.ocrService.readAadharData(formdata).subscribe((resp) => {
           if (resp?.statusCode == 200) {
             if (
               Object.keys(resp?.data).filter(
                 (value) =>
-                  resp?.data[value] != "Detail not found" &&
-                  resp?.data[value] != null
+                  resp?.data[value] != 'Detail not found' &&
+                  resp?.data[value] != null,
               )?.length < 1
             ) {
               this.snack.open(
                 `Uploaded ${type} is not a valid ${type}`,
-                "Ok!",
+                'Ok!',
                 {
                   duration: 2000,
-                  horizontalPosition: "right",
-                  verticalPosition: "top"
-                }
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                },
               );
               return;
             }
@@ -269,14 +269,14 @@ export class AddSalaryAccountComponent implements OnInit {
               this.documentFileFormArray(
                 file.name,
                 res?.data?.fileUrl,
-                res?.data?.documentId
-              )
+                res?.data?.documentId,
+              ),
             );
           } else {
-            this.snack.open(`Uploaded ${type} is not a valid ${type}`, "Ok!", {
+            this.snack.open(`Uploaded ${type} is not a valid ${type}`, 'Ok!', {
               duration: 2000,
-              horizontalPosition: "right",
-              verticalPosition: "top"
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
             });
           }
         });
@@ -286,22 +286,22 @@ export class AddSalaryAccountComponent implements OnInit {
 
   getDocTypeforScan(docname: any, index: any) {
     let docType;
-    let fileindex =
-      this.documentCtrl.controls[index]?.get("files")?.value.length;
-    if (docname.includes("adhar") && fileindex == 0) {
-      docType = "adhaar";
+    const fileindex =
+      this.documentCtrl.controls[index]?.get('files')?.value.length;
+    if (docname.includes('adhar') && fileindex == 0) {
+      docType = 'adhaar';
     }
-    if (docname.includes("adhar") && fileindex == 1) {
-      docType = "adhaar_back";
+    if (docname.includes('adhar') && fileindex == 1) {
+      docType = 'adhaar_back';
     }
-    if (docname.includes("pan")) {
-      docType = "pan";
+    if (docname.includes('pan')) {
+      docType = 'pan';
     }
-    if (docname.includes("pass") && fileindex == 0) {
+    if (docname.includes('pass') && fileindex == 0) {
       docType = docname;
     }
-    if (docname.includes("pass") && fileindex == 1) {
-      docType = "passport_back";
+    if (docname.includes('pass') && fileindex == 1) {
+      docType = 'passport_back';
     }
     return docType;
   }
@@ -318,10 +318,10 @@ export class AddSalaryAccountComponent implements OnInit {
     value: string,
     control: FormGroup | any,
     key: string,
-    genericName: string
+    genericName: string,
   ) {
     const genericValue = this.genederData[genericName].find(
-      (item: any) => item.id == value
+      (item: any) => item.id == value,
     ).values;
     control.get(key).setValue(genericValue);
   }

@@ -8,9 +8,8 @@ describe('CustomSwiperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomSwiperComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomSwiperComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomSwiperComponent);
     component = fixture.componentInstance;

@@ -92,7 +92,7 @@
               class="time_slot_card"
               (click)="onTimeSelected(timeSlot)"
               [ngClass]="[
-                timeSlot?.time == selectedTimeSlot ? 'bg_selectedSlot' : ''
+                timeSlot?.time == selectedTimeSlot ? 'bg_selectedSlot' : '',
               ]"
             >
               <span>

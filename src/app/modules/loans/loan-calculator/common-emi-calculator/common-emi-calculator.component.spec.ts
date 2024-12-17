@@ -8,9 +8,8 @@ describe('CommonEmiCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommonEmiCalculatorComponent ]
-    })
-    .compileComponents();
+      declarations: [CommonEmiCalculatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommonEmiCalculatorComponent);
     component = fixture.componentInstance;

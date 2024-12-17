@@ -8,9 +8,8 @@ describe('GrowthFdAnimationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GrowthFdAnimationComponent ]
-    })
-    .compileComponents();
+      declarations: [GrowthFdAnimationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GrowthFdAnimationComponent);
     component = fixture.componentInstance;

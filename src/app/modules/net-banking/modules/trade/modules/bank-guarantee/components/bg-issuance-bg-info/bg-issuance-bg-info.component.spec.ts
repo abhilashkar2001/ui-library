@@ -8,9 +8,8 @@ describe('BgIssuanceBgInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BgIssuanceBgInfoComponent ]
-    })
-    .compileComponents();
+      declarations: [BgIssuanceBgInfoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BgIssuanceBgInfoComponent);
     component = fixture.componentInstance;

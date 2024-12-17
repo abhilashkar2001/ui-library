@@ -1,20 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AllInOnePopupComponent } from "app/shared/components/all-in-one-popup/all-in-one-popup.component";
-import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { CustomSuccessPopupComponent } from "app/shared/components/custom-success-popup/custom-success-popup.component";
-import { BeneficiaryService } from "../beneficiary-summary/beneficiary.service";
-import { BulkUploadConstant } from "app/modules/net-banking/modules/dashboard/modules/fund-transfer/add-bulk-upload/bulk.upload.constant";
-import { BulkUploadServiceService } from "app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
+import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
+import { CommonService } from 'app/shared/services/common-service/common.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
+import { BeneficiaryService } from '../beneficiary-summary/beneficiary.service';
+import { BulkUploadConstant } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/add-bulk-upload/bulk.upload.constant';
+import { BulkUploadServiceService } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-beneficiary-bulk-upload",
-  templateUrl: "./beneficiary-bulk-upload.component.html",
-  styleUrls: ["./beneficiary-bulk-upload.component.scss"]
+  selector: 'app-beneficiary-bulk-upload',
+  templateUrl: './beneficiary-bulk-upload.component.html',
+  styleUrls: ['./beneficiary-bulk-upload.component.scss'],
 })
 export class BeneficiaryBulkUploadComponent implements OnInit {
   public approvalForm!: FormGroup;
@@ -29,10 +29,10 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       page: 1,
       size: 5,
       totalElements: 562,
-      totalPages: 113
+      totalPages: 113,
     },
     statusCode: 200,
-    status: "OK"
+    status: 'OK',
   };
   auditLogObject: any = {};
   bulkId: any;
@@ -44,17 +44,17 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   filterBy: any;
 
   pendingLevel = {
-    action: "PENDING",
-    userDetais: {}
+    action: 'PENDING',
+    userDetais: {},
   };
   actionType: any;
   transactionIds: any[] = [];
   currentUser: any;
   otp: any;
   referenceNo: any;
-  remarks: string = "";
-  isTransactionActionDone: boolean = false;
-  bulkUploadType: any = "Bulk Upload";
+  remarks = '';
+  isTransactionActionDone = false;
+  bulkUploadType: any = 'Bulk Upload';
   // BulkUploadConstant.staticData;
 
   constructor(
@@ -64,16 +64,16 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
     private commonService: CommonService,
-    private benificiaryService: BeneficiaryService
+    private benificiaryService: BeneficiaryService,
   ) {}
 
   ngOnInit(): void {
     console.log();
     this.currentUser = this.tokenStorage.getUser();
     this.isEdit = true;
-    this.referenceNo = this.route.snapshot.params["id"];
-    console.log(this.referenceNo, "this.bulkId");
-    if (this.bulkId != "addNew") {
+    this.referenceNo = this.route.snapshot.params['id'];
+    console.log(this.referenceNo, 'this.bulkId');
+    if (this.bulkId != 'addNew') {
       // this.getTransactionLevelStatus();
       // this.tansactionAction();
     }
@@ -118,13 +118,13 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   }
 
   customUpdateRecord(event: any) {
-    console.log(event, "button action", this.transactionDetails);
+    console.log(event, 'button action', this.transactionDetails);
     this.actionType = event.operation;
     this.transactionIds = [];
     this.transactionDetails.forEach((transaction: any) => {
       this.transactionIds.push({
         ids: transaction.multiJournalId,
-        status: event.operation === "Authorize" ? "APPROVED" : "REJECTED"
+        status: event.operation === 'Authorize' ? 'APPROVED' : 'REJECTED',
       });
     });
 
@@ -134,11 +134,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   openRemark() {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
-        recordStatus: "Approved"
+        recordStatus: 'Approved',
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class"
+      panelClass: 'popup-dialog-class',
     });
     dialogRef.afterClosed().subscribe((resp) => {
       this.remarks = resp;
@@ -155,11 +155,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorage.getUser()?.mobile
+        mobile: this.tokenStorage.getUser()?.mobile,
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class"
+      panelClass: 'popup-dialog-class',
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
@@ -172,7 +172,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
                   excelId: this.bulkId,
                   remarks: this.remarks,
                   status:
-                    this.actionType === "Authorize" ? "APPROVED" : "REJECTED"
+                    this.actionType === 'Authorize' ? 'APPROVED' : 'REJECTED',
                 };
                 this.api.updateRemark(obj).subscribe((response) => {
                   if (response?.statusCode === 200)
@@ -192,21 +192,21 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
         isNetBanking: true,
         actionType: this.actionType,
         refrenceNo: resp.data,
-        route: "pending-for-approval"
+        route: 'pending-for-approval',
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class",
-      backdropClass: "bdrop"
+      panelClass: 'popup-dialog-class',
+      backdropClass: 'bdrop',
     });
     dialogRefrence.afterClosed().subscribe(() => {
-      console.log("........");
+      console.log('........');
     });
   }
 
   goBack() {
-    console.log("/////////");
-    this.router.navigate(["/user/trade/beneficiary"]);
+    console.log('/////////');
+    this.router.navigate(['/user/trade/beneficiary']);
   }
 
   processTransaction(event: any) {
@@ -226,11 +226,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.currentUser.mobile
+        mobile: this.currentUser.mobile,
       },
-      width: "750px",
+      width: '750px',
       disableClose: true,
-      panelClass: "popup-dialog-class"
+      panelClass: 'popup-dialog-class',
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp) {
@@ -238,28 +238,28 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
           .uploadBenificiaryExcel(event.formData)
           .subscribe((res: any) => {
             if (res?.statusCode === 200) {
-              this.callSuccessPopup("success", res?.data);
-            } else this.callSuccessPopup("failed");
+              this.callSuccessPopup('success', res?.data);
+            } else this.callSuccessPopup('failed');
           });
       }
     });
   }
 
   callSuccessPopup(res: any, reffNo?: any) {
-    let data =
-      res == "success"
-        ? { msg: "Uploaded Successfully", status: true, reffNo: reffNo?.reffNo }
-        : { msg: "Uploaded Failed", status: false };
-    let dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
+    const data =
+      res == 'success'
+        ? { msg: 'Uploaded Successfully', status: true, reffNo: reffNo?.reffNo }
+        : { msg: 'Uploaded Failed', status: false };
+    const dialogRef = this.dialog.open(CustomSuccessPopupComponent, {
       data: data,
-      width: "40%",
+      width: '40%',
       disableClose: true,
-      panelClass: "popup-class",
-      backdropClass: "bdrop"
+      panelClass: 'popup-class',
+      backdropClass: 'bdrop',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
-      if (result == "Done") {
+      if (result == 'Done') {
         this.goBack();
       }
     });
@@ -269,22 +269,22 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
     this.benificiaryService
       .downloadBenificiaryTemplate()
       .subscribe((blob: any) => {
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = "Upload.csv";
+        link.download = 'Upload.csv';
         link.click();
       });
   }
 
   downloadRecord() {
-    console.log("..........");
+    console.log('..........');
     this.api.downloadBulkUpload(this.bulkId).subscribe((data) => {
-      let blob = new Blob([data], { type: "application/octet-stream" });
+      const blob = new Blob([data], { type: 'application/octet-stream' });
 
-      var downloadURL = window.URL.createObjectURL(blob);
-      var link = document.createElement("a");
+      const downloadURL = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
       link.href = downloadURL;
-      link.download = "report.xlsx";
+      link.download = 'report.xlsx';
       link.click();
     });
   }

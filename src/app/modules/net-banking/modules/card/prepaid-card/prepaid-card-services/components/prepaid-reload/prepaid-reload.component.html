@@ -42,7 +42,7 @@
     <ng-template #showRegisterPrepaid>
       <div fxLayout="row" fxFlex="100" fxLayoutGap="10">
         <div fxLayout="column" class="blue-box" fxFlex="100">
-          <span class="light-blue-title">{{ "Pay From" | translate }}</span>
+          <span class="light-blue-title">{{ 'Pay From' | translate }}</span>
           <div fxLayout="column">
             <app-ic-custom-pay-from
               [control]="reloadForm.get('payFrom') | formcontrol"
@@ -54,7 +54,7 @@
           </div>
         </div>
         <div fxLayout="column" class="blue-box" fxFlex="100">
-          <span class="light-blue-title">{{ "Credit Card" | translate }}</span>
+          <span class="light-blue-title">{{ 'Credit Card' | translate }}</span>
           <div fxLayout="row">
             <app-ic-custom-pay-from
               [control]="reloadForm.get('cardNumber') | formcontrol"
@@ -70,7 +70,7 @@
               class="label-info m-12"
             >
               <span class="label-info">
-                {{ "Credit card" | translate }} | {{ "Name" | translate }} -
+                {{ 'Credit card' | translate }} | {{ 'Name' | translate }} -
               </span>
             </div>
           </div>
@@ -78,7 +78,7 @@
       </div>
     </ng-template>
     <div class="light-blue-title row">
-      {{ "Payment Details" | translate }}
+      {{ 'Payment Details' | translate }}
     </div>
     <div fxFlex="100" class="mt-8">
       <app-ic-radio-button

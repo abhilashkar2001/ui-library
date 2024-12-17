@@ -1,12 +1,12 @@
-import { Directive, HostListener } from "@angular/core";
+import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-  selector: "[noSpace]",
+  selector: '[appNoSpace]',
 })
 export class NoSpaceDirective {
-  @HostListener("keydown", ["$event"])
+  @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === " ") {
+    if (event.key === ' ') {
       event.preventDefault();
     }
   }

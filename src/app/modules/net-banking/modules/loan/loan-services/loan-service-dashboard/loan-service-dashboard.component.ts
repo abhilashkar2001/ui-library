@@ -4,15 +4,13 @@ import { LoanDashboardConstant } from '../../loan-dashboard/loan-dashboard.const
 @Component({
   selector: 'app-loan-service-dashboard',
   templateUrl: './loan-service-dashboard.component.html',
-  styleUrls: ['./loan-service-dashboard.component.scss']
+  styleUrls: ['./loan-service-dashboard.component.scss'],
 })
 export class LoanServiceDashboardComponent implements OnInit {
   transactionCard = LoanDashboardConstant.transactionCard;
   serviceLinks = LoanDashboardConstant.Links;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,54 +1,54 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { GenericBgComponentComponent } from "../shared-trade/generic-bg-component/generic-bg-component.component";
-import { BgSummaryComponent } from "../shared-trade/bg-summary/bg-summary.component";
-import { BgInfoComponent } from "app/modules/net-banking/modules/trade/modules/bank-guarantee/pages/bg-info/bg-info.component";
-import { AttachmentsComponent } from "app/modules/net-banking/modules/trade/modules/shared-trade/attachments/attachments.component";
-import { OthersInfoComponent } from "app/modules/net-banking/modules/trade/modules/shared-trade/others-info/others-info.component";
-import { AmendementInfoComponent } from "app/modules/net-banking/modules/trade/modules/bank-guarantee/pages/amendement-info/amendement-info.component";
-import { ApplicantsInfoComponent } from "app/modules/net-banking/modules/trade/modules/shared-trade/applicants-info/applicants-info.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { GenericBgComponentComponent } from '../shared-trade/generic-bg-component/generic-bg-component.component';
+import { BgSummaryComponent } from '../shared-trade/bg-summary/bg-summary.component';
+import { BgInfoComponent } from 'app/modules/net-banking/modules/trade/modules/bank-guarantee/pages/bg-info/bg-info.component';
+import { AttachmentsComponent } from 'app/modules/net-banking/modules/trade/modules/shared-trade/attachments/attachments.component';
+import { OthersInfoComponent } from 'app/modules/net-banking/modules/trade/modules/shared-trade/others-info/others-info.component';
+import { AmendementInfoComponent } from 'app/modules/net-banking/modules/trade/modules/bank-guarantee/pages/amendement-info/amendement-info.component';
+import { ApplicantsInfoComponent } from 'app/modules/net-banking/modules/trade/modules/shared-trade/applicants-info/applicants-info.component';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "bg-issuance",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'bg-issuance',
+    pathMatch: 'full',
   },
   {
-    path: "bg-issuance",
+    path: 'bg-issuance',
     children: [
       {
-        path: "",
-        redirectTo: "summary",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full',
       },
       {
-        path: "summary",
+        path: 'summary',
         component: BgSummaryComponent,
       },
       {
-        path: "add",
+        path: 'add',
         component: GenericBgComponentComponent,
         children: [
           {
-            path: "",
-            redirectTo: "applicants-info",
-            pathMatch: "full",
+            path: '',
+            redirectTo: 'applicants-info',
+            pathMatch: 'full',
           },
           {
-            path: "applicants-info",
+            path: 'applicants-info',
             component: ApplicantsInfoComponent,
           },
           {
-            path: "bg-info",
+            path: 'bg-info',
             component: BgInfoComponent,
           },
           {
-            path: "other-info",
+            path: 'other-info',
             component: OthersInfoComponent,
           },
           {
-            path: "attachments",
+            path: 'attachments',
             component: AttachmentsComponent,
           },
         ],
@@ -56,40 +56,40 @@ const routes: Routes = [
     ],
   },
   {
-    path: "bg-amendment",
+    path: 'bg-amendment',
     children: [
       {
-        path: "",
-        redirectTo: "summary",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full',
       },
       {
-        path: "summary",
+        path: 'summary',
         component: BgSummaryComponent,
       },
       {
-        path: "add",
+        path: 'add',
         component: GenericBgComponentComponent,
         children: [
           {
-            path: "",
-            redirectTo: "bg-info",
-            pathMatch: "full",
+            path: '',
+            redirectTo: 'bg-info',
+            pathMatch: 'full',
           },
           {
-            path: "bg-info",
+            path: 'bg-info',
             component: BgInfoComponent,
           },
           {
-            path: "amendment-info",
+            path: 'amendment-info',
             component: AmendementInfoComponent,
           },
           {
-            path: "other-info",
+            path: 'other-info',
             component: OthersInfoComponent,
           },
           {
-            path: "attachments",
+            path: 'attachments',
             component: AttachmentsComponent,
           },
         ],
@@ -97,32 +97,32 @@ const routes: Routes = [
     ],
   },
   {
-    path: "bg-physical-amedment",
+    path: 'bg-physical-amedment',
     children: [
       {
-        path: "",
-        redirectTo: "summary",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full',
       },
       {
-        path: "summary",
+        path: 'summary',
         component: BgSummaryComponent,
       },
       {
-        path: "add",
+        path: 'add',
         component: GenericBgComponentComponent,
         children: [
           {
-            path: "",
-            redirectTo: "amendment-info",
-            pathMatch: "full",
+            path: '',
+            redirectTo: 'amendment-info',
+            pathMatch: 'full',
           },
           {
-            path: "amendment-info",
+            path: 'amendment-info',
             component: AmendementInfoComponent,
           },
           {
-            path: "attachments",
+            path: 'attachments',
             component: AttachmentsComponent,
           },
         ],
@@ -130,40 +130,40 @@ const routes: Routes = [
     ],
   },
   {
-    path: "bg-templates",
+    path: 'bg-templates',
     children: [
       {
-        path: "",
-        redirectTo: "summary",
-        pathMatch: "full",
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full',
       },
       {
-        path: "summary",
+        path: 'summary',
         component: BgSummaryComponent,
       },
       {
-        path: "add",
+        path: 'add',
         component: GenericBgComponentComponent,
         children: [
           {
-            path: "",
-            redirectTo: "applicants-info",
-            pathMatch: "full",
+            path: '',
+            redirectTo: 'applicants-info',
+            pathMatch: 'full',
           },
           {
-            path: "applicants-info",
+            path: 'applicants-info',
             component: ApplicantsInfoComponent,
           },
           {
-            path: "bg-info",
+            path: 'bg-info',
             component: BgInfoComponent,
           },
           {
-            path: "other-info",
+            path: 'other-info',
             component: OthersInfoComponent,
           },
           {
-            path: "attachments",
+            path: 'attachments',
             component: AttachmentsComponent,
           },
         ],

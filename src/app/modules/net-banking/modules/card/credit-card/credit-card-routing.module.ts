@@ -1,31 +1,31 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadChildren: () =>
-      import("./credit-card-dashboard/credit-card-dashboard.module").then(
-        (m) => m.CreditCardDashboardModule
+      import('./credit-card-dashboard/credit-card-dashboard.module').then(
+        (m) => m.CreditCardDashboardModule,
       ),
   },
   {
-    path: "service",
+    path: 'service',
     loadChildren: () =>
-      import("./credit-card-service/credit-card-service.module").then(
-        (m) => m.CreditCardServiceModule
+      import('./credit-card-service/credit-card-service.module').then(
+        (m) => m.CreditCardServiceModule,
       ),
   },
   {
-    path: "manage-card",
+    path: 'manage-card',
     loadChildren: () =>
-      import("./manage-credit-card/manage-credit-card-module.module").then(
-        (m) => m.ManageCreditCardModule
+      import('./manage-credit-card/manage-credit-card-module.module').then(
+        (m) => m.ManageCreditCardModule,
       ),
   },
 ];

@@ -4,26 +4,26 @@ import {
   OnDestroy,
   HostBinding,
   Input,
-  HostListener
-} from "@angular/core";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
-import { MatchMediaService } from "app/shared/services/match-media.service";
-import { EgretSidenavHelperService } from "./egret-sidenav-helper.service";
-import { MatSidenav } from "@angular/material/sidenav";
-import { MediaObserver } from "@angular/flex-layout";
+  HostListener,
+} from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { MatchMediaService } from 'app/shared/services/match-media.service';
+import { EgretSidenavHelperService } from './egret-sidenav-helper.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Directive({
-  selector: "[egretSidenavHelper]"
+  selector: '[appEgretSidenavHelper]',
 })
 export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
-  @HostBinding("class.is-open")
+  @HostBinding('class.is-open')
   isOpen: boolean;
 
-  @Input("egretSidenavHelper")
+  @Input()
   id: string | any;
 
-  @Input("isOpen")
+  @Input()
   isOpenBreakpoint: string | any;
 
   private unsubscribeAll: Subject<any>;
@@ -32,7 +32,7 @@ export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
     private matchMediaService: MatchMediaService,
     private egretSidenavHelperService: EgretSidenavHelperService,
     private matSidenav: MatSidenav,
-    private mediaObserver: MediaObserver
+    private mediaObserver: MediaObserver,
   ) {
     // Set the default value
     this.isOpen = true;
@@ -45,11 +45,11 @@ export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
 
     if (this.mediaObserver.isActive(this.isOpenBreakpoint)) {
       this.isOpen = true;
-      this.matSidenav.mode = "side";
+      this.matSidenav.mode = 'side';
       this.matSidenav.toggle(true);
     } else {
       this.isOpen = false;
-      this.matSidenav.mode = "over";
+      this.matSidenav.mode = 'over';
       this.matSidenav.toggle(false);
     }
 
@@ -58,11 +58,11 @@ export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
       .subscribe(() => {
         if (this.mediaObserver.isActive(this.isOpenBreakpoint)) {
           this.isOpen = true;
-          this.matSidenav.mode = "side";
+          this.matSidenav.mode = 'side';
           this.matSidenav.toggle(true);
         } else {
           this.isOpen = false;
-          this.matSidenav.mode = "over";
+          this.matSidenav.mode = 'over';
           this.matSidenav.toggle(false);
         }
       });
@@ -75,15 +75,15 @@ export class EgretSidenavHelperDirective implements OnInit, OnDestroy {
 }
 
 @Directive({
-  selector: "[egretSidenavToggler]"
+  selector: '[appEgretSidenavToggler]',
 })
 export class EgretSidenavTogglerDirective {
-  @Input("egretSidenavToggler")
+  @Input()
   public id: any;
 
   constructor(private egretSidenavHelperService: EgretSidenavHelperService) {}
 
-  @HostListener("click")
+  @HostListener('click')
   onClick() {
     // console.log(this.egretSidenavHelperService.getSidenav(this.id))
     this.egretSidenavHelperService.getSidenav(this.id).toggle();

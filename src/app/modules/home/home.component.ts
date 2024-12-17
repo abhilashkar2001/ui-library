@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { SessionService } from "app/shared/session.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SessionService } from 'app/shared/session.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   profileRes: any;
   constructor(
     private sessionService: SessionService,
     private tokenService: TokenStorageService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -25,12 +25,12 @@ export class HomeComponent implements OnInit {
    */
   onInit() {
     /* send username and password to get Access Token */
-    let payload = {
-      username: "WEBSITE",
-      password: "Newuser@1"
+    const payload = {
+      username: 'WEBSITE',
+      password: 'Newuser@1',
     };
-    let isRememberMe = true;
-    let otpRequired = false;
+    const isRememberMe = true;
+    const otpRequired = false;
 
     this.sessionService.signin(payload, isRememberMe, otpRequired).subscribe(
       (_) => {
@@ -38,8 +38,8 @@ export class HomeComponent implements OnInit {
         this.getProfile();
       },
       () => {
-        this.router.navigate(["/home/401"]);
-      }
+        this.router.navigate(['/home/401']);
+      },
     );
   }
 
@@ -47,13 +47,10 @@ export class HomeComponent implements OnInit {
    * @method getProfile()
    */
   getProfile() {
-    this.sessionService.getProfileInfo().subscribe(
-      (res) => {
-        this.profileRes = res;
-        this.tokenService.saveUser(this.profileRes);
-        this.router.navigate(["/account"]);
-      },
-      () => {}
-    );
+    this.sessionService.getProfileInfo().subscribe((res) => {
+      this.profileRes = res;
+      this.tokenService.saveUser(this.profileRes);
+      this.router.navigate(['/account']);
+    });
   }
 }

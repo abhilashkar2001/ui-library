@@ -1,11 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class BgSummaryServiceService {
   basePath = environment.microServiceURL;
@@ -13,12 +13,12 @@ export class BgSummaryServiceService {
   constructor(private http: HttpClient) {}
 
   getSummaryDetails(filterBy: any, page: any, size: any, url: any) {
-    var filterEndpoint = "";
+    let filterEndpoint = '';
     if (filterBy) {
       const keys = Object.keys(filterBy);
       keys.forEach((key) => {
         if (filterBy[key])
-          key == "newFilter"
+          key == 'newFilter'
             ? (filterEndpoint = filterEndpoint + `branchCode=${filterBy[key]}&`)
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
@@ -30,10 +30,10 @@ export class BgSummaryServiceService {
 
   getBgUrl(moduleName: any) {
     switch (moduleName) {
-      case "BG Issuance":
-        return "bgIssuance/fetchApplicantInfo";
-      case "Remittance":
-        return "";
+      case 'BG Issuance':
+        return 'bgIssuance/fetchApplicantInfo';
+      case 'Remittance':
+        return '';
 
       default:
         break;
@@ -43,25 +43,25 @@ export class BgSummaryServiceService {
 
   fetchApplicantInfo(bgMasterId: number) {
     return this.http.get(
-      `${this.basePath}/bankGuarantee/fetchBgMaster?bgMasterId=${bgMasterId}`
+      `${this.basePath}/bankGuarantee/fetchBgMaster?bgMasterId=${bgMasterId}`,
     );
   }
 
   fetchBgInfo(bgMasterId: number): Observable<IcHttpResponseModel<any>> {
     return this.http.get<IcHttpResponseModel<any>>(
-      `${this.basePath}/bankGuarantee/fetchBgInfo?bgMasterId=${bgMasterId}`
+      `${this.basePath}/bankGuarantee/fetchBgInfo?bgMasterId=${bgMasterId}`,
     );
   }
 
   fetchOtherInfo(bgMasterId: number) {
     return this.http.get(
-      `${this.basePath}/bankGuarantee/fetchOtherInfo?bgMasterId=${bgMasterId}`
+      `${this.basePath}/bankGuarantee/fetchOtherInfo?bgMasterId=${bgMasterId}`,
     );
   }
 
   fetchAttachments(bgMasterId: number) {
     return this.http.get(
-      `${this.basePath}/bankGuarantee/fetchAttachment?bgMasterId=${bgMasterId}`
+      `${this.basePath}/bankGuarantee/fetchAttachment?bgMasterId=${bgMasterId}`,
     );
   }
 }

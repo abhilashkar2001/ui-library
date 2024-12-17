@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { SuccessPopupComponent } from "app/shared/components/success-popup/success-popup.component";
-import { FdCalculatorServiceService } from "../fd-calculator-service.service";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
+import { FdCalculatorServiceService } from '../fd-calculator-service.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-book-fd",
-  templateUrl: "./book-fd.component.html",
-  styleUrls: ["./book-fd.component.scss"]
+  selector: 'app-book-fd',
+  templateUrl: './book-fd.component.html',
+  styleUrls: ['./book-fd.component.scss'],
 })
 export class BookFdComponent implements OnInit {
   @Input() depositType: any;
-  isPaymentEnabled: boolean = false; // should be false initially
+  isPaymentEnabled = false; // should be false initially
   customerDetails: any;
   depositDetails:
     | {
@@ -42,11 +42,11 @@ export class BookFdComponent implements OnInit {
 
   constructor(
     private summaryService: FdCalculatorServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
-    this.idDepositId = sessionStorage.getItem("depositOriginationId");
+    this.idDepositId = sessionStorage.getItem('depositOriginationId');
     if (this.idDepositId) {
       this.summaryService
         .fetchDepositeSummary(this.idDepositId, this.depositType)
@@ -57,26 +57,26 @@ export class BookFdComponent implements OnInit {
     }
   }
   proceedFd() {
-    if (sessionStorage.getItem("paymentType") == "Account")
+    if (sessionStorage.getItem('paymentType') == 'Account')
       this.isPaymentEnabled = true;
     else {
       const dialogRef = this.dialog.open(SuccessPopupComponent, {
         data: {
           originationId: this.idDepositId,
           type: this.depositType,
-          email: this.email
+          email: this.email,
         },
-        width: "750px",
+        width: '750px',
         disableClose: true,
-        panelClass: "popup-dialog-class",
-        backdropClass: "bdrop"
+        panelClass: 'popup-dialog-class',
+        backdropClass: 'bdrop',
       });
       dialogRef.afterClosed().subscribe((resp: any) => {
         if (resp === true) {
-          sessionStorage.removeItem("holderType");
-          sessionStorage.removeItem("depositOriginationId");
-          sessionStorage.removeItem("selectedStep");
-          localStorage.removeItem("basisDetails");
+          sessionStorage.removeItem('holderType');
+          sessionStorage.removeItem('depositOriginationId');
+          sessionStorage.removeItem('selectedStep');
+          localStorage.removeItem('basisDetails');
         }
       });
     }

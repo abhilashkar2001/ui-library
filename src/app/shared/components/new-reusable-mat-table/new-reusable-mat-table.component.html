@@ -4,10 +4,16 @@
   fxLayoutAlign="space-between center"
   fxLayoutGap="10px"
   class="mat_table_header_sec mb-2 mx-2 py-8"
-  *ngIf="componentName != 'Bulk Upload'"
+  *ngIf="componentName !== 'Bulk Upload'"
 >
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <div (click)="goBack()" fxLayoutAlign="start center" class="cursor">
+    <div
+      (click)="goBack()"
+      (keydown.enter)="goBack()"
+      tabindex="0"
+      fxLayoutAlign="start center"
+      class="cursor"
+    >
       <mat-icon class="cursor-pointer">arrow_back</mat-icon>
     </div>
     <div>
@@ -24,7 +30,7 @@
     <ng-container>
       <button mat-flat-button class="addNewButton" (click)="bulkUpload()">
         <mat-icon class="text-white text-xl">add</mat-icon>
-        {{ "Upload" | translate }}
+        {{ 'Upload' | translate }}
       </button>
     </ng-container>
   </div>
@@ -32,7 +38,7 @@
   <div fxLayout="column" class="dropdown position-relative">
     <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
-      {{ "Add New" | translate }}
+      {{ 'Add New' | translate }}
     </button>
 
     <div
@@ -40,7 +46,13 @@
       *ngIf="addNewList?.length > 0; else elseBlock"
     >
       <ng-container *ngFor="let item of addNewList">
-        <span class="menu_btn" mat-menu-item (click)="openPopUp(item.value)">
+        <span
+          class="menu_btn"
+          mat-menu-item
+          (click)="openPopUp(item.value)"
+          (keydown.enter)="openPopUp(item.value)"
+          tabindex="1"
+        >
           {{ item.name | translate }}
         </span>
       </ng-container>
@@ -48,11 +60,23 @@
 
     <ng-template #elseBlock>
       <div class="dropdown-content">
-        <span class="menu_btn" mat-menu-item (click)="openPopUp('addNew')">
-          {{ "Create" | translate }}
+        <span
+          class="menu_btn"
+          mat-menu-item
+          (click)="openPopUp('addNew')"
+          (keydown.enter)="openPopUp('addNew')"
+          tabindex="2"
+        >
+          {{ 'Create' | translate }}
         </span>
-        <span class="menu_btn pt-2" mat-menu-item (click)="openPopUp('bulk')">
-          {{ "Bulk Upload" | translate }}
+        <span
+          class="menu_btn pt-2"
+          mat-menu-item
+          (click)="openPopUp('bulk')"
+          (keydown.enter)="openPopUp('bulk')"
+          tabindex="3"
+        >
+          {{ 'Bulk Upload' | translate }}
         </span>
       </div>
     </ng-template>
@@ -61,7 +85,7 @@
 
 <mat-card class="default-card">
   <ng-container *ngIf="!hideFilters">
-    <app-new-reusable-filter
+    <!-- <app-new-reusable-filter
       (customDataByPage)="customSearch($event)"
       [newFilter]="newFilter"
       [countryModuleFilter]="countryModuleFilter"
@@ -76,7 +100,7 @@
       [requiredSpecialFields]="requiredSpecialFields"
       [excelData]="this.maintenanceData?.data[0]?.corpFundDetails"
     >
-    </app-new-reusable-filter>
+    </app-new-reusable-filter> -->
   </ng-container>
 
   <div class="table_container" id="customtable">
@@ -99,8 +123,8 @@
             [indeterminate]="selection.hasValue() && !isAllSelected()"
             [disabled]="
               (maintenanceData?.data?.length > 0 &&
-                maintenanceData?.data[0]?.status == 'APPROVED') ||
-              maintenanceData?.data[0]?.status == 'REJECTED'
+                maintenanceData?.data[0]?.status === 'APPROVED') ||
+              maintenanceData?.data[0]?.status === 'REJECTED'
             "
           >
           </mat-checkbox
@@ -108,11 +132,13 @@
         <mat-cell *matCellDef="let element"
           ><mat-checkbox
             (click)="$event.stopPropagation()"
+            (keydown.enter)="$event.stopPropagation()"
+            tabIndex="4"
             (change)="$event ? selection.toggle(element) : null"
             [checked]="selection.isSelected(element)"
             [disabled]="
-              element?.uploadstatus == 'APPROVED' ||
-              maintenanceData?.data[0]?.status == 'REJECTED'
+              element?.uploadstatus === 'APPROVED' ||
+              maintenanceData?.data[0]?.status === 'REJECTED'
             "
           >
           </mat-checkbox
@@ -125,27 +151,6 @@
       >
         <mat-header-cell *matHeaderCellDef mat-sort-header
           ><b>{{ column.header | translate }}</b>
-          <!-- Sorting starts here -->
-
-          <!-- <div fxLayout="column" class="arrow-wrapper">
-            <div
-              [ngClass]="
-                sortValue == column.columnDef && orderBy == 'ASC'
-                  ? 'higlightSort upArrow'
-                  : 'upArrow'
-              "
-              (click)="customSort(column.columnDef, 'asc')"
-            ></div>
-            <div
-              [ngClass]="
-                sortValue == column.columnDef && orderBy == 'DESC'
-                  ? 'higlightSort customIcon'
-                  : 'customIcon'
-              "
-              (click)="customSort(column.columnDef, 'desc')"
-            ></div>
-          </div> -->
-
           <!-- Sorting ends here -->
         </mat-header-cell>
         <mat-cell
@@ -153,41 +158,43 @@
           class="custom-reuse-table-cell"
           [ngStyle]="{
             overflow:
-              showInfoIcon && column.header == 'Approved' ? 'unset' : 'hidden'
+              showInfoIcon && column.header === 'Approved' ? 'unset' : 'hidden',
           }"
         >
           <div
-            (click)="i == 0 && openPopUp(row)"
+            (click)="i === 0 && openPopUp(row)"
+            (keydown.enter)="i === 0 && openPopUp(row)"
+            tabindex="5"
             [ngClass]="[
-              i == 0 ? 'higlightColumn' : 'tableCell',
-              i == 0 && maintenanceTitle == 'User Maintenance'
+              i === 0 ? 'higlightColumn' : 'tableCell',
+              i === 0 && maintenanceTitle === 'User Maintenance'
                 ? 'align-left'
                 : '',
-              (column.header == 'Status' && column.cell(row)) == 'Pending'
+              (column.header === 'Status' && column.cell(row)) === 'Pending'
                 ? 'highlightPending'
                 : '',
-              (column.header == 'Status' && column.cell(row)) == 'Approved'
+              (column.header === 'Status' && column.cell(row)) === 'Approved'
                 ? 'higlightApprove'
                 : '',
-              (column.header == 'Status' && column.cell(row)) == 'Rejected'
+              (column.header === 'Status' && column.cell(row)) === 'Rejected'
                 ? 'higlightReject'
                 : '',
-              (column.header == 'Active Status' && column.cell(row)) ==
+              (column.header === 'Active Status' && column.cell(row)) ===
               'Inactive'
                 ? 'higlightInactive'
                 : '',
-              (column.header == 'Active Status' && column.cell(row)) == 'Active'
+              (column.header === 'Active Status' && column.cell(row)) ===
+              'Active'
                 ? 'higlightActive'
                 : '',
-              (maintenanceTitle == 'Process Stage Configuration' ||
-                maintenanceTitle == 'Feature Title Maintenance') &&
-              column.header == 'Description'
+              (maintenanceTitle === 'Process Stage Configuration' ||
+                maintenanceTitle === 'Feature Title Maintenance') &&
+              column.header === 'Description'
                 ? 'processStageCell'
-                : ''
+                : '',
             ]"
           >
-            <ng-container *ngIf="column.columnDef == 'businessSuite'">
-              <!-- {{ column.cell(row) | slice : 0 : 25 }} -->
+            <ng-container *ngIf="column.columnDef === 'businessSuite'">
               <span
                 *ngIf="column.cell(row).length > 15"
                 matTooltip="{{
@@ -202,11 +209,6 @@
                 [matMenuTriggerFor]="menu"
                 >{{ getShorendValue(column.cell(row), 15) }}</span
               >
-              <!-- <span *ngIf="column.cell(row)?.length > 5"
-              ><mat-icon [matMenuTriggerFor]="menu" class="viewmore"
-                >more_horiz</mat-icon
-              ></span
-            > -->
 
               <mat-menu #menu="matMenu" xPosition="after">
                 <div *ngFor="let contact of column.cell(row).split(',')">
@@ -215,14 +217,14 @@
               </mat-menu>
             </ng-container>
 
-            <ng-container *ngIf="column.columnDef == 'mobile'">
+            <ng-container *ngIf="column.columnDef === 'mobile'">
               <ng-container
                 *ngIf="column.cell(row) && column.cell(row).length > 0"
               >
                 <ng-container
                   *ngIf="column.cell(row)?.length > 1; else singleMobile"
                 >
-                  {{ column.cell(row)[0][column.columnDef] | slice : 0 : 3 }}
+                  {{ column.cell(row)[0][column.columnDef] | slice: 0 : 3 }}
                   <span
                     *ngIf="column.cell(row)[0][column.columnDef]?.length > 3"
                     class="mask"
@@ -244,7 +246,7 @@
                         *ngFor="let contacts of column.cell(row)"
                         class="dropdownmenu"
                       >
-                        {{ contacts[column.columnDef] | slice : 0 : 3 }}
+                        {{ contacts[column.columnDef] | slice: 0 : 3 }}
                         <span
                           *ngIf="contacts[column.columnDef]?.length > 3"
                           class="maskItem"
@@ -256,7 +258,7 @@
                   </mat-menu>
                 </ng-container>
                 <ng-template #singleMobile>
-                  {{ column.cell(row)[0][column.columnDef] | slice : 0 : 3 }}
+                  {{ column.cell(row)[0][column.columnDef] | slice: 0 : 3 }}
                   <span
                     *ngIf="column.cell(row)[0][column.columnDef]?.length > 3"
                     class="mask"
@@ -267,7 +269,7 @@
               </ng-container>
             </ng-container>
 
-            <ng-container *ngIf="column.columnDef == 'email'">
+            <ng-container *ngIf="column.columnDef === 'email'">
               <ng-container
                 *ngIf="column.cell(row) && column.cell(row).length > 0"
               >
@@ -299,7 +301,7 @@
               </ng-container>
             </ng-container>
 
-            <ng-container *ngIf="column.columnDef == 'processStage'">
+            <ng-container *ngIf="column.columnDef === 'processStage'">
               <div fxLayout="row">
                 {{ row[column.columnDef][0][column.columnDef] }} &nbsp;
                 <span
@@ -316,31 +318,32 @@
             </ng-container>
             <mat-slide-toggle
               class="table_toggle_btn"
-              [checked]="row?.statusForUser == true ? true : false"
+              [checked]="row?.statusForUser === true ? true : false"
               *ngIf="column.columnDef === 'statusForUser'"
             ></mat-slide-toggle>
             <mat-slide-toggle
               class="table_toggle_btn"
-              [checked]="row?.primaryVault == true ? true : false"
+              [checked]="row?.primaryVault === true ? true : false"
               *ngIf="column.columnDef === 'primaryVault'"
             ></mat-slide-toggle>
             <ng-container
               *ngIf="
-                column.columnDef != 'email' &&
-                column.columnDef != 'mobile' &&
-                column.columnDef != 'processStage' &&
-                column.columnDef != 'businessSuite' &&
-                column.columnDef != 'statusForUser' &&
-                column.columnDef != 'primaryVault'
+                column.columnDef !== 'email' &&
+                column.columnDef !== 'mobile' &&
+                column.columnDef !== 'processStage' &&
+                column.columnDef !== 'businessSuite' &&
+                column.columnDef !== 'statusForUser' &&
+                column.columnDef !== 'primaryVault'
               "
             >
-              <ng-container *ngIf="maintenanceTitle == 'User Maintenance'">
-                <ng-container *ngIf="i == 0">
+              <ng-container *ngIf="maintenanceTitle === 'User Maintenance'">
+                <ng-container *ngIf="i === 0">
                   <ng-container *ngIf="row?.profile; else showInitialAvatar">
                     <img
                       [src]="row?.profile?.fileUrl"
-                      [src-fallback]="userImage"
+                      [appSrcfallback]="userImage"
                       class="avatar-2x"
+                      alt="avatar-2x"
                     />
                   </ng-container>
                   <ng-template #showInitialAvatar>
@@ -361,19 +364,19 @@
                   }}"
                   matTooltipPosition="right"
                   [ngClass]="
-                    showInfoIcon && column.header == 'Approved'
+                    showInfoIcon && column.header === 'Approved'
                       ? 'approved_container'
                       : ''
                   "
                 >
                   {{
-                    column.cell(row) == "null" ||
-                    column.cell(row) == "undefined"
-                      ? ""
+                    column.cell(row) === 'null' ||
+                    column.cell(row) === 'undefined'
+                      ? ''
                       : getShorendValue(column.cell(row), 25)
                   }}
                   <div
-                    *ngIf="showInfoIcon && column.header == 'Approved'"
+                    *ngIf="showInfoIcon && column.header === 'Approved'"
                     class="info_icon_container"
                   >
                     <img
@@ -382,6 +385,10 @@
                       (mouseover)="
                         getApprovalHistory(row?.id || row?.bookShortOverId)
                       "
+                      (focus)="
+                        getApprovalHistory(row?.id || row?.bookShortOverId)
+                      "
+                      tabindex="0"
                     />
 
                     <ul
@@ -400,10 +407,11 @@
                                 item?.action.toLowerCase() === 'unauthorized'
                                   ? 'unapproved'
                                   : item?.action.toLowerCase() === 'reject'
-                                  ? 'reject'
-                                  : item?.action.toLowerCase() === 'authorized'
-                                  ? 'default'
-                                  : 'default'
+                                    ? 'reject'
+                                    : item?.action.toLowerCase() ===
+                                        'authorized'
+                                      ? 'default'
+                                      : 'default'
                               "
                             >
                               {{ indx + 1 }}
@@ -422,14 +430,7 @@
                     </ul>
                   </div>
                 </span>
-                <span class="Eid" *ngIf="column.columnDef == 'lastUpdatedBy'">
-                  <!-- Eid #{{
-                  maintenanceTitle == "Till/Vault Maintenance"
-                    ? row?.tillId
-                    : maintenanceTitle == "Limit Maintenance"
-                    ? row?.limitId
-                    : row?.empId
-                }} -->
+                <span class="Eid" *ngIf="column.columnDef === 'lastUpdatedBy'">
                   Eid #{{ row?.empId }}
                 </span>
               </div>
@@ -439,7 +440,7 @@
       </ng-container>
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef
-          ><b>{{ "Action" | translate }}</b></mat-header-cell
+          ><b>{{ 'Action' | translate }}</b></mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           <div class="action_btn_wrapper">
@@ -447,6 +448,8 @@
               class="action_btn"
               title="Approve"
               (click)="updateRecord('Transaction', element.id, element)"
+              (keydown.enter)="updateRecord('Transaction', element.id, element)"
+              tabindex="1"
             >
               <!-- Enabled -->
               <mat-icon class="summaryIcon" svgIcon="transaction"></mat-icon>
@@ -454,42 +457,22 @@
             <div
               class="action_btn"
               title=""
-              *ngIf="element.authStatus == 'AUTHORIZED'"
+              *ngIf="element.authStatus === 'AUTHORIZED'"
             >
               <!-- Disabled -->
               <mat-icon class="summaryIcon" svgIcon="auth-disabled"></mat-icon>
-              <!-- <img
-              class="summaryIcon"
-              src="assets/images/Authorize-disabled.svg"
-              alt="..."
-            /> -->
             </div>
           </div>
-          <!-- <div
-            *ngIf="
-              element.oneTimeAuth === 'N' &&
-              element.authStatus != 'REJECTED' &&
-              maintenanceTitle !== 'Open Or Close Till / Vault' &&
-              (tellerOps
-                ? currentUser?.username == element?.createdBy
-                : true) &&
-              maintenanceTitle !== 'Instrument Status Maintenance'
-            "
-            class="action_btn"
-            (click)="updateRecord('Delete', element.id, element)"
-            title="Delete"
-          >
-           
-            <mat-icon class="summaryIcon" svgIcon="delete-enabled"></mat-icon>
-          </div> -->
           <div
             *ngIf="
               element.oneTimeAuth === 'Y' &&
-              element.recordStatus == 'CLOSE' &&
+              element.recordStatus === 'CLOSE' &&
               !hideClose &&
               maintenanceTitle !== 'Open Or Close Till / Vault'
             "
             (click)="updateRecord('Reopen', element.id, element)"
+            (keydown.enter)="updateRecord('Reopen', element.id, element)"
+            tabindex="1"
             class="action_btn"
             title="Activate"
           >
@@ -497,6 +480,8 @@
           </div>
           <div
             (click)="updateRecord('Close', element.id, element)"
+            (keydown.enter)="updateRecord('Close', element.id, element)"
+            tabindex="1"
             class="action_btn"
             title="Deactivate"
           >
@@ -513,7 +498,6 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <!-- <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row> -->
 
       <mat-row
         *matRowDef="
@@ -528,11 +512,11 @@
   </div>
 </mat-card>
 
-<app-custom-pagination
+<!-- <app-custom-pagination
   *ngIf="!SecurityModule && totalLength > 0"
   [total]="totalLength"
   (customPageEvent)="handlePageEvent($event)"
   [filterValue]="filterValue"
   #tableContainer
 >
-</app-custom-pagination>
+</app-custom-pagination> -->

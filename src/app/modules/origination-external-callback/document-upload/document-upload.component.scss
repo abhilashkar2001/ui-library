@@ -57,7 +57,7 @@ hr.line {
   color: #004c97;
   opacity: 1;
   font-size: 18px;
-  font-family: Poppins, "Medium";
+  font-family: Poppins, 'Medium';
 }
 
 .mat-card.document {
@@ -95,7 +95,7 @@ hr.line {
   color: #b20000 !important;
   height: 50px;
   font-size: 15px;
-  font-family: poppins, "SemiBold";
+  font-family: poppins, 'SemiBold';
   font-weight: 600 !important;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 3px 3px 15px #0000000f !important;
@@ -176,7 +176,7 @@ hr.line {
     no-repeat padding-box;
   color: #fff !important;
   font-size: 12px;
-  font-family: Poppins, "SemiBold";
+  font-family: Poppins, 'SemiBold';
   letter-spacing: 0px;
   text-transform: capitalize;
   font-weight: 600 !important;
@@ -187,7 +187,7 @@ hr.line {
   box-shadow: 3px 3px 15px #0000000f;
   color: #004c97;
   font-size: 12px;
-  font-family: Poppins, "SemiBold";
+  font-family: Poppins, 'SemiBold';
   letter-spacing: 0px;
   text-transform: capitalize;
   font-weight: 600 !important;
@@ -198,10 +198,10 @@ hr.line {
   font-size: 13px;
   letter-spacing: -0.26px;
   font-weight: 600;
-  font-family: poppins, "SemiBold";
+  font-family: poppins, 'SemiBold';
 }
 .mat-form-field mat-label {
-  font-family: Poppins, "Medium";
+  font-family: Poppins, 'Medium';
   font-weight: 600;
   letter-spacing: -0.26px;
   color: #102245;
@@ -212,20 +212,20 @@ hr.line {
 ::ng-deep .mat-progress-bar-fill::after {
   background-color: #008461 !important;
 }
-.pagetitle{
+.pagetitle {
   font-size: 14px;
   color: #102245;
   opacity: 0.5;
-  font-family: Poppins,"Medium";
+  font-family: Poppins, 'Medium';
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0px;
   margin-bottom: 5px;
 }
-.otherpage{
+.otherpage {
   color: #000000;
   font-size: 14px;
-  font-family: Poppins,'Medium';
+  font-family: Poppins, 'Medium';
   font-weight: 600 !important;
   letter-spacing: 0px;
   text-transform: capitalize;

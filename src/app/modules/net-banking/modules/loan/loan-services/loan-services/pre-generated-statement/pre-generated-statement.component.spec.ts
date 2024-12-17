@@ -8,9 +8,8 @@ describe('PreGeneratedStatementComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PreGeneratedStatementComponent ]
-    })
-    .compileComponents();
+      declarations: [PreGeneratedStatementComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PreGeneratedStatementComponent);
     component = fixture.componentInstance;

@@ -9,7 +9,7 @@
       *ngIf="disbursementScheduleForm"
       [formGroup]="disbursementScheduleForm"
     >
-      <h3>{{ "Loan Account Number" | translate }}</h3>
+      <h3>{{ 'Loan Account Number' | translate }}</h3>
       <div>
         <app-searchable-select
           fxFlex="100"
@@ -32,7 +32,7 @@
         fxLayoutAlign="end center"
       >
         <h3 class="disbursementRqstLink">
-          <u>{{ "Disbursement Request" | translate }}</u>
+          <u>{{ 'Disbursement Request' | translate }}</u>
         </h3>
         <app-ic-action-button
           *ngIf="fetchStatement"

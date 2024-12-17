@@ -5,30 +5,30 @@ import { LoanSummaryComponent } from './loan-summary/loan-summary.component';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     component: LoanDashboardComponent,
   },
   {
-    path: "summary",
+    path: 'summary',
     component: LoanSummaryComponent,
   },
 
   {
-    path: "loan-service",
+    path: 'loan-service',
     loadChildren: () =>
-      import("./loan-services/loan-services.module").then(
-        (m) => m.LoanServicesModule
+      import('./loan-services/loan-services.module').then(
+        (m) => m.LoanServicesModule,
       ),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LoanRoutingModule { }
+export class LoanRoutingModule {}

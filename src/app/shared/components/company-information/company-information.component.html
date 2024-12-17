@@ -3,12 +3,12 @@
   fxLayout="column"
   [formGroup]="_parentForm"
 >
-  <h3 class="sub-heading mt-16">{{ "Company Information" }}</h3>
+  <h3 class="sub-heading mt-16">{{ 'Company Information' }}</h3>
   <div class="mb-12" fxFlex fxLayout="column" [formGroup]="corporateCustomer">
     <div fxFlex fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "Company Name" }}</mat-label>
+          <mat-label>{{ 'Company Name' }}</mat-label>
           <input required matInput formControlName="companyName" />
 
           <mat-error
@@ -18,7 +18,7 @@
             "
             class="form-error-msg"
           >
-            {{ "Company Name is required" }}
+            {{ 'Company Name is required' }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -33,7 +33,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "Number of Director" }}</mat-label>
+          <mat-label>{{ 'Number of Director' }}</mat-label>
           <input required matInput formControlName="numberOfDirectors" />
 
           <mat-error
@@ -44,7 +44,7 @@
             "
             class="form-error-msg"
           >
-            {{ "Number of Director is required" }}
+            {{ 'Number of Director is required' }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -61,7 +61,7 @@
     <div fxFlex fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "Nature of the Business" }}</mat-label>
+          <mat-label>{{ 'Nature of the Business' }}</mat-label>
           <input matInput formControlName="natureOfBusiness" />
         </mat-form-field>
       </div>
@@ -80,7 +80,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field appearance="outline">
-          <mat-label>{{ "Date of Incorporation" }}</mat-label>
+          <mat-label>{{ 'Date of Incorporation' }}</mat-label>
           <input
             matInput
             type="text"
@@ -101,13 +101,13 @@
             "
             class="form-error-msg"
           >
-            {{ "Date of Incorporation is required" }}
+            {{ 'Date of Incorporation is required' }}
           </mat-error>
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "Registration Number" }}</mat-label>
+          <mat-label>{{ 'Registration Number' }}</mat-label>
           <input required matInput formControlName="registrationNumber" />
           <mat-error
             *ngIf="
@@ -119,7 +119,7 @@
             class="form-error-msg"
             required
           >
-            {{ "Registration Number is Required" }}
+            {{ 'Registration Number is Required' }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -128,7 +128,7 @@
     <div fxFlex fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "TIN Number" }}</mat-label>
+          <mat-label>{{ 'TIN Number' }}</mat-label>
           <input required matInput formControlName="tinNumber" />
 
           <mat-error
@@ -138,7 +138,7 @@
             "
             class="form-error-msg"
           >
-            {{ "TIN Number is required" }}
+            {{ 'TIN Number is required' }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -153,7 +153,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
         <mat-form-field>
-          <mat-label>{{ "Other" }}</mat-label>
+          <mat-label>{{ 'Other' }}</mat-label>
           <input matInput formControlName="others" />
         </mat-form-field>
       </div>

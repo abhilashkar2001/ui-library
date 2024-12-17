@@ -34,7 +34,7 @@
                     [inputLabel]="'Renewal Amount'| translate"
                     customClass="customTotalField"
                     customLabelClass="customLabelClass"
-                    [numbersOnly]="true"
+                    [appNumbersOnly]="true"
                     customDirectives="appTwoDigitDecimaNumber"
                   ></app-ic-custom-input> -->
               <app-ic-custom-amount-input
@@ -64,7 +64,7 @@
             </div>
 
             <div fxFlex="50" class="gray-box">
-              <p class="label">{{ "New Sanctioned Amount:" | translate }}</p>
+              <p class="label">{{ 'New Sanctioned Amount:' | translate }}</p>
               <span class="light-blue-title">{{
                 installmentDetails?.currency
               }}</span>
@@ -78,7 +78,7 @@
             <!-- Tenure -->
             <div fxFlex="50" class="mt-12" fxLayout="column">
               <mat-label class="customLabelClass"
-                ><b>{{ "Tenure" | translate }}</b></mat-label
+                ><b>{{ 'Tenure' | translate }}</b></mat-label
               >
               <div>
                 <fieldset class="fieldset mb-12" fxFlex="100">
@@ -95,10 +95,10 @@
                         (change)="onInputChange()"
                         placeholder="Enter"
                         class="pl-3 tenure_input"
-                        numbersOnly
+                        appNumbersOnly
                       />
                       <span matSuffix class="suffixLabel">{{
-                        "Year" | translate
+                        'Year' | translate
                       }}</span>
                     </div>
                     <div class="vertical-seperator"></div>
@@ -113,9 +113,9 @@
                         "
                         placeholder="Enter"
                         class="pl-3 tenure_input"
-                        numbersOnly
+                        appNumbersOnly
                       />
-                      <span class="suffixLabel">{{ "Month" | translate }}</span>
+                      <span class="suffixLabel">{{ 'Month' | translate }}</span>
                     </div>
                     <div class="vertical-seperator"></div>
                     <div fxFlex="33" fxLayoutAlign="start center">
@@ -129,9 +129,9 @@
                         "
                         placeholder="Enter"
                         class="pl-3 tenure_input"
-                        numbersOnly
+                        appNumbersOnly
                       />
-                      <span class="suffixLabel">{{ "Day" | translate }}</span>
+                      <span class="suffixLabel">{{ 'Day' | translate }}</span>
                     </div>
                   </div>
                 </fieldset>
@@ -140,7 +140,7 @@
 
             <div class="blue-box blue-border" fxLayout="row">
               <span class="light-blue-title">{{
-                "Interest Rate:" | translate
+                'Interest Rate:' | translate
               }}</span>
               <span class="value"
                 ><b>{{ installmentDetails?.interestRate }}</b></span
@@ -168,8 +168,8 @@
               fxFlex="10"
               fxLayoutAlign="space-between center"
             >
-              <div>{{ "Min" | translate }} {{ minTenure }} months</div>
-              <div>{{ "Max" | translate }} {{ maxTenureInYears }} year</div>
+              <div>{{ 'Min' | translate }} {{ minTenure }} months</div>
+              <div>{{ 'Max' | translate }} {{ maxTenureInYears }} year</div>
             </div>
           </div>
 

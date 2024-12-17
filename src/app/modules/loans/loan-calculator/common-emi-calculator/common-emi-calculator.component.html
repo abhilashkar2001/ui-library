@@ -26,7 +26,7 @@
               <input
                 matInput
                 formControlName="amount"
-                numbersOnly
+                appNumbersOnly
                 maxlength="18"
               />
             </div>
@@ -66,12 +66,12 @@
               maxlength="2"
               formControlName="tenureYear"
               placeholder="Year"
-              numbersOnly
+              appNumbersOnly
               class="tenure-input pl-3"
             />
             <ng-container *ngIf="loanForm.value.tenureYear">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureYear ? "Year" : "" }}
+                {{ loanForm.value.tenureYear ? 'Year' : '' }}
               </span>
             </ng-container>
             <div class="vertical-separator"></div>
@@ -82,13 +82,13 @@
               maxlength="2"
               formControlName="tenureMonth"
               placeholder="Month"
-              numbersOnly
+              appNumbersOnly
               class="tenure-input pl-3"
             />
 
             <ng-container *ngIf="loanForm.value.tenureMonth">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureMonth ? "Month" : "" }}
+                {{ loanForm.value.tenureMonth ? 'Month' : '' }}
               </span>
             </ng-container>
 
@@ -101,12 +101,12 @@
               maxlength="2"
               formControlName="tenureDays"
               placeholder="Day"
-              numbersOnly
+              appNumbersOnly
               class="tenure-input pl-3"
             />
             <ng-container *ngIf="loanForm.value.tenureDays">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureDays ? "Day" : "" }}
+                {{ loanForm.value.tenureDays ? 'Day' : '' }}
               </span>
             </ng-container>
           </div>
@@ -163,7 +163,7 @@
           <input
             matInput
             formControlName="interestRate"
-            minMax
+            appMinMax
             [min]="minValue"
             [max]="maxValue"
           />
@@ -193,7 +193,7 @@
       <div fxFlex="100" fxLayout="column" class="alignCenter">
         <div class="maturityTitle">EMI Amount</div>
         <div class="maturityDesc">
-          {{ emiAmount | currency : currency : true : "1.2-2" }}
+          {{ emiAmount | currency: currency : true : '1.2-2' }}
         </div>
       </div>
       <div fxLayout="row" fxFlex="100" style="width: 100%">
@@ -205,7 +205,7 @@
         >
           <div class="maturityLabel">Total Interest Payable</div>
           <div class="maturityVal">
-            {{ interestPayble | currency : currency : true : "1.2-2" }}
+            {{ interestPayble | currency: currency : true : '1.2-2' }}
           </div>
         </div>
         <div class="emiVl"></div>
@@ -230,7 +230,7 @@
         >
           <div class="maturityLabel">Principal Amount</div>
           <div class="maturityVal">
-            {{ loanForm.value?.amount | currency : currency : true : "1.2-2" }}
+            {{ loanForm.value?.amount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
         <div class="emiVl"></div>
@@ -242,7 +242,7 @@
         >
           <div class="maturityLabel">Total Amount Payable</div>
           <div class="maturityVal">
-            {{ totalPayableAmmount | currency : currency : true : "1.2-2" }}
+            {{ totalPayableAmmount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
       </div>

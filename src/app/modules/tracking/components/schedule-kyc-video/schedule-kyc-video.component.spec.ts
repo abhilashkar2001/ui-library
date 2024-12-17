@@ -8,9 +8,8 @@ describe('ScheduleKycVideoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScheduleKycVideoComponent ]
-    })
-    .compileComponents();
+      declarations: [ScheduleKycVideoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ScheduleKycVideoComponent);
     component = fixture.componentInstance;

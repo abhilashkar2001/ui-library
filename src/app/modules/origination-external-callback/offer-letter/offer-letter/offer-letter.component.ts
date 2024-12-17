@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Router } from "@angular/router";
-import { OfferIssueService } from "app/shared/services/offer-issue.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import * as moment from "moment";
-import { SignNowPopupComponent } from "../../digital-sign/sign-now-popup/sign-now-popup.component";
-import { SuccessModalComponent } from "../../digital-sign/success-modal/success-modal.component";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { BranchService } from "../../digital-sign/sign-now-popup/branch.service";
-import { OriginationService } from "app/shared/services/origination.service";
-import { SharedService } from "app/shared/shared.service";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import * as moment from 'moment';
+import { SignNowPopupComponent } from '../../digital-sign/sign-now-popup/sign-now-popup.component';
+import { SuccessModalComponent } from '../../digital-sign/success-modal/success-modal.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { BranchService } from '../../digital-sign/sign-now-popup/branch.service';
+import { OriginationService } from 'app/shared/services/origination.service';
+import { SharedService } from 'app/shared/shared.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-offer-letter",
-  templateUrl: "./offer-letter.component.html",
-  styleUrls: ["./offer-letter.component.scss"]
+  selector: 'app-offer-letter',
+  templateUrl: './offer-letter.component.html',
+  styleUrls: ['./offer-letter.component.scss'],
 })
 export class OfferLetterComponent implements OnInit {
   currentUser: any;
@@ -25,7 +25,7 @@ export class OfferLetterComponent implements OnInit {
   customerInfo: any;
   download: any;
   staticData = {
-    CUSTOMERRESPONSE: []
+    CUSTOMERRESPONSE: [],
   };
   CUSTOMERRESPONSE: any[] = [];
   constructor(
@@ -37,13 +37,13 @@ export class OfferLetterComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private branchService: BranchService,
     private originationService: OriginationService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
     this.originationId = JSON.parse(
-      <string>sessionStorage.getItem("originationId")
+      <string>sessionStorage.getItem('originationId'),
     );
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.generatePdf();
@@ -54,21 +54,21 @@ export class OfferLetterComponent implements OnInit {
     this.offerIssueService
       .downloadOfferletter(this.originationId)
       .subscribe((res: any) => {
-        this.download = new Blob([res], { type: "application/pdf" });
+        this.download = new Blob([res], { type: 'application/pdf' });
         this.dataLocalUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          window.URL.createObjectURL(this.download)
+          window.URL.createObjectURL(this.download),
         );
         this.dataLocalUrl.changingThisBreaksApplicationSecurity =
           this.dataLocalUrl.changingThisBreaksApplicationSecurity +
-          "#toolbar=0";
+          '#toolbar=0';
       });
   }
   fetchGenericValues() {
     this.sharedService
-      .genericValue("Offer Accept / Reject", Object.keys(this.staticData))
+      .genericValue('Offer Accept / Reject', Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.CUSTOMERRESPONSE = resp.data["CUSTOMERRESPONSE"];
+          this.CUSTOMERRESPONSE = resp.data['CUSTOMERRESPONSE'];
         }
       });
   }
@@ -77,7 +77,7 @@ export class OfferLetterComponent implements OnInit {
     const url = window.URL.createObjectURL(this.download);
 
     // Create a link element and simulate a click to trigger the download
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
     link.download = `Offer Letter.pdf`;
     document.body.appendChild(link);
@@ -91,10 +91,10 @@ export class OfferLetterComponent implements OnInit {
   saveCustomerResponse(response: any) {
     const payload: any = {};
     payload.dateOfOfferAcceptOrReject = moment(new Date()).format(
-      "DD-MMM-YYYY"
+      'DD-MMM-YYYY',
     );
-    let id = this.CUSTOMERRESPONSE.find((item) =>
-      item?.values?.includes(response)
+    const id = this.CUSTOMERRESPONSE.find((item) =>
+      item?.values?.includes(response),
     )?.id;
     payload.customerResponse = id;
 
@@ -103,10 +103,10 @@ export class OfferLetterComponent implements OnInit {
       .postOfferAcceptRejectDetails(payload)
       .subscribe((res) => {
         if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
-          if (response == "Accept") this.route.navigate(["/origination/otp"]);
-          else if (response == "Reject")
-            this.route.navigate(["/origination/remark"]);
-          else this.route.navigate(["/origination/process-offer"]);
+          if (response == 'Accept') this.route.navigate(['/origination/otp']);
+          else if (response == 'Reject')
+            this.route.navigate(['/origination/remark']);
+          else this.route.navigate(['/origination/process-offer']);
         }
       });
   }
@@ -114,23 +114,23 @@ export class OfferLetterComponent implements OnInit {
   openEsign() {
     const dialogRef = this.dialog.open(SignNowPopupComponent, {
       disableClose: false,
-      width: "60%",
-      data: { signatureId: this.signatureId, title: "Sign Now" }
+      width: '60%',
+      data: { signatureId: this.signatureId, title: 'Sign Now' },
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res?.result?.signatureId) {
         const signPayload = {
           originationId: JSON.parse(
-            <string>sessionStorage.getItem("originationId")
+            <string>sessionStorage.getItem('originationId'),
           ),
           signatureId: res?.result?.signatureId,
-          screenCode: this.sessionStorageService.getScreenId()
+          screenCode: this.sessionStorageService.getScreenId(),
         };
         this.branchService
           .saveDigitalSignDetails(signPayload)
           .subscribe((result) => {
             if (result?.statusCode === 200 || result?.statusCode === 201) {
-              this.updateStatus("Submit");
+              this.updateStatus('Submit');
             }
           });
       } else {
@@ -156,12 +156,12 @@ export class OfferLetterComponent implements OnInit {
     this.originationService.verifyWorkflow(payload).subscribe((res) => {
       if (res?.status == 200) {
         const sucessDialog = this.dialog.open(SuccessModalComponent, {
-          width: "40%",
+          width: '40%',
           data: {
-            screenType: "Sign Now",
-            title: "Digital sign has been successfully recorded!"
+            screenType: 'Sign Now',
+            title: 'Digital sign has been successfully recorded!',
           },
-          disableClose: true
+          disableClose: true,
         });
         sucessDialog.afterClosed().subscribe((_) => {
           setTimeout(() => {

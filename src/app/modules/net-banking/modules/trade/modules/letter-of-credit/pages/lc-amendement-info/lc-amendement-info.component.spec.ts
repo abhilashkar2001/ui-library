@@ -8,9 +8,8 @@ describe('LcAmendementInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LcAmendementInfoComponent ]
-    })
-    .compileComponents();
+      declarations: [LcAmendementInfoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LcAmendementInfoComponent);
     component = fixture.componentInstance;

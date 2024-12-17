@@ -1,37 +1,37 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { LoanAccounts } from "app/shared/models/loan-account.model";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanAccounts } from 'app/shared/models/loan-account.model';
 
-import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class LoanService {
   constructor(private http: HttpClient) {}
 
   fetchLoanDetails(
-    customerNo: any
+    customerNo: any,
   ): Observable<IcHttpResponseModel<LoanAccounts>> {
     return this.http.get<IcHttpResponseModel<LoanAccounts>>(
-      `${MICROSERVICE_URL}/origination-matser/fetchLoanByCustNo?customerNo=${customerNo}`
+      `${MICROSERVICE_URL}/origination-matser/fetchLoanByCustNo?customerNo=${customerNo}`,
     );
   }
 
   fetchCorpLoanDetails(corpCustId: string) {
     return this.http.get<IcHttpResponseModel<LoanAccounts>>(
-      `${MICROSERVICE_URL}/origination-matser/fetchLoanByCorpCustId?corpCustId=${corpCustId}`
+      `${MICROSERVICE_URL}/origination-matser/fetchLoanByCorpCustId?corpCustId=${corpCustId}`,
     );
   }
 
   /**get all the corpAccount details */
   fetchListofCorpAccountDetails(corpCustId: string) {
     return this.http.get<IcHttpResponseModel<LoanAccounts>>(
-      `${MICROSERVICE_URL}/corporate-net-banking/getCorpAccountsForDashBoard?corpCustId=${corpCustId}`
+      `${MICROSERVICE_URL}/corporate-net-banking/getCorpAccountsForDashBoard?corpCustId=${corpCustId}`,
     );
   }
 
@@ -40,7 +40,7 @@ export class LoanService {
    *  */
   fetchLoanSummary(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getLoanSummaryDetails?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/getLoanSummaryDetails?originationAccNo=${accNo}`,
     );
   }
 
@@ -49,7 +49,7 @@ export class LoanService {
    *  */
   downloadLoanSummary(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadLoanSummaryDetails?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/downloadLoanSummaryDetails?originationAccNo=${accNo}`,
     );
   }
 
@@ -58,7 +58,7 @@ export class LoanService {
    *  */
   fetchInterestHistory(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getLoanInterest?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/getLoanInterest?originationAccNo=${accNo}`,
     );
   }
 
@@ -67,11 +67,11 @@ export class LoanService {
    *  */
   downloadInterestHistory(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadInterestRateHistory?originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -79,7 +79,7 @@ export class LoanService {
   saveService(payload: any) {
     return this.http.post(
       `${MICROSERVICE_URL}/corporate-net-banking/corpTrans`,
-      payload
+      payload,
     );
   }
 
@@ -88,7 +88,7 @@ export class LoanService {
    *  */
   fetchCurrentRepaymentCycle(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/retail-fund-transfer/fetchCurrentRepaymentCycle?accountNo=${accNo}`
+      `${MICROSERVICE_URL}/retail-fund-transfer/fetchCurrentRepaymentCycle?accountNo=${accNo}`,
     );
   }
 
@@ -97,7 +97,7 @@ export class LoanService {
    *  */
   fetchRepaymentSchedule(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/repaymentSchedule?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/repaymentSchedule?originationAccNo=${accNo}`,
     );
   }
 
@@ -106,11 +106,11 @@ export class LoanService {
    *  */
   downloadRepaymentSchedule(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadRepaymentSchedule?originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -119,7 +119,7 @@ export class LoanService {
    *  */
   fetchStatistics(custId: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/loanSummaryStatistics?custId=${custId}`
+      `${MICROSERVICE_URL}/transaction/loanSummaryStatistics?custId=${custId}`,
     );
   }
 
@@ -128,7 +128,7 @@ export class LoanService {
    *  */
   fetchRecentTrans(custId: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/retail-fund-transfer/fetchRecentTransaction?customerId=${custId}`
+      `${MICROSERVICE_URL}/retail-fund-transfer/fetchRecentTransaction?customerId=${custId}`,
     );
   }
 
@@ -137,7 +137,7 @@ export class LoanService {
    *  */
   fetchLoanInstallment(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/fetchLoanInstallment?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/fetchLoanInstallment?originationAccNo=${accNo}`,
     );
   }
 
@@ -151,7 +151,7 @@ export class LoanService {
    *  */
   fetchPreGenerated(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getLoanStatement?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/getLoanStatement?originationAccNo=${accNo}`,
     );
   }
 
@@ -160,7 +160,7 @@ export class LoanService {
    *  */
   fetchInterestStatement(accNo: number, payload: any) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getInterestStatement?originationAccNo=${accNo}${payload}`
+      `${MICROSERVICE_URL}/transaction/getInterestStatement?originationAccNo=${accNo}${payload}`,
     );
   }
 
@@ -169,11 +169,11 @@ export class LoanService {
    *  */
   downloadOfferLetter(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/origination-matser/fetchEmail?cbsAccountNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -182,11 +182,11 @@ export class LoanService {
    *  */
   downloadClosureLetter(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadLoanClosureLetter?originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
   /**
@@ -194,11 +194,11 @@ export class LoanService {
    *  */
   downloadFinalInterestCertificate(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadLoanFinalInterestCertificate?originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -207,11 +207,11 @@ export class LoanService {
    *  */
   downloadPreGenerated(accNo: number, year: number, month: string) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadPregenaratedStatement?originationAccNo=${accNo}&years=${year}&month=${month}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -219,7 +219,7 @@ export class LoanService {
   calculateEMI(payload: any) {
     return this.http.post(
       `${MICROSERVICE_URL}/loan-repayment/emi-calculation`,
-      payload
+      payload,
     );
   }
 
@@ -228,7 +228,7 @@ export class LoanService {
    *  */
   fetchScheduledPayment(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/schedulePayment?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/schedulePayment?originationAccNo=${accNo}`,
     );
   }
 
@@ -237,11 +237,11 @@ export class LoanService {
    *  */
   downloadScheduledPayment(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadSchedulePayment?originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -250,7 +250,7 @@ export class LoanService {
    *  */
   fetchViewStatement(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/viewStatement?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/viewStatement?originationAccNo=${accNo}`,
     );
   }
 
@@ -259,7 +259,7 @@ export class LoanService {
    *  */
   fetchDisbursementSchedule(accNo: number) {
     return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getDisbursmentSchedule?originationAccNo=${accNo}`
+      `${MICROSERVICE_URL}/transaction/getDisbursmentSchedule?originationAccNo=${accNo}`,
     );
   }
 
@@ -268,11 +268,11 @@ export class LoanService {
    *  */
   downloadViewStatement(accNo: number) {
     const httpOptions = {
-      responseType: "blob" as "json"
+      responseType: 'blob' as 'json',
     };
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/downloadViewStatement?page=1&size=20&originationAccNo=${accNo}`,
-      httpOptions
+      httpOptions,
     );
   }
 
@@ -283,7 +283,7 @@ export class LoanService {
    */
   getLoanChargeInfoDetails(payload: any) {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/loanInterestAndCharge/disburseRepaymentCharge?originationId=${payload}`
+      `${MICROSERVICE_URL}/loanInterestAndCharge/disburseRepaymentCharge?originationId=${payload}`,
     );
   }
 }

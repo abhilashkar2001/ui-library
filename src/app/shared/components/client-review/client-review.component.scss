@@ -1,14 +1,14 @@
 .client-review {
-    .client-container {
-        display: flex;
-        flex-direction: row;
-    }
+  .client-container {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .client-review {
-        .client-container {
-            display: block;
-        }
+  .client-review {
+    .client-container {
+      display: block;
     }
+  }
 }

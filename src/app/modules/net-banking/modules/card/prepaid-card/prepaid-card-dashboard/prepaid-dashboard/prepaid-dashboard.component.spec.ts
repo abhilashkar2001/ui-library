@@ -8,9 +8,8 @@ describe('PrepaidDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrepaidDashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [PrepaidDashboardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PrepaidDashboardComponent);
     component = fixture.componentInstance;

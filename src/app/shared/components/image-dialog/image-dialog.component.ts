@@ -1,25 +1,25 @@
-import { HttpClient } from "@angular/common/http";
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { DomSanitizer } from "@angular/platform-browser";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: "app-image-dialog",
-  templateUrl: "./image-dialog.component.html",
-  styleUrls: ["./image-dialog.component.scss"]
+  selector: 'app-image-dialog',
+  templateUrl: './image-dialog.component.html',
+  styleUrls: ['./image-dialog.component.scss'],
 })
 export class ImageDialogComponent implements OnInit {
   imageUrl: string | any;
   endPoint = environment.microServiceURL;
-  isPdfType: boolean = false;
-  fileUrl: string = "";
+  isPdfType = false;
+  fileUrl = '';
   dataLocalUrl: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogref: MatDialogRef<ImageDialogComponent>,
     private sanitizer: DomSanitizer,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class ImageDialogComponent implements OnInit {
 
   formatFile() {
     console.log(this.data.fileInfo);
-    if (this.data.fileInfo.fileType == "application/pdf") {
+    if (this.data.fileInfo.fileType == 'application/pdf') {
       this.isPdfType = true;
       this.pdfFormat();
     } else {
@@ -38,16 +38,16 @@ export class ImageDialogComponent implements OnInit {
     // console.log(this.data);
   }
   pdfFormat() {
-    this.http.get(this.fileUrl, { responseType: "blob" }).subscribe(
+    this.http.get(this.fileUrl, { responseType: 'blob' }).subscribe(
       (response: Blob) => {
-        const fileData = new Blob([response], { type: "application/pdf" });
+        const fileData = new Blob([response], { type: 'application/pdf' });
         this.dataLocalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          window.URL.createObjectURL(fileData)
+          window.URL.createObjectURL(fileData),
         );
       },
       (error) => {
-        console.error("Error fetching PDF:", error);
-      }
+        console.error('Error fetching PDF:', error);
+      },
     );
   }
   closeDialog() {
@@ -55,7 +55,7 @@ export class ImageDialogComponent implements OnInit {
   }
   getFileUrl(filePath: string) {
     const file = this.endPoint + filePath;
-    let parseFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file);
+    const parseFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file);
     return parseFileUrl;
   }
 }

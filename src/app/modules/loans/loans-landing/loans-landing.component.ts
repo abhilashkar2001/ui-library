@@ -1,26 +1,26 @@
-import { Component, ElementRef, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { LoanService } from "app/shared/services/loan/loan.service";
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonService } from 'app/shared/services/common-service/common.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
-  selector: "app-loans-landing",
-  templateUrl: "./loans-landing.component.html",
-  styleUrls: ["./loans-landing.component.scss"]
+  selector: 'app-loans-landing',
+  templateUrl: './loans-landing.component.html',
+  styleUrls: ['./loans-landing.component.scss'],
 })
 export class LoansLandingComponent implements OnInit {
   carowselData = [];
-  imageUrl = "assets/images/Loan_Gold_img.png";
-  profileHeader = "Achieve Your Dreams with Our Loan Service.";
+  imageUrl = 'assets/images/Loan_Gold_img.png';
+  profileHeader = 'Achieve Your Dreams with Our Loan Service.';
   profileHint =
-    " Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.";
-  routeUrl = "loan/loan-type";
-  category: string = "Lending";
+    ' Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.';
+  routeUrl = 'loan/loan-type';
+  category = 'Lending';
   constructor(
     private router: Router,
     private commonService: CommonService,
     private loanService: LoanService,
-    private el: ElementRef
+    private el: ElementRef,
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +41,13 @@ export class LoansLandingComponent implements OnInit {
   }
 
   customApplyLoan(e: any) {
-    this.router.navigate(["/loan/loan-type"], {
-      queryParams: { subClass: e }
+    this.router.navigate(['/loan/loan-type'], {
+      queryParams: { subClass: e },
     });
   }
   customApply() {
     const targetElement =
-      this.el.nativeElement.querySelector("#custom-carousel");
+      this.el.nativeElement.querySelector('#custom-carousel');
     const targetPosition = targetElement.getBoundingClientRect().top;
     targetPosition > 200 ? targetPosition - 120 : targetPosition;
     if (targetElement) {
@@ -56,7 +56,7 @@ export class LoansLandingComponent implements OnInit {
       //   behavior: "smooth",
       //   block: "start",
       // });
-      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     }
   }
 }

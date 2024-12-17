@@ -13,34 +13,34 @@ export interface ChecklistInfoModel {
 
 export interface DocInfoModel {
   documentId: number;
-  documentName: any;
+  documentName: string;
   documentType: any;
   fileName: string;
   fileType: string;
   documentSide: any;
   verificationType: any;
   fileUrl: string;
-  idNumber: any;
-  phoneNumber: any;
-  documentNumber: any;
-  issueDate: any;
-  expiryDate: any;
-  dob: any;
+  phoneNumber: number;
+  idNumber: number;
+  documentNumber: number;
+  issueDate: Date;
+  expiryDate: Date;
+  dob: Date;
   documentDesc: string;
-  isProofOfAddress: any;
-  documentNameValue: any;
+  isProofOfAddress: string;
+  documentNameValue: string;
   documentNameForChecklist: string;
 }
 
 export interface ChecklistRouteObjModel {
-  checklistItem: string[] | string | any;
-  processStageId: number | string | any;
-  screenId: number | string | any;
-  processCycleCode: string | any;
+  checklistItem: string[] | string | null;
+  processStageId: number | string | null;
+  screenId: number | string | null;
+  processCycleCode: string | null;
 }
 
 export class ChecklistPayloadModel {
-  originationId: number | any;
-  documentIds: number[] | any;
-  screenCode: number | string | any;
+  originationId: number | undefined;
+  documentIds: number[] | undefined;
+  screenCode: number | undefined;
 }

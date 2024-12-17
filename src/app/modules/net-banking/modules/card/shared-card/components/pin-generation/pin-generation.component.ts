@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { OtpService } from "app/shared/services/otp.service";
-import { PopupSuccessComponent } from "app/shared/components/popup-success/popup-success.component";
-import { CardService } from "../../../card.service";
-import { GeneratePinComponent } from "../generate-pin/generate-pin.component";
-import { NavigationEnd, Router } from "@angular/router";
-import { filter } from "rxjs/operators";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { OtpService } from 'app/shared/services/otp.service';
+import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
+import { CardService } from '../../../card.service';
+import { GeneratePinComponent } from '../generate-pin/generate-pin.component';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-pin-generation",
-  templateUrl: "./pin-generation.component.html",
-  styleUrls: ["./pin-generation.component.scss"]
+  selector: 'app-pin-generation',
+  templateUrl: './pin-generation.component.html',
+  styleUrls: ['./pin-generation.component.scss'],
 })
 export class PinGenerationComponent implements OnInit {
   pinGenerationForm!: FormGroup;
   listOfAccounts: any[] = [];
   customerId: any;
   accountDetails: any;
-  otp: boolean = false;
+  otp = false;
   title: string | any;
   typeofCard: any;
 
@@ -29,11 +29,11 @@ export class PinGenerationComponent implements OnInit {
     private loginService: OtpService,
     private sessionStorageService: SessionStorageService,
     private apiService: CardService,
-    private router: Router
+    private router: Router,
   ) {
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd) // Regular filter
+        filter((event) => event instanceof NavigationEnd), // Regular filter
       )
       .subscribe((event) => {
         const navEndEvent = event as NavigationEnd; // Type assertion
@@ -50,9 +50,9 @@ export class PinGenerationComponent implements OnInit {
 
   private buildPinGenerationForm(): void {
     this.pinGenerationForm = this.fb.group({
-      selectCard: [""],
-      cvv: [""],
-      otp: [""]
+      selectCard: [''],
+      cvv: [''],
+      otp: [''],
     });
   }
 
@@ -61,12 +61,12 @@ export class PinGenerationComponent implements OnInit {
    * @param url -url of the activated route
    */
   private updateItemsBasedOnUrl(url: string) {
-    if (url.includes("/credit-card")) {
-      this.title = "Credit Card";
-    } else if (url.includes("/debit-card")) {
-      this.title = "Debit Card";
-    } else if (url.includes("/prepaid-card")) {
-      this.title = "Prepaid Card";
+    if (url.includes('/credit-card')) {
+      this.title = 'Credit Card';
+    } else if (url.includes('/debit-card')) {
+      this.title = 'Debit Card';
+    } else if (url.includes('/prepaid-card')) {
+      this.title = 'Prepaid Card';
     }
   }
 
@@ -84,9 +84,9 @@ export class PinGenerationComponent implements OnInit {
   proceed(): void {
     // Use the common dialog method
     this.openDialog(GeneratePinComponent, {
-      width: "500px",
+      width: '500px',
       disableClose: true,
-      panelClass: "custom-dialog-class" // Pass form values
+      panelClass: 'custom-dialog-class', // Pass form values
     }).subscribe((result) => {
       if (result) {
         this.setPin(result.pin);
@@ -97,13 +97,13 @@ export class PinGenerationComponent implements OnInit {
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.listOfAccounts?.find(
-      (card) => card?.cardNumber == account
+      (card) => card?.cardNumber == account,
     );
     if (this.accountDetails) {
       this.pinGenerationForm
-        ?.get("selectCard")
+        ?.get('selectCard')
         ?.patchValue(this.accountDetails?.cardNumber);
-      this.pinGenerationForm?.get("cvv")?.patchValue(this.accountDetails?.cvv);
+      this.pinGenerationForm?.get('cvv')?.patchValue(this.accountDetails?.cvv);
       this.typeofCard = this.accountDetails?.typeOfCard;
     }
   }
@@ -115,17 +115,17 @@ export class PinGenerationComponent implements OnInit {
         this.openDialog(PopupSuccessComponent, {
           data: {
             auth: {
-              type: "Success",
-              status: "Created",
-              msg: "Your New ATM PIN is set"
-            }
+              type: 'Success',
+              status: 'Created',
+              msg: 'Your New ATM PIN is set',
+            },
           },
           disableClose: true,
-          panelClass: "popup-dialog-class",
-          backdropClass: "bdrop",
-          width: "25%"
+          panelClass: 'popup-dialog-class',
+          backdropClass: 'bdrop',
+          width: '25%',
         }).subscribe(() => {
-          this.router.navigate(["/user/card/credit-card/dashboard"]);
+          this.router.navigate(['/user/card/credit-card/dashboard']);
         });
       }
     });

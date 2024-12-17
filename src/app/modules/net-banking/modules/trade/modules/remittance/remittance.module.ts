@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { RemittanceRoutingModule } from './remittance-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RemittanceRoutingModule
-  ]
+  imports: [CommonModule, RemittanceRoutingModule],
 })
-export class RemittanceModule { }
+export class RemittanceModule {}

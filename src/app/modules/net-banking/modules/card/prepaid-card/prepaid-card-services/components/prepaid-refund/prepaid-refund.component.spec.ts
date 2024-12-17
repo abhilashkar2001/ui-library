@@ -8,9 +8,8 @@ describe('PrepaidRefundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrepaidRefundComponent ]
-    })
-    .compileComponents();
+      declarations: [PrepaidRefundComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PrepaidRefundComponent);
     component = fixture.componentInstance;

@@ -17,7 +17,7 @@
       >
       </app-searchable-select>
       <div fxLayout="column">
-        <h4>{{ "Statements" | translate }}</h4>
+        <h4>{{ 'Statements' | translate }}</h4>
         <mat-radio-group
           aria-label="Select an option"
           formControlName="statementOption"
@@ -25,12 +25,12 @@
           <mat-radio-button
             [value]="'Financial Year'"
             class="radioChecked radiobtn text-gray px-16"
-            >{{ "Financial Year" | translate }}</mat-radio-button
+            >{{ 'Financial Year' | translate }}</mat-radio-button
           >
           <mat-radio-button
             [value]="'Duration'"
             class="radioChecked radiobtn text-gray px-16"
-            >{{ "Duration" | translate }}</mat-radio-button
+            >{{ 'Duration' | translate }}</mat-radio-button
           >
         </mat-radio-group>
       </div>
@@ -74,7 +74,7 @@
     </div>
     <div>
       <h2 *ngIf="fetchStatement" class="requestCertificateHead">
-        {{ "View Request Certificate" | translate }}
+        {{ 'View Request Certificate' | translate }}
       </h2>
     </div>
     <table class="fetch-table w-100" *ngIf="fetchStatement">

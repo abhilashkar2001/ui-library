@@ -8,9 +8,8 @@ describe('SelectSingleTransferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectSingleTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [SelectSingleTransferComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SelectSingleTransferComponent);
     component = fixture.componentInstance;

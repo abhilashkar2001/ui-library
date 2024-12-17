@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NetBankingHomeComponent } from "./net-banking-home.component";
+import { NetBankingHomeComponent } from './net-banking-home.component';
 
-describe("NetBankingHomeComponent", () => {
+describe('NetBankingHomeComponent', () => {
   let component: NetBankingHomeComponent;
   let fixture: ComponentFixture<NetBankingHomeComponent>;
 
@@ -16,7 +16,7 @@ describe("NetBankingHomeComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

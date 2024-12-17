@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class BeneficiaryService {
   protected basePath = environment.microServiceURL;
@@ -12,12 +12,12 @@ export class BeneficiaryService {
   uploadBenificiaryExcel(formData: any) {
     return this.http.post(
       `${this.basePath}/corp_benieficiary/uploadBeneficiary`,
-      formData
+      formData,
     );
   }
 
   getBulkUploadRecords(refNumber: any, filters?: any) {
-    var filterBy = "";
+    let filterBy = '';
     if (filters?.filterBy) {
       const keys = Object.keys(filters.filterBy);
       keys.forEach((key) => {
@@ -27,26 +27,26 @@ export class BeneficiaryService {
     }
     const page = filters?.page
       ? `page=${filters?.page}&size=${filters?.size}`
-      : "";
-    const sort = filters?.sort ? `&sort=${filters?.sort}` : "";
+      : '';
+    const sort = filters?.sort ? `&sort=${filters?.sort}` : '';
     const direction = filters?.direction
       ? `&sortOrder=${filters?.direction}`
-      : "";
-    var filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
-    if (!filters) filterEndpoint = "";
+      : '';
+    let filterEndpoint = `&${filterBy}${page}${sort}${direction}`;
+    if (!filters) filterEndpoint = '';
 
     return this.http.get<any>(
-      `${this.basePath}/corp_benieficiary?refNumber=${refNumber}${filterEndpoint}`
+      `${this.basePath}/corp_benieficiary?refNumber=${refNumber}${filterEndpoint}`,
     );
   }
 
   getSummary(filterBy: any, page: any, size: any) {
-    var filterEndpoint = "";
+    let filterEndpoint = '';
     if (filterBy) {
       const keys = Object.keys(filterBy);
       keys.forEach((key) => {
         if (filterBy[key])
-          key == "newFilter"
+          key == 'newFilter'
             ? (filterEndpoint = filterEndpoint + `branchCode=${filterBy[key]}&`)
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
@@ -55,7 +55,7 @@ export class BeneficiaryService {
 
     const payload = `?${pagination}`;
     return this.http.get(
-      `${this.basePath}/corp_benieficiary/fetchMasterInfo${payload}`
+      `${this.basePath}/corp_benieficiary/fetchMasterInfo${payload}`,
     );
   }
 
@@ -63,8 +63,8 @@ export class BeneficiaryService {
     return this.http.get(
       `${this.basePath}/corp_benieficiary/downloadTemplate?filename=Upload`,
       {
-        responseType: "blob"
-      }
+        responseType: 'blob',
+      },
     );
   }
 
@@ -78,7 +78,7 @@ export class BeneficiaryService {
 
   getBeneficiaryById(id: any) {
     return this.http.get<any>(
-      `${this.basePath}/corp_benieficiary?benificiaryId=${id}`
+      `${this.basePath}/corp_benieficiary?benificiaryId=${id}`,
     );
   }
   getDataByPage(
@@ -87,7 +87,7 @@ export class BeneficiaryService {
     page: any,
     size: any,
     sortName: any,
-    direction: any
+    direction: any,
   ) {
     const filter = `${filterBy}=${filterValue}`;
     const pagination = `size=${size}&page=${page}`;
@@ -96,26 +96,26 @@ export class BeneficiaryService {
       sortName && filterBy
         ? `?${filter}&${sortOperation}&${pagination}`
         : sortName
-        ? `?${sortOperation}&${pagination}`
-        : page && size
-        ? filterBy
-          ? `?${filter}&${pagination}`
-          : `?${pagination}`
-        : "";
+          ? `?${sortOperation}&${pagination}`
+          : page && size
+            ? filterBy
+              ? `?${filter}&${pagination}`
+              : `?${pagination}`
+            : '';
     return this.http.get<any>(`${this.basePath}/corp_benieficiary${payload}`);
   }
 
   checkCorpAccountNumber(accNo: any) {
     return this.http.get<any>(
-      `${this.basePath}/corp_benieficiary/checkExistingAccont?accountNumber=${accNo}`
+      `${this.basePath}/corp_benieficiary/checkExistingAccont?accountNumber=${accNo}`,
     );
   }
 
   fetchBankCode(searchValue: any) {
     return this.http.get<any>(
       `${this.basePath}/retail-beneficiary/fetchOtherBankInfo${
-        searchValue ? `?searchValue=${searchValue}` : ""
-      }`
+        searchValue ? `?searchValue=${searchValue}` : ''
+      }`,
     );
   }
 }

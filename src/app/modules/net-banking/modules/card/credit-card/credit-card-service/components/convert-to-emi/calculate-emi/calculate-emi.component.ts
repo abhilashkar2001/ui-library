@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { ConvertEmiStore } from "../convert-emi.store";
-import { Router } from "@angular/router";
-import { CardDetails } from "app/shared/models/emi-converter.model";
-import { CardService } from "app/modules/net-banking/modules/card/card.service";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ConvertEmiStore } from '../convert-emi.store';
+import { Router } from '@angular/router';
+import { CardDetails } from 'app/shared/models/emi-converter.model';
+import { CardService } from 'app/modules/net-banking/modules/card/card.service';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
 
 @Component({
-  selector: "app-calculate-emi",
-  templateUrl: "./calculate-emi.component.html",
-  styleUrls: ["./calculate-emi.component.scss"]
+  selector: 'app-calculate-emi',
+  templateUrl: './calculate-emi.component.html',
+  styleUrls: ['./calculate-emi.component.scss'],
 })
 export class CalculateEmiComponent implements OnInit {
   calculateEmiForm!: FormGroup;
@@ -27,7 +27,7 @@ export class CalculateEmiComponent implements OnInit {
     private fb: FormBuilder,
     private emiService: CardService,
     private router: Router,
-    private serviceCallHandler: ServiceCallHandler
+    private serviceCallHandler: ServiceCallHandler,
   ) {}
 
   ngOnInit(): void {
@@ -37,9 +37,9 @@ export class CalculateEmiComponent implements OnInit {
 
   private buildCalculateEmiForm() {
     this.calculateEmiForm = this.fb.group({
-      tenureYears: [""],
-      tenureMonths: [""],
-      tenureDays: [""]
+      tenureYears: [''],
+      tenureMonths: [''],
+      tenureDays: [''],
     });
   }
 
@@ -58,9 +58,9 @@ export class CalculateEmiComponent implements OnInit {
   }
 
   calculateSliderValue() {
-    const m = this.calculateEmiForm.get("tenureMonths")?.value;
-    const d = this.calculateEmiForm.get("tenureDays")?.value;
-    const y = this.calculateEmiForm.get("tenureYears")?.value;
+    const m = this.calculateEmiForm.get('tenureMonths')?.value;
+    const d = this.calculateEmiForm.get('tenureDays')?.value;
+    const y = this.calculateEmiForm.get('tenureYears')?.value;
     this.onSliderChangeForTenure(y * 365 + m * 30 + d);
   }
 
@@ -82,7 +82,7 @@ export class CalculateEmiComponent implements OnInit {
       principleAmount: this.emiData[3].value,
       interestRate: 7.28, //now we are maintaining percentage as statically
       numberOfMonths: this.totalMonths,
-      firstRepaymentDate: tomorrow
+      firstRepaymentDate: tomorrow,
     };
     this.calculateEmi(payload);
     this.updateTenureForm(years, months, remainingDays % 30);
@@ -99,13 +99,13 @@ export class CalculateEmiComponent implements OnInit {
     const today = new Date();
     const tomorrow: any = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-    return tomorrow.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    return tomorrow.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   }
 
   private updateTenureForm(years: number, months: number, days: number) {
-    this.calculateEmiForm.get("tenureYears")?.setValue(years);
-    this.calculateEmiForm.get("tenureMonths")?.setValue(months);
-    this.calculateEmiForm.get("tenureDays")?.setValue(days);
+    this.calculateEmiForm.get('tenureYears')?.setValue(years);
+    this.calculateEmiForm.get('tenureMonths')?.setValue(months);
+    this.calculateEmiForm.get('tenureDays')?.setValue(days);
   }
 
   convertYearsToMonths(years: number): number {
@@ -117,7 +117,7 @@ export class CalculateEmiComponent implements OnInit {
   }
 
   formatLabel(value: number | null): string {
-    if (!value) return "";
+    if (!value) return '';
 
     const years = Math.floor(value / 365);
     const remainingDays = value % 365;
@@ -138,48 +138,48 @@ export class CalculateEmiComponent implements OnInit {
       tenure: this.formatLabel(this.sliderValue.value),
       maturityDate: this.obj.maturityDate,
       monthlyEmi: this.emiData[6].value,
-      cardId: this.obj.cardId
+      cardId: this.obj.cardId,
     };
 
     const emiDetailsArr = [
       {
-        eventType: "calculateEmi",
-        statusHeader: "Confirm Details",
-        statusNews: "Converted to EMI successfully!",
+        eventType: 'calculateEmi',
+        statusHeader: 'Confirm Details',
+        statusNews: 'Converted to EMI successfully!',
         summary: [
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Name On Card": this.obj.nameOnCard },
-              { "Card No": payload.cardNo },
-              { "Card Name": payload.cardName },
-              { "Convert To EMI": payload.amount }
-            ]
+              { 'Name On Card': this.obj.nameOnCard },
+              { 'Card No': payload.cardNo },
+              { 'Card Name': payload.cardName },
+              { 'Convert To EMI': payload.amount },
+            ],
           },
           {
-            header: "EMI Details",
+            header: 'EMI Details',
             details: [
               { Amount: payload.amount },
-              { "Interest Rate": payload.interestRate },
-              { "Processing Fee": payload.processingFee },
+              { 'Interest Rate': payload.interestRate },
+              { 'Processing Fee': payload.processingFee },
               { Tenure: payload.tenure },
-              { "Maturity Date": payload.maturityDate },
-              { "Monthly Emi": this.emiData[6].value },
-              { "Card Id": payload.cardId }
-            ]
-          }
+              { 'Maturity Date': payload.maturityDate },
+              { 'Monthly Emi': this.emiData[6].value },
+              { 'Card Id': payload.cardId },
+            ],
+          },
         ],
-        qrToggle: false
-      }
+        qrToggle: false,
+      },
     ];
 
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       emiDetailsArr,
-      (convertedPayload) => this.emiService.convertToEmi(convertedPayload)
+      (convertedPayload) => this.emiService.convertToEmi(convertedPayload),
     );
 
-    this.router.navigate(["/send-money/payment-summary"]);
+    this.router.navigate(['/send-money/payment-summary']);
   }
 }

@@ -29,7 +29,7 @@
               type="text"
               formControlName="amount"
               name="amount"
-              numbersOnly
+              appNumbersOnly
               [readonly]="!isEnabledEdit"
             />
             <mat-error
@@ -53,7 +53,7 @@
                 matInput
                 name="tenureYear"
                 formControlName="tenureYear"
-                numbersOnly
+                appNumbersOnly
                 maxlength="2"
                 placeholder="Year"
                 [readonly]="!isEnabledEdit"
@@ -64,7 +64,7 @@
                 matInput
                 name="tenureMonth"
                 formControlName="tenureMonth"
-                numbersOnly
+                appNumbersOnly
                 maxlength="2"
                 placeholder="Month"
                 [readonly]="!isEnabledEdit"
@@ -74,7 +74,7 @@
                 matInput
                 name="tenureDays"
                 formControlName="tenureDays"
-                numbersOnly
+                appNumbersOnly
                 maxlength="2"
                 placeholder="Day"
                 [readonly]="!isEnabledEdit"
@@ -129,7 +129,7 @@
               type="text"
               formControlName="intrestRate"
               name="intrestRate"
-              numbersOnly
+              appNumbersOnly
               [readonly]="!isEnabledEdit"
             />
             <mat-error
@@ -155,7 +155,7 @@
               type="text"
               formControlName="maturityAmount"
               name="maturityAmount"
-              numbersOnly
+              appNumbersOnly
               [readonly]="!isEnabledEdit"
             />
             <mat-error
@@ -342,7 +342,7 @@
   <div class="align_fdForm" fxLayout="column" *ngIf="verifyStep('kyc')">
     <app-other-documents
       (customSaveDocument)="customSaveDocuments($event)"
-      (onBackEvent)="goBack()"
+      (backEvent)="goBack()"
     ></app-other-documents>
   </div>
 

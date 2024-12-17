@@ -8,9 +8,8 @@ describe('ErrorNotifierPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorNotifierPopupComponent ]
-    })
-    .compileComponents();
+      declarations: [ErrorNotifierPopupComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorNotifierPopupComponent);
     component = fixture.componentInstance;

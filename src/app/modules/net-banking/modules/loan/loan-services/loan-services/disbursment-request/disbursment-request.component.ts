@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { DocumentUploadFormGroup } from "app/shared/helpers/docuemnt-upload.helper";
-import { removeSpecCharsOnly } from "app/shared/helpers/utils";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { LoanDetailsModel } from "app/shared/models/loan-details.model";
-import { LoanInstallmentModel } from "app/shared/models/loan-installment.model";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { GenericValueService } from "app/shared/services/generic-value.service";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DocumentUploadFormGroup } from 'app/shared/helpers/docuemnt-upload.helper';
+import { removeSpecCharsOnly } from 'app/shared/helpers/utils';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { CommonService } from 'app/shared/services/common-service/common.service';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-disbursment-request",
-  templateUrl: "./disbursment-request.component.html",
-  styleUrls: ["./disbursment-request.component.scss"]
+  selector: 'app-disbursment-request',
+  templateUrl: './disbursment-request.component.html',
+  styleUrls: ['./disbursment-request.component.scss'],
 })
 export class DisbursmentRequestComponent
   extends DocumentUploadFormGroup
@@ -48,7 +48,7 @@ export class DisbursmentRequestComponent
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
     private genericValueService: GenericValueService,
-    private commonService: CommonService
+    private commonService: CommonService,
   ) {
     super(new FormBuilder());
   }
@@ -59,7 +59,7 @@ export class DisbursmentRequestComponent
     this.buildDisbursementRequestForm();
     if (this.loanDetails.length > 0) {
       this._parentForm
-        .get("debitAccount")
+        .get('debitAccount')
         ?.setValue(this.loanDetails[0]?.cbsAccountNumber);
       this.onSelectionChange(this.loanDetails[0]?.cbsAccountNumber);
     }
@@ -69,11 +69,11 @@ export class DisbursmentRequestComponent
   //fetch generic values
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue("Common", Object.keys(this.genericValue))
+      .loadGenericValue('Common', Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           Object.keys(res?.data).forEach(
-            (k) => (this.genericValue[k] = res.data[k])
+            (k) => (this.genericValue[k] = res.data[k]),
           );
         }
       });
@@ -81,23 +81,23 @@ export class DisbursmentRequestComponent
 
   buildDisbursementRequestForm() {
     this._parentForm = this.fb.group({
-      debitAccount: ["", [Validators.required]],
-      loanType: [""],
-      chequeFavouringSame: ["", [Validators.required]],
+      debitAccount: ['', [Validators.required]],
+      loanType: [''],
+      chequeFavouringSame: ['', [Validators.required]],
       ownContribution: [false, [Validators.required]],
-      payeeName: ["", [Validators.required]],
-      specificDate: ["", [Validators.required]],
-      debitAmount: [""],
-      creditAmount: [""],
-      transferDate: [""],
-      purpose: [""],
-      preferredDate: [""],
-      remark: [""],
-      acceptTermsConditions: ["", [Validators.required]],
-      transferType: "Loan Disbursement",
-      source: "I",
+      payeeName: ['', [Validators.required]],
+      specificDate: ['', [Validators.required]],
+      debitAmount: [''],
+      creditAmount: [''],
+      transferDate: [''],
+      purpose: [''],
+      preferredDate: [''],
+      remark: [''],
+      acceptTermsConditions: ['', [Validators.required]],
+      transferType: 'Loan Disbursement',
+      source: 'I',
       corpCustomerId: this.corpCustId,
-      documents: this.fb.array([])
+      documents: this.fb.array([]),
     });
     this.pushDocumentInfo();
   }
@@ -112,11 +112,11 @@ export class DisbursmentRequestComponent
 
   onSelectionChange(cbsAccountNumber: string) {
     const selectedAccount: LoanDetailsModel = this.loanDetails.find(
-      (account: any) => account.cbsAccountNumber == cbsAccountNumber
+      (account: any) => account.cbsAccountNumber == cbsAccountNumber,
     );
     this.fetchLoanInstallment();
     if (selectedAccount)
-      this._parentForm.get("loanType")?.setValue(selectedAccount.accountType);
+      this._parentForm.get('loanType')?.setValue(selectedAccount.accountType);
   }
 
   // fetch installment details
@@ -127,10 +127,10 @@ export class DisbursmentRequestComponent
         if (res?.statusCode == 200 && res?.data)
           this.installmentDetails = res?.data;
         this._parentForm
-          .get("payeeName")
+          .get('payeeName')
           ?.setValue(this.installmentDetails?.customerName);
         this._parentForm
-          .get("creditAmount")
+          .get('creditAmount')
           ?.setValue(this.installmentDetails?.loanAmount);
       });
   }
@@ -154,26 +154,26 @@ export class DisbursmentRequestComponent
    */
   uploadDocument(file: any, i: any) {
     const docdata: any = {
-      fileName: file.name.split(".")[0],
-      fileType: file.type.split("/")[1],
-      documentSide: 1
+      fileName: file.name.split('.')[0],
+      fileType: file.type.split('/')[1],
+      documentSide: 1,
     };
 
     // Prepare FormData for each file
     const formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("data", JSON.stringify(docdata));
-    formdata.append("module", "document");
+    formdata.append('file', file);
+    formdata.append('data', JSON.stringify(docdata));
+    formdata.append('module', 'document');
 
     this.commonService.uploadDocument(formdata).subscribe((res: any) => {
       if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
         const uploadedFile = {
           fileName: file.name,
-          fileUrl: res.data.fileUrl || "",
-          documentId: res.data.documentId || null
+          fileUrl: res.data.fileUrl || '',
+          documentId: res.data.documentId || null,
         };
         const filesArray = this.documentCtrl.controls[i].get(
-          "files"
+          'files',
         ) as FormArray;
         filesArray.push(this.fb.group(uploadedFile));
       }
@@ -183,22 +183,22 @@ export class DisbursmentRequestComponent
   getDecimalValue(value: string) {
     return removeSpecCharsOnly(
       this.currentCurrency?.thousandsSeparator,
-      value || 0
+      value || 0,
     );
   }
 
   //save function to save the details
   saveDisbursement() {
-    let payload = {
+    const payload = {
       ...this._parentForm.value,
-      debitAmount: this.getDecimalValue(this._parentForm.value.debitAmount)
+      debitAmount: this.getDecimalValue(this._parentForm.value.debitAmount),
     };
     payload.debitCurrency = this.loanDetails?.find(
       (res: any) =>
-        res?.cbsAccountNumber == this._parentForm?.value?.debitAccount
+        res?.cbsAccountNumber == this._parentForm?.value?.debitAccount,
     )?.currencyCode;
     delete payload.tenure;
-    let docs: any = [];
+    const docs: any = [];
     payload?.documents.forEach((doc: any) => {
       if (doc?.files?.length > 0) {
         doc?.files?.forEach((file: any) => {
@@ -215,59 +215,59 @@ export class DisbursmentRequestComponent
     delete payload?.loanType;
     4;
 
-    let disburArr = [
+    const disburArr = [
       {
-        eventType: "disbursmentReq",
-        operationType: "Loan",
-        status: "details",
-        masterId: "benificiaryMasterId",
-        statusHeader: "Confirm Details",
-        statusNews: "Disbursment Request",
+        eventType: 'disbursmentReq',
+        operationType: 'Loan',
+        status: 'details',
+        masterId: 'benificiaryMasterId',
+        statusHeader: 'Confirm Details',
+        statusNews: 'Disbursment Request',
         summary: [
           {
-            header: "Loan Details",
+            header: 'Loan Details',
             details: [
               { Name: this.installmentDetails?.customerName },
               {
-                "Loan Account Number":
-                  this._parentForm?.get("debitAccount")?.value
+                'Loan Account Number':
+                  this._parentForm?.get('debitAccount')?.value,
               },
               { Type: this._parentForm?.value?.loanType },
-              { "Loan Amount": this.installmentDetails?.loanAmount }
-            ]
+              { 'Loan Amount': this.installmentDetails?.loanAmount },
+            ],
           },
           {
-            header: "Disbursement Requested",
+            header: 'Disbursement Requested',
             details: [
               { Amount: this._parentForm?.value.debitAmount },
               { Purpose: this._parentForm?.value.purpose },
-              { "Preferred Date": this._parentForm?.value.preferredDate },
-              { Remark: this._parentForm?.value.remark }
-            ]
+              { 'Preferred Date': this._parentForm?.value.preferredDate },
+              { Remark: this._parentForm?.value.remark },
+            ],
           },
           {
-            header: "Cheque Detail",
+            header: 'Cheque Detail',
             details: [
-              { "Name of Payee": this._parentForm?.value.payeeName },
-              { "Specific Date": this._parentForm?.value.specificDate }
-            ]
+              { 'Name of Payee': this._parentForm?.value.payeeName },
+              { 'Specific Date': this._parentForm?.value.specificDate },
+            ],
           },
           {
-            header: "Additional Information",
+            header: 'Additional Information',
             details: [
-              { "Upload Document": this._parentForm?.value.documentName },
-              { "Specific Date": this._parentForm?.value.specificDate }
-            ]
-          }
-        ]
-      }
+              { 'Upload Document': this._parentForm?.value.documentName },
+              { 'Specific Date': this._parentForm?.value.specificDate },
+            ],
+          },
+        ],
+      },
     ];
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       disburArr,
-      (payload) => this.loanService.saveService(payload)
+      (payload) => this.loanService.saveService(payload),
     );
-    this.router.navigate(["/user/loan/loan-service/payment-summary"]);
+    this.router.navigate(['/user/loan/loan-service/payment-summary']);
   }
 }

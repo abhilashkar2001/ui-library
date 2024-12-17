@@ -39,7 +39,7 @@
   cursor: pointer;
   border-radius: 8px;
   font-size: 14px;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   padding: 0 24px;
 
@@ -74,7 +74,7 @@ mat-expansion-panel.default-expansion-panel {
     border: 8px solid #f3f3f3;
     border-radius: 12px;
     opacity: 1;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   mat-expansion-panel-header:not(.mat-expanded) {
@@ -105,20 +105,20 @@ mat-expansion-panel.default-expansion-panel {
 }
 .text-label {
   color: #102245;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 600;
 }
 
 .text-light {
   color: #000000 !important;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   opacity: 70%;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .sub-heading {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0px;
@@ -128,19 +128,19 @@ mat-expansion-panel.default-expansion-panel {
 }
 
 .title-text {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   color: #004c97;
   font-weight: 600;
 }
 
 .text-highlighted {
   color: #004c97;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 }
 
 .text-normal {
   color: #102245;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-size: 20px;
   font-weight: 600;
 }
@@ -197,7 +197,8 @@ mat-expansion-panel.default-expansion-panel {
   overflow-x: hidden;
   overflow-y: scroll;
   border: 4px solid #f3f3f3;
-  box-shadow: 0px 1px 1px rgba(9, 30, 66, 0.25),
+  box-shadow:
+    0px 1px 1px rgba(9, 30, 66, 0.25),
     0px 0px 1px 1px rgba(9, 30, 66, 0.13) !important;
   &.custom_doc_select {
     min-width: 85% !important;

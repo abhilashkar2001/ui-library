@@ -1,29 +1,29 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NewDepositService } from "../../../new-deposit.service";
-import { ActivatedRoute } from "@angular/router";
-import { CreateRdService } from "../create-rd.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NewDepositService } from '../../../new-deposit.service';
+import { ActivatedRoute } from '@angular/router';
+import { CreateRdService } from '../create-rd.service';
 
 @Component({
-  selector: "app-create-cd",
-  templateUrl: "./create-cd.component.html",
-  styleUrls: ["./create-cd.component.scss"]
+  selector: 'app-create-cd',
+  templateUrl: './create-cd.component.html',
+  styleUrls: ['./create-cd.component.scss'],
 })
 export class CreateCdComponent implements OnInit {
   createRdForm!: FormGroup;
   @Output() customCreatRdForm = new EventEmitter<any>();
   @Output() customSaveCreate = new EventEmitter<{}>();
 
-  selectedStep: number = 0;
+  selectedStep = 0;
   customBasicForm: any;
   isLinear = true;
-  isEnabledEdit: boolean = false;
-  saveTheEdit: boolean = false;
+  isEnabledEdit = false;
+  saveTheEdit = false;
   staticData = {
     TYPESOFCUSTOMER: [],
     INTERESTPAYOUT: [],
     OWNERSHIP: [],
-    PAYMENTTYPE: []
+    PAYMENTTYPE: [],
   };
   typesOfCustomer: string[] | any;
   interestPayout: string[] | any;
@@ -33,13 +33,13 @@ export class CreateCdComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
-    private newDepositeService: NewDepositService
+    private newDepositeService: NewDepositService,
   ) {}
 
   ngOnInit(): void {
     this.getGenericDetails();
     console.log(this.route.snapshot);
-    var id = this.route.snapshot.params["id"];
+    let id = this.route.snapshot.params['id'];
     console.log(id);
     // this.buildCreateRdForm();
     id = parseInt(id);
@@ -53,13 +53,13 @@ export class CreateCdComponent implements OnInit {
 
   getGenericDetails() {
     this.newDepositeService
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue('website', Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
-          this.interestPayout = resp.data["INTERESTPAYOUT"];
-          this.ownership = resp.data["OWNERSHIP"];
-          this.paymentType = resp.data["PAYMENTTYPE"];
+          this.typesOfCustomer = resp.data['TYPESOFCUSTOMER'];
+          this.interestPayout = resp.data['INTERESTPAYOUT'];
+          this.ownership = resp.data['OWNERSHIP'];
+          this.paymentType = resp.data['PAYMENTTYPE'];
         }
       });
   }
@@ -81,23 +81,23 @@ export class CreateCdComponent implements OnInit {
 
   buildCreateRdForm(data?: any) {
     this.createRdForm = this.fb.group({
-      amount: [data ? data.amount : "", Validators.required],
+      amount: [data ? data.amount : '', Validators.required],
       maturityDate: [
-        data ? new Date(data.maturityDate) : "",
-        Validators.required
+        data ? new Date(data.maturityDate) : '',
+        Validators.required,
       ],
-      intrestRate: [data ? data.intrestRate : "", Validators.required],
-      ownership: [data ? data.ownership : "", Validators.required],
-      maturityAmount: [data ? data.maturityAmount : "", Validators.required],
-      typeOfCustomer: [data ? data.typeOfCustomer : "", Validators.required],
-      intrestPayout: [data ? data.intrestPayout : "", Validators.required],
+      intrestRate: [data ? data.intrestRate : '', Validators.required],
+      ownership: [data ? data.ownership : '', Validators.required],
+      maturityAmount: [data ? data.maturityAmount : '', Validators.required],
+      typeOfCustomer: [data ? data.typeOfCustomer : '', Validators.required],
+      intrestPayout: [data ? data.intrestPayout : '', Validators.required],
       paymentType: [
-        data?.paymentType ? data.paymentType : "",
-        Validators.required
+        data?.paymentType ? data.paymentType : '',
+        Validators.required,
       ],
       autoRenew: [data ? data.autoRenew : false],
       fdRdMasterId: data && data.fdRdMasterId,
-      basisDetailsId: data && data.basisDetailsId
+      basisDetailsId: data && data.basisDetailsId,
     });
     this.customBasicForm = this.createRdForm;
     // setTimeout(() => {
@@ -110,7 +110,7 @@ export class CreateCdComponent implements OnInit {
     this.customCreatRdForm.emit(this.createRdForm);
     this.customSaveCreate.emit({
       satus: true,
-      rdData: this.createRdForm.value
+      rdData: this.createRdForm.value,
     });
   }
 
@@ -122,6 +122,6 @@ export class CreateCdComponent implements OnInit {
     window.close();
   }
   onPaymentTypeChange(e: any) {
-    sessionStorage.setItem("paymentType", e);
+    sessionStorage.setItem('paymentType', e);
   }
 }

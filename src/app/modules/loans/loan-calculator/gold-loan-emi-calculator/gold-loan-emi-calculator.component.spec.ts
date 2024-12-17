@@ -8,7 +8,7 @@ describe('GoldLoanEmiCalculatorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GoldLoanEmiCalculatorComponent]
+      declarations: [GoldLoanEmiCalculatorComponent],
     });
     fixture = TestBed.createComponent(GoldLoanEmiCalculatorComponent);
     component = fixture.componentInstance;

@@ -1,12 +1,12 @@
-import { Options } from "@angular-slider/ngx-slider";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { EducationCalculatorService } from "../education-calculator.service";
+import { Options } from '@angular-slider/ngx-slider';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { EducationCalculatorService } from '../education-calculator.service';
 
 @Component({
-  selector: "app-tax-benefits",
-  templateUrl: "./tax-benefits.component.html",
-  styleUrls: ["./tax-benefits.component.scss"]
+  selector: 'app-tax-benefits',
+  templateUrl: './tax-benefits.component.html',
+  styleUrls: ['./tax-benefits.component.scss'],
 })
 export class TaxBenefitsComponent implements OnInit {
   min = 5000;
@@ -17,19 +17,19 @@ export class TaxBenefitsComponent implements OnInit {
   @Output() customCalculatorValues = new EventEmitter<any>();
   @Output() customBack = new EventEmitter<any>();
   thumbLabel: boolean | any = true;
-  value: number = 8000;
-  highValue: number = 60000;
+  value = 8000;
+  highValue = 60000;
   options: Options = {
     floor: 5000,
     ceil: 100000,
     translate: (value: number): string => {
       return `₹ ${value}`;
-    }
+    },
   };
   expenseDetails: any;
   constructor(
     private fb: FormBuilder,
-    private educationApi: EducationCalculatorService
+    private educationApi: EducationCalculatorService,
   ) {}
 
   ngOnInit(): void {
@@ -40,31 +40,31 @@ export class TaxBenefitsComponent implements OnInit {
   getExpenseDetails() {
     this.educationApi.getExpenseDetails().subscribe((resp) => {
       this.expenseDetails = resp;
-      let tutionFeePercent =
+      const tutionFeePercent =
         (this.expenseDetails?.tutionFee * 100) /
         (this.expenseDetails?.tutionFee + this.expenseDetails?.costOfLiving) /
         100;
       this.calCulateGauge(tutionFeePercent);
       console.log(
         tutionFeePercent,
-        "expenseDetails?.tutionFee + expenseDetails?.costOfLiving"
+        'expenseDetails?.tutionFee + expenseDetails?.costOfLiving',
       );
     });
   }
   onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.value;
-    this.loanForm.get("requiredLoan").setValue(e.value);
+    this.loanForm.get('requiredLoan').setValue(e.value);
     console.log(this.loanForm.value);
   }
   buildForm() {
     this.loanForm = this.fb.group({
       amount: `${this.value}-${this.highValue}`,
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      interestRate: "",
-      requiredLoan: ""
+      tenureYear: '',
+      tenureMonth: '',
+      tenureDays: '',
+      interestRate: '',
+      requiredLoan: '',
     });
   }
   updateDeposit() {
@@ -82,18 +82,18 @@ export class TaxBenefitsComponent implements OnInit {
     }
 
     if (gauge)
-      gauge.querySelector(".gauge__fill").style.transform = `rotate(${
+      gauge.querySelector('.gauge__fill').style.transform = `rotate(${
         value / 2
       }turn)`;
   }
 
   calCulateGauge(percent: any) {
-    const gaugeElement = document.querySelector(".gauge");
+    const gaugeElement = document.querySelector('.gauge');
     this.setGaugeValue(gaugeElement, percent);
   }
   onValueChange(e: any) {
     console.log(e);
-    this.loanForm.get("amount").setValue(`${e.value}-${e.highValue}`);
+    this.loanForm.get('amount').setValue(`${e.value}-${e.highValue}`);
   }
   onBack() {
     this.customBack.emit();

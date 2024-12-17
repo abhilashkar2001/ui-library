@@ -42,19 +42,19 @@
         *ngIf="toggleDetails === true"
       >
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
-          <span class="small-title">{{ "Expiry Date" | translate }}</span>
+          <span class="small-title">{{ 'Expiry Date' | translate }}</span>
           <span class="small-values">{{
             displayCard?.validDate | translate
           }}</span>
         </div>
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
-          <span class="small-title">{{ "Cvv" | translate }}</span>
+          <span class="small-title">{{ 'Cvv' | translate }}</span>
           <span class="small-values">{{ displayCard?.cvv | translate }}</span>
         </div>
       </div>
       <ng-container *ngIf="!forexFilter">
         <div fxFlex="45" fxLayout="column" fxLayoutAlign="start " class="mt-8">
-          <span class="small-title">{{ "Type of Card" | translate }}</span>
+          <span class="small-title">{{ 'Type of Card' | translate }}</span>
           <span class="small-values">{{
             displayCard?.typeOfCard | translate
           }}</span>
@@ -65,7 +65,7 @@
           (click)="openGetStatement()"
         >
           <button mat-flat-button class="small-button class-name get_statement">
-            {{ "Get Statement" | translate }}
+            {{ 'Get Statement' | translate }}
           </button>
         </div>
       </ng-container>

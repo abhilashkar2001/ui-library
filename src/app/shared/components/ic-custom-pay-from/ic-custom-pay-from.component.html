@@ -36,10 +36,10 @@
       *ngIf="accountType && control.value"
     >
       <span class="text-gray mr-4"
-        >{{ accountType | translate }} | {{ "Balance" | translate }}:
+        >{{ accountType | translate }} | {{ 'Balance' | translate }}:
       </span>
       <span class="text-gray mr-4">
-        {{ balance ?? 0 | currency : this.currencyCode }}
+        {{ balance ?? 0 | currency: this.currencyCode }}
       </span>
     </span>
   </div>

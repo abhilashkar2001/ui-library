@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OfferLetterComponent } from './offer-letter.component';
 
-
 describe('OfferLetterComponent', () => {
   let component: OfferLetterComponent;
   let fixture: ComponentFixture<OfferLetterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OfferLetterComponent]
-    })
-      .compileComponents();
+      declarations: [OfferLetterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OfferLetterComponent);
     component = fixture.componentInstance;

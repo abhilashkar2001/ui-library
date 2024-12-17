@@ -1,15 +1,15 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { SigninComponent } from "./signin/signin.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SigninComponent } from './signin/signin.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     children: [
       {
-        path: "signin",
+        path: 'signin',
         component: SigninComponent,
-        data: { title: "Signin" },
+        data: { title: 'Signin' },
       },
     ],
   },

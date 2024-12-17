@@ -1,8 +1,8 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 export abstract class GenericValue {
   abstract loadGenericValue(
     screenName: string,
-    genericName: string[]
+    genericName: string[],
   ): Observable<any>;
 }

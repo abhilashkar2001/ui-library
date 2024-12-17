@@ -8,9 +8,8 @@ describe('FundTransferSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FundTransferSummaryComponent ]
-    })
-    .compileComponents();
+      declarations: [FundTransferSummaryComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FundTransferSummaryComponent);
     component = fixture.componentInstance;

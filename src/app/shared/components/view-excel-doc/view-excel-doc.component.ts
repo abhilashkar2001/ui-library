@@ -1,25 +1,25 @@
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: "app-view-excel-doc",
-  templateUrl: "./view-excel-doc.component.html",
-  styleUrls: ["./view-excel-doc.component.scss"]
+  selector: 'app-view-excel-doc',
+  templateUrl: './view-excel-doc.component.html',
+  styleUrls: ['./view-excel-doc.component.scss'],
 })
 export class ViewExcelDocComponent implements OnInit {
   excelData: any;
-  fileName: any;
+  fileName: string | undefined;
   tableHeader: any;
   tableBody: any;
   dataSource: MatTableDataSource<any> | any;
   displayedColumns: string[] | any;
-  @ViewChild("paginator") paginator: MatPaginator | any;
+  @ViewChild('paginator') paginator: MatPaginator | any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ViewExcelDocComponent>
+    private dialogRef: MatDialogRef<ViewExcelDocComponent>,
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class ViewExcelDocComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
 
     this.displayedColumns = this.tableHeader.map(
-      (header: any) => header.headerCell
+      (header: any) => header.headerCell,
     );
     console.log(this.displayedColumns);
   }

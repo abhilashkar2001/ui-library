@@ -19,84 +19,70 @@ $spaces: (
 
 $utilities: map-merge(
   (
-    "margin": (
-      // responsive: true,
+    'margin': (
       property: margin,
       class: m,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-x": (
-      // responsive: true,
+    'margin-x': (
       property: margin-right margin-left,
       class: mx,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-y": (
-      // responsive: true,
+    'margin-y': (
       property: margin-top margin-bottom,
       class: my,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-top": (
-      // responsive: true,
+    'margin-top': (
       property: margin-top,
       class: mt,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-right": (
-      // responsive: true,
+    'margin-right': (
       property: margin-right,
       class: mr,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-bottom": (
-      // responsive: true,
+    'margin-bottom': (
       property: margin-bottom,
       class: mb,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
           )
         ),
     ),
-    "margin-left": (
-      // responsive: true,
+    'margin-left': (
       property: margin-left,
       class: ml,
-      values:
-        map-merge(
+      values: map-merge(
           $spaces,
           (
             auto: auto,
@@ -104,45 +90,37 @@ $utilities: map-merge(
         ),
     ),
     // Padding utilities
-    "padding":
-      (
-        // responsive: true,
+    'padding': (
         property: padding,
         class: p,
         values: $spaces,
       ),
-    "padding-x": (
-      // responsive: true,
+    'padding-x': (
       property: padding-right padding-left,
       class: px,
       values: $spaces,
     ),
-    "padding-y": (
-      // responsive: true,
+    'padding-y': (
       property: padding-top padding-bottom,
       class: py,
       values: $spaces,
     ),
-    "padding-top": (
-      // responsive: true,
+    'padding-top': (
       property: padding-top,
       class: pt,
       values: $spaces,
     ),
-    "padding-right": (
-      // responsive: true,
+    'padding-right': (
       property: padding-right,
       class: pr,
       values: $spaces,
     ),
-    "padding-bottom": (
-      // responsive: true,
+    'padding-bottom': (
       property: padding-bottom,
       class: pb,
       values: $spaces,
     ),
-    "padding-left": (
-      // responsive: true,
+    'padding-left': (
       property: padding-left,
       class: pl,
       values: $spaces,
@@ -162,7 +140,7 @@ $utilities: map-merge(
   margin: 0.333333rem !important;
 }
 
-[dir="rtl"] {
+[dir='rtl'] {
   .pr-16 {
     padding-left: 16px;
     padding-right: 0 !important;

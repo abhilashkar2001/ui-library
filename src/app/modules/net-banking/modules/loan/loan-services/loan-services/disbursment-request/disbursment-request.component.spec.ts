@@ -8,9 +8,8 @@ describe('DisbursmentRequestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisbursmentRequestComponent ]
-    })
-    .compileComponents();
+      declarations: [DisbursmentRequestComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DisbursmentRequestComponent);
     component = fixture.componentInstance;

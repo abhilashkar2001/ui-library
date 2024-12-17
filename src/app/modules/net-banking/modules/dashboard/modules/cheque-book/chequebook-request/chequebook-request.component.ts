@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { ChequeService } from "../cheque-service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ChequeService } from '../cheque-service';
 
 @Component({
-  selector: "app-chequebook-request",
-  templateUrl: "./chequebook-request.component.html",
-  styleUrls: ["./chequebook-request.component.scss"]
+  selector: 'app-chequebook-request',
+  templateUrl: './chequebook-request.component.html',
+  styleUrls: ['./chequebook-request.component.scss'],
 })
 export class ChequebookRequestComponent implements OnInit {
   chequebookRequestForm!: FormGroup;
@@ -22,18 +22,18 @@ export class ChequebookRequestComponent implements OnInit {
   accountInfo: any;
 
   deliveryOptions: any[] = [
-    { label: "Branch Near Me", value: "Branch Near Me" },
-    { label: "My Address", value: "My Address" }
+    { label: 'Branch Near Me', value: 'Branch Near Me' },
+    { label: 'My Address', value: 'My Address' },
   ];
   branches: any[] = [];
-  addressTypesList: any[] = [{ addressTypes: "Communication Address" }];
+  addressTypesList: any[] = [{ addressTypes: 'Communication Address' }];
   addressList: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private accountService: ChequeService,
     private serviceCallHandler: ServiceCallHandler,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,60 +46,61 @@ export class ChequebookRequestComponent implements OnInit {
     this.accountService.fetchGeneric().subscribe((resp: any) => {
       this.noOfLeaves = resp?.data?.NOOFLEAVES;
       this.instrumentType = resp?.data?.INSTRUMENTTYPE?.find((i: any) =>
-        i?.values?.toLowerCase()?.includes("cheque")
+        i?.values?.toLowerCase()?.includes('cheque'),
       )?.id;
     });
   }
 
   fetchCustomerInfo() {
-    const custInfo: any = sessionStorage.getItem("customer-Info");
+    const custInfo: any = sessionStorage.getItem('customer-Info');
     this.customerInfo = JSON.parse(custInfo);
 
     this.accountNumberList = JSON.parse(
-      <string>sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem('listOfAccounts'),
     );
   }
   buildRequestForm() {
     this.chequebookRequestForm = this.fb.group({
-      accountNo: ["", [Validators.required]],
-      leavesNo: [""],
-      deliveryLocation: ["Branch Near Me"],
-      branch: [""],
+      accountNo: ['', [Validators.required]],
+      leavesNo: [''],
+      deliveryLocation: ['Branch Near Me'],
+      branch: [''],
 
-      type: [""],
-      address1: [""],
-      address2: [""],
-      country: [""],
-      state: [""],
-      city: [""],
-      pin: [""]
+      type: [''],
+      address1: [''],
+      address2: [''],
+      country: [''],
+      state: [''],
+      city: [''],
+      pin: [''],
     });
 
-    const selectedAccountNo = sessionStorage.getItem("selectAccNo");
+    const selectedAccountNo = sessionStorage.getItem('selectAccNo');
 
     if (selectedAccountNo) {
-      this.chequebookRequestForm.get("accountNo")?.setValue(selectedAccountNo);
+      this.chequebookRequestForm.get('accountNo')?.setValue(selectedAccountNo);
       this.handleAccountNumberChange();
     }
   }
 
   handleAccountNumberChange() {
     this.selectedAccInfo = this.accountNumberList?.find(
-      (i) => i?.accountNo === this.chequebookRequestForm.get("accountNo")?.value
+      (i) =>
+        i?.accountNo === this.chequebookRequestForm.get('accountNo')?.value,
     );
 
     this.accountService
-      .getChequeNoByAccNo(this.chequebookRequestForm.get("accountNo")?.value)
+      .getChequeNoByAccNo(this.chequebookRequestForm.get('accountNo')?.value)
       .subscribe(
         (resp) => {
           this.chequeNumber = resp?.data;
         },
-        (err) => console.error("Error: ", err)
+        (err) => console.error('Error: ', err),
       );
 
     this.accountService
       .fetchInfoByoriginationAccNo(
-        this.chequebookRequestForm.get("accountNo")?.value
+        this.chequebookRequestForm.get('accountNo')?.value,
       )
       .subscribe(
         (resp: any) => {
@@ -117,121 +118,121 @@ export class ChequebookRequestComponent implements OnInit {
               this.addressList = res?.data;
             });
         },
-        (err) => console.error("Error: ", err)
+        (err) => console.error('Error: ', err),
       );
   }
 
   changeAddressType() {
     const selectedAddress = this.addressList?.[0];
     this.chequebookRequestForm
-      .get("address1")
+      .get('address1')
       ?.setValue(selectedAddress?.address1);
     this.chequebookRequestForm
-      .get("address2")
+      .get('address2')
       ?.setValue(selectedAddress?.address2);
     this.chequebookRequestForm
-      .get("country")
+      .get('country')
       ?.setValue(selectedAddress?.countryName);
     this.chequebookRequestForm
-      .get("state")
+      .get('state')
       ?.setValue(selectedAddress?.stateName);
-    this.chequebookRequestForm.get("city")?.setValue(selectedAddress?.cityName);
-    this.chequebookRequestForm.get("pin")?.setValue(selectedAddress?.pincode);
+    this.chequebookRequestForm.get('city')?.setValue(selectedAddress?.cityName);
+    this.chequebookRequestForm.get('pin')?.setValue(selectedAddress?.pincode);
   }
 
   goBack() {
-    this.router.navigate(["/user/dashboard"]);
+    this.router.navigate(['/user/dashboard']);
   }
 
   saveChequeDetails() {
     // const chequeDetails = resp?.data;
     const requestFormValue: any = this.chequebookRequestForm.value;
     const insPayload = {
-      instrumentName: "mobile banking cheque",
-      branchNearMe: requestFormValue?.deliveryLocation === "Branch Near Me",
+      instrumentName: 'mobile banking cheque',
+      branchNearMe: requestFormValue?.deliveryLocation === 'Branch Near Me',
       deliveryBranchCode: requestFormValue?.branch,
       accountBranch: this.selectedAccInfo?.accountBranch,
       instrumentType: this.instrumentType,
       accountNumber: requestFormValue?.accountNo,
       chequeBookNumber: this.chequeNumber,
-      numberOfLeaves: requestFormValue?.leavesNo
+      numberOfLeaves: requestFormValue?.leavesNo,
       // chequeDetails,
     };
 
     this.accountService.saveRequestChequeToInstrument(insPayload).subscribe(
       (resp: any) => {
-        console.log("Saved Resp---- ", resp);
-        let leaves = requestFormValue?.leavesNo;
+        console.log('Saved Resp---- ', resp);
+        const leaves = requestFormValue?.leavesNo;
         const leavesValues = this.noOfLeaves.find(
-          (item: any) => item.id === leaves
+          (item: any) => item.id === leaves,
         );
 
-        let paymentDetailsArr = [
+        const paymentDetailsArr = [
           {
-            eventType: "chequeBookRequest",
-            status: "confirm",
-            statusHeader: "Comfirm Detail",
-            statusNews: "Request Summary",
+            eventType: 'chequeBookRequest',
+            status: 'confirm',
+            statusHeader: 'Comfirm Detail',
+            statusNews: 'Request Summary',
             summary: [
               {
-                header: "Account Details",
+                header: 'Account Details',
                 details: [
                   {
-                    Name: this.customerInfo?.customerName
+                    Name: this.customerInfo?.customerName,
                   },
                   {
-                    "Account No": requestFormValue?.accountNo
+                    'Account No': requestFormValue?.accountNo,
                   },
                   {
-                    "Account Type":
-                      this.customerInfo?.accounts?.[0]?.accountType
-                  }
-                ]
+                    'Account Type':
+                      this.customerInfo?.accounts?.[0]?.accountType,
+                  },
+                ],
               },
               {
-                header: "Cheque Book Detail",
+                header: 'Cheque Book Detail',
                 details: [
                   {
-                    "No of Leaves Per Book": leavesValues?.values
-                  }
-                ]
+                    'No of Leaves Per Book': leavesValues?.values,
+                  },
+                ],
               },
               {
-                header: "Communication Address",
+                header: 'Communication Address',
                 details:
-                  requestFormValue?.deliveryLocation === "Branch Near Me"
+                  requestFormValue?.deliveryLocation === 'Branch Near Me'
                     ? [{ Branch: requestFormValue?.branch }]
                     : [
                         {
-                          "Address Line 1": requestFormValue?.address1
+                          'Address Line 1': requestFormValue?.address1,
                         },
                         {
-                          "Address Line 2": requestFormValue?.address2
+                          'Address Line 2': requestFormValue?.address2,
                         },
                         { Country: requestFormValue?.country },
                         { state: requestFormValue?.state },
                         { City: requestFormValue?.city },
-                        { "PIN Code": requestFormValue?.pin }
-                      ]
-              }
+                        { 'PIN Code': requestFormValue?.pin },
+                      ],
+              },
             ],
-            qrToggle: false
-          }
+            qrToggle: false,
+          },
         ];
 
         const revPayload = { id: resp?.data?.id };
         this.serviceCallHandler.put(
-          "serviceHandler",
+          'serviceHandler',
           revPayload,
           paymentDetailsArr,
-          (revPayload) => this.accountService.auditLogRevisions(revPayload)
+          (revPayload) => this.accountService.auditLogRevisions(revPayload),
         );
 
-        this.router.navigate(["user/dashboard/cheque/payment-summary"]);
+        this.router.navigate(['user/dashboard/cheque/payment-summary']);
       },
       (err) => {
-        console.error("Error: ", err);
-      }
+        console.error('Error: ', err);
+      },
     );
     // }
     // this.accountService.saveChequeDetails(payload).subscribe(

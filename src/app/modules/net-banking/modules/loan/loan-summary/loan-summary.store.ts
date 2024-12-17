@@ -1,165 +1,165 @@
-import { HeaderModel } from "../loan-services/loan-services/loan-repayment/loan-repayment.store";
+import { HeaderModel } from '../loan-services/loan-services/loan-repayment/loan-repayment.store';
 
 export class LoanSummaryStore {
   static readonly customerDetails = [
     {
-      header: "customerName",
+      header: 'customerName',
       details: [
         {
-          headerCell: "Outstanding Amount",
-          headerDef: "outstandingAmt"
+          headerCell: 'Outstanding Amount',
+          headerDef: 'outstandingAmt',
         },
         {
-          headerCell: "Total Sanction",
-          headerDef: "totalSanctionAmt"
+          headerCell: 'Total Sanction',
+          headerDef: 'totalSanctionAmt',
         },
         {
-          headerCell: "Total Disbursed",
-          headerDef: "totalDisbursedAmt"
+          headerCell: 'Total Disbursed',
+          headerDef: 'totalDisbursedAmt',
         },
         {
-          headerCell: "Re-paid Till Date",
-          headerDef: "repaidAmt"
+          headerCell: 'Re-paid Till Date',
+          headerDef: 'repaidAmt',
         },
         {
-          headerCell: "Interest Rate",
-          headerDef: "interestValue"
+          headerCell: 'Interest Rate',
+          headerDef: 'interestValue',
         },
         {
-          headerCell: "Maturity Date",
-          headerDef: "maturityDate"
-        }
-      ]
+          headerCell: 'Maturity Date',
+          headerDef: 'maturityDate',
+        },
+      ],
     },
     {
-      header: "Repayment",
+      header: 'Repayment',
       details: [
         {
-          headerCell: "Frequency",
-          headerDef: "frequency"
+          headerCell: 'Frequency',
+          headerDef: 'frequency',
         },
         {
-          headerCell: "Repayment Mode",
-          headerDef: "repaymentMode"
+          headerCell: 'Repayment Mode',
+          headerDef: 'repaymentMode',
         },
         {
-          headerCell: "Repayment Detail",
-          headerDef: "repaymentDetail"
-        }
-      ]
+          headerCell: 'Repayment Detail',
+          headerDef: 'repaymentDetail',
+        },
+      ],
     },
     {
-      header: "Schedule",
+      header: 'Schedule',
       details: [
         {
-          headerCell: "Next Scheduled Amount",
-          headerDef: "nextScheduleAmt"
+          headerCell: 'Next Scheduled Amount',
+          headerDef: 'nextScheduleAmt',
         },
         {
-          headerCell: "Next Scheduled Date",
-          headerDef: "nextScheduleDate"
+          headerCell: 'Next Scheduled Date',
+          headerDef: 'nextScheduleDate',
         },
         {
-          headerCell: "Loan Total Tenure",
-          headerDef: "totalTenure"
-        }
-      ]
-    }
+          headerCell: 'Loan Total Tenure',
+          headerDef: 'totalTenure',
+        },
+      ],
+    },
   ];
 
-  static readonly loanInfo = ["Tenure", "Disbursed", "Repayment"];
+  static readonly loanInfo = ['Tenure', 'Disbursed', 'Repayment'];
 
   static TenureDetails: HeaderModel[] = [
     {
-      headerCell: "Total Tenure",
-      headerDef: "totalTenure"
+      headerCell: 'Total Tenure',
+      headerDef: 'totalTenure',
     },
     {
-      headerCell: "Remaining Tenure",
-      headerDef: "remTenure"
-    }
+      headerCell: 'Remaining Tenure',
+      headerDef: 'remTenure',
+    },
   ];
 
   static DisbursedDetails: HeaderModel[] = [
     {
-      headerCell: "Total sanction",
-      headerDef: "totalSanctionAmt"
+      headerCell: 'Total sanction',
+      headerDef: 'totalSanctionAmt',
     },
     {
-      headerCell: "Total Disbursed",
-      headerDef: "totalDisbursedAmt"
+      headerCell: 'Total Disbursed',
+      headerDef: 'totalDisbursedAmt',
     },
     {
-      headerCell: "Remaining Disbursed",
-      headerDef: "remainingDisbursed"
-    }
+      headerCell: 'Remaining Disbursed',
+      headerDef: 'remainingDisbursed',
+    },
   ];
 
   static RepaymentDetails: HeaderModel[] = [
     {
-      headerCell: "Outstanding Amount",
-      headerDef: "outstandingAmt"
+      headerCell: 'Outstanding Amount',
+      headerDef: 'outstandingAmt',
     },
     {
-      headerCell: "Re-paid Till Date",
-      headerDef: "repaidAmt"
-    }
+      headerCell: 'Re-paid Till Date',
+      headerDef: 'repaidAmt',
+    },
   ];
 
   static readonly chartData = {
     id: 765,
     chart: {
-      type: "pie",
+      type: 'pie',
       custom: {},
       events: {
         render() {
           const chart: any = this,
             series = chart.series[0];
-          let customLabel = chart.options.chart.custom.label;
+          const customLabel = chart.options.chart.custom.label;
 
           const x = series?.center[0] + chart.plotLeft,
             y =
               series?.center[1] +
               chart.plotTop -
-              customLabel?.attr("height") / 2;
+              customLabel?.attr('height') / 2;
 
           customLabel?.attr({
             x,
-            y
+            y,
           });
           // Set font size based on chart diameter
           customLabel?.css({
-            fontSize: `${series.center[2] / 12}px`
+            fontSize: `${series.center[2] / 12}px`,
           });
-        }
-      }
+        },
+      },
     },
     accessibility: {
       point: {
-        valueSuffix: "%"
-      }
+        valueSuffix: '%',
+      },
     },
     title: {
-      text: "2023 Norway car registrations"
+      text: '2023 Norway car registrations',
     },
     subtitle: {
-      text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">SSB</a>'
+      text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">SSB</a>',
     },
     tooltip: {
-      pointFormat: "{series.name}: <b>{point.percentage:.0f}%</b>"
+      pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>',
     },
     legend: {
-      enabled: false
+      enabled: false,
     },
     plotOptions: {
       series: {
         allowPointSelect: true,
-        cursor: "pointer",
+        cursor: 'pointer',
         borderRadius: 8,
-        showInLegend: true
-      }
+        showInLegend: true,
+      },
     },
     series: [],
-    colors: ["#00205C", "#377DFF1D"]
+    colors: ['#00205C', '#377DFF1D'],
   };
 }

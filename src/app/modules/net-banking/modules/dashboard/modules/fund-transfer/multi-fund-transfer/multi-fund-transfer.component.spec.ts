@@ -8,9 +8,8 @@ describe('MultiFundTransferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MultiFundTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [MultiFundTransferComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MultiFundTransferComponent);
     component = fixture.componentInstance;

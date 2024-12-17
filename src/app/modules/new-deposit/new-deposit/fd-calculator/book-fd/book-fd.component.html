@@ -120,7 +120,7 @@
         class="saveButton"
         (click)="proceedFd()"
       >
-        Book {{ depositType && depositType == "RD" ? "RD" : "FD" }}
+        Book {{ depositType && depositType === 'RD' ? 'RD' : 'FD' }}
       </button>
     </div>
     &nbsp;&nbsp;

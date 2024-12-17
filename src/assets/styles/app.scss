@@ -1,23 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;900&family=Poppins:wght@200;300;400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-@import "perfect-scrollbar/css/perfect-scrollbar.css";
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;900&family=Poppins:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'perfect-scrollbar/css/perfect-scrollbar.css';
 /* Importing Bootstrap SCSS file. */
-@import "bootstrap/scss/bootstrap";
-@import "aos/dist/aos.css";
+@import 'bootstrap/scss/bootstrap';
+@import 'aos/dist/aos.css';
 
-@import "https://fonts.googleapis.com/css?family=Poppins";
+@import 'https://fonts.googleapis.com/css?family=Poppins';
 
 @font-face {
-  font-family: "ArialRoundedMT";
-  src: local("ArialRoundedMT")
-    url("/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf")
-    format("truetype");
+  font-family: 'ArialRoundedMT';
+  src: local('ArialRoundedMT')
+    url('/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf')
+    format('truetype');
 }
 @font-face {
-  font-family: "BellMT";
-  src: local("BellMT") url("/assets/fonts/Bell-MT/Bell MT.ttf")
-    format("truetype");
+  font-family: 'BellMT';
+  src: local('BellMT') url('/assets/fonts/Bell-MT/Bell MT.ttf')
+    format('truetype');
 }
 
 * {
@@ -42,7 +42,7 @@ html,
 body {
   width: 100%;
   min-height: 100vh;
-  font-family: "M PLUS Rounded 1c", Arial, Helvetica, sans-serif;
+  font-family: 'M PLUS Rounded 1c', Arial, Helvetica, sans-serif;
   position: relative;
   &::-webkit-scrollbar {
     width: 7px;
@@ -60,55 +60,55 @@ body {
 }
 
 // // Flag icon
-@import "flag-icons/css/flag-icons.min.css";
+@import 'flag-icons/css/flag-icons.min.css';
 
 // // User tour
-@import "hopscotch/dist/css/hopscotch.min.css";
+@import 'hopscotch/dist/css/hopscotch.min.css';
 
 // // Highlightjs theme
-@import "highlight.js/styles/github.css";
+@import 'highlight.js/styles/github.css';
 
 // Main Variables File
-@import "scss/variables";
+@import 'scss/variables';
 
 // @import "scss/mixins/mixins";
 // @import "ic-test-css/src/mixins/mixins";
-@import "node_modules/@onerumango/icust-scss-library/src/mixins/mixins";
+@import 'node_modules/@onerumango/icust-scss-library/src/mixins/mixins';
 
 // @import "scss/colors";
-@import "node_modules/@onerumango/icust-scss-library/src/colors";
+@import 'node_modules/@onerumango/icust-scss-library/src/colors';
 
 // @import "scss/animations";
-@import "node_modules/@onerumango/icust-scss-library/src/animations";
+@import 'node_modules/@onerumango/icust-scss-library/src/animations';
 // Open _main.scss and keep files which are required for your current layout.
 // @import "scss/main/main";
 // @import "ic-test-css/src/main/main";
-@import "node_modules/@onerumango/icust-scss-library/src/main/main";
+@import 'node_modules/@onerumango/icust-scss-library/src/main/main';
 
 // Angular material theme files
 // @import "scss/themes/init";
-@import "node_modules/@onerumango/icust-scss-library/src/themes/init";
+@import 'node_modules/@onerumango/icust-scss-library/src/themes/init';
 
-@import "scss/utilities/utilities";
-@import "scss/components/components";
-@import "scss/palette";
+@import 'scss/utilities/utilities';
+@import 'scss/components/components';
+@import 'scss/palette';
 
 // @import "scss/page-layouts";
-@import "node_modules/@onerumango/icust-scss-library/src/page-layouts";
+@import 'node_modules/@onerumango/icust-scss-library/src/page-layouts';
 
 // Open _views.scss and remove unnecessary view related files
 // @import "scss/views/views";
-@import "node_modules/@onerumango/icust-scss-library/src/views/views";
+@import 'node_modules/@onerumango/icust-scss-library/src/views/views';
 
-@import "scss/button";
-@import "scss/calculator";
-@import "scss/loan-flow.scss";
+@import 'scss/button';
+@import 'scss/calculator';
+@import 'scss/loan-flow.scss';
 // @import "scss/stepper";
-@import "node_modules/@onerumango/icust-scss-library/src/stepper";
+@import 'node_modules/@onerumango/icust-scss-library/src/stepper';
 // @import "./scss/accordian";
-@import "node_modules/@onerumango/icust-scss-library/src/accordian";
+@import 'node_modules/@onerumango/icust-scss-library/src/accordian';
 
-@import "https://fonts.googleapis.com/css?family=Manrope";
+@import 'https://fonts.googleapis.com/css?family=Manrope';
 
 .mat-drawer-content {
   min-height: 100vh !important;
@@ -154,7 +154,7 @@ body {
 .mat-tab-link {
   color: #c0c0c0 !important;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   user-select: none;
   -webkit-user-select: none;

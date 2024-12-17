@@ -5,31 +5,33 @@
     </div>
     <mat-divider></mat-divider>
     <div fxLayout="column">
-      <div
-        fxLayout="row"
-        style="height: 56px"
-        *ngFor="let type of types"
-        fxLayoutAlign="center center"
-      >
-        <div class="vertical-separator"></div>
-        <div class="link" fxLayout="row" fxLayoutAlign="stretch center">
-          {{ (type?.key ? type?.key : type) | translate }}
-          <mat-card class="extend-card" fxLayoutAlign="center center">
-            <button
-              mat-icon-button
-              (click)="
-                type?.route == '' || type?.route
-                  ? route(type?.route, type?.key)
-                  : ''
-              "
-            >
-              <mat-icon
-                class="extend-icon current_theme_filter"
-                svgIcon="extend-icon"
-              ></mat-icon></button
-          ></mat-card>
+      <ng-container *ngIf="Externaltypes">
+        <div
+          fxLayout="row"
+          style="height: 56px"
+          *ngFor="let type of Externaltypes"
+          fxLayoutAlign="center center"
+        >
+          <div class="vertical-separator"></div>
+          <div class="link" fxLayout="row" fxLayoutAlign="stretch center">
+            {{ type?.key ?? '' | translate }}
+            <mat-card class="extend-card" fxLayoutAlign="center center">
+              <button
+                mat-icon-button
+                (click)="
+                  type?.route === '' || type?.route
+                    ? route(type?.route, type?.key)
+                    : ''
+                "
+              >
+                <mat-icon
+                  class="extend-icon current_theme_filter"
+                  svgIcon="extend-icon"
+                ></mat-icon></button
+            ></mat-card>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </section>

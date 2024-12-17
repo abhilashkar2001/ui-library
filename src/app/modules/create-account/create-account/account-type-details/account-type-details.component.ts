@@ -5,28 +5,28 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { environment } from "environments/environment";
-import { MatSnackBar } from "@angular/material/snack-bar";
+  SimpleChanges,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-account-type-details",
-  templateUrl: "./account-type-details.component.html",
-  styleUrls: ["./account-type-details.component.scss"]
+  selector: 'app-account-type-details',
+  templateUrl: './account-type-details.component.html',
+  styleUrls: ['./account-type-details.component.scss'],
 })
 export class AccountTypeDetailsComponent implements OnChanges, OnInit {
   @Input() subClassList: any;
   @Output() customApply = new EventEmitter<any>();
-  basisClass: any = "";
+  basisClass: any = '';
   endPoints = environment.microServiceURL;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
-    this.basisClass = this.route.snapshot.params["id"];
+    this.basisClass = this.route.snapshot.params['id'];
   }
 
   ngOnInit(): void {}
@@ -35,8 +35,8 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
   }
 
   getFileUrl(url: any) {
-    if (url.includes("https")) {
-      return "assets/images/normal_loan.svg";
+    if (url.includes('https')) {
+      return 'assets/images/normal_loan.svg';
     } else {
       return `${this.endPoints}${url}`;
     }
@@ -46,20 +46,20 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     if (event?.basisId) {
       this.applyForAccount(event);
     } else if (event?.productDetails === null) {
-      this.snackBar.open("No Products Available", "Ok", {
+      this.snackBar.open('No Products Available', 'Ok', {
         duration: 3000,
-        verticalPosition: "top",
-        horizontalPosition: "right"
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
       });
     } else if (event?.productDetails?.length > 1) {
       this.customApply.emit({
         classDetails: event,
-        subClass: event?.subClass
+        subClass: event?.subClass,
       });
     } else if (event?.clasDetails.productDetails?.length == 1) {
       this.customApply.emit({
         classDetails: event.clasDetails,
-        subClass: event?.subClass
+        subClass: event?.subClass,
       });
     }
   }
@@ -68,9 +68,9 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     const payload = JSON.stringify({
       accountType: event.basisName,
       basisDetailsId: event.basisId,
-      processCycleCode: event.processCycleCode
+      processCycleCode: event.processCycleCode,
     });
-    localStorage.setItem("basisDetails", payload);
+    localStorage.setItem('basisDetails', payload);
     // const url = this.location.prepareExternalUrl(
     //   this.router.serializeUrl(
     //     this.router.createUrlTree([`/account/open/${event.basisId}`])

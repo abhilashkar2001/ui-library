@@ -8,9 +8,8 @@ describe('IcRadioButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IcRadioButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [IcRadioButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IcRadioButtonComponent);
     component = fixture.componentInstance;

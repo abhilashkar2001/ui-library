@@ -6,7 +6,7 @@
     fxLayoutGap="10px"
   >
     <div>&nbsp;</div>
-    <label class="text-large">{{ "Select Date Range" | translate}}</label>
+    <label class="text-large">{{ 'Select Date Range' | translate }}</label>
   </div>
   <mat-card class="matCard-align custom-mat" fxLayout="column">
     <div fxLayout="row wrap" fxLayoutGap="10px">
@@ -16,7 +16,7 @@
           class="full-width fieldinput"
           tabindex="0"
         >
-          <mat-label>{{ "From Date" | translate}}</mat-label>
+          <mat-label>{{ 'From Date' | translate }}</mat-label>
 
           <mat-date-range-input>
             <input
@@ -48,7 +48,7 @@
       </div>
       <div fxFlex="48" fxFlex.lt-md="100">
         <mat-form-field appearance="outline" class="full-width fieldinput">
-          <mat-label>{{ "To Date" | translate}}</mat-label>
+          <mat-label>{{ 'To Date' | translate }}</mat-label>
 
           <mat-date-range-input [min]="fromDate">
             <input
@@ -111,11 +111,11 @@
     <div fxLayout="row wrap" fxLayout.lt-sm="column">
       <div fxFlex="100" fxLayoutAlign="center center">
         <button class="saveButton" mat-raised-button (click)="close()">
-          {{ "Done" | translate }}</button
+          {{ 'Done' | translate }}</button
         >&nbsp;&nbsp;
         <div>
           <button class="exitButton" mat-raised-button (click)="goBack()">
-            {{ "Back" | translate }}
+            {{ 'Back' | translate }}
           </button>
         </div>
       </div>

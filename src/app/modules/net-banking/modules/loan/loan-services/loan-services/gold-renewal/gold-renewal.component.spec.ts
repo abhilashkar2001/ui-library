@@ -8,9 +8,8 @@ describe('GoldRenewalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GoldRenewalComponent ]
-    })
-    .compileComponents();
+      declarations: [GoldRenewalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GoldRenewalComponent);
     component = fixture.componentInstance;

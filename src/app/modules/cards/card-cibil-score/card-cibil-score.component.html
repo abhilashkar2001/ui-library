@@ -7,8 +7,8 @@
       *ngIf="showCibilScoreResult"
       [flow]="'cards'"
       [isDifferentMobile]="isDifferentMobile"
-      (onBackEvent)="onBackCIBILScoreResult()"
-      (onConfirmEvent)="onConfirm()"
+      (backEvent)="onBackCIBILScoreResult()"
+      (confirmEvent)="onConfirm()"
     ></app-cibil-score-result>
     <div *ngIf="!showCibilScoreResult">
       <div *ngIf="!isDifferentMobile">

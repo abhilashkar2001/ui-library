@@ -5,26 +5,26 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
-} from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { environment } from "environments/environment";
-import { fromEvent } from "rxjs";
-import { debounceTime, map } from "rxjs/operators";
-import { CreatedDurationModelComponent } from "../created-duration-model/created-duration-model.component";
-import { TableService } from "app/shared/services/table-service/table-service";
-import { ViewExcelDocComponent } from "../view-excel-doc/view-excel-doc.component";
-import { MatDialog } from "@angular/material/dialog";
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from 'environments/environment';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+import { CreatedDurationModelComponent } from '../created-duration-model/created-duration-model.component';
+import { TableService } from 'app/shared/services/table-service/table-service';
+import { ViewExcelDocComponent } from '../view-excel-doc/view-excel-doc.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-new-reusable-filter",
-  templateUrl: "./new-reusable-filter.component.html",
-  styleUrls: ["./new-reusable-filter.component.scss"]
+  selector: 'app-new-reusable-filter',
+  templateUrl: './new-reusable-filter.component.html',
+  styleUrls: ['./new-reusable-filter.component.scss'],
 })
 export class NewReusableFilterComponent implements OnInit {
-  @ViewChild("searchVal") searchVal: ElementRef | any;
+  @ViewChild('searchVal') searchVal: ElementRef | any;
   @Input() className: any;
   @Input() module: any;
   @Input() newFilter: any;
@@ -32,7 +32,7 @@ export class NewReusableFilterComponent implements OnInit {
   @Input() countryModuleFilter: any;
   @Input() stateModuleFilter: any;
   @Input() bulkUploadFileName: any;
-  @Input() componentName: string = "";
+  @Input() componentName = '';
   @Input() showOnlySearchTitle: string | any;
   @Input() requiredSpecialFields: any;
   @Input() excelData: any;
@@ -42,72 +42,72 @@ export class NewReusableFilterComponent implements OnInit {
   }>();
 
   @Output() customDownloadRecord = new EventEmitter<any>();
-  filterFormControl: FormControl = new FormControl("");
+  filterFormControl: FormControl = new FormControl('');
 
   status: FormControl = new FormControl();
   tableHeader: any[] = [
     {
-      headerDef: "debitAccount",
-      headerCell: "Source Account"
+      headerDef: 'debitAccount',
+      headerCell: 'Source Account',
     },
     {
-      headerDef: "creditAccount",
-      headerCell: "Destination Account"
+      headerDef: 'creditAccount',
+      headerCell: 'Destination Account',
     },
     {
-      headerDef: "transferMode",
-      headerCell: "Transfer Mode"
+      headerDef: 'transferMode',
+      headerCell: 'Transfer Mode',
     },
     {
-      headerDef: "transferType",
-      headerCell: "Transfer Type"
+      headerDef: 'transferType',
+      headerCell: 'Transfer Type',
     },
     {
-      headerDef: "customerName",
-      headerCell: "Full Name"
+      headerDef: 'customerName',
+      headerCell: 'Full Name',
     },
     {
-      headerDef: "ifscCode",
-      headerCell: "IFSC Code"
+      headerDef: 'ifscCode',
+      headerCell: 'IFSC Code',
     },
     {
-      headerDef: "debitAmount",
-      headerCell: "Amount"
-    }
+      headerDef: 'debitAmount',
+      headerCell: 'Amount',
+    },
   ];
   tableBody: any[] | any;
 
   actionDateOptions = [
-    { value: "ONEDAY", label: "Today" },
-    { value: "ONEWEEK", label: "Last 7 days" },
-    { value: "CURRENTMONTH", label: "Current Month" },
-    { value: "LASTTHREEMONTH", label: "Last 3 Month" },
-    { value: "DATERANGE", label: "Select Date Range" }
+    { value: 'ONEDAY', label: 'Today' },
+    { value: 'ONEWEEK', label: 'Last 7 days' },
+    { value: 'CURRENTMONTH', label: 'Current Month' },
+    { value: 'LASTTHREEMONTH', label: 'Last 3 Month' },
+    { value: 'DATERANGE', label: 'Select Date Range' },
   ];
 
   filterForm: FormGroup | any;
   fxFlexForCol1: number | any;
   private basePath = environment.microServiceURL;
-  userImage = "/assets/images/profile-user.png";
+  userImage = '/assets/images/profile-user.png';
   fromDate: any;
   toDate: any;
   statusOptions: any = [
     {
-      authStatus: "AUTHORIZED",
-      recordStatus: "OPEN"
+      authStatus: 'AUTHORIZED',
+      recordStatus: 'OPEN',
     },
     {
-      authStatus: "AUTHORIZED",
-      recordStatus: "CLOSE"
+      authStatus: 'AUTHORIZED',
+      recordStatus: 'CLOSE',
     },
     {
-      authStatus: "UNAUTHORIZED",
-      recordStatus: "CLOSE"
+      authStatus: 'UNAUTHORIZED',
+      recordStatus: 'CLOSE',
     },
     {
-      authStatus: "UNAUTHORIZED",
-      recordStatus: "OPEN"
-    }
+      authStatus: 'UNAUTHORIZED',
+      recordStatus: 'OPEN',
+    },
   ];
   filteredOptions$: any[] = [];
 
@@ -116,18 +116,18 @@ export class NewReusableFilterComponent implements OnInit {
     private tableservice: TableService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     this.matIconRegistry.addSvgIcon(
       `refresh-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/svg/refresh.svg"
-      )
+        'assets/images/svg/refresh.svg',
+      ),
     );
   }
 
   ngOnInit(): void {
-    console.log(this.componentName, "dsjjj");
+    console.log(this.componentName, 'dsjjj');
     this.fxFlexForCol1 = this.newFilter ? 25 : 40;
     this.buildFormItem();
     // this.getCreatedBy();
@@ -136,19 +136,19 @@ export class NewReusableFilterComponent implements OnInit {
   buildFormItem() {
     this.filterForm = this.fb.group({
       // createdBy: "",
-      lastUpdatedBy: "",
-      createdDate: "",
-      searchValue: "",
-      newFilter: "",
-      authStatus: "",
-      recordStatus: "",
-      status: "",
-      fromDate: "",
-      toDate: "",
-      Auditstatus: "",
-      savedData: "",
-      requestAssignedTo: "",
-      transactionStatus: ""
+      lastUpdatedBy: '',
+      createdDate: '',
+      searchValue: '',
+      newFilter: '',
+      authStatus: '',
+      recordStatus: '',
+      status: '',
+      fromDate: '',
+      toDate: '',
+      Auditstatus: '',
+      savedData: '',
+      requestAssignedTo: '',
+      transactionStatus: '',
     });
     this.filterFormControl.valueChanges
       .pipe(debounceTime(500))
@@ -168,30 +168,34 @@ export class NewReusableFilterComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.searchVal) {
-      fromEvent<any>(this.searchVal.nativeElement, "keyup")
+      fromEvent<any>(this.searchVal.nativeElement, 'keyup')
         .pipe(
           map((event) => event.target.value),
-          debounceTime(500)
+          debounceTime(500),
         )
         .subscribe((value) => {
-          let finalFilter = { ...this.filterForm.value, page: 1, pageSize: 5 };
+          const finalFilter = {
+            ...this.filterForm.value,
+            page: 1,
+            pageSize: 5,
+          };
 
-          if (this.filterForm.value.createdDate == "DATERANGE") {
+          if (this.filterForm.value.createdDate == 'DATERANGE') {
             this.customDataByPage.emit({
               filterValue: {
                 ...this.filterForm.value,
                 fromDate: this.fromDate,
                 toDate: this.toDate,
-                createdDate: "",
-                searchValue: this.encodeURIComponent(value.trim())
-              }
+                createdDate: '',
+                searchValue: this.encodeURIComponent(value.trim()),
+              },
             });
           } else {
             this.customDataByPage.emit({
               filterValue: {
                 ...finalFilter,
-                searchValue: this.encodeURIComponent(value.trim())
-              }
+                searchValue: this.encodeURIComponent(value.trim()),
+              },
             });
           }
         });
@@ -201,68 +205,68 @@ export class NewReusableFilterComponent implements OnInit {
   encodeURIComponent(str: any) {
     return str.replace(
       /[!'()*%#$`^&{}[\]\\|+]/g,
-      (c: any) => "%" + c.charCodeAt(0).toString(16).toUpperCase()
+      (c: any) => '%' + c.charCodeAt(0).toString(16).toUpperCase(),
     );
   }
 
   getFilterValueByStatus(event: any) {
-    if (this.filterForm.value.createdDate == "DATERANGE") {
-      if (event === "DATERANGE") this.openDuration();
+    if (this.filterForm.value.createdDate == 'DATERANGE') {
+      if (event === 'DATERANGE') this.openDuration();
       else {
         this.customDataByPage.emit({
           filterValue: {
             ...this.filterForm.value,
             fromDate: this.fromDate,
             toDate: this.toDate,
-            createdDate: ""
-          }
+            createdDate: '',
+          },
         });
       }
     } else {
-      if (sessionStorage.getItem("fromDate")) {
-        sessionStorage.removeItem("fromDate");
-        sessionStorage.removeItem("toDate");
+      if (sessionStorage.getItem('fromDate')) {
+        sessionStorage.removeItem('fromDate');
+        sessionStorage.removeItem('toDate');
       }
       this.customDataByPage.emit({
         filterValue: {
           ...this.filterForm.value,
           authStatus: event?.authStatus,
-          recordStatus: event?.recordStatus
-        }
+          recordStatus: event?.recordStatus,
+        },
       });
     }
   }
 
   getFilterValue(event: any) {
-    if (this.filterForm.value.createdDate == "DATERANGE") {
-      if (event === "DATERANGE") this.openDuration();
+    if (this.filterForm.value.createdDate == 'DATERANGE') {
+      if (event === 'DATERANGE') this.openDuration();
       else {
         this.customDataByPage.emit({
           filterValue: {
             ...this.filterForm.value,
             fromDate: this.fromDate,
             toDate: this.toDate,
-            createdDate: ""
-          }
+            createdDate: '',
+          },
         });
       }
     } else {
-      if (sessionStorage.getItem("fromDate")) {
-        sessionStorage.removeItem("fromDate");
-        sessionStorage.removeItem("toDate");
+      if (sessionStorage.getItem('fromDate')) {
+        sessionStorage.removeItem('fromDate');
+        sessionStorage.removeItem('toDate');
       }
       this.customDataByPage.emit({
-        filterValue: this.filterForm.value
+        filterValue: this.filterForm.value,
       });
     }
   }
 
   openDuration() {
     const dialogRef = this.dialog.open(CreatedDurationModelComponent, {
-      width: "50%",
-      height: "80%",
+      width: '50%',
+      height: '80%',
       disableClose: true,
-      panelClass: "myapp-no-padding-dialog"
+      panelClass: 'myapp-no-padding-dialog',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -273,8 +277,8 @@ export class NewReusableFilterComponent implements OnInit {
             ...this.filterForm.value,
             fromDate: result[0],
             toDate: result[1],
-            createdDate: ""
-          }
+            createdDate: '',
+          },
         });
       }
     });
@@ -282,20 +286,20 @@ export class NewReusableFilterComponent implements OnInit {
 
   clearFilter() {
     this.filterForm.reset();
-    if (sessionStorage.getItem("fromDate")) {
-      sessionStorage.removeItem("fromDate");
-      sessionStorage.removeItem("toDate");
+    if (sessionStorage.getItem('fromDate')) {
+      sessionStorage.removeItem('fromDate');
+      sessionStorage.removeItem('toDate');
     }
-    this.filterForm.get("authStatus")?.setValue("");
-    this.filterForm.get("recordStatus")?.setValue("");
+    this.filterForm.get('authStatus')?.setValue('');
+    this.filterForm.get('recordStatus')?.setValue('');
     this.customDataByPage.emit({
       filterValue: {
         ...this.filterForm.value,
         page: 1,
         pageSize: 5,
-        sort: "lastUpdated",
-        sortOrder: "DESC"
-      }
+        sort: 'lastUpdated',
+        sortOrder: 'DESC',
+      },
     });
   }
 
@@ -322,7 +326,7 @@ export class NewReusableFilterComponent implements OnInit {
    */
   onLoaded(isFallback: boolean, index: number) {
     if (isFallback) {
-      this.createdBy[index].profileUrl = "NOT_EXIST";
+      this.createdBy[index].profileUrl = 'NOT_EXIST';
     }
   }
 
@@ -335,7 +339,7 @@ export class NewReusableFilterComponent implements OnInit {
   }
 
   clear() {
-    this.filterFormControl.setValue("");
+    this.filterFormControl.setValue('');
   }
 
   downloadRecord() {
@@ -345,13 +349,13 @@ export class NewReusableFilterComponent implements OnInit {
   viewExcel() {
     console.log(this.excelData);
     this.dialog.open(ViewExcelDocComponent, {
-      width: "80%",
+      width: '80%',
       disableClose: true,
       data: {
         tableHeader: this.tableHeader,
         tableBody: this.excelData,
-        fileName: this.bulkUploadFileName
-      }
+        fileName: this.bulkUploadFileName,
+      },
     });
   }
 }

@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
   FormBuilder,
-  FormControl
-} from "@angular/forms";
+  FormControl,
+} from '@angular/forms';
 
 @Component({
-  selector: "app-fee-account",
-  templateUrl: "./fee-account.component.html",
-  styleUrls: ["./fee-account.component.scss"]
+  selector: 'app-fee-account',
+  templateUrl: './fee-account.component.html',
+  styleUrls: ['./fee-account.component.scss'],
 })
 export class FeeAccountComponent implements OnInit {
-  @Input("feeAccArray") feeAccArray: any = [];
+  @Input() feeAccArray: any = [];
   @Input() control: AbstractControl = new FormControl();
   constructor(private formBuilder: FormBuilder) {
     this.control = this.formBuilder.array([]);

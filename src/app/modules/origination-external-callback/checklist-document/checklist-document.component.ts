@@ -1,35 +1,35 @@
-import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ChecklistInfoModel,
   ChecklistPayloadModel,
-  ChecklistRouteObjModel
-} from "app/shared/models/checklist-model";
-import { DocumentUploadService } from "app/shared/services/document-upload.service";
-import { OriginationService } from "app/shared/services/origination.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { SuccessModalComponent } from "../digital-sign/success-modal/success-modal.component";
-import { environment } from "environments/environment";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+  ChecklistRouteObjModel,
+} from 'app/shared/models/checklist-model';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { OriginationService } from 'app/shared/services/origination.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { SuccessModalComponent } from '../digital-sign/success-modal/success-modal.component';
+import { environment } from 'environments/environment';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-checklist-document",
-  templateUrl: "./checklist-document.component.html",
-  styleUrls: ["./checklist-document.component.scss"]
+  selector: 'app-checklist-document',
+  templateUrl: './checklist-document.component.html',
+  styleUrls: ['./checklist-document.component.scss'],
 })
 export class ChecklistDocumentComponent implements OnInit {
   checklistDocumentForm!: FormGroup;
   refNumber: string | any;
-  title: string = "Document Upload";
-  originationId: number = 3507;
+  title = 'Document Upload';
+  originationId = 3507;
   checklistDocuments: any;
   checklistRouteObj: ChecklistRouteObjModel | any;
   customerInfo: any;
   env: string = environment.microServiceURL;
-  pdfType: string =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
+  pdfType =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf';
   acceptedDocumentId: any[] | any;
 
   constructor(
@@ -38,7 +38,7 @@ export class ChecklistDocumentComponent implements OnInit {
     private fb: FormBuilder,
     private snack: MatSnackBar,
     private documentUploadService: DocumentUploadService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
   initChecklistDocumentForm() {
     this.checklistDocumentForm = this.fb.group({
-      documents: this.fb.array([])
+      documents: this.fb.array([]),
     });
   }
 
@@ -62,7 +62,7 @@ export class ChecklistDocumentComponent implements OnInit {
    * @returns the control of document in customer form array
    */
   get documentCtrl(): FormArray {
-    return this.checklistDocumentForm.get("documents") as FormArray;
+    return this.checklistDocumentForm.get('documents') as FormArray;
   }
 
   /**
@@ -72,17 +72,17 @@ export class ChecklistDocumentComponent implements OnInit {
    */
   documentFormArray(data?: any) {
     return this.fb.group({
-      documentName: [data?.document ?? "", [Validators.required]],
-      isProofOfAddress: [data?.isProofOfAddress ?? ""],
+      documentName: [data?.document ?? '', [Validators.required]],
+      isProofOfAddress: [data?.isProofOfAddress ?? ''],
       files: this.fb.array([]),
-      description: [data?.summary ?? ""],
+      description: [data?.summary ?? ''],
       fileType: [
         this.formatDocumentType(
           data?.documentTypesValue?.map((item: any) => item?.toLowerCase()),
-          data?.documentName
-        ) ?? ""
+          data?.documentName,
+        ) ?? '',
       ],
-      docRequired: [data?.docRequired ?? false]
+      docRequired: [data?.docRequired ?? false],
     });
   }
 
@@ -93,7 +93,7 @@ export class ChecklistDocumentComponent implements OnInit {
    * @returns retuns the form control of file in document form array
    */
   documentFilesCtrl(documentIndex: any): FormArray {
-    return this.documentCtrl.at(documentIndex).get("files") as FormArray;
+    return this.documentCtrl.at(documentIndex).get('files') as FormArray;
   }
 
   /**
@@ -103,9 +103,9 @@ export class ChecklistDocumentComponent implements OnInit {
    */
   documentFileFormArray(data?: any) {
     return this.fb.group({
-      fileName: [data?.fileName ?? ""],
-      fileUrl: [data?.fileUrl ?? ""],
-      documentId: [data?.documentId ?? null, [Validators.required]]
+      fileName: [data?.fileName ?? ''],
+      fileUrl: [data?.fileUrl ?? ''],
+      documentId: [data?.documentId ?? null, [Validators.required]],
     });
   }
 
@@ -132,14 +132,14 @@ export class ChecklistDocumentComponent implements OnInit {
       .fetchChecklistItem(
         this.originationId,
         this.checklistRouteObj.screenId,
-        this.checklistRouteObj.processStageId
+        this.checklistRouteObj.processStageId,
       )
       .subscribe((res: IcHttpResponseModel<ChecklistInfoModel[]>) => {
         if (res.statusCode == 200 && res?.data) {
           this.acceptedDocumentId =
-            this.checklistRouteObj?.checklistItem?.split(",");
+            this.checklistRouteObj?.checklistItem?.split(',');
           this.checklistDocuments = res?.data?.filter((checklist) =>
-            this.acceptedDocumentId.some((item: any) => item == checklist.id)
+            this.acceptedDocumentId.some((item: any) => item == checklist.id),
           );
           this.pushDocumentInfo(this.checklistDocuments);
         }
@@ -150,62 +150,77 @@ export class ChecklistDocumentComponent implements OnInit {
     this.documentFilesCtrl(index).push(this.documentFileFormArray());
   }
 
-  uploadDocument(event: any, index: number, fileIndex: number) {
-    const files = event.target.files;
+  uploadDocument(event: Event, index: number, fileIndex: number) {
+    const input = event.target as HTMLInputElement;
+    const files = input?.files;
     if (!files || files.length === 0) {
       return;
     }
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      let docdata: any = {};
-      docdata.fileName = file?.name.split(".")[0];
-      docdata.fileType = file?.type.split("/")[1];
-      docdata.documentNameForChecklist = this.documentCtrl
-        .at(index)
-        .get("documentName")?.value;
-      docdata.documentDesc = this.documentCtrl
-        .at(index)
-        .get("description")?.value;
-      const formdata = new FormData();
-      formdata.append("file", file);
-      formdata.append("data", JSON.stringify(docdata));
-      formdata.append("module", "document");
-      if (
-        this.documentCtrl.at(index).get("fileType")?.value ==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf" &&
-        !file.name.includes(".xlsx") &&
-        !file.name.includes(".pdf")
-      ) {
-        this.snack.open(`Please Upload Pdf or Excel Documents`, "Ok!", {
-          horizontalPosition: "right",
-          verticalPosition: "top",
-          duration: 3000
-        });
-        return;
-      } else if (
-        this.documentCtrl.at(index).get("fileType")?.value ==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" &&
-        !file.name.includes(".xlsx")
-      ) {
-        this.snack.open(`Please Upload Excel documents`, "Ok!", {
-          horizontalPosition: "right",
-          verticalPosition: "top",
-          duration: 3000
-        });
-        return;
-      } else if (
-        this.documentCtrl.at(index).get("fileType")?.value == ".pdf" &&
-        !file.name.toLowerCase().includes(".pdf")
-      ) {
-        this.snack.open(`Please Upload Pdf documents`, "Ok!", {
-          horizontalPosition: "right",
-          verticalPosition: "top",
-          duration: 3000
+
+      // Ensure file is not undefined
+      if (!file) {
+        this.snack.open(`Invalid file. Please upload a valid file.`, 'Ok!', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 3000,
         });
         return;
       }
+
+      const docdata: any = {};
+      docdata.fileName = file.name.split('.')[0];
+      docdata.fileType = file.type.split('/')[1];
+      docdata.documentNameForChecklist = this.documentCtrl
+        .at(index)
+        .get('documentName')?.value;
+      docdata.documentDesc = this.documentCtrl
+        .at(index)
+        .get('description')?.value;
+
+      const formdata = new FormData();
+      formdata.append('file', file); // Safely append file now
+      formdata.append('data', JSON.stringify(docdata));
+      formdata.append('module', 'document');
+
+      if (
+        this.documentCtrl.at(index).get('fileType')?.value ===
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf' &&
+        !file.name.includes('.xlsx') &&
+        !file.name.includes('.pdf')
+      ) {
+        this.snack.open(`Please Upload Pdf or Excel Documents`, 'Ok!', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+        return;
+      } else if (
+        this.documentCtrl.at(index).get('fileType')?.value ===
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
+        !file.name.includes('.xlsx')
+      ) {
+        this.snack.open(`Please Upload Excel documents`, 'Ok!', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+        return;
+      } else if (
+        this.documentCtrl.at(index).get('fileType')?.value === '.pdf' &&
+        !file.name.toLowerCase().includes('.pdf')
+      ) {
+        this.snack.open(`Please Upload Pdf documents`, 'Ok!', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+        return;
+      }
+
       this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
-        if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
+        if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
           this.documentFilesCtrl(index).at(fileIndex).patchValue(res?.data);
           this.documentFilesCtrl(index).push(this.documentFileFormArray());
         }
@@ -215,7 +230,7 @@ export class ChecklistDocumentComponent implements OnInit {
 
   removeImage(index: number, fileIndex: number) {
     const ctrl = this.documentFilesCtrl(index).at(fileIndex);
-    if (ctrl.get("documentId")?.value) {
+    if (ctrl.get('documentId')?.value) {
       ctrl.reset();
     } else {
       this.documentFilesCtrl(index).removeAt(fileIndex);
@@ -223,20 +238,20 @@ export class ChecklistDocumentComponent implements OnInit {
   }
 
   formatDocumentType(documentTypes: string[], documentName: string) {
-    if (documentTypes?.includes("excel") && documentTypes?.includes("pdf"))
-      return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf";
-    else if (documentTypes?.includes("excel"))
-      return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    else if (documentTypes?.includes("pdf")) return ".pdf";
+    if (documentTypes?.includes('excel') && documentTypes?.includes('pdf'))
+      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf';
+    else if (documentTypes?.includes('excel'))
+      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    else if (documentTypes?.includes('pdf')) return '.pdf';
     else console.log(`Document type is not given for ${documentName}`);
-    return "";
+    return '';
   }
 
   saveChecklist() {
-    let payload: ChecklistPayloadModel = {
+    const payload: ChecklistPayloadModel = {
       documentIds: [],
       originationId: this.originationId,
-      screenCode: this.checklistRouteObj?.screenId
+      screenCode: this.checklistRouteObj?.screenId,
     };
     payload.documentIds = [];
     this.documentCtrl?.value?.forEach((element: any) => {
@@ -246,7 +261,7 @@ export class ChecklistDocumentComponent implements OnInit {
     });
     this.originationService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
-        this.updateStatus("Submit");
+        this.updateStatus('Submit');
       }
     });
   }
@@ -274,15 +289,15 @@ export class ChecklistDocumentComponent implements OnInit {
 
   openSuccessPopup() {
     const dialogref = this.dialog.open(SuccessModalComponent, {
-      width: "50%",
-      panelClass: "popup-class",
+      width: '50%',
+      panelClass: 'popup-class',
       data: {
-        title: "Document Summited Successfully",
-        alert: "Keep a record of your Reference Number for future use",
-        refNo: this.customerInfo.icustRefNo
-      }
+        title: 'Document Summited Successfully',
+        alert: 'Keep a record of your Reference Number for future use',
+        refNo: this.customerInfo.icustRefNo,
+      },
     });
-    dialogref.afterClosed().subscribe((_) => {
+    dialogref.afterClosed().subscribe(() => {
       setTimeout(() => {
         window.close();
       }, 5000);

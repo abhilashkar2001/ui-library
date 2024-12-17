@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { LoanDashboardConstant } from "../loan-dashboard/loan-dashboard.constant";
-import { LoanSummaryStore } from "./loan-summary.store";
-import { LoanService } from "app/shared/services/net-loan-service/loan.service";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { LoanDetailsModel } from "app/shared/models/loan-details.model";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoanDashboardConstant } from '../loan-dashboard/loan-dashboard.constant';
+import { LoanSummaryStore } from './loan-summary.store';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-loan-summary",
-  templateUrl: "./loan-summary.component.html",
-  styleUrls: ["./loan-summary.component.scss"]
+  selector: 'app-loan-summary',
+  templateUrl: './loan-summary.component.html',
+  styleUrls: ['./loan-summary.component.scss'],
 })
 export class LoanSummaryComponent implements OnInit {
   summaryForm: FormGroup | undefined;
@@ -33,12 +33,12 @@ export class LoanSummaryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loanService: LoanService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.loanDetails = this.sessionStorageService.getLoanInfo();
-    console.log(this.loanDetails, "checkk");
+    console.log(this.loanDetails, 'checkk');
 
     this.fetchSummaryDetails(this.loanDetails[0]?.cbsAccountNumber);
     this.buildSummary();
@@ -46,16 +46,16 @@ export class LoanSummaryComponent implements OnInit {
 
   buildSummary() {
     this.summaryForm = this.fb.group({
-      loanAccountNumber: [""]
+      loanAccountNumber: [''],
     });
     this.summaryForm
-      ?.get("loanAccountNumber")
+      ?.get('loanAccountNumber')
       ?.setValue(this.loanDetails[0]?.cbsAccountNumber);
   }
 
   //to fetch summary details
   fetchSummaryDetails(loanaccNo: any) {
-    console.log(loanaccNo, "chekkk");
+    console.log(loanaccNo, 'chekkk');
     this.loanService
       .fetchLoanSummary(loanaccNo)
       .subscribe((res: IcHttpResponseModel<LoanDetailsModel> | any) => {
@@ -68,7 +68,7 @@ export class LoanSummaryComponent implements OnInit {
 
   changeRecentTransTabs(i: any) {
     this.selectedRecentTab = this.loanInfo[i];
-    let chartClone = LoanSummaryStore.chartData;
+    const chartClone = LoanSummaryStore.chartData;
     if (i == 0) {
       this.chartDetails = this.Tenure;
       this.chartData = {
@@ -76,63 +76,63 @@ export class LoanSummaryComponent implements OnInit {
         id: 567,
         data: [
           {
-            name: "Tenure",
+            name: 'Tenure',
             colorByPoint: true,
-            innerSize: "45%",
+            innerSize: '45%',
             data: [
               {
-                name: "Total Tenure",
-                y: this.summaryDetails?.totalTenure
+                name: 'Total Tenure',
+                y: this.summaryDetails?.totalTenure,
               },
               {
-                name: "Remaining Tenure",
-                y: this.summaryDetails?.remTenure
-              }
-            ]
-          }
+                name: 'Remaining Tenure',
+                y: this.summaryDetails?.remTenure,
+              },
+            ],
+          },
         ],
         legend: {
-          enabled: true
+          enabled: true,
         },
         xAxis: {
-          lineColor: "#DEDEDE"
-        }
+          lineColor: '#DEDEDE',
+        },
       };
     } else if (i == 1) {
       this.chartDetails = this.Disbursed;
       this.chartData = {
         ...chartClone,
         chart: {
-          type: "column"
+          type: 'column',
         },
         id: 6556,
-        colors: ["#377DFF1D", "#606C8D", "#00205C"],
+        colors: ['#377DFF1D', '#606C8D', '#00205C'],
         data: [
           {
-            name: "Disbursed",
+            name: 'Disbursed',
             colorByPoint: true,
             legend: {
-              enabled: true
+              enabled: true,
             },
             data: [
               {
-                name: "Total sanction",
-                y: this.summaryDetails?.totalSanctionAmt
+                name: 'Total sanction',
+                y: this.summaryDetails?.totalSanctionAmt,
               },
               {
-                name: "Total Disbursed",
-                y: this.summaryDetails?.totalDisbursedAmt
+                name: 'Total Disbursed',
+                y: this.summaryDetails?.totalDisbursedAmt,
               },
               {
-                name: "Remaining Disbursed",
-                y: this.summaryDetails?.remainingDisbursed
-              }
-            ]
-          }
+                name: 'Remaining Disbursed',
+                y: this.summaryDetails?.remainingDisbursed,
+              },
+            ],
+          },
         ],
         xAxis: {
-          type: "category"
-        }
+          type: 'category',
+        },
       };
     } else if (i == 2) {
       this.chartDetails = this.Repayment;
@@ -141,29 +141,29 @@ export class LoanSummaryComponent implements OnInit {
         id: 132,
         data: [
           {
-            name: "Tenure",
+            name: 'Tenure',
             colorByPoint: true,
-            innerSize: "45%",
+            innerSize: '45%',
             data: [
               {
-                name: "Outstanding Amount",
-                y: this.summaryDetails?.outstandingAmt
+                name: 'Outstanding Amount',
+                y: this.summaryDetails?.outstandingAmt,
               },
               {
-                name: "Re-paid Till Date",
-                y: this.summaryDetails?.repaidAmt
-              }
-            ]
-          }
+                name: 'Re-paid Till Date',
+                y: this.summaryDetails?.repaidAmt,
+              },
+            ],
+          },
         ],
         legend: {
-          enabled: true
-        }
+          enabled: true,
+        },
       };
     }
   }
 
   getId() {
-    return "dynamicChart";
+    return 'dynamicChart';
   }
 }

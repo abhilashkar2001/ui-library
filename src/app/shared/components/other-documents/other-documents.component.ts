@@ -5,72 +5,70 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { SharedService } from "app/shared/shared.service";
-import { environment } from "environments/environment";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { CommonService } from "app/shared/services/common-service/common.service";
-import { LoanService } from "app/shared/services/loan/loan.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
+  Validators,
+} from '@angular/forms';
+import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { SharedService } from 'app/shared/shared.service';
+import { environment } from 'environments/environment';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { CommonService } from 'app/shared/services/common-service/common.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-other-documents",
-  templateUrl: "./other-documents.component.html",
-  styleUrls: ["./other-documents.component.scss"]
+  selector: 'app-other-documents',
+  templateUrl: './other-documents.component.html',
+  styleUrls: ['./other-documents.component.scss'],
 })
 export class OtherDocumentsComponent implements OnInit {
-  @Input("updateParentModel") updateParentModel:
-    | ((value: Partial<any> | any) => void | any)
-    | any;
+  @Input() updateParentModel: ((value: Partial<any> | any) => void | any) | any;
   denominationArray: any[] | any = [];
   createDocumentForm!: FormGroup;
   count = 0;
-  isEven: boolean = false;
+  isEven = false;
   selectedImage: File | any;
   parenIndex: number | any;
   currencyArr: any;
   imageUrl: any;
-  kycToggle = "kyc";
+  kycToggle = 'kyc';
   files: any[] = [];
   documentIds = [
     {
-      docIds: []
-    }
+      docIds: [],
+    },
   ];
   @Output() customDocumentForm = new EventEmitter<any>();
-  @Output() onCustomSubmit = new EventEmitter<any>();
-  @Output() onBackEvent = new EventEmitter<any>();
+  @Output() CustomSubmit = new EventEmitter<any>();
+  @Output() backEvent = new EventEmitter<any>();
   @Input() personalDoc: any[] = [];
-  verificationType = "kyc";
+  verificationType = 'kyc';
   documentControls!: FormGroup;
   @Input() isMasterSave = false;
   staticData = {
-    DOCUMENTNAME: []
+    DOCUMENTNAME: [],
   };
   baseUrl = environment.microServiceURL;
   documentList: any = [];
   documentTypeArray: string[] = [];
   hideSelect: string[] = [];
   // SAVE BUTTON PROPERTIES
-  isLoading: boolean = false;
-  loadingBtnText: string = "Saving...";
-  screenName: string = "Select KYC";
+  isLoading = false;
+  loadingBtnText = 'Saving...';
+  screenName = 'Select KYC';
   genericScreenInfo = {
-    screenName: "Select KYC",
+    screenName: 'Select KYC',
     staticData: {
-      DOCUMENTNAME: []
-    }
+      DOCUMENTNAME: [],
+    },
   };
-  ocrProcess: boolean = true;
+  ocrProcess = true;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -79,7 +77,7 @@ export class OtherDocumentsComponent implements OnInit {
     private openAccountService: OpenAccountService,
     private CommonService: CommonService,
     private loanService: LoanService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngAfterViewInit() {}
@@ -92,8 +90,8 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.documentList = this.personalDoc;
-    var originationId = parseInt(
-      <string>sessionStorage.getItem("originationId")
+    const originationId = parseInt(
+      <string>sessionStorage.getItem('originationId'),
     );
     if (originationId) this.getDataFromOriginationMaster(originationId);
     // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
@@ -122,12 +120,12 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   getGenericDetails() {
-    if (this.kycToggle == "addDoocuent" && this.documentTypeArray?.length < 1)
+    if (this.kycToggle == 'addDoocuent' && this.documentTypeArray?.length < 1)
       this.sharedService
         .genericValue(this.screenName, Object.keys(this.staticData))
         .subscribe((resp: any) => {
           if (resp?.statusCode === 200) {
-            this.documentTypeArray = resp.data["DOCUMENTNAME"];
+            this.documentTypeArray = resp.data['DOCUMENTNAME'];
             this.cdr.detectChanges();
           }
         });
@@ -135,7 +133,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
-      otherDocument: this.fb.array([])
+      otherDocument: this.fb.array([]),
     });
     if (data?.length > 0) {
       data.forEach((item: any, i: any) => {
@@ -152,55 +150,55 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   otherDocument(): FormArray {
-    return this.createDocumentForm.get("otherDocument") as FormArray;
+    return this.createDocumentForm.get('otherDocument') as FormArray;
   }
 
   showDocument(data: any, i: any) {
     this.documentControls = this.fb.group({
-      documentNumber: [data ? data[0].documentNumber : "", Validators.required],
-      documentType: [data ? data[0].documentName : "", Validators.required],
+      documentNumber: [data ? data[0].documentNumber : '', Validators.required],
+      documentType: [data ? data[0].documentName : '', Validators.required],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([])
+      docIds: new FormControl([]),
     });
     this.otherDocument().push(this.documentControls);
     if (data) {
       this.otherDocument()
-        .controls[i]?.get("fileInfo")
+        .controls[i]?.get('fileInfo')
         ?.setValue(this.calculateDoc(data, i));
     }
   }
 
   calculateDoc(data: any, i: any) {
-    var docArr: any = [];
-    var docIds: any = [];
+    const docArr: any = [];
+    const docIds: any = [];
     data.forEach((item: any, ind: any) => {
       console.log(item, ind);
-      var docItem = {
+      const docItem = {
         progress: 100,
-        name: item.fileName
+        name: item.fileName,
       };
       docArr.push({
         docId: item.documentId,
         doc: docItem,
-        url: this.mapEndPoints(item.fileUrl)
+        url: this.mapEndPoints(item.fileUrl),
       });
       docIds.push(item.documentId);
     });
-    this.otherDocument().controls[i]?.get("docIds")?.setValue(docIds);
+    this.otherDocument().controls[i]?.get('docIds')?.setValue(docIds);
     return docArr;
   }
 
   newDenom(): FormGroup {
     return this.fb.group({
-      documentNumber: ["", Validators.required],
-      documentType: ["", Validators.required],
+      documentNumber: ['', Validators.required],
+      documentType: ['', Validators.required],
       fileInfo: new FormControl([]),
-      docIds: new FormControl([])
+      docIds: new FormControl([]),
     });
   }
 
   getFileInfo(indx: any): any[] {
-    return this.otherDocument().controls[indx]?.get("fileInfo")?.value;
+    return this.otherDocument().controls[indx]?.get('fileInfo')?.value;
   }
 
   /**
@@ -208,15 +206,15 @@ export class OtherDocumentsComponent implements OnInit {
    * @param index (File index)
    */
   deleteFile(index: number, i: any) {
-    let documentId =
+    const documentId =
       this.createDocumentForm.value.otherDocument[i].docIds[index];
     this.CommonService.deleteDocument(documentId).subscribe((res) => {
       if (res) {
-        console.log("Document deleted Successfully..");
+        console.log('Document deleted Successfully..');
         this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
       }
     });
-    this.otherDocument().controls[i]?.get("fileInfo")?.value.splice(index, 1);
+    this.otherDocument().controls[i]?.get('fileInfo')?.value.splice(index, 1);
   }
 
   addDocument() {
@@ -235,15 +233,15 @@ export class OtherDocumentsComponent implements OnInit {
     this.browseFiles(indx);
   }
   browseFiles(i: any) {
-    const inputElement = document.createElement("input");
-    inputElement.type = "file";
-    inputElement.accept = "image/*";
-    inputElement.addEventListener("change", (event: Event) => {
+    const inputElement = document.createElement('input');
+    inputElement.type = 'file';
+    inputElement.accept = 'image/*';
+    inputElement.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file: any = target.files[0];
-        console.log(file, "file");
-        if (file.type.startsWith("image/")) {
+        console.log(file, 'file');
+        if (file.type.startsWith('image/')) {
           this.selectedImage = file;
           this.displayImage(i, file);
           this.uploadImage(file, i);
@@ -257,8 +255,8 @@ export class OtherDocumentsComponent implements OnInit {
     this.uploadFilesSimulator(0);
   }
   uploadImage(file: any, i: any) {
-    let formData = new FormData();
-    let data = {
+    const formData = new FormData();
+    const data = {
       documentName: this.createDocumentForm.value.otherDocument[i].documentType,
       documentType: this.createDocumentForm.value.otherDocument[i].documentType,
       documentNumber:
@@ -266,27 +264,27 @@ export class OtherDocumentsComponent implements OnInit {
       documentSide: 1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: "kyc"
+      verificationType: 'kyc',
     };
 
-    formData.append("data", JSON.stringify(data));
-    formData.append("file", file);
-    formData.append("module", "document");
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', file);
+    formData.append('module', 'document');
     this.api.uploadDocument(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);
-        this.snack.open(`Document Uploaded Successfully` + " !", "OK", {
+        this.snack.open(`Document Uploaded Successfully` + ' !', 'OK', {
           duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error"
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'snackbar-error',
         });
       }
     });
   }
   updateDocId(indx: any): any[] {
-    return this.otherDocument().controls[indx]?.get("docIds")?.value;
+    return this.otherDocument().controls[indx]?.get('docIds')?.value;
   }
 
   displayImage(indx: any, file: any) {
@@ -295,7 +293,7 @@ export class OtherDocumentsComponent implements OnInit {
       this.imageUrl = event.target.result as string;
       this.getFileInfo(indx).push({
         url: this.imageUrl,
-        name: file.name
+        name: file.name,
       });
     };
     reader.readAsDataURL(this.selectedImage);
@@ -323,11 +321,11 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onConfirmEvent(event?: any) {
-    var docIds: any = [];
+    const docIds: any = [];
     let customerDetails: any;
     event.documentDetails.otherDocument.forEach((element: any) => {
       const docId = {
-        docIds: element.docIds
+        docIds: element.docIds,
       };
       docIds.push(docId);
       if (!customerDetails) {
@@ -339,19 +337,19 @@ export class OtherDocumentsComponent implements OnInit {
         });
       }
     });
-    this.onCustomSubmit.emit({
-      documentDetails: event.documentDetails
+    this.CustomSubmit.emit({
+      documentDetails: event.documentDetails,
     });
 
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: this.isMasterSave,
-      customerDetails: customerDetails
+      customerDetails: customerDetails,
     });
   }
 
   goBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   onDocumentSelection(event: any, index: any) {
@@ -375,7 +373,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   onFileDropped(event: any, i: any) {
     console.log(event);
-    if (event.files.type.startsWith("image/")) {
+    if (event.files.type.startsWith('image/')) {
       this.selectedImage = event.files;
       this.displayImage(i, event.files);
       this.uploadImage(event.files, i);
@@ -389,8 +387,8 @@ export class OtherDocumentsComponent implements OnInit {
    * @returns true false depending upon above codition.
    */
   checkDocValidity() {
-    let isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-      (docItem: any) => docItem.fileInfo?.length > 0
+    const isDocUploaded = this.createDocumentForm.value.otherDocument.every(
+      (docItem: any) => docItem.fileInfo?.length > 0,
     );
     return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
   }

@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { RoutePartsService } from "../../../services/route-parts.service";
-import { LayoutService } from "../../../services/layout.service";
-import { Subscription } from "rxjs";
-import { filter } from "rxjs/operators";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { RoutePartsService } from '../../../services/route-parts.service';
+import { LayoutService } from '../../../services/layout.service';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: "app-breadcrumb",
-  templateUrl: "./breadcrumb.component.html",
-  styleUrls: ["./breadcrumb.component.scss"]
+  selector: 'app-breadcrumb',
+  templateUrl: './breadcrumb.component.html',
+  styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
   routeParts: any[];
@@ -18,17 +18,17 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     private router: Router,
     private routePartsService: RoutePartsService,
     private activeRoute: ActivatedRoute,
-    public layout: LayoutService
+    public layout: LayoutService,
   ) {
     this.routeParts = this.routePartsService.generateRouteParts(
-      this.activeRoute.snapshot
+      this.activeRoute.snapshot,
     );
 
     this.routerEventSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.routeParts = this.routePartsService.generateRouteParts(
-          this.activeRoute.snapshot
+          this.activeRoute.snapshot,
         );
         // generate url from parts
         this.routeParts.reverse().map((item, i) => {
@@ -59,14 +59,14 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
   parseText(part: any) {
     if (!part.breadcrumb) {
-      return "";
+      return '';
     }
     part.breadcrumb = part.breadcrumb.replace(
       /{{([^{}]*)}}/g,
       (a: any, b: any) => {
         const r = part.params[b];
-        return typeof r === "string" ? r : a;
-      }
+        return typeof r === 'string' ? r : a;
+      },
     );
     return part.breadcrumb;
   }

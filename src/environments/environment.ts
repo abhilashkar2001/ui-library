@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  microServiceURL: "https://192.168.0.17:4210/api", // 192.168.1.21 - old
+  microServiceURL: 'https://192.168.0.17:4210/api', // 192.168.1.21 - old
   build: 33,
 };

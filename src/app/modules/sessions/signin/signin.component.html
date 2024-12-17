@@ -8,14 +8,14 @@
     >
       <h1 class="login_heading">{{ appData.title }}</h1>
 
-      <h2 class="login_subtitle" *ngIf="authType == 'signIn'">
+      <h2 class="login_subtitle" *ngIf="authType === 'signIn'">
         {{ appData.greeting }}
       </h2>
 
-      <div class="login_form" fxLayout="column" *ngIf="authType == 'signIn'">
+      <div class="login_form" fxLayout="column" *ngIf="authType === 'signIn'">
         <form [formGroup]="signinForm">
           <mat-form-field appearance="outline">
-            <mat-label>{{ "Corporate Id" | translate }}</mat-label>
+            <mat-label>{{ 'Corporate Id' | translate }}</mat-label>
             <input
               matInput
               formControlName="corporateId"
@@ -31,12 +31,12 @@
               *ngIf="signinForm.get('corporateId')?.hasError('required')"
               class=""
             >
-              {{ "Corporate Id is Required!" | translate }}
+              {{ 'Corporate Id is Required!' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>{{ "Login Id" | translate }}</mat-label>
+            <mat-label>{{ 'Login Id' | translate }}</mat-label>
             <input
               matInput
               formControlName="username"
@@ -54,12 +54,12 @@
               *ngIf="signinForm.get('username')?.hasError('required')"
               class=""
             >
-              {{ "Login Id is Required!" | translate }}
+              {{ 'Login Id is Required!' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width custom-field" appearance="outline">
-            <mat-label>{{ "Password" | translate }}</mat-label>
+            <mat-label>{{ 'Password' | translate }}</mat-label>
             <input
               matInput
               formControlName="password"
@@ -74,35 +74,35 @@
               matSuffix
               (click)="hide = !hide"
               style="cursor: pointer"
-              >{{ hide ? "visibility_off" : "visibility" }}</mat-icon
+              >{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon
             >
             <mat-error
               *ngIf="signinForm.get('password')?.hasError('required')"
               class=""
             >
-              {{ "Password is Required!" | translate }}
+              {{ 'Password is Required!' | translate }}
             </mat-error>
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
             <div fxFlex="100" class="pb-16 text-right">
               <a class="forget">
-                {{ "Forgot Password?" | translate }}
+                {{ 'Forgot Password?' | translate }}
               </a>
             </div>
           </div>
 
           <button class="login_sigin" (click)="submit()">
-            {{ "Sign In" }}
+            {{ 'Sign In' }}
           </button>
         </form>
       </div>
 
-      <div *ngIf="authType == 'otp'">
+      <div *ngIf="authType === 'otp'">
         <div fxLayout="column" fxLayoutGap="20px">
           <div fxLayout="row" class="mt-24">
             <div fxFlex="80">
-              <h2 class="auth_title">{{ "OTP Authentication" }}</h2>
+              <h2 class="auth_title">{{ 'OTP Authentication' }}</h2>
               <p class="auth_subtitle">
                 An authentication code has been sent to<br />
                 registered Email.
@@ -120,15 +120,15 @@
           </ng-container>
 
           <button class="forget" fxFlex="50" fxLayoutAlign="flex-start">
-            {{ "Resend OTP" | translate }}
+            {{ 'Resend OTP' | translate }}
           </button>
 
           <div fxLayout="row" class="auth_button_wrapper" fxLayoutGap="2">
             <button class="saveButton" fxFlex="40" (click)="onVerify()">
-              {{ "Verify" | translate }}
+              {{ 'Verify' | translate }}
             </button>
             <button fxFlex="40" class="exitButton" (click)="goBack()">
-              {{ "Exit" | translate }}
+              {{ 'Exit' | translate }}
             </button>
           </div>
         </div>

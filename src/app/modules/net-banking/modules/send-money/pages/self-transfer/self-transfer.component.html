@@ -23,7 +23,7 @@
       </div>
     </div>
     <h1 class="wrapper_row light-blue-title">
-      {{ "Transfer To" | translate }}
+      {{ 'Transfer To' | translate }}
     </h1>
     <div class="row px-12">
       <div fxFlex="25" class="input_wrapper">
@@ -50,12 +50,12 @@
         <p *ngIf="toAccount">
           <span class="text-small"
             >{{ toAccount?.accountType | translate }} |
-            {{ "Balance" | translate }}:
+            {{ 'Balance' | translate }}:
           </span>
           <span class="text-normal">
             {{
               toAccountBalance
-                | currency : this.selfTransferForm.get("creditCurrency").value
+                | currency: this.selfTransferForm.get('creditCurrency').value
             }}
           </span>
         </p>

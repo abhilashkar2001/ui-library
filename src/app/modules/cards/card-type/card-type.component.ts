@@ -1,27 +1,27 @@
-import { Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { CommonService } from "app/shared/services/common-service/common.service";
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonService } from 'app/shared/services/common-service/common.service';
 
 @Component({
-  selector: "app-card-type",
-  templateUrl: "./card-type.component.html",
-  styleUrls: ["./card-type.component.scss"],
+  selector: 'app-card-type',
+  templateUrl: './card-type.component.html',
+  styleUrls: ['./card-type.component.scss'],
 })
 export class CardTypeComponent implements OnInit {
-  tab: number = 1;
+  tab = 1;
 
   constructor(
     private router: Router,
     private commonService: CommonService,
-    private location: Location
+    private location: Location,
   ) {}
 
   cards = [
-    { image: "../../../../assets/images/bluecard.png" },
-    { image: "../../../../assets/images/bluecard.png" },
-    { image: "../../../../assets/images/bluecard.png" },
-    { image: "../../../../assets/images/bluecard.png" },
+    { image: '../../../../assets/images/bluecard.png' },
+    { image: '../../../../assets/images/bluecard.png' },
+    { image: '../../../../assets/images/bluecard.png' },
+    { image: '../../../../assets/images/bluecard.png' },
   ];
 
   ngOnInit(): void {

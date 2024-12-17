@@ -23,7 +23,7 @@
             <mat-form-field class="full-width mobile_field">
               <input
                 matInput
-                numbersOnly
+                appNumbersOnly
                 maxlength="10"
                 minlength="10"
                 name="verifyMobile"
@@ -64,11 +64,11 @@
         <span class="timer" fxLayout="row">
           <div class="Btn" id="ResendBtn">
             <button
-              [disabled]="display != '00:00'"
+              [disabled]="display !== '00:00'"
               type="button"
               class="resnd_otp"
               (click)="timer(1)"
-              [ngClass]="{ 'gray-button': display != '00:00' }"
+              [ngClass]="{ 'gray-button': display !== '00:00' }"
             >
               Resend
             </button>

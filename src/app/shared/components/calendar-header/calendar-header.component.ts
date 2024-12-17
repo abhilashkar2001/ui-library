@@ -1,14 +1,14 @@
-import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
-import { DateAdapter } from "@angular/material/core";
-import { MatCalendar } from "@angular/material/datepicker";
-import * as moment from "moment";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
+import { MatCalendar } from '@angular/material/datepicker';
+import * as moment from 'moment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: "app-calendar-header",
-  templateUrl: "./calendar-header.component.html",
-  styleUrls: ["./calendar-header.component.scss"]
+  selector: 'app-calendar-header',
+  templateUrl: './calendar-header.component.html',
+  styleUrls: ['./calendar-header.component.scss'],
 })
 export class CalendarHeaderComponent<D> implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -16,7 +16,7 @@ export class CalendarHeaderComponent<D> implements OnDestroy {
   constructor(
     private calendar: MatCalendar<D>, // calendar instance of picker
     private dateAdapter: DateAdapter<D>, // native or moment date adapter
-    cdr: ChangeDetectorRef
+    cdr: ChangeDetectorRef,
   ) {
     // make sure your header stays in sync with the calendar:
     calendar.stateChanges
@@ -27,24 +27,24 @@ export class CalendarHeaderComponent<D> implements OnDestroy {
   // active date label rendered between the arrow buttons
   get periodLabel(): string {
     return moment(this.calendar.activeDate as moment.MomentInput).format(
-      "MMMM YYYY"
+      'MMMM YYYY',
     );
   }
 
   // called when user clicks on one of the left buttons
-  previousClicked(mode: "month" | "year"): void {
+  previousClicked(mode: 'month' | 'year'): void {
     this.changeDate(mode, -1);
   }
 
   // called when user clicks on one of the right buttons
-  nextClicked(mode: "month" | "year"): void {
+  nextClicked(mode: 'month' | 'year'): void {
     this.changeDate(mode, 1);
   }
 
-  private changeDate(mode: "month" | "year", amount: -1 | 1): void {
+  private changeDate(mode: 'month' | 'year', amount: -1 | 1): void {
     // increment or decrement month or year
     this.calendar.activeDate =
-      mode === "month"
+      mode === 'month'
         ? this.dateAdapter.addCalendarMonths(this.calendar.activeDate, amount)
         : this.dateAdapter.addCalendarYears(this.calendar.activeDate, amount);
   }

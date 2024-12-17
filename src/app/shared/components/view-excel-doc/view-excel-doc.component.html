@@ -26,10 +26,15 @@
       </ng-container>
 
       <mat-header-row
-        *matHeaderRowDef="displayedColumns?.[0]?displayedColumns: tableHeader"
+        *matHeaderRowDef="
+          displayedColumns?.[0] ? displayedColumns : tableHeader
+        "
       ></mat-header-row>
       <mat-row
-        *matRowDef="let row; columns: displayedColumns?.[0]?displayedColumns: tableHeader "
+        *matRowDef="
+          let row;
+          columns: displayedColumns?.[0] ? displayedColumns : tableHeader
+        "
       ></mat-row>
     </mat-table>
   </div>

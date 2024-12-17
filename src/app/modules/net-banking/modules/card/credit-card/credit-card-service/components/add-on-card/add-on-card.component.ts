@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 // import { CreditCardService } from "../../../credit-card.service";
-import { Router } from "@angular/router";
-import { CreditCardStore } from "../../../credit-card.store";
-import { CardService } from "../../../../card.service";
-import { AccountList } from "app/shared/models/card.model";
-import { ServiceCallHandler } from "app/shared/service-call.handler";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { Router } from '@angular/router';
+import { CreditCardStore } from '../../../credit-card.store';
+import { CardService } from '../../../../card.service';
+import { AccountList } from 'app/shared/models/card.model';
+import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
-  selector: "app-add-on-card",
-  templateUrl: "./add-on-card.component.html",
-  styleUrls: ["./add-on-card.component.scss"]
+  selector: 'app-add-on-card',
+  templateUrl: './add-on-card.component.html',
+  styleUrls: ['./add-on-card.component.scss'],
 })
 export class AddOnCardComponent implements OnInit {
   addonCardForm!: FormGroup;
@@ -28,7 +28,7 @@ export class AddOnCardComponent implements OnInit {
     private serviceCallHandler: ServiceCallHandler,
     private sessionStorageService: SessionStorageService,
     private tokenService: TokenStorageService,
-    private cardService: CardService
+    private cardService: CardService,
   ) {
     this.profileInfo = this.tokenService.getUser();
   }
@@ -40,80 +40,80 @@ export class AddOnCardComponent implements OnInit {
   }
   buildAddonCardForm() {
     this.addonCardForm = this.fb.group({
-      cardNumber: [""],
-      accountNo: [""],
-      nameRequired: [""],
-      relationShip: [""],
-      dateOfBirth: [""]
+      cardNumber: [''],
+      accountNo: [''],
+      nameRequired: [''],
+      relationShip: [''],
+      dateOfBirth: [''],
     });
   }
   payFromCurrencyCode(value: any) {
-    this.addonCardForm?.get("debitCurrency")?.setValue(value);
+    this.addonCardForm?.get('debitCurrency')?.setValue(value);
   }
 
   patchDetails(event: any) {
     const account = event;
     this.accountDetails = this.cardList?.find(
-      (card: any) => card?.cardNumber == account
+      (card: any) => card?.cardNumber == account,
     );
     if (this.accountDetails) {
       this.typeofCard = this.accountDetails?.typeOfCard;
       this.addonCardForm
-        ?.get("cardNumber")
+        ?.get('cardNumber')
         ?.patchValue(this.accountDetails?.cardNumber);
     }
   }
 
   proceed() {
     if (!this.addonCardForm?.valid) return;
-    let payload = { ...this.addonCardForm.value };
-    let paymentDetailsArr = [
+    const payload = { ...this.addonCardForm.value };
+    const paymentDetailsArr = [
       {
-        eventType: "mmidTransfer",
-        operationType: "Autopay",
-        status: "confirm",
-        masterId: "retailFundTransferMasterId",
-        statusHeader: "Comfirm Payment",
-        statusNews: "Add-on Card Request!",
+        eventType: 'mmidTransfer',
+        operationType: 'Autopay',
+        status: 'confirm',
+        masterId: 'retailFundTransferMasterId',
+        statusHeader: 'Comfirm Payment',
+        statusNews: 'Add-on Card Request!',
         summary: [
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Name on Card": this.accountDetails?.customerName },
+              { 'Name on Card': this.accountDetails?.customerName },
               {
-                "Card Number": this.accountDetails?.cardNumber
+                'Card Number': this.accountDetails?.cardNumber,
               },
               {
-                "Card Name": this.accountDetails?.cardName
+                'Card Name': this.accountDetails?.cardName,
               },
               {
-                "Credit Limit": this.accountDetails?.totalCreditLimit
-              }
-            ]
+                'Credit Limit': this.accountDetails?.totalCreditLimit,
+              },
+            ],
           },
           {
-            header: "Card Control",
+            header: 'Card Control',
             details: [
-              { "Name Required": payload?.nameRequired },
+              { 'Name Required': payload?.nameRequired },
               {
-                "Date Of Birth": payload?.dateOfBirth
+                'Date Of Birth': payload?.dateOfBirth,
               },
               {
-                Relationship: payload?.relationShip
-              }
-            ]
-          }
+                Relationship: payload?.relationShip,
+              },
+            ],
+          },
         ],
-        qrToggle: false
-      }
+        qrToggle: false,
+      },
     ];
     this.serviceCallHandler.put(
-      "serviceHandler",
+      'serviceHandler',
       payload,
       paymentDetailsArr,
-      (payload) => this.cardService.saveAddOnCreditPaymentDetails(payload)
+      (payload) => this.cardService.saveAddOnCreditPaymentDetails(payload),
       // Service call completion callback
     );
-    this.router.navigate(["/user/card/credit-card/service/payment-summary"]);
+    this.router.navigate(['/user/card/credit-card/service/payment-summary']);
   }
 }

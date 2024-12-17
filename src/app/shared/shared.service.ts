@@ -1,9 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { GenericValueInfoModel } from './models/generic-value.model';
+import { IcHttpResponseModel } from './models/ic-http-response.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class SharedService {
   protected baseUrl = environment.microServiceURL;
@@ -11,32 +13,28 @@ export class SharedService {
   constructor(private http: HttpClient) {}
 
   genericValue(screenName: string, genericName: string[]) {
-    return this.http.get<any>(
-      `${this.baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`
+    return this.http.get<IcHttpResponseModel<GenericValueInfoModel>>(
+      `${this.baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`,
     );
   }
 
-  uploadDocument(formData: any) {
-    return this.http.post<any>(`${this.baseUrl}/upload-document`, formData, {
+  uploadDocument(formData: FormData) {
+    return this.http.post(`${this.baseUrl}/upload-document`, formData, {
       reportProgress: true,
-      observe: "events"
+      observe: 'events',
     });
   }
 
-  // Aadhaar Front API
-  // public readAadharData(data) {
-  //   return this.http.post<any>(`${this.baseUrl}/ocr/process`, data);
-  // }
-  public readAadharFrontData(data: any) {
-    return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-front`, data);
+  public readAadharFrontData(data: FormData) {
+    return this.http.post(`${this.baseUrl}/api/scan-adhar-front`, data);
   }
 
   // Aadhaar Back API
-  public readAadhaarBackData(data: any) {
-    return this.http.post<any>(`${this.baseUrl}/api/scan-adhar-back`, data);
+  public readAadhaarBackData(data: FormData) {
+    return this.http.post(`${this.baseUrl}/api/scan-adhar-back`, data);
   }
 
-  deleteDocument(documentId: any) {
+  deleteDocument(documentId: number) {
     return this.http.delete(`${this.baseUrl}/upload-document/${documentId}`);
   }
 }

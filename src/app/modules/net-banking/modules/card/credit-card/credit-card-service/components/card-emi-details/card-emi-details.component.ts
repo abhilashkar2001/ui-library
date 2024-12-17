@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { CreditCardStore } from "../../../credit-card.store";
-import { CardService } from "../../../../card.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { EmiDetails } from "app/shared/models/emi-converter.model";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { NewErrorPopupComponent } from "app/modules/home/new-error-popup/new-error-popup.component";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CreditCardStore } from '../../../credit-card.store';
+import { CardService } from '../../../../card.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { EmiDetails } from 'app/shared/models/emi-converter.model';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-card-emi-details",
-  templateUrl: "./card-emi-details.component.html",
-  styleUrls: ["./card-emi-details.component.scss"]
+  selector: 'app-card-emi-details',
+  templateUrl: './card-emi-details.component.html',
+  styleUrls: ['./card-emi-details.component.scss'],
 })
 export class CardEmiDetailsComponent implements OnInit {
   cardEmiDetailsForm!: FormGroup;
@@ -29,7 +29,7 @@ export class CardEmiDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     this.registerIcons();
   }
@@ -42,10 +42,10 @@ export class CardEmiDetailsComponent implements OnInit {
 
   private registerIcons(): void {
     this.matIconRegistry.addSvgIcon(
-      "download-icon",
+      'download-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/svg/download-white.svg"
-      )
+        'assets/images/svg/download-white.svg',
+      ),
     );
   }
 
@@ -56,7 +56,7 @@ export class CardEmiDetailsComponent implements OnInit {
 
   private buildCardEmiDetailsForm(): void {
     this.cardEmiDetailsForm = this.fb.group({
-      creditNumber: [""]
+      creditNumber: [''],
     });
   }
 
@@ -81,8 +81,8 @@ export class CardEmiDetailsComponent implements OnInit {
   }
   downLoad() {
     if (this.cardEmiDetailsForm.valid) {
-      let month: number = this.cardEmiDetailsForm.get("month")?.value;
-      let year: number = this.cardEmiDetailsForm.get("year")?.value;
+      const month: number = this.cardEmiDetailsForm.get('month')?.value;
+      const year: number = this.cardEmiDetailsForm.get('year')?.value;
       this.cardService
         .downloadCreditInfoAsPdf(this.creditCardNo, month, year)
         .subscribe(
@@ -91,33 +91,33 @@ export class CardEmiDetailsComponent implements OnInit {
           },
           (errorResponse) => {
             this.errorPopUp(errorResponse);
-          }
+          },
         );
     }
   }
   downloadFile(blobData: Blob): void {
-    const blob = new Blob([blobData], { type: "application/pdf" });
+    const blob = new Blob([blobData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.download = "credit_info.pdf";
+    link.download = 'credit_info.pdf';
     link.click();
     window.URL.revokeObjectURL(url);
   }
   errorPopUp(res: any) {
-    let errPayload = {
+    const errPayload = {
       error: res?.error,
       message: res?.message,
-      statusCode: res?.status
+      statusCode: res?.status,
     };
     this.dialog.open(NewErrorPopupComponent, {
-      width: "45%",
-      height: "50%",
+      width: '45%',
+      height: '50%',
       disableClose: true,
       data: {
-        type: "customError",
-        errPayload
-      }
+        type: 'customError',
+        errPayload,
+      },
     });
   }
 }

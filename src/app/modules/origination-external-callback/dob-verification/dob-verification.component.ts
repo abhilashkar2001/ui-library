@@ -1,37 +1,37 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { SessionStorageEnum } from "app/enum/session-storage.enum";
-import { IcHttpResponseModel } from "app/shared/models/ic-http-response.model";
-import { PrimaryCustomerInfo } from "app/shared/models/primary-customer.model";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { OriginationService } from "app/shared/services/origination.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SessionStorageEnum } from 'app/enum/session-storage.enum';
+import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { PrimaryCustomerInfo } from 'app/shared/models/primary-customer.model';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { OriginationService } from 'app/shared/services/origination.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
-  selector: "app-dob-verification",
-  templateUrl: "./dob-verification.component.html",
-  styleUrls: ["./dob-verification.component.scss"]
+  selector: 'app-dob-verification',
+  templateUrl: './dob-verification.component.html',
+  styleUrls: ['./dob-verification.component.scss'],
 })
 export class DobVerificationComponent implements OnInit {
   dateOfBirth: string | any;
-  showOTP: boolean = false;
+  showOTP = false;
   originationId: number | any;
-  otpSent: boolean = false;
+  otpSent = false;
   config = {
     allowNumbersOnly: false,
     length: 6,
     isPasswordInput: true,
     disableAutoFocus: false,
-    placeholder: ""
+    placeholder: '',
   };
   otp: any;
   customerInfo: any;
-  incorrectDOB: boolean = false;
+  incorrectDOB = false;
   constructor(
     private originationService: OriginationService,
     private sessionStorageService: SessionStorageService,
     private loginService: OpenAccountService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -65,20 +65,20 @@ export class DobVerificationComponent implements OnInit {
 
   verifyOtp() {
     const type = JSON.parse(
-      <string>sessionStorage.getItem(SessionStorageEnum.TYPE)
+      <string>sessionStorage.getItem(SessionStorageEnum.TYPE),
     );
     this.loginService
       .verifyOtp({
         mobile: this.sessionStorageService?.getCustomerInfo()?.contact?.mobile,
-        otp: this.otp
+        otp: this.otp,
       })
       .subscribe(async () => {
-        if (type == "send-link")
-          this.router.navigate(["origination/checklist-document"]);
-        else if (type == "e-sign") {
-          if (this.customerInfo?.catagory == "Lending")
-            this.router.navigate(["origination/offer-letter"]);
-          else this.router.navigate(["origination/digital-sign"]);
+        if (type == 'send-link')
+          this.router.navigate(['origination/checklist-document']);
+        else if (type == 'e-sign') {
+          if (this.customerInfo?.catagory == 'Lending')
+            this.router.navigate(['origination/offer-letter']);
+          else this.router.navigate(['origination/digital-sign']);
         }
       });
   }

@@ -14,9 +14,11 @@
 
     <div
       class="tab-buttons"
-      [ngClass]="selectedTab == item.screenName ? 'selected-tab-buttons' : ''"
+      [ngClass]="selectedTab === item.screenName ? 'selected-tab-buttons' : ''"
       *ngFor="let item of items; let i = index"
       (click)="navigate(item, i)"
+      (keydown.enter)="navigate(item, i)"
+      tabindex="0"
     >
       <div
         class="tab-content"
@@ -28,7 +30,7 @@
         <button mat-icon-button>
           <mat-icon
             [svgIcon]="
-              selectedTab == item.screenName ? item.selectedIcon : item.icon
+              selectedTab === item.screenName ? item.selectedIcon : item.icon
             "
             class="current_theme_filter"
           ></mat-icon>

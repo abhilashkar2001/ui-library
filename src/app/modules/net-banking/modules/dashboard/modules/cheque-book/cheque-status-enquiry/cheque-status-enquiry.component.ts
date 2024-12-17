@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { ChequeStore } from "../cheque.store";
-import { ChequeService } from "../cheque-service";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChequeStore } from '../cheque.store';
+import { ChequeService } from '../cheque-service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-cheque-status-enquiry",
-  templateUrl: "./cheque-status-enquiry.component.html",
-  styleUrls: ["./cheque-status-enquiry.component.scss"]
+  selector: 'app-cheque-status-enquiry',
+  templateUrl: './cheque-status-enquiry.component.html',
+  styleUrls: ['./cheque-status-enquiry.component.scss'],
 })
 export class ChequeStatusEnquiryComponent implements OnInit {
   chequeStatusCols = ChequeStore.recentColumns;
@@ -20,13 +20,13 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   chequeNumber: any;
 
   inquiryChequeOptions: any[] = [
-    { label: "Number", value: "Number" },
-    { label: "Range", value: "Range" },
-    { label: "Status", value: "Status" }
+    { label: 'Number', value: 'Number' },
+    { label: 'Range', value: 'Range' },
+    { label: 'Status', value: 'Status' },
   ];
   selectList: any[] = [
-    { label: "Not Used", value: "N" },
-    { label: "Used", value: "Yes" }
+    { label: 'Not Used', value: 'N' },
+    { label: 'Used', value: 'Yes' },
   ];
 
   fetchedData: any;
@@ -34,7 +34,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private chequeService: ChequeService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -44,40 +44,40 @@ export class ChequeStatusEnquiryComponent implements OnInit {
 
   fetchCustomerInfo() {
     this.accountNumberList = JSON.parse(
-      <string>sessionStorage.getItem("listOfAccounts")
+      <string>sessionStorage.getItem('listOfAccounts'),
     );
   }
 
   buildForm() {
     this.chqueInquiryForm = this.fb.group({
-      accountNo: [""],
-      inquiryChequeBy: ["Number"],
-      fromChequeBookNo: [""],
-      toChequeBookNo: [""],
-      chequeNumber: [""],
-      select: [""]
+      accountNo: [''],
+      inquiryChequeBy: ['Number'],
+      fromChequeBookNo: [''],
+      toChequeBookNo: [''],
+      chequeNumber: [''],
+      select: [''],
     });
-    const selectedAccountNo = sessionStorage.getItem("selectAccNo");
+    const selectedAccountNo = sessionStorage.getItem('selectAccNo');
 
     if (selectedAccountNo) {
-      this.chqueInquiryForm.get("accountNo")?.setValue(selectedAccountNo);
+      this.chqueInquiryForm.get('accountNo')?.setValue(selectedAccountNo);
       this.handleAccountNumberChange();
     }
   }
 
   handleAccountNumberChange() {
     this.chequeService
-      .getChequeNoByAccNo(this.chqueInquiryForm.get("accountNo")?.value)
+      .getChequeNoByAccNo(this.chqueInquiryForm.get('accountNo')?.value)
       .subscribe(
         (resp) => {
           this.chequeNumber = resp?.data;
         },
-        (err) => console.error("Error: ", err)
+        (err) => console.error('Error: ', err),
       );
   }
 
   goBack() {
-    this.router.navigate(["/user/dashboard"]);
+    this.router.navigate(['/user/dashboard']);
   }
 
   fetchChequeDetails() {
@@ -90,7 +90,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
       toChequeBookNo: chqueInquiryValue?.toChequeBookNo,
       accountNo: chqueInquiryValue?.accountNo,
       chequeBookNumber: chqueInquiryValue?.chequeNumber,
-      status: chqueInquiryValue?.select
+      status: chqueInquiryValue?.select,
     };
 
     this.chequeService.inquiryCheque(payload)?.subscribe(
@@ -104,12 +104,12 @@ export class ChequeStatusEnquiryComponent implements OnInit {
             chequeNumber: i.leavesNumber,
             status: i?.status,
             reason: i?.reason,
-            amount: i?.amount
+            amount: i?.amount,
           }));
       },
       (error) => {
-        console.error("Error: ", error);
-      }
+        console.error('Error: ', error);
+      },
     );
   }
 }

@@ -5,7 +5,7 @@
   &nbsp;
   <app-cibil-score-result
     *ngIf="showCibilScoreResult"
-    (onBackEvent)="onBackCIBILScoreResult()"
+    (backEvent)="onBackCIBILScoreResult()"
     (onCibilConfirmEvent)="onConfirmFromCibilScoreResult()"
   ></app-cibil-score-result>
   <div *ngIf="!showCibilScoreResult">
@@ -48,7 +48,7 @@
           [showOtpSection]="showOtpSection"
           [otpSent]="otpSent"
           [invalidOtp]="invalidOtp"
-          (onCustomSubmit)="onConfirmFromCibilScoreResult()"
+          (CustomSubmit)="onConfirmFromCibilScoreResult()"
         ></app-common-mobile-verification>
       </div>
       <div

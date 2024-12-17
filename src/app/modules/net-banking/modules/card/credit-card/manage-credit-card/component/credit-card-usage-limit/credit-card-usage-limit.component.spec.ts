@@ -8,9 +8,8 @@ describe('CreditCardUsageLimitComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditCardUsageLimitComponent ]
-    })
-    .compileComponents();
+      declarations: [CreditCardUsageLimitComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreditCardUsageLimitComponent);
     component = fixture.componentInstance;

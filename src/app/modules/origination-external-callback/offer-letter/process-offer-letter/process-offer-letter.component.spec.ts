@@ -8,9 +8,8 @@ describe('ProcessOfferLetterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessOfferLetterComponent ]
-    })
-    .compileComponents();
+      declarations: [ProcessOfferLetterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProcessOfferLetterComponent);
     component = fixture.componentInstance;

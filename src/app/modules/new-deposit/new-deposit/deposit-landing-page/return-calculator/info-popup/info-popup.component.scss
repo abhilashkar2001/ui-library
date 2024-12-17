@@ -1,31 +1,29 @@
 .header {
-    color: #004C97;
-    font-weight: 700;
-    font-size: 25px;
-    margin-top: 2px;
+  color: #004c97;
+  font-weight: 700;
+  font-size: 25px;
+  margin-top: 2px;
 }
 
 .scroll-bar {
-    height: 304px;
-    overflow: scroll;
-    overflow-x: hidden;
+  height: 304px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 ::ng-deep .egret-navy .mat-dialog-container {
-    border-radius: 20px
+  border-radius: 20px;
 }
 
 .head {
-    color: #004C97;
+  color: #004c97;
 }
 
 .text {
-    font-weight: 600;
-    font-size: 10px;
-
+  font-weight: 600;
+  font-size: 10px;
 }
 
-
 tr {
-    border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }

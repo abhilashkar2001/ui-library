@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class AuditLogService {
   protected baseUrl = environment.microServiceURL;
@@ -15,7 +15,7 @@ export class AuditLogService {
         this.baseUrl
       }/loginApi/${id}/revisions?fetchChanges=true&classname=${className}&curPage=${
         page - 1
-      }&pageSize=${pageSize}`
+      }&pageSize=${pageSize}`,
     );
   }
 }

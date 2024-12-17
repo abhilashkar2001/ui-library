@@ -8,9 +8,8 @@ describe('RecentTransactionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecentTransactionComponent ]
-    })
-    .compileComponents();
+      declarations: [RecentTransactionComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RecentTransactionComponent);
     component = fixture.componentInstance;

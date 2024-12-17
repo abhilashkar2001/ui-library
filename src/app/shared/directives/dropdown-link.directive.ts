@@ -5,13 +5,13 @@ import {
   Input,
   OnInit,
   OnDestroy,
-  ElementRef
-} from "@angular/core";
+  ElementRef,
+} from '@angular/core';
 
-import { AppDropdownDirective } from "./dropdown.directive";
+import { AppDropdownDirective } from './dropdown.directive';
 
 @Directive({
-  selector: "[appDropdownLink]"
+  selector: '[appDropdownLink]',
 })
 export class DropdownLinkDirective implements OnInit, OnDestroy {
   @Input() public group: any;
@@ -19,7 +19,7 @@ export class DropdownLinkDirective implements OnInit, OnDestroy {
   protected _open: boolean | any;
   protected nav: AppDropdownDirective;
 
-  @HostBinding("class.open")
+  @HostBinding('class.open')
   @Input()
   get open(): boolean {
     return this._open;
@@ -34,7 +34,7 @@ export class DropdownLinkDirective implements OnInit, OnDestroy {
 
   public constructor(
     @Inject(AppDropdownDirective) nav: AppDropdownDirective,
-    private _elemRef: ElementRef
+    private _elemRef: ElementRef,
   ) {
     this.nav = nav;
   }
@@ -44,7 +44,7 @@ export class DropdownLinkDirective implements OnInit, OnDestroy {
 
     // set true if open class exists
     setTimeout(() => {
-      this.open = this._elemRef.nativeElement.classList.contains("open");
+      this.open = this._elemRef.nativeElement.classList.contains('open');
     }, 100);
   }
 

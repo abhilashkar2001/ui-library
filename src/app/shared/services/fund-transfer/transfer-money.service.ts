@@ -1,11 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class TransferMoneyService {
   constructor(private httpClient: HttpClient) {}
@@ -13,7 +13,7 @@ export class TransferMoneyService {
   saveTransferMoney(payload: any) {
     return this.httpClient.post(
       `${MICROSERVICE_URL}/retail-fund-transfer/transfer-money`,
-      payload
+      payload,
     );
   }
 }

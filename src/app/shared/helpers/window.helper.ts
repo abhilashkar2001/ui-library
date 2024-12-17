@@ -1,12 +1,12 @@
-import { ClassProvider, FactoryProvider, InjectionToken } from "@angular/core";
+import { ClassProvider, FactoryProvider, InjectionToken } from '@angular/core';
 
 export function _window(): any {
   return window;
 }
-export const WINDOW = new InjectionToken("WindowToken");
+export const WINDOW = new InjectionToken('WindowToken');
 export abstract class WindowRef {
   get nativeWindow(): Window {
-    throw new Error("Not implemented.");
+    throw new Error('Not implemented.');
   }
 }
 export class BrowserWindowRef extends WindowRef {
@@ -19,11 +19,11 @@ export class BrowserWindowRef extends WindowRef {
 }
 const browserWindowProvider: ClassProvider = {
   provide: WindowRef,
-  useClass: BrowserWindowRef
+  useClass: BrowserWindowRef,
 };
 export const windowProvider: FactoryProvider = {
   provide: WINDOW,
   useFactory: _window,
-  deps: []
+  deps: [],
 };
 export const WINDOW_PROVIDERS = [browserWindowProvider, windowProvider];

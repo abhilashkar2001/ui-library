@@ -1,13 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { countryStateService } from "./countrySateCityService";
-import { MatDialogRef } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { countryStateService } from './countrySateCityService';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: "app-reusable-pincode-popup",
-  templateUrl: "./reusable-pincode-popup.component.html",
-  styleUrls: ["./reusable-pincode-popup.component.scss"]
+  selector: 'app-reusable-pincode-popup',
+  templateUrl: './reusable-pincode-popup.component.html',
+  styleUrls: ['./reusable-pincode-popup.component.scss'],
 })
 export class ReusablePincodePopupComponent implements OnInit {
   public pincodeForm!: FormGroup;
@@ -16,28 +16,28 @@ export class ReusablePincodePopupComponent implements OnInit {
   cities: any[] | any;
   pincodeExpansion: any[] = [];
   dataSource: any;
-  emptyData = new MatTableDataSource([{ empty: "empty-row" }]);
+  emptyData = new MatTableDataSource([{ empty: 'empty-row' }]);
   columns: any = [
     {
-      columnDef: "pinCode",
-      header: "Pin Code",
-      cell: (element: any) => `${element.pincode}`
+      columnDef: 'pinCode',
+      header: 'Pin Code',
+      cell: (element: any) => `${element.pincode}`,
     },
     {
-      columnDef: "countryName",
-      header: "Country",
-      cell: (element: any) => `${element.countryName}`
+      columnDef: 'countryName',
+      header: 'Country',
+      cell: (element: any) => `${element.countryName}`,
     },
     {
-      columnDef: "stateName",
-      header: "State",
-      cell: (element: any) => `${element.stateName}`
+      columnDef: 'stateName',
+      header: 'State',
+      cell: (element: any) => `${element.stateName}`,
     },
     {
-      columnDef: "cityName",
-      header: "City",
-      cell: (element: any) => `${element.cityName}`
-    }
+      columnDef: 'cityName',
+      header: 'City',
+      cell: (element: any) => `${element.cityName}`,
+    },
   ];
   displayedColumns: any;
   totalLength: any;
@@ -49,7 +49,7 @@ export class ReusablePincodePopupComponent implements OnInit {
     public dialogRef: MatDialogRef<ReusablePincodePopupComponent>,
     private fb: FormBuilder,
     private countryStateCityService: countryStateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -66,15 +66,15 @@ export class ReusablePincodePopupComponent implements OnInit {
 
   checkNumberOnly(event: any) {
     const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^0-9]/g, "");
+    input.value = input.value.replace(/[^0-9]/g, '');
   }
 
   buildForm() {
     this.pincodeForm = this.fb.group({
-      countryId: [""],
-      pincode: [""],
-      stateId: [""],
-      cityId: [""]
+      countryId: [''],
+      pincode: [''],
+      stateId: [''],
+      cityId: [''],
     });
   }
 
@@ -117,9 +117,9 @@ export class ReusablePincodePopupComponent implements OnInit {
   fetchCityByState(stateId: any) {
     this.cities = [];
     this.pincodeForm
-      .get("countryId")
+      .get('countryId')
       ?.setValue(
-        this.states.find((s: any) => s?.stateId === stateId)?.countryId
+        this.states.find((s: any) => s?.stateId === stateId)?.countryId,
       );
     this.countryStateCityService.getCityByState(stateId).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
@@ -130,8 +130,8 @@ export class ReusablePincodePopupComponent implements OnInit {
 
   populateStateCountryByCity(cityId: any) {
     const city = this.cities.find((s: any) => s?.cityId === cityId);
-    this.pincodeForm.get("countryId")?.setValue(city?.countryId);
-    this.pincodeForm.get("stateId")?.setValue(city?.stateId);
+    this.pincodeForm.get('countryId')?.setValue(city?.countryId);
+    this.pincodeForm.get('stateId')?.setValue(city?.stateId);
   }
 
   fetchResultArray() {

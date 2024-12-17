@@ -8,9 +8,8 @@ describe('PendingForApprovalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PendingForApprovalComponent ]
-    })
-    .compileComponents();
+      declarations: [PendingForApprovalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PendingForApprovalComponent);
     component = fixture.componentInstance;

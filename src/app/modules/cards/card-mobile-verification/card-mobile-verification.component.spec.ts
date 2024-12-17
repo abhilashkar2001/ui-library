@@ -8,7 +8,7 @@ describe('CardMobileVerificationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CardMobileVerificationComponent]
+      declarations: [CardMobileVerificationComponent],
     });
     fixture = TestBed.createComponent(CardMobileVerificationComponent);
     component = fixture.componentInstance;

@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-pre-generated-statement',
   templateUrl: './pre-generated-statement.component.html',
-  styleUrls: ['./pre-generated-statement.component.scss']
+  styleUrls: ['./pre-generated-statement.component.scss'],
 })
 export class PreGeneratedStatementComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

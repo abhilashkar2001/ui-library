@@ -1,15 +1,15 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NewDepositService } from "../../../new-deposit.service";
-import { OpenAccountService } from "app/shared/services/open-service/open-account.service";
-import { SuccessPopupComponent } from "../success-popup/success-popup.component";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NewDepositService } from '../../../new-deposit.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: "app-verify-number",
-  templateUrl: "./verify-number.component.html",
-  styleUrls: ["./verify-number.component.scss"]
+  selector: 'app-verify-number',
+  templateUrl: './verify-number.component.html',
+  styleUrls: ['./verify-number.component.scss'],
 })
 export class VerifyNumberComponent implements OnInit {
   @Output() customSaveVerify = new EventEmitter<{}>();
@@ -18,22 +18,22 @@ export class VerifyNumberComponent implements OnInit {
   @Output() customExistingData = new EventEmitter<{}>();
   dialogRef: MatDialogRef<SuccessPopupComponent> | any;
   verifyNumFirm!: FormGroup;
-  isShowOtp: boolean = false;
-  isResend: boolean = false;
-  otp: string = "";
+  isShowOtp = false;
+  isResend = false;
+  otp = '';
   config = {
     allowNumbersOnly: false,
     length: 6,
     isPasswordInput: true,
     disableAutoFocus: false,
-    placeholder: "",
+    placeholder: '',
     inputStyles: {
-      width: "50px",
-      height: "50px"
-    }
+      width: '50px',
+      height: '50px',
+    },
   };
-  isChecked: boolean = false;
-  yourOtp: any = "";
+  isChecked = false;
+  yourOtp: any = '';
   display: any;
   phone: any;
 
@@ -42,7 +42,7 @@ export class VerifyNumberComponent implements OnInit {
     private api: NewDepositService,
     private snack: MatSnackBar,
     private openAccountService: OpenAccountService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -58,13 +58,13 @@ export class VerifyNumberComponent implements OnInit {
   buildVerifyNumForm() {
     this.verifyNumFirm = this.fb.group({
       verifyMobile: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(10)
-        ])
-      ]
+          Validators.maxLength(10),
+        ]),
+      ],
     });
     this.customFormGroupEmit.emit(this.verifyNumFirm);
   }
@@ -72,15 +72,15 @@ export class VerifyNumberComponent implements OnInit {
   verify() {
     const payload = {
       mobile: this.verifyNumFirm.value.verifyMobile,
-      otp: this.yourOtp
+      otp: this.yourOtp,
     };
     this.api.verifyOtp(payload).subscribe((resp) => {
       if (resp?.statusCode == 200 || resp) {
-        this.snack.open(`Mobile Number verified successfully`, "OK", {
+        this.snack.open(`Mobile Number verified successfully`, 'OK', {
           duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error"
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'snackbar-error',
         });
         this.verifyCustomer();
       }
@@ -93,7 +93,7 @@ export class VerifyNumberComponent implements OnInit {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200 && resp?.data) {
           this.customExistingData.emit({
-            customerInfo: resp.data[0]
+            customerInfo: resp.data[0],
           });
           this.customSaveVerify.emit(true);
           // this.customFormGroupEmit.emit(this.verifyNumFirm);
@@ -108,11 +108,11 @@ export class VerifyNumberComponent implements OnInit {
     this.api.getOtp(this.verifyNumFirm.value.verifyMobile).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         //  need to be replace bytoast service
-        this.snack.open(`Otp sent successfully`, "OK", {
+        this.snack.open(`Otp sent successfully`, 'OK', {
           duration: 4000,
-          verticalPosition: "top",
-          horizontalPosition: "right",
-          panelClass: "snackbar-error"
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'snackbar-error',
         });
         this.timer(1);
       }
@@ -123,10 +123,10 @@ export class VerifyNumberComponent implements OnInit {
   timer(minute: any) {
     // let minute = 1;
     let seconds: number = minute * 60;
-    let textSec: any = "0";
-    let statSec: number = 60;
+    let textSec: any = '0';
+    let statSec = 60;
 
-    const prefix = minute < 10 ? "0" : "";
+    const prefix = minute < 10 ? '0' : '';
 
     const timer = setInterval(() => {
       seconds--;
@@ -134,13 +134,13 @@ export class VerifyNumberComponent implements OnInit {
       else statSec = 59;
 
       if (statSec < 10) {
-        textSec = "0" + statSec;
+        textSec = '0' + statSec;
       } else textSec = statSec;
 
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
 
       if (seconds == 0) {
-        console.log("finished");
+        console.log('finished');
         clearInterval(timer);
       }
     }, 1000);

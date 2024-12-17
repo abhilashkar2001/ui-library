@@ -8,7 +8,7 @@ describe('SavingsSubmitDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SavingsSubmitDialogComponent]
+      declarations: [SavingsSubmitDialogComponent],
     });
     fixture = TestBed.createComponent(SavingsSubmitDialogComponent);
     component = fixture.componentInstance;

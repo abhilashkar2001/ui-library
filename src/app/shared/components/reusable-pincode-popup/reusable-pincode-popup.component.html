@@ -159,14 +159,14 @@
             </mat-header-cell>
             <mat-cell
               *matCellDef="let row"
-              (click)="i == 0 && populateItem(row)"
+              (click)="i === 0 && populateItem(row)"
             >
-              <div [ngClass]="i == 0 ? 'higlightColumn' : 'tableCell'">
+              <div [ngClass]="i === 0 ? 'higlightColumn' : 'tableCell'">
                 <span>
                   {{
-                    column?.cell(row) == "null" ||
-                    column?.cell(row) == "undefined"
-                      ? ""
+                    column?.cell(row) === 'null' ||
+                    column?.cell(row) === 'undefined'
+                      ? ''
                       : column?.cell(row)
                   }}
                 </span>

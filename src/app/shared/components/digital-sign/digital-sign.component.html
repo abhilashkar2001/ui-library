@@ -19,7 +19,7 @@
           alt=""
         />
         <mat-hint *ngIf="!image" matSuffix class="signiter">{{
-          "Signature"
+          'Signature'
         }}</mat-hint>
       </div>
       <div class="w-100" fxLayout="row" fxLayoutALign="space-between center">
@@ -31,7 +31,7 @@
           fxLayoutALign="center center"
           (click)="openDigitalSignDialog('Sign Now')"
         >
-          {{ "Digital Sign" }}
+          {{ 'Digital Sign' }}
         </button>
         <button
           mat-button
@@ -39,7 +39,7 @@
           fxFlex="50"
           (click)="openDigitalSignDialog('Upload')"
         >
-          {{ "Upload" }}
+          {{ 'Upload' }}
         </button>
       </div>
     </div>

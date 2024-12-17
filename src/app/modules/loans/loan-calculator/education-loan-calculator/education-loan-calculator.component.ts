@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { EducationLoan } from "./education-calculator.constant";
+import { Component, OnInit } from '@angular/core';
+import { EducationLoan } from './education-calculator.constant';
 
 @Component({
-  selector: "app-education-loan-calculator",
-  templateUrl: "./education-loan-calculator.component.html",
-  styleUrls: ["./education-loan-calculator.component.scss"]
+  selector: 'app-education-loan-calculator',
+  templateUrl: './education-loan-calculator.component.html',
+  styleUrls: ['./education-loan-calculator.component.scss'],
 })
 export class EducationLoanCalculatorComponent implements OnInit {
   educationSteeper = EducationLoan.EDUCATION_STEEPER;

@@ -49,7 +49,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
   .header__item {
     flex: 1 1 10%;
     text-align: center;
-    font-family: "Poppins";
+    font-family: 'Poppins';
   }
   .pb-32 {
     font-size: 16px;
@@ -100,7 +100,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     border-collapse: collapse;
 
     letter-spacing: 1px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     font-size: 0.8rem;
   }
   thead {
@@ -124,7 +124,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     background-color: white;
     font-weight: 700;
     // min-width: 7.35rem;
-    font-family: "Poppins";
+    font-family: 'Poppins';
   }
   thead,
   tr,
@@ -133,7 +133,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     color: #6e7582;
     font-weight: 400 !important;
     font-size: 14px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     // width: 100%;
   }
   th,

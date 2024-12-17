@@ -4,61 +4,59 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { LoanService } from "app/shared/services/loan/loan.service";
+  SimpleChanges,
+} from '@angular/core';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
-  selector: "app-national-id-upload",
-  templateUrl: "./national-id-upload.component.html",
-  styleUrls: ["./national-id-upload.component.scss"]
+  selector: 'app-national-id-upload',
+  templateUrl: './national-id-upload.component.html',
+  styleUrls: ['./national-id-upload.component.scss'],
 })
 export class NationalIdUploadComponent implements OnInit {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel:
-    | ((value: Partial<any>) => void)
-    | any;
-  @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
-  @Input("numberOfDirectors") numberOfDirectors: number | any;
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input() updateParentModel: ((value: Partial<any>) => void) | any;
+  @Input() nationalIdDocumentList: any[] = [];
+  @Input() numberOfDirectors: number | any;
 
   custId: any;
   stepperTitle: any;
   documentTypeArray: any[] = [{}];
   staticData = {
-    DOCUMENTTYPE: []
+    DOCUMENTTYPE: [],
   };
-  screenName: string = "Loan Document";
-  verificationType: string = "Other Document";
+  screenName = 'Loan Document';
+  verificationType = 'Other Document';
   documentList: any;
   genericScreenInfo = {
-    screenName: "Loan Document",
+    screenName: 'Loan Document',
     staticData: {
-      DOCUMENTNAME: []
-    }
+      DOCUMENTNAME: [],
+    },
   };
-  ocrProcess: boolean = true;
+  ocrProcess = true;
   checkListDocList: any = {
     requiredDocument: [
       {
         id: 1,
         seq: 1,
-        document: "National Id",
-        summary: "National Id",
+        document: 'National Id',
+        summary: 'National Id',
         mandatoryForNxtStg: false,
         mandatoryForApproval: false,
         docRequired: true,
-        documentTypes: null
-      }
-    ]
+        documentTypes: null,
+      },
+    ],
   };
 
   constructor(private loanApi: LoanService) {}
 
   ngOnInit(): void {
-    var originationId = sessionStorage.getItem("originationId");
+    const originationId = sessionStorage.getItem('originationId');
     if (originationId) this.getOrigination(originationId);
-    this.custId = localStorage.getItem("customerId");
+    this.custId = localStorage.getItem('customerId');
     this.custId = JSON.parse(this.custId);
     console.log(this.numberOfDirectors);
     if (this.numberOfDirectors) {
@@ -72,14 +70,14 @@ export class NationalIdUploadComponent implements OnInit {
           mandatoryForNxtStg: false,
           mandatoryForApproval: false,
           docRequired: true,
-          documentTypes: null
+          documentTypes: null,
         });
       }
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes, "nationalIdDocumentList");
+    console.log(changes, 'nationalIdDocumentList');
   }
 
   // ngOnChanges(changes: SimpleChange): void {
@@ -101,14 +99,14 @@ export class NationalIdUploadComponent implements OnInit {
       });
   }
   onSubmit(event: any) {
-    console.log(event, "......");
-    var docIds: any = [];
-    let customerDetails: any = [];
+    console.log(event, '......');
+    const docIds: any = [];
+    const customerDetails: any = [];
     if (this.numberOfDirectors) {
       event.documentDetails.otherDocument.forEach((element: any) => {
         if (element.docIds?.length > 0) {
           const docId = {
-            docIds: element.docIds
+            docIds: element.docIds,
           };
           docIds.push(docId);
           customerDetails.push(element.fileInfo[0]);
@@ -119,15 +117,15 @@ export class NationalIdUploadComponent implements OnInit {
       event.documentDetails.otherDocument.forEach((element: any) => {
         if (element.docIds?.length > 0) {
           const docId = {
-            docIds: element.docIds
+            docIds: element.docIds,
           };
           docIds.push(docId);
           console.log(customerDetails);
           console.log(element);
           element.fileInfo.forEach((item: any) => {
-            console.log(item, ".......");
+            console.log(item, '.......');
             if (item.applicantName || item.gender || item.dateOfBirth) {
-              console.log(";;;;;;;");
+              console.log(';;;;;;;');
               customerDetails.push(item);
               return;
             }
@@ -136,16 +134,16 @@ export class NationalIdUploadComponent implements OnInit {
       });
     }
 
-    sessionStorage.setItem("loanDoc", JSON.stringify(docIds));
+    sessionStorage.setItem('loanDoc', JSON.stringify(docIds));
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: true,
-      customerDetails: customerDetails
+      customerDetails: customerDetails,
     });
-    this.onCustomSubmit.emit();
+    this.CustomSubmit.emit();
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 }

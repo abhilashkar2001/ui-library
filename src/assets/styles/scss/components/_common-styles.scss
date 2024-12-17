@@ -1,5 +1,5 @@
 .section_heading {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   text-align: center;
   font-weight: 800;
   font-size: 40px;
@@ -10,7 +10,7 @@
 .section_subHeading {
   color: #4c5371;
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   margin: 0.8rem 0 1.2rem 0;
   @media screen and (max-width: $mobile) {
@@ -25,7 +25,7 @@
   opacity: 0.5;
   margin-top: 15px;
   font-size: 14px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 code {
@@ -34,7 +34,7 @@ code {
   font-size: 14px;
 }
 .mat-form-field-appearance-outline .mat-form-field-flex {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .mat-form-field-appearance-outline .mat-form-field-label {
   top: 1.64375em;
@@ -46,7 +46,7 @@ code {
 
 //mat-tree
 .mat-tree {
-  font-family: "Poppins", sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 .egret-navy .mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: var(--current-theme-background) !important;
@@ -69,7 +69,7 @@ code {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   opacity: 1;
 }
 
@@ -82,7 +82,7 @@ code {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   opacity: 0.7;
 }
 //custom toggle button
@@ -131,7 +131,7 @@ code {
 .small-title {
   color: #606c8d;
   font-size: 12px;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-weight: 500;
   &-bold {
     font-weight: 600;
@@ -140,13 +140,13 @@ code {
 .text-bold {
   color: #060606;
   font-size: 18px;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-weight: 700;
 }
 .text-gray {
   color: #313131;
   font-size: 12px;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   font-weight: 400;
 }
 

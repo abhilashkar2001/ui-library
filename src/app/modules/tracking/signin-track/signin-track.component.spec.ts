@@ -8,9 +8,8 @@ describe('SigninTrackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SigninTrackComponent ]
-    })
-    .compileComponents();
+      declarations: [SigninTrackComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SigninTrackComponent);
     component = fixture.componentInstance;

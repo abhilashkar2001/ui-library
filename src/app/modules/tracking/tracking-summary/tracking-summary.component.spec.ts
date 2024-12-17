@@ -8,9 +8,8 @@ describe('TrackingSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrackingSummaryComponent ]
-    })
-    .compileComponents();
+      declarations: [TrackingSummaryComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TrackingSummaryComponent);
     component = fixture.componentInstance;

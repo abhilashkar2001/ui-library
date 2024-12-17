@@ -4,12 +4,12 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-} from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { of, Observable } from "rxjs";
-import { startWith, tap } from "rxjs/operators";
-import { InterceptorConstant } from "../models/maintApiInterceptor.constant";
-import { RequestCache } from "../services/request-cache.service";
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
+import { InterceptorConstant } from '../models/maintApiInterceptor.constant';
+import { RequestCache } from '../services/request-cache.service';
 
 const cacheableEndpoints = InterceptorConstant.MAINTENANCE_CONSTANT;
 
@@ -25,7 +25,7 @@ export class CachingInterceptor implements HttpInterceptor {
     const cachedResponse = this.cache.get(req);
 
     // cache-then-refresh
-    if (req.headers.get("x-refresh")) {
+    if (req.headers.get('x-refresh')) {
       const results$ = sendRequest(req, next, this.cache);
       return cachedResponse
         ? results$.pipe(startWith(cachedResponse))
@@ -42,7 +42,7 @@ export class CachingInterceptor implements HttpInterceptor {
 function isCacheable(req: HttpRequest<any>): boolean {
   // Implement your own logic to determine if the request is cacheable.
   // For example, you might check if the request method is GET.
-  return req.method === "GET";
+  return req.method === 'GET';
 }
 
 /**
@@ -52,7 +52,7 @@ function isCacheable(req: HttpRequest<any>): boolean {
 function sendRequest(
   req: HttpRequest<any>,
   next: HttpHandler,
-  cache: RequestCache
+  cache: RequestCache,
 ): Observable<HttpEvent<any>> {
   return next.handle(req).pipe(
     tap((event) => {
@@ -60,11 +60,11 @@ function sendRequest(
       if (event instanceof HttpResponse) {
         if (
           cacheableEndpoints.some((endPoint) =>
-            req.urlWithParams.includes(endPoint?.endPoint)
+            req.urlWithParams.includes(endPoint?.endPoint),
           )
         )
           cache.put(req, event); // Update the cache.
       }
-    })
+    }),
   );
 }

@@ -4,25 +4,25 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
-} from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { InfoPopupComponent } from "./info-popup/info-popup.component";
-import { Router } from "@angular/router";
-import { CreateRdService } from "../../rd-calculator/create-rd.service";
-import { Location } from "@angular/common";
-import * as moment from "moment";
-import { TokenStorageService } from "app/shared/token-storage.service";
-import { FdCalculatorServiceService } from "../../fd-calculator/fd-calculator-service.service";
-import { NewDepositService } from "app/modules/new-deposit/new-deposit.service";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatDialog } from "@angular/material/dialog";
+  SimpleChanges,
+} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { InfoPopupComponent } from './info-popup/info-popup.component';
+import { Router } from '@angular/router';
+import { CreateRdService } from '../../rd-calculator/create-rd.service';
+import { Location } from '@angular/common';
+import * as moment from 'moment';
+import { TokenStorageService } from 'app/shared/token-storage.service';
+import { FdCalculatorServiceService } from '../../fd-calculator/fd-calculator-service.service';
+import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-return-calculator",
-  templateUrl: "./return-calculator.component.html",
-  styleUrls: ["./return-calculator.component.scss"]
+  selector: 'app-return-calculator',
+  templateUrl: './return-calculator.component.html',
+  styleUrls: ['./return-calculator.component.scss'],
 })
 export class ReturnCalculatorComponent implements OnInit {
   max = 100000;
@@ -33,22 +33,22 @@ export class ReturnCalculatorComponent implements OnInit {
   @Input() fdName: any;
   @Output() customCalculatorValues = new EventEmitter<any>();
 
-  amount = new FormControl("");
-  email = new FormControl("");
+  amount = new FormControl('');
+  email = new FormControl('');
   thumbLabel: boolean | any = true;
-  name = "Angular 5";
+  name = 'Angular 5';
   calculatorValues: any;
   flexDetails = {
     maturityAmount: 10000,
     intrestRate: 1.9,
-    maturityDate: "2023-02-21",
+    maturityDate: '2023-02-21',
     autoRenew: false,
-    monthlySavings: "2023-08-21"
+    monthlySavings: '2023-08-21',
   };
-  url: string = "";
+  url = '';
   rdBasisId: any;
   fdBasisId: any;
-  isAutoRenew: boolean = false;
+  isAutoRenew = false;
   basisId: any;
   depositeType: any;
   processCycleCode: any;
@@ -58,7 +58,7 @@ export class ReturnCalculatorComponent implements OnInit {
     INTERESTPAYOUT: [],
     MONTHLYSAVINGS: [],
     OWNERSHIP: [],
-    SCHEME: []
+    SCHEME: [],
   };
   typesOfCustomer: string[] | any;
   interestPayout: string[] | any;
@@ -75,13 +75,13 @@ export class ReturnCalculatorComponent implements OnInit {
     private FdCalculatorServiceService: FdCalculatorServiceService,
     private newDepositeService: NewDepositService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
   ) {
     this.matIconRegistry.addSvgIcon(
       `info-outlined-gray`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        "assets/images/info-circle-gray.svg"
-      )
+        'assets/images/info-circle-gray.svg',
+      ),
     );
   }
 
@@ -93,24 +93,24 @@ export class ReturnCalculatorComponent implements OnInit {
   }
   getGenericDetails() {
     this.newDepositeService
-      .genericValue("website", Object.keys(this.staticData))
+      .genericValue('website', Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
-          this.typesOfCustomer = resp.data["TYPESOFCUSTOMER"];
-          this.interestPayout = resp.data["INTERESTPAYOUT"];
-          this.monthlySavings = resp.data["MONTHLYSAVINGS"];
-          this.ownership = resp.data["OWNERSHIP"];
-          this.scheme = resp.data["SCHEME"];
+          this.typesOfCustomer = resp.data['TYPESOFCUSTOMER'];
+          this.interestPayout = resp.data['INTERESTPAYOUT'];
+          this.monthlySavings = resp.data['MONTHLYSAVINGS'];
+          this.ownership = resp.data['OWNERSHIP'];
+          this.scheme = resp.data['SCHEME'];
         }
       });
   }
   ngOnChanges(changes: SimpleChanges | any) {
     if (changes.rdFdValue) {
-      localStorage.removeItem("rdBasisId");
+      localStorage.removeItem('rdBasisId');
       this.rdFdValue = changes.rdFdValue.currentValue;
       console.log(this.rdFdValue);
-      if (this.rdFdValue === "rdCalculator")
-        this.rdApi.getBusinessSuite("Deposit Service").subscribe((resp) => {
+      if (this.rdFdValue === 'rdCalculator')
+        this.rdApi.getBusinessSuite('Deposit Service').subscribe((resp) => {
           if (resp?.statusCode === 200) {
             this.getSubClass(resp.data).then((val: any) => {
               this.rdBasisId = val[0].productDetails[0].basisId;
@@ -119,7 +119,7 @@ export class ReturnCalculatorComponent implements OnInit {
             });
           }
         });
-      else if (this.rdFdValue === "fdCalculator") {
+      else if (this.rdFdValue === 'fdCalculator') {
         this.fdFlowData();
       }
       if (this.depositForm) this.depositForm.reset();
@@ -130,7 +130,7 @@ export class ReturnCalculatorComponent implements OnInit {
   getSubClass(data: any) {
     return new Promise((resolve) => {
       const rdClass = data.filter((item: any) =>
-        item.basisClass.toLowerCase().includes("rd")
+        item.basisClass.toLowerCase().includes('rd'),
       );
       let rdResp = {};
       this.rdApi.getBasisClass(rdClass[0].basisClass).subscribe((resp) => {
@@ -147,7 +147,7 @@ export class ReturnCalculatorComponent implements OnInit {
     this.FdCalculatorServiceService.getFdTypes().subscribe((resp: any) => {
       if (resp?.statusCode == 200) {
         this.FdCalculatorServiceService.fetchSubClass(
-          resp?.data[0]?.basisClass
+          resp?.data[0]?.basisClass,
         ).subscribe((resp) => {
           if (resp?.statusCode == 200) {
             this.fdBasisId = resp?.data[0]?.productDetails[0]?.basisId;
@@ -162,19 +162,19 @@ export class ReturnCalculatorComponent implements OnInit {
   onSliderChange(e: any) {
     console.log(e);
     this.ammountValue = e.srcElement.ariaValueText;
-    this.depositForm.get("amount")?.setValue(this.ammountValue);
+    this.depositForm.get('amount')?.setValue(this.ammountValue);
   }
   buildForm() {
     this.depositForm = this.fb.group({
       amount: 0,
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      scheme: "",
-      ownership: "",
-      intrestPayout: "",
-      typeOfCustomer: "",
-      monthlySavings: ""
+      tenureYear: '',
+      tenureMonth: '',
+      tenureDays: '',
+      scheme: '',
+      ownership: '',
+      intrestPayout: '',
+      typeOfCustomer: '',
+      monthlySavings: '',
     });
   }
   updateDeposit() {
@@ -187,43 +187,43 @@ export class ReturnCalculatorComponent implements OnInit {
 
   openInterestDialog(): void {
     this.dialog.open(InfoPopupComponent, {
-      width: "700px",
-      height: "400px"
+      width: '700px',
+      height: '400px',
     });
   }
 
   openLink(fdType: any) {
     let path;
     this.depositeType = fdType;
-    if (fdType == "FD") {
+    if (fdType == 'FD') {
       const payload = this.originationModel(this.fdBasisId);
       const finalPayload = {
         originationModel: payload,
-        customerInfo: []
+        customerInfo: [],
       };
       this.FdCalculatorServiceService.saveFdOriginationMaster(
-        finalPayload
+        finalPayload,
       ).subscribe((resp) => {
-        path = "/deposits/fdFlow/fdDetails";
+        path = '/deposits/fdFlow/fdDetails';
         this.url = this.location.prepareExternalUrl(
-          this.router.serializeUrl(this.router.createUrlTree([path]))
+          this.router.serializeUrl(this.router.createUrlTree([path])),
         );
         this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.processCycleCode}`;
-        window.open(`${this.url}`, "_blank");
+        window.open(`${this.url}`, '_blank');
       });
     } else {
       const payload = this.originationModel(this.rdBasisId);
       const finalPayload = {
         originationModel: payload,
-        customerInfo: []
+        customerInfo: [],
       };
       this.rdApi.saveRdOriginationMaster(finalPayload).subscribe((resp) => {
         path = `/deposits/rdDeposit`;
         this.url = this.location.prepareExternalUrl(
-          this.router.serializeUrl(this.router.createUrlTree([path]))
+          this.router.serializeUrl(this.router.createUrlTree([path])),
         );
         this.url = `${this.url}/${resp.data.fdRdMasterModel.fdRdMasterId}/${this.rdProcessCycleCode}`;
-        window.open(`${this.url}`, "_blank");
+        window.open(`${this.url}`, '_blank');
       });
     }
   }
@@ -232,18 +232,18 @@ export class ReturnCalculatorComponent implements OnInit {
     return {
       ...this.depositForm.value,
       basisDetailsId: basisId,
-      applicationDate: moment(new Date()).format("DD-MMM-YYYY"),
+      applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
       branchCode: this.tokenStore.getUser().branchCode,
       depositeType: this.depositeType,
       autoRenew: this.isAutoRenew,
       amount: parseInt(this.depositForm.value.amount),
       maturityAmount: 3778, //need to change once flexCube data avilable.
       maturityDate: moment(this.depositForm.value.maturityDate).format(
-        "DD-MMM-YYYY"
+        'DD-MMM-YYYY',
       ),
       typeOfCustomer: this.depositForm.value.typeOfCustomer,
       intrestRate: 677, //need to change once flexCube data avilable.
-      scheme: "Normal or Tax saver"
+      scheme: 'Normal or Tax saver',
     };
   }
 

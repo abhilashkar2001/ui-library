@@ -5,7 +5,7 @@
     fxLayout="row"
     fxLayoutAlign="space-between center"
   >
-    <span class="text">{{ "Add Fund" | translate }}</span>
+    <span class="text">{{ 'Add Fund' | translate }}</span>
     <span class="closediv" (click)="closeDialogref()">
       <mat-icon>close</mat-icon>
     </span>
@@ -37,7 +37,7 @@
             <mat-option
               *ngFor="let accounts of accountList"
               [value]="accounts"
-              >{{ "xxxxxxxx" + accounts.slice(-4) }}</mat-option
+              >{{ 'xxxxxxxx' + accounts.slice(-4) }}</mat-option
             >
           </mat-select>
         </mat-form-field>

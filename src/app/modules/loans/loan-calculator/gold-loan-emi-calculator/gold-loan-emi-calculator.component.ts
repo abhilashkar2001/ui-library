@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: "app-gold-loan-emi-calculator",
-  templateUrl: "./gold-loan-emi-calculator.component.html",
-  styleUrls: ["./gold-loan-emi-calculator.component.scss"]
+  selector: 'app-gold-loan-emi-calculator',
+  templateUrl: './gold-loan-emi-calculator.component.html',
+  styleUrls: ['./gold-loan-emi-calculator.component.scss'],
 })
 export class GoldLoanEmiCalculatorComponent implements OnInit {
   max = 100000;
   min = 1000;
   ammountValue = 0;
   loanForm!: FormGroup | any;
-  amount = new FormControl("");
-  email = new FormControl("");
+  amount = new FormControl('');
+  email = new FormControl('');
   thumbLabel: boolean | any = true;
-  @Input() fdName = "rdCalculator";
+  @Input() fdName = 'rdCalculator';
   @Output() customCalculatorValues = new EventEmitter<any>();
   constructor(private fb: FormBuilder) {}
   // amount: number = 5000;
@@ -34,24 +34,24 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
 
   onSliderChange(e: any) {
     this.ammountValue = e.srcElement.ariaValueText;
-    this.loanForm.get("amount").setValue(e.srcElement.ariaValueText);
+    this.loanForm.get('amount').setValue(e.srcElement.ariaValueText);
   }
   buildForm() {
     this.loanForm = this.fb.group({
       amount: 0,
-      tenureYear: "",
-      tenureMonth: "",
-      tenureDays: "",
-      ornaments: "",
-      carat: "",
-      weight: ""
+      tenureYear: '',
+      tenureMonth: '',
+      tenureDays: '',
+      ornaments: '',
+      carat: '',
+      weight: '',
     });
   }
   applyForLoan() {
     console.log(this.loanForm.value);
-    sessionStorage.setItem("tenureDays", this.loanForm.value.tenureDays);
-    sessionStorage.setItem("tenureYear", this.loanForm.value.tenureYear);
-    sessionStorage.setItem("tenureMonth", this.loanForm.value.tenureMonth);
+    sessionStorage.setItem('tenureDays', this.loanForm.value.tenureDays);
+    sessionStorage.setItem('tenureYear', this.loanForm.value.tenureYear);
+    sessionStorage.setItem('tenureMonth', this.loanForm.value.tenureMonth);
     this.customCalculatorValues.emit(this.loanForm.value);
   }
 }

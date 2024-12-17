@@ -11,7 +11,7 @@
           type="text"
           class="inputText"
           formControlName="verifyNationalID"
-          numbersOnly
+          appNumbersOnly
           maxlength="12"
         />
         <button
@@ -54,7 +54,14 @@
       </div> -->
       <div class="standard-font-black my-20" *ngIf="isShowOtp">
         <span *ngIf="resendLink"
-          ><div (click)="otpTimer()" class="resend-link">Resend</div></span
+          ><div
+            (click)="otpTimer()"
+            (keydown.enter)="otpTimer()"
+            tabindex="0"
+            class="resend-link"
+          >
+            Resend
+          </div></span
         >
         <span *ngIf="!resendLink"
           >Resend the OTP

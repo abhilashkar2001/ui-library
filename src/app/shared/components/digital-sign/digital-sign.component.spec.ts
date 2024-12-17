@@ -8,9 +8,8 @@ describe('DigitalSignComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DigitalSignComponent ]
-    })
-    .compileComponents();
+      declarations: [DigitalSignComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DigitalSignComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,5 @@
 <ng-container *ngIf="bgIssuanceForm">
-  <ng-container *ngIf="bgType == 'BG Issuance'">
+  <ng-container *ngIf="bgType === 'BG Issuance'">
     <app-bg-issuance-bg-info
       [bgIssuanceBgInfoForm]="
         bgIssuanceForm.get('bgIssuanceBgInfo') | formgroup
@@ -8,7 +8,7 @@
     </app-bg-issuance-bg-info>
   </ng-container>
 
-  <ng-container *ngIf="bgType != 'BG Issuance'">
+  <ng-container *ngIf="bgType !== 'BG Issuance'">
     <app-bg-amend-bg-info
       [bgAmendBgInfoForm]="
         bgIssuanceForm.get('bgAmendBgInfoDetails') | formgroup
@@ -25,7 +25,7 @@
     ></app-benificiary-details>
   </ng-container>
 
-  <ng-container *ngIf="bgType != 'BG Issuance'">
+  <ng-container *ngIf="bgType !== 'BG Issuance'">
     <app-transaction-info
       [transactionInfoForm]="
         bgIssuanceForm.get('transactionInfoDetails') | formgroup

@@ -72,9 +72,9 @@
             <button
               mat-flat-button
               class="openFDbtn"
-              (click)="openFD(depositName == 'fdCalculator' ? 'FD' : 'RD')"
+              (click)="openFD(depositName === 'fdCalculator' ? 'FD' : 'RD')"
             >
-              Open {{ depositName == "fdCalculator" ? "FD" : "RD" }} Now
+              Open {{ depositName === 'fdCalculator' ? 'FD' : 'RD' }} Now
             </button>
           </div>
         </div>

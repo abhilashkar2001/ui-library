@@ -1,10 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class countryStateService {
   protected basePath = environment.microServiceURL;
@@ -26,12 +26,12 @@ export class countryStateService {
   }
 
   getState(filterBy: any, page: any, size: any, sortName: any, direction: any) {
-    var filterEndpoint = "";
+    let filterEndpoint = '';
     if (filterBy) {
       const keys = Object.keys(filterBy);
       keys.forEach((key) => {
         if (filterBy[key])
-          key == "newFilter"
+          key == 'newFilter'
             ? (filterEndpoint = filterEndpoint + `branchCode=${filterBy[key]}&`)
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
@@ -41,15 +41,15 @@ export class countryStateService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}&`;
 
     return this.httpClient.get<any>(
-      `${this.basePath}/state?${filterBy ? `${filter}` : ""}${
-        page ? `${pagination}` : ""
-      }${sortName ? `${sortOperation}` : ""}`
+      `${this.basePath}/state?${filterBy ? `${filter}` : ''}${
+        page ? `${pagination}` : ''
+      }${sortName ? `${sortOperation}` : ''}`,
     );
   }
 
   getAllState() {
     return this.httpClient.get<any>(
-      `${this.basePath}/state?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.basePath}/state?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
 
@@ -58,13 +58,13 @@ export class countryStateService {
   }
   getStateById1(id: any) {
     return this.httpClient.get(
-      `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname='icState'`
+      `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname='icState'`,
     );
   }
 
   getStateByCountry(countryId: any) {
     return this.httpClient.get<any>(
-      `${this.basePath}/state?countryId=${countryId}&authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.basePath}/state?countryId=${countryId}&authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
 
@@ -87,7 +87,7 @@ export class countryStateService {
     size: any,
     countryId: any,
     sortName: any,
-    direction: any
+    direction: any,
   ) {
     const filter = `${filterBy}=${filterValue}`;
     const pagination = `page=${page}&size=${size}`;
@@ -97,14 +97,14 @@ export class countryStateService {
       sortName && filterBy
         ? `&${filter}&${sortOperation}&${pagination}`
         : sortName
-        ? `&${sortOperation}&${pagination}`
-        : page && size
-        ? filterBy
-          ? `&${filter}&${pagination}`
-          : `&${pagination}`
-        : "";
+          ? `&${sortOperation}&${pagination}`
+          : page && size
+            ? filterBy
+              ? `&${filter}&${pagination}`
+              : `&${pagination}`
+            : '';
     return this.httpClient.get<any>(
-      `${this.basePath}/state?countryId=${countryId}${payload}`
+      `${this.basePath}/state?countryId=${countryId}${payload}`,
     );
   }
 
@@ -115,7 +115,7 @@ export class countryStateService {
 
   deleteState(stateId: any, countryId?: string) {
     return this.httpClient.delete<any>(
-      `${this.basePath}/state?countryId=${countryId}&id=${stateId}`
+      `${this.basePath}/state?countryId=${countryId}&id=${stateId}`,
     );
   }
 
@@ -133,7 +133,7 @@ export class countryStateService {
 
   getRevisons(id: any, className: any) {
     return this.httpClient.get<any>(
-      `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname=${className}`
+      `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname=${className}`,
     );
   }
 
@@ -142,14 +142,14 @@ export class countryStateService {
     page: any,
     size: any,
     sortName: any,
-    direction: any
+    direction: any,
   ) {
-    var filterEndpoint = "";
+    let filterEndpoint = '';
     if (filterBy) {
       const keys = Object.keys(filterBy);
       keys.forEach((key) => {
         if (filterBy[key])
-          key == "newFilter"
+          key == 'newFilter'
             ? (filterEndpoint = filterEndpoint + `branchCode=${filterBy[key]}&`)
             : (filterEndpoint = filterEndpoint + `${key}=${filterBy[key]}&`);
       });
@@ -159,15 +159,15 @@ export class countryStateService {
     const sortOperation = `sort=${sortName}&sortOrder=${direction}&`;
 
     return this.httpClient.get<any>(
-      `${this.basePath}/city?${filterBy ? `${filter}` : ""}${
-        page ? `${pagination}` : ""
-      }${sortName ? `${sortOperation}` : ""}`
+      `${this.basePath}/city?${filterBy ? `${filter}` : ''}${
+        page ? `${pagination}` : ''
+      }${sortName ? `${sortOperation}` : ''}`,
     );
   }
 
   getAllCity() {
     return this.httpClient.get<any>(
-      `${this.basePath}/city?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.basePath}/city?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
 
@@ -180,54 +180,54 @@ export class countryStateService {
 
   checkduplicate(code: any) {
     return this.httpClient.get(
-      `${this.basePath}/country/dupCountry?countryCode=${code}`
+      `${this.basePath}/country/dupCountry?countryCode=${code}`,
     );
   }
 
   checkduplicateCountryCode(code: any) {
     return this.httpClient.get(
-      `${this.basePath}/country/dupCountryCode?countryCode2=${code}`
+      `${this.basePath}/country/dupCountryCode?countryCode2=${code}`,
     );
   }
 
   checkduplicateState(code: any) {
     return this.httpClient.get(
-      `${this.basePath}/state/checkStateCode?stateCode=${code}`
+      `${this.basePath}/state/checkStateCode?stateCode=${code}`,
     );
   }
 
   checkDuplicateCountryName(countryName: any) {
     return this.httpClient.get(
-      `${this.basePath}/country/name-exist?countryName=${countryName}`
+      `${this.basePath}/country/name-exist?countryName=${countryName}`,
     );
   }
 
   checkDuplicateStateName(stateName: any) {
     return this.httpClient.get(
-      `${this.basePath}/state/isname-exist?stateName=${stateName}`
+      `${this.basePath}/state/isname-exist?stateName=${stateName}`,
     );
   }
 
   checkDuplicatePincode(pincode: any) {
     return this.httpClient.get(
-      `${this.basePath}/city/pincode-exist?pincode=${pincode}`
+      `${this.basePath}/city/pincode-exist?pincode=${pincode}`,
     );
   }
 
   checkDuplicateCity(city: any) {
     return this.httpClient.get(
-      `${this.basePath}/city/checkCityName?cityName=${city}`
+      `${this.basePath}/city/checkCityName?cityName=${city}`,
     );
   }
 
   fetchAuthCountry() {
     return this.httpClient.get<any>(
-      `${this.basePath}/country?authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.basePath}/country?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
   getCityByState(stateId: any) {
     return this.httpClient.get<any>(
-      `${this.basePath}/city?stateId=${stateId}&authStatus=AUTHORIZED&recordStatus=OPEN`
+      `${this.basePath}/city?stateId=${stateId}&authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
 
@@ -235,10 +235,10 @@ export class countryStateService {
     const pagination = `page=${page ?? 1}&size=${size ?? 5}`;
     return this.httpClient.get(
       `${this.basePath}/city/fetch-PinCodeDetail?${pagination}${
-        payload?.countryId ? "&countryId=" + payload.countryId : ""
-      }${payload?.stateId ? "&stateId=" + payload.stateId : ""}${
-        payload?.cityId ? "&cityId=" + payload.cityId : ""
-      }${payload?.pincode ? "&searchValue=" + payload.pincode : ""}`
+        payload?.countryId ? '&countryId=' + payload.countryId : ''
+      }${payload?.stateId ? '&stateId=' + payload.stateId : ''}${
+        payload?.cityId ? '&cityId=' + payload.cityId : ''
+      }${payload?.pincode ? '&searchValue=' + payload.pincode : ''}`,
     );
   }
 }

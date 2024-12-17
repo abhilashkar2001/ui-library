@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Params } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Params } from '@angular/router';
 
 interface IRoutePart {
   title: string;
@@ -11,25 +11,23 @@ interface IRoutePart {
 
 @Injectable()
 export class RoutePartsService {
-  public routeParts: IRoutePart[] | any;
-  constructor() {}
+  public routeParts!: IRoutePart[];
 
-  ngOnInit() {}
-  generateRouteParts(snapshot: ActivatedRouteSnapshot | any): IRoutePart[] {
-    var routeParts = <IRoutePart[]>[];
+  generateRouteParts(snapshot: ActivatedRouteSnapshot): IRoutePart[] {
+    let routeParts = <IRoutePart[]>[];
     if (snapshot) {
       if (snapshot.firstChild) {
         routeParts = routeParts.concat(
-          this.generateRouteParts(snapshot.firstChild)
+          this.generateRouteParts(snapshot.firstChild),
         );
       }
-      if (snapshot.data["title"] && snapshot.url.length) {
+      if (snapshot.data['title'] && snapshot.url.length) {
         routeParts.push({
-          title: snapshot.data["title"],
-          breadcrumb: snapshot.data["breadcrumb"],
-          url: snapshot.url[0].path,
+          title: snapshot.data['title'],
+          breadcrumb: snapshot.data['breadcrumb'],
+          url: snapshot.url[0]?.path || '',
           urlSegments: snapshot.url,
-          params: snapshot.params
+          params: snapshot.params,
         });
       }
     }

@@ -1,19 +1,19 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { CreditCardStore } from "../../../credit-card/credit-card.store";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CreditCardStore } from '../../../credit-card/credit-card.store';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-select-new-card-popup",
-  templateUrl: "./select-new-card-popup.component.html",
-  styleUrls: ["./select-new-card-popup.component.scss"]
+  selector: 'app-select-new-card-popup',
+  templateUrl: './select-new-card-popup.component.html',
+  styleUrls: ['./select-new-card-popup.component.scss'],
 })
 export class SelectNewCardPopupComponent implements OnInit {
-  @ViewChild("widgetsContent", { static: true }) widgetsContent:
+  @ViewChild('widgetsContent', { static: true }) widgetsContent:
     | ElementRef
     | any;
   cardList = CreditCardStore.cardList;
-  currentIndex: number = 0;
-  direction: string = ""; // To handle the transition direction
+  currentIndex = 0;
+  direction = ''; // To handle the transition direction
   selectedCard = this.cardList[this.currentIndex];
 
   constructor(private dialogRef: MatDialogRef<SelectNewCardPopupComponent>) {}
@@ -30,7 +30,7 @@ export class SelectNewCardPopupComponent implements OnInit {
   }
 
   prev() {
-    this.direction = "down";
+    this.direction = 'down';
     if (this.currentIndex > 0) {
       this.currentIndex--;
     } else {
@@ -41,7 +41,7 @@ export class SelectNewCardPopupComponent implements OnInit {
   }
 
   next() {
-    this.direction = "up";
+    this.direction = 'up';
     if (this.currentIndex < this.cardList.length - 1) {
       this.currentIndex++;
     } else {

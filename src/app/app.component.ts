@@ -1,23 +1,23 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { RoutePartsService } from "./shared/services/route-parts.service";
-import { filter } from "rxjs/operators";
-import { UILibIconService } from "./shared/services/ui-lib-icon.service";
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { RoutePartsService } from './shared/services/route-parts.service';
+import { filter } from 'rxjs/operators';
+import { UILibIconService } from './shared/services/ui-lib-icon.service';
 import {
   ThemeChangeService,
-  ThemeOption
-} from "./shared/services/theme-change.service";
+  ThemeOption,
+} from './shared/services/theme-change.service';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  appTitle = "iCust";
-  pageTitle = "";
-  listOfThemeColors: ThemeOption[] = [];
+export class AppComponent implements OnInit {
+  appTitle = 'iCust';
+  pageTitle = '';
+  listOfThemeColors: Partial<ThemeOption>[];
 
   constructor(
     public title: Title,
@@ -25,11 +25,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     private activeRoute: ActivatedRoute,
     private routePartsService: RoutePartsService,
     private iconService: UILibIconService,
-    private themeChangeService: ThemeChangeService
+    private themeChangeService: ThemeChangeService,
   ) {
     this.listOfThemeColors = this.themeChangeService.themeColors;
 
-    this.themeChangeService.setCurrentTheme(this.listOfThemeColors[0]);
+    this.themeChangeService.setCurrentTheme(
+      this.listOfThemeColors[0] as ThemeOption,
+    );
 
     this.iconService.init();
   }
@@ -38,14 +40,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.changePageTitle();
   }
 
-  ngAfterViewInit() {}
-
   changePageTitle() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const routeParts = this.routePartsService.generateRouteParts(
-          this.activeRoute.snapshot
+          this.activeRoute.snapshot,
         );
         if (!routeParts.length) {
           return this.title.setTitle(this.appTitle);

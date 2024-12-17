@@ -11,6 +11,9 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "prettier" // Add Prettier to disable conflicting ESLint rules
       ],
+      "plugins": [
+        "prettier" // Add prettier plugin
+      ],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",

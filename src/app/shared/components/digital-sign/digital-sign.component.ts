@@ -1,47 +1,45 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { SignNowPopupComponent } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component";
-import { environment } from "environments/environment";
-import { BranchService } from "app/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service";
-import { SessionStorageService } from "app/shared/services/session-storage.service";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SignNowPopupComponent } from 'app/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component';
+import { environment } from 'environments/environment';
+import { BranchService } from 'app/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-digital-sign",
-  templateUrl: "./digital-sign.component.html",
-  styleUrls: ["./digital-sign.component.scss"]
+  selector: 'app-digital-sign',
+  templateUrl: './digital-sign.component.html',
+  styleUrls: ['./digital-sign.component.scss'],
 })
 export class DigitalSignComponent implements OnInit {
-  @Output() onBackEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onCustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Input("updateParentModel") updateParentModel:
-    | ((value: Partial<any>) => void)
-    | any;
-  @Input("nationalIdDocumentList") nationalIdDocumentList: any[] = [];
-  @Input("numberOfDirectors") numberOfDirectors: number | any;
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
+  @Input() updateParentModel: ((value: Partial<any>) => void) | any;
+  @Input() nationalIdDocumentList: any[] = [];
+  @Input() numberOfDirectors: number | any;
 
-  image: string = "";
+  image = '';
   MICROSERVICE_URL = environment.microServiceURL;
-  isLoading: boolean = false;
-  loadingBtnText: string = "Saving...";
+  isLoading = false;
+  loadingBtnText = 'Saving...';
   signatureId: any;
   customerId: number | any;
 
   constructor(
     private dialog: MatDialog,
     private branchService: BranchService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.customerId = this.sessionStorageService.getItem("customerStagingId");
+    this.customerId = this.sessionStorageService.getItem('customerStagingId');
     if (this.customerId) this.fetchSign();
   }
 
   openDigitalSignDialog(check: string) {
     const dialogRef = this.dialog.open(SignNowPopupComponent, {
       disableClose: false,
-      width: "60%",
-      data: { title: "Sign Now", check: check }
+      width: '60%',
+      data: { title: 'Sign Now', check: check },
     });
     dialogRef.afterClosed().subscribe((res) => {
       console.log(res);
@@ -51,11 +49,11 @@ export class DigitalSignComponent implements OnInit {
   }
 
   deleteImage() {
-    this.image = "";
+    this.image = '';
   }
 
   onBack() {
-    this.onBackEvent.emit();
+    this.backEvent.emit();
   }
 
   fetchSign() {
@@ -73,11 +71,11 @@ export class DigitalSignComponent implements OnInit {
   onSubmit() {
     const signPayload = {
       customerId: this.customerId,
-      signatureIds: [this.signatureId]
+      signatureIds: [this.signatureId],
     };
     this.branchService.saveCustomerSign(signPayload).subscribe((res) => {
       if ((res?.statusCode == 200 || res?.statusCode == 201) && res?.data)
-        this.onCustomSubmit.emit();
+        this.CustomSubmit.emit();
     });
   }
 }

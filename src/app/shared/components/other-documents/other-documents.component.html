@@ -3,7 +3,7 @@
     <button
       fxFlex="50"
       class="col-md-6"
-      [ngClass]="kycToggle == 'kyc' ? 'toggled' : ''"
+      [ngClass]="kycToggle === 'kyc' ? 'toggled' : ''"
       (click)="onDocumentToggle('kyc')"
       mat-raised-button
     >
@@ -12,7 +12,7 @@
     <button
       fxFlex="50"
       class="col-md-6"
-      [ngClass]="kycToggle == 'addDoocuent' ? 'toggled' : ''"
+      [ngClass]="kycToggle === 'addDoocuent' ? 'toggled' : ''"
       (click)="onDocumentToggle('addDoocuent')"
       mat-raised-button
     >
@@ -20,21 +20,21 @@
     </button>
   </div>
   <!--select start here -->
-  <div *ngIf="kycToggle == 'kyc'">
+  <div *ngIf="kycToggle === 'kyc'">
     <app-select-kyc (customgoBack)="goBack()"> </app-select-kyc>
   </div>
   <!-- select kyc  ends here -->
 
   <!-- other documents start here -->
-  <ng-container *ngIf="kycToggle == 'addDoocuent'">
+  <ng-container *ngIf="kycToggle === 'addDoocuent'">
     <app-web-doc-upload
       [ocrProcess]="ocrProcess"
       [documentTypeArray]="documentTypeArray"
       [verificationType]="verificationType"
-      (onCustomSubmit)="onConfirmEvent($event)"
+      (CustomSubmit)="onConfirmEvent($event)"
       [documentList]="documentList"
       [genericScreenInfo]="genericScreenInfo"
-      (onBackEvent)="goBack()"
+      (backEvent)="goBack()"
     ></app-web-doc-upload>
   </ng-container>
   <!-- other documents ends here -->

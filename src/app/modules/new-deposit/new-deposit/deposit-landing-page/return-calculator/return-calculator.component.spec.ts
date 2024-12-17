@@ -8,9 +8,8 @@ describe('ReturnCalculatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReturnCalculatorComponent ]
-    })
-    .compileComponents();
+      declarations: [ReturnCalculatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReturnCalculatorComponent);
     component = fixture.componentInstance;

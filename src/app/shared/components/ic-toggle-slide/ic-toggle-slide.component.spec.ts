@@ -8,9 +8,8 @@ describe('IcToggleSlideComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IcToggleSlideComponent ]
-    })
-    .compileComponents();
+      declarations: [IcToggleSlideComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IcToggleSlideComponent);
     component = fixture.componentInstance;

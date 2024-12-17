@@ -1,6 +1,8 @@
 import { InjectionToken } from '@angular/core';
 
-export const PERFECT_SCROLLBAR_CONFIG = new InjectionToken('PERFECT_SCROLLBAR_CONFIG');
+export const PERFECT_SCROLLBAR_CONFIG = new InjectionToken(
+  'PERFECT_SCROLLBAR_CONFIG',
+);
 
 export class Geometry {
   public x: number;
@@ -27,8 +29,17 @@ export class Position {
   }
 }
 
-export type PerfectScrollbarEvent = 'psScrollY' | 'psScrollX' | 'psScrollUp'| 'psScrollDown' |
-  'psScrollLeft' | 'psScrollRight' | 'psYReachEnd' | 'psYReachStart' | 'psXReachEnd' | 'psXReachStart';
+export type PerfectScrollbarEvent =
+  | 'psScrollY'
+  | 'psScrollX'
+  | 'psScrollUp'
+  | 'psScrollDown'
+  | 'psScrollLeft'
+  | 'psScrollRight'
+  | 'psYReachEnd'
+  | 'psYReachStart'
+  | 'psXReachEnd'
+  | 'psXReachStart';
 
 export const PerfectScrollbarEvents: PerfectScrollbarEvent[] = [
   'psScrollY',
@@ -42,7 +53,7 @@ export const PerfectScrollbarEvents: PerfectScrollbarEvent[] = [
   'psYReachEnd',
   'psYReachStart',
   'psXReachEnd',
-  'psXReachStart'
+  'psXReachStart',
 ];
 
 export interface PerfectScrollbarConfigInterface {
@@ -92,7 +103,9 @@ export class PerfectScrollbarConfig implements PerfectScrollbarConfigInterface {
 
   public assign(config: PerfectScrollbarConfigInterface = {}) {
     for (const key in config) {
-      this[key as keyof PerfectScrollbarConfig] = config[key as keyof PerfectScrollbarConfigInterface] as never;
+      this[key as keyof PerfectScrollbarConfig] = config[
+        key as keyof PerfectScrollbarConfigInterface
+      ] as never;
     }
   }
 }

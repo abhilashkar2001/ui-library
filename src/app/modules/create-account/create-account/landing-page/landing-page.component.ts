@@ -1,26 +1,27 @@
-import { Component, ElementRef, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { HomeService } from "app/shared/services/home-service/home.service";
-import { TokenStorageService } from "app/shared/token-storage.service";
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { COUNTRYCURRENCY } from 'app/shared/models/country-currency.mode';
+import { HomeService } from 'app/shared/services/home-service/home.service';
+import { TokenStorageService } from 'app/shared/token-storage.service';
 @Component({
-  selector: "app-landing-page",
-  templateUrl: "./landing-page.component.html",
-  styleUrls: ["./landing-page.component.scss"]
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent implements OnInit {
   data: [] = [];
-  imageUrl = "assets/images/account-landing-image.svg";
-  profileHeader = "Savings Made Simple: Open Your Account in 3 Easy Steps.";
+  imageUrl = 'assets/images/account-landing-image.svg';
+  profileHeader = 'Savings Made Simple: Open Your Account in 3 Easy Steps.';
   profileHint =
-    "Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.";
-  routeUrl = "/account/open";
-  businessSuiteName: string = "ACCOUNTOPENINGSERVICES";
-  category: string = "Accounts";
+    'Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.';
+  routeUrl = '/account/open';
+  businessSuiteName = 'ACCOUNTOPENINGSERVICES';
+  category = 'Accounts';
   constructor(
     private homeService: HomeService,
     private router: Router,
     private el: ElementRef,
-    private tokenStore: TokenStorageService
+    private tokenStore: TokenStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class LandingPageComponent implements OnInit {
     const userBranchCode = this.tokenStore.getUser()?.branchCode;
     this.homeService
       .getCountryCurrency(userBranchCode)
-      .subscribe((resp: any) => {
+      .subscribe((resp: COUNTRYCURRENCY) => {
         if (resp?.statusCode) this.tokenStore.saveUserOtherInfo(resp.data);
       });
   }
@@ -45,20 +46,15 @@ export class LandingPageComponent implements OnInit {
         if (response) this.data = response.data;
       });
   }
-  customApplyLoan(event: any) {
-    this.router.navigate(["account/applyAccount", event]);
+  customApplyLoan(event: Event) {
+    this.router.navigate(['account/applyAccount', event]);
   }
   customApply() {
     const targetElement =
-      this.el.nativeElement.querySelector("#custom-carousel");
+      this.el.nativeElement.querySelector('#custom-carousel');
     const targetPosition = targetElement.getBoundingClientRect().top;
     if (targetElement) {
-      // targetElement.scrollIntoView({
-      //   top: scrollPosition,
-      //   behavior: "smooth",
-      //   block: "start",
-      // });
-      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     }
   }
 }

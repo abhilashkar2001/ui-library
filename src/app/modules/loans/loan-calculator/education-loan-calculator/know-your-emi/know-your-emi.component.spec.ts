@@ -8,9 +8,8 @@ describe('KnowYourEmiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KnowYourEmiComponent ]
-    })
-    .compileComponents();
+      declarations: [KnowYourEmiComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(KnowYourEmiComponent);
     component = fixture.componentInstance;

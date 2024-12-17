@@ -4,15 +4,12 @@ import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawe
 @Component({
   selector: 'app-manage-debit-card',
   templateUrl: './manage-debit-card.component.html',
-  styleUrls: ['./manage-debit-card.component.scss']
+  styleUrls: ['./manage-debit-card.component.scss'],
 })
 export class ManageDebitCardComponent implements OnInit {
   tabs = DrawerConstant.cardMenuTabs;
 
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

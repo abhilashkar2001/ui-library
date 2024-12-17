@@ -8,9 +8,8 @@ describe('SingleFundTransferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SingleFundTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [SingleFundTransferComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SingleFundTransferComponent);
     component = fixture.componentInstance;

@@ -8,9 +8,8 @@ describe('UserLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [UserLayoutComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserLayoutComponent);
     component = fixture.componentInstance;

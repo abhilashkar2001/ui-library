@@ -5,12 +5,12 @@
   width: 1540px;
   justify-content: center;
   align-items: center;
-  background: url("/assets/images/backGround_logPage.png") no-repeat;
+  background: url('/assets/images/backGround_logPage.png') no-repeat;
   background-size: 132%;
   background-attachment: fixed;
   background-position: center;
   @media screen and (max-width: 576px) {
-    background: url("/assets/images/backGround_logPage.png") no-repeat;
+    background: url('/assets/images/backGround_logPage.png') no-repeat;
     background-position: center;
   }
 
@@ -42,17 +42,17 @@
       margin-top: 50px;
       margin-bottom: 28px;
       padding-left: 16px;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     .forgot-password-title {
       // margin-top: 50px;
       margin-bottom: 28px;
       // padding-left: 16px;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
     .forgot-password-subtitle {
       font-size: 13px;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       color: #b1b1b1;
     }
     .login_form,
@@ -155,14 +155,14 @@
 
     .auth_subtitle {
       // font-weight: bold;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 12px !important;
       color: #b1b1b1 !important;
     }
     .forget {
       color: $primaryTextColor;
       font-size: 13px;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-weight: 600;
       background: none;
       border: none;

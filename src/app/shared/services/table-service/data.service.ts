@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface ErrorPayload {
   code: number;
@@ -8,15 +8,12 @@ export interface ErrorPayload {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class DataService {
   private refresh = new BehaviorSubject(false);
   isRefresh = this.refresh.asObservable();
 
-  doRefresh(data: any) {
-    this.refresh.next(data);
-  }
   private subject = new Subject<any>();
 
   sendClickEvent() {
@@ -28,10 +25,6 @@ export class DataService {
   }
 
   private auditLogData: any = {};
-
-  setAuditLogData(data: any) {
-    this.auditLogData = data;
-  }
 
   getAuditLogData() {
     return this.auditLogData;

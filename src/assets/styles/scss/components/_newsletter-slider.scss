@@ -28,7 +28,7 @@
         z-index: -1;
       }
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         bottom: 30px;
         left: 0;
@@ -55,7 +55,7 @@
       .client_description {
         font-size: 14px;
         line-height: 25px;
-        font-family: "Poppins", sans-serif;
+        font-family: 'Poppins', sans-serif;
       }
     }
   }
