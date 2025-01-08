@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LayoutService } from './layout.service';
+import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -69,7 +70,10 @@ export class CustomizerService {
   sidebarColors: any[];
   footerColors: any[];
 
-  constructor(private layout: LayoutService) {
+  constructor(
+    private layout: LayoutService,
+    private sessionStorageService: SessionStorageService,
+  ) {
     this.topbarColors = this.getTopbarColors();
     this.sidebarColors = this.getSidebarColors();
     this.footerColors = this.getFooterColors();
@@ -207,7 +211,7 @@ export class CustomizerService {
     }
   }
   getLogedCountry() {
-    const userInfo = sessionStorage.getItem('userInfo');
+    const userInfo = this.sessionStorageService.getUserInfo();
     if (userInfo) {
       return JSON.parse(userInfo);
     } else {

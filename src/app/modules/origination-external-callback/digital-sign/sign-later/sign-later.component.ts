@@ -27,9 +27,7 @@ export class SignLaterComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {
       if (res?.result?.signatureId) {
         const signPayload = {
-          originationId: JSON.parse(
-            <string>sessionStorage.getItem('originationId'),
-          ),
+          originationId: this.sessionStorageService.getOriginationId(),
           signatureId: res?.result?.signatureId,
           screenCode: this.sessionStorageService.getScreenId(),
         };

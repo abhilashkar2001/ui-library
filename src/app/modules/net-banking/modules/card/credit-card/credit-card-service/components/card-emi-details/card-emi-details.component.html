@@ -3,20 +3,23 @@
   <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between center">
     <div class="w-100" fxLayoutAlign="space-between center">
       <div fxFlex="33">
-        <app-searchable-select
-          [inputLabel]="'Credit Card Number' | translate"
-          [items]="listOfAccounts"
-          bindValueKey="cardNumber"
-          bindLabelKey="cardNumber"
+        <ic-select
+          [label]="'Credit Card Number' | translate"
+          placeholder="Credit Card Number"
+          [options]="listOfAccounts"
+          [bindValueKey]="'cardNumber'"
+          [bindLabelKey]="'cardNumber'"
           [control]="cardEmiDetailsForm.get('creditNumber') | formcontrol"
           (selectionChange)="handleTransactionDetails($event)"
-        ></app-searchable-select>
+        ></ic-select>
       </div>
       <div fxFlex="18">
-        <app-ic-action-button
-          buttonName="Download"
-          buttonType="filled"
-        ></app-ic-action-button>
+        <ic-button
+          label="Download"
+          icButtonType="filled"
+          type="submit"
+          size="large"
+        ></ic-button>
       </div>
     </div>
 
@@ -28,14 +31,3 @@
     </div>
   </div>
 </mat-card>
-<!-- [paginationRequired]="true" -->
-
-<!-- <div fxLayoutGap="20" fxLayoutAlign="end center">
-  <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-  </app-ic-action-button>
-  <app-ic-action-button
-    buttonName="Proceed"
-    buttonType="filled"
-    (onClick)="proceed()"
-  ></app-ic-action-button>
-</div> -->

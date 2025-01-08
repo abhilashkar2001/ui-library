@@ -4,15 +4,13 @@
       <h1 class="hero_title">{{ profileHeader }}</h1>
       <p class="hero_subtitle">{{ profileHint }}</p>
       <div class="apply_div">
-        <button type="button" class="apply_btn" (click)="onApply($event)">
-          Apply
-        </button>
-        <!-- <ic-button
-          [label]="'Submit'"
-          [icButtonType]="'ic-raised-button'"
+        <ic-button
+          [label]="'Apply'"
+          [icButtonType]="'filled-rounded'"
           [type]="'submit'"
-          [isSkeleton]="false"
-        ></ic-button> -->
+          [size]="'large'"
+          (click)="onApply($event)"
+        ></ic-button>
       </div>
       <div class="stacked_imgs_div">
         <div class="img_wrapper">

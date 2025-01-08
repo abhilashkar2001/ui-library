@@ -2,7 +2,7 @@
   <div fxLayout="row" fxLayoutAlign="space-between center" class="searchDiv">
     <div class="overView mb-8">{{ 'Account Overview' | translate }}</div>
     <div>
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label class="custom-mat-label">{{
           'Search' | translate
         }}</mat-label>
@@ -16,7 +16,15 @@
         <mat-icon matSuffix class="searchIcon" style="color: #004c97">
           search
         </mat-icon>
-      </mat-form-field>
+      </mat-form-field> -->
+      <ic-form-field
+        label="Search"
+        notAllowFirstSpace
+        placeholder="Search"
+        type="text"
+        suffixIcon="search_icon"
+      >
+      </ic-form-field>
     </div>
   </div>
   <div
@@ -105,10 +113,14 @@
           <a
             mat-tab-link
             *ngFor="let transfer of transferType; let i = index"
-            [active]="i + 1 == currentIndex"
+            [active]="i + 1 === currentIndex"
             (click)="getActiveTransferType(transfer)"
-            >{{ transfer.label | translate }}</a
+            (keydown.enter)="getActiveTransferType(transfer)"
+            tabIndex="0"
+            href="javascript:void(0)"
           >
+            {{ transfer.label | translate }}
+          </a>
         </nav>
         <div class="transfer" #targetElContainer>
           <div
@@ -128,7 +140,7 @@
                 fxLayoutALign="center center"
                 (click)="openTransfer(transfer)"
               >
-                <img [src]="transfer.image" />
+                <img [src]="transfer.image" alt="transfer.image" />
                 <div class="text-label">{{ transfer.label | translate }}</div>
               </mat-card>
             </div>
@@ -226,24 +238,12 @@
             </div>
           </div>
           <div fxLayout="column" fxLayoutGap="5px">
-            <mat-form-field
-              appearance="outline"
-              class="financial_outline_field"
+            <ic-select
+              (selectionChange)="onDropdownChange($event.value)"
+              [options]="selectedActivityLog"
+              selectionType="single"
             >
-              <mat-select
-                [(ngModel)]="selectedActivityLog"
-                (selectionChange)="onDropdownChange($event.value)"
-                panelClass="sticky_panel"
-              >
-                <mat-option [value]="">Select</mat-option>
-                <mat-option value="financial">{{
-                  'Financial' | translate
-                }}</mat-option>
-                <mat-option value="nonfinancial">{{
-                  'Non-Financial' | translate
-                }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+            </ic-select>
             <div fxLayout="column" fxLayoutGap="12px">
               <ng-container *ngFor="let key of colorCode">
                 <mat-accordion>
@@ -269,7 +269,7 @@
                                   class="totalVal"
                                   [style.color]="key.valColor"
                                   [style.background-color]="key.bgColor"
-                                  *ngIf="obj.label == key.label"
+                                  *ngIf="obj.label === key.label"
                                 >
                                   {{ obj.total }}
                                 </div>
@@ -284,7 +284,7 @@
                         <div
                           class="contentBg"
                           [style.background-color]="key.bgColor"
-                          *ngIf="obj.label == key.label"
+                          *ngIf="obj.label === key.label"
                         >
                           <div fxLayout="column" fxLayoutGap="10">
                             <div

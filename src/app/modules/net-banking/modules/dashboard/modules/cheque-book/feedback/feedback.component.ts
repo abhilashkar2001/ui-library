@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChequeService } from '../cheque-service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss'],
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent {
   value = '';
   showKeyboard = true;
   feedbackRating: FormControl = new FormControl();
@@ -21,9 +22,8 @@ export class FeedbackComponent implements OnInit {
   constructor(
     private router: Router,
     private feedbackService: ChequeService,
+    private sessionStorageService: SessionStorageService,
   ) {}
-
-  ngOnInit(): void {}
 
   handleEmojiClick(selectedIndex: number) {
     this.feedbackRating.setValue(selectedIndex + 1);
@@ -62,8 +62,7 @@ export class FeedbackComponent implements OnInit {
 
   complete() {
     const payload = {
-      customerId: JSON.parse(<string>sessionStorage.getItem('customer-Info'))
-        ?.customerId,
+      customerId: this.sessionStorageService.getCustomerInfo()?.customerId,
       feedbackRating: this.feedbackRating.value,
       suggestions: this.suggestions.value,
     };

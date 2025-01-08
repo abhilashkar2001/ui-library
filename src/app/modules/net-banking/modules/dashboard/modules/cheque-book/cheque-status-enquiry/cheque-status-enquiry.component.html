@@ -2,14 +2,17 @@
   <form [formGroup]="chqueInquiryForm" fxFlex="100" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
       <mat-label class="ml-20 custom-label">Account No</mat-label>
-      <app-searchable-select
-        [items]="accountNumberList"
-        bindValueKey="accountNo"
-        bindLabelKey="accountNo"
+      <ic-select
+        fxFlex="30"
+        label="No of Leaves Per Book*"
         [control]="chqueInquiryForm.get('accountNo') | formcontrol"
-        [skipLabel]="false"
+        [options]="accountNumberList"
+        [bindValueKey]="'accountNo'"
         (selectionChange)="handleAccountNumberChange()"
-      ></app-searchable-select>
+        [bindLabelKey]="'accountNo'"
+        selectionType="single"
+      >
+      </ic-select>
       <span class="message" *ngIf="chequeNumber"
         >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
         {{ customerInfo?.customerName }}</span
@@ -41,39 +44,56 @@
         fxFlex="30"
         *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Number'"
       >
-        <app-ic-custom-input
+        <!-- <app-ic-custom-input
           [control]="chqueInquiryForm.get('chequeNumber') | formcontrol"
           inputLabel="Cheque Number"
-        ></app-ic-custom-input>
+        ></app-ic-custom-input> -->
+        <ic-form-field
+          placeholder="Cheque Number"
+          [control]="chqueInquiryForm.get('chequeNumber') | formcontrol"
+          [label]="'Cheque Number'"
+        ></ic-form-field>
       </div>
 
       <div
         fxFlex="30"
         *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Status'"
       >
-        <app-searchable-select
-          [items]="selectList"
-          bindLabelKey="label"
-          bindValueKey="value"
+        <ic-select
+          label="No of Leaves Per Book*"
           [control]="chqueInquiryForm.get('select') | formcontrol"
-          inputLabel="select"
-        ></app-searchable-select>
+          [options]="selectList"
+          [bindValueKey]="'value'"
+          [bindLabelKey]="'label'"
+          selectionType="single"
+        >
+        </ic-select>
       </div>
 
       <ng-container
         *ngIf="chqueInquiryForm.get('inquiryChequeBy')?.value === 'Range'"
       >
         <div fxFlex="25">
-          <app-ic-custom-input
+          <!-- <app-ic-custom-input
             [control]="chqueInquiryForm.get('fromChequeBookNo') | formcontrol"
             inputLabel="From Cheque Book No"
-          ></app-ic-custom-input>
+          ></app-ic-custom-input> -->
+          <ic-form-field
+            placeholder="From Cheque Book No"
+            [control]="chqueInquiryForm.get('fromChequeBookNo') | formcontrol"
+            [label]="'From Cheque Book No'"
+          ></ic-form-field>
         </div>
         <div fxFlex="25">
-          <app-ic-custom-input
+          <!-- <app-ic-custom-input
             [control]="chqueInquiryForm.get('toChequeBookNo') | formcontrol"
             inputLabel="To Cheque Book No"
-          ></app-ic-custom-input>
+          ></app-ic-custom-input> -->
+          <ic-form-field
+            placeholder="To Cheque Book No"
+            [control]="chqueInquiryForm.get('toChequeBookNo') | formcontrol"
+            [label]="'To Cheque Book No'"
+          ></ic-form-field>
         </div>
       </ng-container>
 
@@ -81,13 +101,13 @@
         <button mat-raised-button class="exit-button" (click)="goBack()">
           {{ 'Cancel' }}
         </button>
-        <button
-          mat-raised-button
+        <ic-button
           (click)="fetchChequeDetails()"
-          class="submit-button"
-        >
-          {{ 'Proceed' }}
-        </button>
+          label="Proceed"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
+        ></ic-button>
       </div>
     </div>
   </form>

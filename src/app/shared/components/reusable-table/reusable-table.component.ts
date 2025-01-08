@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
@@ -17,7 +18,7 @@ import { ServiceCallHandler } from 'app/shared/service-call.handler';
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.scss'],
 })
-export class ReusableTableComponent implements OnInit {
+export class ReusableTableComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [];
   @Input() customerInfo: any;
   @Input() selectedAcc: any;

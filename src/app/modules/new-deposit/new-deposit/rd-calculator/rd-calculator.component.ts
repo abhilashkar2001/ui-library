@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CreateRdService } from './create-rd.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-rd-calculator',
@@ -44,18 +45,17 @@ export class RdCalculatorComponent implements OnInit {
     private rdApi: CreateRdService,
     private snack: MatSnackBar,
     private openAccountService: OpenAccountService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.showSideBar.setToken(true);
-    const sessionStep = sessionStorage.getItem('rdStep');
+    const sessionStep = this.sessionStorageService.getRdStep();
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     console.log(this.route.snapshot.params);
     const id = this.route.snapshot.params['id'];
     this.processCycleCode = this.route.snapshot.params['processCode'];
     if (id) this.getRdById(parseInt(id));
-    // var sessionStep = parseInt(sessionStorage.getItem("selectedStep"));
-    //if (sessionStep) this.selectedStep = sessionStep;
     this.getAllRdStep();
   }
   getAllRdStep() {
@@ -99,7 +99,7 @@ export class RdCalculatorComponent implements OnInit {
 
   stepperSelectionChange(event: any) {
     this.cuurrentStep = this.screenList[event.selectedIndex].screenName;
-    sessionStorage.setItem('loanstep', event.selectedIndex);
+    this.sessionStorageService.setLoanStep(event.selectedIndex);
     this.selectedStep = event.selectedIndex;
   }
 
@@ -152,8 +152,7 @@ export class RdCalculatorComponent implements OnInit {
     };
     this.openAccountService.setData(payload.customerInfo[0]);
     this.rdApi.saveRdOriginationMaster(payload).subscribe((resp) => {
-      sessionStorage.setItem(
-        'depositOriginationId',
+      this.sessionStorageService.setDepositOriginationId(
         resp.data.originationModel.originationId,
       );
       this.next();
@@ -179,7 +178,7 @@ export class RdCalculatorComponent implements OnInit {
   next() {
     const num = this.selectedStep + 1;
     this.selectedStep = num;
-    sessionStorage.setItem('rdStep', String(this.selectedStep));
+    this.sessionStorageService.setRdStep(String(this.selectedStep));
     this.factory();
     // for scrolling ssequenceebar and get current state.
     // const el = document.querySelector(".mat-step-label-selected");
@@ -187,13 +186,15 @@ export class RdCalculatorComponent implements OnInit {
   }
 
   customSaveCreate(event: any) {
-    sessionStorage.setItem('holderType', event.rdData.ownership);
+    this.sessionStorageService.setHolderType(event.rdData.ownership);
     const jk = {
       ...this.rdDetails[0],
       ...event.rdData,
       maturityDate: moment(event.rdData.maturityDate).format('YYYY-MMM-DD'),
     };
-    sessionStorage.setItem('originationId', this.rdDetails[0].originationId);
+    this.sessionStorageService.setOriginationId(
+      this.rdDetails[0].originationId,
+    );
     this.rdApi
       .getOriginationMaster(this.rdDetails[0].originationId)
       .subscribe((data) => {
@@ -266,7 +267,7 @@ export class RdCalculatorComponent implements OnInit {
       if (resp?.statusCode === 200) {
         resp.data?.customerInfo?.forEach((item: any) => {
           if (item.primaryCustomer)
-            sessionStorage.setItem('customerId', item.customerId);
+            this.sessionStorageService.setCustomerId(item.customerId);
         });
         this.snack.open(`Personal Details Saved` + ' !', 'OK', {
           duration: 4000,

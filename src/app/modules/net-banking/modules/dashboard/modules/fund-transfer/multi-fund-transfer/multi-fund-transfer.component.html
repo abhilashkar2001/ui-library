@@ -11,47 +11,55 @@
           <span fxFlex="30" class="text_label"
             >Purpose of payment<span class="text-red">*</span></span
           >
-          <mat-form-field fxFlex="60" class="form-field">
-            <mat-select formControlName="purposeOfPayment">
-              <mat-option [value]="">Select</mat-option>
-              <mat-option *ngFor="let item of purpose" [value]="item">{{
-                item
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <ic-select
+            fxFlex="60"
+            [label]="'Purpose of payment' | translate"
+            placeholder="Purpose of payment"
+            [skipLabel]="true"
+            [options]="purpose"
+            [bindValueKey]="'value'"
+            [bindLabelKey]="'label'"
+            [control]="multiTransferForm.get('purposeOfPayment') | formcontrol"
+          ></ic-select>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
           <span fxFlex="30" class="text_label"
             >Transfer From<span class="text-red">*</span></span
           >
-          <mat-form-field fxFlex="60" class="form-field">
-            <mat-select formControlName="debitAccount">
-              <mat-option [value]="">Select</mat-option>
-              <mat-option *ngFor="let item of fromAccount" [value]="item">{{
-                item
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <ic-select
+            fxFlex="60"
+            [label]="'Transfer From' | translate"
+            placeholder="Transfer From"
+            [skipLabel]="true"
+            [options]="fromAccount"
+            [control]="multiTransferForm.get('debitAccount') | formcontrol"
+          ></ic-select>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
           <span fxFlex="30" class="text_label"
             >Amount<span class="text-red">*</span></span
           >
-          <mat-form-field fxFlex="60" class="form-field">
-            <input matInput formControlName="debitAmount" />
-          </mat-form-field>
+          <ic-form-field
+            fxFlex="60"
+            placeholder="Amount"
+            [control]="multiTransferForm.get('debitAmount') | formcontrol"
+            [label]="'Amount' | translate"
+          ></ic-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
           <span fxFlex="30" class="text_label"
             >Transfer Mode<span class="text-red">*</span></span
           >
           <div fxFlex="60">
-            <app-searchable-select
-              [items]="transferMode"
-              bindLabelKey="values"
-              bindValueKey="values"
+            <ic-select
+              [label]="'Transfer Mode' | translate"
+              placeholder="Transfer Mode"
+              [skipLabel]="true"
+              [bindLabelKey]="'values'"
+              [bindValueKey]="'values'"
+              [options]="transferMode"
               [control]="multiTransferForm.get('transferMode') | formcontrol"
-            ></app-searchable-select>
+            ></ic-select>
           </div>
         </div>
         <div
@@ -68,7 +76,7 @@
             >Transfer To<span class="text-red">*</span></span
           >
           <div fxFlex="60" class="serchable-drop">
-            <app-searchable-select
+            <!-- <app-searchable-select
               [multiple]="true"
               [items]="transferTo"
               bindValueKey="accountNo"
@@ -77,7 +85,18 @@
               [skipLabel]="false"
               displayLabel="accountNo"
               (selectionChange)="selectMultiAcc($event)"
-            ></app-searchable-select>
+            ></app-searchable-select> -->
+            <ic-select
+              [label]="'accountNo' | translate"
+              placeholder="accountNo"
+              [skipLabel]="true"
+              (selectionChange)="selectMultiAcc($event)"
+              [options]="transferTo"
+              [bindValueKey]="'accountNo'"
+              [bindLabelKey]="'name'"
+              [control]="multiTransferForm.get('transferTo') | formcontrol"
+              [selectionType]="'multi'"
+            ></ic-select>
           </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
@@ -92,7 +111,11 @@
             />
             <mat-datepicker-toggle matSuffix [for]="picker">
               <mat-icon matDatepickerToggleIcon>
-                <img class="calender" src="/assets/images/calendar.svg" />
+                <img
+                  class="calender"
+                  src="/assets/images/calendar.svg"
+                  alt="calender"
+                />
               </mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -116,29 +139,57 @@
         <ng-container *ngIf="remitter">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Remitter email id</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterEmail" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Remitter email id"
+              [control]="multiTransferForm.get('remmitterEmail') | formcontrol"
+              [label]="'Remitter email id' | translate"
+            ></ic-form-field>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Remitter Mobile</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterMobile" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Remitter Mobile"
+              [control]="multiTransferForm.get('remmitterMobile') | formcontrol"
+              [label]="'Remitter Mobile' | translate"
+            ></ic-form-field>
           </div>
         </ng-container>
         <ng-container *ngIf="beneficiary">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Beneficiary Email</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryEmail" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Beneficiary Email"
+              [control]="
+                multiTransferForm.get('benificiaryEmail') | formcontrol
+              "
+              [label]="'Beneficiary Email' | translate"
+            ></ic-form-field>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Beneficiary Mobile</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryMobile" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Beneficiary Mobile"
+              [control]="
+                multiTransferForm.get('benificiaryMobile') | formcontrol
+              "
+              [label]="'Beneficiary Mobile' | translate"
+            ></ic-form-field>
           </div>
         </ng-container>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
@@ -159,17 +210,33 @@
         <ng-container *ngIf="remitterNarration">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Remitter Narration</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="remmitterNarration" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Remitter Narration"
+              [control]="
+                multiTransferForm.get('remmitterNarration') | formcontrol
+              "
+              [label]="'Remitter Narration' | translate"
+            ></ic-form-field>
           </div>
         </ng-container>
         <ng-container *ngIf="beneficiaryNarration">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Beneficiary Narration</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="benificiaryNarration" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Beneficiary Narration"
+              [control]="
+                multiTransferForm.get('benificiaryNarration') | formcontrol
+              "
+              [label]="'Beneficiary Narration' | translate"
+            ></ic-form-field>
           </div>
         </ng-container>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
@@ -184,28 +251,52 @@
         <ng-container *ngIf="paymentDetail">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Detail 1</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail1" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Detail 1"
+              [control]="multiTransferForm.get('detail1') | formcontrol"
+              [label]="'Detail 1' | translate"
+            ></ic-form-field>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Detail 2</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail2" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Detail 2"
+              [control]="multiTransferForm.get('detail2') | formcontrol"
+              [label]="'Detail 2' | translate"
+            ></ic-form-field>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <span fxFlex="30" class="text_label">Detail 3</span>
-            <mat-form-field fxFlex="60" class="form-field">
+            <!-- <mat-form-field fxFlex="60" class="form-field">
               <input matInput formControlName="detail3" />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              fxFlex="60"
+              placeholder="Detail 3"
+              [control]="multiTransferForm.get('detail3') | formcontrol"
+              [label]="'Detail 3' | translate"
+            ></ic-form-field>
           </div>
         </ng-container>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
           <span fxFlex="30" class="text_label">Remark(For Reviewer)</span>
-          <mat-form-field fxFlex="60" class="form-field">
+          <!-- <mat-form-field fxFlex="60" class="form-field">
             <input matInput formControlName="remarks" />
-          </mat-form-field>
+          </mat-form-field> -->
+          <ic-form-field
+            fxFlex="60"
+            placeholder="Remark(For Reviewer)"
+            [control]="multiTransferForm.get('remarks') | formcontrol"
+            [label]="'Remark(For Reviewer)' | translate"
+          ></ic-form-field>
         </div>
       </div>
     </ng-container>
@@ -239,7 +330,7 @@
                 <span
                   fxFlex="20"
                   class="text-normal"
-                  *ngIf="editedAmountIndex != i; else showInput"
+                  *ngIf="editedAmountIndex !== i; else showInput"
                   >{{ item?.amount | currency }}</span
                 >
                 <ng-template #showInput>
@@ -255,7 +346,7 @@
                 }}</span>
                 <span
                   fxFlex="20"
-                  *ngIf="editedAmountIndex != i; else showEditButton"
+                  *ngIf="editedAmountIndex !== i; else showEditButton"
                 >
                   <mat-icon
                     style="color: #004a9a"
@@ -288,12 +379,19 @@
     <button class="back-button" mat-raised-button (click)="clear()">
       Clear
     </button>
-    <button-loading
+    <app-button-loading
       [type]="'button'"
       [btnClass]="'submit-button'"
       (click)="submit()"
     >
       Submit
-    </button-loading>
+    </app-button-loading>
+    <ic-button
+      (click)="submit()"
+      label=" Submit"
+      icButtonType="filled-rounded"
+      type="submit"
+      size="large"
+    ></ic-button>
   </div>
 </mat-card>

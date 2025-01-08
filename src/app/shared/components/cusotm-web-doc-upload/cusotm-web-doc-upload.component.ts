@@ -125,7 +125,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private dataService: DataService,
-    private sessionService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     // this.buildDocumentForm();
@@ -139,7 +139,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.isShowDisbursement) this.buildLoanDisbursementForm();
-    this.loanCustomerId = sessionStorage.getItem('customerId');
+    this.sessionStorageService.getCustomerId();
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     console.log(this.ocrProcess);
     this.addNewUploadField();
@@ -185,7 +185,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.loanDisbursementForm
       .get('accountNumber')
       ?.valueChanges.pipe(debounceTime(500))
-      .subscribe(() => {});
+      .subscribe();
   }
 
   /**
@@ -468,7 +468,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       const res: any = await service.toPromise();
       if (res?.statusCode == 200) {
         const convertedResp: any = {};
-        for (const item of res?.data?.data) {
+        for (const item of res.data.data) {
           convertedResp[item?.label === 'dob' ? 'dateOfBirth' : item?.label] =
             item.value;
           if (item?.label === 'gender') {
@@ -483,7 +483,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             address1: this.documentInfo?.address,
             pincode: this.documentInfo?.pincode,
           });
-          sessionStorage.setItem('backData', JSON.stringify(this.backData));
+          this.sessionStorageService.setBackData(JSON.stringify(this.backData));
         }
 
         if (res?.data?.aadhaarNumber != 'Details not found') {
@@ -688,10 +688,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                 if (this.isOtherDocVisible)
                   this.extractDoc(
                     this.createDocumentForm.value.otherDocument[i].documentType,
-                    parseInt(<string>sessionStorage.getItem('originationId')),
+                    parseInt(this.sessionStorageService.getOriginationId()),
                     file,
                     resp.data.documentId,
-                    sessionStorage.getItem('customerStagingId'),
+                    this.sessionStorageService.getCustomerStagingId(),
                   );
                 // else this.loder.close();
               }
@@ -710,10 +710,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
           if (this.isOtherDocVisible)
             this.extractDoc(
               this.createDocumentForm.value.otherDocument[i].documentType,
-              parseInt(<string>sessionStorage.getItem('originationId')),
+              parseInt(this.sessionStorageService.getOriginationId()),
               file,
               resp.data.documentId,
-              sessionStorage.getItem('customerStagingId'),
+              this.sessionStorageService.getCustomerStagingId(),
             );
         }
       });
@@ -725,17 +725,15 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             {
               docName:
                 this.createDocumentForm.value.otherDocument[i].documentType,
-              originationId: parseInt(
-                <string>sessionStorage.getItem('originationId'),
-              ),
+              originationId: this.sessionStorageService.getOriginationId(),
               file: file,
               documentId: resp.data.documentId,
-              customerStagingId: sessionStorage.getItem('customerStagingId'),
+              customerStagingId:
+                this.sessionStorageService.getCustomerStagingId(),
             },
           );
-          sessionStorage.setItem(
-            'otherDocScreenCode',
-            <string>sessionStorage.getItem('currentScreenCode'),
+          this.sessionStorageService.setOtherDocScreenCode(
+            this.sessionStorageService.getCurrentScreenCode(),
           );
         }
       });
@@ -878,7 +876,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   onDocumentSelection(event: any, index: any) {
-    if (!this.hideSelect.hasOwnProperty(index)) {
+    if (!Object.prototype.hasOwnProperty.call(this.hideSelect, index)) {
       if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
     } else this.hideSelect[index] = event;
 
@@ -926,7 +924,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     this.openApi.faceRegister(form).subscribe((res) => {
       this.faceId = res?.data?.data?.biometricId;
       this.image = res?.data?.data?.fileUrl;
-      this.sessionService.setItem('biometricId', this.faceId);
+      this.sessionStorageService.setBiometricId(this.faceId);
     });
   }
 

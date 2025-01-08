@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { DataService } from 'app/shared/services/table-service/data.service';
 
 @Component({
@@ -26,30 +27,30 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   constructor(
     private loanApi: LoanService,
     private dataService: DataService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     if (this.accountType === 'loan') this.isDisbursement = true;
     if (this.docCustomerDetails) {
       this.docAppliName = this.docCustomerDetails?.applicantName;
-      sessionStorage.setItem(
-        'docAppliName',
+      this.sessionStorageService.setDocAppliName(
         this.docCustomerDetails?.applicantName,
       );
     } else {
-      this.docAppliName = sessionStorage.getItem('docAppliName');
+      this.docAppliName = this.sessionStorageService.getDocAppliName();
     }
-    const originationId = sessionStorage.getItem('originationId');
+    const originationId = this.sessionStorageService.getOriginationId();
     this.loanApi
       .getCheckListDoc(
-        parseInt(<string>sessionStorage.getItem('currentStage')),
-        parseInt(<string>sessionStorage.getItem('currentScreenCode')),
+        this.sessionStorageService.getCurrentStage(),
+        parseInt(this.sessionStorageService.getCurrentScreenCode()),
       )
       .subscribe((resp) => {
         if (resp?.statusCode == 200) {
           this.checkListDocList = this.groupBy(resp.data);
           const screenCode = parseInt(
-            <string>sessionStorage.getItem('otherDocScreenCode'),
+            this.sessionStorageService.getOtherDocScreenCode(),
           );
           if (screenCode) this.getCheckListDoc(originationId, screenCode);
         } else {
@@ -63,14 +64,14 @@ export class OtherChecklistDocUploadComponent implements OnInit {
       .getSavedChecklist(
         originationId,
         screenCode,
-        parseInt(<string>sessionStorage.getItem('currentStage')),
+        this.sessionStorageService.getCurrentStage(),
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
           this.documentList = resp.data
             .filter((item: any) => item.docInfoModel)
             .map((item: any) => {
-              if (item.hasOwnProperty('docInfoModel')) {
+              if (Object.prototype.hasOwnProperty.call(item, 'docInfoModel')) {
                 item.docs = item.docInfoModel;
                 delete item.docInfoModel;
               }
@@ -92,35 +93,20 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   }
 
   getOrigination(originationId: any) {
-    this.loanApi
-      .getOriginationMaster(parseInt(originationId))
-      .subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          if (
-            resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel?.length > 0
-          ) {
-            // this.documentList =
-            //   resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
-          }
-        }
-      });
+    this.loanApi.getOriginationMaster(parseInt(originationId)).subscribe();
   }
 
   onSubmit(event: any) {
     let docIds: any = [];
     event.documentDetails.otherDocument.forEach((element: any) => {
       if (element.docIds?.length > 0) {
-        // const docId = {
-        //   docIds: element.docIds,
-        // };
-        // docIds.push(docId);
         docIds = [...docIds, ...element.docIds];
       }
     });
     console.log(event.loanDisbursement);
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
-    sessionStorage.setItem('loanDoc', JSON.stringify(docIds));
+    this.sessionStorageService.setLoanDoc(JSON.stringify(docIds));
     this.updateParentModel({
       otherLoanDoc: docIds,
       updateMasterSave: true,
@@ -128,7 +114,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
       loanDisbursement: event.loanDisbursement,
     });
     this.CustomSubmit.emit();
-    sessionStorage.removeItem('docAppliName');
+    this.sessionStorageService.removeDocAppliName();
   }
 
   onBack() {

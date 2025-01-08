@@ -19,6 +19,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { CardLandingComponent } from './card-landing/card-landing.component';
 import { RouterModule } from '@angular/router';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     SharedModule,
     SharedMaterialModule,
+    IcustLibraryModule,
     RouterModule.forChild(cardsRoutes),
   ],
 })

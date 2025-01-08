@@ -16,6 +16,7 @@ import { AddBulkUploadComponent } from './add-bulk-upload/add-bulk-upload.compon
 import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
 import { PendingForApprovalComponent } from './pending-for-approval/pending-for-approval.component';
 import { SharedTradeModule } from '../../../trade/modules/shared-trade/shared-trade.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SharedTradeModule } from '../../../trade/modules/shared-trade/shared-tr
     FormsModule,
     TranslateModule,
     SharedTradeModule,
+    IcustLibraryModule,
   ],
 })
 export class FundTransferModule {}

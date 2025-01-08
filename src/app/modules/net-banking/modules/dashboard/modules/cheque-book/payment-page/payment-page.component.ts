@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       'download-icon',
@@ -40,9 +42,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.profileInfo = this.tokenStorageService.getUser();
     this.paymentDetails = this.serviceCallHandler.get('serviceHandler', true);
     if (this.paymentDetails[0]?.eventType == 'schedule-payment')

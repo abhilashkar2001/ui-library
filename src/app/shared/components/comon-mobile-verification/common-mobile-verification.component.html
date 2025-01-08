@@ -6,7 +6,7 @@
     Enter Mobile Number for Instant Login
   </div>
   <div class="mobile-verify">
-    <fieldset class="yeardrop fieldset">
+    <!-- <fieldset class="yeardrop fieldset">
       <div fxLayout="row" class="parentYearDiv" fxFlex="100">
         <mat-form-field
           appearance="outline"
@@ -19,8 +19,8 @@
             [value]="defaultIsdCodeValue"
             (selectionChange)="setMobileLength()"
           >
+            <mat-option [value]="">Select</mat-option>
             <ng-container *ngFor="let isdCode of countriesIsdCodes">
-              <mat-option [value]="">Select</mat-option>
               <mat-option
                 *ngIf="isdCode"
                 [value]="isdCode?.countryTelIsdCode"
@@ -55,22 +55,44 @@
           </button>
         </mat-form-field>
       </div>
-    </fieldset>
-    <mat-error
+    </fieldset> -->
+    <!-- <ic-mobile-field
+      [label]="'' | translate"
+      type="text"
+      placeholder="OTP"
+      [control]="this.otpForm.get('phone')?.value"
+      [disabled]="(validNumber && getOtpBtn) || isValidMobile"
+      [isdCode]="countriesIsdCodes?.countryTelIsdCode"
+      [isdControl]="this.otpForm.get('isdCode')?.value"
+      [maxLength]="defaultIsdCodeValue"
+      (selectionChange)="setMobileLength()"
+    ></ic-mobile-field> -->
+    <ic-mobile-field
+      label="Mobile number"
+      placeholder="Enter Mobile Number"
+      [control]="otpForm.get('phone')?.value"
+      [isdCode]="countriesIsdCodes"
+      [isdControl]="otpForm.get('isdCode')?.value"
+      [maxLength]="maxMobileLength"
+      (selectionChange)="setMobileLength()"
+      [suffixButton]="'Get OTP'"
+    >
+    </ic-mobile-field>
+    <!-- <mat-error
       *ngIf="
         otpForm.get('phone')?.touched &&
         otpForm.get('phone')?.hasError('invalidLength')
       "
       class="mobileLength-error"
       >Mobile length should be {{ maxMobileLength }}</mat-error
-    >
-    <mat-error class="custom-mat-error" *ngIf="isValidMobile"
+    > -->
+    <!-- <mat-error class="custom-mat-error" *ngIf="isValidMobile"
       >Mobile Number is Invalid.
     </mat-error>
     <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>
-      OTP <span *ngIf="resendOtp == 1">Sent</span>
+      OTP <span *ngIf="resendOtp === 1">Sent</span>
       <span *ngIf="resendOtp > 1">Resent</span> successfully!
-    </div>
+    </div> -->
   </div>
 
   <div
@@ -93,6 +115,8 @@
             (click)="onGetOTP()"
             class="standard-font-blue"
             [ngClass]="[!resendLink ? 'disableResend' : '']"
+            (keydown.enter)="onGetOTP()"
+            tabindex="3"
           >
             Resend OTP</u
           ></a

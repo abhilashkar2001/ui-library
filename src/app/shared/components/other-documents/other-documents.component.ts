@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
@@ -21,13 +22,14 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-other-documents',
   templateUrl: './other-documents.component.html',
   styleUrls: ['./other-documents.component.scss'],
 })
-export class OtherDocumentsComponent implements OnInit {
+export class OtherDocumentsComponent implements OnInit, OnChanges {
   @Input() updateParentModel: ((value: Partial<any> | any) => void | any) | any;
   denominationArray: any[] | any = [];
   createDocumentForm!: FormGroup;
@@ -78,9 +80,8 @@ export class OtherDocumentsComponent implements OnInit {
     private CommonService: CommonService,
     private loanService: LoanService,
     private cdr: ChangeDetectorRef,
+    private sessionStorageService: SessionStorageService,
   ) {}
-
-  ngAfterViewInit() {}
 
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.personalDoc?.currentValue) {
@@ -90,9 +91,7 @@ export class OtherDocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.documentList = this.personalDoc;
-    const originationId = parseInt(
-      <string>sessionStorage.getItem('originationId'),
-    );
+    const originationId = this.sessionStorageService.getOriginationId();
     if (originationId) this.getDataFromOriginationMaster(originationId);
     // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
@@ -353,7 +352,7 @@ export class OtherDocumentsComponent implements OnInit {
   }
 
   onDocumentSelection(event: any, index: any) {
-    if (!this.hideSelect.hasOwnProperty(index)) {
+    if (!Object.prototype.hasOwnProperty.call(this.hideSelect, index)) {
       if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
     } else this.hideSelect[index] = event;
   }

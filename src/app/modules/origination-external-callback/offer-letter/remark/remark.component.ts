@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as moment from 'moment';
 
@@ -20,12 +21,11 @@ export class RemarkComponent implements OnInit {
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
     private route: Router,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.originationId = JSON.parse(
-      <string>sessionStorage.getItem('originationId'),
-    );
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.currentuser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
     this.fetchOfferDetails();

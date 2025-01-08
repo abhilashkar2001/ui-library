@@ -35,6 +35,7 @@ import { NewDepositComponent } from './new-deposit/new-deposit.component';
 import { CreateCdComponent } from './new-deposit/rd-calculator/create-cd/create-cd.component';
 import { RdCalculatorComponent } from './new-deposit/rd-calculator/rd-calculator.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { MatSliderModule } from '@angular/material/slider';
     SharedDirectivesModule,
     SharedModule,
     SharedComponentsModule,
+    IcustLibraryModule,
     RouterModule.forChild(NewDepositRoutes),
   ],
 })

@@ -5,7 +5,7 @@
       <div class="reward-div">
       <div fxLayout="row" fxLayoutGap="10px">
         <h3 class="sub-heading p-0">{{cardInfo?.cardName??'Master Card' | translate}}</h3>
-        <span class="action-text" (click)="goToUpgradePage()">{{'Upgrade' | translate}}</span>
+        <span class="action-text" (click)="goToUpgradePage()" (keydown.down)="goToUpgradePage()" tabindex="0">{{'Upgrade' | translate}}</span>
       </div>
        <span class="text-gray">{{cardInfo?.cardNumber}} | {{cardInfo?.status}}</span>
       </div>
@@ -71,11 +71,14 @@
           <span>{{"Due on 6 June 2024" | translate}}</span></span
         >
         <div >           
-          <app-ic-action-button
-            [buttonName]="'Pay Now' | translate"
-            buttonType="filled"
-            (onClick)="payNow()"
-          ></app-ic-action-button>
+          
+          <ic-button
+       (onClick)="payNow()"
+        label="Pay Now"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
         </div>
       </div>
     </div>
@@ -106,6 +109,7 @@
             'text-gray': item?.actionKey
           }"
           (click)="gotoActionPage(item.actionItem(cardInfo?.[item?.actionKey]))"
+          (keydown.down)="gotoActionPage(item.actionItem(cardInfo?.[item?.actionKey]))" tabindex="0"
         >
           {{ item.actionItem(cardInfo?.[item?.actionKey]) }}
         </span>

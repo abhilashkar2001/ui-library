@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewDepositService } from '../../../new-deposit.service';
 import { ActivatedRoute } from '@angular/router';
 import { CreateRdService } from '../create-rd.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-create-cd',
@@ -34,6 +35,7 @@ export class CreateCdComponent implements OnInit {
     private route: ActivatedRoute,
     private rdApi: CreateRdService,
     private newDepositeService: NewDepositService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -122,6 +124,6 @@ export class CreateCdComponent implements OnInit {
     window.close();
   }
   onPaymentTypeChange(e: any) {
-    sessionStorage.setItem('paymentType', e);
+    this.sessionStorageService.setPaymentType(e);
   }
 }

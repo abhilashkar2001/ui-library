@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 @Component({
   selector: 'app-success-popup',
@@ -34,6 +35,7 @@ export class SuccessPopupComponent implements OnInit {
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService,
     private router: Router,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
@@ -49,7 +51,7 @@ export class SuccessPopupComponent implements OnInit {
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
     if (this.data?.type) this.typeOfPopup = this.data.type ?? '';
     this.email = this.data?.email;
-    if (sessionStorage.getItem('loanBasisDetails')) {
+    if (this.sessionStorageService.getLoanBasisDetails()) {
       this.openAccountService.getData().subscribe((resp: any) => {
         if (resp) {
           this.loanSummaryDetails = resp;
@@ -125,7 +127,7 @@ export class SuccessPopupComponent implements OnInit {
     } else {
       localStorage.removeItem('basisDetails');
       localStorage.removeItem('customerData');
-      sessionStorage.removeItem('loanBasisDetails');
+      this.sessionStorageService.removeLoanBasisDetails();
       this.dialogRef.close(true);
       window.close();
     }

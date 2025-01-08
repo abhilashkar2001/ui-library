@@ -16,7 +16,7 @@
       <div class="calculator_subTItle">Loan Amount</div>
       <div>
         <div fxFlex="100">
-          <mat-form-field
+          <!-- <mat-form-field
             appearance="outline"
             class="full-width background-white"
           >
@@ -30,7 +30,16 @@
                 maxlength="18"
               />
             </div>
-          </mat-form-field>
+          </mat-form-field> -->
+          <ic-form-field
+            label="Amount"
+            [control]="loanForm.get('amount') | formcontrol"
+            [appNoInitialSpecialCharacters]="true"
+            type="text"
+            maxlength="18"
+            [prefixIcon]="otherUserInfo?.currencySymbol"
+          >
+          </ic-form-field>
         </div>
       </div>
     </div>
@@ -38,6 +47,7 @@
       <mat-slider
         class="custom-slider"
         [(ngModel)]="loanForm.value.amount"
+        [ngModelOptions]="{ standalone: true }"
         [max]="max"
         [min]="min"
         fxFlex="100"
@@ -55,7 +65,7 @@
 
     <div class="my-16" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10">
       <div fxFlex="48.5" fxFlex.lt-md="100">
-        <label class="calculator_subTItle">Tenure</label>
+        <label class="calculator_subTItle" for="label">Tenure</label>
         <fieldset class="field-set">
           <legend visible="true" class="fieldset-title">Loan Period</legend>
           <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
@@ -152,10 +162,13 @@
         </mat-error>
       </div>
       <div fxFlex="48.5" fxFlex.lt-md="100">
-        <label class="calculator_subTItle" fxLayoutAlign="space-between center"
+        <label
+          class="calculator_subTItle"
+          fxLayoutAlign="space-between center"
+          for="interestRate"
           >Interest Rate <span>{{ interestRate }}%</span></label
         >
-        <mat-form-field
+        <!-- <mat-form-field
           appearance="outline"
           class="full-width field-changedInput background-white"
         >
@@ -175,11 +188,23 @@
           >
             Interest Rate is required
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
+        <ic-form-field
+          label="Percentage"
+          [control]="loanForm.get('interestRate') | formcontrol"
+          [appNoInitialSpecialCharacters]="true"
+          type="text"
+        >
+        </ic-form-field>
       </div>
     </div>
     <div class="downImage">
-      <img src="assets/images/Group 13767.svg" height="161px" width="100%" />
+      <img
+        src="assets/images/Group 13767.svg"
+        height="161px"
+        width="100%"
+        alt="Group 13767.svg"
+      />
     </div>
   </div>
 

@@ -3,10 +3,12 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -14,14 +16,17 @@ import { environment } from 'environments/environment';
   templateUrl: './loan-products.component.html',
   styleUrls: ['./loan-products.component.scss'],
 })
-export class LoanProductsComponent implements OnInit {
+export class LoanProductsComponent implements OnInit, OnChanges {
   @Input() subLoanList: any;
   @Output() customApply = new EventEmitter<any>();
   @Output() isShowCalculator = new EventEmitter<any>();
   selectedLoan: any;
   endPoints = environment.microServiceURL;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private sessionStorageService: SessionStorageService,
+  ) {}
 
   ngOnInit(): void {
     this.scrollToTop();
@@ -55,7 +60,7 @@ export class LoanProductsComponent implements OnInit {
         basisName: this.selectedLoan?.productDetails[0].basisName,
         basisId: this.selectedLoan?.productDetails[0].basisId,
       });
-      sessionStorage.setItem('loanBasisDetails', payload);
+      this.sessionStorageService.setLoanBasisDetails(payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: true,
@@ -66,7 +71,7 @@ export class LoanProductsComponent implements OnInit {
         basisName: this.selectedLoan?.basisName,
         basisId: this.selectedLoan?.basisId,
       });
-      sessionStorage.setItem('loanBasisDetails', payload);
+      this.sessionStorageService.setLoanBasisDetails(payload);
       this.customApply.emit({
         selectedLoan: this.selectedLoan,
         isShowCalculator: true,

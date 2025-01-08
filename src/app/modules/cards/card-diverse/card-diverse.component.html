@@ -40,14 +40,28 @@
             <div class="image-section">
               <img src="/assets/images/card-steps.png" alt="steps" />
             </div>
-            <div class="justify-content-around my-5">
-              <button
+            <div
+              class="my-5"
+              icFlexLayout
+              fxLayout="row"
+              fxLayoutGap="20px"
+              fxLayoutAlign="start center"
+            >
+              <!-- <button
                 class="confirm-button mb-mb-3 mb-0"
                 [routerLink]="['/card/mobile-verification']"
                 [queryParams]="{ title: carowselData[initialCount]?.header }"
               >
                 Apply
-              </button>
+              </button> -->
+              <!-- class="confirm-button mb-mb-3 mb-0" -->
+              <ic-button
+                label="Apply"
+                icButtonType="filled-rounded"
+                size="large"
+                [routerLink]="['/card/mobile-verification']"
+                [queryParams]="{ title: carowselData[initialCount]?.header }"
+              ></ic-button>
               <a class="compare-link" [routerLink]="['/card/card-type']"
                 >Compare Card</a
               >

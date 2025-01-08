@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { ProductConstant } from './product.store';
 import { catchError } from 'rxjs/operators';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private api: TrackingService,
     private route: ActivatedRoute,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class ProductDetailsComponent implements OnInit {
     this.route.queryParamMap.subscribe((params: any) => {
       this.productType = params.get('type');
     });
-    this.mobileNumber = sessionStorage.getItem('trackingMobile');
+    this.mobileNumber = this.sessionStorageService.getTrackingMobile();
     this.getOriginationById(id);
   }
 

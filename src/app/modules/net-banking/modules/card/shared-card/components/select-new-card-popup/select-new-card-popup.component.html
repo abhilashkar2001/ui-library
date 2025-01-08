@@ -17,12 +17,17 @@
           [class.disabled]="i !== currentIndex"
           *ngIf="i >= currentIndex && i < currentIndex + 2"
           (click)="selectCard(i)"
+          (keydown.down)="selectCard(i)"
+          tabindex="0"
         >
-          <img [src]="card.fileUrl || 'assets/images/card_img1.png'" />
+          <img
+            [src]="card.fileUrl || 'assets/images/card_img1.png'"
+            alt="card_img1"
+          />
         </div>
       </ng-container>
     </mat-card>
-    <mat-card fxFlex="100" class="card-desc" fxLayout="column">
+    <mat-card fxFlex="100" class="card-desc pl-28" fxLayout="column">
       <div
         fxLayout="row"
         fxLayoutAlign="space-between start"
@@ -46,7 +51,7 @@
           <h5>{{ benefit }}</h5>
         </ng-container>
       </div>
-      <div fxLayoutAlign="start center" fxFlex="100" fxLayoutGap="10px">
+      <div fxLayoutAlign="start center" fxFlex="100" fxLayoutGap="20px">
         <div fxLayout="column" fxFlex="25" class="fee-class">
           <h4>Joining Fee</h4>
           <h3>
@@ -62,12 +67,13 @@
           </h3>
         </div>
       </div>
-      <app-ic-action-button
-        class="btn-style"
-        buttonName="Apply"
-        buttonType="filled"
-        (onClick)="applyCard()"
-      ></app-ic-action-button>
+      <ic-button
+        (click)="applyCard()"
+        label="Apply"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </mat-card>
   </div>
 </div>

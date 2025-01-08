@@ -4,6 +4,8 @@ import { Time } from 'highcharts';
 import { COUNTRYCURRENCY } from './models/country-currency.mode';
 import { CurrencyList } from './models/currency.models';
 import { Data } from '@angular/router';
+import { environment } from 'environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -12,12 +14,22 @@ const IS_REMEMBER = 'isRemember';
 const USER_INFO = 'userInfo';
 const CORPORATE_ID = 'corporateId';
 
+const SECRET_KEY = environment.SECRET_KEY;
 export const VALIDITY_IN_SECS = 'validityInSecs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenStorageService {
+  encrypt(value: string): string {
+    return CryptoJS.AES.encrypt(value, SECRET_KEY).toString();
+  }
+
+  decrypt(value: string): string {
+    const bytes = CryptoJS.AES.decrypt(value, SECRET_KEY);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+
   private sessionStore = window.sessionStorage;
   private localStore = window.localStorage;
   currencyList: CurrencyList = StaticData.currencyList;
@@ -36,18 +48,34 @@ export class TokenStorageService {
   }
 
   public saveToken(token: string) {
+    // Encrypt the token before saving it
+    const encryptedToken = this.encrypt(token);
     this.sessionStore.removeItem(TOKEN_KEY);
-    this.sessionStore.setItem(TOKEN_KEY, token);
+    this.sessionStore.setItem(TOKEN_KEY, encryptedToken);
   }
 
-  public getToken(): string | null {
-    return this.sessionStore.getItem(TOKEN_KEY);
+  public getToken() {
+    const token = this.sessionStore.getItem(TOKEN_KEY);
+    return token ? this.decrypt(token) : null;
   }
 
+  // Save encrypted user data
   public saveUser(user: any) {
     this.sessionStore.removeItem(USER_KEY);
-    this.sessionStore.setItem(USER_KEY, JSON.stringify(user));
+    // Encrypt and then store user data
+    const encryptedUser = this.encrypt(JSON.stringify(user));
+    this.sessionStore.setItem(USER_KEY, encryptedUser);
   }
+
+  // Retrieve and decrypt user data
+  public getUser() {
+    const encryptedUser = this.sessionStore.getItem(USER_KEY);
+    return encryptedUser ? JSON.parse(this.decrypt(encryptedUser)) : null;
+  }
+
+  // public getUser() {
+  //   return JSON.parse(<string>this.sessionStore.getItem(USER_KEY));
+  // }
 
   saveLastLoginSession(time: Time) {
     this.sessionStore.setItem('LAST_LOGIN', JSON.stringify(time));
@@ -66,10 +94,6 @@ export class TokenStorageService {
   getLanguage() {
     const parseLanguage: string | null = this.sessionStore.getItem('LANGUAGE');
     if (parseLanguage) return JSON.parse(parseLanguage);
-  }
-
-  public getUser() {
-    return JSON.parse(<string>this.sessionStore.getItem(USER_KEY));
   }
 
   public isLoggedIn(): boolean {

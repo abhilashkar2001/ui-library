@@ -11,14 +11,18 @@
         <div fxLayout="column" class="blue-box" fxFlex="50">
           <span class="light-blue-title">{{ title | translate }}</span>
           <div fxLayout="row">
-            <app-ic-custom-pay-from
-              [control]="upgradeForm.get('creditAccount') | formcontrol"
-              [inputLabel]="'Card No' | translate"
+            <ic-select
+              fxFlex="40"
+              label="Card No"
+              placeholder="Card No"
               bindValueKey="cardNumber"
               bindLabelKey="cardNumber"
-              [items]="cardList"
+              [control]="upgradeForm.get('creditAccount') | formcontrol"
+              [options]="cardList"
               (selectionChange)="patchDetails($event)"
-            ></app-ic-custom-pay-from>
+              selectionType="single"
+            >
+            </ic-select>
             <div
               fxLayout="column"
               fxLayoutAlign="center center"
@@ -32,14 +36,20 @@
           </div>
         </div>
         <div fxLayoutAlign="end center" fxLayoutGap="10px" class="getBillBtn">
-          <app-ic-action-button buttonName="Back" buttonType="stroked">
-          </app-ic-action-button>
-          <app-ic-action-button
-            buttonName="Fetch"
-            buttonType="filled"
-            (onClick)="fetchDetails()"
+          <ic-button
+            label="Back"
+            icButtonType="outlined"
+            type="submit"
+            size="large"
+          ></ic-button>
+          <ic-button
+            label="Fetch"
+            icButtonType="filled"
+            type="submit"
+            size="large"
+            (click)="fetchDetails()"
             [disabled]="upgradeForm.invalid"
-          ></app-ic-action-button>
+          ></ic-button>
         </div>
       </div>
       <div fxLayout="column" *ngIf="upgradeCardDetails">
@@ -47,7 +57,7 @@
         <div class="content-div">
           <div fxFlex="row" fxFlex="100" fxLayoutGap="10px">
             <div fxFlex="15">
-              <img [src]="selectedCard?.fileUrl" />
+              <img [src]="selectedCard?.fileUrl" alt="selected-card" />
             </div>
             <div fxLayout="column" fxFlex="85">
               <h4>{{ selectedCard?.cardName }}</h4>
@@ -126,13 +136,19 @@
       </div>
     </div>
     <div fxLayoutGap="20" fxLayoutAlign="end center" *ngIf="upgradeCardDetails">
-      <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-      </app-ic-action-button>
-      <app-ic-action-button
-        buttonName="Proceed"
-        buttonType="filled"
-        (onClick)="proceed()"
-      ></app-ic-action-button>
+      <ic-button
+        label="Cancel"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+      ></ic-button>
+      <ic-button
+        label="Proceed"
+        (click)="proceed()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-card>
 </form>

@@ -116,17 +116,20 @@
       </div>
     </div>
     <div fxLayoutAlign="end center" fxLayoutGap="10px">
-      <app-ic-action-button
-        buttonName="Back"
-        buttonType="stroked"
-        (onClick)="cancle()"
-      >
-      </app-ic-action-button>
-      <app-ic-action-button
-        buttonName="Next"
-        buttonType="filled"
-        (onClick)="next()"
-      ></app-ic-action-button>
+      <ic-button
+        label="Back"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+        (click)="cancle()"
+      ></ic-button>
+      <ic-button
+        label="Next"
+        (click)="next()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </div>
 </mat-card>

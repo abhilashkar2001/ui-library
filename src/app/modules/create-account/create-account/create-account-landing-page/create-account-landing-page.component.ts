@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorNotifierPopupComponent } from 'app/shared/components/error-notifier-popup/error-notifier-popup.component';
@@ -10,7 +10,6 @@ import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as moment from 'moment';
 import { CreateAccountConstant, CreateEnum } from './create-account.constant';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
-import { EmailService } from 'app/shared/services/email.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'app/shared/services/common-service/common.service';
@@ -23,7 +22,7 @@ const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   templateUrl: './create-account-landing-page.component.html',
   styleUrls: ['./create-account-landing-page.component.scss'],
 })
-export class CreateAccountLandingPageComponent {
+export class CreateAccountLandingPageComponent implements OnInit {
   stepper: MatStepper | any;
   screenList: any;
   screenTitle = '';
@@ -72,8 +71,7 @@ export class CreateAccountLandingPageComponent {
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
-    private emailService: EmailService,
-    private sessionService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private commonService: CommonService,
   ) {
     this.commonService.updateData(router.url);
@@ -160,7 +158,7 @@ export class CreateAccountLandingPageComponent {
     this.currencyCode = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params['id'];
     this.getProductDetails();
-    const sessionStep = sessionStorage.getItem('accountstep');
+    const sessionStep = this.sessionStorageService.getAccountStep();
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     const sessionData = JSON.parse(
       <string>localStorage.getItem('basisDetails'),
@@ -176,14 +174,10 @@ export class CreateAccountLandingPageComponent {
         this.getScreenDetails(resp);
       });
     //this is for existing customer.
-    this.existingCustomerId = parseInt(
-      <string>sessionStorage.getItem('userCustomerId'),
-    );
+    this.existingCustomerId = this.sessionStorageService.getUserCustomerId();
     //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
-    const customStageId = parseInt(
-      <string>sessionStorage.getItem('customerStageId'),
-    );
-    const originationId = sessionStorage.getItem('originationId');
+    const customStageId = this.sessionStorageService.getCustomerStageId();
+    const originationId = this.sessionStorageService.getOriginationId();
     if (originationId) this.getOriginationMaster(parseInt(originationId));
     else if (customStageId) {
       this.getCustomerbyStageId(customStageId);
@@ -217,11 +211,11 @@ export class CreateAccountLandingPageComponent {
     const sessionData = JSON.parse(
       <string>localStorage.getItem('basisDetails'),
     );
+
     console.log(value, 'master data');
     const originationModel = {
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
-      originationId:
-        parseInt(<string>sessionStorage.getItem('originationId')) ?? null,
+      originationId: this.sessionStorageService.getOriginationId() ?? null,
       accountType: sessionData.accountType,
       basisDetailsId: sessionData.basisDetailsId,
       branchCode: this.tokenStore.getUser().branchCode,
@@ -230,7 +224,7 @@ export class CreateAccountLandingPageComponent {
       productDescription: this.productDetails.basisDetailStory,
       currencyCode: this.currencyCode?.currency,
       branchId: this.currentUser.branchId,
-      ownership: JSON.parse(<string>sessionStorage.getItem('ownershipId')),
+      ownership: this.sessionStorageService.getOriginationId(),
       department: this.currentUser?.department,
     };
     if (value.kycDoc) {
@@ -264,7 +258,7 @@ export class CreateAccountLandingPageComponent {
       } else {
         const FinalOriginationModel = {
           ...originationModel,
-          ownership: JSON.parse(<string>sessionStorage.getItem('ownershipId')),
+          ownership: this.sessionStorageService.getOwnershipId(),
         };
         this.submitCheckList(value, FinalOriginationModel, customerInfo);
       }
@@ -276,9 +270,7 @@ export class CreateAccountLandingPageComponent {
       const payload = {
         documentIds: value?.otherLoanDoc,
         originationId: this.originationModel?.originationId,
-        screenCode: parseInt(
-          <string>sessionStorage.getItem('currentScreenCode'),
-        ),
+        screenCode: this.sessionStorageService.getCurrentScreenCode(),
       };
       this.loanApi.saveChecklist(payload).subscribe((resp) => {
         if (resp?.statusCode === 201) {
@@ -318,8 +310,8 @@ export class CreateAccountLandingPageComponent {
         }
         delete custResp[i].customerStagingId;
       }
-      custResp[0].biometricId = this.sessionService.getItem('biometricId')
-        ? [this.sessionService.getItem('biometricId')]
+      custResp[0].biometricId = this.sessionStorageService.getBiometricId()
+        ? [this.sessionStorageService.getBiometricId()]
         : [];
       custResp[i].isphoneNumVerified = true;
       custResp[i].isEmailVerified = true;
@@ -331,7 +323,7 @@ export class CreateAccountLandingPageComponent {
           isManagingDirector: custResp[i]?.primaryCustomer,
         };
 
-      const customerId = sessionStorage.getItem('userCustomerId');
+      const customerId = this.sessionStorageService.getUserCustomerId();
       if (customerId) {
         delete custResp[i].existingCustomerId;
         custResp[i].customerId = parseInt(customerId);
@@ -353,14 +345,12 @@ export class CreateAccountLandingPageComponent {
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200 || resp?.statusCode == 201) {
         this.originationId = resp.data.originationModel.originationId;
-        sessionStorage.setItem(
-          'originationId',
+        this.sessionStorageService.setOriginationId(
           resp?.data?.originationModel?.originationId,
         );
         if (resp?.data?.customerInfo)
-          sessionStorage.setItem(
-            'customerStagingId',
-            JSON.stringify(resp?.data?.customerInfo?.[0]?.customerStagingId),
+          this.sessionStorageService.setCustomerStagingId(
+            resp?.data?.customerInfo?.[0]?.customerStagingId,
           );
         if (resp?.data?.corporateCustomer)
           this.noOfDirectors = resp?.data?.corporateCustomer?.numberOfDirectors;
@@ -397,7 +387,7 @@ export class CreateAccountLandingPageComponent {
             this.ownershipId = this.ownership.find(
               (r: any) => r?.values.toLowerCase() === 'self',
             )?.id;
-            sessionStorage.setItem('ownershipId', this.ownershipId);
+            this.sessionStorageService.setOwnershipId(this.ownershipId);
             resolve(this.ownershipId);
           } else {
             reject(new Error('Failed to fetch generic data'));
@@ -421,8 +411,7 @@ export class CreateAccountLandingPageComponent {
         this.screenList = response.data.screens.sort((s1: any, s2: any) => {
           return s1.sequence - s2.sequence;
         });
-        sessionStorage.setItem(
-          'currentStage',
+        this.sessionStorageService.setCurrentStage(
           resp.data.processStageList[0].id,
         );
         this.factory();
@@ -462,11 +451,10 @@ export class CreateAccountLandingPageComponent {
       return;
     } else {
       this.selectedStep = num;
-      sessionStorage.setItem('accountstep', String(this.selectedStep));
-      sessionStorage.setItem(
-        'currentScreenCode',
-        this.screenList?.[num]?.screenCode,
-      );
+      this.sessionStorageService.setAccountStep(this.selectedStep),
+        this.sessionStorageService.setCurrentScreenCode(
+          this.screenList?.[num]?.screenCode,
+        );
       this.factory();
     }
   }
@@ -475,9 +463,8 @@ export class CreateAccountLandingPageComponent {
     const lastStep = this.selectedStep;
     this.selectedStep = tabDetails.selectedIndex;
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
-    sessionStorage.setItem('accountstep', tabDetails.selectedIndex);
-    sessionStorage.setItem(
-      'currentScreenCode',
+    this.sessionStorageService.setAccountStep(tabDetails.selectedIndex);
+    this.sessionStorageService.setCurrentScreenCode(
       this.screenList?.[this.selectedStep]?.screenCode,
     );
     if (lastStep != tabDetails.selectedIndex)
@@ -583,12 +570,11 @@ Thank you for choosing us for your financial needs.
 Best regards, `,
     );
     formData.append('to', email);
-    this.emailService
-      .triggerTransactionEmail(formData)
-      .subscribe((res: string) => {
-        if (res) {
-        }
-      });
+    // this.emailService
+    //   .triggerTransactionEmail(formData)
+    //   .subscribe((res: string) => {
+    //     if (res) { }
+    //   });
   }
 
   goBack() {
@@ -610,12 +596,11 @@ Best regards, `,
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: accountBasisDetails?.basisDetailsId,
       processCycleCode: accountBasisDetails?.processCycleCode,
-      currentStage: parseInt(<string>sessionStorage.getItem('currentStage')),
+      currentStage: this.sessionStorageService.getCurrentStage(),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
       targetScreen: parseInt(resp?.targetScreen),
     };
-
     this.loanApi.saveLoanApprovalConfig(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.done();

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { FdCalculatorServiceService } from '../fd-calculator-service.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-book-fd',
@@ -43,10 +44,11 @@ export class BookFdComponent implements OnInit {
   constructor(
     private summaryService: FdCalculatorServiceService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.idDepositId = sessionStorage.getItem('depositOriginationId');
+    this.idDepositId = this.sessionStorageService.getDepositOriginationId();
     if (this.idDepositId) {
       this.summaryService
         .fetchDepositeSummary(this.idDepositId, this.depositType)
@@ -57,7 +59,7 @@ export class BookFdComponent implements OnInit {
     }
   }
   proceedFd() {
-    if (sessionStorage.getItem('paymentType') == 'Account')
+    if (this.sessionStorageService.getPaymentType() == 'Account')
       this.isPaymentEnabled = true;
     else {
       const dialogRef = this.dialog.open(SuccessPopupComponent, {
@@ -73,9 +75,9 @@ export class BookFdComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((resp: any) => {
         if (resp === true) {
-          sessionStorage.removeItem('holderType');
-          sessionStorage.removeItem('depositOriginationId');
-          sessionStorage.removeItem('selectedStep');
+          this.sessionStorageService.removeHolderType();
+          this.sessionStorageService.removeDepositOriginationId();
+          this.sessionStorageService.removeSelectedStep();
           localStorage.removeItem('basisDetails');
         }
       });

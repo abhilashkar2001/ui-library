@@ -42,9 +42,7 @@ export class OfferLetterComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
-    this.originationId = JSON.parse(
-      <string>sessionStorage.getItem('originationId'),
-    );
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.generatePdf();
     this.fetchGenericValues();
@@ -120,9 +118,7 @@ export class OfferLetterComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {
       if (res?.result?.signatureId) {
         const signPayload = {
-          originationId: JSON.parse(
-            <string>sessionStorage.getItem('originationId'),
-          ),
+          originationId: this.sessionStorageService.getOriginationId(),
           signatureId: res?.result?.signatureId,
           screenCode: this.sessionStorageService.getScreenId(),
         };

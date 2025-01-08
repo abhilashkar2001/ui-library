@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-signin',
@@ -44,6 +45,7 @@ export class SigninComponent implements OnInit {
     private themingService: ThemeChangeService,
     private dialog: MatDialog,
     public translate: TranslateService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +61,11 @@ export class SigninComponent implements OnInit {
       // otpRequired: [true],
       appType: ['CORP'],
     });
+  }
+
+  visibiltiy(e: Event) {
+    console.log(e, 'event');
+    this.hide = !this.hide;
   }
 
   submit() {
@@ -131,8 +138,7 @@ export class SigninComponent implements OnInit {
           this.tokenService.saveUser(res);
           const result: any = await this.fetchThemeAndLanguange();
           if (result?.data?.length) {
-            sessionStorage.setItem(
-              'userThemeLang',
+            this.sessionStorageService.setUserThemeLang(
               JSON.stringify(result?.data[result?.data?.length - 1]),
             );
             const lang =
@@ -140,7 +146,7 @@ export class SigninComponent implements OnInit {
             this.tokenService.saveLanguage(lang);
             this.translate.use(lang);
           } else {
-            sessionStorage.removeItem('userThemeLang');
+            this.sessionStorageService.removeUserThemeLang();
           }
           this.router.navigate(['/user/dashboard']);
         }

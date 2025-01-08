@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-national-id-upload',
@@ -51,10 +52,13 @@ export class NationalIdUploadComponent implements OnInit {
     ],
   };
 
-  constructor(private loanApi: LoanService) {}
+  constructor(
+    private loanApi: LoanService,
+    private sessionStorageService: SessionStorageService,
+  ) {}
 
   ngOnInit(): void {
-    const originationId = sessionStorage.getItem('originationId');
+    const originationId = this.sessionStorageService.getOriginationId();
     if (originationId) this.getOrigination(originationId);
     this.custId = localStorage.getItem('customerId');
     this.custId = JSON.parse(this.custId);
@@ -134,7 +138,7 @@ export class NationalIdUploadComponent implements OnInit {
       });
     }
 
-    sessionStorage.setItem('loanDoc', JSON.stringify(docIds));
+    this.sessionStorageService.setLoanDoc(JSON.stringify(docIds));
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: true,

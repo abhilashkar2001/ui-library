@@ -28,13 +28,14 @@ export class IncreaseLimitComponent implements OnInit {
     private ss: SessionStorageService,
     // private otpService: OTPService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.initIncreaseLimitForm();
     this.getCreditCardDetailsList();
     this.customerInfo = this.ss.getCustomerInfo();
-    this.userInfo = JSON.parse(<string>sessionStorage.getItem('auth-user'));
+    this.userInfo = this.sessionStorageService.getAuthUser();
     this.cardList = this.ss.getListOfCards();
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     console.log(this.fourDigitNo);

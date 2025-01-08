@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as moment from 'moment';
 
@@ -20,15 +21,14 @@ export class ProcessOfferLetterComponent implements OnInit {
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
     private route: Router,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getUser();
     this.buildRevisiteForm();
-    this.originationId = JSON.parse(
-      <string>sessionStorage.getItem('originationId'),
-    );
-    this.fetchOfferDetails();
+    (this.originationId = this.sessionStorageService.getOriginationId()),
+      this.fetchOfferDetails();
   }
 
   buildRevisiteForm(data?: any) {

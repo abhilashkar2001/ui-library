@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReusableAlertPopupComponent } from 'app/shared/components/reusable-alert-popup/reusable-alert-popup.component';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-cibil-score-container',
@@ -34,6 +35,7 @@ export class CibilScoreContainerComponent {
     private commonService: CommonService,
     private openAccountService: OpenAccountService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   customerConsent() {
@@ -110,7 +112,7 @@ export class CibilScoreContainerComponent {
 
   getOTP(event: any) {
     this.phone = event.phone;
-    sessionStorage.setItem('loanPhone', this.phone);
+    this.sessionStorageService.setLoanPhone(this.phone);
     this.showOtpSection = true;
     this.openAccountService.getOtp(this.phone).subscribe(() => {
       this.otpSent = true;

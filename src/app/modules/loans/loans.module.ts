@@ -36,6 +36,7 @@ import { EducationLoanCalculatorComponent } from './loan-calculator/education-lo
 import { KnowYourEmiComponent } from './loan-calculator/education-loan-calculator/know-your-emi/know-your-emi.component';
 import { TaxBenefitsComponent } from './loan-calculator/education-loan-calculator/tax-benefits/tax-benefits.component';
 import { NationalIdUploadComponent } from '../../shared/components/national-id-upload/national-id-upload.component';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 @NgModule({
   declarations: [
     LoansComponent,
@@ -71,6 +72,7 @@ import { NationalIdUploadComponent } from '../../shared/components/national-id-u
     LoansRoutingModule,
     SharedComponentsModule,
     FlexLayoutModule,
+    IcustLibraryModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })

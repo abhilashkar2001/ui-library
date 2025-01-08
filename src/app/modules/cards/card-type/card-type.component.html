@@ -5,10 +5,16 @@
     </button>
     <span class="text-header">Card Feature Compare</span>
     <div class="add-button-section">
-      <button class="confirm-button add-btn">
+      <!-- <button class="confirm-button add-btn">
         <mat-icon>add</mat-icon>
         <span> Add </span>
-      </button>
+      </button> -->
+      <ic-button
+        label="+ Add"
+        icButtonType="filled-rounded"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </div>
   <div class="row">
@@ -18,6 +24,8 @@
           class="list active"
           (click)="selectedTab(1)"
           [ngClass]="{ active: tab === 1 }"
+          (keydown.enter)="selectedTab(1)"
+          tabindex="0"
         >
           Key Benefits
         </div>
@@ -26,6 +34,8 @@
           class="list"
           (click)="selectedTab(2)"
           [ngClass]="{ active: tab === 2 }"
+          (keydown.enter)="selectedTab(2)"
+          tabindex="1"
         >
           Whay You Earn
         </div>
@@ -34,6 +44,8 @@
           class="list"
           (click)="selectedTab(3)"
           [ngClass]="{ active: tab === 3 }"
+          (keydown.enter)="selectedTab(3)"
+          tabindex="2"
         >
           Reward on every spend
         </div>
@@ -42,6 +54,8 @@
           class="list"
           (click)="selectedTab(4)"
           [ngClass]="{ active: tab === 4 }"
+          (keydown.enter)="selectedTab(4)"
+          tabindex="3"
         >
           Fuel Surcharge Wavier
         </div>
@@ -50,6 +64,8 @@
           class="list"
           (click)="selectedTab(5)"
           [ngClass]="{ active: tab === 5 }"
+          (keydown.enter)="selectedTab(5)"
+          tabindex="4"
         >
           Milestone Benefits (In a Year)
         </div>
@@ -58,6 +74,8 @@
           class="list"
           (click)="selectedTab(6)"
           [ngClass]="{ active: tab === 6 }"
+          (keydown.enter)="selectedTab(6)"
+          tabindex="5"
         >
           Membership Fee
         </div>
@@ -72,14 +90,16 @@
             </button></span
           >
           <img [src]="card.image" alt="" width="229" height="138" />
-          <mat-form-field appearance="outline">
+          <!-- <mat-form-field appearance="outline">
             <mat-select>
               <mat-option [value]="">Select</mat-option>
               <mat-option value="'joint'">Debit Card</mat-option>
               <mat-option value="'individual">Credit Card</mat-option>
               <mat-option value="'individual">Shopping Card</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
+          <ic-select [options]="cardSelection" selectionType="single">
+          </ic-select>
         </div>
       </div>
       <div class="rewards-section">

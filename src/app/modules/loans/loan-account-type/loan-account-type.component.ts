@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 import * as moment from 'moment';
 
@@ -27,6 +28,7 @@ export class LoanAccountTypeComponent implements OnInit {
     private loanService: LoanService,
     private activatedRoute: ActivatedRoute,
     private el: ElementRef,
+    private sessionStorageService: SessionStorageService,
   ) {
     //   this.basisClass = this.activatedRoute.snapshot["queryParams"]["basisClass"];
   }
@@ -108,8 +110,7 @@ export class LoanAccountTypeComponent implements OnInit {
       basisName: this.selectedLoan?.productDetails[0].basisName,
       basisId: this.selectedLoan?.productDetails[0].basisId,
     });
-
-    sessionStorage.setItem('loanBasisDetails', payload);
+    this.sessionStorageService.setLoanBasisDetails(payload);
   }
   customCalculatorValues(event: any) {
     this.selectedLoan = event;
@@ -128,8 +129,8 @@ export class LoanAccountTypeComponent implements OnInit {
     };
     this.loanService.submitLoanDetail(payload).subscribe((resp) => {
       if (resp?.statusCode === 201) {
-        sessionStorage.removeItem('loanstep');
-        sessionStorage.setItem('loanDisburseId', resp?.data.id);
+        this.sessionStorageService.removeLoanStep();
+        this.sessionStorageService.setLoanDisburseId(resp?.data.id);
         // const url = this.location.prepareExternalUrl(
         //   this.router.serializeUrl(
         //     this.router.createUrlTree([`/loan/create-loan/${this.basisId}`])

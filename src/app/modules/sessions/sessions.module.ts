@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [SigninComponent],
@@ -20,6 +22,8 @@ import { NgOtpInputModule } from 'ng-otp-input';
     SharedMaterialModule,
     FlexLayoutModule,
     NgOtpInputModule,
+    IcustLibraryModule,
+    SharedPipesModule,
   ],
 })
 export class SessionsModule {}

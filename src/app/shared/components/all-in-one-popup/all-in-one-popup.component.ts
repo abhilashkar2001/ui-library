@@ -49,4 +49,8 @@ export class AllInOnePopupComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+  visibiltiy(e: Event) {
+    console.log(e, 'event');
+    this.hide = !this.hide;
+  }
 }

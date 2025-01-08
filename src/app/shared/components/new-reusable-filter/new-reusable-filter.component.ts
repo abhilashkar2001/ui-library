@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -17,13 +18,14 @@ import { CreatedDurationModelComponent } from '../created-duration-model/created
 import { TableService } from 'app/shared/services/table-service/table-service';
 import { ViewExcelDocComponent } from '../view-excel-doc/view-excel-doc.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-new-reusable-filter',
   templateUrl: './new-reusable-filter.component.html',
   styleUrls: ['./new-reusable-filter.component.scss'],
 })
-export class NewReusableFilterComponent implements OnInit {
+export class NewReusableFilterComponent implements OnInit, AfterViewInit {
   @ViewChild('searchVal') searchVal: ElementRef | any;
   @Input() className: any;
   @Input() module: any;
@@ -117,6 +119,7 @@ export class NewReusableFilterComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `refresh-icon`,
@@ -127,7 +130,6 @@ export class NewReusableFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.componentName, 'dsjjj');
     this.fxFlexForCol1 = this.newFilter ? 25 : 40;
     this.buildFormItem();
     // this.getCreatedBy();
@@ -223,9 +225,9 @@ export class NewReusableFilterComponent implements OnInit {
         });
       }
     } else {
-      if (sessionStorage.getItem('fromDate')) {
-        sessionStorage.removeItem('fromDate');
-        sessionStorage.removeItem('toDate');
+      if (this.sessionStorageService.getFromDate()) {
+        this.sessionStorageService.removeFromDate();
+        this.sessionStorageService.removeToDate();
       }
       this.customDataByPage.emit({
         filterValue: {
@@ -251,9 +253,9 @@ export class NewReusableFilterComponent implements OnInit {
         });
       }
     } else {
-      if (sessionStorage.getItem('fromDate')) {
-        sessionStorage.removeItem('fromDate');
-        sessionStorage.removeItem('toDate');
+      if (this.sessionStorageService.getFromDate()) {
+        this.sessionStorageService.removeFromDate();
+        this.sessionStorageService.removeToDate();
       }
       this.customDataByPage.emit({
         filterValue: this.filterForm.value,
@@ -286,9 +288,9 @@ export class NewReusableFilterComponent implements OnInit {
 
   clearFilter() {
     this.filterForm.reset();
-    if (sessionStorage.getItem('fromDate')) {
-      sessionStorage.removeItem('fromDate');
-      sessionStorage.removeItem('toDate');
+    if (this.sessionStorageService.getFromDate()) {
+      this.sessionStorageService.removeFromDate();
+      this.sessionStorageService.removeToDate();
     }
     this.filterForm.get('authStatus')?.setValue('');
     this.filterForm.get('recordStatus')?.setValue('');

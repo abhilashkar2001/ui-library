@@ -17,30 +17,42 @@
         >
           <input
             type="text"
-            placeholder="Enter your email address.."
+            placeholder="Enter your email address..."
             formControlName="email"
           />
           <button type="button">Contact Now</button>
         </div>
-        <mat-error
-          class="custom_error"
+        <span
+          class="custom_error_nl ml-24"
           *ngIf="emailForm.get('email')?.hasError('pattern')"
         >
-          <p class="error_message">Invalid email address</p>
-        </mat-error>
-        <mat-error
-          class="custom_error"
+          Invalid email address
+        </span>
+        <span
+          class="custom_error_nl ml-24"
           *ngIf="
             emailForm.get('email')?.touched &&
             emailForm.get('email')?.hasError('required')
           "
         >
-          <p class="error_message">Email address is required</p>
-        </mat-error>
+          Email address is required!
+        </span>
       </div>
-      <img class="blue_rect" src="assets/images/Rectangle 31.svg" />
-      <img class="dots_img dots_top" src="assets/images/Group 75.svg" />
-      <img class="dots_img dots_bottom" src="assets/images/Group 73.svg" />
+      <img
+        class="blue_rect"
+        src="assets/images/Rectangle 31.svg"
+        alt="Rectangle 31.svg"
+      />
+      <img
+        class="dots_img dots_top"
+        src="assets/images/Group 75.svg"
+        alt="Group 75.svg"
+      />
+      <img
+        class="dots_img dots_bottom"
+        src="assets/images/Group 73.svg"
+        alt="Group 73.svg"
+      />
     </div>
   </div>
 </section>

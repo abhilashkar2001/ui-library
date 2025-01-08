@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
@@ -24,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './return-calculator.component.html',
   styleUrls: ['./return-calculator.component.scss'],
 })
-export class ReturnCalculatorComponent implements OnInit {
+export class ReturnCalculatorComponent implements OnInit, OnChanges {
   max = 100000;
   min = 1000;
   ammountValue = 0;
@@ -65,6 +66,7 @@ export class ReturnCalculatorComponent implements OnInit {
   monthlySavings: string[] | any;
   ownership: string[] | any;
   scheme: string[] | any;
+  otherUserInfo: any;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -89,7 +91,7 @@ export class ReturnCalculatorComponent implements OnInit {
     this.getGenericDetails();
     this.buildForm();
     this.fdFlowData();
-    console.log(this.rdFdValue, this.fdName);
+    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
   }
   getGenericDetails() {
     this.newDepositeService
@@ -138,6 +140,7 @@ export class ReturnCalculatorComponent implements OnInit {
           rdResp = resp.data;
           resolve(rdResp);
         } else {
+          return;
         }
       });
     });
@@ -247,7 +250,7 @@ export class ReturnCalculatorComponent implements OnInit {
     };
   }
 
-  formatLoanLabel(value: any) {
-    return `₹ ${value}`;
-  }
+  // formatLoanLabel(value: any) {
+  //   return `₹ ${value}`;
+  // }
 }

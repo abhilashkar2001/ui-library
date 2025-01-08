@@ -8,7 +8,9 @@
     <button (click)="goBack()" mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <label class="text-large">{{ 'Benificiary Maintenance' }}</label>
+    <label for="benificiary" class="text-large">{{
+      'Benificiary Maintenance'
+    }}</label>
   </div>
 </div>
 
@@ -50,7 +52,7 @@
           *ngIf="
             benificiaryDetailsForm.get('accountNo').value &&
             benificiaryDetailsForm.get('confirmAccountNumber').value &&
-            benificiaryDetailsForm.get('accountNo').value !=
+            benificiaryDetailsForm.get('accountNo').value !==
               benificiaryDetailsForm.get('confirmAccountNumber').value
           "
         >
@@ -238,12 +240,12 @@
         {{ 'Edit' }}
       </button>
     </div>
-    <button-loading
+    <app-button-loading
       *ngIf="!readorWrite"
       (click)="onSubmit()"
       [btnClass]="'submit-button'"
     >
-      Save</button-loading
+      Save</app-button-loading
     >
     <div>
       <button

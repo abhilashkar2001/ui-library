@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrackingService } from '../tracking-service';
 import { Router } from '@angular/router';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-signin-track',
@@ -56,6 +57,7 @@ export class SigninTrackComponent implements OnInit {
     private fb: FormBuilder,
     private api: TrackingService,
     private route: Router,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   signForm!: FormGroup;
@@ -81,19 +83,23 @@ export class SigninTrackComponent implements OnInit {
   }
 
   verifyOtp() {
-    this.api
-      .verifyOtp({
-        mobile: this.signForm.value.mobile,
-        otp: this.yourOtp,
-      })
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.invalidOtp = false;
-          sessionStorage.setItem('trackingMobile', this.signForm.value.mobile);
-          this.route.navigate(['/tracking/summary']);
-        } else if (resp?.statusCode === 401) {
-          this.invalidOtp = true;
-        }
-      });
+    if (this.otpAvailable) {
+      this.api
+        .verifyOtp({
+          mobile: this.signForm.value.mobile,
+          otp: this.yourOtp,
+        })
+        .subscribe((resp: any) => {
+          if (resp?.statusCode === 200) {
+            this.invalidOtp = false;
+            this.sessionStorageService.setTrackingMobile(
+              this.signForm.value.mobile,
+            );
+            this.route.navigate(['/tracking/summary']);
+          } else if (resp?.statusCode === 401) {
+            this.invalidOtp = true;
+          }
+        });
+    }
   }
 }

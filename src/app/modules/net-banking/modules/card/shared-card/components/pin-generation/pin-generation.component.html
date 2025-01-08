@@ -1,37 +1,23 @@
 <form class="pin_generation" [formGroup]="pinGenerationForm" fxLayout="column">
   <h3 class="light-blue-title">Pin Generation</h3>
   <mat-card fxLayout="column">
-    <!-- <div fxFlex="100"> -->
     <div class="default blue_card" fxLayout="column">
       <div fxFlex="100" fxLayout="row">
-        <!--  <div fxFlex="20" class="input_wrapper">
-          <app-searchable-select
-            [items]="listOfAccounts"
-            [inputLabel]="'Select Card' | translate"
-            bindValueKey="cardNumber"
-            bindLabelKey="cardNumber"
-            [control]="pinGenerationForm.get('selectCard')"
-            (selectionChange)="patchDetails($event)"
-          >
-          </app-searchable-select>
-        </div>
-        <div fxFlex="25" fxLayoutAlign="start center" class="input_wrapper">
-          <p class="mt-8 mb-0">
-            {{ title | translate }} | {{ "Name" | translate }} -
-            {{ typeofCard | translate }}
-          </p>
-        </div> -->
         <div fxLayout="column" class="blue-box" fxFlex="50">
           <span class="light-blue-title">{{ title | translate }}</span>
           <div fxLayout="row">
-            <app-ic-custom-pay-from
+            <ic-select
+              fxFlex="40"
+              label="Card No"
+              placeholder="Card No"
               [control]="pinGenerationForm.get('selectCard') | formcontrol"
-              [inputLabel]="'Card No' | translate"
+              [options]="listOfAccounts"
               bindValueKey="cardNumber"
               bindLabelKey="cardNumber"
-              [items]="listOfAccounts"
+              selectionType="single"
               (selectionChange)="patchDetails($event)"
-            ></app-ic-custom-pay-from>
+            >
+            </ic-select>
             <div
               fxLayout="column"
               fxLayoutAlign="center center"
@@ -53,13 +39,19 @@
         </div>
 
         <div fxFlex fxLayoutGap="10" fxLayoutAlign="end center" class="mt-8">
-          <app-ic-action-button buttonName="Back" buttonType="stroked">
-          </app-ic-action-button>
-          <app-ic-action-button
-            [buttonName]="'Get Otp' | translate"
-            buttonType="filled"
-            (onClick)="getOtp()"
-          ></app-ic-action-button>
+          <ic-button
+            label="Back"
+            icButtonType="outlined"
+            type="submit"
+            size="large"
+          ></ic-button>
+          <ic-button
+            label="Get Otp"
+            (click)="getOtp()"
+            icButtonType="filled"
+            type="submit"
+            size="large"
+          ></ic-button>
         </div>
       </div>
     </div>
@@ -75,9 +67,14 @@
       *ngIf="otp === true"
     >
       <div fxFlex="20" class="input_wrapper">
-        <app-ic-custom-input
+        <!-- <app-ic-custom-input
           [control]="pinGenerationForm.get('otp') | formcontrol"
-        ></app-ic-custom-input>
+        ></app-ic-custom-input> -->
+        <ic-form-field
+          placeholder="OTP"
+          [control]="pinGenerationForm.get('otp') | formcontrol"
+          [label]="'OTP' | translate"
+        ></ic-form-field>
       </div>
       <div fxFlex class="input_wrapper" class="resend_otp_section">
         <p>{{ 'Didnt receive the OTP?' | translate }}</p>
@@ -90,19 +87,20 @@
       fxLayoutGap="10"
       *ngIf="otp === true"
     >
-      <app-ic-action-button
-        [buttonName]="'Cancel' | translate"
-        buttonType="stroked"
-      >
-      </app-ic-action-button>
-      <app-ic-action-button
-        [buttonName]="'Subscription' | translate"
+      <ic-button
+        label="Cancel"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+      ></ic-button>
+      <ic-button
+        label="Subscription"
         (click)="proceed()"
-        buttonType="filled"
+        icButtonType="filled"
+        type="submit"
+        size="large"
         [disabled]="pinGenerationForm.invalid"
-      >
-      </app-ic-action-button>
+      ></ic-button>
     </div>
-    <!-- </div> -->
   </mat-card>
 </form>

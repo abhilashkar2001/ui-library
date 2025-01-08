@@ -20,6 +20,7 @@ import { PreGeneratedStatementComponent } from './loan-services/pre-generated-st
 import { RequestCertificateComponent } from './loan-services/request-certificate/request-certificate.component';
 import { GoldRenewalComponent } from './loan-services/gold-renewal/gold-renewal.component';
 import { SharedPipesModule } from '../../../../../shared/pipes/shared-pipes.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SharedPipesModule } from '../../../../../shared/pipes/shared-pipes.modu
     FlexLayoutModule,
     SharedComponentsModule,
     SharedPipesModule,
+    IcustLibraryModule,
   ],
 })
 export class LoanServicesModule {}

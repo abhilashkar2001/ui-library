@@ -26,6 +26,7 @@ import {
   GenericValueInfoModel,
 } from 'app/shared/models/generic-value.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
@@ -35,7 +36,7 @@ const MICROSERVICE_URL = environment.microServiceURL;
 })
 export class DocumentUploadComponent implements OnInit {
   documentUploadForm!: FormGroup;
-  documentNames: GenericValueData[] | undefined;
+  documentNames: GenericValueData[] | any;
   genericvalue = 'DOCUMENTNAME';
   currentIndex = 0;
   percentDone: number | any;
@@ -59,13 +60,12 @@ export class DocumentUploadComponent implements OnInit {
     private apiService: SharedService,
     private offerIssueService: OfferIssueService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.originationId = JSON.parse(
-      <string>sessionStorage.getItem('originationId'),
-    );
-    this.customerId = sessionStorage.getItem('customerId');
+    this.originationId = this.sessionStorageService.getOriginationId();
+    this.sessionStorageService.getCustomerId();
     this.getDocumentName();
     this.buildDocumentUploadForm();
     this.initialFormLoading();
@@ -120,7 +120,7 @@ export class DocumentUploadComponent implements OnInit {
           (item: GenericValueData) => item.values === e?.value,
         ) || 0;
       if (this.documentNames && this.documentNames[index])
-        this.documentNames[index]!.selected = true;
+        this.documentNames[index].selected = true;
     }
   }
 

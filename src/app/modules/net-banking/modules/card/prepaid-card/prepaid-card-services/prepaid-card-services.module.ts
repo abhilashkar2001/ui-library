@@ -14,6 +14,7 @@ import { SharedCardModule } from '../../shared-card/shared-card.module';
 import { PrepaidRefundComponent } from './components/prepaid-refund/prepaid-refund.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
     SharedCardModule,
     TranslateModule,
     SharedMaterialModule,
+    IcustLibraryModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

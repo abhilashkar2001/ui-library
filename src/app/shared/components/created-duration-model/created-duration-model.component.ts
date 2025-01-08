@@ -7,6 +7,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -39,6 +40,7 @@ export class CreatedDurationModelComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
@@ -50,8 +52,8 @@ export class CreatedDurationModelComponent implements OnInit {
 
   ngOnInit(): void {
     this.tomorrowDate.setDate(this.todayDate.getDate() + 1);
-    this.fromDate = sessionStorage.getItem('fromDate');
-    this.toDate = sessionStorage.getItem('toDate');
+    this.fromDate = this.sessionStorageService.getFromDate();
+    this.toDate = this.sessionStorageService.getToDate();
   }
 
   close() {
@@ -60,8 +62,8 @@ export class CreatedDurationModelComponent implements OnInit {
       this.convertDate(this.toDate),
     ];
     this.dialogRef.close(this.value);
-    sessionStorage.setItem('fromDate', this.value[0]);
-    sessionStorage.setItem('toDate', this.value[1]);
+    this.sessionStorageService.setFromDate(this.value[0]);
+    this.sessionStorageService.setToDate(this.value[1]);
   }
 
   getToDateValidity() {

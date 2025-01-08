@@ -18,24 +18,17 @@
                 fxFlex="35"
                 *ngIf="showProductType && screenName !== 'beneficiary'"
               >
-                <mat-form-field
-                  appearance="outline"
-                  class="full-width fieldinput"
+                <ic-select
+                  label="Product Type"
+                  [control]="
+                    maintTemplateUpload.get('productType') | formcontrol
+                  "
+                  [options]="productTypeSelection"
+                  selectionType="single"
+                  placeholder="Product Type"
+                  [skipLabel]="true"
                 >
-                  <mat-label class="custom-mat-label">
-                    {{ 'Product Type' }}
-                  </mat-label>
-                  <mat-select
-                    name="productTYpe"
-                    formControlName="productType"
-                    placeholder="Product Type"
-                  >
-                    <mat-option [value]="">Select</mat-option>
-                    <mat-option value="internal">Internal</mat-option>
-                    <mat-option value="external">External</mat-option>
-                    <mat-option value="mixed">Mixed</mat-option>
-                  </mat-select>
-                </mat-form-field>
+                </ic-select>
               </div>
 
               <div fxFlex="35" *ngIf="screenName !== 'beneficiary'">
@@ -60,6 +53,7 @@
                         _ngcontent-vqa-c346=""
                         src="assets/images/calendar.png"
                         style="margin-bottom: 10px"
+                        alt="calendar.png"
                       />
                     </mat-icon>
                   </mat-datepicker-toggle>
@@ -67,19 +61,24 @@
                 </mat-form-field>
               </div>
               <div fxFlex="26">
-                <button
+                <!-- <button
                   fxFlex="100"
                   matSuffix
                   (click)="downloadTemplate($event)"
                   class="verify-btn mt-0"
                 >
                   {{ 'Download Template' }}
-                </button>
+                </button> -->
+                <ic-button
+                  fxFlex="100"
+                  (click)="downloadTemplate($event)"
+                  label="Download Template"
+                  icButtonType="filled"
+                  type="submit"
+                  size="large"
+                ></ic-button>
               </div>
             </ng-container>
-            <!-- <ng-container>
-              <button type="button" class="clause-btn">Clause Template</button>
-            </ng-container> -->
           </div>
         </div>
 
@@ -95,12 +94,18 @@
             class="current_theme_filter"
             alt=""
             (click)="file.click()"
+            (keydown.enter)="file.click()"
+            tabindex="2"
           />
           <span class="HeadingForUpload"
             >{{ 'Drag and Drop files here or' }}
-            <span class="chooseFiles" (click)="file.click()">{{
-              'Choose file'
-            }}</span></span
+            <span
+              class="chooseFiles"
+              (click)="file.click()"
+              (keydown.enter)="file.click()"
+              tabindex="3"
+              >{{ 'Choose file' }}</span
+            ></span
           >
           <span class="sizeAlert">{{ 'Maximum size : 25 MB' }}</span>
           <input
@@ -128,6 +133,8 @@
               fxFlex="24"
               fxLayoutAlign="space-between"
               (click)="viewExcel()"
+              (keydown.enter)="viewExcel()"
+              tabindex="4"
             >
               <img src="assets/images/xls_logo.svg" alt="" />
               <span class="paddingtop HeadingForUpload">{{
@@ -148,7 +155,7 @@
         *ngIf="!isHideButton"
       >
         <div>
-          <button
+          <!-- <button
             color="primary"
             mat-raised-button
             class="submitButton"
@@ -156,7 +163,14 @@
             (click)="goToScreen()"
           >
             {{ 'Continue' }}
-          </button>
+          </button> -->
+          <ic-button
+            label="Continue"
+            icButtonType="filled-rounded"
+            type="submit"
+            size="medium"
+            (click)="goToScreen()"
+          ></ic-button>
           &nbsp;&nbsp;
         </div>
 

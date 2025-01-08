@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardModel, HeaderModel } from 'app/shared/models/card.model';
 import { IconService } from 'app/shared/services/icon.service';
@@ -7,7 +7,7 @@ import { IconService } from 'app/shared/services/icon.service';
   templateUrl: './dashboard-card-details.component.html',
   styleUrls: ['./dashboard-card-details.component.scss'],
 })
-export class DashboardCardDetailsComponent implements OnInit {
+export class DashboardCardDetailsComponent {
   @Input() title: any;
   @Input() cardInfo: CardModel | any;
   @Input() detailsItem: HeaderModel[] | any;
@@ -18,13 +18,11 @@ export class DashboardCardDetailsComponent implements OnInit {
   ) {
     this.iconService
       .addIconIfNotExists('reward-icon', 'assets/images/reward.svg')
-      .subscribe(() => {});
+      .subscribe();
     this.iconService
       .addIconIfNotExists('info-icon', 'assets/images/info.svg')
-      .subscribe(() => {});
+      .subscribe();
   }
-
-  ngOnInit(): void {}
 
   payNow() {
     this.router.navigate(['/user/card/credit-card/service/payment']);

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SessionStorageEnum } from 'app/enum/session-storage.enum';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { PrimaryCustomerInfo } from 'app/shared/models/primary-customer.model';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
@@ -64,9 +63,7 @@ export class DobVerificationComponent implements OnInit {
   }
 
   verifyOtp() {
-    const type = JSON.parse(
-      <string>sessionStorage.getItem(SessionStorageEnum.TYPE),
-    );
+    const type = this.sessionStorageService.getType();
     this.loginService
       .verifyOtp({
         mobile: this.sessionStorageService?.getCustomerInfo()?.contact?.mobile,

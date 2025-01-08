@@ -8,17 +8,17 @@
     <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
       <div fxFlex="50" fxLayoutGap="10" fxLayoutAlign="center center">
         <div class="row card-algn" fxFlex="50">
-          <app-searchable-select
-            [items]="creditCardList"
+          <ic-select
+            label="Card Number"
+            [control]="increaseLimitForm.get('cardNo') | formcontrol"
+            (selectionChange)="getCreditCardLimitByNo($event)"
+            placeholder="Card Number"
+            [options]="creditCardList"
             bindValueKey="cardNo"
             bindLabelKey="cardValue"
-            [control]="increaseLimitForm.get('cardNo') | formcontrol"
-            [inputLabel]="'Card Number' | translate"
-            (selectionChange)="getCreditCardLimitByNo($event)"
-          ></app-searchable-select>
-          <!-- <p class="message">
-                {{ "Credit Card | Name - Master Card" }}
-              </p> -->
+            selectionType="single"
+          >
+          </ic-select>
         </div>
         <div class="row" fxFlex="50">
           <app-ic-custom-input
@@ -31,10 +31,18 @@
             customLabelClass="customLabelClass"
             [readonly]="true"
           ></app-ic-custom-input>
+          <!-- <ic-form-field
+            placeholder="Eligible Credit Limit"
+            [control]="
+              increaseLimitForm.get('eligibleCreditLimit') | formcontrol
+            "
+            [label]="'Eligible Credit Limit' | translate"
+            [readonly]="true"
+          ></ic-form-field> -->
         </div>
       </div>
       <div fxLayoutGap="20" fxLayoutAlign="end center">
-        <app-ic-action-button
+        <!-- <app-ic-action-button
           [buttonName]="'Cancel' | translate"
           buttonType="stroked"
         >
@@ -44,8 +52,21 @@
           buttonType="filled"
           (onClick)="proceedToOtp()"
           [disabled]="!increaseLimitForm.get('eligibleCreditLimit')?.value"
-        ></app-ic-action-button>
-        <!-- [disabled]="increaseLimitForm.invalid" -->
+        ></app-ic-action-button> -->
+        <ic-button
+          label="Cancel"
+          icButtonType="outlined"
+          type="submit"
+          size="large"
+        ></ic-button>
+        <ic-button
+          label="Proceed"
+          [disabled]="!increaseLimitForm.get('eligibleCreditLimit')?.value"
+          (click)="proceedToOtp()"
+          icButtonType="filled"
+          type="submit"
+          size="large"
+        ></ic-button>
       </div>
     </div>
     <ng-container *ngIf="viewOtp">
@@ -60,12 +81,17 @@
       <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
         <div fxFlex="75" fxLayoutGap="10">
           <div class="row" fxFlex="33">
-            <mat-form-field>
+            <!-- <mat-form-field>
               <input
                 matInput
                 [formControl]="increaseLimitForm.get('otp') | formcontrol"
               />
-            </mat-form-field>
+            </mat-form-field> -->
+            <ic-form-field
+              placeholder="OTP"
+              label="OTP"
+              [formControl]="increaseLimitForm.get('otp') | formcontrol"
+            ></ic-form-field>
           </div>
           <span class="gray-text" fxLayoutAlign="center center">{{
             'Didn’t receive the OTP?' | translate
@@ -74,16 +100,26 @@
             class="resend-btn"
             fxLayoutAlign="center center"
             (click)="proceedToOtp()"
+            (keydown.enter)="proceedToOtp()"
+            tabindex="0"
             >{{ 'Resend Code' | translate }}</span
           >
         </div>
         <div>
-          <app-ic-action-button
+          <!-- <app-ic-action-button
             [buttonName]="'Submit' | translate"
             buttonType="filled"
             (onClick)="submitEligibleLimit()"
             [disabled]="!increaseLimitForm.get('otp')?.value"
-          ></app-ic-action-button>
+          ></app-ic-action-button> -->
+          <ic-button
+            [label]="'Submit' | translate"
+            [disabled]="!increaseLimitForm.get('otp')?.value"
+            (click)="submitEligibleLimit()"
+            icButtonType="filled"
+            type="submit"
+            size="large"
+          ></ic-button>
         </div>
       </div>
     </ng-container>

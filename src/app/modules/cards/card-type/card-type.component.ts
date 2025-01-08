@@ -10,6 +10,11 @@ import { CommonService } from 'app/shared/services/common-service/common.service
 })
 export class CardTypeComponent implements OnInit {
   tab = 1;
+  cardSelection: { key: string; value: string }[] = [
+    { key: 'Debit Card', value: 'debitCard' },
+    { key: 'Credit Card', value: 'creditCard' },
+    { key: 'Shopping Card', value: 'shoppingCard' },
+  ];
 
   constructor(
     private router: Router,

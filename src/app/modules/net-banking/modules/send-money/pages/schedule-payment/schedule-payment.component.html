@@ -18,7 +18,7 @@
     <div class="light-blue-title">{{ 'Payment Details' | translate }}</div>
     <div *ngIf="!proceedPayment; else showSchedulePayment" fxLayout="column">
       <div fxFlex="100" fxLayout="row wrap">
-        <div fxFlex="30" class="input_wrapper">
+        <div fxFlex="40" class="input_wrapper">
           <app-searchable-select
             [control]="schedulePaymentForm.get('creditAccount')"
             [inputLabel]="'Transfer To' | translate"
@@ -30,6 +30,15 @@
             [showOutsideLabel]="true"
             (selectionChange)="selectTransfer($event)"
           ></app-searchable-select>
+          <!-- <ic-select
+          [label]="'Transfer To' | translate"
+            [control]="schedulePaymentForm.get('creditAccount')"
+          [options]="transferData"
+         bindLabelKey="nickName"
+            bindValueKey="accountNo"
+          selectionType="single"
+        >
+        </ic-select> -->
           <div fxLayout="row" fxLayoutGap="10px">
             <mat-label class="light-blue-title">{{
               'Favourites' | translate
@@ -60,17 +69,20 @@
         </div>
       </div>
       <div fxLayoutGap="20" fxLayoutAlign="end center" class="btn-algn">
-        <app-ic-action-button
-          [buttonName]="'Cancel' | translate"
-          buttonType="stroked"
-        >
-        </app-ic-action-button>
-        <app-ic-action-button
-          [buttonName]="'Proceed' | translate"
-          buttonType="filled"
-          (onClick)="proceed('')"
+        <ic-button
+          [label]="'Cancel' | translate"
+          icButtonType="outlined"
+          type="submit"
+          size="large"
+        ></ic-button>
+        <ic-button
+          [label]="'Proceed' | translate"
+          (click)="proceed('')"
+          icButtonType="filled"
+          type="submit"
           [disabled]="schedulePaymentForm.get('debitAccount').invalid"
-        ></app-ic-action-button>
+          size="large"
+        ></ic-button>
       </div>
     </div>
   </div>

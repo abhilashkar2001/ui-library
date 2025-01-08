@@ -8,7 +8,8 @@
     class="default generate_pin_card mx-auto d-flex flex-column"
   >
     <span class="text-light">Enter New ATM PIN <strong>(4 digit)</strong></span>
-    <input matInput />
+    <!-- <input matInput /> -->
+    <ic-form-field></ic-form-field>
     <div class="otp_block">
       <ng-otp-input
         class="ng_otp_input"
@@ -16,7 +17,14 @@
         (onInputChange)="onOtpChange($event)"
         [config]="newPinConfig"
       ></ng-otp-input>
-      <div class="view_pin_btn" (click)="toggleNewPinView()">View PIN</div>
+      <div
+        class="view_pin_btn"
+        (click)="toggleNewPinView()"
+        (keydown.enter)="toggleNewPinView()"
+        tabindex="0"
+      >
+        View PIN
+      </div>
     </div>
     <span class="text-light">Confirm ATM PIN <strong>(4 digit)</strong></span>
     <div class="otp_block">
@@ -26,7 +34,14 @@
         (onInputChange)="onOtpChange($event)"
         [config]="confPinConfig"
       ></ng-otp-input>
-      <div class="view_pin_btn" (click)="toggleConfPinView()">View PIN</div>
+      <div
+        class="view_pin_btn"
+        (click)="toggleConfPinView()"
+        (keydown.enter)="toggleConfPinView()"
+        tabindex="1"
+      >
+        View PIN
+      </div>
     </div>
 
     <div
@@ -36,18 +51,20 @@
       fxLayoutAlign="center"
       mat-dialog-actions
     >
-      <app-ic-action-button
-        [buttonName]="'Cancel' | translate"
-        buttonType="stroked"
+      <ic-button
+        label="Cancel"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
         (click)="cancel()"
-      >
-      </app-ic-action-button>
-      <app-ic-action-button
-        [buttonName]="'Subscription' | translate"
+      ></ic-button>
+      <ic-button
+        label="Subscription"
         (click)="submit()"
-        buttonType="filled"
-      >
-      </app-ic-action-button>
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-card>
 </mat-dialog-content>

@@ -1,13 +1,15 @@
+<h3 class="light-blue-title">Unbilled Transaction</h3>
 <div fxLayout="column">
   <div class="creditNumber">
-    <app-searchable-select
-      [inputLabel]="'Credit Card Number' | translate"
-      [items]="creditList"
-      bindValueKey="cardNumber"
-      bindLabelKey="cardNumber"
+    <ic-select
+      [label]="'Credit Card Number' | translate"
+      placeholder="Credit Card Number"
+      [options]="creditList"
+      [bindValueKey]="'cardNumber'"
+      [bindLabelKey]="'cardNumber'"
       [control]="unbilledForm.get('creditNumber') | formcontrol"
       (selectionChange)="patchDetails($event)"
-    ></app-searchable-select>
+    ></ic-select>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div fxLayoutAlign="start center" fxLayoutGap="15">
@@ -20,7 +22,12 @@
         <span class="amount"> ₹ 1,40,000 </span>
       </div>
     </div>
-    <div class="convert" (click)="goToConvertPage()">
+    <div
+      class="convert"
+      (click)="goToConvertPage()"
+      (keypress.down)="goToConvertPage()"
+      tabindex="0"
+    >
       {{ 'Convert To EMI' | translate }}
     </div>
   </div>

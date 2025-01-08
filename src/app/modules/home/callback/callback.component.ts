@@ -43,20 +43,16 @@ export class CallbackComponent implements OnInit {
   getProfile() {
     this.sessionService.getProfileInfo().subscribe((res) => {
       this.tokenService.saveUser(res);
-      sessionStorage.setItem(
-        'customerId',
+      this.sessionStorageService.setCustomerId(
         <string>this.getParameterByName('customerId'),
       );
-      sessionStorage.setItem(
-        'mobile',
+      this.sessionStorageService.setMobile(
         <string>this.getParameterByName('mobile'),
       );
-      sessionStorage.setItem(
-        'ReferanceNumber',
+      this.sessionStorageService.setReferanceNumber(
         <string>this.getParameterByName('referanceNumber'),
       );
-      sessionStorage.setItem(
-        'type',
+      this.sessionStorageService.setType(
         JSON.stringify(this.getParameterByName('type')),
       );
       this.sessionStorageService.setScreenId(
@@ -85,15 +81,12 @@ export class CallbackComponent implements OnInit {
       } else if (this.getParameterByName('route') == 'tracking') {
         this.router.navigate([`${this.getParameterByName('route')}`]);
       } else {
-        sessionStorage.setItem(
-          'originationId',
-          JSON.stringify(this.getParameterByName('originationId')),
-        );
-
-        this.sessionStorageService.setProcessCycleCode(
-          <string>this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
-        );
-
+        this.sessionStorageService.setOriginationId(
+          Number(this.getParameterByName('originationId')),
+        ),
+          this.sessionStorageService.setProcessCycleCode(
+            <string>this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
+          );
         this.router.navigate([
           `/origination/${this.getParameterByName('route')}`,
         ]);

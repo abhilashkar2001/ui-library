@@ -13,6 +13,7 @@ import { ImageDialogComponent } from 'app/shared/components/image-dialog/image-d
 import { SavingsSubmitDialogComponent } from 'app/shared/components/savings-submit-dialog/savings-submit-dialog.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import { environment } from 'environments/environment';
 
@@ -42,6 +43,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges {
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
     private tokenStore: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -55,12 +57,12 @@ export class LoanSummaryComponent implements OnInit, OnChanges {
     this.loanSummaryDetails = changes['loanSummary']?.currentValue;
   }
   getCheckListDoc() {
-    const originationId = sessionStorage.getItem('originationId');
+    const originationId = this.sessionStorageService.getOriginationId();
     this.loanService
       .getSavedChecklist(
         Number(originationId),
-        String(sessionStorage.getItem('otherDocScreenCode')),
-        Number(sessionStorage.getItem('currentStage')),
+        String(this.sessionStorageService.getOtherDocScreenCode),
+        Number(this.sessionStorageService.getCurrentStage),
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
@@ -74,7 +76,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges {
 
   getLoanSummary() {
     return new Promise((resolve) => {
-      const originationId = sessionStorage.getItem('originationId');
+      const originationId = this.sessionStorageService.getOriginationId();
       this.loanService
         .getLoanSummary(originationId)
         .subscribe((response: any) => {
@@ -85,7 +87,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges {
   }
 
   getOriginationMasterData() {
-    const originationId = sessionStorage.getItem('originationId');
+    const originationId = this.sessionStorageService.getOriginationId();
     this.loanService
       .getOriginationMaster(originationId)
       .subscribe((resp: any) => {

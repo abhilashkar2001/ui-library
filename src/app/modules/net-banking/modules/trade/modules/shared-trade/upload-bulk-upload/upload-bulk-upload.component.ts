@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewExcelDocComponent } from 'app/shared/components/view-excel-doc/view-excel-doc.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as XLSX from 'xlsx';
 
@@ -41,6 +42,11 @@ export class UploadBulkUploadComponent implements OnInit {
     [3, 4],
   ];
   corporateId: string | any;
+  productTypeSelection: { key: string; value: string }[] = [
+    { key: 'Internal', value: 'internal' },
+    { key: 'External', value: 'external' },
+    { key: 'Mixed', value: 'mixed' },
+  ];
 
   constructor(
     private router: Router,
@@ -48,18 +54,16 @@ export class UploadBulkUploadComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private tokenStorage: TokenStorageService,
-  ) {}
+    private sessionStorageService: SessionStorageService,
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
-    this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem('corporateId'),
-    );
+    this.corporateId = this.sessionStorageService.getCorporateId();
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;
     });
     this.buildMaintTemplateForm();
-    this.fetchAllScreens();
   }
 
   goBack() {
@@ -139,7 +143,7 @@ export class UploadBulkUploadComponent implements OnInit {
   }
 
   get uploadFileArrlrngth(): any {
-    return this.maintTemplateUpload.get('uplodedFileArray') as FormArray;
+    return this.maintTemplateUpload?.get('uplodedFileArray') as FormArray;
   }
 
   addfiles(filesData?: any): FormGroup {
@@ -172,17 +176,6 @@ export class UploadBulkUploadComponent implements OnInit {
   downloadTemplate(event: Event) {
     event.stopPropagation();
     this.downloadBulkUpload.emit('');
-  }
-
-  fetchAllScreens() {
-    // this.maintenanceUploadService.fetchAllScreen().subscribe((res) => {
-    //   this.sortByAlphabetically(res);
-    //   if (this.uploadData) {
-    //     this.maintTemplateUpload
-    //       .get("selectMaintenance")
-    //       .setValue(this.uploadData);
-    //   }
-    // });
   }
 
   sortByAlphabetically(screens: any) {

@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CreateRdService } from '../../../rd-calculator/create-rd.service';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 @Component({
   selector: 'app-maturity-calculator',
   templateUrl: './maturity-calculator.component.html',
   styleUrls: ['./maturity-calculator.component.scss'],
 })
-export class MaturityCalculatorComponent implements OnInit {
+export class MaturityCalculatorComponent {
   @Input() fdName: any;
   @Input() calculatorValues: any;
   flexDetails = {
@@ -25,9 +26,8 @@ export class MaturityCalculatorComponent implements OnInit {
     private location: Location,
     private rdApi: CreateRdService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
-
-  ngOnInit(): void {}
 
   openDialog(): void {
     this.dialog.open(InfoPopupComponent, {
@@ -52,8 +52,7 @@ export class MaturityCalculatorComponent implements OnInit {
 
       this.rdApi.updateRdDetails(payload).subscribe((resp) => {
         if (resp?.statusCode === 201) {
-          sessionStorage.setItem(
-            'recurringDepositId',
+          this.sessionStorageService.setRecurringDepositId(
             resp.data.recurringDepositId,
           );
           const id = resp?.data?.recurringDepositId

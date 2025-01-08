@@ -58,20 +58,29 @@
                 </div>
               </span>
               <div fxLayout="row" fxLayoutGap="10">
-                <button
+                <!-- <button
                   mat-raised-button
                   class="transfer_btn"
                   (click)="route('user/loan/summary')"
                 >
                   {{ 'View Summary' }}
-                </button>
-                <button
-                  mat-raised-button
-                  class="add_btn"
-                  (click)="route('/loan/loan-service/loan-repayment')"
-                >
+                </button> -->
+                <ic-button
+                  label="View Summary"
+                  (click)="route('user/loan/summary')"
+                  icButtonType="outlined-rounded"
+                  type="submit"
+                  size="medium"
+                ></ic-button>
+                <!-- <button mat-raised-button class="add_btn">
                   {{ 'Pay Now' }}
-                </button>
+                </button> -->
+                <ic-button
+                  label="Pay Now"
+                  icButtonType="filled-rounded"
+                  type="submit"
+                  size="medium"
+                ></ic-button>
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
