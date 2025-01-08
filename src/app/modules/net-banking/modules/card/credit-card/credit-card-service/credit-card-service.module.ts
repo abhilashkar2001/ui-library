@@ -23,6 +23,7 @@ import { AutoPayComponent } from './components/auto-pay/auto-pay.component';
 import { CalculateEmiComponent } from './components/convert-to-emi/calculate-emi/calculate-emi.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatCardModule,
     MatSlideToggleModule,
     FormsModule,
+    IcustLibraryModule,
   ],
 })
 export class CreditCardServiceModule {}

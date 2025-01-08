@@ -5,7 +5,6 @@
         class="togglegrp"
         name="fontStyle"
         aria-label="Font Style"
-        (change)="onToggleChange()"
         [formControl]="paymentMethod"
       >
         <mat-button-toggle class="customTogglebtn" value="Card"
@@ -61,12 +60,12 @@
             <input matInput type="password" name="firstName" appNumbersOnly />
             <div matSuffix class="info-tool">
               <div class="cvv_Img">
-                <img src="assets/images/help-circle.svg" />
+                <img src="assets/images/help-circle.svg" alt="help-circle" />
               </div>
               <div class="info-tool-text">
                 <div fxLayout="column" fxLayoutGap="2%">
                   <div fxLayout="row" fxLayoutAlign="center center">
-                    <img src="assets/images/cvv-image.svg" />
+                    <img src="assets/images/cvv-image.svg" alt="cvv-image" />
                   </div>
                   <div fxLayout="row" fxLayoutAlign="center center">
                     <div class="child">What is CVV?</div>
@@ -171,7 +170,7 @@
           >
             <div fxLayout="row" class="bank_name" fxLayoutAlign="center center">
               <div>
-                <img [src]="card.bankLogo" />
+                <img [src]="card.bankLogo" alt="bank_logo" />
               </div>
               <div class="card_name">{{ card?.bankName }}</div>
             </div>

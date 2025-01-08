@@ -45,8 +45,6 @@ export class CarouselComponent implements OnInit, OnChanges {
   };
   protected baseUrl = environment.microServiceURL;
 
-  constructor() {}
-
   ngOnChanges() {
     this.dynamicList = this.carowselData;
     this.alignItems();

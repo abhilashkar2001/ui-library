@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ChequeStore } from '../cheque.store';
 import { ChequeService } from '../cheque-service';
 import { Router } from '@angular/router';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-cheque-status-enquiry',
@@ -35,6 +36,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
     private fb: FormBuilder,
     private chequeService: ChequeService,
     private router: Router,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +45,7 @@ export class ChequeStatusEnquiryComponent implements OnInit {
   }
 
   fetchCustomerInfo() {
-    this.accountNumberList = JSON.parse(
-      <string>sessionStorage.getItem('listOfAccounts'),
-    );
+    this.accountNumberList = this.sessionStorageService.getListOfAccounts();
   }
 
   buildForm() {
@@ -57,7 +57,8 @@ export class ChequeStatusEnquiryComponent implements OnInit {
       chequeNumber: [''],
       select: [''],
     });
-    const selectedAccountNo = sessionStorage.getItem('selectAccNo');
+
+    const selectedAccountNo = this.sessionStorageService.getSelectAccNo();
 
     if (selectedAccountNo) {
       this.chqueInquiryForm.get('accountNo')?.setValue(selectedAccountNo);

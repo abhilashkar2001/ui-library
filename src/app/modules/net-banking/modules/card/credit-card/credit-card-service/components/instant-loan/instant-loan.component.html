@@ -13,12 +13,12 @@
     <div fxLayout="column" fxFlex="100" class="deposit-section">
       <span class="text-poppins">{{ 'Loan Amount' | translate }}</span>
       <div fxFlex="100">
-        <app-ic-custom-input
+        <ic-form-field
           fxFlex="30"
+          placeholder="Loan Amount"
           [control]="instantLoanForm.get('amount') | formcontrol"
-          customClass="customTotalField"
-          customLabelClass="customLabelClass"
-        ></app-ic-custom-input>
+          [label]="'Loan Amount' | translate"
+        ></ic-form-field>
       </div>
       <div class="slider">
         <mat-slider
@@ -132,13 +132,17 @@
         </div>
         <div class="py-12" fxLayout="row">
           <div class="custom_dropDown_label">Purpose of Loan</div>
-          <app-searchable-select
+          <ic-select
+            class="card-algn"
+            icFlexLayout
+            fxFlex="220px"
+            [label]="'Purpose of Loan' | translate"
+            placeholder="Purpose of Loan"
+            [options]="purpose"
+            [bindValueKey]="'purpose'"
+            [bindLabelKey]="'purpose'"
             [control]="instantLoanForm.get('loanPorpose') | formcontrol"
-            [items]="purpose"
-            [inputLabel]="'Purpose of Loan' | translate"
-            bindValueKey="purpose"
-            bindLabelKey="purpose"
-          ></app-searchable-select>
+          ></ic-select>
         </div>
       </div>
     </div>
@@ -155,11 +159,17 @@
   </app-maturity-chart>
 </div>
 <div fxLayoutGap="20" fxLayoutAlign="end center">
-  <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-  </app-ic-action-button>
-  <app-ic-action-button
-    buttonName="Proceed"
-    buttonType="filled"
-    (onClick)="proceed()"
-  ></app-ic-action-button>
+  <ic-button
+    [label]="'Cancel'"
+    icButtonType="outlined"
+    type="submit"
+    size="large"
+  ></ic-button>
+  <ic-button
+    label="Proceed"
+    (click)="proceed()"
+    icButtonType="filled"
+    type="submit"
+    size="large"
+  ></ic-button>
 </div>

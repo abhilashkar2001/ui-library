@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { NewDepositService } from '../../../new-deposit.service';
 import { PersonalDetailsService } from './personal-details.service';
 import { debounceTime } from 'rxjs/operators';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-personal-details',
@@ -47,6 +48,7 @@ export class PersonalDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private api: NewDepositService,
     private personalDetailsService: PersonalDetailsService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   panelOpened(index: number) {
@@ -72,10 +74,8 @@ export class PersonalDetailsComponent implements OnInit {
     } else {
       this.buildCustomerDetailsForm();
     }
-    this.holderType = sessionStorage.getItem('holderType') || 'Self';
-    this.fixedDepositId = parseInt(
-      <string>sessionStorage.getItem('fixedDepositId'),
-    );
+    this.holderType = this.sessionStorageService.getHolderType() || 'Self';
+    this.fixedDepositId = this.sessionStorageService.getFixedDepositId();
     this.getCountry();
   }
   getCountry() {

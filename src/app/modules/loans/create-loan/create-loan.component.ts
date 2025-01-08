@@ -9,6 +9,7 @@ import { TokenStorageService } from 'app/shared/token-storage.service';
 import { SharedService } from 'app/shared/shared.service';
 import { merge, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-create-loan',
@@ -54,6 +55,7 @@ export class CreateLoanComponent implements OnInit {
     private openApi: OpenAccountService,
     private tokenStore: TokenStorageService,
     private sharedService: SharedService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
   }
@@ -61,12 +63,12 @@ export class CreateLoanComponent implements OnInit {
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currencySymboll = this.otherUserInfo?.currency;
-    const basisId: any = sessionStorage.getItem('loanBasisDetails');
+    const basisId: any = this.sessionStorageService.getLoanBasisDetails();
     this.getProductDetails(JSON.parse(basisId).basisId);
     this.getGenericDetails();
-    this.loanCustomerId = sessionStorage.getItem('customerId');
+    this.loanCustomerId = this.sessionStorageService.getCustomerId();
     if (this.loanCustomerId) this.getCustomerById();
-    const id = parseInt(<string>sessionStorage.getItem('loanDisburseId'));
+    const id = this.sessionStorageService.getLoanDisburseId();
     if (id) this.getLoanById(id);
     else this.initialForm();
   }
@@ -132,9 +134,9 @@ export class CreateLoanComponent implements OnInit {
         if (resp.statusCode === 200) {
           this.initialForm({
             ...resp?.data,
-            tenureDays: sessionStorage.getItem('tenureDays') || 0,
-            tenureYear: sessionStorage.getItem('tenureYear') || 0,
-            tenureMonth: sessionStorage.getItem('tenureMonth') || 0,
+            tenureDays: this.sessionStorageService.getTenureDays() || 0,
+            tenureYear: this.sessionStorageService.getTenureYear() || 0,
+            tenureMonth: this.sessionStorageService.getTenureMonth() || 0,
           });
           if (
             this.holderTypeArray?.length > 0 &&
@@ -167,7 +169,7 @@ export class CreateLoanComponent implements OnInit {
    * @param data is formData
    */
   initialForm(data?: any) {
-    const holderType = sessionStorage.getItem('loanHolderType');
+    const holderType = this.sessionStorageService.getLoanHolderType();
     this.personalLoanDetailsForm = this.fb.group({
       loanAmount: [data ? data.principalAmount : '', Validators.required],
       tenureYear: [data ? data?.tenureYear : ''],
@@ -370,7 +372,7 @@ export class CreateLoanComponent implements OnInit {
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
     });
-    sessionStorage.setItem('loanAmmount', loanAmmount);
+    this.sessionStorageService.setLoanAmount(loanAmmount);
     const holder: any = (
       this.staticData['HOLDERTYPE'] as { id: any; values: string }[]
     )
@@ -379,24 +381,21 @@ export class CreateLoanComponent implements OnInit {
           item?.id == this.personalLoanDetailsForm.controls['holderType'].value,
       )[0]
       ?.values.toLowerCase();
-    sessionStorage.setItem('loanHolderType', holder);
+    this.sessionStorageService.setLoanHolderType(holder);
     this.getOwnershipIdByGeneric(holder);
     this.snack.open(`Create Loan Details Saved !`, 'OK', {
       duration: 4000,
       verticalPosition: 'top',
       horizontalPosition: 'right',
     });
-    sessionStorage.setItem('loanDisburseId', this.calculatePayload().id);
-    sessionStorage.setItem(
-      'tenureYear',
+    this.sessionStorageService.setLoanDisburseId(this.calculatePayload().id);
+    this.sessionStorageService.setTenureYear(
       this.personalLoanDetailsForm.value.tenureYear,
     );
-    sessionStorage.setItem(
-      'tenureMonth',
+    this.sessionStorageService.setTenureMonth(
       this.personalLoanDetailsForm.value.tenureMonth,
     );
-    sessionStorage.setItem(
-      'tenureDays',
+    this.sessionStorageService.setTenureDays(
       this.personalLoanDetailsForm.value.tenureDays,
     );
     this.updateParentModel({
@@ -516,7 +515,7 @@ export class CreateLoanComponent implements OnInit {
           this.ownerShipId = ownership.find(
             (r: any) => r?.values?.toLowerCase() === value?.toLowerCase(),
           )?.id;
-          sessionStorage.setItem('ownershipId', this.ownerShipId);
+          this.sessionStorageService.setOriginationId(this.ownerShipId);
         }
       });
   }

@@ -7,7 +7,7 @@
   <h3>E-Statement</h3>
   <mat-card>
     <div class="w-100" fxLayout="row" fxLayoutGap="16px">
-      <app-searchable-select
+      <!-- <app-searchable-select
         fxFlex="24"
         [control]="estatementForm.get('accountNumber') | formcontrol"
         [inputLabel]="'Loan Account No' | translate"
@@ -17,22 +17,46 @@
         [showOutsideLabel]="true"
         (selectionChange)="fetchLoanInstallment()"
       >
-      </app-searchable-select>
-      <app-ic-custom-input
+      </app-searchable-select> -->
+      <ic-select
+        fxFlex="24"
+        [label]="'Loan Account No' | translate"
+        placeholder="Credit Card Number"
+        [options]="loanDetails"
+        [bindValueKey]="'cbsAccountNumber'"
+        [bindLabelKey]="'cbsAccountNumber'"
+        [control]="estatementForm.get('accountNumber') | formcontrol"
+        (selectionChange)="fetchLoanInstallment()"
+      ></ic-select>
+      <!-- <app-ic-custom-input
         fxFlex="24"
         [control]="estatementForm.get('loanType') | formcontrol"
         [inputLabel]="'Loan Type' | translate"
         [readonly]="true"
-      ></app-ic-custom-input>
-      <app-ic-custom-input
+      ></app-ic-custom-input> -->
+      <ic-form-field
+        placeholder="Loan Type"
+        fxFlex="24"
+        [control]="estatementForm.get('loanType') | formcontrol"
+        [label]="'Loan Type' | translate"
+        [readonly]="true"
+      ></ic-form-field>
+      <!-- <app-ic-custom-input
         fxFlex="24"
         [control]="estatementForm.get('email') | formcontrol"
         [inputLabel]="'Email' | translate"
         [readonly]="true"
-      ></app-ic-custom-input>
+      ></app-ic-custom-input> -->
+      <ic-form-field
+        placeholder="Email"
+        fxFlex="24"
+        [control]="estatementForm.get('email') | formcontrol"
+        [label]="'Email' | translate"
+        [readonly]="true"
+      ></ic-form-field>
     </div>
     <div class="w-100" fxLayout="row" fxLayoutGap="16px">
-      <app-searchable-select
+      <!-- <app-searchable-select
         fxFlex="24"
         [control]="estatementForm.get('frequency') | formcontrol"
         [inputLabel]="'Frequency' | translate"
@@ -40,8 +64,17 @@
         bindValueKey="values"
         bindLabelKey="values"
       >
-      </app-searchable-select>
-      <app-searchable-select
+      </app-searchable-select> -->
+      <ic-select
+        fxFlex="24"
+        [label]="'Frequency' | translate"
+        placeholder="Frequency"
+        [options]="genericValue?.FREQUENCY"
+        [bindValueKey]="'values'"
+        [bindLabelKey]="'values'"
+        [control]="estatementForm.get('frequency') | formcontrol"
+      ></ic-select>
+      <!-- <app-searchable-select
         fxFlex="24"
         [control]="estatementForm.get('format') | formcontrol"
         [inputLabel]="'Format' | translate"
@@ -49,10 +82,19 @@
         bindValueKey="values"
         bindLabelKey="values"
       >
-      </app-searchable-select>
+      </app-searchable-select> -->
+      <ic-select
+        fxFlex="24"
+        [label]="'Format' | translate"
+        placeholder="Frequency"
+        [options]="genericValue?.FORMAT"
+        [bindValueKey]="'values'"
+        [bindLabelKey]="'values'"
+        [control]="estatementForm.get('format') | formcontrol"
+      ></ic-select>
     </div>
     <div fxLayoutGap="20" fxLayoutAlign="end center">
-      <app-ic-action-button
+      <!-- <app-ic-action-button
         [buttonName]="'Cancel' | translate"
         buttonType="stroked"
       >
@@ -61,7 +103,20 @@
         [buttonName]="'Subscribe' | translate"
         buttonType="filled"
         (onClick)="saveEStatement()"
-      ></app-ic-action-button>
+      ></app-ic-action-button> -->
+      <ic-button
+        [label]="'Cancel' | translate"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+      ></ic-button>
+      <ic-button
+        [label]="'Subscribe' | translate"
+        (click)="saveEStatement()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-card>
 </div>

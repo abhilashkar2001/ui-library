@@ -11,6 +11,7 @@ import { TokenStorageService } from 'app/shared/token-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-single-fund-transfer',
@@ -46,6 +47,7 @@ export class SingleFundTransferComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
     public translate: TranslateService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
@@ -56,16 +58,10 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem('corporateId'),
-    );
+    this.corporateId = this.sessionStorageService.getCorporateId();
     this.buildForm();
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
-    this.custAccounts = JSON.parse(
-      <string>sessionStorage.getItem('listOfAccounts'),
-    );
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.custAccounts = this.sessionStorageService.getListOfAccounts();
     this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
     });
@@ -160,7 +156,7 @@ export class SingleFundTransferComponent implements OnInit {
   }
 
   getOTP() {
-    this.api.getOtp(this.customerInfo.mobileNumber).subscribe(() => {});
+    this.api.getOtp(this.customerInfo.mobileNumber).subscribe();
   }
 
   saveData(payload: any) {

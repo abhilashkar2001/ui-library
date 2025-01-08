@@ -12,6 +12,7 @@ import { LoanSummaryComponent } from './loan-summary/loan-summary.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatCardModule,
     TranslateModule,
     ClipboardModule,
+    IcustLibraryModule,
   ],
 })
 export class LoanModule {}

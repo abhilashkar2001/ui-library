@@ -1,25 +1,6 @@
 <div class="m-24 container_class" fxFlex="100">
   <div fxFlex="50" class="fdCalculator_parent tracking_stepper">
-    <!-- <app-commmon-steeper
-      [screenTitle]="screenTitle"
-      [screenList]="screenList"
-      [screenIndex]="selectedStep"
-      customClass="custom_backGround"
-    ></app-commmon-steeper> -->
-
-    <div fxFlex fxLayoutAlign="center center" fxLayout="column">
-      <!-- <h1 class="img_heading">" Welcome To SimpleFlow</h1>
-      <h1 class="img_heading">
-        You get way to Effortless <br />
-        Management
-      </h1>
-      <p class="img_paragraph">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor<br />
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim<br />
-        veniam, quis nostrud exercitation ullamco laboris
-      </p> -->
-    </div>
+    <div fxFlex fxLayoutAlign="center center" fxLayout="column"></div>
   </div>
   <div fxFlex="50">
     <section fxLayout="column" class="signIn">
@@ -31,7 +12,7 @@
         <form *ngIf="signForm && !isShowOtpField" [formGroup]="signForm">
           <h1>Welcome To ICUST</h1>
           <p>Whenever you want, you can check the status of your application</p>
-          <mat-form-field apperance="outline" class="full-width">
+          <!-- <mat-form-field apperance="outline" class="full-width">
             <mat-label>Mobile No.</mat-label>
             <input
               matInput
@@ -39,7 +20,15 @@
               formControlName="mobile"
               maxlength="10"
             />
-          </mat-form-field>
+          </mat-form-field> -->
+          <ic-form-field
+            label="Mobile No."
+            [control]="signForm.get('mobile') | formcontrol"
+            appNumbersOnly
+            type="text"
+            [maxLength]="10"
+          >
+          </ic-form-field>
         </form>
 
         <ng-container *ngIf="isShowOtpField">
@@ -49,11 +38,9 @@
           >
             <span class="verification">{{ 'OTP Authentication' }}</span>
             <span class="phoneNumber">
-              <!-- *ngIf="!this.otpResendTrigger" this was used in the below ng-container, but the otpResendTrigger was not declared in ts file  -->
               <ng-container>
                 An authentication code has been sent to
               </ng-container>
-              <!-- *ngIf="this.otpResendTrigger" this was used in the below ng-container, but the otpResendTrigger was not declared in ts file -->
               <ng-container>
                 An authentication code has been Re-sent to
               </ng-container>
@@ -71,9 +58,13 @@
               ><strong>Invalid OTP!</strong></mat-error
             >
             <div class="verify1">
-              <span (click)="getOtp()" class="addcolor resend">{{
-                'Resend'
-              }}</span>
+              <span
+                (click)="getOtp()"
+                class="addcolor resend"
+                (keydown.enter)="getOtp()"
+                tabindex="0"
+                >{{ 'Resend' }}</span
+              >
             </div>
           </mat-card>
         </ng-container>
@@ -85,15 +76,23 @@
             fxLayoutGap="20"
             fxLayoutAlign="center"
           >
-            <button
+            <!-- <button
               mat-flat-button
               class="filled_btn btn"
               (click)="getOtp()"
               *ngIf="!isShowOtpField"
             >
               {{ 'Get Otp' }}
-            </button>
-            <button
+            </button> -->
+            <ic-button
+              label="Get Otp"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="medium"
+              (click)="getOtp()"
+              *ngIf="!isShowOtpField"
+            ></ic-button>
+            <!-- <button
               mat-flat-button
               class="filled_btn btn"
               *ngIf="isShowOtpField"
@@ -101,10 +100,25 @@
               [disabled]="!otpAvailable"
             >
               {{ 'Submit' }}
-            </button>
-            <button mat-flat-button class="stroked_btn btn">
+            </button> -->
+            <ic-button
+              *ngIf="isShowOtpField"
+              (click)="verifyOtp()"
+              [disabled]="!otpAvailable"
+              label="Submit"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="large"
+            ></ic-button>
+            <!-- <button mat-flat-button class="stroked_btn btn">
               {{ 'Back' }}
-            </button>
+            </button> -->
+            <ic-button
+              label="Back"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="medium"
+            ></ic-button>
           </div>
         </div>
       </div>

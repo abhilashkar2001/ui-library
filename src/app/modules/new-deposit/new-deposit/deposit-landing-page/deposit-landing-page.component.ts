@@ -19,7 +19,7 @@ export class DepositLandingPageComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
   }
-  customDepositChange(event: any) {
+  customDepositChange(event: string) {
     this.depositName = event;
     if (this.depositName == 'rdCalculator') {
       this.fdRdName = 'RD';

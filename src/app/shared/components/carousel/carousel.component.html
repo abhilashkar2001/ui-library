@@ -18,14 +18,21 @@
                 {{ imagesdata?.description }}
               </div>
             </div>
-            <div class="button-container">
-              <button
+            <div class="button-container py-16">
+              <!-- <button
                 type="button"
                 class="btn"
                 (click)="moveToSubAccountPage(imagesdata.basisClass)"
               >
                 Apply now
-              </button>
+              </button> -->
+              <ic-button
+                label="Apply now"
+                icButtonType="outlined-rounded-transparent"
+                type="submit"
+                size="small"
+                (click)="moveToSubAccountPage(imagesdata.basisClass)"
+              ></ic-button>
             </div>
           </div>
         </div>

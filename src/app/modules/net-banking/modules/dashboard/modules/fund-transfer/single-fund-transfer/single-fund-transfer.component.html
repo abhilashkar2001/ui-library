@@ -97,7 +97,11 @@
         />
         <mat-datepicker-toggle matSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>
-            <img class="calender" src="/assets/images/calendar.svg" />
+            <img
+              class="calender"
+              src="/assets/images/calendar.svg"
+              alt="calender"
+            />
           </mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -237,13 +241,13 @@
       <button class="back-button" mat-raised-button (click)="clear()">
         {{ 'Clear' | translate }}
       </button>
-      <button-loading
+      <app-button-loading
         [type]="'button'"
         [btnClass]="'submit-button'"
         (click)="submit()"
       >
         {{ 'Submit' | translate }}
-      </button-loading>
+      </app-button-loading>
     </div>
   </div>
 </mat-card>

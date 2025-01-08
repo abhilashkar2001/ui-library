@@ -10,6 +10,7 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-credit-card-payment',
@@ -21,7 +22,7 @@ export class CreditCardPaymentComponent implements OnInit {
   showSendAdviceBlock = false;
   showNarrationBlock = false;
   creditCardForm!: FormGroup;
-  selectList = [];
+  selectList: any[] = [];
   aanList = [
     { label: '000037560058', value: '000037560058' },
     { label: '000037560078', value: '000037560078' },
@@ -39,6 +40,7 @@ export class CreditCardPaymentComponent implements OnInit {
     private api: OpenAccountService,
     private tokenStorageService: TokenStorageService,
     public translate: TranslateService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
@@ -85,12 +87,8 @@ export class CreditCardPaymentComponent implements OnInit {
   }
 
   fetchCustomerInfo() {
-    this.selectList = JSON.parse(
-      <string>sessionStorage.getItem('listOfAccounts'),
-    );
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
+    this.selectList = this.sessionStorageService.getListOfAccounts();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
   }
 
   close() {
@@ -136,9 +134,7 @@ export class CreditCardPaymentComponent implements OnInit {
     });
   }
   getOTP() {
-    this.api
-      .getOtp(this.tokenStorageService.getUser()?.mobile)
-      .subscribe(() => {});
+    this.api.getOtp(this.tokenStorageService.getUser()?.mobile).subscribe();
   }
 
   saveData(payload: any) {

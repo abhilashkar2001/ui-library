@@ -27,8 +27,12 @@
   </div>
 
   <div class="d-flex justify-content-center mb-3">
-    <button class="read-more-button" (click)="isFaqMore = !isFaqMore">
-      Read {{ isFaqMore ? 'Less' : 'All' }}
-    </button>
+    <ic-button
+      label="Read {{ isFaqMore ? 'Less' : 'All' }}"
+      icButtonType="filled-rounded"
+      type="submit"
+      size="large"
+      (click)="isFaqMore = !isFaqMore"
+    ></ic-button>
   </div>
 </section>

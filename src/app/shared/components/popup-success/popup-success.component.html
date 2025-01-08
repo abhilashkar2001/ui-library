@@ -1,7 +1,7 @@
 <div>
   <div class="success-bgcolor" fxLayoutAlign="center center">
     <div class="img-algn">
-      <img src="/assets/images/Group 1796.png" />
+      <img src="/assets/images/Group 1796.png" alt="tick-icon" />
     </div>
   </div>
   <div class="success-padding">
@@ -12,7 +12,14 @@
       {{ data?.Msg }}
     </div>
     <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
-      <button mat-flat-button class="yes-btn" (click)="close('Yes')">OK</button>
+      <!-- <button mat-flat-button class="yes-btn" (click)="close('Yes')">OK</button> -->
+      <ic-button
+        (click)="close('Yes')"
+        label="OK"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </div>
 </div>

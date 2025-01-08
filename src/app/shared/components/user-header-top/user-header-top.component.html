@@ -103,6 +103,7 @@
   </div>
 
   <mat-menu #accountMenu="matMenu" class="profile-menu">
+    <!-- class="popup_alignment" -->
     <div
       class="profile-box"
       (click)="$event.stopPropagation()"
@@ -129,9 +130,16 @@
         </div>
       </div>
       <hr class="profile-line" />
-      <button mat-menu-item (click)="signOut()" class="lang-title">
-        <mat-icon>exit_to_app</mat-icon> Sign Out
-      </button>
+      <ic-button
+        class="sign_out"
+        icFlexLayout
+        (click)="signOut()"
+        prefixIcon="exit-to-app_black"
+        label="Sign Out"
+        icButtonType="transparent"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-menu>
 </mat-toolbar>

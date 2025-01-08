@@ -1,16 +1,23 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TokenStorageService } from 'app/shared/token-storage.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-payment-details',
   templateUrl: './payment-details.component.html',
   styleUrls: ['./payment-details.component.scss'],
 })
-export class PaymentDetailsComponent implements OnInit {
+export class PaymentDetailsComponent implements OnInit, OnChanges {
   @Input() paymentDetails: any;
   @Input() status: string | any;
   operationType: string | any;
@@ -116,6 +123,7 @@ export class PaymentDetailsComponent implements OnInit {
     private router: Router,
     private location: Location,
     private tokenStorageService: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       'edit-icon',
@@ -142,9 +150,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.paymentDetailsArr = this.paymentDetails;
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.profileInfo = this.tokenStorageService.getUser();
   }
   done() {
@@ -156,7 +162,6 @@ export class PaymentDetailsComponent implements OnInit {
   back() {
     this.location.back();
   }
-  favourite() {}
 
   pay() {
     this.router.navigate(['/send-money/dashboard/transfer-money'], {

@@ -25,56 +25,19 @@
       >
         <div
           [ngClass]="
-            selectedRecentTab == item ? 'light-blue-title' : 'recent-tabs'
+            selectedRecentTab === item ? 'light-blue-title' : 'recent-tabs'
           "
           (click)="changeRecentTransTabs(i)"
+          (keydown.enter)="changeRecentTransTabs(i)"
+          tabindex="0"
         >
           {{ item | translate }}
         </div>
         <div
-          [ngClass]="selectedRecentTab == item ? 'horizontal-line' : ''"
+          [ngClass]="selectedRecentTab === item ? 'horizontal-line' : ''"
         ></div>
       </div>
     </div>
-    <!-- <div
-      fxFlex="50"
-      class="recent-filters-box"
-      fxLayout="row"
-      fxLayoutAlign="space-between"
-      fxLayoutGap="2%"
-    >
-      <mat-card fxLayout="row" class="search-field" fxFlex="80">
-        <input
-          matInput
-          class="saerch_input_field"
-          [formControl]="searchValue"
-          placeholder="Search"
-        />
-        <mat-icon
-          matSuffix
-          svgIcon="search-icon"
-          class="search-icon"
-          (click)="filterSearchValue()"
-        ></mat-icon>
-      </mat-card>
-      <mat-card fxLayout="row" class="search-field" fxFlex="80">
-        <mat-select
-          (selectionChange)="checkValue($event.value)"
-          [formControl]="selectedDate"
-        >
-          <mat-option [value]="">Select</mat-option>
-          <mat-option
-            *ngFor="let item of actionDateOptions"
-            [value]="item.value"
-          >
-            {{ item.label | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-card>
-      <button mat-icon-button>
-        <mat-icon class="filterIcon" svgIcon="filter-icon"></mat-icon>
-      </button>
-    </div> -->
   </div>
   <div class="table">
     <app-reusable-table

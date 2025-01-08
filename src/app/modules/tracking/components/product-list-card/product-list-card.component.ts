@@ -4,6 +4,7 @@ import { TrackingService } from '../../tracking-service';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { ProductListConstant } from './product-list-card.constant';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-product-list-card',
@@ -20,6 +21,7 @@ export class ProductListCardComponent implements OnInit {
   constructor(
     private route: Router,
     private api: TrackingService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class ProductListCardComponent implements OnInit {
     };
     this.api
       .getProductList(
-        parseInt(<string>sessionStorage.getItem('trackingMobile')),
+        parseInt(this.sessionStorageService.getTrackingMobile()),
         filterItem,
       )
       .subscribe((resp) => {

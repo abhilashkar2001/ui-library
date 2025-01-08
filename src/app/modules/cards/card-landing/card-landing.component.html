@@ -10,14 +10,19 @@
         needs, exclusively from our bank.
       </p>
       <div class="apply_div">
-        <button
+        <!-- <button
           type="button"
           class="apply_btn"
           [routerLink]="['/card/card-type']"
         >
           Apply
-        </button>
-
+        </button> -->
+        <ic-button
+          label="Apply"
+          icButtonType="filled-rounded"
+          size="large"
+          [routerLink]="['/card/card-type']"
+        ></ic-button>
         <div class="stacked_imgs_div">
           <div class="img_wrapper">
             <img

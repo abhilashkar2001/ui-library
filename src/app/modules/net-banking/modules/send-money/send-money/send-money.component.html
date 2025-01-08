@@ -11,12 +11,14 @@
         <div fxLayout="row" fxLayoutAlign="space-between" class="tab-header">
           <div
             [ngClass]="
-              selected == item.screenName
+              selected === item.screenName
                 ? 'selected-tab-buttons'
                 : 'tab-buttons'
             "
             *ngFor="let item of tabScreens; let i = index"
             (click)="changeTabs(i)"
+            (keydown.enter)="changeTabs(i)"
+            tabindex="0"
           >
             <div
               class="tab-content"
@@ -27,9 +29,10 @@
               <button mat-icon-button>
                 <img
                   [src]="
-                    selected == item.screenName ? item.selectedSrc : item.src
+                    selected === item.screenName ? item.selectedSrc : item.src
                   "
                   class="current_theme_filter"
+                  alt="current-theme-filter"
                 />
               </button>
               {{ item.screenName | translate }}

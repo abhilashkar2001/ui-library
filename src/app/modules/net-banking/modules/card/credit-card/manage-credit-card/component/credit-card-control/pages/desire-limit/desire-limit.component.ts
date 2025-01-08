@@ -37,12 +37,13 @@ export class DesireLimitComponent implements OnInit {
     private service: CreditcardService,
     private ss: SessionStorageService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.customerInfo = this.ss.getCustomerInfo();
     this.cardList = this.ss.getListOfCards();
-    this.userInfo = JSON.parse(<string>sessionStorage.getItem('auth-user'));
+    this.userInfo = this.sessionStorageService.getAuthUser();
     this.fourDigitNo = this.userInfo?.mobile.substr(6, 10);
     this.initCardControlForm();
     this.getCreditCardDetailsList();

@@ -32,7 +32,7 @@ export class PaymentComponent implements OnInit {
   profileInfo: any;
   constructor(
     private fb: FormBuilder,
-    private sessionStorage: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
     private cardService: CardService,
@@ -42,8 +42,8 @@ export class PaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerInfo = this.sessionStorage.getCustomerInfo();
-    this.cardList = this.sessionStorage.getListOfCards();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.cardList = this.sessionStorageService.getListOfCards();
     this.buildCreditPaymentForm();
   }
 

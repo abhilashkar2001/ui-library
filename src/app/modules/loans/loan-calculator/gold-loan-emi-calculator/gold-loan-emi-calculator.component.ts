@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-gold-loan-emi-calculator',
@@ -16,7 +17,10 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
   thumbLabel: boolean | any = true;
   @Input() fdName = 'rdCalculator';
   @Output() customCalculatorValues = new EventEmitter<any>();
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private sessionStorageService: SessionStorageService,
+  ) {}
   // amount: number = 5000;
   // min: number = 5000;
   // max: number = 100000;
@@ -49,9 +53,9 @@ export class GoldLoanEmiCalculatorComponent implements OnInit {
   }
   applyForLoan() {
     console.log(this.loanForm.value);
-    sessionStorage.setItem('tenureDays', this.loanForm.value.tenureDays);
-    sessionStorage.setItem('tenureYear', this.loanForm.value.tenureYear);
-    sessionStorage.setItem('tenureMonth', this.loanForm.value.tenureMonth);
+    this.sessionStorageService.setTenureDays(this.loanForm.value.tenureDays);
+    this.sessionStorageService.setTenureYear(this.loanForm.value.tenureYear);
+    this.sessionStorageService.setTenureMonth(this.loanForm.value.tenureMonth);
     this.customCalculatorValues.emit(this.loanForm.value);
   }
 }

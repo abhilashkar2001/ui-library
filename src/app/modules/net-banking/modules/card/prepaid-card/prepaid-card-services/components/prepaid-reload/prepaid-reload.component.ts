@@ -38,7 +38,7 @@ export class PrepaidReloadComponent implements OnInit {
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private cardService: CardService,
-    private sessionStorage: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private tokenService: TokenStorageService,
     private router: Router,
@@ -47,8 +47,8 @@ export class PrepaidReloadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerInfo = this.sessionStorage.getCustomerInfo();
-    this.cardList = this.sessionStorage.getListOfCards();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.cardList = this.sessionStorageService.getListOfCards();
     this.buildReloadForm();
     this.fetchGenericValue();
   }
@@ -80,7 +80,7 @@ export class PrepaidReloadComponent implements OnInit {
       });
   }
 
-  selectedCard(event: number) {
+  selectedCard(event: Event) {
     if (event) {
       this.accountDetails = this.cardList.find(
         (card: any) => card.cardNumber == event,

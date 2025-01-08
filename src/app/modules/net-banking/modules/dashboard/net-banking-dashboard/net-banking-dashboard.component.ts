@@ -59,7 +59,10 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
 
   activityLogData: any;
   displayActivityLog: any[] | any;
-  selectedActivityLog = 'financial';
+  selectedActivityLog: { key: string; value: string }[] = [
+    { key: 'Financial', value: 'financial' },
+    { key: 'Non-Financial', value: 'nonfinancial' },
+  ];
   currentUser: any;
   accountlist: any | { accountType: string; accountList: Account[] }[];
   accountNumberList: any = [];
@@ -95,9 +98,8 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem('corporateId'),
-    );
+    const corporateIdRaw = this.sessionStorageService.getCorporateId();
+    this.corporateId = corporateIdRaw ? JSON.parse(corporateIdRaw) : null;
     this.getDashboardInfo();
     this.getActivityLogData();
     this.getDataByPage();
@@ -239,9 +241,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
             });
             this.availableBalance.push(keywiseBalance);
           });
-          sessionStorage.setItem('customer-Info', JSON.stringify(resp?.data));
-          this.selectedAcc = sessionStorage.getItem('selectAccNo')
-            ? sessionStorage.getItem('selectAccNo')
+          this.sessionStorageService.setCustomerId(JSON.stringify(resp?.data));
+          this.sessionStorageService.getSelectAccNo()
+            ? this.sessionStorageService.getSelectAccNo()
             : resp?.data.accounts?.[0]?.accountList?.[0]?.accountNo;
 
           const accountList: any = [];
@@ -251,10 +253,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
             });
           });
           if (accountList)
-            sessionStorage.setItem(
-              'listOfAccounts',
-              JSON.stringify(accountList),
-            );
+            this.sessionStorageService.setListOfAccounts(accountList);
         }
       });
   }
@@ -342,7 +341,7 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
         if (res === true) {
           this.router.navigate([transfer.route]);
           if (transfer.type) {
-            sessionStorage.setItem('uploadType', transfer.type);
+            this.sessionStorageService.setUploadType(transfer.type);
           }
         } else {
           this.router.navigate(['user/dashboard/fund-transfer/credit-card']);
@@ -350,9 +349,9 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
       });
       return;
     } else if (transfer.label == 'Multi Transfer') {
-      if ((transfer.type = 'MULTI')) {
+      if (transfer.type === 'MULTI') {
         this.router.navigate([transfer.route]);
-        sessionStorage.setItem('uploadType', transfer.type);
+        this.sessionStorageService.setUploadType(transfer.type);
       }
     }
     this.router.navigate([transfer.route]);

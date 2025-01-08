@@ -1,17 +1,18 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
 import { WebhostDirective } from 'app/shared/directives/appHost.directive';
 import { BehaviorSubject } from 'rxjs';
 import { GenericBgServiceService } from './generic-bg-service.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-generic-bg-component',
   templateUrl: './generic-bg-component.component.html',
   styleUrls: ['./generic-bg-component.component.scss'],
 })
-export class GenericBgComponentComponent implements OnInit {
+export class GenericBgComponentComponent {
   @Input() componentName = '';
   tabs: any;
   account$: BehaviorSubject<any> = new BehaviorSubject<any>({});
@@ -29,9 +30,8 @@ export class GenericBgComponentComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private api: GenericBgServiceService,
+    private sessionStorageService: SessionStorageService,
   ) {}
-
-  ngOnInit(): void {}
 
   createComponentView() {
     const view = this.host.viewContainerRef;
@@ -136,7 +136,7 @@ export class GenericBgComponentComponent implements OnInit {
       const lcInfo = this.account$.value?.lcInfo;
       const lcInfopayload = {
         lcType: 'Issuance',
-        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        lcMasterId: this.sessionStorageService.getLcMasterId(),
         lcInfo: {
           type: lcInfo?.type,
           domesticOrForeignLc: lcInfo?.domesticOrForegin === 'domesticLC',
@@ -190,13 +190,13 @@ export class GenericBgComponentComponent implements OnInit {
     } else if (this.currentStep$.value?.id == 3) {
       payload = {
         lcType: 'Issuance',
-        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        lcMasterId: this.sessionStorageService.getLcMasterId(),
         ...this.account$?.value?.goodsInfo,
       };
     } else if (this.currentStep$.value?.id == 4) {
       const docPayload = {
         lcType: 'Issuance',
-        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        lcMasterId: this.sessionStorageService.getLcMasterId(),
         documentInfo: {
           documentId: this.account$.value?.documentId,
         },
@@ -206,7 +206,7 @@ export class GenericBgComponentComponent implements OnInit {
       const lcAdditionalInfo = this.account$.value?.lcAdditionalInfo;
       const additionalPayload = {
         lcType: 'Issuence',
-        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        lcMasterId: this.sessionStorageService.getLcMasterId(),
         additionalInfo: {
           lcTransfer: lcAdditionalInfo?.lcTransfer === 'Yes',
           additionalCondition: lcAdditionalInfo?.additionalCondition,
@@ -234,7 +234,7 @@ export class GenericBgComponentComponent implements OnInit {
     } else if (this.currentStep$.value?.id == 6) {
       const attachmentPayload = {
         lcType: 'Issuence',
-        lcMasterId: sessionStorage.getItem('lcMasterId'),
+        lcMasterId: this.sessionStorageService.getLcMasterId(),
         attachment: {
           documentIds: this.account$.value?.attachMentModel?.map(
             (i: any) => i?.documentId,
@@ -249,7 +249,7 @@ export class GenericBgComponentComponent implements OnInit {
         console.log(resp);
         if (resp?.data?.lcMasterId && this.currentStep$.value?.id == 1) {
           this.account$.value.lcMasterId = resp?.data?.lcMasterId;
-          sessionStorage.setItem('lcMasterId', resp?.data?.lcMasterId);
+          this.sessionStorageService.setLcMasterId(resp?.data?.lcMasterId);
         }
       },
       (err) => console.error('Error: ', err),

@@ -91,9 +91,11 @@
             <div
               class="time_slot_card"
               (click)="onTimeSelected(timeSlot)"
-              [ngClass]="[
-                timeSlot?.time == selectedTimeSlot ? 'bg_selectedSlot' : '',
-              ]"
+              (keydown.enter)="onTimeSelected(timeSlot)"
+              tabindex="0"
+              [ngClass]="
+                timeSlot?.time === selectedTimeSlot ? 'bg_selectedSlot' : ''
+              "
             >
               <span>
                 {{ timeSlot?.time }}

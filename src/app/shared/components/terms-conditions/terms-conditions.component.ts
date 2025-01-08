@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as moment from 'moment';
 
@@ -18,16 +19,15 @@ export class TermsConditionsComponent implements OnInit {
   currencySymboll = '₹';
   otherUserInfo: any;
 
-  constructor(private tokenStore: TokenStorageService) {}
+  constructor(
+    private tokenStore: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
+  ) {}
 
   ngOnInit(): void {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.customerData = JSON.parse(
-      <string>sessionStorage.getItem('customerData'),
-    );
-    this.loamAmount = JSON.parse(
-      <string>sessionStorage.getItem('loanAmmount'),
-    )?.loanAmount;
+    this.customerData = this.sessionStorageService.getCustomerData();
+    this.loamAmount = this.sessionStorageService.getLoanAmount()?.loanAmount;
     this.requestDate = moment(new Date()).format();
   }
 

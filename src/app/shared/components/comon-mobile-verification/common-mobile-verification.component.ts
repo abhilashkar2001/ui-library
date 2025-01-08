@@ -9,6 +9,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
@@ -20,6 +21,7 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import { debounceTime } from 'rxjs/operators';
 import { ErrorNotifierPopupComponent } from '../error-notifier-popup/error-notifier-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-common-mobile-verification',
@@ -37,11 +39,11 @@ import { MatDialog } from '@angular/material/dialog';
     ]),
   ],
 })
-export class CommonMobileVerificationComponent implements OnInit {
+export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   @Output() getOTP: EventEmitter<any> = new EventEmitter();
   @Output() enteredOTP: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() onMobileExitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() mobileExitEvent: EventEmitter<any> = new EventEmitter();
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Input() showOtpSection: boolean | any;
   @Input() invalidOtp: boolean | any;
@@ -68,7 +70,8 @@ export class CommonMobileVerificationComponent implements OnInit {
     },
   };
   validNumber = true;
-  countriesIsdCodes: any = [];
+  countriesIsdCodes: any[] = [];
+  countryTelIsdCode: any[] = [];
   selectedIsdCode: any = '';
   isValidMobile = false;
   selectedIsd: any;
@@ -89,6 +92,7 @@ export class CommonMobileVerificationComponent implements OnInit {
     private commonService: CommonService,
     private api: OpenAccountService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.buildFormGroup();
   }
@@ -122,15 +126,16 @@ export class CommonMobileVerificationComponent implements OnInit {
     });
   }
 
-  otpChange() {}
-
   loadCountries() {
-    console.log('.......');
     this.commonService.getAllCountries().subscribe(
       (resp: any) => {
-        console.log(resp, './////////');
         if (resp?.data) {
           this.countriesIsdCodes = resp?.data;
+          this.countryTelIsdCode = resp?.data.map(
+            (i: any) => i?.countryTelIsdCode,
+          );
+          console.log(this.countriesIsdCodes);
+          console.log(this.countryTelIsdCode);
           const indiaIsdCode = this.countriesIsdCodes.find(
             (item: any) => item?.countryName.toLowerCase() == 'india',
           );
@@ -265,7 +270,7 @@ export class CommonMobileVerificationComponent implements OnInit {
   }
 
   onExit() {
-    this.onMobileExitEvent.emit();
+    this.mobileExitEvent.emit();
   }
 
   onVerifyExistingProduct(event: any) {
@@ -299,8 +304,7 @@ export class CommonMobileVerificationComponent implements OnInit {
                   );
                 }
                 if (resp?.data?.length > 0) {
-                  sessionStorage.setItem('mobileNo', event.phone);
-
+                  this.sessionStorageService.setMobileNo(event.phone);
                   if (
                     this.mobileVerifyInfo.applicationType === 'loan application'
                   ) {
@@ -308,13 +312,11 @@ export class CommonMobileVerificationComponent implements OnInit {
                     resp.data.forEach((element: any) => {
                       customerIds.push(element.customerId);
                     });
-                    sessionStorage.setItem(
-                      'userCustomerId',
+                    this.sessionStorageService.setUserCustomerId(
                       JSON.stringify(customerIds),
                     );
                   } else {
-                    sessionStorage.setItem(
-                      'userCustomerId',
+                    this.sessionStorageService.setUserCustomerId(
                       resp.data[0].customerId,
                     );
                   }
@@ -332,7 +334,7 @@ export class CommonMobileVerificationComponent implements OnInit {
                   personalInfo: resp?.data,
                   updateMasterSave: false,
                 });
-                sessionStorage.setItem('mobileNo', event.phone);
+                this.sessionStorageService.setMobileNo(event.phone);
               }
             });
         }
@@ -355,16 +357,15 @@ export class CommonMobileVerificationComponent implements OnInit {
       backdropClass: 'bdrop',
     });
     dialogRef.afterClosed().subscribe((res) => {
-      console.log(res);
       if (res == 'cancel') this.backEvent.emit();
     });
   }
   cleanCacheInMobileScreen() {
-    sessionStorage.removeItem('userCustomerId');
-    sessionStorage.removeItem('customerStageId');
-    sessionStorage.removeItem('customerId');
-    sessionStorage.removeItem('customerStageIds');
-    sessionStorage.removeItem('originationId');
-    sessionStorage.removeItem('otherDocScreenCode');
+    this.sessionStorageService.removeOriginationId();
+    this.sessionStorageService.removeUserCustomerId();
+    this.sessionStorageService.removeCustomerStageId();
+    this.sessionStorageService.removeCustomerId();
+    this.sessionStorageService.removeOriginationId();
+    this.sessionStorageService.removeOtherDocScreenCode();
   }
 }

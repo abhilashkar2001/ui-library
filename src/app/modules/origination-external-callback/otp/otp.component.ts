@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'app/shared/models/user.model';
 import { OtpService } from 'app/shared/services/otp.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
@@ -33,6 +34,7 @@ export class OtpComponent implements OnInit {
     private route: Router,
     private router: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.otpForm = new FormGroup({
       email: new FormControl(''),
@@ -47,10 +49,10 @@ export class OtpComponent implements OnInit {
       this.screenName = params['type'];
     });
     if (this.screenName != '' && this.screenName != undefined) {
-      this.customerId = JSON.parse(
-        <string>sessionStorage.getItem('customerId'),
-      );
-      this.otpForm.get('mobile')?.patchValue(sessionStorage.getItem('mobile'));
+      (this.customerId = this.sessionStorageService.getCustomerId()),
+        this.otpForm
+          .get('mobile')
+          ?.patchValue(this.sessionStorageService.getMobile());
       this.reducedMob = this.otpForm.get('mobile')?.value % 1000;
       setTimeout(() => {
         this.generateOtp();

@@ -48,20 +48,21 @@
       </ng-container>
 
       <div class="mb-10" fxLayout="row" fxLayoutAlign="start center">
-        <button
-          class="confirm-button"
-          mat-raised-button
+        <ic-button
+          label="Apply"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
           (click)="goForCalculator(subAccount)"
-        >
-          Apply
-        </button>
-
+        ></ic-button>
         <a
           *ngIf="subAccount?.featureInfo?.length > 2"
           class="more-less-text"
           (click)="readMoreLess()"
-          >View {{ subAccount?.isReadMore ? 'Less' : 'More' }}</a
-        >
+          (keydown.enter)="readMoreLess()"
+          tabindex="1"
+          >View {{ subAccount?.isReadMore ? 'Less' : 'More' }}
+        </a>
       </div>
     </div>
   </div>

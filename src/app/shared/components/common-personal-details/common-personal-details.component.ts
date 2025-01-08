@@ -29,6 +29,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data } from '@angular/router';
 import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -94,6 +95,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private tokenStore: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   panelOpened(index: number) {
@@ -116,8 +118,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     this.getGenericDetails();
     this.fetchBoundaries();
     this.holderType =
-      sessionStorage.getItem('loanHolderType')?.toLowerCase() || 'Self';
-    this.loanCustomerId = sessionStorage.getItem('originationId');
+      this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'Self';
+    this.loanCustomerId = this.sessionStorageService.getOriginationId();
     this.getAllRequisite().then(() => {
       if (this.personalDetails?.length > 0) {
         this.getGenericDetails();
@@ -218,9 +220,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
                     if (addressArray && addressArray.controls?.[0]) {
                       const address = addressArray.controls[0] as FormGroup;
 
-                      const backData = JSON.parse(
-                        sessionStorage.getItem('backData') || '[]',
-                      );
+                      const backData =
+                        this.sessionStorageService.getBackData() || [];
                       const addressData = backData?.[index];
 
                       if (address && addressData) {
@@ -312,9 +313,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
             }
 
             const address = addressArray.controls[0] as FormGroup;
-            const backData = JSON.parse(
-              sessionStorage.getItem('backData') || '[]',
-            );
+            const backData = this.sessionStorageService.getBackData() || [];
             if (!backData?.[0]) {
               throw new Error('Back data is missing.');
             }
@@ -614,7 +613,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
       .at(i)
       .get('contact')
       ?.get('mobile');
-    const mobileNo = parseInt(<string>sessionStorage.getItem('mobileNo'));
+    const mobileNo = parseInt(this.sessionStorageService.getMobileNo());
     if (mobileNo) {
       if (i === 0) {
         mobileControl.markAllAsTouched();

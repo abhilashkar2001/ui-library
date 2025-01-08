@@ -1,18 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'button-loading',
+  selector: 'app-button-loading',
   templateUrl: './button-loading.component.html',
   styleUrls: ['./button-loading.component.scss'],
 })
-export class ButtonLoadingComponent implements OnInit {
+export class ButtonLoadingComponent {
   @Input() loading = false;
   @Input() disable = false;
   @Input() btnClass = '';
   @Input() loadingText = 'Please wait';
   @Input() type: 'button' | 'submit' = 'submit';
-
-  constructor() {}
-
-  ngOnInit() {}
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-payment-method',
@@ -21,6 +22,7 @@ export class PaymentMethodComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   cardType = [
@@ -44,7 +46,6 @@ export class PaymentMethodComponent implements OnInit {
   ngOnInit(): void {
     this.buildPayentForm();
   }
-  onToggleChange() {}
   buildPayentForm() {
     this.paymentForm = this.fb.group({});
     this.upiPaymentForm = this.fb.group({});
@@ -56,8 +57,8 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   continuePayment() {
-    if (sessionStorage.getItem('depositOriginationId'))
-      this.originId = sessionStorage.getItem('depositOriginationId');
+    if (this.sessionStorageService.getDepositOriginationId())
+      this.originId = this.sessionStorageService.getDepositOriginationId();
     this.dialog.open(SuccessPopupComponent, {
       data: {
         originationId: this.originId,

@@ -15,7 +15,6 @@ import { HeaderTopComponent } from './header-top/header-top.component';
 import { BreadcrumbComponent } from './core-components/breadcrumb/breadcrumb.component';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
 import { AppLoaderComponent } from '../services/app-loader/app-loader.component';
-import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 
 import { FooterComponent } from './footer/footer.component';
 import { SavingsSubmitDialogComponent } from './savings-submit-dialog/savings-submit-dialog.component';
@@ -121,6 +120,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SidebarSideComponent } from './sidebar-side/sidebar-side.component';
 import { NewReusableMatTableComponent } from './new-reusable-mat-table/new-reusable-mat-table.component';
 import { NewReusableFilterComponent } from './new-reusable-filter/new-reusable-filter.component';
+import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
@@ -214,6 +214,7 @@ const components = [
   SidebarSideComponent,
   NewReusableMatTableComponent,
   NewReusableFilterComponent,
+  CusotmWebDocUploadComponent,
 ];
 
 @NgModule({
@@ -235,9 +236,9 @@ const components = [
     MatIconModule,
     NgxSpinnerModule,
     InputMaskModule,
-    IcustLibraryModule,
     MatIconModule,
     MatFormFieldModule,
+    IcustLibraryModule,
   ],
   declarations: components,
   exports: components,

@@ -128,13 +128,13 @@
       <button class="back-button" mat-raised-button (click)="clear()">
         {{ 'Clear' | translate }}
       </button>
-      <button-loading
+      <app-button-loading
         [type]="'button'"
         [btnClass]="'submit-button'"
         (click)="submit()"
       >
         {{ 'Submit' | translate }}
-      </button-loading>
+      </app-button-loading>
     </div>
   </form>
 </mat-card>

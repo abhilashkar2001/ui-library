@@ -26,7 +26,7 @@ export class PrepaidRefundComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cardService: CardService,
-    private sessionStorage: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
     private tokenService: TokenStorageService,
     private router: Router,
@@ -35,8 +35,8 @@ export class PrepaidRefundComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerInfo = this.sessionStorage.getCustomerInfo();
-    this.cardList = this.sessionStorage.getListOfCards();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
+    this.cardList = this.sessionStorageService.getListOfCards();
     this.buildRefundForm();
   }
 

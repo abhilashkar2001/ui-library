@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { ChequeService } from '../cheque-service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-stop-cheque',
@@ -27,6 +28,7 @@ export class StopChequeComponent implements OnInit {
     private chequeService: ChequeService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -36,12 +38,10 @@ export class StopChequeComponent implements OnInit {
   }
 
   fetchCustomerInfo() {
-    const custInfo: any = sessionStorage.getItem('customer-Info');
+    const custInfo: any = this.sessionStorageService.getCustomerInfo();
     this.customerInfo = JSON.parse(custInfo);
 
-    this.accountNumberList = JSON.parse(
-      <string>sessionStorage.getItem('listOfAccounts'),
-    );
+    this.accountNumberList = this.sessionStorageService.getListOfAccounts();
   }
 
   buildForm() {
@@ -53,8 +53,7 @@ export class StopChequeComponent implements OnInit {
       to: [''],
       reason: [''],
     });
-    const selectedAccountNo = sessionStorage.getItem('selectAccNo');
-
+    const selectedAccountNo = this.sessionStorageService.getSelectAccNo();
     if (selectedAccountNo) {
       this.stopChequeForm.get('accountNo')?.setValue(selectedAccountNo);
       this.handleAccountNumberChange(selectedAccountNo);

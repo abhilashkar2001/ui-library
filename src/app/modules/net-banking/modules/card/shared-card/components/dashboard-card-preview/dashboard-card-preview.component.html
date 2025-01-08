@@ -14,11 +14,12 @@
             <img
               [src]="baseUrl + image?.document?.fileUrl"
               class="slide"
-              [ngStyle]="{ opacity: i == currentIndex ? 1 : 0 }"
+              [ngStyle]="{ opacity: i === currentIndex ? 1 : 0 }"
+              alt="file"
             />
           </ng-container>
           <ng-template #showDefault>
-            <img src="assets/images/card_img1.png" />
+            <img src="assets/images/card_img1.png" alt="img" />
           </ng-template>
         </ng-container>
       </div>
@@ -63,10 +64,15 @@
           fxFlex="45"
           fxLayoutAlign="end center"
           (click)="openGetStatement()"
+          (keydown.enter)="openGetStatement()"
+          tabindex="2"
         >
-          <button mat-flat-button class="small-button class-name get_statement">
-            {{ 'Get Statement' | translate }}
-          </button>
+          <ic-button
+            [label]="'Get Statement' | translate"
+            icButtonType="filled"
+            type="submit"
+            size="small"
+          ></ic-button>
         </div>
       </ng-container>
     </div>

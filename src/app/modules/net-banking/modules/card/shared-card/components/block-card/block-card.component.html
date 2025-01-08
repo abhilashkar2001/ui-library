@@ -4,14 +4,20 @@
     <div fxLayout="column" class="blue-box" fxFlex="50">
       <span class="light-blue-title">{{ title | translate }}</span>
       <div fxLayout="row">
-        <app-searchable-select
+        <ic-select
+          fxFlex="20"
+          label="Card No"
+          placeholder="Card No"
+          [bindValueKey]="'id'"
+          [bindLabelKey]="'values'"
           [control]="blockCardForm.get('creditAccount') | formcontrol"
-          [inputLabel]="'Card No' | translate"
-          bindValueKey="cardNumber"
-          bindLabelKey="cardNumber"
-          [items]="cardList"
+          [options]="cardList"
           (selectionChange)="patchDetails($event)"
-        ></app-searchable-select>
+          [bindValueKey]="'cardNumber'"
+          [bindLabelKey]="'cardNumber'"
+          selectionType="single"
+        >
+        </ic-select>
         <div
           fxLayout="column"
           fxLayoutAlign="center center"
@@ -44,7 +50,7 @@
         >
           {{ 'Re-Issue Card?' | translate }}
         </mat-checkbox>
-        <img class="info_icon" src="assets/images/info.png" />
+        <img class="info_icon" src="assets/images/info.png" alt="info" />
         <div class="info_content_container">
           <h3 class="info_title">
             <mat-icon>warning_amber</mat-icon> &nbsp;
@@ -66,7 +72,7 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="this.reIssueToggle == true">
+    <ng-container *ngIf="this.reIssueToggle === true">
       <div class="mt-12" fxFlex="100" fxLayout="column" fxLayoutGap="20px">
         <div class="sub-title">
           {{ 'Mailing Address Same as your' | translate }}
@@ -105,13 +111,19 @@
       </div>
     </ng-container>
     <div fxLayoutGap="20" fxLayoutAlign="end center">
-      <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-      </app-ic-action-button>
-      <app-ic-action-button
-        buttonName="Proceed"
-        buttonType="filled"
-        (onClick)="proceed()"
-      ></app-ic-action-button>
+      <ic-button
+        label="Cancel"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+      ></ic-button>
+      <ic-button
+        label="Proceed"
+        (click)="proceed()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-card>
 </form>

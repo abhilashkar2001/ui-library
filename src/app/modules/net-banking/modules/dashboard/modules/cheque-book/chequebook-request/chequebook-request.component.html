@@ -1,16 +1,24 @@
 <div class="chequebook_request_container">
   <form [formGroup]="chequebookRequestForm">
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20">
+    <div
+      icFlexLayout
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="50"
+    >
       <mat-label class="ml-20 custom-label">Account No</mat-label>
-      <app-searchable-select
-        [items]="accountNumberList"
-        bindValueKey="accountNo"
-        bindLabelKey="accountNo"
+
+      <ic-select
+        fxFlex=""
+        label="Date of Installment"
         [control]="chequebookRequestForm.get('accountNo') | formcontrol"
-        [skipLabel]="false"
-        showOutsideLabel="true"
         (selectionChange)="handleAccountNumberChange()"
-      ></app-searchable-select>
+        [options]="accountNumberList"
+        [bindValueKey]="'accountNo'"
+        [bindLabelKey]="'accountNo'"
+        selectionType="single"
+      >
+      </ic-select>
       <span class="message" *ngIf="chequeNumber"
         >{{ customerInfo?.accounts?.[0]?.accountType }} | Name:
         {{ customerInfo?.customerName }}</span
@@ -20,14 +28,15 @@
     <h2 class="wrapper_row light-blue-title">Cheque Book Detail</h2>
     <div class="row wrapper_row">
       <div fxFlex="25" class="input_wrapper">
-        <app-searchable-select
-          [items]="noOfLeaves"
-          bindLabelKey="values"
-          bindValueKey="id"
+        <ic-select
+          label="No of Leaves Per Book*"
           [control]="chequebookRequestForm.get('leavesNo') | formcontrol"
-          inputLabel="No of Leaves Per Book*"
-          showOutsideLabel="true"
-        ></app-searchable-select>
+          [options]="noOfLeaves"
+          [bindValueKey]="'id'"
+          [bindLabelKey]="'values'"
+          selectionType="single"
+        >
+        </ic-select>
       </div>
       <div
         fxFlex="70"
@@ -64,14 +73,15 @@
     >
       <div class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
-          <app-searchable-select
-            [items]="branches"
-            bindLabelKey="branchName"
-            bindValueKey="branchCode"
+          <ic-select
+            label="Branch"
             [control]="chequebookRequestForm.get('branch') | formcontrol"
-            inputLabel="Branch"
-            showOutsideLabel="true"
-          ></app-searchable-select>
+            [options]="branches"
+            [bindValueKey]="'branchCode'"
+            [bindLabelKey]="'branchName'"
+            selectionType="single"
+          >
+          </ic-select>
         </div>
       </div>
     </ng-container>
@@ -79,67 +89,77 @@
     <ng-template #showMyAddress>
       <div class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
-          <app-searchable-select
-            [items]="addressTypesList"
-            bindValueKey="addressTypes"
-            bindLabelKey="addressTypes"
+          <ic-select
+            label="Type"
             [control]="chequebookRequestForm.get('type') | formcontrol"
-            inputLabel="Type"
             (selectionChange)="changeAddressType()"
-            showOutsideLabel="true"
-          ></app-searchable-select>
+            [options]="addressTypesList"
+            [bindValueKey]="'addressTypes'"
+            [bindLabelKey]="'addressTypes'"
+            selectionType="single"
+          >
+          </ic-select>
         </div>
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="Address Line 1"
             [control]="chequebookRequestForm.get('address1') | formcontrol"
-            inputLabel="Address Line 1"
+            [label]="'Address Line 1'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="Address Line 2"
             [control]="chequebookRequestForm.get('address2') | formcontrol"
-            inputLabel="Address Line 2"
+            [label]="'Address Line 2'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="Country"
             [control]="chequebookRequestForm.get('country') | formcontrol"
-            inputLabel="Country"
+            [label]="'Country'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
       </div>
 
       <div class="row wrapper_row">
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="State"
             [control]="chequebookRequestForm.get('state') | formcontrol"
-            inputLabel="State"
+            [label]="'State'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="City"
             [control]="chequebookRequestForm.get('city') | formcontrol"
-            inputLabel="City"
+            [label]="'City'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
         <div fxFlex="25" class="input_wrapper">
-          <app-ic-custom-input
+          <ic-form-field
+            placeholder="PIN Code"
             [control]="chequebookRequestForm.get('pin') | formcontrol"
-            inputLabel="PIN Code"
+            [label]="'PIN Code'"
             [readonly]="true"
-          ></app-ic-custom-input>
+          ></ic-form-field>
         </div>
       </div>
     </ng-template>
 
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayoutAlign="start center" fxLayoutGap="10">
-        <img src="assets/images/Icon feather-info.png" />
+        <img
+          src="assets/images/Icon feather-info.png"
+          alt="incon feather info"
+        />
         <p class="m-0">
           Exchange rate may be changed at the time of transaction.
         </p>
@@ -148,13 +168,13 @@
         <button mat-raised-button class="exit-button" (click)="goBack()">
           {{ 'Cancel' }}
         </button>
-        <button
-          mat-raised-button
+        <ic-button
           (click)="saveChequeDetails()"
-          class="submit-button"
-        >
-          {{ 'Proceed' }}
-        </button>
+          label="Proceed"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
+        ></ic-button>
       </div>
     </div>
   </form>

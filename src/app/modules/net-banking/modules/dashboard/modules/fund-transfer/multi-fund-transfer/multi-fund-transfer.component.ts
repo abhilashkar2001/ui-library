@@ -12,6 +12,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-multi-fund-transfer',
@@ -22,7 +23,10 @@ export class MultiFundTransferComponent implements OnInit {
   multiTransferForm!: FormGroup;
   genericValue = { TRANSFERMODE: [] };
   selectedAccounts: any[] | any;
-  purpose = ['Salary', 'Vendor'];
+  purpose = [
+    { label: 'Salary', value: 'salary' },
+    { label: 'Vendor', value: 'vendor' },
+  ];
   fromAccount: any = [];
   transferMode = [];
   transferTo = [];
@@ -51,6 +55,7 @@ export class MultiFundTransferComponent implements OnInit {
     private api: OpenAccountService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
@@ -61,17 +66,11 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.corporateId = JSON.parse(
-      <string>sessionStorage.getItem('corporateId'),
-    );
+    this.corporateId = this.sessionStorageService.getCorporateId();
     this.initMultiTransferForm();
     this.fetchGenericValues();
-    this.custAccounts = JSON.parse(
-      <string>sessionStorage.getItem('listOfAccounts'),
-    );
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
+    this.custAccounts = this.sessionStorageService.getListOfAccounts();
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.custAccounts.forEach((element: any) => {
       this.fromAccount.push(element.accountNo);
     });
@@ -184,7 +183,7 @@ export class MultiFundTransferComponent implements OnInit {
   }
 
   getOTP() {
-    this.api.getOtp(this.customerInfo.mobileNumber).subscribe(() => {});
+    this.api.getOtp(this.customerInfo.mobileNumber).subscribe();
   }
 
   cancel() {

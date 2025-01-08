@@ -1,33 +1,28 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[appNoInitialSpecialCharacters]',
 })
 export class NoInitialSpecialCharactersDirective {
+  @Input() appNoInitialSpecialCharacters!: boolean | string;
+
   constructor(private el: ElementRef) {}
 
-  @HostListener('input', ['$event']) onInputChange(event: Event) {
-    const inputValue = this.el.nativeElement.value;
+  @HostListener('input', ['$event']) onInputChange(event: any) {
+    const initialValue = this.el.nativeElement.value;
+    const firstChar = initialValue.charAt(0);
 
-    // Check if the input value starts with a special character or space
-    if (/^[!@#$%^&*(),.?":;_+';/={}|<>-\s]/.test(inputValue)) {
-      // If it starts with a special character or space, prevent the input
-      event.preventDefault();
-      this.el.nativeElement.value = inputValue.replace(
-        /^[!@#$%^&*(),.?":;_+';/={}|<>-\s]+/,
-        '',
-      );
+    // Check if the first character is valid
+    if (!this.isValidFirstChar(firstChar)) {
+      const newValue = initialValue.slice(1); // Remove the first character
+      this.el.nativeElement.value = newValue;
+      event.stopPropagation(); // Prevent event bubbling
     }
   }
 
-  @HostListener('paste', ['$event']) onPaste(event: ClipboardEvent | any) {
-    // Get the pasted text from the clipboard
-    const pastedText: any = event.clipboardData.getData('text');
-
-    // Check if the pasted text starts with a special character or space
-    if (/^[!@#$%^&*(),.?":;_+';/={}|<>-\s]/.test(pastedText)) {
-      // If it starts with a special character or space, prevent the paste
-      event.preventDefault();
-    }
+  private isValidFirstChar(char: string): boolean {
+    // Define allowed characters for the first position
+    const allowedChars = /^[a-zA-Z0-9]$/; // Only alphanumeric characters are allowed
+    return allowedChars.test(char);
   }
 }

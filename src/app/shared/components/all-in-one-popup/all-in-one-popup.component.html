@@ -10,51 +10,38 @@
       <ng-container *ngIf="confirmationForm" [formGroup]="confirmationForm">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div fxFlex="48%">
-            <mat-form-field class="full-width mt-2" appearance="outline">
-              <mat-label>{{ 'Transaction Password' | translate }}</mat-label>
-              <input
-                matInput
-                formControlName="transactionPassword"
-                [type]="hide ? 'password' : 'text'"
-                name="password"
-                placeholder="********"
-                autocomplete="off"
-                class="alignCred"
-              />
-              <mat-icon
-                class="opacity-25"
-                matSuffix
-                (click)="hide = !hide"
-                style="cursor: pointer"
-                >{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon
-              >
-            </mat-form-field>
+            <ic-form-field
+              label="Transaction Password"
+              placeholder="********"
+              [control]="
+                confirmationForm.get('transactionPassword') | formcontrol
+              "
+              [type]="hide ? 'password' : 'text'"
+              [suffixIcon]="hide ? 'visibility-off-grey' : 'visibility-on-grey'"
+              (onSuffixClick)="visibiltiy($event)"
+            >
+            </ic-form-field>
           </div>
-
           <div fxFlex="48%">
-            <mat-form-field class="full-width mt-2" appearance="outline">
-              <mat-label>{{ 'One Time Password' | translate }}</mat-label>
-              <input
-                matInput
-                formControlName="oneTimePassword"
-                name="password"
-                placeholder="********"
-                autocomplete="off"
-                class="alignCred"
-              />
-            </mat-form-field>
+            <ic-form-field
+              label="One Time Password"
+              placeholder="********"
+              [control]="confirmationForm.get('oneTimePassword') | formcontrol"
+              appNumbersOnly
+              type="text"
+            >
+            </ic-form-field>
           </div>
         </div>
       </ng-container>
       <div class="footer">
-        <button
-          type="button"
-          mat-raised-button
-          class="submitButton"
+        <ic-button
           (click)="submit()"
-        >
-          Submit
-        </button>
+          label="Submit"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
+        ></ic-button>
         <button
           type="button"
           mat-raised-button
@@ -97,14 +84,13 @@
       </div>
     </div>
     <div class="footer">
-      <button
-        type="button"
-        mat-raised-button
-        class="submitButton"
+      <ic-button
         (click)="onRemarkConfirm()"
-      >
-        Yes
-      </button>
+        label="Yes"
+        icButtonType="filled-rounded"
+        type="submit"
+        size="large"
+      ></ic-button>
       <button
         type="button"
         mat-raised-button

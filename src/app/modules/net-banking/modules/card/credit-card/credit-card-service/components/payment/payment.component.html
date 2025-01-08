@@ -83,19 +83,20 @@
             </app-ic-custom-input>
           </div>
         </div>
-        <div fxLayout="row" fxLayoutGap="30px" class="mt-12">
-          <app-ic-radio-button
-            [optiions]="autoPay"
-            [control]="
-              paymentDetails.get('cardFundTransfer.autoPay') | formcontrol
-            "
-            [displayLabel]="'Setup for autoPay for this biller' | translate"
-            layout="column"
-          >
-          </app-ic-radio-button>
-          <div fxLayout="column">
-            <mat-label class="ml-20 custom-label">Select Amount</mat-label>
-            <app-searchable-select
+        <div fxLayoutGap="20" fxLayout="row" class="mt-12">
+          <div fxFlex="23">
+            <app-ic-radio-button
+              [optiions]="autoPay"
+              [control]="
+                paymentDetails.get('cardFundTransfer.autoPay') | formcontrol
+              "
+              [displayLabel]="'Setup for autoPay for this biller' | translate"
+              layout="column"
+            >
+            </app-ic-radio-button>
+          </div>
+          <div fxLayout="column" fxFlex="20">
+            <!-- <app-searchable-select
               [items]="selectedAmount"
               [control]="
                 paymentDetails.get('cardFundTransfer.selectAmount')
@@ -104,28 +105,48 @@
               bindValueKey="value"
               bindLabelKey="label"
             >
-            </app-searchable-select>
+            </app-searchable-select> -->
+            <ic-select
+              icFlexLayout
+              fxFlex="100"
+              [label]="'Select Amount' | translate"
+              placeholder="Select Amount"
+              [options]="selectedAmount"
+              [bindValueKey]="'value'"
+              [bindLabelKey]="'label'"
+              [control]="
+                paymentDetails.get('cardFundTransfer.selectAmount')
+                  | formcontrol
+              "
+            ></ic-select>
           </div>
-
-          <app-ic-custom-input
-            [inputLabel]="'Enter Maximum AutoPay Amount' | translate"
-            [control]="
-              paymentDetails.get('cardFundTransfer.maxAutopayAmount')
-                | formcontrol
-            "
-          >
-          </app-ic-custom-input>
+          <div fxFlex="25">
+            <ic-form-field
+              placeholder="Enter Maximum AutoPay Amount"
+              [control]="
+                paymentDetails.get('cardFundTransfer.maxAutopayAmount')
+                  | formcontrol
+              "
+              [label]="'Enter Maximum AutoPay Amount' | translate"
+            ></ic-form-field>
+          </div>
         </div>
       </div>
     </ng-container>
     <div fxLayoutGap="20" fxLayoutAlign="end center">
-      <app-ic-action-button buttonName="Cancel" buttonType="stroked">
-      </app-ic-action-button>
-      <app-ic-action-button
-        buttonName="Proceed"
-        buttonType="filled"
-        (onClick)="proceed()"
-      ></app-ic-action-button>
+      <ic-button
+        [label]="'Cancel'"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+      ></ic-button>
+      <ic-button
+        label="Proceed"
+        (click)="proceed()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
     </div>
   </mat-card>
 </div>

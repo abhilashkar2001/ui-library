@@ -8,7 +8,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 export interface PaginationValue {
   page: number;
@@ -26,9 +27,7 @@ export interface PaginationValue {
     },
   ],
 })
-export class CustomPaginationComponent
-  implements OnInit, OnChanges, ControlValueAccessor
-{
+export class CustomPaginationComponent implements OnInit, OnChanges {
   @Input() value: PaginationValue = { page: 1, pageSize: 5 };
   @Input() total: any;
   @Input() filterValue: any;
@@ -38,16 +37,6 @@ export class CustomPaginationComponent
   currentPage: number | any;
   pageAction: string | any;
   selectedSize = 5;
-  onChange() {}
-  onTouched() {}
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
 
   writeValue(value: PaginationValue): void {
     if (!value) return;
@@ -63,12 +52,14 @@ export class CustomPaginationComponent
   lastrecord = 0;
   firstRecord = 0;
 
+  constructor(private sessionStorageService: SessionStorageService) {}
+
   ngOnInit(): void {
     // this.updateRecord(this.totalPages, this.value.pageSize, 1);
     this.updateVisiblePages();
-    if (sessionStorage.getItem('fromDate')) {
-      sessionStorage.removeItem('fromDate');
-      sessionStorage.removeItem('toDate');
+    if (this.sessionStorageService.getFromDate()) {
+      this.sessionStorageService.removeFromDate();
+      this.sessionStorageService.removeToDate();
     }
   }
 
@@ -118,7 +109,6 @@ export class CustomPaginationComponent
     this.updateRecord(this.totalPages, this.value.pageSize, this.value.page);
     this.currentPage = page;
     this.updateVisiblePages();
-    this.onChange();
     const customtable: any = document.querySelector('#customtable');
     customtable.scrollTo(0, 0);
   }
@@ -129,7 +119,6 @@ export class CustomPaginationComponent
     this.updateTotalPages();
     this.updateRecord(this.totalPages, this.value.pageSize, this.value.page);
     this.updateVisiblePages();
-    this.onChange();
   }
 
   updateVisiblePages(): void {

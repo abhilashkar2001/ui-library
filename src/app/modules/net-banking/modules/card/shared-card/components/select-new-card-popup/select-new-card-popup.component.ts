@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CreditCardStore } from '../../../credit-card/credit-card.store';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './select-new-card-popup.component.html',
   styleUrls: ['./select-new-card-popup.component.scss'],
 })
-export class SelectNewCardPopupComponent implements OnInit {
+export class SelectNewCardPopupComponent {
   @ViewChild('widgetsContent', { static: true }) widgetsContent:
     | ElementRef
     | any;
@@ -17,8 +17,6 @@ export class SelectNewCardPopupComponent implements OnInit {
   selectedCard = this.cardList[this.currentIndex];
 
   constructor(private dialogRef: MatDialogRef<SelectNewCardPopupComponent>) {}
-
-  ngOnInit(): void {}
 
   close() {
     this.dialogRef.close();

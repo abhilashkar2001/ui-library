@@ -8,6 +8,14 @@
   padding: 2px;
 }
 
+.popup_alignment {
+  background-color: red;
+  // position: relative;
+  // top: -310px;
+  // left: 70%;
+  // z-index: 1;
+}
+
 .profile-box {
   background: #fafafa 0% 0% no-repeat padding-box;
   padding: 0px 3px 0px 3px;
@@ -124,6 +132,10 @@
 
 .img-icon {
   border-radius: 50px 50px;
+}
+
+.sign_out {
+  margin-left: 10%;
 }
 
 .edit-icon {

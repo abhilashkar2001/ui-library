@@ -36,11 +36,16 @@
   </div>
 
   <div fxLayout="column" class="dropdown position-relative">
-    <button mat-flat-button class="addNewButton">
+    <!-- <button mat-flat-button class="addNewButton">
       <mat-icon class="text-white text-xl">add</mat-icon>
       {{ 'Add New' | translate }}
-    </button>
-
+    </button> -->
+    <ic-button
+      label="+ Add New"
+      icButtonType="filled-rounded"
+      type="submit"
+      size="large"
+    ></ic-button>
     <div
       class="dropdown-content"
       *ngIf="addNewList?.length > 0; else elseBlock"

@@ -13,6 +13,8 @@ import { FeeAccountComponent } from './fee-account/fee-account.component';
 import { BenificiaryDetailsComponent } from './benificiary-details/benificiary-details.component';
 import { UploadBulkUploadComponent } from './upload-bulk-upload/upload-bulk-upload.component';
 import { RouterModule } from '@angular/router';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedPipesModule } from '../../../../../../shared/pipes/shared-pipes.module';
 
 const components: Type<any>[] = [
   BgSummaryComponent,
@@ -34,6 +36,8 @@ const components: Type<any>[] = [
     SharedComponentsModule,
     SharedMaterialModule,
     RouterModule,
+    IcustLibraryModule,
+    SharedPipesModule,
   ],
   exports: components,
 })

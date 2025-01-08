@@ -5,6 +5,7 @@ import { BeneficiaryService } from '../beneficiary-summary/beneficiary.service';
 import { BankCodePopupComponent } from 'app/shared/components/bank-code-popup/bank-code-popup.component';
 import { IconService } from 'app/shared/services/icon.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-add-edit-benificiary',
@@ -39,16 +40,15 @@ export class AddEditBenificiaryComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private iconService: IconService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.iconService
       .addIconIfNotExists('search-icon', 'assets/images/search-icon.svg')
-      .subscribe(() => {});
+      .subscribe();
   }
 
   ngOnInit(): void {
-    this.customerInfo = JSON.parse(
-      <string>sessionStorage.getItem('customer-Info'),
-    );
+    this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.buildForm({});
     this.getAllCountry();
     this.route.queryParamMap.subscribe((params: any) => {

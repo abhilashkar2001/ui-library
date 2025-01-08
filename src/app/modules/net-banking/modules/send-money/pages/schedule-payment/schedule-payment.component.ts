@@ -58,7 +58,7 @@ export class SchedulePaymentComponent implements OnInit {
     this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
     this.iconService
       .addIconIfNotExists('calendar-icon', 'assets/images/calendar.svg')
-      .subscribe(() => {});
+      .subscribe();
   }
 
   ngOnInit(): void {

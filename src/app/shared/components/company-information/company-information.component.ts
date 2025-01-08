@@ -70,19 +70,15 @@ export class CompanyInformationComponent implements OnInit {
     this.buildCompanyForm();
     this.fetchCountries();
     this.fetchGenericValues();
-    this.corporateCustId = JSON.parse(
-      <string>sessionStorage.getItem('corporateCustId'),
-    );
-    this.miscellaneousId = JSON.parse(
-      <string>sessionStorage.getItem('miscellaneousId'),
-    );
+    this.corporateCustId = this.sessionStorageService.getCorporateCustId();
+    this.miscellaneousId = this.sessionStorageService.getMiscellaneousId();
     if (this.originationId) this.fetchOriginationMaster();
     else this.fetchCompanyDetails();
   }
 
   buildCompanyForm() {
     this._parentForm = this.fb.group({
-      screenCode: parseInt(<string>sessionStorage.getItem('currentScreenCode')),
+      screenCode: parseInt(this.sessionStorageService.getCurrentScreenCode()),
       originationModel: this.fb.group({
         basisDetailsId: [''],
         loanAmount: [''],

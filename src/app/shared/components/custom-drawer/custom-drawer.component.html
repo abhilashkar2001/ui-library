@@ -12,7 +12,7 @@
         matTreeNodePadding
         class="custom-tree-node"
         [ngClass]="[
-          currentMenu == node.name ? 'active-node highlight_blue' : '',
+          currentMenu === node.name ? 'active-node highlight_blue' : '',
           node.roleName === 'parent-node' ? 'align-node' : '',
         ]"
       >
@@ -22,6 +22,8 @@
           [class]="node.roleName"
           style="cursor: pointer"
           (click)="getNode(node); drawer.toggle()"
+          (keydown.enter)="getNode(node)"
+          tabindex="0"
         >
           {{ node.name }}
         </div>
@@ -33,7 +35,7 @@
         fxLayoutAlign="space-between center"
         style="padding: 0%"
         [ngClass]="[
-          currentMenu == node.name &&
+          currentMenu === node.name &&
           node.roleName !== 'parent-node' &&
           node.roleName !== 'child-node'
             ? 'active-node'
@@ -45,6 +47,8 @@
           [class]="node.roleName"
           style="cursor: pointer"
           (click)="currentMenu = node.name"
+          (keydown.enter)="getNode(node)"
+          tabindex="1"
         >
           {{ node.name }}
         </div>

@@ -9,17 +9,6 @@ import { Observable } from 'rxjs';
 export class ChequeService {
   protected basePath = environment.microServiceURL;
   constructor(private httpClient: HttpClient) {}
-  //   mobileNo = JSON.parse(sessionStorage.getItem("customer-Info")).mobileNumber;
-  // fetchCustInfoByMobile(mobileNo) {
-  //   return this.httpClient.get<any>(
-  //     `${this.basePath}/fundTransfer/fetchCustInfo?mobileNo=${mobileNo}`
-  //   );
-  // }
-  //   fetchAccountlistByMobile() {
-  //     return this.httpClient.get(
-  //       `${this.basePath}/fundTransfer/fetchCustInfo?mobileNo=${this.mobileNo}`
-  //     );
-  //   }
   fetchAccountDetailByAccNo(accNo: any) {
     return this.httpClient.get(
       `${this.basePath}/fundTransfer/fetchCustInfo?accountNumber=${accNo}`,

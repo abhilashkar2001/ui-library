@@ -5,6 +5,7 @@ import { FundTransferService } from '../fund-transfer.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NETBANKING } from '../../../net-banking-dashboard/net-banking-dashboard.constant';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-fund-transfer-summary',
@@ -40,10 +41,11 @@ export class FundTransferSummaryComponent implements OnInit {
     private fundTransferService: FundTransferService,
     private tokenStorageService: TokenStorageService,
     public translate: TranslateService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.uploadType = sessionStorage.getItem('uploadType');
+    this.uploadType = this.sessionStorageService.getUploadType();
     setTimeout(() => {
       const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);

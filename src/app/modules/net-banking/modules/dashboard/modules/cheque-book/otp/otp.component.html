@@ -25,7 +25,13 @@
     </div>
     <mat-error *ngIf="invalidOtp"><strong>Invalid OTP!</strong></mat-error>
     <div class="verify1">
-      <span (click)="getOtp()" class="addcolor resend">{{ 'Resend' }}</span>
+      <span
+        (click)="getOtp()"
+        class="addcolor resend"
+        (keydown.enter)="getOtp()"
+        tabindex="0"
+        >{{ 'Resend' }}
+      </span>
     </div>
     <div
       class="button_section"
@@ -33,13 +39,20 @@
       fxLayoutGap="20"
       fxLayoutAlign="center"
     >
-      <button mat-flat-button class="stroked_btn">
-        {{ 'Cancel' }}
-      </button>
-      <button mat-flat-button (click)="submit()" class="filled_btn">
-        {{ 'Proceed' }}
-      </button>
-    </div>
-  </mat-card></ng-container
->
+      <ic-button
+        label="Cancel"
+        icButtonType="outlined"
+        type="submit"
+        size="large"
+        (click)="cancel()"
+      ></ic-button>
+      <ic-button
+        label="Proceed"
+        (click)="submit()"
+        icButtonType="filled"
+        type="submit"
+        size="large"
+      ></ic-button>
+    </div> </mat-card
+></ng-container>
 <ng-template #feedbackSection> <app-feedback></app-feedback></ng-template>

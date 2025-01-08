@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,13 +18,14 @@ import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-common-emi-calculator',
   templateUrl: './common-emi-calculator.component.html',
   styleUrls: ['./common-emi-calculator.component.scss'],
 })
-export class CommonEmiCalculatorComponent implements OnInit {
+export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   max = 1000000;
   min = 10000;
   maxValue = 0;
@@ -45,13 +53,14 @@ export class CommonEmiCalculatorComponent implements OnInit {
     private loanApi: LoanService,
     private tokenStore: TokenStorageService,
     private dataService: DataService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.cleanCache();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currency = this.otherUserInfo?.currency;
-    const basisId: any = sessionStorage.getItem('loanBasisDetails');
+    const basisId: any = this.sessionStorageService.getLoanBasisDetails();
     this.getProductDetails(JSON.parse(basisId).basisId);
     setTimeout(() => {
       this.buildForm();
@@ -170,9 +179,9 @@ export class CommonEmiCalculatorComponent implements OnInit {
     ) {
       return;
     }
-    sessionStorage.setItem('tenureDays', this.loanForm.value.tenureDays);
-    sessionStorage.setItem('tenureYear', this.loanForm.value.tenureYear);
-    sessionStorage.setItem('tenureMonth', this.loanForm.value.tenureMonth);
+    this.sessionStorageService.setTenureDays(this.loanForm.value.tenureDays);
+    this.sessionStorageService.setTenureYear(this.loanForm.value.tenureYear);
+    this.sessionStorageService.setTenureMonth(this.loanForm.value.tenureMonth);
     const obj = {
       ...this.loanForm.value,
       interestPayable: this.interestPayble,
@@ -221,12 +230,11 @@ export class CommonEmiCalculatorComponent implements OnInit {
   }
 
   cleanCache() {
-    sessionStorage.removeItem('userCustomerId');
-    sessionStorage.removeItem('customerStageId');
-    sessionStorage.removeItem('customerId');
-    sessionStorage.removeItem('customerStageIds');
-    sessionStorage.removeItem('originationId');
-    sessionStorage.removeItem('otherDocScreenCode');
+    this.sessionStorageService.removeUserCustomerId();
+    this.sessionStorageService.removeCustomerStageId();
+    this.sessionStorageService.removeCustomerId();
+    this.sessionStorageService.removeOriginationId();
+    this.sessionStorageService.removeOtherDocScreenCode();
     this.dataService.removeChecklistDocument();
     this.dataService.removeDisbursementDetails();
   }

@@ -7,4 +7,6 @@ export const environment = {
   production: false,
   microServiceURL: 'https://192.168.0.17:4210/api', // 192.168.1.21 - old
   build: 33,
+  SECRET_KEY:
+    'e1cd356f6de53babfef423718f055d8034d5d580c4196f6c5f230e2ee395133b',
 };

@@ -40,7 +40,7 @@ export class CreditCardInternaltionalLimitComponent implements OnInit {
   ) {
     this.iconService
       .addIconIfNotExists('info-icon', 'assets/images/svg/info_yellow.svg')
-      .subscribe(() => {});
+      .subscribe();
   }
 
   ngOnInit(): void {

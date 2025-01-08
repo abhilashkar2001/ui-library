@@ -16,9 +16,16 @@
               journey.
             </p>
             <div class="apply_div">
-              <button type="button" class="apply_btn" (click)="apply()">
+              <!-- <button type="button" class="apply_btn" (click)="apply()">
                 Apply
-              </button>
+              </button> -->
+              <ic-button
+                label="Apply"
+                icButtonType="filled-rounded"
+                type="submit"
+                size="large"
+                (click)="apply()"
+              ></ic-button>
             </div>
             <div class="stacked_imgs_div">
               <div class="img_wrapper">
