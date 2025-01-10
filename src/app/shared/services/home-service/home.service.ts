@@ -17,7 +17,7 @@ export class HomeService {
     );
   }
 
-  getCountryCurrency(branchCode: number) {
+  getCountryCurrency(branchCode: string | undefined) {
     return this.http.get<COUNTRYCURRENCY>(
       `${baseUrl}/branch/currencyByBranch?branchCode=${branchCode}`,
     );

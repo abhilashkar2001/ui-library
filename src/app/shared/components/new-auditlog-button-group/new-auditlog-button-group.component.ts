@@ -3,19 +3,26 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { DataService } from 'app/shared/services/table-service/data.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-auditlog-button-group',
   templateUrl: './new-auditlog-button-group.component.html',
   styleUrls: ['./new-auditlog-button-group.component.scss'],
 })
-export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
+export class NewAuditlogButtonGroupComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() isEdit: any;
   @Input() istitle: any;
   @Input() maintTitle: any;
@@ -32,16 +39,30 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
   @Output() customgoBack = new EventEmitter<{}>();
   @Output() customUpdateRecord = new EventEmitter<{ operation: any }>();
   currentUser: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private dataService: DataService,
     public tokenStorageService: TokenStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
+    this.loadUserProfile();
     if (!this.auditLogData) {
       this.dataService.getClickEvent().subscribe(() => {});
     }
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   editRecord() {
@@ -80,5 +101,8 @@ export class NewAuditlogButtonGroupComponent implements OnInit, OnChanges {
     //       });
     //     }
     //   });
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -21,13 +22,17 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SCREENLIST } from './screen';
 import { TableService } from 'app/shared/services/table-service/table-service';
 import { NewReusableFilterComponent } from '../new-reusable-filter/new-reusable-filter.component';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
 
 @Component({
   selector: 'app-new-reusable-mat-table',
   templateUrl: './new-reusable-mat-table.component.html',
   styleUrls: ['./new-reusable-mat-table.component.scss'],
 })
-export class NewReusableMatTableComponent implements OnInit {
+export class NewReusableMatTableComponent implements OnInit, OnDestroy {
   @Input() className: any;
   @Input() module: any;
   @Input() newFilter: any;
@@ -107,7 +112,8 @@ export class NewReusableMatTableComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   bulkUploadFileName: any = '';
   @Output() customDownloadRecord = new EventEmitter<any>();
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -115,7 +121,9 @@ export class NewReusableMatTableComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private tableservice: TableService,
+    private store: Store,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       `download-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -167,8 +175,7 @@ export class NewReusableMatTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('requiredSpecialFields', this.requiredSpecialFields);
-
+    this.loadUserProfile();
     if (this.holidayTitle.toLowerCase().includes('branch')) {
       this.holidayType.setValue('branch');
     } else if (this.holidayTitle.toLowerCase().includes('currency')) {
@@ -183,9 +190,6 @@ export class NewReusableMatTableComponent implements OnInit {
     if (isMatch) {
       this.hideClose = isMatch ? true : false;
     }
-
-    this.currentUser = this.tokenStorageService.getUser();
-
     this.displayedColumns = this.columns?.map((c: any) => c.columnDef);
     if (
       this.componentName != 'Bulk Upload' &&
@@ -206,6 +210,16 @@ export class NewReusableMatTableComponent implements OnInit {
     this.sortValue = 'lastUpdated';
     this.orderBy = 'DESC';
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   getData(e: any) {
     return e ? `${e[0]?.toUpperCase()}${e[1]?.toUpperCase()}` : '';
   }
@@ -624,5 +638,9 @@ export class NewReusableMatTableComponent implements OnInit {
 
   downloadRecord() {
     this.customDownloadRecord.emit();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

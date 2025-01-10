@@ -1,9 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from 'app/shared/token-storage.service';
+
 
 @Component({
   selector: 'app-payment-page',
@@ -19,14 +24,17 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
   download: Blob | any;
   payeeFrom: any;
   customerInfo: any;
-  profileInfo: any;
+  profileInfo: User | undefined;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private serviceCallHandler: ServiceCallHandler,
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private tokenStorageService: TokenStorageService,
+    private store: Store,
     private sessionStorageService: SessionStorageService,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       'download-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -43,7 +51,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
-    this.profileInfo = this.tokenStorageService.getUser();
+      this.loadUserProfile();
     this.paymentDetails = this.serviceCallHandler.get('serviceHandler', true);
     if (this.paymentDetails[0]?.eventType == 'schedule-payment')
       this.scheduleSummary = true;
@@ -58,7 +66,17 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   ngOnDestroy(): void {
     this.serviceCallHandler.remove('serviceHandler');
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

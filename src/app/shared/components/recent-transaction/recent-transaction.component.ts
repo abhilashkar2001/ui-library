@@ -14,8 +14,11 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { CreatedDurationModelComponent } from '../created-duration-model/created-duration-model.component';
 import { CardService } from 'app/modules/net-banking/modules/card/card.service';
 import { CardModel } from 'app/shared/models/card.model';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-recent-transaction',
@@ -26,7 +29,6 @@ export class RecentTransactionComponent implements OnInit {
   @Output() tabChanged = new EventEmitter<any>();
   @Input() customerInfo: any;
   @Input() selectedAcc: any;
-
   @Input() showMoneyStatusIcon: any;
   @Input()
   recentTransTabs: any;
@@ -45,7 +47,6 @@ export class RecentTransactionComponent implements OnInit {
     { value: 'LASTTHREEMONTH', label: 'Last 3 Month' },
     { value: 'DATERANGE', label: 'Select Date Range' },
   ];
-
   fromDate: string | any;
   toDate: string | any;
   createdDate: string | any;
@@ -54,7 +55,8 @@ export class RecentTransactionComponent implements OnInit {
   page: any;
   recentTransMetaData: any;
   pageSize: any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
@@ -62,9 +64,10 @@ export class RecentTransactionComponent implements OnInit {
     private cardService: CardService,
     private dialog: MatDialog,
     private router: Router,
-    private tokenService: TokenStorageService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.matIconRegistry.addSvgIcon(
       'search-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -83,6 +86,15 @@ export class RecentTransactionComponent implements OnInit {
         'assets/images/extend-arrow.svg',
       ),
     );
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {

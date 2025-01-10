@@ -4,20 +4,24 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { createMask } from 'app/shared/directives/input-mask/constants';
 import { findCurrency } from 'app/shared/helpers/utils';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ic-custom-amount-input',
   templateUrl: './ic-custom-amount-input.component.html',
   styleUrls: ['./ic-custom-amount-input.component.scss'],
 })
-export class IcCustomAmountInput implements OnChanges {
+export class IcCustomAmountInput implements OnChanges, OnDestroy {
   @Input() direction: string | undefined | null;
   @Input() control!: AbstractControl | undefined | null;
   @Input() isdControl: AbstractControl | undefined | null = new FormControl('');
@@ -49,12 +53,23 @@ export class IcCustomAmountInput implements OnChanges {
   currencyMask: any;
   currentCurrency: any;
   profileInfo: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private cdr: ChangeDetectorRef,
-    private tokenService: TokenStorageService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.currentCurrency = findCurrency(this.profileInfo.branchCrncyCode);
+  }
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['currencyCode']?.currentValue) {
@@ -64,7 +79,6 @@ export class IcCustomAmountInput implements OnChanges {
 
   ngOnInit(): void {
     if (this.control) this.isRequired = this.checkIfRequired(this.control);
-
     this.currencyMask = createMask({
       alias: 'numeric',
       groupSeparator: `${this.currentCurrency?.thousandsSeparator}`,
@@ -90,7 +104,7 @@ export class IcCustomAmountInput implements OnChanges {
         return maskedValue;
       },
     });
-    this.currencyCode = this.profileInfo.branchCrncyCode;
+    this.currencyCode = this.profileInfo?.branchCrncyCode;
   }
   formatLargeNumber(value: string): string {
     const plainValue = value.replace(/,/g, '');
@@ -115,5 +129,8 @@ export class IcCustomAmountInput implements OnChanges {
   }
   hendeledKeyUpEvent(event: any) {
     this.onKeyUp.emit(event);
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

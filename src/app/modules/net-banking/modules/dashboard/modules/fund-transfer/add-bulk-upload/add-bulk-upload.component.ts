@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BulkUploadConstant } from './bulk.upload.constant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { BulkUploadServiceService } from '../bulk-upload/bulk-upload-service.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-add-bulk-upload',
   templateUrl: './add-bulk-upload.component.html',
   styleUrls: ['./add-bulk-upload.component.scss'],
 })
-export class AddBulkUploadComponent implements OnInit {
+export class AddBulkUploadComponent implements OnInit, OnDestroy {
   public approvalForm!: FormGroup;
   isEdit = false;
 
@@ -53,6 +56,8 @@ export class AddBulkUploadComponent implements OnInit {
   referenceNo: any;
   remarks = '';
   isTransactionActionDone = false;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   // BulkUploadConstant.staticData;
 
   constructor(
@@ -60,20 +65,29 @@ export class AddBulkUploadComponent implements OnInit {
     private router: Router,
     private api: BulkUploadServiceService,
     private dialog: MatDialog,
-    private tokenStorage: TokenStorageService,
     private commonService: CommonService,
-    private tokenStorageService: TokenStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorage.getUser();
+    this.loadUserProfile();
     this.isEdit = true;
     this.bulkId = this.route.snapshot.params['id'];
     if (this.bulkId != 'addNew') {
       this.getTransactionLevelStatus();
-      // for Demo purpose adding, need to handle from backend
       this.tansactionAction();
     }
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   tansactionAction() {
@@ -145,14 +159,13 @@ export class AddBulkUploadComponent implements OnInit {
 
   openConfirmationPopup() {
     this.commonService
-      .generateOTP(this.tokenStorage.getUser()?.mobile)
+      .generateOTP(this.currentUser?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
-
         const dialogRef = this.dialog.open(AllInOnePopupComponent, {
           data: {
             remark: true,
-            mobile: this.tokenStorageService.getUser()?.mobile,
+            mobile: this.currentUser?.mobile,
           },
           width: '750px',
           disableClose: true,
@@ -218,7 +231,7 @@ export class AddBulkUploadComponent implements OnInit {
 
   customSaveBulkUpload(event: any) {
     this.commonService
-      .generateOTP(this.tokenStorage.getUser()?.mobile)
+      .generateOTP(this.currentUser?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
         this.callAllInOnePopup(event);
@@ -229,7 +242,7 @@ export class AddBulkUploadComponent implements OnInit {
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile,
+        mobile: this.currentUser?.mobile,
       },
       width: '750px',
       disableClose: true,
@@ -307,5 +320,9 @@ export class AddBulkUploadComponent implements OnInit {
       link.download = 'Upload.csv';
       link.click();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

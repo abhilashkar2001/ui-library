@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { CardService } from '../../../../card.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { AuthUser } from 'app/shared/models/user.model';
 import { AccountList } from 'app/shared/models/card.model';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-prepaid-reload',
   templateUrl: './prepaid-reload.component.html',
   styleUrls: ['./prepaid-reload.component.scss'],
 })
-export class PrepaidReloadComponent implements OnInit {
+export class PrepaidReloadComponent implements OnInit, OnDestroy {
   reloadForm!: FormGroup;
   prepaidRegister: any[] = [
     { label: 'Prepaid Register', value: true },
@@ -30,20 +32,22 @@ export class PrepaidReloadComponent implements OnInit {
   };
   genericValue: any;
   cardList: AccountList[] | any;
-  profileInfo: AuthUser;
+  profileInfo: User | undefined;
   customerInfo: any;
   accountDetails: AccountList | any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private cardService: CardService,
     private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
-    private tokenService: TokenStorageService,
     private router: Router,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
@@ -51,6 +55,15 @@ export class PrepaidReloadComponent implements OnInit {
     this.cardList = this.sessionStorageService.getListOfCards();
     this.buildReloadForm();
     this.fetchGenericValue();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildReloadForm() {
@@ -160,5 +173,9 @@ export class PrepaidReloadComponent implements OnInit {
       (payload) => this.cardService.savePrepaidReload(payload),
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

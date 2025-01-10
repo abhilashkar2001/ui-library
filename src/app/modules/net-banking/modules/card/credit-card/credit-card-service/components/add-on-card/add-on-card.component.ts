@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 // import { CreditCardService } from "../../../credit-card.service";
 import { Router } from '@angular/router';
@@ -7,14 +7,17 @@ import { CardService } from '../../../../card.service';
 import { AccountList } from 'app/shared/models/card.model';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-add-on-card',
   templateUrl: './add-on-card.component.html',
   styleUrls: ['./add-on-card.component.scss'],
 })
-export class AddOnCardComponent implements OnInit {
+export class AddOnCardComponent implements OnInit, OnDestroy {
   addonCardForm!: FormGroup;
   cardList: AccountList[] | any;
   typeofCard: string | any;
@@ -22,21 +25,33 @@ export class AddOnCardComponent implements OnInit {
   accountDetails: AccountList | any;
   profileInfo: any;
   items = CreditCardStore.relationShipDetail;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
     private sessionStorageService: SessionStorageService,
-    private tokenService: TokenStorageService,
     private cardService: CardService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
     this.currencyCode = this.profileInfo?.branchCrncyCode;
     this.cardList = this.sessionStorageService.getListOfCards();
     this.buildAddonCardForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
   buildAddonCardForm() {
     this.addonCardForm = this.fb.group({
@@ -115,5 +130,9 @@ export class AddOnCardComponent implements OnInit {
       // Service call completion callback
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

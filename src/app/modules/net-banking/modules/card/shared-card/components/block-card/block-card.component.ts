@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { AccountList } from 'app/shared/models/card.model';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CardService } from '../../../card.service';
 import { filter } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-block-card',
   templateUrl: './block-card.component.html',
   styleUrls: ['./block-card.component.scss'],
 })
-export class BlockCardComponent implements OnInit {
+export class BlockCardComponent implements OnInit, OnDestroy {
   blockCardForm!: FormGroup;
   reasons: any[] = [
     { label: 'Lost/Stolen', value: 'Lost/Stolen' },
@@ -29,16 +32,19 @@ export class BlockCardComponent implements OnInit {
   permanentAddress: string | any;
   accountDetails: AccountList | any;
   title: string | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
-    private tokenService: TokenStorageService,
     private creditCardService: CardService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd), // Regular filter
@@ -53,7 +59,18 @@ export class BlockCardComponent implements OnInit {
     this.currencyCode = this.profileInfo?.branchCrncyCode;
     this.cardList = this.sessionStorageService.getListOfCards();
     this.buildBlockCard();
+    this.loadUserProfile();
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   buildBlockCard() {
     this.blockCardForm = this.fb.group({
       source: ['I'],
@@ -204,5 +221,9 @@ export class BlockCardComponent implements OnInit {
       // Service call completion callback
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,10 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ViewExcelDocComponent } from 'app/shared/components/view-excel-doc/view-excel-doc.component';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import * as XLSX from 'xlsx';
 
 type AOA = any[][];
@@ -13,7 +23,7 @@ type AOA = any[][];
   templateUrl: './upload-bulk-upload.component.html',
   styleUrls: ['./upload-bulk-upload.component.scss'],
 })
-export class UploadBulkUploadComponent implements OnInit {
+export class UploadBulkUploadComponent implements OnInit, OnDestroy {
   @Input() updateParentModel:
     | ((part: Partial<any>, isFormValid: boolean) => void)
     | any;
@@ -42,6 +52,8 @@ export class UploadBulkUploadComponent implements OnInit {
     [3, 4],
   ];
   corporateId: string | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   productTypeSelection: { key: string; value: string }[] = [
     { key: 'Internal', value: 'internal' },
     { key: 'External', value: 'external' },
@@ -53,17 +65,29 @@ export class UploadBulkUploadComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private tokenStorage: TokenStorageService,
-    private sessionStorageService: SessionStorageService,
-  ) { }
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
+
+ 
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorage.getUser();
+     this.loadUserProfile();
     this.corporateId = this.sessionStorageService.getCorporateId();
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;
     });
     this.buildMaintTemplateForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   goBack() {
@@ -190,5 +214,8 @@ export class UploadBulkUploadComponent implements OnInit {
         return 0;
       });
     this.screenList = screens;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

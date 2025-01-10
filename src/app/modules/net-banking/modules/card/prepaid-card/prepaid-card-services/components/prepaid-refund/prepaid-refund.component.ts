@@ -1,43 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PrepaidRefundStore } from './prepaid-refund.store';
 import { Router } from '@angular/router';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
-import { AuthUser } from 'app/shared/models/user.model';
 import { AccountList } from 'app/shared/models/card.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-prepaid-refund',
   templateUrl: './prepaid-refund.component.html',
   styleUrls: ['./prepaid-refund.component.scss'],
 })
-export class PrepaidRefundComponent implements OnInit {
+export class PrepaidRefundComponent implements OnInit, OnDestroy {
   refundForm!: FormGroup;
   viewColumnData = PrepaidRefundStore.columnHeaders;
   cardList: AccountList[] | any;
-  profileInfo: AuthUser;
+  profileInfo!: User;
   customerInfo: any;
   cardDetails: any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private cardService: CardService,
     private sessionStorageService: SessionStorageService,
     private serviceCallHandler: ServiceCallHandler,
-    private tokenService: TokenStorageService,
     private router: Router,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.cardList = this.sessionStorageService.getListOfCards();
     this.buildRefundForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildRefundForm() {
@@ -52,7 +65,6 @@ export class PrepaidRefundComponent implements OnInit {
   }
 
   fetchCardDetails(event: any) {
-    console.log(event);
     this.cardService
       .fetchRefund(event)
       .subscribe((res: IcHttpResponseModel<any>) => {
@@ -138,5 +150,9 @@ export class PrepaidRefundComponent implements OnInit {
       (payload) => this.cardService.savePrepaidRefund(payload),
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
@@ -23,13 +24,19 @@ import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { LoanAccounts } from 'app/shared/models/loan-account.model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-net-banking-dashboard',
   templateUrl: './net-banking-dashboard.component.html',
   styleUrls: ['./net-banking-dashboard.component.scss'],
 })
-export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
+export class NetBankingDashboardComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   dashboardInfo: any;
   Object = Object;
   transferType = NETBANKING.transferType;
@@ -70,7 +77,8 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
   selectedAcc: any;
   accountsInfo: any;
   corporateId: any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   @ViewChild('targetElContainer') targetElContainer!: ElementRef;
   @ViewChild('targetElement') targetElement!: ElementRef;
   tableContainerSize: number = window.innerWidth;
@@ -87,8 +95,10 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
     public loanService: LoanService,
     private renderer: Renderer2,
     private sessionStorageService: SessionStorageService,
+    private store: Store,
   ) {
-    this.currentUser = tokenStorageService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.matIconRegistry.addSvgIcon(
       `search-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -107,6 +117,15 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
       const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   ngAfterViewInit(): void {
@@ -369,5 +388,8 @@ export class NetBankingDashboardComponent implements OnInit, AfterViewInit {
           }
         });
     });
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

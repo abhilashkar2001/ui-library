@@ -4,8 +4,11 @@ import { CreditCardStore } from '../../../credit-card.store';
 import { Router } from '@angular/router';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CardService } from '../../../../card.service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-billing-cycle',
@@ -22,16 +25,19 @@ export class BillingCycleComponent implements OnInit {
   listOfCustomers: any[] | any;
   accountDetails: any;
   billingCycleList = CreditCardStore.billCycleList;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private sessionStorageService: SessionStorageService,
-    private tokenService: TokenStorageService,
     private cardService: CardService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
@@ -39,6 +45,15 @@ export class BillingCycleComponent implements OnInit {
     this.cardList = this.sessionStorageService.getListOfCards();
     this.listOfAccounts = this.sessionStorageService.getListOfAccounts();
     this.buildFormGroup();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildFormGroup() {

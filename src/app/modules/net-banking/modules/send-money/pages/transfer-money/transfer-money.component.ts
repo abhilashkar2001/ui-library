@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ChequeService } from 'app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SchedulePaymentService } from 'app/shared/services/fund-transfer/schedule-payment.service';
@@ -10,15 +11,17 @@ import { SendMoneyService } from 'app/shared/services/fund-transfer/send-money.s
 import { TransferMoneyService } from 'app/shared/services/fund-transfer/transfer-money.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import * as moment from 'moment';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-transfer-money',
   templateUrl: './transfer-money.component.html',
   styleUrls: ['./transfer-money.component.scss'],
 })
-export class TransferMoneyComponent implements OnInit {
+export class TransferMoneyComponent implements OnInit, OnDestroy {
   transferMoneyForm!: FormGroup;
   proceedTransferMoney = false;
   transferType: any[] = [];
@@ -46,7 +49,8 @@ export class TransferMoneyComponent implements OnInit {
   selectedCurrency: any;
   fetchingDetails: any;
   currencyCode: string | any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private matIconRegistry: MatIconRegistry,
@@ -54,13 +58,14 @@ export class TransferMoneyComponent implements OnInit {
     private transferMoneyService: TransferMoneyService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
-    private tokenService: TokenStorageService,
     private genericValueService: GenericValueService,
     private accountService: ChequeService,
     private sendMoneyService: SendMoneyService,
     private sessionStorageService: SessionStorageService,
     private schedulePaymentService: SchedulePaymentService,
+    private store: Store,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -81,9 +86,8 @@ export class TransferMoneyComponent implements OnInit {
 
   async ngOnInit() {
     this.buildTransferMoney();
-    this.profileInfo = this.tokenService.getUser();
+    this.loadUserProfile();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
-    console.log(this.customerInfo);
     this.fetchGenericValue();
     this.getFavouritiesData();
     this.fetchingDetails = await this.serviceCallHandler.get(
@@ -118,6 +122,15 @@ export class TransferMoneyComponent implements OnInit {
           ?.setValue(this.fetchingDetails?.remarks);
       }
     }
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildTransferMoney() {
@@ -312,5 +325,8 @@ export class TransferMoneyComponent implements OnInit {
           : this.schedulePaymentService.save(payload),
     );
     this.router.navigate(['/user/send-money/payment-summary']);
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

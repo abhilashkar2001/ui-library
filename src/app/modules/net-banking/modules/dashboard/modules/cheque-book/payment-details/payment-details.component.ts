@@ -1,6 +1,7 @@
 import {
   Component,
   Input,
+  OnDestroy,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -9,6 +10,10 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import { TokenStorageService } from 'app/shared/token-storage.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
@@ -17,7 +22,9 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   templateUrl: './payment-details.component.html',
   styleUrls: ['./payment-details.component.scss'],
 })
-export class PaymentDetailsComponent implements OnInit, OnChanges {
+
+export class PaymentDetailsComponent implements OnInit, OnDestroy, OnChanges {
+
   @Input() paymentDetails: any;
   @Input() status: string | any;
   operationType: string | any;
@@ -116,15 +123,18 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
   masterId: any;
   customerInfo: any;
   profileInfo: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private router: Router,
     private location: Location,
-    private tokenStorageService: TokenStorageService,
+    private store: Store,
     private sessionStorageService: SessionStorageService,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       'edit-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -150,9 +160,19 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.paymentDetailsArr = this.paymentDetails;
+    this.loadUserProfile();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
-    this.profileInfo = this.tokenStorageService.getUser();
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   done() {
     this.router.navigate(['user/dashboard']);
   }
@@ -167,5 +187,9 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
     this.router.navigate(['/send-money/dashboard/transfer-money'], {
       state: { paymentDetails: this.paymentDetails },
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Decimal from 'decimal.js';
 import { SchedulePaymentService } from 'app/shared/services/fund-transfer/schedule-payment.service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SendMoneyService } from 'app/shared/services/fund-transfer/send-money.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { findCurrency, removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { IconService } from 'app/shared/services/icon.service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-schedule-payment',
   templateUrl: './schedule-payment.component.html',
   styleUrls: ['./schedule-payment.component.scss'],
 })
-export class SchedulePaymentComponent implements OnInit {
+export class SchedulePaymentComponent implements OnInit, OnDestroy {
   schedulePaymentForm: FormGroup | any;
   paymentModes: any[] = [];
   options: any[] = [
@@ -43,18 +46,21 @@ export class SchedulePaymentComponent implements OnInit {
   customerInfo: any;
   selectedCurrency: any;
   currentCurrency: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private service: SchedulePaymentService,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
-    private tokenService: TokenStorageService,
     private sendMoneyService: SendMoneyService,
     private genericValueService: GenericValueService,
     private sessionStorageService: SessionStorageService,
     private iconService: IconService,
+    private store: Store,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
     this.iconService
       .addIconIfNotExists('calendar-icon', 'assets/images/calendar.svg')
@@ -62,7 +68,7 @@ export class SchedulePaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileInfo = this.tokenService.getUser();
+    this.loadUserProfile();
     const customerInfo = this.sessionStorageService.getCustomerInfo();
     this.mobileNo = customerInfo?.mobileNumber;
     this.customerId = customerInfo?.customerId;
@@ -70,6 +76,15 @@ export class SchedulePaymentComponent implements OnInit {
     this.fetchGenericValues();
     this.getFavouritiesData();
     this.fetchPayFrom();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
   changeFav(eve: any) {
     this.filterFav = [];
@@ -263,5 +278,9 @@ export class SchedulePaymentComponent implements OnInit {
   close() {
     this.proceedPayment = false;
     this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

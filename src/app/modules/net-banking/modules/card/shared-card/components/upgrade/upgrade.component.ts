@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -6,15 +6,18 @@ import { CardService } from '../../../card.service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SelectNewCardPopupComponent } from '../select-new-card-popup/select-new-card-popup.component';
 import { filter } from 'rxjs/operators';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-upgrade',
   templateUrl: './upgrade.component.html',
   styleUrls: ['./upgrade.component.scss'],
 })
-export class UpgradeComponent implements OnInit {
+export class UpgradeComponent implements OnInit, OnDestroy {
   upgradeForm!: FormGroup;
   cardList: any = [];
   upgradeCardDetails = false;
@@ -26,6 +29,8 @@ export class UpgradeComponent implements OnInit {
   typeofCard: any;
   selectedAddress: any;
   title: string | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -34,9 +39,10 @@ export class UpgradeComponent implements OnInit {
     private creditCardService: CardService,
     private serviceCallHandler: ServiceCallHandler,
     private router: Router,
-    private tokenService: TokenStorageService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd), // Regular filter
@@ -49,9 +55,18 @@ export class UpgradeComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardList = this.sessionStorageService.getListOfCards();
-    // this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.buildUpgradeForm();
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   buildUpgradeForm() {
     this.upgradeForm = this.fb.group({
       cardNo: [''],
@@ -219,5 +234,9 @@ export class UpgradeComponent implements OnInit {
       // Service call completion callback
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

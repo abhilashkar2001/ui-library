@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
@@ -11,6 +11,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
+import { Store } from '@ngrx/store';
+import { UserProfileInfoAction } from 'app/shared/store/action/user-profileInfo.action';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
@@ -18,7 +23,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   appData: ApplicationData = SessionsConstants.APPLICATION_DATA;
   signinForm!: FormGroup;
   hide = true;
@@ -36,6 +41,8 @@ export class SigninComponent implements OnInit {
   authType = 'signIn';
   otp: any;
   currentUser: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -46,11 +53,23 @@ export class SigninComponent implements OnInit {
     private dialog: MatDialog,
     public translate: TranslateService,
     private sessionStorageService: SessionStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenService.getUser();
     this.initform();
+    this.loadUserProfile();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   initform() {
@@ -72,11 +91,8 @@ export class SigninComponent implements OnInit {
     const payload = this.signinForm.value;
     this.tokenService.setCorporateId(payload?.corporateId);
     this.loginService.corporateLogin(payload).subscribe((res: any) => {
-      // if (res?.status == 200) {
       this.authType = 'otp';
       this.tokenService.saveToken(res?.data);
-
-      // }
     });
   }
 
@@ -134,8 +150,7 @@ export class SigninComponent implements OnInit {
             },
           });
         } else {
-          console.log(res);
-          this.tokenService.saveUser(res);
+          this.store.dispatch(UserProfileInfoAction.loadUserProfile());
           const result: any = await this.fetchThemeAndLanguange();
           if (result?.data?.length) {
             this.sessionStorageService.setUserThemeLang(
@@ -151,5 +166,9 @@ export class SigninComponent implements OnInit {
           this.router.navigate(['/user/dashboard']);
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Cards, HeaderModel } from 'app/shared/models/card.model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CreditCardStore } from '../credit-card.store';
 import { QuickLinkTabModel } from 'app/shared/models/tab-model';
 import { CardService } from '../../card.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-credit-card-dashboard',
   templateUrl: './credit-card-dashboard.component.html',
   styleUrls: ['./credit-card-dashboard.component.scss'],
 })
-export class CreditCardDashboardComponent implements OnInit {
+export class CreditCardDashboardComponent implements OnInit, OnDestroy {
   cardList: Cards = [];
   staticCardList: Cards = CreditCardStore.cardList;
   detailsItem: HeaderModel[] = CreditCardStore.detailsItem;
@@ -23,22 +26,30 @@ export class CreditCardDashboardComponent implements OnInit {
   corporateId: any;
   profileInfo: any;
   displayCard: any;
-
   isDrawerOpen = 'close';
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private sessionStorageService: SessionStorageService,
     private cardService: CardService,
-    private tokenService: TokenStorageService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
     this.cardList = this.sessionStorageService.getListOfCards() || [];
-    console.log(this.corporateId);
-
     this.fetchCardSummaryDetails();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   fetchCardSummaryDetails() {
@@ -58,8 +69,6 @@ export class CreditCardDashboardComponent implements OnInit {
   }
 
   fetRecntTransaction() {
-    console.log('hgfg');
-
     this.recentTransData = [];
     const cardNumber =
       this.cardSummaryDetails?.[0]?.cardNumber ||
@@ -81,5 +90,9 @@ export class CreditCardDashboardComponent implements OnInit {
   toggleCheck(value: any) {
     this.isDrawerOpen = value;
     console.log(this.isDrawerOpen);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

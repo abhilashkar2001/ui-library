@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CreditCardStore } from '../../../credit-card.store';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-unbilled-transaction',
   templateUrl: './unbilled-transaction.component.html',
   styleUrls: ['./unbilled-transaction.component.scss'],
 })
-export class UnbilledTransactionComponent implements OnInit {
+export class UnbilledTransactionComponent implements OnInit, OnDestroy {
   unbilledForm!: FormGroup;
   currencyCode = 'INR';
   creditList: any;
@@ -21,20 +24,32 @@ export class UnbilledTransactionComponent implements OnInit {
   typeofCard: any;
   recentTransData: any[] | any;
   profileInfo: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private router: Router,
     private cardService: CardService,
-    private tokenService: TokenStorageService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
     this.creditList = this.sessionStorageService.getListOfCards();
     this.buildUnbilledForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildUnbilledForm() {
@@ -78,5 +93,9 @@ export class UnbilledTransactionComponent implements OnInit {
           this.unbilledValues = resp?.data;
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

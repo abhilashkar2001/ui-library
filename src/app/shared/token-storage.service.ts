@@ -6,6 +6,8 @@ import { CurrencyList } from './models/currency.models';
 import { Data } from '@angular/router';
 import { environment } from 'environments/environment';
 import * as CryptoJS from 'crypto-js';
+import { Store } from '@ngrx/store';
+import { selectUser } from './store/selector/user-profileInfo.selector';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -21,6 +23,8 @@ export const VALIDITY_IN_SECS = 'validityInSecs';
   providedIn: 'root',
 })
 export class TokenStorageService {
+  constructor(private store: Store) {}
+
   encrypt(value: string): string {
     return CryptoJS.AES.encrypt(value, SECRET_KEY).toString();
   }
@@ -59,23 +63,11 @@ export class TokenStorageService {
     return token ? this.decrypt(token) : null;
   }
 
-  // Save encrypted user data
-  public saveUser(user: any) {
-    this.sessionStore.removeItem(USER_KEY);
-    // Encrypt and then store user data
-    const encryptedUser = this.encrypt(JSON.stringify(user));
-    this.sessionStore.setItem(USER_KEY, encryptedUser);
-  }
-
   // Retrieve and decrypt user data
   public getUser() {
     const encryptedUser = this.sessionStore.getItem(USER_KEY);
     return encryptedUser ? JSON.parse(this.decrypt(encryptedUser)) : null;
   }
-
-  // public getUser() {
-  //   return JSON.parse(<string>this.sessionStore.getItem(USER_KEY));
-  // }
 
   saveLastLoginSession(time: Time) {
     this.sessionStore.setItem('LAST_LOGIN', JSON.stringify(time));
@@ -103,7 +95,7 @@ export class TokenStorageService {
   private getAuthStatus() {
     return (
       this.sessionStore.getItem(TOKEN_KEY) !== null &&
-      this.sessionStore.getItem(USER_KEY) !== null
+      this.store.select(selectUser)
     );
   }
 

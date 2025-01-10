@@ -26,6 +26,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
+import { UserProfileInfoEffects } from './shared/store/effects/user-profileInfo.effects';
+import { StoreModule } from '@ngrx/store';
+import { AppState } from './shared/store/state/app.state';
+import { UserProfileInfoReducer } from './shared/store/reducer/user-profileInfo.reducer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -46,6 +51,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     SwiperModule,
     PerfectScrollbarModule,
+    StoreModule.forRoot<AppState>({
+      userProfile: UserProfileInfoReducer,
+    }),
+    EffectsModule.forRoot([UserProfileInfoEffects]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

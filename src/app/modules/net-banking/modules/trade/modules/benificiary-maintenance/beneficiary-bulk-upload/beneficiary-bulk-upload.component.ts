@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { CommonService } from 'app/shared/services/common-service/common.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { BeneficiaryService } from '../beneficiary-summary/beneficiary.service';
 import { BulkUploadConstant } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/add-bulk-upload/bulk.upload.constant';
 import { BulkUploadServiceService } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
 
 @Component({
   selector: 'app-beneficiary-bulk-upload',
   templateUrl: './beneficiary-bulk-upload.component.html',
   styleUrls: ['./beneficiary-bulk-upload.component.scss'],
 })
-export class BeneficiaryBulkUploadComponent implements OnInit {
+export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
   public approvalForm!: FormGroup;
   isEdit = false;
 
@@ -55,28 +58,38 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
   remarks = '';
   isTransactionActionDone = false;
   bulkUploadType: any = 'Bulk Upload';
-  // BulkUploadConstant.staticData;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private api: BulkUploadServiceService,
     private dialog: MatDialog,
-    private tokenStorage: TokenStorageService,
     private commonService: CommonService,
     private benificiaryService: BeneficiaryService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    console.log();
-    this.currentUser = this.tokenStorage.getUser();
+    this.loadUserProfile();
     this.isEdit = true;
     this.referenceNo = this.route.snapshot.params['id'];
-    console.log(this.referenceNo, 'this.bulkId');
     if (this.bulkId != 'addNew') {
       // this.getTransactionLevelStatus();
       // this.tansactionAction();
     }
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   // tansactionAction() {
@@ -148,14 +161,14 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   openConfirmationPopup() {
     this.commonService
-      .generateOTP(this.tokenStorage.getUser()?.mobile)
+      .generateOTP(this.currentUser?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
       });
     const dialogRef = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorage.getUser()?.mobile,
+        mobile: this.currentUser?.mobile,
       },
       width: '750px',
       disableClose: true,
@@ -215,7 +228,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
 
   customSaveBulkUpload(event: any) {
     this.commonService
-      .generateOTP(this.tokenStorage.getUser()?.mobile)
+      .generateOTP(this.currentUser?.mobile)
       .subscribe((resp: any) => {
         this.otp = resp?.data;
         this.callAllInOnePopup(event);
@@ -287,5 +300,8 @@ export class BeneficiaryBulkUploadComponent implements OnInit {
       link.download = 'report.xlsx';
       link.click();
     });
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

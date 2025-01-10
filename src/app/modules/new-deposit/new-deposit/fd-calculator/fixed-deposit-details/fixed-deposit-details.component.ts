@@ -1,20 +1,29 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewDepositService } from '../../../new-deposit.service';
 import { FdCalculatorServiceService } from '../fd-calculator-service.service';
 import * as moment from 'moment';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+
 
 @Component({
   selector: 'app-fixed-deposit-details',
   templateUrl: './fixed-deposit-details.component.html',
   styleUrls: ['./fixed-deposit-details.component.scss'],
 })
-export class FixedDepositDetailsComponent implements OnInit {
+export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
   REPORT_TITLE = 'Fixed Deposit';
   depositType = 'FD';
   createFdForm!: FormGroup;
@@ -53,22 +62,25 @@ export class FixedDepositDetailsComponent implements OnInit {
   interestPayout: string[] | any;
   ownership: string[] | any;
   paymentType: string[] | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
+  currentUser: User | null | undefined;
   constructor(
     private fb: FormBuilder,
     private fdApi: FdCalculatorServiceService,
     private snack: MatSnackBar,
     private cdref: ChangeDetectorRef,
     private newDepositeService: NewDepositService,
-    private tokenStorageService: TokenStorageService,
     private route: ActivatedRoute,
     private openAccountService: OpenAccountService,
-    private sessionStorageService: SessionStorageService,
-  ) {}
-
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
   ngOnInit(): void {
     this.getGenericDetails();
     this.newDepositeService.setToken(true);
-    this.currentUserBranch = this.tokenStorageService.getUser().branchCode;
+    this.loadUserProfile();
     const sessionStep: any = this.sessionStorageService.getFdStep;
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     const id = this.route.snapshot.params['id'];
@@ -76,6 +88,18 @@ export class FixedDepositDetailsComponent implements OnInit {
     else this.buildCreateFdForm();
     const processCycleCode = this.route.snapshot.params['code'];
     if (processCycleCode) this.getAllFdStep(processCycleCode);
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+        if (this.currentUser) {
+          this.currentUserBranch = this.currentUser?.branchCode;
+        }
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   getGenericDetails() {
@@ -378,5 +402,9 @@ export class FixedDepositDetailsComponent implements OnInit {
     if (event) {
       this.existingCustomer = event;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

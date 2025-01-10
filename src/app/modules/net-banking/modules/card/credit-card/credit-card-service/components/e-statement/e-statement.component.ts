@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CardService } from '../../../../card.service';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-e-statement',
   templateUrl: './e-statement.component.html',
   styleUrls: ['./e-statement.component.scss'],
 })
-export class EStatementComponent implements OnInit {
+export class EStatementComponent implements OnInit, OnDestroy {
   customerInfo: any;
   screenName: string | any;
   eStatementForm!: FormGroup;
@@ -22,17 +25,19 @@ export class EStatementComponent implements OnInit {
   profileInfo: any;
   accountDetails: any;
   typeofCard: any;
-
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
     private sessionStorageService: SessionStorageService,
     private genericValueService: GenericValueService,
-    private tokenStorageService: TokenStorageService,
     private cardService: CardService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenStorageService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
@@ -40,6 +45,15 @@ export class EStatementComponent implements OnInit {
     this.accountNumberList = this.sessionStorageService.getListOfCards();
     this.fetchGenericValues();
     this.bulidForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   fetchGenericValues() {
@@ -146,5 +160,9 @@ export class EStatementComponent implements OnInit {
   }
   close() {
     throw new Error('Method not implemented.');
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

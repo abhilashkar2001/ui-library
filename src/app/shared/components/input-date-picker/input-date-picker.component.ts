@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
@@ -6,12 +12,15 @@ import {
 } from '@angular/material/datepicker';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
 import { createMask } from 'app/shared/directives/input-mask/constants';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import { CustomerServiceService } from 'app/shared/services/customer-service.service';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import * as moment from 'moment';
+import { Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -19,7 +28,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './input-date-picker.component.html',
   styleUrls: ['./input-date-picker.component.scss'],
 })
-export class InputDatePickerComponent implements OnInit {
+export class InputDatePickerComponent implements OnInit, OnDestroy {
   @Input() control: FormControl = new FormControl();
   @Input() inputLabel!: string;
   @Input() minDate!: Date;
@@ -38,6 +47,8 @@ export class InputDatePickerComponent implements OnInit {
   currentUser: any;
   holidayInfo: any[] = [];
   selectedYear: number = new Date().getFullYear();
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   dateClass: MatCalendarCellClassFunction<Date> = (date, view) => {
     const cellDate = new Date(date);
@@ -62,8 +73,9 @@ export class InputDatePickerComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private customerservice: CustomerServiceService,
-    private tokenStorageService: TokenStorageService,
+    private store: Store,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       `calendar-icon`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -80,11 +92,18 @@ export class InputDatePickerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
     this.populateDate();
-    // this.getYearlyHolidays(this.selectedYear);
+    this.loadUserProfile();
   }
 
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
   initEvents(): void {
     const handleClick = () => {
       const displayedYearElement: any = document.querySelector(
@@ -92,7 +111,6 @@ export class InputDatePickerComponent implements OnInit {
       );
       if (displayedYearElement) {
         const displayedYearText = displayedYearElement.textContent.trim();
-
         // Extract the year from the displayed year text
         const yearMatch = displayedYearText.match(/\d{4}/);
         if (yearMatch && yearMatch.length > 0) {
@@ -201,5 +219,9 @@ export class InputDatePickerComponent implements OnInit {
           console.error('Error:', error);
         },
       );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

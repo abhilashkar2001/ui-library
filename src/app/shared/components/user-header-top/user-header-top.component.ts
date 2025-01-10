@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { LayoutService } from '../../services/layout.service';
 import { Router } from '@angular/router';
@@ -12,13 +18,17 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { LangTeme } from 'app/shared/models/current-lang-theme.model';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
 
 @Component({
   selector: 'app-user-header-top',
   templateUrl: './user-header-top.component.html',
   styleUrls: ['./user-header-top.component.scss'],
 })
-export class UserHeaderTopComponent implements OnInit {
+export class UserHeaderTopComponent implements OnInit, OnDestroy {
   layoutConf: any;
 
   @Input() notificPanel: any;
@@ -34,13 +44,14 @@ export class UserHeaderTopComponent implements OnInit {
   // Theme change variables
   listOfThemeColors: ThemeOption[] | Partial<ThemeOption>[] = [];
   selectedTheme!: ThemeOption | null;
-
   languageList = [
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Spanish' },
   ];
   selectedLanguage: { code: string; name: string } | undefined;
   currentLangTheme: LangTeme | undefined;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private layout: LayoutService,
     public themeService: ThemeService,
@@ -52,7 +63,9 @@ export class UserHeaderTopComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private themeChangeService: ThemeChangeService,
+    private store: Store,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.listOfThemeColors = this.themeChangeService.themeColors;
     themeChangeService.getCurrentTheme$.subscribe(
       (theme) => (this.selectedTheme = theme),
@@ -68,13 +81,24 @@ export class UserHeaderTopComponent implements OnInit {
 
   ngOnInit() {
     this.layoutConf = this.layout.layoutConf;
-    this.currentUser = this.tokenStorageService.getUser();
-    this.roleName = this.currentUser?.roles?.[0]?.roleName;
+    this.loadUserProfile();
+
     this.lastLoginTime = this.tokenStorageService.getLastLoginSession();
     setTimeout(() => {
       const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+        if (this.currentUser)
+          this.roleName = this.currentUser?.roles?.[0]?.roleName;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   handleThemeChange(theme: any) {
@@ -136,5 +160,9 @@ export class UserHeaderTopComponent implements OnInit {
         id: this.currentLangTheme?.id,
       })
       .subscribe(() => console.log('ddd'));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -6,15 +6,18 @@ import { Router } from '@angular/router';
 import { AccountList } from 'app/shared/models/card.model';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CardService } from '../../../../card.service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-auto-pay',
   templateUrl: './auto-pay.component.html',
   styleUrls: ['./auto-pay.component.scss'],
 })
-export class AutoPayComponent implements OnInit {
+export class AutoPayComponent implements OnInit, OnDestroy {
   autoPayForm!: FormGroup;
   autoPayOptions: any[] = [
     { label: 'Yes', value: true },
@@ -29,6 +32,8 @@ export class AutoPayComponent implements OnInit {
   currencyCode: string | any;
   profileInfo: any;
   accountDetails: AccountList | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -37,22 +42,32 @@ export class AutoPayComponent implements OnInit {
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
     private sessionStorageService: SessionStorageService,
-    private tokenService: TokenStorageService,
     private cardService: CardService,
+    private store: Store,
   ) {
-    this.profileInfo = this.tokenService.getUser();
+    this.userProfile$ = this.store.select(selectUser);
     this.matIconRegistry.addSvgIcon(
       'info-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'assets/images/svg/info_yellow.svg',
       ),
     );
+    this.loadUserProfile();
   }
 
   ngOnInit(): void {
     this.currencyCode = this.profileInfo?.branchCrncyCode;
     this.cardList = this.sessionStorageService.getListOfCards();
     this.buildAutoPayForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildAutoPayForm() {
@@ -142,5 +157,9 @@ export class AutoPayComponent implements OnInit {
       // Service call completion callback
     );
     this.router.navigate(['/user/card/credit-card/service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

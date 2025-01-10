@@ -1,18 +1,20 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'app/shared/models/user.model';
+import { Store } from '@ngrx/store';
 import { OtpService } from 'app/shared/services/otp.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.component.html',
   styleUrls: ['./otp.component.scss'],
 })
-export class OtpComponent implements OnInit {
+export class OtpComponent implements OnInit, OnDestroy {
   currentUser: User | any;
   otpType: any = 'Email';
 
@@ -27,15 +29,18 @@ export class OtpComponent implements OnInit {
   screenName: any = '';
   customerId: any;
   reducedMob: number | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
-    private tokenStorageService: TokenStorageService,
     private otpService: OtpService,
     private snack: MatSnackBar,
     private route: Router,
     private router: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private store: Store,
     private sessionStorageService: SessionStorageService,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
     this.otpForm = new FormGroup({
       email: new FormControl(''),
       mobile: new FormControl(''),
@@ -44,7 +49,7 @@ export class OtpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
+    this.loadUserProfile();
     this.router.queryParams.subscribe((params) => {
       this.screenName = params['type'];
     });
@@ -59,6 +64,16 @@ export class OtpComponent implements OnInit {
       }, 100);
     }
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   resetOrExit(value: any) {
     if (value == 'Reset') {
       this.otpForm.get('otp')?.reset('');
@@ -100,5 +115,9 @@ export class OtpComponent implements OnInit {
         this.route.navigate(['/home']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

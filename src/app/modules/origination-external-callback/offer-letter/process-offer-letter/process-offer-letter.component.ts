@@ -1,34 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import * as moment from 'moment';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-process-offer-letter',
   templateUrl: './process-offer-letter.component.html',
   styleUrls: ['./process-offer-letter.component.scss'],
 })
-export class ProcessOfferLetterComponent implements OnInit {
+export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
   currentUser: any;
   currentTab: any;
   revisiteForm!: FormGroup;
   originationId: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
-    private tokenStorageService: TokenStorageService,
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
     private route: Router,
-    private sessionStorageService: SessionStorageService,
-  ) {}
+    private store: Store,
+     private sessionStorageService: SessionStorageService,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
+    this.loadUserProfile();
     this.buildRevisiteForm();
-    (this.originationId = this.sessionStorageService.getOriginationId()),
+ (this.originationId = this.sessionStorageService.getOriginationId()),
       this.fetchOfferDetails();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildRevisiteForm(data?: any) {
@@ -80,5 +95,8 @@ export class ProcessOfferLetterComponent implements OnInit {
   /**This function is for reset the formvalues */
   reset() {
     this.revisiteForm.reset();
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cardTransactionDetails } from 'app/shared/models/emi-converter.model';
@@ -6,16 +6,19 @@ import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { CreditCardStore } from '../../../credit-card.store';
 import { GETLISTOFACCOUNTS } from 'app/shared/models/session-storage.model';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-instant-loan',
   templateUrl: './instant-loan.component.html',
   styleUrls: ['./instant-loan.component.scss'],
 })
-export class InstantLoanComponent implements OnInit {
+export class InstantLoanComponent implements OnInit, OnDestroy {
   instantLoanForm!: FormGroup;
   purpose = ['education', 'farming']; // Static purpose options
   loanType = 'FD';
@@ -38,24 +41,38 @@ export class InstantLoanComponent implements OnInit {
   customerInfo: any;
   profileInfo: any;
   sliderAmount: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
     private router: Router,
     private apiService: CardService,
-    private tokenStorage: TokenStorageService,
     private serviceCallHandler: ServiceCallHandler,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
+    this.loadUserProfile();
     this.initializeAccounts();
     this.buildInstantLoanForm();
     this.sliderAmount = this.instantLoanForm.get('amount')?.value || 0;
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   // Initialize account list from session storage
   private initializeAccounts(): void {
-    this.profileInfo = this.tokenStorage.getUser();
     const customerInfo = this.sessionStorageService.getCustomerInfo();
     this.listOfAccounts = this.sessionStorageService.getListOfCards();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
@@ -293,5 +310,9 @@ export class InstantLoanComponent implements OnInit {
         qrToggle: false,
       },
     ];
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

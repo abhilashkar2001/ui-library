@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoanRepaymentStore } from './loan-repayment.store';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
@@ -10,15 +10,18 @@ import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
 import { findCurrency, removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { Router } from '@angular/router';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 
 @Component({
   selector: 'app-loan-repayment',
   templateUrl: './loan-repayment.component.html',
   styleUrls: ['./loan-repayment.component.scss'],
 })
-export class LoanRepaymentComponent implements OnInit {
+export class LoanRepaymentComponent implements OnInit, OnDestroy {
   repaymentForm: FormGroup | undefined;
   accountDetails: any = LoanRepaymentStore.loanAccountDetails;
   genericValue: any = { PAYMENTTYPE: [] };
@@ -26,6 +29,8 @@ export class LoanRepaymentComponent implements OnInit {
   installmentDetails: LoanInstallmentModel | any;
   currentCurrency: any;
   profileInfo: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -33,15 +38,30 @@ export class LoanRepaymentComponent implements OnInit {
     private loanService: LoanService,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
-    private tokenService: TokenStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
     this.loanDetails = this.sesssionStorageService.getLoanInfo();
-    this.profileInfo = this.tokenService.getUser();
-    this.currentCurrency = findCurrency(this.profileInfo?.branchCrncyCode);
-    this.buildLoanRepayment();
-    this.fetchGenericValues();
+    this.loadUserProfile();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+        if (this.profileInfo) {
+          this.currentCurrency = findCurrency(
+            this.profileInfo?.branchCrncyCode,
+          );
+        }
+        this.buildLoanRepayment();
+        this.fetchGenericValues();
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildLoanRepayment() {
@@ -205,5 +225,9 @@ export class LoanRepaymentComponent implements OnInit {
     );
 
     this.router.navigate(['/user/loan/loan-service/payment-summary']);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

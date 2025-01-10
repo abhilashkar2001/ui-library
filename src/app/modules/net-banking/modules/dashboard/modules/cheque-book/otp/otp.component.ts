@@ -1,14 +1,23 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Store } from '@ngrx/store';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.component.html',
   styleUrls: ['./otp.component.scss'],
 })
-export class OtpComponent implements OnInit {
+export class OtpComponent implements OnInit, OnDestroy {
   @Output() otpVerified = new EventEmitter<any>();
   config = {
     allowNumbersOnly: false,
@@ -30,15 +39,28 @@ export class OtpComponent implements OnInit {
   otpSection = true;
   otpVerfied = false;
   customerInfo: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private loginService: OpenAccountService,
     private _location: Location,
-    private tokenStorageService: TokenStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   ngOnInit(): void {
-    this.customerInfo = this.tokenStorageService.getUser();
-    this.getOtp();
+    this.loadUserProfile();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.customerInfo = result;
+        this.getOtp();
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   onOtpChange(otp: any) {
@@ -86,5 +108,9 @@ export class OtpComponent implements OnInit {
 
   cancel() {
     this._location.back();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
@@ -9,20 +15,23 @@ import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
 import { SharedService } from 'app/shared/shared.service';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ReusableAlertPopupComponent } from 'app/shared/components/reusable-alert-popup/reusable-alert-popup.component';
 import { DataService } from 'app/shared/services/table-service/data.service';
 import { CustomWebDocUploadServiceService } from 'app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from 'app/shared/store/models/user.model';
 
 @Component({
   selector: 'app-loan-flow',
   templateUrl: './loan-flow.component.html',
   styleUrls: ['./loan-flow.component.scss'],
 })
-export class LoanFlowComponent implements OnInit {
+export class LoanFlowComponent implements OnInit, OnDestroy {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
   createLoan!: FormGroup;
   customVerifyNumber!: FormGroup;
@@ -78,6 +87,8 @@ export class LoanFlowComponent implements OnInit {
   nationalIdDocumentList: any[] = [];
   view: any;
   noOfDirectors: number | any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
@@ -90,8 +101,13 @@ export class LoanFlowComponent implements OnInit {
     protected cdr: ChangeDetectorRef,
     private dataService: DataService,
     private docapi: CustomWebDocUploadServiceService,
+    private sessionService: SessionStorageService,
+    private store: Store,
     private sessionStorageService: SessionStorageService,
-  ) { }
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
+
 
   /**
    * creating dynamically view of screen by iterating 'dynamicScreen' json object which match screenName.
@@ -230,7 +246,6 @@ export class LoanFlowComponent implements OnInit {
                 this.calculateDisbursementPayload(value['loanDisbursement']),
               )
               .subscribe();
-
             this.next();
           }
         });
@@ -246,7 +261,8 @@ export class LoanFlowComponent implements OnInit {
   };
 
   calculateDisbursementPayload(data: any) {
-    const store = this.tokenStore.getUser();
+    // const store = this.tokenStore.getUser();
+    const store = this.currentUser;
     const payload: any = {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
@@ -278,7 +294,7 @@ export class LoanFlowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStore.getUser();
+    this.loadUserProfile();
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.basisId = this.route.snapshot.params['id'];
     const sessionStep = this.sessionStorageService.getLoanStep();
@@ -299,6 +315,16 @@ export class LoanFlowComponent implements OnInit {
       }
     });
   }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currentUser = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
   getLoanById(id: any) {
     this.loanApi.getLoanById(id).subscribe((resp) => {
       if (resp.statusCode === 200) {
@@ -453,7 +479,7 @@ export class LoanFlowComponent implements OnInit {
         loanTenureDay: this.sessionStorageService.getTenureDays(),
         loanTenureMonth: this.sessionStorageService.getTenureMonth(),
         loanTenureYear: this.sessionStorageService.getTenureYear(),
-        branchCode: this.tokenStore.getUser().branchCode,
+        branchCode: this.currentUser?.branchCode,
         source: 'Website',
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
@@ -559,7 +585,7 @@ export class LoanFlowComponent implements OnInit {
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
       loanTenureYear: this.sessionStorageService.getTenureYear(),
-      branchCode: this.tokenStore.getUser().branchCode,
+         branchCode: this.currentUser?.branchCode,
       source: 'Website',
       businessProductName: null,
       productDescription: null,
@@ -917,5 +943,9 @@ export class LoanFlowComponent implements OnInit {
 
   addDoc() {
     this.loanApi.addNewUpload();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

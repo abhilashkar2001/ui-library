@@ -1,20 +1,23 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getCurrencySymbol } from '@angular/common';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SelfTransferService } from 'app/shared/services/fund-transfer/self-transfer.service';
 import { ChequeService } from 'app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from 'app/shared/store/models/user.model';
 
 @Component({
   selector: 'app-self-transfer',
   templateUrl: './self-transfer.component.html',
   styleUrls: ['./self-transfer.component.scss'],
 })
-export class SelfTransferComponent implements OnInit, AfterViewInit {
+export class SelfTransferComponent implements OnInit, AfterViewInit, OnDestroy {
   selfTransferForm: FormGroup | any;
   purposeItems = [
     { label: 'Deposit', value: 'Deposit' },
@@ -38,20 +41,24 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
   fetchedDetails: any;
   categoryTypes: any[] = [];
   accountType: any;
+  userProfile$: Observable<User | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private tokenStorageService: TokenStorageService,
     private router: Router,
     private serviceCallHandler: ServiceCallHandler,
     private selfService: SelfTransferService,
     private genericValueService: GenericValueService,
     private dashboardService: ChequeService,
     private sessionStorageService: SessionStorageService,
-  ) {}
+    private store: Store,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+  }
 
   async ngOnInit() {
-    this.currenctUser = this.tokenStorageService.getUser();
+    this.loadUserProfile();
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
     this.fetchGenericValues();
     this.fetchAccounts();
@@ -90,6 +97,16 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.currenctUser = result;
+        console.log(this.currenctUser, 'currentuser');
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   ngAfterViewInit(): void {
@@ -249,12 +266,7 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
       paymentDetailsArr,
       (payload) => this.selfService.saveSelfTranfer(payload),
     );
-
     this.router.navigate(['/user/send-money/payment-summary'], {});
-
-    // this.selfService.saveSelfTranfer(payload).subscribe((res) => {
-    //   console.log(res);
-    // });
   }
 
   payAccount(event: any) {
@@ -265,5 +277,9 @@ export class SelfTransferComponent implements OnInit, AfterViewInit {
     this.selectedCurrency = listOfAccounts.find(
       (res) => res?.accountNo == event,
     )?.accountCurrency;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }
