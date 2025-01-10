@@ -88,7 +88,7 @@ export class SessionStorageService {
    * This method will set screen Id in session storage
    * @param screenId
    */
-  setScreenId(screenId: number | string) {
+  setScreenId(screenId: any) {
     this.session.removeItem(SessionStorageEnum.SCREEN_ID);
     this.setItem(SessionStorageEnum.SCREEN_ID, screenId);
   }
@@ -144,7 +144,7 @@ export class SessionStorageService {
    * Save Process Cycle Code in session storage
    * @param processCycleCode
    */
-  public setProcessCycleCode(processCycleCode: string): void {
+  public setProcessCycleCode(processCycleCode: any): void {
     this.setItem(SessionStorageEnum.PROCESS_CYCLE_CODE, processCycleCode);
   }
 
@@ -325,7 +325,7 @@ export class SessionStorageService {
    * This method will set the customer id in the session storage
    * @param id
    */
-  public setCustomerId(id: string): void {
+  public setCustomerId(id: any): void {
     this.setItem(SessionStorageEnum.CUSTOMER_ID, id);
   }
 
@@ -348,7 +348,7 @@ export class SessionStorageService {
    * This method will set the Mobile in the session storage
    * @param id
    */
-  public setMobile(id: string): void {
+  public setMobile(id: any): void {
     this.setItem(SessionStorageEnum.MOBILE, id);
   }
 
@@ -372,7 +372,7 @@ export class SessionStorageService {
    * @param id
    */
 
-  public setReferanceNumber(id: string): void {
+  public setReferanceNumber(id: any): void {
     this.setItem(SessionStorageEnum.REFERENCE_NUMBER, id);
   }
 
@@ -396,7 +396,7 @@ export class SessionStorageService {
    * @param id
    */
 
-  public setType(id: string): void {
+  public setType(id: any): void {
     this.setItem(SessionStorageEnum.TYPE, id);
   }
 
@@ -446,8 +446,8 @@ export class SessionStorageService {
    * `This method will set the loan basis details in the session storage
    * @param id
    */
-  public setLoanBasisDetails(id: string): void {
-    this.setItem(SessionStorageEnum.LOAN_BASIS_DETAILS, id);
+  public setLoanBasisDetails(basisDetails: any): void {
+    this.setItem(SessionStorageEnum.LOAN_BASIS_DETAILS, basisDetails);
   }
 
   /**
@@ -581,7 +581,7 @@ export class SessionStorageService {
    * This method will set the loan amount in the session storage
    * @param id
    */
-  public setLoanAmount(id: string): void {
+  public setLoanAmount(id: any): void {
     this.setItem(SessionStorageEnum.LOAN_AMOUNT, id);
   }
 
@@ -646,7 +646,7 @@ export class SessionStorageService {
    * This method will set the user customer id in the session storage
    * @param id
    */
-  public setUserCustomerId(id: string): void {
+  public setUserCustomerId(id: any): void {
     this.setItem(SessionStorageEnum.USER_CUSTOMER_ID, id);
   }
 
@@ -1326,5 +1326,27 @@ export class SessionStorageService {
    */
   public removeCustomerStagingId(): void {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_STAGING_ID);
+  }
+  /**  FETCH: Customer staging id from session storage whose key is stored in CUSTOMER_STAGING_ID in session storage enum
+   * @returns
+   */
+  public getBasisDetails(): any {
+    const basisDetails = this.getItem(SessionStorageEnum.BASIS_DETAILS);
+    return basisDetails;
+  }
+
+  /**
+   * This method will set the Customer staging id in the session storage
+   * @param id
+   */
+  public setBasisDetails(id: string): void {
+    this.setItem(SessionStorageEnum.BASIS_DETAILS, id);
+  }
+
+  /**
+   * This method will remove the Customer staging id in session storage
+   */
+  public removeBasisDetails(): void {
+    this.session.removeItem(SessionStorageEnum.BASIS_DETAILS);
   }
 }

@@ -101,13 +101,11 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     protected cdr: ChangeDetectorRef,
     private dataService: DataService,
     private docapi: CustomWebDocUploadServiceService,
-    private sessionService: SessionStorageService,
     private store: Store,
     private sessionStorageService: SessionStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
-
 
   /**
    * creating dynamically view of screen by iterating 'dynamicScreen' json object which match screenName.
@@ -129,7 +127,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.componentRef = this.view.createComponent(item.component);
             if (this.noOfDirectors)
               this.componentRef.instance.numberOfDirectors = this.noOfDirectors;
-            console.log(this.componentRef);
             // for mobile number.
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
             // for personal details.
@@ -211,7 +208,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.disbursementDetails = value['disbursementDetails'];
     if (value['kycDoc']) {
       this.kycDoc = value['kycDoc'];
-      console.log(value, '........');
       this.docCustomerDetails = value['customerDetails'];
     }
     const originationModel = {
@@ -397,17 +393,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   getAllLoanStep() {
     return new Promise((resolve) => {
-      const sessionData = JSON.parse(
-        this.sessionStorageService.getLoanBasisDetails(),
-      );
-      console.log(sessionData);
-      console.log(sessionData.processCycleCode);
+      const sessionData = this.sessionStorageService.getLoanBasisDetails();
       this.screenTitle = sessionData.basisName;
       this.screenTitle = sessionData.basisName;
       this.openAccountService
         .getProcessCycle(sessionData.processCycleCode)
         .subscribe((resp) => {
-          console.log(resp);
           this.processDetails = {
             processCycleCode: resp?.data?.processCycleCode,
             processStageId: resp?.data?.processStageList[0]?.id,
@@ -416,7 +407,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             resp.data?.processStageList[0].id,
           );
           this.getProcessStages(resp.data?.processStageList[0].id);
-          console.log(resp.data?.processStageList[0].id, 'jsjsjsjsj');
           resolve('');
         });
     });
@@ -424,7 +414,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   getProcessStages(id: any) {
     this.openAccountService.getProcessStages(id).subscribe((resp) => {
-      console.log(id, resp);
       this.screenList = resp.data.screens.sort((s1: any, s2: any) => {
         return s1.sequence - s2.sequence;
       });
@@ -520,9 +509,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       );
       this.factory();
       window.scrollTo(0, 0);
-      // for scrolling sidebar and get current state.
-      // const el = document.querySelector(".mat-step-label-selected");
-      // el.scrollIntoView();
     }
   }
 
@@ -539,7 +525,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             }),
           );
         }
-        console.log(element);
         const docIds = [];
         if (element?.documentId) {
           docIds.push(element.documentId);
@@ -585,7 +570,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
       loanTenureYear: this.sessionStorageService.getTenureYear(),
-         branchCode: this.currentUser?.branchCode,
+      branchCode: this.currentUser?.branchCode,
       source: 'Website',
       businessProductName: null,
       productDescription: null,
@@ -619,7 +604,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   // on Personal details saved
   customSavePersonal(event: any) {
-    console.log(event);
     const payload = event.personalDetails.value.customer;
     payload.forEach((item: any) => {
       delete item.prefixValue;
@@ -647,7 +631,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
               customId.push(item.customerId || item?.customerStagingId);
               if (item.primaryCustomer)
                 this.sessionStorageService.setCustomerStagingId(
-                  JSON.stringify(item.customerStagingId),
+                  item.customerStagingId,
                 );
             });
             this.snack.open(`Personal Details Saved` + ' !', 'OK', {
@@ -656,9 +640,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
               horizontalPosition: 'right',
               panelClass: 'snackbar-error',
             });
-            this.sessionStorageService.setCustomerStageId(
-              JSON.stringify(customId),
-            );
+            this.sessionStorageService.setCustomerStageId(customId);
             this.customerInfo = resp.data?.customerInfo;
             this.sessionStorageService.setOriginationId(
               resp?.data?.originationModel?.originationId,
@@ -672,8 +654,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                 docIds.push(item?.documentId);
                 const formData = new FormData();
                 formData.append('fileName', item?.file);
-                console.log(formdataMap);
-
                 await this.docapi
                   .getCheckListDoc(
                     item?.docName,
@@ -694,8 +674,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                     this.sessionStorageService.getOtherDocScreenCode(),
                 };
                 await this.loanApi.saveChecklist(payload).toPromise();
-                console.log(this.dataService.getDisbursementDetails());
-
                 await this.loanApi
                   .submitLoanDetail(
                     this.calculateDisbursementPayload(
@@ -807,7 +785,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       originationModel: this.factorizedPayload(),
       customerInfo: customerDetails,
     };
-    console.log(payload, '.......');
     this.getMasterSave(payload);
   }
 
@@ -824,9 +801,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   //once all workflow formula we will get it will call on summary save api
   verifyWorkFlow() {
-    console.log(this.screenList);
     const loanAmmount = this.sessionStorageService.getLoanAmount();
-
     const properties = {
       loanAmount: loanAmmount.loanAmount,
       estimatedCost: '09876',

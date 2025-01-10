@@ -114,7 +114,6 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
 
             // for personal details.
             if (this.docCustomerDetails) {
-              console.log(this.docCustomerDetails);
               this.componentRef.instance.docCustomerDetails =
                 this.docCustomerDetails;
             }
@@ -140,7 +139,6 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
             if (this.componentRef.instance?.onMobileExitEvent)
               this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
                 this.router.navigate(['/account/landing']);
-                console.log('................');
               });
 
             if (this.componentRef.instance?.onBackEvent)
@@ -185,9 +183,9 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
         this.getProductDetails();
         const sessionStep = this.sessionStorageService.getAccountStep();
         if (sessionStep) this.selectedStep = parseInt(sessionStep);
-        
+
         this.openAccountService
-          .getProcessCycle(sessionData.processCycleCode)
+          .getProcessCycle(sessionStep.processCycleCode)
           .subscribe((resp) => {
             this.processDetails = {
               processCycleCode: resp.data.processCycleCode,
@@ -196,10 +194,11 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
 
             this.getScreenDetails(resp);
           });
-        this.existingCustomerId = this.sessionStorageService.getUserCustomerId();
-         //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
-    const customStageId = this.sessionStorageService.getCustomerStageId();
-    const originationId = this.sessionStorageService.getOriginationId();
+        this.existingCustomerId =
+          this.sessionStorageService.getUserCustomerId();
+        //this is for staging customer. we checking 1st staging id avilable, if not then checking existing cust Id.
+        const customStageId = this.sessionStorageService.getCustomerStageId();
+        const originationId = this.sessionStorageService.getOriginationId();
 
         if (originationId) {
           this.getOriginationMaster(parseInt(originationId));
@@ -235,13 +234,10 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any> | any) => {
-    console.log(value);
-    const sessionData = JSON.parse(
-      <string>localStorage.getItem('basisDetails'),
-    );
+    const sessionData = this.sessionStorageService.getBasisDetails();
     const originationModel = {
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
-originationId: this.sessionStorageService.getOriginationId() ?? null,
+      originationId: this.sessionStorageService.getOriginationId() ?? null,
       accountType: sessionData.accountType,
       basisDetailsId: sessionData.basisDetailsId,
       branchCode: this.currentUser.branchCode,
@@ -271,7 +267,6 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
       });
     }
     if (value?.companyDetails) {
-      console.log(value);
       this.getMasterSave({
         originationModel: originationModel,
         corporateCustomer: value?.companyDetails?.corporateCustomer,
@@ -284,7 +279,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
       } else {
         const FinalOriginationModel = {
           ...originationModel,
-            ownership: this.sessionStorageService.getOwnershipId(),
+          ownership: this.sessionStorageService.getOwnershipId(),
         };
         this.submitCheckList(value, FinalOriginationModel, customerInfo);
       }
@@ -349,7 +344,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
           isManagingDirector: custResp[i]?.primaryCustomer,
         };
 
-     const customerId = this.sessionStorageService.getUserCustomerId();
+      const customerId = this.sessionStorageService.getUserCustomerId();
       if (customerId) {
         delete custResp[i].existingCustomerId;
         custResp[i].customerId = parseInt(customerId);
@@ -367,15 +362,14 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
    * @param payload
    */
   getMasterSave(payload: any) {
-    console.log(payload);
     this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
       if (resp?.statusCode === 200 || resp?.statusCode == 201) {
         this.originationId = resp.data.originationModel.originationId;
-       this.sessionStorageService.setOriginationId(
+        this.sessionStorageService.setOriginationId(
           resp?.data?.originationModel?.originationId,
         );
         if (resp?.data?.customerInfo)
-         this.sessionStorageService.setCustomerStagingId(
+          this.sessionStorageService.setCustomerStagingId(
             resp?.data?.customerInfo?.[0]?.customerStagingId,
           );
         if (resp?.data?.corporateCustomer)
@@ -413,7 +407,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
             this.ownershipId = this.ownership.find(
               (r: any) => r?.values.toLowerCase() === 'self',
             )?.id;
-                this.sessionStorageService.setOwnershipId(this.ownershipId);
+            this.sessionStorageService.setOwnershipId(this.ownershipId);
             resolve(this.ownershipId);
           } else {
             reject(new Error('Failed to fetch generic data'));
@@ -437,7 +431,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
         this.screenList = response.data.screens.sort((s1: any, s2: any) => {
           return s1.sequence - s2.sequence;
         });
-         this.sessionStorageService.setCurrentStage(
+        this.sessionStorageService.setCurrentStage(
           resp.data.processStageList[0].id,
         );
         this.factory();
@@ -477,7 +471,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
       return;
     } else {
       this.selectedStep = num;
-     this.sessionStorageService.setAccountStep(this.selectedStep),
+      this.sessionStorageService.setAccountStep(this.selectedStep),
         this.sessionStorageService.setCurrentScreenCode(
           this.screenList?.[num]?.screenCode,
         );
@@ -489,7 +483,7 @@ originationId: this.sessionStorageService.getOriginationId() ?? null,
     const lastStep = this.selectedStep;
     this.selectedStep = tabDetails.selectedIndex;
     this.currentStep = this.screenList[tabDetails.selectedIndex].screenName;
-   this.sessionStorageService.setAccountStep(tabDetails.selectedIndex);
+    this.sessionStorageService.setAccountStep(tabDetails.selectedIndex);
     this.sessionStorageService.setCurrentScreenCode(
       this.screenList?.[this.selectedStep]?.screenCode,
     );
@@ -609,16 +603,14 @@ Best regards, `,
   }
 
   saveCofig(resp: any) {
-    const accountBasisDetails = JSON.parse(
-      <string>localStorage.getItem('basisDetails'),
-    );
+    const accountBasisDetails = this.sessionStorageService.getBasisDetails();
     const payload = {
       originationId: this.originationId,
       autoAction: resp?.autoAction,
       approvalConfigId: [parseInt(resp?.approval)],
       basisId: accountBasisDetails?.basisDetailsId,
       processCycleCode: accountBasisDetails?.processCycleCode,
- currentStage: this.sessionStorageService.getCurrentStage(),
+      currentStage: this.sessionStorageService.getCurrentStage(),
       targetStage: parseInt(resp?.targetStage),
       currentScreen: parseInt(resp?.screenCode),
       targetScreen: parseInt(resp?.targetScreen),

@@ -368,10 +368,10 @@ export class CreateLoanComponent implements OnInit {
     if (this.personalLoanDetailsForm.invalid || this.validateMinimumTenure) {
       return;
     }
-    const loanAmmount = JSON.stringify({
+    const loanAmmount = {
       loanAmount: this.personalLoanDetailsForm.value.loanAmount || 20000,
       loanTenure: `${this.personalLoanDetailsForm.value.tenureYear}Years ${this.personalLoanDetailsForm.value.tenureMonth} months ${this.personalLoanDetailsForm.value.tenureDays} Days`,
-    });
+    };
     this.sessionStorageService.setLoanAmount(loanAmmount);
     const holder: any = (
       this.staticData['HOLDERTYPE'] as { id: any; values: string }[]

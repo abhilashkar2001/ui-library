@@ -109,7 +109,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
 
   onGetOTP() {
-    this.ngOtpInput.otpForm.reset();
+    console.log('kjhgfgh');
+    // this.ngOtpInput.otpForm.reset();
     this.api.getOtp(this.otpForm.value.phone).subscribe(() => {
       this.otpSent = true;
       this.showOtpSection = true;
@@ -312,9 +313,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
                     resp.data.forEach((element: any) => {
                       customerIds.push(element.customerId);
                     });
-                    this.sessionStorageService.setUserCustomerId(
-                      JSON.stringify(customerIds),
-                    );
+                    this.sessionStorageService.setUserCustomerId(customerIds);
                   } else {
                     this.sessionStorageService.setUserCustomerId(
                       resp.data[0].customerId,

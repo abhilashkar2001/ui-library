@@ -66,14 +66,13 @@ export class UploadBulkUploadComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private store: Store,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
 
- 
-
   ngOnInit(): void {
-     this.loadUserProfile();
+    this.loadUserProfile();
     this.corporateId = this.sessionStorageService.getCorporateId();
     this.route.queryParamMap.subscribe((params: any) => {
       this.uploadData = params?.params?.data;

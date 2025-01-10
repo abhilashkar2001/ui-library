@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FilterBy } from 'app/shared/helpers/utils';
 import { BulkUploadServiceService } from './bulk-upload-service.service';
@@ -10,7 +10,7 @@ import { InternetBankingService } from 'app/shared/services/internet-banking.ser
   templateUrl: './bulk-upload.component.html',
   styleUrls: ['./bulk-upload.component.scss'],
 })
-export class BulkUploadComponent implements OnInit {
+export class BulkUploadComponent {
   columns: any = BulkUploadConstant.UPLOAD_SUMMARY;
   sort: any;
   size = 5;
@@ -39,8 +39,6 @@ export class BulkUploadComponent implements OnInit {
     private bulkService: InternetBankingService,
     private bulkuploadService: BulkUploadServiceService,
   ) {}
-
-  ngOnInit(): void {}
 
   customGoBack() {
     this.route.navigate(['/user/dashboard']);

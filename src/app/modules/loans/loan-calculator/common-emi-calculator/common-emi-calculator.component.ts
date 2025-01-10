@@ -61,7 +61,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
     this.otherUserInfo = this.tokenStore.getUserOtherInfo();
     this.currency = this.otherUserInfo?.currency;
     const basisId: any = this.sessionStorageService.getLoanBasisDetails();
-    this.getProductDetails(JSON.parse(basisId).basisId);
+    this.getProductDetails(basisId.basisId);
     setTimeout(() => {
       this.buildForm();
     }, 500);

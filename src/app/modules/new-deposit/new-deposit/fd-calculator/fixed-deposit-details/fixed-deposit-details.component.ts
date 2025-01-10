@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'app/shared/store/models/user.model';
 import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-fixed-deposit-details',
@@ -74,6 +74,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private openAccountService: OpenAccountService,
     private store: Store,
+    private sessionStorageSevice: SessionStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
@@ -81,7 +82,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
     this.getGenericDetails();
     this.newDepositeService.setToken(true);
     this.loadUserProfile();
-    const sessionStep: any = this.sessionStorageService.getFdStep;
+    const sessionStep: any = this.sessionStorageSevice.getFdStep;
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
     const id = this.route.snapshot.params['id'];
     if (id) this.dataByMasterId(parseInt(id));
@@ -117,7 +118,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
 
   getAllFdStep(processCycleCode: any) {
     this.fdApi.getProcessCycle(processCycleCode).subscribe((resp) => {
-      this.sessionStorageService.setCurrentStage(
+      this.sessionStorageSevice.setCurrentStage(
         resp.data.processStageList[0].id,
       );
       this.fdApi
@@ -205,15 +206,15 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
         'DD-MMM-YYYY',
       ),
     };
-    this.sessionStorageService.setOriginationId(this.fdDetails.originationId);
-    this.sessionStorageService.setHolderType(this.createFdForm.value.ownership);
+    this.sessionStorageSevice.setOriginationId(this.fdDetails.originationId);
+    this.sessionStorageSevice.setHolderType(this.createFdForm.value.ownership);
     const payload = {
       originationModel: details,
       customerInfo: this.createPayload(this.customerInfo),
     };
     this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        this.sessionStorageService.setFdRdMasterId(
+        this.sessionStorageSevice.setFdRdMasterId(
           resp.data.fdRdMasterModel.fdRdMasterId,
         );
         this.snack.open(`Fixed Deposit Details Saved`, '!', {
@@ -307,7 +308,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
       if (resp.statusCode == 200 && resp.data) {
         resp.data?.customerInfo?.forEach((item: any) => {
           if (item.primaryCustomer)
-            this.sessionStorageService.setCustomerId(item.customerId);
+            this.sessionStorageSevice.setCustomerId(item.customerId);
         });
         this.snack.open(`Personal Details Saved` + ' !', 'OK', {
           duration: 4000,
@@ -333,13 +334,13 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
   goBack() {
     const num = this.selectedStep - 1;
     this.selectedStep = num;
-    this.sessionStorageService.setFdStep(String(this.selectedStep));
+    this.sessionStorageSevice.setFdStep(String(this.selectedStep));
     this.factory();
   }
   next() {
     const num = this.selectedStep + 1;
     this.selectedStep = num;
-    this.sessionStorageService.setFdStep(String(this.selectedStep));
+    this.sessionStorageSevice.setFdStep(String(this.selectedStep));
     this.factory();
   }
   customFormGroup(e: any) {
@@ -347,11 +348,11 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
   }
 
   onHolderTypeChange(e: any) {
-    this.sessionStorageService.setHolderType(e);
+    this.sessionStorageSevice.setHolderType(e);
     this.holderType = e;
   }
   onPaymentTypeChange(e: any) {
-    this.sessionStorageService.setPaymentType(e);
+    this.sessionStorageSevice.setPaymentType(e);
   }
 
   factory() {
@@ -391,7 +392,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
       customerInfo: custResp,
     };
     this.fdApi.saveFdOriginationMaster(payload).subscribe((resp) => {
-      this.sessionStorageService.setDepositOriginationId(
+      this.sessionStorageSevice.setDepositOriginationId(
         resp.data.originationModel.originationId,
       );
       this.next();

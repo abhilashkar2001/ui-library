@@ -7,8 +7,6 @@ import { User } from 'app/shared/store/models/user.model';
 import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
-
 
 @Component({
   selector: 'app-payment-page',
@@ -51,7 +49,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerInfo = this.sessionStorageService.getCustomerInfo();
-      this.loadUserProfile();
+    this.loadUserProfile();
     this.paymentDetails = this.serviceCallHandler.get('serviceHandler', true);
     if (this.paymentDetails[0]?.eventType == 'schedule-payment')
       this.scheduleSummary = true;

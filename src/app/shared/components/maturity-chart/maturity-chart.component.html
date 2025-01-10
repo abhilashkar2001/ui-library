@@ -36,7 +36,7 @@
           <ng-container
             *ngIf="
               !details.headerCell.includes('Interest Rate') &&
-              details.headerCell != 'Interest Amoun====================t'
+              details.headerCell !== 'Interest Amount'
             "
           >
             {{ data[details.headerDef] ?? '-' }}

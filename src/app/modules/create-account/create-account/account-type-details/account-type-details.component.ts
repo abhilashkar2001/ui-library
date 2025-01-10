@@ -3,20 +3,20 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-account-type-details',
   templateUrl: './account-type-details.component.html',
   styleUrls: ['./account-type-details.component.scss'],
 })
-export class AccountTypeDetailsComponent implements OnChanges, OnInit {
+export class AccountTypeDetailsComponent implements OnChanges {
   @Input() subClassList: any;
   @Output() customApply = new EventEmitter<any>();
   basisClass: any = '';
@@ -25,11 +25,11 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.basisClass = this.route.snapshot.params['id'];
   }
 
-  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges | any): void {
     this.subClassList = changes?.subClassList?.currentValue;
   }
@@ -65,18 +65,12 @@ export class AccountTypeDetailsComponent implements OnChanges, OnInit {
   }
 
   applyForAccount(event: any) {
-    const payload = JSON.stringify({
+    const payload = {
       accountType: event.basisName,
       basisDetailsId: event.basisId,
       processCycleCode: event.processCycleCode,
-    });
-    localStorage.setItem('basisDetails', payload);
-    // const url = this.location.prepareExternalUrl(
-    //   this.router.serializeUrl(
-    //     this.router.createUrlTree([`/account/open/${event.basisId}`])
-    //   )
-    // );
-    // window.open(`${url}`, "_blank");
+    };
+    this.sessionStorageService.setLoanBasisDetails(payload);
     this.router.navigate([`/account/open/${event.basisId}`]);
   }
 

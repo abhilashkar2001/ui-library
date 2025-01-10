@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { User } from 'app/shared/store/models/user.model';
 import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
 import * as moment from 'moment';
@@ -25,7 +26,7 @@ export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
     private offerIssueService: OfferIssueService,
     private route: Router,
     private store: Store,
-     private sessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
@@ -33,7 +34,7 @@ export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadUserProfile();
     this.buildRevisiteForm();
- (this.originationId = this.sessionStorageService.getOriginationId()),
+    (this.originationId = this.sessionStorageService.getOriginationId()),
       this.fetchOfferDetails();
   }
 

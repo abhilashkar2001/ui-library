@@ -50,63 +50,59 @@ export class CallbackComponent implements OnInit, OnDestroy {
    * @method getProfile()
    */
   getProfile() {
-    const userProfileSubscription$ = this.userProfile$.subscribe(
-      async (res) => {
-    this.sessionStorageService.setCustomerId(
-          <string>this.getParameterByName('customerId'),
+    const userProfileSubscription$ = this.userProfile$.subscribe(async () => {
+      this.sessionStorageService.setCustomerId(
+        <string>this.getParameterByName('customerId'),
+      );
+      this.sessionStorageService.setMobile(
+        <string>this.getParameterByName('mobile'),
+      );
+      this.sessionStorageService.setReferanceNumber(
+        <string>this.getParameterByName('referanceNumber'),
+      );
+      this.sessionStorageService.setType(
+        JSON.stringify(this.getParameterByName('type')),
+      );
+      this.sessionStorageService.setScreenId(
+        <string>this.getParameterByName(QueryParamEnum.SCREEN_ID),
+      );
+      if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
+        const checklistObj: ChecklistRouteObjModel = {
+          checklistItem: this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM),
+          processStageId: this.getParameterByName(
+            QueryParamEnum.PROCESS_STAGE_ID,
+          ),
+          screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
+          processCycleCode: this.getParameterByName(
+            QueryParamEnum.PROCESS_CYCLE_CODE,
+          ),
+        };
+        this.sessionStorageService.setChecklistRouteObj(checklistObj);
+      }
+      if (
+        this.getParameterByName('customerId') != null &&
+        this.getParameterByName('mobile') != null
+      ) {
+        this.router.navigate([`/origination/otp`], {
+          queryParams: { type: `${this.getParameterByName('screen')}` },
+        });
+      } else if (this.getParameterByName('route') == 'tracking') {
+        this.router.navigate([`${this.getParameterByName('route')}`]);
+      } else {
+        sessionStorage.setItem(
+          'originationId',
+          JSON.stringify(this.getParameterByName('originationId')),
         );
-        this.sessionStorageService.setMobile(
-          <string>this.getParameterByName('mobile'),
-        );
-        this.sessionStorageService.setReferanceNumber(
-          <string>this.getParameterByName('referanceNumber'),
-        );
-        this.sessionStorageService.setType(
-          JSON.stringify(this.getParameterByName('type')),
-        );
-        this.sessionStorageService.setScreenId(
-          <string>this.getParameterByName(QueryParamEnum.SCREEN_ID),
-        );
-        if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
-          const checklistObj: ChecklistRouteObjModel = {
-            checklistItem: this.getParameterByName(
-              QueryParamEnum.CHECKLIST_ITEM,
-            ),
-            processStageId: this.getParameterByName(
-              QueryParamEnum.PROCESS_STAGE_ID,
-            ),
-            screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
-            processCycleCode: this.getParameterByName(
-              QueryParamEnum.PROCESS_CYCLE_CODE,
-            ),
-          };
-          this.sessionStorageService.setChecklistRouteObj(checklistObj);
-        }
-        if (
-          this.getParameterByName('customerId') != null &&
-          this.getParameterByName('mobile') != null
-        ) {
-          this.router.navigate([`/origination/otp`], {
-            queryParams: { type: `${this.getParameterByName('screen')}` },
-          });
-        } else if (this.getParameterByName('route') == 'tracking') {
-          this.router.navigate([`${this.getParameterByName('route')}`]);
-        } else {
-          sessionStorage.setItem(
-            'originationId',
-            JSON.stringify(this.getParameterByName('originationId')),
-          );
 
-          this.sessionStorageService.setProcessCycleCode(
-            <string>this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
-          );
+        this.sessionStorageService.setProcessCycleCode(
+          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
+        );
 
-          this.router.navigate([
-            `/origination/${this.getParameterByName('route')}`,
-          ]);
-        }
-      },
-    );
+        this.router.navigate([
+          `/origination/${this.getParameterByName('route')}`,
+        ]);
+      }
+    });
     this.subscriptions.push(userProfileSubscription$);
   }
 

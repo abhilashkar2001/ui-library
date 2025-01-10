@@ -6,93 +6,19 @@
     Enter Mobile Number for Instant Login
   </div>
   <div class="mobile-verify">
-    <!-- <fieldset class="yeardrop fieldset">
-      <div fxLayout="row" class="parentYearDiv" fxFlex="100">
-        <mat-form-field
-          appearance="outline"
-          class="full-width inputSelect isdSelect"
-          fxFlex="13"
-        >
-          <mat-select
-            class="selector-input"
-            formControlName="isdCode"
-            [value]="defaultIsdCodeValue"
-            (selectionChange)="setMobileLength()"
-          >
-            <mat-option [value]="">Select</mat-option>
-            <ng-container *ngFor="let isdCode of countriesIsdCodes">
-              <mat-option
-                *ngIf="isdCode"
-                [value]="isdCode?.countryTelIsdCode"
-                (click)="onIsdCodeSelected(isdCode)"
-                >+{{ isdCode?.countryTelIsdCode }}</mat-option
-              >
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
-        <span class="vl"></span>
-        <mat-form-field
-          appearance="outline"
-          class="full-width inputSelect mob_field"
-          fxFlex="87"
-        >
-          <input
-            matInput
-            type="text"
-            class="inputText"
-            formControlName="phone"
-            appNumbersOnly
-            [maxlength]="maxMobileLength"
-          />
-          <button
-            class="get-otp-button"
-            matSuffix
-            mat-raised-button
-            (click)="onGetOTP()"
-            [disabled]="(validNumber && getOtpBtn) || isValidMobile"
-          >
-            Get OTP
-          </button>
-        </mat-form-field>
-      </div>
-    </fieldset> -->
-    <!-- <ic-mobile-field
-      [label]="'' | translate"
-      type="text"
-      placeholder="OTP"
-      [control]="this.otpForm.get('phone')?.value"
-      [disabled]="(validNumber && getOtpBtn) || isValidMobile"
-      [isdCode]="countriesIsdCodes?.countryTelIsdCode"
-      [isdControl]="this.otpForm.get('isdCode')?.value"
-      [maxLength]="defaultIsdCodeValue"
-      (selectionChange)="setMobileLength()"
-    ></ic-mobile-field> -->
     <ic-mobile-field
-      label="Mobile number"
-      placeholder="Enter Mobile Number"
-      [control]="otpForm.get('phone')?.value"
+      label="Mobile Number"
+      placeholder="Mobile Number"
+      [isdControl]="otpForm.get('isdCode') | formcontrol"
       [isdCode]="countriesIsdCodes"
-      [isdControl]="otpForm.get('isdCode')?.value"
-      [maxLength]="maxMobileLength"
       (selectionChange)="setMobileLength()"
-      [suffixButton]="'Get OTP'"
+      [control]="otpForm.get('phone') | formcontrol"
+      [maxlength]="maxMobileLength"
+      suffixButton="Get OTP"
+      (onSuffixClick)="onGetOTP()"
+      [disabled]="(validNumber && getOtpBtn) || isValidMobile"
     >
     </ic-mobile-field>
-    <!-- <mat-error
-      *ngIf="
-        otpForm.get('phone')?.touched &&
-        otpForm.get('phone')?.hasError('invalidLength')
-      "
-      class="mobileLength-error"
-      >Mobile length should be {{ maxMobileLength }}</mat-error
-    > -->
-    <!-- <mat-error class="custom-mat-error" *ngIf="isValidMobile"
-      >Mobile Number is Invalid.
-    </mat-error>
-    <div *ngIf="otpSent" class="successfully-Otp" [@fadeInOut]>
-      OTP <span *ngIf="resendOtp === 1">Sent</span>
-      <span *ngIf="resendOtp > 1">Resent</span> successfully!
-    </div> -->
   </div>
 
   <div

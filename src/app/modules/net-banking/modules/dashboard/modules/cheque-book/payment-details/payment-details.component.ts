@@ -14,7 +14,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'app/shared/store/models/user.model';
 import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
@@ -22,9 +21,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   templateUrl: './payment-details.component.html',
   styleUrls: ['./payment-details.component.scss'],
 })
-
 export class PaymentDetailsComponent implements OnInit, OnDestroy, OnChanges {
-
   @Input() paymentDetails: any;
   @Input() status: string | any;
   operationType: string | any;

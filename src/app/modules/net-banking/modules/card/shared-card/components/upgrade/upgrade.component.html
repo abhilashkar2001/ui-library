@@ -12,6 +12,8 @@
           <span class="light-blue-title">{{ title | translate }}</span>
           <div fxLayout="row">
             <ic-select
+              keydown.enter="enter"
+              tabindex="0"
               fxFlex="40"
               label="Card No"
               placeholder="Card No"

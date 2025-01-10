@@ -4,14 +4,35 @@
     fxLayoutAlign="space-between center"
     class="sub_nav_menu_container"
   >
-    <div
+    <!-- <div
       class="nav_item"
       routerLinkActive="open"
       *ngFor="let item of navigationItems"
       [routerLink]="item?.link"
     >
       <img [src]="item.icon" alt="icon" />
-    </div>
+    </div> -->
+    <!-- <div
+      class="nav_item"
+      routerLinkActive="open"
+      *ngFor="let item of navigationItems; let i = index"
+      (click)="routeScreen(item?.link)"
+      (keydown.enter)="routeScreen(routeScreen)"
+      [tabindex]="i"
+    >
+      <img [src]="item.icon" alt="icon" />
+    </div> -->
+    <button
+      class="nav_item"
+      routerLinkActive="open"
+      class="custom_nav_button"
+      *ngFor="let item of navigationItems"
+      [routerLink]="item?.link"
+      (keydown.enter)="navigateByUrl(item?.link)"
+      tabindex="0"
+    >
+      <img [src]="item.icon" alt="icon" />
+    </button>
   </div>
 </mat-toolbar>
 <!-- <app-spinner></app-spinner> -->

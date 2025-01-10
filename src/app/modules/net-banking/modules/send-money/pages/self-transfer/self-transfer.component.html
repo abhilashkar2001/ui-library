@@ -2,7 +2,7 @@
   <form [formGroup]="selfTransferForm" fxFlex="100" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <div class="row px-12">
-        <!-- <app-ic-custom-pay-from
+        <app-ic-custom-pay-from
           [control]="selfTransferForm.get('payFrom')"
           [inputLabel]="'Pay From' | translate"
           bindValueKey="accountNo"
@@ -10,8 +10,8 @@
           [currencyCode]="selectedCurrency"
           (selectionChange)="payAccount($event)"
           [accountType]="accountType"
-        ></app-ic-custom-pay-from> -->
-        <ic-select
+        ></app-ic-custom-pay-from>
+        <!-- <ic-select
           label="Pay From"
           [control]="selfTransferForm.get('payFrom')"
           (selectionChange)="payAccount($event)"
@@ -20,7 +20,7 @@
           [bindLabelKey]="'accountNo'"
           selectionType="single"
         >
-        </ic-select>
+        </ic-select> -->
       </div>
     </div>
     <h1 class="wrapper_row light-blue-title">

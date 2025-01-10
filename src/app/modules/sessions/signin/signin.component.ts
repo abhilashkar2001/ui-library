@@ -154,7 +154,7 @@ export class SigninComponent implements OnInit, OnDestroy {
           const result: any = await this.fetchThemeAndLanguange();
           if (result?.data?.length) {
             this.sessionStorageService.setUserThemeLang(
-              JSON.stringify(result?.data[result?.data?.length - 1]),
+              result?.data[result?.data?.length - 1],
             );
             const lang =
               result?.data[result?.data?.length - 1]?.language ?? 'en';

@@ -105,11 +105,11 @@ export class LoanAccountTypeComponent implements OnInit {
     this.isShowCalculator = true;
     this.selectedLoan = subAccount;
     console.log(this.selectedLoan);
-    const payload = JSON.stringify({
+    const payload = {
       processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
       basisName: this.selectedLoan?.productDetails[0].basisName,
       basisId: this.selectedLoan?.productDetails[0].basisId,
-    });
+    };
     this.sessionStorageService.setLoanBasisDetails(payload);
   }
   customCalculatorValues(event: any) {
