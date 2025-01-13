@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenStorageService } from '../token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 
 @Injectable()
 export class AuthGuard {

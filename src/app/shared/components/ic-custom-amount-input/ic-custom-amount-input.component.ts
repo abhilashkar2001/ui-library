@@ -12,8 +12,8 @@ import { AbstractControl, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { createMask } from 'app/shared/directives/input-mask/constants';
 import { findCurrency } from 'app/shared/helpers/utils';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

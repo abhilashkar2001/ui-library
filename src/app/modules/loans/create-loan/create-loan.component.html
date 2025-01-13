@@ -17,7 +17,7 @@
           <mat-label class="custom-mat-label">Loan Amount</mat-label>
           <div fxLayout="row">
             <span
-              *ngIf="personalLoanDetailsForm.value.loanAmount"
+              *ngIf="personalLoanDetailsForm.value?.loanAmount"
               class="currencySymbol"
               >{{ currencySymboll }}</span
             >
@@ -63,10 +63,10 @@
                 [readonly]="isReadOnly"
                 maxlength="2"
               />
-              <ng-container *ngIf="personalLoanDetailsForm.value.tenureYear">
+              <ng-container *ngIf="personalLoanDetailsForm.value?.tenureYear">
                 <span class="suffixLabel">{{
-                  personalLoanDetailsForm.value.tenureYear
-                    ? personalLoanDetailsForm.value.tenureYear > 1
+                  personalLoanDetailsForm.value?.tenureYear
+                    ? personalLoanDetailsForm.value?.tenureYear > 1
                       ? 'Years'
                       : 'Year'
                     : ''
@@ -86,10 +86,10 @@
                 [readonly]="isReadOnly"
                 maxlength="2"
               />
-              <ng-container *ngIf="personalLoanDetailsForm.value.tenureMonth">
+              <ng-container *ngIf="personalLoanDetailsForm.value?.tenureMonth">
                 <span class="suffixLabel">{{
-                  personalLoanDetailsForm.value.tenureMonth
-                    ? personalLoanDetailsForm.value.tenureMonth > 1
+                  personalLoanDetailsForm.value?.tenureMonth
+                    ? personalLoanDetailsForm.value?.tenureMonth > 1
                       ? 'Months'
                       : 'Month'
                     : ''
@@ -112,10 +112,10 @@
               <ng-container>
                 <span
                   class="suffixLabel"
-                  *ngIf="personalLoanDetailsForm.value.tenureDays"
+                  *ngIf="personalLoanDetailsForm.value?.tenureDays"
                   >{{
-                    personalLoanDetailsForm.value.tenureDays
-                      ? personalLoanDetailsForm.value.tenureDays > 1
+                    personalLoanDetailsForm.value?.tenureDays
+                      ? personalLoanDetailsForm.value?.tenureDays > 1
                         ? 'Days'
                         : 'Day'
                       : ''
@@ -129,9 +129,9 @@
           class="mat-error small-error mt-12"
           *ngIf="
             validateTenure &&
-            (personalLoanDetailsForm.get('tenureYear').value ||
-              personalLoanDetailsForm.get('tenureMonth').value ||
-              personalLoanDetailsForm.get('tenureDays').value)
+            (personalLoanDetailsForm.get('tenureYear')?.value ||
+              personalLoanDetailsForm.get('tenureMonth')?.value ||
+              personalLoanDetailsForm.get('tenureDays')?.value)
           "
         >
           Loan Period should be less than
@@ -143,9 +143,9 @@
           class="mat-error small-error mt-12"
           *ngIf="
             validateMinimumTenure &&
-            (personalLoanDetailsForm.get('tenureYear').value ||
-              personalLoanDetailsForm.get('tenureMonth').value ||
-              personalLoanDetailsForm.get('tenureDays').value)
+            (personalLoanDetailsForm.get('tenureYear')?.value ||
+              personalLoanDetailsForm.get('tenureMonth')?.value ||
+              personalLoanDetailsForm.get('tenureDays')?.value)
           "
         >
           Loan Period should be greater than
@@ -164,7 +164,7 @@
           <div fxLayout="row">
             <span
               class="currencySymbol"
-              *ngIf="personalLoanDetailsForm.value.emiAmount"
+              *ngIf="personalLoanDetailsForm.value?.emiAmount"
               >{{ currencySymboll }}</span
             >
             <input matInput readonly formControlName="emiAmount" />

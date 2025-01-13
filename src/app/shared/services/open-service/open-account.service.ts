@@ -11,7 +11,7 @@ export class OpenAccountService {
   private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) {}
 
-  getOtp(phoneNumber: number): Observable<any> | any {
+  getOtp(phoneNumber: string): Observable<any> | any {
     return this.http.get(`${baseUrl}/auth/generateOTP?mobile=${phoneNumber}`);
   }
 
@@ -98,7 +98,7 @@ export class OpenAccountService {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
 
-  getCustomerById(id: any) {
+  getCustomerById(id: number) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
   }
 

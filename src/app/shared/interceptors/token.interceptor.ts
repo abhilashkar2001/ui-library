@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpRequest,
 } from '@angular/common/http';
-import { TokenStorageService } from '../token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 
 const TOKEN_HEADER_KEY = 'Authorization'; // for Spring Boot back-end
 @Injectable({

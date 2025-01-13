@@ -1,34 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { selectUser } from '@onerumango/utils';
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-remark',
   templateUrl: './remark.component.html',
   styleUrls: ['./remark.component.scss'],
 })
-export class RemarkComponent implements OnInit {
+export class RemarkComponent implements OnInit, OnDestroy {
   currentuser: any;
   originationId: any;
   revisiteForm!: FormGroup;
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private tokenStorageService: TokenStorageService,
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
     private route: Router,
     private sessionStorageService: SessionStorageService,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
-    this.currentuser = this.tokenStorageService.getUser();
-    this.buildRevisiteForm();
-    this.fetchOfferDetails();
+    const loadUser$ = this.store.select(selectUser).subscribe((user) => {
+      if (user) {
+        this.currentuser = user;
+        this.buildRevisiteForm();
+        this.fetchOfferDetails();
+      }
+    });
+
+    this.subscriptions.push(loadUser$);
   }
 
   buildRevisiteForm(data?: any) {
@@ -80,5 +89,9 @@ export class RemarkComponent implements OnInit {
   /**Reseting the remarks data */
   resetRemark() {
     this.revisiteForm.get('remark')?.reset();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

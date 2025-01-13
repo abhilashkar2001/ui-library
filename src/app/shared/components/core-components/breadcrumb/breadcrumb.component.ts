@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { RoutePartsService } from '../../../services/route-parts.service';
 import { LayoutService } from '../../../services/layout.service';
@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
 })
-export class BreadcrumbComponent implements OnInit, OnDestroy {
+export class BreadcrumbComponent implements OnDestroy {
   routeParts: any[];
   routerEventSub: Subscription;
   // public isEnabled: boolean = true;
@@ -50,7 +50,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit() {}
   ngOnDestroy() {
     if (this.routerEventSub) {
       this.routerEventSub.unsubscribe();

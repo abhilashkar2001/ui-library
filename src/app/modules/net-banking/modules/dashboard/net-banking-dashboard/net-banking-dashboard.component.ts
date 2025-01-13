@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NETBANKING } from './net-banking-dashboard.constant';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { Account } from 'app/shared/models/account-list-by-subclass.model';
 import { FlexBalanceModel } from 'app/shared/models/flex-balance.model';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -26,8 +26,8 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-net-banking-dashboard',

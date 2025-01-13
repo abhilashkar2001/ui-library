@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SessionService } from 'app/shared/session.service';
-import { UserProfileInfoAction } from 'app/shared/store/action/user-profileInfo.action';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { UserProfileAction } from '@onerumango/utils';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -41,7 +41,8 @@ export class HomeComponent implements OnInit {
     this.sessionService.signin(payload, isRememberMe, otpRequired).subscribe(
       () => {
         /* get profile info */
-        this.store.dispatch(UserProfileInfoAction.loadUserProfile());
+        this.store.dispatch(UserProfileAction.loadUserProfile());
+        this.router.navigate(['/account']);
       },
       () => {
         this.router.navigate(['/home/401']);

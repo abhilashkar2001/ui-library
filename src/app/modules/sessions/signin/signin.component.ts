@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { SessionService } from 'app/shared/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
@@ -12,10 +12,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { Store } from '@ngrx/store';
-import { UserProfileInfoAction } from 'app/shared/store/action/user-profileInfo.action';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { UserProfileAction } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
@@ -89,7 +89,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   submit() {
     const payload = this.signinForm.value;
-    this.tokenService.setCorporateId(payload?.corporateId);
+    this.sessionStorageService.setCorporateId(payload?.corporateId);
     this.loginService.corporateLogin(payload).subscribe((res: any) => {
       this.authType = 'otp';
       this.tokenService.saveToken(res?.data);
@@ -150,7 +150,7 @@ export class SigninComponent implements OnInit, OnDestroy {
             },
           });
         } else {
-          this.store.dispatch(UserProfileInfoAction.loadUserProfile());
+          this.store.dispatch(UserProfileAction.loadUserProfile());
           const result: any = await this.fetchThemeAndLanguange();
           if (result?.data?.length) {
             this.sessionStorageService.setUserThemeLang(

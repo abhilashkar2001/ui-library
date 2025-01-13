@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DataService } from 'app/shared/services/table-service/data.service';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
+import { TokenStorageService } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

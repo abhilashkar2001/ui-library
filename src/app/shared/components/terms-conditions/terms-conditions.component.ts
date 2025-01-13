@@ -1,14 +1,22 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { AppState, selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-terms-conditions',
   templateUrl: './terms-conditions.component.html',
   styleUrls: ['./terms-conditions.component.scss'],
 })
-export class TermsConditionsComponent implements OnInit {
+export class TermsConditionsComponent implements OnInit, OnDestroy {
   @Output() confirmEvent: EventEmitter<undefined> = new EventEmitter();
   @Output() backEvent: EventEmitter<undefined> = new EventEmitter();
   checked = false;
@@ -16,26 +24,27 @@ export class TermsConditionsComponent implements OnInit {
   customerData: any;
   requestDate!: Date | string;
   loamAmount!: number;
-  currencySymboll = '₹';
   otherUserInfo: any;
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private tokenStore: TokenStorageService,
     private sessionStorageService: SessionStorageService,
+    private store: Store<AppState>,
   ) {}
 
   ngOnInit(): void {
-    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.customerData = this.sessionStorageService.getCustomerData();
-    this.loamAmount = this.sessionStorageService.getLoanAmount()?.loanAmount;
-    this.requestDate = moment(new Date()).format();
-  }
-
-  isValidated() {
-    if (!this.checked) {
-      return true;
-    }
-    return false;
+    const otherUserInfo$ = this.store
+      .select(selectLocaleData)
+      .subscribe((userInfo) => {
+        if (userInfo) {
+          this.otherUserInfo = userInfo;
+          this.customerData = this.sessionStorageService.getCustomerData();
+          this.loamAmount =
+            this.sessionStorageService.getLoanAmount()?.loanAmount;
+          this.requestDate = moment(new Date()).format();
+        }
+      });
+    this.subscriptions.push(otherUserInfo$);
   }
 
   onConfirm() {
@@ -44,5 +53,9 @@ export class TermsConditionsComponent implements OnInit {
 
   onBack() {
     this.backEvent.emit();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

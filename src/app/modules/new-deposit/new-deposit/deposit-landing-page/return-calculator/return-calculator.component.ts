@@ -13,12 +13,20 @@ import { Router } from '@angular/router';
 import { CreateRdService } from '../../rd-calculator/create-rd.service';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import {
+  AppState,
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
 import { FdCalculatorServiceService } from '../../fd-calculator/fd-calculator-service.service';
 import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-return-calculator',
@@ -38,14 +46,6 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
   email = new FormControl('');
   thumbLabel: boolean | any = true;
   name = 'Angular 5';
-  calculatorValues: any;
-  flexDetails = {
-    maturityAmount: 10000,
-    intrestRate: 1.9,
-    maturityDate: '2023-02-21',
-    autoRenew: false,
-    monthlySavings: '2023-08-21',
-  };
   url = '';
   rdBasisId: any;
   fdBasisId: any;
@@ -66,18 +66,20 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
   monthlySavings: string[] | any;
   ownership: string[] | any;
   scheme: string[] | any;
-  otherUserInfo: any;
+  otherUserInfo: LocaleData | undefined;
+  currentUser: User | undefined;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
     private location: Location,
     private rdApi: CreateRdService,
-    private tokenStore: TokenStorageService,
     private FdCalculatorServiceService: FdCalculatorServiceService,
     private newDepositeService: NewDepositService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private store: Store<AppState>,
   ) {
     this.matIconRegistry.addSvgIcon(
       `info-outlined-gray`,
@@ -91,7 +93,20 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
     this.getGenericDetails();
     this.buildForm();
     this.fdFlowData();
-    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    const loadUserProfileSub = this.store
+      .select(selectUser)
+      .subscribe((result) => {
+        if (result) this.currentUser = result;
+      });
+
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((result) => {
+        if (result) this.otherUserInfo = result;
+      });
+
+    this.subscriptions.push(loadUserProfileSub);
+    this.subscriptions.push(localeDataSub);
   }
   getGenericDetails() {
     this.newDepositeService
@@ -184,9 +199,6 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
     console.log(this.depositForm.value);
     this.customCalculatorValues.emit(this.depositForm.value);
   }
-  resetform() {
-    this.depositForm.reset();
-  }
 
   openInterestDialog(): void {
     this.dialog.open(InfoPopupComponent, {
@@ -195,7 +207,7 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
     });
   }
 
-  openLink(fdType: any) {
+  openLink(fdType: string) {
     let path;
     this.depositeType = fdType;
     if (fdType == 'FD') {
@@ -231,12 +243,12 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
     }
   }
 
-  originationModel(basisId: any) {
+  originationModel(basisId: number) {
     return {
       ...this.depositForm.value,
       basisDetailsId: basisId,
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
-      branchCode: this.tokenStore.getUser().branchCode,
+      branchCode: this.currentUser?.branchCode,
       depositeType: this.depositeType,
       autoRenew: this.isAutoRenew,
       amount: parseInt(this.depositForm.value.amount),
@@ -249,8 +261,4 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
       scheme: 'Normal or Tax saver',
     };
   }
-
-  // formatLoanLabel(value: any) {
-  //   return `₹ ${value}`;
-  // }
 }

@@ -3,8 +3,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 

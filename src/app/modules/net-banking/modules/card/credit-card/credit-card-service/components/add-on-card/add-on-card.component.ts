@@ -8,9 +8,9 @@ import { AccountList } from 'app/shared/models/card.model';
 import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-add-on-card',

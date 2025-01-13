@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FundTransferService } from '../fund-transfer.service';
 import { Router } from '@angular/router';
@@ -7,25 +7,30 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import {
+  AppState,
+  selectUser,
+  TokenStorageService,
+  User,
+} from '@onerumango/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-single-fund-transfer',
   templateUrl: './single-fund-transfer.component.html',
   styleUrls: ['./single-fund-transfer.component.scss'],
 })
-export class SingleFundTransferComponent implements OnInit {
+export class SingleFundTransferComponent implements OnInit, OnDestroy {
   fundTransferForm!: FormGroup;
   purpose = ['Salary', 'Vendor'];
   fromAccount: any = [];
   transferMode = [];
   transferTo: any = [];
-  benificiaryEmail = [];
-  benificiaryMobile = [];
   remitter = false;
   beneficiary = false;
   beneficiaryNarration = false;
@@ -37,6 +42,8 @@ export class SingleFundTransferComponent implements OnInit {
   customerInfo: any;
   beneficiaryName: any;
   corporateId: any;
+  currentUser: User | undefined;
+  subscription: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
@@ -48,6 +55,7 @@ export class SingleFundTransferComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     public translate: TranslateService,
     private sessionStorageService: SessionStorageService,
+    private store: Store<AppState>,
   ) {
     this.matIconRegistry.addSvgIcon(
       `single-trans-icon`,
@@ -71,6 +79,18 @@ export class SingleFundTransferComponent implements OnInit {
       const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
+    this.loadUserProfile();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.store
+      .select(selectUser)
+      .subscribe((result) => {
+        if (result) {
+          this.currentUser = result;
+        }
+      });
+    this.subscription.push(loadUserProfileSub);
   }
 
   buildForm() {
@@ -197,7 +217,7 @@ export class SingleFundTransferComponent implements OnInit {
     this.dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile,
+        mobile: this.currentUser?.mobile,
       },
       width: '50%',
       height: '33%',
@@ -222,6 +242,12 @@ export class SingleFundTransferComponent implements OnInit {
           }
         });
       }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
     });
   }
 }

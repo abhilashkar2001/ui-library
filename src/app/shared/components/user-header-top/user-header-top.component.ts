@@ -5,12 +5,12 @@ import {
   ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
-import { ThemeService } from '../../../shared/services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import {
   ThemeChangeService,
   ThemeOption,
@@ -19,9 +19,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { LangTeme } from 'app/shared/models/current-lang-theme.model';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-user-header-top',

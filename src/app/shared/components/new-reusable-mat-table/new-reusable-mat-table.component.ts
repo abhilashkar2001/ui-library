@@ -12,7 +12,7 @@ import {
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSort, Sort } from '@angular/material/sort';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -23,9 +23,9 @@ import { SCREENLIST } from './screen';
 import { TableService } from 'app/shared/services/table-service/table-service';
 import { NewReusableFilterComponent } from '../new-reusable-filter/new-reusable-filter.component';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-new-reusable-mat-table',

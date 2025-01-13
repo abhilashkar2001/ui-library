@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { OtpService } from 'app/shared/services/otp.service';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 

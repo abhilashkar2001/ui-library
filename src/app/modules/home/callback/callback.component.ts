@@ -5,9 +5,9 @@ import { QueryParamEnum } from 'app/enum/query-param.enum';
 import { ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SessionService } from 'app/shared/session.service';
-import { UserProfileInfoAction } from 'app/shared/store/action/user-profileInfo.action';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { UserProfileAction } from '@onerumango/utils';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-callback',
@@ -41,7 +41,7 @@ export class CallbackComponent implements OnInit, OnDestroy {
       .signin(payload, isRememberMe, otpRequired)
       .subscribe((_) => {
         /* get profile info */
-        this.store.dispatch(UserProfileInfoAction.loadUserProfile());
+        this.store.dispatch(UserProfileAction.loadUserProfile());
         this.getProfile();
       });
   }

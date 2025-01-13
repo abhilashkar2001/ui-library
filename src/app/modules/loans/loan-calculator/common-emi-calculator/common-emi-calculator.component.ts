@@ -14,11 +14,12 @@ import {
 } from '@angular/forms';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { debounceTime } from 'rxjs/operators';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-common-emi-calculator',
@@ -38,7 +39,6 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   amount = new FormControl('');
   email = new FormControl('');
   thumbLabel: boolean | any = true;
-  currencySymboll = '₹';
   productDetails: any;
   interestPayble = 0;
   totalPayableAmmount = 0;
@@ -48,23 +48,36 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   currency: any = 'INR';
   interestRate = 10.1;
   valueChangesSubscription: Subscription | any;
+  subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
-    private tokenStore: TokenStorageService,
     private dataService: DataService,
     private sessionStorageService: SessionStorageService,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
+    this.loadLocaleData();
     this.cleanCache();
-    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.currency = this.otherUserInfo?.currency;
     const basisId: any = this.sessionStorageService.getLoanBasisDetails();
     this.getProductDetails(basisId.basisId);
     setTimeout(() => {
       this.buildForm();
     }, 500);
+  }
+
+  loadLocaleData(): void {
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((res) => {
+        if (res) {
+          this.otherUserInfo = res;
+          this.currency = this.otherUserInfo?.currency;
+        }
+      });
+
+    this.subscriptions.push(localeDataSub);
   }
   getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {

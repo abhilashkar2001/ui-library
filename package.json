@@ -3,7 +3,7 @@
   "version": "14.2.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl true --ssl-cert src/assets/certificates/auth_service.crt --ssl-key src/assets/certificates/auth_service.key",
+    "start": "ng serve --ssl true --ssl-cert src/assets/certificates/auth_service.crt --ssl-key src/assets/certificates/auth_service.key --port 4210",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -39,6 +39,7 @@
     "@ngx-translate/http-loader": "^16.0.0",
     "@onerumango/icust-element-library": "^0.0.290",
     "@onerumango/icust-scss-library": "^1.0.15",
+    "@onerumango/utils": "^0.0.34",
     "@types/webgl2": "^0.0.7",
     "@vladmandic/face-api": "^1.7.14",
     "angular-fusioncharts": "4.0.3",

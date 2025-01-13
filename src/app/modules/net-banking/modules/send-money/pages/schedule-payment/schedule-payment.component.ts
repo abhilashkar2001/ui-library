@@ -11,8 +11,8 @@ import { findCurrency, removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { IconService } from 'app/shared/services/icon.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-schedule-payment',

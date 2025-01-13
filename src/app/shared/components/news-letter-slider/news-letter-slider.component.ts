@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NewDepositConstant } from 'app/modules/new-deposit/new-deposit/new-deposit.constant';
 
 import {
@@ -12,16 +12,8 @@ import {
   templateUrl: './news-letter-slider.component.html',
   styleUrls: ['./news-letter-slider.component.scss'],
 })
-export class NewsLetterSliderComponent implements OnInit {
+export class NewsLetterSliderComponent {
   images = NewDepositConstant.CLIENT_DESCRIPTION;
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  // images = [62, 83, 466, 965, 982, 1043, 738].map(
-  //   (n) => `https://picsum.photos/id/${n}/900/500`
-  // );
 
   paused = false;
   unpauseOnArrow = false;

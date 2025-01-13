@@ -12,7 +12,7 @@ import { SuccessPopupComponent } from 'app/shared/components/success-popup/succe
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SharedService } from 'app/shared/shared.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { LocaleData, selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateAccountConstant, CreateEnum } from './create-account.constant';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
@@ -21,9 +21,10 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
+import { take } from 'rxjs/operators';
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;
@@ -49,7 +50,7 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
   staticData = CreateAccountConstant.STATIC_DATA;
   ownershipId: any;
   currentUser: any;
-  currencyCode: any;
+  currencyCode: LocaleData | undefined;
   isHideField = true;
   personalDoc: any[] = [];
   isLoading = false;
@@ -80,7 +81,6 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
     private openAccountService: OpenAccountService,
     private dialog: MatDialog,
     private loanApi: LoanService,
-    private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
@@ -168,6 +168,7 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadUserProfile();
+    this.loadLocaleInfo();
   }
 
   loadUserProfile() {
@@ -176,8 +177,6 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
         this.currentUser = result;
         // Load generic data
         this.getGeneric();
-        // Get currency code
-        this.currencyCode = this.tokenStore.getUserOtherInfo();
         // Get basis ID from route params
         this.basisId = this.route.snapshot.params['id'];
         this.getProductDetails();
@@ -211,6 +210,18 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(loadUserProfileSub);
+  }
+
+  loadLocaleInfo() {
+    const localeInfo$ = this.store
+      .select(selectLocaleData)
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result) {
+          this.currencyCode = result;
+        }
+      });
+    this.subscriptions.push(localeInfo$);
   }
 
   getOriginationMaster(originationId: any) {
@@ -357,8 +368,8 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Here api call for master save & updating origination model with originationId.
-   * NOTE :- Once Workflow formulla Ready thn conditionally need to add verifyWorkflow api.
+   * Here api call for a master save and updating origination model with originationId.
+   * NOTE :- Once Workflow formulla Readier than the conditional need to add verifyWorkflow api.
    * @param payload
    */
   getMasterSave(payload: any) {
@@ -554,7 +565,7 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.tokenStore.cleanUpSessionPartially();
+            sessionStorage.clear();
             this.router.navigate(['/account/landing']);
           }
         });

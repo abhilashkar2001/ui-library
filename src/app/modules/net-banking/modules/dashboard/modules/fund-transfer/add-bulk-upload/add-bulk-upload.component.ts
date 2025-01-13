@@ -10,8 +10,8 @@ import { BulkUploadServiceService } from '../bulk-upload/bulk-upload-service.ser
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-add-bulk-upload',

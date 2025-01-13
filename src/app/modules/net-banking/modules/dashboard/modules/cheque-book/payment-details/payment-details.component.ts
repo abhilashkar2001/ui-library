@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({

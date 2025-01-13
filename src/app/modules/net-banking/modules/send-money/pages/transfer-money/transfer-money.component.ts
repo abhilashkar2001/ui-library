@@ -11,8 +11,8 @@ import { SendMoneyService } from 'app/shared/services/fund-transfer/send-money.s
 import { TransferMoneyService } from 'app/shared/services/fund-transfer/transfer-money.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 

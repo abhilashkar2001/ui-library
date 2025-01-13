@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ConvertEmiStore } from './convert-emi.store';
 import { CardService } from '../../../../card.service';
@@ -9,15 +8,16 @@ import {
   TransactionDetail,
 } from 'app/shared/models/emi-converter.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import * as moment from 'moment';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { Store } from '@ngrx/store';
+import { AppState, selectUser } from '@onerumango/utils';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-convert-to-emi',
   templateUrl: './convert-to-emi.component.html',
   styleUrls: ['./convert-to-emi.component.scss'],
 })
-export class ConvertToEmiComponent implements OnInit {
+export class ConvertToEmiComponent implements OnInit, OnDestroy {
   convertEmiForm!: FormGroup;
   listOfAccounts: string[] = [];
   currencyCode = '';
@@ -25,26 +25,31 @@ export class ConvertToEmiComponent implements OnInit {
   viewColumnData = ConvertEmiStore.transactionDetailsHeaders;
   transactionDetails: TransactionDetail[] = [];
   totalTransactionAmount = 0;
-  customerId: number | any;
-  corporateId: string | any;
+  customerId: number | undefined;
+  corporateId: number | undefined;
+  subscriptions: Subscription[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private sessionStorageService: SessionStorageService,
-    private router: Router,
     private emiService: CardService,
-    private tokenStorage: TokenStorageService,
+    private store: Store<AppState>,
   ) {}
 
   ngOnInit(): void {
-    this.initializeAccounts();
+    this.loadUserProfile();
     this.buildEmiForm();
   }
 
-  // Initialize account list from session storage
-  private initializeAccounts(): void {
-    this.customerId = this.sessionStorageService?.getCustomerInfo()?.customerId;
-    this.corporateId = this.tokenStorage?.getUser()?.corporateCustomerId;
-    this.listOfAccounts = this.sessionStorageService?.getListOfCards();
+  loadUserProfile() {
+    const userProfileSub = this.store.select(selectUser).subscribe((result) => {
+      if (result) {
+        this.customerId =
+          this.sessionStorageService?.getCustomerInfo()?.customerId;
+        this.corporateId = result.corporateCustomerId;
+        this.listOfAccounts = this.sessionStorageService?.getListOfCards();
+      }
+    });
+    this.subscriptions.push(userProfileSub);
   }
 
   // Build the form group for EMI conversion
@@ -54,7 +59,7 @@ export class ConvertToEmiComponent implements OnInit {
     });
   }
 
-  // Handle transaction details event from child component
+  // Handle transaction details event from a child component
   handleTransactionDetails(cardNumber: string): void {
     if (cardNumber) {
       this.fetchTransactionDetails(cardNumber);
@@ -89,35 +94,14 @@ export class ConvertToEmiComponent implements OnInit {
     }));
   }
 
-  // Navigate to the EMI calculation route
-  proceed(): void {
-    const selectedTransactions = this.transactionDetails.filter(
-      (item) => item.convertToEmi,
-    );
-    const noOfElements = selectedTransactions.length;
-
-    if (noOfElements > 0) {
-      const maturityDateString = selectedTransactions[0]?.maturityDate;
-      const payload = {
-        amount: this.totalTransactionAmount,
-        noOfElements: noOfElements,
-        cardName: selectedTransactions[0]?.cardName,
-        cardNumber: selectedTransactions[0]?.cardNumber,
-        cardId: selectedTransactions[0]?.cardId,
-        nameOnCard: selectedTransactions[0]?.nameOnCard,
-        maturityDate: moment(maturityDateString, 'DD-MMM-YYYY').isValid()
-          ? moment(maturityDateString, 'DD-MMM-YYYY').format('YYYY-MM-DD')
-          : '',
-      };
-      this.router.navigate(['/card/credit-card/service/calculate-emi'], {
-        state: payload,
-      });
-    }
-  }
   // Calculate the total amount to be converted
   calculateTotalTransactionAmount(data: TransactionDetail[]): void {
     this.totalTransactionAmount = data
       .filter((item) => item.convertToEmi)
       .reduce((sum, item) => sum + item.amount, 0);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

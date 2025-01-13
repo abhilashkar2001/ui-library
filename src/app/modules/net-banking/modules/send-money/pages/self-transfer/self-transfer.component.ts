@@ -9,8 +9,8 @@ import { SelfTransferService } from 'app/shared/services/fund-transfer/self-tran
 import { ChequeService } from 'app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from '@onerumango/utils';
+import { User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-self-transfer',

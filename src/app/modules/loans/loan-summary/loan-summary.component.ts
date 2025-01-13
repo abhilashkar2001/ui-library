@@ -4,55 +4,65 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from 'app/shared/components/image-dialog/image-dialog.component';
-import { SavingsSubmitDialogComponent } from 'app/shared/components/savings-submit-dialog/savings-submit-dialog.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { AppState, selectLocaleData } from '@onerumango/utils';
 import { environment } from 'environments/environment';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loan-summary',
   templateUrl: './loan-summary.component.html',
   styleUrls: ['./loan-summary.component.scss'],
 })
-export class LoanSummaryComponent implements OnInit, OnChanges {
+export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
-  dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
-  stepperTitle: any;
-  loanSummaryDetails: any;
   @Input() loanSummary: any;
+  @Input() mobileVerifyInfo: any;
+
+  stepperTitle: string | undefined;
+  loanSummaryDetails: any;
   endPoints = environment.microServiceURL;
-  currencySymboll = '₹';
   otherUserInfo: any;
   personalDetails: any;
   checkListDoc: any[] = [];
-  @Input() mobileVerifyInfo: any;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
-    private tokenStore: TokenStorageService,
     private sessionStorageService: SessionStorageService,
+    private store: Store<AppState>,
   ) {}
 
   ngOnInit(): void {
-    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
-    this.getLoanSummary().then(() => {
-      this.getOriginationMasterData();
-      this.getCheckListDoc();
-    });
+    const otherUserInfo$ = this.store
+      .select(selectLocaleData)
+      .subscribe((userInfo) => {
+        if (userInfo) {
+          this.otherUserInfo = userInfo;
+          this.getLoanSummary().then(() => {
+            this.getOriginationMasterData();
+            this.getCheckListDoc();
+          });
+        }
+      });
+    this.subscriptions.push(otherUserInfo$);
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes['loanSummary']?.currentValue;
   }
@@ -136,6 +146,12 @@ export class LoanSummaryComponent implements OnInit, OnChanges {
       width: '900px',
       height: '560px',
       panelClass: 'imageViewDialog',
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
     });
   }
 }

@@ -9,14 +9,12 @@ import {
   ViewChildren,
   HostListener,
 } from '@angular/core';
-import { NavigationService } from '../../../shared/services/navigation.service';
+import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
-import { ThemeService } from '../../../shared/services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
-import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -50,12 +48,8 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     },
   ];
   currentLang = this.availableLangs[0];
-
   @Input() notificPanel: any;
   @Input() mainMenuPanel: any;
-
-  headerType: any;
-
   items = [
     {
       label: 'Open Account',
@@ -82,12 +76,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private navService: NavigationService,
     public themeService: ThemeService,
     public translate: TranslateService,
-    public jwtAuth: JwtAuthService,
     private showSideBar: NewDepositService,
     private renderer: Renderer2,
     private el: ElementRef,
     private router: Router,
-    private tokenStore: TokenStorageService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
   ) {
@@ -182,60 +174,8 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     }
   }
 
-  setLang(lng: any) {
-    this.currentLang = lng;
-    this.translate.use(lng.code);
-  }
-  changeTheme(theme: any) {
-    this.layout.publishLayoutChange({ matTheme: theme.name });
-  }
-
-  toggleNotific() {
-    this.notificPanel.toggle();
-  }
-
-  toggleMenu() {
-    this.mainMenuPanel.toggle();
-  }
-
-  toggleSidenav() {
-    if (this.layoutConf.sidebarStyle === 'closed') {
-      return this.layout.publishLayoutChange({
-        sidebarStyle: 'full',
-      });
-    }
-    this.layout.publishLayoutChange({
-      sidebarStyle: 'closed',
-    });
-  }
-
-  toggleCollapse() {
-    // compact --> full
-    if (this.layoutConf.sidebarStyle === 'compact') {
-      return this.layout.publishLayoutChange(
-        {
-          sidebarStyle: 'full',
-          sidebarCompactToggle: false,
-        },
-        { transitionClass: true },
-      );
-    }
-
-    // * --> compact
-    this.layout.publishLayoutChange(
-      {
-        sidebarStyle: 'compact',
-        sidebarCompactToggle: true,
-      },
-      { transitionClass: true },
-    );
-  }
-
-  onSearch() {
-    //   console.log(e)
-  }
   onNavTabClick() {
-    this.tokenStore.cleanUpSessionPartially();
+    sessionStorage.clear();
   }
 
   goToHomePage() {

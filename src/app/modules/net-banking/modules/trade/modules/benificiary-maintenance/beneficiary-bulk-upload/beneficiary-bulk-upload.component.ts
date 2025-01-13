@@ -10,9 +10,9 @@ import { BulkUploadConstant } from 'app/modules/net-banking/modules/dashboard/mo
 import { BulkUploadServiceService } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-beneficiary-bulk-upload',

@@ -22,14 +22,15 @@ import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../reusable-pincode-popup/reusable-pincode-popup.component';
 import { ErrorNotifierPopupComponent } from '../error-notifier-popup/error-notifier-popup.component';
-import { forkJoin } from 'rxjs';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { forkJoin, Subscription } from 'rxjs';
+import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from './personal-details.constant';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data } from '@angular/router';
 import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -46,18 +47,12 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   @Input() personalDetails: any;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() docCustomerDetails: any;
-  isDone = true;
   selectedStep = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   @Input() customerInfo: any;
   @Input() mobileVerifyInfo: any = {};
 
-  firstFormGroup = this.fb.group({});
-  secondFormGroup = this.fb.group({
-    secondCtrl: [''],
-  });
-  isLinear = true;
   holderType: any;
   loanCustomerId: any;
   countryArray: any;
@@ -77,7 +72,6 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   defaultIsdCodeValue: any;
   maxMobileLength: any;
   nationalityArray: any[] = [];
-  customerIds: any[] = [];
   debounceTimeout: any;
   errorDob: any;
   genderPrefixMap = new Map([
@@ -85,6 +79,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     ['female', 'Ms'],
     ['female', 'Mrs'],
   ]);
+  subscriptions: Subscription[] = [];
+  private localeData: LocaleData | undefined;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -94,8 +90,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     private rdApi: CreateRdService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
-    private tokenStore: TokenStorageService,
     private sessionStorageService: SessionStorageService,
+    private store: Store<AppState>,
   ) {}
 
   panelOpened(index: number) {
@@ -115,6 +111,12 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
+      if (res) {
+        this.localeData = res;
+      }
+    });
+    this.subscriptions.push(localeData$);
     this.getGenericDetails();
     this.fetchBoundaries();
     this.holderType =
@@ -386,8 +388,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
         });
         this.countriesIsdCodes = resp?.data;
         const indiaIsdCode = this.countriesIsdCodes.find(
-          (item: any) =>
-            item?.countryName == this.tokenStore.getUserOtherInfo().country,
+          (item: any) => item?.countryName == this.localeData?.country,
         );
         if (indiaIsdCode) {
           this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
@@ -870,5 +871,9 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
         });
       }
     }
+  }
+
+  ngOnDestory(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

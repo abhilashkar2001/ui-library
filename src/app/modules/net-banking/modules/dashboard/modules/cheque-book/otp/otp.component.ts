@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

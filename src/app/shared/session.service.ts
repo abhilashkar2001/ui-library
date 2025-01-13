@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { map } from 'rxjs/operators';
-import { TokenStorageService } from './token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { SIGNIN } from './models/signin.model';
 import { SIGINDATA } from './models/sigin-data.model';
 import { GETGENERICVALUE } from './models/generic-value.model';

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -7,17 +7,24 @@ import { Router } from '@angular/router';
 import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import {
+  AppState,
+  selectUser,
+  TokenStorageService,
+  User,
+} from '@onerumango/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-credit-card-payment',
   templateUrl: './credit-card-payment.component.html',
   styleUrls: ['./credit-card-payment.component.scss'],
 })
-export class CreditCardPaymentComponent implements OnInit {
+export class CreditCardPaymentComponent implements OnInit, OnDestroy {
   today = new Date();
   showSendAdviceBlock = false;
   showNarrationBlock = false;
@@ -29,6 +36,8 @@ export class CreditCardPaymentComponent implements OnInit {
     { label: '000037560069', value: '000037560069' },
   ];
   customerInfo: any;
+  private currentUser: User | undefined;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +50,7 @@ export class CreditCardPaymentComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     public translate: TranslateService,
     private sessionStorageService: SessionStorageService,
+    private store: Store<AppState>,
   ) {
     this.matIconRegistry.addSvgIcon(
       `card-icon`,
@@ -70,6 +80,16 @@ export class CreditCardPaymentComponent implements OnInit {
       const lang = this.tokenStorageService.getLanguage() ?? 'en';
       this.translate.use(lang);
     }, 300);
+  }
+
+  loadUserProfile() {
+    const userProfileSub = this.store.select(selectUser).subscribe((res) => {
+      if (res) {
+        this.currentUser = res;
+      }
+    });
+
+    this.subscriptions.push(userProfileSub);
   }
   buildCreditCardForm() {
     this.creditCardForm = this.formBuilder.group({
@@ -106,7 +126,7 @@ export class CreditCardPaymentComponent implements OnInit {
     const dialogRef1 = this.dialog.open(AllInOnePopupComponent, {
       data: {
         remark: true,
-        mobile: this.tokenStorageService.getUser()?.mobile,
+        mobile: this.currentUser?.mobile,
       },
       width: '50%',
       height: '33%',
@@ -134,7 +154,8 @@ export class CreditCardPaymentComponent implements OnInit {
     });
   }
   getOTP() {
-    this.api.getOtp(this.tokenStorageService.getUser()?.mobile).subscribe();
+    if (!this.currentUser) return;
+    this.api.getOtp(this.currentUser?.mobile).subscribe();
   }
 
   saveData(payload: any) {
@@ -155,5 +176,9 @@ export class CreditCardPaymentComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

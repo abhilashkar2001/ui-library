@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SalaryAccountService } from './salary-account.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { SessionStorageService } from '../../../../../../../shared/services/session-storage.service';
 
 @Component({
   selector: 'app-salary-account',
@@ -31,11 +31,11 @@ export class SalaryAccountComponent implements OnInit {
   constructor(
     private api: SalaryAccountService,
     private route: Router,
-    private tokenService: TokenStorageService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.customerId = this.tokenService.getCorporateId();
+    this.customerId = this.sessionStorageService.getCorporateId();
     console.log(this.customerId);
 
     this.getSummary();

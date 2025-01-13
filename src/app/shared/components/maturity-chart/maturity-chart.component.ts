@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
 import { ChartStore } from '../chart/chart.store';
 
 @Component({
@@ -6,7 +12,7 @@ import { ChartStore } from '../chart/chart.store';
   templateUrl: './maturity-chart.component.html',
   styleUrls: ['./maturity-chart.component.scss'],
 })
-export class MaturityChartComponent implements OnInit {
+export class MaturityChartComponent implements OnChanges {
   @Input() chartData: any;
   @Input() chartSectionDetails: any;
   @Input() autoCheck: any;
@@ -17,7 +23,6 @@ export class MaturityChartComponent implements OnInit {
   @Input() loanDetailsSection = false;
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() cancle: EventEmitter<any> = new EventEmitter<any>();
-  constructor() {}
 
   ngOnChanges(): void {
     const interest = this.data?.maturityAmount - this.data?.depositAmount;
@@ -46,6 +51,4 @@ export class MaturityChartComponent implements OnInit {
       colors: ['#00205C', '#FFFFFF'],
     };
   }
-
-  ngOnInit(): void {}
 }

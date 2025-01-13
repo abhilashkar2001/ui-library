@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
 @Component({
   selector: 'app-success-popup',
   templateUrl: './success-popup.component.html',
@@ -15,7 +14,6 @@ export class SuccessPopupComponent implements OnInit {
   email!: string;
   loanSummaryDetails: any;
   accountData: any;
-  fdRdDetails: any;
   depositType: any;
   isStageAvilable = true;
   currentStageName = '';
@@ -33,7 +31,6 @@ export class SuccessPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public screenData: any,
     private downloadService: DownloadService,
     private openAccountService: OpenAccountService,
-    private tokenStore: TokenStorageService,
     private router: Router,
     private sessionStorageService: SessionStorageService,
   ) {
@@ -106,7 +103,7 @@ export class SuccessPopupComponent implements OnInit {
 
       if (event.operation == 'Share') {
         //Send email to be implementated from service that's why
-        //existing ui implementation removed by Abhilsh
+        //existing ui implementation removed by Abhilash
       } else {
         const url = window.URL.createObjectURL(report);
         const a = document.createElement('a');
@@ -120,7 +117,7 @@ export class SuccessPopupComponent implements OnInit {
   }
 
   done() {
-    this.tokenStore.cleanUpSessionPartially();
+    sessionStorage.clear();
     if (this.isNetBanking) {
       this.router.navigate([`/user/dashboard/${this.data.route}`]);
       this.dialogRef.close();

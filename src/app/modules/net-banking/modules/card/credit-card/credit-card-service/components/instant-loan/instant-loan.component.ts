@@ -10,8 +10,8 @@ import { CreditCardStore } from '../../../credit-card.store';
 import { GETLISTOFACCOUNTS } from 'app/shared/models/session-storage.model';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { User } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-instant-loan',

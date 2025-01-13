@@ -1,11 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { COUNTRYCURRENCY } from 'app/shared/models/country-currency.mode';
 import { HomeService } from 'app/shared/services/home-service/home.service';
-import { User } from 'app/shared/store/models/user.model';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { User, UserLocaleDataAction } from '@onerumango/utils';
+import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-landing-page',
@@ -18,8 +16,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   profileHeader = 'Savings Made Simple: Open Your Account in 3 Easy Steps.';
   profileHint =
     'Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.';
-  routeUrl = '/account/open';
-  businessSuiteName = 'ACCOUNTOPENINGSERVICES';
   category = 'Accounts';
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
@@ -28,7 +24,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private homeService: HomeService,
     private router: Router,
     private el: ElementRef,
-    private tokenStore: TokenStorageService,
     private store: Store,
   ) {
     this.userProfile$ = this.store.select(selectUser);
@@ -52,11 +47,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getCountryCurrency() {
     const userBranchCode = this.currentUser?.branchCode;
-    this.homeService
-      .getCountryCurrency(userBranchCode)
-      .subscribe((resp: COUNTRYCURRENCY) => {
-        if (resp?.statusCode) this.tokenStore.saveUserOtherInfo(resp.data);
-      });
+    this.homeService.getCountryCurrency(userBranchCode).subscribe((resp) => {
+      if (resp?.statusCode)
+        this.store.dispatch(
+          UserLocaleDataAction.setLocaleData({ localeData: resp.data }),
+        );
+    });
   }
 
   getAccountTypes() {

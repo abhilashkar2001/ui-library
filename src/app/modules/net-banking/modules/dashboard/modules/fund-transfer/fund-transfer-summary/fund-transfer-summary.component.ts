@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FilterBy } from 'app/shared/helpers/utils';
 import { FundTransferService } from '../fund-transfer.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { NETBANKING } from '../../../net-banking-dashboard/net-banking-dashboard.constant';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';

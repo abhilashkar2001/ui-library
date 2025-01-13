@@ -5,9 +5,9 @@ import { CreditCardStore } from '../credit-card.store';
 import { QuickLinkTabModel } from 'app/shared/models/tab-model';
 import { CardService } from '../../card.service';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'app/shared/store/models/user.model';
+import { User } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
+import { selectUser } from '@onerumango/utils';
 
 @Component({
   selector: 'app-credit-card-dashboard',

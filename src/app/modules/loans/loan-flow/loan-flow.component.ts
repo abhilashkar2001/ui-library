@@ -5,12 +5,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { LocaleData, selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
 import { SharedService } from 'app/shared/shared.service';
@@ -23,8 +22,8 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { selectUser } from 'app/shared/store/selector/user-profileInfo.selector';
-import { User } from 'app/shared/store/models/user.model';
+import { selectUser } from '@onerumango/utils';
+import { User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-loan-flow',
@@ -33,15 +32,8 @@ import { User } from 'app/shared/store/models/user.model';
 })
 export class LoanFlowComponent implements OnInit, OnDestroy {
   originationValue$: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  createLoan!: FormGroup;
-  customVerifyNumber!: FormGroup;
-  cibilScoreForm!: FormGroup;
-  documentForm!: FormGroup;
-  kycDetailsForm!: FormGroup;
-  customPersonalDetails!: FormGroup;
   @ViewChild('stepper') stepper: any;
   selectedStep = 0;
-  isLinear = true;
   cuurrentStep: string | any;
   screenList: any = [];
   screenTitle = 'Personal Loan';
@@ -49,21 +41,19 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   loanSummary: any;
   customerData: any;
   customHeader = LoanFlowConstants.CUSTOM_HEADER;
-  originalScreenList: any = [];
   createLoanAccountNumber: any;
   customerInfo: any;
   docIds: any[] | any;
   originationModel: any;
-  basisId: any;
+  basisId: number | undefined;
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number } | any;
   personalDetails: any = [];
   staticData = {
     OWNERSHIP: [],
   };
-  currentUser: any;
-  otherUserInfo: any;
-  ownerShipId: any;
+  currentUser: User | undefined;
+  ownerShipId: number | undefined;
   isLoading = false;
   dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
   @ViewChild('container') container: any;
@@ -89,13 +79,13 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   noOfDirectors: number | any;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+  private localeData: LocaleData | undefined;
   constructor(
     private loanApi: LoanService,
     private openAccountService: OpenAccountService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private router: Router,
-    private tokenStore: TokenStorageService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
     protected cdr: ChangeDetectorRef,
@@ -203,7 +193,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
    */
   updateAccount = (value: Partial<any>) => {
     const isLoan = value?.['isForLoan'] ?? true;
-    // if (value?.otherLoanDoc) this.otherLoanDoc = value?.otherLoanDoc;
     if (value?.['disbursementDetails'])
       this.disbursementDetails = value['disbursementDetails'];
     if (value['kycDoc']) {
@@ -257,13 +246,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   };
 
   calculateDisbursementPayload(data: any) {
-    // const store = this.tokenStore.getUser();
     const store = this.currentUser;
     const payload: any = {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
-      bankCode: store.bankCode,
-      branchCode: store.branchCode,
+      bankCode: store?.bankCode,
+      branchCode: store?.branchCode,
       originationId: this.sessionStorageService.getOriginationId(),
     };
 
@@ -283,15 +271,15 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     }
     payload.disbursementAccInfo = {
       accountNo: data.accountNumber,
-      bankCode: store.bankCode,
-      branchCode: store.branchCode,
+      bankCode: store?.bankCode,
+      branchCode: store?.branchCode,
     };
     return payload;
   }
 
   ngOnInit(): void {
     this.loadUserProfile();
-    this.otherUserInfo = this.tokenStore.getUserOtherInfo();
+    this.loadLocaleData();
     this.basisId = this.route.snapshot.params['id'];
     const sessionStep = this.sessionStorageService.getLoanStep();
     if (sessionStep) this.selectedStep = parseInt(sessionStep);
@@ -321,7 +309,19 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     this.subscriptions.push(loadUserProfileSub);
   }
 
-  getLoanById(id: any) {
+  loadLocaleData() {
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((res) => {
+        if (res) {
+          this.localeData = res;
+        }
+      });
+
+    this.subscriptions.push(localeDataSub);
+  }
+
+  getLoanById(id: number) {
     this.loanApi.getLoanById(id).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.disbursementDetails = resp.data;
@@ -472,8 +472,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         source: 'Website',
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
-        currencyCode: this.otherUserInfo.currency,
-        branchId: this.currentUser.branchId,
+        currencyCode: this.localeData?.currency,
+        branchId: this.currentUser?.branchId,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
         department: this.currentUser?.department,
@@ -574,8 +574,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       source: 'Website',
       businessProductName: null,
       productDescription: null,
-      currencyCode: this.otherUserInfo.currency,
-      branchId: this.currentUser.branchId,
+      currencyCode: this.localeData?.currency,
+      branchId: this.currentUser?.branchId,
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
       department: this.currentUser?.department,
@@ -621,19 +621,19 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.openAccountService
         .saveCustomerInfo(payloadData)
         .subscribe(async (resp) => {
-          if (resp?.statusCode === 200) {
+          if (resp.statusCode === 200) {
             this.originationModel = resp.data?.originationModel;
             this.personalDetails = resp.data?.customerInfo;
             this.loanAccountInfo = resp.data?.loanAccountInfo;
             this.originationValue$ = resp.data;
             const customId: any = [];
-            resp.data?.customerInfo?.forEach(async (item: any) => {
+            for (const item of resp.data.customerInfo) {
               customId.push(item.customerId || item?.customerStagingId);
               if (item.primaryCustomer)
                 this.sessionStorageService.setCustomerStagingId(
                   item.customerStagingId,
                 );
-            });
+            }
             this.snack.open(`Personal Details Saved` + ' !', 'OK', {
               duration: 4000,
               verticalPosition: 'top',
@@ -650,7 +650,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
               const formdataMap: Map<string, Record<string, any>> | any =
                 this.dataService.getChecklistDocument();
               const docIds: number[] = [];
-              formdataMap.forEach(async (item: any) => {
+              for (const item of formdataMap) {
                 docIds.push(item?.documentId);
                 const formData = new FormData();
                 formData.append('fileName', item?.file);
@@ -663,7 +663,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                     docIds[0],
                   )
                   .toPromise();
-              });
+              }
               if (this.mobileVerifyInfo) {
                 const payload = {
                   documentIds: docIds,
@@ -687,18 +687,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.next();
           }
         });
-    });
-  }
-
-  updateWebDisbursment() {
-    const originationId: any = this.sessionStorageService.getOriginationId();
-    const mapPayload = {
-      id: this.sessionStorageService.getLoanDisburseId(),
-      originationId: parseInt(originationId),
-    };
-
-    this.loanApi.updateOrigination(mapPayload).subscribe(() => {
-      this.next();
     });
   }
 
@@ -874,10 +862,10 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            this.tokenStore.cleanUpSessionPartially();
+            sessionStorage.clear();
             this.router.navigate(['loan/landing']);
           } else if (resp === 'tracking') {
-            this.tokenStore.cleanUpSessionPartially();
+            sessionStorage.clear();
           }
         });
       }

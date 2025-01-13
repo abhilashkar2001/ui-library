@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { TransactionCardConstant } from './transaction-card.constants';
 import { IconService } from 'app/shared/services/icon.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TabModel, Tabs } from 'app/shared/models/tab-model';
 

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { COUNTRYCURRENCY } from 'app/shared/models/country-currency.mode';
 import { WEBSITEPRODUCT } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
+import { IcHttpResponseModel } from '../../models/ic-http-response.model';
+import { LocaleData } from '@onerumango/utils';
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
@@ -18,7 +19,7 @@ export class HomeService {
   }
 
   getCountryCurrency(branchCode: string | undefined) {
-    return this.http.get<COUNTRYCURRENCY>(
+    return this.http.get<IcHttpResponseModel<LocaleData>>(
       `${baseUrl}/branch/currencyByBranch?branchCode=${branchCode}`,
     );
   }

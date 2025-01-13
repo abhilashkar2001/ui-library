@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
-import { TokenStorageService } from 'app/shared/token-storage.service';
+import { selectUser } from '@onerumango/utils';
 import * as moment from 'moment';
 import { SignNowPopupComponent } from '../../digital-sign/sign-now-popup/sign-now-popup.component';
 import { SuccessModalComponent } from '../../digital-sign/success-modal/success-modal.component';
@@ -11,13 +11,15 @@ import { BranchService } from '../../digital-sign/sign-now-popup/branch.service'
 import { OriginationService } from 'app/shared/services/origination.service';
 import { SharedService } from 'app/shared/shared.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-offer-letter',
   templateUrl: './offer-letter.component.html',
   styleUrls: ['./offer-letter.component.scss'],
 })
-export class OfferLetterComponent implements OnInit {
+export class OfferLetterComponent implements OnInit, OnDestroy {
   currentUser: any;
   dataLocalUrl: any;
   originationId: any;
@@ -28,9 +30,9 @@ export class OfferLetterComponent implements OnInit {
     CUSTOMERRESPONSE: [],
   };
   CUSTOMERRESPONSE: any[] = [];
+  subscriptions: Subscription[] = [];
   constructor(
     private offerIssueService: OfferIssueService,
-    private tokenStorageService: TokenStorageService,
     private domSanitizer: DomSanitizer,
     private route: Router,
     private dialog: MatDialog,
@@ -38,14 +40,23 @@ export class OfferLetterComponent implements OnInit {
     private branchService: BranchService,
     private originationService: OriginationService,
     private sharedService: SharedService,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.tokenStorageService.getUser();
-    this.originationId = this.sessionStorageService.getOriginationId();
-    this.customerInfo = this.sessionStorageService.getCustomerInfo();
-    this.generatePdf();
-    this.fetchGenericValues();
+    const loadUserProfileSub = this.store
+      .select(selectUser)
+      .subscribe((user) => {
+        if (user) {
+          this.currentUser = user;
+          this.originationId = this.sessionStorageService.getOriginationId();
+          this.customerInfo = this.sessionStorageService.getCustomerInfo();
+          this.generatePdf();
+          this.fetchGenericValues();
+        }
+      });
+
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   generatePdf() {
@@ -166,5 +177,9 @@ export class OfferLetterComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sb) => sb.unsubscribe());
   }
 }
