@@ -1,15 +1,19 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ThemeService } from 'app/shared/services/theme.service';
 import { IdleTimeoutService } from '@onerumango/utils';
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.template.html',
 })
-export class AdminLayoutComponent implements OnDestroy {
+export class AdminLayoutComponent implements OnDestroy, OnInit {
   constructor(
     public themeService: ThemeService,
     private idleTimeoutService: IdleTimeoutService,
   ) {}
+
+  ngOnInit() {
+    console.log(this.idleTimeoutService.getElapsedSessionTime());
+  }
 
   ngOnDestroy() {
     this.idleTimeoutService.clearTimeOut();

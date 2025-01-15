@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { TokenStorageService } from '@onerumango/utils';
 @Component({
   selector: 'app-success-popup',
   templateUrl: './success-popup.component.html',
@@ -33,6 +34,7 @@ export class SuccessPopupComponent implements OnInit {
     private openAccountService: OpenAccountService,
     private router: Router,
     private sessionStorageService: SessionStorageService,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
@@ -117,7 +119,7 @@ export class SuccessPopupComponent implements OnInit {
   }
 
   done() {
-    sessionStorage.clear();
+    this.tokenStorageService.clearSessionExceptLoginInfo();
     if (this.isNetBanking) {
       this.router.navigate([`/user/dashboard/${this.data.route}`]);
       this.dialogRef.close();

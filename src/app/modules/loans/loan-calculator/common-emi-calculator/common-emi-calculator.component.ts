@@ -72,6 +72,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       .select(selectLocaleData)
       .subscribe((res) => {
         if (res) {
+          console.log(res);
           this.otherUserInfo = res;
           this.currency = this.otherUserInfo?.currency;
         }
@@ -82,6 +83,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
+        console.log(this.otherUserInfo, 'test');
         this.productDetails = resp.data[0].lendingParameters.find(
           (el: any) => el.currency == this.otherUserInfo.currency,
         );
@@ -178,8 +180,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   }
   get checkTenurePresence() {
     const { tenureYear, tenureMonth, tenureDays } = this.loanForm.value;
-    const isTenurePresent = !!tenureYear || !!tenureMonth || !!tenureDays;
-    return isTenurePresent;
+    return !!tenureYear || !!tenureMonth || !!tenureDays;
   }
 
   applyForLoan() {

@@ -603,7 +603,7 @@ export class SessionStorageService {
    * This method will set the ownership id in the session storage
    * @param id
    */
-  public setOwnershipId(id: string): void {
+  public setOwnershipId(id: number): void {
     this.setItem(SessionStorageEnum.OWNERSHIP_ID, id);
   }
 

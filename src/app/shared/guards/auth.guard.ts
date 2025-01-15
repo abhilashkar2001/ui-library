@@ -1,20 +1,19 @@
-import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 import { TokenStorageService } from '@onerumango/utils';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-@Injectable()
-export class AuthGuard {
-  constructor(
-    private router: Router,
-    private tokenService: TokenStorageService,
-  ) {}
-
-  canActivate() {
-    if (this.tokenService.isLoggedIn()) {
+export const AuthGuard = (): Observable<boolean> => {
+  const router = inject(Router);
+  const tokenStorageService = inject(TokenStorageService);
+  return tokenStorageService.isLoggedIn().pipe(
+    map((isAuthenticated) => {
+      if (!isAuthenticated) {
+        router.navigate(['/home']);
+        return false;
+      }
       return true;
-    } else {
-      this.router.navigate(['/home/401']);
-      return false;
-    }
-  }
-}
+    }),
+  );
+};

@@ -6,9 +6,6 @@ import { TokenStorageService } from '@onerumango/utils';
 import { SIGNIN } from './models/signin.model';
 import { SIGINDATA } from './models/sigin-data.model';
 import { GETGENERICVALUE } from './models/generic-value.model';
-import * as CryptoJS from 'crypto-js';
-
-const SECRET_KEY = environment.SECRET_KEY;
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +13,6 @@ const SECRET_KEY = environment.SECRET_KEY;
 export class SessionService {
   //WINDOW SESSION STORAGE
   session = window.sessionStorage;
-
-  encrypt(value: string): string {
-    return CryptoJS.AES.encrypt(value, SECRET_KEY).toString();
-  }
-
-  decrypt(value: string): string {
-    const bytes = CryptoJS.AES.decrypt(value, SECRET_KEY);
-    return bytes.toString(CryptoJS.enc.Utf8);
-  }
 
   protected basePath = environment.microServiceURL;
 
@@ -48,10 +36,6 @@ export class SessionService {
           }
         }),
       );
-  }
-
-  getProfileInfo() {
-    return this.httpClient.get(`${this.basePath}/loginApi/profile`);
   }
 
   getCorporateProfile() {

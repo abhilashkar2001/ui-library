@@ -8,6 +8,7 @@ import {
   ThemeChangeService,
   ThemeOption,
 } from './shared/services/theme-change.service';
+import { RoutingState } from './shared/helpers/routingState';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +27,14 @@ export class AppComponent implements OnInit {
     private routePartsService: RoutePartsService,
     private iconService: UILibIconService,
     private themeChangeService: ThemeChangeService,
+    private routingState: RoutingState,
   ) {
     this.listOfThemeColors = this.themeChangeService.themeColors;
 
     this.themeChangeService.setCurrentTheme(
       this.listOfThemeColors[0] as ThemeOption,
     );
-
+    this.routingState.loadRouting();
     this.iconService.init();
   }
 

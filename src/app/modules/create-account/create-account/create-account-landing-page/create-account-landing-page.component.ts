@@ -12,7 +12,11 @@ import { SuccessPopupComponent } from 'app/shared/components/success-popup/succe
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SharedService } from 'app/shared/shared.service';
-import { LocaleData, selectLocaleData } from '@onerumango/utils';
+import {
+  LocaleData,
+  selectLocaleData,
+  TokenStorageService,
+} from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateAccountConstant, CreateEnum } from './create-account.constant';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
@@ -48,7 +52,7 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
   ownership: any;
   screenName: string = CreateAccountConstant.SCREEN_NAME;
   staticData = CreateAccountConstant.STATIC_DATA;
-  ownershipId: any;
+  ownershipId: number | undefined;
   currentUser: any;
   currencyCode: LocaleData | undefined;
   isHideField = true;
@@ -88,12 +92,13 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     private commonService: CommonService,
     private store: Store,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
     this.commonService.updateData(router.url);
   }
 
-  showComponent(screenName: any) {
+  showComponent(screenName: string) {
     if (
       this.dynamicScreen.some((item) =>
         screenName.toLowerCase().includes(item.key),
@@ -418,7 +423,8 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
             this.ownershipId = this.ownership.find(
               (r: any) => r?.values.toLowerCase() === 'self',
             )?.id;
-            this.sessionStorageService.setOwnershipId(this.ownershipId);
+            if (this.ownershipId)
+              this.sessionStorageService.setOwnershipId(this.ownershipId);
             resolve(this.ownershipId);
           } else {
             reject(new Error('Failed to fetch generic data'));
@@ -565,7 +571,7 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            sessionStorage.clear();
+            this.tokenStorageService.clearSessionExceptLoginInfo();
             this.router.navigate(['/account/landing']);
           }
         });

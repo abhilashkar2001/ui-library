@@ -56,6 +56,7 @@ export const rootRouterConfig: Routes = [
     path: '',
     component: AdminLayoutComponent,
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'account',

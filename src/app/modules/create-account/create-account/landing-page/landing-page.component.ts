@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HomeService } from 'app/shared/services/home-service/home.service';
-import { User, UserLocaleDataAction } from '@onerumango/utils';
+import { User } from '@onerumango/utils';
 import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 @Component({
@@ -32,7 +32,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.loadUserProfile();
-    this.getCountryCurrency();
     this.getAccountTypes();
   }
 
@@ -43,16 +42,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.push(loadUserProfileSub);
-  }
-
-  getCountryCurrency() {
-    const userBranchCode = this.currentUser?.branchCode;
-    this.homeService.getCountryCurrency(userBranchCode).subscribe((resp) => {
-      if (resp?.statusCode)
-        this.store.dispatch(
-          UserLocaleDataAction.setLocaleData({ localeData: resp.data }),
-        );
-    });
   }
 
   getAccountTypes() {

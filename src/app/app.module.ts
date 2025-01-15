@@ -6,11 +6,9 @@ import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
 } from './shared/components/perfect-scrollbar';
-
 import { rootRouterConfig } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -67,15 +65,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       timeOut: 3000,
       preventDuplicates: true,
     }),
-    UtilsModule.forRoot({
-      microServiceURL: environment.microServiceURL,
-      SECRET_KEY: environment.SECRET_KEY,
-    }),
+    UtilsModule.forRoot(environment),
   ],
   declarations: [AppComponent],
   providers: [
     { provide: ErrorHandler, useClass: ErrorHandlerService },
-    // { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,

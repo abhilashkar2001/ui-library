@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from './services/theme.service';
 import { NavigationService } from './services/navigation.service';
 import { RoutePartsService } from './services/route-parts.service';
-import { AuthGuard } from './guards/auth.guard';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { AppLoaderService } from './services/app-loader/app-loader.service';
 
@@ -32,7 +31,6 @@ import { InputMaskModule } from './directives/input-mask/input-mask.module';
     ThemeService,
     NavigationService,
     RoutePartsService,
-    AuthGuard,
     AppConfirmService,
     AppLoaderService,
     ReactiveFormsModule,

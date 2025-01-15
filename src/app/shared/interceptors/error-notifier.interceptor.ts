@@ -10,25 +10,15 @@ import { EMPTY, throwError } from 'rxjs';
 import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { TokenStorageService } from '@onerumango/utils';
 
 @Injectable()
 export class ErrorNotifierService implements HttpInterceptor {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private tokenStorageService: TokenStorageService,
   ) {}
-
-  errorData: { code: number; message: string }[] = [
-    { code: 400, message: 'Bad Request' },
-    { code: 401, message: 'Unauthorized' },
-    { code: 403, message: 'Forbidden' },
-    { code: 404, message: 'Not Found' },
-    { code: 500, message: 'Internal Server Error' },
-    { code: 502, message: 'Bad Gateway' },
-    { code: 503, message: 'Service Unavailable' },
-    { code: 504, message: 'Gateway Timeout' },
-    { code: 0, message: 'Error' },
-  ];
 
   intercept(request: HttpRequest<any>, next: HttpHandler): any {
     return next.handle(request).pipe(
@@ -57,7 +47,7 @@ export class ErrorNotifierService implements HttpInterceptor {
               this.openCustomErrorDialog(errorPayload);
               return EMPTY; // Gracefully complete the stream
             } else if (error.status === 401) {
-              sessionStorage.clear();
+              this.tokenStorageService.signOut();
               this.dialog.closeAll();
               this.router.navigate(['/home'], {
                 queryParams: { type: 'auth' },

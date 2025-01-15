@@ -9,7 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { LocaleData, selectLocaleData } from '@onerumango/utils';
+import {
+  LocaleData,
+  selectLocaleData,
+  TokenStorageService,
+} from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
 import { SharedService } from 'app/shared/shared.service';
@@ -93,6 +97,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     private docapi: CustomWebDocUploadServiceService,
     private store: Store,
     private sessionStorageService: SessionStorageService,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
@@ -862,10 +867,10 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
-            sessionStorage.clear();
+            this.tokenStorageService.clearSessionExceptLoginInfo();
             this.router.navigate(['loan/landing']);
           } else if (resp === 'tracking') {
-            sessionStorage.clear();
+            this.tokenStorageService.clearSessionExceptLoginInfo();
           }
         });
       }

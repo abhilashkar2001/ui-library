@@ -18,6 +18,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { TokenStorageService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-header-top',
@@ -82,6 +83,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private router: Router,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
@@ -175,7 +177,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   onNavTabClick() {
-    sessionStorage.clear();
+    this.tokenStorageService.clearSessionExceptLoginInfo();
   }
 
   goToHomePage() {

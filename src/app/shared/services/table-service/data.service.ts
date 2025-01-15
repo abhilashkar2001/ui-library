@@ -11,14 +11,7 @@ export interface ErrorPayload {
   providedIn: 'root',
 })
 export class DataService {
-  private refresh = new BehaviorSubject(false);
-  isRefresh = this.refresh.asObservable();
-
   private subject = new Subject<any>();
-
-  sendClickEvent() {
-    this.subject.next();
-  }
 
   getClickEvent(): Observable<any> {
     return this.subject.asObservable();

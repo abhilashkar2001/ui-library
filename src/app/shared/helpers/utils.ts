@@ -113,11 +113,11 @@ export function removeSpecCharsOnly(separator: any, val: any) {
   return Number(money);
 }
 
-export function findCurrency(currencyCode: any) {
+export function findCurrency(currencyCode: string) {
   return StaticData.currencyList[currencyCode];
 }
 
-export function handleDownload(data: any, pdfName: any) {
+export function handleDownload(data: any, pdfName: string) {
   const blob = new Blob([data], { type: 'application/octet-stream' });
   const url = window.URL.createObjectURL(blob);
 
