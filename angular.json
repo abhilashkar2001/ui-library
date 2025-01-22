@@ -83,7 +83,7 @@
               ],
               "outputHashing": "all"
             },
-            "qa": {
+            "stanbic": {
               "budgets": [
                 {
                   "type": "initial",
@@ -99,49 +99,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.qa.ts"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "scb": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "9mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "9mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.scb.ts"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "kbz": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "9mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "9mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.kbz.ts"
+                  "with": "src/environments/environment.stanbic.ts"
                 }
               ],
               "outputHashing": "all"

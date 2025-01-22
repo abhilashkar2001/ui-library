@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  microServiceURL: 'https://192.168.0.17:4210/api',
+  microServiceURL: 'https://172.16.1.124:8767',
   build: 32,
 };
