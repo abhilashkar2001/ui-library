@@ -483,7 +483,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             address1: this.documentInfo?.address,
             pincode: this.documentInfo?.pincode,
           });
-          this.sessionStorageService.setBackData(JSON.stringify(this.backData));
+          this.sessionStorageService.setBackData(this.backData);
         }
 
         if (res?.data?.aadhaarNumber != 'Details not found') {

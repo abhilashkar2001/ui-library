@@ -186,7 +186,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
                     );
                 }
                 const gender = this.genderArray.find(
-                  (e) => e.values.toLowerCase() === item?.gender?.toLowerCase(),
+                  (e) =>
+                    e.values?.toLowerCase() === item?.gender?.toLowerCase(),
                 )?.id;
                 const customerFormGrp = this.customerDetailsForm.get(
                   'customer',
@@ -224,8 +225,9 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
 
                       const backData =
                         this.sessionStorageService.getBackData() || [];
+                      console.log(backData);
                       const addressData = backData?.[index];
-
+                      console.log(address, addressData);
                       if (address && addressData) {
                         address
                           .get('pincode')
@@ -556,6 +558,11 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
         }
       });
   }
+
+  get addressArray(): FormArray {
+    return this.customer.get('contact.address') as FormArray;
+  }
+
   getCustomerByCif(i: any) {
     this.customer.controls[i]
       ?.get('customerNo')

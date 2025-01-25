@@ -1161,7 +1161,7 @@ export class SessionStorageService {
    * This method will set the Back data id in the session storage
    * @param id
    */
-  public setBackData(id: string): void {
+  public setBackData(id: any): void {
     this.setItem(SessionStorageEnum.BACK_DATA, id);
   }
 

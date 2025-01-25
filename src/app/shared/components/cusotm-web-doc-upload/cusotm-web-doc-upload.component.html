@@ -90,7 +90,7 @@
                           class="img_box"
                           [style.width]="isOtherDocVisible ? '65px' : ''"
                         >
-                          <img [src]="getFileUrl(file)" />
+                          <img [src]="getFileUrl(file)" alt="image" />
                         </div>
                         <div class="img_container">
                           <p class="img_name">{{ file?.name }}</p>
@@ -244,7 +244,7 @@
         <mat-error
           class="custom-error"
           *ngIf="
-            loanDisbursementForm?.value.confirmAccountNumber !=
+            loanDisbursementForm?.value.confirmAccountNumber !==
               loanDisbursementForm?.value.accountNumber &&
             loanDisbursementForm.get('confirmAccountNumber')?.touched
           "
@@ -320,7 +320,12 @@
           }}</mat-hint>
         </div>
         <div class="scan-title" fxFlex="20" [fxLayoutAlign]="'center center'">
-          <span class="scan-btn" (click)="openDialog()">
+          <span
+            class="scan-btn"
+            (click)="openDialog()"
+            (keydown.enter)="openDialog()"
+            tabindex="0"
+          >
             {{ !image ? 'Scan' : 'Re-Scan' }}
           </span>
         </div>
@@ -329,24 +334,23 @@
   </div>
 
   <div fxLayoutGap="20px" fxLayoutAlign="start center" class="pt-12">
-    <button-loading
-      [loadingText]="loadingBtnText"
+    <ic-button
+      [label]="'Submit' | translate"
       [type]="'submit'"
-      [disable]="isLoading && checkDocValidity()"
-      [loading]="isLoading"
-      (click)="onSubmit()"
-      [btnClass]="'submit-button'"
+      size="large"
+      [icButtonType]="'filled-rounded'"
+      [isLoading]="isLoading"
+      [disabled]="isLoading && checkDocValidity()"
+      (OnClick)="onSubmit()"
     >
-      Submit
-    </button-loading>
-    <button
-      type="button"
-      mat-raised-button
-      class="button back_button"
-      (click)="onBack()"
-      class="back-button"
+    </ic-button>
+    <ic-button
+      [label]="'Back'"
+      icButtonType="ghost-rounded-danger"
+      size="large"
+      [type]="'button'"
+      (OnClick)="onBack()"
     >
-      Back
-    </button>
+    </ic-button>
   </div>
 </div>

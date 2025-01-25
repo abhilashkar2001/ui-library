@@ -81,7 +81,7 @@
             size="large"
             [icButtonType]="'filled-rounded'"
             [isLoading]="isLoading"
-            [disable]="!(otpAvailable && !isLoading && agreed)"
+            [disabled]="!(otpAvailable && !isLoading && agreed)"
             (OnClick)="onVerify()"
           >
           </ic-button>

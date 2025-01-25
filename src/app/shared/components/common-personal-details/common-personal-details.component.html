@@ -394,15 +394,15 @@
                     *ngIf="!isHideField"
                   >
                     <div *ngIf="customerDetailsForm.value.customer.length > 1">
-                      <button
-                        type="button"
+                      <ic-button
+                        [label]="'Save' | translate"
+                        [type]="'submit'"
+                        size="large"
+                        [icButtonType]="'filled-rounded'"
                         [disabled]="!customer.valid"
-                        mat-raised-button
-                        class="button submit_button"
-                        (click)="saveCustomer(i)"
+                        (OnClick)="saveCustomer(i)"
                       >
-                        Save
-                      </button>
+                      </ic-button>
                     </div>
                   </div>
                 </div>
@@ -428,25 +428,25 @@
   </div>
   <div fxFlex="100" fxLayout="row" fxLayoutGap="2%" style="margin-top: 50px">
     <div>
-      <button
-        type="button"
-        mat-raised-button
-        class="button submit_button"
+      <ic-button
+        [label]="'Confirm' | translate"
+        [type]="'submit'"
+        size="large"
+        [icButtonType]="'filled-rounded'"
         [disabled]="!customerDetailsForm.valid"
-        (click)="confirmCustomer()"
+        (OnClick)="confirmCustomer()"
       >
-        Confirm
-      </button>
+      </ic-button>
     </div>
     <div>
-      <button
-        type="button"
-        mat-raised-button
-        class="button back_button"
-        (click)="goBack()"
+      <ic-button
+        [label]="'Back'"
+        icButtonType="ghost-rounded-danger"
+        size="large"
+        [type]="'button'"
+        (OnClick)="goBack()"
       >
-        Back
-      </button>
+      </ic-button>
     </div>
   </div>
 </div>
