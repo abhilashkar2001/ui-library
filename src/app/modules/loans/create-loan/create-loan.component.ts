@@ -71,7 +71,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadLocaleData();
     const basisId: any = this.sessionStorageService.getLoanBasisDetails();
-    this.getProductDetails(JSON.parse(basisId).basisId);
+    this.getProductDetails(basisId.basisId);
     this.getGenericDetails();
     this.loanCustomerId = this.sessionStorageService.getCustomerId();
     if (this.loanCustomerId) this.getCustomerById();

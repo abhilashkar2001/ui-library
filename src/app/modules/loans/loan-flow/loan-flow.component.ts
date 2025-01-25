@@ -139,8 +139,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.componentRef.instance.accountType = 'loan';
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
-
-            this.componentRef.instance?.onCustomSubmit.subscribe(
+            console.log(this.componentRef.instance?.onCustomSubmit);
+            this.componentRef.instance?.onCustomSubmit?.subscribe(
               (data: any) => {
                 if (data?.value?.accountNumber)
                   this.createLoanAccountNumber = data.value.accountNumber;

@@ -75,24 +75,24 @@
           class="button-section"
           *ngIf="showOtpSection"
         >
-          <button-loading
-            [btnClass]="'submit-button'"
-            [loadingText]="loadingBtnText"
+          <ic-button
+            [label]="'Save' | translate"
             [type]="'submit'"
+            size="large"
+            [icButtonType]="'filled-rounded'"
+            [isLoading]="isLoading"
             [disable]="!(otpAvailable && !isLoading && agreed)"
-            [loading]="isLoading"
-            (click)="onVerify()"
+            (OnClick)="onVerify()"
           >
-            Confirm
-          </button-loading>
-          <button
-            class="back-button"
-            mat-raised-button
-            (click)="onExit()"
-            style="color: #b20000; margin-left: 5px"
+          </ic-button>
+          <ic-button
+            [label]="'Exit'"
+            icButtonType="ghost-rounded-danger"
+            size="large"
+            [type]="'button'"
+            (OnClick)="onExit()"
           >
-            Exit
-          </button>
+          </ic-button>
         </div>
       </div>
     </div>

@@ -10,122 +10,31 @@
         fxFlex="48"
         [ngClass]="{ 'disable-mat-form-field': isReadOnly }"
       >
-        <mat-form-field
-          appearance="outline"
-          class="full-width currency_field fieldinput"
-        >
-          <mat-label class="custom-mat-label">Loan Amount</mat-label>
-          <div fxLayout="row">
-            <span
-              *ngIf="personalLoanDetailsForm.value?.loanAmount"
-              class="currencySymbol"
-              >{{ currencySymboll }}</span
-            >
-            <input
-              matInput
-              [readonly]="isReadOnly"
-              name="loanAmount"
-              formControlName="loanAmount"
-              maxlength="22"
-              appNoLeadingSpace
-              appDecimalinput
-              [numLength]="18"
-              [allowedDecimalIndex]="3"
-            />
-          </div>
-
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm.get('loanAmount')?.hasError('required')
-            "
-          >
-            Loan Amount is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <ic-form-field
+          label="Loan Amount"
+          [control]="personalLoanDetailsForm.get('loanAmount') | formcontrol"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.loanAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="48" class="MiscellaneousClass">
-        <fieldset
-          [ngClass]="{ 'disable-fieldset': isReadOnly }"
-          class="fieldset"
+        <ic-tenure-field
+          label="Tenure"
+          [fields]="['tenureYear', 'tenureMonth', 'tenureDays']"
+          [fieldLabels]="{
+            tenureYear: 'Years',
+            tenureMonth: 'Months',
+            tenureDays: 'Days',
+          }"
+          [parentForm]="personalLoanDetailsForm"
+          [disabled]="true"
         >
-          <legend style="width: fit-content">Tenure</legend>
-          <div fxFlex="100" fxLayout="row">
-            <div fxFlex="33">
-              <input
-                fxFlex="50"
-                matInput
-                name="year"
-                appNumbersOnly
-                placeholder="Year"
-                formControlName="tenureYear"
-                class="pl-3 tenure_input"
-                [readonly]="isReadOnly"
-                maxlength="2"
-              />
-              <ng-container *ngIf="personalLoanDetailsForm.value?.tenureYear">
-                <span class="suffixLabel">{{
-                  personalLoanDetailsForm.value?.tenureYear
-                    ? personalLoanDetailsForm.value?.tenureYear > 1
-                      ? 'Years'
-                      : 'Year'
-                    : ''
-                }}</span>
-              </ng-container>
-            </div>
-            <div class="vertical-seperator"></div>
-            <div fxFlex="33">
-              <input
-                fxFlex="50"
-                matInput
-                name="month"
-                appNumbersOnly
-                placeholder="Month"
-                formControlName="tenureMonth"
-                class="pl-3 tenure_input"
-                [readonly]="isReadOnly"
-                maxlength="2"
-              />
-              <ng-container *ngIf="personalLoanDetailsForm.value?.tenureMonth">
-                <span class="suffixLabel">{{
-                  personalLoanDetailsForm.value?.tenureMonth
-                    ? personalLoanDetailsForm.value?.tenureMonth > 1
-                      ? 'Months'
-                      : 'Month'
-                    : ''
-                }}</span>
-              </ng-container>
-            </div>
-            <div class="vertical-seperator"></div>
-            <div fxFlex="33">
-              <input
-                fxFlex="50"
-                matInput
-                name="day"
-                appNumbersOnly
-                placeholder="Day"
-                formControlName="tenureDays"
-                class="pl-3 tenure_input"
-                [readonly]="isReadOnly"
-                maxlength="2"
-              />
-              <ng-container>
-                <span
-                  class="suffixLabel"
-                  *ngIf="personalLoanDetailsForm.value?.tenureDays"
-                  >{{
-                    personalLoanDetailsForm.value?.tenureDays
-                      ? personalLoanDetailsForm.value?.tenureDays > 1
-                        ? 'Days'
-                        : 'Day'
-                      : ''
-                  }}</span
-                >
-              </ng-container>
-            </div>
-          </div>
-        </fieldset>
-        <mat-error
+        </ic-tenure-field>
+        <!--  <mat-error
           class="mat-error small-error mt-12"
           *ngIf="
             validateTenure &&
@@ -152,11 +61,11 @@
           {{ productDetails?.minimumTenorYear }} Years
           {{ productDetails?.minimumTenorMonth }} Months
           {{ productDetails?.minimumTenorDay }} Days
-        </mat-error>
+        </mat-error> -->
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <mat-form-field
+        <!-- <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
         >
@@ -169,11 +78,20 @@
             >
             <input matInput readonly formControlName="emiAmount" />
           </div>
-        </mat-form-field>
+        </mat-form-field> -->
+        <ic-form-field
+          label="Emi Amount"
+          [control]="personalLoanDetailsForm.get('emiAmount') | formcontrol"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.emiAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width fieldinput">
+        <!-- <mat-form-field appearance="outline" class="full-width fieldinput">
           <mat-label class="custom-mat-label">Interest Rate</mat-label>
           <input matInput readonly formControlName="interestRate" />
           <mat-error
@@ -182,60 +100,43 @@
             "
           >
             Interest Rate is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+          </mat-error> -->
+        <!-- </mat-form-field> -->
+        <ic-form-field
+          label="Interest Rate"
+          [control]="personalLoanDetailsForm.get('interestRate') | formcontrol"
+          [readonly]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <mat-form-field
-          appearance="outline"
-          class="full-width currency_field fieldinput"
-        >
-          <mat-label class="custom-mat-label">Interest Payable</mat-label>
-          <div fxLayout="row">
-            <span
-              class="currencySymbol"
-              *ngIf="personalLoanDetailsForm.value.loanAmount"
-              >{{ currencySymboll }}</span
-            >
-            <input matInput readonly formControlName="interestPayable" />
-          </div>
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm
-                .get('interestPayable')
-                ?.hasError('required')
-            "
-          >
-            Interest Payable is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <ic-form-field
+          label="Interest Payable"
+          [control]="
+            personalLoanDetailsForm.get('interestPayable') | formcontrol
+          "
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.interestPayable
+              ? currencySymboll
+              : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <mat-form-field
-          appearance="outline"
-          class="full-width currency_field fieldinput"
-        >
-          <mat-label class="custom-mat-label">Principle Amount</mat-label>
-          <div fxLayout="row">
-            <span
-              class="currencySymbol"
-              *ngIf="personalLoanDetailsForm.value.principlAmount"
-              >{{ currencySymboll }}</span
-            >
-            <input matInput readonly formControlName="principlAmount" />
-          </div>
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm
-                .get('principlAmount')
-                ?.hasError('required')
-            "
-          >
-            Principle Amount is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <ic-form-field
+          label="Principal Amount"
+          [control]="
+            personalLoanDetailsForm.get('principlAmount') | formcontrol
+          "
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.principlAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
       </div>
 
       <div
@@ -259,7 +160,7 @@
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <mat-form-field
+        <!-- <mat-form-field
           appearance="outline"
           class="full-width currency_field fieldinput"
         >
@@ -281,7 +182,20 @@
           >
             Total Payable Amount is <strong>required</strong>
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
+        <ic-form-field
+          label="Total Payable Amount"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.totalPayableAmount
+              ? currencySymboll
+              : ''
+          "
+          [control]="
+            personalLoanDetailsForm.get('totalPayableAmount') | formcontrol
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="48" class="enabled-mat-form-field">
@@ -318,19 +232,25 @@
       </div>
 
       <div fxFlex="100" class="button-section">
-        <button class="confirm-button" (click)="onConfirm()">Confirm</button
-        >&nbsp;&nbsp;
-        <!-- <button
-          class="edit-button"
-          type="button"
-          (click)="editRecord()"
-          *ngIf="isReadOnly"
+        <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+        <ic-button
+          [label]="'Confirm'"
+          [type]="'submit'"
+          size="large"
+          [icButtonType]="'filled-rounded'"
+          (OnClick)="onConfirm()"
         >
-          Edit</button
-        >&nbsp;&nbsp; -->
-        <button class="exit-button" type="button" (click)="onBack()">
-          Back</button
-        >&nbsp;&nbsp;
+        </ic-button>
+        &nbsp;&nbsp;
+        <ic-button
+          [label]="'Back'"
+          icButtonType="ghost-rounded-danger"
+          size="large"
+          [type]="'button'"
+          (OnClick)="onBack()"
+        >
+        </ic-button>
+        &nbsp;&nbsp;
       </div>
     </div>
   </form>

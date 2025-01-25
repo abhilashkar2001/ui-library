@@ -149,9 +149,7 @@
         [fxFlex]="fdName === 'rdCalculator' ? 33 : 48"
         class="col-md-4 col-12"
       >
-        <label class="calculator_subTItle"
-          >Interest Payout</label
-        >
+        <label class="calculator_subTItle">Interest Payout</label>
         <!-- <mat-form-field
           appearance="outline"
           class="full-width field-changedInput"
@@ -182,9 +180,7 @@
       </div>
       <ng-container *ngIf="fdName === 'rdCalculator'">
         <div fxFlex="33" class="col-md-4 col-12">
-          <label class="calculator_subTItle"
-            >Monthly Savings</label
-          >
+          <label class="calculator_subTItle">Monthly Savings</label>
           <ic-select
             label="Date of Installment"
             [control]="depositForm.get('monthlySavings') | formcontrol"

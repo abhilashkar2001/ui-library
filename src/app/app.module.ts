@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { UtilsModule } from '@onerumango/utils';
 import { environment } from '../environments/environment';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -66,6 +67,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       preventDuplicates: true,
     }),
     UtilsModule.forRoot(environment),
+    IcustLibraryModule,
   ],
   declarations: [AppComponent],
   providers: [

@@ -253,21 +253,21 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   onVerify() {
     this.isLoading = true;
     this.loadingBtnText = 'Saving...';
-    this.api
-      .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
-      .subscribe((response: any) => {
-        if (response.statusCode === 401) {
-          this.invalidOtp = true;
-          this.isLoading = false;
-        } else if (response.statusCode === 200 || response?.accessToken) {
-          this.loadingBtnText = 'Saved';
-          this.isLoading = false;
-          this.invalidOtp = false;
-          if (!this.hideInfo)
-            this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
-          this.CustomSubmit.emit({});
-        }
-      });
+    // this.api
+    //   .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
+    //   .subscribe((response: any) => {
+    //     if (response.statusCode === 401) {
+    //       this.invalidOtp = true;
+    //       this.isLoading = false;
+    //     } else if (response.statusCode === 200 || response?.accessToken) {
+    this.loadingBtnText = 'Saved';
+    this.isLoading = false;
+    this.invalidOtp = false;
+    if (!this.hideInfo)
+      this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
+    this.CustomSubmit.emit({});
+    //   }
+    // });
   }
 
   onExit() {

@@ -15,6 +15,7 @@
                       <img
                         *ngIf="customer.valid"
                         src="assets/images/done_icon.svg"
+                        alt="image"
                       />
                       <span style="margin-left: 10px"
                         >Applicant {{ i + 1 }}</span
@@ -24,7 +25,7 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                   <div class="col-md-6 col-12" *ngIf="!isHideField">
-                    <mat-form-field
+                    <!-- <mat-form-field
                       appearance="outline"
                       class="full-width disable-field"
                     >
@@ -36,8 +37,16 @@
                         name="customerNo"
                         appSpecialIsAlphaNumeric
                         maxlength="20"
-                      />
-                    </mat-form-field>
+                      /> -->
+                    <!-- </mat-form-field> -->
+                    <ic-form-field
+                      *ngIf="!isHideField"
+                      label="CIF Number"
+                      [control]="customer.get('customerNo') | formcontrol"
+                      [readonly]="true"
+                      [icNoInitialSpace]="true"
+                      [icSpecialAlphaNumeric]="true"
+                    ></ic-form-field>
                   </div>
                   <div
                     class="col-md-6 col-12 default-toggle-slide pb-12"
@@ -47,88 +56,41 @@
                     <span class="applicat-text">
                       Is this applicant a primary customer? *</span
                     >
-                    <mat-slide-toggle
-                      formControlName="primaryCustomer"
+                    <ic-slide-toggle
+                      [formControl]="
+                        customer?.get('primaryCustomer') | formcontrol
+                      "
                       [disabled]="
-                        checkPrimaryCustomer() && primaryCustIndex != i
+                        checkPrimaryCustomer() && primaryCustIndex !== i
                       "
                     >
-                    </mat-slide-toggle>
+                    </ic-slide-toggle>
                   </div>
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Prefix</mat-label>
-
-                      <mat-select
-                        formControlName="prefix"
-                        (selectionChange)="CheckGenderandPrefix(i)"
-                      >
-                        <mat-option [value]="">Select</mat-option>
-                        <mat-option
-                          *ngFor="let prefixItem of prefixArray"
-                          [value]="prefixItem.id"
-                          >{{ prefixItem.values }}</mat-option
-                        >
-                      </mat-select>
-                      <mat-error
-                        *ngIf="
-                          customer.get('prefix')?.touched &&
-                          customer.get('prefix')?.hasError('required')
-                        "
-                      >
-                        Prefix is required
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-select
+                      label="Prefix"
+                      [options]="prefixArray"
+                      bindValueKey="id"
+                      bindLabelKey="values"
+                      [control]="customer.get('prefix') | formcontrol"
+                      (selectionChange)="CheckGenderandPrefix(i)"
+                    ></ic-select>
                   </div>
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>First Name</mat-label>
-                      <input
-                        matInput
-                        appAlphabetOnly
-                        type="text"
-                        formControlName="firstName"
-                        name="firstName"
-                      />
-
-                      <mat-error
-                        *ngIf="
-                          customer.get('firstName')?.touched &&
-                          customer.get('firstName')?.hasError('required')
-                        "
-                      >
-                        First Name is required
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-form-field
+                      label="First Name"
+                      [control]="customer.get('firstName') | formcontrol"
+                      [icNoInitialSpace]="true"
+                      [icAlphabetOnly]="true"
+                    ></ic-form-field>
                   </div>
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Last Name</mat-label>
-                      <input
-                        matInput
-                        appAlphabetOnly
-                        type="text"
-                        formControlName="lastName"
-                        name="lastName"
-                      />
-                      <mat-error
-                        *ngIf="
-                          customer.get('lastName')?.touched &&
-                          customer.get('lastName')?.hasError('required')
-                        "
-                      >
-                        Last Name is required
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-form-field
+                      label="lastName"
+                      [control]="customer.get('lastName') | formcontrol"
+                      [icNoInitialSpace]="true"
+                      [icAlphabetOnly]="true"
+                    ></ic-form-field>
                   </div>
                   <div class="col-md-6 col-12">
                     <mat-form-field
@@ -175,197 +137,61 @@
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Email</mat-label>
-                      <input
-                        matInput
-                        appNoInitialSpecialCharacters
-                        appNoSpace
-                        [disabled]="!customerDetailsForm.valid"
-                        [formControl]="
-                          customer.get('contact')?.get('email') | formcontrol
-                        "
-                        name="email"
-                      />
-                      <mat-error
-                        *ngIf="
-                          customer.get('contact')?.get('email')?.touched &&
-                          customer
-                            .get('contact')
-                            ?.get('email')
-                            ?.hasError('required')
-                        "
-                      >
-                        Email is required
-                      </mat-error>
-                      <mat-error
-                        *ngIf="
-                          customer
-                            .get('contact')
-                            ?.get('email')
-                            ?.hasError('pattern')
-                        "
-                      >
-                        Please enter Valid Email
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-form-field
+                      label="Email"
+                      [control]="customer.get('email') | formcontrol"
+                      [icNoInitialSpace]="true"
+                      [customError]="
+                        customer
+                          .get('contact')
+                          ?.get('email')
+                          ?.hasError('pattern')
+                          ? 'Please enter Valid Email'
+                          : ''
+                      "
+                    ></ic-form-field>
                   </div>
                   <div class="col-md-6 col-12" fxLayout="column">
-                    <fieldset class="yeardrop fieldset" fxFlex="100">
-                      <div fxLayout="row" class="parentYearDiv" fxFlex="100">
-                        <mat-form-field
-                          appearance="outline"
-                          class="full-width inputSelect isdSelect"
-                          fxFlex="25"
-                        >
-                          <mat-select
-                            class="selector-input"
-                            [formControl]="
-                              customer.get('contact')?.get('mobtCode')
-                                | formcontrol
-                            "
-                          >
-                            <ng-container
-                              *ngFor="let isdCode of countriesIsdCodes"
-                            >
-                              <mat-option [value]="">Select</mat-option>
-                              <mat-option
-                                *ngIf="isdCode?.countryTelIsdCode"
-                                [value]="isdCode?.countryTelIsdCode"
-                                >+{{ isdCode?.countryTelIsdCode }}</mat-option
-                              >
-                            </ng-container>
-                          </mat-select>
-                        </mat-form-field>
-                        <span class="fielSetDivider"></span>
-                        <mat-form-field
-                          appearance="outline"
-                          class="full-width inputSelect mob_field"
-                          fxFlex="75"
-                        >
-                          <mat-label>Mobile Number</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            class="inputText"
-                            [formControl]="
-                              customer.get('contact')?.get('mobile')
-                                | formcontrol
-                            "
-                            appNumbersOnly
-                            [maxlength]="maxMobileLength"
-                            placeholder="Mobile Number"
-                            [readonly]="
-                              customer.get('contact')?.get('mobile')?.value
-                                ? true
-                                : false
-                            "
-                            (keyup)="checkProductDuplicacy($event, i)"
-                          />
-                        </mat-form-field>
-                      </div>
-                    </fieldset>
-                    <mat-error
-                      class="custom-error"
-                      *ngIf="
-                        customer
-                          .get('contact')
-                          ?.get('mobile')
-                          ?.hasError('required') &&
-                        customer.get('contact')?.get('mobile')?.touched
+                    <ic-mobile-field
+                      label="Mobile Number"
+                      [control]="
+                        customer.get('contact')?.get('mobile') | formcontrol
                       "
-                    >
-                      Mobile Number is required
-                    </mat-error>
-                    <mat-error
-                      class="custom-error"
-                      *ngIf="
-                        customer.get('contact')?.get('mobile')?.touched &&
-                        customer.get('contact')?.get('mobile')?.value &&
-                        customer
-                          .get('contact')
-                          ?.get('mobile')
-                          ?.hasError('invalidLength')
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        customer.get('contact')?.get('mobtCode') | formcontrol
                       "
-                      >Mobile length should be {{ maxMobileLength }}</mat-error
-                    >
-                    <mat-error
-                      class="custom-error"
-                      *ngIf="
-                        customer
-                          .get('contact')
-                          ?.get('mobtCode')
-                          ?.hasError('required') &&
-                        customer.get('contact')?.get('mobtCode')?.touched
-                      "
-                      >ISD Code is required</mat-error
-                    >
+                      [maxLength]="maxMobileLength"
+                    ></ic-mobile-field>
                   </div>
 
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Gender</mat-label>
-                      <mat-select
-                        formControlName="gender"
-                        (selectionChange)="CheckGenderandPrefix(i)"
-                      >
-                        <mat-option [value]="">Select</mat-option>
-                        <mat-option
-                          *ngFor="let genderItem of genderArray"
-                          [value]="genderItem.id"
-                          >{{ genderItem.values }}</mat-option
-                        >
-                      </mat-select>
-                      <mat-error
-                        *ngIf="
-                          customer.get('gender')?.touched &&
-                          customer.get('gender')?.hasError('required')
-                        "
-                      >
-                        Gender is required
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-select
+                      [options]="genderArray"
+                      label="Gender"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      [control]="customer.get('gender') | formcontrol"
+                      (selectionChange)="CheckGenderandPrefix(i)"
+                    ></ic-select>
                   </div>
                   <div class="col-md-6 col-12">
-                    <app-searchable-select
-                      [items]="nationalityArray"
-                      inputLabel="Nationality"
+                    <ic-select
+                      [options]="nationalityArray"
+                      label="Nationality"
                       bindLabelKey="nationality"
                       bindValueKey="nationality"
                       [control]="customer.get('nationality') | formcontrol"
-                    ></app-searchable-select>
+                    ></ic-select>
                   </div>
                   <div class="col-md-6 col-12">
-                    <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>Marital Status</mat-label>
-                      <mat-select formControlName="maritalStatus">
-                        <mat-option [value]="">Select</mat-option>
-                        <mat-option
-                          *ngFor="let maritalItem of maritalStatusArray"
-                          [value]="maritalItem.id"
-                          >{{ maritalItem.values }}</mat-option
-                        >
-                      </mat-select>
-                      <mat-error
-                        *ngIf="
-                          this.customer.get('maritalStatus')?.touched &&
-                          this.customer
-                            .get('maritalStatus')
-                            ?.hasError('required')
-                        "
-                      >
-                        Marital Status is required
-                      </mat-error>
-                    </mat-form-field>
+                    <ic-select
+                      [options]="maritalStatusArray"
+                      label="Martial Status"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      [control]="customer.get('maritalStatus') | formcontrol"
+                    ></ic-select>
                   </div>
                   <div class="highlight_title">Address Details</div>
                   <div
@@ -382,7 +208,7 @@
                       [formGroup]="addressGroup"
                     >
                       <div class="col-md-12 col-12">
-                        <mat-form-field
+                        <!-- <mat-form-field
                           appearance="outline"
                           class="full-width disable-field"
                         >
@@ -402,11 +228,16 @@
                           >
                             Address is required
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <ic-form-field
+                          label="Address"
+                          [control]="addressGroup.get('address1') | formcontrol"
+                          [icNoInitialSpace]="true"
+                        ></ic-form-field>
                       </div>
 
                       <div class="col-md-6 col-12">
-                        <mat-form-field
+                        <!-- <mat-form-field
                           appearance="outline"
                           class="full-width disable-field"
                         >
@@ -429,20 +260,29 @@
                           >
                             Residence Type is required
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <ic-select
+                          [options]="residenceTypeArray"
+                          label="Residence Type"
+                          bindLabelKey="values"
+                          bindValueKey="id"
+                          [control]="
+                            addressGroup.get('residenceType') | formcontrol
+                          "
+                        ></ic-select>
                       </div>
                       <div class="col-md-6 col-12">
-                        <app-searchable-select
-                          [items]="countryArray"
-                          inputLabel="Country"
+                        <ic-select
+                          [options]="countryArray"
+                          label="Country"
                           bindLabelKey="countryName"
                           bindValueKey="countryName"
                           [control]="addressGroup.get('countryName')"
-                        ></app-searchable-select>
+                        ></ic-select>
                       </div>
 
                       <div class="col-md-6 col-12">
-                        <mat-form-field
+                        <!-- <mat-form-field
                           appearance="outline"
                           class="full-width disable-field zipCode_field"
                         >
@@ -469,11 +309,20 @@
                           >
                             Zip Code is required
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <ic-form-field
+                          label="Zip Code"
+                          [control]="customer.get('pincode') | formcontrol"
+                          [icNoInitialSpace]="true"
+                          suffixIcon="search_icon"
+                          (onSuffixClick)="pincodeExpansion()"
+                          [maxLength]="10"
+                          [icNumbersOnly]="true"
+                        ></ic-form-field>
                       </div>
 
                       <div class="col-md-6 col-12">
-                        <mat-form-field
+                        <!-- <mat-form-field
                           appearance="outline"
                           class="full-width disable-field hide-select-arrow"
                         >
@@ -493,11 +342,19 @@
                           >
                             State is required
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <ic-form-field
+                          label="State"
+                          [control]="
+                            addressGroup.get('stateName') | formcontrol
+                          "
+                          [icNoInitialSpace]="true"
+                          [readonly]="true"
+                        ></ic-form-field>
                       </div>
 
                       <div class="col-md-6 col-12">
-                        <mat-form-field
+                        <!-- <mat-form-field
                           appearance="outline"
                           class="full-width disable-field hide-select-arrow"
                         >
@@ -517,7 +374,13 @@
                           >
                             City required
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <ic-form-field
+                          label="City"
+                          [control]="addressGroup.get('cityName') | formcontrol"
+                          [icNoInitialSpace]="true"
+                          [readonly]="true"
+                        ></ic-form-field>
                       </div>
                     </ng-container>
                   </div>
@@ -555,6 +418,10 @@
     <div
       class="add_applicant"
       (click)="holderType === 'joint' && addCustomer(customer.controls.length)"
+      (keydown.enter)="
+        holderType === 'joint' && addCustomer(customer.controls.length)
+      "
+      tabindex="0"
     >
       Add Another Applicant
     </div>
