@@ -194,15 +194,17 @@
                     ></ic-select>
                   </div>
                   <div class="highlight_title">Address Details</div>
+
                   <div
                     class="row"
                     *ngIf="
                       customer.get('contact.address')?.value as addressControl
                     "
                   >
+                    <div *ngIf="addressControl">Address is available.</div>
                     <ng-container
                       *ngFor="
-                        let addressGroup of addressControl?.controls;
+                        let addressGroup of addressControl;
                         let addressIndex = index
                       "
                       [formGroup]="addressGroup"
@@ -231,8 +233,9 @@
                         </mat-form-field> -->
                         <ic-form-field
                           label="Address"
-                          [control]="addressGroup.get('address1') | formcontrol"
+                          [control]="addressGroup.address1 | formcontrol"
                           [icNoInitialSpace]="true"
+                          [isRequired]="true"
                         ></ic-form-field>
                       </div>
 
@@ -266,9 +269,8 @@
                           label="Residence Type"
                           bindLabelKey="values"
                           bindValueKey="id"
-                          [control]="
-                            addressGroup.get('residenceType') | formcontrol
-                          "
+                          [control]="addressGroup.residenceType | formcontrol"
+                          [isRequired]="true"
                         ></ic-select>
                       </div>
                       <div class="col-md-6 col-12">
@@ -277,7 +279,8 @@
                           label="Country"
                           bindLabelKey="countryName"
                           bindValueKey="countryName"
-                          [control]="addressGroup.get('countryName')"
+                          [control]="addressGroup.countryName"
+                          [isRequired]="true"
                         ></ic-select>
                       </div>
 
@@ -318,6 +321,7 @@
                           (onSuffixClick)="pincodeExpansion()"
                           [maxLength]="10"
                           [icNumbersOnly]="true"
+                          [isRequired]="true"
                         ></ic-form-field>
                       </div>
 
@@ -345,9 +349,7 @@
                         </mat-form-field> -->
                         <ic-form-field
                           label="State"
-                          [control]="
-                            addressGroup.get('stateName') | formcontrol
-                          "
+                          [control]="addressGroup.stateName | formcontrol"
                           [icNoInitialSpace]="true"
                           [readonly]="true"
                         ></ic-form-field>
@@ -377,7 +379,7 @@
                         </mat-form-field> -->
                         <ic-form-field
                           label="City"
-                          [control]="addressGroup.get('cityName') | formcontrol"
+                          [control]="addressGroup.cityName | formcontrol"
                           [icNoInitialSpace]="true"
                           [readonly]="true"
                         ></ic-form-field>
