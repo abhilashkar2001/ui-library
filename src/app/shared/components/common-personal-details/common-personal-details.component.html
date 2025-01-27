@@ -25,20 +25,6 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                   <div class="col-md-6 col-12" *ngIf="!isHideField">
-                    <!-- <mat-form-field
-                      appearance="outline"
-                      class="full-width disable-field"
-                    >
-                      <mat-label>CIF Number</mat-label>
-                      <input
-                        matInput
-                        type="text"
-                        formControlName="customerNo"
-                        name="customerNo"
-                        appSpecialIsAlphaNumeric
-                        maxlength="20"
-                      /> -->
-                    <!-- </mat-form-field> -->
                     <ic-form-field
                       *ngIf="!isHideField"
                       label="CIF Number"
@@ -194,199 +180,97 @@
                     ></ic-select>
                   </div>
                   <div class="highlight_title">Address Details</div>
-
-                  <div
-                    class="row"
-                    *ngIf="
-                      customer.get('contact.address')?.value as addressControl
-                    "
-                  >
-                    <div *ngIf="addressControl">Address is available.</div>
-                    <ng-container
-                      *ngFor="
-                        let addressGroup of addressControl;
-                        let addressIndex = index
+                  <ng-container>
+                    <div
+                      class="row"
+                      *ngIf="
+                        customer.get('contact.address')?.value as addressControl
                       "
-                      [formGroup]="addressGroup"
                     >
-                      <div class="col-md-12 col-12">
-                        <!-- <mat-form-field
-                          appearance="outline"
-                          class="full-width disable-field"
-                        >
-                          <mat-label>Address</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            formControlName="address1"
-                            name="address1"
-                            appNoInitialSpecialCharacters
-                          />
-                          <mat-error
-                            *ngIf="
-                              addressGroup.get('address1').touched &&
-                              addressGroup.get('address1').hasError('required')
+                      <ng-container
+                        *ngFor="
+                          let addressGroup of (
+                            customer?.get('contact')?.get('address') | formarray
+                          ).controls;
+                          let addressIndex = index
+                        "
+                        [formGroup]="addressGroup | formgroup"
+                      >
+                        <div class="col-md-12 col-12">
+                          <ic-form-field
+                            label="Address"
+                            [control]="
+                              addressGroup.get('address1') | formcontrol
                             "
-                          >
-                            Address is required
-                          </mat-error>
-                        </mat-form-field> -->
-                        <ic-form-field
-                          label="Address"
-                          [control]="addressGroup.address1 | formcontrol"
-                          [icNoInitialSpace]="true"
-                          [isRequired]="true"
-                        ></ic-form-field>
-                      </div>
+                            [icNoInitialSpace]="true"
+                            [isRequired]="true"
+                          ></ic-form-field>
+                        </div>
 
-                      <div class="col-md-6 col-12">
-                        <!-- <mat-form-field
-                          appearance="outline"
-                          class="full-width disable-field"
-                        >
-                          <mat-label>Residence Type</mat-label>
-                          <mat-select formControlName="residenceType">
-                            <mat-option [value]="">Select</mat-option>
-                            <mat-option
-                              *ngFor="let residenceItem of residenceTypeArray"
-                              [value]="residenceItem.id"
-                              >{{ residenceItem.values }}</mat-option
-                            >
-                          </mat-select>
-                          <mat-error
-                            *ngIf="
-                              addressGroup.get('residenceType').touched &&
-                              addressGroup
-                                .get('residenceType')
-                                .hasError('required')
+                        <div class="col-md-6 col-12">
+                          <ic-select
+                            [options]="residenceTypeArray"
+                            label="Residence Type"
+                            bindLabelKey="values"
+                            bindValueKey="id"
+                            [control]="
+                              addressGroup.get('residenceType') | formcontrol
                             "
-                          >
-                            Residence Type is required
-                          </mat-error>
-                        </mat-form-field> -->
-                        <ic-select
-                          [options]="residenceTypeArray"
-                          label="Residence Type"
-                          bindLabelKey="values"
-                          bindValueKey="id"
-                          [control]="addressGroup.residenceType | formcontrol"
-                          [isRequired]="true"
-                        ></ic-select>
-                      </div>
-                      <div class="col-md-6 col-12">
-                        <ic-select
-                          [options]="countryArray"
-                          label="Country"
-                          bindLabelKey="countryName"
-                          bindValueKey="countryName"
-                          [control]="addressGroup.countryName"
-                          [isRequired]="true"
-                        ></ic-select>
-                      </div>
-
-                      <div class="col-md-6 col-12">
-                        <!-- <mat-form-field
-                          appearance="outline"
-                          class="full-width disable-field zipCode_field"
-                        >
-                          <mat-label>Zip Code</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            formControlName="pincode"
-                            name="pincode"
-                            appNumbersOnly
-                            maxlength="10"
-                          />
-                          <mat-icon
-                            matSuffix
-                            class="searchIcon-main"
-                            (click)="pincodeExpansion()"
-                            >search</mat-icon
-                          >
-                          <mat-error
-                            *ngIf="
-                              addressGroup.get('pincode').touched &&
-                              addressGroup.get('pincode').hasError('required')
+                            [isRequired]="true"
+                          ></ic-select>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <ic-select
+                            [options]="countryArray"
+                            label="Country"
+                            bindLabelKey="countryName"
+                            bindValueKey="countryName"
+                            [control]="
+                              addressGroup.get('countryName') | formcontrol
                             "
-                          >
-                            Zip Code is required
-                          </mat-error>
-                        </mat-form-field> -->
-                        <ic-form-field
-                          label="Zip Code"
-                          [control]="customer.get('pincode') | formcontrol"
-                          [icNoInitialSpace]="true"
-                          suffixIcon="search_icon"
-                          (onSuffixClick)="pincodeExpansion()"
-                          [maxLength]="10"
-                          [icNumbersOnly]="true"
-                          [isRequired]="true"
-                        ></ic-form-field>
-                      </div>
+                            [isRequired]="true"
+                          ></ic-select>
+                        </div>
 
-                      <div class="col-md-6 col-12">
-                        <!-- <mat-form-field
-                          appearance="outline"
-                          class="full-width disable-field hide-select-arrow"
-                        >
-                          <mat-label>State</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            formControlName="stateName"
-                            name="stateName"
-                            readonly
-                          />
-                          <mat-error
-                            *ngIf="
-                              addressGroup.get('stateName').touched &&
-                              addressGroup.get('stateName').hasError('required')
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="Zip Code"
+                            [control]="
+                              addressGroup.get('pincode') | formcontrol
                             "
-                          >
-                            State is required
-                          </mat-error>
-                        </mat-form-field> -->
-                        <ic-form-field
-                          label="State"
-                          [control]="addressGroup.stateName | formcontrol"
-                          [icNoInitialSpace]="true"
-                          [readonly]="true"
-                        ></ic-form-field>
-                      </div>
+                            [icNoInitialSpace]="true"
+                            suffixIcon="search_icon"
+                            (onSuffixClick)="pincodeExpansion()"
+                            [maxLength]="10"
+                            [icNumbersOnly]="true"
+                            [isRequired]="true"
+                          ></ic-form-field>
+                        </div>
 
-                      <div class="col-md-6 col-12">
-                        <!-- <mat-form-field
-                          appearance="outline"
-                          class="full-width disable-field hide-select-arrow"
-                        >
-                          <mat-label>City</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            formControlName="cityName"
-                            name="cityId"
-                            readonly
-                          />
-                          <mat-error
-                            *ngIf="
-                              addressGroup.get('cityName').touched &&
-                              addressGroup.get('cityName').hasError('required')
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="State"
+                            [control]="
+                              addressGroup.get('stateName') | formcontrol
                             "
-                          >
-                            City required
-                          </mat-error>
-                        </mat-form-field> -->
-                        <ic-form-field
-                          label="City"
-                          [control]="addressGroup.cityName | formcontrol"
-                          [icNoInitialSpace]="true"
-                          [readonly]="true"
-                        ></ic-form-field>
-                      </div>
-                    </ng-container>
-                  </div>
+                            [icNoInitialSpace]="true"
+                            [readonly]="true"
+                          ></ic-form-field>
+                        </div>
 
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="City"
+                            [control]="
+                              addressGroup.get('cityName') | formcontrol
+                            "
+                            [icNoInitialSpace]="true"
+                            [readonly]="true"
+                          ></ic-form-field>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
                   <div
                     fxFlex="100"
                     fxLayout="row"
