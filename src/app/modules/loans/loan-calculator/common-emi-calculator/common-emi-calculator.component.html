@@ -40,13 +40,13 @@
             [prefixIcon]="otherUserInfo?.currencySymbol"
           >
           </ic-form-field>
+          <input placeholder="loan amount" [value]="ammountValue" />
         </div>
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap">
       <mat-slider
         class="custom-slider"
-        [(ngModel)]="loanForm.value.amount"
         [ngModelOptions]="{ standalone: true }"
         [max]="max"
         [min]="min"
@@ -55,7 +55,7 @@
         (change)="onSliderChange($event)"
         discrete
       >
-        <input matSliderThumb #slider />
+        <input [value]="ammountValue" matSliderThumb #slider />
       </mat-slider>
       <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
         <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>

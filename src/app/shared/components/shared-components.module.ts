@@ -121,6 +121,8 @@ import { SidebarSideComponent } from './sidebar-side/sidebar-side.component';
 import { NewReusableMatTableComponent } from './new-reusable-mat-table/new-reusable-mat-table.component';
 import { NewReusableFilterComponent } from './new-reusable-filter/new-reusable-filter.component';
 import { ButtonLoadingComponent } from './button-loading/button-loading.component';
+import { MatInputModule } from '@angular/material/input';
+import { PersonalDetailsComponent } from 'app/shared/components/personal-details/personal-details.component';
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
@@ -215,6 +217,7 @@ const components = [
   NewReusableMatTableComponent,
   NewReusableFilterComponent,
   CusotmWebDocUploadComponent,
+  PersonalDetailsComponent,
 ];
 
 @NgModule({
@@ -239,6 +242,7 @@ const components = [
     MatIconModule,
     MatFormFieldModule,
     IcustLibraryModule,
+    MatInputModule,
   ],
   declarations: components,
   exports: components,

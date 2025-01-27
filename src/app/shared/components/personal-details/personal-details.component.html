@@ -69,6 +69,7 @@
               _ngcontent-vqa-c346=""
               src="assets/images/calendar.png"
               class="pb-25"
+              alt="calender.png"
             />
           </mat-icon>
         </mat-datepicker-toggle>
@@ -149,6 +150,7 @@
           matSuffix
           src="assets/images/search.png"
           class="pb-25 standard-search"
+          alt="search.png"
         />
         <div class="vertical-separator"></div>
         <div class="locate-container">
@@ -249,7 +251,7 @@
           <mat-option
             [value]="city.cityId"
             *ngFor="let city of cityList"
-            (onSelectionChange)="onSelectCity($event, city)"
+            (onSelectionChange)="onSelectCity($event)"
           >
             {{ city?.cityName }}</mat-option
           >
