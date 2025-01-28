@@ -560,7 +560,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   }
 
   get addressArray(): FormArray {
-    return this.customer.get('contact.address') as FormArray;
+    return this.customer?.get('contact')?.get('address') as FormArray;
   }
 
   getCustomerByCif(i: any) {

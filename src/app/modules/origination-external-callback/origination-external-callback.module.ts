@@ -5,7 +5,8 @@ import { OriginationExternalCallbackRoutingModule } from './origination-external
 import { OtpComponent } from './otp/otp.component';
 import { OfferLetterComponent } from './offer-letter/offer-letter/offer-letter.component';
 import { ProcessOfferLetterComponent } from './offer-letter/process-offer-letter/process-offer-letter.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { NgOtpInputModule } from 'ng-otp-input';

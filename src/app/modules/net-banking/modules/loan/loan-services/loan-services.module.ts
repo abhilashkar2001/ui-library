@@ -10,7 +10,8 @@ import { LoanRepaymentComponent } from './loan-services/loan-repayment/loan-repa
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { ModifyTenureComponent } from './loan-services/modify-tenure/modify-tenure.component';
 import { EStatementComponent } from './loan-services/e-statement/e-statement.component';

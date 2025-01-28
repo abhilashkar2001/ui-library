@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { CardRoutingModule } from './card-routing.module';
 import { TranslateModule } from '@ngx-translate/core';

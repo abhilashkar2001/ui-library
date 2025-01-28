@@ -2,7 +2,8 @@ import { SigninTrackComponent } from './signin-track/signin-track.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { RouterModule } from '@angular/router';
 import { TrackingComponent } from './tracking.component';
 import { TrackingRoute } from './tracking.routing.module';

@@ -9,7 +9,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { PrepaidReloadComponent } from './components/prepaid-reload/prepaid-reload.component';
 import { PrepaidCardServicesRoutingModule } from './prepaid-card-service-routing.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedCardModule } from '../../shared-card/shared-card.module';
 import { PrepaidRefundComponent } from './components/prepaid-refund/prepaid-refund.component';
 import { TranslateModule } from '@ngx-translate/core';

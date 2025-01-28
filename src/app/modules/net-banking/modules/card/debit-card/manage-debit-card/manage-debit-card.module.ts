@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule, CoreModule } from '@angular/flex-layout';
+// import { FlexLayoutModule, CoreModule } from '@angular/flex-layout';
+import { CoreModule, FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';

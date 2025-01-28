@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PerfectScrollbarModule } from 'app/shared/components/perfect-scrollbar';
 import { SharedPipesModule } from '../pipes/shared-pipes.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 
 import { HeaderTopComponent } from './header-top/header-top.component';

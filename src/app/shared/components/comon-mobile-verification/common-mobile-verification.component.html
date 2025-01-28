@@ -81,9 +81,9 @@
             size="large"
             [icButtonType]="'filled-rounded'"
             [isLoading]="isLoading"
-            [disabled]="!(otpAvailable && !isLoading && agreed)"
             (OnClick)="onVerify()"
           >
+            <!-- [disabled]="!(otpAvailable && !isLoading && agreed)" -->
           </ic-button>
           <ic-button
             [label]="'Exit'"

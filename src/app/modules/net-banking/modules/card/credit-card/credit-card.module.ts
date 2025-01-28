@@ -4,7 +4,8 @@ import {
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
+import { CoreModule, FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedModule } from 'app/shared/shared.module';
 import { CreditCardRoutingModule } from './credit-card-routing.module';
 import { TranslateModule } from '@ngx-translate/core';

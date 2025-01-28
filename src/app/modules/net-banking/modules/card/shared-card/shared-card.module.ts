@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedModule } from 'app/shared/shared.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,9 +16,9 @@ import { PinGenerationComponent } from './components/pin-generation/pin-generati
 import { UpgradeComponent } from './components/upgrade/upgrade.component';
 import { BlockCardComponent } from './components/block-card/block-card.component';
 import { SelectNewCardPopupComponent } from './components/select-new-card-popup/select-new-card-popup.component';
-import { NgOtpInputModule } from 'ng-otp-input';
 import { MatCardModule } from '@angular/material/card';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 const components = [
   DashboardCardPreviewComponent,

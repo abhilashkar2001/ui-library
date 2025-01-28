@@ -4,7 +4,8 @@ import { DebitCardServiceComponent } from './debit-card-service/debit-card-servi
 import { DebitCardRoutingModule } from './debit-card-routing.module';
 import { ManageDebitCardComponent } from './manage-debit-card/manage-debit-card.component';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedModule } from 'app/shared/shared.module';
 

@@ -6,7 +6,8 @@ import { AddEditBenificiaryComponent } from './add-edit-benificiary/add-edit-ben
 import { BenificiaryBulkUploadSummaryComponent } from './benificiary-bulk-upload-summary/benificiary-bulk-upload-summary.component';
 import { BeneficiarySummaryComponent } from './beneficiary-summary/beneficiary-summary.component';
 import { BeneficiaryBulkUploadComponent } from './beneficiary-bulk-upload/beneficiary-bulk-upload.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';

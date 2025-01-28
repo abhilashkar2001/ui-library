@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@ngbracket/ngx-layout';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

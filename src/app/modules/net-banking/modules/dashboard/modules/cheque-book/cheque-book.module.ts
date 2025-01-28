@@ -7,7 +7,8 @@ import { ChequeStatusEnquiryComponent } from './cheque-status-enquiry/cheque-sta
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { StopChequeComponent } from './stop-cheque/stop-cheque.component';
 import { ChequebookRequestComponent } from './chequebook-request/chequebook-request.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';

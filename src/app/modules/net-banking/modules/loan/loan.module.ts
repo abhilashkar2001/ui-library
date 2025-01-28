@@ -4,7 +4,8 @@ import { LoanRoutingModule } from './loan-routing.module';
 import { LoanDashboardComponent } from './loan-dashboard/loan-dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { LoanServiceDashboardComponent } from './loan-services/loan-service-dashboard/loan-service-dashboard.component';

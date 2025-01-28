@@ -8,7 +8,8 @@ import { AttachmentsComponent } from 'app/modules/net-banking/modules/trade/modu
 import { OthersInfoComponent } from 'app/modules/net-banking/modules/trade/modules/shared-trade/others-info/others-info.component';
 import { GenericBgComponentComponent } from '../shared-trade/generic-bg-component/generic-bg-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { FeeAccountComponent } from './fee-account/fee-account.component';
 import { BenificiaryDetailsComponent } from './benificiary-details/benificiary-details.component';
 import { UploadBulkUploadComponent } from './upload-bulk-upload/upload-bulk-upload.component';

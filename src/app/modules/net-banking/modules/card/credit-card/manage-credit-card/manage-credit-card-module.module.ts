@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from 'app/shared/shared.module';
-import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
+import { CoreModule, FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { ManageCreditCardComponent } from './manage-credit-card.component';
 import { CreditCardControlComponent } from './component/credit-card-control/credit-card-control.component';

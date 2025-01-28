@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SendMoneyRoutingModule } from './send-money-routing.module';
 import { SendMoneyComponent } from './send-money/send-money.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
 import { SelfTransferComponent } from './pages/self-transfer/self-transfer.component';

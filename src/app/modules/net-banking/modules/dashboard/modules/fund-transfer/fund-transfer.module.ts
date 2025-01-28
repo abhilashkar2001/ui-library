@@ -8,7 +8,8 @@ import { CreditCardPaymentComponent } from './credit-card-payment/credit-card-pa
 import { SharedModule } from 'app/shared/shared.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FundTransferSummaryComponent } from './fund-transfer-summary/fund-transfer-summary.component';
 import { TranslateModule } from '@ngx-translate/core';

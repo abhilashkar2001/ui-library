@@ -4,7 +4,7 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { CreditCardServiceRoutingModule } from './credit-card-service-routing.module';
 import { CreditCardServiceComponent } from './credit-card-service/credit-card-service.component';
 import { SharedModule } from 'app/shared/shared.module';
-import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
+import { CoreModule, FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConvertToEmiComponent } from './components/convert-to-emi/convert-to-emi.component';
