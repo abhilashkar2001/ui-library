@@ -248,7 +248,7 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
       ...this.depositForm.value,
       basisDetailsId: basisId,
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
-      branchCode: this.currentUser?.branchCode,
+      branchCode: this.currentUser?.branch,
       depositeType: this.depositeType,
       autoRenew: this.isAutoRenew,
       amount: parseInt(this.depositForm.value.amount),

@@ -96,7 +96,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
       if (result) {
         this.currentUser = result;
         if (this.currentUser) {
-          this.currentUserBranch = this.currentUser?.branchCode;
+          this.currentUserBranch = this.currentUser?.branch;
         }
       }
     });

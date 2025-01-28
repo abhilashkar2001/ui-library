@@ -256,7 +256,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       ...this.disbursementDetails,
       disbursementType: data.disbursementType,
       bankCode: store?.bankCode,
-      branchCode: store?.branchCode,
+      branchCode: store?.branch,
       originationId: this.sessionStorageService.getOriginationId(),
     };
 
@@ -277,7 +277,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     payload.disbursementAccInfo = {
       accountNo: data.accountNumber,
       bankCode: store?.bankCode,
-      branchCode: store?.branchCode,
+      branchCode: store?.branch,
     };
     return payload;
   }
@@ -473,7 +473,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         loanTenureDay: this.sessionStorageService.getTenureDays(),
         loanTenureMonth: this.sessionStorageService.getTenureMonth(),
         loanTenureYear: this.sessionStorageService.getTenureYear(),
-        branchCode: this.currentUser?.branchCode,
+        branchCode: this.currentUser?.branch,
         source: 'Website',
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
@@ -575,7 +575,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
       loanTenureYear: this.sessionStorageService.getTenureYear(),
-      branchCode: this.currentUser?.branchCode,
+      branchCode: this.currentUser?.branch,
       source: 'Website',
       businessProductName: null,
       productDescription: null,
