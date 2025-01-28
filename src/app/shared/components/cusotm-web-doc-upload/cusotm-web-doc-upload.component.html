@@ -307,7 +307,11 @@
         >
           <div class="biometric-card w-100" fxLayoutAlign="end center">
             <div class="deleteDiv" fxLayoutAlign="center center">
-              <mat-icon class="deleteBtn"> delete </mat-icon>
+              <ic-button
+                [icButtonType]="'icon'"
+                [icIcon]="'delete'"
+                (click)="removeScannedFace()"
+              ></ic-button>
             </div>
           </div>
           <img

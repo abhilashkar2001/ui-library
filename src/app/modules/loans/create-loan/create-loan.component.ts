@@ -436,7 +436,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       bankCode: this.personalLoanDetailsForm?.value.bankCode,
       branchCode: this.personalLoanDetailsForm?.value.branchCode,
     };
-    console.log(payload, '.payload');
     return payload;
   }
 
