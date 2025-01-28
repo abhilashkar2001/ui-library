@@ -362,8 +362,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    * @returns void if form is invalid
    */
   onConfirm() {
-    console.log('confirm called');
-    console.log(this.personalLoanDetailsForm);
     if (this.personalLoanDetailsForm?.invalid || this.validateMinimumTenure) {
       return;
     }
@@ -438,7 +436,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       bankCode: this.personalLoanDetailsForm?.value.bankCode,
       branchCode: this.personalLoanDetailsForm?.value.branchCode,
     };
-    console.log(payload, '.payload');
     return payload;
   }
 
@@ -446,7 +443,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    * navigating back screen.
    */
   onBack() {
-    console.log('back called');
     this.backEvent.emit();
   }
 
