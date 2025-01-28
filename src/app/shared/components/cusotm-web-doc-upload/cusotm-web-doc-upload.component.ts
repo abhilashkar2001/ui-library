@@ -353,6 +353,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         url: this.mapEndPoints(item.fileUrl),
         name: item.fileName,
       });
+      console.log(data);
       docIds.push(item.documentId);
     });
     this.otherDocument().controls[i]?.get('docIds')?.setValue(docIds);
@@ -404,6 +405,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
   fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
+  }
+  removeScannedFace() {
+    this.image = '';
+    this.sessionStorageService.removeBiometricId();
   }
 
   browseFiles(i: any) {

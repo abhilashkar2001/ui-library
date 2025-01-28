@@ -56,7 +56,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   agreed = false;
   resendLink = false;
   displaySecond: string | any;
-  getOtpBtn = true;
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
   config = {
     allowNumbersOnly: true,
@@ -69,11 +68,13 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       height: '80px',
     },
   };
-  validNumber = true;
+  getOtpBtn = false; // Field is enabled by default
+  validNumber = false; // Number is invalid by default
+  isValidMobile = false; // Number is not valid initially
+
   countriesIsdCodes: any[] = [];
   countryTelIsdCode: any[] = [];
   selectedIsdCode: any = '';
-  isValidMobile = false;
   selectedIsd: any;
   defaultIsdCodeValue: any;
   resendOtp = 0;
@@ -124,6 +125,16 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.otpSent = false;
       }, 500000);
+    });
+    console.log(
+      'result',
+      (this.validNumber && this.getOtpBtn) || this.isValidMobile,
+    );
+
+    console.log({
+      validNumber: this.validNumber,
+      getOtpBtn: this.getOtpBtn,
+      isValidMobile: this.isValidMobile,
     });
   }
 

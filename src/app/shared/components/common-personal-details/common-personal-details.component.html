@@ -125,7 +125,9 @@
                   <div class="col-md-6 col-12">
                     <ic-form-field
                       label="Email"
-                      [control]="customer.get('email') | formcontrol"
+                      [control]="
+                        customer.get('contact')?.get('email') | formcontrol
+                      "
                       [icNoInitialSpace]="true"
                       [customError]="
                         customer
@@ -161,7 +163,7 @@
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>
                   </div>
-                  <div class="col-md-6 col-12">
+                  <div class="col-md-6 col-12 mb-md-3">
                     <ic-select
                       [options]="nationalityArray"
                       label="Nationality"

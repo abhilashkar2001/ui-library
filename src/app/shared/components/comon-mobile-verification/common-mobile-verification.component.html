@@ -13,10 +13,10 @@
       [isdCode]="countriesIsdCodes"
       (selectionChange)="setMobileLength()"
       [control]="otpForm.get('phone') | formcontrol"
-      [maxlength]="maxMobileLength"
+      [maxLength]="maxMobileLength"
       suffixButton="Get OTP"
       (onSuffixClick)="onGetOTP()"
-      [disabled]="(validNumber && getOtpBtn) || isValidMobile"
+      [disabled]="(getOtpBtn && !validNumber) || showOtpSection"
     >
     </ic-mobile-field>
   </div>

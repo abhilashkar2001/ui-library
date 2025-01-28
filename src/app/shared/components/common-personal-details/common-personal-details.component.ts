@@ -760,6 +760,9 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   }
 
   goBack() {
+    console.log('go back ');
+    console.log(this.customerDetailsForm);
+
     this.backEvent.emit();
   }
   saveCustomer(i: any) {
