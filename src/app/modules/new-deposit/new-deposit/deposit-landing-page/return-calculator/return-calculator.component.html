@@ -48,7 +48,7 @@
           <ic-form-field
             label="Amount"
             [readonly]="false"
-            [appNoInitialSpecialCharacters]="true"
+            [icNoInitialSpace]="true"
             [control]="depositForm.get('amount') | formcontrol"
             type="text"
             [prefixIcon]="otherUserInfo?.currency ?? ''"

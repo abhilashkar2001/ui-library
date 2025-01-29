@@ -857,7 +857,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     const personalInfoGroup = this.customer.at(index);
     const prefix = this.prefixArray.filter(
       (item) => item.id === personalInfoGroup.get('prefix')?.value,
-    )[0].values;
+    )[0]?.values;
     const gender = this.genderArray.filter(
       (item) => item.id === personalInfoGroup.get('gender')?.value,
     )[0]?.values;

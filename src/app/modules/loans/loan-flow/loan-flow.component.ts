@@ -139,39 +139,37 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.componentRef.instance.accountType = 'loan';
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
-            console.log(this.componentRef.instance?.onCustomSubmit);
-            this.componentRef.instance?.onCustomSubmit?.subscribe(
-              (data: any) => {
-                if (data?.value?.accountNumber)
-                  this.createLoanAccountNumber = data.value.accountNumber;
+            console.log(this.componentRef.instance);
+            this.componentRef.instance?.CustomSubmit?.subscribe((data: any) => {
+              console.log(data);
+              if (data?.value?.accountNumber)
+                this.createLoanAccountNumber = data.value.accountNumber;
 
-                if (data?.personalInfo) {
-                  this.personalDetails = data.personalInfo;
-                  this.personalDetails.forEach((item: any) => {
-                    if (item.primaryCustomer)
-                      this.personalDoc = item?.documentInfo;
-                  });
-                }
-
-                if (
-                  screenName.toLowerCase().includes('personal') ||
-                  screenName.toLowerCase().includes('director')
-                ) {
-                  this.customSavePersonal(data);
-                } else if (screenName.toLowerCase().includes('company')) {
-                  this.customSaveCompany(data);
-                } else if (screenName.toLowerCase().includes('signature')) {
-                  this.next();
-                }
-              },
-            );
+              if (data?.personalInfo) {
+                this.personalDetails = data.personalInfo;
+                this.personalDetails.forEach((item: any) => {
+                  if (item.primaryCustomer)
+                    this.personalDoc = item?.documentInfo;
+                });
+              }
+              console.log(screenName);
+              if (
+                screenName.toLowerCase().includes('personal') ||
+                screenName.toLowerCase().includes('director')
+              ) {
+                this.customSavePersonal(data);
+              } else if (screenName.toLowerCase().includes('company')) {
+                this.customSaveCompany(data);
+              } else if (screenName.toLowerCase().includes('signature')) {
+                this.next();
+              }
+            });
             if (this.componentRef.instance?.onMobileExitEvent)
               this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
                 this.router.navigate(['/loan/landing']);
               });
-
-            if (this.componentRef.instance?.onBackEvent)
-              this.componentRef.instance?.onBackEvent.subscribe(() => {
+            if (this.componentRef.instance?.backEvent)
+              this.componentRef.instance?.backEvent.subscribe(() => {
                 this.goBack();
               });
           });
@@ -197,6 +195,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
+    console.log(value);
     const isLoan = value?.['isForLoan'] ?? true;
     if (value?.['disbursementDetails'])
       this.disbursementDetails = value['disbursementDetails'];
@@ -473,12 +472,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         loanTenureDay: this.sessionStorageService.getTenureDays(),
         loanTenureMonth: this.sessionStorageService.getTenureMonth(),
         loanTenureYear: this.sessionStorageService.getTenureYear(),
-        branchCode: this.currentUser?.branchId,
+        branchCode: this.currentUser?.branchCode,
         source: 'Website',
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
         currencyCode: this.localeData?.currency,
-        branchId: this.currentUser?.branchId,
+        branchId: this.currentUser?.branchCode,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
         department: this.currentUser?.department,
@@ -575,12 +574,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
       loanTenureYear: this.sessionStorageService.getTenureYear(),
-      branchCode: this.currentUser?.branchId,
+      branchCode: this.currentUser?.branchCode,
       source: 'Website',
       businessProductName: null,
       productDescription: null,
       currencyCode: this.localeData?.currency,
-      branchId: this.currentUser?.branchId,
+      branchId: this.currentUser?.branchCode,
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
       department: this.currentUser?.department,

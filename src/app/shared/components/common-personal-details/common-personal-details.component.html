@@ -30,7 +30,6 @@
                       label="CIF Number"
                       [control]="customer.get('customerNo') | formcontrol"
                       [readonly]="true"
-                      [icNoInitialSpace]="true"
                       [icSpecialAlphaNumeric]="true"
                     ></ic-form-field>
                   </div>
@@ -66,7 +65,6 @@
                     <ic-form-field
                       label="First Name"
                       [control]="customer.get('firstName') | formcontrol"
-                      [icNoInitialSpace]="true"
                       [icAlphabetOnly]="true"
                     ></ic-form-field>
                   </div>
@@ -74,7 +72,6 @@
                     <ic-form-field
                       label="lastName"
                       [control]="customer.get('lastName') | formcontrol"
-                      [icNoInitialSpace]="true"
                       [icAlphabetOnly]="true"
                     ></ic-form-field>
                   </div>
@@ -128,7 +125,6 @@
                       [control]="
                         customer.get('contact')?.get('email') | formcontrol
                       "
-                      [icNoInitialSpace]="true"
                       [customError]="
                         customer
                           .get('contact')
@@ -204,7 +200,6 @@
                             [control]="
                               addressGroup.get('address1') | formcontrol
                             "
-                            [icNoInitialSpace]="true"
                             [isRequired]="true"
                           ></ic-form-field>
                         </div>
@@ -240,7 +235,6 @@
                             [control]="
                               addressGroup.get('pincode') | formcontrol
                             "
-                            [icNoInitialSpace]="true"
                             suffixIcon="search_icon"
                             (onSuffixClick)="pincodeExpansion()"
                             [maxLength]="10"
@@ -255,7 +249,6 @@
                             [control]="
                               addressGroup.get('stateName') | formcontrol
                             "
-                            [icNoInitialSpace]="true"
                             [readonly]="true"
                           ></ic-form-field>
                         </div>
@@ -266,7 +259,6 @@
                             [control]="
                               addressGroup.get('cityName') | formcontrol
                             "
-                            [icNoInitialSpace]="true"
                             [readonly]="true"
                           ></ic-form-field>
                         </div>

@@ -143,13 +143,7 @@
         >
           <mat-form-field appearance="outline" fxFlex="100">
             <mat-label class="custom-label">Email Id</mat-label>
-            <input
-              matInput
-              type="text"
-              appNoInitialSpecialCharacters
-              appNoSpace
-              formControlName="email"
-            />
+            <input matInput type="text" appNoSpace formControlName="email" />
 
             <mat-error
               *ngIf="benificiaryDetailsForm.get('email')?.hasError('pattern')"

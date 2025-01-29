@@ -7,6 +7,8 @@
             class="deleteDiv"
             fxLayoutAlign="center center"
             (click)="deleteImage()"
+            (keydown.enter)="deleteImage()"
+            tabindex="0"
           >
             <mat-icon class="deleteBtn"> delete </mat-icon>
           </div>
@@ -47,21 +49,21 @@
 </div>
 
 <div fxLayoutGap="10" fxLayoutAlign="end center" class="pt-12">
-  <button-loading
-    [loadingText]="loadingBtnText"
+  <ic-button
+    [label]="'Submit' | translate"
     [type]="'submit'"
-    [disable]="isLoading && !image"
-    [loading]="isLoading"
-    (click)="onSubmit()"
+    size="large"
+    [icButtonType]="'filled-rounded'"
+    [disabled]="isLoading && !image"
+    (OnClick)="onSubmit()"
   >
-    Submit
-  </button-loading>
-  <button
-    type="button"
-    mat-raised-button
-    class="button back_button"
-    (click)="onBack()"
+  </ic-button>
+  <ic-button
+    [label]="'Back'"
+    icButtonType="ghost-rounded-danger"
+    size="large"
+    [type]="'button'"
+    (OnClick)="onBack()"
   >
-    Back
-  </button>
+  </ic-button>
 </div>

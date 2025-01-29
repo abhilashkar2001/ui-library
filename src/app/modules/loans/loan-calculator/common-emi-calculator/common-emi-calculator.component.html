@@ -34,7 +34,7 @@
           <ic-form-field
             label="Amount"
             [control]="loanForm.get('amount') | formcontrol"
-            [appNoInitialSpecialCharacters]="true"
+            [icNoInitialSpace]="true"
             type="text"
             maxlength="18"
             [prefixIcon]="otherUserInfo?.currencySymbol"
@@ -191,7 +191,7 @@
         <ic-form-field
           label="Percentage"
           [control]="loanForm.get('interestRate') | formcontrol"
-          [appNoInitialSpecialCharacters]="true"
+          [icNoInitialSpace]="true"
           type="text"
         >
         </ic-form-field>
