@@ -21,6 +21,7 @@ import { WarningComponent } from '../warning/warning.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CUSTOMFILE } from 'app/shared/models/custom-file.model';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-web-doc-upload',
@@ -69,7 +70,7 @@ export class WebDocUploadComponent implements OnInit {
     private sharedService: SharedService,
     private api: NewDepositService,
     private snack: MatSnackBar,
-
+    private genericValueService: GenericValueService,
     private dialog: MatDialog,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
@@ -94,8 +95,8 @@ export class WebDocUploadComponent implements OnInit {
   }
 
   getGenericDetails() {
-    this.sharedService
-      .genericValue('Common', Object.keys(this.staticData))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.documentTypeArray = resp.data['DOCUMENTNAME'];

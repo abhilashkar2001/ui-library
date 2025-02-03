@@ -58,7 +58,7 @@ export class EStatementComponent implements OnInit, OnDestroy {
 
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue('Common', Object.keys(this.genericValue))
+      .loadGenericValue(Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           Object.keys(res?.data).forEach(

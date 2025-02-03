@@ -27,6 +27,7 @@ import {
 } from 'app/shared/models/generic-value.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 @Component({
@@ -58,6 +59,7 @@ export class DocumentUploadComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private snack: MatSnackBar,
     private apiService: SharedService,
+    private genericValueService: GenericValueService,
     private offerIssueService: OfferIssueService,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
@@ -79,8 +81,8 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   getDocumentName() {
-    this.apiService
-      .genericValue('Common', [this.genericvalue])
+    this.genericValueService
+      .loadGenericValue([this.genericvalue])
       .subscribe((res: IcHttpResponseModel<GenericValueInfoModel>) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
           this.documentNames = res?.data?.['DOCUMENTNAME'];

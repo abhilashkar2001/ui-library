@@ -87,7 +87,7 @@ export class PrepaidReloadComponent implements OnInit, OnDestroy {
   //fetch generic value
   fetchGenericValue() {
     this.genericValueService
-      .loadGenericValue('Common', Object.keys(this.staticData))
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((res: any) => {
         this.genericValue = res?.data;
       });

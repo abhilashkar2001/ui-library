@@ -13,7 +13,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 export class CreateCdComponent implements OnInit {
   createRdForm!: FormGroup;
   @Output() customCreatRdForm = new EventEmitter<any>();
-  @Output() customSaveCreate = new EventEmitter<{}>();
+  @Output() customSaveCreate = new EventEmitter<object>();
 
   selectedStep = 0;
   customBasicForm: any;

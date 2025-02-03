@@ -195,7 +195,7 @@ export class TransferMoneyComponent implements OnInit, OnDestroy {
 
   fetchGenericValue() {
     this.genericValueService
-      .loadGenericValue('Common', Object.keys(this.staticData))
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((res: any) => {
         this.genericValue = res?.data;
       });

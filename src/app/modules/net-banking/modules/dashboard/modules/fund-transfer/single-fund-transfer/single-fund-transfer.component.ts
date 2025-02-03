@@ -19,6 +19,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-single-fund-transfer',
@@ -44,9 +45,12 @@ export class SingleFundTransferComponent implements OnInit, OnDestroy {
   corporateId: any;
   currentUser: User | undefined;
   subscription: Subscription[] = [];
+  genericValue: any = { TRANSFERMODE: [] };
+
   constructor(
     private fb: FormBuilder,
     private fundTransferService: FundTransferService,
+    private genericValueService: GenericValueService,
     private router: Router,
     private dialog: MatDialog,
     private api: OpenAccountService,
@@ -128,8 +132,8 @@ export class SingleFundTransferComponent implements OnInit, OnDestroy {
   }
 
   fetchGeneric() {
-    this.fundTransferService
-      .fetchGeneric('Common', 'TRANSFERMODE')
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.genericValue))
       .subscribe((resp: any) => {
         this.transferMode = resp?.data?.TRANSFERMODE;
       });

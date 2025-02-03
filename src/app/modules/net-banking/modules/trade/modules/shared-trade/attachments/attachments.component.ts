@@ -50,11 +50,9 @@ export class AttachmentsComponent implements OnInit {
   }
 
   fetchGenericValue() {
-    this.genericValueService
-      .loadGenericValue('Common', ['TITLE'])
-      .subscribe((res) => {
-        console.log(res);
-      });
+    this.genericValueService.loadGenericValue(['TITLE']).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   fetchAttachments(id: any) {
@@ -93,8 +91,8 @@ export class AttachmentsComponent implements OnInit {
   //customerArray
   createDocArray(data?: any) {
     return this.formBuilder.group({
-      title: [data ? data.title : '', ,],
-      titleDescription: [data ? data.titleDescription : '', ,],
+      title: [data ? data.title : ''],
+      titleDescription: [data ? data.titleDescription : ''],
       fileUplodedArray: this.formBuilder.array([]),
       id: [data?.id ?? null],
     });

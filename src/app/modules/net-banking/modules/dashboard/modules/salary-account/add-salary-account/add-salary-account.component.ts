@@ -9,6 +9,7 @@ import { DocumentUploadService } from 'app/shared/services/document-upload.servi
 import { SalaryAccountService } from '../salary-account/salary-account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-add-salary-account',
@@ -17,7 +18,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddSalaryAccountComponent implements OnInit {
   salaryAccountForm!: FormGroup;
-  screenName = 'Common';
   genericData: any = {
     PREFIX: [],
     GENDER: [],
@@ -43,6 +43,7 @@ export class AddSalaryAccountComponent implements OnInit {
     private ocrService: OCRService,
     private notificationService: NotificationService,
     private documentUploadService: DocumentUploadService,
+    private genericValueService: GenericValueService,
   ) {}
 
   ngOnInit(): void {
@@ -87,8 +88,8 @@ export class AddSalaryAccountComponent implements OnInit {
     this.router.navigate(['user/dashboard/salary-account']);
   }
   fetchGenericValues() {
-    this.api
-      .getGenericValue(this.screenName, Object.keys(this.genericData))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.genericData))
       .subscribe((res: any) => {
         if (res?.statusCode == 200) {
           this.genederData = res.data.GENDER;

@@ -21,9 +21,9 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   styleUrls: ['./company-information.component.scss'],
 })
 export class CompanyInformationComponent implements OnInit {
-  @Output() CustomSubmit = new EventEmitter<{}>();
-  @Output() backEvent = new EventEmitter<{}>();
-  @Output() customFormGroup = new EventEmitter<{}>();
+  @Output() CustomSubmit = new EventEmitter<object>();
+  @Output() backEvent = new EventEmitter<object>();
+  @Output() customFormGroup = new EventEmitter<object>();
 
   @Input() personalDetails: any;
   @Input() basisId: any;
@@ -271,7 +271,7 @@ export class CompanyInformationComponent implements OnInit {
   /** fetch all generic value form generic value maintenance for dropdown values */
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue('Common', Object.keys(this.genericValue))
+      .loadGenericValue(Object.keys(this.genericValue))
       .subscribe((res: any) => {
         if (res?.statusCode === 200 && res?.data) {
           Object.keys(res?.data).forEach(

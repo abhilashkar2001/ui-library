@@ -31,6 +31,7 @@ import { Data } from '@angular/router';
 import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -67,7 +68,6 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   listCity: any = [];
   primaryCustIndex = 0;
   boundaries: any;
-  screenName = 'Common';
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
@@ -92,6 +92,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private store: Store<AppState>,
+    private genericValueService: GenericValueService,
   ) {}
 
   panelOpened(index: number) {
@@ -370,8 +371,8 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
   }
 
   getGenericDetails() {
-    this.loanApi
-      .genericValue(this.screenName, Object.keys(this.staticData))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genderArray = resp.data['GENDER'];

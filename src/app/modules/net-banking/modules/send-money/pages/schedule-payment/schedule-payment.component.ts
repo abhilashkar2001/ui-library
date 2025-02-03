@@ -125,7 +125,7 @@ export class SchedulePaymentComponent implements OnInit, OnDestroy {
 
   fetchGenericValues() {
     this.genericValueService
-      .loadGenericValue('Common', Object.keys(this.genericData))
+      .loadGenericValue(Object.keys(this.genericData))
       .subscribe((res: any) => {
         if (res?.statusCode == 200) {
           this.frequncyData = res.data.FREQUENCY;

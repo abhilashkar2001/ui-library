@@ -1,8 +1,10 @@
+import { IcHttpResponseModel } from '@onerumango/utils';
 import { Observable } from 'rxjs';
+import { GenericValueInfoModel } from '../models/generic-value.model';
 
 export abstract class GenericValue {
   abstract loadGenericValue(
-    screenName: string,
     genericName: string[],
-  ): Observable<any>;
+    screenCode: number,
+  ): Observable<IcHttpResponseModel<GenericValueInfoModel>>;
 }

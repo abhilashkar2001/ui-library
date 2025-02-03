@@ -1,59 +1,65 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { GenericValue } from '../data/generic-value';
-import { map } from 'rxjs/operators';
 import { GenericValueInfoModel } from '../models/generic-value.model';
-import { IcHttpResponseModel } from '../models/ic-http-response.model';
+import { IcHttpResponseModel } from '@onerumango/utils';
 
 const MICROSERVICE_URL = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })
 export class GenericValueService extends GenericValue {
-  genericValue: any;
+  genericValue: IcHttpResponseModel<GenericValueInfoModel> | undefined;
 
   constructor(private http: HttpClient) {
     super();
   }
 
   loadGenericValue(
-    screenName: any,
     genericName: string[],
+    screenCode?: number,
   ): Observable<IcHttpResponseModel<GenericValueInfoModel>> {
-    console.log(this.genericValue);
-    console.log(genericName);
     if (this.genericValue && Object.keys(this.genericValue?.data).length > 0) {
       genericName = genericName?.filter(
-        (name) => !Object.keys(this.genericValue?.data)?.includes(name),
+        (name: any) =>
+          !Object.keys(this.genericValue?.data ?? {})?.includes(name),
       );
       if (genericName?.length < 1) {
         return of(this.genericValue);
       } else {
-        return this.fetchGenericValue(screenName, genericName);
+        return this.fetchGenericValue(genericName, screenCode);
       }
     } else {
-      return this.fetchGenericValue(screenName, genericName);
+      return this.fetchGenericValue(genericName, screenCode);
     }
   }
 
-  fetchGenericValue(screenName: any, genericName: any) {
+  fetchGenericValue(
+    genericName: string[] | string,
+    screenCode?: number,
+  ): Observable<IcHttpResponseModel<GenericValueInfoModel>> {
+    const params = new HttpParams();
+    params.append('genericName', JSON.stringify(genericName));
+    if (screenCode) params.append('screenCode', screenCode);
     return this.http
-      .get(
-        `${MICROSERVICE_URL}/generic-value?screenName=${screenName}&genericName=${genericName}`,
-      )
+      .get<
+        IcHttpResponseModel<GenericValueInfoModel>
+      >(`${MICROSERVICE_URL}/generic-value`, { params })
       .pipe(map(this.processData, this));
   }
 
-  private processData(data: any) {
-    console.log(data);
+  private processData(
+    data: IcHttpResponseModel<GenericValueInfoModel>,
+  ): IcHttpResponseModel<GenericValueInfoModel> {
     if (data) {
       this.genericValue = {
         ...data,
         ...{ data: { ...this.genericValue?.data, ...data?.data } },
       };
     }
-    return this.genericValue;
+    return this.genericValue as IcHttpResponseModel<GenericValueInfoModel>;
   }
 }

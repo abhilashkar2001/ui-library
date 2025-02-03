@@ -16,7 +16,6 @@ import {
 } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
-import { SharedService } from 'app/shared/shared.service';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ReusableAlertPopupComponent } from 'app/shared/components/reusable-alert-popup/reusable-alert-popup.component';
@@ -28,6 +27,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { selectUser } from '@onerumango/utils';
 import { User } from '@onerumango/utils';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-loan-flow',
@@ -91,7 +91,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private sharedService: SharedService,
+    private genericValueService: GenericValueService,
     protected cdr: ChangeDetectorRef,
     private dataService: DataService,
     private docapi: CustomWebDocUploadServiceService,
@@ -139,9 +139,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.componentRef.instance.accountType = 'loan';
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
-            console.log(this.componentRef.instance);
             this.componentRef.instance?.CustomSubmit?.subscribe((data: any) => {
-              console.log(data);
               if (data?.value?.accountNumber)
                 this.createLoanAccountNumber = data.value.accountNumber;
 
@@ -152,7 +150,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                     this.personalDoc = item?.documentInfo;
                 });
               }
-              console.log(screenName);
               if (
                 screenName.toLowerCase().includes('personal') ||
                 screenName.toLowerCase().includes('director')
@@ -472,12 +469,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         loanTenureDay: this.sessionStorageService.getTenureDays(),
         loanTenureMonth: this.sessionStorageService.getTenureMonth(),
         loanTenureYear: this.sessionStorageService.getTenureYear(),
-        branchCode: this.currentUser?.branchCode,
+        branchCode: this.currentUser?.branch,
         source: 'Website',
         businessProductName: this.productDetails.basisName,
         productDescription: this.productDetails.basisDetailStory,
         currencyCode: this.localeData?.currency,
-        branchId: this.currentUser?.branchCode,
+        branchId: this.currentUser?.branch,
         ownership: ownershipId,
         documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
         department: this.currentUser?.department,
@@ -574,12 +571,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
       loanTenureYear: this.sessionStorageService.getTenureYear(),
-      branchCode: this.currentUser?.branchCode,
+      branchCode: this.currentUser?.branch,
       source: 'Website',
       businessProductName: null,
       productDescription: null,
       currencyCode: this.localeData?.currency,
-      branchId: this.currentUser?.branchCode,
+      branchId: this.currentUser?.branch,
       ownership: ownershipId,
       documentId: this.otherLoanDoc ?? null,
       department: this.currentUser?.department,
@@ -892,8 +889,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   getOwnershipIdByGeneric(value: any) {
     let ownership = [];
-    this.sharedService
-      .genericValue('Common', Object.keys(this.staticData))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           ownership = resp.data['OWNERSHIP'];

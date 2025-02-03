@@ -31,6 +31,7 @@ import { ScanComponent } from '../scan/scan.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 enum CreateLoanEnum {
   INTERNAL = 'internal',
@@ -116,6 +117,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
+    private genericValueService: GenericValueService,
     private api: NewDepositService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
@@ -264,8 +266,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   getGenericDetails() {
-    this.sharedService
-      .genericValue('Common', Object.keys(this.staticData))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };

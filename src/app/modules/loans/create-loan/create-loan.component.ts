@@ -12,12 +12,12 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import * as moment from 'moment';
 import { debounceTime } from 'rxjs/operators';
 import { CreateLoanConstant, CreateLoanEnum } from './create-loan.constant';
-import { selectLocaleData } from '@onerumango/utils';
-import { SharedService } from 'app/shared/shared.service';
+import { IcScreen, selectLocaleData } from '@onerumango/utils';
 import { merge, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-create-loan',
@@ -30,6 +30,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() mobileVerifyInfo: any;
+  @Input() screenInfo!: IcScreen;
 
   personalLoanDetailsForm: FormGroup | undefined;
   loanEnum = CreateLoanEnum;
@@ -61,7 +62,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     private loanApi: LoanService,
     private snack: MatSnackBar,
     private openApi: OpenAccountService,
-    private sharedService: SharedService,
+    private genericValueService: GenericValueService,
     private sessionStorageService: SessionStorageService,
     private store: Store,
   ) {
@@ -124,7 +125,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    */
   getGenericDetails() {
     this.loanApi
-      .genericValue(this.screenName, Object.keys(this.staticData))
+      .genericValue(Object.keys(this.staticData), this.screenInfo?.screenCode)
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
@@ -485,8 +486,8 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
 
   getOwnershipIdByGeneric(value: any) {
     let ownership = [];
-    this.sharedService
-      .genericValue('Common', Object.keys(this.staticOwnership))
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticOwnership))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           ownership = resp.data['OWNERSHIP'];

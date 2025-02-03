@@ -82,7 +82,7 @@ export class LoanService {
     );
   }
 
-  genericValue(screenName: string, genericName: string[]) {
+  genericValue(screenName: string | string[], genericName: string[] | number) {
     return this.http.get<any>(
       `${baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`,
     );
