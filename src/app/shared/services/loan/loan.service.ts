@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IcHttpResponseModel } from '@onerumango/utils';
 import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
+import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
 
@@ -30,8 +32,8 @@ export class LoanService {
   }
 
   getSubLoanTypes(subAccount: string): Observable<any> | any {
-    return this.http.get(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}&website=true`,
+    return this.http.get<IcHttpResponseModel<BasisSubClassModel>>(
+      `${baseUrl}/basis-subclass?basisClass=${subAccount}&website=true`,
     );
   }
 
