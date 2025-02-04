@@ -44,3 +44,48 @@ export interface Documents {
   expiryDate?: Date | string;
   dob?: string | Date;
 }
+
+export interface BasisSubClassModel {
+  action: string;
+  authBy: any;
+  authorizedDate: any;
+  authStatus: string;
+  bankCode: string;
+  bankId: number;
+  basisClass: string;
+  basisClassId: number;
+  businessSuite: string;
+  businessSuiteId: number;
+  created: string;
+  createdBy: string;
+  description: string;
+  documentId: number;
+  documentInfo: DocumentInfo;
+  empId: string;
+  entityCode: string;
+  id: number;
+  lastUpdated: string;
+  lastUpdatedBy: string;
+  oneTimeAuth: string;
+  recordStatus: string;
+  subClassName: string;
+  version: any;
+}
+
+export interface DocumentInfo {
+  dob: any;
+  documentId: number;
+  documentName: any;
+  documentNameValue: any;
+  documentNumber: any;
+  documentSide: any;
+  documentType: any;
+  expiryDate: any;
+  fileData: any;
+  fileName: string;
+  fileType: string;
+  fileUrl: string;
+  issueDate: any;
+  passportNumber: any;
+  verificationType: any;
+}

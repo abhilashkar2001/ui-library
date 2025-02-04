@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -15,18 +14,19 @@ import { environment } from 'environments/environment';
   templateUrl: './common-product.component.html',
   styleUrls: ['./common-product.component.scss'],
 })
-export class CommonProductComponent implements OnInit {
+export class CommonProductComponent {
   endPoints = environment.microServiceURL;
   @Input() subAccount: any;
   @Input() productIndex = 0;
-  @Output() onApply = new EventEmitter<any>();
+  @Output() apply = new EventEmitter<any>();
   @Output() customClassApply = new EventEmitter<any>();
   constructor(
     private cdr: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-  ) {}
+  ) {
+    console.log(this.subAccount);
+  }
 
-  ngOnInit(): void {}
   goForCalculator(product: any) {
     console.log(product);
     if (product?.productDetails === null) {
@@ -40,7 +40,7 @@ export class CommonProductComponent implements OnInit {
         clasDetails: product,
       });
     } else {
-      this.onApply.emit(product);
+      this.apply.emit(product);
     }
   }
   readMoreLess() {

@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IcHttpResponseModel } from '@onerumango/utils';
+import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -20,7 +22,7 @@ export class LoanAccountTypeComponent implements OnInit {
   endPoints = environment.microServiceURL;
   selectedLoan: any;
   basisId: any;
-  calculatorInfo: any | {};
+  calculatorInfo: any;
 
   constructor(
     private router: Router,
@@ -47,10 +49,8 @@ export class LoanAccountTypeComponent implements OnInit {
   getLoanSubTypes() {
     this.loanService
       .getSubLoanTypes(this.basisClass)
-      .subscribe((response: any) => {
-        this.subLoanList = response.data.filter(
-          (item: any) => !!item?.productDetails,
-        );
+      .subscribe((response: IcHttpResponseModel<BasisSubClassModel>) => {
+        this.subLoanList = response.data;
       });
   }
 
@@ -101,17 +101,6 @@ export class LoanAccountTypeComponent implements OnInit {
     }
   }
 
-  goForCalculator(subAccount: any) {
-    this.isShowCalculator = true;
-    this.selectedLoan = subAccount;
-    console.log(this.selectedLoan);
-    const payload = {
-      processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
-      basisName: this.selectedLoan?.productDetails[0].basisName,
-      basisId: this.selectedLoan?.productDetails[0].basisId,
-    };
-    this.sessionStorageService.setLoanBasisDetails(payload);
-  }
   customCalculatorValues(event: any) {
     this.selectedLoan = event;
     const emiStartDate = new Date();
@@ -131,18 +120,8 @@ export class LoanAccountTypeComponent implements OnInit {
       if (resp?.statusCode === 201) {
         this.sessionStorageService.removeLoanStep();
         this.sessionStorageService.setLoanDisburseId(resp?.data.id);
-        // const url = this.location.prepareExternalUrl(
-        //   this.router.serializeUrl(
-        //     this.router.createUrlTree([`/loan/create-loan/${this.basisId}`])
-        //   )
-        // );
-        // window.open(`${url}`, "_blank");
         this.router.navigate([`/loan/create-loan/${this.basisId}`]);
       }
     });
-  }
-  showCalculator(event: any) {
-    console.log(event);
-    // this.isShowCalculator = event;
   }
 }
