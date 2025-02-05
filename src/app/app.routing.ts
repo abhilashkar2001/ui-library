@@ -10,27 +10,41 @@ export const rootRouterConfig: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+
+  /** This is the default routing for the landing page */
   {
     path: 'home',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
     data: { title: 'Loading' },
   },
-  {
-    path: 'origination',
-    loadChildren: () =>
-      import(
-        './modules/origination-external-callback/origination-external-callback.module'
-      ).then((m) => m.OriginationExternalCallbackModule),
-    data: { preload: false, title: 'Home', breadcrumb: 'Home' },
-  },
 
+  /** This is the default route for origination section where customer can
+   * apply for Loan
+   */
   {
     path: '',
+    component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/origination/origination.module').then(
+            (m) => m.OriginationModule,
+          ),
+      },
+    ],
+  },
+
+  /** Net Banking Login Route */
+  {
+    path: 'sessions',
     component: AuthLayoutComponent,
     children: [
       {
-        path: 'sessions',
+        path: '',
         loadChildren: () =>
           import('./modules/sessions/sessions.module').then(
             (m) => m.SessionsModule,
@@ -38,6 +52,8 @@ export const rootRouterConfig: Routes = [
       },
     ],
   },
+
+  /** Corporate Banking Module Route */
   {
     path: 'user',
     component: UserLayoutComponent,
@@ -49,50 +65,6 @@ export const rootRouterConfig: Routes = [
           import('./modules/net-banking/net-banking.module').then(
             (m) => m.NetBankingModule,
           ),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    children: [
-      {
-        path: 'account',
-        loadChildren: () =>
-          import('./modules/create-account/create-account.module').then(
-            (m) => m.CreateAccountModule,
-          ),
-        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
-      },
-      {
-        path: 'card',
-        loadChildren: () =>
-          import('./modules/cards/cards.module').then((m) => m.CardsModule),
-        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
-      },
-      {
-        path: 'deposits',
-        loadChildren: () =>
-          import('./modules/new-deposit/new-deposit.module').then(
-            (m) => m.NewDepositModule,
-          ),
-        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
-      },
-      {
-        path: 'loan',
-        loadChildren: () =>
-          import('./modules/loans/loans.module').then((m) => m.LoansModule),
-        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
-      },
-      {
-        path: 'tracking',
-        loadChildren: () =>
-          import('./modules/tracking/tracking.module').then(
-            (m) => m.TrackingModule,
-          ),
-        data: { preload: false, title: 'Home', breadcrumb: 'Home' },
       },
     ],
   },

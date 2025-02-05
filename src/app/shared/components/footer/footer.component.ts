@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { FooterConstant } from './footer.constant';
 import { FooterServiceService } from 'app/shared/services/footer-service.service';
 import { Store } from '@ngrx/store';

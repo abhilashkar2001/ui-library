@@ -15,7 +15,7 @@ import { Account } from 'app/shared/models/account-list-by-subclass.model';
 import { FlexBalanceModel } from 'app/shared/models/flex-balance.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
-import { SelectSingleTransferComponent } from 'app/shared/components/select-single-transfer/select-single-transfer.component';
+import { SelectSingleTransferComponent } from 'app/modules/net-banking/modules/shared-corporate-banking/select-single-transfer/select-single-transfer.component';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { PendingApprovalSummary } from 'app/shared/models/pending-approval.model';
 import { TranslateService } from '@ngx-translate/core';

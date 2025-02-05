@@ -1,0 +1,136 @@
+<div class="main_page" *ngIf="otpForm" [formGroup]="otpForm">
+  <div
+    fxFlex="100"
+    fxLayoutAlign="space-between"
+    class="head_container bank-title"
+  >
+    <h1 class="apply-poppinsfamily">
+      {{
+        screenName && screenName !== ''
+          ? screenName + ' Document Uplaod'
+          : (currentUser?.bankName | titlecase)
+      }}
+    </h1>
+    <div
+      fxFlex="15"
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      class="refNoDiv"
+      *ngIf="screenName && screenName !== ''"
+    >
+      <div class="refNoheading">{{ 'Reference No' }}</div>
+      <div class="refNoValue">{{ customerId }}</div>
+    </div>
+  </div>
+
+  <div class="subhead_container">
+    <h3 *ngIf="!screenName" class="text-label mb-16">OTP Type</h3>
+    <div
+      *ngIf="screenName && screenName !== ''"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <h3 class="OtpHeading">
+        {{
+          'An OTP has been sent to the Registered Mobile Number (XXXXX XX' +
+            reducedMob +
+            ')'
+        }}
+      </h3>
+      <img src="../../../../../../assets/images/mobileVerifyImage.png" alt="" srcset="" />
+    </div>
+
+    <div
+      *ngIf="!screenName"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <mat-card
+        fxFlex="48"
+        *ngFor="let item of cardArr"
+        class="mx-0"
+        [ngClass]="otpType === item ? 'selected-card' : 'toggle-card'"
+        fxLayout="row"
+        (click)="otpType = item"
+      >
+        <mat-icon>trip_origin</mat-icon>
+        <div class="text-center w-100 text-bold">
+          {{ item }}
+        </div>
+      </mat-card>
+    </div>
+    <div *ngIf="!screenName">
+      <div *ngFor="let item of cardArr">
+        <ng-container>
+          <mat-form-field
+            *ngIf="item === otpType"
+            class="pt-24"
+            appearance="outline"
+          >
+            <mat-label>{{ otpType }}</mat-label>
+            <input
+              type="text"
+              matInput
+              [formControlName]="otpType?.toLowerCase()"
+              (input)="otpForm.get('otp')?.setValue('')"
+            />
+            <button
+              matSuffix
+              mat-stroked-button
+              class="otp-btn"
+              (click)="generateOtp()"
+              [disabled]="!otpForm.controls[otpType?.toLowerCase()]?.value"
+            >
+              Get OTP
+            </button>
+          </mat-form-field>
+        </ng-container>
+      </div>
+    </div>
+    <div class="text-center">
+      <h2 [ngClass]="!screenName ? 'text-label' : 'VerifyOtpText'">
+        {{
+          !screenName
+            ? 'Enter OTP to verify'
+            : 'Please Enter Your OTP to verify'
+        }}
+      </h2>
+    </div>
+    <div class="ng_otp_field my-24" fxLayoutAlign="center center">
+      <ng-otp-input
+        #ngOtpInput
+        [config]="ngOtpConfig"
+        [formControl]="otpForm.get('otp') | formcontrol"
+        (onInputChange)="onOtpChange($event)"
+      ></ng-otp-input>
+    </div>
+    <div class="text-center mb-24">
+      <span
+        class="resendBtn"
+        (click)="resendOtp()"
+        (keydown.enter)="resendOtp()"
+        tabindex="0"
+        >Resend</span
+      >
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+      <button
+        mat-raised-button
+        class="reset-btn"
+        fxFlex="20"
+        (click)="resetOrExit(!screenName ? 'Reset' : 'Exit')"
+      >
+        {{ !screenName ? 'Reset' : 'Exit' }}
+      </button>
+      <button
+        mat-raised-button
+        class="submit-btn"
+        fxFlex="40"
+        (click)="verifyOtp()"
+        [disabled]="otpForm.invalid"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

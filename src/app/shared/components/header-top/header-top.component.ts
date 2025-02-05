@@ -13,7 +13,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
-import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';

@@ -17,7 +17,6 @@ const routes: Routes = [
     path: 'summary',
     component: LoanSummaryComponent,
   },
-
   {
     path: 'loan-service',
     loadChildren: () =>

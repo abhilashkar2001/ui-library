@@ -4,221 +4,96 @@ import { SharedMaterialModule } from '../shared-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PerfectScrollbarModule } from 'app/shared/components/perfect-scrollbar';
 import { SharedPipesModule } from '../pipes/shared-pipes.module';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
-
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
-
 import { HeaderTopComponent } from './header-top/header-top.component';
-
-// ALWAYS REQUIRED
-import { BreadcrumbComponent } from './core-components/breadcrumb/breadcrumb.component';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
 import { AppLoaderComponent } from '../services/app-loader/app-loader.component';
-
 import { FooterComponent } from './footer/footer.component';
-import { SavingsSubmitDialogComponent } from './savings-submit-dialog/savings-submit-dialog.component';
-import { ClientReviewComponent } from './client-review/client-review.component';
-import { TopPerformingComponent } from './top-performing/top-performing.component';
-
-// Import FusionCharts library and chart modules
+import { SavingsSubmitDialogComponent } from '../../modules/origination/modules/shared-origination/savings-submit-dialog/savings-submit-dialog.component';
+import { TopPerformingComponent } from '../../modules/origination/modules/shared-origination/top-performing/top-performing.component';
 import * as Widgets from 'fusioncharts/fusioncharts.widgets';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
-// Pass the fusioncharts library and chart modules
 import { FusionChartsModule } from 'angular-fusioncharts';
-// Import FusionCharts library and chart modules
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { CommonMobileVerificationComponent } from './comon-mobile-verification/common-mobile-verification.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { FaqComponent } from './faq/faq.component';
-import { ClientsComponent } from './clients/clients.component';
-import { CibilScorePoorDialgComponent } from './cibil-score-poor-dialg/cibil-score-poor-dialg.component';
-import { CibilScoreResultComponent } from './cibil-score-result/cibil-score-result.component';
+import { TermsConditionsComponent } from '../../modules/origination/modules/shared-origination/terms-conditions/terms-conditions.component';
+import { CommonMobileVerificationComponent } from '../../modules/origination/modules/dynamic-pages/comon-mobile-verification/common-mobile-verification.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NewsLetterSliderComponent } from './news-letter-slider/news-letter-slider.component';
-import { NewsLetterComponent } from './news-letter/news-letter.component';
-import { LandingProfileComponent } from './landing-profile/landing-profile.component';
-
 import { NgOtpInputModule } from 'ng-otp-input';
-import { OtherDocumentsComponent } from './other-documents/other-documents.component';
-import { SelectKycComponent } from './select-kyc/select-kyc.component';
-import { CustomSwiperComponent } from './custom-swiper/custom-swiper.component';
+import { SelectKycComponent } from '../../modules/origination/modules/shared-origination/select-kyc/select-kyc.component';
 import { SwiperModule } from 'swiper/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { SuccessPopupComponent } from './success-popup/success-popup.component';
-import { CommmonSteeperComponent } from './commmon-steeper/commmon-steeper.component';
-import { CommonPersonalDetailsComponent } from './common-personal-details/common-personal-details.component';
+import { CommonPersonalDetailsComponent } from '../../modules/origination/modules/dynamic-pages/common-personal-details/common-personal-details.component';
 import { SearchableSelectComponent } from './searchable-select/searchable-select.component';
 import { ReusablePincodePopupComponent } from './reusable-pincode-popup/reusable-pincode-popup.component';
-import { CustomPaginationComponent } from './custom-pagination/custom-pagination.component';
-import { CommonProductComponent } from './common-product/common-product.component';
-import { ImageDialogComponent } from './image-dialog/image-dialog.component';
-import { ShowDocumentComponent } from './show-document/show-document.component';
-import { ErrorNotifierPopupComponent } from './error-notifier-popup/error-notifier-popup.component';
-import { AllInOnePopupComponent } from './all-in-one-popup/all-in-one-popup.component';
-import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
-import { CreatedDurationModelComponent } from './created-duration-model/created-duration-model.component';
-import { CommonLevelStatusComponent } from './common-level-status/common-level-status.component';
-import { AduitLogDetailsComponent } from './audit-log/aduit-log-details/aduit-log-details.component';
-import { AuditLogTableComponent } from './audit-log/audit-log-table/audit-log-table.component';
-import { AuditLogPopupComponent } from './audit-log/audit-log-popup/audit-log-popup.component';
-import { NewAuditlogButtonGroupComponent } from './new-auditlog-button-group/new-auditlog-button-group.component';
+import { ShowDocumentComponent } from '../../modules/origination/modules/shared-origination/show-document/show-document.component';
 import { UserHeaderTopComponent } from './user-header-top/user-header-top.component';
-import { AddNewPopupComponent } from './add-new-popup/add-new-popup.component';
 import { SubNavBarComponent } from './sub-nav-bar/sub-nav-bar.component';
-import { InputDatePickerComponent } from './input-date-picker/input-date-picker.component';
 import { CustomDateAdapter } from '../services/date-time/customDateAdapter';
 import { DateAdapter } from '@angular/material/core';
 import { InputMaskModule } from '../directives/input-mask/input-mask.module';
 
-import { WebDocUploadComponent } from './web-doc-upload/web-doc-upload.component';
+import { WebDocUploadComponent } from '../../modules/origination/modules/shared-origination/web-doc-upload/web-doc-upload.component';
 import { WarningComponent } from './warning/warning.component';
-import { SpinnerComponent } from './core-components/spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { IcCustomInputComponent } from './ic-custom-input/ic-custom-input.component';
-import { IcRowInputComponent } from './ic-row-input/ic-row-input.component';
-import { ReusableTableComponent } from './reusable-table/reusable-table.component';
-import { SelectSingleTransferComponent } from './select-single-transfer/select-single-transfer.component';
-import { CustomSuccessPopupComponent } from './custom-success-popup/custom-success-popup.component';
-import { CusotmWebDocUploadComponent } from './cusotm-web-doc-upload/cusotm-web-doc-upload.component';
+import { SelectSingleTransferComponent } from '../../modules/net-banking/modules/shared-corporate-banking/select-single-transfer/select-single-transfer.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
-import { CibilScoreChartComponent } from './cibil-score-chart/cibil-score-chart.component';
-import { OtherChecklistDocUploadComponent } from './other-checklist-doc-upload/other-checklist-doc-upload.component';
-import { ReusableAlertPopupComponent } from './reusable-alert-popup/reusable-alert-popup.component';
-import { StagingSuccessAreaComponent } from './staging-success-area/staging-success-area.component';
-import { CompanyInformationComponent } from './company-information/company-information.component';
-import { DirectorDetailsComponent } from './director-details/director-details.component';
+import { OtherChecklistDocUploadComponent } from '../../modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
+import { StagingSuccessAreaComponent } from '../../modules/origination/modules/shared-origination/staging-success-area/staging-success-area.component';
+import { CompanyInformationComponent } from '../../modules/origination/modules/dynamic-pages/company-information/company-information.component';
 import { ViewExcelDocComponent } from './view-excel-doc/view-excel-doc.component';
-import { DigitalSignComponent } from './digital-sign/digital-sign.component';
+import { DigitalSignComponent } from '../../modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
 import { ScanComponent } from './scan/scan.component';
-import { TabLinkComponent } from '../widgets/tab-link/tab-link.component';
-import { TransactionCardComponent } from '../widgets/transaction-card/transaction-card.component';
-import { SwiperCardComponent } from './swiper-card/swiper-card.component';
-import { RecentTransactionComponent } from './recent-transaction/recent-transaction.component';
-import { IcToggleSlideComponent } from './ic-toggle-slide/ic-toggle-slide.component';
-import { IcCustomAmountInput } from './ic-custom-amount-input/ic-custom-amount-input.component';
-import { ReusableFavouritiesComponent } from './reusable-favourities/reusable-favourities.component';
-import { IcActionButtonComponent } from './ic-action-button/ic-action-button.component';
-import { ToolbarTitleComponent } from '../widgets/toolbar-title/toolbar-title.component';
-import { ToolbarTabComponent } from '../widgets/toolbar-tab/toolbar-tab.component';
-import { LinkPayeeSideBarComponent } from '../widgets/link-payee-side-bar/link-payee-side-bar.component';
-import { QrcodeComponent } from './qrcode/qrcode.component';
-import { IcCustomPayFromComponent } from './ic-custom-pay-from/ic-custom-pay-from.component';
-import { IcRadioButtonComponent } from './ic-radio-button/ic-radio-button.component';
-import { CustomDrawerComponent } from './custom-drawer/custom-drawer.component';
-import { DashboardInstantPayComponent } from '../widgets/dashboard-instant-pay/dashboard-instant-pay.component';
-import { ReusableNodatafoundComponent } from './reusable-nodatafound/reusable-nodatafound.component';
-import { BankCodePopupComponent } from './bank-code-popup/bank-code-popup.component';
-import { ExternalLinkComponent } from '../widgets/external-link/external-link.component';
-import { ChartPage } from './chart/chart.page';
-import { MaturityChartComponent } from './maturity-chart/maturity-chart.component';
-import { PopupSuccessComponent } from './popup-success/popup-success.component';
+import { TabLinkComponent } from '../../modules/net-banking/modules/shared-corporate-banking/widgets/tab-link/tab-link.component';
+import { TransactionCardComponent } from '../../modules/net-banking/modules/shared-corporate-banking/widgets/transaction-card/transaction-card.component';
+import { SwiperCardComponent } from '../../modules/net-banking/modules/shared-corporate-banking/swiper-card/swiper-card.component';
+import { ToolbarTitleComponent } from '../../modules/net-banking/modules/shared-corporate-banking/widgets/toolbar-title/toolbar-title.component';
+import { ToolbarTabComponent } from '../../modules/net-banking/modules/shared-corporate-banking/widgets/toolbar-tab/toolbar-tab.component';
+import { LinkPayeeSideBarComponent } from '../../modules/net-banking/modules/shared-corporate-banking/widgets/link-payee-side-bar/link-payee-side-bar.component';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SidebarSideComponent } from './sidebar-side/sidebar-side.component';
-import { NewReusableMatTableComponent } from './new-reusable-mat-table/new-reusable-mat-table.component';
-import { NewReusableFilterComponent } from './new-reusable-filter/new-reusable-filter.component';
-import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 import { MatInputModule } from '@angular/material/input';
-import { PersonalDetailsComponent } from 'app/shared/components/personal-details/personal-details.component';
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
 const components = [
   HeaderTopComponent,
-  BreadcrumbComponent,
   AppComfirmComponent,
   AppLoaderComponent,
-  ButtonLoadingComponent,
   FooterComponent,
   SavingsSubmitDialogComponent,
-  NewsLetterSliderComponent,
-  NewsLetterComponent,
   TopPerformingComponent,
-  ClientReviewComponent,
   TermsConditionsComponent,
   CommonMobileVerificationComponent,
-  CarouselComponent,
-  FaqComponent,
-  CibilScoreResultComponent,
-  CibilScorePoorDialgComponent,
-  ClientsComponent,
-  LandingProfileComponent,
-  OtherDocumentsComponent,
   SelectKycComponent,
   SuccessPopupComponent,
-  CustomSwiperComponent,
-  CommmonSteeperComponent,
   CommonPersonalDetailsComponent,
   SearchableSelectComponent,
   ReusablePincodePopupComponent,
-  CustomPaginationComponent,
-  CommonProductComponent,
-  ImageDialogComponent,
   ShowDocumentComponent,
-  ErrorNotifierPopupComponent,
-  CreatedDurationModelComponent,
-  CalendarHeaderComponent,
-  AllInOnePopupComponent,
-  CommonLevelStatusComponent,
-  AuditLogTableComponent,
-  AduitLogDetailsComponent,
-  AuditLogPopupComponent,
-  NewAuditlogButtonGroupComponent,
   UserHeaderTopComponent,
-  AddNewPopupComponent,
   SubNavBarComponent,
-  InputDatePickerComponent,
-  ReusableTableComponent,
   WebDocUploadComponent,
   WarningComponent,
-  SpinnerComponent,
-  IcCustomInputComponent,
-  IcRowInputComponent,
   SelectSingleTransferComponent,
-  CustomSuccessPopupComponent,
-  CusotmWebDocUploadComponent,
   PdfViewerComponent,
-  CibilScoreChartComponent,
   OtherChecklistDocUploadComponent,
-  CibilScoreChartComponent,
-  ReusableAlertPopupComponent,
   StagingSuccessAreaComponent,
   CompanyInformationComponent,
-  DirectorDetailsComponent,
   ViewExcelDocComponent,
   DigitalSignComponent,
   ScanComponent,
   TransactionCardComponent,
   TabLinkComponent,
   SwiperCardComponent,
-  RecentTransactionComponent,
-  IcToggleSlideComponent,
-  IcCustomAmountInput,
-  ReusableFavouritiesComponent,
-  IcActionButtonComponent,
   ToolbarTitleComponent,
   ToolbarTabComponent,
   LinkPayeeSideBarComponent,
-  QrcodeComponent,
-  IcCustomPayFromComponent,
-  IcRadioButtonComponent,
-  BankCodePopupComponent,
-  ExternalLinkComponent,
-  CustomDrawerComponent,
-  DashboardInstantPayComponent,
-  ReusableNodatafoundComponent,
-  ChartPage,
-  MaturityChartComponent,
-  PopupSuccessComponent,
   SidebarSideComponent,
-  NewReusableMatTableComponent,
-  NewReusableFilterComponent,
-  CusotmWebDocUploadComponent,
-  PersonalDetailsComponent,
 ];
 
 @NgModule({
@@ -231,7 +106,6 @@ const components = [
     FlexLayoutModule,
     FusionChartsModule,
     NgbModule,
-    PerfectScrollbarModule,
     SharedPipesModule,
     SharedDirectivesModule,
     SharedMaterialModule,

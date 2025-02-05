@@ -1,0 +1,155 @@
+<div fxLayout="column">
+  <form
+    *ngIf="createDocumentForm"
+    fxLayout="column"
+    fxFlex="100"
+    [formGroup]="createDocumentForm"
+  >
+    <div formArrayName="otherDocument">
+      <div *ngFor="let denomDetai of otherDocument().controls; let i = index">
+        <mat-card fxFlex="98%" fxLayout="column" [formGroupName]="i">
+          <div fxLayout="column" class="outer-div" fxFlex="100">
+            <div fxLayout="column">
+              <div fxLayoutAlign="space-between start" class="text-header">
+                <div fxFlex="80">Document {{ i + 1 }}</div>
+                <button
+                  *ngIf="i > 0"
+                  class="deleteButton"
+                  (click)="deleteDocument(i)"
+                >
+                  Delete
+                </button>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <mat-form-field
+                    fxFlex="100"
+                    class="borderColor"
+                    appearance="outline"
+                  >
+                    <mat-label class="label_input">Document Type</mat-label>
+                    <mat-select
+                      appearance="outline"
+                      class="mat_selection"
+                      formControlName="documentType"
+                    >
+                      <mat-option [value]="">Select</mat-option>
+                      <mat-option
+                        *ngFor="
+                          let documentTypeItem of documentTypeArray;
+                          let docIndex = index
+                        "
+                        [hidden]="
+                          isDocumentOptionDisabled2(documentTypeItem.values)
+                        "
+                        class="option_font"
+                        [value]="documentTypeItem.id"
+                        (click)="
+                          onDocumentSelection(documentTypeItem.values, i)
+                        "
+                        >{{ documentTypeItem.values }}</mat-option
+                      >
+                    </mat-select>
+                    <mat-error> Please Select Document Type </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6 col-12">
+                  <mat-form-field appearance="outline" style="display: block">
+                    <mat-label class="custom-mat-label"
+                      >Document Number</mat-label
+                    >
+                    <input
+                      matInput
+                      appNoLeadingSpace
+                      maxlength="30"
+                      formControlName="documentNumber"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <ng-container>
+                <mat-card class="card-subdiv">
+                  <div
+                    appDragDrop
+                    class="doc_upload"
+                    fxFlex="100"
+                    #fileInput
+                    (FileDropped)="onFileDropped($event, i)"
+                    (click)="fileBrowseHandler(i)"
+                    (keydown.enter)="fileBrowseHandler(i)"
+                    tabindex="0"
+                  >
+                    <div class="drag_drop" fxFlex="90">
+                      <h3 class="text-header">Upload Document</h3>
+                      <p>
+                        On desktop, Simply drag and drop your file in this
+                        field.<br />
+                        Acceptable formats: JPEG, JPG or PNG.
+                      </p>
+                    </div>
+                    <label for="fileDropRef" class="doc_img" fxFlex="10">
+                      <img
+                        src="../../../../../../assets/images/upload-logo.svg"
+                        alt="Upload Sign"
+                      />
+                    </label>
+                  </div>
+                  <ng-container
+                    *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                  >
+                    <div class="upload_img" fxFlex="100">
+                      <div class="img_box">
+                        <img [src]="file?.url" alt="file URL" />
+                      </div>
+                      <div class="img_container">
+                        <p class="img_name">{{ file?.name }}</p>
+                        <div class="progress-cont">
+                          <div class="progress" [style.width]="'100%'"></div>
+                        </div>
+                      </div>
+                      <button
+                        mat-icon-button
+                        class="btn"
+                        (click)="deleteFile(fileIndx, i, file)"
+                      >
+                        <mat-icon color="warn">delete</mat-icon>
+                      </button>
+                    </div>
+                  </ng-container>
+                </mat-card>
+              </ng-container>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+  <button
+    type="button"
+    class="add-more-btn"
+    [disabled]="checkValidity()"
+    [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : '#004c97' }"
+    (click)="addDocument()"
+  >
+    Add Another Document
+  </button>
+  <div fxLayoutGap="50px">
+    <button-loading
+      [loadingText]="loadingBtnText"
+      [type]="'submit'"
+      [disable]="isLoading && checkDocValidity()"
+      [loading]="isLoading"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button-loading>
+    <button
+      type="button"
+      mat-raised-button
+      class="button back_button"
+      (click)="onBack()"
+    >
+      Back
+    </button>
+  </div>
+</div>

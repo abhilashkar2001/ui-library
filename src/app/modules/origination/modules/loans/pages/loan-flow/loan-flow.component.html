@@ -1,0 +1,32 @@
+<div class="loan_flow_container">
+  <div fxFlex="40" class="fdCalculator_parent">
+    <app-commmon-steeper
+      [screenTitle]="screenTitle"
+      [screenList]="screenList"
+      [screenIndex]="selectedStep"
+      (customSelectionChange)="stepperSelectionChange($event)"
+    ></app-commmon-steeper>
+  </div>
+
+  <mat-divider vertical></mat-divider>
+
+  <div class="col-div2 screenMargin" fxFlex="60" fxLayout="column">
+    <div fxLayoutAlign="space-between start">
+      <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
+        {{ cuurrentStep }}
+      </h2>
+      <button
+        mat-button
+        class="add_btn mr-20"
+        *ngIf="checkBtnValidity()"
+        (click)="addDoc()"
+      >
+        Add
+      </button>
+    </div>
+
+    <div>
+      <ng-template appAppHost #container></ng-template>
+    </div>
+  </div>
+</div>

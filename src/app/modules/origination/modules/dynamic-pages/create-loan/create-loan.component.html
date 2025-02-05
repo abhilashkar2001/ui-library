@@ -1,0 +1,256 @@
+<div class="personal-loan-details mt-20" fxFlex="100">
+  <form
+    *ngIf="personalLoanDetailsForm"
+    [formGroup]="personalLoanDetailsForm"
+    fxFlex="100"
+  >
+    <div fxLayout="row wrap" fxLayoutGap="1%">
+      <div
+        class=""
+        fxFlex="48"
+        [ngClass]="{ 'disable-mat-form-field': isReadOnly }"
+      >
+        <ic-form-field
+          label="Loan Amount"
+          [control]="personalLoanDetailsForm.get('loanAmount') | formcontrol"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.loanAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
+      </div>
+
+      <div fxFlex="48" class="MiscellaneousClass">
+        <ic-tenure-field
+          label="Tenure"
+          [fields]="['tenureYear', 'tenureMonth', 'tenureDays']"
+          [fieldLabels]="{
+            tenureYear: 'Years',
+            tenureMonth: 'Months',
+            tenureDays: 'Days',
+          }"
+          [parentForm]="personalLoanDetailsForm"
+          [disabled]="true"
+        >
+        </ic-tenure-field>
+        <!--  <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateTenure &&
+            (personalLoanDetailsForm.get('tenureYear')?.value ||
+              personalLoanDetailsForm.get('tenureMonth')?.value ||
+              personalLoanDetailsForm.get('tenureDays')?.value)
+          "
+        >
+          Loan Period should be less than
+          {{ productDetails?.maximumTenorYear || 0 }} Years
+          {{ productDetails?.maximumTenorMonth || 0 }} Months
+          {{ productDetails?.maximumTenorDay || 0 }} Days
+        </mat-error>
+        <mat-error
+          class="mat-error small-error mt-12"
+          *ngIf="
+            validateMinimumTenure &&
+            (personalLoanDetailsForm.get('tenureYear')?.value ||
+              personalLoanDetailsForm.get('tenureMonth')?.value ||
+              personalLoanDetailsForm.get('tenureDays')?.value)
+          "
+        >
+          Loan Period should be greater than
+          {{ productDetails?.minimumTenorYear }} Years
+          {{ productDetails?.minimumTenorMonth }} Months
+          {{ productDetails?.minimumTenorDay }} Days
+        </mat-error> -->
+      </div>
+
+      <div fxFlex="48" class="disable-mat-form-field">
+        <!-- <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
+          <mat-label class="custom-mat-label">EMI Amount</mat-label>
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value?.emiAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="emiAmount" />
+          </div>
+        </mat-form-field> -->
+        <ic-form-field
+          label="Emi Amount"
+          [control]="personalLoanDetailsForm.get('emiAmount') | formcontrol"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.emiAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
+      </div>
+
+      <div fxFlex="48" class="disable-mat-form-field">
+        <!-- <mat-form-field appearance="outline" class="full-width fieldinput">
+          <mat-label class="custom-mat-label">Interest Rate</mat-label>
+          <input matInput readonly formControlName="interestRate" />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('interestRate')?.hasError('required')
+            "
+          >
+            Interest Rate is <strong>required</strong>
+          </mat-error> -->
+        <!-- </mat-form-field> -->
+        <ic-form-field
+          label="Interest Rate"
+          [control]="personalLoanDetailsForm.get('interestRate') | formcontrol"
+          [readonly]="true"
+        ></ic-form-field>
+      </div>
+
+      <div fxFlex="48" class="disable-mat-form-field">
+        <ic-form-field
+          label="Interest Payable"
+          [control]="
+            personalLoanDetailsForm.get('interestPayable') | formcontrol
+          "
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.interestPayable
+              ? currencySymboll
+              : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
+      </div>
+
+      <div fxFlex="48" class="disable-mat-form-field">
+        <ic-form-field
+          label="Principal Amount"
+          [control]="
+            personalLoanDetailsForm.get('principlAmount') | formcontrol
+          "
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.principlAmount ? currencySymboll : ''
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
+      </div>
+
+      <div
+        fxFlex="48"
+        class="enabled-mat-form-field"
+        style="transform: translate(10px, -15px)"
+      >
+        <mat-label class="text-label">Holder Type</mat-label>
+        <mat-radio-group
+          class="custom-radio-grp"
+          formControlName="holderType"
+          fxLayout="row"
+          fxLayoutGap="10"
+        >
+          <div *ngFor="let holderItem of holderTypeArray">
+            <mat-radio-button [value]="holderItem.id">{{
+              holderItem.values
+            }}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      <div fxFlex="48" class="disable-mat-form-field">
+        <!-- <mat-form-field
+          appearance="outline"
+          class="full-width currency_field fieldinput"
+        >
+          <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
+          <div fxLayout="row">
+            <span
+              class="currencySymbol"
+              *ngIf="personalLoanDetailsForm.value.totalPayableAmount"
+              >{{ currencySymboll }}</span
+            >
+            <input matInput readonly formControlName="totalPayableAmount" />
+          </div>
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm
+                .get('totalPayableAmount')
+                ?.hasError('required')
+            "
+          >
+            Total Payable Amount is <strong>required</strong>
+          </mat-error>
+        </mat-form-field> -->
+        <ic-form-field
+          label="Total Payable Amount"
+          [prefixIcon]="
+            personalLoanDetailsForm.value?.totalPayableAmount
+              ? currencySymboll
+              : ''
+          "
+          [control]="
+            personalLoanDetailsForm.get('totalPayableAmount') | formcontrol
+          "
+          [readonly]="isReadOnly"
+          [icNoInitialSpace]="true"
+        ></ic-form-field>
+      </div>
+
+      <div fxFlex="48" class="enabled-mat-form-field">
+        <mat-form-field
+          appearance="outline"
+          class="full-width custom-field fieldinput"
+        >
+          <mat-label class="custom-mat-label">EMI Payment Start Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="emiStartDate"
+            [min]="currentDate"
+            readonly
+          />
+          <mat-error
+            *ngIf="
+              personalLoanDetailsForm.get('emiStartDate')?.hasError('required')
+            "
+          >
+            EMI Payment Start Date is <strong>required</strong>
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                src="/src/assets/images/calendar.png"
+                class="pb-25"
+                alt="calendar"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" class="button-section">
+        <ic-button
+          [label]="'Confirm'"
+          [type]="'submit'"
+          size="large"
+          [icButtonType]="'filled-rounded'"
+          (click)="onConfirm()"
+        >
+        </ic-button>
+        &nbsp;&nbsp;
+        <ic-button
+          [label]="'Back'"
+          icButtonType="ghost-rounded-danger"
+          size="large"
+          [type]="'button'"
+          (click)="onBack()"
+        >
+        </ic-button>
+        &nbsp;&nbsp;
+      </div>
+    </div>
+  </form>
+</div>

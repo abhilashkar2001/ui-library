@@ -4,9 +4,9 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
-import { PerfectScrollbarModule } from 'app/shared/components/perfect-scrollbar';
 import { RouterModule } from '@angular/router';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { UserLayoutComponent } from './user-layout/user-layout.component';
     SharedModule,
     RouterModule,
     SharedMaterialModule,
-    PerfectScrollbarModule,
+    IcustLibraryModule,
   ],
 })
 export class LayoutsModule {}

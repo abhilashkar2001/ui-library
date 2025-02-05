@@ -1,0 +1,38 @@
+<div fxLayout="column">
+  <div class="loan-account-type">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      class="product-desc-container"
+    >
+      <div class="account-type-header mb-10">{{ basisClass }}</div>
+      <div class="standard-content-title">
+        This is a process, how you can get loan for your self.
+      </div>
+    </div>
+    <app-loan-products
+      [subLoanList]="subLoanList"
+      (customApply)="customApply($event)"
+    >
+    </app-loan-products>
+  </div>
+
+  <div *ngIf="isShowCalculator" fxLayout="column" id="loanCalculator">
+    <div fxLayoutAlign="center center" fxLayout="column">
+      <div class="account-type-header">{{ basisClass }} EMI Calculator</div>
+      <div class="standard-content-title mb-30">
+        Maximize Your Savings with Fixed Deposit: Earn Guaranteed Returns on
+        Your Investment.
+      </div>
+    </div>
+    <div style="margin: 35px">
+      <app-common-emi-calculator
+        (customCalculatorValues)="customCalculatorValues($event)"
+        [calculatorInfo]="calculatorInfo"
+      ></app-common-emi-calculator>
+    </div>
+  </div>
+  <div>
+    <app-faq></app-faq>
+  </div>
+</div>

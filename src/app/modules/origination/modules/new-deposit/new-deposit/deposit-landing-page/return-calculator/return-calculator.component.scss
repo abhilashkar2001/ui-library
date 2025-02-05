@@ -1,0 +1,212 @@
+@import '../../../../../../../../../node_modules/@onerumango/icust-scss-library/src/main';
+@import '../../../../../../../../../node_modules/@onerumango/icust-scss-library/src/customize';
+
+.calculator_container {
+  padding: 28px 90px 28px 28px;
+  border-radius: 16px;
+  border: 3px solid #fff;
+  background-color: #f6faff;
+  box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  img.calc_cornor_image {
+    position: absolute;
+    bottom: -40px;
+    left: -45px;
+    height: 180px;
+    width: 180px;
+    transform: rotate(268deg);
+    z-index: -1;
+  }
+}
+
+.example-margin1 {
+  margin-right: 10%;
+  padding: 2%;
+}
+::ng-deep .inputSelect.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0px;
+  margin-top: -4px !important;
+}
+
+::ng-deep
+  .inputSelect.mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: white !important;
+}
+.inputSelect {
+  width: 33% !important;
+  background: #fffefe 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  opacity: 1;
+  margin-top: 0px;
+  display: flow-root;
+}
+.vl {
+  border-left: 1px solid #00000030;
+}
+.calculator_subTItle {
+  color: #004c97;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Poppins';
+}
+
+.category {
+  display: flex;
+}
+.value_check {
+  margin-right: 30px;
+  margin-left: 10px;
+}
+.rdfdform {
+  border-radius: 16px;
+}
+.fd_container {
+  background-color: #ffffff;
+  box-shadow: 0px 6.1189799309px 30.5949001312px rgba(0, 0, 0, 0.0509803922);
+  border-radius: 20px;
+  min-height: 80%;
+  min-width: 130%;
+  padding: 15px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+
+  img.fd_cornor_image {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    height: 115px;
+    width: 115px;
+    z-index: -1;
+  }
+
+  .maturityTitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .maturityDesc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 33px;
+    font-weight: 600;
+    color: #004c97;
+  }
+  .maturityLabel {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .maturityVal {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #004c97;
+  }
+}
+
+.alignCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #00000030;
+}
+.alignLeft {
+  align-items: inherit !important;
+  padding-left: 5%;
+}
+.designImg {
+  position: absolute;
+  width: 180px;
+  left: -30px;
+  top: 250px;
+}
+
+.sub-child {
+  color: #a5a5a5;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.openFDbtn {
+  width: 200px;
+  height: 50px;
+  border-radius: 40px !important;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.4px;
+  color: #fff !important;
+  background: linear-gradient(90deg, #004aa0 0%, #06113c 100%) !important;
+  margin: 10px 0%;
+}
+
+.parentYearDiv {
+  margin-top: -10px;
+}
+:host ::ng-deep .parentYearDiv--child.mat-form-field-appearance-outline {
+  & .mat-form-field-outline.mat-form-field-outline-thick {
+    box-shadow: none !important;
+  }
+  .mat-form-field-infix {
+    padding: 8px 0px 8px 0px !important;
+  }
+}
+:host ::ng-deep .deposit--ammount--field {
+  & .mat-form-field-wrapper {
+    padding-bottom: 10px !important;
+  }
+}
+fieldset {
+  legend {
+    color: rgb(132 141 159);
+    font-family: Poppins;
+    font-size: 75%;
+    line-height: normal;
+    float: none;
+    margin-left: 13px;
+    opacity: 0.8;
+  }
+  padding: 5px;
+  border-radius: 8px;
+  height: 62px;
+  background: #fff;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+  .mat-form-field {
+    padding: 10px 0;
+    border-radius: 11px;
+  }
+
+  input {
+    padding: 5px 5px;
+  }
+}
+
+.custom-error {
+  font-size: 13px;
+  margin-top: -20px;
+}
+.suffixLabel {
+  position: relative;
+  font-size: 16px;
+  color: #b4b4b4;
+}
+.vertical-seperator {
+  border-left: #e0e0e0 2px solid;
+  margin-top: -2px;
+  border-radius: 5px;
+}
+.tenure_input {
+  position: relative;
+  top: -5px !important;
+  text-align: right;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+}

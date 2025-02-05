@@ -1,0 +1,45 @@
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { SavingsSubmitDialogComponent } from 'app/modules/origination/modules/shared-origination/savings-submit-dialog/savings-submit-dialog.component';
+
+@Component({
+  selector: 'app-card-terms-conditions',
+  templateUrl: './card-terms-conditions.component.html',
+  styleUrls: ['./card-terms-conditions.component.scss'],
+})
+export class CardTermsConditionsComponent implements OnInit {
+  @Output() backEvent: EventEmitter<any> = new EventEmitter();
+  @Output() confirmEvent: EventEmitter<any> = new EventEmitter();
+
+  dialogsaveRef!: MatDialogRef<SavingsSubmitDialogComponent>;
+  stepperTitle: any;
+
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {}
+
+  onConfirm() {
+    this.dialogsaveRef = this.dialog.open(SavingsSubmitDialogComponent, {
+      data: {
+        applicationNo: 746764326432,
+        flow: 'cards',
+      },
+      width: '885px',
+      height: '676px',
+      disableClose: true,
+      panelClass: 'popup-dialog-class',
+      backdropClass: 'bdrop',
+    });
+    this.dialogsaveRef.componentInstance.submitClicked.subscribe(() => {
+      this.router.navigate(['/cards']);
+    });
+  }
+
+  onBack() {
+    this.backEvent.emit();
+  }
+}

@@ -1,11 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  PerfectScrollbarModule,
-  PERFECT_SCROLLBAR_CONFIG,
-  PerfectScrollbarConfigInterface,
-} from './shared/components/perfect-scrollbar';
 import { rootRouterConfig } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
@@ -26,7 +21,11 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { UtilsModule } from '@onerumango/utils';
 import { environment } from '../environments/environment';
-import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import {
+  IcustLibraryModule,
+  PERFECT_SCROLLBAR_CONFIG,
+  PerfectScrollbarConfigInterface,
+} from '@onerumango/icust-element-library';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -46,7 +45,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SharedModule,
     HttpClientModule,
     SwiperModule,
-    PerfectScrollbarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

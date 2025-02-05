@@ -5,7 +5,7 @@ import { QueryParamEnum } from 'app/enum/query-param.enum';
 import { ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SessionService } from 'app/shared/session.service';
-import { UserProfileAction } from '@onerumango/utils';
+import { getParameterByName, UserProfileAction } from '@onerumango/utils';
 import { User } from '@onerumango/utils';
 import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { Observable, Subscription } from 'rxjs';
 export class CallbackComponent implements OnInit, OnDestroy {
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+
   constructor(
     private sessionService: SessionService,
     private router: Router,
@@ -40,10 +41,10 @@ export class CallbackComponent implements OnInit, OnDestroy {
     this.sessionService
       .signin(payload, isRememberMe, otpRequired)
       .subscribe((_) => {
-        /* get profile info */
         this.store.dispatch(UserProfileAction.loadUserProfile());
-        this.getProfile();
       });
+
+    this.getProfile();
   }
 
   /**
@@ -52,67 +53,56 @@ export class CallbackComponent implements OnInit, OnDestroy {
   getProfile() {
     const userProfileSubscription$ = this.userProfile$.subscribe(async () => {
       this.sessionStorageService.setCustomerId(
-        <string>this.getParameterByName('customerId'),
+        <string>getParameterByName('customerId'),
       );
       this.sessionStorageService.setMobile(
-        <string>this.getParameterByName('mobile'),
+        <string>getParameterByName('mobile'),
       );
       this.sessionStorageService.setReferanceNumber(
-        <string>this.getParameterByName('referanceNumber'),
+        <string>getParameterByName('referanceNumber'),
       );
       this.sessionStorageService.setType(
-        JSON.stringify(this.getParameterByName('type')),
+        JSON.stringify(getParameterByName('type')),
       );
       this.sessionStorageService.setScreenId(
-        <string>this.getParameterByName(QueryParamEnum.SCREEN_ID),
+        <string>getParameterByName(QueryParamEnum.SCREEN_ID),
       );
-      if (this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
+      if (getParameterByName(QueryParamEnum.CHECKLIST_ITEM)) {
         const checklistObj: ChecklistRouteObjModel = {
-          checklistItem: this.getParameterByName(QueryParamEnum.CHECKLIST_ITEM),
-          processStageId: this.getParameterByName(
-            QueryParamEnum.PROCESS_STAGE_ID,
-          ),
-          screenId: this.getParameterByName(QueryParamEnum.SCREEN_ID),
-          processCycleCode: this.getParameterByName(
+          checklistItem: getParameterByName(QueryParamEnum.CHECKLIST_ITEM),
+          processStageId: getParameterByName(QueryParamEnum.PROCESS_STAGE_ID),
+          screenId: getParameterByName(QueryParamEnum.SCREEN_ID),
+          processCycleCode: getParameterByName(
             QueryParamEnum.PROCESS_CYCLE_CODE,
           ),
         };
         this.sessionStorageService.setChecklistRouteObj(checklistObj);
       }
       if (
-        this.getParameterByName('customerId') != null &&
-        this.getParameterByName('mobile') != null
+        getParameterByName('customerId') != null &&
+        getParameterByName('mobile') != null
       ) {
         this.router.navigate([`/origination/otp`], {
-          queryParams: { type: `${this.getParameterByName('screen')}` },
+          queryParams: { type: `${getParameterByName('screen')}` },
         });
-      } else if (this.getParameterByName('route') == 'tracking') {
-        this.router.navigate([`${this.getParameterByName('route')}`]);
+      } else if (getParameterByName('route') == 'tracking') {
+        this.router.navigate([`${getParameterByName('route')}`]);
       } else {
         sessionStorage.setItem(
           'originationId',
-          JSON.stringify(this.getParameterByName('originationId')),
+          JSON.stringify(getParameterByName('originationId')),
         );
 
         this.sessionStorageService.setProcessCycleCode(
-          this.getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
+          getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
         );
 
         this.router.navigate([
-          `/origination/${this.getParameterByName('route')}`,
+          `/origination/request-process/${getParameterByName('route')}`,
         ]);
       }
     });
     this.subscriptions.push(userProfileSubscription$);
-  }
-
-  getParameterByName(name: any, url = window.location.href) {
-    name = name.replace(/[[\]]/g, '\\$&');
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
   ngOnDestroy() {

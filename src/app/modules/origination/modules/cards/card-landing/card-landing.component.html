@@ -1,0 +1,70 @@
+<section class="container hero_section">
+  <div class="row">
+    <div class="col-12 col-lg-7 py-3 py-md-5 order-1 order-lg-0">
+      <h1 class="hero_title">
+        Innovate Finances,<br />
+        Enrich Lives - <br />Welcome to <br />Demobank Cards!
+      </h1>
+      <p class="hero_subtitle">
+        Experience financial empowerment with tailored solutions that meet your
+        needs, exclusively from our bank.
+      </p>
+      <div class="apply_div">
+        <!-- <button
+          type="button"
+          class="apply_btn"
+          [routerLink]="['/card/card-type']"
+        >
+          Apply
+        </button> -->
+        <ic-button
+          label="Apply"
+          icButtonType="filled-rounded"
+          size="large"
+          [routerLink]="['/card/card-type']"
+        ></ic-button>
+        <div class="stacked_imgs_div">
+          <div class="img_wrapper">
+            <img
+              src="/src/assets/images/images.png"
+              alt="Ellipse61965"
+              class="image-upload"
+            />
+          </div>
+          <div class="stacked_div_text">
+            <h2>4K+</h2>
+            <p>users worldwide</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-5 order-0 order-lg-1 hero_image_container">
+      <img
+        src="../../../../../../assets/images/debit-card.png"
+        alt="debit card"
+        class="card_hero_image debit_card"
+      />
+      <img
+        src="../../../../../../assets/images/card-shadow.svg"
+        alt="debit card"
+        class="card_hero_image card_shadow"
+      />
+      <img
+        src="../../../../../../assets/images/hand.png"
+        alt="debit card"
+        class="card_hero_image hand"
+      />
+    </div>
+  </div>
+</section>
+<div class="mar-20">
+  <app-card-diverse></app-card-diverse>
+</div>
+
+<div class="top-performing mar-20">
+  <app-top-performing></app-top-performing>
+</div>
+
+<div class="mar-20">
+  <app-news-letter-slider></app-news-letter-slider>
+</div>

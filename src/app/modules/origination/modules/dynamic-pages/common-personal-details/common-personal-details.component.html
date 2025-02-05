@@ -1,0 +1,332 @@
+<div fxLayout="column" *ngIf="customerDetailsForm">
+  <form [formGroup]="customerDetailsForm">
+    <div formArrayName="customer">
+      <div *ngFor="let customer of customer.controls; let i = index">
+        <div [formGroup]="customer | formgroup">
+          <div class="custom_accordin">
+            <mat-accordion>
+              <mat-expansion-panel
+                [expanded]="i === 0"
+                (opened)="panelOpened(i)"
+              >
+                <mat-expansion-panel-header class="customer_Header">
+                  <mat-panel-description class="customer_Header_description">
+                    <div fxLayout="row">
+                      <img
+                        *ngIf="customer.valid"
+                        src="../../../../../../assets/images/done_icon.svg"
+                        alt="image"
+                      />
+                      <span style="margin-left: 10px"
+                        >Applicant {{ i + 1 }}</span
+                      >
+                    </div>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                  <div class="col-md-6 col-12" *ngIf="!isHideField">
+                    <ic-form-field
+                      *ngIf="!isHideField"
+                      label="CIF Number"
+                      [control]="customer.get('customerNo') | formcontrol"
+                      [readonly]="true"
+                      [icSpecialAlphaNumeric]="true"
+                    ></ic-form-field>
+                  </div>
+                  <div
+                    class="col-md-6 col-12 default-toggle-slide pb-12"
+                    fxLayoutAlign="end center"
+                    *ngIf="!isHideField"
+                  >
+                    <span class="applicat-text">
+                      Is this applicant a primary customer? *</span
+                    >
+                    <ic-slide-toggle
+                      [formControl]="
+                        customer?.get('primaryCustomer') | formcontrol
+                      "
+                      [disabled]="
+                        checkPrimaryCustomer() && primaryCustIndex !== i
+                      "
+                    >
+                    </ic-slide-toggle>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <ic-select
+                      label="Prefix"
+                      [options]="prefixArray"
+                      bindValueKey="id"
+                      bindLabelKey="values"
+                      [control]="customer.get('prefix') | formcontrol"
+                      (selectionChange)="CheckGenderandPrefix(i)"
+                    ></ic-select>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <ic-form-field
+                      label="First Name"
+                      [control]="customer.get('firstName') | formcontrol"
+                      [icAlphabetOnly]="true"
+                    ></ic-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <ic-form-field
+                      label="lastName"
+                      [control]="customer.get('lastName') | formcontrol"
+                      [icAlphabetOnly]="true"
+                    ></ic-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <mat-form-field
+                      appearance="outline"
+                      class="full-width disable-field"
+                    >
+                      <mat-label>Date Of Birth</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="dateOfBirth"
+                        name="dateOfBirth"
+                        [matDatepicker]="picker"
+                        [max]="todayDate"
+                        readonly
+                        (dateChange)="
+                          dateOfBirthSelected(
+                            customerDetailsForm.value.customer[0].dateOfBirth,
+                            i
+                          )
+                        "
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon
+                          >calendar_today</mat-icon
+                        >
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error
+                        *ngIf="
+                          customer.get('dateOfBirth')?.touched &&
+                          customer.get('dateOfBirth')?.hasError('required')
+                        "
+                      >
+                        Date of Birth is required
+                      </mat-error>
+                      <mat-error
+                        *ngIf="
+                          customer.get('dateOfBirth')?.hasError('invalidDob')
+                        "
+                      >
+                        {{ errorDob }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <ic-form-field
+                      label="Email"
+                      [control]="
+                        customer.get('contact')?.get('email') | formcontrol
+                      "
+                      [customError]="
+                        customer
+                          .get('contact')
+                          ?.get('email')
+                          ?.hasError('pattern')
+                          ? 'Please enter Valid Email'
+                          : ''
+                      "
+                    ></ic-form-field>
+                  </div>
+                  <div class="col-md-6 col-12" fxLayout="column">
+                    <ic-mobile-field
+                      label="Mobile Number"
+                      [control]="
+                        customer.get('contact')?.get('mobile') | formcontrol
+                      "
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        customer.get('contact')?.get('mobtCode') | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                    ></ic-mobile-field>
+                  </div>
+
+                  <div class="col-md-6 col-12">
+                    <ic-select
+                      [options]="genderArray"
+                      label="Gender"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      [control]="customer.get('gender') | formcontrol"
+                      (selectionChange)="CheckGenderandPrefix(i)"
+                    ></ic-select>
+                  </div>
+                  <div class="col-md-6 col-12 mb-md-3">
+                    <ic-select
+                      [options]="nationalityArray"
+                      label="Nationality"
+                      bindLabelKey="nationality"
+                      bindValueKey="nationality"
+                      [control]="customer.get('nationality') | formcontrol"
+                    ></ic-select>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <ic-select
+                      [options]="maritalStatusArray"
+                      label="Martial Status"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      [control]="customer.get('maritalStatus') | formcontrol"
+                    ></ic-select>
+                  </div>
+                  <div class="highlight_title">Address Details</div>
+                  <ng-container>
+                    <div
+                      class="row"
+                      *ngIf="
+                        customer.get('contact.address')?.value as addressControl
+                      "
+                    >
+                      <ng-container
+                        *ngFor="
+                          let addressGroup of (
+                            customer?.get('contact')?.get('address') | formarray
+                          ).controls;
+                          let addressIndex = index
+                        "
+                        [formGroup]="addressGroup | formgroup"
+                      >
+                        <div class="col-md-12 col-12">
+                          <ic-form-field
+                            label="Address"
+                            [control]="
+                              addressGroup.get('address1') | formcontrol
+                            "
+                            [isRequired]="true"
+                          ></ic-form-field>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <ic-select
+                            [options]="residenceTypeArray"
+                            label="Residence Type"
+                            bindLabelKey="values"
+                            bindValueKey="id"
+                            [control]="
+                              addressGroup.get('residenceType') | formcontrol
+                            "
+                            [isRequired]="true"
+                          ></ic-select>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <ic-select
+                            [options]="countryArray"
+                            label="Country"
+                            bindLabelKey="countryName"
+                            bindValueKey="countryName"
+                            [control]="
+                              addressGroup.get('countryName') | formcontrol
+                            "
+                            [isRequired]="true"
+                          ></ic-select>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="Zip Code"
+                            [control]="
+                              addressGroup.get('pincode') | formcontrol
+                            "
+                            suffixIcon="search_icon"
+                            (onSuffixClick)="pincodeExpansion()"
+                            [maxLength]="10"
+                            [icNumbersOnly]="true"
+                            [isRequired]="true"
+                          ></ic-form-field>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="State"
+                            [control]="
+                              addressGroup.get('stateName') | formcontrol
+                            "
+                            [readonly]="true"
+                          ></ic-form-field>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <ic-form-field
+                            label="City"
+                            [control]="
+                              addressGroup.get('cityName') | formcontrol
+                            "
+                            [readonly]="true"
+                          ></ic-form-field>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <div
+                    fxFlex="100"
+                    fxLayout="row"
+                    fxLayoutGap="2%"
+                    style="margin-top: 50px"
+                    class="col-12"
+                    *ngIf="!isHideField"
+                  >
+                    <div *ngIf="customerDetailsForm.value.customer.length > 1">
+                      <ic-button
+                        [label]="'Save' | translate"
+                        [type]="'submit'"
+                        size="large"
+                        [icButtonType]="'filled-rounded'"
+                        [disabled]="!customer.valid"
+                        (OnClick)="saveCustomer(i)"
+                      >
+                      </ic-button>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="!isHideField && holderType === 'joint'">
+    <div
+      class="add_applicant"
+      (click)="holderType === 'joint' && addCustomer(customer.controls.length)"
+      (keydown.enter)="
+        holderType === 'joint' && addCustomer(customer.controls.length)
+      "
+      tabindex="0"
+    >
+      Add Another Applicant
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="2%" style="margin-top: 50px">
+    <div>
+      <ic-button
+        [label]="'Confirm' | translate"
+        [type]="'submit'"
+        size="large"
+        [icButtonType]="'filled-rounded'"
+        [disabled]="!customerDetailsForm.valid"
+        (OnClick)="confirmCustomer()"
+      >
+      </ic-button>
+    </div>
+    <div>
+      <ic-button
+        [label]="'Back'"
+        icButtonType="ghost-rounded-danger"
+        size="large"
+        [type]="'button'"
+        (OnClick)="goBack()"
+      >
+      </ic-button>
+    </div>
+  </div>
+</div>

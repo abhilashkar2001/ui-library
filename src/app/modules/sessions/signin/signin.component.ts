@@ -6,7 +6,7 @@ import { TokenStorageService } from '@onerumango/utils';
 import { SessionService } from 'app/shared/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
+import { NewErrorPopupComponent } from 'app/shared/components/new-error-popup/new-error-popup.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
+import { NewErrorPopupComponent } from 'app/shared/components/new-error-popup/new-error-popup.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../card.service';
 import {
