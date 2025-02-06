@@ -1,7 +1,14 @@
 <div fxFlex="100" class="imageDisplayDiv">
   <div fxLayout="row" fxLayoutAlign="space-between" class="imageNameDisplayDiv">
     <div fxLayoutAlign="start" class="imgName">{{ data.imageName }}</div>
-    <img (click)="closeDialog()" [tabIndex]="1" (keydown.enter)="closeDialog()" role="button" src="assets/images/cancelIcon.svg" alt="Cancel Image" />
+    <img
+      (click)="closeDialog()"
+      [tabIndex]="1"
+      (keydown.enter)="closeDialog()"
+      role="button"
+      src="assets/images/cancelIcon.svg"
+      alt="Cancel Image"
+    />
     <!-- <mat-icon >close</mat-icon> -->
   </div>
   <div class="imageView">
