@@ -1,10 +1,5 @@
 import { FACTORYPOPULATE } from './factory-populate.models';
 
-export interface GenericValuePayloadModel {
-  screenName: string[];
-  genericName: string[];
-}
-
 export interface GenericValueInfoModel {
   [key: string]: GenericValueData[];
 }
@@ -23,13 +18,4 @@ export interface GETGENERICVALUE {
     | FACTORYPOPULATE[];
   message: string;
   error?: string;
-}
-
-export interface Data {
-  DOCUMENTNAME: Documentname[];
-}
-
-export interface Documentname {
-  id: number;
-  values: string;
 }

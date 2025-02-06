@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 // SERVICES
 import { ThemeService } from './services/theme.service';
 import { NavigationService } from './services/navigation.service';
-import { RoutePartsService } from './services/route-parts.service';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { AppLoaderService } from './services/app-loader/app-loader.service';
 
@@ -16,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SearchModule } from './search/search.module';
 import { InputMaskModule } from './directives/input-mask/input-mask.module';
+import { RoutePartsService } from '@onerumango/utils';
 
 @NgModule({
   imports: [

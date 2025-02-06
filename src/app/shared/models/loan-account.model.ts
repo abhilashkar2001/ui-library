@@ -53,11 +53,3 @@ export interface LoanAccount {
   type: string;
   accountList: Account[];
 }
-
-export interface LoanDetails {
-  customerId: string | null;
-  customerNo: string | null;
-  customerName: string | null;
-  mobileNumber: string | null;
-  accounts: LoanAccount[];
-}
