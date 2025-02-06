@@ -129,11 +129,7 @@ export class CardService {
       payload,
     );
   }
-  fetchListOfCards(customerId: number) {
-    return this.http.get<IcHttpResponseModel<string[]>>(
-      `${baseUrl}/card/fetch-cardNo?customerId=${customerId}`,
-    );
-  }
+
   fetchEmiDetails(cardNo: any, customerId: any) {
     return this.http.get<IcHttpResponseModel<EmiDetails[]>>(
       `${baseUrl}/card/fetch-emi?cardNo=${cardNo}&customerId=${customerId}`,

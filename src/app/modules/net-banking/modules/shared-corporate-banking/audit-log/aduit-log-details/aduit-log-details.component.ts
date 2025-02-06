@@ -3,7 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
+  OnChanges,
   Output,
   SimpleChanges,
   ViewChild,
@@ -20,17 +20,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./aduit-log-details.component.scss'],
   providers: [DatePipe],
 })
-export class AduitLogDetailsComponent implements OnInit {
+export class AduitLogDetailsComponent implements OnChanges {
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
-  selectedFilterIndex = 0;
   filterValue = '';
-  selectedFilterBy: string | any;
   dataSource = new MatTableDataSource();
-  displayedColumns: any;
   @Input() isShowCancel: any;
-  // Remove this @Input when real time api integarate
   @Input() dummyData: any[] = [];
   @Input() auditlogHistory: any;
   @Input() auditInfo: any;
@@ -86,10 +82,6 @@ export class AduitLogDetailsComponent implements OnInit {
     private api: AuditLogService,
     private cdr: ChangeDetectorRef,
   ) {}
-
-  ngOnInit(): void {
-    //console.log("action", this.auditInfo);
-  }
 
   ngOnChanges(changes: SimpleChanges | any) {
     if (changes.auditInfo) {

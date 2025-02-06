@@ -16,11 +16,4 @@ export class SendMoneyService {
       `${MICROSERVICE_URL}/corp_benieficiary`,
     );
   }
-
-  instantPay(payload: any) {
-    return this.http.post<any>(
-      `${MICROSERVICE_URL}/retail-fund-transfer/transfer-money`,
-      payload,
-    );
-  }
 }
