@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -15,7 +14,7 @@ import { MatStepper } from '@angular/material/stepper';
   templateUrl: './commmon-steeper.component.html',
   styleUrls: ['./commmon-steeper.component.scss'],
 })
-export class CommmonSteeperComponent implements OnChanges, OnInit {
+export class CommmonSteeperComponent implements OnChanges {
   @Input() screenList: any;
   @Input() screenTitle: any;
   @Input() screenIndex = 0;
@@ -23,10 +22,7 @@ export class CommmonSteeperComponent implements OnChanges, OnInit {
   isLinear = true;
   @ViewChild('stepper') myStepper: MatStepper | any;
   @Output() customSelectionChange = new EventEmitter<any>();
-  selectStep = 0;
-  constructor() {}
 
-  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.screenIndex) {
       this.screenIndex = changes?.screenIndex?.currentValue;

@@ -89,6 +89,8 @@
                 <p
                   class="label_value document_label_value"
                   (click)="opnDocument(docItem?.fileUrl, docItem)"
+                  (keydown.enter)="opnDocument(docItem?.fileUrl, docItem)"
+                  [tabindex]="0"
                 >
                   {{ docItem[item?.valueKey] ?? docItem?.fileName
                   }}{{ docItem?.documentSide }}
@@ -123,6 +125,6 @@
       </div>
       <!-- Other Info Summary Ends-->
     </div>
-    <mat-divider *ngIf="i != productInfo?.length - 1"></mat-divider>
+    <mat-divider *ngIf="i !== productInfo?.length - 1"></mat-divider>
   </ng-container>
 </section>

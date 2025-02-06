@@ -18,7 +18,6 @@ export class CreditCardUsageLimitComponent implements OnInit {
   tabs = DrawerConstant.cardLimitTabs;
 
   limitForm!: FormGroup;
-  isEnable = false;
   menuLabels: { [key: number]: string } = {};
   selectedCurrency: any;
   max = 140000;
@@ -40,7 +39,7 @@ export class CreditCardUsageLimitComponent implements OnInit {
   ) {
     this.iconService
       .addIconIfNotExists('info-icon', 'assets/images/svg/info_yellow.svg')
-      .subscribe(() => {});
+      .subscribe();
   }
 
   ngOnInit(): void {

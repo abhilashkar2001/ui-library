@@ -43,15 +43,17 @@
           *ngIf="product.imageUrl; else defaultImage"
           [src]="product.imageUrl"
           class="card-img"
+          alt="Card"
         />
         <ng-template #defaultImage>
           <img
             [src]="
-              indx % 2 == 0
+              indx % 2 === 0
                 ? 'assets/images/applicationlist.svg'
                 : 'assets/images/apllicationdetails.svg'
             "
             class="card-img"
+            alt="Card"
           />
         </ng-template>
         <div class="p-12" fxLayout="column">

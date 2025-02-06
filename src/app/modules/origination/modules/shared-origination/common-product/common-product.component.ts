@@ -3,7 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
+  OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -15,7 +15,7 @@ import { environment } from 'environments/environment';
   templateUrl: './common-product.component.html',
   styleUrls: ['./common-product.component.scss'],
 })
-export class CommonProductComponent implements OnInit {
+export class CommonProductComponent implements OnChanges {
   endPoints = environment.microServiceURL;
   @Input() subAccount: any;
   @Input() productIndex = 0;
@@ -26,7 +26,6 @@ export class CommonProductComponent implements OnInit {
     private snackBar: MatSnackBar,
   ) {}
 
-  ngOnInit(): void {}
   goForCalculator(product: any) {
     console.log(product);
     if (product?.productDetails === null) {
@@ -67,7 +66,5 @@ export class CommonProductComponent implements OnInit {
     }
 
     this.cdr.detectChanges();
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
   }
 }

@@ -47,8 +47,11 @@
                 <a
                   (click)="opened(social?.path)"
                   *ngFor="let social of socialMedia"
+                  (keydown.enter)="opened(social?.path)"
+                  tabIndex="0"
+                  role="button"
                 >
-                  <img [src]="social.imgUrl"
+                  <img [src]="social.imgUrl" alt="Social Media Image"
                 /></a>
               </div>
             </div>

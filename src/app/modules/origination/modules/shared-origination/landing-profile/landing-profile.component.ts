@@ -12,8 +12,6 @@ export class LandingProfileComponent {
   @Input() routeUrl: any;
   @Output() customApply = new EventEmitter<any>();
 
-  constructor() {}
-
   onApply(e: any) {
     this.customApply.emit(e);
   }

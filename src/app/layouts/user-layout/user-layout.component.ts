@@ -1,11 +1,11 @@
 import {
   Component,
   OnInit,
-  AfterViewInit,
   ViewChild,
   HostListener,
   ViewContainerRef,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import {
   Router,
@@ -20,7 +20,6 @@ import { filter } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from 'app/shared/services/layout.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
-import { ThemeService } from 'app/shared/services/theme.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -28,7 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './user-layout.component.html',
   styleUrls: ['./user-layout.component.scss'],
 })
-export class UserLayoutComponent implements OnInit, AfterViewInit {
+export class UserLayoutComponent implements OnInit, OnDestroy {
   public isModuleLoading = false;
   private moduleLoaderSub: Subscription | any;
   private layoutConfSub: Subscription | any;
@@ -40,13 +39,11 @@ export class UserLayoutComponent implements OnInit, AfterViewInit {
   public customPanelClass = 'panel-end-drawer';
   public layoutConf: any = {};
   public adminContainerClasses: any = {};
-  public moduleContainerClass: any = {};
   module: string | any;
 
   constructor(
     private router: Router,
     public translate: TranslateService,
-    public themeService: ThemeService,
     private layout: LayoutService,
     private sidenavService: SidenavService,
     private cdr: ChangeDetectorRef,
@@ -123,8 +120,6 @@ export class UserLayoutComponent implements OnInit, AfterViewInit {
   onResize(event: any) {
     this.layout.adjustLayout(event);
   }
-
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
     if (this.moduleLoaderSub) {

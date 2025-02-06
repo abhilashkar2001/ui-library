@@ -11,19 +11,19 @@
           <mat-card fxFlex="100" fxLayout="row wrap">
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx == 0">Process :</div>
+                <div class="label_title" *ngIf="indx === 0">Process :</div>
                 <div class="label_value">{{ item?.process }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx == 0">Date & Time</div>
+                <div class="label_title" *ngIf="indx === 0">Date & Time</div>
                 <div class="label_value">{{ item?.processDate }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx == 0">Description</div>
+                <div class="label_title" *ngIf="indx === 0">Description</div>
                 <div class="label_value">
                   {{ item?.description }}
                 </div>
@@ -31,7 +31,7 @@
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx == 0">Status :</div>
+                <div class="label_title" *ngIf="indx === 0">Status :</div>
                 <div
                   class="statusVal"
                   [ngClass]="[
