@@ -19,7 +19,6 @@ import { NewDepositService } from 'app/modules/origination/modules/new-deposit/n
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SharedService } from 'app/shared/shared.service';
 import { environment } from 'environments/environment';
-import { WarningComponent } from '../warning/warning.component';
 import { CustomWebDocUploadServiceService } from './custom-web-doc-upload-service.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -27,11 +26,12 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import { debounceTime } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
-import { ScanComponent } from '../scan/scan.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
+import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 
 enum CreateLoanEnum {
   INTERNAL = 'internal',
@@ -895,12 +895,11 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   checkValidity() {
-    return Math.abs(this.documentTypeArray?.length - this?.hideSelect?.length) <
-      1 ||
+    return (
+      Math.abs(this.documentTypeArray?.length - this?.hideSelect?.length) < 1 ||
       this.documentTypeArray?.length ==
         this.createDocumentForm.value.otherDocument.length
-      ? true
-      : false;
+    );
   }
 
   openDialog(check?: string) {

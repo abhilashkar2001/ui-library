@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ReusableAlertPopupComponent } from 'app/shared/components/reusable-alert-popup/reusable-alert-popup.component';
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-cibil-score-container',
@@ -31,54 +27,10 @@ export class CibilScoreContainerComponent {
   agreed = false;
   isOtpAllowed = false;
 
-  constructor(
-    private commonService: CommonService,
-    private openAccountService: OpenAccountService,
-    private dialog: MatDialog,
-    private sessionStorageService: SessionStorageService,
-  ) {}
-
-  customerConsent() {
-    const dialogRef = this.dialog.open(ReusableAlertPopupComponent, {
-      data: {
-        msg: 'Can I use the same verified number to check the credit bureau',
-      },
-      width: '750px',
-      height: '400px',
-      disableClose: true,
-      panelClass: 'popup-dialog-class',
-      backdropClass: 'bdrop',
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      if (resp) {
-        this.showCibilScoreResult = true;
-      } else {
-        this.showCibilScoreResult = false;
-        this.selectedOption = 'different';
-      }
-    });
-  }
+  constructor(private openAccountService: OpenAccountService) {}
 
   onBack() {
     this.backEvent.emit();
-  }
-
-  radioChange(event: any) {
-    this.isDifferentMobile = event.value === 'same' ? false : true;
-    this.commonService.isUserUsingDifferentMobile(this.isDifferentMobile);
-    const tempRow = [
-      { stepName: 'Personal Details' },
-      { stepName: 'Select KYC' },
-    ];
-    this.isDifferentMobile
-      ? this.isDifferentMobileNumber.emit({
-          steps: tempRow,
-          isDifferentMobile: true,
-        })
-      : this.isDifferentMobileNumber.emit({
-          steps: [],
-          isDifferentMobile: false,
-        });
   }
 
   onBackCIBILScoreResult() {
@@ -110,34 +62,11 @@ export class CibilScoreContainerComponent {
     this.confirmEvent.emit();
   }
 
-  getOTP(event: any) {
-    this.phone = event.phone;
-    this.sessionStorageService.setLoanPhone(this.phone);
-    this.showOtpSection = true;
-    this.openAccountService.getOtp(this.phone).subscribe(() => {
-      this.otpSent = true;
-      setTimeout(() => {
-        this.otpSent = false;
-      }, 5000);
-    });
-  }
-
   checkCobilConfim() {
     if (this.selectedOption === 'same') return false;
     else {
       if (!(this.isOtpAllowed && this.agreed)) return true;
       else return false;
-    }
-  }
-  enteredOtp(event: any) {
-    this.otp = event.otp;
-    this.agreed = event?.agreed;
-    this.isOtpAllowed = this.otp && this.otp?.length >= 6 ? true : false;
-  }
-
-  otpTimer(event: any) {
-    if (event.seconds == '00:00') {
-      this.isOtpAllowed = false;
     }
   }
 }

@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { TokenStorageService } from '@onerumango/utils';
+import { NewErrorPopupComponent, TokenStorageService } from '@onerumango/utils';
 import { SessionService } from 'app/shared/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { NewErrorPopupComponent } from 'app/shared/components/new-error-popup/new-error-popup.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -105,18 +104,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   onVerify() {
     this.getProfile();
-    // this.commonService.verifyOTP(payload).subscribe((res: any) => {
-    //   if (res.data !== "Invalid OTP") {
-    //     this.tokenService.saveToken(res?.accessToken);
-    //     this.getProfile();
-    //   } else {
-    //     this.snack.open(res.message, "OK", {
-    //       duration: 4000,
-    //       verticalPosition: "top",
-    //       horizontalPosition: "right",
-    //     });
-    //   }
-    // });
   }
 
   fetchThemeAndLanguange() {

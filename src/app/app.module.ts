@@ -10,7 +10,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { LayoutsModule } from './layouts/layouts.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { InterceptorProviders } from './shared/interceptors/interceptors';
 import { SwiperModule } from 'swiper/angular';
 import { ToastrModule } from 'ngx-toastr';
 import { CustomDateAdapter } from './shared/services/date-time/customDateAdapter';
@@ -19,7 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { UtilsModule } from '@onerumango/utils';
+import { InterceptorProviders, UtilsModule } from '@onerumango/utils';
 import { environment } from '../environments/environment';
 import {
   IcustLibraryModule,
@@ -78,7 +77,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
-    // REQUIRED IF YOU USE JWT AUTHENTICATION
     InterceptorProviders,
     CustomDateAdapter,
     { provide: DateAdapter, useClass: CustomDateAdapter },

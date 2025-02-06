@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
-import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { OCRService } from 'app/shared/services/ocr.service';
 import { NotificationService } from 'app/shared/services/notification.service';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
@@ -10,6 +9,7 @@ import { SalaryAccountService } from '../salary-account/salary-account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { CustomSuccessPopupComponent } from '../../../../shared-corporate-banking/custom-success-popup/custom-success-popup.component';
 
 @Component({
   selector: 'app-add-salary-account',

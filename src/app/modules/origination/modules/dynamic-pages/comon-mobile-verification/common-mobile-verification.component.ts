@@ -19,9 +19,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from 'app/shared/services/common-service/common.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { debounceTime } from 'rxjs/operators';
-import { ErrorNotifierPopupComponent } from '../../../../../shared/components/error-notifier-popup/error-notifier-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 
 @Component({
   selector: 'app-common-mobile-verification',

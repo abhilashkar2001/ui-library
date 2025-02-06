@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterBy } from 'app/shared/helpers/utils';
 import { bgConstant } from './bg-summary.constant';
-import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
 import { BgSummaryServiceService } from './bg-summary-service.service';
-import { DrawerConstant } from '../../../../../../../shared/components/custom-drawer/custom-drawer.constant';
 import { MatDialog } from '@angular/material/dialog';
+import { AddNewPopupComponent } from '../../../../shared-corporate-banking/add-new-popup/add-new-popup.component';
 
 @Component({
   selector: 'app-bg-summary',
@@ -37,8 +36,6 @@ export class BgSummaryComponent implements OnInit {
   };
   isSummary = true;
   componentName: any;
-  tradeMenus = DrawerConstant.DRAWER_MENU;
-  matchedObject: any;
   summaryDetails: any;
   addNewList = bgConstant.ADDNEW_LIST;
   constructor(
@@ -120,7 +117,7 @@ export class BgSummaryComponent implements OnInit {
 
   /**
    * Note: if templateName is avilable then it should be send by params
-   * @param template templateName or id
+   * @param id
    */
   getBGType(id?: number) {
     this.route.navigate([`${this.summaryDetails.addNewPath}`], {

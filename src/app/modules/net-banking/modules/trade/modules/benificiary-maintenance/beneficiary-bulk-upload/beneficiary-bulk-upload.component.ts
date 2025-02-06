@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { CommonService } from 'app/shared/services/common-service/common.service';
-import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { BeneficiaryService } from '../beneficiary-summary/beneficiary.service';
 import { BulkUploadConstant } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/add-bulk-upload/bulk.upload.constant';
 import { BulkUploadServiceService } from 'app/modules/net-banking/modules/dashboard/modules/fund-transfer/bulk-upload/bulk-upload-service.service';
@@ -13,6 +10,8 @@ import { Store } from '@ngrx/store';
 import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '@onerumango/utils';
+import { AllInOnePopupComponent } from '../../../../shared-corporate-banking/all-in-one-popup/all-in-one-popup.component';
+import { CustomSuccessPopupComponent } from '../../../../shared-corporate-banking/custom-success-popup/custom-success-popup.component';
 
 @Component({
   selector: 'app-beneficiary-bulk-upload',
@@ -20,10 +19,7 @@ import { User } from '@onerumango/utils';
   styleUrls: ['./beneficiary-bulk-upload.component.scss'],
 })
 export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
-  public approvalForm!: FormGroup;
   isEdit = false;
-
-  approvalList = [];
 
   columns = BulkUploadConstant.GENERIC_COLUMNS;
   staticData = {
@@ -40,24 +36,17 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
   auditLogObject: any = {};
   bulkId: any;
   transactionDetails: any;
-  templateFileList: any = [];
   bulkUploadDetails: any;
   page: any;
   pageSize: any;
   filterBy: any;
 
-  pendingLevel = {
-    action: 'PENDING',
-    userDetais: {},
-  };
   actionType: any;
   transactionIds: any[] = [];
   currentUser: any;
   otp: any;
   referenceNo: any;
   remarks = '';
-  isTransactionActionDone = false;
-  bulkUploadType: any = 'Bulk Upload';
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
 
@@ -77,10 +66,6 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
     this.loadUserProfile();
     this.isEdit = true;
     this.referenceNo = this.route.snapshot.params['id'];
-    if (this.bulkId != 'addNew') {
-      // this.getTransactionLevelStatus();
-      // this.tansactionAction();
-    }
   }
 
   loadUserProfile() {
@@ -91,26 +76,6 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(loadUserProfileSub);
   }
-
-  // tansactionAction() {
-  //   this.api.getBulkUploadRecords(this.bulkId).subscribe((resp) => {
-  //     const data = resp.data[0].corpFundDetails;
-  //     this.isTransactionActionDone =
-  //       data.every((item) => item.uploadstatus === "APPROVED") ||
-  //       data.every((item) => item.uploadstatus === "REJECTED");
-  //   });
-  // }
-
-  // getTransactionLevelStatus() {
-  //   this.api.getLevelApprovalStatus(this.bulkId).subscribe((resp) => {
-  //     if (resp?.statusCode === 200) {
-  //       this.approvalList = resp.data;
-  //       if (this.approvalList?.length === 1) {
-  //         this.approvalList.push(this.pendingLevel);
-  //       }
-  //     }
-  //   });
-  // }
 
   getBulkUploadDetailsById(filter: any) {
     this.benificiaryService
@@ -128,20 +93,6 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
     this.pageSize = filters?.size || 5;
     this.filterBy = filters.filterBy;
     this.getBulkUploadDetailsById(filters);
-  }
-
-  customUpdateRecord(event: any) {
-    console.log(event, 'button action', this.transactionDetails);
-    this.actionType = event.operation;
-    this.transactionIds = [];
-    this.transactionDetails.forEach((transaction: any) => {
-      this.transactionIds.push({
-        ids: transaction.multiJournalId,
-        status: event.operation === 'Authorize' ? 'APPROVED' : 'REJECTED',
-      });
-    });
-
-    this.openRemark();
   }
 
   openRemark() {
@@ -199,7 +150,7 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
   }
 
   openSuccessDialog(resp: any) {
-    const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
+    this.dialog.open(SuccessPopupComponent, {
       data: {
         // referenceNo: this.data.referenceNo,
         isNetBanking: true,
@@ -212,18 +163,11 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
       panelClass: 'popup-dialog-class',
       backdropClass: 'bdrop',
     });
-    dialogRefrence.afterClosed().subscribe(() => {
-      console.log('........');
-    });
   }
 
   goBack() {
     console.log('/////////');
     this.router.navigate(['/user/trade/beneficiary']);
-  }
-
-  processTransaction(event: any) {
-    this.transactionDetails = event;
   }
 
   customSaveBulkUpload(event: any) {
@@ -289,18 +233,6 @@ export class BeneficiaryBulkUploadComponent implements OnInit, OnDestroy {
       });
   }
 
-  downloadRecord() {
-    console.log('..........');
-    this.api.downloadBulkUpload(this.bulkId).subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/octet-stream' });
-
-      const downloadURL = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = 'report.xlsx';
-      link.click();
-    });
-  }
   ngOnDestroy() {
     this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }

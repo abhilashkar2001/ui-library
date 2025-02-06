@@ -5,9 +5,9 @@ import { ServiceCallHandler } from 'app/shared/service-call.handler';
 import { IconService } from 'app/shared/services/icon.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { LimitType } from '../../credit-card-usage-limit.store';
-import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawer.constant';
 import { CreditcardService } from '../../creditcard.service';
 import { debounceTime } from 'rxjs/operators';
+import { DrawerConstant } from '../../../../../shared-corporate-banking/custom-drawer/custom-drawer.constant';
 
 @Component({
   selector: 'app-credit-card-usage-limit',
@@ -49,21 +49,7 @@ export class CreditCardUsageLimitComponent implements OnInit {
     this.selectedTabName == 'Domestic limits';
   }
 
-  fetchCardDetails() {
-    const customerInfo: any = this.sessionStorageService.getCustomerInfo();
-    this.creditCardService
-      .getCreditCardList(customerInfo.customerId)
-      .subscribe((res: any) => {
-        if (res.status == 'OK') {
-          this.creditCardList = res.data;
-          console.log(this.creditCardList);
-        }
-      });
-  }
-
   buildDomesticLimit(data?: any) {
-    console.log(data);
-
     this.limitForm = this.fb.group({
       usageType: ['Domestic'],
       cardNo: [data ? data?.cardNo : ''],

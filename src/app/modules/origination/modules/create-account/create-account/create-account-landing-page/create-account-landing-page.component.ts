@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ErrorNotifierPopupComponent } from 'app/shared/components/error-notifier-popup/error-notifier-popup.component';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
@@ -29,6 +28,7 @@ import { User } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
 import { selectUser } from '@onerumango/utils';
 import { take } from 'rxjs/operators';
+import { ErrorNotifierPopupComponent } from '../../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;

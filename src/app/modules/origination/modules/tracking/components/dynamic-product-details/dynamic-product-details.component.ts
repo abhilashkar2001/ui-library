@@ -1,31 +1,23 @@
-import { Location } from '@angular/common';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ImageDialogComponent } from 'app/shared/components/image-dialog/image-dialog.component';
 import { PdfViewerComponent } from 'app/shared/components/pdf-viewer/pdf-viewer.component';
+import { ImageDialogComponent } from '../../../shared-origination/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-loan-product-details',
   templateUrl: './dynamic-product-details.component.html',
   styleUrls: ['./dynamic-product-details.component.scss'],
 })
-export class DynamicProductDetailsComponent implements OnInit {
+export class DynamicProductDetailsComponent implements OnChanges {
   @Input() productInfo: any = [];
   @Input() dynamicKeyHelper: any = {};
-  constructor(
-    private dialog: MatDialog,
-    private location: Location,
-    private router: Router,
-  ) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes.productInfo) {
       this.productInfo = changes.productInfo.currentValue;
     }
   }
-
-  ngOnInit(): void {}
 
   opnDocument(imageUrl: any, doc: any) {
     console.log(imageUrl, doc, 'kkk');
@@ -55,24 +47,5 @@ export class DynamicProductDetailsComponent implements OnInit {
 
   trackByIndex(index: any) {
     return index;
-  }
-
-  /**
-   * ViewFile
-   */
-  public viewUploadedFile(file: any): void {
-    // if (file?.fileType?.toLowerCase() === "pdf") {
-    const url = this.location.prepareExternalUrl(
-      this.router.serializeUrl(
-        this.router.createUrlTree(['/origination/pdf-viewer']),
-      ),
-    );
-    const pdfViewerUrl = `${url}?fileUrl=${encodeURIComponent(
-      file.fileUrl,
-    )}&fileName=${encodeURIComponent(file.fileName)}`;
-    window.open(pdfViewerUrl, '_blank');
-    // } else {
-    //   console.log("File type is not PDF:", file.fileType);
-    // }
   }
 }

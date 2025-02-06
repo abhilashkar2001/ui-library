@@ -9,13 +9,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ImageDialogComponent } from 'app/shared/components/image-dialog/image-dialog.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { AppState, selectLocaleData } from '@onerumango/utils';
-import { environment } from 'environments/environment';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
@@ -33,14 +30,12 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
 
   stepperTitle: string | undefined;
   loanSummaryDetails: any;
-  endPoints = environment.microServiceURL;
   otherUserInfo: any;
   personalDetails: any;
   checkListDoc: any[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
-    private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
@@ -116,37 +111,15 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   onBack() {
     this.backEvent.emit();
   }
-  getFileUrl(url: any) {
-    if (url.includes('https')) {
-      return 'assets/images/account-img1.png';
-    } else {
-      return `${this.endPoints}${url}`;
-    }
-  }
 
   checkDisbursementType() {
-    if (
+    return !!(
       this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue !=
         null &&
       this.loanSummaryDetails?.disbursementDetails?.disbursementTypeValue
         ?.toLowerCase()
         ?.includes('account')
-    )
-      return true;
-    else return false;
-  }
-
-  viewFiles(imageUrl: any, imageName: any): void {
-    console.log(imageName);
-    this.dialog.open(ImageDialogComponent, {
-      data: {
-        imageUrl,
-        imageName: imageName.fileName,
-      },
-      width: '900px',
-      height: '560px',
-      panelClass: 'imageViewDialog',
-    });
+    );
   }
 
   ngOnDestroy(): void {

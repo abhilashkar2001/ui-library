@@ -1,17 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { BulkUploadConstant } from './bulk.upload.constant';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
-import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { CommonService } from 'app/shared/services/common-service/common.service';
-import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { BulkUploadServiceService } from '../bulk-upload/bulk-upload-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '@onerumango/utils';
 import { selectUser } from '@onerumango/utils';
+import { CustomSuccessPopupComponent } from '../../../../shared-corporate-banking/custom-success-popup/custom-success-popup.component';
+import { AllInOnePopupComponent } from '../../../../shared-corporate-banking/all-in-one-popup/all-in-one-popup.component';
 
 @Component({
   selector: 'app-add-bulk-upload',
@@ -19,7 +17,6 @@ import { selectUser } from '@onerumango/utils';
   styleUrls: ['./add-bulk-upload.component.scss'],
 })
 export class AddBulkUploadComponent implements OnInit, OnDestroy {
-  public approvalForm!: FormGroup;
   isEdit = false;
 
   approvalList: any = [];
@@ -39,7 +36,6 @@ export class AddBulkUploadComponent implements OnInit, OnDestroy {
   auditLogObject: any = {};
   bulkId: any;
   transactionDetails: any;
-  templateFileList: any = [];
   bulkUploadDetails: any;
   page: any;
   pageSize: any;
@@ -53,12 +49,10 @@ export class AddBulkUploadComponent implements OnInit, OnDestroy {
   transactionIds: any[] = [];
   currentUser: any;
   otp: any;
-  referenceNo: any;
   remarks = '';
   isTransactionActionDone = false;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
-  // BulkUploadConstant.staticData;
 
   constructor(
     private route: ActivatedRoute,
@@ -200,25 +194,6 @@ export class AddBulkUploadComponent implements OnInit, OnDestroy {
           }
         });
       });
-  }
-
-  openSuccessDialog(resp: any) {
-    const dialogRefrence = this.dialog.open(SuccessPopupComponent, {
-      data: {
-        // referenceNo: this.data.referenceNo,
-        isNetBanking: true,
-        actionType: this.actionType,
-        refrenceNo: resp.data,
-        route: 'pending-for-approval',
-      },
-      width: '750px',
-      disableClose: true,
-      panelClass: 'popup-dialog-class',
-      backdropClass: 'bdrop',
-    });
-    dialogRefrence.afterClosed().subscribe(() => {
-      console.log('........');
-    });
   }
 
   goBack() {

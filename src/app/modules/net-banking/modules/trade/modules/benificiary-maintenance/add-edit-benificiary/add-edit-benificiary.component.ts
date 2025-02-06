@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from '../beneficiary-summary/beneficiary.service';
-import { BankCodePopupComponent } from 'app/shared/components/bank-code-popup/bank-code-popup.component';
 import { IconService } from 'app/shared/services/icon.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { BankCodePopupComponent } from '../../../../shared-corporate-banking/bank-code-popup/bank-code-popup.component';
 
 @Component({
   selector: 'app-add-edit-benificiary',

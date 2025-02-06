@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawer.constant';
+import { Component } from '@angular/core';
+import { DrawerConstant } from '../../../shared-corporate-banking/custom-drawer/custom-drawer.constant';
 
 @Component({
   selector: 'app-manage-debit-card',
   templateUrl: './manage-debit-card.component.html',
   styleUrls: ['./manage-debit-card.component.scss'],
 })
-export class ManageDebitCardComponent implements OnInit {
+export class ManageDebitCardComponent {
   tabs = DrawerConstant.cardMenuTabs;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

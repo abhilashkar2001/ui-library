@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NewErrorPopupComponent } from 'app/shared/components/new-error-popup/new-error-popup.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../card.service';
 import {
@@ -8,6 +7,7 @@ import {
   MatDialog,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { NewErrorPopupComponent } from '@onerumango/utils';
 
 @Component({
   selector: 'app-get-statement-popup',
@@ -94,16 +94,6 @@ export class GetStatementPopupComponent implements OnInit {
     link.click();
     window.URL.revokeObjectURL(url);
   }
-
-  // openPopUp() {
-  //   const dialogRef = this.dialog.open(SuccessPopupComponent, {
-  //     data: "File Downloaded successfully",
-  //     panelClass: "custom-popup-container",
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log(result);
-  //   });
-  // }
 
   errorPopUp(res: any) {
     const errPayload = {

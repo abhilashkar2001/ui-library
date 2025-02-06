@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -21,7 +22,6 @@ import * as moment from 'moment';
 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
-import { ErrorNotifierPopupComponent } from '../../../../../shared/components/error-notifier-popup/error-notifier-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from './personal-details.constant';
@@ -32,13 +32,16 @@ import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',
   styleUrls: ['./common-personal-details.component.scss'],
 })
-export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
+export class CommonPersonalDetailsComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   customerDetailsForm!: FormGroup;
   @Output() CustomSubmit = new EventEmitter<Data>();
   @Output() backEvent = new EventEmitter<Data>();
@@ -881,7 +884,7 @@ export class CommonPersonalDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnDestory(): void {
+  ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

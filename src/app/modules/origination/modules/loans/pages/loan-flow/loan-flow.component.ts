@@ -18,15 +18,15 @@ import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
 import { AppHostDirective } from 'app/shared/directives/app-host.directive';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { ReusableAlertPopupComponent } from 'app/shared/components/reusable-alert-popup/reusable-alert-popup.component';
 import { DataService } from 'app/shared/services/table-service/data.service';
-import { CustomWebDocUploadServiceService } from 'app/shared/components/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { selectUser } from '@onerumango/utils';
 import { User } from '@onerumango/utils';
+import { CustomWebDocUploadServiceService } from '../../../shared-origination/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
+import { ReusableAlertPopupComponent } from '../../../shared-origination/reusable-alert-popup/reusable-alert-popup.component';
 
 @Component({
   selector: 'app-loan-flow',
