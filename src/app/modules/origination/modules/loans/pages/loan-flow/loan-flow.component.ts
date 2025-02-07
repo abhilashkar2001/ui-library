@@ -16,7 +16,6 @@ import {
 } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
-import { AppHostDirective } from 'app/shared/directives/app-host.directive';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -27,6 +26,7 @@ import { selectUser } from '@onerumango/utils';
 import { User } from '@onerumango/utils';
 import { CustomWebDocUploadServiceService } from '../../../shared-origination/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
 import { ReusableAlertPopupComponent } from '../../../shared-origination/reusable-alert-popup/reusable-alert-popup.component';
+import { WebhostDirective } from '../../../../../../shared/directives/appHost.directive';
 
 @Component({
   selector: 'app-loan-flow',
@@ -59,9 +59,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   isLoading = false;
   dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
   @ViewChild('container') container: any;
-  @ViewChild(AppHostDirective, { static: true }) appAppHost:
-    | AppHostDirective
-    | any;
+  @ViewChild(WebhostDirective, { static: true }) appAppHost!: WebhostDirective;
   componentRef: any;
   currentComponentInfo: any;
   mobileVerifyInfo = {

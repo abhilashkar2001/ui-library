@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
     this.sessionService.signin(payload, isRememberMe, otpRequired).subscribe(
       () => {
         this.store.dispatch(UserProfileAction.loadUserProfile());
-        this.router.navigate(['/account']);
+        this.router.navigate(['/origination/account']);
       },
       () => {
         this.router.navigate(['/home/401']);

@@ -18,7 +18,6 @@ import {
 } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateAccountConstant, CreateEnum } from './create-account.constant';
-import { AppHostDirective } from 'app/shared/directives/app-host.directive';
 import { EmailService } from 'app/shared/services/email.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,6 +28,7 @@ import { Store } from '@ngrx/store';
 import { selectUser } from '@onerumango/utils';
 import { take } from 'rxjs/operators';
 import { ErrorNotifierPopupComponent } from '../../../shared-origination/error-notifier-popup/error-notifier-popup.component';
+import { WebhostDirective } from '../../../../../../shared/directives/appHost.directive';
 
 const { OWNERSHIP, PRODUCT_DUPLICATION_KEY, SOURCE_PAYLOAD_KEY, LOADING_TEXT } =
   CreateEnum;
@@ -60,8 +60,8 @@ export class CreateAccountLandingPageComponent implements OnInit, OnDestroy {
   isLoading = false;
   dynamicScreen = CreateAccountConstant.DYNAMIC_SCREEN;
   @ViewChild('container') container: any;
-  @ViewChild(AppHostDirective, { static: true }) appAppHost:
-    | AppHostDirective
+  @ViewChild(WebhostDirective, { static: true }) appAppHost:
+    | WebhostDirective
     | any;
   componentRef: any;
   currentComponentInfo: any;

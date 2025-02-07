@@ -19,10 +19,24 @@ import { ReusableAlertPopupComponent } from './reusable-alert-popup/reusable-ale
 import { SavingsSubmitDialogComponent } from './savings-submit-dialog/savings-submit-dialog.component';
 import { SelectKycComponent } from './select-kyc/select-kyc.component';
 import { ShowDocumentComponent } from './show-document/show-document.component';
-import { StagingSuccessAreaComponent } from './staging-success-area/staging-success-area.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { TopPerformingComponent } from './top-performing/top-performing.component';
 import { WebDocUploadComponent } from './web-doc-upload/web-doc-upload.component';
+import { SharedMaterialModule } from '../../../../shared/shared-material.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { RouterModule } from '@angular/router';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from '../../../../shared/directives/shared-directives.module';
+import { SwiperModule } from 'swiper/angular';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
+import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 
 const components = [
   CarouselComponent,
@@ -44,14 +58,31 @@ const components = [
   SavingsSubmitDialogComponent,
   SelectKycComponent,
   ShowDocumentComponent,
-  StagingSuccessAreaComponent,
   TermsConditionsComponent,
   TopPerformingComponent,
   WebDocUploadComponent,
 ];
 @NgModule({
   declarations: components,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule,
+    FlexLayoutModule,
+    FusionChartsModule,
+    NgbModule,
+    SharedPipesModule,
+    SharedDirectivesModule,
+    SharedMaterialModule,
+    SharedComponentsModule,
+    NgOtpInputModule,
+    SwiperModule,
+    NgxSpinnerModule,
+    InputMaskModule,
+    IcustLibraryModule,
+  ],
   exports: components,
 })
 export class SharedOriginationModule {}

@@ -12,7 +12,7 @@
       {{ 'Quick Link' | translate }}
     </button>
   </div>
-  <div class="mtcd" *ngIf="viewPayee !== true">
+  <div class="mtcd" *ngIf="!viewPayee">
     <app-dashboard-instant-pay [instantPay]="false"></app-dashboard-instant-pay>
   </div>
   <div class="mtcd">

@@ -21,7 +21,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './ic-custom-amount-input.component.html',
   styleUrls: ['./ic-custom-amount-input.component.scss'],
 })
-export class IcCustomAmountInput implements OnChanges, OnDestroy {
+export class IcCustomAmountInputComponent implements OnChanges, OnDestroy {
   @Input() direction: string | undefined | null;
   @Input() control!: AbstractControl | undefined | null;
   @Input() isdControl: AbstractControl | undefined | null = new FormControl('');

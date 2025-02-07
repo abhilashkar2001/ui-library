@@ -13,7 +13,6 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgOtpInputModule } from 'ng-otp-input';
-import { SearchModule } from './search/search.module';
 import { InputMaskModule } from './directives/input-mask/input-mask.module';
 import { RoutePartsService } from '@onerumango/utils';
 
@@ -24,7 +23,6 @@ import { RoutePartsService } from '@onerumango/utils';
     SharedPipesModule,
     SharedDirectivesModule,
     NgOtpInputModule,
-    SearchModule,
     InputMaskModule,
   ],
   providers: [

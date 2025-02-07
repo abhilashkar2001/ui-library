@@ -20,6 +20,7 @@ import { ChecklistDocumentComponent } from './checklist-document/checklist-docum
 import { DobVerificationComponent } from './dob-verification/dob-verification.component';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module'
     NgOtpInputModule,
     OriginationExternalCallbackRoutingModule,
     SharedPipesModule,
+    SharedOriginationModule,
   ],
 })
 export class OriginationExternalCallbackModule {}

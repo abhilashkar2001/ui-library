@@ -8,14 +8,12 @@ import { AduitLogDetailsComponent } from './audit-log/aduit-log-details/aduit-lo
 import { BankCodePopupComponent } from './bank-code-popup/bank-code-popup.component';
 import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
-import { ChartPage } from './chart/chart.page';
 import { CommonLevelStatusComponent } from './common-level-status/common-level-status.component';
 import { CreatedDurationModelComponent } from './created-duration-model/created-duration-model.component';
 import { CustomDrawerComponent } from './custom-drawer/custom-drawer.component';
 import { CustomPaginationComponent } from './custom-pagination/custom-pagination.component';
 import { CustomSuccessPopupComponent } from './custom-success-popup/custom-success-popup.component';
 import { IcActionButtonComponent } from './ic-action-button/ic-action-button.component';
-import { IcCustomAmountInput } from './ic-custom-amount-input/ic-custom-amount-input.component';
 import { IcCustomInputComponent } from './ic-custom-input/ic-custom-input.component';
 import { IcCustomPayFromComponent } from './ic-custom-pay-from/ic-custom-pay-from.component';
 import { IcRadioButtonComponent } from './ic-radio-button/ic-radio-button.component';
@@ -33,7 +31,7 @@ import { ReusableFavouritiesComponent } from './reusable-favourities/reusable-fa
 import { ReusableNodatafoundComponent } from './reusable-nodatafound/reusable-nodatafound.component';
 import { ReusableTableComponent } from './reusable-table/reusable-table.component';
 import { SelectSingleTransferComponent } from './select-single-transfer/select-single-transfer.component';
-import { SwiperComponent } from 'swiper/angular';
+import { SwiperComponent, SwiperModule } from 'swiper/angular';
 import { DashboardInstantPayComponent } from './widgets/dashboard-instant-pay/dashboard-instant-pay.component';
 import { ExternalLinkComponent } from './widgets/external-link/external-link.component';
 import { LinkPayeeSideBarComponent } from './widgets/link-payee-side-bar/link-payee-side-bar.component';
@@ -41,6 +39,23 @@ import { TabLinkComponent } from './widgets/tab-link/tab-link.component';
 import { ToolbarTabComponent } from './widgets/toolbar-tab/toolbar-tab.component';
 import { ToolbarTitleComponent } from './widgets/toolbar-title/toolbar-title.component';
 import { TransactionCardComponent } from './widgets/transaction-card/transaction-card.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedMaterialModule } from '../../../../shared/shared-material.module';
+import { SwiperCardComponent } from './swiper-card/swiper-card.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
+import { RouterModule } from '@angular/router';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from '../../../../shared/directives/shared-directives.module';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from '../../../../shared/shared.module';
+import { ChartComponent } from './chart/chart.page';
+import { IcCustomAmountInputComponent } from './ic-custom-amount-input/ic-custom-amount-input.component';
 
 const components = [
   AddNewPopupComponent,
@@ -51,14 +66,14 @@ const components = [
   BankCodePopupComponent,
   ButtonLoadingComponent,
   CalendarHeaderComponent,
-  ChartPage,
+  ChartComponent,
   CommonLevelStatusComponent,
   CreatedDurationModelComponent,
   CustomDrawerComponent,
   CustomPaginationComponent,
   CustomSuccessPopupComponent,
   IcActionButtonComponent,
-  IcCustomAmountInput,
+  IcCustomAmountInputComponent,
   IcCustomInputComponent,
   IcCustomPayFromComponent,
   IcRadioButtonComponent,
@@ -84,10 +99,29 @@ const components = [
   ToolbarTabComponent,
   ToolbarTitleComponent,
   TransactionCardComponent,
+  SwiperCardComponent,
 ];
 @NgModule({
   declarations: components,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule,
+    FlexLayoutModule,
+    FusionChartsModule,
+    NgbModule,
+    SharedPipesModule,
+    SharedDirectivesModule,
+    SharedMaterialModule,
+    NgOtpInputModule,
+    SwiperModule,
+    NgxSpinnerModule,
+    InputMaskModule,
+    IcustLibraryModule,
+    SharedModule,
+  ],
   exports: components,
 })
 export class SharedCorporateBankingModule {}

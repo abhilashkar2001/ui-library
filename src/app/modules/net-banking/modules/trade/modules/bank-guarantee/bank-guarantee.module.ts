@@ -15,6 +15,7 @@ import { BgAmendBgInfoComponent } from './components/bg-amend-bg-info/bg-amend-b
 import { BgIssuanceBgInfoComponent } from './components/bg-issuance-bg-info/bg-issuance-bg-info.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { SharedPipesModule } from '../../../../../../shared/pipes/shared-pipes.module';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SharedPipesModule } from '../../../../../../shared/pipes/shared-pipes.m
     TranslateModule,
     BankGuaranteeRoutingModule,
     SharedPipesModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class BankGuaranteeModule {}

@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'account',
+  },
+  {
     path: 'account',
     loadChildren: () =>
       import('./modules/create-account/create-account.module').then(

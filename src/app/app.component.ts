@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { RoutePartsService } from './shared/services/route-parts.service';
 import { filter } from 'rxjs/operators';
 import { UILibIconService } from './shared/services/ui-lib-icon.service';
 import {
@@ -9,6 +8,7 @@ import {
   ThemeOption,
 } from './shared/services/theme-change.service';
 import { RoutingState } from './shared/helpers/routingState';
+import { RoutePartsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-root',

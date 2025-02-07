@@ -7,6 +7,8 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { SharedModule } from 'app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { SharedCorporateBankingModule } from '../../shared-corporate-banking/shared-corporate-banking.module';
+import { SharedCardModule } from '../shared-card/shared-card.module';
 
 @NgModule({
   declarations: [],
@@ -18,6 +20,8 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
     SharedModule,
     SharedMaterialModule,
     RouterModule,
+    SharedCardModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class PrepaidCardModule {}

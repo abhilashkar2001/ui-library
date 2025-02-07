@@ -18,6 +18,7 @@ import { CreditCardInternaltionalLimitComponent } from './component/credit-card-
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     MatCardModule,
     MatSlideToggleModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class ManageCreditCardModule {}

@@ -13,8 +13,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
-import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
-import { SharedDirectivesModule } from 'app/shared/directives/shared-directives.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgOtpInputModule } from 'ng-otp-input';
@@ -37,6 +35,8 @@ import { CreateCdComponent } from './new-deposit/rd-calculator/create-cd/create-
 import { RdCalculatorComponent } from './new-deposit/rd-calculator/rd-calculator.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
 
 @NgModule({
   declarations: [
@@ -74,10 +74,10 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     MatCheckboxModule,
     MatSelectModule,
     SharedMaterialModule,
-    SharedDirectivesModule,
     SharedModule,
-    SharedComponentsModule,
     IcustLibraryModule,
+    SharedOriginationModule,
+    DynamicPagesModule,
     RouterModule.forChild(NewDepositRoutes),
   ],
 })

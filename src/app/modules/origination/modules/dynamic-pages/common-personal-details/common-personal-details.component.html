@@ -200,7 +200,6 @@
                             [control]="
                               addressGroup.get('address1') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-form-field>
                         </div>
 
@@ -213,7 +212,6 @@
                             [control]="
                               addressGroup.get('residenceType') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-select>
                         </div>
                         <div class="col-md-6 col-12">
@@ -225,7 +223,6 @@
                             [control]="
                               addressGroup.get('countryName') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-select>
                         </div>
 
@@ -239,7 +236,6 @@
                             (onSuffixClick)="pincodeExpansion()"
                             [maxLength]="10"
                             [icNumbersOnly]="true"
-                            [isRequired]="true"
                           ></ic-form-field>
                         </div>
 
@@ -273,7 +269,7 @@
                     class="col-12"
                     *ngIf="!isHideField"
                   >
-                    <div *ngIf="customerDetailsForm.value.customer.length > 1">
+                    <div *ngIf="customerDetailsForm.value['customer'].length > 1">
                       <ic-button
                         [label]="'Save' | translate"
                         [type]="'submit'"

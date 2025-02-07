@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     TranslateModule,
     SharedComponentsModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class SendMoneyModule {}

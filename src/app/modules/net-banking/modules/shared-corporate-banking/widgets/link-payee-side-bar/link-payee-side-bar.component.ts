@@ -2,11 +2,9 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { TransactionCardComponent } from '../transaction-card/transaction-card.component';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { CreditCardStore } from 'app/modules/net-banking/modules/card/credit-card/credit-card.store';
 import { MatDialog } from '@angular/material/dialog';
 import { TabModel } from 'app/shared/models/tab-model';
-import { QrcodeComponent } from '../../qrcode/qrcode.component';
 
 @Component({
   selector: 'app-link-payee-side-bar',
@@ -21,7 +19,6 @@ export class LinkPayeeSideBarComponent implements OnInit {
   @ViewChild('focusButton') focusButton!: ElementRef<HTMLButtonElement>;
 
   constructor(
-    private router: Router,
     private dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
@@ -58,16 +55,5 @@ export class LinkPayeeSideBarComponent implements OnInit {
         right: '200px', // Adjust left position
       },
     });
-  }
-
-  addFund() {
-    this.dialog.open(QrcodeComponent, {
-      width: '60%',
-      panelClass: 'qrcodeClass',
-    });
-  }
-
-  navigateToAddPayee() {
-    this.router.navigate([`/send-money/payee/add-payee/dashboard/domestic`]);
   }
 }

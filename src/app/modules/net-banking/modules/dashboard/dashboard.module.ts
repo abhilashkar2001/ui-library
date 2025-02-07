@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [NetBankingDashboardComponent],
@@ -26,6 +27,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     DashboardRoutingModule,
     MatExpansionModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })
