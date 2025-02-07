@@ -24,7 +24,6 @@ export class LoansLandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //please dont'remove from here
     window.scrollTo(0, 0);
     this.updateCurrentRoute();
     this.getLoanServices();
@@ -41,7 +40,7 @@ export class LoansLandingComponent implements OnInit {
   }
 
   customApplyLoan(e: any) {
-    this.router.navigate(['/loan/loan-type'], {
+    this.router.navigate(['/origination/loan/loan-type'], {
       queryParams: { subClass: e },
     });
   }
@@ -52,11 +51,6 @@ export class LoansLandingComponent implements OnInit {
     const targetPosition = targetElement.getBoundingClientRect().top;
     targetPosition > 200 ? targetPosition - 120 : targetPosition;
     if (targetElement) {
-      // targetElement.scrollIntoView({
-      //   top: scrollPosition,
-      //   behavior: "smooth",
-      //   block: "start",
-      // });
       window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     }
   }

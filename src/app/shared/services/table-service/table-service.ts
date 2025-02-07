@@ -7,14 +7,10 @@ import { environment } from 'environments/environment';
   providedIn: 'root',
 })
 export class TableService {
-  _format: string | any;
-  _locale: string | any;
-  currentLocal: any;
   protected basePath = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
   private isEditingSubject = new BehaviorSubject<boolean>(false);
-  isEditing$ = this.isEditingSubject.asObservable();
 
   setEditingStatus(status: boolean) {
     this.isEditingSubject.next(status);

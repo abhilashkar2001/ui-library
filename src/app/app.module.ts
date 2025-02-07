@@ -16,7 +16,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { InterceptorProviders, UtilsModule } from '@onerumango/utils';
+import {
+  InterceptorProviders,
+  ROUTING_STATE,
+  UtilsModule,
+} from '@onerumango/utils';
 import { environment } from '../environments/environment';
 import {
   IcustLibraryModule,
@@ -24,6 +28,7 @@ import {
   PerfectScrollbarConfigInterface,
 } from '@onerumango/icust-element-library';
 import { LayoutsModule } from './layouts/layouts.module';
+import { RoutingState } from './shared/helpers/routingState';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -74,6 +79,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
+    },
+    {
+      provide: ROUTING_STATE,
+      useClass: RoutingState,
     },
     InterceptorProviders,
     CustomDateAdapter,

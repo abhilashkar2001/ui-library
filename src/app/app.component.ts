@@ -8,7 +8,7 @@ import {
   ThemeOption,
 } from './shared/services/theme-change.service';
 import { RoutingState } from './shared/helpers/routingState';
-import { RoutePartsService } from '@onerumango/utils';
+import { LoadingService, RoutePartsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   appTitle = 'iCust';
   pageTitle = '';
   listOfThemeColors: Partial<ThemeOption>[];
+  show = false;
 
   constructor(
     public title: Title,
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
     private iconService: UILibIconService,
     private themeChangeService: ThemeChangeService,
     private routingState: RoutingState,
+    private _loaderService: LoadingService,
   ) {
     this.listOfThemeColors = this.themeChangeService.themeColors;
 
@@ -40,6 +42,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.changePageTitle();
+
+    this._loaderService.show$.subscribe((res) => {
+      this.show = res;
+    });
   }
 
   changePageTitle() {

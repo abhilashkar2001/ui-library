@@ -80,37 +80,6 @@ export class LoanService {
   }
 
   /**
-   * @param accNo to download repayment schedule data for respective account Number
-   *  */
-  downloadRepaymentSchedule(accNo: number) {
-    const httpOptions = {
-      responseType: 'blob' as 'json',
-    };
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadRepaymentSchedule?originationAccNo=${accNo}`,
-      httpOptions,
-    );
-  }
-
-  /**
-   * @param custId to fetch statistics data for respective customer id
-   *  */
-  fetchStatistics(custId: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/loanSummaryStatistics?custId=${custId}`,
-    );
-  }
-
-  /**
-   * @param custId to fetch recent transaction data for respective customer id
-   *  */
-  fetchRecentTrans(custId: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/retail-fund-transfer/fetchRecentTransaction?customerId=${custId}`,
-    );
-  }
-
-  /**
    * @param accNo to fetch loan installment details for respective account number
    *  */
   fetchLoanInstallment(accNo: number) {
