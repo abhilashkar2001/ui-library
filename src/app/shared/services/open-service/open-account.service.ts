@@ -86,8 +86,8 @@ export class OpenAccountService {
   getData(): Observable<any> {
     return this.dataSubject.asObservable();
   }
-  fetchBoundariesDetails(basisId: number) {
-    return this.http.get<any>(`${baseUrl}/boundaries?basisDetailId=${basisId}`);
+  fetchBoundariesDetails(productId: number) {
+    return this.http.get<any>(`${baseUrl}/boundaries?productId=${productId}`);
   }
 
   getProductDetails(basisId: any) {

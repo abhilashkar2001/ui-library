@@ -4,6 +4,8 @@ import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { IcHttpResponseModel } from '@onerumango/utils';
+import { AspectLendings } from '../../models/origination/aspect-lending.model';
 
 const baseUrl = environment.microServiceURL;
 
@@ -91,9 +93,9 @@ export class LoanService {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
 
-  getProductAspectDetails(basisId: any) {
-    return this.http.get<any>(
-      `${baseUrl}/aspects-lending?basisDetailId=${basisId}`,
+  getProductAspectDetails(productId: number) {
+    return this.http.get<IcHttpResponseModel<AspectLendings>>(
+      `${baseUrl}/aspects-lending?productId=${productId}`,
     );
   }
 

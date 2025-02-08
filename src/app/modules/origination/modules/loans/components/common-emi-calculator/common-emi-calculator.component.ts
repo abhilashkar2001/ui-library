@@ -83,8 +83,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        console.log(this.otherUserInfo, 'test');
-        this.productDetails = resp.data[0].lendingParameters.find(
+        this.productDetails = resp.data[0]?.lendingParameters.find(
           (el: any) => el.currency == this.otherUserInfo.currency,
         );
         this.min = this.productDetails.minimumAmount;
