@@ -10,15 +10,11 @@
   >
     <div>
       <h3 class="text-label mb-16">Remarks</h3>
-
-      <textarea
-        name=""
-        id=""
-        cols="100"
-        rows="15"
-        class="toggle-card"
-        formControlName="remark"
-      ></textarea>
+      <ic-textarea
+        [rows]="15"
+        [control]="revisiteForm.get('remark') | formcontrol"
+      >
+      </ic-textarea>
     </div>
     <div
       class="w-100"

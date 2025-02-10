@@ -21,6 +21,8 @@ import { DobVerificationComponent } from './dob-verification/dob-verification.co
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { SharedOriginationModule } from '../shared-origination/shared-originatio
   ],
   imports: [
     CommonModule,
+    IcustLibraryModule,
+    TranslateModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
