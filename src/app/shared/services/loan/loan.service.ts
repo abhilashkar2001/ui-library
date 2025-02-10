@@ -6,7 +6,6 @@ import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
-import { IcHttpResponseModel } from '@onerumango/utils';
 import { AspectLendings } from '../../models/origination/aspect-lending.model';
 
 const baseUrl = environment.microServiceURL;
@@ -35,7 +34,7 @@ export class LoanService {
 
   getSubLoanTypes(subAccount: string): Observable<any> | any {
     return this.http.get<IcHttpResponseModel<BasisSubClassModel>>(
-      `${baseUrl}/basis-subclass?basisClass=${subAccount}&website=true`,
+      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}&website=true`,
     );
   }
 
@@ -92,7 +91,9 @@ export class LoanService {
   }
 
   getProductDetails(basisId: any) {
-    return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
+    return this.http.get<any>(
+      `${baseUrl}/origination-product-detail?id=${basisId}`,
+    );
   }
 
   getProductAspectDetails(productId: number) {

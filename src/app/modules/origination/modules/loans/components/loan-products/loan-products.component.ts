@@ -48,7 +48,7 @@ export class LoanProductsComponent implements OnInit, OnChanges {
       const payload = {
         processCycleCode: this.selectedLoan?.productDetails[0].processCycleCode,
         basisName: this.selectedLoan?.productDetails[0].basisName,
-        basisId: this.selectedLoan?.productDetails[0].basisClassId,
+        basisId: this.selectedLoan?.productDetails[0].basisId,
       };
       this.sessionStorageService.setLoanBasisDetails(payload);
       this.customApply.emit({
@@ -59,7 +59,7 @@ export class LoanProductsComponent implements OnInit, OnChanges {
       const payload = {
         processCycleCode: this.selectedLoan?.processCycleCode,
         basisName: this.selectedLoan?.basisName,
-        basisId: this.selectedLoan?.basisClassId,
+        basisId: this.selectedLoan?.basisId,
       };
       this.sessionStorageService.setLoanBasisDetails(payload);
       this.customApply.emit({
