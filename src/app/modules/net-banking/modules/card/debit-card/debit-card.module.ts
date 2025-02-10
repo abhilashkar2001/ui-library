@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { SharedCorporateBankingModule } from '../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [DebitCardServiceComponent, ManageDebitCardComponent],
@@ -18,6 +19,7 @@ import { SharedModule } from 'app/shared/shared.module';
     SharedMaterialModule,
     FlexLayoutModule,
     RouterModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class DebitCardModule {}

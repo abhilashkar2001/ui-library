@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CreditCardStore } from '../../../credit-card.store';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
-import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupSuccessComponent } from '../../../../../shared-corporate-banking/popup-success/popup-success.component';
 
 @Component({
   selector: 'app-alert-subscription',

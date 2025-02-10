@@ -6,6 +6,8 @@ import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { IcHttpResponseModel } from '@onerumango/utils';
+import { AspectLendings } from '../../models/origination/aspect-lending.model';
 
 const baseUrl = environment.microServiceURL;
 
@@ -37,16 +39,6 @@ export class LoanService {
     );
   }
 
-  getExistingUserDetails(mobileNumber: string): Observable<any> | any {
-    return this.http.get(
-      `${baseUrl}/fetchExistingCustomer?mobile=${mobileNumber}`,
-    );
-  }
-
-  saveLoanPersonaldetails(loanDetails: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/loan-account/save`, loanDetails);
-  }
-
   getLoanSummary(originationId: any): Observable<any> | any {
     return this.http.get(
       `${baseUrl}/webSummary?originationId=${originationId}`,
@@ -58,19 +50,6 @@ export class LoanService {
   }
   getLoanById(id: any) {
     return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
-  }
-  saveLoanPersonal(loanDetails: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/customer/joint`, loanDetails);
-  }
-
-  getProcessStage(processCode: any) {
-    // https://192.168.0.127:8765/process_cycle/stages?processCycleCode
-    return this.http.get<any>(
-      `${baseUrl}/process_cycle/stages?processCycleCode=${processCode}`,
-    );
-  }
-  updateOrigination(data: any) {
-    return this.http.put<any>(`${baseUrl}/webDisbursement`, data);
   }
 
   verifyWorkFlow(flowData: any) {
@@ -94,16 +73,6 @@ export class LoanService {
       responseType: 'text',
     });
   }
-  getAllState() {
-    return this.http.get(
-      `${baseUrl}/state?authStatus=AUTHORIZED&recordStatus=OPEN`,
-    );
-  }
-  getAllCity() {
-    return this.http.get(
-      `${baseUrl}/city?authStatus=AUTHORIZED&recordStatus=OPEN`,
-    );
-  }
 
   getAccountList(customerNumber: any) {
     return this.http.get<any>(
@@ -126,15 +95,9 @@ export class LoanService {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
 
-  getProductAspectDetails(basisId: any) {
-    return this.http.get<any>(
-      `${baseUrl}/aspects-lending?basisDetailId=${basisId}`,
-    );
-  }
-
-  checkMobileAndProduct(productCode: any, mobileNo: any, accountType: any) {
-    return this.http.get<any>(
-      `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`,
+  getProductAspectDetails(productId: number) {
+    return this.http.get<IcHttpResponseModel<AspectLendings>>(
+      `${baseUrl}/aspects-lending?productId=${productId}`,
     );
   }
 
@@ -153,12 +116,7 @@ export class LoanService {
       `${baseUrl}/customer-api?customerNo=${id}`,
     );
   }
-  stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
-    return this.http.post(
-      `${baseUrl}/origination-matser/customerStagingSave`,
-      personalDetails,
-    );
-  }
+
   getCustByStageId(id: number) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`,
@@ -169,11 +127,6 @@ export class LoanService {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 
-  fetchInterestDetails(basisId: any) {
-    return this.http.get<any>(
-      `${baseUrl}/loanInterestAndCharge/interestLoanRates?productCode=${basisId}`,
-    );
-  }
   getCheckListDoc(stageId: any, screenCode: any) {
     return this.http.get<any>(
       `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`,

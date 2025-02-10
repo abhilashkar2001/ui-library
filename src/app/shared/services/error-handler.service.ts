@@ -26,9 +26,6 @@ export class ErrorHandlerService extends ErrorHandler {
 
     this.errorCount = this.errorCount + 1;
     if (this.errorCount % increment === 0) {
-      console.log(' ');
-      console.log(`errorHandler() was called ${this.errorCount} times.`);
-      console.log(' ');
       super.handleError(error);
 
       if (this.errorCount === max) {

@@ -51,23 +51,4 @@ export class NavigationService {
   menuItems = new BehaviorSubject<IMenuItem[]>(this.defaultMenu);
   // navigation component has subscribed to this Observable
   menuItems$ = this.menuItems.asObservable();
-
-  // Customizer component uses this method to change menu.
-  // You can remove this method and customizer component.
-  // Or you can customize this method to supply different menu for
-  // different user type.
-  // PLEASE VIEW THE EGRET FULL VERSION CODE
-  publishNavigationChange() {
-    this.menuItems.next(this.defaultMenu);
-    // switch (menuType) {
-    //   case 'separator-menu':
-    //     this.menuItems.next(this.defaultMenu);
-    //     break;
-    //   case 'icon-menu':
-    //     this.menuItems.next(this.iconMenu);
-    //     break;
-    //   default:
-    //     this.menuItems.next(this.plainMenu);
-    // }
-  }
 }

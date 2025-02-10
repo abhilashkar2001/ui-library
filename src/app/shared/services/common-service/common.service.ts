@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 const baseUrl = environment.microServiceURL;
 @Injectable({
@@ -9,19 +9,9 @@ const baseUrl = environment.microServiceURL;
 })
 export class CommonService {
   private urlSource = new BehaviorSubject('initial value');
-  public changedUrl = this.urlSource.asObservable();
   private userMobileSource = new BehaviorSubject(false);
-  public userMobileNumber = this.userMobileSource.asObservable();
-  private calCulatorsDataSource = new BehaviorSubject(false);
-  public $calculatorsData = this.calCulatorsDataSource.asObservable();
 
   constructor(private http: HttpClient) {}
-
-  isExisitingUser(phoneNumber: number): Observable<any> | any {
-    return this.http.get(
-      `${baseUrl}/fetchExistingCustomer?mobile=${phoneNumber}`,
-    );
-  }
 
   updateData(value: any) {
     this.urlSource.next(value);
@@ -31,23 +21,12 @@ export class CommonService {
     this.userMobileSource.next(value);
   }
 
-  loanCalculatorsDataSave(calcData: any) {
-    this.calCulatorsDataSource.next(calcData);
-  }
-
   deleteDocument(documentId: any) {
     return this.http.delete(`${baseUrl}/upload-document/${documentId}`);
   }
 
   uploadDocument(formData: any) {
-    return this.http.post<any>(
-      `${baseUrl}/upload-document`,
-      formData,
-      // {
-      //   reportProgress: true,
-      //   observe: "events",
-      // }
-    );
+    return this.http.post<any>(`${baseUrl}/upload-document`, formData);
   }
   getAllCountries() {
     return this.http.get<any>(
@@ -56,23 +35,5 @@ export class CommonService {
   }
   generateOTP(mobile: any) {
     return this.http.get<any>(`${baseUrl}/auth/generateOTP?mobile=${mobile}`);
-  }
-
-  verifyOTP(payload: any) {
-    return this.http.post<any>(`${baseUrl}/auth/verifyOTP`, payload);
-  }
-
-  uploadAndProgress(file: File) {
-    console.log(file);
-    const formData = new FormData();
-    formData.append('file', file);
-    return this.http.post(
-      `${baseUrl}/upload-document/uploadProgress`,
-      formData,
-      {
-        reportProgress: true,
-        observe: 'events',
-      },
-    );
   }
 }

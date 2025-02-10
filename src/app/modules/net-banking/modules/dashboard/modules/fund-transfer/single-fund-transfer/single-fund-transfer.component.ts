@@ -4,9 +4,7 @@ import { FundTransferService } from '../fund-transfer.service';
 import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import {
   AppState,
   selectUser,
@@ -20,6 +18,8 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { CustomSuccessPopupComponent } from '../../../../shared-corporate-banking/custom-success-popup/custom-success-popup.component';
+import { AllInOnePopupComponent } from '../../../../shared-corporate-banking/all-in-one-popup/all-in-one-popup.component';
 
 @Component({
   selector: 'app-single-fund-transfer',

@@ -1,0 +1,158 @@
+<div fxLayout="column">
+  <mat-card class="header-card">
+    <!-- BEGIN:HEADER -->
+    <div class="header-container" fxLayout="column">
+      <!-- BEGIN ROW: Breadcrumb & TOOLBAR & STATUS -->
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+          <div fxLayout="column">
+            <div class="toolbar-files">
+              <mat-toolbar style="background: none">
+                <div class="toolbar-container">
+                  <div fxLayoutAlign="center center">
+                    <div>
+                      <button mat-icon-button>
+                        <mat-icon (click)="goBack()">arrow_back</mat-icon>
+                      </button>
+                    </div>
+                    <div>
+                      <span>{{ title }}</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-toolbar>
+            </div>
+          </div>
+        </div>
+        <div
+          fxFlex="15"
+          fxLayout="column"
+          fxLayoutAlign="center start"
+          class="refNoDiv mt-12 mr-12"
+        >
+          <div class="refNoheading">{{ 'Reference No' }}</div>
+          <div class="refNoValue">{{ refNumber }}</div>
+        </div>
+      </div>
+      <!-- END ROW: Breadcrumb & TOOLBAR & STATUS -->
+    </div>
+    <!-- END:HEADER -->
+  </mat-card>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between start" class="p-24">
+    <ng-container *ngFor="let document of documentCtrl.controls; let i = index">
+      <div fxFlex="49" class="custom-expansion-panel mb-8">
+        <mat-expansion-panel
+          style="border-radius: 8px"
+          [ngStyle]="{
+            border: document.get('docRequired')?.value
+              ? '1px solid #B10000'
+              : '',
+          }"
+        >
+          <mat-expansion-panel-header
+            >{{ document.get('documentName')?.value | titlecase }} &nbsp;
+            <span style="color: #b10000">
+              {{ document.get('docRequired')?.value ? '*' : '' }}
+            </span>
+          </mat-expansion-panel-header>
+          <div fxLayout="row wrap" fxLayoutGap="6px">
+            <div
+              class="mb-12"
+              *ngFor="
+                let files of documentFilesCtrl(i).controls;
+                let fileIndex = index
+              "
+              [formGroup]="files | formgroup"
+            >
+              <div class="card">
+                <div fxLayout="row" class="doc-header">
+                  <ng-container *ngIf="files?.get('fileUrl')?.value">
+                    <img class="action-icon" src="../../../../../../assets/images/tick.svg" />
+                  </ng-container>
+
+                  <span fxFlex></span>
+
+                  <button
+                    *ngIf="fileIndex != 0"
+                    class="btn-box"
+                    mat-icon-button
+                    (click)="removeImage(i, fileIndex)"
+                  >
+                    <mat-icon class="danger1">delete</mat-icon>
+                  </button>
+                </div>
+                <div class="document-wrapper">
+                  <div
+                    fxLayout="column"
+                    fxLayoutAlign="center center"
+                    *ngIf="!files?.get('fileUrl')?.value; else showFile"
+                    (click)="addAnotherPage(i)"
+                  >
+                    <mat-icon class="icon">add</mat-icon>
+                    <span>Add Other Page</span>
+                  </div>
+                  <ng-template #showFile>
+                    <div *ngIf="files?.get('fileName')?.value.includes('.pdf')">
+                      <app-pdf-viewer
+                        [fileUrl]="files?.get('fileUrl')?.value"
+                        [fileName]="files?.get('fileName')?.value"
+                      ></app-pdf-viewer>
+                    </div>
+                    <div
+                      *ngIf="!files?.get('fileName')?.value.includes('.pdf')"
+                    >
+                      <img [src]="env + files?.get('fileName')?.value" alt="" />
+                    </div>
+                  </ng-template>
+                </div>
+                <div
+                  class="document-footer mt-12"
+                  *ngIf="!files?.get('documentId')?.value"
+                >
+                  <div
+                    fxLayout="row"
+                    fxLayouGap="5"
+                    fxLayoutAlign="space-evenly center"
+                    class="mb-4"
+                  >
+                    <button
+                      mat-raised-button
+                      class="sm-btn uploadColor"
+                      [disableRipple]="true"
+                    >
+                      {{ 'Upload' }}
+                      <input
+                        #fileInput
+                        type="file"
+                        class="changeInput"
+                        [accept]="
+                          document.get('fileType')?.value ||
+                          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf'
+                        "
+                        title=""
+                        required
+                        (change)="uploadDocument($event, i, fileIndex)"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </ng-container>
+  </div>
+
+  <div fxFlex></div>
+
+  <div fxLayoutAlign="space-between center" class="w-100 px-24">
+    <button mat-raised-button class="exit-button" (click)="goBack()">
+      Exit
+    </button>
+    <button mat-raised-button class="uploadButton" (click)="saveChecklist()">
+      Submit
+    </button>
+  </div>
+</div>

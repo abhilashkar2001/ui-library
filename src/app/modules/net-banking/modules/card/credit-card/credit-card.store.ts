@@ -12,14 +12,6 @@ import {
 
 export class CreditCardStore {
   static readonly serviceTabs: TabModel[] = [
-    // {
-    //   screenName: "Card Dashboard",
-    //   route: "/card/credit-card/dashboard",
-    //   src: "assets/images/send-money-icon.svg",
-    //   selectedSrc: "assets/images/send-money-unselected.svg",
-    //   icon: "send-money-icon",
-    //   selectedIcon: "send-money-unselected",
-    // },
     {
       screenName: 'Payment',
       route: '/user/card/credit-card/service/payment',

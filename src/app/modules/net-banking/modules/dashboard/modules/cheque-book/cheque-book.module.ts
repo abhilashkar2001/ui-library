@@ -18,6 +18,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { SharedPipesModule } from '../../../../../../shared/pipes/shared-pipes.module';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     NgOtpInputModule,
     SharedPipesModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class ChequeBookModule {}

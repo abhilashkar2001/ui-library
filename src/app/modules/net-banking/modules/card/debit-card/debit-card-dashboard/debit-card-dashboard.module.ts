@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DebitCardDashboardComponent } from './debit-card-dashboard/debit-card-dashboard.component';
 import { DebitCardDashboardRoutingModule } from './debit-card-dashboard-routing.module';
 import { MatCardModule } from '@angular/material/card';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [DebitCardDashboardComponent],
@@ -20,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatCardModule,
     DebitCardDashboardRoutingModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class DebitCardDashboardModule {}

@@ -1,0 +1,281 @@
+<div
+  fxFlex="100"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayoutGap.lt-md="10px"
+  class="rdfdform"
+>
+  <div
+    fxFlex="80"
+    fxLayout="column"
+    class="calculator_container"
+    *ngIf="depositForm"
+    [formGroup]="depositForm"
+  >
+    <img
+      src="/src/assets/images/Mask%20Group.svg"
+      class="calc_cornor_image"
+      alt="calc_cornor_image/"
+    />
+    <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxFlex="40">
+        <span class="calculator_subTItle">Scheme</span>
+        <mat-radio-group formControlName="scheme">
+          <mat-radio-button
+            class="example-margin col-md-3 col-12"
+            *ngFor="let scheme of scheme"
+            [value]="scheme"
+            >{{ scheme }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column" fxFlex="40">
+        <span class="calculator_subTItle">Ownership</span>
+        <mat-radio-group formControlName="ownership">
+          <mat-radio-button
+            class="example-margin col-md-3 col-12"
+            *ngFor="let ownership of ownership"
+            [value]="ownership"
+            >{{ ownership }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="space-between center">
+      <div class="calculator_subTItle">Deposit Amount</div>
+      <div>
+        <div fxFlex="100">
+          <ic-form-field
+            label="Amount"
+            [readonly]="false"
+            [icNoInitialSpace]="true"
+            [control]="depositForm.get('amount') | formcontrol"
+            type="text"
+            [prefixIcon]="otherUserInfo?.currency ?? ''"
+          >
+          </ic-form-field>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100">
+      <mat-slider
+        class="custom-slider"
+        [(ngModel)]="depositForm.value.amount"
+        [max]="max"
+        [min]="min"
+        fxFlex="100"
+        [step]="thumbLabel"
+        (change)="onSliderChange($event)"
+        discrete
+      >
+        <!-- [displayWith]="formatLoanLabel" -->
+        <input matSliderThumb #slider />
+      </mat-slider>
+    </div>
+    <div
+      fxLayout="row"
+      fxFlex="100"
+      fxLayoutAlign="space-between center"
+      style="margin-top: -2%"
+    >
+      <div>{{ otherUserInfo?.currency }} {{ min }}</div>
+      <div>{{ otherUserInfo?.currency }} {{ max }}</div>
+    </div>
+    <div fxLayout="column" fxFlex="100">
+      <div class="calculator_subTItle">Types of Customer</div>
+      <mat-radio-group formControlName="typeOfCustomer" class="row">
+        <mat-radio-button
+          class="example-margin col-md-3 col-12"
+          *ngFor="let typesOfCustomer of typesOfCustomer"
+          [value]="typesOfCustomer"
+          >{{ typesOfCustomer }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div fxFlex="100" class="row my-16" fxLayoutAlign="space-between center">
+      <div
+        [fxFlex]="fdName === 'rdCalculator' ? 33 : 48"
+        class="col-md-4 col-12"
+      >
+        <label class="calculator_subTItle">Tenure</label>
+        <fieldset class="fieldset">
+          <legend style="width: fit-content">Deposit Period</legend>
+          <div fxFlex="100" fxLayout="row" class="parentYearDiv">
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="tenureYear"
+                maxlength="2"
+                formControlName="tenureYear"
+                placeholder="Enter"
+                class="pl-3 tenure_input"
+                appNumbersOnly
+              />
+              <span matSuffix class="suffixLabel">Year</span>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="tenureMonth"
+                maxlength="2"
+                formControlName="tenureMonth"
+                placeholder="Enter"
+                class="pl-3 tenure_input"
+                appNumbersOnly
+              />
+              <span class="suffixLabel">Month</span>
+            </div>
+            <div class="vertical-seperator"></div>
+            <div fxFlex="33">
+              <input
+                fxFlex="50"
+                matInput
+                name="tenureDays"
+                maxlength="2"
+                formControlName="tenureDays"
+                placeholder="Enter"
+                class="pl-3 tenure_input"
+                appNumbersOnly
+              />
+              <span class="suffixLabel">Day</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        [fxFlex]="fdName === 'rdCalculator' ? 33 : 48"
+        class="col-md-4 col-12"
+      >
+        <label class="calculator_subTItle">Interest Payout</label>
+        <!-- <mat-form-field
+          appearance="outline"
+          class="full-width field-changedInput"
+        >
+          <mat-label class="custom-mat-label">Payout Type</mat-label>
+          <mat-select
+            name="currencyCode"
+            class="selectOption"
+            formControlName="intrestPayout"
+            (selectionChange)="fdName === 'fdCalculator' && updateDeposit()"
+          >
+            <mat-option [value]="">Select</mat-option>
+            <mat-option
+              *ngFor="let interestPayout of interestPayout"
+              [value]="interestPayout"
+              >{{ interestPayout }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field> -->
+        <ic-select
+          label="Payout Type"
+          [control]="depositForm.get('intrestPayout') | formcontrol"
+          (selectionChange)="fdName === 'fdCalculator' && updateDeposit()"
+          [options]="interestPayout"
+          selectionType="single"
+        >
+        </ic-select>
+      </div>
+      <ng-container *ngIf="fdName === 'rdCalculator'">
+        <div fxFlex="33" class="col-md-4 col-12">
+          <label class="calculator_subTItle">Monthly Savings</label>
+          <ic-select
+            label="Date of Installment"
+            [control]="depositForm.get('monthlySavings') | formcontrol"
+            (selectionChange)="fdName === 'rdCalculator' && updateDeposit()"
+            [options]="monthlySavings"
+            selectionType="single"
+          >
+          </ic-select>
+        </div>
+      </ng-container>
+    </div>
+    <div class="sub-child">
+      This is applicable for resident individuals <br />
+      *Rate of interest depends on the duration of your FD.<br />
+      For Fixed Deposits with tenure below 181 days, interest will be calculated
+      at maturity as simple interest.
+    </div>
+  </div>
+  <div fxFlex="20" fxLayoutAlign="center center">
+    <div
+      fxFlex="100"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      class="fd_container"
+    >
+      <img
+        src="/src/assets/images/card-doddle.svg"
+        class="fd_cornor_image"
+        alt="fd_cornor_image"
+      />
+      <div fxFlex="100" fxLayout="column" class="alignCenter full-width">
+        <div class="maturityTitle">Maturity Amount</div>
+        <div class="maturityDesc">₹ 1,10,202</div>
+      </div>
+
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          fxFlex="48"
+          class="alignLeft"
+          fxLayoutAlign="start center"
+        >
+          <div class="maturityLabel">Interest Amount</div>
+          <div class="maturityVal">₹ 12,669</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="start center"
+        >
+          <div fxLayout="row">
+            <div class="maturityLabel">Interest Rate</div>
+            <mat-icon
+              svgIcon="info-outlined-gray"
+              (click)="openInterestDialog()"
+            ></mat-icon>
+          </div>
+          <div class="maturityVal">₹ 12,669</div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxFlex="100" style="width: 100%">
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="start center"
+        >
+          <div class="maturityLabel">Maturity Date</div>
+          <div class="maturityVal">02 Aug 2025</div>
+        </div>
+        <div class="vl"></div>
+        <div
+          fxLayout="column"
+          class="alignLeft"
+          fxFlex="48"
+          fxLayoutAlign="start center"
+        >
+          <mat-checkbox class="custom_checkBox" [(ngModel)]="isAutoRenew"
+            >Auto Renew
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div>
+        <ic-button
+          label=" Open {{ fdName === 'fdCalculator' ? 'FD' : 'RD' }} Now"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
+          (click)="openLink(fdName === 'fdCalculator' ? 'FD' : 'RD')"
+        ></ic-button>
+      </div>
+    </div>
+  </div>
+</div>

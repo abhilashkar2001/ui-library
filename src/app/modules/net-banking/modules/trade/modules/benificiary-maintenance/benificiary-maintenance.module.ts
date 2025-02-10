@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { SharedTradeModule } from '../shared-trade/shared-trade.module';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SharedTradeModule } from '../shared-trade/shared-trade.module';
     SharedComponentsModule,
     BenificiaryMaintenanceRoutingModule,
     SharedTradeModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class BenificiaryMaintenanceModule {}

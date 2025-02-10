@@ -1,0 +1,36 @@
+<section class="carousel py-5 py-md-0">
+  <div class="px-3">
+    <h1 class="section_heading">{{ businessSuiteName }}</h1>
+    <p class="section_subHeading">
+      Open your account in a breeze and start banking hassle-free.
+    </p>
+  </div>
+
+  <div class="carousel_section">
+    <div class="ellipse"></div>
+    <swiper [config]="swiperConfig" [navigation]="true">
+      <ng-template swiperSlide *ngFor="let imagesdata of dynamicList">
+        <div class="single_card" [ngStyle]="getbackgroundImage(imagesdata)">
+          <div class="card_overlay">
+            <div>
+              <div class="card_title">{{ imagesdata?.basisClass }}</div>
+              <div class="card_description">
+                {{ imagesdata?.description }}
+              </div>
+            </div>
+            <div class="button-container py-16">
+              <ic-button
+                label="Apply now"
+                icButtonType="outlined-rounded-transparent"
+                type="submit"
+                size="small"
+                (click)="moveToSubAccountPage(imagesdata.basisClass)"
+              ></ic-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+    <div class="convex"></div>
+  </div>
+</section>

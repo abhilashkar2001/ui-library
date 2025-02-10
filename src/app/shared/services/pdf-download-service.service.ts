@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import jsPDF from 'jspdf';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import { LoanService } from './loan/loan.service';
@@ -13,43 +12,6 @@ export class PdfDownloadServiceService {
     private api: LoanService,
     private snack: MatSnackBar,
   ) {}
-  sendEmail(successData: any) {
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'px',
-      format: 'a4',
-      compress: true,
-    });
-
-    // PAGE FORMAT
-
-    const body = [];
-    const row = [];
-    row.push(successData.cbsReferenceNo);
-    row.push(successData.cifNumber);
-    row.push(successData.originationId);
-    row.push(successData.userReferenceNo);
-    body.push(row);
-
-    const formData = new FormData();
-    formData.append('subject', 'Loan Slip');
-    formData.append(
-      'body',
-      'Automatic Generated Loan Details. Find below attach',
-    );
-    formData.append('to', successData?.email);
-    const pdfBlob = doc.output('blob');
-    const pdfFile = new File([pdfBlob], 'Loan Details.pdf', {
-      type: 'application/pdf',
-    });
-    formData.append('filePath', pdfFile, pdfFile.name);
-    console.log(formData);
-
-    //   this.api
-    //     .triggerTransactionEmail(formData)
-    //     .subscribe((res) => console.log(res));
-    // }
-  }
 
   Excel(data: any, title: any, headeCustom: any, actionType: any) {
     const fileData = data;

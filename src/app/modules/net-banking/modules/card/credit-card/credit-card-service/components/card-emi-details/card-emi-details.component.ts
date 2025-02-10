@@ -7,8 +7,8 @@ import { CardService } from '../../../../card.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { EmiDetails } from 'app/shared/models/emi-converter.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { NewErrorPopupComponent } from 'app/modules/home/new-error-popup/new-error-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NewErrorPopupComponent } from '@onerumango/utils';
 
 @Component({
   selector: 'app-card-emi-details',

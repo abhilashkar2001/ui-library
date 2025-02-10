@@ -19,6 +19,7 @@ import { SelectNewCardPopupComponent } from './components/select-new-card-popup/
 import { MatCardModule } from '@angular/material/card';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { SharedCorporateBankingModule } from '../../shared-corporate-banking/shared-corporate-banking.module';
 
 const components = [
   DashboardCardPreviewComponent,
@@ -46,6 +47,7 @@ const components = [
     ClipboardModule,
     NgOtpInputModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class SharedCardModule {}

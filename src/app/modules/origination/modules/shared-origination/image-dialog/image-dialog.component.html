@@ -1,0 +1,27 @@
+<div fxFlex="100" class="imageDisplayDiv">
+  <div fxLayout="row" fxLayoutAlign="space-between" class="imageNameDisplayDiv">
+    <div fxLayoutAlign="start" class="imgName">{{ data.imageName }}</div>
+    <img (click)="closeDialog()" [tabIndex]="1" (keydown.enter)="closeDialog()" role="button" src="assets/images/cancelIcon.svg" alt="Cancel Image" />
+    <!-- <mat-icon >close</mat-icon> -->
+  </div>
+  <div class="imageView">
+    <ng-container *ngIf="!isPdfType; else showPdfTemplate">
+      <img
+        class="images expanded_view"
+        [src]="getFileUrl(data.imageUrl)"
+        width="100%"
+        alt="Expanded View"
+      />
+    </ng-container>
+
+    <ng-template #showPdfTemplate>
+      <object
+        [data]="dataLocalUrl"
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        aria-label="Checklist Document"
+      ></object>
+    </ng-template>
+  </div>
+</div>

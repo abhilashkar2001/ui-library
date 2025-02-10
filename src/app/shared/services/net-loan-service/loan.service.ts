@@ -53,28 +53,6 @@ export class LoanService {
     );
   }
 
-  /**
-   * @param accNo to fetch interest history data for respective account Number
-   *  */
-  fetchInterestHistory(accNo: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/getLoanInterest?originationAccNo=${accNo}`,
-    );
-  }
-
-  /**
-   * @param accNo to download interest history data pdf for respective account Number
-   *  */
-  downloadInterestHistory(accNo: number) {
-    const httpOptions = {
-      responseType: 'blob' as 'json',
-    };
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadInterestRateHistory?originationAccNo=${accNo}`,
-      httpOptions,
-    );
-  }
-
   //save loan service
   saveService(payload: any) {
     return this.http.post(
@@ -98,37 +76,6 @@ export class LoanService {
   fetchRepaymentSchedule(accNo: number) {
     return this.http.get(
       `${MICROSERVICE_URL}/transaction/repaymentSchedule?originationAccNo=${accNo}`,
-    );
-  }
-
-  /**
-   * @param accNo to download repayment schedule data for respective account Number
-   *  */
-  downloadRepaymentSchedule(accNo: number) {
-    const httpOptions = {
-      responseType: 'blob' as 'json',
-    };
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadRepaymentSchedule?originationAccNo=${accNo}`,
-      httpOptions,
-    );
-  }
-
-  /**
-   * @param custId to fetch statistics data for respective customer id
-   *  */
-  fetchStatistics(custId: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/loanSummaryStatistics?custId=${custId}`,
-    );
-  }
-
-  /**
-   * @param custId to fetch recent transaction data for respective customer id
-   *  */
-  fetchRecentTrans(custId: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/retail-fund-transfer/fetchRecentTransaction?customerId=${custId}`,
     );
   }
 
@@ -202,46 +149,11 @@ export class LoanService {
     );
   }
 
-  /**
-   * @param accNo to download final certificate for respective account Number
-   *  */
-  downloadPreGenerated(accNo: number, year: number, month: string) {
-    const httpOptions = {
-      responseType: 'blob' as 'json',
-    };
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadPregenaratedStatement?originationAccNo=${accNo}&years=${year}&month=${month}`,
-      httpOptions,
-    );
-  }
-
   //save loan service
   calculateEMI(payload: any) {
     return this.http.post(
       `${MICROSERVICE_URL}/loan-repayment/emi-calculation`,
       payload,
-    );
-  }
-
-  /**
-   * @param accNo to fetch interest statement details for respective account number
-   *  */
-  fetchScheduledPayment(accNo: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/schedulePayment?originationAccNo=${accNo}`,
-    );
-  }
-
-  /**
-   * @param accNo to download final certificate for respective account Number
-   *  */
-  downloadScheduledPayment(accNo: number) {
-    const httpOptions = {
-      responseType: 'blob' as 'json',
-    };
-    return this.http.get(
-      `${MICROSERVICE_URL}/transaction/downloadSchedulePayment?originationAccNo=${accNo}`,
-      httpOptions,
     );
   }
 

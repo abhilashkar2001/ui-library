@@ -1,0 +1,127 @@
+<div class="m-24 container_class" fxFlex="100">
+  <div fxFlex="50" class="fdCalculator_parent tracking_stepper">
+    <div fxFlex fxLayoutAlign="center center" fxLayout="column"></div>
+  </div>
+  <div fxFlex="50">
+    <section fxLayout="column" class="signIn">
+      <div class="logo">
+        <img src="../../../../../../assets/images/Group%205698.svg" alt="logo" />
+        <p class="logo_text">DemoBank</p>
+      </div>
+      <div class="signIn_container">
+        <form *ngIf="signForm && !isShowOtpField" [formGroup]="signForm">
+          <h1>Welcome To ICUST</h1>
+          <p>Whenever you want, you can check the status of your application</p>
+          <!-- <mat-form-field apperance="outline" class="full-width">
+            <mat-label>Mobile No.</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="mobile"
+              maxlength="10"
+            />
+          </mat-form-field> -->
+          <ic-form-field
+            label="Mobile No."
+            [control]="signForm.get('mobile') | formcontrol"
+            appNumbersOnly
+            type="text"
+            [maxLength]="10"
+          >
+          </ic-form-field>
+        </form>
+
+        <ng-container *ngIf="isShowOtpField">
+          <mat-card
+            fxLayout="column"
+            class="default otp_custom_card mx-auto d-flex flex-column"
+          >
+            <span class="verification">{{ 'OTP Authentication' }}</span>
+            <span class="phoneNumber">
+              <ng-container>
+                An authentication code has been sent to
+              </ng-container>
+              <ng-container>
+                An authentication code has been Re-sent to
+              </ng-container>
+              <br />
+              <span class="text-light">(+62) 812 345 6XXX</span>
+            </span>
+            <div class="otp_block">
+              <ng-otp-input
+                #ngOtpInput
+                (onInputChange)="onOtpChange($event)"
+                [config]="config"
+              ></ng-otp-input>
+            </div>
+            <mat-error *ngIf="invalidOtp"
+              ><strong>Invalid OTP!</strong></mat-error
+            >
+            <div class="verify1">
+              <span
+                (click)="getOtp()"
+                class="addcolor resend"
+                (keydown.enter)="getOtp()"
+                tabindex="0"
+                >{{ 'Resend' }}</span
+              >
+            </div>
+          </mat-card>
+        </ng-container>
+
+        <div fxLayout="row">
+          <div
+            class="button_section"
+            fxLayout="row"
+            fxLayoutGap="20"
+            fxLayoutAlign="center"
+          >
+            <!-- <button
+              mat-flat-button
+              class="filled_btn btn"
+              (click)="getOtp()"
+              *ngIf="!isShowOtpField"
+            >
+              {{ 'Get Otp' }}
+            </button> -->
+            <ic-button
+              label="Get Otp"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="medium"
+              (click)="getOtp()"
+              *ngIf="!isShowOtpField"
+            ></ic-button>
+            <!-- <button
+              mat-flat-button
+              class="filled_btn btn"
+              *ngIf="isShowOtpField"
+              (click)="verifyOtp()"
+              [disabled]="!otpAvailable"
+            >
+              {{ 'Submit' }}
+            </button> -->
+            <ic-button
+              *ngIf="isShowOtpField"
+              (click)="verifyOtp()"
+              [disabled]="!otpAvailable"
+              label="Submit"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="large"
+            ></ic-button>
+            <!-- <button mat-flat-button class="stroked_btn btn">
+              {{ 'Back' }}
+            </button> -->
+            <ic-button
+              label="Back"
+              icButtonType="filled-rounded"
+              type="submit"
+              size="medium"
+            ></ic-button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

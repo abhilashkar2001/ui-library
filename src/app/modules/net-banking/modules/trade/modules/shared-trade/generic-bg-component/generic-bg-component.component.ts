@@ -1,10 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddNewPopupComponent } from 'app/shared/components/add-new-popup/add-new-popup.component';
 import { WebhostDirective } from 'app/shared/directives/appHost.directive';
 import { BehaviorSubject } from 'rxjs';
 import { GenericBgServiceService } from './generic-bg-service.service';
-import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
@@ -28,7 +26,6 @@ export class GenericBgComponentComponent {
   bgType: any;
   constructor(
     private router: Router,
-    private dialog: MatDialog,
     private api: GenericBgServiceService,
     private sessionStorageService: SessionStorageService,
   ) {}
@@ -69,20 +66,6 @@ export class GenericBgComponentComponent {
     this.isCurrentFormValid$.next(isFormValid);
   };
 
-  saveTemplet() {
-    const dialogRef = this.dialog.open(AddNewPopupComponent, {
-      data: {
-        isSaveTemplate: true,
-      },
-      width: '750px',
-      disableClose: true,
-      panelClass: 'popup-dialog-class',
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      this.saveTemplate(resp.templateName);
-    });
-  }
-
   saveTemplate(templateName: any) {
     const payload = {
       applicantModel: {
@@ -97,18 +80,11 @@ export class GenericBgComponentComponent {
     this.api.saveTemplate(payload).subscribe(() => {});
   }
 
-  updateRecord(event: any) {
-    console.log(
-      event,
-      '........',
-      this.currentStep$.value?.id,
-      this.account$.value,
-    );
-
+  updateRecord() {
     let payload;
     if (this.currentStep$?.value?.id == 1) {
       const applicantInfo = this.account$.value?.applicantInfo;
-      const applicantInfoPayload = {
+      payload = {
         lcType: 'Issuance',
         applicantInfo: {
           applicant: applicantInfo?.applicant,
@@ -118,7 +94,6 @@ export class GenericBgComponentComponent {
           iecCode: applicantInfo?.iecCode,
           devliveryVia: applicantInfo?.deliveryMode,
           margin: applicantInfo?.margin,
-          // licenceOglOrNonOgl: applicantInfo?.,
           feeAccount: applicantInfo?.feeAccount,
           contact: {
             address: applicantInfo?.contactInfo?.address?.map((i: any) => ({
@@ -131,10 +106,9 @@ export class GenericBgComponentComponent {
           },
         },
       };
-      payload = applicantInfoPayload;
     } else if (this.currentStep$.value?.id == 2) {
       const lcInfo = this.account$.value?.lcInfo;
-      const lcInfopayload = {
+      payload = {
         lcType: 'Issuance',
         lcMasterId: this.sessionStorageService.getLcMasterId(),
         lcInfo: {
@@ -186,7 +160,6 @@ export class GenericBgComponentComponent {
           },
         },
       };
-      payload = lcInfopayload;
     } else if (this.currentStep$.value?.id == 3) {
       payload = {
         lcType: 'Issuance',
@@ -194,17 +167,16 @@ export class GenericBgComponentComponent {
         ...this.account$?.value?.goodsInfo,
       };
     } else if (this.currentStep$.value?.id == 4) {
-      const docPayload = {
+      payload = {
         lcType: 'Issuance',
         lcMasterId: this.sessionStorageService.getLcMasterId(),
         documentInfo: {
           documentId: this.account$.value?.documentId,
         },
       };
-      payload = docPayload;
     } else if (this.currentStep$.value?.id == 5) {
       const lcAdditionalInfo = this.account$.value?.lcAdditionalInfo;
-      const additionalPayload = {
+      payload = {
         lcType: 'Issuence',
         lcMasterId: this.sessionStorageService.getLcMasterId(),
         additionalInfo: {
@@ -230,9 +202,8 @@ export class GenericBgComponentComponent {
           },
         },
       };
-      payload = additionalPayload;
     } else if (this.currentStep$.value?.id == 6) {
-      const attachmentPayload = {
+      payload = {
         lcType: 'Issuence',
         lcMasterId: this.sessionStorageService.getLcMasterId(),
         attachment: {
@@ -241,19 +212,15 @@ export class GenericBgComponentComponent {
           ),
         },
       };
-      payload = attachmentPayload;
     }
 
-    this.api.submitIssuance(payload).subscribe(
-      (resp: any) => {
-        console.log(resp);
-        if (resp?.data?.lcMasterId && this.currentStep$.value?.id == 1) {
-          this.account$.value.lcMasterId = resp?.data?.lcMasterId;
-          this.sessionStorageService.setLcMasterId(resp?.data?.lcMasterId);
-        }
-      },
-      (err) => console.error('Error: ', err),
-    );
+    this.api.submitIssuance(payload).subscribe((resp: any) => {
+      console.log(resp);
+      if (resp?.data?.lcMasterId && this.currentStep$.value?.id == 1) {
+        this.account$.value.lcMasterId = resp?.data?.lcMasterId;
+        this.sessionStorageService.setLcMasterId(resp?.data?.lcMasterId);
+      }
+    });
 
     const nextTab = this.tabs.find(
       (i: any) => i?.id == this.currentStep$?.value?.id + 1,

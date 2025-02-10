@@ -16,6 +16,7 @@ import { PrepaidRefundComponent } from './components/prepaid-refund/prepaid-refu
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     TranslateModule,
     SharedMaterialModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

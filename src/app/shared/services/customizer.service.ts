@@ -65,7 +65,6 @@ export class CustomizerService {
       active: false,
     },
   ];
-  selectedSidebarColor: any;
   topbarColors: any[];
   sidebarColors: any[];
   footerColors: any[];
@@ -147,69 +146,6 @@ export class CustomizerService {
       });
   }
 
-  changeSidebarColor(color: any) {
-    this.layout.publishLayoutChange({ sidebarColor: color.class });
-    this.sidebarColors = this.getSidebarColors();
-  }
-
-  changeTopbarColor(color: any) {
-    this.layout.publishLayoutChange({ topbarColor: color.class });
-    this.topbarColors = this.getTopbarColors();
-  }
-
-  changeFooterColor(color: any) {
-    this.layout.publishLayoutChange({ footerColor: color.class });
-    this.footerColors = this.getFooterColors();
-  }
-
-  removeClass(el: any, className: any) {
-    if (!el || el.length === 0) return;
-    if (!el.length) {
-      el.classList.remove(className);
-    } else {
-      for (let i = 0; i < el.length; i++) {
-        el[i].classList.remove(className);
-      }
-    }
-  }
-
-  addClass(el: any, className: any) {
-    if (!el) return;
-    if (!el.length) {
-      el.classList.add(className);
-    } else {
-      for (let i = 0; i < el.length; i++) {
-        el[i].classList.add(className);
-      }
-    }
-  }
-
-  findClosest(el: any, className: any) {
-    if (!el) return;
-    while (el) {
-      const parent = el.parentElement;
-      if (parent && this.hasClass(parent, className)) {
-        return parent;
-      }
-      el = parent;
-    }
-  }
-
-  hasClass(el: any, className: any) {
-    if (!el) return;
-    return (
-      ` ${el.className} `.replace(/[\n\t]/g, ' ').indexOf(` ${className} `) > -1
-    );
-  }
-
-  toggleClass(el: any, className: any) {
-    if (!el) return;
-    if (this.hasClass(el, className)) {
-      this.removeClass(el, className);
-    } else {
-      this.addClass(el, className);
-    }
-  }
   getLogedCountry() {
     const userInfo = this.sessionStorageService.getUserInfo();
     if (userInfo) {

@@ -11,20 +11,9 @@ export class OfferIssueService {
   summary: any;
   constructor(private http: HttpClient) {}
 
-  fetchIssueDetails(originationId: number, screenCode: number) {
-    return this.http.get<any>(
-      `${MICROSERVICE_URL}/issue-stage?originationId=${originationId}&screenCode=${screenCode}`,
-    );
-  }
   fetchOfferIssueSummary(originationId: number) {
     return this.http.get(
       `${MICROSERVICE_URL}/issue-stage?originationId=${originationId}`,
-    );
-  }
-
-  fetchCustomerInfo(originationId: number) {
-    return this.http.get(
-      `${MICROSERVICE_URL}/issue-stage/fetch-offer-issue-interest?originationId=${originationId}`,
     );
   }
 
@@ -49,19 +38,6 @@ export class OfferIssueService {
   postOfferAcceptRejectDetails(payload: any) {
     return this.http.put<any>(
       `${MICROSERVICE_URL}/origination-matser/updateOfferAcceptAndReject`,
-      payload,
-    );
-  }
-
-  fetchOriginationDetails(originationId: any) {
-    return this.http.get<any>(
-      `${MICROSERVICE_URL}/origination-matser?originationId=${originationId}`,
-    );
-  }
-
-  saveDetails(payload: any) {
-    return this.http.post<any>(
-      `${MICROSERVICE_URL}/origination-matser/save`,
       payload,
     );
   }

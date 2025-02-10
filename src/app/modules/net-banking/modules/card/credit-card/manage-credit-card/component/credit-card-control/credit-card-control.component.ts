@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawer.constant';
+import { DrawerConstant } from '../../../../../shared-corporate-banking/custom-drawer/custom-drawer.constant';
 
 @Component({
   selector: 'app-credit-card-control',
@@ -9,8 +9,6 @@ import { DrawerConstant } from 'app/shared/components/custom-drawer/custom-drawe
 export class CreditCardControlComponent implements OnInit {
   tabs = DrawerConstant.cardControlTabs;
   selectedTabName: any;
-
-  constructor() {}
 
   ngOnInit(): void {
     this.selectedTabName = 'Increase Limit';

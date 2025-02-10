@@ -5,14 +5,14 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { FundTransferService } from '../fund-transfer.service';
 import { debounceTime } from 'rxjs/operators';
 import { toWords } from 'number-to-words';
-import { CustomSuccessPopupComponent } from 'app/shared/components/custom-success-popup/custom-success-popup.component';
-import { AllInOnePopupComponent } from 'app/shared/components/all-in-one-popup/all-in-one-popup.component';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { CustomSuccessPopupComponent } from '../../../../shared-corporate-banking/custom-success-popup/custom-success-popup.component';
+import { AllInOnePopupComponent } from '../../../../shared-corporate-banking/all-in-one-popup/all-in-one-popup.component';
 
 @Component({
   selector: 'app-multi-fund-transfer',
@@ -30,8 +30,6 @@ export class MultiFundTransferComponent implements OnInit {
   fromAccount: any = [];
   transferMode = [];
   transferTo = [];
-  benificiaryEmail = [];
-  benificiaryMobile = [];
   remitter = false;
   beneficiary = false;
   beneficiaryNarration = false;

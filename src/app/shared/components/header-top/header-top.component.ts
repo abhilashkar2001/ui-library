@@ -13,7 +13,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
-import { NewDepositService } from 'app/modules/new-deposit/new-deposit.service';
+import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +26,6 @@ import { TokenStorageService } from '@onerumango/utils';
   styleUrls: ['./header-top.component.scss'],
 })
 export class HeaderTopComponent implements OnInit, OnDestroy {
-  // callbackUrl
   externalInternetRoutePort = ':4211';
 
   layoutConf: any;
@@ -36,37 +35,24 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   hideNavItem = false;
   showMobilemenu = false;
 
-  public availableLangs = [
-    {
-      name: 'EN',
-      code: 'en',
-      flag: 'us',
-    },
-    {
-      name: 'ES',
-      code: 'es',
-      flag: 'es',
-    },
-  ];
-  currentLang = this.availableLangs[0];
   @Input() notificPanel: any;
   @Input() mainMenuPanel: any;
   items = [
     {
       label: 'Open Account',
-      route: '/account',
+      route: '/origination/account',
     },
     {
       label: 'Card',
-      route: '/card',
+      route: '/origination/card',
     },
     {
       label: 'Deposits',
-      route: '/deposits',
+      route: '/origination/deposits',
     },
     {
       label: 'Loan',
-      route: '/loan',
+      route: '/origination/loan',
     },
   ];
   @ViewChildren('element') elReference: QueryList<ElementRef> | any;
@@ -181,7 +167,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   goToHomePage() {
-    this.router.navigate(['/account/landing']);
+    this.router.navigate(['/origination/account/landing']);
   }
   openDropdown(i: number) {
     if (this.expand == i) {
@@ -196,7 +182,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   trackingStatus() {
-    this.router.navigate([`/tracking`]);
+    this.router.navigate([`/origination/tracking`]);
   }
 
   /**

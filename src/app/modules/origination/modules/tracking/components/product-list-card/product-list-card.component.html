@@ -1,0 +1,94 @@
+<div fxLayout="column">
+  <!-- Search and filter section -->
+  <mat-form-field
+    appearance="outline"
+    class="full-width fieldinput custom-field custom-search"
+    fxFlex="100"
+  >
+    <mat-icon matPrefix class="searchIcon">search</mat-icon>
+    <input
+      matInput
+      type="text"
+      placeholder="Search"
+      [formControl]="searchControl"
+    />
+    <div matSuffix fxFLex="100">
+      <mat-select
+        [(ngModel)]="searchFilter"
+        (selectionChange)="onCategoryChange()"
+      >
+        <mat-option [value]="">Select</mat-option>
+        <mat-option [value]="category" *ngFor="let category of categoryList">{{
+          category
+        }}</mat-option>
+      </mat-select>
+    </div>
+  </mat-form-field>
+
+  <!-- Product cards -->
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <ng-container
+      *ngFor="
+        let product of productList;
+        trackBy: trackByProductId;
+        let indx = index
+      "
+    >
+      <mat-card
+        fxFlex="31"
+        class="card-div mb-24 p-4"
+        (click)="openProduct(product)"
+      >
+        <img
+          *ngIf="product.imageUrl; else defaultImage"
+          [src]="product.imageUrl"
+          class="card-img"
+          alt="Card"
+        />
+        <ng-template #defaultImage>
+          <img
+            [src]="
+              indx % 2 === 0
+                ? 'assets/images/applicationlist.svg'
+                : 'assets/images/apllicationdetails.svg'
+            "
+            class="card-img"
+            alt="Card"
+          />
+        </ng-template>
+        <div class="p-12" fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <p class="label_item">Type</p>
+              <p class="label_value">{{ product.type }}</p>
+            </div>
+            <div fxLayout="column">
+              <p class="label_item">Applicant No</p>
+              <p class="label_value">{{ product.applicationNo }}</p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            class="pt-12"
+          >
+            <div fxLayout="column">
+              <p class="label_item">Loan Amount</p>
+              <p class="label_value">₹ {{ product?.amount ?? 0 }}</p>
+            </div>
+            <div fxLayout="column">
+              <p class="label_item">Status</p>
+              <p
+                class="label_value"
+                [ngClass]="getStatusClass(product.status.toLowerCase())"
+              >
+                {{ product.status }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </ng-container>
+  </div>
+</div>

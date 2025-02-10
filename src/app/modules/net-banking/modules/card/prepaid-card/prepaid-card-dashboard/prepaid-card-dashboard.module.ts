@@ -7,6 +7,7 @@ import { SharedCardModule } from '../../shared-card/shared-card.module';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [PrepaidDashboardComponent],
@@ -17,6 +18,7 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
     SharedMaterialModule,
     SharedCardModule,
     FlexLayoutModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class PrepaidCardDashboardModule {}

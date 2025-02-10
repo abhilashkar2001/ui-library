@@ -8,6 +8,7 @@ import { SharedCardModule } from '../../shared-card/shared-card.module';
 import { CreditCardDashboardComponent } from './credit-card-dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [CreditCardDashboardComponent],
@@ -20,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class CreditCardDashboardModule {}

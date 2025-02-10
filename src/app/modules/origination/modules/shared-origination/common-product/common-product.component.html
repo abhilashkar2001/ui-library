@@ -1,0 +1,65 @@
+<div
+  class="product-container"
+  [ngStyle]="{
+    'flex-direction': productIndex % 2 !== 0 ? 'row-reverse' : 'row',
+    padding: productIndex % 2 !== 0 ? '20px' : '',
+  }"
+>
+  <div class="img-section" fxFlex="50">
+    <div data-aos="zoom-out" data-aos-delay="200" data-aos-duration="500">
+      <img
+        [src]="getFileUrl(subAccount.fileUrl)"
+        width="399"
+        height="333"
+        alt="subAccountType"
+      />
+    </div>
+  </div>
+  <div class="loan-main-text" fxFlex="50">
+    <div data-aos="fade-left" data-aos-delay="200" data-aos-duration="500">
+      <div class="standard-content-title-header">
+        <div
+          data-aos="fade-left"
+          data-aos-delay="200"
+          data-aos-duration="500"
+          class="content-circle"
+        ></div>
+        {{ subAccount?.subClassName }} {{ subAccount?.basisName }}
+      </div>
+      <ng-container
+        *ngFor="
+          let feature of !subAccount.isReadMore
+            ? subAccount?.featureInfo?.slice(0, 1)
+            : subAccount?.featureInfo
+        "
+      >
+        <p class="feature_name">{{ feature?.featureName }}</p>
+        <ul class="desc-list">
+          <ng-container *ngFor="let childFeature of feature?.feature">
+            <li *ngIf="childFeature?.catalogueDesc" class="show-hyperLink">
+              {{ childFeature?.catalogueDesc }}
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
+
+      <div class="mb-10" fxLayout="row" fxLayoutAlign="start center">
+        <ic-button
+          label="Apply"
+          icButtonType="filled-rounded"
+          type="submit"
+          size="large"
+          (click)="goForCalculator(subAccount)"
+        ></ic-button>
+        <a
+          *ngIf="subAccount?.featureInfo?.length > 2"
+          class="more-less-text"
+          (click)="readMoreLess()"
+          (keydown.enter)="readMoreLess()"
+          tabindex="1"
+          >View {{ subAccount?.isReadMore ? 'Less' : 'More' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

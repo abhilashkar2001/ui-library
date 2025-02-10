@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     TranslateModule,
     ClipboardModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class LoanModule {}

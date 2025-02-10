@@ -19,21 +19,6 @@ export class OpenAccountService {
     return this.http.post(`${baseUrl}/auth/verifyOTP`, otpObject);
   }
 
-  nationalVerifyOtp(otpObject: any) {
-    return this.http.post(`${baseUrl}/auth/verifyOTP`, otpObject);
-  }
-
-  savePersonalDetails(personalDetails: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/customer/joint`, personalDetails);
-  }
-
-  stageSavePersonalDetails(personalDetails: any): Observable<any> | any {
-    return this.http.post(
-      `${baseUrl}/origination-matser/customerStagingSave`,
-      personalDetails,
-    );
-  }
-
   uploadDocument(documentObjects: any): Observable<any> | any {
     return this.http.post(`${baseUrl}/upload-document`, documentObjects);
   }
@@ -43,14 +28,6 @@ export class OpenAccountService {
       `${baseUrl}/documents?source=web Site`,
       documentObjects,
     );
-  }
-
-  getResidentType() {
-    return this.http.get(`${baseUrl}/details?businessSuite`);
-  }
-
-  getGender() {
-    return this.http.get(`${baseUrl}/details?businessSuite`);
   }
 
   getCity(stateId: number) {
@@ -63,12 +40,6 @@ export class OpenAccountService {
 
   getCountryList() {
     return this.http.get(`${baseUrl}/country`);
-  }
-
-  getSubAccountsOfAccounts(subAccount: string) {
-    return this.http.get(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subAccount}`,
-    );
   }
 
   getExistingCustomer(mobileNo: any, type?: any) {
@@ -108,16 +79,6 @@ export class OpenAccountService {
     );
   }
 
-  fetchStateCityByZipcode(pincode: any) {
-    return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
-  }
-
-  getAllState() {
-    return this.http.get(`${baseUrl}/state`);
-  }
-  getAllCity() {
-    return this.http.get(`${baseUrl}/city`);
-  }
   setData(data: any) {
     this.dataSubject.next(data);
   }
@@ -125,8 +86,8 @@ export class OpenAccountService {
   getData(): Observable<any> {
     return this.dataSubject.asObservable();
   }
-  fetchBoundariesDetails(basisId: number) {
-    return this.http.get<any>(`${baseUrl}/boundaries?basisDetailId=${basisId}`);
+  fetchBoundariesDetails(productId: number) {
+    return this.http.get<any>(`${baseUrl}/boundaries?productId=${productId}`);
   }
 
   getProductDetails(basisId: any) {

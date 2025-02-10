@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { OtpService } from 'app/shared/services/otp.service';
-import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
 import { CardService } from '../../../card.service';
 import { GeneratePinComponent } from '../generate-pin/generate-pin.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupSuccessComponent } from '../../../../shared-corporate-banking/popup-success/popup-success.component';
 
 @Component({
   selector: 'app-pin-generation',

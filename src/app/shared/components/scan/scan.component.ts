@@ -14,8 +14,6 @@ import * as faceapi from 'face-api.js';
   styleUrls: ['./scan.component.scss'],
 })
 export class ScanComponent implements OnInit {
-  WIDTH = 0;
-  HEIGHT = 0;
   @ViewChild('video', { static: true })
   public video!: ElementRef;
   @ViewChild('canvas', { static: true })
@@ -32,7 +30,6 @@ export class ScanComponent implements OnInit {
   videoInput: any;
   flag = true;
   disableVideo = false;
-  resData: any;
   isScanned = false;
   rescann: boolean | any;
   perscentageCheck = true;

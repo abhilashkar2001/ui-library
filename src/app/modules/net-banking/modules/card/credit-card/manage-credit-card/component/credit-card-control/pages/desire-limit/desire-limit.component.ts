@@ -3,8 +3,8 @@ import { CreditcardService } from '../../../../creditcard.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { PopupSuccessComponent } from 'app/shared/components/popup-success/popup-success.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupSuccessComponent } from '../../../../../../../shared-corporate-banking/popup-success/popup-success.component';
 
 @Component({
   selector: 'app-desire-limit',
