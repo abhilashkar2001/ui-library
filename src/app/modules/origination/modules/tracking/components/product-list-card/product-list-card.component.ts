@@ -37,12 +37,9 @@ export class ProductListCardComponent implements OnInit {
   /**
    * api call to fetch all products.
    */
-  getProductList() {
+  getProductList(value?: string) {
     const filterItem = {
-      category:
-        this.searchFilter === ProductListConstant.DEFAULT_CATEGORIES
-          ? ''
-          : this.searchFilter,
+      category: value === ProductListConstant.DEFAULT_CATEGORIES ? '' : value,
       searchParam: this.searchParam,
     };
     this.api
@@ -59,8 +56,8 @@ export class ProductListCardComponent implements OnInit {
       });
   }
 
-  onCategoryChange() {
-    this.getProductList();
+  onCategoryChange(value: string) {
+    this.getProductList(value);
   }
 
   /**
@@ -68,9 +65,12 @@ export class ProductListCardComponent implements OnInit {
    * @param product product info
    */
   openProduct(product: any) {
-    this.route.navigate([`tracking/summary/${product?.originationId}`], {
-      queryParams: { type: product.type },
-    });
+    this.route.navigate(
+      [`origination/tracking/summary/${product?.originationId}`],
+      {
+        queryParams: { type: product.type },
+      },
+    );
   }
 
   /**

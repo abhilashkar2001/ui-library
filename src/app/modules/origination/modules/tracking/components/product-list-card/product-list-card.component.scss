@@ -8,6 +8,21 @@
   }
 }
 
+.search_div {
+  height: 60px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px #0000001a;
+  input {
+    background: none;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+  }
+}
 .card-title {
   color: #004c97;
 }

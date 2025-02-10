@@ -1,32 +1,37 @@
 <div fxLayout="column">
-  <!-- Search and filter section -->
-  <mat-form-field
-    appearance="outline"
-    class="full-width fieldinput custom-field custom-search"
+  <div
+    class="search_div"
     fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
   >
-    <mat-icon matPrefix class="searchIcon">search</mat-icon>
+    <ic-button
+      type="icon"
+      icButtonType="ghost"
+      icIcon="search_icon"
+      customButtonClass="boxshadow-none"
+    >
+    </ic-button>
     <input
       matInput
       type="text"
       placeholder="Search"
       [formControl]="searchControl"
     />
-    <div matSuffix fxFLex="100">
-      <mat-select
-        [(ngModel)]="searchFilter"
-        (selectionChange)="onCategoryChange()"
-      >
-        <mat-option [value]="">Select</mat-option>
-        <mat-option [value]="category" *ngFor="let category of categoryList">{{
-          category
-        }}</mat-option>
-      </mat-select>
-    </div>
-  </mat-form-field>
+    <ic-select
+      fxFlex="30"
+      label="Category"
+      placeholder="Category*"
+      [options]="categoryList"
+      bindLabelKey="category"
+      (selectionChange)="onCategoryChange($event)"
+      customClass="m-0"
+    >
+    </ic-select>
+  </div>
 
   <!-- Product cards -->
-  <div fxLayout="row wrap" fxLayoutGap="1%">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
     <ng-container
       *ngFor="
         let product of productList;

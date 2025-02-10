@@ -269,7 +269,9 @@
                     class="col-12"
                     *ngIf="!isHideField"
                   >
-                    <div *ngIf="customerDetailsForm.value['customer'].length > 1">
+                    <div
+                      *ngIf="customerDetailsForm.value['customer'].length > 1"
+                    >
                       <ic-button
                         [label]="'Save' | translate"
                         [type]="'submit'"

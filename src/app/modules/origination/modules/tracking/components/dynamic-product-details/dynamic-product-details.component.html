@@ -39,13 +39,15 @@
                   >
                     <p class="label_title">{{ item.label }}</p>
                     <p class="label_value">
-                      {{ personal[item?.valueKey] }}
+                      {{
+                        personal[item?.valueKey] ??
+                          personal?.contact?.[item?.valueKey]
+                      }}
                     </p>
                   </ng-container>
                 </ng-container>
               </div>
               <div fxFlex="100"><h3>Address Detail</h3></div>
-
               <div
                 fxFlex="19"
                 class="mb-24"
@@ -116,6 +118,9 @@
                 </p>
                 <p class="label_value" *ngIf="item.type === 'maskText'">
                   {{ product.values[item?.valueKey] | textMask: 4 }}
+                </p>
+                <p class="label_value" *ngIf="item.type === 'document'">
+                  {{ product.values[item?.valueKey] ?? 'No Documents Found' }}
                 </p>
               </div>
               <!-- </ng-template> -->
