@@ -98,11 +98,15 @@
                   }}{{ docItem?.documentSide }}
                 </p>
               </div>
+              <div *ngIf="product.values.length === 0 || !product.values">
+                <p class="label_value">
+                  {{ 'No Documents Found' }}
+                </p>
+              </div>
             </ng-container>
             <!-- Document Info Ends -->
 
             <ng-template #showOther>
-              <!-- <ng-template #showOtherInfo> -->
               <div>
                 <p class="label_title">{{ item.label }}</p>
                 <p
