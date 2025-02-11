@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { BranchService } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
+import { IcScreen } from '@onerumango/utils';
 
 @Component({
   selector: 'app-digital-sign',
@@ -16,13 +17,14 @@ export class DigitalSignComponent implements OnInit {
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() nationalIdDocumentList: any[] = [];
   @Input() numberOfDirectors: number | any;
+  @Input() screenInfo: IcScreen | undefined;
 
   image = '';
   MICROSERVICE_URL = environment.microServiceURL;
   isLoading = false;
   loadingBtnText = 'Saving...';
   signatureId: any;
-  customerId: number | any;
+  customerId: number | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -31,7 +33,7 @@ export class DigitalSignComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.customerId = this.sessionStorageService.getItem('custStagingId');
+    this.customerId = this.sessionStorageService.getCustomerStagingId();
     if (this.customerId) this.fetchSign();
   }
 
@@ -70,8 +72,8 @@ export class DigitalSignComponent implements OnInit {
 
   onSubmit() {
     const signPayload = {
-      customerId: this.customerId,
-      signatureIds: [this.signatureId],
+      customerStagingId: this.customerId,
+      signatureId: [this.signatureId],
     };
     this.branchService.saveCustomerSign(signPayload).subscribe((res) => {
       if ((res?.statusCode == 200 || res?.statusCode == 201) && res?.data)

@@ -73,7 +73,7 @@ export class BranchService {
   }
   fetchCustomerSign(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/customer-api/customerStageSignature/fetch-by-id/${id}`,
+      `${MICROSERVICE_URL}/customer-api/customerStageSignature/fetch-by-id?customerStagingId=${id}`,
     );
   }
 }

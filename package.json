@@ -39,7 +39,7 @@
     "@ngx-translate/http-loader": "^16.0.0",
     "@onerumango/icust-element-library": "^0.0.541",
     "@onerumango/icust-scss-library": "^1.0.15",
-    "@onerumango/utils": "^0.0.122",
+    "@onerumango/utils": "^0.0.129",
     "@popperjs/core": "^2.11.8",
     "@types/webgl2": "^0.0.7",
     "@vladmandic/face-api": "^1.7.14",

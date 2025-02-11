@@ -66,8 +66,8 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
     this.loanService
       .getSavedChecklist(
         Number(originationId),
-        String(this.sessionStorageService.getOtherDocScreenCode),
-        Number(this.sessionStorageService.getCurrentStage),
+        String(this.sessionStorageService.getOtherDocScreenCode()),
+        Number(this.sessionStorageService.getCurrentStage()),
       )
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
