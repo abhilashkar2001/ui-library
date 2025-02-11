@@ -17,7 +17,6 @@
   </div>
   <div class="loan-main-text" fxFlex="50">
     <div data-aos="fade-left" data-aos-delay="200" data-aos-duration="500">
-      <!-- [attr.data-aos]="productIndex % 2 === 0 ? 'fade-left' : 'fade-right'" -->
       <div class="standard-content-title-header">
         <div
           data-aos="fade-left"
@@ -25,11 +24,8 @@
           data-aos-duration="500"
           class="content-circle"
         ></div>
-        {{ subAccount?.subClass }} {{ subAccount?.basisName }}
+        {{ subAccount?.subClassName }} {{ subAccount?.basisName }}
       </div>
-      <!-- <div class="standard-content">
-        {{ subAccount?.subClassDesc }} {{ subAccount?.basisStory }}
-      </div> -->
       <ng-container
         *ngFor="
           let feature of !subAccount.isReadMore

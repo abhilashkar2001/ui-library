@@ -42,5 +42,6 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     IcustLibraryModule,
     RouterModule.forChild(TrackingRoute),
   ],
+  exports: [RouterModule],
 })
 export class TrackingModule {}

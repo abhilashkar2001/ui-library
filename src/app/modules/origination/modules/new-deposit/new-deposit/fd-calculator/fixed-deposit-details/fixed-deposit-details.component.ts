@@ -178,7 +178,7 @@ export class FixedDepositDetailsComponent implements OnInit, OnDestroy {
       paymentType: [data ? data?.paymentType : '', Validators.required],
       autoRenew: [data ? data.autoRenew : false],
       fdRdMasterId: data && data.fdRdMasterId,
-      basisDetailsId: data && data.basisDetailsId,
+      originationProductId: data && data.originationProductId,
     });
     this.customBasicForm = this.createFdForm;
   }

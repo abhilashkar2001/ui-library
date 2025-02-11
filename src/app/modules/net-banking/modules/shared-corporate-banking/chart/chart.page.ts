@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnChanges,
 } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
@@ -39,7 +40,7 @@ Drilldown(Highcharts);
 })
 
 //  constructor(private chartService: ChartService) {}
-export class ChartPage implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   @ViewChild('charts') public chartEl: ElementRef | any;
   @Output() customThreeDView = new EventEmitter<any>();
   constructor(private fb: FormBuilder) {}
@@ -195,9 +196,7 @@ export class ChartPage implements OnInit {
   }
 
   createChartGauge(data: any) {
-    // let modifiedData = this.setColor(data);
     this.chart = Highcharts.chart(`charts${data?.id}`, data);
-    //  this.checkNoData(modifiedData, this.chart);
   }
 
   checkNoData(data: any, chart: any) {
@@ -211,13 +210,6 @@ export class ChartPage implements OnInit {
   getId() {
     return `charts${this.dynamicCharData?.id}`;
   }
-  threedView(view: any) {
-    this.customThreeDView.emit(view);
-  }
-  onStartDateChange() {}
-  onMonthChange() {}
-  onYearChange() {}
-  dateRangeChange() {}
 
   emitDateOutput(action: any) {
     this.customDateOutput.emit({

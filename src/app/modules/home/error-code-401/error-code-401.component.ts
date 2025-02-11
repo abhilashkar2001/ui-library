@@ -10,6 +10,6 @@ export class ErrorCode401Component {
   constructor(private router: Router) {}
 
   back(): void {
-    this.router.navigateByUrl('/home');
+    this.router.navigate(['/home']);
   }
 }

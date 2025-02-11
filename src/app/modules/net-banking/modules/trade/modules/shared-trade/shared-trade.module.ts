@@ -16,6 +16,7 @@ import { UploadBulkUploadComponent } from './upload-bulk-upload/upload-bulk-uplo
 import { RouterModule } from '@angular/router';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { SharedPipesModule } from '../../../../../../shared/pipes/shared-pipes.module';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 const components: Type<any>[] = [
   BgSummaryComponent,
@@ -39,6 +40,7 @@ const components: Type<any>[] = [
     RouterModule,
     IcustLibraryModule,
     SharedPipesModule,
+    SharedCorporateBankingModule,
   ],
   exports: components,
 })

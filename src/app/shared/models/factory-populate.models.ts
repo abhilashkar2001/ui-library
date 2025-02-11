@@ -1,10 +1,10 @@
 export interface FACTORYPOPULATE {
   customerId: number;
-  prefix: string;
+  prefixId: string;
   firstName: string;
   lastName: string;
   dateOfBirth: Date;
-  gender: string;
+  genderId: string;
   nationality: string;
   contact: {
     mobile: number;

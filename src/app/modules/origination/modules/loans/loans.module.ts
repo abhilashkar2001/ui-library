@@ -14,28 +14,20 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { LoanFlowComponent } from './pages/loan-flow/loan-flow.component';
 import { CommonEmiCalculatorComponent } from './components/common-emi-calculator/common-emi-calculator.component';
 import { LoanProductsComponent } from './components/loan-products/loan-products.component';
-import { NationalIdUploadComponent } from '../dynamic-pages/national-id-upload/national-id-upload.component';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
-import { CibilScoreContainerComponent } from '../dynamic-pages/cibil-score-container/cibil-score-container.component';
-import { LoanTermsConditionsComponent } from '../dynamic-pages/loan-terms-conditions/loan-terms-conditions.component';
-import { CreateLoanComponent } from '../dynamic-pages/create-loan/create-loan.component';
 import { LoanAccountTypeComponent } from './pages/loan-account-type/loan-account-type.component';
 import { LoansComponent } from './loans/loans.component';
-import { LoanSummaryComponent } from '../dynamic-pages/loan-summary/loan-summary.component';
 import { LoansRoutingModule } from './loans-routing.module';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
 @NgModule({
   declarations: [
     LoansComponent,
     LoanAccountTypeComponent,
-    CreateLoanComponent,
-    LoanTermsConditionsComponent,
-    LoanSummaryComponent,
-    CibilScoreContainerComponent,
     LoansLandingComponent,
     LoanFlowComponent,
     CommonEmiCalculatorComponent,
     LoanProductsComponent,
-    NationalIdUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +40,8 @@ import { LoansRoutingModule } from './loans-routing.module';
     SharedComponentsModule,
     FlexLayoutModule,
     IcustLibraryModule,
+    SharedOriginationModule,
+    DynamicPagesModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })

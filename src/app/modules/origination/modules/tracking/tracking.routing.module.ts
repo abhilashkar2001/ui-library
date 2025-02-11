@@ -4,6 +4,7 @@ import { TrackingSummaryComponent } from './tracking-summary/tracking-summary.co
 import { SigninTrackComponent } from './signin-track/signin-track.component';
 import { ProductListCardComponent } from './components/product-list-card/product-list-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { AuthGuard } from 'app/shared/guards/auth.guard';
 
 export const TrackingRoute: Routes = [
   {
@@ -18,6 +19,7 @@ export const TrackingRoute: Routes = [
       {
         path: 'summary',
         component: TrackingSummaryComponent,
+        canActivate: [AuthGuard],
         children: [
           {
             path: '',

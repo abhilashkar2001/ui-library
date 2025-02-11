@@ -57,7 +57,7 @@
                       [options]="prefixArray"
                       bindValueKey="id"
                       bindLabelKey="values"
-                      [control]="customer.get('prefix') | formcontrol"
+                      [control]="customer.get('prefixId') | formcontrol"
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>
                   </div>
@@ -155,7 +155,7 @@
                       label="Gender"
                       bindLabelKey="values"
                       bindValueKey="id"
-                      [control]="customer.get('gender') | formcontrol"
+                      [control]="customer.get('genderId') | formcontrol"
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>
                   </div>
@@ -174,7 +174,7 @@
                       label="Martial Status"
                       bindLabelKey="values"
                       bindValueKey="id"
-                      [control]="customer.get('maritalStatus') | formcontrol"
+                      [control]="customer.get('maritalStatusId') | formcontrol"
                     ></ic-select>
                   </div>
                   <div class="highlight_title">Address Details</div>
@@ -200,7 +200,6 @@
                             [control]="
                               addressGroup.get('address1') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-form-field>
                         </div>
 
@@ -213,7 +212,6 @@
                             [control]="
                               addressGroup.get('residenceType') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-select>
                         </div>
                         <div class="col-md-6 col-12">
@@ -225,7 +223,6 @@
                             [control]="
                               addressGroup.get('countryName') | formcontrol
                             "
-                            [isRequired]="true"
                           ></ic-select>
                         </div>
 
@@ -236,10 +233,9 @@
                               addressGroup.get('pincode') | formcontrol
                             "
                             suffixIcon="search_icon"
-                            (onSuffixClick)="pincodeExpansion()"
+                            (onSuffixClick)="pincodeExpansion(i)"
                             [maxLength]="10"
                             [icNumbersOnly]="true"
-                            [isRequired]="true"
                           ></ic-form-field>
                         </div>
 
@@ -273,7 +269,9 @@
                     class="col-12"
                     *ngIf="!isHideField"
                   >
-                    <div *ngIf="customerDetailsForm.value.customer.length > 1">
+                    <div
+                      *ngIf="customerDetailsForm.value['customer'].length > 1"
+                    >
                       <ic-button
                         [label]="'Save' | translate"
                         [type]="'submit'"

@@ -9,6 +9,7 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
+import { SharedCorporateBankingModule } from '../../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [SalaryAccountComponent, AddSalaryAccountComponent],
@@ -20,6 +21,7 @@ import { SharedComponentsModule } from 'app/shared/components/shared-components.
     FlexLayoutModule,
     SharedComponentsModule,
     SalaryAccountRoutingModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class SalaryAccountModule {}

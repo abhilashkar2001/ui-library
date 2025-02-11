@@ -114,17 +114,6 @@ export class PersonalDetailsComponent implements OnInit {
   onConfirm() {
     const payLoad = this.createPayLoad();
     this.OnConfirmEmitter.emit({ payLoad: payLoad });
-
-    // this.openAccountService.savePersonalDetails(payLoad).subscribe(
-    //   (response: any) => {
-    //     console.log('Response: ', response);
-    //     localStorage.setItem('customerId', response.data.customerId);
-    //     this.router.navigate(['/loans/select-kyc']);
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
   }
 
   onBack() {

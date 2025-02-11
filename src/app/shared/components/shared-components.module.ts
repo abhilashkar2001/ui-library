@@ -19,7 +19,6 @@ import * as Charts from 'fusioncharts/fusioncharts.charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SwiperModule } from 'swiper/angular';
-import { MatIconModule } from '@angular/material/icon';
 import { SearchableSelectComponent } from './searchable-select/searchable-select.component';
 import { ReusablePincodePopupComponent } from './reusable-pincode-popup/reusable-pincode-popup.component';
 import { UserHeaderTopComponent } from './user-header-top/user-header-top.component';
@@ -33,9 +32,8 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { ViewExcelDocComponent } from './view-excel-doc/view-excel-doc.component';
 import { ScanComponent } from './scan/scan.component';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { SidebarSideComponent } from './sidebar-side/sidebar-side.component';
-import { MatInputModule } from '@angular/material/input';
+import { StagingSuccessAreaComponent } from './staging-success-area/staging-success-area.component';
+import { SuccessPopupComponent } from './success-popup/success-popup.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
@@ -52,7 +50,8 @@ const components = [
   PdfViewerComponent,
   ViewExcelDocComponent,
   ScanComponent,
-  SidebarSideComponent,
+  StagingSuccessAreaComponent,
+  SuccessPopupComponent,
 ];
 
 @NgModule({
@@ -70,13 +69,9 @@ const components = [
     SharedMaterialModule,
     NgOtpInputModule,
     SwiperModule,
-    MatIconModule,
     NgxSpinnerModule,
     InputMaskModule,
-    MatIconModule,
-    MatFormFieldModule,
     IcustLibraryModule,
-    MatInputModule,
   ],
   declarations: components,
   exports: components,

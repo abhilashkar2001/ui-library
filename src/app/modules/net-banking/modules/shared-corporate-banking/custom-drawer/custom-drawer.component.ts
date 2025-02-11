@@ -5,7 +5,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -23,7 +22,7 @@ import { DrawerConstant } from './custom-drawer.constant';
   templateUrl: './custom-drawer.component.html',
   styleUrls: ['./custom-drawer.component.scss'],
 })
-export class CustomDrawerComponent implements OnInit, OnChanges {
+export class CustomDrawerComponent implements OnChanges {
   @Input() menuType: any;
   TREE_DATA: any[] = [];
   currentMenu = '';
@@ -42,8 +41,6 @@ export class CustomDrawerComponent implements OnInit, OnChanges {
       ),
     );
   }
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['menuType']) {

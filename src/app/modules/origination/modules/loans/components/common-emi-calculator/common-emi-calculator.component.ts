@@ -83,8 +83,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        console.log(this.otherUserInfo, 'test');
-        this.productDetails = resp.data[0].lendingParameters.find(
+        this.productDetails = resp.data[0]?.lendingParameters.find(
           (el: any) => el.currency == this.otherUserInfo.currency,
         );
         this.min = this.productDetails.minimumAmount;
@@ -156,7 +155,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
               principleAmount: parseInt(this.loanForm.value.amount),
               interestRate: parseFloat(this.loanForm.value.interestRate),
               numberOfMonths: result,
-              firstRepaymentDate: moment(new Date()).format('DD-MM-YYYY'),
+              firstRepaymentDate: moment(new Date()).format('YYYY-MM-DD'),
             };
             this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
               this.interestPayble = Math.round(resp.data.totalInterest);

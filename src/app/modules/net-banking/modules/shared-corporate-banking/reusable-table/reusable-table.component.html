@@ -4,7 +4,7 @@
     *ngFor="let column of columnNames; let i = index"
     [matColumnDef]="column?.headerDef"
   >
-    <mat-header-cell class="column-name" *matHeaderCellDef [sticky]="true">
+    <mat-header-cell class="column-name" *matHeaderCellDef>
       {{ column?.headerCell }}
     </mat-header-cell>
 
@@ -68,11 +68,7 @@
           </ng-template>
         </ng-container>
         <ng-container *ngSwitchCase="'Full Refund'">
-          <mat-checkbox
-            [checked]="element[column?.headerDef]"
-            [readonly]="true"
-          >
-          </mat-checkbox>
+          <mat-checkbox [checked]="element[column?.headerDef]"> </mat-checkbox>
         </ng-container>
         <ng-container *ngSwitchCase="'Download'">
           <button mat-flat-button class="download-btn">

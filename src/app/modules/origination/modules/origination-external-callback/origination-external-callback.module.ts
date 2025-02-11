@@ -20,6 +20,9 @@ import { ChecklistDocumentComponent } from './checklist-document/checklist-docum
 import { DobVerificationComponent } from './dob-verification/dob-verification.component';
 import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module'
   ],
   imports: [
     CommonModule,
+    IcustLibraryModule,
+    TranslateModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
@@ -45,6 +50,7 @@ import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module'
     NgOtpInputModule,
     OriginationExternalCallbackRoutingModule,
     SharedPipesModule,
+    SharedOriginationModule,
   ],
 })
 export class OriginationExternalCallbackModule {}

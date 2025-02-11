@@ -13,6 +13,8 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { AccountTypeDetailsComponent } from './create-account/account-type-details/account-type-details.component';
 import { ApplyAccountComponent } from './create-account/apply-account/apply-account.component';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
     ReactiveFormsModule,
     NgOtpInputModule,
     RouterModule.forChild(HomeRoutes),
+    SharedOriginationModule,
+    DynamicPagesModule,
   ],
 })
 export class CreateAccountModule {}

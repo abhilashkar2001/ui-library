@@ -19,7 +19,7 @@ export class CommonProductComponent implements OnChanges {
   endPoints = environment.microServiceURL;
   @Input() subAccount: any;
   @Input() productIndex = 0;
-  @Output() onApply = new EventEmitter<any>();
+  @Output() apply = new EventEmitter<any>();
   @Output() customClassApply = new EventEmitter<any>();
   constructor(
     private cdr: ChangeDetectorRef,
@@ -39,7 +39,7 @@ export class CommonProductComponent implements OnChanges {
         clasDetails: product,
       });
     } else {
-      this.onApply.emit(product);
+      this.apply.emit(product);
     }
   }
   readMoreLess() {

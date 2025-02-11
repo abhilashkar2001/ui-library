@@ -1,4 +1,4 @@
-<div class="main_page" [formGroup]="revisiteForm" *ngIf="revisiteForm">
+<div class="main_page" [formGroup]="revisiteForm" *ngIf="">
   <div class="head_container bank-title">
     <h1>{{ currentUser?.bankName | titlecase }}</h1>
   </div>
@@ -8,17 +8,10 @@
     fxLayout="column"
     fxLayoutAlign="space-between start"
   >
-    <ng-container *ngIf="currentTab == 1; else showNext">
+    <ng-container *ngIf="currentTab === 1; else showNext">
       <div>
         <h3 class="text-label mb-16">Remarks</h3>
-
-        <textarea
-          name=""
-          id=""
-          cols="100"
-          rows="15"
-          class="toggle-card"
-        ></textarea>
+        <ic-textarea [rows]="15"> </ic-textarea>
       </div>
     </ng-container>
     <ng-template #showNext>
@@ -152,14 +145,11 @@
         </mat-card>
         <div>
           <h3 class="text-label mb-16 ml-16">Remark</h3>
-          <textarea
-            name=""
-            id=""
-            cols="150"
-            rows="3"
-            class="toggle-card"
-            formControlName="remark"
-          ></textarea>
+          <ic-textarea
+            [rows]="3"
+            [control]="revisiteForm.get('remark') | formcontrol"
+          >
+          </ic-textarea>
         </div>
         <div class="ml-16">
           <span class="text-bold">Note: </span

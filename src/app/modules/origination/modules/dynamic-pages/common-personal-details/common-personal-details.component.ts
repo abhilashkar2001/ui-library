@@ -189,27 +189,27 @@ export class CommonPersonalDetailsComponent
                       applicantNameArray?.[applicantNameArray.length - 1],
                     );
                 }
-                const gender = this.genderArray.find(
+                const genderId = this.genderArray.find(
                   (e) =>
-                    e.values?.toLowerCase() === item?.gender?.toLowerCase(),
+                    e.values?.toLowerCase() === item?.genderId?.toLowerCase(),
                 )?.id;
                 const customerFormGrp = this.customerDetailsForm.get(
                   'customer',
                 ) as FormGroup;
                 const customerIdx: any = customerFormGrp.controls[index];
-                customerIdx.get('gender').setValue(gender);
+                customerIdx.get('genderId').setValue(genderId);
 
-                if (item?.gender?.toLowerCase()) {
-                  const prefix = this.prefixArray.filter(
+                if (item?.genderId?.toLowerCase()) {
+                  const prefixId = this.prefixArray.filter(
                     (val: any) =>
                       val?.values ==
-                      this.genderPrefixMap.get(item?.gender?.toLowerCase()),
+                      this.genderPrefixMap.get(item?.genderId?.toLowerCase()),
                   );
                   const customerFormGrp = this.customerDetailsForm.get(
                     'customer',
                   ) as FormGroup;
                   const customerIdx: any = customerFormGrp.controls[index];
-                  customerIdx.get('prefix').setValue(prefix[0]?.id);
+                  customerIdx.get('prefixId').setValue(prefixId[0]?.id);
                 }
 
                 const customerControl = this.customer.at(index) as FormGroup;
@@ -293,17 +293,17 @@ export class CommonPersonalDetailsComponent
                 .get('lastName')
                 .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
             }
-            const gender = this.genderArray.find(
+            const genderId = this.genderArray.find(
               (e) =>
                 e.values.toLowerCase() ===
-                this.docCustomerDetails?.gender?.toLowerCase(),
+                this.docCustomerDetails?.genderId?.toLowerCase(),
             )?.id;
 
             const customerFormGrp = this.customerDetailsForm.get(
               'customer',
             ) as FormGroup;
             const customerIdx: any = customerFormGrp.controls[0];
-            customerIdx.get('gender').setValue(gender);
+            customerIdx.get('genderId').setValue(genderId);
 
             const customerControl = this.customer.at(0) as FormGroup;
             if (!customerControl) {
@@ -389,6 +389,7 @@ export class CommonPersonalDetailsComponent
     if (resp?.statusCode === 200) {
       if (resp?.data) {
         this.countryArray = resp?.data;
+        console.log(this.countryArray);
         resp?.data.forEach((element: any) => {
           if (element.nationality != null) this.nationalityArray.push(element);
         });
@@ -440,22 +441,23 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
+    console.log(data);
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ''],
-      customerStagingId: data?.customerStagingId ?? null,
+      custStagingId: data?.custStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ''],
       primaryCustomer: [
         data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
       ],
-      prefix: [data ? data.prefix : '', Validators.required],
+      prefixId: [data ? data.prefixId : '', Validators.required],
       firstName: [data ? data.firstName : '', Validators.required],
       lastName: [data ? data.lastName : '', Validators.required],
       dateOfBirth: [data ? data.dateOfBirth : '', Validators.required],
 
-      gender: [data ? data.gender : '', Validators.required],
+      genderId: [data ? data.genderId : '', Validators.required],
       nationality: [data ? data.nationality : '', Validators.required],
-      maritalStatus: [data ? data.maritalStatus : '', Validators.required],
+      maritalStatusId: [data ? data.maritalStatusId : '', Validators.required],
       source: data?.source ? data.source : 'Website',
       kycStatus: data?.kycStatus && data.kycStatus,
       documentId: this.calculateId(data),
@@ -667,12 +669,12 @@ export class CommonPersonalDetailsComponent
     const customerIndex: any = customerFormGroup.controls[i];
     customerIndex.patchValue({
       primaryCustomer: false,
-      prefix: '',
+      prefixId: '',
       firstName: '',
       lastName: '',
       dateOfBirth: '',
       email: '',
-      gender: '',
+      genderId: '',
       nationality: '',
       address1: '',
       residenceType: '',
@@ -684,7 +686,7 @@ export class CommonPersonalDetailsComponent
       kycStatus: '',
     });
   }
-  pincodeExpansion() {
+  pincodeExpansion(customerIndex: number) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: '60%',
       disableClose: true,
@@ -694,15 +696,13 @@ export class CommonPersonalDetailsComponent
       if (res) {
         const customerFormGroup = this.customerDetailsForm.get(
           'customer',
-        ) as FormGroup;
-        const customerAddress: any = customerFormGroup.controls[
-          'address'
-        ] as FormGroup;
-        customerAddress.controls[0];
+        ) as FormArray;
+        const customerAddress = customerFormGroup.controls[customerIndex]?.get(
+          'contact.address',
+        ) as FormArray;
         const addressControl = customerAddress.controls[0];
-
-        addressControl.patchValue(res);
-        addressControl.get('countryName')?.patchValue(res.countryName);
+        addressControl?.patchValue(res);
+        addressControl?.get('countryName')?.patchValue(res.countryName);
       }
     });
   }
@@ -718,7 +718,7 @@ export class CommonPersonalDetailsComponent
     let prefixValue = null;
     this.customerDetailsForm.value.customer.forEach((element: any) => {
       this.prefixArray.forEach((el) => {
-        if (element.primaryCustomer && el.id == element.prefix) {
+        if (element.primaryCustomer && el.id == element.prefixId) {
           prefixValue = el.values;
         }
       });
@@ -782,12 +782,12 @@ export class CommonPersonalDetailsComponent
     return {
       customerId: resp?.['customerId'],
       primaryCustomer: '',
-      prefix: resp?.['prefix'],
+      prefixId: resp?.['prefixId'],
       firstName: resp?.['firstName'],
       lastName: resp?.['lastName'],
       dateOfBirth: resp?.['dateOfBirth'],
       email: resp?.['contact']?.email,
-      gender: resp?.['gender'],
+      genderId: resp?.['genderId'],
       nationality: resp?.['nationality'],
       contact: {
         mobile: resp?.['contact']?.mobile,
@@ -859,23 +859,25 @@ export class CommonPersonalDetailsComponent
 
   CheckGenderandPrefix(index: number) {
     const personalInfoGroup = this.customer.at(index);
-    const prefix = this.prefixArray.filter(
-      (item) => item.id === personalInfoGroup.get('prefix')?.value,
+    const prefixId = this.prefixArray.filter(
+      (item) => item.id === personalInfoGroup.get('prefixId')?.value,
     )[0]?.values;
-    const gender = this.genderArray.filter(
-      (item) => item.id === personalInfoGroup.get('gender')?.value,
+    const genderId = this.genderArray.filter(
+      (item) => item.id === personalInfoGroup.get('genderId')?.value,
     )[0]?.values;
-    if (prefix && gender) {
+    if (prefixId && genderId) {
       if (
-        (prefix.toLowerCase() === 'mr' && gender.toLowerCase() === 'male') ||
-        ((prefix.toLowerCase() === 'ms' || prefix.toLowerCase() === 'mrs') &&
-          gender.toLowerCase() === 'female')
+        (prefixId.toLowerCase() === 'mr' &&
+          genderId.toLowerCase() === 'male') ||
+        ((prefixId.toLowerCase() === 'ms' ||
+          prefixId.toLowerCase() === 'mrs') &&
+          genderId.toLowerCase() === 'female')
       ) {
-        console.log('Prefix and Gender match!');
+        console.log('prefixId and genderId match!');
       } else {
-        personalInfoGroup.get('prefix')?.patchValue('');
-        personalInfoGroup.get('gender')?.patchValue('');
-        this.snack.open('Prefix and Gender does not match!', 'OK', {
+        personalInfoGroup.get('prefixId')?.patchValue('');
+        personalInfoGroup.get('genderId')?.patchValue('');
+        this.snack.open('prefixId and genderId does not match!', 'OK', {
           duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',

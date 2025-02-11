@@ -9,13 +9,12 @@ export class TrackingService {
   baseUrl = environment.microServiceURL;
   constructor(private http: HttpClient) {}
 
-  getOtp(phoneNumber: number) {
-    return this.http.get<any>(
-      `${this.baseUrl}/auth/generateOTP?mobile=${phoneNumber}`,
-    );
+  getOtp(data: { mobile: number }) {
+    return this.http.post<any>(`${this.baseUrl}/auth/generateOtp`, data);
   }
+
   verifyOtp(otpObject: any) {
-    return this.http.post(`${this.baseUrl}/auth/verifyOTP`, otpObject);
+    return this.http.post(`${this.baseUrl}/auth/verifyOtp`, otpObject);
   }
 
   getProductList(mobile: any, filterItem: any) {

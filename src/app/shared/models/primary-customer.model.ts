@@ -1,6 +1,6 @@
 export interface PrimaryCustomerInfo {
   customerId: number;
-  customerStagingId: number;
+  custStagingId: number;
   customerNo: string;
   prefixValue: string;
   prefix: number;

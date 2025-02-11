@@ -6,7 +6,6 @@ export enum SessionStorageEnum {
   TYPE = 'type',
   PROCESS_CYCLE_CODE = 'processCycleCode',
   LOAN_INFO = 'loan-info',
-  CARD_INFO = 'card-info',
   LIST_OF_CARDS = 'listOfCards',
   LIST_OF_ACCOUNTS = 'listOfAccounts',
   SELECTED_ACCOUNT_NO = 'selectAccNo',
@@ -57,5 +56,5 @@ export enum SessionStorageEnum {
   DOC_APPLI_NAME = 'docAppliName',
   FD_STEP = 'fdStep',
   FD_RD_MASTER_ID = 'fdRdMasterId',
-  CUSTOMER_STAGING_ID = 'customerStagingId',
+  CUSTOMER_STAGING_ID = 'custStagingId',
 }

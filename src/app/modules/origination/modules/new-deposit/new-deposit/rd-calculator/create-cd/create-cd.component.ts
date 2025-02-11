@@ -99,7 +99,7 @@ export class CreateCdComponent implements OnInit {
       ],
       autoRenew: [data ? data.autoRenew : false],
       fdRdMasterId: data && data.fdRdMasterId,
-      basisDetailsId: data && data.basisDetailsId,
+      originationProductId: data && data.originationProductId,
     });
     this.customBasicForm = this.createRdForm;
     // setTimeout(() => {

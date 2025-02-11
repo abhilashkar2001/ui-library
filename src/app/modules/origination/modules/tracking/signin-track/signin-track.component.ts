@@ -76,10 +76,13 @@ export class SigninTrackComponent implements OnInit {
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }
   getOtp() {
-    this.api.getOtp(this.signForm.value.mobile).subscribe(() => {
-      this.isShowOtpField = true;
-      this.selectedStep = 1;
-    });
+    const mobileNumber = this.signForm.value?.mobile; // Ensure type safety
+    if (mobileNumber) {
+      this.api.getOtp({ mobile: mobileNumber }).subscribe(() => {
+        this.isShowOtpField = true;
+        this.selectedStep = 1;
+      });
+    }
   }
 
   verifyOtp() {
@@ -87,15 +90,17 @@ export class SigninTrackComponent implements OnInit {
       this.api
         .verifyOtp({
           mobile: this.signForm.value.mobile,
-          otp: this.yourOtp,
+          otp: Number(this.yourOtp),
+          tokenRequired: true,
         })
         .subscribe((resp: any) => {
-          if (resp?.statusCode === 200) {
+          if (resp) {
             this.invalidOtp = false;
             this.sessionStorageService.setTrackingMobile(
               this.signForm.value.mobile,
             );
-            this.route.navigate(['/tracking/summary']);
+            console.log(this.route, 'calling here');
+            this.route.navigate(['origination/tracking/summary']);
           } else if (resp?.statusCode === 401) {
             this.invalidOtp = true;
           }

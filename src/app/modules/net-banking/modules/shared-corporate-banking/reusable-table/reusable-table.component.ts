@@ -31,7 +31,6 @@ export class ReusableTableComponent implements OnInit, OnChanges {
   @Input() selectedScreen: any;
   dataSource: MatTableDataSource<any> | any;
   @Output() actionItemClicked: EventEmitter<any> = new EventEmitter<any>();
-  moreContentIndx: number | any;
   selectedAccountInfo: any;
   @Input() selectedRowIndex = -1;
 

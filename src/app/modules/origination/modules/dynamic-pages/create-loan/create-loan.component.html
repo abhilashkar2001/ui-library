@@ -31,9 +31,10 @@
             tenureDays: 'Days',
           }"
           [parentForm]="personalLoanDetailsForm"
-          [disabled]="true"
         >
         </ic-tenure-field>
+        <!--        To add disable in tenure field once added in library -->
+        <!--          [disabled]="true"-->
         <!--  <mat-error
           class="mat-error small-error mt-12"
           *ngIf="
@@ -65,20 +66,6 @@
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <!-- <mat-form-field
-          appearance="outline"
-          class="full-width currency_field fieldinput"
-        >
-          <mat-label class="custom-mat-label">EMI Amount</mat-label>
-          <div fxLayout="row">
-            <span
-              class="currencySymbol"
-              *ngIf="personalLoanDetailsForm.value?.emiAmount"
-              >{{ currencySymboll }}</span
-            >
-            <input matInput readonly formControlName="emiAmount" />
-          </div>
-        </mat-form-field> -->
         <ic-form-field
           label="Emi Amount"
           [control]="personalLoanDetailsForm.get('emiAmount') | formcontrol"
@@ -91,17 +78,6 @@
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <!-- <mat-form-field appearance="outline" class="full-width fieldinput">
-          <mat-label class="custom-mat-label">Interest Rate</mat-label>
-          <input matInput readonly formControlName="interestRate" />
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm.get('interestRate')?.hasError('required')
-            "
-          >
-            Interest Rate is <strong>required</strong>
-          </mat-error> -->
-        <!-- </mat-form-field> -->
         <ic-form-field
           label="Interest Rate"
           [control]="personalLoanDetailsForm.get('interestRate') | formcontrol"
@@ -160,29 +136,6 @@
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">
-        <!-- <mat-form-field
-          appearance="outline"
-          class="full-width currency_field fieldinput"
-        >
-          <mat-label class="custom-mat-label">Total Payable Amount</mat-label>
-          <div fxLayout="row">
-            <span
-              class="currencySymbol"
-              *ngIf="personalLoanDetailsForm.value.totalPayableAmount"
-              >{{ currencySymboll }}</span
-            >
-            <input matInput readonly formControlName="totalPayableAmount" />
-          </div>
-          <mat-error
-            *ngIf="
-              personalLoanDetailsForm
-                .get('totalPayableAmount')
-                ?.hasError('required')
-            "
-          >
-            Total Payable Amount is <strong>required</strong>
-          </mat-error>
-        </mat-form-field> -->
         <ic-form-field
           label="Total Payable Amount"
           [prefixIcon]="

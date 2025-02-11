@@ -33,7 +33,7 @@ export class CustomPaginationComponent implements OnInit, OnChanges {
   @Input() filterValue: any;
   @Input() visibleRangeLength = 5;
   @Input() pageSizes: number[] = [5, 10, 25, 50];
-  @Output() customPageEvent = new EventEmitter<{}>();
+  @Output() customPageEvent = new EventEmitter();
   currentPage: number | any;
   pageAction: string | any;
   selectedSize = 5;

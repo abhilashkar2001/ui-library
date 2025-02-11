@@ -91,7 +91,7 @@ export class LoanAccountTypeComponent implements OnInit {
       interestPayable: parseFloat(this.selectedLoan.interestPayable),
       principalAmount: this.selectedLoan.amount,
       totalPayableAmount: parseFloat(this.selectedLoan.totalPayableAmount),
-      disbursementType: '',
+      disbursementTypeId: '',
       accountNumber: null,
       emiStartDate: moment(emiStartDate).format(),
     };
@@ -99,7 +99,7 @@ export class LoanAccountTypeComponent implements OnInit {
       if (resp?.statusCode === 201) {
         this.sessionStorageService.removeLoanStep();
         this.sessionStorageService.setLoanDisburseId(resp?.data.id);
-        this.router.navigate([`/loan/create-loan/${this.basisId}`]);
+        this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
       }
     });
   }

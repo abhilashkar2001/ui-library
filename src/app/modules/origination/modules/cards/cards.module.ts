@@ -20,6 +20,8 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { CardLandingComponent } from './card-landing/card-landing.component';
 import { RouterModule } from '@angular/router';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     SharedMaterialModule,
     IcustLibraryModule,
     RouterModule.forChild(cardsRoutes),
+    SharedOriginationModule,
+    DynamicPagesModule,
   ],
 })
 export class CardsModule {}

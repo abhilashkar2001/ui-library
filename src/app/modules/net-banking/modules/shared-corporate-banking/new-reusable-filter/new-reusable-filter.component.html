@@ -212,8 +212,8 @@
           <mat-option [value]="">Select</mat-option>
           <mat-option
             *ngFor="let item of newFilter.options"
-            [value]="item.value"
-            >{{ item.option }}</mat-option
+            [value]="item['value']"
+            >{{ item['option'] }}</mat-option
           >
         </mat-select>
       </mat-form-field>

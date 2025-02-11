@@ -9,10 +9,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { debounceTime } from 'rxjs/operators';
 import { CreateLoanConstant, CreateLoanEnum } from './create-loan.constant';
-import { IcScreen, selectLocaleData } from '@onerumango/utils';
+import { IcScreen, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { merge, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -25,7 +25,6 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
   styleUrls: ['./create-loan.component.scss'],
 })
 export class CreateLoanComponent implements OnInit, OnDestroy {
-  // decorates for component communication.
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
@@ -35,7 +34,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
   personalLoanDetailsForm: FormGroup | undefined;
   loanEnum = CreateLoanEnum;
 
-  // variables with static data.
   currencySymboll = CreateLoanConstant.CURRENCY_SYMBOLL;
   screenName: string = CreateLoanConstant.SCREEN_NAME;
   staticData = CreateLoanConstant.GENERIC_SATIC_KEYS;
@@ -45,14 +43,14 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     OWNERSHIP: [],
   };
 
-  disbursementType: string | undefined;
+  disbursementTypeId: string | undefined;
   loanDetails: any;
   isReadOnly = true;
   loanCustomerId: number | undefined;
   accountList: any;
   currentDate = new Date();
   productDetails: any;
-  otherUserInfo: any;
+  otherUserInfo: LocaleData | undefined;
   ownerShipId: number | undefined;
   valueChangesSubscription: Subscription | any;
   subscriptions: Subscription[] = [];
@@ -85,17 +83,19 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     const localeDataSub = this.store
       .select(selectLocaleData)
       .subscribe((localeData) => {
-        this.otherUserInfo = localeData;
-        this.currencySymboll = this.otherUserInfo?.currency;
+        if (localeData) {
+          this.otherUserInfo = localeData;
+          this.currencySymboll = this.otherUserInfo?.currency;
+        }
       });
     this.subscriptions.push(localeDataSub);
   }
 
-  getProductDetails(basisId: any) {
+  getProductDetails(basisId: number) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.productDetails = resp.data[0].lendingParameters.find(
-          (el: any) => el.currency == this.otherUserInfo.currency,
+      if (resp?.statusCode === 200 && resp?.data?.length > 0) {
+        this.productDetails = resp.data[0]?.lendingParameters.find(
+          (el: any) => el.currency == this.otherUserInfo?.currency,
         );
       }
     });
@@ -125,7 +125,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    */
   getGenericDetails() {
     this.loanApi
-      .genericValue(Object.keys(this.staticData), this.screenInfo?.screenCode)
+      .genericValue(this.screenInfo?.screenCode, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
@@ -145,9 +145,9 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    * Api call to fetch webDisbursement by id.
    * @param id webdisbursementId
    */
-  getLoanById(id: any) {
-    this.loanApi.getLoanById(id).subscribe(
-      (resp) => {
+  getLoanById(id: number) {
+    this.loanApi.getLoanById(id).subscribe({
+      next: (resp) => {
         if (resp.statusCode === 200) {
           this.initialForm({
             ...resp?.data,
@@ -166,10 +166,10 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
           this.initialForm();
         }
       },
-      () => {
+      error: () => {
         this.initialForm();
       },
-    );
+    });
   }
 
   /**
@@ -202,7 +202,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
         data ? data.totalPayableAmount : '',
         Validators.required,
       ],
-      disbursementType: [data ? data?.disbursementType : ''],
+      disbursementTypeId: [data ? data?.disbursementTypeId : ''],
       accountNumber: [data ? data?.accountNumber : ''],
       id: data?.id,
       bankCode: [data ? data?.bankCode : ''],
@@ -211,7 +211,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       branchCode: [data ? data?.branchCode : ''],
       confirmAccountNumber: '',
     });
-    // if (data) this.disbursementType = data?.disbursementType.toLowerCase();
 
     this.personalLoanDetailsForm
       ?.get('accountNumber')
@@ -421,7 +420,8 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       totalPayableAmount: parseInt(
         this.personalLoanDetailsForm?.value.totalPayableAmount,
       ),
-      disbursementType: this.personalLoanDetailsForm?.value.disbursementType,
+      disbursementTypeId:
+        this.personalLoanDetailsForm?.value.disbursementTypeId,
       emiStartDate: moment(
         this.personalLoanDetailsForm?.value.emiStartDate,
       ).format(),

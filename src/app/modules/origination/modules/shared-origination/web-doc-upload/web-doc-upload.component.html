@@ -87,7 +87,7 @@
                         Acceptable formats: JPEG, JPG or PNG.
                       </p>
                     </div>
-                    <label for="fileDropRef" class="doc_img" fxFlex="10">
+                    <label class="doc_img" fxFlex="10">
                       <img
                         src="../../../../../../assets/images/upload-logo.svg"
                         alt="Upload Sign"
@@ -134,15 +134,14 @@
     Add Another Document
   </button>
   <div fxLayoutGap="50px">
-    <button-loading
-      [loadingText]="loadingBtnText"
+    <ic-button
       [type]="'submit'"
-      [disable]="isLoading && checkDocValidity()"
-      [loading]="isLoading"
+      [disabled]="isLoading && checkDocValidity()"
+      [isLoading]="isLoading"
       (click)="onSubmit()"
     >
       Submit
-    </button-loading>
+    </ic-button>
     <button
       type="button"
       mat-raised-button

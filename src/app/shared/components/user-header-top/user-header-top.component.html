@@ -91,7 +91,7 @@
   >
     <div fxLayout="column" fxLayoutAlign="center center">
       <button mat-icon-button class="topbar-button-right img-button d-flex">
-        <img [src]="fileUrl" [appSrcfallback]="userImage" alt="file URL" />
+        <img [src]="fileUrl" alt="file URL" />
       </button>
     </div>
     <div fxLayout="column" fxLayoutAlign="center center">
@@ -112,12 +112,7 @@
     >
       <div class="profile-header">
         <div class="profile-image-container">
-          <img
-            class="img-icon"
-            [src]="fileUrl"
-            alt="file URL"
-            [appSrcfallback]="userImage"
-          />
+          <img class="img-icon" [src]="fileUrl" alt="file URL" />
         </div>
 
         <div class="profile-info">

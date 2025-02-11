@@ -8,28 +8,6 @@
   <div fxLayout="column" fxLayoutAlign="center">
     <div class="verification-card py-4">
       <ng-container *ngIf="!isSaveTemplate">
-        <!-- <div fxLayout="row" class="full-width mb-12 p-0">
-          <div
-            fxFlex="50"
-            fxLayout="column"
-            fxLayoutAlign="center center"
-            class="customer-type"
-            [ngClass]="{ 'customer-type-selected': !checkToggle }"
-            (click)="customerToggle(false)"
-          >
-            <div>Select Template</div>
-          </div>
-          <div
-            fxFlex="50"
-            fxLayout="column"
-            fxLayoutAlign="center center"
-            class="customer-type"
-            [ngClass]="{ 'customer-type-selected': checkToggle }"
-            (click)="customerToggle(true)"
-          >
-            <div>Add New</div>
-          </div>
-        </div> -->
         <div fxLayout="column">
           <mat-label class="custom-label">Template Name</mat-label>
           <mat-form-field appearance="outline" class="custom-field">

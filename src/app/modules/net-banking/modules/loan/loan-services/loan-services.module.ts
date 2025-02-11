@@ -22,6 +22,7 @@ import { RequestCertificateComponent } from './loan-services/request-certificate
 import { GoldRenewalComponent } from './loan-services/gold-renewal/gold-renewal.component';
 import { SharedPipesModule } from '../../../../../shared/pipes/shared-pipes.module';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedCorporateBankingModule } from '../../shared-corporate-banking/shared-corporate-banking.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
     SharedComponentsModule,
     SharedPipesModule,
     IcustLibraryModule,
+    SharedCorporateBankingModule,
   ],
 })
 export class LoanServicesModule {}

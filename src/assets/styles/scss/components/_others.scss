@@ -152,6 +152,10 @@ mat-expansion-panel.default-expansion-panel {
   border: 1px #00000017 solid;
 }
 
+.boxshadow-none {
+  box-shadow: none !important;
+}
+
 // /* Thumb label styles */
 // .mat-mdc-slider {
 //   .mdc-slider__value-indicator-container {
