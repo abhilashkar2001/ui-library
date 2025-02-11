@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, of, map } from 'rxjs';
 import { GenericValue } from '../data/generic-value';
 import { GenericValueInfoModel } from '../models/generic-value.model';
-import { IcHttpResponseModel } from '@onerumango/utils';
+import { appendFilterParam, IcHttpResponseModel } from '@onerumango/utils';
 
 const MICROSERVICE_URL = environment.microServiceURL;
 
@@ -30,20 +30,18 @@ export class GenericValueService extends GenericValue {
       if (genericName?.length < 1) {
         return of(this.genericValue);
       } else {
-        return this.fetchGenericValue(genericName, screenCode);
+        return this.fetchGenericValue({ genericName, screenCode });
       }
     } else {
-      return this.fetchGenericValue(genericName, screenCode);
+      return this.fetchGenericValue({ genericName, screenCode });
     }
   }
 
   fetchGenericValue(
-    genericName: string[] | string,
-    screenCode?: number,
+    paramsObj: any,
   ): Observable<IcHttpResponseModel<GenericValueInfoModel>> {
-    const params = new HttpParams();
-    params.append('genericName', JSON.stringify(genericName));
-    if (screenCode) params.append('screenCode', screenCode);
+    const params = appendFilterParam(paramsObj);
+
     return this.http
       .get<
         IcHttpResponseModel<GenericValueInfoModel>

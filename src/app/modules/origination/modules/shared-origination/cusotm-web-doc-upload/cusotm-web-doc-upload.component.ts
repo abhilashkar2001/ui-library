@@ -89,7 +89,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   nationalIdGeneric: any;
 
   @Input() isShowDisbursement = false;
-  disbursementType: any;
+  disbursementTypeId: any;
   disbursementTypeArray: any[] = [{}];
   loanCustomerId: string | any;
   accountList: any;
@@ -171,8 +171,8 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   buildLoanDisbursementForm(data?: any) {
     this.loanDisbursementForm = this.fb.group({
-      disbursementType: [
-        data ? data?.disbursementType : '',
+      disbursementTypeId: [
+        data ? data?.disbursementTypeId : '',
         Validators.required,
       ],
       accountNumber: [data ? data?.accountNumber : ''],
@@ -195,15 +195,15 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
    * @param event is disbursement change value
    */
   onDisbursementSelectionChanged(event: any) {
-    this.disbursementType = this.staticData['DISBURSEMENTTYPE']
+    this.disbursementTypeId = this.staticData['DISBURSEMENTTYPE']
       .filter((item: any) => item?.id == event)[0]
       .values.toLowerCase();
-    console.log(this.disbursementType, ' this.disbursementType ');
+    console.log(this.disbursementTypeId, ' this.disbursementTypeId ');
     this.loanDisbursementForm
       .get('disbursementTypeValue')
-      ?.setValue(' this.disbursementType');
+      ?.setValue(' this.disbursementTypeId');
     if (
-      this.disbursementType.includes(CreateLoanEnum.ACCOUNT_INCLUDES_KEY) &&
+      this.disbursementTypeId.includes(CreateLoanEnum.ACCOUNT_INCLUDES_KEY) &&
       this.loanDisbursementForm.value.accountType === CreateLoanEnum.INTERNAL
     ) {
       this.loanDisbursementForm.controls['accountNumber']?.setValidators([
@@ -280,7 +280,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
             (res) => res?.values == 'Cash',
           )?.id;
           this.loanDisbursementForm
-            ?.get('disbursementType')
+            ?.get('disbursementTypeId')
             ?.setValue(this.defaultDisbursement);
         }
       });
@@ -735,8 +735,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
               originationId: this.sessionStorageService.getOriginationId(),
               file: file,
               documentId: resp.data.documentId,
-              customerStagingId:
-                this.sessionStorageService.getCustomerStagingId(),
+              custStagingId: this.sessionStorageService.getCustomerStagingId(),
             },
           );
           this.sessionStorageService.setOtherDocScreenCode(
@@ -753,7 +752,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     originationId: any,
     file: any,
     documentId: any,
-    customerStagingId: any,
+    custStagingId: any,
   ) {
     const formData = new FormData();
     formData.append('fileName', file);
@@ -763,7 +762,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         originationId,
         formData,
         documentId,
-        customerStagingId,
+        custStagingId,
       )
       .subscribe((resp) => {
         if (resp) {
@@ -844,9 +843,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     }
     console.log(this.createDocumentForm);
 
-    if (this.createDocumentForm.invalid || !isDocUploaded) {
-      return;
-    }
+    // if (this.createDocumentForm.invalid || !isDocUploaded) {
+    //   return;
+    // }
     console.log(isDocUploaded);
     this.isLoading = true;
     this.loadingBtnText = 'Saving...';

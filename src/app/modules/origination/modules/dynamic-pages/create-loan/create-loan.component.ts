@@ -95,7 +95,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.productDetails = resp.data[0]?.lendingParameters.find(
-          (el) => el.currency == this.otherUserInfo?.currency,
+          (el: any) => el.currency == this.otherUserInfo?.currency,
         );
       }
     });
@@ -125,7 +125,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    */
   getGenericDetails() {
     this.loanApi
-      .genericValue(Object.keys(this.staticData), this.screenInfo?.screenCode)
+      .genericValue(this.screenInfo?.screenCode, Object.keys(this.staticData))
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };

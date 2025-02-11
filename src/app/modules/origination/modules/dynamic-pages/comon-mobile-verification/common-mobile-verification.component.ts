@@ -22,6 +22,10 @@ import { debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
+import { TrackingService } from '../../tracking/tracking-service';
+import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-common-mobile-verification',
@@ -87,6 +91,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   @Input() basisName = '';
   loadingBtnText = 'Saving...';
   @Input() mobileVerifyInfo: any = {};
+  subscriptions: Subscription[] = [];
+  private localeData: LocaleData | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -94,11 +100,19 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     private api: OpenAccountService,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
+    private otpService: TrackingService,
+    private store: Store<AppState>,
   ) {
     this.buildFormGroup();
   }
 
   ngOnInit(): void {
+    const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
+      if (res) {
+        this.localeData = res;
+      }
+    });
+    this.subscriptions.push(localeData$);
     this.loadCountries();
   }
 
@@ -110,32 +124,23 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
 
   onGetOTP() {
-    console.log('kjhgfgh');
     // this.ngOtpInput.otpForm.reset();
-    this.api.getOtp(this.otpForm.value.phone).subscribe(() => {
-      this.otpSent = true;
-      this.showOtpSection = true;
-      this.getOtpBtn = true;
-      this.validNumber = true;
-      this.resendLink = false;
-      this.invalidOtp = false;
-      this.resendOtp += 1;
-      this.stopInterval();
-      this.otpTimer();
-      setTimeout(() => {
-        this.otpSent = false;
-      }, 500000);
-    });
-    console.log(
-      'result',
-      (this.validNumber && this.getOtpBtn) || this.isValidMobile,
-    );
-
-    console.log({
-      validNumber: this.validNumber,
-      getOtpBtn: this.getOtpBtn,
-      isValidMobile: this.isValidMobile,
-    });
+    this.otpService
+      .getOtp({ mobile: this.otpForm.value.phone })
+      .subscribe(() => {
+        this.otpSent = true;
+        this.showOtpSection = true;
+        this.getOtpBtn = true;
+        this.validNumber = true;
+        this.resendLink = false;
+        this.invalidOtp = false;
+        this.resendOtp += 1;
+        this.stopInterval();
+        this.otpTimer();
+        setTimeout(() => {
+          this.otpSent = false;
+        }, 500000);
+      });
   }
 
   loadCountries() {
@@ -146,10 +151,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
           this.countryTelIsdCode = resp?.data.map(
             (i: any) => i?.countryTelIsdCode,
           );
-          console.log(this.countriesIsdCodes);
-          console.log(this.countryTelIsdCode);
           const indiaIsdCode = this.countriesIsdCodes.find(
-            (item: any) => item?.countryName.toLowerCase() == 'india',
+            (item: any) => item?.countryName == this.localeData?.country,
           );
           if (indiaIsdCode) {
             this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
@@ -264,21 +267,21 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   onVerify() {
     this.isLoading = true;
     this.loadingBtnText = 'Saving...';
-    // this.api
-    //   .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
-    //   .subscribe((response: any) => {
-    //     if (response.statusCode === 401) {
-    //       this.invalidOtp = true;
-    //       this.isLoading = false;
-    //     } else if (response.statusCode === 200 || response?.accessToken) {
-    this.loadingBtnText = 'Saved';
-    this.isLoading = false;
-    this.invalidOtp = false;
-    if (!this.hideInfo)
-      this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
-    this.CustomSubmit.emit({});
-    //   }
-    // });
+    this.otpService
+      .verifyOtp({ mobile: this.otpForm.value.phone, otp: this.yourOtp })
+      .subscribe((response: any) => {
+        if (response.status === 401) {
+          this.invalidOtp = true;
+          this.isLoading = false;
+        } else if (response.status === 200) {
+          this.loadingBtnText = 'Saved';
+          this.isLoading = false;
+          this.invalidOtp = false;
+          if (!this.hideInfo)
+            this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
+          this.CustomSubmit.emit({});
+        }
+      });
   }
 
   onExit() {
@@ -286,6 +289,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
 
   onVerifyExistingProduct(event: any) {
+    console.log(this.mobileVerifyInfo);
     const type = !this.mobileVerifyInfo?.individual ? 'corporate' : '';
     // this.isLoading = true;
     this.api
@@ -294,8 +298,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
         event.phone,
         this.mobileVerifyInfo.productDuplicationKey,
       )
-      .subscribe((resp) => {
-        if (!resp) {
+      .subscribe((resp: boolean) => {
+        if (resp) {
           this.allreadyProduct(
             `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
             'Please visit bank for more information.',

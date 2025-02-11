@@ -246,7 +246,7 @@ export class ReturnCalculatorComponent implements OnInit, OnChanges {
   originationModel(basisId: number) {
     return {
       ...this.depositForm.value,
-      basisDetailsId: basisId,
+      originationProductId: basisId,
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
       branchCode: this.currentUser?.branchId,
       depositeType: this.depositeType,

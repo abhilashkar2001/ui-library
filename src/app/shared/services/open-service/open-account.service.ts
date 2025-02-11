@@ -44,7 +44,7 @@ export class OpenAccountService {
 
   getExistingCustomer(mobileNo: any, type?: any) {
     return this.http.get(
-      `${baseUrl}/fetchExistingCustomer?mobile=${mobileNo}${
+      `${baseUrl}/customer-api?mobile=${mobileNo}${
         type ? `&type=${type}` : ''
       }`,
     );

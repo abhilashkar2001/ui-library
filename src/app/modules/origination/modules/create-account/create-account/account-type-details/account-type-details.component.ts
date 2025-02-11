@@ -67,7 +67,7 @@ export class AccountTypeDetailsComponent implements OnChanges {
   applyForAccount(event: any) {
     const payload = {
       accountType: event.basisName,
-      basisDetailsId: event.basisId,
+      originationProductId: event.basisId,
       processCycleCode: event.processCycleCode,
     };
     this.sessionStorageService.setLoanBasisDetails(payload);

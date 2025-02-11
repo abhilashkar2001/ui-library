@@ -80,7 +80,7 @@ export class CompanyInformationComponent implements OnInit {
     this._parentForm = this.fb.group({
       screenCode: parseInt(this.sessionStorageService.getCurrentScreenCode()),
       originationModel: this.fb.group({
-        basisDetailsId: [''],
+        originationProductId: [''],
         loanAmount: [''],
       }),
       corporateCustomer: this.addCorporateCustomer(),

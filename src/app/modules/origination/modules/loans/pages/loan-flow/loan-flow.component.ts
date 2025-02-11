@@ -119,9 +119,14 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             if (this.noOfDirectors)
               this.componentRef.instance.numberOfDirectors = this.noOfDirectors;
             // for mobile number.
+            console.log(this.mobileVerifyInfo);
             this.componentRef.instance.mobileVerifyInfo = this.mobileVerifyInfo;
             // for personal details.
             this.componentRef.instance.basisId = this.basisId;
+
+            // to pass screenInfo
+            this.componentRef.instance.screenInfo =
+              this.screenList[this.selectedStep];
             this.componentRef.instance.personalDetails = this.personalDetails;
             this.componentRef.instance.docCustomerDetails =
               this.docCustomerDetails;
@@ -136,6 +141,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
             this.componentRef.instance.updateParentModel = this.updateAccount;
             this.componentRef.instance?.CustomSubmit?.subscribe((data: any) => {
+              console.log(data);
               if (data?.value?.accountNumber)
                 this.createLoanAccountNumber = data.value.accountNumber;
 
@@ -146,6 +152,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                     this.personalDoc = item?.documentInfo;
                 });
               }
+              console.log(screenName);
               if (
                 screenName.toLowerCase().includes('personal') ||
                 screenName.toLowerCase().includes('director')
@@ -356,6 +363,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
           basisName: this.productDetails.basisName,
           individual: resp?.data[0]?.individual,
         };
+        console.log(this.mobileVerifyInfo);
         this.cdr.detectChanges();
       }
     });
@@ -456,24 +464,28 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     const originationId = this.sessionStorageService.getOriginationId();
     if (loanData) {
       const payload = {
-        originationId:
-          this.originationModel?.originationId ?? originationId ?? null,
-        applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
-        accountType: sessionData.basisName,
-        basisDetailsId: sessionData.basisId,
-        loanAmount: parseInt(loanData.loanAmount),
-        loanTenureDay: this.sessionStorageService.getTenureDays(),
-        loanTenureMonth: this.sessionStorageService.getTenureMonth(),
-        loanTenureYear: this.sessionStorageService.getTenureYear(),
-        branchCode: this.currentUser?.branch,
-        source: 'Website',
-        businessProductName: this.productDetails.basisName,
-        productDescription: this.productDetails.basisDetailStory,
-        currencyCode: this.localeData?.currency,
-        branchId: this.currentUser?.branch,
-        ownership: ownershipId,
-        documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
-        department: this.currentUser?.department,
+        loanDetails: {
+          loanAmount: parseInt(loanData.loanAmount),
+          loanTenureDay: this.sessionStorageService.getTenureDays(),
+          loanTenureMonth: this.sessionStorageService.getTenureMonth(),
+          loanTenureYear: this.sessionStorageService.getTenureYear(),
+        },
+        originationModel: {
+          originationId:
+            this.originationModel?.originationId ?? originationId ?? null,
+          applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
+          accountType: sessionData.basisName,
+          originationProductId: sessionData.basisId,
+          source: 'Website',
+          businessProductName: this.productDetails.basisName,
+          productDescription: this.productDetails.basisDetailStory,
+          currencyCode: this.localeData?.currency,
+          currencyId: this.currentUser?.currencyId,
+          branchId: this.currentUser?.branchId,
+          ownership: ownershipId,
+          documentId: this.otherLoanDoc?.length > 0 ? this.otherLoanDoc : null,
+          department: this.currentUser?.department,
+        },
       };
       return payload;
     } else return;
@@ -502,7 +514,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.selectedStep = num;
       this.sessionStorageService.setLoanStep(String(this.selectedStep));
       this.sessionStorageService.setCurrentScreenCode(
-        this.screenList[num].screenCode,
+        this.screenList[this.selectedStep].screenCode,
       );
       this.factory();
       window.scrollTo(0, 0);
@@ -542,7 +554,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
           jointCustomerInfo: [],
           middleName: '',
           dateOfBirth: moment(element.dateOfBirth).format(),
-          documentId: [this.kycDoc[i]],
+          documentId: this.kycDoc?.[i] ? [this.kycDoc?.[i]] : null,
           biometricId: [this.sessionStorageService.getBiometricId()],
         };
         customer.push(cus);
@@ -562,7 +574,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         null,
       applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
       accountType: sessionData.basisName,
-      basisDetailsId: sessionData.basisId,
+      originationProductId: sessionData.basisId,
       loanAmount: parseInt(loanData.loanAmount),
       loanTenureDay: this.sessionStorageService.getTenureDays(),
       loanTenureMonth: this.sessionStorageService.getTenureMonth(),
@@ -611,8 +623,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       event.prefixValue,
     ).then((data) => {
       const payloadData = {
-        originationModel: { ...this.factorizedPayload() },
+        ...this.factorizedPayload(),
         customerInfo: data,
+        screenCode: this.screenList[this.selectedStep].screenCode,
       };
       this.openAccountService
         .saveCustomerInfo(payloadData)
@@ -624,10 +637,10 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.originationValue$ = resp.data;
             const customId: any = [];
             for (const item of resp.data.customerInfo) {
-              customId.push(item.customerId || item?.customerStagingId);
+              customId.push(item.customerId || item?.custStagingId);
               if (item.primaryCustomer)
                 this.sessionStorageService.setCustomerStagingId(
-                  item.customerStagingId,
+                  item.custStagingId,
                 );
             }
             this.snack.open(`Personal Details Saved` + ' !', 'OK', {

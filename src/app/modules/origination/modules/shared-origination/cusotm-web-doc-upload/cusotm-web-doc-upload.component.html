@@ -134,32 +134,21 @@
       fxLayoutGap="1%"
     >
       <div fxFlex="48" class="enabled-mat-form-field">
-        <mat-form-field appearance="outline" class="full-width custom-field">
-          <mat-label class="custom-mat-label">Disbursement Type</mat-label>
-          <mat-select
-            formControlName="disbursementType"
-            (selectionChange)="onDisbursementSelectionChanged($event.value)"
-          >
-            <mat-option [value]="">Select</mat-option>
-            <mat-option
-              *ngFor="let disburse of disbursementTypeArray"
-              [value]="disburse.id"
-              >{{ disburse.values }}</mat-option
-            >
-          </mat-select>
-          <mat-error
-            *ngIf="
-              loanDisbursementForm.get('disbursementType')?.hasError('required')
-            "
-          >
-            Disbursement Type is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <ic-select
+          [label]="'Disbursement Type' | translate"
+          placeholder="Disbursement Type"
+          [options]="disbursementTypeArray"
+          [bindValueKey]="'id'"
+          [bindLabelKey]="'values'"
+          [control]="
+            loanDisbursementForm.get('disbursementTypeId') | formcontrol
+          "
+        ></ic-select>
       </div>
 
       <div fxFlex="48" class="pt-12">
         <mat-radio-group
-          *ngIf="disbursementType === loanEnum.ACCOUNT_EXISTING_KEY"
+          *ngIf="disbursementTypeId === loanEnum.ACCOUNT_EXISTING_KEY"
           aria-label="Select an option"
           formControlName="accountType"
           (change)="onChange()"
@@ -176,8 +165,8 @@
         class="enabled-mat-form-field"
         fxFlex="48"
         *ngIf="
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY ||
-          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
+          disbursementTypeId === loanEnum.ACCOUNT_INCLUDES_KEY ||
+          disbursementTypeId === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -229,8 +218,8 @@
         class=""
         *ngIf="
           loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL ||
-          disbursementType === loanEnum.ACCOUNT_INCLUDES_KEY ||
-          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
+          disbursementTypeId === loanEnum.ACCOUNT_INCLUDES_KEY ||
+          disbursementTypeId === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -258,7 +247,7 @@
         class=""
         *ngIf="
           loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
-          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
+          disbursementTypeId === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">
@@ -272,7 +261,7 @@
         class=""
         *ngIf="
           loanDisbursementForm?.value.accountType === loanEnum.EXTERNAL &&
-          disbursementType === loanEnum.ACCOUNT_EXISTING_KEY
+          disbursementTypeId === loanEnum.ACCOUNT_EXISTING_KEY
         "
       >
         <mat-form-field appearance="outline" class="full-width custom-field">

@@ -31,7 +31,7 @@ export class DigitalSignComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.customerId = this.sessionStorageService.getItem('customerStagingId');
+    this.customerId = this.sessionStorageService.getItem('custStagingId');
     if (this.customerId) this.fetchSign();
   }
 

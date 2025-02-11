@@ -62,9 +62,9 @@ export class LoanService {
     );
   }
 
-  genericValue(screenName: string | string[], genericName: string[] | number) {
+  genericValue(screenCode: number, genericName: string | string[]) {
     return this.http.get<any>(
-      `${baseUrl}/generic-value?screenName=${screenName}&genericName=${genericName}`,
+      `${baseUrl}/generic-value?screenCode=${screenCode}&genericName=${genericName}`,
     );
   }
   triggerloanDetailsEmail(formdata: any) {

@@ -57,7 +57,7 @@
                       [options]="prefixArray"
                       bindValueKey="id"
                       bindLabelKey="values"
-                      [control]="customer.get('prefix') | formcontrol"
+                      [control]="customer.get('prefixId') | formcontrol"
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>
                   </div>
@@ -155,7 +155,7 @@
                       label="Gender"
                       bindLabelKey="values"
                       bindValueKey="id"
-                      [control]="customer.get('gender') | formcontrol"
+                      [control]="customer.get('genderId') | formcontrol"
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>
                   </div>
@@ -174,7 +174,7 @@
                       label="Martial Status"
                       bindLabelKey="values"
                       bindValueKey="id"
-                      [control]="customer.get('maritalStatus') | formcontrol"
+                      [control]="customer.get('maritalStatusId') | formcontrol"
                     ></ic-select>
                   </div>
                   <div class="highlight_title">Address Details</div>
@@ -233,7 +233,7 @@
                               addressGroup.get('pincode') | formcontrol
                             "
                             suffixIcon="search_icon"
-                            (onSuffixClick)="pincodeExpansion()"
+                            (onSuffixClick)="pincodeExpansion(i)"
                             [maxLength]="10"
                             [icNumbersOnly]="true"
                           ></ic-form-field>

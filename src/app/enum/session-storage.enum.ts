@@ -56,5 +56,5 @@ export enum SessionStorageEnum {
   DOC_APPLI_NAME = 'docAppliName',
   FD_STEP = 'fdStep',
   FD_RD_MASTER_ID = 'fdRdMasterId',
-  CUSTOMER_STAGING_ID = 'customerStagingId',
+  CUSTOMER_STAGING_ID = 'custStagingId',
 }

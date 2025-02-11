@@ -10,16 +10,15 @@ export class OtpService {
   constructor(private http: HttpClient) {}
 
   generateOTP(payload: any) {
-    return this.http.get<any>(
-      `${MICROSERVICE_URL}/auth/generateOTP?${
-        payload?.mobile
-          ? `mobile=${payload?.mobile}`
-          : `email=${payload?.email}`
-      }`,
+    return this.http.post<any>(
+      `${MICROSERVICE_URL}/auth/generateOtp`,
+      payload?.mobile
+        ? `{"mobile":${payload?.mobile}}`
+        : `email:${payload?.email}`,
     );
   }
 
   verifyOTP(payload: any) {
-    return this.http.post<any>(`${MICROSERVICE_URL}/auth/verifyOTP`, payload);
+    return this.http.post<any>(`${MICROSERVICE_URL}/auth/verifyOtp`, payload);
   }
 }

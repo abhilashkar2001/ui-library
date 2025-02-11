@@ -67,13 +67,13 @@ export class BranchService {
   }
   saveCustomerSign(payload: any): Observable<any> {
     return this.httpClient.post(
-      `${MICROSERVICE_URL}/signature/saveCustStageSignature`,
+      `${MICROSERVICE_URL}/customer-api/saveCustStageSignature`,
       payload,
     );
   }
   fetchCustomerSign(id: any) {
     return this.httpClient.get<any>(
-      `${MICROSERVICE_URL}/signature/customerStageSignature/fetch-by-id/${id}`,
+      `${MICROSERVICE_URL}/customer-api/customerStageSignature/fetch-by-id/${id}`,
     );
   }
 }

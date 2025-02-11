@@ -3,7 +3,7 @@ export class CreateLoanConstant {
   static readonly SCREEN_NAME = 'Create Loan';
   static readonly GENERIC_SATIC_KEYS = {
     HOLDERTYPE: [],
-    DISBURSEMENTTYPE: [],
+    OWNERSHIP: [],
   };
 
   static readonly ACCOUNT_TYPE = [
