@@ -20,8 +20,6 @@ export class DynamicProductDetailsComponent implements OnChanges {
   }
 
   opnDocument(imageUrl: any, doc: any) {
-    console.log(imageUrl, doc, 'kkk');
-
     if (doc.fileUrl.includes('pdf')) {
       this.dialog.open(PdfViewerComponent, {
         data: {

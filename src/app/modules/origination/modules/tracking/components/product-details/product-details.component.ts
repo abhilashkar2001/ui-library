@@ -64,11 +64,8 @@ export class ProductDetailsComponent implements OnInit {
       if (originationDetails?.statusCode === 200) {
         const orginationInfo = originationDetails.data[0];
         const kycDoc = orginationInfo.customerInfo
-          .filter((obj: any) => obj.primaryCustomer)
-          .flatMap((obj: any) =>
-            obj.documnentsInfo.documents.flatMap((objDoc: any) => objDoc.docs),
-          );
-
+          .filter((customer: any) => customer.primaryCustomer)
+          .flatMap((customer: any) => customer.documentInfo);
         if (resp?.applicationDetails?.statusCode === 200) {
           this.applicationStatus = resp?.applicationDetails?.data;
           this.applicationStatus = this.applicationStatus.filter(
@@ -100,11 +97,9 @@ export class ProductDetailsComponent implements OnInit {
             .filter((obj: any) => obj.docInfoModel)
             ?.map((item: any) => item?.docInfoModel?.[0]);
         }
-
         if (resp.webSummary?.statusCode === 200) {
-          const loanInfo = resp.webSummary.data;
-          const loanTenure = `${loanInfo.loanDetails.loanTenureYear} Year ${loanInfo.loanDetails.loanTenureMonth} Months ${loanInfo.loanDetails.loanTenureDay} Day`;
-
+          const loanInfo = resp.webSummary?.data;
+          const loanTenure = `${loanInfo?.loanDetails?.loanTenureYear} Year ${loanInfo?.loanDetails?.loanTenureMonth} Months ${loanInfo?.loanDetails?.loanTenureDay} Day`;
           this.dynamicDetails = [
             {
               key: 'loanAccountInfo',
@@ -118,10 +113,8 @@ export class ProductDetailsComponent implements OnInit {
             { key: 'customerInfo', values: orginationInfo.customerInfo ?? {} },
             {
               key: 'documnentsInfo',
-              // values: loanInfo.documnentsInfo.docInfoModel ?? []
               values: this.loanDocument ?? [],
             },
-
             { key: 'docs', values: kycDoc },
           ];
           this.dynamicKeyHelper = this.productType
