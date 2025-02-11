@@ -52,12 +52,12 @@ export class ProductConstant {
         },
         {
           label: 'Principle Amount',
-          valueKey: 'interestPayable',
+          valueKey: 'principalAmount',
           type: 'currency',
         },
         {
           label: 'Total Payable Amount',
-          valueKey: 'interestPayable',
+          valueKey: 'totalPayableAmount',
           type: 'currency',
         },
         { label: 'Holder Type', valueKey: 'holderType' },
