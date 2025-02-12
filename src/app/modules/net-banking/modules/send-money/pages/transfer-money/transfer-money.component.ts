@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ChequeService } from 'app/modules/net-banking/modules/dashboard/modules/cheque-book/cheque-service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SchedulePaymentService } from 'app/shared/services/fund-transfer/schedule-payment.service';
 import { SendMoneyService } from 'app/shared/services/fund-transfer/send-money.service';
 import { TransferMoneyService } from 'app/shared/services/fund-transfer/transfer-money.service';

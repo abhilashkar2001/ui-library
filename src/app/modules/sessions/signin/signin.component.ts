@@ -3,7 +3,7 @@ import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { NewErrorPopupComponent, TokenStorageService } from '@onerumango/utils';
-import { SessionService } from 'app/shared/session.service';
+import { SessionService } from 'app/shared/services/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

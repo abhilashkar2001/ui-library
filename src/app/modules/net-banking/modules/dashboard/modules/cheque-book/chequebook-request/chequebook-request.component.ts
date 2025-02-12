@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { ChequeService } from '../cheque-service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 

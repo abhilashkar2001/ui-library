@@ -7,7 +7,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { Router } from '@angular/router';
 
 @Component({

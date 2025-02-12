@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CreditCardStore } from '../../../credit-card.store';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
 import { Store } from '@ngrx/store';

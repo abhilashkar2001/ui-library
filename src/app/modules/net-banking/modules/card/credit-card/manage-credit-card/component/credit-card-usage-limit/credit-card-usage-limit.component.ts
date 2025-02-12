@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { IconService } from 'app/shared/services/icon.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { LimitType } from '../../credit-card-usage-limit.store';

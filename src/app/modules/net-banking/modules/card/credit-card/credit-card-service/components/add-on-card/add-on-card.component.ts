@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CreditCardStore } from '../../../credit-card.store';
 import { CardService } from '../../../../card.service';
 import { AccountList } from 'app/shared/models/card.model';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '@onerumango/utils';

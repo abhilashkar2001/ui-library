@@ -16,7 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
-import { SharedService } from 'app/shared/shared.service';
+import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { CommonService } from 'app/shared/services/common-service/common.service';

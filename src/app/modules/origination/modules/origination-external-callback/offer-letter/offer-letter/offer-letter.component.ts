@@ -9,7 +9,7 @@ import { SuccessModalComponent } from '../../digital-sign/success-modal/success-
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { BranchService } from '../../digital-sign/sign-now-popup/branch.service';
 import { OriginationService } from 'app/shared/services/origination.service';
-import { SharedService } from 'app/shared/shared.service';
+import { SharedService } from 'app/shared/services/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../card.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SelectNewCardPopupComponent } from '../select-new-card-popup/select-new-card-popup.component';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';

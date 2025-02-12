@@ -16,7 +16,7 @@ import { Payee } from 'app/shared/models/card.model';
 import { CUSTOMERINFO } from 'app/shared/models/get-customer-info.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { SELECTEDPAYEE } from 'app/shared/models/selected-payee.model';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { debounceTime } from 'rxjs/operators';
 

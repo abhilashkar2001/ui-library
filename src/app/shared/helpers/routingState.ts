@@ -7,6 +7,8 @@ import { TokenStorageService, UserProfileAction } from '@onerumango/utils';
   providedIn: 'root',
 })
 export class RoutingState {
+  history: string[] = [];
+
   constructor(
     private router: Router,
     private store: Store,
@@ -17,5 +19,9 @@ export class RoutingState {
     if (this.tokenService.getToken() && !this.router.navigated)
       this.store.dispatch(UserProfileAction.loadUserProfile());
     else this.router.navigate(['/home']);
+  }
+
+  getHistory() {
+    return this.history;
   }
 }

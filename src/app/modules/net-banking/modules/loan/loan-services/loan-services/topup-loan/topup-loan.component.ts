@@ -11,7 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 
 @Component({
   selector: 'app-topup-loan',

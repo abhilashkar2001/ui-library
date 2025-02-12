@@ -8,7 +8,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({

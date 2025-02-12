@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';

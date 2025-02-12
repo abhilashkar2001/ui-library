@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { GenericValueInfoModel } from './models/generic-value.model';
-import { IcHttpResponseModel } from './models/ic-http-response.model';
+import { GenericValueInfoModel } from '../models/generic-value.model';
+import { IcHttpResponseModel } from '../models/ic-http-response.model';
 
 @Injectable({
   providedIn: 'root',

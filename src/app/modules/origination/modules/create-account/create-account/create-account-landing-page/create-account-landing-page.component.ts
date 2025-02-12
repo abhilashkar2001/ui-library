@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SuccessPopupComponent } from 'app/shared/components/success-popup/success-popup.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { SharedService } from 'app/shared/shared.service';
+import { SharedService } from 'app/shared/services/shared.service';
 import {
   LocaleData,
   selectLocaleData,

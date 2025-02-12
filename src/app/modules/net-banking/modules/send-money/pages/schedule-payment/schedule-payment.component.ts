@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Decimal from 'decimal.js';
 import { SchedulePaymentService } from 'app/shared/services/fund-transfer/schedule-payment.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SendMoneyService } from 'app/shared/services/fund-transfer/send-money.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';

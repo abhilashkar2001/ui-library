@@ -8,7 +8,7 @@ import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LoanDetailsModel } from 'app/shared/models/loan-details.model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { Router } from '@angular/router';
 
 @Component({

@@ -4,7 +4,7 @@ import { ConvertEmiStore } from '../convert-emi.store';
 import { Router } from '@angular/router';
 import { CardDetails } from 'app/shared/models/emi-converter.model';
 import { CardService } from 'app/modules/net-banking/modules/card/card.service';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 
 @Component({
   selector: 'app-calculate-emi',

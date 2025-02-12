@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
-import { SharedService } from 'app/shared/shared.service';
+import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 import { MatDialog } from '@angular/material/dialog';

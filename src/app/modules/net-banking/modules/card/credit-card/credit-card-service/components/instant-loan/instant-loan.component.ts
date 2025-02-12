@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cardTransactionDetails } from 'app/shared/models/emi-converter.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardService } from '../../../../card.service';
 import { CreditCardStore } from '../../../credit-card.store';

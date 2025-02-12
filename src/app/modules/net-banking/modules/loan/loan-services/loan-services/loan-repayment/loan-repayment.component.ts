@@ -9,7 +9,7 @@ import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { LoanInstallmentModel } from 'app/shared/models/loan-installment.model';
 import { findCurrency, removeSpecCharsOnly } from 'app/shared/helpers/utils';
 import { Router } from '@angular/router';
-import { ServiceCallHandler } from 'app/shared/service-call.handler';
+import { ServiceCallHandler } from 'app/shared/services/service-call.handler';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';

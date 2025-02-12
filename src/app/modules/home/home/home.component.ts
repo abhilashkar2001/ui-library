@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SessionService } from 'app/shared/session.service';
+import { SessionService } from 'app/shared/services/session.service';
 import { UserProfileAction } from '@onerumango/utils';
 import { User } from '@onerumango/utils';
 import { selectUser } from '@onerumango/utils';
