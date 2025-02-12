@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { GenericValueData } from '../../../../../shared/models/generic-value.model';
 
 @Component({
   selector: 'app-create-loan',
@@ -69,7 +70,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadLocaleData();
-    const basisId: any = this.sessionStorageService.getLoanBasisDetails();
+    const basisId = this.sessionStorageService.getLoanBasisDetails();
     this.getProductDetails(basisId.basisId);
     this.getGenericDetails();
     this.loanCustomerId = this.sessionStorageService.getCustomerId();
@@ -286,7 +287,6 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
-      console.log(totalMonthsIncludingDays);
       resolve(totalMonthsIncludingDays);
     });
   }
@@ -363,6 +363,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
    */
   onConfirm() {
     if (this.personalLoanDetailsForm?.invalid || this.validateMinimumTenure) {
+      console.log(this.personalLoanDetailsForm, this.validateMinimumTenure);
       return;
     }
     const loanAmmount = {
@@ -484,15 +485,15 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     return totalDays <= MinimumAllowedDays;
   }
 
-  getOwnershipIdByGeneric(value: any) {
-    let ownership = [];
+  getOwnershipIdByGeneric(value: string) {
+    let ownership: GenericValueData[] = [];
     this.genericValueService
       .loadGenericValue(Object.keys(this.staticOwnership))
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         if (resp?.statusCode === 200) {
-          ownership = resp.data['OWNERSHIP'];
+          ownership = resp.data['OWNERSHIP'] ?? [];
           this.ownerShipId = ownership.find(
-            (r: any) => r?.values?.toLowerCase() === value?.toLowerCase(),
+            (r) => r?.values?.toLowerCase() === value?.toLowerCase(),
           )?.id;
           if (!this.ownerShipId) return;
           this.sessionStorageService.setOriginationId(this.ownerShipId);
