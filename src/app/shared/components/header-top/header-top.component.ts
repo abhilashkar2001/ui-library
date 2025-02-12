@@ -65,7 +65,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     private showSideBar: NewDepositService,
     private renderer: Renderer2,
-    private el: ElementRef,
     private router: Router,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -117,10 +116,13 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   onNavigation(route: any) {
-    const item = this.items.findIndex((i) => route.includes(i?.route));
-    this.animateUnderline(
-      this.elReference.find((index: any) => index === item)?.nativeElement,
-    );
+    const itemIndex = this.items.findIndex((i) => route.includes(i?.route));
+    const elements = this.elReference?.toArray();
+    const elem = elements[itemIndex]?.nativeElement;
+
+    if (elem) {
+      this.animateUnderline(elem);
+    }
   }
 
   ngOnDestroy() {
@@ -152,14 +154,23 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   // animate the nav link underline
   animateUnderline(elem: any) {
-    if (elem) {
-      const underlineElem = this.el.nativeElement.querySelector('#underline');
-      const { left, width } = elem.getBoundingClientRect();
-      this.renderer.setStyle(underlineElem, 'left', left + 'px');
-      this.renderer.setStyle(underlineElem, 'width', width + 'px');
-      this.showMobilemenu = false;
-      window.scrollTo(0, 0);
-    }
+    if (!elem) return;
+
+    const underlineElem = document.querySelector('#underline');
+    if (!underlineElem) return;
+
+    const navbar = document.querySelector('.navbar');
+    const navbarRect = navbar?.getBoundingClientRect();
+    const elemRect = elem.getBoundingClientRect();
+
+    const leftOffset = navbarRect
+      ? elemRect.left - navbarRect.left
+      : elemRect.left;
+
+    this.renderer.setStyle(underlineElem, 'left', `${leftOffset}px`);
+    this.renderer.setStyle(underlineElem, 'width', `${elemRect.width}px`);
+    this.showMobilemenu = false;
+    window.scrollTo(0, 0);
   }
 
   onNavTabClick() {
