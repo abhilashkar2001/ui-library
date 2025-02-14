@@ -38,13 +38,13 @@
   padding: 5px;
 }
 .submit {
-  @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
+  // @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
   background-image: none;
   background-color: var(--current-theme-background) !important;
   border-radius: 8px !important;
 }
 .resetbtn {
-  @include action_button(#b20000, #fff, $buttonHeight, 124px);
+  // @include action_button(#b20000, #fff, $buttonHeight, 124px);
   border-radius: 8px !important;
   border: 2px solid #b20000 !important;
 }

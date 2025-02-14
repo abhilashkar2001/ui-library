@@ -9,18 +9,19 @@
 }
 
 .search_div {
-  height: 60px;
+  min-height: 70px;
   width: 100%;
-  padding: 5px;
+  padding: 0px 20px;
   border-radius: 12px;
-  box-shadow: 0 3px 15px #0000001a;
+  box-shadow: 0px 23px 44px 0px #b0b7c32b;
   input {
     background: none;
     box-shadow: none;
     outline: none;
     border: none;
-    font-family: 'Poppins', sans-serif;
     width: 100%;
+    font-size: 20px !important;
+    font-weight: 400 !important;
   }
 }
 .card-title {
@@ -49,6 +50,7 @@
   margin-bottom: 20px;
   cursor: pointer;
   border-radius: 18px;
+  box-shadow: 0px 2.04px 27.21px 0px #0000000f;
 }
 
 .btn-div {

@@ -1,3 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="22.136" height="22.142" viewBox="0 0 22.136 22.142">
-  <path id="Icon_ionic-ios-search" data-name="Icon ionic-ios-search" d="M26.377,25.032,20.22,18.818a8.774,8.774,0,1,0-1.332,1.349L25,26.341a.947.947,0,0,0,1.337.035A.954.954,0,0,0,26.377,25.032Zm-13.051-4.79a6.928,6.928,0,1,1,4.9-2.029A6.885,6.885,0,0,1,13.326,20.242Z" transform="translate(-4.5 -4.493)" fill="#b4b4b4"/>
+<svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M14.9998 25.0024C20.5226 25.0024 24.9998 20.5253 24.9998 15.0024C24.9998 9.47956 20.5226 5.00241 14.9998 5.00241C9.47691 5.00241 4.99976 9.47956 4.99976 15.0024C4.99976 20.5253 9.47691 25.0024 14.9998 25.0024Z"
+    stroke="#B0B7C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M28.0002 27.9995L22.0002 21.9995" stroke="#B0B7C3" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round" />
 </svg>

@@ -1,21 +1,4 @@
-@import 'node_modules/@onerumango/icust-scss-library/src/themes/variables';
 // Title: New and Upload Button
-.addNewButton,
-.uploadButton {
-  @include custom_button(white, $gradientBg);
-  // filter: var(--current-theme-filter);
-  background-image: none;
-  background-color: var(--current-theme-background) !important;
-  border-radius: 8px;
-}
-// Title: Download Button
-.downloadBtn {
-  @include custom_button();
-  color: var(--current-theme-background) !important;
-  .mat-icon {
-    filter: var(--current-theme-filter);
-  }
-}
 
 .menu_btn:hover {
   background: #d8e3f0 0% 0% no-repeat padding-box !important;
@@ -81,7 +64,7 @@
 
     .mat-header-row {
       background-color: #f3f3f3 !important;
-      border-radius: $borderRadius;
+      // border-radius: $borderRadius;
       border-color: transparent;
       position: sticky;
       top: 0;
@@ -113,7 +96,7 @@
           align-items: center;
 
           .higlightSort {
-            color: $primaryTextColor !important;
+            // color: $primaryTextColor !important;
           }
 
           .customIcon {
@@ -138,7 +121,7 @@
 
           .customIcon:hover,
           .upArrow:hover {
-            color: $primaryTextColor !important;
+            // color: $primaryTextColor !important;
             cursor: pointer;
           }
         }
@@ -181,24 +164,24 @@ mat-cell {
     }
     &.higlightUnapprove {
       letter-spacing: 0px !important;
-      color: $unapprovedText !important;
+      // color: $unapprovedText !important;
     }
     &.higlightApprove {
       letter-spacing: 0px !important;
-      color: $approvedText !important;
+      // color: $approvedText !important;
     }
     &.higlightInactive {
       width: 111px;
       min-height: 32px;
-      background-color: $inactiveBg !important;
+      // background-color: $inactiveBg !important;
       border-radius: 17px !important;
-      color: $inactiveText !important;
+      // color: $inactiveText !important;
     }
     &.higlightActive {
       min-height: 32px;
-      background-color: $activeBg !important;
+      // background-color: $activeBg !important;
       border-radius: 17px !important;
-      color: $activeText !important;
+      // color: $activeText !important;
     }
   }
   &.no_data {
@@ -234,12 +217,12 @@ mat-cell {
   }
 }
 // .mat-row:nth-child(even) {
-//   background-color: $evenRowBg;
+// background-color: $evenRowBg;
 //   border: none;
 // }
 
 // .mat-row:nth-child(odd) {
-//   background-color: $oddRowBg !important;
+// background-color: $oddRowBg !important;
 //   border: none;
 // }
 
@@ -318,10 +301,10 @@ mat-cell {
     visibility: hidden;
     min-width: 250px;
     width: max-content;
-    background-color: $primaryTextColor;
+    // background-color: $primaryTextColor;
     color: white;
     text-align: start;
-    border-radius: $borderRadius;
+    // border-radius: $borderRadius;
     padding: 5px 0;
     position: absolute;
     z-index: 1;
@@ -340,7 +323,7 @@ mat-cell {
       margin-left: -5px;
       border-width: 12px;
       border-style: solid;
-      border-color: transparent transparent $primaryTextColor transparent;
+      // border-color: transparent transparent $primaryTextColor transparent;
     }
   }
   &:hover .tooltiptext-stage {

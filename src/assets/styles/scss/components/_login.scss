@@ -27,7 +27,7 @@
       max-width: 100%;
       padding: 10px;
       border-radius: 8px;
-      box-shadow: $inputBoxShadow;
+      // box-shadow: $inputBoxShadow;
       backdrop-filter: blur(4px);
     }
 
@@ -160,7 +160,7 @@
       color: #b1b1b1 !important;
     }
     .forget {
-      color: $primaryTextColor;
+      // color: $primaryTextColor;
       font-size: 13px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;

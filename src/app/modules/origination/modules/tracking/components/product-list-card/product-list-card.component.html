@@ -4,14 +4,9 @@
     fxFlex="100"
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    fxLayoutGap="10"
   >
-    <ic-button
-      type="icon"
-      icButtonType="ghost"
-      icIcon="search_icon"
-      customButtonClass="boxshadow-none"
-    >
-    </ic-button>
+    <img src="assets/images/search_icon.svg" alt="" />
     <input
       matInput
       type="text"
@@ -19,19 +14,19 @@
       [formControl]="searchControl"
     />
     <ic-select
-      fxFlex="30"
+      fxFlex="15"
       label="Category"
       placeholder="Category*"
       [options]="categoryList"
       bindLabelKey="category"
       (selectionChange)="onCategoryChange($event)"
-      customClass="m-0"
+      customClass="m-0 gray-select"
     >
     </ic-select>
   </div>
 
   <!-- Product cards -->
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%" class="my-2">
     <ng-container
       *ngFor="
         let product of productList;
@@ -64,11 +59,11 @@
         <div class="p-12" fxLayout="column">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column">
-              <p class="label_item">Type</p>
+              <div class="breadcrum_sm">Type</div>
               <p class="label_value">{{ product.type }}</p>
             </div>
             <div fxLayout="column">
-              <p class="label_item">Applicant No</p>
+              <div class="breadcrum_sm">Applicant No</div>
               <p class="label_value">{{ product.applicationNo }}</p>
             </div>
           </div>
@@ -79,11 +74,11 @@
             class="pt-12"
           >
             <div fxLayout="column">
-              <p class="label_item">Loan Amount</p>
+              <div class="breadcrum_sm">Loan Amount</div>
               <p class="label_value">₹ {{ product?.amount ?? 0 }}</p>
             </div>
             <div fxLayout="column">
-              <p class="label_item">Status</p>
+              <div class="breadcrum_sm">Status</div>
               <p
                 class="label_value"
                 [ngClass]="getStatusClass(product.status.toLowerCase())"

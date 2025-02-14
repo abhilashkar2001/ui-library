@@ -4,12 +4,21 @@
     box-shadow: 0 0 18px rgba(0, 0, 0, 0.05) !important;
 
     mat-expansion-panel {
-      border-radius: 20px !important;
       box-shadow: none !important;
+      background: white;
+      mat-expansion-panel-header {
+        border-radius: 8px !important;
+      }
+      .mat-expansion-panel-body {
+        margin: 0 !important;
+        padding-top: 12px;
+        border: 1px solid #ebf0ff;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+      }
     }
   }
   .mat-expansion-panel-header {
-    // box-shadow: 0px 4px 20px 0px #0000000f !important;
     height: 70px !important;
   }
   .mat-expansion-panel-header-description {
