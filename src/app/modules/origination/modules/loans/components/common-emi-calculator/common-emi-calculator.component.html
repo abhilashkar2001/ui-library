@@ -56,7 +56,12 @@
       >
         <input [value]="ammountValue" matSliderThumb #slider />
       </mat-slider>
-      <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
+      <div
+        fxLayout="row"
+        fxFlex="100"
+        fxLayoutAlign="space-between center"
+        class="breadcrum_md"
+      >
         <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
         <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
       </div>
@@ -199,7 +204,7 @@
     </div>
     <div class="downImage">
       <img
-        src="../../../../../../../assets/images/Group%2013767.svg"
+        src="/assets/images/Group%2013767.svg"
         height="161px"
         width="100%"
         alt="Group 13767.svg"
