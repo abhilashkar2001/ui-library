@@ -1,21 +1,21 @@
-$buttonHeight: 40px;
+// $buttonHeight: 40px;
 
-.saveTempletButton {
-  text-decoration: underline;
-  font: normal normal 15px / 47px Poppins;
-  letter-spacing: 0px;
-  font-weight: 500;
-  color: var(--current-theme-background);
-  margin: 0px 14px;
-}
-.saveandSubmit {
-  @include action_button(#00468b, #fff, $buttonHeight, 185px);
-}
-.submit {
-  @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
-  background-image: none;
-  background-color: var(--current-theme-background) !important;
-}
-.resetbtn {
-  @include action_button(#b20000, #fff, $buttonHeight, 124px);
-}
+// .saveTempletButton {
+//   text-decoration: underline;
+//   font: normal normal 15px / 47px Poppins;
+//   letter-spacing: 0px;
+//   font-weight: 500;
+//   color: var(--current-theme-background);
+//   margin: 0px 14px;
+// }
+// .saveandSubmit {
+//   @include action_button(#00468b, #fff, $buttonHeight, 185px);
+// }
+// .submit {
+//   @include action_button(#ffff, $gradientBg, $buttonHeight, 124px);
+//   background-image: none;
+//   background-color: var(--current-theme-background) !important;
+// }
+// .resetbtn {
+//   @include action_button(#b20000, #fff, $buttonHeight, 124px);
+// }

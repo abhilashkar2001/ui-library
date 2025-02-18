@@ -60,8 +60,8 @@ code {
   background: var(--current-theme-background);
 }
 .egret-navy .mat-expansion-indicator::after {
-  // color: rgb(0 83 255 / 61%);
-  color: var(--current-theme-background-dark);
+  color: #004c97;
+  padding: 4px;
 }
 
 .mat-radio-label-content {

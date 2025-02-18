@@ -15,6 +15,7 @@
       [control]="otpForm.get('phone') | formcontrol"
       [maxLength]="maxMobileLength"
       suffixButton="Get OTP"
+      [icNumbersOnly]="true"
       (onSuffixClick)="onGetOTP()"
       [disabled]="(getOtpBtn && !validNumber) || showOtpSection"
     >
@@ -48,6 +49,7 @@
           ></a
         ></span
       >
+      &nbsp;
       <span *ngIf="!resendLink && displaySecond"
         >({{ displaySecond }} sec)</span
       >

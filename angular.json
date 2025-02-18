@@ -57,7 +57,7 @@
               "node_modules/ngx-spinner/animations/square-loader.css",
               "node_modules/keen-slider/keen-slider.min.css",
               "node_modules/ngx-spinner/animations/square-jelly-box.css",
-              "node_modules/@onerumango/icust-scss-library/dist/main.css",
+              "node_modules/@onerumango/icust-element-library/src/lib/styles/main.scss",
               "node_modules/@angular/cdk/overlay-prebuilt.css"
             ],
             "scripts": []

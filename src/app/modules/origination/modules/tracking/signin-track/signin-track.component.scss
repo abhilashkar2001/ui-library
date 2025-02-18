@@ -82,6 +82,7 @@
   .addcolor {
     color: #004c97 !important;
     opacity: 1 !important;
+    text-decoration: underline;
   }
   .removecolor {
     opacity: 0.37 !important;
@@ -90,7 +91,7 @@
 .container_class {
   height: 80vh;
   .tracking_stepper {
-    background-image: url('/src/assets/images/tracking-back.svg');
+    background-image: url('/assets/images/tracking-back.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

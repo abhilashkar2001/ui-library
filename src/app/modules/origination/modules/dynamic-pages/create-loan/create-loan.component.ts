@@ -19,6 +19,8 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { GenericValueData } from '../../../../../shared/models/generic-value.model';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-loan',
@@ -64,8 +66,16 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     private genericValueService: GenericValueService,
     private sessionStorageService: SessionStorageService,
     private store: Store,
+    private matIconRegiostry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
   ) {
     this.currentDate.setDate(new Date().getDate() + 1);
+    this.matIconRegiostry.addSvgIcon(
+      `calendar`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        'assets/images/calendar.svg',
+      ),
+    );
   }
 
   ngOnInit(): void {

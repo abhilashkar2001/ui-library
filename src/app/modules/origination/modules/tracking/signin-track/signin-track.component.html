@@ -5,10 +5,7 @@
   <div fxFlex="50">
     <section fxLayout="column" class="signIn">
       <div class="logo">
-        <img
-          src="../../../../../../assets/images/Group%205698.svg"
-          alt="logo"
-        />
+        <img src="../../../../../../assets/images/Group 5698.svg" alt="logo" />
         <p class="logo_text">DemoBank</p>
       </div>
       <div class="signIn_container">
@@ -39,8 +36,10 @@
             fxLayout="column"
             class="default otp_custom_card mx-auto d-flex flex-column"
           >
-            <span class="verification">{{ 'OTP Authentication' }}</span>
-            <span class="phoneNumber">
+            <span class="header_xxl_bold_black">{{
+              'OTP Authentication'
+            }}</span>
+            <span class="breadcrum_md">
               <ng-container>
                 An authentication code has been sent to
               </ng-container>
@@ -48,7 +47,7 @@
                 An authentication code has been Re-sent to
               </ng-container>
               <br />
-              <span class="text-light">(+62) 812 345 6XXX</span>
+              <span class="header_md_bold_black">(+62) 812 345 6XXX</span>
             </span>
             <div class="otp_block">
               <ng-otp-input
@@ -63,7 +62,7 @@
             <div class="verify1">
               <span
                 (click)="getOtp()"
-                class="addcolor resend"
+                class="addcolor resend m-2"
                 (keydown.enter)="getOtp()"
                 tabindex="0"
                 >{{ 'Resend' }}</span
@@ -83,7 +82,7 @@
               label="Get Otp"
               icButtonType="filled-rounded"
               type="submit"
-              size="medium"
+              size="large"
               (click)="getOtp()"
               *ngIf="!isShowOtpField"
             ></ic-button>
@@ -110,9 +109,9 @@
             </button> -->
             <ic-button
               label="Back"
-              icButtonType="filled-rounded"
+              icButtonType="ghost-rounded-basic"
               type="submit"
-              size="medium"
+              size="large"
             ></ic-button>
           </div>
         </div>
