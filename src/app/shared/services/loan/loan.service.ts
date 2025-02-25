@@ -136,7 +136,7 @@ export class LoanService {
 
   saveChecklist(payload: any) {
     return this.http.post<any>(
-      `${baseUrl}/origination-matser/saveChecklist`,
+      `${baseUrl}/origination-doc`,
       payload,
     );
   }
