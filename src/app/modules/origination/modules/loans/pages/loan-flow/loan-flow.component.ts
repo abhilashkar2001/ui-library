@@ -780,7 +780,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     payload.properties = {};
     payload.screenCode = null;
     payload.processStageId = null;
-    payload.processCycleCode = this.processDetails.processCycleCode;
+    payload.processCycleId = this.processDetails.processCycleId;
     payload.originationId = originationId;
     payload.action = 'Submit';
 
