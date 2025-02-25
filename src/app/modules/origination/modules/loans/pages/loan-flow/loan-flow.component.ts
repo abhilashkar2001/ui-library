@@ -405,6 +405,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         .getProcessCycle(sessionData.processCycleCode)
         .subscribe((resp) => {
           this.processDetails = {
+            id: resp?.data?.id,
             processCycleCode: resp?.data?.processCycleCode,
             processStageId: resp?.data?.processStageList[0]?.id,
           };
