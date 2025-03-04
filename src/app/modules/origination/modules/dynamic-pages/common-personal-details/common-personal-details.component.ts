@@ -89,7 +89,7 @@ export class CommonPersonalDetailsComponent
     private api: NewDepositService,
     private loanApi: LoanService,
     private openApi: OpenAccountService,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private rdApi: CreateRdService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
@@ -126,6 +126,7 @@ export class CommonPersonalDetailsComponent
     this.holderType =
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'Self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
+    console.log(this.docCustomerDetails);
     this.getAllRequisite().then(() => {
       if (this.personalDetails?.length > 0) {
         this.getGenericDetails();
@@ -133,202 +134,6 @@ export class CommonPersonalDetailsComponent
       } else {
         this.buildCustomerDetailsForm();
         console.log(this.docCustomerDetails, 'this.docCustomerDetails');
-        if (this.docCustomerDetails)
-          setTimeout(() => {
-            if (this.docCustomerDetails instanceof Array) {
-              this.docCustomerDetails.forEach((item, index) => {
-                const customerFormGroup = this.customerDetailsForm.get(
-                  'customer',
-                ) as FormGroup;
-                const customerIndex: any = customerFormGroup.controls[index];
-                customerIndex
-                  .get('dateOfBirth')
-                  ?.setValue(
-                    moment(item?.dateOfBirth, 'DD/MM/YYYY').format(
-                      'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
-                    ),
-                  );
-
-                const applicantNameArray = item?.applicantName
-                  ? item?.applicantName?.split(' ')
-                  : [];
-                if (applicantNameArray && applicantNameArray?.length >= 3) {
-                  const cstomerFormGroup = this.customerDetailsForm.get(
-                    'customer',
-                  ) as FormGroup;
-                  const cstomerIndex: any = cstomerFormGroup.controls[index];
-                  cstomerIndex
-                    .get('firstName')
-                    .setValue(applicantNameArray?.slice(0, 2)?.join(' '));
-
-                  const customerFormGroup = this.customerDetailsForm.get(
-                    'customer',
-                  ) as FormGroup;
-                  const customerIndex: any = customerFormGroup.controls[index];
-                  customerIndex
-                    .get('lastName')
-                    .setValue(
-                      applicantNameArray?.[applicantNameArray.length - 1],
-                    );
-                } else {
-                  const customerFormGroup = this.customerDetailsForm.get(
-                    'customer',
-                  ) as FormGroup;
-                  const customerIndex: any = customerFormGroup.controls[index];
-                  customerIndex
-                    .get('firstName')
-                    .setValue(applicantNameArray?.[0]);
-
-                  const customerFormGrp = this.customerDetailsForm.get(
-                    'customer',
-                  ) as FormGroup;
-                  const customerIdx: any = customerFormGrp.controls[index];
-                  customerIdx
-                    .get('lastName')
-                    .setValue(
-                      applicantNameArray?.[applicantNameArray.length - 1],
-                    );
-                }
-                const genderId = this.genderArray.find(
-                  (e) =>
-                    e.values?.toLowerCase() === item?.genderId?.toLowerCase(),
-                )?.id;
-                const customerFormGrp = this.customerDetailsForm.get(
-                  'customer',
-                ) as FormGroup;
-                const customerIdx: any = customerFormGrp.controls[index];
-                customerIdx.get('genderId').setValue(genderId);
-
-                if (item?.genderId?.toLowerCase()) {
-                  const prefixId = this.prefixArray.filter(
-                    (val: any) =>
-                      val?.values ==
-                      this.genderPrefixMap.get(item?.genderId?.toLowerCase()),
-                  );
-                  const customerFormGrp = this.customerDetailsForm.get(
-                    'customer',
-                  ) as FormGroup;
-                  const customerIdx: any = customerFormGrp.controls[index];
-                  customerIdx.get('prefixId').setValue(prefixId[0]?.id);
-                }
-
-                const customerControl = this.customer.at(index) as FormGroup;
-
-                if (customerControl) {
-                  const contactControl = customerControl.get(
-                    'contact',
-                  ) as FormGroup;
-
-                  if (contactControl) {
-                    const addressArray = contactControl.get(
-                      'address',
-                    ) as FormArray;
-
-                    if (addressArray && addressArray.controls?.[0]) {
-                      const address = addressArray.controls[0] as FormGroup;
-
-                      const backData =
-                        this.sessionStorageService.getBackData() || [];
-                      console.log(backData);
-                      const addressData = backData?.[index];
-                      console.log(address, addressData);
-                      if (address && addressData) {
-                        address
-                          .get('pincode')
-                          ?.patchValue(addressData.pincode || '');
-                        address
-                          .get('address1')
-                          ?.patchValue(addressData.address1 || '');
-                      }
-                    }
-                  }
-                }
-              });
-              return;
-            }
-            const customerFormGroup = this.customerDetailsForm.get(
-              'customer',
-            ) as FormGroup;
-            const customerIndex: any = customerFormGroup.controls[0];
-            customerIndex
-              .get('dateOfBirth')
-              .setValue(
-                moment(
-                  this.docCustomerDetails?.dateOfBirth,
-                  'DD/MM/YYYY',
-                ).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-              );
-
-            const applicantNameArray = this.docCustomerDetails?.applicantName
-              ? this.docCustomerDetails?.applicantName?.split(' ')
-              : [];
-            if (applicantNameArray && applicantNameArray?.length >= 3) {
-              const customerFormGroup = this.customerDetailsForm.get(
-                'customer',
-              ) as FormGroup;
-              const customerIndex: any = customerFormGroup.controls[0];
-              customerIndex
-                .get('firstName')
-                .setValue(applicantNameArray?.slice(0, 2)?.join(' '));
-
-              const customerFormGrp = this.customerDetailsForm.get(
-                'customer',
-              ) as FormGroup;
-              const customerIdx: any = customerFormGrp.controls[0];
-              customerIdx
-                .get('lastName')
-                .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
-            } else {
-              const customerFormGroup = this.customerDetailsForm.get(
-                'customer',
-              ) as FormGroup;
-              const customerIndex: any = customerFormGroup.controls[0];
-              customerIndex.get('firstName').setValue(applicantNameArray?.[0]);
-
-              const customerFormGrp = this.customerDetailsForm.get(
-                'customer',
-              ) as FormGroup;
-              const customerIdx: any = customerFormGrp.controls[0];
-              customerIdx
-                .get('lastName')
-                .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
-            }
-            const genderId = this.genderArray.find(
-              (e) =>
-                e.values.toLowerCase() ===
-                this.docCustomerDetails?.genderId?.toLowerCase(),
-            )?.id;
-
-            const customerFormGrp = this.customerDetailsForm.get(
-              'customer',
-            ) as FormGroup;
-            const customerIdx: any = customerFormGrp.controls[0];
-            customerIdx.get('genderId').setValue(genderId);
-
-            const customerControl = this.customer.at(0) as FormGroup;
-            if (!customerControl) {
-              throw new Error('Customer control is missing.');
-            }
-
-            const contactControl = customerControl.get('contact') as FormGroup;
-            if (!contactControl) {
-              throw new Error('Contact control is missing.');
-            }
-
-            const addressArray = contactControl.get('address') as FormArray;
-            if (!addressArray || !addressArray.controls?.[0]) {
-              throw new Error('Address array or controls are missing.');
-            }
-
-            const address = addressArray.controls[0] as FormGroup;
-            const backData = this.sessionStorageService.getBackData() || [];
-            if (!backData?.[0]) {
-              throw new Error('Back data is missing.');
-            }
-
-            address.get('pincode')?.patchValue(backData[0].pincode || '');
-            address.get('address1')?.patchValue(backData[0].address1 || '');
-          }, 100);
       }
     });
   }
@@ -427,7 +232,204 @@ export class CommonPersonalDetailsComponent
         for (let i = 0; i < this.docCustomerDetails?.length; i++)
           this.addCustomer(i);
       else this.addCustomer(0);
-      this.cd.detectChanges();
+      console.log(this.docCustomerDetails);
+      if (this.docCustomerDetails?.length > 0)
+        setTimeout(() => {
+          if (this.docCustomerDetails instanceof Array) {
+            this.docCustomerDetails.forEach((item, index) => {
+              const customerFormGroup = this.customerDetailsForm.get(
+                'customer',
+              ) as FormGroup;
+              const customerIndex: any = customerFormGroup.controls[index];
+              customerIndex
+                .get('dateOfBirth')
+                ?.setValue(
+                  moment(item?.dateOfBirth, 'DD/MM/YYYY').format(
+                    'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
+                  ),
+                );
+
+              const applicantNameArray = item?.applicantName
+                ? item?.applicantName?.split(' ')
+                : [];
+              if (applicantNameArray && applicantNameArray?.length >= 3) {
+                const cstomerFormGroup = this.customerDetailsForm.get(
+                  'customer',
+                ) as FormGroup;
+                const cstomerIndex: any = cstomerFormGroup.controls[index];
+                cstomerIndex
+                  .get('firstName')
+                  .setValue(applicantNameArray?.slice(0, 2)?.join(' '));
+
+                const customerFormGroup = this.customerDetailsForm.get(
+                  'customer',
+                ) as FormGroup;
+                const customerIndex: any = customerFormGroup.controls[index];
+                customerIndex
+                  .get('lastName')
+                  .setValue(
+                    applicantNameArray?.[applicantNameArray.length - 1],
+                  );
+              } else {
+                const customerFormGroup = this.customerDetailsForm.get(
+                  'customer',
+                ) as FormGroup;
+                const customerIndex: any = customerFormGroup.controls[index];
+                customerIndex
+                  .get('firstName')
+                  .setValue(applicantNameArray?.[0]);
+
+                const customerFormGrp = this.customerDetailsForm.get(
+                  'customer',
+                ) as FormGroup;
+                const customerIdx: any = customerFormGrp.controls[index];
+                customerIdx
+                  .get('lastName')
+                  .setValue(
+                    applicantNameArray?.[applicantNameArray.length - 1],
+                  );
+              }
+              const genderId = this.genderArray.find(
+                (e) =>
+                  e.values?.toLowerCase() === item?.genderId?.toLowerCase(),
+              )?.id;
+              const customerFormGrp = this.customerDetailsForm.get(
+                'customer',
+              ) as FormGroup;
+              const customerIdx: any = customerFormGrp.controls[index];
+              customerIdx.get('genderId').setValue(genderId);
+
+              if (item?.genderId?.toLowerCase()) {
+                const prefixId = this.prefixArray.filter(
+                  (val: any) =>
+                    val?.values ==
+                    this.genderPrefixMap.get(item?.genderId?.toLowerCase()),
+                );
+                const customerFormGrp = this.customerDetailsForm.get(
+                  'customer',
+                ) as FormGroup;
+                const customerIdx: any = customerFormGrp.controls[index];
+                customerIdx.get('prefixId').setValue(prefixId[0]?.id);
+              }
+
+              const customerControl = this.customer.at(index) as FormGroup;
+
+              if (customerControl) {
+                const contactControl = customerControl.get(
+                  'contact',
+                ) as FormGroup;
+
+                if (contactControl) {
+                  const addressArray = contactControl.get(
+                    'address',
+                  ) as FormArray;
+
+                  if (addressArray && addressArray.controls?.[0]) {
+                    const address = addressArray.controls[0] as FormGroup;
+
+                    const backData =
+                      this.sessionStorageService.getBackData() || [];
+                    console.log(backData);
+                    const addressData = backData?.[index];
+                    console.log(address, addressData);
+                    if (address && addressData) {
+                      address
+                        .get('pincode')
+                        ?.patchValue(addressData.pincode || '');
+                      address
+                        .get('address1')
+                        ?.patchValue(addressData.address1 || '');
+                    }
+                  }
+                }
+              }
+            });
+            return;
+          }
+          const customerFormGroup = this.customerDetailsForm.get(
+            'customer',
+          ) as FormGroup;
+          const customerIndex: any = customerFormGroup.controls[0];
+          customerIndex
+            .get('dateOfBirth')
+            .setValue(
+              moment(this.docCustomerDetails?.dateOfBirth, 'DD/MM/YYYY').format(
+                'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
+              ),
+            );
+
+          const applicantNameArray = this.docCustomerDetails?.applicantName
+            ? this.docCustomerDetails?.applicantName?.split(' ')
+            : [];
+          if (applicantNameArray && applicantNameArray?.length >= 3) {
+            const customerFormGroup = this.customerDetailsForm.get(
+              'customer',
+            ) as FormGroup;
+            const customerIndex: any = customerFormGroup.controls[0];
+            customerIndex
+              .get('firstName')
+              .setValue(applicantNameArray?.slice(0, 2)?.join(' '));
+
+            const customerFormGrp = this.customerDetailsForm.get(
+              'customer',
+            ) as FormGroup;
+            const customerIdx: any = customerFormGrp.controls[0];
+            customerIdx
+              .get('lastName')
+              .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
+          } else {
+            const customerFormGroup = this.customerDetailsForm.get(
+              'customer',
+            ) as FormGroup;
+            const customerIndex: any = customerFormGroup.controls[0];
+            customerIndex.get('firstName').setValue(applicantNameArray?.[0]);
+
+            const customerFormGrp = this.customerDetailsForm.get(
+              'customer',
+            ) as FormGroup;
+            const customerIdx: any = customerFormGrp.controls[0];
+            customerIdx
+              .get('lastName')
+              .setValue(applicantNameArray?.[applicantNameArray.length - 1]);
+          }
+          const genderId = this.genderArray.find(
+            (e) =>
+              e.values.toLowerCase() ===
+              this.docCustomerDetails?.genderId?.toLowerCase(),
+          )?.id;
+
+          const customerFormGrp = this.customerDetailsForm.get(
+            'customer',
+          ) as FormGroup;
+          const customerIdx: any = customerFormGrp.controls[0];
+          customerIdx.get('genderId').setValue(genderId);
+
+          const customerControl = this.customer.at(0) as FormGroup;
+          if (!customerControl) {
+            throw new Error('Customer control is missing.');
+          }
+
+          const contactControl = customerControl.get('contact') as FormGroup;
+          if (!contactControl) {
+            throw new Error('Contact control is missing.');
+          }
+
+          const addressArray = contactControl.get('address') as FormArray;
+          if (!addressArray || !addressArray.controls?.[0]) {
+            throw new Error('Address array or controls are missing.');
+          }
+
+          const address = addressArray.controls[0] as FormGroup;
+          const backData = this.sessionStorageService.getBackData() || [];
+          if (!backData?.[0]) {
+            throw new Error('Back data is missing.');
+          }
+
+          address.get('pincode')?.patchValue(backData[0].pincode || '');
+          address.get('address1')?.patchValue(backData[0].address1 || '');
+          this.debounceZipCodeAndCif();
+        }, 100);
+      this.cdr.detectChanges();
     }
   }
 

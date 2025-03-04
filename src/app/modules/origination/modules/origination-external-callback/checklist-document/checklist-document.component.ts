@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-checklist-document',
@@ -39,6 +40,7 @@ export class ChecklistDocumentComponent implements OnInit {
     private snack: MatSnackBar,
     private documentUploadService: DocumentUploadService,
     private dialog: MatDialog,
+    private loanService: LoanService,
   ) {}
 
   ngOnInit(): void {
@@ -257,7 +259,7 @@ export class ChecklistDocumentComponent implements OnInit {
         if (file?.documentId) payload?.documentIds?.push(file?.documentId);
       });
     });
-    this.originationService.saveChecklist(payload).subscribe((res) => {
+    this.loanService.saveChecklist(payload).subscribe((res) => {
       if (res?.statusCode === 200 || res?.statusCode == 201) {
         this.updateStatus('Submit');
       }

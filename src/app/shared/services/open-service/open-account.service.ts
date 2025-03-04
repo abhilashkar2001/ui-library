@@ -110,7 +110,7 @@ export class OpenAccountService {
 
   // Register a face
   faceRegister(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/api/faceid/register`, data);
+    return this.http.post<any>(`${baseUrl}/auth/faceid/register`, data);
   }
 
   faceMatch(payload: any) {

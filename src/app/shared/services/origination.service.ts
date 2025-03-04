@@ -1,10 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import {
-  ChecklistInfoModel,
-  ChecklistPayloadModel,
-} from '../models/checklist-model';
+import { ChecklistInfoModel } from '../models/checklist-model';
 import { PrimaryCustomerInfo } from '../models/primary-customer.model';
 import { IcHttpResponseModel } from '../models/ic-http-response.model';
 
@@ -36,18 +33,6 @@ export class OriginationService {
     return this.http.get<IcHttpResponseModel<ChecklistInfoModel[]>>(
       `${MICROSERVICE_URL}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
       options,
-    );
-  }
-
-  /**
-   * This method will save the checklist for particular screen
-   * @param payload
-   * @returns
-   */
-  saveChecklist(payload: ChecklistPayloadModel) {
-    return this.http.post<IcHttpResponseModel<ChecklistInfoModel>>(
-      `${MICROSERVICE_URL}/origination-matser/saveChecklist`,
-      payload,
     );
   }
 

@@ -50,7 +50,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/index.html",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@onerumango/icust-element-library/src/lib/styles/assets/icons",
+                "output": "assets/icons"
+              }
+            ],
             "styles": [
               "src/assets/styles/app.scss",
               "node_modules/ngx-toastr/toastr.css",

@@ -12,7 +12,7 @@
       [isdControl]="otpForm.get('isdCode') | formcontrol"
       [isdCode]="countriesIsdCodes"
       (selectionChange)="setMobileLength()"
-      [control]="otpForm.get('phone') | formcontrol"
+      formControlName="phone"
       [maxLength]="maxMobileLength"
       suffixButton="Get OTP"
       [icNumbersOnly]="true"

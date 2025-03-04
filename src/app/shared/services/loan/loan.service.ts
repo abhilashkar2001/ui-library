@@ -134,11 +134,13 @@ export class LoanService {
     );
   }
 
+  /**
+   * This method will save the checklist for particular screen
+   * @param payload
+   * @returns
+   */
   saveChecklist(payload: any) {
-    return this.http.post<any>(
-      `${baseUrl}/origination-doc`,
-      payload,
-    );
+    return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
   }
   getSavedChecklist(
     originationId: number,
