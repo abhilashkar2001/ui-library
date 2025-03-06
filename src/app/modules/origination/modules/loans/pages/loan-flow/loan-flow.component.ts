@@ -781,7 +781,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     payload.properties = {};
     payload.screenCode = null;
     payload.processStageId = null;
-    payload.processCycleId = this.processDetails.id;
+    payload.processCycleId = this.processDetails?.id;
     payload.originationId = originationId;
     payload.action = 'Submit';
 
@@ -805,7 +805,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((resp) => {
           if (resp === true) {
             this.tokenStorageService.clearSessionExceptLoginInfo();
-            this.router.navigate(['loan/landing']);
+            this.router.navigate(['origination/loan/landing']);
           } else if (resp === 'tracking') {
             this.tokenStorageService.clearSessionExceptLoginInfo();
           }
