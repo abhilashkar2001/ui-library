@@ -37,6 +37,7 @@ import { SwiperModule } from 'swiper/angular';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
+import { LibPipesModule } from '@onerumango/utils';
 
 const components = [
   CarouselComponent,
@@ -82,6 +83,7 @@ const components = [
     NgxSpinnerModule,
     InputMaskModule,
     IcustLibraryModule,
+    LibPipesModule,
   ],
   exports: components,
 })
