@@ -8,10 +8,16 @@
   <div class="img-section" fxFlex="50">
     <div data-aos="zoom-out" data-aos-delay="200" data-aos-duration="500">
       <img
-        [src]="getFileUrl(subAccount.fileUrl)"
+        #img
+        *ngIf="
+          filePreview?.changingThisBreaksApplicationSecurity
+            | safe: 'url'
+            | async as safeUrl
+        "
+        [src]="safeUrl"
+        alt="file"
         width="399"
         height="333"
-        alt="subAccountType"
       />
     </div>
   </div>

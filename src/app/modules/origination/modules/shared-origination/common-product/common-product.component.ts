@@ -4,10 +4,12 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -15,17 +17,23 @@ import { environment } from 'environments/environment';
   templateUrl: './common-product.component.html',
   styleUrls: ['./common-product.component.scss'],
 })
-export class CommonProductComponent implements OnChanges {
+export class CommonProductComponent implements OnChanges, OnInit {
   endPoints = environment.microServiceURL;
   @Input() subAccount: any;
   @Input() productIndex = 0;
   @Output() apply = new EventEmitter<any>();
   @Output() customClassApply = new EventEmitter<any>();
+  filePreview: any;
   constructor(
     private cdr: ChangeDetectorRef,
     private snackBar: MatSnackBar,
+    private sanitizer: DomSanitizer,
   ) {}
-
+  ngOnInit(): void {
+    this.filePreview = this.filePreview = this.getFileUrl(
+      this.subAccount.fileUrl,
+    );
+  }
   goForCalculator(product: any) {
     console.log(product);
     if (product?.productDetails === null) {
@@ -50,7 +58,7 @@ export class CommonProductComponent implements OnChanges {
       if (url.includes('https')) {
         return 'assets/images/normal_loan.svg';
       } else {
-        return `${this.endPoints}${url}`;
+        return this.sanitizer.bypassSecurityTrustUrl(`${this.endPoints}${url}`);
       }
     } else return 'assets/images/normal_loan.svg';
   }
