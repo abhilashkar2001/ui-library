@@ -556,7 +556,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
           middleName: '',
           dateOfBirth: moment(element.dateOfBirth).format(),
           documentId: this.kycDoc?.[i] ? [this.kycDoc?.[i]] : null,
-          biometricId: [this.sessionStorageService.getBiometricId()],
+          biometricId: this.sessionStorageService.getBiometricId()
+            ? [this.sessionStorageService.getBiometricId()]
+            : null,
         };
         customer.push(cus);
       });
