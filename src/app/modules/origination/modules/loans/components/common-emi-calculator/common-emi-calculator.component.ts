@@ -183,15 +183,15 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   }
 
   applyForLoan() {
-    this.loanForm.markAllAsTouched();
-    if (
-      this.loanForm.invalid ||
-      !this.checkTenurePresence ||
-      this.validateMinimumTenure ||
-      this.validateTenure
-    ) {
-      return;
-    }
+    // this.loanForm.markAllAsTouched();
+    // if (
+    //   this.loanForm.invalid ||
+    //   !this.checkTenurePresence ||
+    //   this.validateMinimumTenure ||
+    //   this.validateTenure
+    // ) {
+    //   return;
+    // }
     this.sessionStorageService.setTenureDays(this.loanForm.value.tenureDays);
     this.sessionStorageService.setTenureYear(this.loanForm.value.tenureYear);
     this.sessionStorageService.setTenureMonth(this.loanForm.value.tenureMonth);

@@ -12,6 +12,8 @@
 
   <div class="col-div2 screenMargin" fxFlex="60" fxLayout="column">
     <div fxLayoutAlign="space-between start">
+      {{ currentComponentInfo | json }}
+      {{ dynamicScreen | json }}
       <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
         {{ cuurrentStep }}
       </h2>

@@ -5,6 +5,7 @@ import { BranchService } from 'app/modules/origination/modules/origination-exter
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { IcScreen } from '@onerumango/utils';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-digital-sign',
@@ -25,11 +26,12 @@ export class DigitalSignComponent implements OnInit {
   loadingBtnText = 'Saving...';
   signatureId: any;
   customerId: number | undefined;
-
+  filePreview: any;
   constructor(
     private dialog: MatDialog,
     private branchService: BranchService,
     private sessionStorageService: SessionStorageService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,9 @@ export class DigitalSignComponent implements OnInit {
       console.log(res);
       this.image = res?.result?.fileUrl;
       this.signatureId = res?.result?.signatureId;
+      this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(
+        this.MICROSERVICE_URL + res?.result?.fileUrl,
+      );
     });
   }
 

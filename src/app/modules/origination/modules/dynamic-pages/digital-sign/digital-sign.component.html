@@ -16,7 +16,9 @@
         <img
           class="image"
           [src]="
-            image ? MICROSERVICE_URL + image : 'assets/images/upload-icon.svg'
+            filePreview.changingThisBreaksApplicationSecurity
+              | safe: 'url'
+              | async
           "
           alt=""
         />

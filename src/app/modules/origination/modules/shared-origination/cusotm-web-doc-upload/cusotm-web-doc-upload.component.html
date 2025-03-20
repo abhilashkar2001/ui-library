@@ -85,7 +85,11 @@
                       *ngFor="let file of getFileInfo(i); let fileIndx = index"
                       fxFlex="32"
                     >
-                      <div class="upload_img" fxFlex="100">
+                      <div
+                        class="upload_img"
+                        (click)="openFile(file, i, fileIndx)"
+                        fxFlex="100"
+                      >
                         <div
                           class="img_box"
                           [style.width]="isOtherDocVisible ? '65px' : ''"
