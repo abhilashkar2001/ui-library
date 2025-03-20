@@ -9,8 +9,11 @@
   <div class="carousel_section">
     <div class="ellipse"></div>
     <swiper [config]="swiperConfig" [navigation]="true">
-      <ng-template swiperSlide *ngFor="let imagesdata of dynamicList">
-        <div class="single_card" [ngStyle]="getbackgroundImage(imagesdata)">
+      <ng-template
+        swiperSlide
+        *ngFor="let imagesdata of dynamicList; let i = index"
+      >
+        <div class="single_card" [ngStyle]="backgroundStyles[i]">
           <div class="card_overlay">
             <div>
               <div class="card_title">{{ imagesdata?.basisClass }}</div>
