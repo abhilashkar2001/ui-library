@@ -131,9 +131,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
         this.otpSent = true;
         this.showOtpSection = true;
         this.getOtpBtn = true;
-        setTimeout(() => {
-          this.validNumber = true;
-        });
+        this.validNumber = true;
         this.resendLink = false;
         this.invalidOtp = false;
         this.resendOtp += 1;
