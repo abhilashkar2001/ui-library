@@ -114,7 +114,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         if (screenName.toLowerCase().includes(item.key)) {
           this.currentComponentInfo = { ...item };
           this.view = this.appAppHost.viewContainerRef;
-          console.log(item.component);
           setTimeout(() => {
             this.componentRef = this.view.createComponent(item.component);
             if (this.noOfDirectors)

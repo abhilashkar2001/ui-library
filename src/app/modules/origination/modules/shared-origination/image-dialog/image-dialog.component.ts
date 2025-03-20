@@ -38,9 +38,12 @@ export class ImageDialogComponent implements OnInit {
 
   formatFile() {
     console.log(this.data.fileInfo);
-    if (this.data.imageUrl.includes('pdf')) {
+    if (
+      this.data.imageUrl.includes('pdf') ||
+      this.data?.fileInfo?.fileUrl?.includes('pdf')
+    ) {
       this.isPdfType = true;
-      this.fileUrl = this.data.pdfUrl;
+      this.fileUrl = this.data.pdfUrl || this.data?.imageUrl;
       this.pdfFormat();
     } else {
       this.isPdfType = false;
@@ -65,11 +68,4 @@ export class ImageDialogComponent implements OnInit {
   closeDialog() {
     this.dialogref.close();
   }
-  // getFileUrl(filePath: string) {
-  //   const file = filePath;
-  //   console.log(file);
-  //   console.log(filePath);
-  //   const parseFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file);
-  //   return parseFileUrl;
-  // }
 }

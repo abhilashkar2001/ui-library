@@ -683,6 +683,16 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                   this.otherDocument()?.controls[i]?.get('fileInfo')?.value,
                   i,
                 );
+                const fileInfoArr =
+                  this.otherDocument().controls[i]?.get('fileInfo')?.value;
+                fileInfoArr.forEach((fileInfoObj: any) => {
+                  if (resp.data.fileName.includes(fileInfoObj.name)) {
+                    fileInfoObj.newFileUrl = resp.data.fileUrl;
+                  }
+                });
+                this.otherDocument()
+                  .controls[i]?.get('fileInfo')
+                  ?.setValue(fileInfoArr);
                 this.otherDocument()
                   ?.controls[i]?.get('fileInfo')
                   ?.get('newFileUrl')
@@ -726,7 +736,16 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
           this.updateDocId(i).push(resp.data.documentId);
           this.documentIds.push(this.createDocumentForm.value);
           this.fileUrls.push(resp.data.fileUrl);
-
+          const fileInfoArr =
+            this.otherDocument().controls[i]?.get('fileInfo')?.value;
+          fileInfoArr.forEach((fileInfoObj: any) => {
+            if (resp.data.fileName.includes(fileInfoObj.name)) {
+              fileInfoObj.newFileUrl = resp.data.fileUrl;
+            }
+          });
+          this.otherDocument()
+            .controls[i]?.get('fileInfo')
+            ?.setValue(fileInfoArr);
           if (this.isOtherDocVisible)
             this.extractDoc(
               this.createDocumentForm.value.otherDocument[i].documentType,
@@ -948,25 +967,12 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.sessionStorageService.setBiometricId(this.faceId);
     });
   }
-  openFile(file: any, i: any, index: any) {
-    console.log(file);
-    const fileUrl = this.getFileUrl(file);
-    console.log(this.otherDocument());
-    console.log(file);
-    console.log(fileUrl);
-
-    console.log(this.baseUrl + this.fileUrls[index]);
+  openFile(file: any) {
     this.dialog.open(ImageDialogComponent, {
       data: {
-        imageUrl:
-          this.baseUrl +
-          this.otherDocument().controls[i]?.get('fileInfo')?.get('newFileUrl')
-            ?.value,
+        imageUrl: this.baseUrl + file.newFileUrl,
         imageName: file.name ?? 'document',
-        pdfUrl:
-          this.baseUrl +
-          this.otherDocument().controls[i]?.get('fileInfo')?.get('newFileUrl')
-            ?.value,
+        pdfUrl: this.baseUrl + file.newFileUrl,
       },
       width: '900px',
       height: '560px',

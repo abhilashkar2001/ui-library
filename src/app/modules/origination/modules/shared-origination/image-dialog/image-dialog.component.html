@@ -12,9 +12,6 @@
     <!-- <mat-icon >close</mat-icon> -->
   </div>
   <div class="imageView">
-    {{ isPdfType }}
-    {{ data | json }}
-    {{ filePreview | json }}
     <ng-container *ngIf="!isPdfType; else showPdfTemplate">
       <img
         class="images expanded_view"

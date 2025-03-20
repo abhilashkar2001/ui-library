@@ -257,12 +257,10 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
   setMobileLength() {
     if (this.otpForm.get('isdCode')) {
-      console.log(this.countriesIsdCodes);
       const countryRecord = this.countriesIsdCodes.find(
         (item: any) =>
           item.countryTelIsdCode == this.otpForm.get('isdCode')?.value,
       );
-      console.log(countryRecord);
       this.maxMobileLength = countryRecord.mobileLength;
     }
   }

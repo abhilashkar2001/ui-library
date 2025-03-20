@@ -262,7 +262,7 @@
     </mat-expansion-panel>
   </ng-container>
   <div class="uploaded-documents-summary">
-    <div class="text-header">Select KYC</div>
+    <div class="text-header">National ID</div>
     <div class="bank-account-details w-full" fxLayout="column">
       <div class="col-1"></div>
       <div fxLayout="row wrap" fxLayoutGap="2%">
@@ -279,7 +279,9 @@
   <div class="uploaded-documents-summary">
     <div class="text-header">Face Scan</div>
     <div class="bank-account-details w-full" fxLayout="column">
-      <div class="col-1"></div>
+      <div class="col-1" *ngIf="!loanSummaryDetails?.biometricVerification">
+        Not Uploaded
+      </div>
       <div fxLayout="row wrap" fxLayoutGap="2%">
         <ng-container
           *ngFor="

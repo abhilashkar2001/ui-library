@@ -23,7 +23,6 @@ export class PdfViewerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.fileUrl);
     this.getFile();
   }
 

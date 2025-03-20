@@ -3,7 +3,6 @@ import { environment } from 'environments/environment';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PdfViewerComponent } from 'app/shared/components/pdf-viewer/pdf-viewer.component';
 
 @Component({
   selector: 'app-show-document',
@@ -35,29 +34,16 @@ export class ShowDocumentComponent implements OnInit {
     }
   }
   viewFiles(imageUrl: any, imageName: any): void {
-    console.log(imageName);
-    if (imageName?.fileType?.includes('pdf')) {
-      this.dialog.open(PdfViewerComponent, {
-        data: {
-          fileUrl: imageName.fileUrl,
-          imageName: imageName.fileName,
-          fileInfo: imageName,
-        },
-        width: '60%',
-        height: '560px',
-        panelClass: 'imageViewDialog',
-      });
-    } else {
-      this.dialog.open(ImageDialogComponent, {
-        data: {
-          imageUrl: this.endPoints + imageUrl,
-          imageName: imageName.fileName,
-          fileInfo: imageName,
-        },
-        width: '60%',
-        height: '560px',
-        panelClass: 'imageViewDialog',
-      });
-    }
+    imageUrl;
+    this.dialog.open(ImageDialogComponent, {
+      data: {
+        imageUrl: this.endPoints + imageName.fileUrl,
+        imageName: imageName.fileName,
+        fileInfo: imageName,
+      },
+      width: '60%',
+      height: '560px',
+      panelClass: 'imageViewDialog',
+    });
   }
 }
