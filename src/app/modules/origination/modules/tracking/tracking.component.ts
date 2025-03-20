@@ -8,6 +8,6 @@ import { FooterServiceService } from 'app/shared/services/footer-service.service
 })
 export class TrackingComponent {
   constructor(private footerService: FooterServiceService) {
-    this.footerService.updateHideFooter(true);
+    this.footerService.updateHideFooter(false);
   }
 }

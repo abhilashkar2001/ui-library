@@ -152,3 +152,16 @@
     }
   }
 }
+
+::ng-deep .toggle-group .ic-button-toggle-group {
+  width: 60% !important;
+  border-radius: 20px !important;
+}
+
+::ng-deep .ic-button.ghost-basic {
+  border-radius: 24px !important;
+}
+
+::ng-deep .ic-button.filled {
+  border-radius: 24px !important;
+}

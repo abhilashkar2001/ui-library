@@ -25,70 +25,102 @@
     </ic-select>
   </div>
 
-  <!-- Product cards -->
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%" class="my-2">
-    <ng-container
-      *ngFor="
-        let product of productList;
-        trackBy: trackByProductId;
-        let indx = index
-      "
-    >
-      <mat-card
-        fxFlex="31"
-        class="card-div mb-24 p-4"
-        (click)="openProduct(product)"
+  <!-- Tracking Product cards -->
+  <mat-card class="default-card p-12 mt-8">
+    <span class="header_xl_bold_black">Tracking Status</span>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%" class="my-2">
+      <ng-container
+        *ngFor="
+          let product of productList;
+          trackBy: trackByProductId;
+          let indx = index
+        "
       >
-        <img
-          *ngIf="product.imageUrl; else defaultImage"
-          [src]="product.imageUrl"
-          class="card-img"
-          alt="Card"
-        />
-        <ng-template #defaultImage>
+        <mat-card
+          fxFlex="31"
+          class="card-div mb-24 p-4"
+          (click)="openProduct(product)"
+        >
           <img
-            [src]="
-              indx % 2 === 0
-                ? 'assets/images/applicationlist.svg'
-                : 'assets/images/apllicationdetails.svg'
-            "
+            *ngIf="product.imageUrl; else defaultImage"
+            [src]="product.imageUrl"
             class="card-img"
             alt="Card"
           />
-        </ng-template>
-        <div class="p-12" fxLayout="column">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="column">
-              <div class="breadcrum_sm">Type</div>
-              <p class="label_value">{{ product.type }}</p>
+          <ng-template #defaultImage>
+            <img
+              [src]="
+                indx % 2 === 0
+                  ? 'assets/images/applicationlist.svg'
+                  : 'assets/images/apllicationdetails.svg'
+              "
+              class="card-img"
+              alt="Card"
+            />
+          </ng-template>
+          <div class="p-12" fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div fxLayout="column">
+                <div class="breadcrum_sm">Type</div>
+                <p class="label_value">{{ product.type }}</p>
+              </div>
+              <div fxLayout="column">
+                <div class="breadcrum_sm">Applicant No</div>
+                <p class="label_value">{{ product.applicationNo }}</p>
+              </div>
             </div>
-            <div fxLayout="column">
-              <div class="breadcrum_sm">Applicant No</div>
-              <p class="label_value">{{ product.applicationNo }}</p>
+            <mat-divider></mat-divider>
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              class="pt-12"
+            >
+              <div fxLayout="column">
+                <div class="breadcrum_sm">Loan Amount</div>
+                <p class="label_value">₹ {{ product?.amount ?? 0 }}</p>
+              </div>
+              <div fxLayout="column">
+                <div class="breadcrum_sm">Status</div>
+                <p
+                  class="label_value"
+                  [ngClass]="getStatusClass(product.status.toLowerCase())"
+                >
+                  {{ product.status }}
+                </p>
+              </div>
             </div>
           </div>
-          <mat-divider></mat-divider>
-          <div
-            fxLayout="row"
-            fxLayoutAlign="space-between center"
-            class="pt-12"
+        </mat-card>
+      </ng-container>
+    </div>
+  </mat-card>
+
+  <!-- Pending Cards -->
+
+  <!-- Apply Now -->
+
+  <mat-card class="default-card p-12 my-8">
+    <span class="header_xl_bold_black">Apply Now</span>
+
+    <div class="apply_now_container">
+      <ng-container *ngFor="let apply of applyNowProducts">
+        <div class="apply_card">
+          <span class="theme_header_lg_bold">{{ apply }}</span>
+          <span class="header_md_bold_black"
+            >A loan moves the present to the future. The debt moves the future
+            to the present.</span
           >
-            <div fxLayout="column">
-              <div class="breadcrum_sm">Loan Amount</div>
-              <p class="label_value">₹ {{ product?.amount ?? 0 }}</p>
-            </div>
-            <div fxLayout="column">
-              <div class="breadcrum_sm">Status</div>
-              <p
-                class="label_value"
-                [ngClass]="getStatusClass(product.status.toLowerCase())"
-              >
-                {{ product.status }}
-              </p>
-            </div>
-          </div>
+          <ic-button
+            class="w-100"
+            customButtonClass="w-100"
+            [label]="'Apply'"
+            icButtonType="filled-rounded"
+            (OnClick)="applyProduct(apply)"
+            type="submit"
+            size="medium"
+          ></ic-button>
         </div>
-      </mat-card>
-    </ng-container>
-  </div>
+      </ng-container>
+    </div>
+  </mat-card>
 </div>

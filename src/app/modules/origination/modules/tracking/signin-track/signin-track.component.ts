@@ -11,6 +11,16 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 })
 export class SigninTrackComponent implements OnInit {
   screenTitle = 'Tracking Status';
+  statusToggle = [
+    {
+      label: 'Mobile',
+      value: 'mobile',
+    },
+    {
+      label: 'Customer ID',
+      value: 'customerId',
+    },
+  ];
   selectedStep = 0;
   screenList = [
     {
@@ -64,7 +74,10 @@ export class SigninTrackComponent implements OnInit {
 
   ngOnInit(): void {
     this.signForm = this.fb.group({
+      status: 'mobile',
       mobile: '',
+      customerId: '',
+      password: '',
       // otp: "",
     });
   }

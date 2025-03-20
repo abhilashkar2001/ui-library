@@ -55,6 +55,10 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
     this.backEvent.emit();
   }
 
+  onDecline() {
+    console.log('decline functionality need to implement');
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

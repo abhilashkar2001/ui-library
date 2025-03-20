@@ -5,6 +5,8 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { ProductListConstant } from './product-list-card.constant';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { HomeService } from 'app/shared/services/home-service/home.service';
 
 @Component({
   selector: 'app-product-list-card',
@@ -13,6 +15,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 })
 export class ProductListCardComponent implements OnInit {
   productList: any = [];
+  applyNowProducts: any = [];
   searchFilter = ProductListConstant.DEFAULT_CATEGORIES;
   categoryList = ProductListConstant.CATEGORY_LIST;
   searchControl: FormControl = new FormControl('');
@@ -22,6 +25,9 @@ export class ProductListCardComponent implements OnInit {
     private route: Router,
     private api: TrackingService,
     private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
+    private homeService: HomeService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +38,8 @@ export class ProductListCardComponent implements OnInit {
         this.getProductList();
       });
     this.getProductList();
+    this.getLoanServices();
+    this.getAccountTypes();
   }
 
   /**
@@ -93,6 +101,31 @@ export class ProductListCardComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  getLoanServices() {
+    this.loanService.getLoanTypes('Lending').subscribe((resp: any) => {
+      const loanProducts = resp.data?.map((item: any) => item.basisClass);
+      this.applyNowProducts = [...this.applyNowProducts, ...loanProducts];
+    });
+  }
+
+  getAccountTypes() {
+    this.homeService.getAccountTypes('Accounts').subscribe((resp: any) => {
+      const accountBusinessNames = resp.data.map(
+        (item: any) => item.businessSuite,
+      );
+      this.applyNowProducts = [
+        ...this.applyNowProducts,
+        ...accountBusinessNames,
+      ];
+    });
+  }
+
+  applyProduct(value: string) {
+    this.router.navigate(['/origination/loan/loan-type'], {
+      queryParams: { subClass: value },
+    });
   }
 
   /**

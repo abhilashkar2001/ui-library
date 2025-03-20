@@ -125,3 +125,38 @@
     top: -4px;
   }
 }
+
+.apply_now_container {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.apply_now_container::-webkit-scrollbar {
+  display: none;
+}
+
+.apply_card {
+  flex: 0 0 auto;
+  width: 260px;
+  height: 300px;
+  background-color: #f5faff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  scroll-snap-align: start;
+
+  .applyBtn {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
