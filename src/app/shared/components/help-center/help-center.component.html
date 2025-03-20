@@ -1,0 +1,28 @@
+<mat-sidenav-container class="help-container" *ngIf="isOpen">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    position="end"
+    class="help-sidenav"
+    [(opened)]="isOpen"
+    (backdropClick)="closeHelp()"
+  >
+    <div class="help-header">
+      <h3 class="theme_header_lg_bold">Help Center</h3>
+      <button mat-icon-button (click)="closeHelp()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="help-content">
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Search" />
+      </mat-form-field>
+      <h4 class="header_gt_md_bold_black">Enter Mobile Number:</h4>
+      <p class="header_md">- The mobile number for instant login...</p>
+      <h4 class="header_gt_md_bold_black">Get OTP:</h4>
+      <p class="header_md">- Based on mobile number, we send OTP...</p>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>

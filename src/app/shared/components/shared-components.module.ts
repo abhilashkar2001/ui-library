@@ -34,6 +34,7 @@ import { ScanComponent } from './scan/scan.component';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { StagingSuccessAreaComponent } from './staging-success-area/staging-success-area.component';
 import { SuccessPopupComponent } from './success-popup/success-popup.component';
+import { HelpCenterComponent } from './help-center/help-center.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, Widgets, FusionTheme);
 
@@ -52,6 +53,7 @@ const components = [
   ScanComponent,
   StagingSuccessAreaComponent,
   SuccessPopupComponent,
+  HelpCenterComponent,
 ];
 
 @NgModule({

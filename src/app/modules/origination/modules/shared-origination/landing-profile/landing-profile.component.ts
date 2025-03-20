@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-profile',
@@ -12,7 +13,13 @@ export class LandingProfileComponent {
   @Input() routeUrl: any;
   @Output() customApply = new EventEmitter<any>();
 
+  constructor(private router: Router) {}
+
   onApply(e: any) {
     this.customApply.emit(e);
+  }
+
+  navigateTracking() {
+    this.router.navigate([`origination/tracking`]);
   }
 }

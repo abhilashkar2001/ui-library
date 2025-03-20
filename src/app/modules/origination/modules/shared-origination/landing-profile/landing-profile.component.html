@@ -3,7 +3,12 @@
     <div class="col-12 col-lg-7 py-3 py-md-5 order-1 order-lg-0">
       <h1 class="hero_title">{{ profileHeader }}</h1>
       <p class="hero_subtitle">{{ profileHint }}</p>
-      <div class="apply_div">
+      <div
+        class="apply_div"
+        fxLayout="row"
+        fxLayoutGap="20"
+        fxLayoutAlign="start center"
+      >
         <ic-button
           [label]="'Apply'"
           [icButtonType]="'filled-rounded'"
@@ -11,6 +16,14 @@
           [size]="'large'"
           (click)="onApply($event)"
         ></ic-button>
+
+        <span
+          class="tracking"
+          (click)="navigateTracking()"
+          (keydown.enter)="navigateTracking()"
+          tabindex="0"
+          >Tracking status/Resume</span
+        >
       </div>
       <div class="stacked_imgs_div">
         <div class="img_wrapper">

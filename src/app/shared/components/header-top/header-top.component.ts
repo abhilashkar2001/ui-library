@@ -19,6 +19,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { TokenStorageService } from '@onerumango/utils';
+import { HelpCenterService } from 'app/shared/services/helpCenter.service';
 
 @Component({
   selector: 'app-header-top',
@@ -57,6 +58,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   ];
   @ViewChildren('element') elReference: QueryList<ElementRef> | any;
   expand = 0;
+  openHelp = false;
 
   constructor(
     private layout: LayoutService,
@@ -69,6 +71,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
+    private helpCenterService: HelpCenterService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
@@ -109,7 +112,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       this.menuItems = mainItems;
       return;
     });
-
     this.showSideBar.getToken().subscribe((resp) => {
       this.hideNavItem = resp;
     });
@@ -194,6 +196,11 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   trackingStatus() {
     this.router.navigate([`/origination/tracking`]);
+  }
+
+  helpCenter() {
+    this.helpCenterService.toggleHelpCenter();
+    this.openHelp = true;
   }
 
   /**
