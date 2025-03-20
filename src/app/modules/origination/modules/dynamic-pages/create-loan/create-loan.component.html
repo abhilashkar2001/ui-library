@@ -113,24 +113,31 @@
 
       <div
         fxFlex="48"
-        class="enabled-mat-form-field"
-        style="transform: translate(10px, -15px)"
+        class="enabled-mat-form-field p-8"
+        fxLayout="row wrap"
+        fxLayoutAlign="start center"
       >
-        <mat-label class="text-label">Holder Type</mat-label>
-        <ic-radio-group
-          class="custom-radio-grp"
-          [formControl]="
-            personalLoanDetailsForm.get('holderType') | formcontrol
-          "
-          fxLayout="row"
-          fxLayoutGap="10"
+        <mat-label class="header_md_bold_black" fxFlex="100"
+          >Holder Type
+          <span *ngIf="isHolderTypeRequired()" style="color: red"
+            >*</span
+          ></mat-label
         >
-          <ic-radio-button
-            *ngFor="let holderItem of holderTypeArray"
-            [value]="holderItem.id"
-            >{{ holderItem.values }}</ic-radio-button
-          >
-        </ic-radio-group>
+        <ic-radio-button
+          fxFlex="25"
+          *ngFor="let holderItem of holderTypeArray"
+          [control]="personalLoanDetailsForm.get('holderType') | formcontrol"
+          [value]="holderItem.id"
+          [label]="holderItem.values"
+        >
+        </ic-radio-button>
+        <div
+          *ngIf="personalLoanDetailsForm.get('holderType')?.invalid"
+          class="mat-error"
+          fxFlex="100"
+        >
+          Holder Type is required!
+        </div>
       </div>
 
       <div fxFlex="48" class="disable-mat-form-field">

@@ -1,8 +1,7 @@
 .scan-dialog-class {
   .closebtn {
-    top: 5px;
-    right: -330px;
-    position: relative;
+    align-self: flex-end;
+    margin: 12px;
   }
   .scantitle {
     font-size: 22px;

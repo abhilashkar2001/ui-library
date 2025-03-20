@@ -93,7 +93,9 @@
                           <img [src]="getFileUrl(file)" alt="image" />
                         </div>
                         <div class="img_container">
-                          <p class="img_name">{{ file?.name }}</p>
+                          <span class="breadcrum_sm_bold">{{
+                            file?.name
+                          }}</span>
                           <div
                             class="progress-cont"
                             *ngIf="file.progress === '100%'; else showSize"
@@ -104,14 +106,14 @@
                             ></div>
                           </div>
                           <ng-template #showSize>
-                            <div>{{ file.size }}</div>
+                            <div class="theme_sm">{{ file.size }}</div>
                           </ng-template>
                         </div>
-                        <mat-icon
-                          (click)="deleteFile(fileIndx, i, file)"
+                        <ic-icon
                           class="cancel-icon"
-                          >close</mat-icon
-                        >
+                          name="close"
+                          (click)="deleteFile(fileIndx, i, file)"
+                        ></ic-icon>
                       </div>
                     </div>
                   </div>
