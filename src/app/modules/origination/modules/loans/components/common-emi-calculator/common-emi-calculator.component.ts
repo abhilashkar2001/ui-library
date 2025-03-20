@@ -225,7 +225,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       this.productDetails?.minimumTenorMonth || 0,
       this.productDetails?.minimumTenorDay || 0,
     );
-    return totalDays <= MinimumAllowedDays;
+    return totalDays < MinimumAllowedDays;
   }
 
   get validateTenure() {

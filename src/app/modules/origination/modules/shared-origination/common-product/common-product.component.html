@@ -42,7 +42,7 @@
         <p class="feature_name">{{ feature?.featureName }}</p>
         <ul class="desc-list">
           <ng-container *ngFor="let childFeature of feature?.feature">
-            <li *ngIf="childFeature?.catalogueDesc" class="show-hyperLink">
+            <li *ngIf="childFeature?.catalogueDesc" class="theme_md">
               {{ childFeature?.catalogueDesc }}
             </li>
           </ng-container>
