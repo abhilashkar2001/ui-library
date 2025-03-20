@@ -84,7 +84,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.productDetails = resp.data[0]?.lendingParameters.find(
-          (el: any) => el.currency == this.otherUserInfo.currency,
+          (el: any) => el.currencyCode == this.otherUserInfo.currency,
         );
         this.min = this.productDetails.minimumAmount;
         this.max = this.productDetails.maximumAmount;
