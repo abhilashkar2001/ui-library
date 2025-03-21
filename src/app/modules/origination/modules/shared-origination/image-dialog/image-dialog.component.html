@@ -15,7 +15,11 @@
     <ng-container *ngIf="!isPdfType; else showPdfTemplate">
       <img
         class="images expanded_view"
-        [src]="getFileUrl(data.imageUrl)"
+        [src]="
+          filePreview?.changingThisBreaksApplicationSecurity
+            | safe: 'url'
+            | async
+        "
         width="100%"
         alt="Expanded View"
       />

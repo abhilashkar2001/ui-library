@@ -114,6 +114,12 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     });
     this.subscriptions.push(localeData$);
     this.loadCountries();
+    this.otpForm
+      .get('isdCode')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe(() => {
+        this.setMobileLength();
+      });
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -199,6 +205,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       .get('phone')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
+        this.otpForm.get('phone')?.setErrors(null);
+
         const regExp = /^[0]+$/;
         if (resp?.length == this.maxMobileLength) {
           this.isValidMobile = regExp.test(resp);

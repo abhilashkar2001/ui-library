@@ -18,7 +18,13 @@
       [icNumbersOnly]="true"
       (onSuffixClick)="onGetOTP()"
       [disabled]="(getOtpBtn && !validNumber) || showOtpSection"
+      [customError]="
+        otpForm.get('phone')?.hasError('invalidLength')
+          ? 'Max mobile length is ' + maxMobileLength
+          : ''
+      "
     >
+      >
     </ic-mobile-field>
   </div>
 

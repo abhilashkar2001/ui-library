@@ -24,6 +24,7 @@ import { SwiperModule } from 'swiper/angular';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
+import { LibPipesModule } from '@onerumango/utils';
 
 const components = [
   CibilScoreContainerComponent,
@@ -57,6 +58,7 @@ const components = [
     InputMaskModule,
     IcustLibraryModule,
     SharedOriginationModule,
+    LibPipesModule,
   ],
   exports: components,
 })

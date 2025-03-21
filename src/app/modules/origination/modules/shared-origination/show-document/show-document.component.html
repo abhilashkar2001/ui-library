@@ -3,7 +3,28 @@
     <div class="uploaded-images full-width" fxLayout="row">
       <!-- <mat-icon>check_circle</mat-icon> -->
       <!-- <img src="../../../../assets/images/account-img1.png" alt="" /> -->
-      <img [src]="getFileUrl(document.fileUrl)" alt="" />
+      <!-- Show image if it's not a PDF -->
+      <img
+        *ngIf="
+          !filePreview?.changingThisBreaksApplicationSecurity?.includes('pdf')
+        "
+        [src]="
+          filePreview?.changingThisBreaksApplicationSecurity
+            | safe: 'url'
+            | async
+        "
+        alt="Image Preview"
+      />
+
+      <!-- Show fallback image if it's a PDF -->
+      <img
+        *ngIf="
+          filePreview?.changingThisBreaksApplicationSecurity?.includes('pdf')
+        "
+        [src]="'assets/images/file_icon.svg'"
+        alt="PDF Icon"
+      />
+
       <div
         class="image_icon_container"
         fxLayout="column"

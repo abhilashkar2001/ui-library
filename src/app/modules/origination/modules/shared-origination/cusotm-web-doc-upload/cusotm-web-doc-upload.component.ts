@@ -32,6 +32,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
+import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
 
 enum CreateLoanEnum {
   INTERNAL = 'internal',
@@ -112,6 +113,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   image = '';
   faceId: any;
   frontAadhar: any;
+  fileUrls: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -390,6 +392,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   deleteFile(index: number, i: any, _doc: any) {
     this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
     this.otherDocument().controls[i]?.get('fileInfo')?.value.splice(index, 1);
+    this.fileUrls.splice(index, 1);
   }
 
   deleteDocument(i: number) {
@@ -674,11 +677,30 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
               if (resp?.statusCode === 200) {
                 this.isLoading = false;
                 this.updateDocId(i).push(resp.data.documentId);
+                this.fileUrls.push(resp.data.fileUrl);
                 this.documentIds.push(this.createDocumentForm.value);
                 console.log(
                   this.otherDocument()?.controls[i]?.get('fileInfo')?.value,
                   i,
                 );
+                const fileInfoArr =
+                  this.otherDocument().controls[i]?.get('fileInfo')?.value;
+                fileInfoArr.forEach((fileInfoObj: any) => {
+                  if (resp.data.fileName.includes(fileInfoObj.name)) {
+                    fileInfoObj.newFileUrl = resp.data.fileUrl;
+                  }
+                });
+                this.otherDocument()
+                  .controls[i]?.get('fileInfo')
+                  ?.setValue(fileInfoArr);
+                this.otherDocument()
+                  ?.controls[i]?.get('fileInfo')
+                  ?.get('newFileUrl')
+                  ?.setValue(resp.data.fileUrl);
+                this.otherDocument()
+                  .controls[i]?.get('fileInfo')
+                  ?.get('newFileUrl')
+                  ?.setValue(resp.data.fileUrl);
                 const index =
                   this.otherDocument()?.controls[i]?.get('fileInfo')?.value
                     ?.length - 1;
@@ -713,7 +735,17 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         if (resp?.statusCode === 200) {
           this.updateDocId(i).push(resp.data.documentId);
           this.documentIds.push(this.createDocumentForm.value);
-
+          this.fileUrls.push(resp.data.fileUrl);
+          const fileInfoArr =
+            this.otherDocument().controls[i]?.get('fileInfo')?.value;
+          fileInfoArr.forEach((fileInfoObj: any) => {
+            if (resp.data.fileName.includes(fileInfoObj.name)) {
+              fileInfoObj.newFileUrl = resp.data.fileUrl;
+            }
+          });
+          this.otherDocument()
+            .controls[i]?.get('fileInfo')
+            ?.setValue(fileInfoArr);
           if (this.isOtherDocVisible)
             this.extractDoc(
               this.createDocumentForm.value.otherDocument[i].documentType,
@@ -792,6 +824,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         name: file.name,
         progress: '100%',
         size: `${sizeinKb}kb`,
+        newFileUrl: '',
+        pdfUrl: '',
+        imageUrl: '',
       });
       setTimeout(() => {
         this.getFileInfo(indx)[this.getFileInfo(indx)?.length - 1].progress =
@@ -932,7 +967,18 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       this.sessionStorageService.setBiometricId(this.faceId);
     });
   }
-
+  openFile(file: any) {
+    this.dialog.open(ImageDialogComponent, {
+      data: {
+        imageUrl: this.baseUrl + file.newFileUrl,
+        imageName: file.name ?? 'document',
+        pdfUrl: this.baseUrl + file.newFileUrl,
+      },
+      width: '900px',
+      height: '560px',
+      panelClass: 'imageViewDialog',
+    });
+  }
   validateFace(file: any) {
     const form = new FormData();
     form.append('faceImage', file);

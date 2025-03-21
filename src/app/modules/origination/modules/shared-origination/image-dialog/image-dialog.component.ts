@@ -15,6 +15,7 @@ export class ImageDialogComponent implements OnInit {
   isPdfType = false;
   fileUrl = '';
   dataLocalUrl: any;
+  filePreview: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogref: MatDialogRef<ImageDialogComponent>,
@@ -23,14 +24,26 @@ export class ImageDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fileUrl = environment.microServiceURL + this.data.imageUrl;
+    console.log(this.data);
+    this.fileUrl = this.data.imageUrl;
+
     this.formatFile();
+
+    console.log('File URL:', this.fileUrl);
+    this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(
+      this.fileUrl,
+    );
+    console.log(this.filePreview);
   }
 
   formatFile() {
     console.log(this.data.fileInfo);
-    if (this.data.fileInfo.fileType == 'application/pdf') {
+    if (
+      this.data.imageUrl.includes('pdf') ||
+      this.data?.fileInfo?.fileUrl?.includes('pdf')
+    ) {
       this.isPdfType = true;
+      this.fileUrl = this.data.pdfUrl || this.data?.imageUrl;
       this.pdfFormat();
     } else {
       this.isPdfType = false;
@@ -38,12 +51,14 @@ export class ImageDialogComponent implements OnInit {
     // console.log(this.data);
   }
   pdfFormat() {
+    console.log(this.fileUrl);
     this.http.get(this.fileUrl, { responseType: 'blob' }).subscribe(
       (response: Blob) => {
         const fileData = new Blob([response], { type: 'application/pdf' });
         this.dataLocalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           window.URL.createObjectURL(fileData),
         );
+        console.log(this.dataLocalUrl);
       },
       (error) => {
         console.error('Error fetching PDF:', error);
@@ -52,10 +67,5 @@ export class ImageDialogComponent implements OnInit {
   }
   closeDialog() {
     this.dialogref.close();
-  }
-  getFileUrl(filePath: string) {
-    const file = this.endPoint + filePath;
-    const parseFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file);
-    return parseFileUrl;
   }
 }
