@@ -282,6 +282,14 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
       });
   }
 
+  isHolderTypeRequired(): boolean {
+    return (
+      this.personalLoanDetailsForm
+        ?.get('holderType')
+        ?.hasValidator(Validators.required) ?? false
+    );
+  }
+
   ngOnDestroy(): void {
     if (this.valueChangesSubscription) {
       this.valueChangesSubscription.unsubscribe();

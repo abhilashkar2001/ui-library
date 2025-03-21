@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" class="p-12">
   <div class="text-center">
     <img src="assets/images/failed.svg" width="40%" alt="" />
   </div>
@@ -6,20 +6,24 @@
   <p class="text-center text-normal">
     {{ data.message }}
   </p>
-  <div class="w-100 text-center" fxLayoutAlign="center center">
-    <button
-      mat-raised-button
+  <div
+    class="w-100 text-center"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+    <ic-button
+      [label]="'Yes' | translate"
+      icButtonType="filled-rounded"
       mat-dialog-close="Ok"
-      class="savebutton applyButtonStandard"
-    >
-      Yes
-    </button>
-    <button
-      mat-raised-button
+      type="submit"
+      size="medium"
+    ></ic-button>
+    <ic-button
+      [label]="'No' | translate"
+      icButtonType="ghost-rounded-danger"
       mat-dialog-close="close"
-      class="button back_button"
-    >
-      No
-    </button>
+      type="submit"
+      size="medium"
+    ></ic-button>
   </div>
 </div>

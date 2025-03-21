@@ -58,7 +58,7 @@
       <ic-checkbox
         class="custom-checkbox"
         class="primary"
-        (onCheckboxChange)="onAgreed()"
+        (checkboxChange)="onAgreed($event)"
       >
         <span class="standard-font-gray">
           I authorize DemoBank and it's representatives to email, call or SMS
@@ -81,6 +81,7 @@
             [label]="'Save' | translate"
             [type]="'submit'"
             size="large"
+            [disabled]="this.agreed == false"
             [icButtonType]="'filled-rounded'"
             [isLoading]="isLoading"
             (OnClick)="onVerify()"

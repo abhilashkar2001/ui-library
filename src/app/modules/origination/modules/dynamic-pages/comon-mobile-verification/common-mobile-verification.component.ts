@@ -182,8 +182,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     return true;
   }
 
-  onAgreed() {
-    this.agreed = !this.agreed;
+  onAgreed(e: any) {
+    this.agreed = e;
     this.enteredOTP.emit({
       otp: this.otp,
       agreed: this.agreed,
