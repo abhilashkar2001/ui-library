@@ -117,6 +117,6 @@
       </ic-button>
     </div>
   </div>
-  <div id="underline"></div>
+  <div *ngIf="!hideNavItem" id="underline"></div>
 </header>
 <app-help-center *ngIf="openHelp"></app-help-center>

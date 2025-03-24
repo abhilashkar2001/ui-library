@@ -13,7 +13,14 @@
         swiperSlide
         *ngFor="let imagesdata of dynamicList; let i = index"
       >
-        <div class="single_card" [ngStyle]="backgroundStyles[i]">
+        <div
+          class="single_card"
+          [ngStyle]="
+            backgroundStyles[i] || {
+              'background-image': 'url(assets/images/default_fallback_img.svg)',
+            }
+          "
+        >
           <div class="card_overlay">
             <div>
               <div class="card_title">{{ imagesdata?.basisClass }}</div>

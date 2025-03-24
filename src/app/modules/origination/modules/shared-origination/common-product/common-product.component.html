@@ -7,18 +7,24 @@
 >
   <div class="img-section" fxFlex="50">
     <div data-aos="zoom-out" data-aos-delay="200" data-aos-duration="500">
-      <img
-        #img
+      <ng-container
         *ngIf="
           filePreview?.changingThisBreaksApplicationSecurity
             | safe: 'url'
-            | async as safeUrl
+            | async as safeUrl;
+          else placeholderImage
         "
-        [src]="safeUrl"
-        alt="file"
-        width="399"
-        height="333"
-      />
+      >
+        <img #img [src]="safeUrl" alt="file" width="399" height="333" />
+      </ng-container>
+      <ng-template #placeholderImage>
+        <img
+          src="assets/images/default_fallback_img.svg"
+          alt="dummy image"
+          width="399"
+          height="333"
+        />
+      </ng-template>
     </div>
   </div>
   <div class="loan-main-text" fxFlex="50">

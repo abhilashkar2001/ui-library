@@ -401,7 +401,7 @@ export class CreateLoanComponent implements OnInit, OnDestroy {
     this.sessionStorageService.setLoanHolderType(holder);
     this.getOwnershipIdByGeneric(holder);
     this.snack.open(`Create Loan Details Saved !`, 'OK', {
-      duration: 4000,
+      duration: 400000,
       verticalPosition: 'top',
       horizontalPosition: 'right',
     });

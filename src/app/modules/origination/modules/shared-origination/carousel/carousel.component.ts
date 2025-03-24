@@ -88,8 +88,9 @@ export class CarouselComponent implements OnInit, OnChanges {
         this.convertToBlobUrl(url, index);
       } else {
         this.backgroundStyles[index] = {
-          'background-image': 'url(assets/images/Frame 5.svg)',
+          'background-image': 'url(assets/images/default_fallback_img.svg)',
         }; // Fallback
+        this.cdRef.detectChanges();
       }
     });
   }

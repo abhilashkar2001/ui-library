@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChildren,
   HostListener,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
@@ -72,6 +73,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
     private helpCenterService: HelpCenterService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
@@ -114,6 +116,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     });
     this.showSideBar.getToken().subscribe((resp) => {
       this.hideNavItem = resp;
+      this.cdr.detectChanges();
     });
   }
 
@@ -152,6 +155,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       node = node.parentNode;
     }
     return false;
+  }
+
+  get shouldShowUnderline(): boolean {
+    return Array.isArray(this.items) && this.items.some((item) => item?.label);
   }
 
   // animate the nav link underline
