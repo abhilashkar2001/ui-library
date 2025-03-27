@@ -16,7 +16,7 @@
         <img
           class="image"
           [src]="
-            filePreview.changingThisBreaksApplicationSecurity
+            filePreview?.changingThisBreaksApplicationSecurity
               | safe: 'url'
               | async
           "
