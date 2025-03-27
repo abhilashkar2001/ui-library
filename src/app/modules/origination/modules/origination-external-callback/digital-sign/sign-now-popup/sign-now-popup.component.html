@@ -156,34 +156,25 @@
     fxLayoutAlign="center center"
     fxLayoutGap="20px"
   >
-    <button
+    <ic-button
+      label="Done"
       *ngIf="radioFlag === 'upload' || title === 'Physical Sign'"
-      class="sign_popup_btn done"
-      mat-raised-button
-      type="button"
-      color="primary"
-      (click)="saveSignUpload()"
+      (OnClick)="saveSignUpload()"
       [disabled]="!signImg"
-    >
-      Done
-    </button>
-    <button
+      [icButtonType]="'filled-rounded'"
+    ></ic-button>
+
+    <ic-button
+      label="Done"
       *ngIf="radioFlag === 'digitan-sign' && title === 'Sign Now'"
-      class="sign_popup_btn done"
-      mat-raised-button
-      type="button"
-      color="primary"
-      (click)="saveDigitalSign()"
-    >
-      Done
-    </button>
-    <button
+      (OnClick)="saveDigitalSign()"
+      [icButtonType]="'filled-rounded'"
+    ></ic-button>
+
+    <ic-button
+      label="Cancel"
+      [icButtonType]="'ghost-rounded'"
       (click)="closeDialog()"
-      mat-raised-button
-      type="button"
-      class="cancelButton"
-    >
-      <span id="cancel1"> Cancel </span>
-    </button>
+    ></ic-button>
   </div>
 </div>

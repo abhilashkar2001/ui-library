@@ -1,0 +1,24 @@
+<div>
+  <mat-card class="mt-16 uploadcard">
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div appDragDrop>
+          <mat-icon (click)="close()">close</mat-icon>
+          <img class="imagedesign" [src]="imageUrl" alt="upload image" />
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="full-width mt-24 mb-12" fxLayoutAlign="center">
+    <button
+      mat-raised-button
+      type="button"
+      class="donebtn"
+      mat-dialog-close
+      (click)="editPage()"
+    >
+      Edit
+    </button>
+  </div>
+</div>

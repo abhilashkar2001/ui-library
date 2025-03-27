@@ -8,6 +8,7 @@ import { DocumentUploadComponent } from './document-upload/document-upload.compo
 import { RemarkComponent } from './offer-letter/remark/remark.component';
 import { DobVerificationComponent } from './dob-verification/dob-verification.component';
 import { ChecklistDocumentComponent } from './checklist-document/checklist-document.component';
+import { DigitalSignatureComponent } from 'app/modules/origination/modules/origination-external-callback/offer-letter/digital-signature/digital-signature.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,13 @@ const routes: Routes = [
     component: ChecklistDocumentComponent,
     data: {
       title: 'Verification',
+    },
+  },
+  {
+    path: 'digital-signature',
+    component: DigitalSignatureComponent,
+    data: {
+      title: 'Digital Signature',
     },
   },
 ];

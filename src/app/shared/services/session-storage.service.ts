@@ -1349,4 +1349,19 @@ export class SessionStorageService {
   public removeBasisDetails(): void {
     this.session.removeItem(SessionStorageEnum.BASIS_DETAILS);
   }
+  public getCustomerName(): string[] {
+    return this.getItem(SessionStorageEnum.CUSTOMER_NAME);
+  }
+  public getCategory() {
+    return this.getItem(SessionStorageEnum.CATEGORY);
+  }
+  public getStageIdList(): number[] {
+    return this.getItem(SessionStorageEnum.STAGE_ID_LIST);
+  }
+  public getReferenceNo() {
+    return this.getItem(SessionStorageEnum.REF_NO);
+  }
+  public getPrimaryEmail() {
+    return this.getItem(SessionStorageEnum.PRIMARY_EMAIL);
+  }
 }

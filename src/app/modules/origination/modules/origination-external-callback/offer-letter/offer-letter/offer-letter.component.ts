@@ -118,6 +118,7 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
           else this.route.navigate(['/origination/process-offer']);
         }
       });
+    this.route.navigate(['origination/request-processing/digital-signature']);
   }
 
   openEsign() {

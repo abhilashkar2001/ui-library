@@ -1,0 +1,88 @@
+<div fxLayout="column" class="bottom-card">
+  <img
+    src="assets/images/white-simple-textured-design-background.png"
+    alt="Background Image"
+    class="background-image"
+  />
+  <mat-card class="sign-later dig-sign-container">
+    <div
+      class="full-width"
+      fxLayout="row"
+      fxLayoutGap="2%"
+      fxLayout.sm="column"
+    >
+      <mat-card fxFlex="25" class="sign-later">
+        <div fxLayout="row" fxFlex="100">
+          <div fxFlex="30" fxLayout="column" class="img_items">
+            <div fxFlex="10">
+              <img src="assets/images/signnow.png" alt="" />
+            </div>
+          </div>
+          <div fxFlex="35" fxLayoutAlign="center center">
+            <h4 class="sub-heading">Sign Now</h4>
+          </div>
+          <div
+            *ngIf="imageUrl && buttonTitle === 'Sign Now'"
+            class="icon"
+            fxFlex="20"
+            fxLayoutAlign="end"
+          >
+            <mat-icon>check</mat-icon>
+          </div>
+        </div>
+        <div fxFlex="100" fxLayoutAlign="end" class="add_details">
+          <ic-button
+            label="Add details"
+            (OnClick)="
+              imageUrl && buttonTitle === 'Sign Now'
+                ? viewSignData('Sign Now')
+                : addDetalis('Sign Now')
+            "
+            [icButtonType]="'filled-rounded'"
+          ></ic-button>
+        </div>
+      </mat-card>
+      <mat-card fxFlex="25" class="sign-later">
+        <div fxLayout="row" fxFlex="100">
+          <div fxFlex="30" fxLayout="column" class="img_items">
+            <div fxFlex="10" class="">
+              <img src="assets/images/physicalSign.svg" alt="" />
+            </div>
+          </div>
+          <div fxFlex="50" fxLayoutAlign="center center">
+            <h4 class="sub-heading">Physical Sign</h4>
+          </div>
+          <div
+            *ngIf="imageUrl && buttonTitle === 'Physical Sign'"
+            class="icon"
+            fxFlex="20"
+            fxLayoutAlign="end"
+          >
+            <mat-icon>check</mat-icon>
+          </div>
+        </div>
+        <div fxFlex="100" fxLayoutAlign="end" class="add_details">
+          <ic-button
+            label="Add details"
+            (OnClick)="
+              imageUrl && buttonTitle === 'Physical Sign'
+                ? viewSignData('Physical Sign')
+                : addDetalis('Physical Sign')
+            "
+            [icButtonType]="'filled-rounded'"
+          ></ic-button>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card>
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutGap="2%"
+    fxLayoutAlign="end center"
+    class="action-dig-sign-btn"
+  >
+    <ic-button label="Reset" [icButtonType]="'ghost-rounded'"></ic-button>
+    <ic-button label="Submit" [icButtonType]="'filled-rounded'"></ic-button>
+  </div>
+</div>
