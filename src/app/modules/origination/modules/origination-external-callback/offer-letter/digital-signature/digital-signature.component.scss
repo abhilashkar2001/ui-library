@@ -103,8 +103,6 @@
 .dig-sign-container {
   padding: 17px;
   margin: 3%;
-  // background: url('assets/images/white-simple-textured-design-background.png')
-  //   0% 0% no-repeat padding-box;
 }
 .action-dig-sign-btn {
   margin-right: 3%;
@@ -117,4 +115,17 @@
   height: 100%;
   object-fit: cover;
   z-index: -10;
+}
+.pd-10 {
+  padding: 10px;
+}
+.sub-heading-sign {
+  letter-spacing: 0px;
+  color: #888888;
+  opacity: 1;
+  font-size: 16px;
+}
+.images-sign {
+  width: 104px;
+  height: 132px;
 }
