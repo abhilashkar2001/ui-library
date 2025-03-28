@@ -126,26 +126,71 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="isStart" fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="10">
-          <img src="assets/images/svg/xlsx.svg" alt="" />
-        </div>
-        <span fxFlex="80">{{ file?.name }} </span>
-        <mat-icon *ngIf="!isUploading" class="deletebtn" (click)="deleteFile()">
-          delete
-        </mat-icon>
-        <mat-icon *ngIf="isUploading" class="deletebtn" (click)="deleteFile()">
-          close
-        </mat-icon>
-      </div>
+    <mat-card
+      *ngIf="isStart"
+      class="pd-15"
+      fxLayout="column"
+      fxLayoutAlign="start center"
+    >
       <ng-container>
-        <div fxLayout="row" class="ic-progress-bar">
-          <mat-progress-bar
-            mode="determinate"
-            [value]="percentDone"
-            *ngIf="isUploading"
-          ></mat-progress-bar>
+        <div
+          fxFlex="100"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          class="ic-progress-bar"
+        >
+          <div fxFlex="100" fxLayoutAlign="start center">
+            <span *ngIf="fileUploadFailed">
+              Could not upload File, Try Again!</span
+            >
+            <div
+              fxFlex="100"
+              fxLayoutAlign="row"
+              *ngIf="isUploading"
+              fxLayoutGap="5"
+            >
+              <img
+                [src]="
+                  file.name?.includes('png')
+                    ? 'assets/images/file-png.svg'
+                    : 'assets/images/file-jpg.svg'
+                "
+                alt=""
+              />
+              <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between">
+                <span>{{ file?.name }}</span>
+                <mat-progress-bar
+                  class="pd-15"
+                  *ngIf="isUploading"
+                  [value]="percentDone"
+                  mode="determinate"
+                ></mat-progress-bar>
+              </div>
+              <div></div>
+            </div>
+            <ng-container *ngIf="uploadSuccess && !isUploading">
+              <div fxFlex="100" fxLayoutAlign="space-between center">
+                <div class="fileicon-filename">
+                  <img
+                    [src]="
+                      file.name?.includes('png')
+                        ? 'assets/images/file-png.svg'
+                        : 'assets/images/file-jpg.svg'
+                    "
+                    alt=""
+                  />
+                  <span>{{ file?.name }}</span>
+                </div>
+                <div>
+                  <ic-button
+                    [icIcon]="'delete'"
+                    [icButtonType]="'icon'"
+                    (OnClick)="deleteFile()"
+                  ></ic-button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </ng-container>
     </mat-card>
@@ -160,7 +205,7 @@
       label="Done"
       *ngIf="radioFlag === 'upload' || title === 'Physical Sign'"
       (OnClick)="saveSignUpload()"
-      [disabled]="!signImg"
+      [disabled]="!signImg && uploadSuccess"
       [icButtonType]="'filled-rounded'"
     ></ic-button>
 

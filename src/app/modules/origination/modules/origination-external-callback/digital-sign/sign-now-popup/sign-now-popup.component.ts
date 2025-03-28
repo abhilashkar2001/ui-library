@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { catchError, map, of, Subscription } from 'rxjs';
 import { BranchService } from './branch.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SignPadComponent } from '../sign-pad/sign-pad.component';
@@ -22,7 +22,7 @@ export class SignNowPopupComponent implements OnInit {
   signatureImg: any;
   isSign = true;
   radioFlag = 'digitan-sign';
-  signaturePadOptions: Object = {
+  signaturePadOptions: any = {
     minWidth: 2,
     canvasWidth: 700,
     canvasHeight: 300,
@@ -43,7 +43,7 @@ export class SignNowPopupComponent implements OnInit {
   sinatureId: string | Blob | any;
   title: any;
   check: any;
-
+  fileUploadFailed = false;
   constructor(
     private dialogRef: MatDialogRef<SignNowPopupComponent>,
     private cdr: ChangeDetectorRef,
@@ -92,18 +92,36 @@ export class SignNowPopupComponent implements OnInit {
     docPayload.append('data', JSON.stringify(data));
     docPayload.append('module', 'signature');
     docPayload.append('signatureId', this.sinatureId);
-    this.branchService.saveUploadSignature(docPayload).subscribe(
-      (resp: any) => {
-        const data = {
-          result: resp?.data,
-          title: this.title,
-        };
-        this.dialogRef.close(data);
-      },
-      (err) => console.log('Error: ', err),
-    );
+    this.isUploading = true;
+    this.branchService
+      .saveUploadSignature(docPayload)
+      .pipe(
+        map((event: any) => this.handleUploadEvent(event)),
+        catchError((err) => {
+          this.fileUploadFailed = true;
+          this.isUploading = false;
+          return of(err);
+        }),
+      )
+      .subscribe();
   }
-
+  handleUploadEvent(event: any) {
+    this.isUploading = true;
+    console.log(event);
+    if (event.type === HttpEventType.UploadProgress) {
+      this.percentDone = Math.round((100 * event.loaded) / event.total);
+    } else if (event.type === HttpEventType.Response) {
+      // Upload complete
+      this.percentDone = 0;
+      this.isUploading = false;
+      this.uploadSuccess = true;
+      this.dialogRef.close({
+        result: event?.body?.data,
+        title: this.title,
+      });
+      console.log('Called ');
+    }
+  }
   closeDialog() {
     if (this.signPadComponent) this.signPadComponent.clearCanvas();
     this.deleteFile();
@@ -143,6 +161,8 @@ export class SignNowPopupComponent implements OnInit {
    * @param e
    */
   onFileSelect(e: any) {
+    this.fileUploadFailed = false;
+    console.log(e.target);
     try {
       this.isStart = true;
       this.file = e.target.files[0];
@@ -151,7 +171,7 @@ export class SignNowPopupComponent implements OnInit {
       fReader.readAsDataURL(this.file);
       fReader.onloadend = (_event: any) => {
         this.signImg = _event.target.result;
-        this.fileUpload(this.file);
+        this.uploadDocument();
       };
     } catch (error) {}
   }
@@ -187,6 +207,5 @@ export class SignNowPopupComponent implements OnInit {
     this.isStart = !this.isStart;
     this.file = null;
     this.signImg = null;
-    this.isStart = false;
   }
 }

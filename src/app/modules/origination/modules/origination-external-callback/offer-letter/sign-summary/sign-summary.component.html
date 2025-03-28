@@ -4,7 +4,15 @@
       <div fxLayout="column" fxLayoutAlign="center center">
         <div appDragDrop>
           <mat-icon (click)="close()">close</mat-icon>
-          <img class="imagedesign" [src]="imageUrl" alt="upload image" />
+          <img
+            [src]="
+              imageUrl?.changingThisBreaksApplicationSecurity
+                | safe: 'url'
+                | async
+            "
+            class="imagedesign"
+            alt="upload image"
+          />
         </div>
       </div>
     </mat-card-content>

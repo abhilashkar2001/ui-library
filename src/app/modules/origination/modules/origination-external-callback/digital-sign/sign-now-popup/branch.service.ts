@@ -38,7 +38,14 @@ export class BranchService {
     });
   }
   saveUploadSignature(payload: any) {
-    return this.httpClient.post(`${MICROSERVICE_URL}/upload-document`, payload);
+    return this.httpClient.post(
+      `${MICROSERVICE_URL}/upload-document`,
+      payload,
+      {
+        reportProgress: true,
+        observe: 'events',
+      },
+    );
   }
   saveDigitalSignDetails(payload: any): Observable<any> {
     return this.httpClient.post(

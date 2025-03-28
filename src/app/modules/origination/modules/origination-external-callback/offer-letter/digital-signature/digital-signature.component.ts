@@ -46,7 +46,6 @@ export class DigitalSignatureComponent {
   buttonTitle: any;
   currentUser: User | null | undefined;
   customerName: string | undefined;
-
   userProfile$: Observable<User | null>;
 
   constructor(

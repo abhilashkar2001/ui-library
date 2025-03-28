@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DigitalSignatureComponent } from './offer-letter/digital-signature/digital-signature.component';
 import { SignSummaryComponent } from './offer-letter/sign-summary/sign-summary.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LibPipesModule } from '@onerumango/utils';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SharedPipesModule,
     SharedOriginationModule,
     MatProgressBarModule,
+    LibPipesModule,
   ],
 })
 export class OriginationExternalCallbackModule {}
