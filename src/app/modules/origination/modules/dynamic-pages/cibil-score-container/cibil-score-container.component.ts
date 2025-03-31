@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 
 @Component({
@@ -14,9 +22,10 @@ export class CibilScoreContainerComponent {
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() createLoanAccountNumber: any;
   hideInfo = true;
+  @ViewChild('consentDialog') consentDialog!: TemplateRef<any>;
 
   isDifferentMobile = false;
-  showCibilScoreResult = true;
+  showCibilScoreResult = false;
   selectedOption: 'different' | 'same' = 'same';
   optionalSteps: any;
   phone: any;
@@ -27,14 +36,17 @@ export class CibilScoreContainerComponent {
   agreed = false;
   isOtpAllowed = false;
 
-  constructor(private openAccountService: OpenAccountService) {}
+  constructor(
+    private openAccountService: OpenAccountService,
+    private dialog: MatDialog,
+  ) {}
 
   onBack() {
     this.backEvent.emit();
   }
 
   onBackCIBILScoreResult() {
-    this.showCibilScoreResult = false;
+    this.showCibilScoreResult = true;
   }
 
   onContinue() {
@@ -68,5 +80,13 @@ export class CibilScoreContainerComponent {
       if (!(this.isOtpAllowed && this.agreed)) return true;
       else return false;
     }
+  }
+
+  openDialog() {
+    this.dialog.open(this.consentDialog, {
+      width: '40%',
+      height: '56%',
+      panelClass: 'custom-dialog',
+    });
   }
 }

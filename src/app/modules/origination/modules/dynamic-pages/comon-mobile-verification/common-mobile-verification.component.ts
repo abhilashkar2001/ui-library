@@ -54,6 +54,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   @Input() otpSent: boolean | any;
   @Input() hideInfo = false;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
+  @Input() verificationName = 'Mobile Number';
+
   otpForm!: FormGroup;
   phone: string | any;
   otp: any;

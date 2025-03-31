@@ -25,6 +25,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { LibPipesModule } from '@onerumango/utils';
+import { LoanDetailsComponent } from './loan-details/loan-details.component';
 
 const components = [
   CibilScoreContainerComponent,
@@ -37,6 +38,7 @@ const components = [
   LoanTermsConditionsComponent,
   NationalIdUploadComponent,
   OtherChecklistDocUploadComponent,
+  LoanDetailsComponent,
 ];
 
 @NgModule({

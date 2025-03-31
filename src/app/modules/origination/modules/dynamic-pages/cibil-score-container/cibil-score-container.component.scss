@@ -1,4 +1,4 @@
-label {
+p {
   color: #b4b4b4;
   font-family: Poppins;
   font-size: 16px;
@@ -71,11 +71,31 @@ label {
   font-weight: 600;
 }
 
-mat-radio-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 48%;
-  margin-top: 12px;
-  margin-bottom: 16px;
+.link {
+  color: #004c97;
+  font-family: Poppins;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.custom-dialog .mat-dialog-container {
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.popup-container {
+  text-align: center;
+}
+
+.popup-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.popup-actions {
+  margin-top: 20px;
 }

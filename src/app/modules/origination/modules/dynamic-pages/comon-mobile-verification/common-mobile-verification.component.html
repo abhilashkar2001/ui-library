@@ -2,10 +2,10 @@
   <div class="title-text" *ngIf="!hideInfo">
     Let's begin with some necessary information and get you started
   </div>
-  <div class="standard-font-blue" *ngIf="!hideInfo">
-    Enter Mobile Number for Instant Login
+  <div class="standard-font-blue">
+    Enter {{ verificationName }} for Instant Login
   </div>
-  <div class="mobile-verify">
+  <div class="mobile-verify" *ngIf="!hideInfo; else showField">
     <ic-mobile-field
       label="Mobile Number"
       placeholder="Mobile Number"
@@ -27,6 +27,10 @@
       >
     </ic-mobile-field>
   </div>
+  <ng-template #showField>
+    <ic-form-field suffixButton="Get OTP" (onSuffixClick)="onGetOTP()">
+    </ic-form-field>
+  </ng-template>
 
   <div
     [ngStyle]="{ display: showOtpSection ? 'block' : 'none' }"
@@ -87,7 +91,7 @@
             [label]="'Save' | translate"
             [type]="'submit'"
             size="large"
-            [disabled]="this.agreed == false"
+            [disabled]="this.agreed === false"
             [icButtonType]="'filled-rounded'"
             [isLoading]="isLoading"
             (OnClick)="onVerify()"
