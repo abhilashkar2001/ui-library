@@ -88,7 +88,6 @@ export class CallbackComponent implements OnInit, OnDestroy {
       } else if (getParameterByName('route') == 'tracking') {
         this.router.navigate([`${getParameterByName('route')}`]);
       } else {
-        console.log('object');
         sessionStorage.setItem(
           'originationId',
           JSON.stringify(getParameterByName('originationId')),
@@ -100,8 +99,9 @@ export class CallbackComponent implements OnInit, OnDestroy {
         this.sessionStorageService.setProcessCycleCode(
           getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
         );
-
-        this.router.navigate([`/origination/request-processing/offer-letter`]);
+        this.router.navigate([
+          `/origination/request-process/${getParameterByName('route')}`,
+        ]);
       }
     });
     this.subscriptions.push(userProfileSubscription$);
