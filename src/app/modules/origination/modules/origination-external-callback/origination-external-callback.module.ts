@@ -23,6 +23,10 @@ import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module'
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { TranslateModule } from '@ngx-translate/core';
+import { DigitalSignatureComponent } from './offer-letter/digital-signature/digital-signature.component';
+import { SignSummaryComponent } from './offer-letter/sign-summary/sign-summary.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LibPipesModule } from '@onerumango/utils';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,8 @@ import { TranslateModule } from '@ngx-translate/core';
     RemarkComponent,
     ChecklistDocumentComponent,
     DobVerificationComponent,
+    DigitalSignatureComponent,
+    SignSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +57,8 @@ import { TranslateModule } from '@ngx-translate/core';
     OriginationExternalCallbackRoutingModule,
     SharedPipesModule,
     SharedOriginationModule,
+    MatProgressBarModule,
+    LibPipesModule,
   ],
 })
 export class OriginationExternalCallbackModule {}

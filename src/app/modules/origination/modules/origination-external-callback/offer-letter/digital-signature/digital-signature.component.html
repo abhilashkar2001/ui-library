@@ -1,0 +1,110 @@
+<div fxLayout="column" class="bottom-card">
+  <img
+    src="assets/images/white-simple-textured-design-background.png"
+    alt="Background Image"
+    class="background-image"
+  />
+
+  <mat-card class="sign-later dig-sign-container">
+    <div
+      fxLayout="row"
+      fxLayoutGap="2%"
+      fxLayout.sm="column"
+      class="full-width"
+    >
+      <!-- Sign Now Card -->
+      <mat-card fxFlex="38" class="sign-later pd-10">
+        <div fxLayout="row" fxFlex="100">
+          <div fxFlex="30" class="img_items">
+            <img
+              class="images-sign"
+              src="assets/images/signnow.png"
+              alt="Sign Now"
+            />
+          </div>
+          <div
+            fxFlex="66"
+            fxLayoutAlign="center start"
+            fxLayoutGap="3"
+            fxLayout="column"
+          >
+            <div
+              fxLayout="row wrap"
+              fxFlex.gt-lg="100"
+              fxLayoutAlign="space-between"
+            >
+              <h4 class="sub-heading">Sign Now</h4>
+              <mat-icon *ngIf="imageUrl && buttonTitle === 'Sign Now'"
+                >check</mat-icon
+              >
+            </div>
+            <span class="sub-heading-sign"
+              >E sign allows you to sign documents online securely and
+              conveniently</span
+            >
+            <ic-button
+              label="Add details"
+              (OnClick)="
+                imageUrl && buttonTitle === 'Sign Now'
+                  ? viewSignData('Sign Now')
+                  : addDetalis('Sign Now')
+              "
+              [icButtonType]="'filled-rounded'"
+            ></ic-button>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Physical Sign Card -->
+      <mat-card fxFlex="38" class="sign-later pd-10">
+        <div fxLayout="row" fxFlex="100">
+          <div fxFlex="30" class="img_items">
+            <img
+              class="images-sign"
+              src="assets/images/physicalSign.svg"
+              alt="Physical Sign"
+            />
+          </div>
+          <div
+            fxFlex="70"
+            fxLayoutAlign="center start"
+            fxLayoutGap="3"
+            fxLayout="column"
+          >
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between">
+              <h4 class="sub-heading">Physical Sign</h4>
+              <mat-icon *ngIf="imageUrl && buttonTitle === 'Physical Sign'"
+                >check</mat-icon
+              >
+            </div>
+            <span class="sub-heading-sign">
+              Complete the offer letter process in four steps: download, sign,
+              scan and upload</span
+            >
+            <ic-button
+              label="Add details"
+              (OnClick)="
+                imageUrl && buttonTitle === 'Physical Sign'
+                  ? viewSignData('Physical Sign')
+                  : addDetalis('Physical Sign')
+              "
+              [icButtonType]="'filled-rounded'"
+            ></ic-button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card>
+
+  <!-- Action Buttons -->
+  <div
+    fxLayout="row"
+    fxLayoutGap="2%"
+    fxLayoutAlign="end center"
+    class="action-dig-sign-btn"
+    fxFlex="100"
+  >
+    <ic-button label="Reset" [icButtonType]="'ghost-rounded'"></ic-button>
+    <ic-button label="Submit" [icButtonType]="'filled-rounded'"></ic-button>
+  </div>
+</div>

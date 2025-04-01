@@ -1349,4 +1349,53 @@ export class SessionStorageService {
   public removeBasisDetails(): void {
     this.session.removeItem(SessionStorageEnum.BASIS_DETAILS);
   }
+  public getCustomerName(): string[] {
+    return this.getItem(SessionStorageEnum.CUSTOMER_NAME);
+  }
+  public setCustomerName(customerName: string): void {
+    this.setItem(SessionStorageEnum.CUSTOMER_NAME, customerName);
+  }
+  public removeCustomerName(): void {
+    this.session.removeItem(SessionStorageEnum.CUSTOMER_NAME);
+  }
+  public getCategory() {
+    return this.getItem(SessionStorageEnum.CATEGORY);
+  }
+  public setCategory(category: string): void {
+    this.setItem(SessionStorageEnum.CATEGORY, category);
+  }
+  public removeCategory(): void {
+    this.session.removeItem(SessionStorageEnum.CATEGORY);
+  }
+  public getStageIdList(): number[] {
+    return this.getItem(SessionStorageEnum.STAGE_ID_LIST);
+  }
+  public setStagingIdList(stagingIdList: number[]): void {
+    this.setItem(
+      SessionStorageEnum.STAGE_ID_LIST,
+      JSON.stringify(stagingIdList),
+    );
+  }
+  public removeStagingIdList() {
+    this.session.removeItem(SessionStorageEnum.STAGE_ID_LIST);
+  }
+  public getReferenceNo() {
+    return this.getItem(SessionStorageEnum.REF_NO);
+  }
+  public setReferenceNo(refNo: any) {
+    return this.setItem(SessionStorageEnum.REF_NO, refNo);
+  }
+
+  public removeReferenceNo() {
+    return this.session.removeItem(SessionStorageEnum.REF_NO);
+  }
+  public getPrimaryEmail() {
+    return this.getItem(SessionStorageEnum.PRIMARY_EMAIL);
+  }
+  public setPrimaryEmail(primaryEmail: string) {
+    return this.setItem(SessionStorageEnum.PRIMARY_EMAIL, primaryEmail);
+  }
+  public removePrimaryEmail() {
+    this.session.removeItem(SessionStorageEnum.PRIMARY_EMAIL);
+  }
 }

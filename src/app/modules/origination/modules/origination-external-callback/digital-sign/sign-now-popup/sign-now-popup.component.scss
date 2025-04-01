@@ -1,6 +1,6 @@
 .done {
-  width: 172px;
-  height: 49px;
+  width: 150px;
+  height: 40px;
   /* UI Properties */
   background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
     no-repeat padding-box;
@@ -13,4 +13,11 @@
 }
 .heading {
   margin-left: 42px;
+}
+.image-icon {
+  height: 40px;
+  width: 40px;
+}
+.pd-15 {
+  padding: 15px;
 }

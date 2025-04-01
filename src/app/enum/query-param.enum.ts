@@ -3,4 +3,5 @@ export enum QueryParamEnum {
   SCREEN_ID = 'screenCode',
   PROCESS_STAGE_ID = 'processStageId',
   PROCESS_CYCLE_CODE = 'processCycleCode',
+  ORIGINATION_ID = 'originationId',
 }

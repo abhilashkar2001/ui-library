@@ -92,11 +92,13 @@ export class CallbackComponent implements OnInit, OnDestroy {
           'originationId',
           JSON.stringify(getParameterByName('originationId')),
         );
+        this.sessionStorageService.setOriginationId(
+          Number(getParameterByName(QueryParamEnum.ORIGINATION_ID)),
+        );
 
         this.sessionStorageService.setProcessCycleCode(
           getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
         );
-
         this.router.navigate([
           `/origination/request-process/${getParameterByName('route')}`,
         ]);

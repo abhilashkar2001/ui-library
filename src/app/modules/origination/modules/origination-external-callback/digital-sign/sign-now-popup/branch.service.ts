@@ -38,7 +38,14 @@ export class BranchService {
     });
   }
   saveUploadSignature(payload: any) {
-    return this.httpClient.post(`${MICROSERVICE_URL}/upload-document`, payload);
+    return this.httpClient.post(
+      `${MICROSERVICE_URL}/upload-document`,
+      payload,
+      {
+        reportProgress: true,
+        observe: 'events',
+      },
+    );
   }
   saveDigitalSignDetails(payload: any): Observable<any> {
     return this.httpClient.post(
@@ -74,6 +81,31 @@ export class BranchService {
   fetchCustomerSign(id: any) {
     return this.httpClient.get<any>(
       `${MICROSERVICE_URL}/customer-api/customerStageSignature/fetch-by-id?customerStagingId=${id}`,
+    );
+  }
+  getOfferIssueSign(originationId: number) {
+    return this.httpClient.get<any>(
+      `${MICROSERVICE_URL}/origination-matser/fetchOfferIssueSign?originationId=${originationId}`,
+    );
+  }
+  saveIssuerSignature(payload: {
+    originationId: any;
+    signatureId: any;
+    screenCode: number;
+  }) {
+    return this.httpClient.post(
+      `${MICROSERVICE_URL}/origination-matser/saveOfferIssueSign`,
+      payload,
+    );
+  }
+  downloadOfferletter(originationId: number) {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+
+    return this.httpClient.get(
+      `${MICROSERVICE_URL}/origination-matser/fetchEmail?originationId=${originationId}`,
+      httpOptions,
     );
   }
 }
