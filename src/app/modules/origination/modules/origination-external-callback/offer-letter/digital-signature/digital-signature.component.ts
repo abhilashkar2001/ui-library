@@ -158,7 +158,6 @@ export class DigitalSignatureComponent {
       data: { imageUrl: this.imageUrl, title: title },
     });
     dialogRef.afterClosed().subscribe((data) => {
-      console.log(data);
       if (data == 'edited') {
         this.updateParentModel?.({}, true, true);
         this.addDetalis(title);
@@ -168,7 +167,6 @@ export class DigitalSignatureComponent {
   }
 
   saveSignature(goNext: boolean) {
-    console.log(goNext, this.signatureId);
     const category = this.sessionStorageService.getCategory();
     if (goNext && this.signatureId) {
       if (category == 'Lending' && this.screenInfo?.screenValue == 'O1APPD') {
@@ -177,7 +175,6 @@ export class DigitalSignatureComponent {
       } else this.updateParentModel?.({ goNext: true }, true, true);
       return;
     }
-    console.log('first');
     if (category == 'Lending' && this.screenInfo?.screenValue == 'O1APPD')
       this.saveIssuerSignature();
     else this.saveCustomerSignature();

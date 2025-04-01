@@ -81,7 +81,6 @@ export class SignNowPopupComponent implements OnInit {
   }
 
   uploadDocument() {
-    console.log('file', this.file);
     const docPayload = new FormData();
     const data = {
       fileName: this.file?.name || 'signature',
@@ -107,7 +106,6 @@ export class SignNowPopupComponent implements OnInit {
   }
   handleUploadEvent(event: any) {
     this.isUploading = true;
-    console.log(event);
     if (event.type === HttpEventType.UploadProgress) {
       this.percentDone = Math.round((100 * event.loaded) / event.total);
     } else if (event.type === HttpEventType.Response) {
@@ -119,7 +117,6 @@ export class SignNowPopupComponent implements OnInit {
         result: event?.body?.data,
         title: this.title,
       });
-      console.log('Called ');
     }
   }
   closeDialog() {
@@ -162,7 +159,6 @@ export class SignNowPopupComponent implements OnInit {
    */
   onFileSelect(e: any) {
     this.fileUploadFailed = false;
-    console.log(e.target);
     try {
       this.isStart = true;
       this.file = e.target.files[0];
