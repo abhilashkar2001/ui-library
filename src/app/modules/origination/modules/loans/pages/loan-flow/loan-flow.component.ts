@@ -789,6 +789,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     payload.processCycleId = this.processDetails?.id;
     payload.originationId = originationId;
     payload.action = 'Submit';
+    payload.transactionType = 'IND_LOAN';
 
     this.loanApi.verifyWorkFlow(payload).subscribe((resp: any) => {
       if (resp?.status === 200) {

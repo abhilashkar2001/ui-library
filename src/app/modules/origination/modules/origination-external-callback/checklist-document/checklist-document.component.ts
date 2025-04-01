@@ -280,6 +280,8 @@ export class ChecklistDocumentComponent implements OnInit {
     payload.originationId = this.originationId;
     payload.action = action;
     payload.remarks = remarks;
+    payload.transactionType = 'IND_LOAN';
+
     this.originationService.verifyWorkflow(payload).subscribe((res) => {
       if (res?.status == 200) {
         this.openSuccessPopup();

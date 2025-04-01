@@ -161,6 +161,8 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
     payload.originationId = this.originationId;
     payload.action = action;
     payload.remarks = remarks;
+    payload.transactionType = 'IND_LOAN';
+
     this.originationService.verifyWorkflow(payload).subscribe((res) => {
       if (res?.status == 200) {
         const sucessDialog = this.dialog.open(SuccessModalComponent, {
