@@ -254,19 +254,16 @@
 ::ng-deep
   .mat-step-header.mat-vertical-stepper-header
   .mat-step-icon-state-edit {
-  background-image: url('/assets/images/Group_13808.svg') !important;
+  background-image: url(/assets/images/tick_animation.svg) !important;
   background-position: center;
-  background-size: 26px 30px;
+  background-size: 45px 45px;
   width: 60px;
   border-radius: 10px;
-  font-size: 24px;
   border: 1px solid #008461 !important;
-  height: 60px;
   font-size: 24px;
-  background-position-y: 15px;
-  background-position-x: 15px;
   height: 60px;
   background-repeat: no-repeat;
+  background-color: #e4fff8;
   .mat-step-icon-content {
     display: none !important;
   }

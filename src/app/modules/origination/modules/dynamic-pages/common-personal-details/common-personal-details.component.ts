@@ -33,6 +33,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
+import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -65,6 +66,7 @@ export class CommonPersonalDetailsComponent
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
   genderArray: any[] = [{}];
   prefixArray: any[] = [{}];
+  statementOptionArr = [{ id: 21, values: 'SMS' }];
   residenceTypeArray: any[] = [{}];
   maritalStatusArray: any[] = [{}];
   todayDate: Date = new Date();
@@ -84,6 +86,7 @@ export class CommonPersonalDetailsComponent
   ]);
   subscriptions: Subscription[] = [];
   private localeData: LocaleData | undefined;
+  dateFormat!: string;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -96,6 +99,7 @@ export class CommonPersonalDetailsComponent
     private sessionStorageService: SessionStorageService,
     private store: Store<AppState>,
     private genericValueService: GenericValueService,
+    private dateService: DateTimeService,
   ) {}
 
   panelOpened(index: number) {
@@ -120,6 +124,7 @@ export class CommonPersonalDetailsComponent
         this.localeData = res;
       }
     });
+    this.dateFormat = this.dateService?.format.toLocaleLowerCase();
     this.subscriptions.push(localeData$);
     this.getGenericDetails();
     this.fetchBoundaries();

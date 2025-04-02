@@ -12,6 +12,7 @@ import { NoLeadingSpaceDirective } from './no-leading-space.directive';
 import { NoSpaceDirective } from './noSpace.directive';
 import { MinMaxDirective } from './restrictNum-directive';
 import { WebhostDirective } from './appHost.directive';
+import { NumberAnimationDirective } from './number-animation.directive';
 
 const directives = [
   EgretSidenavHelperDirective,
@@ -24,6 +25,7 @@ const directives = [
   NoSpaceDirective,
   MinMaxDirective,
   WebhostDirective,
+  NumberAnimationDirective,
 ];
 
 @NgModule({
