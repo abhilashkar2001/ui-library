@@ -29,7 +29,6 @@
                       *ngIf="!isHideField"
                       label="CIF Number"
                       [control]="customer.get('customerNo') | formcontrol"
-                      [readonly]="true"
                       [icSpecialAlphaNumeric]="true"
                     ></ic-form-field>
                   </div>
@@ -66,6 +65,7 @@
                       label="First Name"
                       [control]="customer.get('firstName') | formcontrol"
                       [icAlphabetOnly]="true"
+                      [maxLength]="200"
                     ></ic-form-field>
                   </div>
                   <div class="col-md-6 col-12">
@@ -73,6 +73,7 @@
                       label="lastName"
                       [control]="customer.get('lastName') | formcontrol"
                       [icAlphabetOnly]="true"
+                      [maxLength]="200"
                     ></ic-form-field>
                   </div>
                   <div class="col-md-6 col-12">

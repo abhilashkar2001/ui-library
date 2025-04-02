@@ -129,7 +129,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.loanForm = this.fb.group({
-      amount: [this.min],
+      amount: [this.min, [Validators.required]],
       tenureYear: '',
       tenureMonth: '',
       tenureDays: '',
