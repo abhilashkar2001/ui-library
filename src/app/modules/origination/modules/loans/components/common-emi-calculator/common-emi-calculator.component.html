@@ -35,9 +35,12 @@
             label="Amount"
             [control]="loanForm.get('amount') | formcontrol"
             [icNoInitialSpace]="true"
+            [icNumbersOnly]="true"
             type="text"
-            maxlength="18"
             [prefixIcon]="otherUserInfo?.currencySymbol"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="6"
+            [decimalPlaces]="2"
           >
           </ic-form-field>
         </div>
@@ -197,6 +200,9 @@
           label="Percentage"
           [control]="loanForm.get('interestRate') | formcontrol"
           [icNoInitialSpace]="true"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="3"
+          [decimalPlaces]="2"
           type="text"
         >
         </ic-form-field>
