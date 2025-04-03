@@ -7,7 +7,6 @@
   </div>
   <div class="mobile-verify" *ngIf="!hideInfo; else showField">
     <ic-mobile-field
-      label="Mobile Number"
       placeholder="Mobile Number"
       [isdControl]="otpForm.get('isdCode') | formcontrol"
       [isdCode]="countriesIsdCodes"

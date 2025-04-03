@@ -227,7 +227,7 @@
     >
       <div fxFlex="100" fxLayout="column" class="alignCenter">
         <div class="maturityTitle">EMI Amount</div>
-        <div class="maturityDesc">
+        <div class="maturityDesc" [appNumberAnimation]="emiAmount">
           {{ emiAmount | currency: currency : true : '1.2-2' }}
         </div>
       </div>
@@ -239,7 +239,7 @@
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Total Interest Payable</div>
-          <div class="maturityVal">
+          <div class="maturityVal" [appNumberAnimation]="interestPayble">
             {{ interestPayble | currency: currency : true : '1.2-2' }}
           </div>
         </div>
@@ -251,7 +251,10 @@
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Interest Rate</div>
-          <div class="maturityVal">
+          <div
+            class="maturityVal"
+            [appNumberAnimation]="loanForm.value?.interestRate"
+          >
             {{ loanForm.value?.interestRate }}%*p.a.
           </div>
         </div>
@@ -264,7 +267,10 @@
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Principal Amount</div>
-          <div class="maturityVal">
+          <div
+            class="maturityVal"
+            [appNumberAnimation]="loanForm.value?.amount"
+          >
             {{ loanForm.value?.amount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
@@ -276,7 +282,7 @@
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Total Amount Payable</div>
-          <div class="maturityVal">
+          <div class="maturityVal" [appNumberAnimation]="totalPayableAmmount">
             {{ totalPayableAmmount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
