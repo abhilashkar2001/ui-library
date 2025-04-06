@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { selectUser } from '@onerumango/utils';
@@ -18,16 +18,20 @@ export class RemarkComponent implements OnInit, OnDestroy {
   originationId: any;
   revisiteForm!: FormGroup;
   subscriptions: Subscription[] = [];
+  type: string | undefined;
 
   constructor(
     private offerIssueService: OfferIssueService,
     private fb: FormBuilder,
-    private route: Router,
+    private router: Router,
     private sessionStorageService: SessionStorageService,
     private store: Store,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.type = this.route.snapshot.queryParams['type'];
+    console.log(this.type);
     this.originationId = this.sessionStorageService.getOriginationId();
     const loadUser$ = this.store.select(selectUser).subscribe((user) => {
       if (user) {
@@ -81,7 +85,7 @@ export class RemarkComponent implements OnInit, OnDestroy {
     payload.id = formValue.id;
     this.offerIssueService.saveCustomerRequest(payload).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
-        this.route.navigate(['home']);
+        this.router.navigate(['home']);
       }
     });
   }

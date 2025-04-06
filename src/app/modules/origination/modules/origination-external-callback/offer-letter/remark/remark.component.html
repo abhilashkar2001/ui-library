@@ -1,43 +1,134 @@
-<div class="main_page" *ngIf="revisiteForm" [formGroup]="revisiteForm">
-  <div class="head_container bank-title">
-    <h1>{{ currentuser?.bankName | titlecase }}</h1>
-  </div>
+<div
+  class="main_page_container"
+  *ngIf="revisiteForm"
+  [formGroup]="revisiteForm"
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutGap="10"
+>
+  <span fxFlex="100" class="bank-title">
+    {{ currentuser?.bankName | titlecase }}
+  </span>
+  <ng-container *ngIf="type === 'revisit'">
+    <mat-card fxFlex="100" fxLayout="column" class="container p-8">
+      <h2 class="header_md_bold_black mb-16">Revisit Information</h2>
+      <div
+        fxLayout="row"
+        fxLayout.lt-sm="column"
+        fxLayoutGap="16px"
+        *ngIf="revisiteForm"
+        [formGroup]="revisiteForm"
+      >
+        <!-- Approved Detail Section -->
+        <div fxFlex="50" class="info-card" fxFlex="100" fxLayout="row wrap">
+          <h5 fxFlex="100" class="header_md_bold_black mb-16">
+            Approved Detail
+          </h5>
+          <mat-card class="container p-8" fxFlex="100">
+            <ic-form-field
+              label="Amount"
+              [control]="revisiteForm.get('amount') | formcontrol"
+              fxFlex="100"
+            ></ic-form-field>
 
-  <div
-    class="subhead_container"
-    fxLayout="column"
-    fxLayoutAlign="space-between start"
-  >
-    <div>
-      <h3 class="text-label mb-16">Remarks</h3>
+            <div fxLayout="row" fxLayoutGap="16px" fxFlex="100">
+              <ic-form-field
+                label="Rate of Interest"
+                [control]="revisiteForm.get('rateOfInterest') | formcontrol"
+                fxFlex="50"
+              ></ic-form-field>
+              <ic-tenure-field
+                label="Loan Tenure"
+                [fields]="['tenureYear', 'tenureMonth', 'tenureDays']"
+                [fieldLabels]="{
+                  tenureYear: 'Years',
+                  tenureMonth: 'Months',
+                  tenureDays: 'Days',
+                }"
+                [parentForm]="revisiteForm"
+                fxFlex="50"
+              >
+              </ic-tenure-field>
+            </div>
+          </mat-card>
+        </div>
+
+        <!-- Customer Request Section -->
+        <div fxFlex="50" class="info-card" fxFlex="100" fxLayout="row wrap">
+          <h5 class="header_md_bold_black mb-16" fxFlex="100">
+            Customer Request
+          </h5>
+          <mat-card class="container p-8" fxFlex="100">
+            <ic-form-field
+              label="Amount"
+              [control]="revisiteForm.get('requestedAmount') | formcontrol"
+            ></ic-form-field>
+
+            <div fxLayout="row" fxLayoutGap="16px">
+              <ic-form-field
+                label="Rate of Interest"
+                [control]="
+                  revisiteForm.get('requestedRateOfInterest') | formcontrol
+                "
+                fxFlex="50"
+              ></ic-form-field>
+              <ic-tenure-field
+                label="Loan Tenure"
+                [fields]="[
+                  'requestedLoanTenureYear',
+                  'requestedLoanTenureMonth',
+                  'requestedLoanTenureDay',
+                ]"
+                [fieldLabels]="{
+                  requestedLoanTenureYear: 'Years',
+                  requestedLoanTenureMonth: 'Months',
+                  requestedLoanTenureDay: 'Days',
+                }"
+                [parentForm]="revisiteForm"
+                fxFlex="50"
+              >
+              </ic-tenure-field>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
+    <div fxFlex="100" fxLayout="row wrap">
+      <h3 fxFlex="100" class="header_md_bold_black mt-16">Remarks</h3>
       <ic-textarea
-        [rows]="15"
+        [rows]="5"
+        fxFlex="100"
         [control]="revisiteForm.get('remark') | formcontrol"
       >
       </ic-textarea>
     </div>
+    <h5 *ngIf="type === 'revisit'" class="mb-16" fxFlex="100">
+      <span class="header_md_bold_black">Note:</span>
+      <span class="breadcrum_sm">
+        Help us by providing additional Information for revisiting this
+        application.
+      </span>
+    </h5>
     <div
-      class="w-100"
       fxLayout="row"
-      fxLayoutAlign="start center"
-      fxLayoutGap="20px"
+      fxLayoutGap="2%"
+      fxLayoutAlign="end center"
+      class="action-dig-sign-btn"
+      fxFlex="100"
     >
-      <button
-        mat-raised-button
-        class="reset-btn"
-        fxFlex="40"
-        (click)="resetRemark()"
-      >
-        Reset
-      </button>
-      <button
-        mat-raised-button
-        class="submit-btn"
-        fxFlex="60"
-        (click)="saveCustomerRequest()"
-      >
-        Submit
-      </button>
+      <ic-button
+        label="Reset"
+        [icButtonType]="'ghost-rounded'"
+        (OnClick)="resetRemark()"
+      ></ic-button>
+      <ic-button
+        label="Submit"
+        [icButtonType]="'filled-rounded'"
+        (OnClick)="saveCustomerRequest()"
+      ></ic-button>
     </div>
   </div>
 </div>

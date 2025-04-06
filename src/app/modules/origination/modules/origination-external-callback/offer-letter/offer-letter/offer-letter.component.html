@@ -1,53 +1,42 @@
 <div class="main_page white-background">
-  <mat-card class="default-card m-24">
-    <div fxLayout="row" fxLayoutAlign="flex-end center">
-      <!-- <h1 class="bank-title">{{ currentUser?.bankName | titlecase }}</h1> -->
+  <mat-card class="default-card m-24 pt-4 pb-4">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="m-4">
+      <h2 class="bank-title" fxLayoutAlign="center center">
+        {{ currentUser?.bankName | titlecase }}
+      </h2>
       <div fxLayout="row" fxLayoutGap="10px">
-        <button mat-raised-button class="reset-btn" (click)="openEsign()">
-          <img
-            src="../../../../../../../assets/images/edit-icon.svg"
-            alt="edit"
-            class="mr-8"
-          />
-          E-Sign
-        </button>
-        <button mat-raised-button class="reset-btn">
-          <img
-            src="../../../../../../../assets/images/share.png"
-            alt=""
-            class="mr-8"
-          />
-          Share
-        </button>
-        <button mat-raised-button class="submit-btn" (click)="handleDownload()">
-          <img
-            src="../../../../../../../assets/images/download_white.svg"
-            alt=""
-            class="mr-8"
-          />Download
-        </button>
-        <button mat-raised-button class="submit-btn">
-          <img
-            src="../../../../../../../assets/images/upload_white.svg"
-            alt=""
-            class="mr-8"
-          />
-          Upload
-        </button>
+        <ic-button
+          icIcon="share"
+          icButtonType="ghost-rounded"
+          size="medium"
+          label="Share"
+        ></ic-button>
+        <ic-button
+          icIcon="download_white"
+          icButtonType="filled-rounded"
+          size="medium"
+          label="Download"
+          (OnClick)="handleDownload()"
+        ></ic-button>
       </div>
     </div>
     <div>
       <div fxLayout="row">
-        <mat-card class="default-card mx-0 letter-card" fxFlex="70">
-          <div *ngIf="dataLocalUrl != undefined" class="h-100">
+        <div class="default-card mx-0 letter-card" fxFlex="70">
+          <div *ngIf="dataLocalUrl !== undefined" class="h-100">
             <object
               [data]="dataLocalUrl"
               type="application/pdf"
               width="100%"
               height="100%"
-            ></object>
+            >
+              <p>
+                Your browser does not support PDFs. Please download the PDF to
+                view it: <a [href]="dataLocalUrl" download>Download PDF</a>.
+              </p>
+            </object>
           </div>
-        </mat-card>
+        </div>
         <div fxLayout="column" fxLayoutAlign="space-between start" class="p-12">
           <div>
             <div fxLayout="row">
@@ -99,34 +88,32 @@
         </div>
       </div>
     </div>
-    <div>
-      <div fxLayout="row" fxLayoutGap="10px">
-        <button
-          fxFlex="15"
-          mat-raised-button
-          class="submit-btn"
-          (click)="saveCustomerResponse('Accept')"
-        >
-          Accept
-        </button>
-        <button
-          fxFlex="15"
-          mat-raised-button
-          class="reset-btn"
-          style="color: #b20000"
-          (click)="saveCustomerResponse('Reject')"
-        >
-          Reject
-        </button>
-        <button
-          fxFlex="15"
-          mat-raised-button
-          class="reset-btn"
-          (click)="saveCustomerResponse('Revisited')"
-        >
-          Revisited
-        </button>
-      </div>
-    </div>
   </mat-card>
+  <div fxLayout="row" fxLayoutGap="10px" class="ml-24">
+    <ic-button
+      [label]="'Accept' | translate"
+      [type]="'submit'"
+      size="large"
+      [icButtonType]="'filled-rounded'"
+      (OnClick)="saveCustomerResponse('Accept')"
+    >
+    </ic-button>
+
+    <ic-button
+      [label]="'Reject'"
+      icButtonType="ghost-rounded-danger"
+      size="large"
+      [type]="'button'"
+      (OnClick)="saveCustomerResponse('Reject')"
+    >
+    </ic-button>
+    <ic-button
+      [label]="'Revisited'"
+      icButtonType="ghost-rounded"
+      size="large"
+      [type]="'button'"
+      (OnClick)="saveCustomerResponse('Revisited')"
+    >
+    </ic-button>
+  </div>
 </div>

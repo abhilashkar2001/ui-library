@@ -108,17 +108,24 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
     payload.customerResponse = id;
 
     payload.originationId = this.originationId;
-    this.offerIssueService
-      .postOfferAcceptRejectDetails(payload)
-      .subscribe((res) => {
-        if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
-          if (response == 'Accept') this.route.navigate(['/origination/otp']);
-          else if (response == 'Reject')
-            this.route.navigate(['/origination/remark']);
-          else this.route.navigate(['/origination/process-offer']);
-        }
+    // this.offerIssueService
+    //   .postOfferAcceptRejectDetails(payload)
+    //   .subscribe((res) => {
+    //     if ((res?.statusCode === 200 || res?.statusCode == 201) && res?.data) {
+    //       if (response == 'Accept') this.route.navigate(['/origination/otp']);
+    //       else if (response == 'Reject')
+    //         this.route.navigate(['/origination/remark']);
+    //       else this.route.navigate(['/origination/process-offer']);
+    //     }
+    //   });
+    if (response === 'Accept')
+      this.route.navigate(['origination/request-processing/digital-signature']);
+    else if (response === 'Revisited')
+      this.route.navigate(['origination/request-processing/remark'], {
+        queryParams: {
+          type: 'revisit',
+        },
       });
-    this.route.navigate(['origination/request-processing/digital-signature']);
   }
 
   openEsign() {
