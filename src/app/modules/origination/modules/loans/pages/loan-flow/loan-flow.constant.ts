@@ -62,7 +62,7 @@ export class LoanFlowConstants {
     },
     {
       id: 3,
-      key: 'loan',
+      key: 'details',
       type: 'Loan Details',
       component: LoanDetailsComponent,
     },
