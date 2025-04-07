@@ -151,4 +151,8 @@ export class LoanService {
       `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenCode}&stageId=${stageId}`,
     );
   }
+
+  saveLoanDetails(payload: any) {
+    return this.http.post<any>(`${baseUrl}/loan-detail`, payload);
+  }
 }

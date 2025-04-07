@@ -45,6 +45,7 @@
   .bank-title {
     font-family: 'Big Caslon';
     color: #004b94;
+    font-size: 1.5rem;
   }
   .toggle-card {
     @include default-container();
@@ -111,17 +112,15 @@
   }
   .text-highlighted {
     color: #004c97;
-    font-family: 'Poppins';
+    font: normal normal normal 12px/16px Roboto;
   }
   .text-normal {
     color: #00000f;
-    font-family: 'Poppins';
+    font: normal normal normal 14px / 16px Roboto;
   }
 
   .sub-heading {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
+    font: normal normal 400 18px/21px Roboto !important;
     letter-spacing: 0px;
     color: #102245;
     opacity: 1;
@@ -135,8 +134,7 @@
   }
   .text-label {
     color: #102245 !important;
-    font-family: 'Poppins';
-    // font-weight: 600;
+    font: normal normal 400 14px/21px Roboto;
   }
   .text-light {
     color: #00000f;
@@ -155,6 +153,7 @@
 
   .letter-card {
     min-height: 70vh;
+    border-radius: 0px !important;
   }
 
   //mat-form for application

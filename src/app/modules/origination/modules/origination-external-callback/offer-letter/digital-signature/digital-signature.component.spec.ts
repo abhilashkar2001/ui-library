@@ -8,7 +8,7 @@ describe('DigitalSignatureComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DigitalSignatureComponent]
+      declarations: [DigitalSignatureComponent],
     });
     fixture = TestBed.createComponent(DigitalSignatureComponent);
     component = fixture.componentInstance;
