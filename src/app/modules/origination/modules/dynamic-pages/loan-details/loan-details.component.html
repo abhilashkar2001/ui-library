@@ -14,17 +14,16 @@
         <ic-form-field
           label="Interest Rate %"
           [control]="loanDetails.get('interestRate') | formcontrol"
-          [readonly]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="48" class="MiscellaneousClass">
         <ic-tenure-field
           label="Tenure"
-          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDays']"
+          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
           [fieldLabels]="{
             loanTenureYear: 'Years',
             loanTenureMonth: 'Months',
-            loanTenureDays: 'Days',
+            loanTenureDay: 'Days',
           }"
           [parentForm]="loanDetails"
         >
@@ -41,41 +40,44 @@
       </div>
       <div fxFlex="48">
         <ic-form-field
-          *ngIf="loanDetails?.get('emiAmount')"
           label="EMI Amount"
           [control]="loanDetails.get('emiAmount') | formcontrol"
           [disabled]="true"
+          [readonly]="true"
           [prefixIcon]="loanDetails.value?.emiAmount ? currencySymboll : ''"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
           label="EMI Interest Payable"
-          [control]="loanDetailsForm.get('interestPayable') | formcontrol"
+          [control]="loanDetails.get('emiInterestPayable') | formcontrol"
           [disabled]="true"
           [prefixIcon]="
-            loanDetailsForm.value?.interestPayable ? currencySymboll : ''
+            loanDetails.value?.emiInterestPayable ? currencySymboll : ''
           "
+          [readonly]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
           label="Total Interest Amount"
-          [control]="loanDetailsForm.get('totalInterestAmount') | formcontrol"
+          [control]="loanDetails.get('totalInterestAmount') | formcontrol"
           [disabled]="true"
           [prefixIcon]="
-            loanDetailsForm.value?.totalInterestAmount ? currencySymboll : ''
+            loanDetails.value?.totalInterestAmount ? currencySymboll : ''
           "
+          [readonly]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
           label="Total Payable Amount"
-          [control]="loanDetailsForm.get('totalPayableAmount') | formcontrol"
+          [control]="loanDetails.get('totalPayableAmount') | formcontrol"
           [disabled]="true"
           [prefixIcon]="
-            loanDetailsForm.value?.totalPayableAmount ? currencySymboll : ''
+            loanDetails.value?.totalPayableAmount ? currencySymboll : ''
           "
+          [readonly]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="48" class="enabled-mat-form-field">

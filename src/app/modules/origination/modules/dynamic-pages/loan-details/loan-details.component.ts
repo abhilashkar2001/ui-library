@@ -39,6 +39,7 @@ export class LoanDetailsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   otherUserInfo: LocaleData | undefined;
   currencySymboll = '';
+  originationId: number | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +50,7 @@ export class LoanDetailsComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private loanApi: LoanService,
   ) {
-    this.currentDate?.setDate(new Date().getDate() + 1);
+    this.currentDate?.setDate(this.todaysDate.getDate() + 1);
 
     this.matIconRegiostry.addSvgIcon(
       `calendar`,
@@ -63,11 +64,10 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.profileInfo);
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
-    const id = this.sessionStorageService.getLoanDisburseId();
-    if (id) this.getLoanById(id);
     this.buildDetailsForm();
+    this.getLoanDetails();
   }
 
   buildDetailsForm(data?: any) {
@@ -84,35 +84,61 @@ export class LoanDetailsComponent implements OnInit {
         ],
         loanTenureYear: [data?.loanDetails?.loanTenureYear ?? ''],
         loanTenureMonth: [data?.loanDetails?.loanTenureMonth ?? ''],
-        loanTenureDays: [data?.loanDetails?.loanTenureDays ?? ''],
-        emiAmount: [
-          data?.loanDetails?.emiAmount ?? data?.emiAmount ?? '',
-          Validators.required,
-        ],
+        loanTenureDay: [data?.loanDetails?.loanTenureDay ?? ''],
+        emiAmount: [data?.loanDetails?.emiAmount ?? '', Validators.required],
+        emiInterestPayable: [data?.loanDetails?.interestPayable ?? ''],
+        totalInterestAmount: [data?.loanDetails?.interestPayable ?? ''],
+        totalPayableAmount: [data?.loanDetails?.totalPayableAmount ?? ''],
       }),
-      interestPayable: [data?.interestPayable ?? ''],
-      totalInterestAmount: [data?.totalInterestAmount ?? ''],
-      totalPayableAmount: [data?.totalPayableAmount ?? ''],
+
       loanDisbursementModel: this.fb.group({
-        disbursementModeId: [data?.disbursementModeId ?? ''],
-        disbursementMode: [data?.disbursementMode ?? 'Cash'],
-        internal: [data?.internal ?? ''],
+        disbursementModeId: [
+          data?.loanDisbursementModel?.disbursementModeId?.data
+            ?.disbursementModeId ?? '',
+        ],
+        disbursementMode: [
+          data?.loanDisbursementModel?.disbursementModeValue?.data
+            ?.disbursementMode ?? 'Cash',
+        ],
+        internal: [data?.loanDisbursementModel?.internal?.data?.internal ?? ''],
         loanAmount: [
           this.loanDetailsForm?.value?.loanAmount ?? data?.principalAmount,
         ],
-        firstDisbursementDate: [this.currentDate],
-        chequeNumber: [data?.chequeNumber ?? ''],
+        firstDisbursementDate: [
+          data?.loanDisbursementModel?.firstDisbursementDate ??
+            this.currentDate,
+        ],
+        chequeNumber: [
+          data?.loanDisbursementModel?.chequeNumber ?? data?.chequeNumber ?? '',
+        ],
+        requiredMultipleDisbursement: true,
+        scheduleFrequencyYear: 0,
+        scheduleFrequencyMonth: 1,
+        scheduleFrequencyDay: 0,
         disbursementAccount: this.fb.group({
-          accountNo: [data?.accountNo ?? ''],
-          accountType: [data?.accountType ?? ''],
-          customerName: [data?.customerName ?? ''],
-          bankCode: [data?.bankCode ?? ''],
-          bankName: [data?.bankName ?? ''],
-          branchName: [data?.branchName ?? ''],
+          accountNo: [
+            data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
+          ],
+          accountType: [
+            data?.loanDisbursementModel?.disbursementAccount?.accountType ?? '',
+          ],
+          customerName: [
+            data?.loanDisbursementModel?.disbursementAccount?.customerName ??
+              '',
+          ],
+          bankCode: [
+            data?.loanDisbursementModel?.disbursementAccount?.bankCode ?? '',
+          ],
+          bankName: [
+            data?.loanDisbursementModel?.disbursementAccount?.bankName ?? '',
+          ],
+          branchName: [
+            data?.loanDisbursementModel?.disbursementAccount?.branchName ?? '',
+          ],
         }),
       }),
       originationModel: this.fb.group({
-        applicationDate: [this.todaysDate],
+        applicationDate: [moment(this.todaysDate).format('YYYY-MM-DD')],
         branchId: [this.profileInfo?.branchId],
         source: 'Website',
         currencyCode: [this.profileInfo?.currencyCode],
@@ -131,7 +157,11 @@ export class LoanDetailsComponent implements OnInit {
             ),
           ).format('YYYY-MM-DD'),
         ],
-        repaymentFrequencyId: [data?.repaymentFrequencyId ?? ''],
+        repaymentFrequencyId: [
+          data?.repaymentModel?.repaymentFrequencyId ??
+            data?.repaymentFrequencyId ??
+            '',
+        ],
       }),
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     });
@@ -198,27 +228,13 @@ export class LoanDetailsComponent implements OnInit {
     }
   }
 
-  /**
-   * Api call to fetch webDisbursement by id.
-   * @param id webdisbursementId
-   */
-  getLoanById(id: number) {
-    this.loanApi.getLoanById(id).subscribe({
-      next: (resp) => {
+  getLoanDetails() {
+    if (this.originationId)
+      this.loanApi.getLoanDetails(this.originationId).subscribe((resp) => {
         if (resp.statusCode === 200) {
-          this.buildDetailsForm({
-            ...resp?.data,
-            loanDetails: {
-              loanTenureDays: this.sessionStorageService.getTenureDays() || 0,
-              loanTenureYear: this.sessionStorageService.getTenureYear() || 0,
-              loanTenureMonth: this.sessionStorageService.getTenureMonth() || 0,
-            },
-          });
-        } else {
-          this.buildDetailsForm();
+          this.loanDetailsForm?.patchValue(resp?.data);
         }
-      },
-    });
+      });
   }
 
   onConfirm() {
@@ -226,9 +242,9 @@ export class LoanDetailsComponent implements OnInit {
     const payload = {
       ...this.loanDetailsForm?.value,
     };
-    delete payload?.interestPayable;
-    delete payload?.totalInterestAmount;
-    delete payload?.totalPayableAmount;
+    payload.originationModel.originationId = this.originationId;
+    payload.loanDisbursementModel.loanAmount = payload.loanDetails.loanAmount;
+    delete payload?.loanDisbursementModel?.disbursementMode;
     this.loanApi.saveLoanDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
         console.log(resp?.data);

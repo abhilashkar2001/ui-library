@@ -7,7 +7,7 @@ import { NationalIdUploadComponent } from '../../../dynamic-pages/national-id-up
 import { OtherChecklistDocUploadComponent } from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
 import { CompanyInformationComponent } from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
 import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
-import { CreateLoanComponent } from '../../../dynamic-pages/create-loan/create-loan.component';
+import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -63,7 +63,7 @@ export class LoanFlowConstants {
       id: 3,
       key: 'create',
       type: 'Create Loan',
-      component: CreateLoanComponent,
+      component: LoanDetailsComponent,
     },
     {
       id: 4,

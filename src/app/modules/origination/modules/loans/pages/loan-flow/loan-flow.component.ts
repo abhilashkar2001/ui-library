@@ -466,13 +466,15 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     const loanData = this.sessionStorageService.getLoanAmount();
     const ownershipId = this.sessionStorageService.getOwnershipId();
     const originationId = this.sessionStorageService.getOriginationId();
+    const emiData = this.sessionStorageService.getEmiData();
+
     if (loanData) {
       const payload = {
         loanDetails: {
           loanAmount: parseInt(loanData.loanAmount),
-          loanTenureDay: this.sessionStorageService.getTenureDays(),
-          loanTenureMonth: this.sessionStorageService.getTenureMonth(),
-          loanTenureYear: this.sessionStorageService.getTenureYear(),
+          loanTenureDay: emiData?.loanTenureDay,
+          loanTenureMonth: emiData?.loanTenureMonth,
+          loanTenureYear: emiData?.loanTenureYear,
         },
         originationModel: {
           originationId:
@@ -573,6 +575,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     const sessionData = this.sessionStorageService.getLoanBasisDetails();
     const loanData = this.sessionStorageService.getLoanAmount();
     const ownershipId = this.sessionStorageService.getOwnershipId();
+    const emiData = this.sessionStorageService.getEmiData();
     return {
       originationId:
         this.originationModel?.originationId ??
@@ -582,9 +585,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       accountType: sessionData.basisName,
       originationProductId: sessionData.basisId,
       loanAmount: parseInt(loanData.loanAmount),
-      loanTenureDay: this.sessionStorageService.getTenureDays(),
-      loanTenureMonth: this.sessionStorageService.getTenureMonth(),
-      loanTenureYear: this.sessionStorageService.getTenureYear(),
+      loanTenureDay: emiData?.loanTenureDay,
+      loanTenureMonth: emiData?.loanTenureMonth,
+      loanTenureYear: emiData?.loanTenureYear,
       branchCode: this.currentUser?.branch,
       source: 'Website',
       businessProductName: null,

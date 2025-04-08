@@ -26,6 +26,7 @@ import { TrackingService } from '../../tracking/tracking-service';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-common-mobile-verification',
@@ -104,6 +105,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     private sessionStorageService: SessionStorageService,
     private otpService: TrackingService,
     private store: Store<AppState>,
+    private loanApi: LoanService,
   ) {
     this.buildFormGroup();
   }
@@ -289,7 +291,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
           this.invalidOtp = false;
           if (!this.hideInfo)
             this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
-          this.CustomSubmit.emit({});
         }
       });
   }
@@ -362,6 +363,20 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               }
             });
         }
+        const data = {
+          loanDetails: {
+            ...this.sessionStorageService.getEmiData(),
+            mobile: event.phone,
+          },
+        };
+        this.loanApi.saveLoanDetails(data).subscribe((resp: any) => {
+          if (resp.statusCode === 200) {
+            this.CustomSubmit.emit({});
+            this.sessionStorageService.setOriginationId(
+              resp?.data?.loanDetails?.originationId,
+            );
+          }
+        });
       });
   }
   allreadyProduct(

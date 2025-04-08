@@ -4,7 +4,6 @@ import { CibilScoreContainerComponent } from './cibil-score-container/cibil-scor
 import { CommonPersonalDetailsComponent } from './common-personal-details/common-personal-details.component';
 import { CommonMobileVerificationComponent } from './comon-mobile-verification/common-mobile-verification.component';
 import { CompanyInformationComponent } from './company-information/company-information.component';
-import { CreateLoanComponent } from './create-loan/create-loan.component';
 import { DigitalSignComponent } from './digital-sign/digital-sign.component';
 import { LoanSummaryComponent } from './loan-summary/loan-summary.component';
 import { LoanTermsConditionsComponent } from './loan-terms-conditions/loan-terms-conditions.component';
@@ -32,7 +31,6 @@ const components = [
   CommonPersonalDetailsComponent,
   CommonMobileVerificationComponent,
   CompanyInformationComponent,
-  CreateLoanComponent,
   DigitalSignComponent,
   LoanSummaryComponent,
   LoanTermsConditionsComponent,

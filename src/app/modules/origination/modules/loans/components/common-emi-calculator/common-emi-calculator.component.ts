@@ -130,9 +130,9 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   buildForm() {
     this.loanForm = this.fb.group({
       amount: [this.min, [Validators.required]],
-      tenureYear: '',
-      tenureMonth: '',
-      tenureDays: '',
+      loanTenureYear: '',
+      loanTenureMonth: '',
+      loanTenureDay: '',
       interestRate: [this.interestRate, [Validators.required]],
     });
 
@@ -142,14 +142,14 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
         if (
           this.loanForm.value.interestRate &&
           this.loanForm.value.amount &&
-          (this.loanForm.value.tenureYear ||
-            this.loanForm.value.tenureMonth ||
-            this.loanForm.value.tenureDays)
+          (this.loanForm.value.loanTenureYear ||
+            this.loanForm.value.loanTenureMonth ||
+            this.loanForm.value.loanTenureDay)
         ) {
           this.calculateTenure(
-            parseInt(this.loanForm.value.tenureYear) || 0,
-            parseInt(this.loanForm.value.tenureMonth) || 0,
-            parseInt(this.loanForm.value.tenureDays) || 0,
+            parseInt(this.loanForm.value.loanTenureYear) || 0,
+            parseInt(this.loanForm.value.loanTenureMonth) || 0,
+            parseInt(this.loanForm.value.loanTenureDay) || 0,
           ).then((result) => {
             const payload = {
               principleAmount: parseInt(this.loanForm.value.amount),
@@ -163,6 +163,15 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
                 resp.data.totalRepaymentAmount,
               );
               this.emiAmount = Math.round(resp.data.monthlyPayment);
+              const { emiInfo, ...emiData } = resp.data;
+              this.sessionStorageService.setEmiData({
+                ...emiData,
+                ...this.loanForm.value,
+              });
+              console.log({
+                ...emiData,
+                ...this.loanForm.value,
+              });
             });
           });
         }
@@ -173,13 +182,13 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       const totalMonths = years * 12 + months;
       const daysInMonth = days ? Math.ceil(days / 30) : 0;
       const totalMonthsIncludingDays = totalMonths + daysInMonth;
-      console.log(totalMonthsIncludingDays);
       resolve(totalMonthsIncludingDays);
     });
   }
   get checkTenurePresence() {
-    const { tenureYear, tenureMonth, tenureDays } = this.loanForm.value;
-    return !!tenureYear || !!tenureMonth || !!tenureDays;
+    const { loanTenureYear, loanTenureMonth, loanTenureDay } =
+      this.loanForm.value;
+    return !!loanTenureYear || !!loanTenureMonth || !!loanTenureDay;
   }
 
   applyForLoan() {
@@ -192,9 +201,6 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
-    this.sessionStorageService.setTenureDays(this.loanForm.value.tenureDays);
-    this.sessionStorageService.setTenureYear(this.loanForm.value.tenureYear);
-    this.sessionStorageService.setTenureMonth(this.loanForm.value.tenureMonth);
     const obj = {
       ...this.loanForm.value,
       interestPayable: this.interestPayble,
@@ -216,9 +222,9 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
 
   get validateMinimumTenure() {
     const totalDays = this.calculateTotalDays(
-      this.loanForm.value.tenureYear || 0,
-      this.loanForm.value.tenureMonth || 0,
-      this.loanForm.value.tenureDays || 0,
+      this.loanForm.value.loanTenureYear || 0,
+      this.loanForm.value.loanTenureMonth || 0,
+      this.loanForm.value.loanTenureDay || 0,
     );
     const MinimumAllowedDays = this.calculateTotalDays(
       this.productDetails?.minimumTenorYear || 0,
@@ -230,9 +236,9 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
 
   get validateTenure() {
     const totalDays = this.calculateTotalDays(
-      this.loanForm.value.tenureYear || 0,
-      this.loanForm.value.tenureMonth || 0,
-      this.loanForm.value.tenureDays || 0,
+      this.loanForm.value.loanTenureYear || 0,
+      this.loanForm.value.loanTenureMonth || 0,
+      this.loanForm.value.loanTenureDay || 0,
     );
     const totalAllowedDays = this.calculateTotalDays(
       this.productDetails?.maximumTenorYear || 0,
