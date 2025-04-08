@@ -1,6 +1,5 @@
 import { CommonPersonalDetailsComponent } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/common-personal-details.component';
 import { CommonMobileVerificationComponent } from 'app/modules/origination/modules/dynamic-pages/comon-mobile-verification/common-mobile-verification.component';
-import { CreateLoanComponent } from '../../../dynamic-pages/create-loan/create-loan.component';
 import { CibilScoreContainerComponent } from '../../../dynamic-pages/cibil-score-container/cibil-score-container.component';
 import { LoanTermsConditionsComponent } from '../../../dynamic-pages/loan-terms-conditions/loan-terms-conditions.component';
 import { LoanSummaryComponent } from '../../../dynamic-pages/loan-summary/loan-summary.component';
@@ -8,7 +7,7 @@ import { NationalIdUploadComponent } from '../../../dynamic-pages/national-id-up
 import { OtherChecklistDocUploadComponent } from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
 import { CompanyInformationComponent } from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
 import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
-import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
+import { CreateLoanComponent } from '../../../dynamic-pages/create-loan/create-loan.component';
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -59,12 +58,6 @@ export class LoanFlowConstants {
       key: 'personal',
       type: 'Create Loan',
       component: CommonPersonalDetailsComponent,
-    },
-    {
-      id: 3,
-      key: 'details',
-      type: 'Loan Details',
-      component: LoanDetailsComponent,
     },
     {
       id: 3,
