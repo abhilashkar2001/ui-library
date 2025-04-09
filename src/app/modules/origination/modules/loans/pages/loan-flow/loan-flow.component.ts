@@ -477,7 +477,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         originationModel: {
           originationId:
             this.originationModel?.originationId ?? originationId ?? null,
-          applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
+          applicationDate: moment(new Date()).format('YYYY-MM-DD'),
           accountType: sessionData.basisName,
           originationProductId: sessionData.basisId,
           source: 'Website',
@@ -578,7 +578,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         this.originationModel?.originationId ??
         this.sessionStorageService.getOriginationId() ??
         null,
-      applicationDate: moment(new Date()).format('DD-MMM-YYYY'),
+      applicationDate: moment(new Date()).format('YYYY-MM-DD'),
       accountType: sessionData.basisName,
       originationProductId: sessionData.basisId,
       loanAmount: parseInt(loanData.loanAmount),
