@@ -167,10 +167,13 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
               this.sessionStorageService.setEmiData({
                 ...emiData,
                 ...this.loanForm.value,
-              });
-              console.log({
-                ...emiData,
-                ...this.loanForm.value,
+                loanTenureDay: Number(this.loanForm?.value.loanTenureDay || 0),
+                loanTenureMonth: Number(
+                  this.loanForm?.value.loanTenureMonth || 0,
+                ),
+                loanTenureYear: Number(
+                  this.loanForm?.value.loanTenureYear || 0,
+                ),
               });
             });
           });

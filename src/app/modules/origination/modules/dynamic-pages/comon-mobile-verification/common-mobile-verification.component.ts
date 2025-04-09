@@ -23,10 +23,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 import { TrackingService } from '../../tracking/tracking-service';
-import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
-import { Subscription } from 'rxjs';
+import {
+  AppState,
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-common-mobile-verification',
@@ -96,6 +103,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   @Input() mobileVerifyInfo: any = {};
   subscriptions: Subscription[] = [];
   private localeData: LocaleData | undefined;
+  profileInfo: any;
+  userProfile$: Observable<User | null>;
 
   constructor(
     private fb: FormBuilder,
@@ -107,6 +116,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     private store: Store<AppState>,
     private loanApi: LoanService,
   ) {
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
     this.buildFormGroup();
   }
 
@@ -151,6 +162,15 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
           this.otpSent = false;
         }, 500000);
       });
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   loadCountries() {
@@ -289,8 +309,43 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
           this.loadingBtnText = 'Saved';
           this.isLoading = false;
           this.invalidOtp = false;
-          if (!this.hideInfo)
-            this.onVerifyExistingProduct({ phone: this.otpForm.value.phone });
+          const emiData = this.sessionStorageService.getEmiData();
+          const data = {
+            loanDetails: {
+              loanAmount: emiData?.amount,
+              totalInterestAmount: emiData?.totalInterest,
+              interestRate: emiData?.rateOfIntrest,
+              loanTenureMonth: emiData?.loanTenureMonth,
+              loanTenureDay: emiData?.loanTenureDay,
+              loanTenureYear: emiData?.loanTenureYear,
+              totalPayableAmount: emiData?.totalRepaymentAmount,
+              mobile: this.otpForm.value.phone,
+              emiInterestPayable: emiData?.totalInterest,
+              emiAmount: emiData?.monthlyPayment,
+            },
+            originationModel: {
+              applicationDate: moment(new Date()).format('YYYY-MM-DD'),
+              branchId: this.profileInfo?.branchId,
+              source: 'Website',
+              currencyCode: this.profileInfo?.currencyCode,
+              currencyId: this.profileInfo?.currencyId,
+              originationProductId:
+                this.sessionStorageService.getLoanBasisDetails()?.basisId,
+            },
+          };
+          this.loanApi.saveLoanDetails(data).subscribe((resp: any) => {
+            if (resp.statusCode === 200) {
+              console.log(resp?.data?.originationModel?.originationId);
+              this.sessionStorageService.setOriginationId(
+                resp?.data?.originationModel?.originationId,
+              );
+              console.log(this.sessionStorageService.getOriginationId());
+              if (!this.hideInfo)
+                this.onVerifyExistingProduct({
+                  phone: this.otpForm.value.phone,
+                });
+            }
+          });
         }
       });
   }
@@ -363,20 +418,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               }
             });
         }
-        const data = {
-          loanDetails: {
-            ...this.sessionStorageService.getEmiData(),
-            mobile: event.phone,
-          },
-        };
-        this.loanApi.saveLoanDetails(data).subscribe((resp: any) => {
-          if (resp.statusCode === 200) {
-            this.CustomSubmit.emit({});
-            this.sessionStorageService.setOriginationId(
-              resp?.data?.loanDetails?.originationId,
-            );
-          }
-        });
       });
   }
   allreadyProduct(
@@ -400,11 +441,9 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     });
   }
   cleanCacheInMobileScreen() {
-    this.sessionStorageService.removeOriginationId();
     this.sessionStorageService.removeUserCustomerId();
     this.sessionStorageService.removeCustomerStageId();
     this.sessionStorageService.removeCustomerId();
-    this.sessionStorageService.removeOriginationId();
     this.sessionStorageService.removeOtherDocScreenCode();
   }
 }

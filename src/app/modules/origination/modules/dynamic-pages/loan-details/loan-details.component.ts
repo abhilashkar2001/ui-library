@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Data } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   LocaleData,
@@ -21,6 +22,8 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./loan-details.component.scss'],
 })
 export class LoanDetailsComponent implements OnInit {
+  @Output() CustomSubmit = new EventEmitter<Data>();
+  @Output() backEvent = new EventEmitter<Data>();
   loanDetailsForm: FormGroup | undefined;
   todaysDate = new Date();
   currentDate: Date | undefined;
@@ -82,9 +85,9 @@ export class LoanDetailsComponent implements OnInit {
           data?.loanDetails?.interestRate ?? data?.interestRate ?? '',
           Validators.required,
         ],
-        loanTenureYear: [data?.loanDetails?.loanTenureYear ?? ''],
-        loanTenureMonth: [data?.loanDetails?.loanTenureMonth ?? ''],
-        loanTenureDay: [data?.loanDetails?.loanTenureDay ?? ''],
+        loanTenureYear: [data?.loanDetails?.loanTenureYear ?? 0],
+        loanTenureMonth: [data?.loanDetails?.loanTenureMonth ?? 0],
+        loanTenureDay: [data?.loanDetails?.loanTenureDay ?? 0],
         emiAmount: [data?.loanDetails?.emiAmount ?? '', Validators.required],
         emiInterestPayable: [data?.loanDetails?.interestPayable ?? ''],
         totalInterestAmount: [data?.loanDetails?.interestPayable ?? ''],
@@ -95,12 +98,15 @@ export class LoanDetailsComponent implements OnInit {
         disbursementModeId: [
           data?.loanDisbursementModel?.disbursementModeId?.data
             ?.disbursementModeId ?? '',
+          Validators.required,
         ],
         disbursementMode: [
           data?.loanDisbursementModel?.disbursementModeValue?.data
             ?.disbursementMode ?? 'Cash',
         ],
-        internal: [data?.loanDisbursementModel?.internal?.data?.internal ?? ''],
+        internal: [
+          data?.loanDisbursementModel?.internal?.data?.internal ?? false,
+        ],
         loanAmount: [
           this.loanDetailsForm?.value?.loanAmount ?? data?.principalAmount,
         ],
@@ -161,6 +167,7 @@ export class LoanDetailsComponent implements OnInit {
           data?.repaymentModel?.repaymentFrequencyId ??
             data?.repaymentFrequencyId ??
             '',
+          Validators.required,
         ],
       }),
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
@@ -238,21 +245,24 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   onConfirm() {
-    console.log('loanDetailsForm', this.loanDetailsForm?.value);
     const payload = {
       ...this.loanDetailsForm?.value,
     };
     payload.originationModel.originationId = this.originationId;
     payload.loanDisbursementModel.loanAmount = payload.loanDetails.loanAmount;
+    payload.loanDisbursementModel.chequeNumber = Number(
+      payload.loanDisbursementModel.chequeNumber,
+    );
     delete payload?.loanDisbursementModel?.disbursementMode;
     this.loanApi.saveLoanDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
-        console.log(resp?.data);
+        this.sessionStorageService.setEmiData(resp.data?.loanDetails);
+        this.CustomSubmit.emit({ isNext: true });
       }
     });
   }
 
   onBack() {
-    console.log('first');
+    this.backEvent.emit();
   }
 }
