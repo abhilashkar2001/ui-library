@@ -16,7 +16,7 @@ export class OpenAccountService {
   }
 
   verifyOtp(otpObject: any) {
-    return this.http.post(`${baseUrl}/auth/verifyOTP`, otpObject);
+    return this.http.post(`${baseUrl}/auth/verifyOtp`, otpObject);
   }
 
   uploadDocument(documentObjects: any): Observable<any> | any {

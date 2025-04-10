@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   Input,
-  OnInit,
   Renderer2,
 } from '@angular/core';
 
@@ -12,7 +11,7 @@ import {
   templateUrl: './cibil-score-chart.component.html',
   styleUrls: ['./cibil-score-chart.component.scss'],
 })
-export class CibilScoreChartComponent implements OnInit, AfterViewInit {
+export class CibilScoreChartComponent implements AfterViewInit {
   @Input() cibilScore: number | any;
 
   cibilScoreList = [
@@ -47,8 +46,6 @@ export class CibilScoreChartComponent implements OnInit, AfterViewInit {
     private el: ElementRef,
     private renderer: Renderer2,
   ) {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.animateCibilScore(this.cibilScore);
