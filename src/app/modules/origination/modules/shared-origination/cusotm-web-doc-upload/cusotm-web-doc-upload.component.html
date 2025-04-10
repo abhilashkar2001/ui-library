@@ -20,60 +20,73 @@
                 "
               >
                 <mat-card class="card-subdiv">
-                  <div
-                    appDragDrop
-                    class="doc_upload"
-                    fxFlex="100"
-                    #fileInput
-                    (FileDropped)="onFileDropped($event, i)"
-                    [ngClass]="[
-                      denomDetai.value.documentType &&
-                      denomDetai.value.docRequired
-                        ? ''
-                        : 'drop_list_class',
-                    ]"
-                  >
-                    <div class="drag_drop" fxFlex="90">
-                      <h3
-                        class="text-header"
-                        *ngIf="
-                          denomDetai.value.documentType &&
-                            denomDetai.value.docRequired;
-                          else showDropList
-                        "
-                      >
-                        {{ denomDetai.value.documentType }}
-                      </h3>
-                      <ng-template #showDropList>
-                        <mat-form-field
-                          appearance="outline"
-                          class="custom-doc-field"
-                          fxFlex="95"
-                        >
-                          <mat-select
-                            formControlName="documentType"
-                            placeholder="Select Document"
-                          >
-                            <mat-option [value]="">Select</mat-option>
-                            <mat-option
-                              [value]="nonReqDoc.document"
-                              *ngFor="
-                                let nonReqDoc of checkListDocList?.nonRequiredDocument
-                              "
-                              >{{ nonReqDoc.document }}</mat-option
-                            >
-                          </mat-select>
-                        </mat-form-field>
-                      </ng-template>
-                    </div>
-                    <button
-                      type="button"
-                      mat-raised-button
-                      class="button submit_btn"
-                      (click)="fileBrowseHandler(i)"
+                  <div fxFlex="100" fxLayoutGap="5">
+                    <div
+                      appDragDrop
+                      class="doc_upload"
+                      fxFlex="90"
+                      #fileInput
+                      (FileDropped)="onFileDropped($event, i)"
+                      [ngClass]="[
+                        denomDetai.value.documentType &&
+                        denomDetai.value.docRequired
+                          ? ''
+                          : 'drop_list_class',
+                      ]"
                     >
-                      Upload
-                    </button>
+                      <div class="drag_drop" fxFlex="90">
+                        <h3
+                          class="text-header"
+                          *ngIf="
+                            denomDetai.value.documentType &&
+                              denomDetai.value.docRequired;
+                            else showDropList
+                          "
+                        >
+                          {{ denomDetai.value.documentType }}
+                        </h3>
+                        <ng-template #showDropList>
+                          <mat-form-field
+                            appearance="outline"
+                            class="custom-doc-field"
+                            fxFlex="95"
+                          >
+                            <mat-select
+                              formControlName="documentType"
+                              placeholder="Select Document"
+                            >
+                              <mat-option [value]="">Select</mat-option>
+                              <mat-option
+                                [value]="nonReqDoc.document"
+                                *ngFor="
+                                  let nonReqDoc of checkListDocList?.nonRequiredDocument
+                                "
+                                >{{ nonReqDoc.document }}</mat-option
+                              >
+                            </mat-select>
+                          </mat-form-field>
+                        </ng-template>
+                      </div>
+                      <button
+                        type="button"
+                        mat-raised-button
+                        class="button submit_btn"
+                        (click)="fileBrowseHandler(i)"
+                      >
+                        Upload
+                      </button>
+                    </div>
+                    <div
+                      class="doc_upload"
+                      fxFlex="10"
+                      fxLayoutAlign="center center"
+                    >
+                      <ic-button
+                        [icButtonType]="'icon'"
+                        [icIcon]="'delete'"
+                        [disabled]="true"
+                      ></ic-button>
+                    </div>
                   </div>
                   <div
                     fxLayout="row wrap"
@@ -88,6 +101,8 @@
                       <div
                         class="upload_img"
                         (click)="openFile(file)"
+                        (keydown.enter)="openFile(file)"
+                        tabindex="0"
                         fxFlex="100"
                       >
                         <div
@@ -117,6 +132,8 @@
                           class="cancel-icon"
                           name="close"
                           (click)="deleteFile(fileIndx, i, file)"
+                          (keydown.enter)="deleteFile(fileIndx, i, file)"
+                          tabindex="1"
                         ></ic-icon>
                       </div>
                     </div>

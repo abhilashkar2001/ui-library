@@ -62,4 +62,5 @@ export enum SessionStorageEnum {
   STAGE_ID_LIST = 'stagingIdList',
   REF_NO = 'referenceNo',
   PRIMARY_EMAIL = 'primaryEmail',
+  EMI_DATA = 'emiData',
 }

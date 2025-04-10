@@ -47,7 +47,7 @@ export class LoanService {
   submitLoanDetail(payload: any) {
     return this.http.post<any>(`${baseUrl}/webDisbursement`, payload);
   }
-  getLoanById(id: any) {
+  getLoanById(id: number) {
     return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
   }
 
@@ -149,6 +149,16 @@ export class LoanService {
   ) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}&screenCode=${screenCode}&stageId=${stageId}`,
+    );
+  }
+
+  saveLoanDetails(payload: any) {
+    return this.http.post<any>(`${baseUrl}/loan-detail`, payload);
+  }
+
+  getLoanDetails(originationId: number) {
+    return this.http.get<any>(
+      `${baseUrl}/loan-detail?originationId=${originationId}`,
     );
   }
 }

@@ -480,73 +480,6 @@ export class SessionStorageService {
   public removeLoanDisburseId(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_DISBURSE_ID);
   }
-  /**  FETCH: Tenure days from session storage whose key is stored in TENURE_DAYS in session storage enum
-   * @returns
-   */
-  public getTenureDays(): any {
-    const tenureDays = this.getItem(SessionStorageEnum.TENURE_DAYS);
-    return tenureDays;
-  }
-
-  /**
-   * This method will set the tenure days in the session storage
-   * @param id
-   */
-
-  public setTenureDays(id: string): void {
-    this.setItem(SessionStorageEnum.TENURE_DAYS, id);
-  }
-
-  /**
-   * This method will remove the tenure days in session storage
-   */
-  public removeTenureDays(): void {
-    this.session.removeItem(SessionStorageEnum.TENURE_DAYS);
-  }
-  /**  FETCH: Tenure year from session storage whose key is stored in TENURE_YEAR in session storage enum
-   * @returns
-   */
-  public getTenureYear(): any {
-    const tenureYear = this.getItem(SessionStorageEnum.TENURE_YEAR);
-    return tenureYear;
-  }
-
-  /**
-   *
-   * @param id This method will set the tenure year in the session storage
-   */
-  public setTenureYear(id: string): void {
-    this.setItem(SessionStorageEnum.TENURE_YEAR, id);
-  }
-
-  /**
-   * This method will remove the tenure year in session storage
-   */
-  public removeTenureYear(): void {
-    this.session.removeItem(SessionStorageEnum.TENURE_YEAR);
-  }
-  /**  FETCH: Tenure month  from session storage whose key is stored in TENURE_MONTH in session storage enum
-   * @returns
-   */
-  public getTenureMonth(): any {
-    const tenureMonth = this.getItem(SessionStorageEnum.TENURE_MONTH);
-    return tenureMonth;
-  }
-
-  /**
-   * This method will set the tenure month in the session storage
-   * @param id
-   */
-  public setTenureMonth(id: string): void {
-    this.setItem(SessionStorageEnum.TENURE_MONTH, id);
-  }
-
-  /**
-   * This method will remove the tenure month in session storage
-   */
-  public removeTenureMonth(): void {
-    this.session.removeItem(SessionStorageEnum.TENURE_MONTH);
-  }
 
   /**  FETCH: Loan holder type from session storage whose key is stored in LOAN_HOLDER_TYPE in session storage enum
    * @returns
@@ -1397,5 +1330,15 @@ export class SessionStorageService {
   }
   public removePrimaryEmail() {
     this.session.removeItem(SessionStorageEnum.PRIMARY_EMAIL);
+  }
+
+  public getEmiData() {
+    return this.getItem(SessionStorageEnum.EMI_DATA);
+  }
+  public setEmiData(emiData: string): void {
+    this.setItem(SessionStorageEnum.EMI_DATA, emiData);
+  }
+  public removeEmiData(): void {
+    this.session.removeItem(SessionStorageEnum.EMI_DATA);
   }
 }

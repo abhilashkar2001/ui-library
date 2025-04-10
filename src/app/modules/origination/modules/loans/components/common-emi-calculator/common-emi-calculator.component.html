@@ -79,33 +79,33 @@
             <input
               fxFlex="30"
               matInput
-              name="tenureYear"
+              name="loanTenureYear"
               maxlength="2"
-              formControlName="tenureYear"
+              formControlName="loanTenureYear"
               placeholder="Year"
               appNumbersOnly
               class="tenure-input pl-3"
             />
-            <ng-container *ngIf="loanForm.value.tenureYear">
+            <ng-container *ngIf="loanForm.value.loanTenureYear">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureYear ? 'Year' : '' }}
+                {{ loanForm.value.loanTenureYear ? 'Year' : '' }}
               </span>
             </ng-container>
             <div class="vertical-separator"></div>
             <input
               fxFlex="30"
               matInput
-              name="tenureMonth"
+              name="loanTenureMonth"
               maxlength="2"
-              formControlName="tenureMonth"
+              formControlName="loanTenureMonth"
               placeholder="Month"
               appNumbersOnly
               class="tenure-input pl-3"
             />
 
-            <ng-container *ngIf="loanForm.value.tenureMonth">
+            <ng-container *ngIf="loanForm.value.loanTenureMonth">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureMonth ? 'Month' : '' }}
+                {{ loanForm.value.loanTenureMonth ? 'Month' : '' }}
               </span>
             </ng-container>
 
@@ -114,16 +114,16 @@
             <input
               fxFlex="30"
               matInput
-              name="tenureDays"
+              name="loanTenureDay"
               maxlength="2"
-              formControlName="tenureDays"
+              formControlName="loanTenureDay"
               placeholder="Day"
               appNumbersOnly
               class="tenure-input pl-3"
             />
-            <ng-container *ngIf="loanForm.value.tenureDays">
+            <ng-container *ngIf="loanForm.value.loanTenureDay">
               <span fxFlex="8" class="placeholders">
-                {{ loanForm.value.tenureDays ? 'Day' : '' }}
+                {{ loanForm.value.loanTenureDay ? 'Day' : '' }}
               </span>
             </ng-container>
           </div>
@@ -132,9 +132,9 @@
           class="mat-error small-error mt-12"
           *ngIf="
             validateTenure &&
-            (loanForm.controls['tenureYear'].value ||
-              loanForm.controls['tenureMonth'].value ||
-              loanForm.controls['tenureDays'].value)
+            (loanForm.controls['loanTenureYear'].value ||
+              loanForm.controls['loanTenureMonth'].value ||
+              loanForm.controls['loanTenureDay'].value)
           "
         >
           Loan Period should be Maximum
@@ -146,9 +146,9 @@
           class="mat-error small-error mt-12"
           *ngIf="
             validateMinimumTenure &&
-            (loanForm.controls['tenureYear'].value ||
-              loanForm.controls['tenureMonth'].value ||
-              loanForm.controls['tenureDays'].value)
+            (loanForm.controls['loanTenureYear'].value ||
+              loanForm.controls['loanTenureMonth'].value ||
+              loanForm.controls['loanTenureDay'].value)
           "
         >
           Loan Period should be Minimum
@@ -159,9 +159,9 @@
         <mat-error
           class="mat-error small-error mt-12"
           *ngIf="
-            (loanForm.get('tenureYear').touched ||
-              loanForm.get('tenureMonth').touched ||
-              loanForm.get('tenureDays').touched) &&
+            (loanForm.get('loanTenureYear').touched ||
+              loanForm.get('loanTenureMonth').touched ||
+              loanForm.get('loanTenureDay').touched) &&
             !checkTenurePresence
           "
         >
