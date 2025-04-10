@@ -27,7 +27,11 @@
     </ic-mobile-field>
   </div>
   <ng-template #showField>
-    <ic-form-field suffixButton="Get OTP" (onSuffixClick)="onGetOTP()">
+    <ic-form-field
+      [control]="otpForm.get('nationalId') | formcontrol"
+      suffixButton="Get OTP"
+      (onSuffixClick)="onGetOTP()"
+    >
     </ic-form-field>
   </ng-template>
 
@@ -63,7 +67,7 @@
         >({{ displaySecond }} sec)</span
       >
     </div>
-    <div class="standard-auth-checkbox-container">
+    <div class="standard-auth-checkbox-container" *ngIf="!hideInfo">
       <ic-checkbox
         class="custom-checkbox"
         class="primary"
@@ -77,7 +81,7 @@
     </div>
   </div>
 
-  <div>
+  <div *ngIf="!hideInfo">
     <div fxLayout="column">
       <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
         <div

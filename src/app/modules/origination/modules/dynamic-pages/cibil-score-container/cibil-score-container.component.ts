@@ -30,7 +30,6 @@ export class CibilScoreContainerComponent {
   optionalSteps: any;
   phone: any;
   showOtpSection: boolean | any;
-  otpSent = false;
   invalidOtp = false;
   otp: any;
   agreed = false;
@@ -50,19 +49,17 @@ export class CibilScoreContainerComponent {
   }
 
   onContinue() {
-    if (this.selectedOption === 'different') {
-      this.openAccountService
-        .verifyOtp({ mobile: this.phone, otp: this.otp })
-        .subscribe((response: any) => {
-          if (response.statusCode === 401) {
-            this.showCibilScoreResult = false;
-            this.invalidOtp = true;
-          } else if (response.statusCode === 200) {
-            this.invalidOtp = false;
-            this.showCibilScoreResult = true;
-          }
-        });
-    } else this.showCibilScoreResult = true;
+    this.openAccountService
+      .verifyOtp({ mobile: this.phone, otp: this.otp })
+      .subscribe((response: any) => {
+        if (response.status === 401) {
+          this.showCibilScoreResult = false;
+          this.invalidOtp = true;
+        } else if (response.status === 200) {
+          this.invalidOtp = false;
+          this.showCibilScoreResult = true;
+        }
+      });
   }
 
   onConfirmFromCibilScoreResult() {
@@ -74,12 +71,9 @@ export class CibilScoreContainerComponent {
     this.confirmEvent.emit();
   }
 
-  checkCobilConfim() {
-    if (this.selectedOption === 'same') return false;
-    else {
-      if (!(this.isOtpAllowed && this.agreed)) return true;
-      else return false;
-    }
+  checkCobilConfim(event?: any) {
+    this.phone = event?.phone;
+    this.otp = event?.otp;
   }
 
   openDialog() {

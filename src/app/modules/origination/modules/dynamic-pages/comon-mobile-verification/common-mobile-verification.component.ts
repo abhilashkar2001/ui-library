@@ -60,6 +60,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   @Input() showOtpSection: boolean | any;
   @Input() invalidOtp: boolean | any;
   @Input() otpSent: boolean | any;
+  @Input() agree: boolean | any;
   @Input() hideInfo = false;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() verificationName = 'Mobile Number';
@@ -142,26 +143,32 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       this.otpTimer();
     }
     if (changes.hideInfo) this.hideInfo = changes.hideInfo.currentValue;
+    if (changes.agree.currentValue) {
+      this.onAgreed(true);
+    }
   }
 
   onGetOTP() {
     // this.ngOtpInput.otpForm.reset();
-    this.otpService
-      .getOtp({ mobile: this.otpForm.value.phone })
-      .subscribe(() => {
-        this.otpSent = true;
-        this.showOtpSection = true;
-        this.getOtpBtn = true;
-        this.validNumber = true;
-        this.resendLink = false;
-        this.invalidOtp = false;
-        this.resendOtp += 1;
-        this.stopInterval();
-        this.otpTimer();
-        setTimeout(() => {
-          this.otpSent = false;
-        }, 500000);
-      });
+    console.log(this.otpForm.value);
+    const value =
+      this.otpForm.value.phone?.length > 0
+        ? this.otpForm.value.phone
+        : this.otpForm.value.nationalId;
+    this.otpService.getOtp({ mobile: value }).subscribe(() => {
+      this.otpSent = true;
+      this.showOtpSection = true;
+      this.getOtpBtn = true;
+      this.validNumber = true;
+      this.resendLink = false;
+      this.invalidOtp = false;
+      this.resendOtp += 1;
+      this.stopInterval();
+      this.otpTimer();
+      setTimeout(() => {
+        this.otpSent = false;
+      }, 500000);
+    });
   }
 
   loadUserProfile() {
@@ -204,12 +211,11 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     this.yourOtp = this.otp.toString();
     this.otpAvailable =
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
-  }
-  isValidated() {
-    if (this.otpForm.value.phone?.length === 10 && this.getOtpBtn) {
-      return false;
-    }
-    return true;
+    if (this.otpAvailable)
+      this.enteredOTP.emit({
+        otp: this.otp,
+        phone: this.otpForm.value.nationalId,
+      });
   }
 
   onAgreed(e: any) {
@@ -217,6 +223,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     this.enteredOTP.emit({
       otp: this.otp,
       agreed: this.agreed,
+      phone: this.otpForm.value.nationalId,
     });
   }
 
@@ -224,6 +231,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     this.otpForm = this.fb.group({
       phone: [''],
       isdCode: [''],
+      nationalId: [''],
     });
     this.otpForm
       .get('phone')
