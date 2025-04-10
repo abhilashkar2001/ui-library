@@ -6,6 +6,10 @@
     <meta name="description" content="" />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self';"
+    />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="icon" type="image/x-icon" href="favicon2.ico" />
     <link
@@ -30,6 +34,11 @@
       document.addEventListener('DOMContentLoaded', function () {
         AOS.init();
       });
+    </script>
+    <script>
+      if (window.top != window.self) {
+        window.top.location = window.self.location;
+      }
     </script>
     <style></style>
   </head>
