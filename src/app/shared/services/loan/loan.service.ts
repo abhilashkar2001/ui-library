@@ -161,4 +161,30 @@ export class LoanService {
       `${baseUrl}/loan-detail?originationId=${originationId}`,
     );
   }
+
+  saveBusinessDetails(payload: any) {
+    return this.http.post<any>(
+      `${baseUrl}/loan-detail/save-business-details`,
+      payload,
+    );
+  }
+
+  getBusinessDetailsById(originationId: number) {
+    return this.http.get<any>(
+      `${baseUrl}/loan-detail/fetch-business-by-id=${originationId}`,
+    );
+  }
+
+  saveCollateralDetails(payload: any) {
+    return this.http.post<any>(
+      `${baseUrl}/loan-detail/save-collateral`,
+      payload,
+    );
+  }
+
+  getCollateralDetailsId(originationId: number) {
+    return this.http.get<any>(
+      `${baseUrl}/loan-detail/fetch-collateral/${originationId}`,
+    );
+  }
 }

@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Data } from '@angular/router';
+import { IcHttpResponseModel } from '@onerumango/utils';
+import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-collateral-details',
@@ -7,11 +13,52 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./collateral-details.component.scss'],
 })
 export class CollateralDetailsComponent implements OnInit {
+  @Output() CustomSubmit = new EventEmitter<Data>();
+  @Output() backEvent = new EventEmitter<Data>();
   collateralDetailsForm!: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  ownershipStatus = [
+    { label: 'Self', value: true },
+    { label: 'Others', value: false },
+  ];
+  loanTypeList: any[] = [];
+  originationId!: number;
+  staticData = {
+    LOANTYPE: [],
+  };
+  constructor(
+    private fb: FormBuilder,
+    private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
+    private genericService: GenericValueService,
+  ) {}
 
   ngOnInit() {
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.buildCollateralForm();
+    this.fetchGenericValue();
+    if (this.originationId) {
+      this.getCollateralDetailsById();
+    }
+  }
+
+  fetchGenericValue() {
+    this.genericService
+      .loadGenericValue(Object.keys(this.staticData))
+      .subscribe((res: IcHttpResponseModel<GenericValueInfoModel>) => {
+        if (res?.statusCode == 200 || res?.statusCode == 201) {
+          this.loanTypeList = res?.data?.['LOANTYPE'] ?? [];
+        }
+      });
+  }
+
+  getCollateralDetailsById() {
+    this.loanService
+      .getCollateralDetailsId(this.originationId)
+      .subscribe((res: any) => {
+        if (res?.statusCode == 200 || res?.statusCode == 201) {
+          this.collateralDetailsForm.patchValue(res?.data);
+        }
+      });
   }
 
   buildCollateralForm() {
@@ -24,8 +71,21 @@ export class CollateralDetailsComponent implements OnInit {
       assetMonetaryWorthForVaf: [''],
       securityCover: [''],
       totalAssetWorth: [''],
-      loanType: [''],
-      originationInfoId: 1412,
+      loanTypeId: [''],
+      originationInfoId: [this.originationId],
     });
+  }
+
+  saveCollateralDetails() {
+    const payload = { ...this.collateralDetailsForm.value };
+    this.loanService.saveCollateralDetails(payload).subscribe((res: any) => {
+      if (res?.statusCode == 200 || res?.statusCode == 201) {
+        this.CustomSubmit.emit({ isNext: true });
+      }
+    });
+  }
+
+  onBack() {
+    this.backEvent.emit();
   }
 }
