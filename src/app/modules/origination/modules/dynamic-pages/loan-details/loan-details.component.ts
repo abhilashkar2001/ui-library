@@ -170,8 +170,9 @@ export class LoanDetailsComponent implements OnInit {
           Validators.required,
         ],
       }),
-      screenCode: this.sessionStorageService.getCurrentScreenCode(),
+      screenCode: [''],
     });
+    console.log(this.sessionStorageService.getCurrentScreenCode());
   }
 
   get loanDetails() {
@@ -224,11 +225,9 @@ export class LoanDetailsComponent implements OnInit {
   setDisbursement(event: number) {
     console.log(event);
     if (event) {
-      console.log(this.genericValue?.DISBURSEMENTTYPE);
       const disbursement = this.genericValue?.DISBURSEMENTTYPE?.find(
         (value: { id: number; values: string }) => value?.id === event,
       )?.values;
-      console.log(disbursement);
       this.loanDisbursementModel
         ?.get('disbursementMode')
         ?.setValue(disbursement);
@@ -245,6 +244,10 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   onConfirm() {
+    if (this.loanDetailsForm?.invalid) {
+      this.loanDetailsForm?.markAllAsTouched();
+      return;
+    }
     const payload = {
       ...this.loanDetailsForm?.value,
     };
@@ -253,6 +256,10 @@ export class LoanDetailsComponent implements OnInit {
     payload.loanDisbursementModel.chequeNumber = Number(
       payload.loanDisbursementModel.chequeNumber,
     );
+    payload.screenCode = this.sessionStorageService.getCurrentScreenCode();
+    payload.loanDisbursementModel.firstDisbursementDate = moment(
+      this.currentDate,
+    ).format('YYYY-MM-DD');
     delete payload?.loanDisbursementModel?.disbursementMode;
     this.loanApi.saveLoanDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
