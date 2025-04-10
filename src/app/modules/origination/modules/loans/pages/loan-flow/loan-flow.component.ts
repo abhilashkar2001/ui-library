@@ -390,16 +390,19 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     });
   }
   updateNationalId(resp: any) {
-    resp.data[0].customerInfo.forEach((customer: any) => {
-      if (customer?.primaryCustomer) {
-        if (customer?.documnentsInfo) {
-          this.nationalIdDocumentList = customer?.documnentsInfo?.documents;
-          if (this.componentRef)
-            this.componentRef.instance.nationalIdDocumentList =
-              this.nationalIdDocumentList;
+    console.log(resp.data[0].customerInfo?.length);
+    if (resp.data[0].customerInfo?.length > 0) {
+      resp.data[0].customerInfo.forEach((customer: any) => {
+        if (customer?.primaryCustomer) {
+          if (customer?.documnentsInfo) {
+            this.nationalIdDocumentList = customer?.documnentsInfo?.documents;
+            if (this.componentRef)
+              this.componentRef.instance.nationalIdDocumentList =
+                this.nationalIdDocumentList;
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   getAllLoanStep() {
@@ -440,24 +443,26 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
    * @returns payload of customerInfo.
    */
   modelFactoryForCustomer(customerInfo: any, docIds: any) {
-    const custResp: any =
-      customerInfo?.length > 1 ? customerInfo : [...customerInfo];
-    custResp.forEach((item: any, i: any) => {
-      custResp[i].documentId = [];
-      custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
-      if (item.primaryCustomer === true) custResp[i].documentId = docIds;
-      if (this.noOfDirectors)
-        custResp[i].corpDirectorModel = {
-          sharePercentage: 100 / this.noOfDirectors,
-          isManagingDirector: custResp[i]?.primaryCustomer,
-        };
-      delete custResp[i]?.biometricInfo;
-      delete custResp[i]?.documnentsInfo;
-      delete custResp[i]?.documentsInfoModel;
-      delete custResp[i]?.signatureInfo;
-    });
+    if (this.personalDetails?.length > 0) {
+      const custResp: any =
+        customerInfo?.length > 1 ? customerInfo : [...customerInfo];
+      custResp.forEach((item: any, i: any) => {
+        custResp[i].documentId = [];
+        custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
+        if (item.primaryCustomer === true) custResp[i].documentId = docIds;
+        if (this.noOfDirectors)
+          custResp[i].corpDirectorModel = {
+            sharePercentage: 100 / this.noOfDirectors,
+            isManagingDirector: custResp[i]?.primaryCustomer,
+          };
+        delete custResp[i]?.biometricInfo;
+        delete custResp[i]?.documnentsInfo;
+        delete custResp[i]?.documentsInfoModel;
+        delete custResp[i]?.signatureInfo;
+      });
 
-    return custResp;
+      return custResp;
+    }
   }
 
   /**
