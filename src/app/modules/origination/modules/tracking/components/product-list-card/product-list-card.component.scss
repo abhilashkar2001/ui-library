@@ -1,7 +1,7 @@
 .desc-list {
   margin-left: -25px;
   color: #051a2d;
-  font: 12px poppins;
+  font: 12px Benton Sans;
 
   li {
     padding-bottom: 10px;
@@ -25,12 +25,12 @@
   }
 }
 .card-title {
-  color: #004c97;
+  color: #0033a1;
 }
 
 .card-summary {
   color: #051a2d;
-  font-family: poppins;
+  font-family: Benton Sans;
   font-size: 16px;
   margin: 0;
 }
@@ -43,7 +43,7 @@
 }
 
 .read-text {
-  color: #004c97;
+  color: #0033a1;
 }
 
 .card-div {
@@ -62,7 +62,7 @@
 }
 
 .btn-selected {
-  background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0% 0%
+  background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0% 0%
     no-repeat padding-box;
   border-radius: 15px !important;
   opacity: 1;
@@ -73,7 +73,7 @@
 
 .btn-hide {
   text-align: left;
-  font: 16px Poppins;
+  font: 16px Benton Sans;
   letter-spacing: -0.32px;
   color: #7e7e7e;
   opacity: 1;
@@ -88,13 +88,13 @@
 }
 .label_value {
   color: #102245;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   font-weight: 600;
   font-size: 14px;
 }
 
 .highlightPending {
-  color: #004c97 !important;
+  color: #0033a1 !important;
 }
 .highlightOngoing {
   color: #eeab2c !important;

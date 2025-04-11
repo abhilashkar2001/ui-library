@@ -17,7 +17,7 @@
 
     .title-text {
       color: #000;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Benton Sans', sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
@@ -26,8 +26,8 @@
     }
 
     .text-info-label {
-      color: #004c97;
-      font-family: 'Poppins', sans-serif;
+      color: #0033a1;
+      font-family: 'Benton Sans', sans-serif;
       font-size: 18px;
       font-style: normal;
       font-weight: 500;
@@ -102,13 +102,13 @@
 
 .standard-font {
   font-weight: 500;
-  font-family: Poppins;
+  font-family: Benton Sans;
   margin-bottom: 27px;
 }
 
 .standard-font-blue {
   @extend .standard-font;
-  color: #004c97;
+  color: #0033a1;
   font-size: 18px;
 }
 
@@ -145,10 +145,10 @@
 }
 
 .highlight_title {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
   text-align: left;
-  color: #004c97;
+  color: #0033a1;
 }

@@ -11,7 +11,7 @@
   }
 
   .title-head {
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     font-weight: 600;
     font-size: 16px;
     color: #00000f;
@@ -19,7 +19,7 @@
     margin: 10px;
   }
   mat-label.label_input {
-    font-family: Poppins;
+    font-family: Benton Sans;
     font-weight: 600;
     font-size: 13px;
     color: #102245 !important;
@@ -89,7 +89,7 @@
   }
   .chooseFile {
     padding: 10px 10px;
-    font-family: Poppins;
+    font-family: Benton Sans;
     background: var(--current-theme-background);
     position: absolute;
     color: #fff;
@@ -126,7 +126,7 @@
   .Nextbtn {
     padding: 2px;
     color: white;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box;
   }
   .Backbtn {
@@ -147,7 +147,7 @@
     border: 3px !important;
   }
   .custCategory mat-label {
-    font: medium poppins;
+    font: medium Benton Sans;
     color: #102245;
     opacity: 50%;
     padding-left: 10px;
@@ -164,7 +164,7 @@
     border-radius: 8px;
   }
   ::ng-deep .egret-blue .mat-progress-bar-fill::after {
-    background: linear-gradient(90deg, #051a2d, #004c97);
+    background: linear-gradient(90deg, #051a2d, #0033a1);
     border-radius: 28px !important;
   }
   .image_status_bar {
@@ -175,11 +175,11 @@
   }
 
   .fileName {
-    font: medium Poppins;
+    font: medium Benton Sans;
     opacity: 70%;
   }
   :host ::ng-deep .mat-select {
-    font: medium Poppins !important;
+    font: medium Benton Sans !important;
     opacity: 50% !important;
   }
   .crossIcon {
@@ -196,7 +196,7 @@
   .option_font {
     color: #000000;
     opacity: 100%;
-    font: 'medium', 'Poppins';
+    font: 'medium', 'Benton Sans';
   }
   .egret-navy .mat-select-value {
     font-weight: bold;
@@ -226,7 +226,7 @@
 
   .uploaded_file {
     font-size: medium;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     color: #004a9a;
     opacity: 100%;
     flex: none !important;
@@ -255,7 +255,7 @@
     height: 220px;
   }
   .label_input {
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     font-weight: normal;
     font-size: medium;
     color: #102245 !important;
@@ -271,7 +271,7 @@
     z-index: 1;
   }
   .fileUploaded {
-    font: medium Poppins;
+    font: medium Benton Sans;
     font-weight: bold;
     color: #0b0b0b;
     opacity: 70%;
@@ -279,7 +279,7 @@
   }
 
   .mat-select-value-text {
-    font: medium poppins;
+    font: medium Benton Sans;
     color: #000000;
     opacity: 100%;
     font-weight: bolder;
@@ -295,7 +295,7 @@
   }
 }
 .mat-option-text {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-weight: 600;
 }
 .egret-navy .mat-select-panel {

@@ -9,14 +9,14 @@
     color: #000000;
     opacity: 1;
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 600;
   }
   .approve {
     color: #000000;
     opacity: 1;
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 600;
     margin-top: 5%;
   }
@@ -34,7 +34,7 @@
     transform: translate(1.30627em, -3px);
   }
   .submitButton {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box;
     color: #fff !important;
     border-radius: 20px;
@@ -52,7 +52,9 @@
     color: #b20000 !important;
     background: #fff;
     border-radius: 35px !important;
-    font-family: Poppins, sans-serif;
+    font-family:
+      Benton Sans,
+      sans-serif;
     font-size: 13px;
     font-weight: 600 !important;
     letter-spacing: 0.4px;

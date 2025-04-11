@@ -18,7 +18,7 @@
         padding-bottom: 0px !important;
 
         .label_input {
-          font-family: 'Poppins';
+          font-family: 'Benton Sans';
           font-weight: normal;
           font-size: medium;
           color: #102245 !important;
@@ -31,7 +31,7 @@
           .option_font {
             color: #000000;
             opacity: 100%;
-            font: 'medium', 'Poppins';
+            font: 'medium', 'Benton Sans';
           }
         }
       }
@@ -49,7 +49,7 @@
     .addbtn {
       // padding-left: 5px;
       font-size: 38px;
-      color: #004c97;
+      color: #0033a1;
       cursor: pointer;
       z-index: 0;
       height: 83%;
@@ -69,15 +69,15 @@
   }
   .digsign {
     color: white !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box !important;
     border-radius: 23px !important;
     color: #ffffff !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box !important;
     border-radius: 23px !important;
     font-size: 12px;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     // font-weight: 600 !important;
     letter-spacing: 0px;
     text-transform: capitalize;
@@ -87,9 +87,9 @@
     background: #ffffff 0% 0% no-repeat padding-box !important;
     box-shadow: 3px 3px 15px #0000000f;
     border-radius: 35px !important;
-    color: #004c97 !important;
+    color: #0033a1 !important;
     font-size: 12px;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     font-weight: 600 !important;
     letter-spacing: 0px;
     width: 90px;
@@ -157,7 +157,7 @@
     color: #102245;
     opacity: 0.5;
     font-size: 14px;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     font-weight: 600;
     letter-spacing: 0px;
     text-transform: capitalize;
@@ -182,13 +182,13 @@
 
     .uploaded_file {
       font-size: medium;
-      font-family: 'Poppins';
+      font-family: 'Benton Sans';
       color: #004a9a;
       opacity: 100%;
     }
 
     .fileUploaded {
-      font: medium Poppins;
+      font: medium Benton Sans;
       font-weight: bold;
       color: #0b0b0b;
       opacity: 70%;
@@ -202,7 +202,7 @@
 
   .chooseFile {
     padding: 10px 10px;
-    font-family: Poppins;
+    font-family: Benton Sans;
     background: var(--current-theme-background);
     position: absolute;
     color: #fff;
@@ -266,22 +266,26 @@
   }
 
   .headings {
-    font-family: Poppins, sans-serif;
+    font-family:
+      Benton Sans,
+      sans-serif;
     font-size: 15px;
-    color: #004c97;
+    color: #0033a1;
     font-weight: 600;
   }
 
   .valueData {
     color: #102245;
     font-size: 12px;
-    font-family: Poppins, sans-serif;
+    font-family:
+      Benton Sans,
+      sans-serif;
     font-weight: 600;
   }
   .customer-button {
     width: 206px;
     height: 40px;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box;
     border-radius: 23px;
     color: #fff;
@@ -377,13 +381,13 @@
         display: flex;
         height: 30px;
         padding: 10px;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Benton Sans', sans-serif;
         font-weight: 600;
       }
 
       .scan-btn {
         display: inline-block;
-        color: #004c97;
+        color: #0033a1;
         opacity: 1;
         cursor: pointer;
       }
@@ -408,15 +412,15 @@
 
 .digsign {
   color: white !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
     no-repeat padding-box !important;
   border-radius: 23px !important;
   color: #ffffff !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #004c97 100%) 0% 0%
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
     no-repeat padding-box !important;
   border-radius: 23px !important;
   font-size: 12px;
-  font-family: 'Poppins';
+  font-family: 'Benton Sans';
   // font-weight: 600 !important;
   letter-spacing: 0px;
   text-transform: capitalize;
@@ -426,9 +430,9 @@
   background: #ffffff 0% 0% no-repeat padding-box !important;
   box-shadow: 3px 3px 15px #0000000f;
   border-radius: 35px !important;
-  color: #004c97 !important;
+  color: #0033a1 !important;
   font-size: 12px;
-  font-family: 'Poppins';
+  font-family: 'Benton Sans';
   font-weight: 600 !important;
   letter-spacing: 0px;
   width: 90px;
@@ -477,7 +481,7 @@
   color: #102245;
   opacity: 0.5;
   font-size: 14px;
-  font-family: 'Poppins';
+  font-family: 'Benton Sans';
   font-weight: 600;
   letter-spacing: 0px;
   text-transform: capitalize;
@@ -498,7 +502,7 @@
   justify-content: flex-start;
   align-items: center;
 
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   font-weight: 600;
   color: #b4b4b4;
   cursor: pointer;
@@ -515,7 +519,7 @@
 .pep-label {
   width: calc(100% - 50px);
   font-size: 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   font-weight: 600;
   flex-grow: 1;
   padding-right: 10px;
@@ -531,7 +535,7 @@
 }
 
 .actionIcon {
-  font: medium 'Poppins';
+  font: medium 'Benton Sans';
   color: #b4b4b4;
   height: 50px;
   border-radius: 8px !important;
@@ -545,7 +549,7 @@
   span {
     width: 80%;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 500;
   }
 }

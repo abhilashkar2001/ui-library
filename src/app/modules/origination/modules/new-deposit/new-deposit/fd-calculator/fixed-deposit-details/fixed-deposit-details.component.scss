@@ -18,7 +18,7 @@
 }
 .editButton {
   width: 172px;
-  color: #004c97;
+  color: #0033a1;
   font-size: 15px;
   background: #ffffff;
   height: 40px;
@@ -29,7 +29,7 @@
 // for rd vertical
 
 .selected_stepper {
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
   color: white;
   width: 60px;
   border-radius: 10px;
@@ -46,7 +46,7 @@
 }
 
 .steeper_name {
-  color: #004c97;
+  color: #0033a1;
   margin-left: 50px;
   font-size: 18px;
   font-weight: 500;
@@ -62,7 +62,7 @@
 .deposit_icon {
   width: 75px;
   height: 75px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -96,7 +96,7 @@
 ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon {
   background: #e6efff;
   border: 1px solid #bac0d7 !important;
-  color: #004c97 !important;
+  color: #0033a1 !important;
   font-size: 24px;
   width: 60px;
   border-radius: 10px;
@@ -122,13 +122,13 @@
     padding-left: 33px !important;
   }
   .mat-step-label.mat-step-label-active.mat-step-label-selected {
-    color: #004c97 !important;
+    color: #0033a1 !important;
     font-weight: 600;
     font-size: 24px !important;
     padding-left: 33px !important;
   }
   .mat-step-label {
-    color: #004c97 !important;
+    color: #0033a1 !important;
     font-weight: 600;
     padding-left: 33px !important;
     font-size: 24px !important;
@@ -144,7 +144,7 @@
 }
 
 ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon-selected {
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
   color: white !important;
   width: 60px;
   border-radius: 10px;
@@ -175,7 +175,7 @@
 .deposit_icon {
   width: 75px;
   height: 75px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #004c97 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -248,10 +248,10 @@
 }
 
 .calculator_subTItle {
-  color: #004c97;
+  color: #0033a1;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Benton Sans';
 }
 .autoRenew {
   padding: 2%;
@@ -278,7 +278,7 @@
   position: relative;
 }
 .fieldset-title {
-  font: 10px Poppins;
+  font: 10px Benton Sans;
   color: #102245;
   font-weight: 500;
   opacity: 0.5;
@@ -299,7 +299,7 @@
 .fieldset-input {
   position: relative;
   top: -4px;
-  font-family: Poppins;
+  font-family: Benton Sans;
   color: #102245 !important;
   opacity: 100%;
   letter-spacing: -0.26px;

@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="40.8" height="40.8" viewBox="0 0 40.8 40.8">
   <g id="Group_12891" data-name="Group 12891" transform="translate(-447.801 -464.398)">
-    <circle id="ludovic-migneault-4uj3iZ5m084-unsplash" cx="20.4" cy="20.4" r="20.4" transform="translate(447.801 464.398)" fill="#e7f3ff"/>
+    <circle id="ludovic-migneault-4uj3iZ5m084-unsplash" cx="20.4" cy="20.4" r="20.4"
+      transform="translate(447.801 464.398)" fill="#e7f3ff" />
     <g id="Group_12794" data-name="Group 12794" transform="translate(18348 12484.836)">
-      <path id="Path_14914" data-name="Path 14914" d="M14.5,2.79V6.5h3.71Z" transform="translate(-17891 -12012.499)" fill="#004c97"/>
-      <path id="Path_14915" data-name="Path 14915" d="M14,7.5a.5.5,0,0,1-.5-.5V2.5H6A1.46,1.46,0,0,0,4.5,4V20A1.46,1.46,0,0,0,6,21.5H17A1.46,1.46,0,0,0,18.5,20V7.5Zm-2,10H8a.5.5,0,0,1,0-1h4a.5.5,0,0,1,0,1Zm3-3H8a.5.5,0,0,1,0-1h7a.5.5,0,0,1,0,1Zm0-3H8a.5.5,0,0,1,0-1h7a.5.5,0,0,1,0,1Z" transform="translate(-17891 -12012.499)" fill="#004c97"/>
+      <path id="Path_14914" data-name="Path 14914" d="M14.5,2.79V6.5h3.71Z"
+        transform="translate(-17891 -12012.499)" fill="#0033a1" />
+      <path id="Path_14915" data-name="Path 14915"
+        d="M14,7.5a.5.5,0,0,1-.5-.5V2.5H6A1.46,1.46,0,0,0,4.5,4V20A1.46,1.46,0,0,0,6,21.5H17A1.46,1.46,0,0,0,18.5,20V7.5Zm-2,10H8a.5.5,0,0,1,0-1h4a.5.5,0,0,1,0,1Zm3-3H8a.5.5,0,0,1,0-1h7a.5.5,0,0,1,0,1Zm0-3H8a.5.5,0,0,1,0-1h7a.5.5,0,0,1,0,1Z"
+        transform="translate(-17891 -12012.499)" fill="#0033a1" />
     </g>
   </g>
 </svg>

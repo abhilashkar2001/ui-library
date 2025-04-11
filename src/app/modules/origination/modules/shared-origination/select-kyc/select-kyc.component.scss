@@ -51,13 +51,13 @@
   align-items: center;
 }
 .resnd_otp {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  color: #004c97;
+  color: #0033a1;
   text-decoration: underline;
   border: none;
   background: none;
@@ -78,7 +78,7 @@
   font-size: 13px;
 }
 .verifyInfo {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -87,23 +87,23 @@
   color: #000000;
 }
 .enter_mobile {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
   letter-spacing: 0em;
   text-align: left;
-  color: #004c97;
+  color: #0033a1;
   margin-top: 21px;
 }
 .enter_otp {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
   letter-spacing: 0em;
   text-align: left;
-  color: #004c97;
+  color: #0033a1;
   margin: 20px 0;
 }
 :host::ng-deep.otp_field .otp-input {
@@ -113,7 +113,7 @@
 }
 .check_font {
   color: #a1a1a1;
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;

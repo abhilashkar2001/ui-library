@@ -1,6 +1,6 @@
 .mat_table_header_sec {
   .table_title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 400;
     margin-bottom: 0;
   }
@@ -23,7 +23,7 @@
   font-weight: 600;
   padding: 0.3rem 0.6rem !important;
   border-radius: 40px !important;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Benton Sans', sans-serif !important;
   letter-spacing: 0.5px;
   background: rgb(211 211 211);
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.0588235294) !important;
@@ -31,20 +31,20 @@
 .emaildropdownmenu {
   padding: 10px;
   color: #102245;
-  font-family: Poppins;
+  font-family: Benton Sans;
 }
 .dropdownmobile {
   padding: 10px;
 }
 .dropdownmenu {
   color: #102245 !important;
-  font-family: Poppins !important;
+  font-family: Benton Sans !important;
 }
 .maskItem {
   margin-left: -12px !important;
   padding: 10px !important;
   color: #102245 !important;
-  font-family: Poppins !important;
+  font-family: Benton Sans !important;
 }
 
 .dropdown-content {
@@ -81,7 +81,7 @@
   justify-content: flex-start;
   align-items: center;
   height: 55px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   font-size: 13px !important;
 }
 .menu_btn:hover {
@@ -114,7 +114,7 @@
       background-color: #fff;
       opacity: 0;
       visibility: hidden;
-      border: 3px solid #004c972e;
+      border: 3px solid #0033a12e;
       border-radius: 8px;
       transition: all 0.24s linear;
       z-index: 999;
@@ -148,7 +148,7 @@
         height: 60px;
 
         p {
-          font-family: 'Poppins', sans-serif;
+          font-family: 'Benton Sans', sans-serif;
           font-weight: 500;
           margin: 0;
           line-height: 1.5;
@@ -210,7 +210,7 @@
   cursor: default !important;
   color: #010101 !important;
   font-size: 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   font-weight: 500 !important;
 }
 ::ng-deep .custom-reuse-table-cell:first-child,
