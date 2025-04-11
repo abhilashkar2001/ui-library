@@ -108,6 +108,6 @@ export class CibilScoreResultComponent implements OnInit {
 
   onContinue() {
     console.log(this.cibilScore);
-    this.onCibilConfirmEvent.emit();
+    this.onCibilConfirmEvent.emit({ isNext: true });
   }
 }

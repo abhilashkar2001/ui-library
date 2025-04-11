@@ -28,10 +28,11 @@
         <app-common-mobile-verification
           [hideInfo]="hideInfo"
           [showOtpSection]="showOtpSection"
-          [otpSent]="otpSent"
           [invalidOtp]="invalidOtp"
           (CustomSubmit)="onConfirmFromCibilScoreResult()"
           verificationName="National Id"
+          (enteredOTP)="checkCobilConfim($event)"
+          [agree]="agreed"
         ></app-common-mobile-verification>
       </div>
       <div fxLayout="row" fxLayoutGap="10">
@@ -39,6 +40,7 @@
           class="custom-checkbox"
           class="primary"
           style="margin-right: 10px"
+          (checkboxChange)="agreed = !agreed"
         >
         </ic-checkbox>
         <span class="standard-font-gray mb-4">
@@ -53,19 +55,23 @@
           as described above.
         </span>
       </div>
-      <div class="button-section" fxLayoutGap="50px">
-        <button
-          mat-raised-button
-          class="confirm-button"
-          [disabled]="checkCobilConfim()"
-          (click)="onContinue()"
+      <div class="button-section" fxLayout="row" fxLayoutGap="2%">
+        <ic-button
+          (OnClick)="onContinue()"
+          [disabled]="!(agreed && otp)"
+          [label]="'Continue' | translate"
+          [type]="'submit'"
+          [icButtonType]="'filled-rounded'"
         >
-          Continue
-        </button>
+        </ic-button>
 
-        <button mat-raised-button class="back-button" (click)="onBack()">
-          Back
-        </button>
+        <ic-button
+          [label]="'Back'"
+          icButtonType="ghost-rounded-danger"
+          size="large"
+          (OnClick)="onBack()"
+        >
+        </ic-button>
       </div>
     </div>
   </div>

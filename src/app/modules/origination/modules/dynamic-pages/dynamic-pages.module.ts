@@ -25,6 +25,8 @@ import { InputMaskModule } from '../../../../shared/directives/input-mask/input-
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { LibPipesModule } from '@onerumango/utils';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
+import { BusinessDetailsComponent } from './business-details/business-details.component';
+import { CollateralDetailsComponent } from './collateral-details/collateral-details.component';
 
 const components = [
   CibilScoreContainerComponent,
@@ -37,6 +39,8 @@ const components = [
   NationalIdUploadComponent,
   OtherChecklistDocUploadComponent,
   LoanDetailsComponent,
+  BusinessDetailsComponent,
+  CollateralDetailsComponent,
 ];
 
 @NgModule({

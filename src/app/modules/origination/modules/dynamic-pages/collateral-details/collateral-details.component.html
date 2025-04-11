@@ -1,0 +1,142 @@
+<div
+  class="business-main"
+  [formGroup]="collateralDetailsForm"
+  fxLayout="column"
+>
+  <mat-card class="default-card p-12">
+    <span class="theme_gt_md">Credit Card Details</span>
+    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
+      <div fxFlex="100">
+        <ic-form-field
+          label="Description of Collateral"
+          [control]="
+            collateralDetailsForm.get('collateralDescriptionForCredit')
+              | formcontrol
+          "
+        ></ic-form-field>
+      </div>
+      <div fxFlex="49">
+        <div class="header_md_bold_black mb-8">
+          {{ 'Ownership of the collateral' | translate }}
+        </div>
+        <div fxLayout="row" fxLayoutGap="50px">
+          <ic-radio-button
+            *ngFor="let status of ownershipStatus"
+            [control]="
+              collateralDetailsForm.get('ownershipForCredit')
+                | controlAsFormControl
+            "
+            [value]="status.value"
+            [label]="status.label"
+          >
+          </ic-radio-button>
+        </div>
+      </div>
+      <div fxFlex="49">
+        <ic-form-field
+          label="Asset Monetary Worth"
+          [control]="
+            collateralDetailsForm.get('assetMonetaryWorthForCredit')
+              | formcontrol
+          "
+        >
+        </ic-form-field>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="default-card p-12">
+    <span class="theme_gt_md">VAF Details</span>
+    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
+      <div fxFlex="100">
+        <ic-form-field
+          label="Description of Collateral"
+          [control]="
+            collateralDetailsForm.get('collateralDescriptionForVaf')
+              | formcontrol
+          "
+        ></ic-form-field>
+      </div>
+      <div fxFlex="49">
+        <div class="header_md_bold_black mb-8">
+          {{ 'Ownership of the collateral' | translate }}
+        </div>
+        <div fxLayout="row" fxLayoutGap="50px">
+          <ic-radio-button
+            *ngFor="let status of ownershipStatus"
+            [control]="
+              collateralDetailsForm.get('ownershipForVaf')
+                | controlAsFormControl
+            "
+            [value]="status.value"
+            [label]="status.label"
+          >
+          </ic-radio-button>
+        </div>
+      </div>
+      <div fxFlex="49">
+        <ic-form-field
+          label="Asset Monetary Worth"
+          [control]="
+            collateralDetailsForm.get('assetMonetaryWorthForVaf') | formcontrol
+          "
+        >
+        </ic-form-field>
+      </div>
+    </div>
+  </mat-card>
+
+  <div fxLayout="row wrap" class="align-section" fxLayoutGap="1%">
+    <div fxFlex="49">
+      <ic-form-field
+        label="(%)of Security Cover"
+        [control]="collateralDetailsForm.get('securityCover') | formcontrol"
+      >
+      </ic-form-field>
+    </div>
+    <div fxFlex="49">
+      <ic-form-field
+        label="Total Asset Worth"
+        [control]="collateralDetailsForm.get('totalAssetWorth') | formcontrol"
+      >
+      </ic-form-field>
+    </div>
+    <div fxFlex="49">
+      <ic-select
+        label="Loan Type"
+        [options]="loanTypeList"
+        bindValueKey="id"
+        bindLabelKey="values"
+        [control]="collateralDetailsForm.get('loanTypeId') | formcontrol"
+      >
+      </ic-select>
+    </div>
+  </div>
+
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutGap="1%"
+    style="margin-top: 50px"
+  >
+    <div>
+      <ic-button
+        [label]="'Confirm' | translate"
+        [type]="'submit'"
+        size="large"
+        (OnClick)="saveCollateralDetails()"
+        [icButtonType]="'filled-rounded'"
+      >
+      </ic-button>
+    </div>
+    <div>
+      <ic-button
+        [label]="'Back'"
+        icButtonType="ghost-rounded-danger"
+        size="large"
+        (OnClick)="onBack()"
+        [type]="'button'"
+      >
+      </ic-button>
+    </div>
+  </div>
+</div>

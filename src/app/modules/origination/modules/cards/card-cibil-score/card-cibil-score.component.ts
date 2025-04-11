@@ -9,11 +9,11 @@ import { CommonService } from 'app/shared/services/common-service/common.service
 })
 export class CardCibilScoreComponent implements OnInit {
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
-  @Output() confirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() isDifferentMobileNumber: EventEmitter<any> = new EventEmitter();
 
   isDifferentMobile = false;
-  showCibilScoreResult = false;
+  showCibilScoreResult = true;
   stepperTitle: string;
   selectedOption: 'different' | 'same' = 'same';
 
@@ -60,7 +60,8 @@ export class CardCibilScoreComponent implements OnInit {
     this.showCibilScoreResult = true;
   }
 
-  onConfirm() {
-    this.confirmEvent.emit();
+  onConfirm(event?: any) {
+    console.log(event);
+    this.CustomSubmit.emit(event);
   }
 }
