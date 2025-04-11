@@ -63,6 +63,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   }
   getCheckListDoc() {
     const originationId = this.sessionStorageService.getOriginationId();
+    console.log(this.sessionStorageService.getOtherDocScreenCode());
     this.loanService
       .getSavedChecklist(
         Number(originationId),

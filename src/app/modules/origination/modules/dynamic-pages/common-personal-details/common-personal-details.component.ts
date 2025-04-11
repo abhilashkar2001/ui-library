@@ -983,6 +983,9 @@ export class CommonPersonalDetailsComponent
 
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
+        this.sessionStorageService.setCustomerStagingId(
+          resp?.data?.customerInfo?.[0]?.custStagingId,
+        );
         this.CustomSubmit.emit({ isNext: true });
       }
     });
