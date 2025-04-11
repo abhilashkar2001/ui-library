@@ -1,5 +1,5 @@
 <div class="loan_flow_container">
-  <div fxFlex="40" class="fdCalculator_parent">
+  <div fxFlex="35" class="fdCalculator_parent">
     <app-commmon-steeper
       [screenTitle]="screenTitle"
       [screenList]="screenList"
@@ -8,9 +8,16 @@
     ></app-commmon-steeper>
   </div>
 
-  <mat-divider vertical></mat-divider>
+  <mat-divider vertical class="divider"></mat-divider>
 
-  <div class="col-div2 screenMargin" fxFlex="60" fxLayout="column">
+  <div
+    class="col-div2 screenMargin"
+    fxFlex="65"
+    fxLayout="column"
+    data-aos="zoom-in"
+    data-aos-delay="200"
+    data-aos-duration="500"
+  >
     <div fxLayoutAlign="space-between start">
       <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
         {{ cuurrentStep }}
@@ -25,7 +32,7 @@
       </button>
     </div>
 
-    <div>
+    <div class="container_dynamic">
       <ng-template appHost #container></ng-template>
     </div>
   </div>

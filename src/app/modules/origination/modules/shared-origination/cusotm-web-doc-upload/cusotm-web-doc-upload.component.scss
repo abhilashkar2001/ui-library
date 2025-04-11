@@ -81,7 +81,7 @@
 
     .img_box {
       height: 40px;
-      width: 40px !important;
+      min-width: 40px !important;
       border-radius: 10px;
       overflow: hidden;
 
@@ -102,10 +102,6 @@
       padding: 0rem 1rem;
       .img_name {
         word-break: break-word;
-        color: #606c8d;
-        font-weight: 600;
-        font-size: 13px;
-        margin: 0 0 6px !important;
       }
     }
     .cancel-icon {

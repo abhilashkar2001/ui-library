@@ -156,10 +156,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                 });
               }
               console.log(screenName);
-              if (
-                screenName.toLowerCase().includes('personal') ||
-                screenName.toLowerCase().includes('director')
-              ) {
+              if (screenName.toLowerCase().includes('director')) {
                 this.customSavePersonal(data);
               } else if (screenName.toLowerCase().includes('company')) {
                 this.customSaveCompany(data);

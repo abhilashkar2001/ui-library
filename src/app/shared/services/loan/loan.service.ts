@@ -78,11 +78,29 @@ export class LoanService {
       `${baseUrl}/customer/accountInfo?customerNo=${customerNumber}`,
     );
   }
+
   getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser?originationId=${id}`,
     );
   }
+
+  getPersonalDetailsData(id: any) {
+    return this.http.get<any>(
+      `${baseUrl}/loan-detail/fetch-personal-details?originationId=${id}`,
+    );
+  }
+
+  savePersonalDetails(personalDetails: any) {
+    return this.http.post<any>(
+      `${baseUrl}/loan-detail/personal-details`,
+      personalDetails,
+    );
+  }
+
+  // getOriginationMaster(_id: any) {
+  //   return this.http.get<any>(`../../../../../../../assets/json/dummay.json`);
+  // }
 
   checkAccountNumberAvilable(accountNumber: any) {
     return this.http.get<any>(

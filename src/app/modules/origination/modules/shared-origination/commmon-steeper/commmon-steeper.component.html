@@ -32,6 +32,9 @@
     [selectedIndex]="screenIndex"
     (selectionChange)="stepperSelectionChange($event)"
     class="mt-32"
+    data-aos="fade-down"
+    data-aos-delay="200"
+    data-aos-duration="500"
   >
     <ng-container *ngFor="let item of screenList; let i = index">
       <mat-step

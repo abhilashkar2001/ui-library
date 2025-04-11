@@ -1,10 +1,23 @@
-.vertical_line {
-  position: relative;
-  height: 50px;
-  left: 30px;
-  border-left: 1px #bac0d7 dotted;
-  display: block;
-  height: 122px;
+// Loan Flow Container
+.loan_flow_container {
+  margin-top: 3rem;
+  .fdCalculator_parent {
+    padding-left: 6%;
+    padding-right: 2%;
+    flex-direction: row;
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+  .divider {
+    border-right: 1px solid #0000003b;
+  }
+  .container_dynamic {
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 1%;
+  }
 }
 
 .deposit_icon {
@@ -124,14 +137,6 @@
 
 // for vrtical
 
-.fdCalculator_parent {
-  padding-left: 6%;
-  padding-right: 2%;
-  flex-direction: row;
-  height: 450px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
 @media screen and (max-width: 768px) {
   .fdCalculator_parent {
     display: none;
@@ -148,12 +153,7 @@
   width: 100%;
   padding-left: 2%;
 }
-.vertical-line {
-  display: block;
-  width: 100px;
-  border-top: 1px dotted;
-  margin-top: 35px;
-}
+
 .align_fd {
   padding: 20px 33px;
 }
@@ -167,9 +167,4 @@
   border: 1px solid #023e79;
   border-radius: 4px;
   width: 80px;
-}
-
-// Loan Flow Container
-.loan_flow_container {
-  margin-top: 3rem;
 }

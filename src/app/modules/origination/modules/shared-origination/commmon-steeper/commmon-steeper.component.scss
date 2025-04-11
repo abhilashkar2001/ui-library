@@ -93,7 +93,7 @@
 }
 .steps-average-text {
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #004c97;
 }
@@ -217,8 +217,7 @@
   }
   .mat-step-label.mat-step-label-active {
     color: #008461 !important;
-    font-size: 24px !important;
-    // font-weight: 600;
+    font-size: 18px !important;
     padding-left: 33px !important;
   }
   .mat-step-label.mat-step-label-active.mat-step-label-selected {

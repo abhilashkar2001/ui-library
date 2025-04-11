@@ -4,7 +4,10 @@
 
 .carousel {
   .carousel_section {
-    padding: 2rem 0;
+    padding: 0;
+    .swiper-wrapper {
+      justify-content: center;
+    }
     .single_card {
       width: 100%;
       min-height: 300px;

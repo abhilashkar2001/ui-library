@@ -4,7 +4,12 @@
       class="col-12 col-lg-6 col-md-6 py-3 pt-md-5 pb-md-3 order-1 order-lg-0"
     >
       <div class="container">
-        <div class="row">
+        <div
+          class="row"
+          data-aos="zoom-out"
+          data-aos-delay="200"
+          data-aos-duration="500"
+        >
           <div class="col-12 col-lg-11 col-md-11 ml-auto">
             <h1 class="hero_title">
               Secure Your Future<br />with Guaranteed<br />Returns.
@@ -53,6 +58,9 @@
     </div>
     <div
       class="col-12 col-lg-6 col-md-6 order-0 order-lg-1 d-flex justify-content-end align-items-center pt-3 pr-0"
+      data-aos="zoom-in"
+      data-aos-delay="200"
+      data-aos-duration="500"
     >
       <img
         [src]="imageUrl"
@@ -69,7 +77,12 @@
       (customDepositChange)="customDepositChange($event)"
     ></app-fd-rd-calculator>
   </div>
-  <div fxLayout="column">
+  <div
+    fxLayout="column"
+    data-aos="fade-up"
+    data-aos-delay="200"
+    data-aos-duration="500"
+  >
     <div fxLayoutAlign="center center" class="section_heading">
       Instant Growth {{ fdRdName }}
     </div>

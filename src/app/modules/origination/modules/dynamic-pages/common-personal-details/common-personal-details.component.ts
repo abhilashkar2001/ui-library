@@ -12,10 +12,15 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
-import { CreateRdService } from 'app/modules/origination/modules/new-deposit/new-deposit/rd-calculator/create-rd.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import * as moment from 'moment';
@@ -28,13 +33,12 @@ import { PersonalDetailsConstant } from './personal-details.constant';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data } from '@angular/router';
-import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
+// import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
+// import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
-
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',
@@ -49,7 +53,7 @@ export class CommonPersonalDetailsComponent
   @Output() customFormGroup = new EventEmitter<Data>();
   @Input() isHideField = false;
   @Input() basisId: any;
-  @Input() personalDetails: any;
+  personalDetails: any;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() docCustomerDetails: any;
   selectedStep = 0;
@@ -66,7 +70,9 @@ export class CommonPersonalDetailsComponent
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
   genderArray: any[] = [{}];
   prefixArray: any[] = [{}];
-  statementOptionArr = [{ id: 21, values: 'SMS' }];
+  empoymentArray: any[] = [{}];
+  relationArray: any[] = [{}];
+  statementOptionArr: any[] = [{}];
   residenceTypeArray: any[] = [{}];
   maritalStatusArray: any[] = [{}];
   todayDate: Date = new Date();
@@ -93,30 +99,14 @@ export class CommonPersonalDetailsComponent
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private cdr: ChangeDetectorRef,
-    private rdApi: CreateRdService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private store: Store<AppState>,
     private genericValueService: GenericValueService,
     private dateService: DateTimeService,
+    private personalData: LoanService,
   ) {}
-
-  panelOpened(index: number) {
-    this.panels.forEach((panel, i) => {
-      if (i !== index) {
-        panel.close();
-      }
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges | any): void {
-    this.getAllRequisite().then(() => {
-      if (changes?.personalDetails?.currentValue) {
-        this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
-      } else this.buildCustomerDetailsForm();
-    });
-  }
 
   ngOnInit(): void {
     const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
@@ -126,19 +116,49 @@ export class CommonPersonalDetailsComponent
     });
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
     this.subscriptions.push(localeData$);
+
     this.getGenericDetails();
     this.fetchBoundaries();
+
     this.holderType =
-      this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'Self';
+      this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
-    console.log(this.docCustomerDetails);
+    // this.loanCustomerId = 67583;
+
+    const personalDetailsSub = this.personalData
+      .getPersonalDetailsData(this.loanCustomerId)
+      .subscribe((resp) => {
+        this.personalDetails = resp?.data?.customerInfo;
+        if (this.personalDetails) {
+          this.getGenericDetails();
+          this.buildCustomerDetailsForm(this.personalDetails);
+        } else {
+          this.buildCustomerDetailsForm();
+        }
+      });
+
+    this.subscriptions.push(personalDetailsSub);
+
     this.getAllRequisite().then(() => {
-      if (this.personalDetails?.length > 0) {
-        this.getGenericDetails();
-        this.buildCustomerDetailsForm(this.personalDetails);
-      } else {
+      if (!this.personalDetails) {
         this.buildCustomerDetailsForm();
-        console.log(this.docCustomerDetails, 'this.docCustomerDetails');
+      }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges | any): void {
+    console.log(changes);
+    this.getAllRequisite().then(() => {
+      if (changes?.personalDetails?.currentValue) {
+        this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
+      } else this.buildCustomerDetailsForm();
+    });
+  }
+
+  panelOpened(index: number) {
+    this.panels.forEach((panel, i) => {
+      if (i !== index) {
+        panel.close();
       }
     });
   }
@@ -149,7 +169,6 @@ export class CommonPersonalDetailsComponent
         countries: this.api.getCountryDetails(),
       }).subscribe(
         (res) => {
-          console.log(res, '......');
           this.getCountry(res.countries);
           resolve('done');
         },
@@ -165,22 +184,12 @@ export class CommonPersonalDetailsComponent
       this.listCityState = resp.data;
     }
   }
+
   getCity(resp: any) {
     if (resp?.statusCode === 200) {
       this.countryArray = resp.data;
     }
     this.listCity = resp.data;
-  }
-
-  getCustomerById() {
-    this.rdApi
-      .getOriginationMaster(parseInt(this.loanCustomerId))
-      .subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          const customerDetails = resp.data[0].customerInfo;
-          this.buildCustomerDetailsForm(customerDetails);
-        } else this.buildCustomerDetailsForm();
-      });
   }
 
   getGenericDetails() {
@@ -192,14 +201,17 @@ export class CommonPersonalDetailsComponent
           this.prefixArray = resp.data['PREFIX'];
           this.residenceTypeArray = resp.data['RESIDENCETYPE'];
           this.maritalStatusArray = resp.data['MARITALSTATUS'];
+          this.empoymentArray = resp.data['EMPLOYMENTTYPE'];
+          this.relationArray = resp.data['RELATIONSHIPTYPE'];
+          this.statementOptionArr = resp.data['COMMUNICATIONTYPE'];
         }
       });
   }
+
   getCountry(resp: any) {
     if (resp?.statusCode === 200) {
       if (resp?.data) {
         this.countryArray = resp?.data;
-        console.log(this.countryArray);
         resp?.data.forEach((element: any) => {
           if (element.nationality != null) this.nationalityArray.push(element);
         });
@@ -221,7 +233,6 @@ export class CommonPersonalDetailsComponent
 
   buildCustomerDetailsForm(data?: any) {
     this.customerDetailsForm = this.fb.group({
-      loanCustomerId: '',
       customer: this.fb.array([]),
     });
 
@@ -233,11 +244,12 @@ export class CommonPersonalDetailsComponent
         );
       }, 200);
     } else {
-      if (this.docCustomerDetails?.length > 0)
+      if (this.docCustomerDetails?.length > 0) {
         for (let i = 0; i < this.docCustomerDetails?.length; i++)
           this.addCustomer(i);
-      else this.addCustomer(0);
-      console.log(this.docCustomerDetails);
+      } else {
+        this.addCustomer(0);
+      }
       if (this.docCustomerDetails?.length > 0)
         setTimeout(() => {
           if (this.docCustomerDetails instanceof Array) {
@@ -443,20 +455,13 @@ export class CommonPersonalDetailsComponent
       this.addCustomer(i, data && data[i]);
   }
 
-  get customer(): FormArray {
-    return this.customerDetailsForm.get('customer') as FormArray;
-  }
-
   newCustomer(data?: any): FormGroup {
-    console.log(data);
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ''],
       custStagingId: data?.custStagingId ?? null,
       onboardingStatus: [data ? data.onboardingStatus : ''],
-      primaryCustomer: [
-        data ? data.primaryCustomer : this.customer.length == 0 ? true : false,
-      ],
+      primaryCustomer: [data ? data.primaryCustomer : false],
       prefixId: [data ? data.prefixId : '', Validators.required],
       firstName: [data ? data.firstName : '', Validators.required],
       lastName: [data ? data.lastName : '', Validators.required],
@@ -468,6 +473,126 @@ export class CommonPersonalDetailsComponent
       source: data?.source ? data.source : 'Website',
       kycStatus: data?.kycStatus && data.kycStatus,
       documentId: this.calculateId(data),
+      documentInfo: this.fb.array(
+        data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [],
+      ),
+
+      spouseInfo: this.fb.group({
+        spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
+        prefix: [data?.spouseInfo?.prefix ?? ''],
+        prefixValue: [data?.spouseInfo?.prefixValue ?? ''],
+        firstName: [data?.spouseInfo?.firstName ?? ''],
+        middleName: [data?.spouseInfo?.middleName ?? ''],
+        lastName: [data?.spouseInfo?.lastName ?? ''],
+        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? ''],
+        employeeStatusId: [data?.spouseInfo?.employeeStatusId ?? ''],
+        employeeStatusValue: [data?.spouseInfo?.employeeStatusValue ?? ''],
+        netIncome: [data?.spouseInfo?.netIncome ?? ''],
+        contactDetails: this.fb.group({
+          contactId: [data?.spouseInfo?.contactDetails?.contactId ?? null],
+          telephone: [data?.spouseInfo?.contactDetails?.telephone ?? ''],
+          worktelephone: [
+            data?.spouseInfo?.contactDetails?.worktelephone ?? '',
+          ],
+          mobile: [data?.spouseInfo?.contactDetails?.mobile ?? ''],
+          email: [data?.spouseInfo?.contactDetails?.email ?? ''],
+          fax: [data?.spouseInfo?.contactDetails?.fax ?? ''],
+          whatsappNo: [data?.spouseInfo?.contactDetails?.whatsappNo ?? ''],
+          alternativeNumber: [
+            data?.spouseInfo?.contactDetails?.alternativeNumber ?? '',
+          ],
+          residencePhone: [
+            data?.spouseInfo?.contactDetails?.residencePhone ?? '',
+          ],
+          mobtCode: [
+            data?.spouseInfo?.contactDetails?.mobtCode ??
+              this.defaultIsdCodeValue,
+          ],
+          waptCode: [
+            data?.spouseInfo?.contactDetails?.waptCode ??
+              this.defaultIsdCodeValue,
+          ],
+          altCode: [
+            data?.spouseInfo?.contactDetails?.altCode ??
+              this.defaultIsdCodeValue,
+          ],
+          statementViaId: [
+            data?.spouseInfo?.contactDetails?.statementViaId ?? '',
+          ],
+        }),
+      }),
+
+      emergencyContactInfo: this.fb.group({
+        emergencyContactId: [
+          data?.emergencyContactInfo?.emergencyContactId ?? null,
+        ],
+        prefix: [data?.emergencyContactInfo?.prefix ?? ''],
+        prefixValue: [data?.emergencyContactInfo?.prefixValue ?? ''],
+        firstName: [
+          data?.emergencyContactInfo?.firstName ?? '',
+          Validators.required,
+        ],
+        middleName: [data?.emergencyContactInfo?.middleName ?? ''],
+        lastName: [
+          data?.emergencyContactInfo?.lastName ?? '',
+          Validators.required,
+        ],
+        relationshipId: [
+          data?.emergencyContactInfo?.relationshipId ?? '',
+          Validators.required,
+        ],
+        relationshipValue: [
+          data?.emergencyContactInfo?.relationshipValue ?? '',
+        ],
+        contactDetails: this.fb.group({
+          contactId: [
+            data?.emergencyContactInfo?.contactDetails?.contactId ?? null,
+          ],
+          telephone: [
+            data?.emergencyContactInfo?.contactDetails?.telephone ?? '',
+          ],
+          worktelephone: [
+            data?.emergencyContactInfo?.contactDetails?.worktelephone ?? '',
+          ],
+          mobile: [data?.emergencyContactInfo?.contactDetails?.mobile ?? ''],
+          email: [
+            data?.emergencyContactInfo?.contactDetails?.email ?? '',
+            Validators.pattern(
+              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+            ),
+          ],
+          fax: [data?.emergencyContactInfo?.contactDetails?.fax ?? ''],
+          whatsappNo: [
+            data?.emergencyContactInfo?.contactDetails?.whatsappNo ?? '',
+          ],
+          alternativeNumber: [
+            data?.emergencyContactInfo?.contactDetails?.alternativeNumber ?? '',
+          ],
+          residencePhone: [
+            data?.emergencyContactInfo?.contactDetails?.residencePhone ?? '',
+          ],
+          mobtCode: [
+            data?.emergencyContactInfo?.contactDetails?.mobtCode ??
+              this.defaultIsdCodeValue,
+          ],
+          waptCode: [
+            data?.emergencyContactInfo?.contactDetails?.waptCode ??
+              this.defaultIsdCodeValue,
+          ],
+          altCode: [
+            data?.emergencyContactInfo?.contactDetails?.altCode ??
+              this.defaultIsdCodeValue,
+          ],
+          statementViaId: [
+            data?.emergencyContactInfo?.contactDetails?.statementViaId ?? '',
+          ],
+          address: this.fb.array(
+            data?.emergencyContactInfo?.contactDetails?.address?.map(
+              (addr: any) => this.createEmergencyContactAddressGroup(addr),
+            ) || [],
+          ),
+        }),
+      }),
 
       contact: this.fb.group({
         email: [
@@ -487,8 +612,111 @@ export class CommonPersonalDetailsComponent
           data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
           [Validators.required],
         ],
+        alternativeNumber: [
+          data?.contact ? data?.contact.alternativeNumber : '',
+        ],
+        altCode: [
+          data ? parseInt(data.contact.altCode) : this.defaultIsdCodeValue,
+        ],
+        whatsappNo: [data?.contact ? data?.contact.whatsappNo : ''],
+        waptCode: [
+          data ? parseInt(data.contact.waptCode) : this.defaultIsdCodeValue,
+        ],
+        telephone: [data?.contact ? data?.contact.telephone : ''],
+        worktelephone: [data?.contact ? data?.contact.worktelephone : ''],
+        fax: [data?.contact ? data?.contact.fax : ''],
+        statementViaId: [data?.contact ? data?.contact.statementViaId : ''],
         address: this.fb.array([]),
       }),
+    });
+  }
+
+  get customer(): FormArray {
+    return this.customerDetailsForm.get('customer') as FormArray;
+  }
+
+  get addressArray(): FormArray {
+    return this.customer?.get('contact')?.get('address') as FormArray;
+  }
+
+  getDocumentInfoArray(index: number): FormArray {
+    return this.customer.at(index).get('documentInfo') as FormArray;
+  }
+
+  getDocumentControl(
+    customerIndex: number,
+    docIndex: number,
+    controlName: string,
+  ): AbstractControl | null {
+    const docArray = this.getDocumentInfoArray(customerIndex);
+    if (
+      !docArray ||
+      !docArray.controls ||
+      docIndex >= docArray.controls.length
+    ) {
+      return null;
+    }
+
+    const documentGroup = docArray.controls[docIndex];
+    return documentGroup?.get(controlName) || null;
+  }
+
+  getSpouseInfo(index: number): FormGroup {
+    return this.customer.at(index).get('spouseInfo') as FormGroup;
+  }
+
+  getSpouseContactDetails(index: number): FormGroup {
+    return this.getSpouseInfo(index).get('contactDetails') as FormGroup;
+  }
+
+  getEmergencyContactInfo(index: number): FormGroup {
+    return this.customer.at(index).get('emergencyContactInfo') as FormGroup;
+  }
+
+  getEmergencyContactDetails(index: number): FormGroup {
+    return this.getEmergencyContactInfo(index).get(
+      'contactDetails',
+    ) as FormGroup;
+  }
+
+  getEmergencyContactAddress(index: number): FormArray {
+    return this.getEmergencyContactDetails(index).get('address') as FormArray;
+  }
+
+  addEmergencyContactAddress(index: number, address?: any): void {
+    const addressArray = this.getEmergencyContactAddress(index);
+    addressArray.push(this.createEmergencyContactAddressGroup(address));
+  }
+
+  clearEmergencyContactAddress(index: number): void {
+    const addressArray = this.getEmergencyContactAddress(index);
+    while (addressArray.length) {
+      addressArray.removeAt(0);
+    }
+  }
+
+  private createEmergencyContactAddressGroup(address?: any): FormGroup {
+    return this.fb.group({
+      addressId: [address?.addressId ?? null],
+      address1: [address?.address1 ?? '', Validators.required],
+      address2: [address?.address2 ?? ''],
+      cityName: [address?.cityName ?? ''],
+      stateName: [address?.stateName ?? ''],
+      countryName: [address?.countryName ?? ''],
+      pincode: [address?.pincode ?? ''],
+      cityId: [address?.cityId ?? ''],
+      residenceType: [address?.residenceType ?? '', Validators.required],
+      residenceTypeValue: [address?.residenceTypeValue ?? ''],
+    });
+  }
+
+  private newDocumentGroup(doc?: any): FormGroup {
+    return this.fb.group({
+      documentTypeId: [doc?.documentTypeId || '', Validators.required],
+      documentNumber: [doc?.documentNumber || '', Validators.required],
+      issueDate: [doc?.issueDate || ''],
+      expiryDate: [doc?.expiryDate || ''],
+      countryOfIssue: [doc?.countryOfIssue || ''],
     });
   }
 
@@ -499,7 +727,7 @@ export class CommonPersonalDetailsComponent
     addressArrayControl.push(
       this.fb.group({
         address1: [address?.address1 ?? '', [Validators.required]],
-        address2: [address?.address2 ?? ''],
+        address2: [address?.address2 ?? '', [Validators.required]],
         residenceType: [address?.residenceType ?? '', [Validators.required]],
         countryName: [address?.countryName ?? '', [Validators.required]],
         pincode: [address?.pincode ?? '', [Validators.required]],
@@ -530,10 +758,11 @@ export class CommonPersonalDetailsComponent
     this.addAddress(i, data ? data.contact?.address[0] : {});
     this.debounceZipCodeAndCif();
   }
+
   debounceZipCodeAndCif() {
     for (let i = 0; i < this.customer.value?.length; i++) {
       this.fetchStateCity(i);
-      this.getCustomerByCif(i);
+      // this.getCustomerByCif(i);
       this.checkMobileValidtiy(i);
     }
   }
@@ -572,62 +801,58 @@ export class CommonPersonalDetailsComponent
       });
   }
 
-  get addressArray(): FormArray {
-    return this.customer?.get('contact')?.get('address') as FormArray;
-  }
+  // getCustomerByCif(i: any) {
+  //   this.customer.controls[i]
+  //     ?.get('customerNo')
+  //     ?.valueChanges.pipe(debounceTime(500))
+  //     .subscribe((value) => {
+  //       if (value) {
+  //         this.loanApi.getCustomerByCif(value).subscribe((resp) => {
+  //           if (
+  //             resp &&
+  //             resp.statusCode === 200 &&
+  //             Array.isArray(resp.data) &&
+  //             resp.data[0] !== undefined
+  //           ) {
+  //             const payload = <FACTORYPOPULATE>resp?.data[0];
+  //             this.customer.controls[i]?.patchValue(
+  //               this.FactoryPopulate(payload),
+  //             );
+  //             this.customerDetailsForm.markAllAsTouched();
+  //           } else {
+  //             this.resetExceptCif(i);
+  //           }
+  //         });
+  //       } else {
+  //         this.resetExceptCif(i);
+  //       }
+  //     });
+  // }
 
-  getCustomerByCif(i: any) {
-    this.customer.controls[i]
-      ?.get('customerNo')
-      ?.valueChanges.pipe(debounceTime(500))
-      .subscribe((value) => {
-        if (value) {
-          this.loanApi.getCustomerByCif(value).subscribe((resp) => {
-            if (
-              resp &&
-              resp.statusCode === 200 &&
-              Array.isArray(resp.data) &&
-              resp.data[0] !== undefined
-            ) {
-              const payload = <FACTORYPOPULATE>resp?.data[0];
-              this.customer.controls[i]?.patchValue(
-                this.FactoryPopulate(payload),
-              );
-              this.customerDetailsForm.markAllAsTouched();
-            } else {
-              this.resetExceptCif(i);
-            }
-          });
-        } else {
-          this.resetExceptCif(i);
-        }
-      });
-  }
+  // debounceValue(delay: number, value: number, i: any): void {
+  //   if (this.debounceTimeout) {
+  //     clearTimeout(this.debounceTimeout);
+  //   }
+  //   this.debounceTimeout = setTimeout(() => {
+  //     const mobileControl = this.customer.at(i).get('contact')?.get('mobile');
+  //     if (i == 0)
+  //       this.openApi
+  //         .checkMobileAndProduct(
+  //           this.mobileVerifyInfo.basisName,
+  //           value,
+  //           this.mobileVerifyInfo.productDuplicationKey,
+  //         )
+  //         .subscribe((result) => {
+  //           if (!result) {
+  //             this.allreadyProduct(mobileControl);
+  //           }
+  //         });
+  //   }, delay);
+  // }
 
-  debounceValue(delay: number, value: number, i: any): void {
-    if (this.debounceTimeout) {
-      clearTimeout(this.debounceTimeout);
-    }
-    this.debounceTimeout = setTimeout(() => {
-      const mobileControl = this.customer.at(i).get('contact')?.get('mobile');
-      if (i == 0)
-        this.openApi
-          .checkMobileAndProduct(
-            this.mobileVerifyInfo.basisName,
-            value,
-            this.mobileVerifyInfo.productDuplicationKey,
-          )
-          .subscribe((result) => {
-            if (!result) {
-              this.allreadyProduct(mobileControl);
-            }
-          });
-    }, delay);
-  }
-
-  checkProductDuplicacy(event: any, i: any) {
-    this.debounceValue(500, event.target.value, i);
-  }
+  // checkProductDuplicacy(event: any, i: any) {
+  //   this.debounceValue(500, event.target.value, i);
+  // }
 
   checkMobileValidtiy(i: any) {
     const mobileControl: any = this.customer
@@ -653,122 +878,161 @@ export class CommonPersonalDetailsComponent
       });
   }
 
-  allreadyProduct(mobileControl: any) {
-    const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
-      data: {
-        errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
-        errorMessageHint: 'Please visit bank for more information.',
-      },
-      width: '650px',
-      disableClose: true,
-      panelClass: 'popup-dialog-class',
-      backdropClass: 'bdrop',
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      mobileControl.setValue('');
-    });
-  }
+  // allreadyProduct(mobileControl: any) {
+  //   const dialogRef = this.dialog.open(ErrorNotifierPopupComponent, {
+  //     data: {
+  //       errorMessage: `We have found similar ${this.mobileVerifyInfo.applicationType} in our record on your Mobile Number`,
+  //       errorMessageHint: 'Please visit bank for more information.',
+  //     },
+  //     width: '650px',
+  //     disableClose: true,
+  //     panelClass: 'popup-dialog-class',
+  //     backdropClass: 'bdrop',
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //     mobileControl.setValue('');
+  //   });
+  // }
 
-  resetExceptCif(i: any) {
-    const customerFormGroup = this.customerDetailsForm.get(
-      'customer',
-    ) as FormGroup;
-    const customerIndex: any = customerFormGroup.controls[i];
-    customerIndex.patchValue({
-      primaryCustomer: false,
-      prefixId: '',
-      firstName: '',
-      lastName: '',
-      dateOfBirth: '',
-      email: '',
-      genderId: '',
-      nationality: '',
-      address1: '',
-      residenceType: '',
-      countryName: '',
-      pincode: '',
-      state: '',
-      cityId: '',
-      source: '',
-      kycStatus: '',
-    });
-  }
-  pincodeExpansion(customerIndex: number) {
+  // resetExceptCif(i: any) {
+  //   const customerFormGroup = this.customerDetailsForm.get(
+  //     'customer',
+  //   ) as FormGroup;
+  //   const customerIndex: any = customerFormGroup.controls[i];
+  //   customerIndex.patchValue({
+  //     primaryCustomer: false,
+  //     prefixId: '',
+  //     firstName: '',
+  //     lastName: '',
+  //     dateOfBirth: '',
+  //     email: '',
+  //     genderId: '',
+  //     nationality: '',
+  //     address1: '',
+  //     residenceType: '',
+  //     countryName: '',
+  //     pincode: '',
+  //     state: '',
+  //     cityId: '',
+  //     source: '',
+  //     kycStatus: '',
+  //   });
+  // }
+
+  pincodeExpansion(
+    customerIndex: number,
+    addressType: 'customer' | 'emergency' = 'customer',
+  ) {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: '60%',
       disableClose: true,
       panelClass: 'dialog-class',
     });
+
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        const customerFormGroup = this.customerDetailsForm.get(
-          'customer',
-        ) as FormArray;
-        const customerAddress = customerFormGroup.controls[customerIndex]?.get(
-          'contact.address',
-        ) as FormArray;
-        const addressControl = customerAddress.controls[0];
-        addressControl?.patchValue(res);
-        addressControl?.get('countryName')?.patchValue(res.countryName);
+        if (addressType === 'customer') {
+          // Handle customer address
+          const customerAddress = this.customer
+            .at(customerIndex)
+            .get('contact.address') as FormArray;
+          const addressControl = customerAddress.controls[0];
+          addressControl?.patchValue(res);
+          addressControl?.get('countryName')?.patchValue(res.countryName);
+        } else {
+          // Handle emergency contact address
+          const emergencyAddress =
+            this.getEmergencyContactAddress(customerIndex);
+          if (emergencyAddress.controls[0]) {
+            emergencyAddress.controls[0].patchValue(res);
+            emergencyAddress.controls[0]
+              .get('countryName')
+              ?.patchValue(res.countryName);
+          } else {
+            // If no address exists, add one
+            this.addEmergencyContactAddress(customerIndex, res);
+          }
+        }
       }
     });
   }
 
   confirmCustomer() {
+    console.log('first');
     if (
-      this.customerDetailsForm.invalid ||
-      (!this.isHideField && this.isAnyPrimaryCustomer())
+      this.customerDetailsForm.invalid
+      // this.isAnyPrimaryCustomer())
     ) {
       return;
     }
-
-    let prefixValue = null;
-    this.customerDetailsForm.value.customer.forEach((element: any) => {
-      this.prefixArray.forEach((el) => {
-        if (element.primaryCustomer && el.id == element.prefixId) {
-          prefixValue = el.values;
-        }
-      });
-    });
+    console.log('se');
+    // let prefixValue = null;
+    // this.customerDetailsForm.value.customer.forEach((element: any) => {
+    //   this.prefixArray.forEach((el) => {
+    //     if (element.primaryCustomer && el.id == element.prefixId) {
+    //       prefixValue = el.values;
+    //     }
+    //   });
+    // });
     console.log(this.customerDetailsForm, 'customerDetailsForm');
-    this.CustomSubmit.emit({
-      status: true,
-      prefixValue: prefixValue,
-      personalDetails: this.customerDetailsForm,
-    });
+    const payload = {
+      originationId: this.loanCustomerId,
+      customerInfo: [...this.customerDetailsForm?.value.customer],
+    };
+    payload.customerInfo[0].primaryCustomer = true;
 
-    this?.updateParentModel({
-      personalDetails: this.customerDetailsForm.value,
-      updateMasterSave: true,
-      prefixValue: prefixValue,
-      isForLoan: false,
+    this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
+      if (resp.statusCode === 200) {
+        this.CustomSubmit.emit({ isNext: true });
+      }
     });
+    // this?.updateParentModel({
+    //   personalDetails: this.customerDetailsForm.value,
+    //   updateMasterSave: true,
+    //   prefixValue: prefixValue,
+    //   isForLoan: false,
+    // });
   }
 
+  // onConfirm() {
+  //   const payload = {
+  //     ...this.loanDetailsForm?.value,
+  //   };
+  //   payload.originationModel.originationId = this.originationId;
+  //   this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
+  //     if (resp.statusCode === 200) {
+  //       this.CustomSubmit.emit({ isNext: true });
+  //     }
+  //   });
+  // }
+
+  confirmCustomertoCheck() {
+    console.log(this.customerDetailsForm);
+  }
   /**
    * checking any one customer should be primary customer .If not then it will show message and return.
    * @returns is any customer primary or not.
    */
-  isAnyPrimaryCustomer() {
-    if (
-      this.customerDetailsForm.value.customer.some(
-        (item: any) => item?.primaryCustomer == true,
-      )
-    ) {
-      return false;
-    } else {
-      this.dialog.open(ErrorNotifierPopupComponent, {
-        data: {
-          errorMessage: 'Please select primary customer',
-        },
-        width: '650px',
-        disableClose: true,
-        panelClass: 'popup-dialog-class',
-        backdropClass: 'bdrop',
-      });
-      return true;
-    }
-  }
+  // isAnyPrimaryCustomer() {
+  //   if (
+  //     this.customerDetailsForm.value.customer.some(
+  //       (item: any) => item?.primaryCustomer == true,
+  //     )
+  //   ) {
+  //     return false;
+  //   } else {
+  //     this.dialog.open(ErrorNotifierPopupComponent, {
+  //       data: {
+  //         errorMessage: 'Please select primary customer',
+  //       },
+  //       width: '650px',
+  //       disableClose: true,
+  //       panelClass: 'popup-dialog-class',
+  //       backdropClass: 'bdrop',
+  //     });
+  //     return true;
+  //   }
+  // }
 
   goBack() {
     this.backEvent.emit();
@@ -785,47 +1049,49 @@ export class CommonPersonalDetailsComponent
     });
   }
 
-  FactoryPopulate(resp: FACTORYPOPULATE) {
-    return {
-      customerId: resp?.['customerId'],
-      primaryCustomer: '',
-      prefixId: resp?.['prefixId'],
-      firstName: resp?.['firstName'],
-      lastName: resp?.['lastName'],
-      dateOfBirth: resp?.['dateOfBirth'],
-      email: resp?.['contact']?.email,
-      genderId: resp?.['genderId'],
-      nationality: resp?.['nationality'],
-      contact: {
-        mobile: resp?.['contact']?.mobile,
-        mobtCode: parseInt(resp?.['contact']?.mobtCode),
-        email: resp?.['contact']?.email,
-        address: [
-          {
-            address1: resp?.['contact']?.address?.[0]?.address1,
-            residenceType: resp?.['contact']?.address?.[0]?.residenceType,
-            countryName: resp?.['contact']?.address?.[0]?.countryName,
-            pincode: resp?.['contact']?.address?.[0]?.pincode,
-            state: resp?.['contact']?.address?.[0]?.stateName,
-            cityId: resp?.['contact']?.address?.[0]?.cityId,
-          },
-        ],
-      },
-      source: resp?.['source'],
-      kycStatus: resp?.['kycStatus'],
-      mobile: resp?.['contact']?.mobile,
-      data: null,
-      mobtCode: parseInt(resp?.['contact']?.mobtCode),
-    };
-  }
-  checkPrimaryCustomer() {
-    return this.customerDetailsForm.value.customer.some((item: any, i: any) => {
-      if (item.primaryCustomer) {
-        this.primaryCustIndex = i;
-        return item.primaryCustomer;
-      } else return false;
-    });
-  }
+  // FactoryPopulate(resp: FACTORYPOPULATE) {
+  //   return {
+  //     customerId: resp?.['customerId'],
+  //     primaryCustomer: '',
+  //     prefixId: resp?.['prefixId'],
+  //     firstName: resp?.['firstName'],
+  //     lastName: resp?.['lastName'],
+  //     dateOfBirth: resp?.['dateOfBirth'],
+  //     email: resp?.['contact']?.email,
+  //     genderId: resp?.['genderId'],
+  //     nationality: resp?.['nationality'],
+  //     contact: {
+  //       mobile: resp?.['contact']?.mobile,
+  //       mobtCode: parseInt(resp?.['contact']?.mobtCode),
+  //       email: resp?.['contact']?.email,
+  //       address: [
+  //         {
+  //           address1: resp?.['contact']?.address?.[0]?.address1,
+  //           residenceType: resp?.['contact']?.address?.[0]?.residenceType,
+  //           countryName: resp?.['contact']?.address?.[0]?.countryName,
+  //           pincode: resp?.['contact']?.address?.[0]?.pincode,
+  //           state: resp?.['contact']?.address?.[0]?.stateName,
+  //           cityId: resp?.['contact']?.address?.[0]?.cityId,
+  //         },
+  //       ],
+  //     },
+  //     source: resp?.['source'],
+  //     kycStatus: resp?.['kycStatus'],
+  //     mobile: resp?.['contact']?.mobile,
+  //     data: null,
+  //     mobtCode: parseInt(resp?.['contact']?.mobtCode),
+  //   };
+  // }
+
+  // checkPrimaryCustomer() {
+  //   return this.customerDetailsForm.value.customer.some((item: any, i: any) => {
+  //     if (item.primaryCustomer) {
+  //       this.primaryCustIndex = i;
+  //       return item.primaryCustomer;
+  //     } else return false;
+  //   });
+  // }
+
   fetchBoundaries() {
     this.openApi.fetchBoundariesDetails(this.basisId).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
@@ -845,6 +1111,7 @@ export class CommonPersonalDetailsComponent
       this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
     }
   }
+
   showAgeValidation(i: any) {
     setTimeout(() => {
       const customerFormGroup = this.customerDetailsForm.get(
@@ -860,6 +1127,7 @@ export class CommonPersonalDetailsComponent
       customerIdx.get('dateOfBirth').setErrors({ invalidDob: true });
     }, 100);
   }
+
   calculateAge(dateOfBirth: any) {
     return moment().diff(dateOfBirth, 'years');
   }

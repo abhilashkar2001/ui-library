@@ -1,4 +1,9 @@
-<section class="carousel py-5 py-md-0">
+<section
+  class="carousel py-5 py-md-0"
+  data-aos="fade-top"
+  data-aos-delay="200"
+  data-aos-duration="500"
+>
   <div class="px-3">
     <h1 class="section_heading">{{ businessSuiteName }}</h1>
     <p class="section_subHeading">
@@ -6,7 +11,12 @@
     </p>
   </div>
 
-  <div class="carousel_section">
+  <div
+    class="carousel_section"
+    data-aos="zoom-in"
+    data-aos-delay="200"
+    data-aos-duration="500"
+  >
     <div class="ellipse"></div>
     <swiper [config]="swiperConfig" [navigation]="true">
       <ng-template
@@ -20,6 +30,9 @@
               'background-image': 'url(assets/images/default_fallback_img.svg)',
             }
           "
+          data-aos="zoom-out"
+          data-aos-delay="200"
+          data-aos-duration="500"
         >
           <div class="card_overlay">
             <div>
