@@ -189,7 +189,7 @@ export class LoanService {
 
   getBusinessDetailsById(originationId: number) {
     return this.http.get<any>(
-      `${baseUrl}/loan-detail/fetch-business-by-id=${originationId}`,
+      `${baseUrl}/loan-detail/fetch-business-details/${originationId}`,
     );
   }
 
@@ -202,7 +202,7 @@ export class LoanService {
 
   getCollateralDetailsId(originationId: number) {
     return this.http.get<any>(
-      `${baseUrl}/loan-detail/fetch-collateral/${originationId}`,
+      `${baseUrl}/loan-detail/fetch-collateralInfo?originationId=${originationId}`,
     );
   }
 }

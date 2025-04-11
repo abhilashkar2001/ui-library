@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Data } from '@angular/router';
 import { IcHttpResponseModel } from '@onerumango/utils';
@@ -30,6 +36,7 @@ export class CollateralDetailsComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
     private genericService: GenericValueService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -56,7 +63,10 @@ export class CollateralDetailsComponent implements OnInit {
       .getCollateralDetailsId(this.originationId)
       .subscribe((res: any) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.collateralDetailsForm.patchValue(res?.data);
+          this.collateralDetailsForm.patchValue(res?.data[0]);
+          this.collateralDetailsForm
+            .get('originationInfoId')
+            ?.setValue(this.originationId);
         }
       });
   }
@@ -74,6 +84,7 @@ export class CollateralDetailsComponent implements OnInit {
       loanTypeId: [''],
       originationInfoId: [this.originationId],
     });
+    this.cdr.detectChanges();
   }
 
   saveCollateralDetails() {

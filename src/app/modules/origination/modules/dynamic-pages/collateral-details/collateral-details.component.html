@@ -8,6 +8,7 @@
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
+          [icAlphabetOnly]="true"
           label="Description of Collateral"
           [control]="
             collateralDetailsForm.get('collateralDescriptionForCredit')
@@ -34,6 +35,7 @@
       </div>
       <div fxFlex="49">
         <ic-form-field
+          [icNumbersOnly]="true"
           label="Asset Monetary Worth"
           [control]="
             collateralDetailsForm.get('assetMonetaryWorthForCredit')
@@ -49,6 +51,7 @@
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
+          [icAlphabetOnly]="true"
           label="Description of Collateral"
           [control]="
             collateralDetailsForm.get('collateralDescriptionForVaf')
@@ -75,6 +78,7 @@
       </div>
       <div fxFlex="49">
         <ic-form-field
+          [icNumbersOnly]="true"
           label="Asset Monetary Worth"
           [control]="
             collateralDetailsForm.get('assetMonetaryWorthForVaf') | formcontrol
@@ -95,6 +99,7 @@
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [icNumbersOnly]="true"
         label="Total Asset Worth"
         [control]="collateralDetailsForm.get('totalAssetWorth') | formcontrol"
       >

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
 import { IcHttpResponseModel } from '@onerumango/utils';
 import {
@@ -43,7 +43,7 @@ export class BusinessDetailsComponent implements OnInit {
 
   getBusinessDetailsById() {
     this.loanService
-      .getCollateralDetailsId(this.originationId)
+      .getBusinessDetailsById(this.originationId)
       .subscribe((res: any) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
           this.businessDetailsForm.patchValue(res?.data);
@@ -64,11 +64,11 @@ export class BusinessDetailsComponent implements OnInit {
   buildBusinessForm() {
     this.businessDetailsForm = this.fb.group({
       businessName: [''],
-      natureOfBusinessId: [20],
-      yearsOfOperation: [''],
-      typeOfService: [''],
-      monthlyTurnover: [''],
-      aveStockLevel: [''],
+      natureOfBusinessId: ['', Validators.required],
+      yearsOfOperation: ['', Validators.required],
+      typeOfService: ['', Validators.required],
+      monthlyTurnover: ['', Validators.required],
+      aveStockLevel: ['', Validators.required],
       contact: this.fb.group({
         telephone: [''],
         address: this.fb.array([this.buildAddressGroup()]),
@@ -86,7 +86,7 @@ export class BusinessDetailsComponent implements OnInit {
 
   buildAddressGroup(): FormGroup {
     return this.fb.group({
-      address1: [''],
+      address1: ['', Validators.required],
     });
   }
 

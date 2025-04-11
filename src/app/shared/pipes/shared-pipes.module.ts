@@ -6,6 +6,7 @@ import { CustomCurrencyPipe } from './custom-currency.pipe';
 import { FormArrayPipe } from './formarray.pipe';
 import { FormControlPipe } from './formcontrol.pipe';
 import { FormGroupPipe } from './formgroup.pipe';
+import { TenureFormatPipe } from './tenure.pipe';
 
 const pipes = [
   SearchOptionsPipe,
@@ -14,6 +15,7 @@ const pipes = [
   FormArrayPipe,
   FormControlPipe,
   FormGroupPipe,
+  TenureFormatPipe,
 ];
 
 @NgModule({

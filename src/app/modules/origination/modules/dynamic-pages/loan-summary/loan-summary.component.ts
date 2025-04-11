@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -15,6 +14,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { AppState, selectLocaleData } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { LoanSummaryStore } from './loan-summary.store';
 
 @Component({
   selector: 'app-loan-summary',
@@ -27,16 +27,18 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() loanSummary: any;
   @Input() mobileVerifyInfo: any;
-
-  stepperTitle: string | undefined;
+  loansummaryDetails = LoanSummaryStore.LOANSUMMARY;
+  personalDetailsArr = LoanSummaryStore.PersonalDetailsStore;
+  businessDetailsArr = LoanSummaryStore.BusinessDetailsStore;
+  collateralDetailsArr = LoanSummaryStore.CollateralDetailsStore;
   loanSummaryDetails: any;
+  stepperTitle: string | undefined;
   otherUserInfo: any;
   personalDetails: any;
   checkListDoc: any[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private loanService: LoanService,
     private openAccountService: OpenAccountService,
     private sessionStorageService: SessionStorageService,
@@ -51,7 +53,6 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
           this.otherUserInfo = userInfo;
           this.getLoanSummary().then(() => {
             this.getOriginationMasterData();
-            this.getCheckListDoc();
           });
         }
       });
@@ -61,24 +62,6 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     this.loanSummaryDetails = changes['loanSummary']?.currentValue;
   }
-  getCheckListDoc() {
-    const originationId = this.sessionStorageService.getOriginationId();
-    console.log(this.sessionStorageService.getOtherDocScreenCode());
-    this.loanService
-      .getSavedChecklist(
-        Number(originationId),
-        String(this.sessionStorageService.getOtherDocScreenCode()),
-        Number(this.sessionStorageService.getCurrentStage()),
-      )
-      .subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          this.checkListDoc = resp.data.filter(
-            (item: any) => item.docInfoModel,
-          );
-          this.cdr.detectChanges();
-        }
-      });
-  }
 
   getLoanSummary() {
     return new Promise((resolve) => {
@@ -87,6 +70,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
         .getLoanSummary(originationId)
         .subscribe((response: any) => {
           this.loanSummaryDetails = response.data;
+          console.log(this.loanSummaryDetails, 'check');
           resolve('');
         });
     });
