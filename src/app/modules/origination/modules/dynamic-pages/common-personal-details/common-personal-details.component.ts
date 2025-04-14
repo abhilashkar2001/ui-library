@@ -93,6 +93,7 @@ export class CommonPersonalDetailsComponent
   subscriptions: Subscription[] = [];
   private localeData: LocaleData | undefined;
   dateFormat!: string;
+  screenCodeValue: number | undefined;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -123,6 +124,7 @@ export class CommonPersonalDetailsComponent
     this.holderType =
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
+    this.screenCodeValue = this.sessionStorageService.getCurrentScreenCode();
     // this.loanCustomerId = 67583;
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
@@ -142,6 +144,11 @@ export class CommonPersonalDetailsComponent
       if (!this.personalDetails) {
         this.buildCustomerDetailsForm();
       }
+    });
+
+    console.log('calling');
+    this.customerDetailsForm.valueChanges.subscribe((res) => {
+      console.log(res, 'response');
     });
   }
 
@@ -447,6 +454,10 @@ export class CommonPersonalDetailsComponent
         }, 100);
       this.cdr.detectChanges();
     }
+
+    this.customerDetailsForm.valueChanges.subscribe((res) => {
+      console.log(res, 'response');
+    });
   }
 
   renderApplicant(data: any, applicantLength: any) {
@@ -976,7 +987,8 @@ export class CommonPersonalDetailsComponent
     console.log(this.customerDetailsForm, 'customerDetailsForm');
     const payload = {
       originationId: this.loanCustomerId,
-      customerInfo: [...this.customerDetailsForm?.value.customer],
+      screenCode: this.screenCodeValue,
+      customerInfo: [...this.customerDetailsForm.value.customer],
     };
     payload.customerInfo[0].primaryCustomer = true;
 
