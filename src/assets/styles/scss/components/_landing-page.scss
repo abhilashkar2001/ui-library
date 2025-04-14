@@ -1,5 +1,5 @@
 $dark_blue: #06113c;
-$text_blue: #3c4f9a;
+$text_blue: #0033a1;
 $text_dark_blue: #212353;
 $gradient_bg: linear-gradient(90deg, #004aa0 0%, #06113c 100%);
 
@@ -23,8 +23,8 @@ section.hero_section {
 
   .hero_title {
     font-size: 60px;
-    font-weight: bold;
-    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    font-family: 'Benton Sans', sans-serif;
     color: $dark_blue;
     @media screen and (max-width: $mobile) {
       font-size: 2rem;
@@ -33,7 +33,7 @@ section.hero_section {
   .hero_subtitle {
     width: 65%;
     font-size: 17px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     margin: 1.5rem 0;
     color: #4c5371;
     @media screen and (max-width: $laptop) {
@@ -45,9 +45,6 @@ section.hero_section {
   }
   .apply_div {
     margin: 2rem 0;
-    // .apply_btn {
-    //   @include custom_round_btn;
-    // }
   }
   .stacked_imgs_div {
     display: flex;
@@ -76,12 +73,12 @@ section.hero_section {
       h2,
       p {
         color: $dark_blue;
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Benton Sans', sans-serif;
         margin: 0;
       }
       h2 {
         font-size: 1.5rem;
-        font-weight: 800;
+        font-weight: 500;
       }
     }
   }

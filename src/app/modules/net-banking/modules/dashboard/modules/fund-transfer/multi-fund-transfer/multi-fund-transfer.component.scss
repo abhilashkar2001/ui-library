@@ -1,6 +1,6 @@
 .multi_fund_container {
   .heading_card {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     text-align: center;
     font-weight: 500;
     font-size: 20px;
@@ -16,19 +16,19 @@
     overflow-y: auto;
   }
   .text_label {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 500;
   }
   .hint {
-    font: normal normal bold 12px/16px poppins;
+    font: normal normal bold 12px/16px Benton Sans;
     font-style: italic;
     color: gray;
     text-align: center;
   }
 
   .link {
-    font: normal normal bold 15px/16px poppins;
-    color: #004c97;
+    font: normal normal bold 15px/16px Benton Sans;
+    color: #0033a1;
     text-align: center;
     cursor: pointer;
     font-style: italic;
@@ -37,8 +37,8 @@
   .add-link {
     height: 50px;
     background: aliceblue;
-    font: normal normal bold 15px / 16px poppins;
-    color: #004c97;
+    font: normal normal bold 15px / 16px Benton Sans;
+    color: #0033a1;
     text-align: center;
     margin-top: 12px;
     margin-left: 10px;
@@ -47,7 +47,7 @@
 
   .check {
     mat-checkbox {
-      font-family: 'Poppins';
+      font-family: 'Benton Sans';
     }
   }
 
@@ -83,11 +83,11 @@
 }
 
 .form-title {
-  font: normal normal 25px/16px poppins;
+  font: normal normal 25px/16px Benton Sans;
 }
 
 .label {
-  font: normal normal 17px/16px poppins;
+  font: normal normal 17px/16px Benton Sans;
   color: gray;
   text-align: center;
   display: flex;
@@ -103,7 +103,7 @@
 }
 
 .hint {
-  font: normal normal bold 14px/16px poppins;
+  font: normal normal bold 14px/16px Benton Sans;
   color: gray;
   text-align: center;
 }

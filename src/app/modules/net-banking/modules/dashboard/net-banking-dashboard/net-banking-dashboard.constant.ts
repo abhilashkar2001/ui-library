@@ -119,7 +119,7 @@ export class NETBANKING {
     },
     {
       label: 'bulkFile',
-      valColor: '#004C97',
+      valColor: '#0033a1',
       bgColor: '#E1ECF7',
     },
     {

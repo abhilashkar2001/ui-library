@@ -27,7 +27,7 @@
   opacity: 1;
 
   .fieldset-title {
-    font: 10px Poppins;
+    font: 10px Benton Sans;
     color: #102245;
     margin-bottom: 4px;
     font-weight: 600;
@@ -37,7 +37,7 @@
   .tenure-input {
     position: relative;
     width: 100%;
-    font-family: Poppins;
+    font-family: Benton Sans;
     color: #102245 !important;
     opacity: 100%;
     letter-spacing: -0.26px;
@@ -48,7 +48,7 @@
   .placeholders {
     position: relative;
     right: 8%;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-weight: 600;
   }
 
@@ -94,10 +94,10 @@
   height: 35px;
 }
 .calculator_subTItle {
-  color: #004c97;
+  color: #0033a1;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Benton Sans';
   span {
     color: #5a607f;
     font-size: 15px;
@@ -116,15 +116,15 @@
   min-height: 80%;
   padding: 15px;
   .maturityTitle {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-size: 20px;
     font-weight: 500;
   }
   .maturityDesc {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-size: 33px;
     font-weight: 600;
-    color: #004c97;
+    color: #0033a1;
     display: inline-block;
     animation: fadeInScale 0.8s ease-out;
   }
@@ -141,15 +141,15 @@
   }
 
   .maturityLabel {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-size: 16px;
     font-weight: 500;
   }
   .maturityVal {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    color: #004c97;
+    color: #0033a1;
   }
 }
 .calc-white-bg {
@@ -162,7 +162,7 @@
   padding: 10%;
 }
 .emiAmount {
-  color: #004c97;
+  color: #0033a1;
   font-size: 50px;
   font-weight: bolder;
 }
@@ -180,7 +180,7 @@
   border: none;
   outline: none;
   font-size: 16px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Benton Sans', sans-serif;
   letter-spacing: 0.4px;
   color: #fff !important;
   background: linear-gradient(90deg, #004aa0 0%, #06113c 100%) !important;

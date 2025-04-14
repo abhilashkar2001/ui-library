@@ -252,6 +252,7 @@
                     <ic-form-field
                       fxFlex="49"
                       label="Fax"
+                      [icNumbersOnly]="true"
                       [control]="
                         customer.get('contact')?.get('fax') | formcontrol
                       "

@@ -29,7 +29,7 @@
     color: #000000;
     font-weight: 600;
     span {
-      color: #004c97;
+      color: #0033a1;
     }
   }
 }
@@ -51,7 +51,7 @@
 }
 .status_container {
   .level_title {
-    color: #004c97;
+    color: #0033a1;
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 1em;
@@ -71,7 +71,7 @@
     border-radius: 8px;
   }
   ::ng-deep .egret-blue .mat-progress-bar-fill::after {
-    background: linear-gradient(90deg, #051a2d, #004c97);
+    background: linear-gradient(90deg, #051a2d, #0033a1);
     border-radius: 28px !important;
   }
 }

@@ -3,23 +3,27 @@
     <div fxFlex="49">
       <ic-form-field
         label="Business Name"
+        [icAlphabetOnly]="true"
         [control]="businessDetailsForm.get('businessName') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
         label="Telephone Number"
+        [icNumbersOnly]="true"
         [control]="contact.get('telephone') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="99">
       <ic-form-field
+        [icAlphanumeric]="true"
         label="Business Address"
         [control]="address.at(0).get('address1') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [icNumbersOnly]="true"
         label="No of years in operation"
         [control]="businessDetailsForm.get('yearsOfOperation') | formcontrol"
       ></ic-form-field>
@@ -36,18 +40,21 @@
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [icAlphabetOnly]="true"
         label="Types of Goods service"
         [control]="businessDetailsForm.get('typeOfService') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [icNumbersOnly]="true"
         label="Monthly Turn over"
         [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [icNumbersOnly]="true"
         label="AVE stock Level"
         [control]="businessDetailsForm.get('aveStockLevel') | formcontrol"
       ></ic-form-field>

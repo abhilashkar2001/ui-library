@@ -8,7 +8,7 @@
   display: flex;
   height: 25px;
   width: 25px;
-  background-color: #004c97;
+  background-color: #0033a1;
   border-radius: 50%;
 }
 .dot_grp {
@@ -16,13 +16,13 @@
 }
 .label_title {
   color: #102245;
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 15px;
   font-weight: 600;
   line-height: 27px;
 }
 .label_value {
-  font-family: Poppins;
+  font-family: Benton Sans;
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
@@ -45,7 +45,7 @@
 }
 
 .scheduleStatus {
-  @include statusLabel(#004c97, #d8e0ff);
+  @include statusLabel(#0033a1, #d8e0ff);
 }
 .inProgressStatus {
   @include statusLabel(#eeab2c, #fff6e5);
@@ -54,7 +54,7 @@
   @include statusLabel(#ee2c2c, #ffe5e5);
 }
 .pendingStatus {
-  @include statusLabel(#004c97, #ebf6ff);
+  @include statusLabel(#0033a1, #ebf6ff);
 }
 
 ul.approved_history_container {
@@ -80,7 +80,7 @@ ul.approved_history_container {
     position: absolute;
     left: calc(10% + 40px);
     transform: translateX(-50%);
-    background-color: #004c97;
+    background-color: #0033a1;
     width: 4px;
     top: 145px;
     border-radius: 40px;
@@ -92,7 +92,7 @@ ul.approved_history_container {
     height: 100%;
 
     p {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Benton Sans', sans-serif;
       font-weight: 500;
       margin: 0;
       line-height: 1.5;
@@ -103,7 +103,7 @@ ul.approved_history_container {
       display: grid;
       place-items: center;
       p.count {
-        background-color: #004c97;
+        background-color: #0033a1;
         border-radius: 50%;
         font-size: 12px;
         font-weight: 600;

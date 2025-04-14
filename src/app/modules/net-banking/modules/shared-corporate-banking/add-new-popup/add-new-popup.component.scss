@@ -3,7 +3,9 @@
     margin: 12px 24px;
     text-align: center;
     font-size: 20px;
-    font-family: Poppins, 'Medium';
+    font-family:
+      Benton Sans,
+      'Medium';
     letter-spacing: 0px;
     color: #00000f;
     opacity: 0.7;
@@ -23,7 +25,9 @@
     .customer-type {
       height: 80px;
       font-size: 20px;
-      font-family: Poppins, 'Medium';
+      font-family:
+        Benton Sans,
+        'Medium';
       cursor: pointer;
       font-weight: bold;
       letter-spacing: 0px;
@@ -31,7 +35,7 @@
 
     .customer-type-selected {
       border-radius: 8px;
-      border: solid 1px #004c97;
+      border: solid 1px #0033a1;
       background-color: #d6dbea;
     }
   }
@@ -42,7 +46,7 @@
     color: #ffffff !important;
     letter-spacing: -0.3px;
     font-size: 15px;
-    font-family: Poppins;
+    font-family: Benton Sans;
     opacity: 1;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -55,7 +59,7 @@
     letter-spacing: -0.3px;
     box-shadow: 3px 3px 15px #0000000f;
     font-size: 15px;
-    font-family: Poppins;
+    font-family: Benton Sans;
     opacity: 1;
     font-weight: 600 !important;
     margin-bottom: 10px;

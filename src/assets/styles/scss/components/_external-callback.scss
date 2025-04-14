@@ -16,14 +16,14 @@
     box-shadow: 3px 3px 20px #0000000d;
     border-radius: 10px;
     opacity: 1;
-    color: #004c97 !important;
+    color: #0033a1 !important;
     &:focus {
-      outline-color: #004c97;
+      outline-color: #0033a1;
     }
   }
 
   .submit-btn {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box;
     color: white !important;
     width: 40% !important;
@@ -32,7 +32,7 @@
   .reset-btn {
     background: #fffefe 0% 0% no-repeat padding-box !important;
     box-shadow: 0px 3px 15px #00000017;
-    color: #004c97;
+    color: #0033a1;
     max-width: none;
   }
   .subhead_container {
@@ -54,7 +54,7 @@
   }
   .selected-card {
     @include default-container();
-    color: #004c97;
+    color: #0033a1;
   }
 
   .text-area {
@@ -63,7 +63,7 @@
   }
 
   .otp-btn {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #004c97 100%) 0%
+    background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0%
       0% no-repeat padding-box;
     border: 1px solid #00000000;
     opacity: 1;
@@ -87,7 +87,7 @@
     border-radius: 4px;
     opacity: 1;
     color: #d68c00;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
   }
 
   .mat-raised-button,
@@ -97,7 +97,7 @@
     width: 150px;
     max-width: 150px;
     height: 45px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Benton Sans', sans-serif;
 
     .mat-button-ripple {
       border-radius: 36px !important;
@@ -106,12 +106,12 @@
     }
   }
   .title-text {
-    font-family: 'Poppins';
-    color: #004c97;
+    font-family: 'Benton Sans';
+    color: #0033a1;
     font-weight: 600;
   }
   .text-highlighted {
-    color: #004c97;
+    color: #0033a1;
     font: normal normal normal 12px/16px Roboto;
   }
   .text-normal {
@@ -129,7 +129,7 @@
   .text-gray {
     color: #00000f;
     opacity: 70%;
-    font-family: Poppins;
+    font-family: Benton Sans;
     font-weight: 600;
   }
   .text-label {
@@ -138,7 +138,7 @@
   }
   .text-light {
     color: #00000f;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     opacity: 70%;
     font-weight: 600;
     margin-bottom: 10px;
@@ -162,7 +162,7 @@
     ::placeholder,
     mat-label,
     mat-option {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Benton Sans', sans-serif;
       font-weight: 600;
       color: rgb(16, 34, 69);
       opacity: 0.5;
@@ -203,7 +203,7 @@
   }
 
   .mat-select-value {
-    font-family: Poppins;
+    font-family: Benton Sans;
     color: #102245 !important;
     opacity: 100%;
     letter-spacing: -0.26px;
@@ -219,20 +219,20 @@
     position: relative !important;
   }
   input {
-    font-family: Poppins !important;
+    font-family: Benton Sans !important;
     color: #102245 !important;
     letter-spacing: -0.26px;
     font-weight: 600 !important;
   }
 
   .mat-option {
-    font: 14px 'Poppins';
+    font: 14px 'Benton Sans';
     font-weight: 600;
   }
   .mat-error {
     color: #ff3d57;
     font-weight: bold;
-    font-family: 'Poppins';
+    font-family: 'Benton Sans';
     font-size: 10px;
   }
   .mat-select-panel-wrap {

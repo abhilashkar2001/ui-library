@@ -9,6 +9,7 @@ import { CompanyInformationComponent } from 'app/modules/origination/modules/dyn
 import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
 import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
 import { CollateralDetailsComponent } from '../../../dynamic-pages/collateral-details/collateral-details.component';
+import { BusinessDetailsComponent } from '../../../dynamic-pages/business-details/business-details.component';
 
 export class LoanFlowConstants {
   static readonly CUSTOM_HEADER = [
@@ -102,6 +103,12 @@ export class LoanFlowConstants {
       key: 'collateral',
       type: 'Collateral Details',
       component: CollateralDetailsComponent,
+    },
+    {
+      id: 5,
+      key: 'business',
+      type: 'Business Details',
+      component: BusinessDetailsComponent,
     },
 
     {

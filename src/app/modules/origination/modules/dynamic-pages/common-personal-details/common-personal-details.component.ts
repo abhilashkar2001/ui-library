@@ -124,7 +124,6 @@ export class CommonPersonalDetailsComponent
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
     // this.loanCustomerId = 67583;
-
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
       .subscribe((resp) => {

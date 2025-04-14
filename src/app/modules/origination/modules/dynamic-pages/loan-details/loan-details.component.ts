@@ -24,7 +24,7 @@ import { Observable, Subscription } from 'rxjs';
 export class LoanDetailsComponent implements OnInit {
   @Output() CustomSubmit = new EventEmitter<Data>();
   @Output() backEvent = new EventEmitter<Data>();
-  loanDetailsForm: FormGroup | undefined;
+  loanDetailsForm!: FormGroup;
   todaysDate = new Date();
   currentDate: Date | undefined;
   staticData = {
