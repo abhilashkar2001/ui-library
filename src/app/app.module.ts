@@ -16,11 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  InterceptorProviders,
-  ROUTING_STATE,
-  UtilsModule,
-} from '@onerumango/utils';
+import { ROUTING_STATE, UtilsModule } from '@onerumango/utils';
 import { environment } from '../environments/environment';
 import {
   IcustLibraryModule,
@@ -84,7 +80,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: ROUTING_STATE,
       useClass: RoutingState,
     },
-    InterceptorProviders,
     CustomDateAdapter,
     { provide: DateAdapter, useClass: CustomDateAdapter },
   ],

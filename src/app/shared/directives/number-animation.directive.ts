@@ -11,12 +11,14 @@ import {
   selector: '[appNumberAnimation]',
 })
 export class NumberAnimationDirective implements OnChanges {
-  @Input() appNumberAnimation: any = 0; // Accepts numbers with formatting
+  @Input() appNumberAnimation: any = 0;
 
   private animationFrame: number | null = null;
-  private originalFormat: string | null = null; // Stores the original text format
-  private audio = new Audio(); // Preload audio
+  private originalFormat: string | null = null;
+  private originalNumberText: string | null = null;
+  private audio = new Audio();
   private lastPlayedTime = 0;
+
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
@@ -28,11 +30,14 @@ export class NumberAnimationDirective implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['appNumberAnimation']) {
       const newValue = this.extractNumber(this.appNumberAnimation);
-      const oldValue = this.extractNumber(this.el.nativeElement.textContent);
+      const currentText = this.el.nativeElement.textContent;
+      const oldValue = this.extractNumber(currentText);
 
-      // Store the original format only if it's not stored yet
-      if (!this.originalFormat && this.el.nativeElement.textContent.trim()) {
-        this.originalFormat = this.el.nativeElement.textContent;
+      // Capture and store original string and number once
+      if (!this.originalFormat && currentText.trim()) {
+        this.originalFormat = currentText;
+        const numberMatch = currentText.match(/-?\d[\d,]*(\.\d+)?/);
+        this.originalNumberText = numberMatch ? numberMatch[0] : null;
       }
 
       if (newValue !== null && oldValue !== newValue) {
@@ -43,19 +48,20 @@ export class NumberAnimationDirective implements OnChanges {
 
   private extractNumber(value: any): number | null {
     if (value === null || value === undefined) return null;
-    const match = value.toString().match(/-?\d+(\.\d+)?/);
-    return match ? parseFloat(match[0]) : null;
+    const match = value.toString().match(/-?\d[\d,]*(\.\d+)?/);
+    if (match) {
+      const cleaned = match[0].replace(/,/g, ''); // Remove commas for parsing
+      return parseFloat(cleaned);
+    }
+    return null;
   }
 
   private animateValue(start: number | null, end: number, duration: number) {
-    if (start === null) start = 0; // Default start value if null
-
-    if (this.animationFrame) {
-      cancelAnimationFrame(this.animationFrame);
-    }
+    if (start === null) start = 0;
+    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
 
     let current = start;
-    const step = (end - start) / (duration / 16); // 60 FPS smooth animation
+    const step = (end - start) / (duration / 16); // 60 FPS
 
     const updateValue = () => {
       current += step;
@@ -63,11 +69,10 @@ export class NumberAnimationDirective implements OnChanges {
         current = end;
       }
 
-      // Ensure original format is restored with updated number
-      if (this.originalFormat) {
+      if (this.originalFormat && this.originalNumberText) {
         const updatedText = this.originalFormat.replace(
-          /-?\d+(\.\d+)?/,
-          current.toFixed(2),
+          this.originalNumberText,
+          this.formatNumber(current, this.originalNumberText),
         );
         this.renderer.setProperty(
           this.el.nativeElement,
@@ -75,11 +80,11 @@ export class NumberAnimationDirective implements OnChanges {
           updatedText,
         );
       }
-      // Play sound at controlled intervals (every 150ms)
+
       if (Date.now() - this.lastPlayedTime > 150) {
         this.lastPlayedTime = Date.now();
-        this.audio.currentTime = 0; // Restart sound
-        this.audio.play().catch(() => {}); // Catch prevents potential errors on first load
+        this.audio.currentTime = 0;
+        this.audio.play().catch(() => {});
       }
 
       if (current !== end) {
@@ -88,5 +93,19 @@ export class NumberAnimationDirective implements OnChanges {
     };
 
     this.animationFrame = requestAnimationFrame(updateValue);
+  }
+
+  private formatNumber(value: number, original: string): string {
+    const decimalPlaces = original.includes('.')
+      ? original.split('.')[1]?.length
+      : 0;
+
+    // Retain the comma format only if present in the original
+    const formatted = value.toLocaleString('en-IN', {
+      minimumFractionDigits: decimalPlaces,
+      maximumFractionDigits: decimalPlaces,
+    });
+
+    return formatted;
   }
 }

@@ -145,11 +145,6 @@ export class CommonPersonalDetailsComponent
         this.buildCustomerDetailsForm();
       }
     });
-
-    console.log('calling');
-    this.customerDetailsForm.valueChanges.subscribe((res) => {
-      console.log(res, 'response');
-    });
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {

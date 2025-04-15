@@ -41,6 +41,7 @@
             [icTwoDigitDecimalNumber]="true"
             [numLength]="6"
             [decimalPlaces]="2"
+            (onInputChange)="onInputChange($event)"
           >
           </ic-form-field>
         </div>
@@ -73,7 +74,7 @@
     <div class="my-16" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10">
       <div fxFlex="48.5" fxFlex.lt-md="100">
         <label class="calculator_subTItle" for="label">Tenure</label>
-        <fieldset class="field-set">
+        <!-- <fieldset class="field-set">
           <legend visible="true" class="fieldset-title">Loan Period</legend>
           <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
             <input
@@ -127,7 +128,19 @@
               </span>
             </ng-container>
           </div>
-        </fieldset>
+        </fieldset> -->
+
+        <ic-tenure-field
+          label="Loan Period"
+          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
+          [fieldLabels]="{
+            loanTenureYear: 'Year',
+            loanTenureMonth: 'Month',
+            loanTenureDay: 'Day',
+          }"
+          [parentForm]="loanForm"
+        >
+        </ic-tenure-field>
         <mat-error
           class="mat-error small-error mt-12"
           *ngIf="
