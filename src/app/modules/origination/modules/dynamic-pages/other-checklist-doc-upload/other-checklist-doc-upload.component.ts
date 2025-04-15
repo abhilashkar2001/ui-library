@@ -106,7 +106,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
     console.log(event.loanDisbursement);
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
-    this.sessionStorageService.setLoanDoc(JSON.stringify(docIds));
+    this.sessionStorageService.setLoanDoc(docIds);
     this.updateParentModel({
       otherLoanDoc: docIds,
       updateMasterSave: true,

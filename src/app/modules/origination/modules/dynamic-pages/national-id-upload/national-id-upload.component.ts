@@ -138,7 +138,7 @@ export class NationalIdUploadComponent implements OnInit {
       });
     }
 
-    this.sessionStorageService.setLoanDoc(JSON.stringify(docIds));
+    this.sessionStorageService.setLoanDoc(docIds);
     this.updateParentModel({
       kycDoc: docIds,
       updateMasterSave: true,

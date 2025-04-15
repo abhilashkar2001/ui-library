@@ -76,7 +76,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   staticData: any = {
     DOCUMENTNAME: [],
-    DISBURSEMENTTYPE: [],
   };
   selectedImage: Blob | any;
   imageUrl: string | any;
@@ -91,7 +90,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   @Input() isShowDisbursement = false;
   disbursementTypeId: any;
-  disbursementTypeArray: any[] = [{}];
   loanCustomerId: string | any;
   accountList: any;
   accountTypeArr = [
@@ -193,34 +191,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
-   * @param event is disbursement change value
-   */
-  onDisbursementSelectionChanged(event: any) {
-    this.disbursementTypeId = this.staticData['DISBURSEMENTTYPE']
-      .filter((item: any) => item?.id == event)[0]
-      .values.toLowerCase();
-    console.log(this.disbursementTypeId, ' this.disbursementTypeId ');
-    this.loanDisbursementForm
-      .get('disbursementTypeValue')
-      ?.setValue(' this.disbursementTypeId');
-    if (
-      this.disbursementTypeId.includes(CreateLoanEnum.ACCOUNT_INCLUDES_KEY) &&
-      this.loanDisbursementForm.value.accountType === CreateLoanEnum.INTERNAL
-    ) {
-      this.loanDisbursementForm.controls['accountNumber']?.setValidators([
-        Validators.required,
-      ]);
-    } else {
-      this.loanDisbursementForm.controls['accountNumber']?.clearValidators();
-    }
-
-    this.loanDisbursementForm.controls[
-      'accountNumber'
-    ]?.updateValueAndValidity();
-  }
-
-  /**
    * account number validation.
    */
   onChange() {
@@ -274,16 +244,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         if (resp?.statusCode === 200) {
           this.staticData = { ...resp.data };
           this.documentTypeArray = resp.data['DOCUMENTNAME'];
-          this.disbursementTypeArray = resp.data['DISBURSEMENTTYPE'];
           this.nationalIdGeneric = this.documentTypeArray.filter((item: any) =>
             item.values.toLowerCase().includes('aadhar'),
           )[0].id;
-          this.defaultDisbursement = this.disbursementTypeArray?.find(
-            (res) => res?.values == 'Cash',
-          )?.id;
-          this.loanDisbursementForm
-            ?.get('disbursementTypeId')
-            ?.setValue(this.defaultDisbursement);
         }
       });
   }
