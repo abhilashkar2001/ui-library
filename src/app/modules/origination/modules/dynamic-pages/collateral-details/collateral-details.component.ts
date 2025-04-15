@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Data } from '@angular/router';
 import { IcHttpResponseModel } from '@onerumango/utils';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
@@ -44,6 +44,8 @@ export class CollateralDetailsComponent implements OnInit {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.screenCode = this.sessionStorageService.getCurrentScreenCode();
     this.buildCollateralForm();
+    this.getCollateralDetails().push(this.collateralDetailsGroup('Credit'));
+    this.getCollateralDetails().push(this.collateralDetailsGroup('Vaf'));
     this.fetchGenericValue();
     if (this.originationId) {
       this.getCollateralDetailsById();
@@ -64,10 +66,26 @@ export class CollateralDetailsComponent implements OnInit {
     this.loanService
       .getCollateralDetailsId(this.originationId)
       .subscribe((res: any) => {
-        if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.collateralDetailsForm.patchValue(res?.data[0]);
+        if (res?.statusCode === 200 || res?.statusCode === 201) {
+          const data = res.data[0];
+          this.collateralDetailsForm.patchValue({
+            percentageOfSecurityCover: data.percentageOfSecurityCover,
+            effectiveDate: data.effectiveDate,
+            expiryDate: data.expiryDate,
+            totalAssetWorth: data.totalAssetWorth,
+            loanTypeId: data.loanTypeId,
+          });
+
+          const details = data.collateralDetails ?? [];
+          details.forEach((item: any, index: number) => {
+            const group = this.getCollateralDetails().at(index);
+            if (group) {
+              group.patchValue(item);
+            }
+          });
+
           this.collateralDetailsForm
-            .get('originationInfoId')
+            .get('originationd')
             ?.setValue(this.originationId);
           this.collateralDetailsForm
             .get('screenCode')
@@ -78,19 +96,42 @@ export class CollateralDetailsComponent implements OnInit {
 
   buildCollateralForm() {
     this.collateralDetailsForm = this.fb.group({
-      collateralDescriptionForCredit: [''],
-      ownershipForCredit: ['false'],
-      assetMonetaryWorthForCredit: [''],
-      collateralDescriptionForVaf: [''],
-      ownershipForVaf: ['false'],
-      assetMonetaryWorthForVaf: [''],
-      securityCover: [''],
+      percentageOfSecurityCover: [''],
+      effectiveDate: [''],
+      expiryDate: [''],
       totalAssetWorth: [''],
+      collateralDetails: this.fb.array([]),
       loanTypeId: [''],
-      originationInfoId: [this.originationId ?? ''],
+      originationd: [this.originationId ?? ''],
       screenCode: [this.screenCode ?? ''],
     });
     this.cdr.detectChanges();
+  }
+
+  // Get collateral details form array
+  getCollateralDetails(): FormArray {
+    return this.collateralDetailsForm.get('collateralDetails') as FormArray;
+  }
+
+  get creditGroup(): FormGroup {
+    return (
+      (this.getCollateralDetails()?.at(0) as FormGroup) || this.fb.group({})
+    );
+  }
+
+  get vafGroup(): FormGroup {
+    return (
+      (this.getCollateralDetails()?.at(1) as FormGroup) || this.fb.group({})
+    );
+  }
+
+  collateralDetailsGroup(typeOfCollateral?: string) {
+    return this.fb.group({
+      description: [''],
+      ownership: [''],
+      assetMonetaryWorth: [''],
+      typeOfCollateral: [typeOfCollateral],
+    });
   }
 
   saveCollateralDetails() {

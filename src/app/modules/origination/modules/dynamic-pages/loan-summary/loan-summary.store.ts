@@ -8,9 +8,8 @@ export class LoanSummaryStore {
         { header: 'Tenure', headKey: 'loanTenure', isTenure: true },
         {
           header: 'Repayment Frequency',
-          headKey: 'repaymentFrequency',
+          headKey: 'repaymentFrequencyValue',
         },
-
         {
           header: 'Interest Rate',
           headKey: 'interestRate',
@@ -34,7 +33,7 @@ export class LoanSummaryStore {
         },
         {
           header: 'EMI Start Date',
-          headKey: 'emiStartDate',
+          headKey: 'firstRepaymentDate',
         },
         {
           header: 'Installment Start Date',
@@ -46,11 +45,11 @@ export class LoanSummaryStore {
       title: 'Main Banking Details',
       headerKey: 'loanDisbursementModel',
       headerInfo: [
-        { header: 'Account', headKey: 'account' },
+        { header: 'Account', headKey: 'internal' },
         { header: 'Bank Name', headKey: 'bankName' },
         { header: 'Account Number', headKey: 'accountNo' },
         { header: 'Account Type', headKey: 'accountType' },
-        { header: 'Account Name', headKey: 'accountName' },
+        { header: 'Account Name', headKey: 'customerName' },
         { header: 'Disbursement Type', headKey: 'disbursementType' },
         { header: 'Branch Name', headKey: 'branchName' },
       ],
@@ -110,8 +109,8 @@ export class LoanSummaryStore {
         { header: 'Telephone (work)* ', headKey: 'worktelephone' },
         { header: 'Mobile Number*', headKey: 'mobile' },
         { header: 'Email ID', headKey: 'email' },
-        { header: 'Employee Status', headKey: 'accountType' },
-        { header: 'Net Income', headKey: 'accountType' },
+        { header: 'Employee Status', headKey: 'employeeStatusValue' },
+        { header: 'Net Income', headKey: 'netIncome' },
       ],
     },
     {
@@ -123,12 +122,12 @@ export class LoanSummaryStore {
         { header: 'Last Name*', headKey: 'lastName' },
         { header: 'Date of Birth* ', headKey: 'dateOfBirth' },
         { header: 'Nationality', headKey: 'nationality' },
-        { header: 'Telephone (home)*', headKey: 'accountNumber' },
+        { header: 'Telephone (home)*', headKey: 'telephone' },
         { header: 'Telephone (work)* ', headKey: 'worktelephone' },
         { header: 'Mobile Number*', headKey: 'mobile' },
         { header: 'Email ID', headKey: 'email' },
-        { header: 'Employee Status', headKey: 'accountType' },
-        { header: 'Net Income', headKey: 'accountType' },
+        { header: 'Employee Status', headKey: 'employeeStatusValue' },
+        { header: 'Net Income', headKey: 'netIncome' },
       ],
     },
   ];
