@@ -108,6 +108,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   onSliderChange(e: any) {
     this.ammountValue = e.srcElement.ariaValueText;
     console.log(e.srcElement.ariaValueText);
@@ -119,6 +120,18 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       return;
     }
     this.loanForm.get('amount').setValue(e.srcElement.ariaValueText);
+  }
+
+  onInputChange(value: any) {
+    const parsedValue = Number(value);
+    if (!isNaN(parsedValue)) {
+      this.loanForm.get('amount')?.setValue(parsedValue, { emitEvent: false });
+
+      // Sync the slider value
+      if (parsedValue >= this.min && parsedValue <= this.max) {
+        this.ammountValue = parsedValue;
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -180,6 +193,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
         }
       });
   }
+
   calculateTenure(years: any, months: any, days: any) {
     return new Promise((resolve) => {
       const totalMonths = years * 12 + months;

@@ -93,6 +93,7 @@ export class CommonPersonalDetailsComponent
   subscriptions: Subscription[] = [];
   private localeData: LocaleData | undefined;
   dateFormat!: string;
+  screenCodeValue: number | undefined;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -123,6 +124,7 @@ export class CommonPersonalDetailsComponent
     this.holderType =
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
+    this.screenCodeValue = this.sessionStorageService.getCurrentScreenCode();
     // this.loanCustomerId = 67583;
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
@@ -143,6 +145,7 @@ export class CommonPersonalDetailsComponent
         this.buildCustomerDetailsForm();
       }
     });
+
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {

@@ -6,7 +6,12 @@
   }"
 >
   <div class="img-section" fxFlex="50">
-    <div data-aos="zoom-out" data-aos-delay="200" data-aos-duration="500">
+    <div
+      class="image-mask-wrapper"
+      data-aos="zoom-out"
+      data-aos-delay="200"
+      data-aos-duration="500"
+    >
       <ng-container
         *ngIf="
           filePreview?.changingThisBreaksApplicationSecurity
@@ -15,7 +20,20 @@
           else placeholderImage
         "
       >
-        <img #img [src]="safeUrl" alt="file" width="399" height="333" />
+        <img
+          class="background-img"
+          [src]="safeUrl"
+          alt="dimmed file"
+          width="399"
+          height="333"
+        />
+        <img
+          class="masked-img"
+          [src]="safeUrl"
+          alt="masked file"
+          width="399"
+          height="333"
+        />
       </ng-container>
       <ng-template #placeholderImage>
         <img
