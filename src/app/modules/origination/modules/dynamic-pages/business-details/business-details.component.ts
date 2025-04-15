@@ -24,6 +24,7 @@ export class BusinessDetailsComponent implements OnInit {
     INDUSTRYTYPE: [],
   };
   originationId!: number;
+  screenCode: number | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +35,7 @@ export class BusinessDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.originationId = this.sessionStorage.getOriginationId();
+    this.screenCode = this.sessionStorage.getCurrentScreenCode();
     this.buildBusinessForm();
     this.fetchGenericValue();
     if (this.originationId) {
@@ -46,7 +48,7 @@ export class BusinessDetailsComponent implements OnInit {
       .getBusinessDetailsById(this.originationId)
       .subscribe((res: any) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.businessDetailsForm.patchValue(res?.data);
+          this.businessDetailsForm.patchValue(res?.data[0]);
         }
       });
   }
@@ -98,6 +100,7 @@ export class BusinessDetailsComponent implements OnInit {
       originationModel: {
         originationId: this.sessionStorage.getOriginationId(),
       },
+      screenCode: this.screenCode,
       businessDetailModel: {
         ...this.businessDetailsForm.value,
       },

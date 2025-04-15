@@ -34,6 +34,16 @@
                     : loanSummaryDetails?.[section.headerKey]?.loanTenureDay
               }}
             </ng-container>
+            <ng-container *ngIf="field.header === 'Repayment Frequency'">
+              {{ loanSummaryDetails?.repaymentModel?.firstRepaymentDate ?? '' }}
+            </ng-container>
+            <ng-container *ngIf="section.headerKey === 'loanDisbursementModel'">
+              {{
+                loanSummaryDetails?.[section.headerKey]?.disbursementAccount?.[
+                  field.headKey
+                ] ?? ''
+              }}
+            </ng-container>
           </span>
         </div>
       </div>
@@ -80,6 +90,15 @@
                     ''
                 }}
               </ng-container>
+              <ng-container *ngSwitchCase="'Emergency Contact / Next of Kin'">
+                {{
+                  loanSummaryDetails?.[section.headerKey]?.[0]
+                    ?.emergencyContactInfo?.[field.headKey] ??
+                    loanSummaryDetails?.[section.headerKey]?.[0]
+                      ?.emergencyContactInfo?.contactDetails?.[field.headKey] ??
+                    ''
+                }}
+              </ng-container>
             </ng-container>
           </span>
         </div>
@@ -96,14 +115,17 @@
           *ngFor="let field of section.headerInfo"
           fxFlex="28%"
           class="mt-20"
+          fxLayout="column"
         >
           <span class="breadcrum_md">{{ field.header }}</span>
           <span class="header_lg">
             <ng-container>
               {{
-                loanSummaryDetails?.[section.headerKey]?.[0]?.contact?.[
-                  field.headKey
-                ] ?? ''
+                loanSummaryDetails?.[section.headerKey]?.[field.headKey] ??
+                  loanSummaryDetails?.[section.headerKey]?.contact?.[
+                    field.headKey
+                  ] ??
+                  ''
               }}
             </ng-container>
           </span>
@@ -129,17 +151,26 @@
           >
             <span class="breadcrum_md">{{ field.header }}</span
             ><br />
-            <!-- <span class="header_lg">{{
-              loanSummaryDetails[item.dataKey][field.key]
-            }}</span> -->
+            <span class="header_lg">
+              {{
+                loanSummaryDetails[section.headerInfo][field.key] === true
+                  ? 'Yes'
+                  : loanSummaryDetails[section.headerInfo][field.key] === false
+                    ? 'No'
+                    : loanSummaryDetails[section.headerInfo][field.key] || '—'
+              }}
+            </span>
           </div>
         </div>
       </mat-card>
       <div fxLayout="row wrap" fxLayoutGap="16px" class="mt-4">
-        <div *ngFor="let foot of section.footer" fxFlex="30%">
-          <span class="breadcrum_md">{{ foot.header }}</span
-          ><br />
-          <!-- <span class="header_lg">{{ collateralDetailsData[foot.key] }}</span> -->
+        <div *ngFor="let foot of section.footer" fxFlex="30%" fxLayout="column">
+          <span class="breadcrum_md">{{ foot.header }}</span>
+          <span class="header_lg">
+            {{ loanSummaryDetails[section.headerInfo][foot.key] || '' }}</span
+          >
+
+          <br />
         </div>
       </div>
     </div>

@@ -31,6 +31,7 @@ export class CollateralDetailsComponent implements OnInit {
   staticData = {
     LOANTYPE: [],
   };
+  screenCode: number | undefined;
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
@@ -41,6 +42,7 @@ export class CollateralDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
+    this.screenCode = this.sessionStorageService.getCurrentScreenCode();
     this.buildCollateralForm();
     this.fetchGenericValue();
     if (this.originationId) {
@@ -67,6 +69,9 @@ export class CollateralDetailsComponent implements OnInit {
           this.collateralDetailsForm
             .get('originationInfoId')
             ?.setValue(this.originationId);
+          this.collateralDetailsForm
+            .get('screenCode')
+            ?.setValue(this.screenCode);
         }
       });
   }
@@ -82,7 +87,8 @@ export class CollateralDetailsComponent implements OnInit {
       securityCover: [''],
       totalAssetWorth: [''],
       loanTypeId: [''],
-      originationInfoId: [this.originationId],
+      originationInfoId: [this.originationId ?? ''],
+      screenCode: [this.screenCode ?? ''],
     });
     this.cdr.detectChanges();
   }
