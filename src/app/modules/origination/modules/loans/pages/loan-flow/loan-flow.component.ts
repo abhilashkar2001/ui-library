@@ -514,6 +514,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   }
   factory() {
     this.cuurrentStep = this.screenList[this.selectedStep]?.screenName;
+    this.sessionStorageService.setCurrentScreenCode(
+      this.screenList?.[this.selectedStep]?.screenCode,
+    );
     this.showComponent(this.cuurrentStep);
   }
   next() {

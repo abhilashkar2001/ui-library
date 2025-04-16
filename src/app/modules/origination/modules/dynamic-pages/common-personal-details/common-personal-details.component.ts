@@ -237,6 +237,7 @@ export class CommonPersonalDetailsComponent
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
+    console.log(this.docCustomerDetails);
 
     if (data?.length > 0) {
       setTimeout(() => {
@@ -380,6 +381,7 @@ export class CommonPersonalDetailsComponent
           const applicantNameArray = this.docCustomerDetails?.applicantName
             ? this.docCustomerDetails?.applicantName?.split(' ')
             : [];
+          console.log(this.docCustomerDetails);
           if (applicantNameArray && applicantNameArray?.length >= 3) {
             const customerFormGroup = this.customerDetailsForm.get(
               'customer',
@@ -458,6 +460,7 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
+    console.log(data);
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ''],
@@ -979,11 +982,14 @@ export class CommonPersonalDetailsComponent
     console.log(this.customerDetailsForm, 'customerDetailsForm');
     const payload = {
       originationId: this.loanCustomerId,
-      screenCode: this.screenCodeValue,
-      customerInfo: [...this.customerDetailsForm.value.customer],
+      customerInfo: [...this.customerDetailsForm?.value.customer],
+      screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;
-
+    const docIds = this.sessionStorageService.getLoanDoc();
+    if (docIds) {
+      payload.customerInfo[0].documentId = docIds;
+    }
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.sessionStorageService.setCustomerStagingId(

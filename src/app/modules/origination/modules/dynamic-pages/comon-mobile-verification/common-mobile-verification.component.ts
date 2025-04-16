@@ -320,7 +320,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
           const emiData = this.sessionStorageService.getEmiData();
           const data = {
             loanDetails: {
-              loanAmount: emiData?.amount,
+              loanAmount: Number(emiData?.amount),
               totalInterestAmount: emiData?.totalInterest,
               interestRate: emiData?.rateOfIntrest,
               loanTenureMonth: emiData?.loanTenureMonth,
@@ -340,6 +340,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               originationProductId:
                 this.sessionStorageService.getLoanBasisDetails()?.basisId,
             },
+            screenCode: this.sessionStorageService.getCurrentScreenCode(),
           };
           this.loanApi.saveLoanDetails(data).subscribe((resp: any) => {
             if (resp.statusCode === 200) {
