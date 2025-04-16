@@ -145,7 +145,6 @@ export class CommonPersonalDetailsComponent
         this.buildCustomerDetailsForm();
       }
     });
-
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -452,6 +451,10 @@ export class CommonPersonalDetailsComponent
         }, 100);
       this.cdr.detectChanges();
     }
+
+    this.customerDetailsForm.valueChanges.subscribe((res) => {
+      console.log(res, 'response');
+    });
   }
 
   renderApplicant(data: any, applicantLength: any) {

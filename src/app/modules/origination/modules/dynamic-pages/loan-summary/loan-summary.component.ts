@@ -70,10 +70,25 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
         .getLoanSummary(originationId)
         .subscribe((response: any) => {
           this.loanSummaryDetails = response.data;
-          console.log(this.loanSummaryDetails, 'check');
+          this.getCollateralDetails(this.loanSummaryDetails);
           resolve('');
         });
     });
+  }
+
+  getCollateralDetails(details: any) {
+    const collateralDetails = details?.collateralInfo?.collateralDetails || [];
+    const credit = collateralDetails[0] || {};
+    const vaf = collateralDetails[1] || {};
+    details.collateralInfo = {
+      ...details.collateralInfo,
+      collateralDescriptionForCredit: credit.description,
+      ownershipForCredit: credit.ownership,
+      assetMonetaryWorthForCredit: credit.assetMonetaryWorth,
+      collateralDescriptionForVaf: vaf.description,
+      ownershipForVaf: vaf.ownership,
+      assetMonetaryWorthForVaf: vaf.assetMonetaryWorth,
+    };
   }
 
   getOriginationMasterData() {

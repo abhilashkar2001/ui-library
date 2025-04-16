@@ -3,17 +3,14 @@
   [formGroup]="collateralDetailsForm"
   fxLayout="column"
 >
-  <mat-card class="default-card p-12">
+  <mat-card class="default-card p-12" *ngIf="creditGroup">
     <span class="theme_gt_md">Credit Card Details</span>
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
           [icAlphabetOnly]="true"
           label="Description of Collateral"
-          [control]="
-            collateralDetailsForm.get('collateralDescriptionForCredit')
-              | formcontrol
-          "
+          [control]="creditGroup.get('description') | formcontrol"
         ></ic-form-field>
       </div>
       <div fxFlex="49">
@@ -23,40 +20,30 @@
         <div fxLayout="row" fxLayoutGap="50px">
           <ic-radio-button
             *ngFor="let status of ownershipStatus"
-            [control]="
-              collateralDetailsForm.get('ownershipForCredit')
-                | controlAsFormControl
-            "
+            [control]="creditGroup.get('ownership') | formcontrol"
             [value]="status.value"
             [label]="status.label"
-          >
-          </ic-radio-button>
+          ></ic-radio-button>
         </div>
       </div>
       <div fxFlex="49">
         <ic-form-field
           [icNumbersOnly]="true"
           label="Asset Monetary Worth"
-          [control]="
-            collateralDetailsForm.get('assetMonetaryWorthForCredit')
-              | formcontrol
-          "
-        >
-        </ic-form-field>
+          [control]="creditGroup.get('assetMonetaryWorth') | formcontrol"
+        ></ic-form-field>
       </div>
     </div>
   </mat-card>
-  <mat-card class="default-card p-12">
+
+  <mat-card class="default-card p-12" *ngIf="vafGroup">
     <span class="theme_gt_md">VAF Details</span>
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
           [icAlphabetOnly]="true"
           label="Description of Collateral"
-          [control]="
-            collateralDetailsForm.get('collateralDescriptionForVaf')
-              | formcontrol
-          "
+          [control]="vafGroup.get('description') | formcontrol"
         ></ic-form-field>
       </div>
       <div fxFlex="49">
@@ -66,25 +53,18 @@
         <div fxLayout="row" fxLayoutGap="50px">
           <ic-radio-button
             *ngFor="let status of ownershipStatus"
-            [control]="
-              collateralDetailsForm.get('ownershipForVaf')
-                | controlAsFormControl
-            "
+            [control]="vafGroup.get('ownership') | formcontrol"
             [value]="status.value"
             [label]="status.label"
-          >
-          </ic-radio-button>
+          ></ic-radio-button>
         </div>
       </div>
       <div fxFlex="49">
         <ic-form-field
           [icNumbersOnly]="true"
           label="Asset Monetary Worth"
-          [control]="
-            collateralDetailsForm.get('assetMonetaryWorthForVaf') | formcontrol
-          "
-        >
-        </ic-form-field>
+          [control]="vafGroup.get('assetMonetaryWorth') | formcontrol"
+        ></ic-form-field>
       </div>
     </div>
   </mat-card>
@@ -93,7 +73,9 @@
     <div fxFlex="49">
       <ic-form-field
         label="(%)of Security Cover"
-        [control]="collateralDetailsForm.get('securityCover') | formcontrol"
+        [control]="
+          collateralDetailsForm.get('percentageOfSecurityCover') | formcontrol
+        "
       >
       </ic-form-field>
     </div>

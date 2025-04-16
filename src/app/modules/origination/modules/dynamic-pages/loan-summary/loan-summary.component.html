@@ -34,8 +34,13 @@
                     : loanSummaryDetails?.[section.headerKey]?.loanTenureDay
               }}
             </ng-container>
-            <ng-container *ngIf="field.header === 'Repayment Frequency'">
-              {{ loanSummaryDetails?.repaymentModel?.firstRepaymentDate ?? '' }}
+            <ng-container
+              *ngIf="
+                field.header === 'EMI Start Date' ||
+                field.header === 'Repayment Frequency'
+              "
+            >
+              {{ loanSummaryDetails?.repaymentModel?.[field.headKey] ?? '' }}
             </ng-container>
             <ng-container *ngIf="section.headerKey === 'loanDisbursementModel'">
               {{
