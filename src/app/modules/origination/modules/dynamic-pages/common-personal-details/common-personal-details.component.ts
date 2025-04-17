@@ -747,18 +747,7 @@ export class CommonPersonalDetailsComponent
   }
 
   calculateId(data: any) {
-    const docIds: any = [];
-    data?.documnentsInfo?.documents.forEach((item: any) => {
-      const docItemId: any = [];
-      item.docs.forEach((docItem: any) => {
-        docItemId.push(docItem.documentId);
-      });
-      const docId = {
-        docIds: docItemId,
-      };
-      docIds.push(docId);
-    });
-    return docIds;
+    console.log(data);
   }
 
   async addCustomer(i: any, data?: any) {
@@ -985,14 +974,11 @@ export class CommonPersonalDetailsComponent
     console.log(this.customerDetailsForm, 'customerDetailsForm');
     const payload = {
       originationId: this.loanCustomerId,
-      customerInfo: [...this.customerDetailsForm?.value.customer],
+      customerInfo: [...this.customerDetailsForm.value.customer],
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;
-    const docIds = this.sessionStorageService.getLoanDoc();
-    if (docIds) {
-      payload.customerInfo[0].documentId = docIds;
-    }
+
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.sessionStorageService.setCustomerStagingId(

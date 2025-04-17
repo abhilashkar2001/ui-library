@@ -198,14 +198,11 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
    * @param value inputValue of child screen
    */
   updateAccount = (value: Partial<any>) => {
-    console.log(value);
     const isLoan = value?.['isForLoan'] ?? true;
-    if (value?.['disbursementDetails'])
-      this.disbursementDetails = value['disbursementDetails'];
     if (value?.['kycDoc']) {
       this.kycDoc = value?.['kycDoc'];
-      this.docCustomerDetails = value?.['customerDetails'];
     }
+    this.docCustomerDetails = value?.['customerDetails'];
     const originationModel = {
       ...this.factorizedPayload(),
     };

@@ -7,13 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -23,7 +17,6 @@ import { CustomWebDocUploadServiceService } from './custom-web-doc-upload-servic
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { debounceTime } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -33,13 +26,6 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
-
-enum CreateLoanEnum {
-  INTERNAL = 'internal',
-  EXTERNAL = 'external',
-  ACCOUNT_INCLUDES_KEY = 'new acc',
-  ACCOUNT_EXISTING_KEY = 'existing acc',
-}
 @Component({
   selector: 'app-cusotm-web-doc-upload',
   templateUrl: './cusotm-web-doc-upload.component.html',
@@ -59,11 +45,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Input() isOtherDocVisible = true;
   @Input() docAppliName: any;
   @Input() individual = true;
-  loanEnum = CreateLoanEnum;
 
   documentControls!: FormGroup;
   createDocumentForm!: FormGroup;
-  loanDisbursementForm!: FormGroup;
   documentIds = [
     {
       docIds: [],
@@ -92,16 +76,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   disbursementTypeId: any;
   loanCustomerId: string | any;
   accountList: any;
-  accountTypeArr = [
-    {
-      name: 'Internal Account',
-      value: 'internal',
-    },
-    {
-      name: 'External Account',
-      value: 'external',
-    },
-  ];
   defaultDisbursement: any;
   ocrPass = false;
   nationalIdNo: any;
@@ -140,7 +114,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.isShowDisbursement) this.buildLoanDisbursementForm();
     this.sessionStorageService.getCustomerId();
     if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
     console.log(this.ocrProcess);
@@ -167,54 +140,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     }
 
     this.getGenericDetails();
-  }
-
-  buildLoanDisbursementForm(data?: any) {
-    this.loanDisbursementForm = this.fb.group({
-      disbursementTypeId: [
-        data ? data?.disbursementTypeId : '',
-        Validators.required,
-      ],
-      accountNumber: [data ? data?.accountNumber : ''],
-      id: data?.id,
-      bankCode: [data ? data?.bankCode : ''],
-      accountType: CreateLoanEnum.INTERNAL,
-      ifscCode: [data ? data?.ifscCode : ''],
-      branchCode: [data ? data?.branchCode : ''],
-      confirmAccountNumber: '',
-      disbursementTypeValue: '',
-    });
-    this.loanDisbursementForm
-      .get('accountNumber')
-      ?.valueChanges.pipe(debounceTime(500))
-      .subscribe();
-  }
-
-  /**
-   * account number validation.
-   */
-  onChange() {
-    if (
-      this.loanDisbursementForm.value.accountNumber &&
-      this.loanDisbursementForm.value.accountType === this.loanEnum.INTERNAL
-    ) {
-      this.validateAccountNumber(this.loanDisbursementForm.value.accountNumber);
-    } else this.loanDisbursementForm.get('accountNumber')?.setErrors(null);
-  }
-  /**
-   * api call for account number validation, if account Number not present then invalidAccount error will throw in html.
-   */
-
-  validateAccountNumber(resp: any) {
-    this.loanApi.checkAccountNumberAvilable(resp).subscribe((data) => {
-      if (!data) {
-        this.loanDisbursementForm
-          .get('accountNumber')
-          ?.setErrors({ invalidAccount: true });
-      } else {
-        this.loanDisbursementForm.get('accountNumber')?.setErrors(null);
-      }
-    });
   }
 
   getCustomerById() {
@@ -553,13 +478,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         applicantName: name,
         dateOfBirth: dateOfBirth,
         gender: gender,
+        documentNumber:
+          this.otherDocument()?.controls[i]?.get('docIds')?.value[index],
       };
     }
-
-    console.log(
-      this.otherDocument().controls[i]?.get('fileInfo')?.value,
-      '///////',
-    );
   }
 
   documentNotMatched(i: any, file: any) {
@@ -623,7 +545,11 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     formData.append('module', 'document');
     // this.loder.open();
     this.ocrPass = false;
-    if (this.ocrCheck) {
+    if (
+      this.createDocumentForm.value.otherDocument[
+        i
+      ]?.documentType?.toLowerCase() == 'national id'
+    ) {
       this.readDocument(
         file,
         this.createDocumentForm.value.otherDocument[i]?.docIds?.length,
@@ -677,7 +603,12 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                   this.documentInfo?.dateOfBirth,
                   this.documentInfo?.gender,
                 );
-                if (this.isOtherDocVisible)
+                if (
+                  this.isOtherDocVisible &&
+                  !this.createDocumentForm.value.otherDocument[i].documentType
+                    ?.toLowerCase()
+                    .includes('national')
+                )
                   this.extractDoc(
                     this.createDocumentForm.value.otherDocument[i].documentType,
                     parseInt(this.sessionStorageService.getOriginationId()),
@@ -832,7 +763,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.loanDisbursementForm, '.....');
     let isDocUploaded = false;
     if (this.createDocumentForm) {
       isDocUploaded = this.createDocumentForm.value.otherDocument
@@ -847,15 +777,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     console.log(isDocUploaded);
     this.isLoading = true;
     this.loadingBtnText = 'Saving...';
-    if (this.loanDisbursementForm) {
-      this.CustomSubmit.emit({
-        documentDetails: this.createDocumentForm.value,
-        loanDisbursement: this.loanDisbursementForm.value ?? {},
-      });
-    } else
-      this.CustomSubmit.emit({
-        documentDetails: this.createDocumentForm.value,
-      });
+    this.CustomSubmit.emit({
+      documentDetails: this.createDocumentForm.value,
+    });
   }
 
   onBack() {

@@ -98,12 +98,27 @@ export class OtherChecklistDocUploadComponent implements OnInit {
 
   onSubmit(event: any) {
     let docIds: any = [];
+    const customerDetails: any = [];
     event.documentDetails.otherDocument.forEach((element: any) => {
       if (element.docIds?.length > 0) {
         docIds = [...docIds, ...element.docIds];
       }
     });
     console.log(event.loanDisbursement);
+    event.documentDetails.otherDocument.forEach((element: any) => {
+      if (element.docIds?.length > 0) {
+        const docId = {
+          docIds: element.docIds,
+        };
+        docIds.push(docId);
+        element.fileInfo.forEach((item: any) => {
+          if (item.applicantName || item.gender || item.dateOfBirth) {
+            customerDetails.push(item);
+            return;
+          }
+        });
+      }
+    });
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
     this.sessionStorageService.setLoanDoc(docIds);
@@ -111,7 +126,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
       otherLoanDoc: docIds,
       updateMasterSave: true,
       isCheckListDoc: true,
-      loanDisbursement: event.loanDisbursement,
+      customerDetails: customerDetails,
     });
     this.CustomSubmit.emit();
     this.sessionStorageService.removeDocAppliName();

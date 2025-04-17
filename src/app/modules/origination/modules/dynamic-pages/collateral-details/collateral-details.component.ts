@@ -102,7 +102,7 @@ export class CollateralDetailsComponent implements OnInit {
       totalAssetWorth: [''],
       collateralDetails: this.fb.array([]),
       loanTypeId: [''],
-      originationd: [this.originationId ?? ''],
+      originationId: [this.originationId ?? ''],
       screenCode: [this.screenCode ?? ''],
     });
     this.cdr.detectChanges();
