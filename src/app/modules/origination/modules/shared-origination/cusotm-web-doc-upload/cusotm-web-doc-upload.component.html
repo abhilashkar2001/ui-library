@@ -43,7 +43,12 @@
                             else showDropList
                           "
                         >
-                          {{ denomDetai.value.documentType }}
+                          {{ denomDetai.value.documentType
+                          }}<span
+                            *ngIf="denomDetai?.value?.docRequired"
+                            class="required-star"
+                            >*</span
+                          >
                         </h3>
                         <ng-template #showDropList>
                           <mat-form-field

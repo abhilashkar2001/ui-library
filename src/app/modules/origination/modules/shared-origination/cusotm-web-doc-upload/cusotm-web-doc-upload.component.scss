@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: column;
 }
-
+.required-star {
+  color: red;
+}
 .add-more-btn {
   border-radius: 10px;
   background: #fffefe;

@@ -763,6 +763,13 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const hasUploadedRequiredDocs = this.otherDocument()?.value?.some(
+      (item: any) => item.fileInfo.length == 0 && item.docRequired,
+    );
+
+    if (hasUploadedRequiredDocs) {
+      return;
+    }
     let isDocUploaded = false;
     if (this.createDocumentForm) {
       isDocUploaded = this.createDocumentForm.value.otherDocument
