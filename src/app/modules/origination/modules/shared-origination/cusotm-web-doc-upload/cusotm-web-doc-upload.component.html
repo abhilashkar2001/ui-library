@@ -165,16 +165,12 @@
       fxLayout="column"
     >
       <div class="forSignImg" fxLayout="column">
-        <div
-          class="signdig"
-          fxLayout="column"
-          fxLayoutAlign="flex-start center"
-        >
+        <div class="signdig" fxLayout="column" fxLayoutAlign="center center">
           <div class="biometric-card w-100" fxLayoutAlign="end center">
-            <div class="deleteDiv" fxLayoutAlign="center center">
+            <div class="deleteDiv" fxLayoutAlign="center center" *ngIf="image">
               <ic-button
                 [icButtonType]="'icon'"
-                [icIcon]="'delete'"
+                [icIcon]="image ? 'delete' : ''"
                 (click)="removeScannedFace()"
               ></ic-button>
             </div>

@@ -116,6 +116,10 @@ export class LoanDetailsComponent implements OnInit {
         ],
         chequeNumber: [
           data?.loanDisbursementModel?.chequeNumber ?? data?.chequeNumber ?? '',
+          this.loanDisbursementModel?.get('disbursementMode')?.value ===
+          'Cheque'
+            ? Validators.required
+            : [],
         ],
         requiredMultipleDisbursement: true,
         scheduleFrequencyYear: 0,
@@ -124,22 +128,30 @@ export class LoanDetailsComponent implements OnInit {
         disbursementAccount: this.fb.group({
           accountNo: [
             data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
+            Validators.required,
           ],
           accountType: [
             data?.loanDisbursementModel?.disbursementAccount?.accountType ?? '',
+            Validators.required,
           ],
           customerName: [
             data?.loanDisbursementModel?.disbursementAccount?.customerName ??
               '',
+            this.loanDisbursementModel?.get('disbursementMode')?.value ===
+            'Cheque'
+              ? Validators.required
+              : [],
           ],
           bankCode: [
             data?.loanDisbursementModel?.disbursementAccount?.bankCode ?? '',
           ],
           bankName: [
             data?.loanDisbursementModel?.disbursementAccount?.bankName ?? '',
+            Validators.required,
           ],
           branchName: [
             data?.loanDisbursementModel?.disbursementAccount?.branchName ?? '',
+            Validators.required,
           ],
         }),
       }),

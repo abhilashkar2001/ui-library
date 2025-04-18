@@ -11,94 +11,50 @@
   <form [formGroup]="pincodeForm">
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxFlex="24.5">
-        <app-searchable-select
-          [customInputHeight]="'height_45'"
-          [items]="countries"
-          inputLabel="Country"
+        <ic-select
+          fxFlex="100"
+          [options]="countries"
+          label="Country"
           bindLabelKey="countryName"
           bindValueKey="countryId"
           [control]="pincodeForm.get('countryId') | formcontrol"
           (selectionChange)="fetchStateByCountry($event)"
-        ></app-searchable-select>
+        ></ic-select>
       </div>
 
       <div fxFlex="24.5">
-        <mat-form-field
-          appearance="outline"
-          class="full-width fieldinput height_45"
-        >
-          <mat-label>Pincode</mat-label>
-          <input
-            matInput
-            type="text"
-            name="pincode"
-            placeholder="pincode"
-            formControlName="pincode"
-            (input)="checkNumberOnly($event)"
-          />
-          <mat-error
-            *ngIf="
-              pincodeForm.get('pincode')?.hasError('touched') ||
-              pincodeForm.get('pincode')?.hasError('required')
-            "
-          >
-            <small>Pincode is Required</small>
-          </mat-error>
-        </mat-form-field>
+        <ic-form-field
+          fxFlex="100"
+          label="Pincode"
+          suffixIcon="search"
+          [control]="pincodeForm.get('pincode') | formcontrol"
+          [maxLength]="10"
+          [icNumbersOnly]="true"
+        ></ic-form-field>
       </div>
 
       <div fxFlex="24.5">
-        <mat-form-field
-          appearance="outline"
-          class="full-width fieldinput height_45"
-        >
-          <mat-label>State</mat-label>
-          <mat-select
-            formControlName="stateId"
-            (selectionChange)="fetchCityByState($event.value)"
-            disableOptionCentering
-          >
-            <mat-option [value]="">Select</mat-option>
-            <mat-option *ngFor="let state of states" [value]="state.stateId">{{
-              state.stateName
-            }}</mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="
-              pincodeForm.get('stateId')?.hasError('touched') ||
-              pincodeForm.get('stateId')?.hasError('required')
-            "
-          >
-            <small>State is Required</small>
-          </mat-error>
-        </mat-form-field>
+        <ic-select
+          fxFlex="100"
+          [options]="states"
+          label="State"
+          bindLabelKey="stateName"
+          bindValueKey="stateId"
+          [control]="pincodeForm.get('stateId') | formcontrol"
+          (selectionChange)="fetchCityByState($event)"
+        ></ic-select>
       </div>
 
       <div fxFlex="24.5">
-        <mat-form-field
-          appearance="outline"
-          class="full-width fieldinput height_45"
-        >
-          <mat-label>City</mat-label>
-          <mat-select
-            formControlName="cityId"
-            (selectionChange)="populateStateCountryByCity($event.value)"
-            disableOptionCentering
-          >
-            <mat-option [value]="">Select</mat-option>
-            <mat-option *ngFor="let city of cities" [value]="city.cityId">{{
-              city.cityName
-            }}</mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="
-              pincodeForm.get('cityId')?.hasError('touched') ||
-              pincodeForm.get('cityId')?.hasError('required')
-            "
-          >
-            <small>City is Required</small>
-          </mat-error>
-        </mat-form-field>
+        <ic-select
+          fxFlex="100"
+          [options]="cities"
+          label="City"
+          bindLabelKey="cityName"
+          bindValueKey="cityId"
+          [control]="pincodeForm.get('cityId') | formcontrol"
+          (selectionChange)="populateStateCountryByCity($event)"
+        ></ic-select>
       </div>
     </div>
 

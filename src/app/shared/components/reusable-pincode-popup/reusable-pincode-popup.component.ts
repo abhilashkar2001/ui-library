@@ -64,11 +64,6 @@ export class ReusablePincodePopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  checkNumberOnly(event: any) {
-    const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^0-9]/g, '');
-  }
-
   buildForm() {
     this.pincodeForm = this.fb.group({
       countryId: [''],

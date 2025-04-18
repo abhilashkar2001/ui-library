@@ -139,6 +139,7 @@
             loanTenureDay: 'Day',
           }"
           [parentForm]="loanForm"
+          [isRequired]="true"
         >
         </ic-tenure-field>
         <mat-error
@@ -168,17 +169,6 @@
           {{ productDetails?.minimumTenorYear || 0 }} Years
           {{ productDetails?.minimumTenorMonth || 0 }} Months
           {{ productDetails?.minimumTenorDay || 0 }} Days
-        </mat-error>
-        <mat-error
-          class="mat-error small-error mt-12"
-          *ngIf="
-            (loanForm.get('loanTenureYear').touched ||
-              loanForm.get('loanTenureMonth').touched ||
-              loanForm.get('loanTenureDay').touched) &&
-            !checkTenurePresence
-          "
-        >
-          Loan Period is Required
         </mat-error>
       </div>
       <div fxFlex="48.5" fxFlex.lt-md="100">

@@ -503,7 +503,12 @@ export class CommonPersonalDetailsComponent
             data?.spouseInfo?.contactDetails?.worktelephone ?? '',
           ],
           mobile: [data?.spouseInfo?.contactDetails?.mobile ?? ''],
-          email: [data?.spouseInfo?.contactDetails?.email ?? ''],
+          email: [
+            data?.spouseInfo?.contactDetails?.email ?? '',
+            Validators.pattern(
+              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+            ),
+          ],
           fax: [data?.spouseInfo?.contactDetails?.fax ?? ''],
           whatsappNo: [data?.spouseInfo?.contactDetails?.whatsappNo ?? ''],
           alternativeNumber: [

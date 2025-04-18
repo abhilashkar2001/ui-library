@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './loan-terms-conditions.component.html',
   styleUrls: ['./loan-terms-conditions.component.scss'],
 })
-export class LoanTermsConditionsComponent implements OnInit {
+export class LoanTermsConditionsComponent {
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
@@ -15,8 +15,6 @@ export class LoanTermsConditionsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
   }
-
-  ngOnInit(): void {}
 
   onConfirm() {
     this.updateParentModel({ updateMasterSave: false });
