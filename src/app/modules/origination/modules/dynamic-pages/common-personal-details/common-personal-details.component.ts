@@ -236,8 +236,6 @@ export class CommonPersonalDetailsComponent
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
-    console.log(this.docCustomerDetails);
-
     if (data?.length > 0) {
       setTimeout(() => {
         this.renderApplicant(
@@ -474,7 +472,6 @@ export class CommonPersonalDetailsComponent
       firstName: [data ? data.firstName : '', Validators.required],
       lastName: [data ? data.lastName : '', Validators.required],
       dateOfBirth: [data ? data.dateOfBirth : '', Validators.required],
-
       genderId: [data ? data.genderId : '', Validators.required],
       nationality: [data ? data.nationality : '', Validators.required],
       maritalStatusId: [data ? data.maritalStatusId : '', Validators.required],

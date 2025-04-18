@@ -116,10 +116,6 @@ export class LoanDetailsComponent implements OnInit {
         ],
         chequeNumber: [
           data?.loanDisbursementModel?.chequeNumber ?? data?.chequeNumber ?? '',
-          this.loanDisbursementModel?.get('disbursementMode')?.value ===
-          'Cheque'
-            ? Validators.required
-            : [],
         ],
         requiredMultipleDisbursement: true,
         scheduleFrequencyYear: 0,
@@ -128,30 +124,22 @@ export class LoanDetailsComponent implements OnInit {
         disbursementAccount: this.fb.group({
           accountNo: [
             data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
-            Validators.required,
           ],
           accountType: [
             data?.loanDisbursementModel?.disbursementAccount?.accountType ?? '',
-            Validators.required,
           ],
           customerName: [
             data?.loanDisbursementModel?.disbursementAccount?.customerName ??
               '',
-            this.loanDisbursementModel?.get('disbursementMode')?.value ===
-            'Cheque'
-              ? Validators.required
-              : [],
           ],
           bankCode: [
             data?.loanDisbursementModel?.disbursementAccount?.bankCode ?? '',
           ],
           bankName: [
             data?.loanDisbursementModel?.disbursementAccount?.bankName ?? '',
-            Validators.required,
           ],
           branchName: [
             data?.loanDisbursementModel?.disbursementAccount?.branchName ?? '',
-            Validators.required,
           ],
         }),
       }),
@@ -184,7 +172,48 @@ export class LoanDetailsComponent implements OnInit {
       }),
       screenCode: [''],
     });
-    console.log(this.sessionStorageService.getCurrentScreenCode());
+
+    const disbursementAccount = this.loanDisbursementModel.get(
+      'disbursementAccount',
+    );
+    const chequeNumberControl = this.loanDisbursementModel.get('chequeNumber');
+
+    if (!disbursementAccount) return;
+
+    const requiredFieldsForAccount = [
+      'accountNo',
+      'accountType',
+      'bankName',
+      'branchName',
+    ];
+    const customerNameField = 'customerName';
+
+    const updateValidators = (control: any, required: boolean) => {
+      if (!control) return;
+      control.setValidators(required ? Validators.required : null);
+      control.updateValueAndValidity();
+    };
+    this.loanDisbursementModel
+      .get('disbursementMode')
+      ?.valueChanges.subscribe((mode: string) => {
+        if (mode === 'Account') {
+          requiredFieldsForAccount.forEach((field) =>
+            updateValidators(disbursementAccount.get(field), true),
+          );
+          updateValidators(disbursementAccount.get(customerNameField), false);
+          updateValidators(chequeNumberControl, false);
+        } else if (mode === 'Cheque') {
+          requiredFieldsForAccount.forEach((field) =>
+            updateValidators(disbursementAccount.get(field), false),
+          );
+          updateValidators(chequeNumberControl, true);
+        } else {
+          [...requiredFieldsForAccount, customerNameField].forEach((field) =>
+            updateValidators(disbursementAccount.get(field), false),
+          );
+          updateValidators(chequeNumberControl, false);
+        }
+      });
   }
 
   get loanDetails() {
