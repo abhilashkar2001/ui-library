@@ -133,7 +133,6 @@
                       fxFlex="49"
                       [placeholder]="dateFormat"
                       label="Date Issued"
-                      dateFormat=""
                       [control]="
                         getDocumentControl(i, 0, 'issueDate') | formcontrol
                       "
@@ -144,7 +143,6 @@
                       fxFlex="49"
                       [placeholder]="dateFormat"
                       label="Expiry Date"
-                      dateFormat=""
                       [control]="
                         getDocumentControl(i, 0, 'expiryDate') | formcontrol
                       "
@@ -333,7 +331,7 @@
                       fxFlex="49"
                       [placeholder]="dateFormat"
                       label="Living Address Since"
-                      dateFormat=""
+                      [maxDate]="todayDate"
                     >
                     </ic-date-picker>
                   </div>
