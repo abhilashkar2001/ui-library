@@ -210,39 +210,34 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.personalDetails,
       value?.['kycDoc'] ?? null,
     );
+    console.log(value, isLoan, this.personalDetails);
+    if (value?.['isCheckListDoc']) {
+      const payload = {
+        documentIds: value?.['otherLoanDoc'],
+        originationId:
+          this.originationModel?.originationId ??
+          this.sessionStorageService.getOriginationId(),
+
+        screenCode: this.sessionStorageService.getCurrentScreenCode(),
+      };
+      this.loanApi.saveChecklist(payload).subscribe((resp) => {
+        if (resp?.statusCode === 201) {
+          this.sessionStorageService.setOtherDocScreenCode(
+            this.sessionStorageService.getCurrentScreenCode(),
+          );
+          this.next();
+        }
+      });
+    }
     if (
       value['updateMasterSave'] &&
       isLoan &&
       this.personalDetails?.length > 0
     ) {
-      if (value?.['isCheckListDoc']) {
-        const payload = {
-          documentIds: value?.['otherLoanDoc'],
-          originationId:
-            this.originationModel?.originationId ??
-            this.sessionStorageService.getOriginationId(),
-
-          screenCode: this.sessionStorageService.getCurrentScreenCode(),
-        };
-        this.loanApi.saveChecklist(payload).subscribe((resp) => {
-          if (resp?.statusCode === 201) {
-            this.sessionStorageService.setOtherDocScreenCode(
-              this.sessionStorageService.getCurrentScreenCode(),
-            );
-            this.calculateDisbursementPayload(value['loanDisbursement']);
-            this.loanApi
-              .submitLoanDetail(
-                this.calculateDisbursementPayload(value['loanDisbursement']),
-              )
-              .subscribe();
-            this.next();
-          }
-        });
-      } else
-        this.getMasterSave({
-          originationModel: originationModel,
-          customerInfo: customerInfo,
-        });
+      this.getMasterSave({
+        originationModel: originationModel,
+        customerInfo: customerInfo,
+      });
     } else {
       if (!isLoan) return;
       else this.next();
@@ -683,7 +678,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                     resp?.data?.originationModel?.originationId,
                     formData,
                     item?.documentId,
-                    docIds[0],
                   )
                   .toPromise();
               }

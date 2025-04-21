@@ -18,7 +18,6 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { Subscription } from 'rxjs';
-import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -100,7 +99,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private docapi: CustomWebDocUploadServiceService,
     private loanApi: LoanService,
     private openApi: OpenAccountService,
-    private dataService: DataService,
     private sessionStorageService: SessionStorageService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
@@ -614,7 +612,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
                     parseInt(this.sessionStorageService.getOriginationId()),
                     file,
                     resp.data.documentId,
-                    this.sessionStorageService.getCustomerStagingId(),
                   );
                 // else this.loder.close();
               }
@@ -624,7 +621,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         .catch((error) => {
           console.error(error);
         });
-    } else if (!this.ocrCheck && this.individual) {
+    } else {
       this.api.uploadDocument(formData).subscribe((resp) => {
         if (resp?.statusCode === 200) {
           this.updateDocId(i).push(resp.data.documentId);
@@ -646,50 +643,18 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
               parseInt(this.sessionStorageService.getOriginationId()),
               file,
               resp.data.documentId,
-              this.sessionStorageService.getCustomerStagingId(),
             );
-        }
-      });
-    } else {
-      this.api.uploadDocument(formData).subscribe((resp) => {
-        if (resp?.statusCode === 200 || resp?.statusCode == 201) {
-          this.dataService.setChecklistDocument(
-            this.createDocumentForm.value.otherDocument[i].documentType,
-            {
-              docName:
-                this.createDocumentForm.value.otherDocument[i].documentType,
-              originationId: this.sessionStorageService.getOriginationId(),
-              file: file,
-              documentId: resp.data.documentId,
-              custStagingId: this.sessionStorageService.getCustomerStagingId(),
-            },
-          );
-          this.sessionStorageService.setOtherDocScreenCode(
-            this.sessionStorageService.getCurrentScreenCode(),
-          );
         }
       });
     }
   }
 
   //for demo purpose removed error message
-  extractDoc(
-    docName: any,
-    originationId: any,
-    file: any,
-    documentId: any,
-    custStagingId: any,
-  ) {
+  extractDoc(docName: any, originationId: any, file: any, documentId: any) {
     const formData = new FormData();
     formData.append('fileName', file);
     this.docapi
-      .getCheckListDoc(
-        docName,
-        originationId,
-        formData,
-        documentId,
-        custStagingId,
-      )
+      .getCheckListDoc(docName, originationId, formData, documentId)
       .subscribe((resp) => {
         if (resp) {
           if (

@@ -105,20 +105,20 @@ export class OtherChecklistDocUploadComponent implements OnInit {
       }
     });
     console.log(event.loanDisbursement);
-    event.documentDetails.otherDocument.forEach((element: any) => {
-      if (element.docIds?.length > 0) {
-        const docId = {
-          docIds: element.docIds,
-        };
-        docIds.push(docId);
-        element.fileInfo.forEach((item: any) => {
-          if (item.applicantName || item.gender || item.dateOfBirth) {
-            customerDetails.push(item);
-            return;
-          }
-        });
-      }
-    });
+    // event.documentDetails.otherDocument.forEach((element: any) => {
+    //   if (element.docIds?.length > 0) {
+    //     const docId = {
+    //       docIds: element.docIds,
+    //     };
+    //     docIds.push(docId);
+    //     element.fileInfo.forEach((item: any) => {
+    //       if (item.applicantName || item.gender || item.dateOfBirth) {
+    //         customerDetails.push(item);
+    //         return;
+    //       }
+    //     });
+    //   }
+    // });
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
     this.sessionStorageService.setLoanDoc(docIds);

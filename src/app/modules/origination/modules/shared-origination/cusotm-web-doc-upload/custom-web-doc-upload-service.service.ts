@@ -15,10 +15,9 @@ export class CustomWebDocUploadServiceService {
     originationId: any,
     fileDesc: any,
     documentId: any,
-    custStagingId: any,
   ) {
     return this.http.post<any>(
-      `${this.baseUrl}/pyDocument/save?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}&customerId=${custStagingId}`,
+      `${this.baseUrl}/pyDocument/savePyDoc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`,
       fileDesc,
     );
   }
