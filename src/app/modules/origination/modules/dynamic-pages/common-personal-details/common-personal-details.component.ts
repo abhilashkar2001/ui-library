@@ -94,6 +94,7 @@ export class CommonPersonalDetailsComponent
   private localeData: LocaleData | undefined;
   dateFormat!: string;
   screenCodeValue: number | undefined;
+  customerDocDetails: any;
   constructor(
     private fb: FormBuilder,
     private api: NewDepositService,
@@ -125,6 +126,7 @@ export class CommonPersonalDetailsComponent
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
     this.screenCodeValue = this.sessionStorageService.getCurrentScreenCode();
+    this.customerDocDetails = this.sessionStorageService.getLoanDoc();
     // this.loanCustomerId = 67583;
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
@@ -461,7 +463,7 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
-    console.log(data);
+    const allDocIds = (this.customerDocDetails ?? [])[0]?.docIds ?? [];
     return this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ''],
@@ -477,11 +479,10 @@ export class CommonPersonalDetailsComponent
       maritalStatusId: [data ? data.maritalStatusId : '', Validators.required],
       source: data?.source ? data.source : 'Website',
       kycStatus: data?.kycStatus && data.kycStatus,
-      documentId: this.calculateId(data),
+      documentId: this.fb.control([{ docIds: allDocIds }]),
       documentInfo: this.fb.array(
         data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [],
       ),
-
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
         prefix: [data?.spouseInfo?.prefix ?? ''],
@@ -748,10 +749,6 @@ export class CommonPersonalDetailsComponent
     );
   }
 
-  calculateId(data: any) {
-    console.log(data);
-  }
-
   async addCustomer(i: any, data?: any) {
     await this.customer.push(this.newCustomer(data));
     this.addAddress(i, data ? data.contact?.address[0] : {});
@@ -957,7 +954,6 @@ export class CommonPersonalDetailsComponent
   }
 
   confirmCustomer() {
-    console.log('first');
     if (
       this.customerDetailsForm.invalid
       // this.isAnyPrimaryCustomer())
