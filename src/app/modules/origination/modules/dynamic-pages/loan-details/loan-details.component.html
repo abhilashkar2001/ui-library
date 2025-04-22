@@ -177,7 +177,7 @@
         <div fxFlex="48">
           <ic-form-field
             label="Account Name"
-            [icAlphabetOnly]="true"
+            [icAlphaNumericWithSpace]="true"
             [maxLength]="40"
             [control]="loanDisbursementModel.get('customerName') | formcontrol"
           ></ic-form-field>
@@ -189,6 +189,7 @@
           <ic-form-field
             label="Bank Code"
             [maxLength]="35"
+            [icAlphanumeric]="true"
             [control]="loanDisbursementAccount.get('bankCode') | formcontrol"
           ></ic-form-field>
         </div>

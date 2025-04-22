@@ -39,6 +39,7 @@ import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 // import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
+import { pluckOnlyDate } from 'app/shared/helpers/utils';
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',
@@ -237,15 +238,13 @@ export class CommonPersonalDetailsComponent
   // To check the Mobilelength according to isdCode
   checkMobileLength(value: any, contactGroup: FormGroup, controlName: string) {
     if (!contactGroup) {
-      console.error('Contact group is null or undefined');
       return;
     }
-    const countryCode = this.countriesIsdCodes.find(
+    const countryCode = this.countriesIsdCodes?.find(
       (resp: any) => resp.countryTelIsdCode === Number(value),
     );
     if (countryCode) {
-      this.maxMobileLength = countryCode.mobileLength;
-
+      this.maxMobileLength = countryCode?.mobileLength;
       const control = contactGroup.get(controlName);
       if (control) {
         control.setValidators([
@@ -676,7 +675,7 @@ export class CommonPersonalDetailsComponent
       },
       {
         groupName: 'spouseInfo.contactDetails',
-        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+        fields: ['mobile'],
       },
       {
         groupName: 'emergencyContactInfo.contactDetails',
@@ -779,7 +778,7 @@ export class CommonPersonalDetailsComponent
 
   private newDocumentGroup(doc?: any): FormGroup {
     return this.fb.group({
-      documentTypeId: [doc?.documentTypeId || '', [Validators.required]],
+      documentTypeId: [doc?.documentTypeId || ''],
       documentNumber: [doc?.documentNumber || '', Validators.required],
       issueDate: [doc?.issueDate || ''],
       expiryDate: [doc?.expiryDate || ''],
@@ -1019,19 +1018,24 @@ export class CommonPersonalDetailsComponent
     ) {
       return;
     }
-    console.log('se');
-    // let prefixValue = null;
-    // this.customerDetailsForm.value.customer.forEach((element: any) => {
-    //   this.prefixArray.forEach((el) => {
-    //     if (element.primaryCustomer && el.id == element.prefixId) {
-    //       prefixValue = el.values;
-    //     }
-    //   });
-    // });
-    console.log(this.customerDetailsForm, 'customerDetailsForm');
+
+    const customerData = this.customerDetailsForm.value.customer.map(
+      (customer: any) => {
+        return {
+          ...customer,
+          dateOfBirth: pluckOnlyDate(customer.dateOfBirth),
+          spouseInfo: customer.spouseInfo
+            ? {
+                ...customer.spouseInfo,
+                dateOfBirth: pluckOnlyDate(customer.spouseInfo.dateOfBirth),
+              }
+            : null,
+        };
+      },
+    );
     const payload = {
       originationId: this.loanCustomerId,
-      customerInfo: [...this.customerDetailsForm.value.customer],
+      customerInfo: customerData,
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;

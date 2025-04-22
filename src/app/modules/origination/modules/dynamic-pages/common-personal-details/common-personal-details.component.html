@@ -61,12 +61,6 @@
                       [placeholder]="dateFormat"
                       label="DateOfBirth"
                       dateFormat=""
-                      (valueChange)="
-                        dateOfBirthSelected(
-                          customerDetailsForm.value.customer[0].dateOfBirth,
-                          i
-                        )
-                      "
                       [control]="customer.get('dateOfBirth') | formcontrol"
                     >
                     </ic-date-picker>

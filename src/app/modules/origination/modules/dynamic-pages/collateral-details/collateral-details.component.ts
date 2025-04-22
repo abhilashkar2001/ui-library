@@ -67,23 +67,7 @@ export class CollateralDetailsComponent implements OnInit {
       .getCollateralDetailsId(this.originationId)
       .subscribe((res: any) => {
         if (res?.statusCode === 200 || res?.statusCode === 201) {
-          const data = res.data[0];
-          this.collateralDetailsForm.patchValue({
-            percentageOfSecurityCover: data.percentageOfSecurityCover,
-            effectiveDate: data.effectiveDate,
-            expiryDate: data.expiryDate,
-            totalAssetWorth: data.totalAssetWorth,
-            loanTypeId: data.loanTypeId,
-          });
-
-          const details = data.collateralDetails ?? [];
-          details.forEach((item: any, index: number) => {
-            const group = this.getCollateralDetails().at(index);
-            if (group) {
-              group.patchValue(item);
-            }
-          });
-
+          this.collateralDetailsForm.patchValue(res?.data);
           this.collateralDetailsForm
             .get('originationd')
             ?.setValue(this.originationId);
