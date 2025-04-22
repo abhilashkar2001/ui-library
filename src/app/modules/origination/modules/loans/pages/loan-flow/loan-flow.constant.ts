@@ -7,7 +7,7 @@ import { NationalIdUploadComponent } from '../../../dynamic-pages/national-id-up
 import { OtherChecklistDocUploadComponent } from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
 import { CompanyInformationComponent } from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
 import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
-// import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
+import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
 import { CollateralDetailsComponent } from '../../../dynamic-pages/collateral-details/collateral-details.component';
 import { BusinessDetailsComponent } from '../../../dynamic-pages/business-details/business-details.component';
 
@@ -65,7 +65,7 @@ export class LoanFlowConstants {
       id: 3,
       key: 'create',
       type: 'Create Loan',
-      component: CommonPersonalDetailsComponent,
+      component: LoanDetailsComponent,
     },
     {
       id: 4,
