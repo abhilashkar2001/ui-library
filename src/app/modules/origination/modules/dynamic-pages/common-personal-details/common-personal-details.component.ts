@@ -234,6 +234,30 @@ export class CommonPersonalDetailsComponent
     }
   }
 
+  // To check the Mobilelength according to isdCode
+  checkMobileLength(value: any, contactGroup: FormGroup, controlName: string) {
+    if (!contactGroup) {
+      console.error('Contact group is null or undefined');
+      return;
+    }
+    const countryCode = this.countriesIsdCodes.find(
+      (resp: any) => resp.countryTelIsdCode === Number(value),
+    );
+    if (countryCode) {
+      this.maxMobileLength = countryCode.mobileLength;
+
+      const control = contactGroup.get(controlName);
+      if (control) {
+        control.setValidators([
+          Validators.required,
+          Validators.maxLength(this.maxMobileLength),
+          Validators.minLength(this.maxMobileLength),
+        ]);
+        control.updateValueAndValidity();
+      }
+    }
+  }
+
   buildCustomerDetailsForm(data?: any) {
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
@@ -464,7 +488,7 @@ export class CommonPersonalDetailsComponent
 
   newCustomer(data?: any): FormGroup {
     const allDocIds = (this.customerDocDetails ?? [])[0]?.docIds ?? [];
-    return this.fb.group({
+    const formGroup = this.fb.group({
       customerId: data && data.customerId,
       customerNo: [data ? data.customerNo : ''],
       custStagingId: data?.custStagingId ?? null,
@@ -621,7 +645,7 @@ export class CommonPersonalDetailsComponent
         ],
         mobtCode: [
           data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
-          [Validators.required],
+          Validators.required,
         ],
         alternativeNumber: [
           data?.contact ? data?.contact.alternativeNumber : '',
@@ -640,10 +664,42 @@ export class CommonPersonalDetailsComponent
         address: this.fb.array([]),
       }),
     });
+    this.setMobileValidators(formGroup);
+    return formGroup;
+  }
+
+  private setMobileValidators(formGroup: FormGroup) {
+    const groups = [
+      {
+        groupName: 'contact',
+        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+      },
+      {
+        groupName: 'spouseInfo.contactDetails',
+        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+      },
+      {
+        groupName: 'emergencyContactInfo.contactDetails',
+        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+      },
+    ];
+    groups.forEach((group) => {
+      const contactGroup = formGroup.get(group.groupName) as FormGroup;
+      const isdCode = contactGroup.get('mobtCode')?.value;
+      if (isdCode) {
+        group.fields.forEach((field) => {
+          this.checkMobileLength(isdCode, contactGroup, field);
+        });
+      }
+    });
   }
 
   get customer(): FormArray {
     return this.customerDetailsForm.get('customer') as FormArray;
+  }
+
+  getCustomerContactDetails(index: number): FormGroup {
+    return this.customer.at(index)?.get('contact') as FormGroup;
   }
 
   get addressArray(): FormArray {
@@ -709,7 +765,7 @@ export class CommonPersonalDetailsComponent
   private createEmergencyContactAddressGroup(address?: any): FormGroup {
     return this.fb.group({
       addressId: [address?.addressId ?? null],
-      address1: [address?.address1 ?? '', Validators.required],
+      address1: [address?.address1 ?? '', [Validators.required]],
       address2: [address?.address2 ?? ''],
       cityName: [address?.cityName ?? ''],
       stateName: [address?.stateName ?? ''],
@@ -723,7 +779,7 @@ export class CommonPersonalDetailsComponent
 
   private newDocumentGroup(doc?: any): FormGroup {
     return this.fb.group({
-      documentTypeId: [doc?.documentTypeId || '', Validators.required],
+      documentTypeId: [doc?.documentTypeId || '', [Validators.required]],
       documentNumber: [doc?.documentNumber || '', Validators.required],
       issueDate: [doc?.issueDate || ''],
       expiryDate: [doc?.expiryDate || ''],
@@ -766,7 +822,6 @@ export class CommonPersonalDetailsComponent
   fetchStateCity(i: any) {
     const customer = this.customer.at(i).get('contact') as FormGroup;
     const address: any = customer.get('address');
-
     const addressControl = address.controls[0];
     addressControl
       ?.get('pincode')
@@ -789,6 +844,10 @@ export class CommonPersonalDetailsComponent
                     addressControl
                       .get('stateName')
                       ?.patchValue(res?.data?.[0]?.state);
+                  } else {
+                    addressControl.get('countryName')?.setValue(null);
+                    addressControl.get('cityName').setValue(null);
+                    addressControl.get('stateName')?.setValue(null);
                   }
                 });
             }, 1000);

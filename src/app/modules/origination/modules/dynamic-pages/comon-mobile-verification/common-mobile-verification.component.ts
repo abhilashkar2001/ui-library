@@ -150,7 +150,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
 
   onGetOTP() {
     // this.ngOtpInput.otpForm.reset();
-    console.log(this.otpForm.value);
     const value =
       this.otpForm.value.phone?.length > 0
         ? this.otpForm.value.phone
@@ -164,6 +163,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       this.invalidOtp = false;
       this.resendOtp += 1;
       this.stopInterval();
+      this.ngOtpInput?.otpForm?.enable();
       this.otpTimer();
       setTimeout(() => {
         this.otpSent = false;
@@ -271,6 +271,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
 
       if (seconds == 0) {
         this.resendLink = true;
+        this.ngOtpInput?.otpForm?.disable();
         this.stopInterval();
       }
       this.otpTimerReset({ seconds: this.displaySecond });

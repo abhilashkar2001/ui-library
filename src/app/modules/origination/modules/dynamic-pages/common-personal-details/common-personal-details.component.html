@@ -53,53 +53,23 @@
                       label="Last Name"
                       [control]="customer.get('lastName') | formcontrol"
                       [icAlphabetOnly]="true"
-                      [maxLength]="200"
+                      [maxLength]="20"
                     ></ic-form-field>
 
-                    <mat-form-field
+                    <ic-date-picker
                       fxFlex="49"
-                      appearance="outline"
-                      class="full-width disable-field"
+                      [placeholder]="dateFormat"
+                      label="DateOfBirth"
+                      dateFormat=""
+                      (valueChange)="
+                        dateOfBirthSelected(
+                          customerDetailsForm.value.customer[0].dateOfBirth,
+                          i
+                        )
+                      "
+                      [control]="customer.get('dateOfBirth') | formcontrol"
                     >
-                      <mat-label>Date Of Birth</mat-label>
-                      <input
-                        matInput
-                        type="text"
-                        formControlName="dateOfBirth"
-                        name="dateOfBirth"
-                        [matDatepicker]="picker"
-                        [max]="todayDate"
-                        readonly
-                        (dateChange)="
-                          dateOfBirthSelected(
-                            customerDetailsForm.value.customer[0].dateOfBirth,
-                            i
-                          )
-                        "
-                      />
-                      <mat-datepicker-toggle matSuffix [for]="picker">
-                        <mat-icon matDatepickerToggleIcon
-                          >calendar_today</mat-icon
-                        >
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                      <mat-error
-                        *ngIf="
-                          customer.get('dateOfBirth')?.touched &&
-                          customer.get('dateOfBirth')?.hasError('required')
-                        "
-                      >
-                        Date of Birth is required
-                      </mat-error>
-                      <mat-error
-                        *ngIf="
-                          customer.get('dateOfBirth')?.hasError('invalidDob')
-                        "
-                      >
-                        {{ errorDob }}
-                      </mat-error>
-                    </mat-form-field>
-
+                    </ic-date-picker>
                     <ic-select
                       fxFlex="49"
                       [options]="genderArray"
@@ -193,6 +163,13 @@
                         customer.get('contact')?.get('mobtCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'mobile'
+                        )
+                      "
                       [icNumbersOnly]="true"
                     ></ic-mobile-field>
                     <ic-mobile-field
@@ -207,6 +184,13 @@
                         customer.get('contact')?.get('altCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'alternativeNumber'
+                        )
+                      "
                       [icNumbersOnly]="true"
                     ></ic-mobile-field>
                     <ic-mobile-field
@@ -220,6 +204,13 @@
                         customer.get('contact')?.get('waptCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'whatsappNo'
+                        )
+                      "
                       [icNumbersOnly]="true"
                     ></ic-mobile-field>
                     <ic-form-field
@@ -359,6 +350,7 @@
                         getSpouseInfo(i).get('firstName') | formcontrol
                       "
                       [icAlphabetOnly]="true"
+                      [maxLength]="20"
                     ></ic-form-field>
 
                     <ic-form-field
@@ -366,6 +358,7 @@
                       label="Last Name"
                       [control]="getSpouseInfo(i).get('lastName') | formcontrol"
                       [icAlphabetOnly]="true"
+                      [maxLength]="20"
                     ></ic-form-field>
 
                     <ic-date-picker
@@ -409,6 +402,13 @@
                         getSpouseContactDetails(i).get('mobtCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getSpouseContactDetails(i),
+                          'mobile'
+                        )
+                      "
                     ></ic-mobile-field>
                     <ic-form-field
                       fxFlex="49"
@@ -475,6 +475,7 @@
                         getEmergencyContactInfo(i).get('firstName')
                           | formcontrol
                       "
+                      [maxLength]="20"
                       [icAlphabetOnly]="true"
                     ></ic-form-field>
 
@@ -485,6 +486,7 @@
                         getEmergencyContactInfo(i).get('lastName') | formcontrol
                       "
                       [icAlphabetOnly]="true"
+                      [maxLength]="20"
                     ></ic-form-field>
                     <ic-select
                       fxFlex="49"
@@ -505,6 +507,7 @@
                         getEmergencyContactDetails(i).get('telephone')
                           | formcontrol
                       "
+                      [maxLength]="20"
                       [icNumbersOnly]="true"
                     ></ic-form-field>
                     <ic-form-field
@@ -514,6 +517,7 @@
                         getEmergencyContactDetails(i).get('worktelephone')
                           | formcontrol
                       "
+                      [maxLength]="20"
                       [icNumbersOnly]="true"
                     ></ic-form-field>
                     <ic-mobile-field
@@ -528,6 +532,13 @@
                       [isdControl]="
                         getEmergencyContactDetails(i).get('mobtCode')
                           | formcontrol
+                      "
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'mobile'
+                        )
                       "
                       [maxLength]="maxMobileLength"
                     ></ic-mobile-field>
@@ -544,6 +555,13 @@
                           | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'alternativeNumber'
+                        )
+                      "
                       [icNumbersOnly]="true"
                     ></ic-mobile-field>
                     <ic-mobile-field
@@ -558,6 +576,13 @@
                       [isdControl]="
                         getEmergencyContactDetails(i).get('waptCode')
                           | formcontrol
+                      "
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'whatsappNo'
+                        )
                       "
                       [maxLength]="maxMobileLength"
                     ></ic-mobile-field>
@@ -583,6 +608,7 @@
                           'address1'
                         ) | formcontrol
                       "
+                      [maxLength]="250"
                     ></ic-form-field>
                     <ic-select
                       fxFlex="49"

@@ -54,10 +54,12 @@ export class ReusablePincodePopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayedColumns = this.columns.map((c: any) => c.columnDef);
-    this.buildForm();
     this.fetchAllCountry();
     this.fetchAllState();
     this.fetchAllCity();
+    setTimeout(() => {
+      this.buildForm();
+    }, 2000);
   }
 
   close() {
