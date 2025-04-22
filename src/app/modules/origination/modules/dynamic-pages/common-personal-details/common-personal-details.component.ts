@@ -795,7 +795,7 @@ export class CommonPersonalDetailsComponent
         address1: [address?.address1 ?? '', [Validators.required]],
         address2: [address?.address2 ?? '', [Validators.required]],
         residenceType: [address?.residenceType ?? '', [Validators.required]],
-        countryName: [address?.countryName ?? '', [Validators.required]],
+        countryName: [address?.countryName ?? ''],
         pincode: [address?.pincode ?? '', [Validators.required]],
         stateName: [address?.stateName ?? ''],
         cityId: [address?.cityId ?? ''],

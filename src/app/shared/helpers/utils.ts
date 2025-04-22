@@ -92,8 +92,10 @@ export const DEFAULT_LOCALE = {
   currency: 'USD',
 };
 export function pluckOnlyDate(date: any) {
+  if (!date) return '';
   return moment(date).format('YYYY-MM-DD');
 }
+
 export interface FilterBy {
   createdBy: string;
   createdDate: string;
