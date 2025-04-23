@@ -37,4 +37,16 @@ export class SharedService {
   deleteDocument(documentId: number) {
     return this.http.delete(`${this.baseUrl}/upload-document/${documentId}`);
   }
+
+  public pyScan(
+    docName: any,
+    originationId: any,
+    fileDesc: any,
+    documentId: any,
+  ) {
+    return this.http.post<any>(
+      `${this.baseUrl}/pyDocument/savePyDoc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`,
+      fileDesc,
+    );
+  }
 }

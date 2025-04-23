@@ -65,7 +65,8 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
 
   getLoanSummary() {
     return new Promise((resolve) => {
-      const originationId = this.sessionStorageService.getOriginationId();
+      const originationId =
+        this.sessionStorageService.getOriginationId() ?? 126831;
       this.loanService
         .getLoanSummary(originationId)
         .subscribe((response: any) => {

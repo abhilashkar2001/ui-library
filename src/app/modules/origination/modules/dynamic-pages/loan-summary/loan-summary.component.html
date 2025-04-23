@@ -81,7 +81,10 @@
                 {{
                   loanSummaryDetails?.[section.headerKey]?.[0]?.contact?.[
                     field.headKey
-                  ] ?? ''
+                  ] ??
+                    loanSummaryDetails?.[section.headerKey]?.[0]?.contact
+                      ?.address[0]?.[field.headKey] ??
+                    ''
                 }}
               </ng-container>
 
@@ -271,8 +274,9 @@
     </mat-panel-description>
   </mat-expansion-panel>
 </ng-container> -->
-<!-- <div class="uploaded-documents-summary">
-  <div class="text-header">National ID</div>
+
+<div class="uploaded-documents-summary">
+  <div class="text-header">Document Uploaded(National ID)</div>
   <div class="bank-account-details w-full" fxLayout="column">
     <div class="col-1"></div>
     <div fxLayout="row wrap" fxLayoutGap="2%">
@@ -283,7 +287,7 @@
       </ng-container>
     </div>
   </div>
-</div> -->
+</div>
 
 <div class="uploaded-documents-summary">
   <div class="text-header">Loan Document</div>

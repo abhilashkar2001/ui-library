@@ -488,20 +488,20 @@ export class CommonPersonalDetailsComponent
   newCustomer(data?: any): FormGroup {
     const allDocIds = (this.customerDocDetails ?? [])[0]?.docIds ?? [];
     const formGroup = this.fb.group({
-      customerId: data && data.customerId,
-      customerNo: [data ? data.customerNo : ''],
+      customerId: data && data?.customerId,
+      customerNo: [data ? data?.customerNo : ''],
       custStagingId: data?.custStagingId ?? null,
-      onboardingStatus: [data ? data.onboardingStatus : ''],
-      primaryCustomer: [data ? data.primaryCustomer : false],
-      prefixId: [data ? data.prefixId : '', Validators.required],
-      firstName: [data ? data.firstName : '', Validators.required],
-      lastName: [data ? data.lastName : '', Validators.required],
-      dateOfBirth: [data ? data.dateOfBirth : '', Validators.required],
-      genderId: [data ? data.genderId : '', Validators.required],
-      nationality: [data ? data.nationality : '', Validators.required],
-      maritalStatusId: [data ? data.maritalStatusId : '', Validators.required],
-      source: data?.source ? data.source : 'Website',
-      kycStatus: data?.kycStatus && data.kycStatus,
+      onboardingStatus: [data ? data?.onboardingStatus : ''],
+      primaryCustomer: [data ? data?.primaryCustomer : false],
+      prefixId: [data ? data?.prefixId : '', Validators.required],
+      firstName: [data ? data?.firstName : '', Validators.required],
+      lastName: [data ? data?.lastName : '', Validators.required],
+      dateOfBirth: [data ? data?.dateOfBirth : '', Validators.required],
+      genderId: [data ? data?.genderId : '', Validators.required],
+      nationality: [data ? data?.nationality : '', Validators.required],
+      maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
+      source: data?.source ? data?.source : 'Website',
+      kycStatus: data?.kycStatus && data?.kycStatus,
       documentId: this.fb.control([{ docIds: allDocIds }]),
       documentInfo: this.fb.array(
         data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [],
@@ -639,27 +639,27 @@ export class CommonPersonalDetailsComponent
           ],
         ],
         mobile: [
-          data?.contact ? data?.contact.mobile : '',
+          data?.contact ? data?.contact?.mobile : '',
           [Validators.required],
         ],
         mobtCode: [
-          data ? parseInt(data.contact.mobtCode) : this.defaultIsdCodeValue,
+          data ? parseInt(data?.contact?.mobtCode) : this.defaultIsdCodeValue,
           Validators.required,
         ],
         alternativeNumber: [
           data?.contact ? data?.contact.alternativeNumber : '',
         ],
         altCode: [
-          data ? parseInt(data.contact.altCode) : this.defaultIsdCodeValue,
+          data ? parseInt(data?.contact?.altCode) : this.defaultIsdCodeValue,
         ],
-        whatsappNo: [data?.contact ? data?.contact.whatsappNo : ''],
+        whatsappNo: [data?.contact ? data?.contact?.whatsappNo : ''],
         waptCode: [
-          data ? parseInt(data.contact.waptCode) : this.defaultIsdCodeValue,
+          data ? parseInt(data?.contact?.waptCode) : this.defaultIsdCodeValue,
         ],
-        telephone: [data?.contact ? data?.contact.telephone : ''],
-        worktelephone: [data?.contact ? data?.contact.worktelephone : ''],
-        fax: [data?.contact ? data?.contact.fax : ''],
-        statementViaId: [data?.contact ? data?.contact.statementViaId : ''],
+        telephone: [data?.contact ? data?.contact?.telephone : ''],
+        worktelephone: [data?.contact ? data?.contact?.worktelephone : ''],
+        fax: [data?.contact ? data?.contact?.fax : ''],
+        statementViaId: [data?.contact ? data?.contact?.statementViaId : ''],
         address: this.fb.array([]),
       }),
     });
@@ -671,7 +671,7 @@ export class CommonPersonalDetailsComponent
     const groups = [
       {
         groupName: 'contact',
-        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+        fields: ['mobile'],
       },
       {
         groupName: 'spouseInfo.contactDetails',
@@ -679,7 +679,7 @@ export class CommonPersonalDetailsComponent
       },
       {
         groupName: 'emergencyContactInfo.contactDetails',
-        fields: ['mobile', 'alternativeNumber', 'whatsappNo'],
+        fields: ['mobile'],
       },
     ];
     groups.forEach((group) => {
@@ -1039,6 +1039,10 @@ export class CommonPersonalDetailsComponent
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;
+    payload.customerInfo.forEach((cust: any) => {
+      delete cust.documentId;
+      delete cust.documentInfo;
+    });
 
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
