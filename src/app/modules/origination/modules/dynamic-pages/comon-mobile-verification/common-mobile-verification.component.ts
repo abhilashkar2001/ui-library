@@ -149,7 +149,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
 
   onGetOTP() {
-    // this.ngOtpInput.otpForm.reset();
+    this.ngOtpInput.otpForm.reset();
     const value =
       this.otpForm.value.phone?.length > 0
         ? this.otpForm.value.phone
