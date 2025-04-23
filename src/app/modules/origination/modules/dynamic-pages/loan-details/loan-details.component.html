@@ -81,32 +81,12 @@
         ></ic-form-field>
       </div>
       <div fxFlex="48" class="enabled-mat-form-field">
-        <mat-form-field
-          appearance="outline"
-          class="full-width custom-field fieldinput"
+        <ic-date-picker
+          label="EMI Start Date"
+          [control]="repaymentModel.get('firstRepaymentDate') | formcontrol"
+          [minDate]="todaysDate"
         >
-          <mat-label class="custom-mat-label">EMI Start Date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            [formControl]="
-              repaymentModel.get('firstRepaymentDate') | formcontrol
-            "
-            [min]="currentDate"
-            readonly
-          />
-          <mat-error
-            *ngIf="
-              repaymentModel.get('firstRepaymentDate')?.hasError('required')
-            "
-          >
-            EMI Payment Start Date is <strong>required</strong>
-          </mat-error>
-          <mat-datepicker-toggle matSuffix [for]="picker">
-            <mat-icon matDatepickerToggleIcon svgIcon="calendar"> </mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+        </ic-date-picker>
       </div>
     </div>
 
@@ -179,7 +159,9 @@
             label="Account Name"
             [icAlphaNumericWithSpace]="true"
             [maxLength]="40"
-            [control]="loanDisbursementModel.get('customerName') | formcontrol"
+            [control]="
+              loanDisbursementAccount.get('customerName') | formcontrol
+            "
           ></ic-form-field>
         </div>
         <div
@@ -219,7 +201,7 @@
             label="Account Number"
             [icNumbersOnly]="true"
             [maxLength]="20"
-            [control]="loanDetailsForm.get('accountNo') | formcontrol"
+            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
@@ -227,14 +209,16 @@
             label="Account Holder Name"
             [maxLength]="40"
             [icAlphabetOnly]="true"
-            [control]="loanDisbursementModel.get('customerName') | formcontrol"
+            [control]="
+              loanDisbursementAccount.get('customerName') | formcontrol
+            "
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
             label="Bank Name"
             [icAlphabetOnly]="true"
-            [control]="loanDetailsForm.get('accountHolderName') | formcontrol"
+            [control]="loanDisbursementAccount.get('bankName') | formcontrol"
           ></ic-form-field>
         </div>
       </ng-container>
@@ -261,4 +245,5 @@
       &nbsp;&nbsp;
     </div>
   </form>
+  <ic-spinner *ngIf="!loanDetailsForm"></ic-spinner>
 </section>

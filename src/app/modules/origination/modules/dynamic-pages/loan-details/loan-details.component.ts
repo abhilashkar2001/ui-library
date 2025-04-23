@@ -69,8 +69,10 @@ export class LoanDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
-    this.buildDetailsForm();
-    this.getLoanDetails();
+    setTimeout(() => {
+      this.buildDetailsForm();
+      this.getLoanDetails();
+    }, 2000);
   }
 
   buildDetailsForm(data?: any) {
@@ -175,7 +177,7 @@ export class LoanDetailsComponent implements OnInit {
 
     const disbursementAccount = this.loanDisbursementModel.get(
       'disbursementAccount',
-    );
+    ) as FormGroup;
     const chequeNumberControl = this.loanDisbursementModel.get('chequeNumber');
 
     if (!disbursementAccount) return;
@@ -185,14 +187,19 @@ export class LoanDetailsComponent implements OnInit {
       'accountType',
       'bankName',
       'branchName',
+      'customerName',
     ];
     const customerNameField = 'customerName';
+    const accountNoField = 'accountNo';
 
     const updateValidators = (control: any, required: boolean) => {
       if (!control) return;
       control.setValidators(required ? Validators.required : null);
       control.updateValueAndValidity();
+      console.log(control, 'Control');
+      console.log(required, 'Required');
     };
+
     this.loanDisbursementModel
       .get('disbursementMode')
       ?.valueChanges.subscribe((mode: string) => {
@@ -200,12 +207,14 @@ export class LoanDetailsComponent implements OnInit {
           requiredFieldsForAccount.forEach((field) =>
             updateValidators(disbursementAccount.get(field), true),
           );
-          updateValidators(disbursementAccount.get(customerNameField), false);
+          // updateValidators(disbursementAccount.get(customerNameField), false);
           updateValidators(chequeNumberControl, false);
         } else if (mode === 'Cheque') {
           requiredFieldsForAccount.forEach((field) =>
             updateValidators(disbursementAccount.get(field), false),
           );
+          updateValidators(disbursementAccount.get(customerNameField), true);
+          updateValidators(disbursementAccount.get(accountNoField), true);
           updateValidators(chequeNumberControl, true);
         } else {
           [...requiredFieldsForAccount, customerNameField].forEach((field) =>
