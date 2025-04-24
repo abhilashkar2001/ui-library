@@ -37,6 +37,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   personalDetails: any;
   checkListDoc: any[] = [];
   subscriptions: Subscription[] = [];
+  documentDetails: any;
 
   constructor(
     private loanService: LoanService,
@@ -70,7 +71,8 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
       this.loanService
         .getLoanSummary(originationId)
         .subscribe((response: any) => {
-          this.loanSummaryDetails = response.data;
+          this.loanSummaryDetails = response?.data;
+          this.documentDetails = response?.data?.customerInfo[0]?.documentInfo;
           this.getCollateralDetails(this.loanSummaryDetails);
           resolve('');
         });

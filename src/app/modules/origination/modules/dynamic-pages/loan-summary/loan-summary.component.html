@@ -104,6 +104,10 @@
                     ?.emergencyContactInfo?.[field.headKey] ??
                     loanSummaryDetails?.[section.headerKey]?.[0]
                       ?.emergencyContactInfo?.contactDetails?.[field.headKey] ??
+                    loanSummaryDetails?.[section.headerKey]?.[0]
+                      ?.emergencyContactInfo?.contactDetails?.address[0]?.[
+                      field.headKey
+                    ] ??
                     ''
                 }}
               </ng-container>
@@ -280,7 +284,7 @@
   <div class="bank-account-details w-full" fxLayout="column">
     <div class="col-1"></div>
     <div fxLayout="row wrap" fxLayoutGap="2%">
-      <ng-container *ngFor="let doc of loanSummaryDetails?.docs; let i = index">
+      <ng-container *ngFor="let doc of documentDetails; let i = index">
         <div fxFlex="31" class="mt-20">
           <app-show-document [document]="doc"> </app-show-document>
         </div>

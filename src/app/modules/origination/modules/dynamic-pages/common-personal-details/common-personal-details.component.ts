@@ -62,11 +62,9 @@ export class CommonPersonalDetailsComponent
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   @Input() customerInfo: any;
   @Input() mobileVerifyInfo: any = {};
-
   holderType: any;
   loanCustomerId: any;
   countryArray: any;
-
   listCityState: any = [];
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
   genderArray: any[] = [{}];
@@ -129,6 +127,11 @@ export class CommonPersonalDetailsComponent
     this.screenCodeValue = this.sessionStorageService.getCurrentScreenCode();
     this.customerDocDetails = this.sessionStorageService.getLoanDoc();
     // this.loanCustomerId = 67583;
+    this.getAllRequisite().then(() => {
+      if (!this.personalDetails) {
+        this.buildCustomerDetailsForm();
+      }
+    });
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
       .subscribe((resp) => {
@@ -142,12 +145,6 @@ export class CommonPersonalDetailsComponent
       });
 
     this.subscriptions.push(personalDetailsSub);
-
-    this.getAllRequisite().then(() => {
-      if (!this.personalDetails) {
-        this.buildCustomerDetailsForm();
-      }
-    });
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -247,11 +244,14 @@ export class CommonPersonalDetailsComponent
       this.maxMobileLength = countryCode?.mobileLength;
       const control = contactGroup.get(controlName);
       if (control) {
-        control.setValidators([
-          Validators.required,
+        const validators = [
           Validators.maxLength(this.maxMobileLength),
           Validators.minLength(this.maxMobileLength),
-        ]);
+        ];
+        if (controlName === 'mobile') {
+          validators.unshift(Validators.required);
+        }
+        control.setValidators(validators);
         control.updateValueAndValidity();
       }
     }
@@ -290,7 +290,6 @@ export class CommonPersonalDetailsComponent
                     'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
                   ),
                 );
-
               const applicantNameArray = item?.applicantName
                 ? item?.applicantName?.split(' ')
                 : [];
@@ -474,10 +473,6 @@ export class CommonPersonalDetailsComponent
         }, 100);
       this.cdr.detectChanges();
     }
-
-    this.customerDetailsForm.valueChanges.subscribe((res) => {
-      console.log(res, 'response');
-    });
   }
 
   renderApplicant(data: any, applicantLength: any) {
@@ -508,27 +503,36 @@ export class CommonPersonalDetailsComponent
       ),
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
-        prefix: [data?.spouseInfo?.prefix ?? ''],
+        prefix: [data?.spouseInfo?.prefix ?? '', Validators.required],
         prefixValue: [data?.spouseInfo?.prefixValue ?? ''],
-        firstName: [data?.spouseInfo?.firstName ?? ''],
+        firstName: [data?.spouseInfo?.firstName ?? '', Validators.required],
         middleName: [data?.spouseInfo?.middleName ?? ''],
-        lastName: [data?.spouseInfo?.lastName ?? ''],
-        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? ''],
-        employeeStatusId: [data?.spouseInfo?.employeeStatusId ?? ''],
+        lastName: [data?.spouseInfo?.lastName ?? '', Validators.required],
+        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? '', Validators.required],
+        employeeStatusId: [
+          data?.spouseInfo?.employeeStatusId ?? '',
+          Validators.required,
+        ],
         employeeStatusValue: [data?.spouseInfo?.employeeStatusValue ?? ''],
-        netIncome: [data?.spouseInfo?.netIncome ?? ''],
+        netIncome: [data?.spouseInfo?.netIncome ?? '', Validators.required],
         contactDetails: this.fb.group({
           contactId: [data?.spouseInfo?.contactDetails?.contactId ?? null],
           telephone: [data?.spouseInfo?.contactDetails?.telephone ?? ''],
           worktelephone: [
             data?.spouseInfo?.contactDetails?.worktelephone ?? '',
           ],
-          mobile: [data?.spouseInfo?.contactDetails?.mobile ?? ''],
+          mobile: [
+            data?.spouseInfo?.contactDetails?.mobile ?? '',
+            [Validators.required],
+          ],
           email: [
             data?.spouseInfo?.contactDetails?.email ?? '',
-            Validators.pattern(
-              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
-            ),
+            [
+              Validators.required,
+              Validators.pattern(
+                '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+              ),
+            ],
           ],
           fax: [data?.spouseInfo?.contactDetails?.fax ?? ''],
           whatsappNo: [data?.spouseInfo?.contactDetails?.whatsappNo ?? ''],
@@ -560,7 +564,7 @@ export class CommonPersonalDetailsComponent
         emergencyContactId: [
           data?.emergencyContactInfo?.emergencyContactId ?? null,
         ],
-        prefix: [data?.emergencyContactInfo?.prefix ?? ''],
+        prefix: [data?.emergencyContactInfo?.prefix ?? '', Validators.required],
         prefixValue: [data?.emergencyContactInfo?.prefixValue ?? ''],
         firstName: [
           data?.emergencyContactInfo?.firstName ?? '',
@@ -588,12 +592,18 @@ export class CommonPersonalDetailsComponent
           worktelephone: [
             data?.emergencyContactInfo?.contactDetails?.worktelephone ?? '',
           ],
-          mobile: [data?.emergencyContactInfo?.contactDetails?.mobile ?? ''],
+          mobile: [
+            data?.emergencyContactInfo?.contactDetails?.mobile ?? '',
+            Validators.required,
+          ],
           email: [
             data?.emergencyContactInfo?.contactDetails?.email ?? '',
-            Validators.pattern(
-              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
-            ),
+            [
+              Validators.required,
+              Validators.pattern(
+                '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+              ),
+            ],
           ],
           fax: [data?.emergencyContactInfo?.contactDetails?.fax ?? ''],
           whatsappNo: [
@@ -627,7 +637,6 @@ export class CommonPersonalDetailsComponent
           ),
         }),
       }),
-
       contact: this.fb.group({
         email: [
           data?.contact ? data?.contact.email : '',
@@ -656,41 +665,20 @@ export class CommonPersonalDetailsComponent
         waptCode: [
           data ? parseInt(data?.contact?.waptCode) : this.defaultIsdCodeValue,
         ],
-        telephone: [data?.contact ? data?.contact?.telephone : ''],
+        telephone: [
+          data?.contact ? data?.contact?.telephone : '',
+          Validators.required,
+        ],
         worktelephone: [data?.contact ? data?.contact?.worktelephone : ''],
-        fax: [data?.contact ? data?.contact?.fax : ''],
-        statementViaId: [data?.contact ? data?.contact?.statementViaId : ''],
+        fax: [data?.contact ? data?.contact?.fax : '', Validators.required],
+        statementViaId: [
+          data?.contact ? data?.contact?.statementViaId : '',
+          Validators.required,
+        ],
         address: this.fb.array([]),
       }),
     });
-    this.setMobileValidators(formGroup);
     return formGroup;
-  }
-
-  private setMobileValidators(formGroup: FormGroup) {
-    const groups = [
-      {
-        groupName: 'contact',
-        fields: ['mobile'],
-      },
-      {
-        groupName: 'spouseInfo.contactDetails',
-        fields: ['mobile'],
-      },
-      {
-        groupName: 'emergencyContactInfo.contactDetails',
-        fields: ['mobile'],
-      },
-    ];
-    groups.forEach((group) => {
-      const contactGroup = formGroup.get(group.groupName) as FormGroup;
-      const isdCode = contactGroup.get('mobtCode')?.value;
-      if (isdCode) {
-        group.fields.forEach((field) => {
-          this.checkMobileLength(isdCode, contactGroup, field);
-        });
-      }
-    });
   }
 
   get customer(): FormArray {
@@ -764,14 +752,14 @@ export class CommonPersonalDetailsComponent
   private createEmergencyContactAddressGroup(address?: any): FormGroup {
     return this.fb.group({
       addressId: [address?.addressId ?? null],
-      address1: [address?.address1 ?? '', [Validators.required]],
+      address1: [address?.address1 ?? '', Validators.required],
       address2: [address?.address2 ?? ''],
       cityName: [address?.cityName ?? ''],
       stateName: [address?.stateName ?? ''],
       countryName: [address?.countryName ?? ''],
       pincode: [address?.pincode ?? ''],
       cityId: [address?.cityId ?? ''],
-      residenceType: [address?.residenceType ?? '', Validators.required],
+      residenceType: [address?.residenceType ?? '', [Validators.required]],
       residenceTypeValue: [address?.residenceTypeValue ?? ''],
     });
   }

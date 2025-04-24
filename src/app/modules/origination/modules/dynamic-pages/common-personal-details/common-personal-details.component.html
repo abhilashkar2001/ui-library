@@ -97,6 +97,7 @@
                       fxFlex="49"
                       [placeholder]="dateFormat"
                       label="Date Issued"
+                      [maxDate]="todayDate"
                       [control]="
                         getDocumentControl(i, 0, 'issueDate') | formcontrol
                       "
@@ -110,6 +111,7 @@
                       [control]="
                         getDocumentControl(i, 0, 'expiryDate') | formcontrol
                       "
+                      [minDate]="todayDate"
                     >
                     </ic-date-picker>
 
@@ -358,7 +360,7 @@
                     <ic-date-picker
                       fxFlex="49"
                       [placeholder]="dateFormat"
-                      label="Date of Birth"
+                      label="DateofBirth"
                       dateFormat=""
                       [control]="
                         getSpouseInfo(i).get('dateOfBirth') | formcontrol
