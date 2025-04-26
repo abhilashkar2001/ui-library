@@ -21,9 +21,9 @@
           label="Tenure"
           [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
           [fieldLabels]="{
-            loanTenureYear: 'Years',
-            loanTenureMonth: 'Months',
-            loanTenureDay: 'Days',
+            loanTenureYear: 'Year',
+            loanTenureMonth: 'Month',
+            loanTenureDay: 'Day',
           }"
           [parentForm]="loanDetails"
         >
@@ -80,7 +80,7 @@
           [readonly]="true"
         ></ic-form-field>
       </div>
-      <div fxFlex="48" class="enabled-mat-form-field">
+      <div fxFlex="48">
         <ic-date-picker
           label="EMI Start Date"
           [control]="repaymentModel.get('firstRepaymentDate') | formcontrol"
