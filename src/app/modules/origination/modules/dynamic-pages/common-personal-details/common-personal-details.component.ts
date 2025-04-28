@@ -25,7 +25,7 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import * as moment from 'moment';
 
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
@@ -134,14 +134,18 @@ export class CommonPersonalDetailsComponent
     });
     const personalDetailsSub = this.personalData
       .getPersonalDetailsData(this.loanCustomerId)
-      .subscribe((resp) => {
-        this.personalDetails = resp?.data?.customerInfo;
-        if (this.personalDetails) {
-          this.getGenericDetails();
+      .pipe(
+        finalize(() => {
           this.buildCustomerDetailsForm(this.personalDetails);
-        } else {
-          this.buildCustomerDetailsForm();
-        }
+        }),
+      )
+      .subscribe({
+        next: (resp) => {
+          this.personalDetails = resp?.data?.customerInfo || null;
+          if (this.personalDetails) {
+            this.getGenericDetails();
+          }
+        },
       });
 
     this.subscriptions.push(personalDetailsSub);
@@ -471,6 +475,7 @@ export class CommonPersonalDetailsComponent
           address.get('address1')?.patchValue(backData[0].address1 || '');
           this.debounceZipCodeAndCif();
         }, 100);
+      console.log(this.customerDetailsForm, 'formdroup1');
       this.cdr.detectChanges();
     }
   }
@@ -1004,6 +1009,7 @@ export class CommonPersonalDetailsComponent
       this.customerDetailsForm.invalid
       // this.isAnyPrimaryCustomer())
     ) {
+      this.customerDetailsForm.markAllAsTouched();
       return;
     }
 
@@ -1036,6 +1042,20 @@ export class CommonPersonalDetailsComponent
       if (resp.statusCode === 200) {
         this.sessionStorageService.setCustomerStagingId(
           resp?.data?.customerInfo?.[0]?.custStagingId,
+        );
+        this.sessionStorageService.setCustomerData(
+          JSON.stringify({
+            name: (
+              (resp?.data?.customerInfo?.[0]?.firstName || '') +
+              ' ' +
+              (resp?.data?.customerInfo?.[0]?.lastName || '')
+            ).trim(),
+            mobile: (
+              (resp?.data?.customerInfo?.[0]?.contact?.mobtCode || '') +
+              (resp?.data?.customerInfo?.[0]?.contact?.mobtCode ? '-' : '') +
+              (resp?.data?.customerInfo?.[0]?.contact?.mobile || '')
+            ).trim(),
+          }),
         );
         this.CustomSubmit.emit({ isNext: true });
       }

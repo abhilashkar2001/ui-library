@@ -37,7 +37,7 @@
             [icNoInitialSpace]="true"
             [icNumbersOnly]="true"
             type="text"
-            [prefixIcon]="otherUserInfo?.currencySymbol"
+            [prefixIcon]="currencySymbol"
             [icTwoDigitDecimalNumber]="true"
             [numLength]="6"
             [decimalPlaces]="2"
@@ -66,8 +66,8 @@
         fxLayoutAlign="space-between center"
         class="breadcrum_md"
       >
-        <div>{{ otherUserInfo?.currencySymbol }} {{ min }}</div>
-        <div>{{ otherUserInfo?.currencySymbol }} {{ max }}</div>
+        <div>{{ currencySymbol }} {{ min }}</div>
+        <div>{{ currencySymbol }} {{ max }}</div>
       </div>
     </div>
 

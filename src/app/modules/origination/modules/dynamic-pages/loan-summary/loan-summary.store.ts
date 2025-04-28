@@ -141,7 +141,7 @@ export class LoanSummaryStore {
       headerInfo: [
         { header: 'Business Name', headKey: 'businessName' },
         { header: 'Telephone No', headKey: 'telephone' },
-        { header: 'Address', headKey: 'address[0].address1' },
+        { header: 'Address', headKey: 'address1' },
         { header: 'No of Years in Operation ', headKey: 'yearsOfOperation' },
         { header: 'Industry', headKey: 'natureOfBusinessValue' },
         { header: 'AVE Stock level', headKey: 'aveStockLevel' },

@@ -36,8 +36,8 @@ export class BusinessDetailsComponent implements OnInit {
   ngOnInit() {
     this.originationId = this.sessionStorage.getOriginationId();
     this.screenCode = this.sessionStorage.getCurrentScreenCode();
-    this.buildBusinessForm();
     this.fetchGenericValue();
+    this.buildBusinessForm();
     if (this.originationId) {
       this.getBusinessDetailsById();
     }

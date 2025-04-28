@@ -1,21 +1,23 @@
 <div class="basic-details-container">
   <div class="col-1">
     <span class="content-header">Name</span>
-    <span class="content">{{ customerData?.name }}</span>
+    <span class="header_gt_md_bold_black">{{ customerData?.name || '' }}</span>
   </div>
   <div class="col-2">
-    <span class="content-header">CIF Number</span>
-    <span class="content">{{
-      customerData?.cifNumber || customerData?.customerId
+    <span class="content-header">Mobile Number</span>
+    <span class="header_gt_md_bold_black">{{
+      customerData?.mobile || ''
     }}</span>
   </div>
   <div class="col-3">
     <span class="content-header">Date and Time of Request</span>
-    <span class="content">{{ requestDate | date: 'dd MMM yyyy | HH:mm' }}</span>
+    <span class="header_gt_md_bold_black">{{
+      requestDate | date: 'dd MMM yyyy | HH:mm'
+    }}</span>
   </div>
   <div class="col-4">
     <span class="content-header">Loan Amount</span>
-    <span class="content">
+    <span class="header_gt_md_bold_black">
       <span class="currencySymbol">{{ otherUserInfo?.currency }} </span>&nbsp;{{
         loamAmount | customCurrency: otherUserInfo.currency : '1.2-2'
       }}</span
@@ -25,7 +27,7 @@
 
 <div class="desc-text">
   <div>
-    <span class="content">Important Information:</span>
+    <span class="header_gt_md_bold_black">Important Information:</span>
     <span class="content-header"
       >The Credit Information Companies (CICs) is an initiative of the
       Government of India and the Reserve Bank of India (RBI) to improve the
@@ -34,7 +36,7 @@
       account with us to the concerned Credit Information Company. This data
       will be updated on a regular basis for all our customers.</span
     >
-    <span class="content">Other Information:</span>
+    <span class="header_gt_md_bold_black">Other Information:</span>
     <span class="content-header">
       Part Payment is allowed after initial 3 EMIs. Maximum 40% of current
       Principal Outstanding is allowed as part payment in a financial year, this
@@ -83,15 +85,30 @@
   </div>
 </div>
 
-<div class="button-section">
-  <button
-    mat-flat-button
-    class="confirm-button"
-    (click)="onConfirm()"
+<div class="button-section pt-20" fxLayout="row" fxLayoutGap="2%">
+  <ic-button
+    [label]="'Confirm' | translate"
+    [type]="'submit'"
+    size="large"
+    [icButtonType]="'filled-rounded'"
     [disabled]="!checked"
+    (OnClick)="onConfirm()"
   >
-    Confirm</button
-  >&nbsp;&nbsp;
-  <button class="back-button" (click)="onDecline()">Decline</button>
-  <button class="back-button" (click)="onBack()">Back</button>
+  </ic-button>
+  <ic-button
+    [label]="'Decline' | translate"
+    [type]="'submit'"
+    size="large"
+    icButtonType="ghost-rounded-danger"
+    (OnClick)="onDecline()"
+  >
+  </ic-button>
+  <ic-button
+    [label]="'Back' | translate"
+    [type]="'submit'"
+    size="large"
+    icButtonType="ghost-rounded-danger"
+    (OnClick)="onBack()"
+  >
+  </ic-button>
 </div>

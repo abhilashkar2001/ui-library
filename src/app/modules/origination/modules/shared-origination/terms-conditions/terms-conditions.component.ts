@@ -38,9 +38,10 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
       .subscribe((userInfo) => {
         if (userInfo) {
           this.otherUserInfo = userInfo;
-          this.customerData = this.sessionStorageService.getCustomerData();
-          this.loamAmount =
-            this.sessionStorageService.getLoanAmount()?.loanAmount;
+          this.customerData = JSON.parse(
+            this.sessionStorageService.getCustomerData(),
+          );
+          this.loamAmount = this.sessionStorageService.getLoanAmount();
           this.requestDate = moment(new Date()).format();
         }
       });

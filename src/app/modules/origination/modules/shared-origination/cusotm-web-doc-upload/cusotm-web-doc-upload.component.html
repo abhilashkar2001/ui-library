@@ -72,14 +72,14 @@
                           </mat-form-field>
                         </ng-template>
                       </div>
-                      <button
+                      <ic-button
                         type="button"
-                        mat-raised-button
-                        class="button submit_btn"
-                        (click)="fileBrowseHandler(i)"
+                        size="medium"
+                        label="Upload"
+                        (OnClick)="fileBrowseHandler(i)"
                       >
                         Upload
-                      </button>
+                      </ic-button>
                     </div>
                     <div
                       class="doc_upload"

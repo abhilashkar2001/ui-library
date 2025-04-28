@@ -1,3 +1,4 @@
+import { getCurrencySymbol } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -54,7 +55,6 @@ export class LoanDetailsComponent implements OnInit {
     private loanApi: LoanService,
   ) {
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
-
     this.matIconRegiostry.addSvgIcon(
       `calendar`,
       this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -76,7 +76,6 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   buildDetailsForm(data?: any) {
-    console.log(data);
     this.loanDetailsForm = this.fb.group({
       loanDetails: this.fb.group({
         loanAmount: [
@@ -163,7 +162,7 @@ export class LoanDetailsComponent implements OnInit {
               this.todaysDate.getMonth() + 1,
               this.todaysDate.getDate(),
             ),
-          ).format('YYYY-MM-DD'),
+          ).format('MM-DD-YYYY'),
         ],
         repaymentFrequencyId: [
           data?.repaymentModel?.repaymentFrequencyId ??
@@ -256,7 +255,10 @@ export class LoanDetailsComponent implements OnInit {
       .subscribe((localeData) => {
         if (localeData) {
           this.otherUserInfo = localeData;
-          this.currencySymboll = this.otherUserInfo?.currency;
+          this.currencySymboll = getCurrencySymbol(
+            this.otherUserInfo.currency,
+            'wide',
+          );
         }
       });
     this.subscriptions.push(localeDataSub);
@@ -303,6 +305,7 @@ export class LoanDetailsComponent implements OnInit {
     };
     payload.originationModel.originationId = this.originationId;
     payload.loanDisbursementModel.loanAmount = payload.loanDetails.loanAmount;
+    payload.originationModel.currencyId = this.profileInfo?.currencyId;
     payload.loanDisbursementModel.chequeNumber = Number(
       payload.loanDisbursementModel.chequeNumber,
     );
@@ -314,6 +317,9 @@ export class LoanDetailsComponent implements OnInit {
     this.loanApi.saveLoanDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
         this.sessionStorageService.setEmiData(resp.data?.loanDetails);
+        this.sessionStorageService.setLoanAmount(
+          payload.loanDetails.loanAmount,
+        );
         this.CustomSubmit.emit({ isNext: true });
       }
     });

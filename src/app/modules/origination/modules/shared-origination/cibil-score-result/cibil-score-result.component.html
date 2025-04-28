@@ -52,8 +52,22 @@
     </div>
   </div>
 
-  <div class="button-section" fxLayoutGap="50px">
-    <button class="confirm-button" (click)="onContinue()">Continue</button>
-    <button class="back-button" (click)="onBack()">Back</button>
+  <div class="button-section" fxLayoutGap="2%" fxLayout="row">
+    <ic-button
+      (OnClick)="onContinue()"
+      [label]="'Continue' | translate"
+      [type]="'submit'"
+      size="large"
+      [icButtonType]="'filled-rounded'"
+    >
+    </ic-button>
+
+    <ic-button
+      [label]="'Back'"
+      icButtonType="ghost-rounded-danger"
+      size="large"
+      (OnClick)="onBack()"
+    >
+    </ic-button>
   </div>
 </div>

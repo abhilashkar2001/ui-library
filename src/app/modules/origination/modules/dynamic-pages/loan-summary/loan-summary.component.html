@@ -46,7 +46,7 @@
               {{
                 loanSummaryDetails?.[section.headerKey]?.disbursementAccount?.[
                   field.headKey
-                ] ?? ''
+                ]
               }}
             </ng-container>
           </span>
@@ -119,7 +119,7 @@
   </mat-card>
 
   <!-- Business Details -->
-  <mat-card class="default-card">
+  <mat-card class="default-card" *ngIf="businessDetailsArr">
     <div *ngFor="let section of businessDetailsArr" class="p-12">
       <div class="text-header mt-3">{{ section.title }}</div>
       <div fxLayout="row wrap" fxLayoutGap="16px">
@@ -137,7 +137,9 @@
                   loanSummaryDetails?.[section.headerKey]?.contact?.[
                     field.headKey
                   ] ??
-                  ''
+                  loanSummaryDetails?.[section.headerKey]?.contact
+                    ?.address[0]?.[field.headKey] ??
+                  '-'
               }}
             </ng-container>
           </span>
@@ -147,7 +149,7 @@
   </mat-card>
 
   <!-- Collateral Details -->
-  <mat-card class="default-card">
+  <mat-card class="default-card" *ngIf="collateralDetailsArr">
     <div *ngFor="let section of collateralDetailsArr" class="p-12">
       <div class="text-header mt-3">{{ section.title }}</div>
       <mat-card
@@ -335,9 +337,22 @@
     </div>
   </div>
 </div>
-<div class="pb-24">
-  <button class="confirm-button" (click)="onVerify()">Confirm</button
-  >&nbsp;&nbsp;
-  <button class="back-button" (click)="onBack()">Back</button>
+<div class="pb-24" fxLayout="row" fxLayoutGap="2%">
+  <ic-button
+    [label]="'Confirm' | translate"
+    [type]="'submit'"
+    size="large"
+    [icButtonType]="'filled-rounded'"
+    (OnClick)="onVerify()"
+  >
+  </ic-button>
+  <ic-button
+    [label]="'Back'"
+    icButtonType="ghost-rounded-danger"
+    size="large"
+    [type]="'submit'"
+    (OnClick)="onBack()"
+  >
+  </ic-button>
 </div>
 <!-- </div> -->

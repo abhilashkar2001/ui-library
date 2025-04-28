@@ -96,44 +96,44 @@
     fxLayoutAlign="space-between center"
     *ngIf="isStageAvilable"
   >
-    <button
-      type="button"
-      class="shareBtn"
-      mat-raised-button
-      (click)="onClickAction('Pdf', 'Share')"
+    <ic-button
+      [label]="'Share'"
+      icButtonType="ghost-rounded"
+      size="large"
+      [type]="'button'"
+      icIcon="share"
+      (OnClick)="onClickAction('Pdf', 'Share')"
     >
-      <img src="assets/images/Share-icon.png" alt="Share" />&nbsp;Share
-    </button>
+    </ic-button>
     &nbsp;&nbsp;
-    <button
-      type="button"
-      class="shareBtn"
-      mat-raised-button
-      (click)="onClick()"
+    <ic-button
+      [label]="'Tracking'"
+      icButtonType="ghost-rounded"
+      icIcon="search"
+      size="large"
+      [type]="'button'"
+      (OnClick)="onClick()"
     >
-      <img src="assets/images/tracking-icon.svg" alt="tracking" />&nbsp;Tracking
-    </button>
+    </ic-button>
     &nbsp;&nbsp;
-    <button
-      type="button"
-      class="shareBtn"
-      mat-raised-button
-      (click)="onClickAction('Pdf', 'Download')"
+    <ic-button
+      [label]="'Download'"
+      icButtonType="ghost-rounded"
+      size="large"
+      icIcon="download"
+      [type]="'button'"
+      (OnClick)="onClickAction('Pdf', 'Download')"
     >
-      <img
-        src="assets/images/Download-icon.png"
-        alt="Dlownload"
-      />&nbsp;Download
-    </button>
+    </ic-button>
   </div>
   <div>
-    <button
-      type="button"
-      mat-raised-button
-      class="saveButton done_btn"
-      (click)="done()"
+    <ic-button
+      [label]="'Done'"
+      icButtonType="filled-rounded"
+      size="large"
+      [type]="'button'"
+      (OnClick)="done()"
     >
-      Done
-    </button>
+    </ic-button>
   </div>
 </div>

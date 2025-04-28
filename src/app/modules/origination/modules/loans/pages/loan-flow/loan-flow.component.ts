@@ -203,13 +203,13 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.kycDoc = value?.['kycDoc'];
     }
     this.docCustomerDetails = value?.['customerDetails'];
-    const originationModel = {
-      ...this.factorizedPayload(),
-    };
-    const customerInfo = this.modelFactoryForCustomer(
-      this.personalDetails,
-      value?.['kycDoc'] ?? null,
-    );
+    // const originationModel = {
+    //   ...this.factorizedPayload(),
+    // };
+    // const customerInfo = this.modelFactoryForCustomer(
+    //   this.personalDetails,
+    //   value?.['kycDoc'] ?? null,
+    // );
     console.log(value, isLoan, this.personalDetails);
     if (value?.['isCheckListDoc']) {
       const payload = {
@@ -229,19 +229,19 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         }
       });
     }
-    if (
-      value['updateMasterSave'] &&
-      isLoan &&
-      this.personalDetails?.length > 0
-    ) {
-      this.getMasterSave({
-        originationModel: originationModel,
-        customerInfo: customerInfo,
-      });
-    } else {
-      if (!isLoan) return;
-      else this.next();
-    }
+    // if (
+    //   value['updateMasterSave'] &&
+    //   isLoan &&
+    //   this.personalDetails?.length > 0
+    // ) {
+    //   this.getMasterSave({
+    //     originationModel: originationModel,
+    //     customerInfo: customerInfo,
+    //   });
+    // } else {
+    if (!isLoan) return;
+    else this.next();
+    // }
   };
 
   calculateDisbursementPayload(data: any) {
@@ -805,9 +805,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             message:
               'Your loan application is sent. The bank will contact you soon.',
           },
-          width: '750px',
+          width: '55%',
           disableClose: true,
-          panelClass: ['popup-dialog-class', 'scroll-card'],
+          panelClass: 'ic-dialog__panelclass',
           backdropClass: 'bdrop',
         });
         dialogRef.afterClosed().subscribe((resp) => {

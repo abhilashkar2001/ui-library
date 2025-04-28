@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-common-emi-calculator',
@@ -49,6 +50,8 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   interestRate = 10.1;
   valueChangesSubscription: Subscription | any;
   subscriptions: Subscription[] = [];
+  currencySymbol: any;
+  currencyInputMask: any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -75,6 +78,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
           console.log(res);
           this.otherUserInfo = res;
           this.currency = this.otherUserInfo?.currency;
+          this.currencySymbol = getCurrencySymbol(this.currency, 'wide');
         }
       });
 

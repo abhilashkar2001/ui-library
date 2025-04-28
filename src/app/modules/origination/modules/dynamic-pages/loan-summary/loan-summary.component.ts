@@ -38,6 +38,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   checkListDoc: any[] = [];
   subscriptions: Subscription[] = [];
   documentDetails: any;
+  originationId: number | null | undefined;
 
   constructor(
     private loanService: LoanService,
@@ -47,11 +48,13 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.originationId = this.sessionStorageService.getOriginationId();
     const otherUserInfo$ = this.store
       .select(selectLocaleData)
       .subscribe((userInfo) => {
         if (userInfo) {
           this.otherUserInfo = userInfo;
+          this.fetchChecklist();
           this.getLoanSummary().then(() => {
             this.getOriginationMasterData();
           });
@@ -66,10 +69,8 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
 
   getLoanSummary() {
     return new Promise((resolve) => {
-      const originationId =
-        this.sessionStorageService.getOriginationId() ?? 126831;
       this.loanService
-        .getLoanSummary(originationId)
+        .getLoanSummary(this.originationId)
         .subscribe((response: any) => {
           this.loanSummaryDetails = response?.data;
           this.documentDetails = response?.data?.customerInfo[0]?.documentInfo;
@@ -77,6 +78,21 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
           resolve('');
         });
     });
+  }
+
+  // Fetch Checklist info
+  fetchChecklist() {
+    if (this.originationId)
+      this.loanService.fetchCheckListSummary(this.originationId).subscribe((res) => {
+        if (res.data.length > 0) {
+          this.checkListDoc = res.data
+            .filter((item: any) => item.docInfoModel)
+            .filter(
+              (item: any) => !item.document?.toLowerCase().includes('national'),
+            );
+          console.log(this.checkListDoc);
+        }
+      });
   }
 
   getCollateralDetails(details: any) {

@@ -205,4 +205,10 @@ export class LoanService {
       `${baseUrl}/loan-detail/fetch-collateralInfo?originationId=${originationId}`,
     );
   }
+
+  fetchCheckListSummary(originationId: number) {
+    return this.http.get<any>(
+      `${baseUrl}/origination-doc?originationId=${originationId}`,
+    );
+  }
 }
