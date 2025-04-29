@@ -83,16 +83,19 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
   // Fetch Checklist info
   fetchChecklist() {
     if (this.originationId)
-      this.loanService.fetchCheckListSummary(this.originationId).subscribe((res) => {
-        if (res.data.length > 0) {
-          this.checkListDoc = res.data
-            .filter((item: any) => item.docInfoModel)
-            .filter(
-              (item: any) => !item.document?.toLowerCase().includes('national'),
-            );
-          console.log(this.checkListDoc);
-        }
-      });
+      this.loanService
+        .fetchCheckListSummary(this.originationId)
+        .subscribe((res) => {
+          if (res.data.length > 0) {
+            this.checkListDoc = res.data
+              .filter((item: any) => item.docInfoModel)
+              .filter(
+                (item: any) =>
+                  !item.document?.toLowerCase().includes('national'),
+              );
+            console.log(this.checkListDoc);
+          }
+        });
   }
 
   getCollateralDetails(details: any) {

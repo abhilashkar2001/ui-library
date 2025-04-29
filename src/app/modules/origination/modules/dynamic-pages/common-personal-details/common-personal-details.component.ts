@@ -475,7 +475,6 @@ export class CommonPersonalDetailsComponent
           address.get('address1')?.patchValue(backData[0].address1 || '');
           this.debounceZipCodeAndCif();
         }, 100);
-      console.log(this.customerDetailsForm, 'formdroup1');
       this.cdr.detectChanges();
     }
   }
@@ -772,7 +771,7 @@ export class CommonPersonalDetailsComponent
   private newDocumentGroup(doc?: any): FormGroup {
     return this.fb.group({
       documentTypeId: [doc?.documentTypeId || ''],
-      documentNumber: [doc?.documentNumber || '', Validators.required],
+      documentNumber: [doc?.documentNumber || ''],
       issueDate: [doc?.issueDate || ''],
       expiryDate: [doc?.expiryDate || ''],
       countryOfIssue: [doc?.countryOfIssue || ''],
