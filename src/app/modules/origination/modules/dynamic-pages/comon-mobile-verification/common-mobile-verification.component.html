@@ -7,6 +7,7 @@
   </div>
   <div class="mobile-verify" *ngIf="!hideInfo; else showField">
     <ic-mobile-field
+      fxFlex="70"
       placeholder="Mobile Number"
       [isdControl]="otpForm.get('isdCode') | formcontrol"
       [isdCode]="countriesIsdCodes"
@@ -27,12 +28,15 @@
     </ic-mobile-field>
   </div>
   <ng-template #showField>
-    <ic-form-field
-      [control]="otpForm.get('nationalId') | formcontrol"
-      suffixButton="Get OTP"
-      (onSuffixClick)="onGetOTP()"
-    >
-    </ic-form-field>
+    <div>
+      <ic-form-field
+        fxFlex="70"
+        [control]="otpForm.get('nationalId') | formcontrol"
+        suffixButton="Get OTP"
+        (onSuffixClick)="onGetOTP()"
+      >
+      </ic-form-field>
+    </div>
   </ng-template>
 
   <div

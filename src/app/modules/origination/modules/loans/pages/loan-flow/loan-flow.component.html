@@ -22,14 +22,14 @@
       <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
         {{ cuurrentStep }}
       </h2>
-      <button
-        mat-button
-        class="add_btn mr-20"
+      <ic-button
+        icButtonType="filled-rounded"
+        label="Add"
         *ngIf="checkBtnValidity()"
         (click)="addDoc()"
       >
         Add
-      </button>
+      </ic-button>
     </div>
 
     <div class="container_dynamic">

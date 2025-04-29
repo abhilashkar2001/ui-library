@@ -43,10 +43,10 @@ export class CollateralDetailsComponent implements OnInit {
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.screenCode = this.sessionStorageService.getCurrentScreenCode();
+    this.fetchGenericValue();
     this.buildCollateralForm();
     this.getCollateralDetails().push(this.collateralDetailsGroup('Credit'));
     this.getCollateralDetails().push(this.collateralDetailsGroup('Vaf'));
-    this.fetchGenericValue();
     if (this.originationId) {
       this.getCollateralDetailsById();
     }
