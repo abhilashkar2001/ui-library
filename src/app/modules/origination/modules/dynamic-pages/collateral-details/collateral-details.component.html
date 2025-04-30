@@ -8,7 +8,7 @@
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
-          [icAlphabetOnly]="true"
+          [icAlphaNumericWithSpace]="true"
           label="Description of Collateral"
           [control]="creditGroup.get('description') | formcontrol"
         ></ic-form-field>
@@ -41,7 +41,7 @@
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
       <div fxFlex="100">
         <ic-form-field
-          [icAlphabetOnly]="true"
+          [icAlphaNumericWithSpace]="true"
           label="Description of Collateral"
           [control]="vafGroup.get('description') | formcontrol"
         ></ic-form-field>

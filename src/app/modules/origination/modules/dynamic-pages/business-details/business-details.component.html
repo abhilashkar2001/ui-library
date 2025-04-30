@@ -4,12 +4,14 @@
       <ic-form-field
         label="Business Name"
         [icAlphabetOnly]="true"
+        [maxLength]="15"
         [control]="businessDetailsForm.get('businessName') | formcontrol"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
         label="Telephone Number"
+        [maxLength]="20"
         [icNumbersOnly]="true"
         [control]="contact.get('telephone') | formcontrol"
       ></ic-form-field>
@@ -18,6 +20,7 @@
       <ic-form-field
         [icAlphanumeric]="true"
         label="Business Address"
+        [maxLength]="250"
         [control]="address.at(0).get('address1') | formcontrol"
       ></ic-form-field>
     </div>
@@ -25,6 +28,7 @@
       <ic-form-field
         [icNumbersOnly]="true"
         label="No of years in operation"
+        [maxLength]="3"
         [control]="businessDetailsForm.get('yearsOfOperation') | formcontrol"
       ></ic-form-field>
     </div>
@@ -47,9 +51,14 @@
     </div>
     <div fxFlex="49">
       <ic-form-field
-        [icNumbersOnly]="true"
         label="Monthly Turn over"
+        [icTwoDigitDecimalNumber]="true"
+        [decimalPlaces]="3"
+        [numLength]="18"
         [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"
+        [prefixIcon]="
+          businessDetailsForm.value?.monthlyTurnover ? currencySymboll : ''
+        "
       ></ic-form-field>
     </div>
     <div fxFlex="49">

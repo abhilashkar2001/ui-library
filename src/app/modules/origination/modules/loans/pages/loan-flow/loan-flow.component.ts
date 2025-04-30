@@ -210,7 +210,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     //   this.personalDetails,
     //   value?.['kycDoc'] ?? null,
     // );
-    console.log(value, isLoan, this.personalDetails);
     if (value?.['isCheckListDoc']) {
       const payload = {
         documentIds: value?.['otherLoanDoc'],
@@ -225,7 +224,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
           this.sessionStorageService.setOtherDocScreenCode(
             this.sessionStorageService.getCurrentScreenCode(),
           );
-          this.next();
         }
       });
     }

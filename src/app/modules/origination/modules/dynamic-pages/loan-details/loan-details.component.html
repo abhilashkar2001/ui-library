@@ -7,12 +7,18 @@
         <ic-form-field
           label="Loan Amount Requested (GHS)"
           [control]="loanDetails.get('loanAmount') | formcontrol"
+          [icTwoDigitDecimalNumber]="true"
+          [decimalPlaces]="3"
+          [numLength]="18"
           [prefixIcon]="loanDetails.value?.loanAmount ? currencySymboll : ''"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
           label="Interest Rate %"
+          [icTwoDigitDecimalNumber]="true"
+          [decimalPlaces]="3"
+          [numLength]="5"
           [control]="loanDetails.get('interestRate') | formcontrol"
         ></ic-form-field>
       </div>

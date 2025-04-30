@@ -187,6 +187,7 @@ export class LoanDetailsComponent implements OnInit {
       'bankName',
       'branchName',
       'customerName',
+      'bankCode',
     ];
     const customerNameField = 'customerName';
     const accountNoField = 'accountNo';
@@ -195,8 +196,6 @@ export class LoanDetailsComponent implements OnInit {
       if (!control) return;
       control.setValidators(required ? Validators.required : null);
       control.updateValueAndValidity();
-      console.log(control, 'Control');
-      console.log(required, 'Required');
     };
 
     this.loanDisbursementModel
@@ -212,6 +211,7 @@ export class LoanDetailsComponent implements OnInit {
           requiredFieldsForAccount.forEach((field) =>
             updateValidators(disbursementAccount.get(field), false),
           );
+          updateValidators(disbursementAccount.get('bankName'), true);
           updateValidators(disbursementAccount.get(customerNameField), true);
           updateValidators(disbursementAccount.get(accountNoField), true);
           updateValidators(chequeNumberControl, true);

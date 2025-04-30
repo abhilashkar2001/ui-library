@@ -87,8 +87,13 @@
                       fxLayoutAlign="center center"
                     >
                       <ic-button
-                        [icButtonType]="'icon'"
-                        [icIcon]="'delete'"
+                        type="icon"
+                        [icIcon]="
+                          denomDetai.value.docRequired
+                            ? 'delete-white'
+                            : 'delete'
+                        "
+                        icButtonType="ghost"
                         [disabled]="denomDetai.value.docRequired"
                         (OnClick)="deleteDocument(i)"
                       ></ic-button>

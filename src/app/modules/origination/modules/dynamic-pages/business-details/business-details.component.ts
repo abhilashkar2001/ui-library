@@ -1,7 +1,13 @@
+import { getCurrencySymbol } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
-import { IcHttpResponseModel } from '@onerumango/utils';
+import { Store } from '@ngrx/store';
+import {
+  IcHttpResponseModel,
+  LocaleData,
+  selectLocaleData,
+} from '@onerumango/utils';
 import {
   GenericValueData,
   GenericValueInfoModel,
@@ -9,6 +15,7 @@ import {
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-business-details',
@@ -25,13 +32,19 @@ export class BusinessDetailsComponent implements OnInit {
   };
   originationId!: number;
   screenCode: number | undefined;
+  currencySymboll = '';
+  otherUserInfo: LocaleData | undefined;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private sessionStorage: SessionStorageService,
     private loanService: LoanService,
     private genericService: GenericValueService,
-  ) {}
+    private store: Store,
+  ) {
+    this.loadLocaleData();
+  }
 
   ngOnInit() {
     this.originationId = this.sessionStorage.getOriginationId();
@@ -41,6 +54,21 @@ export class BusinessDetailsComponent implements OnInit {
     if (this.originationId) {
       this.getBusinessDetailsById();
     }
+  }
+
+  loadLocaleData(): void {
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((localeData) => {
+        if (localeData) {
+          this.otherUserInfo = localeData;
+          this.currencySymboll = getCurrencySymbol(
+            this.otherUserInfo.currency,
+            'wide',
+          );
+        }
+      });
+    this.subscriptions.push(localeDataSub);
   }
 
   getBusinessDetailsById() {

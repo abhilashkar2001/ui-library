@@ -15,7 +15,6 @@
       formControlName="phone"
       [maxLength]="maxMobileLength"
       suffixButton="Get OTP"
-      [icNumbersOnly]="true"
       (onSuffixClick)="onGetOTP()"
       [disabled]="(getOtpBtn && !validNumber) || showOtpSection"
       [customError]="
