@@ -99,3 +99,20 @@ p {
 .popup-actions {
   margin-top: 20px;
 }
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-content {
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.link {
+  color: #1976d2;
+  cursor: pointer;
+  text-decoration: underline;
+}

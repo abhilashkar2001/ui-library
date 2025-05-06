@@ -281,7 +281,7 @@
   </mat-expansion-panel>
 </ng-container> -->
 
-<div class="uploaded-documents-summary">
+<div *ngIf="documentDetails?.length" class="uploaded-documents-summary">
   <div class="text-header">Document Uploaded(National ID)</div>
   <div class="bank-account-details w-full" fxLayout="column">
     <div class="col-1"></div>

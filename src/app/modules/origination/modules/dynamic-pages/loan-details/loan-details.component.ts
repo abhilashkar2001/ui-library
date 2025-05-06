@@ -15,7 +15,14 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  Subscription,
+} from 'rxjs';
 
 @Component({
   selector: 'app-loan-details',
@@ -163,6 +170,7 @@ export class LoanDetailsComponent implements OnInit {
               this.todaysDate.getDate(),
             ),
           ).format('MM-DD-YYYY'),
+          Validators.required,
         ],
         repaymentFrequencyId: [
           data?.repaymentModel?.repaymentFrequencyId ??
@@ -222,6 +230,71 @@ export class LoanDetailsComponent implements OnInit {
           updateValidators(chequeNumberControl, false);
         }
       });
+
+    this.setupLoanCalculationListener();
+  }
+
+  // When the loan details change, this function is called to set up the listener for loan calculation
+  setupLoanCalculationListener() {
+    const loanDetailsGroup = this.loanDetailsForm.get('loanDetails');
+    const repaymentModelGroup = this.loanDetailsForm.get('repaymentModel');
+    if (!loanDetailsGroup || !repaymentModelGroup) return;
+    loanDetailsGroup.valueChanges
+      .pipe(
+        debounceTime(300),
+        map(
+          ({
+            loanAmount,
+            interestRate,
+            loanTenureYear,
+            loanTenureMonth,
+            loanTenureDay,
+          }) => ({
+            principleAmount: loanAmount,
+            interestRate,
+            numberOfMonths:
+              (loanTenureYear ?? 0) * 12 +
+              (loanTenureMonth ?? 0) +
+              Math.floor((loanTenureDay ?? 0) / 30),
+          }),
+        ),
+        filter(
+          ({ principleAmount, interestRate, numberOfMonths }) =>
+            !!principleAmount && !!interestRate && numberOfMonths > 0,
+        ),
+        distinctUntilChanged(
+          (prev, curr) =>
+            prev.principleAmount === curr.principleAmount &&
+            prev.interestRate === curr.interestRate &&
+            prev.numberOfMonths === curr.numberOfMonths,
+        ),
+      )
+      .subscribe(({ principleAmount, interestRate, numberOfMonths }) => {
+        const firstRepaymentDate =
+          repaymentModelGroup.get('firstRepaymentDate')?.value;
+        this.callEmiCalculationAPI({
+          principleAmount,
+          interestRate,
+          numberOfMonths,
+          firstRepaymentDate,
+        });
+      });
+  }
+
+  // This function is used to call the EMI calculation API when the loan data changes
+  callEmiCalculationAPI(payload: any) {
+    this.loanApi.getEmiCalculation(payload).subscribe((res: any) => {
+      if (res?.statusCode === 200) {
+        this.loanDetailsForm.get('loanDetails')?.patchValue({
+          emiAmount: res?.data?.monthlyPayment,
+          emiInterestPayable: res?.data?.principal,
+          totalInterestAmount: res?.data?.totalInterest,
+          totalPayableAmount: res.data?.totalRepaymentAmount,
+        });
+      }
+    });
+
+    console.log(this.loanDetailsForm, 'formgrou');
   }
 
   get loanDetails() {
@@ -312,7 +385,7 @@ export class LoanDetailsComponent implements OnInit {
     payload.screenCode = this.sessionStorageService.getCurrentScreenCode();
     payload.loanDisbursementModel.firstDisbursementDate = moment(
       this.currentDate,
-    ).format('YYYY-MM-DD');
+    ).format('MM-DD-YYYY');
     delete payload?.loanDisbursementModel?.disbursementMode;
     this.loanApi.saveLoanDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {

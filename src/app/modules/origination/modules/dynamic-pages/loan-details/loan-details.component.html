@@ -51,7 +51,7 @@
           [control]="loanDetails.get('emiAmount') | formcontrol"
           [disabled]="true"
           [readonly]="true"
-          [prefixIcon]="loanDetails.value?.emiAmount ? currencySymboll : ''"
+          [prefixIcon]="currencySymboll"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
@@ -59,9 +59,7 @@
           label="EMI Interest Payable"
           [control]="loanDetails.get('emiInterestPayable') | formcontrol"
           [disabled]="true"
-          [prefixIcon]="
-            loanDetails.value?.emiInterestPayable ? currencySymboll : ''
-          "
+          [prefixIcon]="currencySymboll"
           [readonly]="true"
         ></ic-form-field>
       </div>
@@ -70,9 +68,7 @@
           label="Total Interest Amount"
           [control]="loanDetails.get('totalInterestAmount') | formcontrol"
           [disabled]="true"
-          [prefixIcon]="
-            loanDetails.value?.totalInterestAmount ? currencySymboll : ''
-          "
+          [prefixIcon]="currencySymboll"
           [readonly]="true"
         ></ic-form-field>
       </div>
@@ -81,9 +77,7 @@
           label="Total Payable Amount"
           [control]="loanDetails.get('totalPayableAmount') | formcontrol"
           [disabled]="true"
-          [prefixIcon]="
-            loanDetails.value?.totalPayableAmount ? currencySymboll : ''
-          "
+          [prefixIcon]="currencySymboll"
           [readonly]="true"
         ></ic-form-field>
       </div>

@@ -1,71 +1,85 @@
-<div class="biometric-card-expansion-panel">
-  <div class="upper-biometric-card" fxFlex="50" fxLayoutGap="5">
-    <div class="forSignImg" fxLayout="column">
-      <div class="signdig" fxLayout="column" fxLayoutAlign="flex-start center">
-        <div class="biometric-card w-100" fxLayoutAlign="end center">
-          <div
-            class="deleteDiv"
-            fxLayoutAlign="center center"
-            (click)="deleteImage()"
-            (keydown.enter)="deleteImage()"
-            tabindex="0"
-          >
-            <mat-icon class="deleteBtn"> delete </mat-icon>
+<div fxFlex="98%" fxLayout="column">
+  <div fxLayout="column" class="outer-div" fxFlex="100">
+    <div fxLayout="column">
+      <ng-container>
+        <mat-card class="card-subdiv">
+          <div fxFlex="100">
+            <div
+              appDragDrop
+              class="doc_upload"
+              fxFlex="100"
+              fxLayoutGap="10"
+              #fileInput
+            >
+              <div class="drag_drop" fxFlex="100">
+                <h3 class="text-header">
+                  <span [ngClass]="{ 'required-star': signatures.length === 0 }"
+                    >Signature*</span
+                  >
+                </h3>
+              </div>
+              <ic-button
+                type="button"
+                size="medium"
+                label="Upload"
+                label="Signin"
+                (OnClick)="openDigitalSignDialog('Sign Now')"
+              >
+              </ic-button>
+              <ic-button
+                type="button"
+                size="medium"
+                label="Upload"
+                icButtonType="ghost-neutral"
+                (OnClick)="openDigitalSignDialog('Upload')"
+              >
+                Upload
+              </ic-button>
+            </div>
           </div>
-        </div>
-        <img
-          class="image"
-          [src]="
-            filePreview?.changingThisBreaksApplicationSecurity
-              | safe: 'url'
-              | async
-          "
-          alt=""
-        />
-        <mat-hint *ngIf="!image" matSuffix class="signiter">{{
-          'Signature'
-        }}</mat-hint>
-      </div>
-      <div class="w-100" fxLayout="row" fxLayoutALign="space-between center">
-        <button
-          type="button"
-          mat-button
-          class="digsign"
-          fxFlex="50"
-          fxLayoutALign="center center"
-          (click)="openDigitalSignDialog('Sign Now')"
-        >
-          {{ 'Digital Sign' }}
-        </button>
-        <button
-          mat-button
-          class="upd"
-          fxFlex="50"
-          (click)="openDigitalSignDialog('Upload')"
-        >
-          {{ 'Upload' }}
-        </button>
-      </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="1%" class="uploaded_list">
+            <div *ngFor="let sig of signatures; let i = index" fxFlex="32">
+              <div class="upload_img" tabindex="0" fxFlex="100">
+                <div class="img_box">
+                  <img [src]="sig.filePreview" alt="Signature Image" />
+                </div>
+                <div class="img_container">
+                  <span class="breadcrum_sm_bold img_name"
+                    >Signature {{ i + 1 }}</span
+                  >
+                </div>
+                <ic-icon
+                  class="cancel-icon"
+                  name="close"
+                  (click)="deleteSignature(i)"
+                  (keydown.enter)="deleteSignature(i)"
+                  tabindex="1"
+                ></ic-icon>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </ng-container>
     </div>
   </div>
-</div>
-
-<div fxLayoutGap="10" fxLayoutAlign="end center" class="pt-12">
-  <ic-button
-    [label]="'Submit' | translate"
-    [type]="'submit'"
-    size="large"
-    [icButtonType]="'filled-rounded'"
-    [disabled]="isLoading && !image"
-    (OnClick)="onSubmit()"
-  >
-  </ic-button>
-  <ic-button
-    [label]="'Back'"
-    icButtonType="ghost-rounded-danger"
-    size="large"
-    [type]="'button'"
-    (OnClick)="onBack()"
-  >
-  </ic-button>
+  <div fxLayoutGap="10" fxLayoutAlign="start center" class="pt-12">
+    <ic-button
+      [label]="'Submit' | translate"
+      [type]="'submit'"
+      size="large"
+      [icButtonType]="'filled-rounded'"
+      [disabled]="isLoading && !image"
+      (OnClick)="onSubmit()"
+    >
+    </ic-button>
+    <ic-button
+      [label]="'Back'"
+      icButtonType="ghost-rounded-danger"
+      size="large"
+      [type]="'button'"
+      (OnClick)="onBack()"
+    >
+    </ic-button>
+  </div>
 </div>

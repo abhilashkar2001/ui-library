@@ -17,12 +17,12 @@ export class LoanSummaryStore {
         },
         { header: 'EMI Amount', headKey: 'emiAmount', isCurrency: true },
         {
-          header: 'EMI Interset Payable',
+          header: 'EMI Interest Payable',
           headKey: 'emiInterestPayable',
           isCurrency: true,
         },
         {
-          header: 'Total Interset Amount',
+          header: 'Total Interest Amount',
           headKey: 'totalInterestAmount',
           isCurrency: true,
         },
@@ -90,7 +90,7 @@ export class LoanSummaryStore {
           header: 'Residential Status',
           headKey: 'residenceTypeValue',
         },
-        { header: 'Suburd', headKey: 'address2' },
+        { header: 'Suburb', headKey: 'address2' },
         { header: 'City', headKey: 'cityName' },
         { header: 'Postal Code', headKey: 'pincode' },
         { header: 'Living Address Since', headKey: 'branchName' },

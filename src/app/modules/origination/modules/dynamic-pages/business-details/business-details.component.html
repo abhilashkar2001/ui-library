@@ -46,6 +46,7 @@
       <ic-form-field
         [icAlphabetOnly]="true"
         label="Types of Goods service"
+        [maxLength]="255"
         [control]="businessDetailsForm.get('typeOfService') | formcontrol"
       ></ic-form-field>
     </div>
@@ -53,6 +54,7 @@
       <ic-form-field
         label="Monthly Turn over"
         [icTwoDigitDecimalNumber]="true"
+        [maxLength]="20"
         [decimalPlaces]="3"
         [numLength]="18"
         [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"

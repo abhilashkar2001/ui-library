@@ -238,7 +238,7 @@ export class countryStateService {
         payload?.countryId ? '&countryId=' + payload.countryId : ''
       }${payload?.stateId ? '&stateId=' + payload.stateId : ''}${
         payload?.cityId ? '&cityId=' + payload.cityId : ''
-      }${payload?.pincode ? '&search=' + payload.pincode : ''}`,
+      }${payload?.pincode ? '&searchValue=' + payload.pincode : ''}`,
     );
   }
 }

@@ -27,6 +27,7 @@ export class DigitalSignComponent implements OnInit {
   signatureId: any;
   customerId: number | undefined;
   filePreview: any;
+  signatures: any[] = [];
   constructor(
     private dialog: MatDialog,
     private branchService: BranchService,
@@ -46,17 +47,21 @@ export class DigitalSignComponent implements OnInit {
       data: { title: 'Sign Now', check: check },
     });
     dialogRef.afterClosed().subscribe((res) => {
-      console.log(res);
-      this.image = res?.result?.fileUrl;
-      this.signatureId = res?.result?.signatureId;
-      this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(
-        this.MICROSERVICE_URL + res?.result?.fileUrl,
-      );
+      if (res?.result?.fileUrl && res?.result?.signatureId) {
+        const newSignature = {
+          fileUrl: res.result.fileUrl,
+          signatureId: res.result.signatureId,
+          filePreview: this.sanitizer.bypassSecurityTrustResourceUrl(
+            this.MICROSERVICE_URL + res.result.fileUrl,
+          ),
+        };
+        this.signatures.push(newSignature);
+      }
     });
   }
 
-  deleteImage() {
-    this.image = '';
+  deleteSignature(index: number) {
+    this.signatures.splice(index, 1);
   }
 
   onBack() {
@@ -66,19 +71,28 @@ export class DigitalSignComponent implements OnInit {
   fetchSign() {
     this.branchService.fetchCustomerSign(this.customerId).subscribe((res) => {
       if (
-        (res?.statusCode == 200 || res?.statusCode == 201) &&
+        (res?.statusCode === 200 || res?.statusCode === 201) &&
         res?.data?.length
       ) {
-        this.image = res?.data[0]?.fileUrl;
-        this.signatureId = res?.data[0]?.signatureId;
+        this.signatures = res.data.map((item: any) => ({
+          signatureId: item.signatureId,
+          fileUrl: item.fileUrl,
+          filePreview: this.sanitizer.bypassSecurityTrustResourceUrl(
+            this.MICROSERVICE_URL + item.fileUrl,
+          ),
+        }));
       }
     });
   }
 
   onSubmit() {
+    if (!this.signatures.length) {
+      return;
+    }
+    const signatureIds = this.signatures.map((sig) => sig.signatureId);
     const signPayload = {
       customerStagingId: this.customerId,
-      signatureId: [this.signatureId],
+      signatureId: signatureIds,
     };
     this.branchService.saveCustomerSign(signPayload).subscribe((res) => {
       if ((res?.statusCode == 200 || res?.statusCode == 201) && res?.data)

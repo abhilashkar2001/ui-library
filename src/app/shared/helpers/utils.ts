@@ -93,7 +93,7 @@ export const DEFAULT_LOCALE = {
 };
 export function pluckOnlyDate(date: any) {
   if (!date) return '';
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('MM-DD-YYYY');
 }
 
 export interface FilterBy {

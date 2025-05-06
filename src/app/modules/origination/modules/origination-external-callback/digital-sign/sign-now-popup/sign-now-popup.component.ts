@@ -62,7 +62,6 @@ export class SignNowPopupComponent implements OnInit {
     }
     this.cdr.markForCheck();
   }
-  ngAfterViewInit() {}
 
   signpadImage(event: any) {
     this.file = new File([event], 'E-sign.png', {
@@ -113,10 +112,12 @@ export class SignNowPopupComponent implements OnInit {
       this.percentDone = 0;
       this.isUploading = false;
       this.uploadSuccess = true;
-      this.dialogRef.close({
-        result: event?.body?.data,
-        title: this.title,
-      });
+      setTimeout(() => {
+        this.dialogRef.close({
+          result: event?.body?.data,
+          title: this.title,
+        });
+      }, 2000);
     }
   }
   closeDialog() {
@@ -169,7 +170,9 @@ export class SignNowPopupComponent implements OnInit {
         this.signImg = _event.target.result;
         this.uploadDocument();
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
