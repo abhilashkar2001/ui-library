@@ -154,20 +154,23 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       this.otpForm.value.phone?.length > 0
         ? this.otpForm.value.phone
         : this.otpForm.value.nationalId;
-    this.otpService.getOtp({ mobile: value }).subscribe(() => {
-      this.otpSent = true;
-      this.showOtpSection = true;
-      this.getOtpBtn = true;
-      this.validNumber = true;
-      this.resendLink = false;
-      this.invalidOtp = false;
-      this.resendOtp += 1;
-      this.stopInterval();
-      this.ngOtpInput?.otpForm?.enable();
-      this.otpTimer();
-      setTimeout(() => {
-        this.otpSent = false;
-      }, 500000);
+    this.otpService.getOtp({ mobile: value }).subscribe((resp) => {
+      const otp = resp?.OTP;
+      if (otp && otp !== 'null') {
+        this.otpSent = true;
+        this.showOtpSection = true;
+        this.getOtpBtn = true;
+        this.validNumber = true;
+        this.resendLink = false;
+        this.invalidOtp = false;
+        this.resendOtp += 1;
+        this.stopInterval();
+        this.ngOtpInput?.otpForm?.enable();
+        this.otpTimer();
+        setTimeout(() => {
+          this.otpSent = false;
+        }, 500000);
+      }
     });
   }
 
