@@ -14,7 +14,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
@@ -22,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CUSTOMFILE } from 'app/shared/models/custom-file.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 
 @Component({
   selector: 'app-web-doc-upload',
@@ -68,10 +68,10 @@ export class WebDocUploadComponent implements OnInit {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
-    private api: NewDepositService,
     private snack: MatSnackBar,
     private genericValueService: GenericValueService,
     private dialog: MatDialog,
+    private documentUploadService: DocumentUploadService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     // this.buildDocumentForm();
@@ -391,7 +391,7 @@ export class WebDocUploadComponent implements OnInit {
     formData.append('data', JSON.stringify(data));
     formData.append('file', file);
     formData.append('module', 'document');
-    this.api.uploadDocument(formData).subscribe((resp) => {
+    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);

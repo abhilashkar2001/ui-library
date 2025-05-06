@@ -27,7 +27,6 @@ import { User } from '@onerumango/utils';
 import { CustomWebDocUploadServiceService } from '../../../shared-origination/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
 import { ReusableAlertPopupComponent } from '../../../shared-origination/reusable-alert-popup/reusable-alert-popup.component';
 import { WebhostDirective } from '../../../../../../shared/directives/appHost.directive';
-import { NewDepositService } from '../../../new-deposit/new-deposit.service';
 
 @Component({
   selector: 'app-loan-flow',
@@ -95,9 +94,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     private store: Store,
     private sessionStorageService: SessionStorageService,
     private tokenStorageService: TokenStorageService,
-    private navigationService: NewDepositService,
   ) {
-    this.navigationService.setToken(true);
     this.userProfile$ = this.store.select(selectUser);
   }
 
@@ -838,7 +835,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.navigationService.setToken(false);
     this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }
 }

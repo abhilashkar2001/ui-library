@@ -5,15 +5,10 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { RouterModule } from '@angular/router';
-import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 
 @NgModule({
-  declarations: [
-    AdminLayoutComponent,
-    AuthLayoutComponent,
-    UserLayoutComponent,
-  ],
+  declarations: [AdminLayoutComponent, AuthLayoutComponent],
   imports: [
     CommonModule,
     SharedModule,

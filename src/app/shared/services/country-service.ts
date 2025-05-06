@@ -12,7 +12,7 @@ export class CountryService {
 
   public getCountries(): Observable<any> {
     return this.http.get<any>(
-      `${MICROSERVICE_URL}/country?authStatus=AUTHORIZED&recordStatus=OPEN`,
+      `${MICROSERVICE_URL}/country?oneTimeAuth=Y&recordStatus=OPEN`,
     );
   }
 }

@@ -20,11 +20,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import * as moment from 'moment';
-
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
@@ -33,13 +31,12 @@ import { PersonalDetailsConstant } from './personal-details.constant';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data } from '@angular/router';
-// import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
-// import { ErrorNotifierPopupComponent } from '../../shared-origination/error-notifier-popup/error-notifier-popup.component';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
+import { CountryService } from 'app/shared/services/country-service';
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',
@@ -96,7 +93,6 @@ export class CommonPersonalDetailsComponent
   customerDocDetails: any;
   constructor(
     private fb: FormBuilder,
-    private api: NewDepositService,
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private cdr: ChangeDetectorRef,
@@ -107,6 +103,7 @@ export class CommonPersonalDetailsComponent
     private genericValueService: GenericValueService,
     private dateService: DateTimeService,
     private personalData: LoanService,
+    private countryService: CountryService,
   ) {}
 
   ngOnInit(): void {
@@ -171,7 +168,7 @@ export class CommonPersonalDetailsComponent
   async getAllRequisite() {
     return new Promise((resolve) => {
       forkJoin({
-        countries: this.api.getCountryDetails(),
+        countries: this.countryService.getCountries(),
       }).subscribe(
         (res) => {
           this.getCountry(res.countries);

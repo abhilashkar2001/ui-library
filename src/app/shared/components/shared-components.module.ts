@@ -21,8 +21,6 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { SwiperModule } from 'swiper/angular';
 import { SearchableSelectComponent } from './searchable-select/searchable-select.component';
 import { ReusablePincodePopupComponent } from './reusable-pincode-popup/reusable-pincode-popup.component';
-import { UserHeaderTopComponent } from './user-header-top/user-header-top.component';
-import { SubNavBarComponent } from './sub-nav-bar/sub-nav-bar.component';
 import { CustomDateAdapter } from '../services/date-time/customDateAdapter';
 import { DateAdapter } from '@angular/material/core';
 import { InputMaskModule } from '../directives/input-mask/input-mask.module';
@@ -45,8 +43,6 @@ const components = [
   FooterComponent,
   SearchableSelectComponent,
   ReusablePincodePopupComponent,
-  UserHeaderTopComponent,
-  SubNavBarComponent,
   WarningComponent,
   PdfViewerComponent,
   ViewExcelDocComponent,

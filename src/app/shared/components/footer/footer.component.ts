@@ -5,7 +5,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { FooterConstant } from './footer.constant';
 import { FooterServiceService } from 'app/shared/services/footer-service.service';
 import { Store } from '@ngrx/store';
@@ -29,7 +28,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
   constructor(
-    private showSideBar: NewDepositService,
     private footerService: FooterServiceService,
     private store: Store,
   ) {
@@ -40,9 +38,6 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.loadUserProfile();
     this.footerService.isHideFooter().subscribe((resp) => {
       this.isHideFooter = resp;
-    });
-    this.showSideBar.getToken().subscribe((resp) => {
-      this.hideNavItem = resp;
     });
   }
 

@@ -18,20 +18,6 @@
         *ngIf="!hideNavItem"
       >
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
-          <ng-container *ngFor="let item of items">
-            <li
-              (click)="onNavTabClick()"
-              (keydown.enter)="onNavTabClick()"
-              tabindex="1"
-            >
-              <a
-                [routerLink]="[item.route]"
-                routerLinkActive="highlight_label"
-                #element
-                >{{ item?.label }}</a
-              >
-            </li>
-          </ng-container>
           <div
             fxLayout="column"
             class="align_top_items dropdown position-relative"

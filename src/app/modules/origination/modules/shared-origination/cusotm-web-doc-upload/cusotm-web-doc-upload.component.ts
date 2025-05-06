@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-// import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { CustomWebDocUploadServiceService } from './custom-web-doc-upload-service.service';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -25,6 +23,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 @Component({
   selector: 'app-cusotm-web-doc-upload',
   templateUrl: './cusotm-web-doc-upload.component.html',
@@ -89,9 +88,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    // private sharedService: SharedService,
     private genericValueService: GenericValueService,
-    private api: NewDepositService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
@@ -100,6 +97,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private sessionStorageService: SessionStorageService,
+    private documentUploadService: DocumentUploadService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     // this.buildDocumentForm();
@@ -341,133 +339,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     return docType;
   }
 
-  // async readDocument(file: any, i: any) {
-  //   this.ocrPass = false;
-  //   const formdata = new FormData();
-  //   const backFormdata = new FormData();
-  //   formdata.append('file', file);
-  //   formdata.append('image', file);
-  //   formdata.append('lang', 'eng');
-  //   formdata.append(
-  //     'imageType',
-  //     this.getDocTypeforScan(this.hideSelect[0]?.toLowerCase(), i),
-  //   );
-  //   backFormdata.append('file', file);
-  //   if (formdata.get('imageType') !== 'adhaar_back') this.frontAadhar = file;
-
-  //   try {
-  //     const service =
-  //       formdata.get('imageType') === 'adhaar_back'
-  //         ? this.sharedService.pyScan(backFormdata)
-  //         : this.sharedService.pyScan(formdata);
-
-  //     const res: any = await service.toPromise();
-  //     if (res?.statusCode == 200) {
-  //       const convertedResp: any = {};
-  //       for (const item of res.data.data) {
-  //         convertedResp[item?.label === 'dob' ? 'dateOfBirth' : item?.label] =
-  //           item.value;
-  //         if (item?.label === 'gender') {
-  //           convertedResp[item?.label] = item?.value;
-  //         }
-  //       }
-  //       this.documentInfo = convertedResp;
-  //       res.data = convertedResp;
-  //       // Aadhaar Back Scan
-  //       if (this.documentInfo?.address && this.documentInfo?.pincode) {
-  //         this.backData.push({
-  //           address1: this.documentInfo?.address,
-  //           pincode: this.documentInfo?.pincode,
-  //         });
-  //         this.sessionStorageService.setBackData(this.backData);
-  //       }
-
-  //       if (res?.data?.aadhaarNumber != 'Details not found') {
-  //         this.nationalIdNo = res?.data?.aadhaarNumber;
-  //       }
-  //       if (
-  //         Object.keys(res?.data).filter(
-  //           (value) =>
-  //             res?.data[value] != 'Detail not found' &&
-  //             res?.data[value] != null,
-  //         )?.length < 1
-  //       ) {
-  //         this.documentNotMatched(i, file);
-  //         return -1;
-  //       } else {
-  //         // this.loder.close();
-  //         this.snack.open(`Document Uploaded Successfully` + ' !', 'OK', {
-  //           duration: 4000,
-  //           verticalPosition: 'top',
-  //           horizontalPosition: 'right',
-  //           panelClass: 'snackbar-error',
-  //         });
-  //         this.ocrPass = true;
-  //         // if document details not found or document is invalid.
-  //         if (
-  //           (res.data?.aadhaarNumber == 'Detail not found' ||
-  //             res.data?.panNumber == 'Detail not found' ||
-  //             res.data?.passportNumber == 'Detail not found') &&
-  //           res.data?.dateOfBirth == 'Detail not found'
-  //         ) {
-  //           this.documentNotMatched(i, file);
-  //         } else {
-  //           // for aadhar
-  //           const index =
-  //             this.otherDocument()?.controls[i]?.get('fileInfo')?.value
-  //               ?.length - 1;
-  //           console.log(index, 'idx');
-
-  //           if (index) {
-  //             this.updateFileInfo(
-  //               index,
-  //               i,
-  //               res.data?.name,
-  //               res.data?.dateOfBirth,
-  //               res.data?.gender,
-  //             );
-  //           }
-  //           if (this.hideSelect[i]?.toLowerCase().includes('aadhar')) {
-  //             if (
-  //               res.data?.aadhaarNumber.replace(/\s/g, '') !=
-  //               this.otherDocument()['controls'][i]?.get('documentNumber')
-  //                 ?.value
-  //             ) {
-  //               // this.documentDataMissMatch(`Document number`, file, i);
-  //             }
-  //           }
-  //           // for pan card
-  //           else if (this.hideSelect[i]?.toLowerCase().includes('pan')) {
-  //             if (
-  //               res.data?.panNumber.replace(/\s/g, '') !=
-  //               this.otherDocument()['controls']?.[i]?.get('documentNumber')
-  //                 ?.value
-  //             ) {
-  //               this.documentDataMissMatch(`Document number`, file, i);
-  //             }
-  //           }
-  //           // for passport.
-  //           else if (this.hideSelect[i]?.toLowerCase().includes('passport')) {
-  //             console.log(res);
-  //             if (
-  //               res.data?.passportNumber.replace(/\s/g, '') !=
-  //               this.otherDocument()['controls'][i]?.get('documentNumber')
-  //                 ?.value
-  //             ) {
-  //               this.documentDataMissMatch(`Document number`, file, i);
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     // this.loder.close();
-  //     this.deleteFile(i, i, file);
-  //     throw error;
-  //   }
-  //   return;
-  // }
-
   updateFileInfo(index: any, i: any, name: any, dateOfBirth: any, gender: any) {
     const fileInfoControl = this.otherDocument()?.controls[i]?.get('fileInfo');
     if (fileInfoControl && fileInfoControl.value) {
@@ -516,140 +387,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Commentting this method because scanAdhar no need to call for nationalid for new changes
-  // uploadImage(file: any, i: any) {
-  //   const formData = new FormData();
-  //   const data = {
-  //     ...(this.isOtherDocVisible
-  //       ? {
-  //           documentNameForChecklist:
-  //             this.createDocumentForm.value.otherDocument[i].documentType,
-  //         }
-  //       : ''),
-  //     documentName: !this.isOtherDocVisible ? this.nationalIdGeneric : null,
-  //     documentType: !this.isOtherDocVisible
-  //       ? this.nationalIdGeneric
-  //       : this.createDocumentForm.value.otherDocument[i].documentType,
-  //     documentNumber:
-  //       this.createDocumentForm.value.otherDocument[i].documentNumber,
-  //     documentSide:
-  //       this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1,
-  //     fileName: file.name,
-  //     fileType: file.type,
-  //     verificationType: 'kyc',
-  //   };
-
-  //   formData.append('data', JSON.stringify(data));
-  //   formData.append('file', file);
-  //   formData.append('module', 'document');
-  //   // this.loder.open();
-  //   this.ocrPass = false;
-  //   if (
-  //     this.createDocumentForm.value.otherDocument[
-  //       i
-  //     ]?.documentType?.toLowerCase() == 'national id'
-  //   ) {
-  //     this.readDocument(
-  //       file,
-  //       this.createDocumentForm.value.otherDocument[i]?.docIds?.length,
-  //     )
-  //       .then(() => {
-  //         if (this.ocrPass) {
-  //           const updatedData = {
-  //             ...data,
-  //             documentNumber: this.nationalIdNo,
-  //           };
-  //           formData.set('data', JSON.stringify(updatedData));
-
-  //           this.api.uploadDocument(formData).subscribe((resp) => {
-  //             if (resp?.statusCode === 200) {
-  //               this.isLoading = false;
-  //               this.updateDocId(i).push(resp.data.documentId);
-  //               this.fileUrls.push(resp.data.fileUrl);
-  //               this.documentIds.push(this.createDocumentForm.value);
-  //               console.log(
-  //                 this.otherDocument()?.controls[i]?.get('fileInfo')?.value,
-  //                 i,
-  //               );
-  //               const fileInfoArr =
-  //                 this.otherDocument().controls[i]?.get('fileInfo')?.value;
-  //               fileInfoArr.forEach((fileInfoObj: any) => {
-  //                 if (resp.data.fileName.includes(fileInfoObj.name)) {
-  //                   fileInfoObj.newFileUrl = resp.data.fileUrl;
-  //                 }
-  //               });
-  //               this.otherDocument()
-  //                 .controls[i]?.get('fileInfo')
-  //                 ?.setValue(fileInfoArr);
-  //               this.otherDocument()
-  //                 ?.controls[i]?.get('fileInfo')
-  //                 ?.get('newFileUrl')
-  //                 ?.setValue(resp.data.fileUrl);
-  //               this.otherDocument()
-  //                 .controls[i]?.get('fileInfo')
-  //                 ?.get('newFileUrl')
-  //                 ?.setValue(resp.data.fileUrl);
-  //               const index =
-  //                 this.otherDocument()?.controls[i]?.get('fileInfo')?.value
-  //                   ?.length - 1;
-  //               console.log(index, 'idx');
-
-  //               // if (index)
-  //               this.updateFileInfo(
-  //                 index,
-  //                 i,
-  //                 this.documentInfo?.name,
-  //                 this.documentInfo?.dateOfBirth,
-  //                 this.documentInfo?.gender,
-  //               );
-  //               if (
-  //                 this.isOtherDocVisible &&
-  //                 !this.createDocumentForm.value.otherDocument[i].documentType
-  //                   ?.toLowerCase()
-  //                   .includes('national')
-  //               )
-  //                 this.extractDoc(
-  //                   this.createDocumentForm.value.otherDocument[i].documentType,
-  //                   parseInt(this.sessionStorageService.getOriginationId()),
-  //                   file,
-  //                   resp.data.documentId,
-  //                 );
-  //               // else this.loder.close();
-  //             }
-  //           });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   } else {
-  //     this.api.uploadDocument(formData).subscribe((resp) => {
-  //       if (resp?.statusCode === 200) {
-  //         this.updateDocId(i).push(resp.data.documentId);
-  //         this.documentIds.push(this.createDocumentForm.value);
-  //         this.fileUrls.push(resp.data.fileUrl);
-  //         const fileInfoArr =
-  //           this.otherDocument().controls[i]?.get('fileInfo')?.value;
-  //         fileInfoArr.forEach((fileInfoObj: any) => {
-  //           if (resp.data.fileName.includes(fileInfoObj.name)) {
-  //             fileInfoObj.newFileUrl = resp.data.fileUrl;
-  //           }
-  //         });
-  //         this.otherDocument()
-  //           .controls[i]?.get('fileInfo')
-  //           ?.setValue(fileInfoArr);
-  //         if (this.isOtherDocVisible)
-  //           this.extractDoc(
-  //             this.createDocumentForm.value.otherDocument[i].documentType,
-  //             parseInt(this.sessionStorageService.getOriginationId()),
-  //             file,
-  //             resp.data.documentId,
-  //           );
-  //       }
-  //     });
-  //   }
-  // }
-
   uploadImage(file: any, i: any) {
     const formData = new FormData();
     const data = {
@@ -677,7 +414,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     formData.append('module', 'document');
     this.ocrPass = false;
 
-    this.api.uploadDocument(formData).subscribe((resp) => {
+    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.fileUrls.push(resp.data.fileUrl);

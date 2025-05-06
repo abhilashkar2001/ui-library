@@ -15,7 +15,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
@@ -23,6 +22,7 @@ import { CommonService } from 'app/shared/services/common-service/common.service
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 
 @Component({
   selector: 'app-other-documents',
@@ -73,7 +73,6 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
   ocrProcess = true;
   constructor(
     private fb: FormBuilder,
-    private api: NewDepositService,
     private snack: MatSnackBar,
     private sharedService: SharedService,
     private openAccountService: OpenAccountService,
@@ -81,6 +80,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     private loanService: LoanService,
     private cdr: ChangeDetectorRef,
     private sessionStorageService: SessionStorageService,
+    private documentUploadService: DocumentUploadService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -269,7 +269,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     formData.append('data', JSON.stringify(data));
     formData.append('file', file);
     formData.append('module', 'document');
-    this.api.uploadDocument(formData).subscribe((resp) => {
+    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.documentIds.push(this.createDocumentForm.value);

@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { NewDepositConstant } from 'app/modules/origination/modules/new-deposit/new-deposit/new-deposit.constant';
 
 import {
   NgbCarousel,
   NgbSlideEvent,
   NgbSlideEventSource,
 } from '@ng-bootstrap/ng-bootstrap';
+import { CLIENT_DESCRIPTION } from 'app/config/news-letter.constant';
 
 @Component({
   selector: 'app-news-letter-slider',
@@ -13,7 +13,7 @@ import {
   styleUrls: ['./news-letter-slider.component.scss'],
 })
 export class NewsLetterSliderComponent {
-  images = NewDepositConstant.CLIENT_DESCRIPTION;
+  images = CLIENT_DESCRIPTION;
 
   paused = false;
   unpauseOnArrow = false;

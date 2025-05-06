@@ -1,7 +1,0 @@
-<app-tab-link [tabs]="tabs" (changeTab)="tabChanges($event)"></app-tab-link>
-<ng-container *ngIf="selectedTabName === 'Increase Limit'; else showOther">
-  <app-increase-limit></app-increase-limit>
-</ng-container>
-<ng-template #showOther>
-  <app-desire-limit></app-desire-limit>
-</ng-template>

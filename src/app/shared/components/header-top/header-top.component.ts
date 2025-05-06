@@ -8,14 +8,12 @@ import {
   QueryList,
   ViewChildren,
   HostListener,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
-import { NewDepositService } from 'app/modules/origination/modules/new-deposit/new-deposit.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -39,24 +37,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
 
   @Input() notificPanel: any;
   @Input() mainMenuPanel: any;
-  items = [
-    {
-      label: 'Open Account',
-      route: '/origination/account',
-    },
-    {
-      label: 'Card',
-      route: '/origination/card',
-    },
-    {
-      label: 'Deposits',
-      route: '/origination/deposits',
-    },
-    {
-      label: 'Loan',
-      route: '/origination/loan',
-    },
-  ];
   @ViewChildren('element') elReference: QueryList<ElementRef> | any;
   expand = 0;
   openHelp = false;
@@ -66,14 +46,12 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private navService: NavigationService,
     public themeService: ThemeService,
     public translate: TranslateService,
-    private showSideBar: NewDepositService,
     private renderer: Renderer2,
     private router: Router,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
     private helpCenterService: HelpCenterService,
-    private cdr: ChangeDetectorRef,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
@@ -84,14 +62,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.onNavigation(this.router.url);
-    }, 100);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.onNavigation(event.url);
-      }
-    });
     this.layoutConf = this.layout.layoutConf;
     this.egretThemes = this.themeService.egretThemes;
     this.menuItemSub = this.navService.menuItems$.subscribe((res) => {
@@ -114,20 +84,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       this.menuItems = mainItems;
       return;
     });
-    this.showSideBar.getToken().subscribe((resp) => {
-      this.hideNavItem = resp;
-      this.cdr.detectChanges();
-    });
-  }
-
-  onNavigation(route: any) {
-    const itemIndex = this.items.findIndex((i) => route.includes(i?.route));
-    const elements = this.elReference?.toArray();
-    const elem = elements[itemIndex]?.nativeElement;
-
-    if (elem) {
-      this.animateUnderline(elem);
-    }
   }
 
   ngOnDestroy() {
@@ -155,10 +111,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       node = node.parentNode;
     }
     return false;
-  }
-
-  get shouldShowUnderline(): boolean {
-    return Array.isArray(this.items) && this.items.some((item) => item?.label);
   }
 
   // animate the nav link underline
