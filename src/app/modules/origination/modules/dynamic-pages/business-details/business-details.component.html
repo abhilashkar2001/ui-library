@@ -4,7 +4,7 @@
       <ic-form-field
         label="Business Name"
         [icAlphabetOnly]="true"
-        [maxLength]="15"
+        [maxLength]="100"
         [control]="businessDetailsForm.get('businessName') | formcontrol"
       ></ic-form-field>
     </div>
@@ -67,6 +67,7 @@
       <ic-form-field
         [icNumbersOnly]="true"
         label="AVE stock Level"
+        [maxLength]="20"
         [control]="businessDetailsForm.get('aveStockLevel') | formcontrol"
       ></ic-form-field>
     </div>

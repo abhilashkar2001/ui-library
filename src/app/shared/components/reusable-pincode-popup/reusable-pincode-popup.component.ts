@@ -102,13 +102,14 @@ export class ReusablePincodePopupComponent implements OnInit {
   fetchStateByCountry(countryId: any) {
     this.states = [];
     this.cities = [];
-    this.countryStateCityService
-      .getStateByCountry(countryId)
-      .subscribe((res) => {
-        if (res?.statusCode === 200 && res?.data) {
-          this.states = res?.data;
-        }
-      });
+    if (countryId)
+      this.countryStateCityService
+        .getStateByCountry(countryId)
+        .subscribe((res) => {
+          if (res?.statusCode === 200 && res?.data) {
+            this.states = res?.data;
+          }
+        });
   }
 
   fetchCityByState(stateId: any) {
@@ -118,11 +119,12 @@ export class ReusablePincodePopupComponent implements OnInit {
       ?.setValue(
         this.states.find((s: any) => s?.stateId === stateId)?.countryId,
       );
-    this.countryStateCityService.getCityByState(stateId).subscribe((res) => {
-      if (res?.statusCode === 200 && res?.data) {
-        this.cities = res?.data;
-      }
-    });
+    if (stateId)
+      this.countryStateCityService.getCityByState(stateId).subscribe((res) => {
+        if (res?.statusCode === 200 && res?.data) {
+          this.cities = res?.data;
+        }
+      });
   }
 
   populateStateCountryByCity(cityId: any) {

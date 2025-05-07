@@ -5,14 +5,20 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
           <mat-icon
             [svgIcon]="
-              item?.status === 'SUCCESS' ? 'approveIcon' : 'rejectIcon'
+              item?.status?.toUpperCase() === 'SUCCESS'
+                ? 'approveIcon'
+                : 'rejectIcon'
             "
           ></mat-icon>
-          <div fxFlex="100%" class="time" *ngIf="item?.status === 'SUCCESS'">
+          <div
+            fxFlex="100%"
+            class="time"
+            *ngIf="item?.status?.toUpperCase() === 'SUCCESS'"
+          >
             {{ item?.name }} created {{ item?.status }}FULLY ({{ item?.value }})
           </div>
           <div
-            *ngIf="item?.status !== 'SUCCESS'"
+            *ngIf="item?.status?.toUpperCase() !== 'SUCCESS'"
             fxLayout="column"
             class="w-100"
             fxLayoutALign="start start"
@@ -31,8 +37,9 @@
           *ngIf="updatedResult.length - 1 !== i"
           [ngStyle]="{
             background:
-              (item?.status === 'SUCCESS' ? '#008461' : '#B10000') +
-              ' 0% 0% no-repeat padding-box',
+              (item?.status?.toUpperCase() === 'SUCCESS'
+                ? '#008461'
+                : '#B10000') + ' 0% 0% no-repeat padding-box',
           }"
         ></div>
       </ng-container>

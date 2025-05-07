@@ -99,11 +99,11 @@ export class ProductDetailsComponent implements OnInit {
         }
         if (resp.webSummary?.statusCode === 200) {
           const loanInfo = resp.webSummary?.data;
-          const loanTenure = `${loanInfo?.loanDetails?.loanTenureYear} Year ${loanInfo?.loanDetails?.loanTenureMonth} Months ${loanInfo?.loanDetails?.loanTenureDay} Day`;
+          const loanTenure = `${loanInfo?.loanDetail?.loanTenureYear} Year ${loanInfo?.loanDetail?.loanTenureMonth} Months ${loanInfo?.loanDetail?.loanTenureDay} Day`;
           this.dynamicDetails = [
             {
               key: 'loanAccountInfo',
-              values: { ...loanInfo.loanDetails, tenure: loanTenure },
+              values: { ...loanInfo.loanDetail, tenure: loanTenure },
             },
             { key: 'bankAccount', values: loanInfo.bankAccount ?? {} },
             {

@@ -93,17 +93,13 @@ export class NationalIdUploadComponent implements OnInit {
       .getOriginationMaster(parseInt(originationId))
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
-          if (
-            resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel?.length > 0
-          ) {
-            this.documentList =
-              resp.data[0].loanAccountInfo.documnentsInfo.docInfoModel;
+          if (resp.data[0].customerInfo[0].documentInfo.length > 0) {
+            this.documentList = resp.data[0].customerInfo[0].documentInfo;
           }
         }
       });
   }
   onSubmit(event: any) {
-    console.log(event, '......');
     const docIds: any = [];
     const customerDetails: any = [];
     if (this.numberOfDirectors) {
@@ -127,9 +123,7 @@ export class NationalIdUploadComponent implements OnInit {
           console.log(customerDetails);
           console.log(element);
           element.fileInfo.forEach((item: any) => {
-            console.log(item, '.......');
             if (item.applicantName || item.gender || item.dateOfBirth) {
-              console.log(';;;;;;;');
               customerDetails.push(item);
               return;
             }

@@ -121,17 +121,15 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
-    console.log(changes?.documentList);
     if (changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
     if (changes.documentList?.currentValue?.length > 0) {
       this.documentList = changes.documentList.currentValue;
-      this.createDocumentForm.value.otherDocument.forEach((i: any) => {
-        this.otherDocument()
-          .controls[i]?.get('fileInfo')
-          ?.setValue(this.calculateDoc(this.documentList[i].docs, i));
+      this.otherDocument().controls.forEach((control, index) => {
+        const docData = this.documentList[index]?.docs ?? [];
+        control.get('fileInfo')?.setValue(this.calculateDoc(docData, index));
       });
     }
 
@@ -179,13 +177,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
     // else {
     if (data?.length > 0) {
-      console.log(data, 'data checking');
-
       data.forEach((item: any) => {
         this.hideSelect.push(item?.documentType);
         this.addDocument(item);
         this.customDocumentForm.emit(this.createDocumentForm);
-        console.log(this.createDocumentForm.value, 'data');
       });
     }
     if (this.isOtherDocVisible) this.addDocument();
@@ -226,24 +221,19 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   calculateDoc(data: any, i: any) {
-    console.log(data);
+    const docArr: any[] = [];
+    const docIds: number[] = [];
 
-    const docArr: any = [];
-    const docIds: any = [];
-    const docItem = {
-      progress: 100,
-      name: data.fileName,
-    };
     data.forEach((item: any) => {
       docArr.push({
         docId: item.documentId,
-        doc: docItem,
-        url: this.mapEndPoints(item.fileUrl),
         name: item.fileName,
+        progress: 100, // should be a number
+        url: this.mapEndPoints(item.fileUrl),
       });
-      console.log(data);
       docIds.push(item.documentId);
     });
+
     this.otherDocument().controls[i]?.get('docIds')?.setValue(docIds);
     return docArr;
   }
