@@ -198,4 +198,11 @@ export class LoanService {
       `${MICROSERVICE_URL}/loanInterestAndCharge/disburseRepaymentCharge?originationId=${payload}`,
     );
   }
+
+  saveTermsandCreditFields(payload: any) {
+    return this.http.put<any>(
+      `${MICROSERVICE_URL}/loan-detail/updateCreditAndTermsField`,
+      payload,
+    );
+  }
 }

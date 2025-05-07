@@ -47,9 +47,6 @@ export class LoanService {
   submitLoanDetail(payload: any) {
     return this.http.post<any>(`${baseUrl}/webDisbursement`, payload);
   }
-  getLoanById(id: number) {
-    return this.http.get<any>(`${baseUrl}/webDisbursement/findById?id=${id}`);
-  }
 
   verifyWorkFlow(flowData: any) {
     return this.http.post<any>(`${baseUrl}/workflow/verify`, flowData);

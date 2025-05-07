@@ -283,8 +283,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       const customerId: any = this.sessionStorageService.getUserCustomerId();
       const customerStageId: any =
         this.sessionStorageService.getCustomerStageId();
-      const id = this.sessionStorageService.getLoanDisburseId();
-      if (id) this.getLoanById(id);
+
       if (originationId) this.getOriginationMaster(parseInt(originationId));
       else if (customerStageId) {
         this.getCustByStageId();
@@ -313,14 +312,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.push(localeDataSub);
-  }
-
-  getLoanById(id: number) {
-    this.loanApi.getLoanById(id).subscribe((resp) => {
-      if (resp.statusCode === 200) {
-        this.disbursementDetails = resp.data;
-      }
-    });
   }
 
   getCustomerById() {
@@ -354,6 +345,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
           individual: resp?.data[0]?.individual,
         };
         console.log(this.mobileVerifyInfo);
+        this.showComponent(this.cuurrentStep);
         this.cdr.detectChanges();
       }
     });
@@ -471,7 +463,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         originationModel: {
           originationId:
             this.originationModel?.originationId ?? originationId ?? null,
-          applicationDate: moment(new Date()).format('YYYY-MM-DD'),
+          applicationDate: moment(new Date()).format('MM-DD-YYYY'),
           accountType: sessionData.basisName,
           originationProductId: sessionData.basisId,
           source: 'Website',
@@ -576,7 +568,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         this.originationModel?.originationId ??
         this.sessionStorageService.getOriginationId() ??
         null,
-      applicationDate: moment(new Date()).format('YYYY-MM-DD'),
+      applicationDate: moment(new Date()).format('MM-DD-YYYY'),
       accountType: sessionData.basisName,
       originationProductId: sessionData.basisId,
       loanAmount: parseInt(loanData.loanAmount),

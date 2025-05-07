@@ -418,6 +418,9 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       if (resp?.statusCode === 200) {
         this.updateDocId(i).push(resp.data.documentId);
         this.fileUrls.push(resp.data.fileUrl);
+        if (this.fileUrls.length > 0) {
+          this.frontAadhar = this.fileUrls[0];
+        }
         this.documentIds.push(this.createDocumentForm.value);
         const fileInfoArr =
           this.otherDocument().controls[i]?.get('fileInfo')?.value;
@@ -641,10 +644,12 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       panelClass: 'imageViewDialog',
     });
   }
-  validateFace(file: any) {
+  async validateFace(file: any) {
     const form = new FormData();
+    const docBlob = await fetch(this.frontAadhar).then((res) => res.blob());
+    const docFile = new File([docBlob], 'docImage.png', { type: 'image/png' });
     form.append('faceImage', file);
-    form.append('docImage', this.frontAadhar);
+    form.append('docImage', docFile);
     this.openApi.faceMatch(form).subscribe((res) => {
       console.log(res);
       if (res?.data?.message === 'Face matched successfully')

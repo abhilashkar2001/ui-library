@@ -76,7 +76,7 @@ export class BusinessDetailsComponent implements OnInit {
       .getBusinessDetailsById(this.originationId)
       .subscribe((res: any) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.businessDetailsForm.patchValue(res?.data);
+          this.businessDetailsForm.patchValue(res?.data[0]);
         }
       });
   }

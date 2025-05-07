@@ -152,7 +152,13 @@ export class LoanDetailsComponent implements OnInit {
         }),
       }),
       originationModel: this.fb.group({
-        applicationDate: [moment(this.todaysDate).format('YYYY-MM-DD')],
+        applicationDate: moment(
+          new Date(
+            this.todaysDate.getFullYear(),
+            this.todaysDate.getMonth(),
+            this.todaysDate.getDate(),
+          ),
+        ).format('MM-DD-YYYY'),
         branchId: [this.profileInfo?.branchId],
         source: 'Website',
         currencyCode: [this.profileInfo?.currencyCode],
@@ -182,6 +188,7 @@ export class LoanDetailsComponent implements OnInit {
       screenCode: [''],
     });
 
+    console.log('Full form value:', this.loanDetailsForm.value);
     const disbursementAccount = this.loanDisbursementModel.get(
       'disbursementAccount',
     ) as FormGroup;
@@ -376,6 +383,14 @@ export class LoanDetailsComponent implements OnInit {
     const payload = {
       ...this.loanDetailsForm?.value,
     };
+
+    payload.originationModel.applicationDate = moment(
+      new Date(
+        this.todaysDate.getFullYear(),
+        this.todaysDate.getMonth(),
+        this.todaysDate.getDate(),
+      ),
+    ).format('MM-DD-YYYY');
     payload.originationModel.originationId = this.originationId;
     payload.loanDisbursementModel.loanAmount = payload.loanDetails.loanAmount;
     payload.originationModel.currencyId = this.profileInfo?.currencyId;

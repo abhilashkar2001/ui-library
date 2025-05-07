@@ -95,12 +95,8 @@ export class LoanAccountTypeComponent implements OnInit {
       accountNumber: null,
       emiStartDate: moment(emiStartDate).format(),
     };
-    this.loanService.submitLoanDetail(payload).subscribe((resp) => {
-      if (resp?.statusCode === 201) {
-        this.sessionStorageService.removeLoanStep();
-        this.sessionStorageService.setLoanDisburseId(resp?.data.id);
-        this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
-      }
-    });
+    this.sessionStorageService.removeLoanStep();
+    this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
+    console.log(payload);
   }
 }

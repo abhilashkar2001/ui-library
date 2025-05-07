@@ -88,7 +88,7 @@ export class LoanSummaryComponent implements OnInit, OnChanges, OnDestroy {
         .subscribe((res) => {
           if (res.data.length > 0) {
             this.checkListDoc = res.data
-              .filter((item: any) => item.docInfoModel)
+              .filter((item: any) => item?.docInfoModel)
               .filter(
                 (item: any) =>
                   !item.document?.toLowerCase().includes('national'),

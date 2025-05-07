@@ -336,7 +336,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               emiAmount: emiData?.monthlyPayment,
             },
             originationModel: {
-              applicationDate: moment(new Date()).format('YYYY-MM-DD'),
+              applicationDate: moment(new Date()).format('MM-DD-YYYY'),
               branchId: this.profileInfo?.branchId,
               source: 'Website',
               currencyCode: this.profileInfo?.currencyCode,

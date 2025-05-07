@@ -7,6 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 
 @Component({
@@ -38,6 +40,8 @@ export class CibilScoreContainerComponent {
   constructor(
     private openAccountService: OpenAccountService,
     private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
   ) {}
 
   onBack() {
@@ -63,8 +67,17 @@ export class CibilScoreContainerComponent {
   }
 
   onConfirmFromCibilScoreResult() {
-    this.updateParentModel({ updateMasterSave: false });
-    this.CustomSubmit.emit();
+    const payload = {
+      originationId: this.sessionStorageService.getOriginationId(),
+      screenCode: this.sessionStorageService.getCurrentScreenCode(),
+      creditChecked: true,
+    };
+    this.loanService.saveTermsandCreditFields(payload).subscribe((res) => {
+      if (res?.statusCode === 200) {
+        this.updateParentModel({ updateMasterSave: false });
+        this.CustomSubmit.emit();
+      }
+    });
   }
 
   onVerify() {

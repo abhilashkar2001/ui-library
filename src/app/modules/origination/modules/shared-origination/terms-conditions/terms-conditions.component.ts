@@ -10,6 +10,7 @@ import { AppState, selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -29,6 +30,7 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
     private store: Store<AppState>,
   ) {}
 
@@ -49,7 +51,17 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
   }
 
   onConfirm() {
-    this.confirmEvent.emit();
+    const payload = {
+      originationId: this.sessionStorageService.getOriginationId(),
+      screenCode: this.sessionStorageService.getCurrentScreenCode(),
+      termsAndCondChecked: true,
+    };
+    this.loanService.saveTermsandCreditFields(payload).subscribe((res) => {
+      console.log(res);
+      if (res?.statusCode === 200) {
+        this.confirmEvent.emit();
+      }
+    });
   }
 
   onBack() {
