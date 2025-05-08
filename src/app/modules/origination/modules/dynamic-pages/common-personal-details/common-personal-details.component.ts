@@ -91,6 +91,7 @@ export class CommonPersonalDetailsComponent
   dateFormat!: string;
   screenCodeValue: number | undefined;
   customerDocDetails: any;
+  isMarried = false;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -149,7 +150,6 @@ export class CommonPersonalDetailsComponent
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
-    console.log(changes);
     this.getAllRequisite().then(() => {
       if (changes?.personalDetails?.currentValue) {
         this.buildCustomerDetailsForm(changes.personalDetails.currentValue);
@@ -262,6 +262,7 @@ export class CommonPersonalDetailsComponent
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
+
     if (data?.length > 0) {
       setTimeout(() => {
         this.renderApplicant(
@@ -474,6 +475,52 @@ export class CommonPersonalDetailsComponent
         }, 100);
       this.cdr.detectChanges();
     }
+
+    setTimeout(() => {
+      const maritalStatusIdControl = this.customer
+        .at(0)
+        ?.get('maritalStatusId');
+      maritalStatusIdControl?.valueChanges.subscribe((statusId: number) => {
+        const status = this.maritalStatusArray
+          .find((item) => item.id === statusId)
+          ?.values?.toLowerCase();
+        const isMarried = status === 'married';
+        this.isMarried = isMarried;
+        const spouse = this.getSpouseInfo(0);
+        const contact = this.getSpouseContactDetails(0);
+        const spouseFields = [
+          'prefix',
+          'firstName',
+          'lastName',
+          'dateOfBirth',
+          'employeeStatusId',
+          'netIncome',
+        ];
+        const contactFields = ['mobile', 'email'];
+        spouseFields.forEach((field) =>
+          spouse
+            .get(field)
+            ?.setValidators(isMarried ? Validators.required : null),
+        );
+        contactFields.forEach((field) => {
+          const ctrl = contact.get(field);
+          if (!ctrl) return;
+          const validators = isMarried ? [Validators.required] : [];
+          if (field === 'email')
+            validators.push(
+              Validators.pattern(
+                '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
+              ),
+            );
+          ctrl.setValidators(validators);
+        });
+
+        [
+          ...spouseFields.map((f) => spouse.get(f)),
+          ...contactFields.map((f) => contact.get(f)),
+        ].forEach((ctrl) => ctrl?.updateValueAndValidity());
+      });
+    }, 2000);
   }
 
   renderApplicant(data: any, applicantLength: any) {
@@ -482,6 +529,12 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
+    if (data?.maritalStatusId) {
+      const status = this.maritalStatusArray
+        .find((item) => item.id === data.maritalStatusId)
+        ?.values?.toLowerCase();
+      this.isMarried = status === 'married';
+    }
     const allDocIds = (this.customerDocDetails ?? [])[0]?.docIds ?? [];
     const formGroup = this.fb.group({
       customerId: data && data?.customerId,
@@ -496,6 +549,7 @@ export class CommonPersonalDetailsComponent
       genderId: [data ? data?.genderId : '', Validators.required],
       nationality: [data ? data?.nationality : '', Validators.required],
       maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
+
       source: data?.source ? data?.source : 'Website',
       kycStatus: data?.kycStatus && data?.kycStatus,
       documentId: this.fb.control([{ docIds: allDocIds }]),
@@ -504,59 +558,27 @@ export class CommonPersonalDetailsComponent
       ),
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
-        prefix: [data?.spouseInfo?.prefix ?? '', Validators.required],
+        prefix: [data?.spouseInfo?.prefix ?? ''],
         prefixValue: [data?.spouseInfo?.prefixValue ?? ''],
-        firstName: [data?.spouseInfo?.firstName ?? '', Validators.required],
+        firstName: [data?.spouseInfo?.firstName ?? ''],
         middleName: [data?.spouseInfo?.middleName ?? ''],
-        lastName: [data?.spouseInfo?.lastName ?? '', Validators.required],
-        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? '', Validators.required],
-        employeeStatusId: [
-          data?.spouseInfo?.employeeStatusId ?? '',
-          Validators.required,
-        ],
+        lastName: [data?.spouseInfo?.lastName ?? ''],
+        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? ''],
+        employeeStatusId: [data?.spouseInfo?.employeeStatusId ?? ''],
         employeeStatusValue: [data?.spouseInfo?.employeeStatusValue ?? ''],
-        netIncome: [data?.spouseInfo?.netIncome ?? '', Validators.required],
+        netIncome: [data?.spouseInfo?.netIncome ?? ''],
         contactDetails: this.fb.group({
           contactId: [data?.spouseInfo?.contactDetails?.contactId ?? null],
           telephone: [data?.spouseInfo?.contactDetails?.telephone ?? ''],
           worktelephone: [
             data?.spouseInfo?.contactDetails?.worktelephone ?? '',
           ],
-          mobile: [
-            data?.spouseInfo?.contactDetails?.mobile ?? '',
-            [Validators.required],
-          ],
-          email: [
-            data?.spouseInfo?.contactDetails?.email ?? '',
-            [
-              Validators.required,
-              Validators.pattern(
-                '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$',
-              ),
-            ],
-          ],
-          fax: [data?.spouseInfo?.contactDetails?.fax ?? ''],
-          whatsappNo: [data?.spouseInfo?.contactDetails?.whatsappNo ?? ''],
-          alternativeNumber: [
-            data?.spouseInfo?.contactDetails?.alternativeNumber ?? '',
-          ],
-          residencePhone: [
-            data?.spouseInfo?.contactDetails?.residencePhone ?? '',
-          ],
+          mobile: [data?.spouseInfo?.contactDetails?.mobile ?? ''],
+          email: [data?.spouseInfo?.contactDetails?.email ?? ''],
+
           mobtCode: [
             data?.spouseInfo?.contactDetails?.mobtCode ??
               this.defaultIsdCodeValue,
-          ],
-          waptCode: [
-            data?.spouseInfo?.contactDetails?.waptCode ??
-              this.defaultIsdCodeValue,
-          ],
-          altCode: [
-            data?.spouseInfo?.contactDetails?.altCode ??
-              this.defaultIsdCodeValue,
-          ],
-          statementViaId: [
-            data?.spouseInfo?.contactDetails?.statementViaId ?? '',
           ],
         }),
       }),

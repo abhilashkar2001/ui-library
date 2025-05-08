@@ -75,7 +75,11 @@ export class ProductDetailsComponent implements OnInit {
             const val: any = {
               title: item?.process,
             };
-            if (item?.status === 'DONE' || item?.status === 'APPROVED') {
+            if (
+              item?.status === 'DONE' ||
+              item?.status === 'APPROVED' ||
+              item?.status === 'COMPLETED'
+            ) {
               val.value = 100;
             }
             if (item?.status === 'PENDING') {
@@ -84,7 +88,7 @@ export class ProductDetailsComponent implements OnInit {
             if (item?.status === 'ONGOING') {
               val.value = 20;
             }
-            if (item?.status === 'REJECT') {
+            if (item?.status === 'REJECT' || item?.status === 'EXPIRED') {
               val.value = 0;
             }
             return val;
@@ -108,7 +112,7 @@ export class ProductDetailsComponent implements OnInit {
             { key: 'bankAccount', values: loanInfo.bankAccount ?? {} },
             {
               key: 'disbursementDetails',
-              values: loanInfo.disbursementDetails ?? {},
+              values: loanInfo.loanDisbursementModel.disbursementAccount ?? {},
             },
             { key: 'customerInfo', values: orginationInfo.customerInfo ?? {} },
             {

@@ -112,12 +112,10 @@ export class SignNowPopupComponent implements OnInit {
       this.percentDone = 0;
       this.isUploading = false;
       this.uploadSuccess = true;
-      setTimeout(() => {
-        this.dialogRef.close({
-          result: event?.body?.data,
-          title: this.title,
-        });
-      }, 2000);
+      this.dialogRef.close({
+        result: event?.body?.data,
+        title: this.title,
+      });
     }
   }
   closeDialog() {

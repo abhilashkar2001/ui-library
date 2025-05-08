@@ -13,4 +13,11 @@ export class DocumentUploadService {
       formData,
     );
   }
+
+  // DELETE DOCUMENT FOR THE CUSTOMER SERVICE
+  deleteDocument(customerStagId: number, documentId: number) {
+    return this.httpClient.delete(
+      `${MICROSERVICE_URL}/customer-api/deleteCustomerDocInfo?custStageId=${customerStagId}&documentId=${documentId}`,
+    );
+  }
 }

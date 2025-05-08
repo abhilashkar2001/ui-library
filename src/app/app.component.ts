@@ -37,7 +37,12 @@ export class AppComponent implements OnInit {
       this.listOfThemeColors[0] as ThemeOption,
     );
     this.routingState.loadRouting();
+    window.addEventListener('storage', this.handleStorageEvent);
     this.iconService.init();
+  }
+
+  handleStorageEvent(event: StorageEvent) {
+    if (event.key == 'isRemember') location.reload();
   }
 
   ngOnInit() {

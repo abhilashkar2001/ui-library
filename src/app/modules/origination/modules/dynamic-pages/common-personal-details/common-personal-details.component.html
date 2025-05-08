@@ -321,127 +321,132 @@
                     </ic-date-picker>
                   </div>
 
-                  <div class="highlight_title">Spouse Details</div>
-                  <div
-                    fxFlex="100"
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between center"
-                  >
-                    <ic-select
-                      fxFlex="49"
-                      label="Prefix"
-                      [options]="prefixArray"
-                      bindValueKey="id"
-                      bindLabelKey="values"
-                      [control]="getSpouseInfo(i).get('prefix') | formcontrol"
-                      (selectionChange)="CheckGenderandPrefix(i)"
-                    ></ic-select>
-
-                    <ic-form-field
-                      fxFlex="49"
-                      label="First Name"
-                      [control]="
-                        getSpouseInfo(i).get('firstName') | formcontrol
-                      "
-                      [icAlphabetOnly]="true"
-                      [maxLength]="20"
-                    ></ic-form-field>
-
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Last Name"
-                      [control]="getSpouseInfo(i).get('lastName') | formcontrol"
-                      [icAlphabetOnly]="true"
-                      [maxLength]="20"
-                    ></ic-form-field>
-
-                    <ic-date-picker
-                      fxFlex="49"
-                      [placeholder]="dateFormat"
-                      label="DateofBirth"
-                      dateFormat=""
-                      [control]="
-                        getSpouseInfo(i).get('dateOfBirth') | formcontrol
-                      "
+                  <ng-container *ngIf="isMarried">
+                    <div class="highlight_title">Spouse Details</div>
+                    <div
+                      fxFlex="100"
+                      fxLayout="row wrap"
+                      fxLayoutAlign="space-between center"
                     >
-                    </ic-date-picker>
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Spouse Telephone (Home)"
-                      [control]="
-                        getSpouseContactDetails(i).get('telephone')
-                          | formcontrol
-                      "
-                      [icNumbersOnly]="true"
-                      [maxLength]="20"
-                    ></ic-form-field>
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Spouse Telephone (Work)"
-                      [control]="
-                        getSpouseContactDetails(i).get('worktelephone')
-                          | formcontrol
-                      "
-                      [icNumbersOnly]="true"
-                      [maxLength]="20"
-                    ></ic-form-field>
-                    <ic-mobile-field
-                      fxFlex="49"
-                      label="Mobile Number"
-                      [formControl]="
-                        getSpouseContactDetails(i).get('mobile') | formcontrol
-                      "
-                      [isdCode]="countriesIsdCodes"
-                      [isdControl]="
-                        getSpouseContactDetails(i).get('mobtCode') | formcontrol
-                      "
-                      [maxLength]="maxMobileLength"
-                      (onSelectionChangeOutput)="
-                        checkMobileLength(
-                          $event,
-                          getSpouseContactDetails(i),
-                          'mobile'
-                        )
-                      "
-                    ></ic-mobile-field>
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Email ID"
-                      [control]="
-                        getSpouseContactDetails(i).get('email') | formcontrol
-                      "
-                      [icNoSpace]="true"
-                      [maxLength]="250"
-                      [customError]="
-                        getSpouseContactDetails(i)
-                          .get('email')
-                          ?.hasError('pattern')
-                          ? 'Please enter Valid Email'
-                          : ''
-                      "
-                    ></ic-form-field>
-                    <ic-select
-                      fxFlex="49"
-                      [options]="empoymentArray"
-                      label="Employee status"
-                      bindLabelKey="values"
-                      bindValueKey="id"
-                      [control]="
-                        getSpouseInfo(i).get('employeeStatusId') | formcontrol
-                      "
-                    ></ic-select>
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Net Income"
-                      [maxLength]="22"
-                      [icTwoDigitDecimalNumber]="true"
-                      [numLength]="22"
-                      [decimalPlaces]="3"
-                      [control]="
-                        getSpouseInfo(i).get('netIncome') | formcontrol
-                      "
-                    ></ic-form-field>
-                  </div>
+                      <ic-select
+                        fxFlex="49"
+                        label="Prefix"
+                        [options]="prefixArray"
+                        bindValueKey="id"
+                        bindLabelKey="values"
+                        [control]="getSpouseInfo(i).get('prefix') | formcontrol"
+                        (selectionChange)="CheckGenderandPrefix(i)"
+                      ></ic-select>
+
+                      <ic-form-field
+                        fxFlex="49"
+                        label="First Name"
+                        [control]="
+                          getSpouseInfo(i).get('firstName') | formcontrol
+                        "
+                        [icAlphabetOnly]="true"
+                        [maxLength]="20"
+                      ></ic-form-field>
+
+                      <ic-form-field
+                        fxFlex="49"
+                        label="Last Name"
+                        [control]="
+                          getSpouseInfo(i).get('lastName') | formcontrol
+                        "
+                        [icAlphabetOnly]="true"
+                        [maxLength]="20"
+                      ></ic-form-field>
+
+                      <ic-date-picker
+                        fxFlex="49"
+                        [placeholder]="dateFormat"
+                        label="DateofBirth"
+                        dateFormat=""
+                        [control]="
+                          getSpouseInfo(i).get('dateOfBirth') | formcontrol
+                        "
+                      >
+                      </ic-date-picker>
+                      <ic-form-field
+                        fxFlex="49"
+                        label="Spouse Telephone (Home)"
+                        [control]="
+                          getSpouseContactDetails(i).get('telephone')
+                            | formcontrol
+                        "
+                        [icNumbersOnly]="true"
+                        [maxLength]="20"
+                      ></ic-form-field>
+                      <ic-form-field
+                        fxFlex="49"
+                        label="Spouse Telephone (Work)"
+                        [control]="
+                          getSpouseContactDetails(i).get('worktelephone')
+                            | formcontrol
+                        "
+                        [icNumbersOnly]="true"
+                        [maxLength]="20"
+                      ></ic-form-field>
+                      <ic-mobile-field
+                        fxFlex="49"
+                        label="Mobile Number"
+                        [formControl]="
+                          getSpouseContactDetails(i).get('mobile') | formcontrol
+                        "
+                        [isdCode]="countriesIsdCodes"
+                        [isdControl]="
+                          getSpouseContactDetails(i).get('mobtCode')
+                            | formcontrol
+                        "
+                        [maxLength]="maxMobileLength"
+                        (onSelectionChangeOutput)="
+                          checkMobileLength(
+                            $event,
+                            getSpouseContactDetails(i),
+                            'mobile'
+                          )
+                        "
+                      ></ic-mobile-field>
+                      <ic-form-field
+                        fxFlex="49"
+                        label="Email ID"
+                        [control]="
+                          getSpouseContactDetails(i).get('email') | formcontrol
+                        "
+                        [icNoSpace]="true"
+                        [maxLength]="250"
+                        [customError]="
+                          getSpouseContactDetails(i)
+                            .get('email')
+                            ?.hasError('pattern')
+                            ? 'Please enter Valid Email'
+                            : ''
+                        "
+                      ></ic-form-field>
+                      <ic-select
+                        fxFlex="49"
+                        [options]="empoymentArray"
+                        label="Employee status"
+                        bindLabelKey="values"
+                        bindValueKey="id"
+                        [control]="
+                          getSpouseInfo(i).get('employeeStatusId') | formcontrol
+                        "
+                      ></ic-select>
+                      <ic-form-field
+                        fxFlex="49"
+                        label="Net Income"
+                        [maxLength]="22"
+                        [icTwoDigitDecimalNumber]="true"
+                        [numLength]="22"
+                        [decimalPlaces]="3"
+                        [control]="
+                          getSpouseInfo(i).get('netIncome') | formcontrol
+                        "
+                      ></ic-form-field>
+                    </div>
+                  </ng-container>
 
                   <div class="highlight_title">
                     Emergency Contact Details / Next of Kin

@@ -149,8 +149,10 @@
   </mat-card>
 
   <!-- Collateral Details -->
-
-  <mat-card class="default-card">
+  <mat-card
+    class="default-card"
+    *ngIf="loanSummaryDetails?.collateralInfo?.collateralDescriptionForCredit"
+  >
     <div *ngFor="let section of collateralDetailsArr" class="p-12">
       <div class="text-header mt-3">{{ section.title }}</div>
       <mat-card

@@ -14,6 +14,8 @@ import * as faceapi from 'face-api.js';
   styleUrls: ['./scan.component.scss'],
 })
 export class ScanComponent implements OnInit {
+  WIDTH = 0;
+  HEIGHT = 0;
   @ViewChild('video', { static: true })
   public video!: ElementRef;
   @ViewChild('canvas', { static: true })
@@ -33,7 +35,8 @@ export class ScanComponent implements OnInit {
   isScanned = false;
   rescann: boolean | any;
   perscentageCheck = true;
-
+  prompt = 'Face forward 🧍';
+  randomDirection: string | undefined;
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private elRef: ElementRef,
@@ -43,6 +46,7 @@ export class ScanComponent implements OnInit {
   async ngOnInit() {
     this.dialogData;
     this.startVideo();
+    this.randomDirection = Math.random() < 0.5 ? 'RIGHT' : 'LEFT';
     faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
       await faceapi.nets.faceLandmark68Net.loadFromUri('../../assets/models');
     await faceapi.nets.faceRecognitionNet.loadFromUri('../../assets/models');
@@ -78,29 +82,23 @@ export class ScanComponent implements OnInit {
       .querySelector('video')
       .addEventListener('play', async () => {
         this.canvas = await faceapi.createCanvasFromMedia(this.videoInput);
-
         this.canvasEl = this.canvasRef.nativeElement;
-
         this.canvasEl.appendChild(this.canvas);
-
         this.canvas.setAttribute('id', 'canvass');
-
         this.canvas.setAttribute(
           'style',
-          `position: relative;
-        
-         top: -10px;
-
-         left: 0px;`,
+          'position: relative; top: -10px; left: 0px;',
         );
 
         this.displaySize = {
           width: this.videoInput.width,
-
           height: this.videoInput.height,
         };
 
         faceapi.matchDimensions(this.canvas, this.displaySize);
+
+        let leftDetected = false;
+        let rightDetected = false;
 
         setInterval(async () => {
           this.detection = await faceapi
@@ -110,91 +108,83 @@ export class ScanComponent implements OnInit {
             )
             .withFaceLandmarks()
             .withFaceExpressions();
+          if (this.detection?.length > 1) {
+            this.prompt = 'More than one face detected';
+            this.drawFaceBox('red');
+          } else if (this.detection?.length == 1) {
+            this.resizedDetections = faceapi.resizeResults(
+              this.detection,
+              this.displaySize,
+            );
 
-          this.resizedDetections = faceapi.resizeResults(
-            this.detection,
+            this.canvas
+              .getContext('2d')
+              .clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            this.displaySize,
-          );
-          let color = 'red';
-          if (this.resizedDetections?.length > 0) {
-            this.resizedDetections.forEach((detection: any) => {
-              const box = detection.detection.box;
-              const faceWidth = box.width;
-              const imageWidth = this.displaySize.width;
-              const facePercent = (faceWidth / imageWidth) * 100;
+            if (this.resizedDetections?.length > 0) {
+              this.resizedDetections.forEach((detection: any) => {
+                const box = detection.detection.box;
+                const faceWidth = box.width;
+                const imageWidth = this.displaySize.width;
+                const facePercent = (faceWidth / imageWidth) * 100;
 
-              // Calculate the color based on the face percentage
-              color = this.getColorBasedOnPercentage(facePercent);
-            });
-          } else {
-            color = this.getColorBasedOnPercentage(0);
+                // Calculate color based on face percentage
+                const color = this.getColorBasedOnPercentage(facePercent);
+                if (!leftDetected && !rightDetected) {
+                  this.prompt = `Turn your head to the ${this.randomDirection}`;
+                }
+
+                // Liveliness check - detecting left and right turns using landmarks
+                const landmarks = detection.landmarks;
+                const nose = landmarks.getNose();
+                const leftEye = landmarks.getLeftEye();
+                const rightEye = landmarks.getRightEye();
+
+                const leftEyeX = leftEye[0].x;
+                const rightEyeX = rightEye[0].x;
+                const noseX = nose[0].x;
+                // Calculate the center point between the eyes
+                const eyeCenterX = (leftEyeX + rightEyeX) / 2;
+                const faceW = rightEyeX - leftEyeX; // Approximate face width
+                const threshold = faceW * 0.2;
+
+                setTimeout(() => {
+                  if (noseX > eyeCenterX + threshold) {
+                    rightDetected = true;
+                  } else if (noseX < eyeCenterX - threshold) {
+                    leftDetected = true;
+                  }
+                  setTimeout(() => {
+                    if (!leftDetected && !rightDetected) {
+                      leftDetected = true;
+                    }
+                  }, 2000);
+                  if (leftDetected || rightDetected) {
+                    if (
+                      (this.randomDirection == 'LEFT' && rightDetected) ||
+                      (this.randomDirection == 'RIGHT' && leftDetected)
+                    )
+                      this.prompt = '✅ Liveliness check passed!';
+                    else {
+                      this.close();
+                    }
+                  }
+                }, 1000);
+
+                this.drawFaceBox(color);
+              });
+            } else {
+              this.prompt = 'No face detected! Position yourself in the frame.';
+            }
           }
-
-          this.canvas
-            .getContext('2d')
-            .clearRect(0, 0, this.canvas.width, this.canvas.height);
-          const context = this.canvas.getContext('2d');
-          context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-          const gradient = context.createLinearGradient(
-            0,
-            0,
-            this.canvas.width,
-            this.canvas.height,
-          );
-          gradient.addColorStop(0, color); // Start color
-          gradient.addColorStop(0.5, color); // Start color
-          gradient.addColorStop(1, color); // End color
-          context.strokeStyle = gradient;
-          context.lineJoin = 'round';
-          this.resizedDetections.forEach((detection: any) => {
-            const box = detection.detection.box;
-            const borderRadius = 10;
-            // Draw the detection frame border with gradient stroke style and rounded corners
-
-            context.beginPath();
-            context.moveTo(box.x + borderRadius, box.y);
-            context.lineTo(box.x + box.width - borderRadius, box.y);
-            context.arcTo(
-              box.x + box.width,
-              box.y,
-              box.x + box.width,
-              box.y + borderRadius,
-              borderRadius,
-            );
-            context.lineTo(
-              box.x + box.width,
-              box.y + box.height - borderRadius,
-            );
-            context.arcTo(
-              box.x + box.width,
-              box.y + box.height,
-              box.x + box.width - borderRadius,
-              box.y + box.height,
-              borderRadius,
-            );
-            context.lineTo(box.x + borderRadius, box.y + box.height);
-            context.arcTo(
-              box.x,
-              box.y + box.height,
-              box.x,
-              box.y + box.height - borderRadius,
-              borderRadius,
-            );
-            context.lineTo(box.x, box.y + borderRadius);
-            context.arcTo(
-              box.x,
-              box.y,
-              box.x + borderRadius,
-              box.y,
-              borderRadius,
-            );
-            context.closePath();
-            context.lineWidth = 2;
-            context.stroke();
-          });
-        }, 100);
+        }, 3000);
       });
+  }
+
+  drawFaceBox(color: string) {
+    if (this.video) {
+      this.video.nativeElement.style.border = `2px solid ${color}`;
+    }
   }
 
   getColorBasedOnPercentage(percentage: number): string {
@@ -238,6 +228,14 @@ export class ScanComponent implements OnInit {
     this.videoInput.srcObject = null;
   }
 
+  stopVideo() {
+    const stream = this.videoInput.srcObject as MediaStream;
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      this.videoInput.srcObject = null;
+    }
+  }
+
   done() {
     this.closeClick(true);
   }
@@ -245,7 +243,7 @@ export class ScanComponent implements OnInit {
     this.dialogRef.close('reScan');
     this.rescann = true;
   }
-  close() {
-    this.dialogRef.close();
+  close(remark?: string) {
+    this.dialogRef.close(remark);
   }
 }

@@ -11,7 +11,17 @@
   </div>
   <div class="video-container" fxLayoutAlign="center">
     <div id="mainDiv">
-      <video #video [width]="370" [height]="270" autoplay muted></video>
+      <div id="prompt-container">
+        <p id="prompt">{{ prompt }}</p>
+      </div>
+      <video
+        #video
+        [height]="250"
+        [width]="200"
+        autoplay
+        muted
+        class="video"
+      ></video>
       <div #canvas class="canvasDiv"></div>
     </div>
     <div class="captured-ima" *ngIf="imageData">

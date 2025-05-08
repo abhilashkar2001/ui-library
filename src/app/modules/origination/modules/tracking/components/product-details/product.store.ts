@@ -70,7 +70,7 @@ export class ProductConstant {
       keyPair: [
         { label: 'Type', valueKey: 'disbursementTypeValue' },
         { label: 'Account No', valueKey: 'accountNo' },
-        { label: 'Name', valueKey: 'name' },
+        { label: 'Name', valueKey: 'customerName' },
         { label: 'EMI Payment Start Date', valueKey: 'emiStartDate' },
       ],
     },
