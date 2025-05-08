@@ -12,23 +12,24 @@
       </p>
     </div>
     <div
-      class="row"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
       data-aos="zoom-in"
       data-aos-delay="200"
       data-aos-duration="500"
     >
-      <div class="col-md-8 col-12">
-        <ngb-carousel
-          #carousel
-          [interval]="3000"
-          [pauseOnHover]="pauseOnHover"
-          [pauseOnFocus]="pauseOnFocus"
-          (slide)="onSlide($event)"
-        >
-          <ng-template ngbSlide *ngFor="let img of images; index as i">
-            <div
-              class="testimonial_section d-flex flex-column flex-md-row align-items-center"
-            >
+      <swiper
+        fxFlex="69"
+        fxFlex.lt-md="100"
+        [autoplay]="{ delay: 3000, disableOnInteraction: false }"
+        [loop]="true"
+        [pagination]="{ clickable: true }"
+        [navigation]="true"
+        class="mySwiper"
+      >
+        <ng-container *ngFor="let img of images">
+          <ng-template swiperSlide>
+            <div class="testimonial_section">
               <div class="client_img">
                 <img [src]="img.image" alt="Client" />
                 <img
@@ -39,21 +40,19 @@
               </div>
               <div class="client_text">
                 <div class="header_lg_bold_black">{{ img.client }}</div>
-                <div class="header_md">
-                  {{ img.cliewntDescription }}
-                </div>
+                <div class="header_md">{{ img.cliewntDescription }}</div>
               </div>
             </div>
           </ng-template>
-        </ngb-carousel>
-      </div>
-      <div class="col-md-4 col-12 p-5">
-        <img
-          src="assets/images/Group 13938.svg"
-          class="img-fluid"
-          alt="Image"
-        />
-      </div>
+        </ng-container>
+      </swiper>
+
+      <img
+        fxFlex="30"
+        src="assets/images/Group 13938.svg"
+        class="img-fluid"
+        alt="Image"
+      />
     </div>
   </div>
 </section>

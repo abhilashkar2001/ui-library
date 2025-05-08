@@ -36,20 +36,3 @@ import 'zone.js'; // Included with Angular CLI.
  */
 
 (window as any).global = window;
-
-// // User tour
-import 'hopscotch';
-// // Rich Text Editor
-// import 'quill';
-
-// import '../node_modules/hammerjs/hammer.js';
-
-/**
- * Date, currency, decimal and percent pipes.
- * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
- */
-// import 'intl';  // Run `npm install --save intl`.
-/**
- * Need to import at least one locale-data with intl.
- */
-// import 'intl/locale-data/jsonp/en';

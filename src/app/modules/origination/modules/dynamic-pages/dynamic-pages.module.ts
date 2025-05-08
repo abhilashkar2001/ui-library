@@ -16,11 +16,8 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { FusionChartsModule } from 'angular-fusioncharts';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SwiperModule } from 'swiper/angular';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { LibPipesModule } from '@onerumango/utils';
@@ -52,13 +49,10 @@ const components = [
     RouterModule,
     TranslateModule,
     FlexLayoutModule,
-    FusionChartsModule,
-    NgbModule,
     SharedModule,
     SharedMaterialModule,
     NgOtpInputModule,
     SwiperModule,
-    NgxSpinnerModule,
     InputMaskModule,
     IcustLibraryModule,
     SharedOriginationModule,

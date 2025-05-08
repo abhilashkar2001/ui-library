@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoansLandingComponent } from './pages/loans-landing/loans-landing.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
@@ -33,7 +32,6 @@ import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbPopoverModule,
     SharedModule,
     SharedMaterialModule,
     LoansRoutingModule,

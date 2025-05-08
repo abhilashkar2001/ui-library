@@ -2,9 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'perfect-scrollbar/css/perfect-scrollbar.css';
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-@import 'aos/dist/aos.css';
 
 @import 'https://fonts.googleapis.com/css?family=Poppins';
 
@@ -58,15 +55,6 @@ body {
     }
   }
 }
-
-// // Flag icon
-@import 'flag-icons/css/flag-icons.min.css';
-
-// // User tour
-@import 'hopscotch/dist/css/hopscotch.min.css';
-
-// // Highlightjs theme
-@import 'highlight.js/styles/github.css';
 
 // Main Variables File
 @import 'scss/variables';

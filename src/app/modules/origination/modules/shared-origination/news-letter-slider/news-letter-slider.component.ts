@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-
-import {
-  NgbCarousel,
-  NgbSlideEvent,
-  NgbSlideEventSource,
-} from '@ng-bootstrap/ng-bootstrap';
+import { SwiperComponent } from 'swiper/angular';
+import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper';
 import { CLIENT_DESCRIPTION } from 'app/config/news-letter.constant';
+
+// Install Swiper modules
+SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 @Component({
   selector: 'app-news-letter-slider',
@@ -15,38 +14,19 @@ import { CLIENT_DESCRIPTION } from 'app/config/news-letter.constant';
 export class NewsLetterSliderComponent {
   images = CLIENT_DESCRIPTION;
 
+  @ViewChild('swiperRef', { static: false }) swiper?: SwiperComponent;
   paused = false;
-  unpauseOnArrow = false;
-  pauseOnIndicator = false;
-  pauseOnHover = true;
-  pauseOnFocus = true;
 
-  @ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
+  togglePaused(): void {
+    if (!this.swiper) return;
 
-  togglePaused() {
+    const autoplay = this.swiper.swiperRef.autoplay;
     if (this.paused) {
-      this.carousel.cycle();
+      autoplay?.start();
     } else {
-      this.carousel.pause();
+      autoplay?.stop();
     }
-    this.paused = !this.paused;
-  }
 
-  onSlide(slideEvent: NgbSlideEvent) {
-    if (
-      this.unpauseOnArrow &&
-      slideEvent.paused &&
-      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT ||
-        slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
-    ) {
-      this.togglePaused();
-    }
-    if (
-      this.pauseOnIndicator &&
-      !slideEvent.paused &&
-      slideEvent.source === NgbSlideEventSource.INDICATOR
-    ) {
-      this.togglePaused();
-    }
+    this.paused = !this.paused;
   }
 }

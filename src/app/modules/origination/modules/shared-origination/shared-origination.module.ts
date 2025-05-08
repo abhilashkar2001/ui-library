@@ -29,12 +29,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { RouterModule } from '@angular/router';
-import { FusionChartsModule } from 'angular-fusioncharts';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from '../../../../shared/directives/shared-directives.module';
 import { SwiperModule } from 'swiper/angular';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { InputMaskModule } from '../../../../shared/directives/input-mask/input-mask.module';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { LibPipesModule } from '@onerumango/utils';
@@ -72,15 +69,12 @@ const components = [
     RouterModule,
     TranslateModule,
     FlexLayoutModule,
-    FusionChartsModule,
-    NgbModule,
     SharedPipesModule,
     SharedDirectivesModule,
     SharedMaterialModule,
     SharedComponentsModule,
     NgOtpInputModule,
     SwiperModule,
-    NgxSpinnerModule,
     InputMaskModule,
     IcustLibraryModule,
     LibPipesModule,

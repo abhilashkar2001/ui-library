@@ -10,7 +10,6 @@ import { AppLoaderService } from './services/app-loader/app-loader.service';
 import { SharedComponentsModule } from './components/shared-components.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { SharedDirectivesModule } from './directives/shared-directives.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { InputMaskModule } from './directives/input-mask/input-mask.module';
@@ -32,7 +31,6 @@ import { RoutePartsService } from '@onerumango/utils';
     AppConfirmService,
     AppLoaderService,
     ReactiveFormsModule,
-    NgbModule,
   ],
   exports: [SharedComponentsModule, SharedPipesModule, SharedDirectivesModule],
 })

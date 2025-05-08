@@ -2,6 +2,8 @@
   .testimonial_section {
     position: relative;
     margin-top: 3rem;
+    display: flex;
+    align-items: center;
     .client_img {
       width: 45%;
       height: 380px;

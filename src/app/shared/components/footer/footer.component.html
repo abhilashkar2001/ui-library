@@ -4,11 +4,11 @@
   data-aos-delay="200"
   data-aos-duration="500"
 >
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-11 mx-auto">
-        <section class="row">
-          <div class="col-12 col-md-4 py-3">
+  <div class="container" fxLayout="column">
+    <div fxLayout="row">
+      <div fxFlex="100">
+        <section fxLayout="row" fxLayout.lt-md="column">
+          <div fxFlex="50">
             <h1 class="footer_logo">
               {{ userDetails?.bankName ?? 'Demo Bank' }}
             </h1>
@@ -19,45 +19,45 @@
               short-term savings.
             </p>
           </div>
-          <div
-            class="col-12 col-md-2 d-flex flex-column align-items-start align-items-md-center py-3"
-          >
-            <div class="full-width">
-              <h4 class="header_md_bold_black">Pages</h4>
-              <ul class="footer_links">
-                <li *ngFor="let page of footerPages">
-                  <a [routerLink]="page.path">{{ page.name }}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="col-12 col-md-3 d-flex flex-column align-items-start align-items-md-center py-3"
-          >
-            <div class="full-width">
-              <h4 class="header_md_bold_black">Help</h4>
-              <ul class="footer_links">
-                <li *ngFor="let help of helpSection">
-                  <a>{{ help.name }}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="col-12 col-md-3 d-flex flex-column align-items-start align-items-md-center py-3"
-          >
+          <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between">
             <div>
-              <h4 class="header_md_bold_black">Social Media</h4>
-              <div class="social_img_wrapper">
-                <a
-                  (click)="opened(social?.path)"
-                  *ngFor="let social of socialMedia"
-                  (keydown.enter)="opened(social?.path)"
-                  tabIndex="0"
-                  role="button"
-                >
-                  <img [src]="social.imgUrl" alt="Social Media Image"
-                /></a>
+              <div class="full-width">
+                <h4 class="header_md_bold_black">Pages</h4>
+                <ul class="footer_links">
+                  <li *ngFor="let page of footerPages">
+                    <a [routerLink]="page.path">{{ page.name }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="col-12 col-md-3 d-flex flex-column align-items-start align-items-md-center py-3"
+            >
+              <div class="full-width">
+                <h4 class="header_md_bold_black">Help</h4>
+                <ul class="footer_links">
+                  <li *ngFor="let help of helpSection">
+                    <a>{{ help.name }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="col-12 col-md-3 d-flex flex-column align-items-start align-items-md-center py-3"
+            >
+              <div>
+                <h4 class="header_md_bold_black">Social Media</h4>
+                <div class="social_img_wrapper">
+                  <a
+                    (click)="opened(social?.path)"
+                    *ngFor="let social of socialMedia"
+                    (keydown.enter)="opened(social?.path)"
+                    tabIndex="0"
+                    role="button"
+                  >
+                    <img [src]="social.imgUrl" alt="Social Media Image"
+                  /></a>
+                </div>
               </div>
             </div>
           </div>
@@ -66,12 +66,8 @@
     </div>
 
     <div id="horizontal_line"></div>
-    <section class="row">
-      <div class="col-12 col-md-11 mx-auto">
-        <p class="theme_md mb-0">
-          &copy; 2025 Rumango LTD. All rights reserved.
-        </p>
-      </div>
-    </section>
+    <div fxLayout="row" fxFlex="100">
+      <p class="theme_md mb-0">&copy; 2025 Rumango LTD. All rights reserved.</p>
+    </div>
   </div>
 </footer>

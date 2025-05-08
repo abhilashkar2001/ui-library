@@ -7,7 +7,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperModule } from 'swiper/angular';
 import { ToastrModule } from 'ngx-toastr';
 import { CustomDateAdapter } from './shared/services/date-time/customDateAdapter';
@@ -53,7 +52,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule.forRoot(rootRouterConfig, {
       useHash: true,
     }),
-    NgbModule,
     MatDialogModule,
     ToastrModule.forRoot({
       progressAnimation: 'decreasing',

@@ -1,19 +1,14 @@
-<section class="container hero_section">
-  <div class="row align-items-center">
+<section class="hero_section">
+  <div class="hero_container">
     <div
-      class="col-12 col-lg-7 py-3 py-md-5 order-1 order-lg-0"
+      class="hero_text"
       data-aos="zoom-out"
       data-aos-delay="200"
       data-aos-duration="500"
     >
       <h1 class="hero_title">{{ profileHeader }}</h1>
       <p class="hero_subtitle">{{ profileHint }}</p>
-      <div
-        class="apply_div"
-        fxLayout="row"
-        fxLayoutGap="20"
-        fxLayoutAlign="start center"
-      >
+      <div class="apply_div">
         <ic-button
           label="APPLY"
           icButtonType="filled-blue"
@@ -55,12 +50,12 @@
       </div>
     </div>
     <div
-      class="col-12 col-lg-5 order-0 order-lg-1 d-flex justify-content-center align-items-center"
+      class="hero_image"
       data-aos="zoom-in"
       data-aos-delay="200"
       data-aos-duration="500"
     >
-      <img [src]="imageUrl" alt="hero image" class="img-fluid" />
+      <img [src]="imageUrl" alt="hero image" class="hero_img" />
     </div>
   </div>
 </section>
