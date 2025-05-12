@@ -22,7 +22,7 @@ import {
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
@@ -285,13 +285,7 @@ export class CommonPersonalDetailsComponent
                 'customer',
               ) as FormGroup;
               const customerIndex: any = customerFormGroup.controls[index];
-              customerIndex
-                .get('dateOfBirth')
-                ?.setValue(
-                  moment(item?.dateOfBirth, 'DD/MM/YYYY').format(
-                    'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
-                  ),
-                );
+              customerIndex.get('dateOfBirth')?.setValue(item?.dateOfBirth);
               const applicantNameArray = item?.applicantName
                 ? item?.applicantName?.split(' ')
                 : [];
@@ -395,11 +389,7 @@ export class CommonPersonalDetailsComponent
           const customerIndex: any = customerFormGroup.controls[0];
           customerIndex
             .get('dateOfBirth')
-            .setValue(
-              moment(this.docCustomerDetails?.dateOfBirth, 'DD/MM/YYYY').format(
-                'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
-              ),
-            );
+            .setValue(this.docCustomerDetails?.dateOfBirth);
 
           const applicantNameArray = this.docCustomerDetails?.applicantName
             ? this.docCustomerDetails?.applicantName?.split(' ')
@@ -1192,37 +1182,37 @@ export class CommonPersonalDetailsComponent
     });
   }
 
-  dateOfBirthSelected(selectedDate: any, i: any) {
-    const dateOfBirth = moment(selectedDate).format('YYYY-MMM-DD');
-    console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
-    if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation(i);
-      this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
-    } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
-      this.showAgeValidation(i);
-      this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
-    }
-  }
+  // dateOfBirthSelected(selectedDate: any, i: any) {
+  //   const dateOfBirth = moment(selectedDate).format('MM-DD-YYYY');
+  //   console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
+  //   if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
+  //     this.showAgeValidation(i);
+  //     this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
+  //   } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
+  //     this.showAgeValidation(i);
+  //     this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
+  //   }
+  // }
 
-  showAgeValidation(i: any) {
-    setTimeout(() => {
-      const customerFormGroup = this.customerDetailsForm.get(
-        'customer',
-      ) as FormGroup;
-      const customerIndex: any = customerFormGroup.controls[i];
-      customerIndex.get('dateOfBirth').setValue(null);
+  // showAgeValidation(i: any) {
+  //   setTimeout(() => {
+  //     const customerFormGroup = this.customerDetailsForm.get(
+  //       'customer',
+  //     ) as FormGroup;
+  //     const customerIndex: any = customerFormGroup.controls[i];
+  //     customerIndex.get('dateOfBirth').setValue(null);
 
-      const customerFormGrp = this.customerDetailsForm.get(
-        'customer',
-      ) as FormGroup;
-      const customerIdx: any = customerFormGrp.controls[i];
-      customerIdx.get('dateOfBirth').setErrors({ invalidDob: true });
-    }, 100);
-  }
+  //     const customerFormGrp = this.customerDetailsForm.get(
+  //       'customer',
+  //     ) as FormGroup;
+  //     const customerIdx: any = customerFormGrp.controls[i];
+  //     customerIdx.get('dateOfBirth').setErrors({ invalidDob: true });
+  //   }, 100);
+  // }
 
-  calculateAge(dateOfBirth: any) {
-    return moment().diff(dateOfBirth, 'years');
-  }
+  // calculateAge(dateOfBirth: any) {
+  //   return moment().diff(dateOfBirth, 'years');
+  // }
 
   CheckGenderandPrefix(index: number) {
     const personalInfoGroup = this.customer.at(index);

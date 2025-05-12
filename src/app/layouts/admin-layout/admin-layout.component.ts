@@ -3,6 +3,7 @@ import { ThemeService } from 'app/shared/services/theme.service';
 import { IdleTimeoutService } from '@onerumango/utils';
 @Component({
   selector: 'app-admin-layout',
+  styleUrls: ['./admin-layout.component.scss'],
   templateUrl: './admin-layout.template.html',
 })
 export class AdminLayoutComponent implements OnDestroy, OnInit {
