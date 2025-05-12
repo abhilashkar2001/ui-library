@@ -10,6 +10,13 @@
           [icTwoDigitDecimalNumber]="true"
           [decimalPlaces]="3"
           [numLength]="18"
+          [customError]="
+            loanDetails.get('loanAmount')?.hasError('max')
+              ? 'Amount cannot exceed ' + max
+              : loanDetails.get('loanAmount')?.hasError('min')
+                ? 'Amount should be at least ' + min
+                : ''
+          "
           [prefixIcon]="loanDetails.value?.loanAmount ? currencySymboll : ''"
         ></ic-form-field>
       </div>

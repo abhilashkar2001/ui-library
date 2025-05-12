@@ -1173,15 +1173,10 @@ export class SessionStorageService {
   /**  FETCH: Doc appli name from session storage whose key is stored in DOC_APPLI_NAME in session storage enum
    * @returns
    */
-  public getDocAppliName(): any {
-    const docAppliName = this.getItem(SessionStorageEnum.DOC_APPLI_NAME);
-    return docAppliName;
+  public getDocAppliName(): string | null {
+    return this.getItem(SessionStorageEnum.DOC_APPLI_NAME);
   }
 
-  /**
-   * This method will set the Doc appli name in the session storage
-   * @param id
-   */
   public setDocAppliName(id: string): void {
     this.setItem(SessionStorageEnum.DOC_APPLI_NAME, id);
   }

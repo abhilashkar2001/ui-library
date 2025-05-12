@@ -34,6 +34,11 @@
   }
 }
 
+mat-progress-bar.green_progress {
+  --mdc-linear-progress-active-indicator-color: #008461;
+  --mdc-linear-progress-active-indicator-height: 8px;
+}
+
 .editButton {
   box-shadow: 15.12px 15.12px 60.49px 0px #0000001a;
   height: 40px;

@@ -15,14 +15,15 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   @Input() docCustomerDetails: any;
   @Input() accountType: any;
   @Input() mobileVerifyInfo: any;
+  @Input() screenInfo: any;
   verificationType = 'Other Document';
   documentList: any[] = [];
-
-  ocrProcess = false;
+  isNationalId = false;
   checkListDocList: any[] = [];
   checkListDoc: any = [];
   docAppliName: any;
   isDisbursement = false;
+  screenName: string | undefined;
 
   constructor(
     private loanApi: LoanService,
@@ -31,6 +32,7 @@ export class OtherChecklistDocUploadComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.screenName = this.screenInfo.screenName;
     if (this.accountType === 'loan') this.isDisbursement = true;
     if (this.docCustomerDetails) {
       this.docAppliName = this.docCustomerDetails?.applicantName;
@@ -38,19 +40,20 @@ export class OtherChecklistDocUploadComponent implements OnInit {
         this.docCustomerDetails?.applicantName,
       );
     } else {
-      this.docAppliName = this.sessionStorageService.getDocAppliName();
+      // this.docAppliName = this.sessionStorageService.getDocAppliName() ?? '';
     }
     const originationId = this.sessionStorageService.getOriginationId();
     this.loanApi
       .getCheckListDoc(
         this.sessionStorageService.getCurrentStage(),
         parseInt(this.sessionStorageService.getCurrentScreenCode()),
+        this.sessionStorageService.getOriginationId(),
       )
       .subscribe((resp) => {
         if (resp?.statusCode == 200) {
           this.checkListDocList = this.groupBy(resp.data);
           const screenCode = parseInt(
-            this.sessionStorageService.getOtherDocScreenCode(),
+            this.sessionStorageService.getCurrentScreenCode(),
           );
           if (screenCode) this.getCheckListDoc(originationId, screenCode);
         } else {
@@ -77,7 +80,6 @@ export class OtherChecklistDocUploadComponent implements OnInit {
               }
               return item;
             });
-          console.log(this.documentList, 'this.documentList ');
         }
       });
   }
@@ -104,21 +106,6 @@ export class OtherChecklistDocUploadComponent implements OnInit {
         docIds = [...docIds, ...element.docIds];
       }
     });
-    console.log(event.loanDisbursement);
-    // event.documentDetails.otherDocument.forEach((element: any) => {
-    //   if (element.docIds?.length > 0) {
-    //     const docId = {
-    //       docIds: element.docIds,
-    //     };
-    //     docIds.push(docId);
-    //     element.fileInfo.forEach((item: any) => {
-    //       if (item.applicantName || item.gender || item.dateOfBirth) {
-    //         customerDetails.push(item);
-    //         return;
-    //       }
-    //     });
-    //   }
-    // });
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
     this.sessionStorageService.setLoanDoc(docIds);

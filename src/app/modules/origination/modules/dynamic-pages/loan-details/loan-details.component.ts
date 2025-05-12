@@ -51,6 +51,13 @@ export class LoanDetailsComponent implements OnInit {
   otherUserInfo: LocaleData | undefined;
   currencySymboll = '';
   originationId: number | undefined;
+  min: any;
+  productDetails: any;
+  max: any;
+  maxValue: any;
+  interestRate: any;
+  minValue: number | undefined;
+  interestDetails: any;
 
   constructor(
     private fb: FormBuilder,
@@ -75,10 +82,12 @@ export class LoanDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
+    const basisId: any = this.sessionStorageService.getLoanBasisDetails();
     this.fetchGenericValues();
     setTimeout(() => {
       this.buildDetailsForm();
       this.getLoanDetails();
+      this.getProductDetails(basisId.basisId);
     }, 2000);
   }
 
@@ -87,7 +96,6 @@ export class LoanDetailsComponent implements OnInit {
       loanDetails: this.fb.group({
         loanAmount: [
           data?.loanDetails?.loanAmount ?? data?.principalAmount ?? '',
-          Validators.required,
         ],
         interestRate: [
           data?.loanDetails?.interestRate ?? data?.interestRate ?? '',
@@ -188,7 +196,6 @@ export class LoanDetailsComponent implements OnInit {
       screenCode: [''],
     });
 
-    console.log('Full form value:', this.loanDetailsForm.value);
     const disbursementAccount = this.loanDisbursementModel.get(
       'disbursementAccount',
     ) as FormGroup;
@@ -373,6 +380,36 @@ export class LoanDetailsComponent implements OnInit {
           this.loanDetailsForm?.patchValue(resp?.data);
         }
       });
+  }
+
+  // Get Product details
+  getProductDetails(basisId: any) {
+    this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        this.productDetails = resp.data[0]?.lendingParameters.find(
+          (el: any) => el.currencyCode == this.otherUserInfo?.currency,
+        );
+        this.min = this.productDetails.minimumAmount;
+        this.max = this.productDetails.maximumAmount;
+        const control = this.loanDetails?.get('loanAmount');
+        console.log(control, 'control');
+        control?.setValidators([
+          Validators.required,
+          Validators.min(this.min),
+          Validators.max(this.max),
+        ]);
+        control?.updateValueAndValidity();
+      }
+    });
+    this.loanApi.getProductInterestDetails(basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        resp.data.forEach((item: any) => {
+          if (item?.isPrimary) {
+            this.interestDetails = item;
+          }
+        });
+      }
+    });
   }
 
   onConfirm() {
