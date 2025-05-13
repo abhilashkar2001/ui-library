@@ -111,9 +111,9 @@ export class LoanDetailsComponent implements OnInit {
       }),
 
       loanDisbursementModel: this.fb.group({
-        disbursementModeId: [
-          data?.loanDisbursementModel?.disbursementModeId?.data
-            ?.disbursementModeId ?? '',
+        disbursementTypeId: [
+          data?.loanDisbursementModel?.disbursementTypeId?.data
+            ?.disbursementTypeId ?? '',
           Validators.required,
         ],
         disbursementMode: [
