@@ -87,7 +87,7 @@ export function scrollTo(selector: any) {
 }
 export const DEFAULT_LOCALE = {
   country: 'United States',
-  dateFormat: 'MM/DD/YYYY',
+  dateFormat: 'MM-DD-YYYY',
   locale: 'en-US',
   currency: 'USD',
 };

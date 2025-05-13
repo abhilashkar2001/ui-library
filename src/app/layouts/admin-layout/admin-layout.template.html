@@ -1,4 +1,9 @@
-<app-header-top></app-header-top>
+<div class="layout-wrapper">
+  <app-header-top></app-header-top>
 
-<router-outlet></router-outlet>
-<app-footer (scrollToTop)="scrollToTop()"></app-footer>
+  <div class="layout-content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer (scrollToTop)="scrollToTop()"></app-footer>
+</div>

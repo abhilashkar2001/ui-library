@@ -22,7 +22,7 @@ import {
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
@@ -285,13 +285,7 @@ export class CommonPersonalDetailsComponent
                 'customer',
               ) as FormGroup;
               const customerIndex: any = customerFormGroup.controls[index];
-              customerIndex
-                .get('dateOfBirth')
-                ?.setValue(
-                  moment(item?.dateOfBirth, 'DD/MM/YYYY').format(
-                    'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
-                  ),
-                );
+              customerIndex.get('dateOfBirth')?.setValue(item?.dateOfBirth);
               const applicantNameArray = item?.applicantName
                 ? item?.applicantName?.split(' ')
                 : [];
@@ -395,11 +389,7 @@ export class CommonPersonalDetailsComponent
           const customerIndex: any = customerFormGroup.controls[0];
           customerIndex
             .get('dateOfBirth')
-            .setValue(
-              moment(this.docCustomerDetails?.dateOfBirth, 'DD/MM/YYYY').format(
-                'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
-              ),
-            );
+            .setValue(this.docCustomerDetails?.dateOfBirth);
 
           const applicantNameArray = this.docCustomerDetails?.applicantName
             ? this.docCustomerDetails?.applicantName?.split(' ')
@@ -558,7 +548,7 @@ export class CommonPersonalDetailsComponent
       ),
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
-        prefix: [data?.spouseInfo?.prefix ?? ''],
+        prefixId: [data?.spouseInfo?.prefixId ?? ''],
         prefixValue: [data?.spouseInfo?.prefixValue ?? ''],
         firstName: [data?.spouseInfo?.firstName ?? ''],
         middleName: [data?.spouseInfo?.middleName ?? ''],
@@ -567,18 +557,15 @@ export class CommonPersonalDetailsComponent
         employeeStatusId: [data?.spouseInfo?.employeeStatusId ?? ''],
         employeeStatusValue: [data?.spouseInfo?.employeeStatusValue ?? ''],
         netIncome: [data?.spouseInfo?.netIncome ?? ''],
-        contactDetails: this.fb.group({
-          contactId: [data?.spouseInfo?.contactDetails?.contactId ?? null],
-          telephone: [data?.spouseInfo?.contactDetails?.telephone ?? ''],
-          worktelephone: [
-            data?.spouseInfo?.contactDetails?.worktelephone ?? '',
-          ],
-          mobile: [data?.spouseInfo?.contactDetails?.mobile ?? ''],
-          email: [data?.spouseInfo?.contactDetails?.email ?? ''],
+        contact: this.fb.group({
+          contactId: [data?.spouseInfo?.contact?.contactId ?? null],
+          telephone: [data?.spouseInfo?.contact?.telephone ?? ''],
+          worktelephone: [data?.spouseInfo?.contact?.worktelephone ?? ''],
+          mobile: [data?.spouseInfo?.contact?.mobile ?? ''],
+          email: [data?.spouseInfo?.contact?.email ?? ''],
 
           mobtCode: [
-            data?.spouseInfo?.contactDetails?.mobtCode ??
-              this.defaultIsdCodeValue,
+            data?.spouseInfo?.contact?.mobtCode ?? this.defaultIsdCodeValue,
           ],
         }),
       }),
@@ -587,7 +574,10 @@ export class CommonPersonalDetailsComponent
         emergencyContactId: [
           data?.emergencyContactInfo?.emergencyContactId ?? null,
         ],
-        prefix: [data?.emergencyContactInfo?.prefix ?? '', Validators.required],
+        prefixId: [
+          data?.emergencyContactInfo?.prefixId ?? '',
+          Validators.required,
+        ],
         prefixValue: [data?.emergencyContactInfo?.prefixValue ?? ''],
         firstName: [
           data?.emergencyContactInfo?.firstName ?? '',
@@ -605,22 +595,18 @@ export class CommonPersonalDetailsComponent
         relationshipValue: [
           data?.emergencyContactInfo?.relationshipValue ?? '',
         ],
-        contactDetails: this.fb.group({
-          contactId: [
-            data?.emergencyContactInfo?.contactDetails?.contactId ?? null,
-          ],
-          telephone: [
-            data?.emergencyContactInfo?.contactDetails?.telephone ?? '',
-          ],
+        contact: this.fb.group({
+          contactId: [data?.emergencyContactInfo?.contact?.contactId ?? null],
+          telephone: [data?.emergencyContactInfo?.contact?.telephone ?? ''],
           worktelephone: [
-            data?.emergencyContactInfo?.contactDetails?.worktelephone ?? '',
+            data?.emergencyContactInfo?.contact?.worktelephone ?? '',
           ],
           mobile: [
-            data?.emergencyContactInfo?.contactDetails?.mobile ?? '',
+            data?.emergencyContactInfo?.contact?.mobile ?? '',
             Validators.required,
           ],
           email: [
-            data?.emergencyContactInfo?.contactDetails?.email ?? '',
+            data?.emergencyContactInfo?.contact?.email ?? '',
             [
               Validators.required,
               Validators.pattern(
@@ -628,34 +614,32 @@ export class CommonPersonalDetailsComponent
               ),
             ],
           ],
-          fax: [data?.emergencyContactInfo?.contactDetails?.fax ?? ''],
-          whatsappNo: [
-            data?.emergencyContactInfo?.contactDetails?.whatsappNo ?? '',
-          ],
+          fax: [data?.emergencyContactInfo?.contact?.fax ?? ''],
+          whatsappNo: [data?.emergencyContactInfo?.contact?.whatsappNo ?? ''],
           alternativeNumber: [
-            data?.emergencyContactInfo?.contactDetails?.alternativeNumber ?? '',
+            data?.emergencyContactInfo?.contact?.alternativeNumber ?? '',
           ],
           residencePhone: [
-            data?.emergencyContactInfo?.contactDetails?.residencePhone ?? '',
+            data?.emergencyContactInfo?.contact?.residencePhone ?? '',
           ],
           mobtCode: [
-            data?.emergencyContactInfo?.contactDetails?.mobtCode ??
+            data?.emergencyContactInfo?.contact?.mobtCode ??
               this.defaultIsdCodeValue,
           ],
           waptCode: [
-            data?.emergencyContactInfo?.contactDetails?.waptCode ??
+            data?.emergencyContactInfo?.contact?.waptCode ??
               this.defaultIsdCodeValue,
           ],
           altCode: [
-            data?.emergencyContactInfo?.contactDetails?.altCode ??
+            data?.emergencyContactInfo?.contact?.altCode ??
               this.defaultIsdCodeValue,
           ],
           statementViaId: [
-            data?.emergencyContactInfo?.contactDetails?.statementViaId ?? '',
+            data?.emergencyContactInfo?.contact?.statementViaId ?? '',
           ],
           address: this.fb.array(
-            data?.emergencyContactInfo?.contactDetails?.address?.map(
-              (addr: any) => this.createEmergencyContactAddressGroup(addr),
+            data?.emergencyContactInfo?.contact?.address?.map((addr: any) =>
+              this.createEmergencyContactAddressGroup(addr),
             ) || [],
           ),
         }),
@@ -743,7 +727,7 @@ export class CommonPersonalDetailsComponent
   }
 
   getSpouseContactDetails(index: number): FormGroup {
-    return this.getSpouseInfo(index).get('contactDetails') as FormGroup;
+    return this.getSpouseInfo(index).get('contact') as FormGroup;
   }
 
   getEmergencyContactInfo(index: number): FormGroup {
@@ -751,9 +735,7 @@ export class CommonPersonalDetailsComponent
   }
 
   getEmergencyContactDetails(index: number): FormGroup {
-    return this.getEmergencyContactInfo(index).get(
-      'contactDetails',
-    ) as FormGroup;
+    return this.getEmergencyContactInfo(index).get('contact') as FormGroup;
   }
 
   getEmergencyContactAddress(index: number): FormArray {
@@ -1192,37 +1174,37 @@ export class CommonPersonalDetailsComponent
     });
   }
 
-  dateOfBirthSelected(selectedDate: any, i: any) {
-    const dateOfBirth = moment(selectedDate).format('YYYY-MMM-DD');
-    console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
-    if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
-      this.showAgeValidation(i);
-      this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
-    } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
-      this.showAgeValidation(i);
-      this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
-    }
-  }
+  // dateOfBirthSelected(selectedDate: any, i: any) {
+  //   const dateOfBirth = moment(selectedDate).format('MM-DD-YYYY');
+  //   console.log(this.calculateAge(dateOfBirth) > this.boundaries.minimumAge);
+  //   if (this.calculateAge(dateOfBirth) < this.boundaries.minimumAge) {
+  //     this.showAgeValidation(i);
+  //     this.errorDob = `Min age should be ${this.boundaries?.minimumAge}`;
+  //   } else if (this.calculateAge(dateOfBirth) > this.boundaries.maximumAge) {
+  //     this.showAgeValidation(i);
+  //     this.errorDob = `Max age should be ${this.boundaries?.maximumAge}`;
+  //   }
+  // }
 
-  showAgeValidation(i: any) {
-    setTimeout(() => {
-      const customerFormGroup = this.customerDetailsForm.get(
-        'customer',
-      ) as FormGroup;
-      const customerIndex: any = customerFormGroup.controls[i];
-      customerIndex.get('dateOfBirth').setValue(null);
+  // showAgeValidation(i: any) {
+  //   setTimeout(() => {
+  //     const customerFormGroup = this.customerDetailsForm.get(
+  //       'customer',
+  //     ) as FormGroup;
+  //     const customerIndex: any = customerFormGroup.controls[i];
+  //     customerIndex.get('dateOfBirth').setValue(null);
 
-      const customerFormGrp = this.customerDetailsForm.get(
-        'customer',
-      ) as FormGroup;
-      const customerIdx: any = customerFormGrp.controls[i];
-      customerIdx.get('dateOfBirth').setErrors({ invalidDob: true });
-    }, 100);
-  }
+  //     const customerFormGrp = this.customerDetailsForm.get(
+  //       'customer',
+  //     ) as FormGroup;
+  //     const customerIdx: any = customerFormGrp.controls[i];
+  //     customerIdx.get('dateOfBirth').setErrors({ invalidDob: true });
+  //   }, 100);
+  // }
 
-  calculateAge(dateOfBirth: any) {
-    return moment().diff(dateOfBirth, 'years');
-  }
+  // calculateAge(dateOfBirth: any) {
+  //   return moment().diff(dateOfBirth, 'years');
+  // }
 
   CheckGenderandPrefix(index: number) {
     const personalInfoGroup = this.customer.at(index);
