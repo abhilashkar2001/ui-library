@@ -28,7 +28,12 @@
       <mat-progress-bar
         mode="determinate"
         [value]="item.value"
-        class="green_progress"
+        [ngClass]="{
+          green_progress: item.value === 100,
+          red_progress: item.status === 'REJECT' || item.status === 'EXPIRED',
+          orange_progress: item.status === 'ONGOING',
+          purple_progress: item.status === 'PENDING',
+        }"
       ></mat-progress-bar>
     </div>
   </div>

@@ -74,6 +74,7 @@ export class ProductDetailsComponent implements OnInit {
           this.statusItems = this.applicationStatus.map((item: any) => {
             const val: any = {
               title: item?.process,
+              status: item?.status,
             };
             if (
               item?.status === 'DONE' ||
@@ -89,7 +90,7 @@ export class ProductDetailsComponent implements OnInit {
               val.value = 20;
             }
             if (item?.status === 'REJECT' || item?.status === 'EXPIRED') {
-              val.value = 0;
+              val.value = 10;
             }
             return val;
           });

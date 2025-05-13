@@ -39,6 +39,21 @@ mat-progress-bar.green_progress {
   --mdc-linear-progress-active-indicator-height: 8px;
 }
 
+mat-progress-bar.red_progress {
+  --mdc-linear-progress-active-indicator-color: #ff5454;
+  --mdc-linear-progress-active-indicator-height: 8px;
+}
+
+mat-progress-bar.orange_progress {
+  --mdc-linear-progress-active-indicator-color: #fdc651;
+  --mdc-linear-progress-active-indicator-height: 8px;
+}
+
+mat-progress-bar.purple_progress {
+  --mdc-linear-progress-active-indicator-color: #f8aeff;
+  --mdc-linear-progress-active-indicator-height: 8px;
+}
+
 .editButton {
   box-shadow: 15.12px 15.12px 60.49px 0px #0000001a;
   height: 40px;
@@ -60,6 +75,8 @@ mat-progress-bar.green_progress {
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 1em;
+    display: flex;
+    align-items: center;
     span {
       margin-right: 10px;
       width: 15px;

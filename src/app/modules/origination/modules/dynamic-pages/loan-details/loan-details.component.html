@@ -156,7 +156,9 @@
         <div fxFlex="48">
           <ic-select
             [options]="genericValue?.ACCOUNTTYPE"
-            [control]="loanDisbursementAccount.get('accountType') | formcontrol"
+            [control]="
+              loanDisbursementAccount.get('accountTypeId') | formcontrol
+            "
             bindLabelKey="values"
             bindValueKey="id"
             label="Account Type"

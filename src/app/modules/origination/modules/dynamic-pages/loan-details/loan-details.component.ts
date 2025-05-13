@@ -141,8 +141,9 @@ export class LoanDetailsComponent implements OnInit {
           accountNo: [
             data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
           ],
-          accountType: [
-            data?.loanDisbursementModel?.disbursementAccount?.accountType ?? '',
+          accountTypeId: [
+            data?.loanDisbursementModel?.disbursementAccount?.accountTypeId ??
+              null,
           ],
           customerName: [
             data?.loanDisbursementModel?.disbursementAccount?.customerName ??
@@ -205,7 +206,7 @@ export class LoanDetailsComponent implements OnInit {
 
     const requiredFieldsForAccount = [
       'accountNo',
-      'accountType',
+      'accountTypeId',
       'bankName',
       'branchName',
       'customerName',

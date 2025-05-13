@@ -48,7 +48,7 @@ export class LoanSummaryStore {
         { header: 'Account', headKey: 'internal' },
         { header: 'Bank Name', headKey: 'bankName' },
         { header: 'Account Number', headKey: 'accountNo' },
-        { header: 'Account Type', headKey: 'accountType' },
+        { header: 'Account Type', headKey: 'accountTypeValue' },
         { header: 'Account Name', headKey: 'customerName' },
         { header: 'Disbursement Type', headKey: 'disbursementTypeId' },
         { header: 'Branch Name', headKey: 'branchName' },
