@@ -50,7 +50,7 @@ export class LoanSummaryStore {
         { header: 'Account Number', headKey: 'accountNo' },
         { header: 'Account Type', headKey: 'accountType' },
         { header: 'Account Name', headKey: 'customerName' },
-        { header: 'Disbursement Type', headKey: 'disbursementModeValue' },
+        { header: 'Disbursement Type', headKey: 'disbursementTypeId' },
         { header: 'Branch Name', headKey: 'branchName' },
       ],
     },
