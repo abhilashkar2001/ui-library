@@ -539,12 +539,18 @@ export class CommonPersonalDetailsComponent
       genderId: [data ? data?.genderId : '', Validators.required],
       nationality: [data ? data?.nationality : '', Validators.required],
       maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
-
       source: data?.source ? data?.source : 'Website',
       kycStatus: data?.kycStatus && data?.kycStatus,
+      residenceStatusValue: [
+        data ? data?.residenceStatusValue : '',
+        Validators.required,
+      ],
       documentId: this.fb.control([{ docIds: allDocIds }]),
+
       documentInfo: this.fb.array(
-        data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [],
+        data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [
+          this.newDocumentGroup(),
+        ],
       ),
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
@@ -640,10 +646,11 @@ export class CommonPersonalDetailsComponent
           address: this.fb.array(
             data?.emergencyContactInfo?.contact?.address?.map((addr: any) =>
               this.createEmergencyContactAddressGroup(addr),
-            ) || [],
+            ) || [this.createEmergencyContactAddressGroup()],
           ),
         }),
       }),
+
       contact: this.fb.group({
         email: [
           data?.contact ? data?.contact.email : '',
@@ -755,27 +762,32 @@ export class CommonPersonalDetailsComponent
   }
 
   private createEmergencyContactAddressGroup(address?: any): FormGroup {
-    return this.fb.group({
+    const group = this.fb.group({
       addressId: [address?.addressId ?? null],
       address1: [address?.address1 ?? '', Validators.required],
-      address2: [address?.address2 ?? ''],
-      cityName: [address?.cityName ?? ''],
+      address2: [address?.address2 ?? '', Validators.required],
+      cityName: [address?.cityName ?? '', Validators.required],
       stateName: [address?.stateName ?? ''],
       countryName: [address?.countryName ?? ''],
-      pincode: [address?.pincode ?? ''],
+      pincode: [address?.pincode ?? '', Validators.required],
       cityId: [address?.cityId ?? ''],
-      residenceType: [address?.residenceType ?? '', [Validators.required]],
+      residenceType: [address?.residenceType ?? '', Validators.required],
       residenceTypeValue: [address?.residenceTypeValue ?? ''],
     });
+
+    // This ensures validators are processed immediately
+    group.updateValueAndValidity();
+
+    return group;
   }
 
   private newDocumentGroup(doc?: any): FormGroup {
     return this.fb.group({
       documentTypeId: [doc?.documentTypeId || ''],
-      documentNumber: [doc?.documentNumber || ''],
-      issueDate: [doc?.issueDate || ''],
-      expiryDate: [doc?.expiryDate || ''],
-      countryOfIssue: [doc?.countryOfIssue || ''],
+      documentNumber: [doc?.documentNumber || '', Validators.required],
+      issueDate: [doc?.issueDate || '', Validators.required],
+      expiryDate: [doc?.expiryDate || '', Validators.required],
+      countryOfIssue: [doc?.countryOfIssue || '', Validators.required],
     });
   }
 

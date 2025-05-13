@@ -121,7 +121,9 @@
                       label="Country of Issue"
                       bindLabelKey="countryName"
                       bindValueKey="countryName"
-                      [control]="customer.get('countryOfIssue') | formcontrol"
+                      [control]="
+                        getDocumentControl(i, 0, 'countryOfIssue') | formcontrol
+                      "
                     ></ic-select>
 
                     <ic-select
@@ -130,7 +132,9 @@
                       label="Country of residence"
                       bindLabelKey="countryName"
                       bindValueKey="countryName"
-                      [control]="customer.get('countryName') | formcontrol"
+                      [control]="
+                        customer.get('residenceStatusValue') | formcontrol
+                      "
                     ></ic-select>
 
                     <ic-select

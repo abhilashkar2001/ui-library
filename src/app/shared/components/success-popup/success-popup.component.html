@@ -1,7 +1,13 @@
 <div fxLayout="column">
-  <!-- <div fxLayoutAlign="end center">
-    <mat-icon (click)="close()">close</mat-icon>
-  </div> -->
+  <div fxLayoutAlign="end center">
+    <!-- <mat-icon (click)="close()">close</mat-icon> -->
+    <ic-button
+      icButtonType="ghost-neutral"
+      icIcon="close"
+      type="icon"
+      (OnClick)="close()"
+    ></ic-button>
+  </div>
   <div class="alertText">
     <div *ngIf="isStageAvilable; else showOtherText">
       {{ message }}
@@ -94,6 +100,7 @@
     fxLayout="row"
     class="button-container"
     fxLayoutAlign="space-between center"
+    fxLayoutGap="10px"
     *ngIf="isStageAvilable"
   >
     <ic-button
@@ -105,7 +112,7 @@
       (OnClick)="onClickAction('Pdf', 'Share')"
     >
     </ic-button>
-    &nbsp;&nbsp;
+
     <ic-button
       [label]="'Tracking'"
       icButtonType="ghost-rounded"
@@ -115,7 +122,7 @@
       (OnClick)="onClick()"
     >
     </ic-button>
-    &nbsp;&nbsp;
+
     <ic-button
       [label]="'Download'"
       icButtonType="ghost-rounded"
