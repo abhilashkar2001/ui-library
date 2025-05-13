@@ -7,7 +7,6 @@ import { CompanyInformationComponent } from './company-information/company-infor
 import { DigitalSignComponent } from './digital-sign/digital-sign.component';
 import { LoanSummaryComponent } from './loan-summary/loan-summary.component';
 import { LoanTermsConditionsComponent } from './loan-terms-conditions/loan-terms-conditions.component';
-import { NationalIdUploadComponent } from './national-id-upload/national-id-upload.component';
 import { OtherChecklistDocUploadComponent } from './other-checklist-doc-upload/other-checklist-doc-upload.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { SharedMaterialModule } from '../../../../shared/shared-material.module';
@@ -33,7 +32,6 @@ const components = [
   DigitalSignComponent,
   LoanSummaryComponent,
   LoanTermsConditionsComponent,
-  NationalIdUploadComponent,
   OtherChecklistDocUploadComponent,
   LoanDetailsComponent,
   BusinessDetailsComponent,

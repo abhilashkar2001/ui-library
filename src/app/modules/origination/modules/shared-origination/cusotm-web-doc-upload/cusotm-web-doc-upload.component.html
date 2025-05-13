@@ -157,10 +157,9 @@
       </div>
     </div>
   </form>
-
   <div
     class="biometric-card-expansion-panel"
-    *ngIf="ocrProcess"
+    *ngIf="this.screenNameValue.toLowerCase().includes('national')"
     fxLayout="column"
   >
     <h2 class="highlight_title pt-8">Face Capture</h2>

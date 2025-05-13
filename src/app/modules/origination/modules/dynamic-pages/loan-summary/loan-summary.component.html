@@ -13,6 +13,26 @@
         >
           <span class="breadcrum_md">{{ field.header }}</span>
           <span class="header_lg">
+            <ng-container *ngIf="field.headKey === 'internal'">
+              {{
+                loanSummaryDetails?.[section.headerKey]?.internal === true
+                  ? 'Internal'
+                  : 'External'
+              }}
+            </ng-container>
+            <ng-container
+              *ngIf="
+                field.headKey !== 'internal' &&
+                section.headerKey === 'loanDisbursementModel'
+              "
+            >
+              {{
+                loanSummaryDetails?.[section.headerKey]?.disbursementAccount?.[
+                  field.headKey
+                ] ?? loanSummaryDetails?.[section.headerKey]?.[field.headKey]
+              }}
+            </ng-container>
+
             <ng-container *ngIf="field.isCurrency">
               <span class="currencySymbol">{{ otherUserInfo?.currency }}</span>
               {{
@@ -21,11 +41,13 @@
               }}
             </ng-container>
             <ng-container *ngIf="field.isPercentage">
-              {{ loanSummaryDetails?.[section.headerKey]?.[field.headKey] }}%
+              {{
+                loanSummaryDetails?.[section.headerKey]?.[field.headKey] ?? ''
+              }}%
             </ng-container>
-            <ng-container *ngIf="!field.isCurrency && !field.isPercentage">
+            <!-- <ng-container *ngIf="!field.isCurrency && !field.isPercentage">
               {{ loanSummaryDetails?.[section.headerKey]?.[field.headKey] }}
-            </ng-container>
+            </ng-container> -->
             <ng-container *ngIf="field.isTenure">
               {{
                 loanSummaryDetails?.[section.headerKey]?.loanTenureYear
@@ -41,13 +63,6 @@
               "
             >
               {{ loanSummaryDetails?.repaymentModel?.[field.headKey] ?? '' }}
-            </ng-container>
-            <ng-container *ngIf="section.headerKey === 'loanDisbursementModel'">
-              {{
-                loanSummaryDetails?.[section.headerKey]?.disbursementAccount?.[
-                  field.headKey
-                ]
-              }}
             </ng-container>
           </span>
         </div>
@@ -186,7 +201,6 @@
           <span class="header_lg">
             {{ loanSummaryDetails[section.headerInfo][foot.key] || '' }}</span
           >
-
           <br />
         </div>
       </div>

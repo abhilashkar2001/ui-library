@@ -38,11 +38,11 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   @Input() verificationType: string | any;
   @Input() documentList: any = [];
   @Input() genericScreenInfo: any;
-  @Input() ocrProcess: boolean | any;
   @Input() checkListDocList: any;
   @Input() isOtherDocVisible = true;
   @Input() docAppliName: any;
   @Input() individual = true;
+  @Input() screenNameValue: string | any;
 
   documentControls!: FormGroup;
   createDocumentForm!: FormGroup;
@@ -111,8 +111,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sessionStorageService.getCustomerId();
-    if (!this.ocrProcess) this.ocrCheck = this.ocrProcess;
-    console.log(this.ocrProcess);
     this.addNewUploadField();
   }
 
@@ -121,6 +119,7 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
+    console.log(changes, 'changes');
     if (changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
@@ -132,7 +131,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
         control.get('fileInfo')?.setValue(this.calculateDoc(docData, index));
       });
     }
-
     this.getGenericDetails();
   }
 

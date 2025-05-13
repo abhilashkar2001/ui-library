@@ -143,9 +143,9 @@ export class LoanService {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 
-  getCheckListDoc(stageId: any, screenCode: any) {
+  getCheckListDoc(stageId: any, screenCode: any, originationId: number) {
     return this.http.get<any>(
-      `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`,
+      `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}&originationId=${originationId}`,
     );
   }
 

@@ -334,7 +334,9 @@
                         [options]="prefixArray"
                         bindValueKey="id"
                         bindLabelKey="values"
-                        [control]="getSpouseInfo(i).get('prefix') | formcontrol"
+                        [control]="
+                          getSpouseInfo(i).get('prefixId') | formcontrol
+                        "
                         (selectionChange)="CheckGenderandPrefix(i)"
                       ></ic-select>
 
@@ -463,7 +465,7 @@
                       bindValueKey="id"
                       bindLabelKey="values"
                       [control]="
-                        getEmergencyContactInfo(i).get('prefix') | formcontrol
+                        getEmergencyContactInfo(i).get('prefixId') | formcontrol
                       "
                       (selectionChange)="CheckGenderandPrefix(i)"
                     ></ic-select>

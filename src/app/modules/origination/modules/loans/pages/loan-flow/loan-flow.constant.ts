@@ -3,7 +3,6 @@ import { CommonMobileVerificationComponent } from 'app/modules/origination/modul
 import { CibilScoreContainerComponent } from '../../../dynamic-pages/cibil-score-container/cibil-score-container.component';
 import { LoanTermsConditionsComponent } from '../../../dynamic-pages/loan-terms-conditions/loan-terms-conditions.component';
 import { LoanSummaryComponent } from '../../../dynamic-pages/loan-summary/loan-summary.component';
-import { NationalIdUploadComponent } from '../../../dynamic-pages/national-id-upload/national-id-upload.component';
 import { OtherChecklistDocUploadComponent } from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
 import { CompanyInformationComponent } from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
 import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
@@ -95,7 +94,7 @@ export class LoanFlowConstants {
       id: 6,
       key: 'national',
       type: 'Create Loan',
-      component: NationalIdUploadComponent,
+      component: OtherChecklistDocUploadComponent,
     },
 
     {

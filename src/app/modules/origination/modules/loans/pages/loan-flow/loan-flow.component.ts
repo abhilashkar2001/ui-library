@@ -74,7 +74,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   kycDoc: any = null;
   docCustomerDetails: any;
   disbursementDetails: any;
-  nationalIdDocumentList: any[] = [];
   view: any;
   noOfDirectors: number | any;
   userProfile$: Observable<User | null>;
@@ -131,9 +130,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             this.componentRef.instance.docCustomerDetails =
               this.docCustomerDetails;
 
-            // national Doc
-            this.componentRef.instance.nationalIdDocumentList =
-              this.nationalIdDocumentList;
             this.componentRef.instance.personalDoc = this.personalDoc;
             this.componentRef.instance.isMasterSave = true;
 
@@ -358,27 +354,11 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         this.personalDetails = resp.data[0]?.customerInfo;
         this.originationId = resp.data[0].originationModel.originationId;
         this.originationModel = resp.data[0]?.originationModel;
-        this.updateNationalId(resp);
         if (this.componentRef)
           this.componentRef.instance.personalDetails = this.personalDetails;
         this.cdr.detectChanges();
       }
     });
-  }
-  updateNationalId(resp: any) {
-    console.log(resp.data[0].customerInfo?.length);
-    if (resp.data[0].customerInfo?.length > 0) {
-      resp.data[0].customerInfo.forEach((customer: any) => {
-        if (customer?.primaryCustomer) {
-          if (customer?.documnentsInfo) {
-            this.nationalIdDocumentList = customer?.documnentsInfo?.documents;
-            if (this.componentRef)
-              this.componentRef.instance.nationalIdDocumentList =
-                this.nationalIdDocumentList;
-          }
-        }
-      });
-    }
   }
 
   getAllLoanStep() {

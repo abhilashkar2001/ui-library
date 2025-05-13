@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
 import { IcHttpResponseModel } from '@onerumango/utils';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
@@ -80,12 +80,12 @@ export class CollateralDetailsComponent implements OnInit {
 
   buildCollateralForm() {
     this.collateralDetailsForm = this.fb.group({
-      percentageOfSecurityCover: [''],
+      percentageOfSecurityCover: ['', Validators.required],
       effectiveDate: [''],
       expiryDate: [''],
       totalAssetWorth: [''],
       collateralDetails: this.fb.array([]),
-      loanTypeId: [''],
+      loanTypeId: ['', Validators.required],
       originationId: [this.originationId ?? ''],
       screenCode: [this.screenCode ?? ''],
     });
@@ -112,13 +112,16 @@ export class CollateralDetailsComponent implements OnInit {
   collateralDetailsGroup(typeOfCollateral?: string) {
     return this.fb.group({
       description: [''],
-      ownership: [''],
+      ownership: ['', Validators.required],
       assetMonetaryWorth: [''],
       typeOfCollateral: [typeOfCollateral],
     });
   }
 
   saveCollateralDetails() {
+    if (!this.collateralDetailsForm.valid) {
+      return;
+    }
     const payload = { ...this.collateralDetailsForm.value };
     this.loanService.saveCollateralDetails(payload).subscribe((res: any) => {
       if (res?.statusCode == 200 || res?.statusCode == 201) {
