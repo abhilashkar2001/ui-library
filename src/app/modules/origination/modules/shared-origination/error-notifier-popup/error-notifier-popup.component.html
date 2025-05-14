@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" class="p-12">
   <div fxLayout="column">
     <div class="alertText">
       {{ errorMessage }}
@@ -12,6 +12,7 @@
   </div>
   <div fxLayoutAlign="center center" fxLayoutGap="15">
     <button
+      *ngIf="showOkBtn"
       type="button"
       mat-raised-button
       class="saveButton done_btn"

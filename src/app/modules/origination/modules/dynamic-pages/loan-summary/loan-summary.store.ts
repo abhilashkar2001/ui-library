@@ -37,7 +37,7 @@ export class LoanSummaryStore {
         },
         {
           header: 'Installment Start Date',
-          headKey: 'emiEndDate',
+          headKey: 'firstRepaymentDate',
         },
       ],
     },
@@ -50,7 +50,7 @@ export class LoanSummaryStore {
         { header: 'Account Number', headKey: 'accountNo' },
         { header: 'Account Type', headKey: 'accountTypeValue' },
         { header: 'Account Name', headKey: 'customerName' },
-        { header: 'Disbursement Type', headKey: 'disbursementTypeId' },
+        { header: 'Disbursement Type', headKey: 'disbursementTypeValue' },
         { header: 'Branch Name', headKey: 'branchName' },
       ],
     },

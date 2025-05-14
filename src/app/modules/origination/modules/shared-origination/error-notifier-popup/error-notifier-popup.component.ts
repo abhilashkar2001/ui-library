@@ -11,6 +11,7 @@ export class ErrorNotifierPopupComponent implements OnInit {
   errorMessageHint = '';
   isStageAvilable = true;
   showCancelBtn = false;
+  showOkBtn = false;
 
   constructor(
     private dialogRef: MatDialogRef<ErrorNotifierPopupComponent>,
@@ -22,6 +23,7 @@ export class ErrorNotifierPopupComponent implements OnInit {
     this.errorMessageHint = this.data?.errorMessageHint ?? '';
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
     this.showCancelBtn = this.data?.showCancelBtn ? true : false;
+    this.showOkBtn = this.data?.showOkBtn ? false : true;
   }
 
   closeDialog() {

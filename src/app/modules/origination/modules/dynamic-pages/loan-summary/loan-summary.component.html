@@ -59,7 +59,8 @@
             <ng-container
               *ngIf="
                 field.header === 'EMI Start Date' ||
-                field.header === 'Repayment Frequency'
+                field.header === 'Repayment Frequency' ||
+                field.header === 'Installment Start Date'
               "
             >
               {{ loanSummaryDetails?.repaymentModel?.[field.headKey] ?? '' }}
@@ -112,7 +113,7 @@
                     field.headKey
                   ] ??
                     loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
-                      ?.contactDetails?.[field.headKey] ??
+                      ?.contact?.[field.headKey] ??
                     ''
                 }}
               </ng-container>
@@ -121,9 +122,9 @@
                   loanSummaryDetails?.[section.headerKey]?.[0]
                     ?.emergencyContactInfo?.[field.headKey] ??
                     loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contactDetails?.[field.headKey] ??
+                      ?.emergencyContactInfo?.contact?.[field.headKey] ??
                     loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contactDetails?.address[0]?.[
+                      ?.emergencyContactInfo?.contact?.address[0]?.[
                       field.headKey
                     ] ??
                     ''
