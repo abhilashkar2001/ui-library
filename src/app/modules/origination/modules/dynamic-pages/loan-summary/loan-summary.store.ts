@@ -67,10 +67,10 @@ export class LoanSummaryStore {
         { header: 'Date of Birth* ', headKey: 'dateOfBirth' },
         { header: 'Nationality', headKey: 'nationality' },
         { header: 'Gender', headKey: 'genderValue' },
-        { header: 'Date issued', headKey: 'branchName' },
-        { header: 'Country of Residence', headKey: 'branchName' },
+        { header: 'Date issued', headKey: 'issueDate' },
+        { header: 'Country of Residence', headKey: 'countryOfIssue' },
         { header: 'Marital Status', headKey: 'maritalStatusValue' },
-        { header: 'Identification Number', headKey: 'branchName' },
+        { header: 'Identification Number', headKey: 'documentNumber' },
       ],
     },
     {

@@ -83,59 +83,58 @@
                       [control]="customer.get('nationality') | formcontrol"
                     ></ic-select>
 
-                    <ic-form-field
-                      fxFlex="49"
-                      label="Identification Number"
-                      [icNumbersOnly]="true"
-                      [maxLength]="20"
-                      [control]="
-                        getDocumentControl(i, 0, 'documentNumber') | formcontrol
-                      "
-                    ></ic-form-field>
+                    <ng-container *ngIf="getDocumentIdArray(i) as docArray">
+                      <ng-container
+                        *ngFor="
+                          let docGroup of docArray.controls;
+                          let j = index
+                        "
+                      >
+                        <ic-form-field
+                          fxFlex="49"
+                          label="Identification Number"
+                          [control]="
+                            docGroup.get('documentNumber') | formcontrol
+                          "
+                        ></ic-form-field>
 
-                    <ic-date-picker
-                      fxFlex="49"
-                      [placeholder]="dateFormat"
-                      label="Date Issued"
-                      [maxDate]="todayDate"
-                      [control]="
-                        getDocumentControl(i, 0, 'issueDate') | formcontrol
-                      "
-                    >
-                    </ic-date-picker>
+                        <ic-date-picker
+                          fxFlex="49"
+                          label="Date Issued"
+                          [maxDate]="todayDate"
+                          [control]="docGroup.get('issueDate') | formcontrol"
+                        ></ic-date-picker>
 
-                    <ic-date-picker
-                      fxFlex="49"
-                      [placeholder]="dateFormat"
-                      label="Expiry Date"
-                      [control]="
-                        getDocumentControl(i, 0, 'expiryDate') | formcontrol
-                      "
-                      [minDate]="todayDate"
-                    >
-                    </ic-date-picker>
-
-                    <ic-select
-                      fxFlex="49"
-                      [options]="countryArray"
-                      label="Country of Issue"
-                      bindLabelKey="countryName"
-                      bindValueKey="countryName"
-                      [control]="
-                        getDocumentControl(i, 0, 'countryOfIssue') | formcontrol
-                      "
-                    ></ic-select>
-
-                    <ic-select
-                      fxFlex="49"
-                      [options]="countryArray"
-                      label="Country of residence"
-                      bindLabelKey="countryName"
-                      bindValueKey="countryName"
-                      [control]="
-                        customer.get('residenceStatusValue') | formcontrol
-                      "
-                    ></ic-select>
+                        <ic-date-picker
+                          fxFlex="49"
+                          [placeholder]="dateFormat"
+                          label="Expiry Date"
+                          [control]="docGroup.get('expiryDate') | formcontrol"
+                          [minDate]="todayDate"
+                        >
+                        </ic-date-picker>
+                        <ic-select
+                          fxFlex="49"
+                          [options]="countryArray"
+                          label="Country of Issue"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          [control]="
+                            docGroup.get('countryOfIssue') | formcontrol
+                          "
+                        ></ic-select>
+                        <ic-select
+                          fxFlex="49"
+                          [options]="countryArray"
+                          label="Country of residence"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          [control]="
+                            customer.get('countryOfResidence') | formcontrol
+                          "
+                        ></ic-select>
+                      </ng-container>
+                    </ng-container>
 
                     <ic-select
                       fxFlex="49"

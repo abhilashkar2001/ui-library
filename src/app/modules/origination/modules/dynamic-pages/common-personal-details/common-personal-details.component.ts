@@ -525,7 +525,16 @@ export class CommonPersonalDetailsComponent
         ?.values?.toLowerCase();
       this.isMarried = status === 'married';
     }
-    const allDocIds = (this.customerDocDetails ?? [])[0]?.docIds ?? [];
+
+    const docInfo = data?.documentInfo?.[0];
+    const docGroup = this.createDocumentGroup({
+      docIds: this.customerDocDetails?.length ? this.customerDocDetails : [],
+      documentNumber: docInfo?.documentNumber ?? '',
+      issueDate: docInfo?.issueDate ?? '',
+      expiryDate: docInfo?.expiryDate ?? '',
+      countryOfIssue: docInfo?.countryOfIssue ?? '',
+    });
+
     const formGroup = this.fb.group({
       customerId: data && data?.customerId,
       customerNo: [data ? data?.customerNo : ''],
@@ -539,19 +548,10 @@ export class CommonPersonalDetailsComponent
       genderId: [data ? data?.genderId : '', Validators.required],
       nationality: [data ? data?.nationality : '', Validators.required],
       maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
+      countryOfResidence: [data ? data?.countryOfResidence : ''],
       source: data?.source ? data?.source : 'Website',
       kycStatus: data?.kycStatus && data?.kycStatus,
-      residenceStatusValue: [
-        data ? data?.residenceStatusValue : '',
-        Validators.required,
-      ],
-      documentId: this.fb.control([{ docIds: allDocIds }]),
-
-      documentInfo: this.fb.array(
-        data?.documentInfo?.map((doc: any) => this.newDocumentGroup(doc)) || [
-          this.newDocumentGroup(),
-        ],
-      ),
+      documentId: this.fb.array([docGroup]),
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
         prefixId: [data?.spouseInfo?.prefixId ?? ''],
@@ -575,7 +575,6 @@ export class CommonPersonalDetailsComponent
           ],
         }),
       }),
-
       emergencyContactInfo: this.fb.group({
         emergencyContactId: [
           data?.emergencyContactInfo?.emergencyContactId ?? null,
@@ -695,6 +694,19 @@ export class CommonPersonalDetailsComponent
     return formGroup;
   }
 
+  createDocumentGroup(doc: any): FormGroup {
+    return this.fb.group({
+      docIds: [doc?.docIds || []],
+      documentNumber: [doc?.documentNumber ?? '', Validators.required],
+      issueDate: [doc?.issueDate ?? '', Validators.required],
+      expiryDate: [doc?.expiryDate ?? '', Validators.required],
+      countryOfIssue: [doc?.countryOfIssue ?? '', Validators.required],
+    });
+  }
+
+  getDocumentIdArray(index: number): FormArray {
+    return this.customer?.at(index)?.get('documentId') as FormArray;
+  }
   get customer(): FormArray {
     return this.customerDetailsForm.get('customer') as FormArray;
   }
@@ -779,16 +791,6 @@ export class CommonPersonalDetailsComponent
     group.updateValueAndValidity();
 
     return group;
-  }
-
-  private newDocumentGroup(doc?: any): FormGroup {
-    return this.fb.group({
-      documentTypeId: [doc?.documentTypeId || ''],
-      documentNumber: [doc?.documentNumber || '', Validators.required],
-      issueDate: [doc?.issueDate || '', Validators.required],
-      expiryDate: [doc?.expiryDate || '', Validators.required],
-      countryOfIssue: [doc?.countryOfIssue || '', Validators.required],
-    });
   }
 
   addAddress(i: any, address?: any) {
@@ -1045,10 +1047,10 @@ export class CommonPersonalDetailsComponent
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;
-    payload.customerInfo.forEach((cust: any) => {
-      delete cust.documentId;
-      delete cust.documentInfo;
-    });
+    // payload.customerInfo.forEach((cust: any) => {
+    //   // delete cust.documentId;
+    //   delete cust.documentInfo;
+    // });
 
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
