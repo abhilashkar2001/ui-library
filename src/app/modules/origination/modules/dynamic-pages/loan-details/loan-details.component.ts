@@ -16,6 +16,7 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import moment from 'moment';
 import {
+  combineLatest,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -58,6 +59,8 @@ export class LoanDetailsComponent implements OnInit {
   interestRate: any;
   minValue: number | undefined;
   interestDetails: any;
+  valueChangesSubscription: Subscription | any;
+  tenureErrorMessage!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -246,6 +249,19 @@ export class LoanDetailsComponent implements OnInit {
         }
       });
 
+    const tenureYear$ = this.loanDetails.get('loanTenureYear')?.valueChanges;
+    const tenureMonth$ = this.loanDetails.get('loanTenureMonth')?.valueChanges;
+    const tenureDay$ = this.loanDetails.get('loanTenureDay')?.valueChanges;
+    this.valueChangesSubscription = combineLatest([
+      tenureYear$,
+      tenureMonth$,
+      tenureDay$,
+    ])
+      .pipe(debounceTime(300))
+      .subscribe(() => {
+        this.tenureErrorMessage = this.getTenureError();
+      });
+
     this.setupLoanCalculationListener();
   }
 
@@ -308,8 +324,6 @@ export class LoanDetailsComponent implements OnInit {
         });
       }
     });
-
-    console.log(this.loanDetailsForm, 'formgrou');
   }
 
   get loanDetails() {
@@ -393,7 +407,6 @@ export class LoanDetailsComponent implements OnInit {
         this.min = this.productDetails.minimumAmount;
         this.max = this.productDetails.maximumAmount;
         const control = this.loanDetails?.get('loanAmount');
-        console.log(control, 'control');
         control?.setValidators([
           Validators.required,
           Validators.min(this.min),
@@ -413,8 +426,45 @@ export class LoanDetailsComponent implements OnInit {
     });
   }
 
+  calculateTotalDays(
+    loanTenureYear: any,
+    loanTenureMonth: any,
+    loanTenureDay: any,
+  ) {
+    const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
+    return d;
+  }
+
+  getTenureError(): string {
+    const y = this.loanDetails.value.loanTenureYear || 0;
+    const m = this.loanDetails.value.loanTenureMonth || 0;
+    const d = this.loanDetails.value.loanTenureDay || 0;
+
+    const totalEnteredDays = this.calculateTotalDays(y, m, d);
+
+    if (totalEnteredDays === 0) return '';
+    const minDays = this.calculateTotalDays(
+      this.productDetails?.minimumTenorYear || 0,
+      this.productDetails?.minimumTenorMonth || 0,
+      this.productDetails?.minimumTenorDay || 0,
+    );
+    const maxDays = this.calculateTotalDays(
+      this.productDetails?.maximumTenorYear || 0,
+      this.productDetails?.maximumTenorMonth || 0,
+      this.productDetails?.maximumTenorDay || 0,
+    );
+
+    if (totalEnteredDays < minDays) {
+      return `Loan Tenure should be Minimum: ${this.productDetails?.minimumTenorYear || 0} Year ${this.productDetails?.minimumTenorMonth || 0} Months ${this.productDetails?.minimumTenorDay || 0} Days`;
+    }
+    if (totalEnteredDays > maxDays) {
+      return `Loan Tenure should be Maximum : ${this.productDetails?.maximumTenorYear || 0} Year ${this.productDetails?.maximumTenorMonth || 0} Months ${this.productDetails?.maximumTenorDay || 0} Days`;
+    }
+    return '';
+  }
+
   onConfirm() {
-    if (this.loanDetailsForm?.invalid) {
+    if (this.loanDetailsForm?.invalid || this.tenureErrorMessage) {
       this.loanDetailsForm?.markAllAsTouched();
       return;
     }
@@ -453,5 +503,9 @@ export class LoanDetailsComponent implements OnInit {
 
   onBack() {
     this.backEvent.emit();
+  }
+
+  ngOnDestroy() {
+    this.valueChangesSubscription?.unsubscribe();
   }
 }
