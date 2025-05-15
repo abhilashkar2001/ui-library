@@ -4,6 +4,7 @@ import {
   Input,
   SimpleChanges,
   OnDestroy,
+  OnChanges,
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './staging-success-area.component.html',
   styleUrls: ['./staging-success-area.component.scss'],
 })
-export class StagingSuccessAreaComponent implements OnDestroy {
+export class StagingSuccessAreaComponent implements OnChanges, OnDestroy {
   @Input() originationId: any;
   @Input() isComplete: any;
   updatedResult!: STAGINGSUCCESSAREA[];
