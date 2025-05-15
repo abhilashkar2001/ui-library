@@ -799,6 +799,10 @@ export class CommonPersonalDetailsComponent
     const addressArrayControl = pk;
     addressArrayControl.push(
       this.fb.group({
+        livingAddressSince: [
+          address?.livingAddressSince ?? '',
+          Validators.required,
+        ],
         address1: [address?.address1 ?? '', [Validators.required]],
         address2: [address?.address2 ?? '', [Validators.required]],
         residenceType: [address?.residenceType ?? '', [Validators.required]],

@@ -313,15 +313,18 @@
                           label="City"
                           [control]="addressGroup.get('cityName') | formcontrol"
                         ></ic-form-field>
+                        <ic-date-picker
+                          fxFlex="49"
+                          [placeholder]="dateFormat"
+                          label="Living Address Since"
+                          [maxDate]="todayDate"
+                          [control]="
+                            addressGroup.get('livingAddressSince') | formcontrol
+                          "
+                        >
+                        </ic-date-picker>
                       </ng-container>
                     </ng-container>
-                    <ic-date-picker
-                      fxFlex="49"
-                      [placeholder]="dateFormat"
-                      label="Living Address Since"
-                      [maxDate]="todayDate"
-                    >
-                    </ic-date-picker>
                   </div>
 
                   <ng-container *ngIf="isMarried">

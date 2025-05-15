@@ -111,8 +111,8 @@ export class CollateralDetailsComponent implements OnInit {
 
   collateralDetailsGroup(typeOfCollateral?: string) {
     return this.fb.group({
-      description: [''],
-      ownership: ['', Validators.required],
+      description: ['', Validators.required],
+      ownership: [true, Validators.required],
       assetMonetaryWorth: [''],
       typeOfCollateral: [typeOfCollateral],
     });

@@ -93,7 +93,7 @@ export class LoanSummaryStore {
         { header: 'Suburb', headKey: 'address2' },
         { header: 'City', headKey: 'cityName' },
         { header: 'Postal Code', headKey: 'pincode' },
-        { header: 'Living Address Since', headKey: 'branchName' },
+        { header: 'Living Address Since', headKey: 'livingAddressSince' },
       ],
     },
     {

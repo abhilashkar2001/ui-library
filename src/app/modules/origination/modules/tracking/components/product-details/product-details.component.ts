@@ -90,7 +90,7 @@ export class ProductDetailsComponent implements OnInit {
               val.value = 20;
             }
             if (item?.status === 'REJECT' || item?.status === 'EXPIRED') {
-              val.value = 10;
+              val.value = 100;
             }
             return val;
           });
