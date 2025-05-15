@@ -195,9 +195,11 @@ export class SignNowPopupComponent implements OnInit {
 
   onFileDropped(event: any) {
     this.file = event;
+    this.fileName = this.file.name;
     this.isStart = true;
     this.isUploading = false;
     this.signImg = true;
+    this.uploadDocument();
   }
 
   deleteFile() {

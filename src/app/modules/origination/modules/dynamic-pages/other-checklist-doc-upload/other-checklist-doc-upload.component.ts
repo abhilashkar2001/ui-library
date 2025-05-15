@@ -33,6 +33,8 @@ export class OtherChecklistDocUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenName = this.screenInfo.screenName;
+    console.log(this.screenName, 'screenname');
+
     if (this.accountType === 'loan') this.isDisbursement = true;
     if (this.docCustomerDetails) {
       this.docAppliName = this.docCustomerDetails?.applicantName;
@@ -108,7 +110,9 @@ export class OtherChecklistDocUploadComponent implements OnInit {
     });
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
-    this.sessionStorageService.setLoanDoc(docIds);
+    if (this.screenName?.includes('national')) {
+      this.sessionStorageService.setLoanDoc(docIds);
+    }
     this.updateParentModel({
       otherLoanDoc: docIds,
       updateMasterSave: true,

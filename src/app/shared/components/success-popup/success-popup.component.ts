@@ -5,6 +5,7 @@ import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from '@onerumango/utils';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 @Component({
   selector: 'app-success-popup',
   templateUrl: './success-popup.component.html',
@@ -35,6 +36,7 @@ export class SuccessPopupComponent implements OnInit {
     private router: Router,
     private sessionStorageService: SessionStorageService,
     private tokenStorageService: TokenStorageService,
+    private loanService: LoanService,
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
@@ -49,7 +51,7 @@ export class SuccessPopupComponent implements OnInit {
     if (this.data?.appontment) this.appontment = this.data.appontment;
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
     if (this.data?.type) this.typeOfPopup = this.data.type ?? '';
-    this.email = this.data?.email;
+    this.email = this.data?.email ?? 'shiyam.ram@rumango.com';
     if (this.sessionStorageService.getLoanBasisDetails()) {
       this.openAccountService.getData().subscribe((resp: any) => {
         if (resp) {
@@ -69,6 +71,22 @@ export class SuccessPopupComponent implements OnInit {
 
   onClickAction(type: any, operation: any) {
     this.shareOrDownload({ type: type, operation: operation });
+  }
+
+  // Share button email to
+  shareEmail() {
+    const formData = new FormData();
+    formData.append(
+      'to',
+      this.data.email ?? this.email ?? 'shiyam.ram@rumango.com',
+    );
+    formData.append('subject', 'Hello from Shiyam');
+    formData.append('body', 'Email testing got successful');
+    // formData.append('file', this.selectedFile);
+
+    this.loanService.triggerloanDetailsEmail(formData).subscribe((res) => {
+      console.log(res, 'response');
+    });
   }
 
   shareOrDownload(event: any) {
