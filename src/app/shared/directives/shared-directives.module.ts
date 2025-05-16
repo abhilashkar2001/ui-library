@@ -13,6 +13,7 @@ import { NoSpaceDirective } from './noSpace.directive';
 import { MinMaxDirective } from './restrictNum-directive';
 import { WebhostDirective } from './appHost.directive';
 import { NumberAnimationDirective } from './number-animation.directive';
+import { DragDropDirective } from './drag-drop.directive';
 
 const directives = [
   EgretSidenavHelperDirective,
@@ -26,6 +27,7 @@ const directives = [
   MinMaxDirective,
   WebhostDirective,
   NumberAnimationDirective,
+  DragDropDirective,
 ];
 
 @NgModule({

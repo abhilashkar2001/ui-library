@@ -65,7 +65,7 @@ export class LoanService {
     );
   }
   triggerloanDetailsEmail(formdata: any) {
-    return this.http.post(`${baseUrl}/email`, formdata, {
+    return this.http.post(`${'https://192.168.131.206'}/email`, formdata, {
       responseType: 'text',
     });
   }

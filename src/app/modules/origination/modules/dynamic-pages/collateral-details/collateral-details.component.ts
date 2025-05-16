@@ -120,6 +120,7 @@ export class CollateralDetailsComponent implements OnInit {
 
   saveCollateralDetails() {
     if (!this.collateralDetailsForm.valid) {
+      this.collateralDetailsForm.markAllAsTouched();
       return;
     }
     const payload = { ...this.collateralDetailsForm.value };

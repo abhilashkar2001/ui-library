@@ -21,3 +21,8 @@
 .pd-15 {
   padding: 15px;
 }
+
+mat-progress-bar.progrees_color {
+  --mdc-linear-progress-active-indicator-color: #004c97;
+  --mdc-linear-progress-active-indicator-height: 4px;
+}

@@ -759,7 +759,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     payload.originationId = originationId;
     payload.action = 'Submit';
     payload.transactionType = 'IND_LOAN';
-
     this.loanApi.verifyWorkFlow(payload).subscribe((resp: any) => {
       if (resp?.status === 200) {
         const dialogRef = this.dialog.open(SuccessPopupComponent, {
@@ -767,12 +766,14 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             originationId: originationId,
             loanSummary: this.loanSummary,
             customHeader: this.customHeader,
+            email: this.personalDetails[0]?.contact?.email,
             type: 'loan',
             isComplete: resp?.data?.isComplete,
             message:
               'Your loan application is sent. The bank will contact you soon.',
           },
           width: '55%',
+          height: 'auto',
           disableClose: true,
           panelClass: 'ic-dialog__panelclass',
           backdropClass: 'bdrop',

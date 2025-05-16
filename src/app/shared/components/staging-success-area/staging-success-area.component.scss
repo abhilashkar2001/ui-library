@@ -8,8 +8,7 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 1rem;
-  padding: 3rem 0 0 0;
+  padding: 2rem 0 0 0;
   width: 100%;
 }
 
@@ -21,7 +20,7 @@ li {
   padding: 2rem;
   border-radius: 15px;
   overflow: auto;
-  height: 215px;
+  height: 150px;
 }
 
 h1 {
@@ -30,7 +29,6 @@ h1 {
 }
 
 .sessions {
-  margin-top: 2rem;
   border-radius: 12px;
   position: relative;
 }

@@ -92,8 +92,13 @@
   <div *ngIf="this.radioFlag === 'upload' || title === 'Physical Sign'">
     <mat-card class="mt-16 uploadcard">
       <mat-card-content>
-        <div fxLayout="column" fxLayoutAlign="center center">
-          <div appDragDrop (fileDropped)="onFileDropped($event)">
+        <div
+          appDragDrop
+          (fileDropped)="onFileDropped($event)"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <div>
             <img
               class="imagedesign"
               src="../../../../../../../assets/images/upload.svg"
@@ -163,6 +168,7 @@
                   class="pd-15"
                   *ngIf="isUploading"
                   [value]="percentDone"
+                  class="progrees_color"
                   mode="determinate"
                 ></mat-progress-bar>
               </div>
