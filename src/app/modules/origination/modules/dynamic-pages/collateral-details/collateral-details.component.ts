@@ -23,8 +23,8 @@ export class CollateralDetailsComponent implements OnInit {
   @Output() backEvent = new EventEmitter<Data>();
   collateralDetailsForm!: FormGroup;
   ownershipStatus = [
-    { label: 'Self', value: true },
-    { label: 'Others', value: false },
+    { label: 'Self', value: 'true' },
+    { label: 'Others', value: 'false' },
   ];
   loanTypeList: any[] = [];
   originationId!: number;
@@ -88,6 +88,7 @@ export class CollateralDetailsComponent implements OnInit {
       loanTypeId: ['', Validators.required],
       originationId: [this.originationId ?? ''],
       screenCode: [this.screenCode ?? ''],
+      id: [''],
     });
     this.cdr.detectChanges();
   }
@@ -115,11 +116,13 @@ export class CollateralDetailsComponent implements OnInit {
       ownership: [true, Validators.required],
       assetMonetaryWorth: [''],
       typeOfCollateral: [typeOfCollateral],
+      id: [''],
     });
   }
 
   saveCollateralDetails() {
     if (!this.collateralDetailsForm.valid) {
+      this.collateralDetailsForm.markAllAsTouched();
       return;
     }
     const payload = { ...this.collateralDetailsForm.value };

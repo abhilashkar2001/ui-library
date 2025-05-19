@@ -548,7 +548,10 @@ export class CommonPersonalDetailsComponent
       genderId: [data ? data?.genderId : '', Validators.required],
       nationality: [data ? data?.nationality : '', Validators.required],
       maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
-      countryOfResidence: [data ? data?.countryOfResidence : ''],
+      countryOfResidence: [
+        data ? data?.countryOfResidence : '',
+        Validators.required,
+      ],
       source: data?.source ? data?.source : 'Website',
       kycStatus: data?.kycStatus && data?.kycStatus,
       documentId: this.fb.array([docGroup]),
@@ -1051,10 +1054,12 @@ export class CommonPersonalDetailsComponent
       screenCode: this.sessionStorageService.getCurrentScreenCode(),
     };
     payload.customerInfo[0].primaryCustomer = true;
-    // payload.customerInfo.forEach((cust: any) => {
-    //   // delete cust.documentId;
-    //   delete cust.documentInfo;
-    // });
+
+    if (!this.isMarried) {
+      payload.customerInfo.forEach((spouse: any) => {
+        delete spouse.spouseInfo;
+      });
+    }
 
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
       if (resp.statusCode === 200) {
