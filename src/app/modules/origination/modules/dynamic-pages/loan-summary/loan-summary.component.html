@@ -74,66 +74,76 @@
   <!-- Personal Identification -->
   <mat-card class="default-card">
     <div *ngFor="let section of personalDetailsArr" class="p-12">
-      <div class="text-header mt-3">{{ section.title }}</div>
-      <div fxLayout="row wrap" fxLayoutGap="16px">
-        <div
-          *ngFor="let field of section.headerInfo"
-          fxFlex="28%"
-          fxLayout="column"
-          class="mt-20"
-        >
-          <span class="breadcrum_md">{{ field.header }}</span>
-          <span class="header_lg">
-            <ng-container [ngSwitch]="section.title">
-              <ng-container *ngSwitchCase="'Personal Identification'">
-                {{
-                  loanSummaryDetails?.[section.headerKey]?.[0]?.[
-                    field.headKey
-                  ] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.documentInfo[0]?.[field.headKey] ??
-                    ''
-                }}
-              </ng-container>
-
-              <ng-container *ngSwitchCase="'Contact Details'">
-                {{
-                  loanSummaryDetails?.[section.headerKey]?.[0]?.contact?.[
-                    field.headKey
-                  ] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]?.contact
-                      ?.address[0]?.[field.headKey] ??
-                    ''
-                }}
-              </ng-container>
-
-              <ng-container *ngSwitchCase="'Spouse Details'">
-                {{
-                  loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo?.[
-                    field.headKey
-                  ] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
-                      ?.contact?.[field.headKey] ??
-                    ''
-                }}
-              </ng-container>
-              <ng-container *ngSwitchCase="'Emergency Contact / Next of Kin'">
-                {{
-                  loanSummaryDetails?.[section.headerKey]?.[0]
-                    ?.emergencyContactInfo?.[field.headKey] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contact?.[field.headKey] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contact?.address[0]?.[
+      <ng-container
+        *ngIf="
+          section.title !== 'Spouse Details' ||
+          loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
+        "
+      >
+        <div class="text-header mt-3">{{ section.title }}</div>
+        <div fxLayout="row wrap" fxLayoutGap="16px">
+          <div
+            *ngFor="let field of section.headerInfo"
+            fxFlex="28%"
+            fxLayout="column"
+            class="mt-20"
+          >
+            <span class="breadcrum_md">{{ field.header }}</span>
+            <span class="header_lg">
+              <ng-container [ngSwitch]="section.title">
+                <ng-container *ngSwitchCase="'Personal Identification'">
+                  {{
+                    loanSummaryDetails?.[section.headerKey]?.[0]?.[
                       field.headKey
                     ] ??
-                    ''
-                }}
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.documentInfo[0]?.[field.headKey] ??
+                      ''
+                  }}
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'Contact Details'">
+                  {{
+                    loanSummaryDetails?.[section.headerKey]?.[0]?.contact?.[
+                      field.headKey
+                    ] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]?.contact
+                        ?.address[0]?.[field.headKey] ??
+                      ''
+                  }}
+                </ng-container>
+
+                <ng-container
+                  *ngIf="loanSummaryDetails.customerInfo[0].spouseInfo !== null"
+                >
+                  <ng-container *ngSwitchCase="'Spouse Details'">
+                    {{
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.spouseInfo?.[field.headKey] ??
+                        loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
+                          ?.contact?.[field.headKey] ??
+                        ''
+                    }}
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'Emergency Contact / Next of Kin'">
+                  {{
+                    loanSummaryDetails?.[section.headerKey]?.[0]
+                      ?.emergencyContactInfo?.[field.headKey] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.emergencyContactInfo?.contact?.[field.headKey] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.emergencyContactInfo?.contact?.address[0]?.[
+                        field.headKey
+                      ] ??
+                      ''
+                  }}
+                </ng-container>
               </ng-container>
-            </ng-container>
-          </span>
+            </span>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </mat-card>
 
@@ -211,96 +221,6 @@
     </div>
   </mat-card>
 </div>
-
-<!-- <ng-container *ngFor="let item of personalDetails; let i = index">
-  <div class="text-header">
-    {{ mobileVerifyInfo?.individual ? 'Personal Details' : 'Director Details' }}
-  </div>
-  <mat-expansion-panel style="border-radius: 10px; margin-bottom: 20px">
-    <mat-expansion-panel-header class="text-header"
-      >Applicant {{ i + 1 }}</mat-expansion-panel-header
-    >
-    <mat-panel-description>
-      <div fxLayout="column" class="expansion-div">
-        <div class="bank-account-summary">
-          <div class="disbursement-details w-full">
-            <div class="col-1">
-              <span class="content-header">Prefix</span>
-              <span class="content">{{ item?.prefixValue }} </span>
-            </div>
-            <div class="col-1">
-              <span class="content-header">First Name</span>
-              <span class="content">{{ item?.firstName }} </span>
-            </div>
-            <div class="col-1">
-              <span class="content-header">Last Name</span>
-              <span class="content">{{ item?.lastName }} </span>
-            </div>
-          </div>
-          <div class="disbursement-details w-full">
-            <div class="col-1">
-              <span class="content-header">Date of Birth</span>
-              <span class="content">{{ item?.dateOfBirth }} </span>
-            </div>
-            <div class="col-1">
-              <span class="content-header">Email</span>
-              <span class="content">{{ item?.contact?.email }} </span>
-            </div>
-          </div>
-          <div class="disbursement-details w-full">
-            <div class="col-1">
-              <span class="content-header">Gender</span>
-              <span class="content">{{ item?.genderValue }} </span>
-            </div>
-            <div class="col-1">
-              <span class="content-header">Nationality</span>
-              <span class="content">{{ item?.nationality }} </span>
-            </div>
-            <div class="col-1">
-              <span class="content-header">Mobile No</span>
-              <span class="content">{{ item?.contact?.mobile }} </span>
-            </div>
-          </div>
-        </div>
-        <ng-container
-          *ngFor="let address of item?.contact?.address; let i = index"
-        >
-          <div class="bank-account-summary">
-            <div class="text-header">Address Details</div>
-            <div class="disbursement-details w-full">
-              <div class="col-1">
-                <span class="content-header">Address</span>
-                <span class="content">{{ address?.address1 }} </span>
-              </div>
-              <div class="col-1">
-                <span class="content-header">Residence Type</span>
-                <span class="content">{{ address?.residenceTypeValue }} </span>
-              </div>
-              <div class="col-1">
-                <span class="content-header">Country</span>
-                <span class="content">{{ address?.countryName }} </span>
-              </div>
-            </div>
-            <div class="disbursement-details w-full">
-              <div class="col-1">
-                <span class="content-header">Zip Code</span>
-                <span class="content">{{ address?.pincode }} </span>
-              </div>
-              <div class="col-1">
-                <span class="content-header">State</span>
-                <span class="content">{{ address?.stateName }} </span>
-              </div>
-              <div class="col-1">
-                <span class="content-header">City</span>
-                <span class="content">{{ address?.cityName }} </span>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </mat-panel-description>
-  </mat-expansion-panel>
-</ng-container> -->
 
 <div *ngIf="documentDetails?.length" class="uploaded-documents-summary">
   <div class="text-header">Document Uploaded(National ID)</div>

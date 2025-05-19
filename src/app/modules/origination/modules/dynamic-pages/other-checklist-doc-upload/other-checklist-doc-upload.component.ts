@@ -33,6 +33,8 @@ export class OtherChecklistDocUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenName = this.screenInfo.screenName;
+    console.log(this.screenName, 'screenname');
+
     if (this.accountType === 'loan') this.isDisbursement = true;
     if (this.docCustomerDetails) {
       this.docAppliName = this.docCustomerDetails?.applicantName;
