@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Inject,
   OnInit,
   ViewChild,
@@ -18,7 +19,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SignNowPopupComponent implements OnInit {
   @ViewChild('signPadRef', { static: false })
-  signPadComponent: SignPadComponent | any;
+  signPadComponent!: SignPadComponent;
+  @ViewChild('fileSelect', { static: false })
+  fileInput!: ElementRef<HTMLInputElement>;
   signatureImg: any;
   isSign = true;
   radioFlag = 'digitan-sign';
@@ -75,7 +78,11 @@ export class SignNowPopupComponent implements OnInit {
       this.signPadComponent.saveSignature();
     }
   }
+
   saveSignUpload() {
+    if (!this.file || !this.signImg) {
+      return;
+    }
     this.uploadDocument();
   }
 
@@ -105,6 +112,7 @@ export class SignNowPopupComponent implements OnInit {
   }
   handleUploadEvent(event: any) {
     this.isUploading = true;
+    this.uploadSuccess = true;
     if (event.type === HttpEventType.UploadProgress) {
       this.percentDone = Math.round((100 * event.loaded) / event.total);
     } else if (event.type === HttpEventType.Response) {
@@ -166,11 +174,13 @@ export class SignNowPopupComponent implements OnInit {
       fReader.readAsDataURL(this.file);
       fReader.onloadend = (_event: any) => {
         this.signImg = _event.target.result;
-        this.uploadDocument();
+        this.handleUploadEvent(this.signImg);
+        // this.uploadDocument();
       };
     } catch (error) {
       console.log(error);
     }
+    this.cdr.detectChanges();
   }
 
   /**
@@ -199,12 +209,15 @@ export class SignNowPopupComponent implements OnInit {
     this.isStart = true;
     this.isUploading = false;
     this.signImg = true;
-    this.uploadDocument();
+    this.handleUploadEvent(event);
   }
 
   deleteFile() {
     this.isStart = !this.isStart;
     this.file = null;
     this.signImg = null;
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
   }
 }

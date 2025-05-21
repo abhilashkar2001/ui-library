@@ -68,10 +68,10 @@ export class ProductConstant {
     disbursementDetails: {
       type: 'Disbursement Details',
       keyPair: [
-        { label: 'Type', valueKey: 'disbursementTypeValue' },
+        { label: 'Type', valueKey: 'disbursementModeValue' },
         { label: 'Account No', valueKey: 'accountNo' },
         { label: 'Name', valueKey: 'customerName' },
-        { label: 'EMI Payment Start Date', valueKey: 'emiStartDate' },
+        { label: 'EMI Payment Start Date', valueKey: 'firstRepaymentDate' },
       ],
     },
     bankAccount: {

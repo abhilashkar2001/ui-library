@@ -113,8 +113,26 @@ export class ProductDetailsComponent implements OnInit {
             { key: 'bankAccount', values: loanInfo.bankAccount ?? {} },
             {
               key: 'disbursementDetails',
-              values: loanInfo.loanDisbursementModel.disbursementAccount ?? {},
+              values: {
+                ...(loanInfo?.loanDisbursementModel ?? {}),
+                ...(loanInfo?.loanDisbursementModel?.disbursementAccount ?? {}),
+                ...(loanInfo?.repaymentModel ?? {}),
+                disbursementModeValue:
+                  loanInfo?.loanDisbursementModel?.disbursementAccount
+                    ?.disbursementModeValue ??
+                  loanInfo?.loanDisbursementModel?.disbursementModeValue ??
+                  loanInfo?.repaymentModel?.disbursementModeValue ??
+                  null,
+                firstRepaymentDate:
+                  loanInfo?.repaymentModel?.firstRepaymentDate ?? null,
+                customerName:
+                  loanInfo?.loanDisbursementModel?.disbursementAccount
+                    ?.customerName ??
+                  loanInfo?.loanDisbursementModel?.customerName ??
+                  null,
+              },
             },
+
             { key: 'customerInfo', values: orginationInfo.customerInfo ?? {} },
             {
               key: 'documnentsInfo',
