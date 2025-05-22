@@ -172,30 +172,14 @@
                   mode="determinate"
                 ></mat-progress-bar>
               </div>
-              <div></div>
-            </div>
-            <ng-container *ngIf="uploadSuccess && !isUploading">
-              <div fxFlex="100" fxLayoutAlign="space-between center">
-                <div class="fileicon-filename">
-                  <img
-                    [src]="
-                      file.name?.includes('png')
-                        ? 'assets/images/file-png.svg'
-                        : 'assets/images/file-jpg.svg'
-                    "
-                    alt=""
-                  />
-                  <span>{{ file?.name }}</span>
-                </div>
-                <div>
-                  <ic-button
-                    [icIcon]="'delete'"
-                    [icButtonType]="'icon'"
-                    (OnClick)="deleteFile()"
-                  ></ic-button>
-                </div>
+              <div *ngIf="uploadSuccess">
+                <ic-button
+                  [icIcon]="'delete'"
+                  [icButtonType]="'icon'"
+                  (OnClick)="deleteFile()"
+                ></ic-button>
               </div>
-            </ng-container>
+            </div>
           </div>
         </div>
       </ng-container>

@@ -237,6 +237,7 @@ export class ScanComponent implements OnInit {
   }
 
   done() {
+    this.stopVideo();
     this.closeClick(true);
   }
   rescan() {
@@ -244,6 +245,7 @@ export class ScanComponent implements OnInit {
     this.rescann = true;
   }
   close(remark?: string) {
+    this.stopVideo();
     this.dialogRef.close(remark);
   }
 }

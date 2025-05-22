@@ -110,7 +110,8 @@ export class OtherChecklistDocUploadComponent implements OnInit {
     });
 
     this.dataService.setDisbursementDetails(event.loanDisbursement);
-    if (this.screenName?.includes('national')) {
+
+    if (this.screenName?.toLowerCase()?.includes('national')) {
       this.sessionStorageService.setLoanDoc(docIds);
     }
     this.updateParentModel({
