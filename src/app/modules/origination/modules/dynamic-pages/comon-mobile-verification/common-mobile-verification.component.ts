@@ -162,7 +162,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
             ?.patchValue(resp?.data?.loanDetails?.mobile);
           this.otpForm
             .get('isdCode')
-            ?.patchValue(resp?.data?.loanDetails?.mobtCode);
+            ?.patchValue(Number(resp?.data?.loanDetails?.mobtCode));
         }
       });
   }
@@ -478,5 +478,9 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     this.sessionStorageService.removeCustomerStageId();
     this.sessionStorageService.removeCustomerId();
     this.sessionStorageService.removeOtherDocScreenCode();
+  }
+
+  onNext() {
+    this.CustomSubmit.emit(true);
   }
 }
