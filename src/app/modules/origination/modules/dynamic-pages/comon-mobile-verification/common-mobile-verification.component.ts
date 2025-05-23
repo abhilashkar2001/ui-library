@@ -106,6 +106,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   private localeData: LocaleData | undefined;
   profileInfo: any;
   userProfile$: Observable<User | null>;
+  originationId: number | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -129,7 +130,11 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       }
     });
     this.subscriptions.push(localeData$);
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.loadCountries();
+    if (this.originationId) {
+      this.getLoanDetails();
+    }
     this.otpForm
       .get('isdCode')
       ?.valueChanges.pipe(debounceTime(500))
@@ -148,12 +153,25 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
     }
   }
 
+  getLoanDetails() {
+    if (this.originationId)
+      this.loanApi.getLoanDetails(this.originationId).subscribe((resp) => {
+        if (resp.statusCode === 200) {
+          this.otpForm
+            .get('phone')
+            ?.patchValue(resp?.data?.loanDetails?.mobile);
+          this.otpForm
+            .get('isdCode')
+            ?.patchValue(resp?.data?.loanDetails?.mobtCode);
+        }
+      });
+  }
+
   onGetOTP() {
     this.ngOtpInput.otpForm.reset();
-    const value =
-      this.otpForm.value.phone?.length > 0
-        ? this.otpForm.value.phone
-        : this.otpForm.value.nationalId;
+    const value = !this.hideInfo
+      ? this.otpForm.value.phone
+      : this.otpForm.value.nationalId;
     this.otpService.getOtp({ mobile: value }).subscribe((resp) => {
       const otp = resp?.OTP;
       if (otp && otp !== 'null') {
@@ -202,7 +220,9 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               this.countriesIsdCodes[0].countryTelIsdCode;
             this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
           }
-          this.otpForm.get('isdCode')?.setValue(this.defaultIsdCodeValue);
+          if (!this.originationId) {
+            this.otpForm.get('isdCode')?.setValue(this.defaultIsdCodeValue);
+          }
         }
       },
       (err) => console.error('Error: ', err),
@@ -241,7 +261,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
         this.otpForm.get('phone')?.setErrors(null);
-
         const regExp = /^[0]+$/;
         if (resp?.length == this.maxMobileLength) {
           this.isValidMobile = regExp.test(resp);
@@ -297,7 +316,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
         (item: any) =>
           item.countryTelIsdCode == this.otpForm.get('isdCode')?.value,
       );
-      this.maxMobileLength = countryRecord.mobileLength;
+      this.maxMobileLength = countryRecord?.mobileLength;
     }
   }
 
@@ -331,7 +350,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
               loanTenureDay: emiData?.loanTenureDay,
               loanTenureYear: emiData?.loanTenureYear,
               totalPayableAmount: emiData?.totalRepaymentAmount,
-              mobile: this.otpForm.value.phone,
+              mobile: this.otpForm.value?.phone,
+              mobtCode: this.otpForm.value?.isdCode ?? null,
               emiInterestPayable: emiData?.totalInterest,
               emiAmount: emiData?.monthlyPayment,
             },
