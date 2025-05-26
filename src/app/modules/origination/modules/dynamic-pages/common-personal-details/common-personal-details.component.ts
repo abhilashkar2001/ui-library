@@ -90,7 +90,6 @@ export class CommonPersonalDetailsComponent
   private localeData: LocaleData | undefined;
   dateFormat!: string;
   screenCodeValue: number | undefined;
-  customerDocDetails: any;
   isMarried = false;
   constructor(
     private fb: FormBuilder,
@@ -123,7 +122,6 @@ export class CommonPersonalDetailsComponent
       this.sessionStorageService.getLoanHolderType()?.toLowerCase() || 'self';
     this.loanCustomerId = this.sessionStorageService.getOriginationId();
     this.screenCodeValue = this.sessionStorageService.getCurrentScreenCode();
-    this.customerDocDetails = this.sessionStorageService.getLoanDoc();
     // this.loanCustomerId = 67583;
     this.getAllRequisite().then(() => {
       if (!this.personalDetails) {
@@ -519,6 +517,8 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
+    const documentId =
+      data.documentInfo.map((doc: any) => doc.documentId) ?? [];
     if (data?.maritalStatusId) {
       const status = this.maritalStatusArray
         .find((item) => item.id === data.maritalStatusId)
@@ -528,7 +528,7 @@ export class CommonPersonalDetailsComponent
 
     const docInfo = data?.documentInfo?.[0];
     const docGroup = this.createDocumentGroup({
-      docIds: this.customerDocDetails?.length ? this.customerDocDetails : [],
+      docIds: documentId ?? [],
       documentNumber: docInfo?.documentNumber ?? '',
       issueDate: docInfo?.issueDate ?? '',
       expiryDate: docInfo?.expiryDate ?? '',
@@ -1136,7 +1136,6 @@ export class CommonPersonalDetailsComponent
   }
   saveCustomer(i: any) {
     this.closePanel(i);
-    console.log(this.customerDetailsForm);
   }
   closePanel(index: any) {
     this.panels.forEach((panel, i) => {

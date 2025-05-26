@@ -136,7 +136,7 @@ export class LoanDetailsComponent implements OnInit {
         chequeNumber: [
           data?.loanDisbursementModel?.chequeNumber ?? data?.chequeNumber ?? '',
         ],
-        requiredMultipleDisbursement: true,
+        requiredMultipleDisbursement: false,
         scheduleFrequencyYear: 0,
         scheduleFrequencyMonth: 1,
         scheduleFrequencyDay: 0,

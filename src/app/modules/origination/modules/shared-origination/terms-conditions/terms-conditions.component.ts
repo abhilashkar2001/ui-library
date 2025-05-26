@@ -11,6 +11,8 @@ import * as moment from 'moment';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomPopupComponent } from 'app/shared/components/custom-popup/custom-popup.component';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -32,6 +34,7 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
     private store: Store<AppState>,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +73,17 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
 
   onDecline() {
     console.log('decline functionality need to implement');
+  }
+
+  // Open Terms&Conditons Popup
+  openTermsCond() {
+    this.dialog.open(CustomPopupComponent, {
+      width: '800px',
+      data: {
+        message:
+          'Part Payment is allowed after initial 3 EMIs. Maximum 40% of current Principal Outstanding is allowed as part payment in a financial year, this can be one bullet payment or maximum of 3 payments totaling up to 40% of Principal Outstanding. In case you wish to avail this option, 2% part payment charges is applicable on partial payment. Part payment to be made from customer’s own fund. This facility is allowed only for customers who have opted for Smart Personal Loan.',
+      },
+    });
   }
 
   ngOnDestroy() {
