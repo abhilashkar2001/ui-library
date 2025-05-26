@@ -1,6 +1,14 @@
+.popup-content {
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-top: 1rem;
+}
+
 .popup-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
 }

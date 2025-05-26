@@ -1,23 +1,158 @@
 <div class="p-12">
   <div class="popup-header">
-    <span></span>
+    <span class="header_lg_bold_black">Terms & Conditions</span>
     <button mat-icon-button (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div class="header_md">
-    <p>{{ data.message }}</p>
+  <!-- Scrollable Content -->
+  <div class="popup-content p-2">
+    <p class="header_lg_bold_black">Welcome to Stanbic Bank!</p>
+    <p>
+      These Terms & Conditions explain how your Digital Loan works and what you
+      can expect as our customer.
+    </p>
+
+    <h3 class="header_gt_md_bold_black">
+      When You Use Our Services, You Agree to These Terms
+    </h3>
+    <p>
+      By applying for and using a digital loan through our website or mobile
+      app, you're agreeing to follow the rules in this document. Using our
+      service counts as your digital consent—no extra paperwork required.
+    </p>
+    <ul>
+      <li>It’s like signing an agreement, just quicker and more convenient.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Who Can Apply for a Digital Loan</h3>
+    <ul>
+      <li>You’re at least 18 years old</li>
+      <li>You have a valid ID and mobile number</li>
+      <li>You meet our credit and verification criteria</li>
+      <li>
+        We check these details to ensure responsible lending and protect you
+        from fraud.
+      </li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Keeping Your Login Details Safe</h3>
+    <p>
+      It's your responsibility to keep your password, PIN, and OTPs private.
+    </p>
+    <ul>
+      <li>If someone misuses your login, it’s still your responsibility.</li>
+      <li>
+        Think of your login as your digital signature. Never share it—even with
+        family or friends.
+      </li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">How the Loan Works</h3>
+    <ul>
+      <li>
+        We show the loan amount, interest rate, and repayment date upfront.
+      </li>
+      <li>You choose the amount and agree to the terms.</li>
+      <li>The money is disbursed directly to your bank account.</li>
+      <li>Repayments are debited automatically on due dates.</li>
+      <li>You’ll receive a copy of the agreement.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Repaying Your Loan on Time</h3>
+    <ul>
+      <li>Late payments may result in penalties.</li>
+      <li>Your credit score may be affected.</li>
+      <li>Legal action may be taken for serious defaults.</li>
+      <li>If you're struggling, contact us early—we may help.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Fees, Charges, and Interest</h3>
+    <ul>
+      <li>Interest rate (flat or reducing)</li>
+      <li>Processing or convenience fees</li>
+      <li>Penalties for missed payments</li>
+      <li>No hidden fees—what you see is what you pay.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Loan Limits and Usage</h3>
+    <p>
+      Loan eligibility depends on credit profile, history, and income. Loans
+      must be used for lawful personal purposes only.
+    </p>
+
+    <h3 class="header_gt_md_bold_black">Checking Your Loan Details</h3>
+    <ul>
+      <li>Loan balance</li>
+      <li>Repayment schedule and due dates</li>
+      <li>Previous transactions</li>
+      <li>All available via app or website.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">
+      When We Might Freeze or Cancel Your Loan Access
+    </h3>
+    <ul>
+      <li>Fraud or suspicious activity</li>
+      <li>Repeated missed repayments</li>
+      <li>False information provided</li>
+      <li>Legal or regulatory reasons</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">
+      Respectful Use and Accurate Information
+    </h3>
+    <ul>
+      <li>Be honest in your application</li>
+      <li>Treat our staff with courtesy</li>
+      <li>Update contact details promptly</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Data Privacy and Security</h3>
+    <ul>
+      <li>
+        We use your data to check eligibility, process applications, and prevent
+        fraud.
+      </li>
+      <li>We do not sell your data.</li>
+      <li>Your data is protected under our Privacy Policy.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">App and Website Ownership</h3>
+    <p>
+      All content belongs to Stanbic Bank. Do not reuse or modify it without
+      permission.
+    </p>
+
+    <h3 class="header_gt_md_bold_black">If There’s a Dispute</h3>
+    <p>
+      Disputes will follow local laws and may be resolved in court in your
+      jurisdiction. We prefer resolving issues directly and fairly.
+    </p>
+
+    <h3 class="header_gt_md_bold_black">We May Update These Terms</h3>
+    <ul>
+      <li>We may notify you via app, SMS, or email.</li>
+      <li>You may opt out if you disagree.</li>
+      <li>Continued use means you accept the updated terms.</li>
+    </ul>
+
+    <h3 class="header_gt_md_bold_black">Need Help? We’re Here</h3>
+    <p>📞 Phone: 123-456-7890</p>
+    <p>🌐 Website: www.yourbank.com</p>
+    <p>🏢 Or visit your nearest Stanbic Bank branch</p>
   </div>
 
-  <div fxLayoutAlign="center center">
+  <!-- Done Button -->
+  <div fxLayoutAlign="center center" class="mt-4">
     <ic-button
       [label]="'Done'"
       icButtonType="filled-rounded"
       size="large"
       [type]="'button'"
+      mat-dialog-close
       (OnClick)="close()"
-    >
-    </ic-button>
+    ></ic-button>
   </div>
 </div>

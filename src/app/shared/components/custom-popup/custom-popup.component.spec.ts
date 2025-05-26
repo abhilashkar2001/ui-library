@@ -8,7 +8,7 @@ describe('CustomPopupComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomPopupComponent]
+      declarations: [CustomPopupComponent],
     });
     fixture = TestBed.createComponent(CustomPopupComponent);
     component = fixture.componentInstance;

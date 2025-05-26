@@ -79,10 +79,8 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
   openTermsCond() {
     this.dialog.open(CustomPopupComponent, {
       width: '800px',
-      data: {
-        message:
-          'Part Payment is allowed after initial 3 EMIs. Maximum 40% of current Principal Outstanding is allowed as part payment in a financial year, this can be one bullet payment or maximum of 3 payments totaling up to 40% of Principal Outstanding. In case you wish to avail this option, 2% part payment charges is applicable on partial payment. Part payment to be made from customer’s own fund. This facility is allowed only for customers who have opted for Smart Personal Loan.',
-      },
+      height: 'auto',
+      maxHeight: '90vh',
     });
   }
 
