@@ -1,0 +1,23 @@
+<div class="p-12">
+  <div class="popup-header">
+    <span></span>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="header_md">
+    <p>{{ data.message }}</p>
+  </div>
+
+  <div fxLayoutAlign="center center">
+    <ic-button
+      [label]="'Done'"
+      icButtonType="filled-rounded"
+      size="large"
+      [type]="'button'"
+      (OnClick)="close()"
+    >
+    </ic-button>
+  </div>
+</div>
