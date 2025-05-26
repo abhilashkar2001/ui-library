@@ -1,7 +1,7 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -29,7 +29,7 @@ import { DocumentUploadService } from 'app/shared/services/document-upload.servi
   templateUrl: './cusotm-web-doc-upload.component.html',
   styleUrls: ['./cusotm-web-doc-upload.component.scss'],
 })
-export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
+export class CusotmWebDocUploadComponent implements OnInit, OnDestroy, OnChanges {
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() customDocumentForm = new EventEmitter<any>();
@@ -52,7 +52,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     },
   ];
   files: any[] = [];
-  uploadedDocResponse: any = [];
   docIds: any[] = [];
   stepperTitle: any;
 
@@ -64,22 +63,17 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   baseUrl = environment.microServiceURL;
   screenName = 'Loan Document';
   hideSelect: string[] = ['aadhar card'];
-  // SAVE BUTTON PROPERTIES
   isLoading: boolean | any = false;
   loadingBtnText = 'Saving...';
-  ocrCheck = true;
   nationalIdGeneric: any;
 
   @Input() isShowDisbursement = false;
   disbursementTypeId: any;
   loanCustomerId: string | any;
   accountList: any;
-  defaultDisbursement: any;
   ocrPass = false;
-  nationalIdNo: any;
   documentInfo: any;
   addNewButtonClicked: Subscription | any;
-  backData: any[] = [];
   image = '';
   faceId: any;
   frontAadhar: any;
@@ -100,7 +94,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     private documentUploadService: DocumentUploadService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
-    // this.buildDocumentForm();
     this.matIconRegistry.addSvgIcon(
       'cancel-icon',
       this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -404,11 +397,11 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
 
     this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
+        if(data?.documentNameForChecklist?.toLowerCase()?.includes('national') && i == 0){
+          this.frontAadhar = resp.data.fileUrl;
+        }
         this.updateDocId(i).push(resp.data.documentId);
         this.fileUrls.push(resp.data.fileUrl);
-        if (this.fileUrls.length > 0) {
-          this.frontAadhar = this.fileUrls[0];
-        }
         this.documentIds.push(this.createDocumentForm.value);
         const fileInfoArr =
           this.otherDocument().controls[i]?.get('fileInfo')?.value;
@@ -432,7 +425,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
           this.documentInfo?.gender,
         );
 
-        // ✅ Always call extractDoc now
         this.extractDoc(
           this.createDocumentForm.value.otherDocument[i].documentType,
           parseInt(this.sessionStorageService.getOriginationId()),
@@ -443,7 +435,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  //for demo purpose removed error message
   extractDoc(docName: any, originationId: any, file: any, documentId: any) {
     const formData = new FormData();
     formData.append('fileName', file);
@@ -511,7 +502,6 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
   }
 
   onFileDropped(event: any, i: any) {
-    console.log(event);
     if (event.files.type.startsWith('image/')) {
       this.selectedImage = event.files;
       this.displayImage(i, event.files, event.files?.size);
@@ -632,9 +622,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy {
       panelClass: 'imageViewDialog',
     });
   }
+
   async validateFace(file: any) {
     const form = new FormData();
-    const docBlob = await fetch(this.frontAadhar).then((res) => res.blob());
+    const docBlob = await fetch(environment.microServiceURL + this.frontAadhar).then((res) => res.blob());
     const docFile = new File([docBlob], 'docImage.png', { type: 'image/png' });
     form.append('faceImage', file);
     form.append('docImage', docFile);

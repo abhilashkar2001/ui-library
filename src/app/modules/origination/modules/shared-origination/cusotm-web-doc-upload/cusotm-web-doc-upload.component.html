@@ -25,8 +25,7 @@
                       appDragDrop
                       class="doc_upload"
                       fxFlex="90"
-                      #fileInput
-                      (FileDropped)="onFileDropped($event, i)"
+                      (fileDropped)="onFileDropped($event, i)"
                       [ngClass]="[
                         denomDetai.value.documentType &&
                         denomDetai.value.docRequired
