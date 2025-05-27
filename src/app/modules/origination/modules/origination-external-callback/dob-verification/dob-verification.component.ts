@@ -71,11 +71,11 @@ export class DobVerificationComponent implements OnInit {
       })
       .subscribe(async () => {
         if (type == 'send-link')
-          this.router.navigate(['origination/checklist-document']);
+          this.router.navigate(['origination/request-processing/checklist-document']);
         else if (type == 'e-sign') {
           if (this.customerInfo?.catagory == 'Lending')
-            this.router.navigate(['origination/offer-letter']);
-          else this.router.navigate(['origination/digital-sign']);
+            this.router.navigate(['origination/request-process/offer-letter']);
+          else this.router.navigate(['origination/request-process/digital-sign']);
         }
       });
   }

@@ -22,8 +22,8 @@ export class ErrorNotifierPopupComponent implements OnInit {
     this.errorMessage = this.data.errorMessage;
     this.errorMessageHint = this.data?.errorMessageHint ?? '';
     this.isStageAvilable = this.data?.isStageAvilable ?? true;
-    this.showCancelBtn = this.data?.showCancelBtn ? true : false;
-    this.showOkBtn = this.data?.showOkBtn ? false : true;
+    this.showCancelBtn = !!this.data?.showCancelBtn;
+    this.showOkBtn = !this.data?.showOkBtn;
   }
 
   closeDialog() {

@@ -29,8 +29,6 @@ export class ChecklistDocumentComponent implements OnInit {
   checklistRouteObj: ChecklistRouteObjModel | any;
   customerInfo: any;
   env: string = environment.microServiceURL;
-  pdfType =
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf';
   acceptedDocumentId: any[] | any;
 
   constructor(
