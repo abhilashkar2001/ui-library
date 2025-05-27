@@ -1,7 +1,8 @@
 import {
   Component,
   EventEmitter,
-  Input, OnChanges,
+  Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -29,7 +30,9 @@ import { DocumentUploadService } from 'app/shared/services/document-upload.servi
   templateUrl: './cusotm-web-doc-upload.component.html',
   styleUrls: ['./cusotm-web-doc-upload.component.scss'],
 })
-export class CusotmWebDocUploadComponent implements OnInit, OnDestroy, OnChanges {
+export class CusotmWebDocUploadComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   @Output() customDocumentForm = new EventEmitter<any>();
@@ -397,7 +400,10 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy, OnChanges
 
     this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        if(data?.documentNameForChecklist?.toLowerCase()?.includes('national') && i == 0){
+        if (
+          data?.documentNameForChecklist?.toLowerCase()?.includes('national') &&
+          i == 0
+        ) {
           this.frontAadhar = resp.data.fileUrl;
         }
         this.updateDocId(i).push(resp.data.documentId);
@@ -625,12 +631,13 @@ export class CusotmWebDocUploadComponent implements OnInit, OnDestroy, OnChanges
 
   async validateFace(file: any) {
     const form = new FormData();
-    const docBlob = await fetch(environment.microServiceURL + this.frontAadhar).then((res) => res.blob());
+    const docBlob = await fetch(
+      environment.microServiceURL + this.frontAadhar,
+    ).then((res) => res.blob());
     const docFile = new File([docBlob], 'docImage.png', { type: 'image/png' });
     form.append('faceImage', file);
     form.append('docImage', docFile);
     this.openApi.faceMatch(form).subscribe((res) => {
-      console.log(res);
       if (res?.data?.message === 'Face matched successfully')
         this.uploadFace(file);
       else if (res?.data?.message == 'Face did not match') {
