@@ -165,9 +165,6 @@ export class ScanComponent implements OnInit {
                       (this.randomDirection == 'RIGHT' && leftDetected)
                     )
                       this.prompt = '✅ Liveliness check passed!';
-                    else {
-                      this.close();
-                    }
                   }
                 }, 1000);
 

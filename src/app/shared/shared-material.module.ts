@@ -77,6 +77,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     MatBottomSheetModule,
     MatDividerModule,
     NgxSliderModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedMaterialModule {}

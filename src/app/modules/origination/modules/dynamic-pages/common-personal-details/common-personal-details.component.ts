@@ -518,7 +518,7 @@ export class CommonPersonalDetailsComponent
 
   newCustomer(data?: any): FormGroup {
     const documentId =
-      data.documentInfo?.map((doc: any) => doc?.documentId) ?? [];
+      data?.documentInfo?.map((doc: any) => doc?.documentId) ?? [];
     if (data?.maritalStatusId) {
       const status = this.maritalStatusArray
         .find((item) => item.id === data.maritalStatusId)

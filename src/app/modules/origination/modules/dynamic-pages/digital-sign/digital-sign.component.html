@@ -15,7 +15,10 @@
                 <h3 class="text-header">
                   Signature
                   <span [ngClass]="{ 'required-star': signatures.length === 0 }"
-                    >*</span
+                    >*
+                    <span *ngIf="signatures.length === 0" class="medium_txt"
+                      >(Signature is required)</span
+                    ></span
                   >
                 </h3>
               </div>

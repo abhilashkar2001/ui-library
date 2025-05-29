@@ -592,7 +592,7 @@ export class CusotmWebDocUploadComponent
       data: { title: 'Sign Now', check: check },
     });
     dialogRef.afterClosed().subscribe((res) => {
-      if (res.image) {
+      if (res?.image) {
         const timestamp = new Date();
         const seconds = timestamp.getSeconds();
         fetch(res.image)
@@ -629,20 +629,34 @@ export class CusotmWebDocUploadComponent
     });
   }
 
-  async validateFace(file: any) {
+  async validateFace(file: File) {
     const form = new FormData();
-    const docBlob = await fetch(
-      environment.microServiceURL + this.frontAadhar,
-    ).then((res) => res.blob());
-    const docFile = new File([docBlob], 'docImage.png', { type: 'image/png' });
+    let docFile: File;
+    if (this.frontAadhar.startsWith('data:image')) {
+      const base64Data = this.frontAadhar.split(',')[1];
+      const mimeType = this.frontAadhar
+        .split(',')[0]
+        .split(':')[1]
+        .split(';')[0];
+      const byteArray = Uint8Array.from(atob(base64Data), (c) =>
+        c.charCodeAt(0),
+      );
+      docFile = new File([byteArray], 'docImage.png', { type: mimeType });
+    } else {
+      const docBlob = await fetch(
+        environment.microServiceURL + this.frontAadhar,
+      ).then((res) => res.blob());
+      docFile = new File([docBlob], 'docImage.png', { type: 'image/png' });
+    }
     form.append('faceImage', file);
     form.append('docImage', docFile);
+
     this.openApi.faceMatch(form).subscribe((res) => {
-      if (res?.data?.message === 'Face matched successfully')
+      if (res?.data?.message === 'Face matched successfully') {
         this.uploadFace(file);
-      else if (res?.data?.message == 'Face did not match') {
+      } else if (res?.data?.message === 'Face did not match') {
         const dialogData = {
-          error: `Captured face is not matching with the National id image.`,
+          error: `Captured face is not matching with the National ID image.`,
           message: 'Would you like to continue?',
         };
         const dialogRef = this.dialog.open(WarningComponent, {
@@ -651,10 +665,13 @@ export class CusotmWebDocUploadComponent
           disableClose: true,
           panelClass: '',
         });
+
         dialogRef.afterClosed().subscribe((result) => {
-          if (result != 'Ok') {
+          if (result !== 'Ok') {
             this.openDialog();
-          } else if (result == 'Ok') this.uploadFace(file);
+          } else {
+            this.uploadFace(file);
+          }
         });
       }
     });
