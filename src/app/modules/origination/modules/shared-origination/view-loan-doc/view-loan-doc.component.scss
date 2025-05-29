@@ -1,3 +1,4 @@
+/* Optimized CSS */
 .loan-doc-modal {
   display: flex;
   flex-direction: column;
@@ -5,175 +6,163 @@
   max-height: 90vh;
   background: #ffffff;
 
-  .mat-dialog-container {
-    overflow: hidden !important;
+  .modal-header {
+    flex-shrink: 0;
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-  }
-
-  .mb-24 {
-    margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4px;
-  }
-
-  .fileName {
-    font:
-      500 14px/20px Poppins,
-      sans-serif;
-    color: #000000;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 40px);
-  }
-
-  .close-card {
-    height: 32px;
-    width: 32px;
-    min-width: 32px;
-    border-radius: 4px;
-    background: #f5f5f5;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-
-    &:hover {
-      background: #e0e0e0;
-    }
-
-    mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  .mat-table-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-    background: white;
-    min-width: min-content;
-    margin: 5px;
-  }
-
-  .mat-table {
-    width: max-content;
-    min-width: 100%;
-    table-layout: auto;
-  }
-
-  mat-header-row {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: #f5f7fa;
-    height: 40px;
-  }
-
-  mat-header-cell {
-    font:
-      500 11px/15px Poppins,
-      sans-serif;
-    color: #0032a4 !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 8px;
-    border-right: 1px solid #e0e0e0;
-    min-width: 100px;
-    max-width: 200px;
-    box-sizing: border-box;
-
-    &:last-child {
-      border-right: none;
-    }
-  }
-
-  mat-cell {
-    font:
-      400 11px/15px Poppins,
-      sans-serif;
-    color: #333333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 6px 8px;
-    border-right: 1px solid #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
-    min-width: 200px;
-    box-sizing: border-box;
 
-    &:last-child {
-      border-right: none;
+    .fileName {
+      font:
+        500 14px/20px Poppins,
+        sans-serif;
+      color: #000000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 40px);
+    }
+
+    .close-card {
+      height: 32px;
+      width: 32px;
+      border-radius: 4px;
+      background: #f5f5f5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #e0e0e0;
+      }
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #004c97;
+      }
     }
   }
 
-  mat-row {
-    height: 36px;
-    background: #ffffff;
-
-    &:nth-child(even) {
-      background: #fafafa;
-    }
-
-    &:last-child mat-cell {
-      border-bottom: none;
-    }
-
-    &:hover {
-      background-color: #f0f4ff;
+  .scrollable-content {
+    flex: 1;
+    padding: 0 16px;
+    .table-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background: white;
+      overflow: auto !important;
     }
   }
 
-  mat-paginator {
-    position: sticky;
-    bottom: 0;
-    background: #f5f7fa;
-    border-top: 1px solid #e0e0e0;
+  .paginator-container {
+    flex-shrink: 0;
+    padding: 0 16px 16px;
 
-    .mat-paginator-container {
-      min-height: 40px;
+    mat-paginator {
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      background: #f5f7fa;
+
+      .mat-mdc-paginator-container {
+        justify-content: flex-end;
+        min-height: 40px;
+        padding: 0 8px;
+      }
+    }
+  }
+
+  /* Table Styles with perfect column alignment */
+  mat-table {
+    width: 100%;
+
+    mat-header-row,
+    mat-row {
+      display: flex;
+      width: 100%;
+    }
+
+    mat-header-cell,
+    mat-cell {
+      flex: 1;
+      min-width: 150px;
+      max-width: 200px;
       padding: 0 8px;
-      justify-content: flex-end;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-right: 1px solid #e0e0e0;
+
+      &:last-child {
+        border-right: none;
+      }
     }
 
-    .mat-paginator-page-size {
-      margin-right: auto;
+    mat-header-row {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #f5f7fa;
+      height: 40px;
+
+      mat-header-cell {
+        font:
+          500 11px/15px Poppins,
+          sans-serif;
+        color: #0032a4;
+      }
+    }
+
+    mat-row {
+      height: 36px;
+      background: #ffffff;
+
+      &:nth-child(even) {
+        background: #fafafa;
+      }
+
+      &:last-child mat-cell {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #f0f4ff;
+      }
+
+      mat-cell {
+        font:
+          400 11px/15px Poppins,
+          sans-serif;
+        color: #333333;
+        padding: 6px 8px;
+        border-bottom: 1px solid #e0e0e0;
+      }
     }
   }
-}
 
-/* Scrollbar styling */
-.mat-table-wrapper::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
+  /* Scrollbar styling */
+  .scrollable-content::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
 
-.mat-table-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+  .scrollable-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
 
-.mat-table-wrapper::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
+  .scrollable-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
 
-.mat-table-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
-.mat-mdc-cell.mat-mdc-cell:not(.no_data):first-of-type,
-.mat-mdc-header-cell.mat-mdc-cell:not(.no_data):first-of-type {
-  padding-left: 1% !important;
+  .scrollable-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
 }
