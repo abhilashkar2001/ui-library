@@ -1,0 +1,30 @@
+<div style="overflow-y: hidden" class="loan-doc-modal">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-24">
+    <span class="fileName">{{ fileName }}</span>
+    <mat-card
+      class="close-card"
+      fxLayoutAlign="center center"
+      (click)="closeDialog()"
+    >
+      <mat-icon style="color: #004c97">close</mat-icon>
+    </mat-card>
+  </div>
+
+  <div class="mat-table-wrapper" *ngIf="dataSource">
+    <mat-table class="w-full" [dataSource]="dataSource">
+      <ng-container *ngFor="let header of tableHeader" [matColumnDef]="header">
+        <mat-header-cell *matHeaderCellDef>{{ header }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element[header] }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="tableHeader"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableHeader"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      #paginator
+      [pageSizeOptions]="[2, 4, 6, 8]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

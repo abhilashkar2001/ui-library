@@ -11,8 +11,8 @@ export class OpenAccountService {
   private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) {}
 
-  getOtp(phoneNumber: string): Observable<any> | any {
-    return this.http.get(`${baseUrl}/auth/generateOTP?mobile=${phoneNumber}`);
+  getOtp(mobile: string): Observable<any> | any {
+    return this.http.post(`${baseUrl}/auth/generateOtp`,{mobile});
   }
 
   verifyOtp(otpObject: any) {

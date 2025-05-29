@@ -6,7 +6,13 @@
       <!-- Show image if it's not a PDF -->
       <img
         *ngIf="
-          !filePreview?.changingThisBreaksApplicationSecurity?.includes('pdf')
+          !filePreview?.changingThisBreaksApplicationSecurity?.includes(
+            'pdf'
+          ) &&
+          !filePreview?.changingThisBreaksApplicationSecurity?.includes(
+            'xlsx'
+          ) &&
+          !filePreview?.changingThisBreaksApplicationSecurity?.includes('csv')
         "
         [src]="
           filePreview?.changingThisBreaksApplicationSecurity
@@ -19,7 +25,11 @@
       <!-- Show fallback image if it's a PDF -->
       <img
         *ngIf="
-          filePreview?.changingThisBreaksApplicationSecurity?.includes('pdf')
+          filePreview?.changingThisBreaksApplicationSecurity?.includes('pdf') ||
+          filePreview?.changingThisBreaksApplicationSecurity?.includes(
+            'xlsx'
+          ) ||
+          filePreview?.changingThisBreaksApplicationSecurity?.includes('csv')
         "
         [src]="'assets/images/file_icon.svg'"
         alt="PDF Icon"

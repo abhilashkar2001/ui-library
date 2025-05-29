@@ -4,12 +4,12 @@
     <img
       (click)="closeDialog()"
       [tabIndex]="1"
+      tabindex="0"
       (keydown.enter)="closeDialog()"
       role="button"
       src="assets/images/cancelIcon.svg"
       alt="Cancel Image"
     />
-    <!-- <mat-icon >close</mat-icon> -->
   </div>
   <div class="imageView">
     <ng-container *ngIf="!isPdfType; else showPdfTemplate">

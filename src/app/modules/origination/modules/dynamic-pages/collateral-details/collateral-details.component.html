@@ -76,7 +76,9 @@
         [control]="
           collateralDetailsForm.get('percentageOfSecurityCover') | formcontrol
         "
-        [icNumbersOnly]="true"
+        [icTwoDigitDecimalNumber]="true"
+        [decimalPlaces]="3"
+        [numLength]="2"
       >
       </ic-form-field>
     </div>
