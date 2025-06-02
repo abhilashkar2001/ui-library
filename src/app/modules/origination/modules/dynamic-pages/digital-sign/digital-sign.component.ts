@@ -28,6 +28,7 @@ export class DigitalSignComponent implements OnInit {
   customerId: number | undefined;
   filePreview: any;
   signatures: any[] = [];
+  submitted = false;
   constructor(
     private dialog: MatDialog,
     private branchService: BranchService,
@@ -87,6 +88,7 @@ export class DigitalSignComponent implements OnInit {
 
   onSubmit() {
     if (!this.signatures.length) {
+      this.submitted = true;
       return;
     }
     const signatureIds = this.signatures.map((sig) => sig.signatureId);

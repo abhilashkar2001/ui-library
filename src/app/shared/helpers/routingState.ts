@@ -23,7 +23,11 @@ export class RoutingState {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe(({ urlAfterRedirects }: NavigationEnd) => {
-        if (urlAfterRedirects.toLowerCase().includes('origination/loan/create-loan')) {
+        if (
+          urlAfterRedirects
+            .toLowerCase()
+            .includes('origination/loan/create-loan')
+        ) {
           this.beforeUnloadService.enable();
         } else {
           this.beforeUnloadService.disable();

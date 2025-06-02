@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-view-loan-doc',
@@ -33,5 +34,21 @@ export class ViewLoanDocComponent implements OnInit {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  // Download excel
+  downloadExcel(): void {
+    try {
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.tableBody);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      const excelFileName = this.fileName?.endsWith('.xlsx')
+        ? this.fileName
+        : `${this.fileName}.xlsx`;
+
+      XLSX.writeFile(wb, excelFileName);
+    } catch (error) {
+      console.error('Error while downloading Excel:', error);
+    }
   }
 }

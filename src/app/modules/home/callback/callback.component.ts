@@ -4,7 +4,11 @@ import { Store } from '@ngrx/store';
 import { QueryParamEnum } from 'app/enum/query-param.enum';
 import { ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import {getParameterByName, TokenStorageService, UserProfileAction} from '@onerumango/utils';
+import {
+  getParameterByName,
+  TokenStorageService,
+  UserProfileAction,
+} from '@onerumango/utils';
 import { User } from '@onerumango/utils';
 import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
@@ -21,7 +25,7 @@ export class CallbackComponent implements OnInit, OnDestroy {
     private router: Router,
     private sessionStorageService: SessionStorageService,
     private store: Store,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
   }
@@ -31,7 +35,7 @@ export class CallbackComponent implements OnInit, OnDestroy {
     localStorage.clear();
     const code = getParameterByName('code');
     if (code) {
-      this.tokenStorageService.saveToken(code)
+      this.tokenStorageService.saveToken(code);
       this.store.dispatch(UserProfileAction.loadUserProfile());
     }
     this.getProfile();
@@ -53,14 +57,12 @@ export class CallbackComponent implements OnInit, OnDestroy {
         };
         this.sessionStorageService.setChecklistRouteObj(checklistObj);
       }
-      this.sessionStorageService.setType(
-          getParameterByName('type'),
-      );
+      this.sessionStorageService.setType(getParameterByName('type'));
       this.sessionStorageService.setOriginationId(
-          Number(getParameterByName(QueryParamEnum.ORIGINATION_ID)),
+        Number(getParameterByName(QueryParamEnum.ORIGINATION_ID)),
       );
       this.sessionStorageService.setProcessCycleCode(
-          getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
+        getParameterByName(QueryParamEnum.PROCESS_CYCLE_CODE),
       );
       this.router.navigate([
         `/origination/request-processing/${getParameterByName('route')}`,

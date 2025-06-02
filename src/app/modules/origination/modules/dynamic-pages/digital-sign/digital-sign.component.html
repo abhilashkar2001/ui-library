@@ -14,9 +14,14 @@
               <div class="drag_drop" fxFlex="100">
                 <h3 class="text-header">
                   Signature
-                  <span [ngClass]="{ 'required-star': signatures.length === 0 }"
+                  <span
+                    [ngClass]="{
+                      'required-star': submitted && signatures.length === 0,
+                    }"
                     >*
-                    <span *ngIf="signatures.length === 0" class="medium_txt"
+                    <span
+                      *ngIf="submitted && signatures.length === 0"
+                      class="medium_txt"
                       >(Signature is required)</span
                     ></span
                   >

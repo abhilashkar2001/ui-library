@@ -12,7 +12,7 @@ export class OpenAccountService {
   constructor(private http: HttpClient) {}
 
   getOtp(mobile: string): Observable<any> | any {
-    return this.http.post(`${baseUrl}/auth/generateOtp`,{mobile});
+    return this.http.post(`${baseUrl}/auth/generateOtp`, { mobile });
   }
 
   verifyOtp(otpObject: any) {
