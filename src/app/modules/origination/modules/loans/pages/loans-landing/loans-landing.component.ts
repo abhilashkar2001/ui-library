@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonService } from 'app/shared/services/common-service/common.service';
+// import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
@@ -18,20 +18,20 @@ export class LoansLandingComponent implements OnInit {
   category = 'Lending';
   constructor(
     private router: Router,
-    private commonService: CommonService,
+    // private commonService: CommonService,
     private loanService: LoanService,
     private el: ElementRef,
   ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.updateCurrentRoute();
+    // this.updateCurrentRoute();
     this.getLoanServices();
   }
 
-  updateCurrentRoute() {
-    this.commonService.updateData(this.router.url);
-  }
+  // updateCurrentRoute() {
+  //   this.commonService.updateData(this.router.url);
+  // }
 
   getLoanServices() {
     this.loanService.getLoanTypes(this.category).subscribe((response: any) => {

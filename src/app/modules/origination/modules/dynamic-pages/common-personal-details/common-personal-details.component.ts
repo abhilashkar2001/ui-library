@@ -91,6 +91,8 @@ export class CommonPersonalDetailsComponent
   dateFormat!: string;
   screenCodeValue: number | undefined;
   isMarried = false;
+  dobMinDate: Date | any;
+  dobMaxDate: Date | any;
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -707,6 +709,12 @@ export class CommonPersonalDetailsComponent
     });
   }
 
+  getExpDateMin() {
+    const currentDate = new Date(this.todayDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+    return currentDate;
+  }
+
   getDocumentIdArray(index: number): FormArray {
     return this.customer?.at(index)?.get('documentId') as FormArray;
   }
@@ -1192,6 +1200,20 @@ export class CommonPersonalDetailsComponent
     this.openApi.fetchBoundariesDetails(this.basisId).subscribe((res) => {
       if (res?.statusCode === 200 && res?.data) {
         this.boundaries = res.data[0];
+        const minimumAge = this.boundaries.minimumAge ?? 0;
+        const maximumAge = this.boundaries.maximumAge ?? 0;
+
+        this.dobMaxDate = new Date(
+          this.todayDate.getFullYear() - maximumAge,
+          this.todayDate.getMonth(),
+          this.todayDate.getDate(),
+        );
+
+        this.dobMinDate = new Date(
+          this.todayDate.getFullYear() - minimumAge,
+          this.todayDate.getMonth(),
+          this.todayDate.getDate(),
+        );
       }
     });
   }

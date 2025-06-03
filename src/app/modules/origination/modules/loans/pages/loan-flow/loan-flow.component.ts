@@ -160,9 +160,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                 this.next();
               }
             });
-            if (this.componentRef.instance?.onMobileExitEvent)
-              this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
-                this.router.navigate(['/loan/landing']);
+
+            if (this.componentRef.instance?.mobileExitEvent)
+              this.componentRef.instance?.mobileExitEvent.subscribe(() => {
+                this.router.navigate(['/origination/loan/loan-type'], {
+                  queryParams: { subClass: this.productDetails?.basisClass },
+                });
               });
             if (this.componentRef.instance?.backEvent)
               this.componentRef.instance?.backEvent.subscribe(() => {

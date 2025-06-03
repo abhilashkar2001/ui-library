@@ -17,6 +17,8 @@
     </app-loan-products>
   </div>
 
+  {{ isShowCalculator }}
+
   <div *ngIf="isShowCalculator" fxLayout="column" id="loanCalculator">
     <div fxLayoutAlign="center center" fxLayout="column">
       <div class="account-type-header">{{ basisClass }} EMI Calculator</div>

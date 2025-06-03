@@ -8,6 +8,7 @@
     (backEvent)="onBackCIBILScoreResult()"
     (onCibilConfirmEvent)="onConfirmFromCibilScoreResult()"
   ></app-cibil-score-result>
+
   <div *ngIf="!showCibilScoreResult">
     <div *ngIf="!isDifferentMobile">
       <div class="mobile-selection-tpl">
@@ -15,12 +16,12 @@
           <img src="../../../../../../assets/images/shield.png" alt="shield" />
         </div>
         <div class="card-details">
-          <p>Your Account Number</p>
+          <p>Your Phone No</p>
           <span class="text-info-1">{{ createLoanAccountNumber }}</span>
         </div>
         <div class="vertical-line"></div>
         <div class="card-details">
-          <p>Your National Number</p>
+          <p>Your National ID</p>
           <span class="text-info-1"></span>
         </div>
       </div>
@@ -40,6 +41,7 @@
           class="custom-checkbox"
           class="primary"
           style="margin-right: 10px"
+          [checked]="agreed"
           (checkboxChange)="agreed = !agreed"
         >
         </ic-checkbox>

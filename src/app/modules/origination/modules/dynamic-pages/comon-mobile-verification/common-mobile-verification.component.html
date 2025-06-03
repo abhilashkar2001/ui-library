@@ -83,36 +83,32 @@
     </div>
   </div>
 
-  <div *ngIf="!hideInfo">
-    <div fxLayout="column">
-      <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
-        <div
-          fxLayout="row"
-          fxLayoutGap="30px"
-          class="button-section"
+  <!-- <div *ngIf="!hideInfo"> -->
+  <div fxLayout="column">
+    <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
+      <div fxLayout="row" fxLayoutGap="30px" class="button-section">
+        <ic-button
           *ngIf="showOtpSection"
+          [label]="'Verify' | translate"
+          [type]="'submit'"
+          size="large"
+          [disabled]="this.agreed === false"
+          [icButtonType]="'filled-rounded'"
+          [isLoading]="isLoading"
+          (OnClick)="onVerify()"
         >
-          <ic-button
-            [label]="'Verify' | translate"
-            [type]="'submit'"
-            size="large"
-            [disabled]="this.agreed === false"
-            [icButtonType]="'filled-rounded'"
-            [isLoading]="isLoading"
-            (OnClick)="onVerify()"
-          >
-            <!-- [disabled]="!(otpAvailable && !isLoading && agreed)" -->
-          </ic-button>
-          <ic-button
-            [label]="'Exit'"
-            icButtonType="ghost-rounded-danger"
-            size="large"
-            [type]="'button'"
-            (OnClick)="onExit()"
-          >
-          </ic-button>
-        </div>
+          <!-- [disabled]="!(otpAvailable && !isLoading && agreed)" -->
+        </ic-button>
+        <ic-button
+          [label]="'Back'"
+          icButtonType="ghost-rounded-danger"
+          size="large"
+          [type]="'button'"
+          (OnClick)="onExit()"
+        >
+        </ic-button>
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </form>

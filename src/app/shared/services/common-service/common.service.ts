@@ -8,14 +8,10 @@ const baseUrl = environment.microServiceURL;
   providedIn: 'root',
 })
 export class CommonService {
-  private urlSource = new BehaviorSubject('initial value');
+  // private urlSource = new BehaviorSubject('initial value');
   private userMobileSource = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) {}
-
-  updateData(value: any) {
-    this.urlSource.next(value);
-  }
 
   isUserUsingDifferentMobile(value: boolean) {
     this.userMobileSource.next(value);
