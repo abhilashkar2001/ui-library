@@ -26,6 +26,7 @@ export class DobVerificationComponent implements OnInit {
   otp: any;
   customerInfo: any;
   incorrectDOB = false;
+
   constructor(
     private originationService: OriginationService,
     private sessionStorageService: SessionStorageService,

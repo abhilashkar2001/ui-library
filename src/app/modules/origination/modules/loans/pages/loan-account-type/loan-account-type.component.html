@@ -1,9 +1,9 @@
 <div fxLayout="column">
   <div class="loan-account-type">
     <div
+      class="product-desc-container"
       fxLayout="column"
       fxLayoutAlign="center center"
-      class="product-desc-container"
     >
       <div class="account-type-header mb-10">{{ basisClass }}</div>
       <div class="standard-content-title">
@@ -11,8 +11,8 @@
       </div>
     </div>
     <app-loan-products
-      [subLoanList]="subLoanList"
       (customApply)="customApply($event)"
+      [subLoanList]="subLoanList"
     >
     </app-loan-products>
   </div>
@@ -20,7 +20,7 @@
   {{ isShowCalculator }}
 
   <div *ngIf="isShowCalculator" fxLayout="column" id="loanCalculator">
-    <div fxLayoutAlign="center center" fxLayout="column">
+    <div fxLayout="column" fxLayoutAlign="center center">
       <div class="account-type-header">{{ basisClass }} EMI Calculator</div>
       <div class="standard-content-title mb-30">
         Maximize Your Savings with Fixed Deposit: Earn Guaranteed Returns on

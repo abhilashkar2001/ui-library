@@ -1,4 +1,10 @@
-import { EventEmitter, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+  EventEmitter,
+  Inject,
+  Injectable,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 export interface ITheme {
@@ -26,6 +32,7 @@ export class ThemeService {
 
   public activatedTheme: ITheme | undefined;
   private renderer: Renderer2;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     rendererFactory: RendererFactory2,

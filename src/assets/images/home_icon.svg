@@ -1,10 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="27.317" height="47.77" viewBox="0 0 27.317 47.77">
-  <g id="Group_11705" data-name="Group 11705" transform="translate(-85 -88)">
-    <g id="Group_8797" data-name="Group 8797">
-      <g id="Group_8089" data-name="Group 8089" transform="translate(85 88)">
-        <text id="Home" transform="translate(0 44.77)" fill="#fff" font-size="10" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Home</tspan></text>
+<svg height="47.77" viewBox="0 0 27.317 47.77" width="27.317" xmlns="http://www.w3.org/2000/svg">
+  <g data-name="Group 11705" id="Group_11705" transform="translate(-85 -88)">
+    <g data-name="Group 8797" id="Group_8797">
+      <g data-name="Group 8089" id="Group_8089" transform="translate(85 88)">
+        <text fill="#fff" font-family="SegoeUI, Segoe UI" font-size="10" id="Home" transform="translate(0 44.77)">
+          <tspan x="0" y="0">Home</tspan>
+        </text>
         <g id="noun-home-6605324" transform="translate(0 0)">
-          <path id="Path_14391" data-name="Path 14391" d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z" transform="translate(-2.341 -2)" fill="#fff"/>
+          <path d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z" data-name="Path 14391"
+                fill="#fff"
+                id="Path_14391" transform="translate(-2.341 -2)" />
         </g>
       </g>
     </g>

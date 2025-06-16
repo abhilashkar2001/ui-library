@@ -1,12 +1,14 @@
 .loanForm {
   border-radius: 16px;
 }
+
 .calculator_container {
   background-color: #f6faff;
   padding: 2%;
   border-radius: 16px;
   border: 3px solid #fff;
   box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
+
   .yeardrop.fieldset {
     ::ng-deep .mat-form-field-outline {
       box-shadow: none !important;
@@ -34,6 +36,7 @@
     opacity: 0.5;
     top: -1px;
   }
+
   .tenure-input {
     position: relative;
     width: 100%;
@@ -45,6 +48,7 @@
     outline: none;
     border: none;
   }
+
   .placeholders {
     position: relative;
     right: 8%;
@@ -68,17 +72,18 @@
 }
 
 ::ng-deep
-  .inputSelects.mat-form-field-appearance-outline
-  .mat-form-field-infix {
+.inputSelects.mat-form-field-appearance-outline
+.mat-form-field-infix {
   padding: 0px;
   margin-top: -10px !important;
 }
 
 ::ng-deep
-  .inputSelects.mat-form-field-appearance-outline
-  .mat-form-field-outline {
+.inputSelects.mat-form-field-appearance-outline
+.mat-form-field-outline {
   color: white !important;
 }
+
 .inputSelects {
   width: 30% !important;
   height: 22px;
@@ -88,16 +93,19 @@
   margin-top: 0px;
   display: flow-root;
 }
+
 .vl {
   border-left: 1px solid #bdbbbb;
   margin-top: -5px;
   height: 35px;
 }
+
 .calculator_subTItle {
   color: #0033a1;
   font-size: 18px;
   font-weight: 600;
   font-family: 'Benton Sans';
+
   span {
     color: #5a607f;
     font-size: 15px;
@@ -115,11 +123,13 @@
   border-radius: 20px;
   min-height: 80%;
   padding: 15px;
+
   .maturityTitle {
     font-family: 'Benton Sans', sans-serif;
     font-size: 20px;
     font-weight: 500;
   }
+
   .maturityDesc {
     font-family: 'Benton Sans', sans-serif;
     font-size: 33px;
@@ -145,6 +155,7 @@
     font-size: 16px;
     font-weight: 500;
   }
+
   .maturityVal {
     font-family: 'Benton Sans', sans-serif;
     font-size: 13px;
@@ -152,15 +163,18 @@
     color: #0033a1;
   }
 }
+
 .calc-white-bg {
   background-image: url('/assets/images/card-doddle.svg') !important;
   background-position-x: right;
   background-position-y: top !important;
   background-repeat: no-repeat !important;
 }
+
 .emiTitle {
   padding: 10%;
 }
+
 .emiAmount {
   color: #0033a1;
   font-size: 50px;
@@ -170,9 +184,11 @@
 .emiVl {
   border-left: 1px solid #00000030;
 }
+
 .renew_check {
   margin: 5% 0;
 }
+
 .openFDbtn {
   width: 200px;
   height: 50px;
@@ -186,12 +202,14 @@
   background: linear-gradient(90deg, #0062e1, #03a) !important;
   margin: 10px 0%;
 }
+
 .alignCenter {
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #00000030;
 }
+
 .alignLeft {
   align-items: inherit !important;
   padding-left: 5%;
@@ -209,6 +227,7 @@
     top: 0em !important;
   }
 }
+
 ::ng-deep .month-suffix-field {
   .mat-form-field-suffix {
     right: 42% !important;
@@ -220,18 +239,22 @@
   height: 8px !important;
   border-radius: 10px !important;
   box-shadow: 0px 3px 6px 0px #0000001f;
+
   .mat-slider-track-background {
     background-color: #fff !important;
   }
 }
+
 :host ::ng-deep .background-white.mat-form-field {
   .mat-input-element {
     padding-left: 5px !important;
   }
+
   .mat-form-field-flex .mat-form-field-outline {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
+
     &-start,
     &-gap,
     &-end {
@@ -239,11 +262,13 @@
     }
   }
 }
+
 .small-error {
   position: relative;
   top: -16px;
   left: 12px;
 }
+
 .field-changedInput {
   ::ng-deep .mat-form-field-flex {
     height: 56px !important;

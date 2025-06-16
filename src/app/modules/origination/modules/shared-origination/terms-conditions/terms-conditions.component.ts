@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { AppState, selectLocaleData } from '@onerumango/utils';
 import * as moment from 'moment';

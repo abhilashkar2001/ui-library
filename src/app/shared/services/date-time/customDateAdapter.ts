@@ -6,6 +6,7 @@ import * as moment from 'moment';
 
 const defaultLocale = 'en-US';
 const defaultDateFormatter = 'DD-MM-YYYY';
+
 @Injectable({
   providedIn: 'root',
 })

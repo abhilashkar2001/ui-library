@@ -1,10 +1,10 @@
-<div fxLayout="column" fxFlex="100" class="scrollStep {{ customClass }}">
-  <div fxLayout="row" class="scrollStep__prodInfo">
+<div class="scrollStep {{ customClass }}" fxFlex="100" fxLayout="column">
+  <div class="scrollStep__prodInfo" fxLayout="row">
     <div>
       <div class="deposit_icon">
         <img
-          src="assets/images/bank-profile-logo.svg"
           alt="Bank Sign"
+          src="assets/images/bank-profile-logo.svg"
           width="65%"
         />
       </div>
@@ -17,7 +17,7 @@
       </div>
       <div class="stepper-title">in {{ screenList?.length }} simple steps</div>
       <div class="fd_info_stat" fxLayout="row" fxLayoutGap="10">
-        <img src="assets/images/Group.svg" alt="img" />
+        <img alt="img" src="assets/images/Group.svg" />
         <div class="steps-average-text">
           On an average, People get their savings account in 15 - 20 min
         </div>
@@ -26,21 +26,21 @@
   </div>
   <mat-stepper
     #stepper
-    orientation="vertical"
-    [linear]="isLinear"
-    class="custom_steppper"
-    [selectedIndex]="screenIndex"
     (selectionChange)="stepperSelectionChange($event)"
+    [linear]="isLinear"
+    [selectedIndex]="screenIndex"
+    class="custom_steppper"
     class="mt-32"
     data-aos="fade-down"
     data-aos-delay="200"
     data-aos-duration="500"
+    orientation="vertical"
   >
     <ng-container *ngFor="let item of screenList; let i = index">
       <mat-step
-        [label]="item.screenName"
         [completed]="item.completed"
         [editable]="item.isEditable"
+        [label]="item.screenName"
       ></mat-step>
     </ng-container>
   </mat-stepper>

@@ -1,74 +1,74 @@
-<div class="business-main" [formGroup]="businessDetailsForm" fxLayout="column">
+<div [formGroup]="businessDetailsForm" class="business-main" fxLayout="column">
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <div fxFlex="49">
       <ic-form-field
-        label="Business Name"
+        [control]="businessDetailsForm.get('businessName') | formcontrol"
         [icAlphabetOnly]="true"
         [maxLength]="100"
-        [control]="businessDetailsForm.get('businessName') | formcontrol"
+        label="Business Name"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
-        label="Telephone Number"
-        [maxLength]="20"
-        [icNumbersOnly]="true"
         [control]="contact.get('telephone') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="20"
+        label="Telephone Number"
       ></ic-form-field>
     </div>
     <div fxFlex="99">
       <ic-form-field
-        [icAlphanumeric]="true"
-        label="Business Address"
-        [maxLength]="250"
         [control]="address.at(0).get('address1') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="Business Address"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
-        [icNumbersOnly]="true"
-        label="No of years in operation"
-        [maxLength]="3"
         [control]="businessDetailsForm.get('yearsOfOperation') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="3"
+        label="No of years in operation"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-select
-        label="Industry Type"
-        [options]="industryTypeList"
-        bindValueKey="id"
-        bindLabelKey="values"
         [control]="businessDetailsForm.get('natureOfBusinessId') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Industry Type"
       >
       </ic-select>
     </div>
     <div fxFlex="49">
       <ic-form-field
-        [icAlphabetOnly]="true"
-        label="Types of Goods service"
-        [maxLength]="255"
         [control]="businessDetailsForm.get('typeOfService') | formcontrol"
+        [icAlphabetOnly]="true"
+        [maxLength]="255"
+        label="Types of Goods service"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
-        label="Monthly Turn over"
+        [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"
+        [decimalPlaces]="3"
         [icTwoDigitDecimalNumber]="true"
         [maxLength]="20"
-        [decimalPlaces]="3"
         [numLength]="18"
-        [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"
         [prefixIcon]="
           businessDetailsForm.value?.monthlyTurnover ? currencySymboll : ''
         "
+        label="Monthly Turn over"
       ></ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
-        [icNumbersOnly]="true"
-        label="AVE stock Level"
-        [maxLength]="20"
         [control]="businessDetailsForm.get('aveStockLevel') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="20"
+        label="AVE stock Level"
       ></ic-form-field>
     </div>
   </div>
@@ -76,21 +76,21 @@
   <div fxFlex="100" fxLayout="row" fxLayoutGap="2%" style="margin-top: 50px">
     <div>
       <ic-button
+        (OnClick)="saveBusinessDetails()"
+        [icButtonType]="'filled-rounded'"
         [label]="'Confirm' | translate"
         [type]="'submit'"
         size="large"
-        (OnClick)="saveBusinessDetails()"
-        [icButtonType]="'filled-rounded'"
       >
       </ic-button>
     </div>
     <div>
       <ic-button
+        (OnClick)="onBack()"
         [label]="'Back'"
+        [type]="'button'"
         icButtonType="ghost-rounded-danger"
         size="large"
-        [type]="'button'"
-        (OnClick)="onBack()"
       >
       </ic-button>
     </div>

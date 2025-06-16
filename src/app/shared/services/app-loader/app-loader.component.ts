@@ -9,5 +9,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AppLoaderComponent {
   title: any;
   message: any;
+
   constructor(public dialogRef: MatDialogRef<AppLoaderComponent>) {}
 }

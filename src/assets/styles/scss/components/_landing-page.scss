@@ -30,6 +30,7 @@ section.hero_section {
       font-size: 2rem;
     }
   }
+
   .hero_subtitle {
     width: 65%;
     font-size: 17px;
@@ -43,31 +44,38 @@ section.hero_section {
       width: 100%;
     }
   }
+
   .apply_div {
     margin: 2rem 0;
   }
+
   .stacked_imgs_div {
     display: flex;
     align-items: center;
     margin-top: 1.4rem;
+
     .img_wrapper {
       position: relative;
       width: 130px;
       height: 60px;
       display: flex;
+
       img.stacked_images {
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
+
         &:nth-child(2) {
           left: 25%;
         }
+
         &:last-child {
           left: 50%;
         }
       }
     }
+
     .stacked_div_text {
       h2,
       p {
@@ -75,6 +83,7 @@ section.hero_section {
         font-family: 'Benton Sans', sans-serif;
         margin: 0;
       }
+
       h2 {
         font-size: 1.5rem;
         font-weight: 500;
@@ -85,6 +94,7 @@ section.hero_section {
   .hero_image_container {
     .card_hero_image {
       position: absolute;
+
       &.debit_card {
         position: relative;
         width: 90%;
@@ -92,21 +102,23 @@ section.hero_section {
         top: 5%;
         transform: translateX(-50%);
         z-index: 2;
-        animation: card_animation 1.2s cubic-bezier(0.4, 0, 1, 1) infinite
-          alternate;
+        animation: card_animation 1.2s cubic-bezier(0.4, 0, 1, 1) infinite alternate;
       }
+
       &.card_shadow {
         position: relative;
         top: 0;
         left: 2%;
         z-index: 1;
       }
+
       &.hand {
         position: absolute;
         right: 0;
         top: 20%;
         width: 25%;
       }
+
       @media screen and (max-width: $laptop) {
         &.debit_card {
           width: 60%;

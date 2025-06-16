@@ -1,21 +1,21 @@
 <div fxLayout="column">
   <form
     *ngIf="createDocumentForm"
-    fxLayout="column"
-    fxFlex="100"
     [formGroup]="createDocumentForm"
+    fxFlex="100"
+    fxLayout="column"
   >
     <div formArrayName="otherDocument">
       <div *ngFor="let denomDetai of otherDocument().controls; let i = index">
-        <mat-card fxFlex="98%" fxLayout="column" [formGroupName]="i">
-          <div fxLayout="column" class="outer-div" fxFlex="100">
+        <mat-card [formGroupName]="i" fxFlex="98%" fxLayout="column">
+          <div class="outer-div" fxFlex="100" fxLayout="column">
             <div fxLayout="column">
-              <div fxLayoutAlign="space-between start" class="text-header">
+              <div class="text-header" fxLayoutAlign="space-between start">
                 <div fxFlex="80">Document {{ i + 1 }}</div>
                 <button
+                  (click)="deleteDocument(i)"
                   *ngIf="i > 0"
                   class="deleteButton"
-                  (click)="deleteDocument(i)"
                 >
                   Delete
                 </button>
@@ -23,9 +23,9 @@
               <div class="row">
                 <div class="col-md-6 col-12">
                   <mat-form-field
-                    fxFlex="100"
-                    class="borderColor"
                     appearance="outline"
+                    class="borderColor"
+                    fxFlex="100"
                   >
                     <mat-label class="label_input">Document Type</mat-label>
                     <mat-select
@@ -35,6 +35,9 @@
                     >
                       <mat-option [value]="">Select</mat-option>
                       <mat-option
+                        (click)="
+                          onDocumentSelection(documentTypeItem.values, i)
+                        "
                         *ngFor="
                           let documentTypeItem of documentTypeArray;
                           let docIndex = index
@@ -42,27 +45,26 @@
                         [hidden]="
                           isDocumentOptionDisabled2(documentTypeItem.values)
                         "
-                        class="option_font"
                         [value]="documentTypeItem.id"
-                        (click)="
-                          onDocumentSelection(documentTypeItem.values, i)
-                        "
-                        >{{ documentTypeItem.values }}</mat-option
+                        class="option_font"
+                      >{{ documentTypeItem.values }}
+                      </mat-option
                       >
                     </mat-select>
-                    <mat-error> Please Select Document Type </mat-error>
+                    <mat-error> Please Select Document Type</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-12">
                   <mat-form-field appearance="outline" style="display: block">
                     <mat-label class="custom-mat-label"
-                      >Document Number</mat-label
+                    >Document Number
+                    </mat-label
                     >
                     <input
-                      matInput
                       appNoLeadingSpace
-                      maxlength="30"
                       formControlName="documentNumber"
+                      matInput
+                      maxlength="30"
                     />
                   </mat-form-field>
                 </div>
@@ -70,13 +72,13 @@
               <ng-container>
                 <mat-card class="card-subdiv">
                   <div
-                    appDragDrop
-                    class="doc_upload"
-                    fxFlex="100"
                     #fileInput
                     (FileDropped)="onFileDropped($event, i)"
                     (click)="fileBrowseHandler(i)"
                     (keydown.enter)="fileBrowseHandler(i)"
+                    appDragDrop
+                    class="doc_upload"
+                    fxFlex="100"
                     tabindex="0"
                   >
                     <div class="drag_drop" fxFlex="90">
@@ -89,8 +91,8 @@
                     </div>
                     <label class="doc_img" fxFlex="10">
                       <img
-                        src="../../../../../../assets/images/upload-logo.svg"
                         alt="Upload Sign"
+                        src="../../../../../../assets/images/upload-logo.svg"
                       />
                     </label>
                   </div>
@@ -104,13 +106,13 @@
                       <div class="img_container">
                         <p class="img_name">{{ file?.name }}</p>
                         <div class="progress-cont">
-                          <div class="progress" [style.width]="'100%'"></div>
+                          <div [style.width]="'100%'" class="progress"></div>
                         </div>
                       </div>
                       <button
-                        mat-icon-button
-                        class="btn"
                         (click)="deleteFile(fileIndx, i, file)"
+                        class="btn"
+                        mat-icon-button
                       >
                         <mat-icon color="warn">delete</mat-icon>
                       </button>
@@ -125,28 +127,28 @@
     </div>
   </form>
   <button
-    type="button"
-    class="add-more-btn"
+    (click)="addDocument()"
     [disabled]="checkValidity()"
     [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : '#0033a1' }"
-    (click)="addDocument()"
+    class="add-more-btn"
+    type="button"
   >
     Add Another Document
   </button>
   <div fxLayoutGap="50px">
     <ic-button
-      [type]="'submit'"
+      (click)="onSubmit()"
       [disabled]="isLoading && checkDocValidity()"
       [isLoading]="isLoading"
-      (click)="onSubmit()"
+      [type]="'submit'"
     >
       Submit
     </ic-button>
     <button
-      type="button"
-      mat-raised-button
-      class="button back_button"
       (click)="onBack()"
+      class="button back_button"
+      mat-raised-button
+      type="button"
     >
       Back
     </button>

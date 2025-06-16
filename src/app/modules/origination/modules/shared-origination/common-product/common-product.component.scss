@@ -7,7 +7,7 @@
   }
   .loan-main-text {
     max-width: 100% !important;
-    justify-content: center !important  ;
+    justify-content: center !important;
     align-items: center !important;
   }
 }
@@ -87,6 +87,7 @@
         z-index: -1;
         // animation: content-circle 1.5s ease-in-out infinite alternate;
       }
+
       // @keyframes content-circle {
       //   0% {
       //     left: 0%;
@@ -140,6 +141,7 @@
     }
   }
 }
+
 .emi-calculator-header {
   margin-top: 30px;
   color: var(--dard, #06113c);
@@ -151,12 +153,14 @@
   line-height: 74.097px;
   letter-spacing: -0.24px;
 }
+
 .show-hyperLink {
   color: #0033a1;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer !important;
 }
+
 .feature_name {
   color: #051a2d;
   font-family: Benton Sans;
@@ -165,6 +169,7 @@
   font-weight: 700;
   padding: 5px 0px;
 }
+
 .more-less-text {
   color: #06113c;
   border: none !important;
@@ -173,14 +178,14 @@
   font-weight: 600;
   padding-left: 6%;
 }
+
 $btnBackground: #06113c;
 
 .confirm-button:hover {
-  box-shadow:
-    0px 0px 0px 2.5px #fff,
-    0px 0px 0px 5px $btnBackground,
-    0px 0px 0px 10px white,
-    0px 0px 0px 0px $btnBackground;
+  box-shadow: 0px 0px 0px 2.5px #fff,
+  0px 0px 0px 5px $btnBackground,
+  0px 0px 0px 10px white,
+  0px 0px 0px 0px $btnBackground;
   background: rgba(219, 236, 255, 0.8392156863) !important;
   color: $btnBackground !important;
   margin-top: 5px;

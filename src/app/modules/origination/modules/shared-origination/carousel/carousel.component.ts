@@ -10,7 +10,11 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { ENVIRONMENT, IEnvironment, TokenStorageService } from '@onerumango/utils';
+import {
+  ENVIRONMENT,
+  IEnvironment,
+  TokenStorageService,
+} from '@onerumango/utils';
 import SwiperCore, { Navigation } from 'swiper';
 
 SwiperCore.use([Navigation]);

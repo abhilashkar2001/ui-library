@@ -1,22 +1,22 @@
 <div class="main_page white-background">
   <mat-card class="default-card m-24 pt-4 pb-4">
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="m-4">
+    <div class="m-4" fxLayout="row" fxLayoutAlign="space-between center">
       <h2 class="bank-title" fxLayoutAlign="center center">
         {{ currentUser?.bankName | titlecase }}
       </h2>
       <div fxLayout="row" fxLayoutGap="10px">
         <ic-button
-          icIcon="share"
           icButtonType="ghost-rounded"
-          size="medium"
+          icIcon="share"
           label="Share"
+          size="medium"
         ></ic-button>
         <ic-button
-          icIcon="download-white"
-          icButtonType="filled-rounded"
-          size="medium"
-          label="Download"
           (OnClick)="handleDownload()"
+          icButtonType="filled-rounded"
+          icIcon="download-white"
+          label="Download"
+          size="medium"
         ></ic-button>
       </div>
     </div>
@@ -26,9 +26,9 @@
           <div *ngIf="dataLocalUrl !== undefined" class="h-100">
             <object
               [data]="dataLocalUrl"
+              height="100%"
               type="application/pdf"
               width="100%"
-              height="100%"
             >
               <p>
                 Your browser does not support PDFs. Please download the PDF to
@@ -37,13 +37,14 @@
             </object>
           </div>
         </div>
-        <div fxLayout="column" fxLayoutAlign="space-between start" class="p-12">
+        <div class="p-12" fxLayout="column" fxLayoutAlign="space-between start">
           <div>
             <div fxLayout="row">
               <mat-icon
                 class="material-icons-outlined mt-12"
                 style="color: #0033a1"
-                >info</mat-icon
+              >info
+              </mat-icon
               >
               <h3 class="sub-heading">Offer Letter</h3>
             </div>
@@ -63,12 +64,12 @@
             <div fxLayout="column">
               <h3 class="title-text">Applicants</h3>
               <div
+                class="mb-12"
                 fxLayout="row"
                 fxLayoutAlign="space-between center"
-                class="mb-12"
               >
                 <span class="text-label"
-                  >{{ customerInfo?.firstName }}
+                >{{ customerInfo?.firstName }}
                   {{ customerInfo?.lastName }}</span
                 >
                 <button class="status_btn">REQUESTED</button>
@@ -89,30 +90,30 @@
       </div>
     </div>
   </mat-card>
-  <div fxLayout="row" fxLayoutGap="10px" class="ml-24">
+  <div class="ml-24" fxLayout="row" fxLayoutGap="10px">
     <ic-button
+      (OnClick)="saveCustomerResponse('Accept')"
+      [icButtonType]="'filled-rounded'"
       [label]="'Accept' | translate"
       [type]="'submit'"
       size="large"
-      [icButtonType]="'filled-rounded'"
-      (OnClick)="saveCustomerResponse('Accept')"
     >
     </ic-button>
 
     <ic-button
+      (OnClick)="saveCustomerResponse('Reject')"
       [label]="'Reject'"
+      [type]="'button'"
       icButtonType="ghost-rounded-danger"
       size="large"
-      [type]="'button'"
-      (OnClick)="saveCustomerResponse('Reject')"
     >
     </ic-button>
     <ic-button
+      (OnClick)="saveCustomerResponse('Revisited')"
       [label]="'Revisited'"
+      [type]="'button'"
       icButtonType="ghost-rounded"
       size="large"
-      [type]="'button'"
-      (OnClick)="saveCustomerResponse('Revisited')"
     >
     </ic-button>
   </div>

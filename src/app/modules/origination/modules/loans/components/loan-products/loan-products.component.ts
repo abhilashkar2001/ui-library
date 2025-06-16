@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 
@@ -61,6 +69,7 @@ export class LoanProductsComponent implements OnInit, OnChanges {
       });
     }
   }
+
   getFileUrl(url: any) {
     if (url.includes('https')) {
       return 'assets/images/normal_loan.svg';

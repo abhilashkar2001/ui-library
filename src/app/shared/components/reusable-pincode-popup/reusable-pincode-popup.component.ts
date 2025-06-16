@@ -45,6 +45,7 @@ export class ReusablePincodePopupComponent implements OnInit {
   pagesize: number | any;
   pageIndex: number | any;
   filterValue: any;
+
   constructor(
     public dialogRef: MatDialogRef<ReusablePincodePopupComponent>,
     private fb: FormBuilder,

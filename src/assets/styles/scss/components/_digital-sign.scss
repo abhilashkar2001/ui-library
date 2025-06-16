@@ -30,6 +30,7 @@
     height: 49px;
     border-radius: 21px;
   }
+
   .margin-left {
     margin-left: 10px;
   }
@@ -170,6 +171,7 @@
   .header-card {
     height: 200px !important;
   }
+
   .label {
     font-family: 'Benton Sans';
     font-size: 15px;
@@ -178,6 +180,7 @@
     opacity: 1;
     font-weight: 600;
   }
+
   .labelval {
     color: #102245;
     font-size: 15px;
@@ -189,6 +192,7 @@
     opacity: 1;
     /* font-weight: 600;*/
   }
+
   .Sign-Header {
     letter-spacing: 0px;
     color: #00000f;
@@ -205,6 +209,7 @@
   filter: contrast(2);
   transform: rotate(180deg);
 }
+
 .icon {
   width: 35px;
   height: 35px;
@@ -215,8 +220,7 @@
 .primary-btn {
   width: 162px !important;
   height: 49px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box;
   border-radius: 23px;
   font-weight: bold;
   color: #ffffff !important;
@@ -245,6 +249,7 @@
 .p-3 {
   padding: 3px;
 }
+
 .img_items {
   margin-top: -17px !important;
 }

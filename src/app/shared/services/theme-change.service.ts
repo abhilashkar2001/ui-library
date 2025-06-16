@@ -125,6 +125,7 @@ export class ThemeChangeService {
         payload.borderColor,
       );
   }
+
   saveCurrentTheme(payload: {
     userId: number;
     themeInfoId?: number;

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FooterConstant } from './footer.constant';
 import { FooterServiceService } from 'app/shared/services/footer-service.service';
 import { Store } from '@ngrx/store';
@@ -20,6 +26,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   isHideFooter = false;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+
   constructor(
     private footerService: FooterServiceService,
     private store: Store,

@@ -33,12 +33,12 @@ $chart_inner_size: 300px;
       justify-content: center;
       background: conic-gradient(#7d2ae8 180deg, #fff 0deg);
       background: linear-gradient(
-        170deg,
-        #fa2735,
-        #fd8901,
-        #fcc101,
-        #8ad83c,
-        #229c5a
+                      170deg,
+                      #fa2735,
+                      #fd8901,
+                      #fcc101,
+                      #8ad83c,
+                      #229c5a
       );
 
       &::before {
@@ -69,9 +69,11 @@ $chart_inner_size: 300px;
           margin-bottom: 0;
           margin-top: 20px;
           position: relative;
+
           &:first-child {
             left: -10px;
           }
+
           &:last-child {
             right: -10px;
           }
@@ -87,6 +89,7 @@ $chart_inner_size: 300px;
           background: linear-gradient(to right, #fb4e30, #fc591b);
           border-radius: 0 0 50px 50px;
         }
+
         &::after {
           content: '';
           position: absolute;
@@ -98,7 +101,9 @@ $chart_inner_size: 300px;
           border-radius: 0 0 50px 50px;
         }
       }
-    } // end of circular-progress
+    }
+
+    // end of circular-progress
 
     .marker_container {
       position: absolute;
@@ -150,8 +155,7 @@ $chart_inner_size: 300px;
       align-items: center;
       border-radius: 30px;
       background: #f6faff;
-      box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px
-        rgba(0, 0, 0, 0.09);
+      box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px rgba(0, 0, 0, 0.09);
       border: 4.737px solid #fff;
       font-size: 16px;
       font-family: 'Benton Sans', sans-serif;
@@ -164,6 +168,7 @@ $chart_inner_size: 300px;
         border: none;
         margin-top: 5px;
         margin-left: 5px;
+
         &:hover + .cibil_score_info {
           visibility: visible;
           opacity: 1;
@@ -199,14 +204,17 @@ $chart_inner_size: 300px;
     .parentCibil {
       font-size: 25px !important;
     }
+
     .cibilInfo {
       font-size: 16px !important;
     }
+
     .circle {
       width: 20px;
       height: 20px;
       border-radius: 50%;
     }
+
     .cibil_score {
       font-size: 20px;
       font-weight: 500;

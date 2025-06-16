@@ -2,62 +2,62 @@
   <div class="container">
     <div class="w-100 d-flex justify-content-between align-items-center">
       <div
-        class="logo"
         (click)="goToHomePage()"
         (keydown.enter)="goToHomePage()"
+        class="logo"
         tabindex="0"
       >
         <img
-          src="assets/images/stanbic_horizontal_white.svg"
           alt="logo"
+          src="assets/images/stanbic_horizontal_white.svg"
           style="width: 100%"
         />
       </div>
       <nav
-        class="d-flex align-items-md-center justify-content-end"
         *ngIf="!hideNavItem"
+        class="d-flex align-items-md-center justify-content-end"
       >
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
           <div
-            fxLayout="column"
             class="align_top_items dropdown position-relative"
+            fxLayout="column"
           >
             <ic-button
-              fxLayoutAlign="space-evenly center"
-              label="LOGIN"
-              icButtonType="filled-blue"
-              type="submit"
-              size="large"
               class="login_btn"
               customButtonClass="w-100"
+              fxLayoutAlign="space-evenly center"
+              icButtonType="filled-blue"
+              label="LOGIN"
+              size="large"
+              type="submit"
             >
             </ic-button>
             <div class="dropdown-content" fxLayout="column">
-              <div fxLayout="column" class="bg-color plr-8">
+              <div class="bg-color plr-8" fxLayout="column">
                 <span
-                  class="flex-spaceAround-center h-50 plr-12 cursor-pointer"
                   (click)="openDropdown(1)"
-                  [class.active-button]="expand === 1"
                   (keydown.enter)="openDropdown(1)"
+                  [class.active-button]="expand === 1"
+                  class="flex-spaceAround-center h-50 plr-12 cursor-pointer"
                   tabindex="2"
                 >
                   Net Banking
                   <mat-icon>keyboard_arrow_down</mat-icon>
                 </span>
-                <span *ngIf="expand === 1" fxLayout="column" class="sub-value">
+                <span *ngIf="expand === 1" class="sub-value" fxLayout="column">
                   <span
-                    class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
                     (click)="redirectToInternet()"
                     (keydown.enter)="redirectToInternet()"
+                    class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
                     tabindex="3"
                   >
                     Personal
                     <mat-icon>keyboard_arrow_right</mat-icon>
                   </span>
                   <span
-                    class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
                     (click)="redirectToSignIn()"
                     (keydown.enter)="redirectToSignIn()"
+                    class="flex-spaceAround-center h-50 plr-8 cursor-pointer sub_value_menu"
                     tabindex="4"
                   >
                     Corporate
@@ -77,9 +77,9 @@
                 Remit Money
               </span>
               <span
-                class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
                 (click)="trackingStatus()"
                 (keydown.enter)="trackingStatus()"
+                class="flex-spaceAround-center bg-color h-50 plr-20 cursor-pointer"
                 tabindex="5"
               >
                 Tracking Status
@@ -88,21 +88,21 @@
           </div>
         </ul>
         <mat-icon
-          role="button"
-          class="d-flex d-lg-none"
           (click)="toggleMobileNavMenu()"
+          class="d-flex d-lg-none"
+          role="button"
           svgIcon="menu-icon"
         >
         </mat-icon>
       </nav>
       <ic-button
+        (OnClick)="helpCenter()"
         *ngIf="hideNavItem"
         fxLayoutAlign="space-evenly center"
-        label="Help"
         icButtonType="filled-rounded"
-        (OnClick)="helpCenter()"
-        type="submit"
+        label="Help"
         size="large"
+        type="submit"
       >
       </ic-button>
     </div>

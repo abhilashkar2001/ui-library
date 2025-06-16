@@ -1195,7 +1195,6 @@
   "Escalation Rate is required": "Se requiere tasa de escalamiento",
   "Escalation Time*": "Tiempo de escalamiento*",
   "Application Auto Inactive*": "Aplicación Auto Inactiva*",
-
   "Application Auto Expiry*": "Caducidad automática de la aplicación*",
   "Restrictions": "Restricciones",
   "Channel Allowed": "Canal permitido",
@@ -1333,7 +1332,6 @@
   "Teller Product Maintenance": "Mantenimiento de productos de caja",
   "Product Code": "Código de producto",
   "Product Name": "nombre del producto",
-
   "Product Name is Required!": "¡El nombre del producto es obligatorio!",
   "Signature Display": "Pantalla de firma",
   "Signature Verification": "Verificación de firma",

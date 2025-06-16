@@ -2,18 +2,22 @@
   font-size: 16px !important;
   opacity: 1;
 }
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #a8acaf8f;
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #a8acaf8f;
 }

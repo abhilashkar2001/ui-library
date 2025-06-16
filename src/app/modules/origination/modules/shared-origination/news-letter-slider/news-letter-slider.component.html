@@ -12,20 +12,20 @@
       </p>
     </div>
     <div
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
       data-aos="zoom-in"
       data-aos-delay="200"
       data-aos-duration="500"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
     >
       <swiper
-        fxFlex="69"
-        fxFlex.lt-md="100"
         [autoplay]="{ delay: 3000, disableOnInteraction: false }"
         [loop]="true"
-        [pagination]="{ clickable: true }"
         [navigation]="true"
+        [pagination]="{ clickable: true }"
         class="mySwiper"
+        fxFlex="69"
+        fxFlex.lt-md="100"
       >
         <ng-container *ngFor="let img of images">
           <ng-template swiperSlide>
@@ -33,9 +33,9 @@
               <div class="client_img">
                 <img [src]="img.image" alt="Client" />
                 <img
-                  src="assets/images/Group 75.svg"
-                  class="dots_img"
                   alt="Options"
+                  class="dots_img"
+                  src="assets/images/Group 75.svg"
                 />
               </div>
               <div class="client_text">
@@ -48,10 +48,10 @@
       </swiper>
 
       <img
+        alt="Image"
+        class="img-fluid"
         fxFlex="30"
         src="assets/images/Group 13938.svg"
-        class="img-fluid"
-        alt="Image"
       />
     </div>
   </div>

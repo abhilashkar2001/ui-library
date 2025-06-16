@@ -4,6 +4,7 @@ import { WEBSITEPRODUCT } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 
 const baseUrl = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })

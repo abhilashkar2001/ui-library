@@ -6,6 +6,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 export class NumberDirective {
   regexStructure = '^[0-9]*$'; // numbers accpt dots
   @Input('appNumbersOnly') isNumbersOnly!: boolean | string;
+
   constructor(private _el: ElementRef) {}
 
   @HostListener('ion-input', ['$event']) onInputChange(event: any) {

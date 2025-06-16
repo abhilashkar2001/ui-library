@@ -11,6 +11,7 @@ import { ImageDialogComponent } from '../../../shared-origination/image-dialog/i
 export class DynamicProductDetailsComponent implements OnChanges {
   @Input() productInfo: any = [];
   @Input() dynamicKeyHelper: any = {};
+
   constructor(private dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges | any): void {

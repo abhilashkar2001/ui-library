@@ -22,10 +22,12 @@
   gap: 6px;
   width: 100%;
 }
+
 .mobileLength-error {
   margin: 3px 0px 0px 20px;
   font-family: 'Benton Sans';
 }
+
 .standard-txtField-phone-main {
   padding-bottom: 4px;
   height: 65px;
@@ -91,30 +93,33 @@
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.0901960784);
   border-radius: 8px;
   padding: 10px;
+
   ::ng-deep .mat-form-field-wrapper {
     padding-bottom: 0px !important;
   }
 }
 
 ::ng-deep
-  .mobile-verify
-  .inputSelect.mat-form-field-appearance-outline
-  .mat-form-field-infix {
+.mobile-verify
+.inputSelect.mat-form-field-appearance-outline
+.mat-form-field-infix {
   padding: 0px;
   margin-top: -4px !important;
 }
+
 ::ng-deep
-  .mobile-verify
-  .inputSelect.isdSelect.mat-form-field-appearance-outline
-  .mat-form-field-infix {
+.mobile-verify
+.inputSelect.isdSelect.mat-form-field-appearance-outline
+.mat-form-field-infix {
   margin-top: 5px !important;
 }
 
 ::ng-deep
-  .inputSelect.mat-form-field-appearance-outline
-  .mat-form-field-outline {
+.inputSelect.mat-form-field-appearance-outline
+.mat-form-field-outline {
   color: white !important;
 }
+
 .vl {
   border-left: 2px solid #cacaca;
   margin: 2px 0px;
@@ -123,6 +128,7 @@
 :host ::ng-deep .mob_field .mat-form-field-wrapper {
   margin-top: 15px !important;
 }
+
 :host ::ng-deep .isdSelect .mat-form-field-wrapper {
   margin: 8px 0;
 }
@@ -131,11 +137,13 @@
   top: -3px !important;
   right: -6px !important;
 }
+
 ::ng-deep
-  .inputSelect.mat-form-field-appearance-outline
-  .mat-form-field-outline {
+.inputSelect.mat-form-field-appearance-outline
+.mat-form-field-outline {
   color: white !important;
 }
+
 .custom-mat-error {
   top: -21px;
   position: relative;
@@ -149,18 +157,22 @@
   ::ng-deep .isdSelect .mat-form-field-flex {
     padding: 0.75rem !important;
   }
+
   .parentYearDiv {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.090196) !important;
     border-radius: 8px;
   }
+
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     box-shadow: none !important;
   }
 }
+
 .disableResend {
   pointer-events: none !important;
   color: #a1a1a1 !important;
   cursor: default !important;
+
   a {
     cursor: default !important;
   }

@@ -28,6 +28,7 @@ export class SuccessPopupComponent implements OnInit {
   generatedLink = '';
   appontment: any;
   isComplete: any;
+
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -43,6 +44,7 @@ export class SuccessPopupComponent implements OnInit {
     this.actionType = data.actionType;
     this.referenceNo = data.refrenceNo;
   }
+
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
@@ -150,9 +152,11 @@ export class SuccessPopupComponent implements OnInit {
       window.close();
     }
   }
+
   close() {
     this.dialogRef.close(false);
   }
+
   onClick() {
     this.dialogRef.close('tracking');
     this.router.navigate(['/origination/tracking']);

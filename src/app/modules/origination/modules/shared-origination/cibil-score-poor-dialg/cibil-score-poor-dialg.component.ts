@@ -13,6 +13,7 @@ export class CibilScorePoorDialgComponent implements OnInit {
   applicationNo: any;
   @Output() submitClicked = new EventEmitter<any>();
   @Output() goBack = new EventEmitter<any>();
+
   constructor(
     private dialogRef: MatDialogRef<CibilScorePoorDialgComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,

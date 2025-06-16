@@ -11,19 +11,19 @@
           <mat-card fxFlex="100" fxLayout="row wrap">
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx === 0">Process :</div>
+                <div *ngIf="indx === 0" class="label_title">Process :</div>
                 <div class="label_value">{{ item?.process }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx === 0">Date & Time</div>
+                <div *ngIf="indx === 0" class="label_title">Date & Time</div>
                 <div class="label_value">{{ item?.processDate }}</div>
               </div>
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx === 0">Description</div>
+                <div *ngIf="indx === 0" class="label_title">Description</div>
                 <div class="label_value">
                   {{ item?.description }}
                 </div>
@@ -31,9 +31,8 @@
             </div>
             <div fxFlex="25" fxLayoutAlign="center start">
               <div fxLayout="column">
-                <div class="label_title" *ngIf="indx === 0">Status :</div>
+                <div *ngIf="indx === 0" class="label_title">Status :</div>
                 <div
-                  class="statusVal"
                   [ngClass]="[
                     item?.status?.toLowerCase() === 'schedule'
                       ? 'scheduleStatus'
@@ -48,6 +47,7 @@
                       ? 'pendingStatus'
                       : '',
                   ]"
+                  class="statusVal"
                 >
                   {{ item.status }}
                 </div>

@@ -22,6 +22,7 @@ export class ShowDocumentComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
   ) {}
+
   ngOnInit(): void {
     this.filePreview = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.endPoints + this.document?.fileUrl,

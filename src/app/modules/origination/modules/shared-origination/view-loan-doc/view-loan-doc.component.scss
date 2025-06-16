@@ -15,9 +15,8 @@
     border-bottom: 1px solid #e0e0e0;
 
     .fileName {
-      font:
-        500 14px/20px Poppins,
-        sans-serif;
+      font: 500 14px/20px Poppins,
+      sans-serif;
       color: #000000;
       white-space: nowrap;
       overflow: hidden;
@@ -52,6 +51,7 @@
   .scrollable-content {
     flex: 1;
     padding: 0 16px;
+
     .table-container {
       border: 1px solid #e0e0e0;
       border-radius: 4px;
@@ -113,9 +113,8 @@
       height: 40px;
 
       mat-header-cell {
-        font:
-          500 11px/15px Poppins,
-          sans-serif;
+        font: 500 11px/15px Poppins,
+        sans-serif;
         color: #0032a4;
       }
     }
@@ -137,9 +136,8 @@
       }
 
       mat-cell {
-        font:
-          400 11px/15px Poppins,
-          sans-serif;
+        font: 400 11px/15px Poppins,
+        sans-serif;
         color: #333333;
         padding: 6px 8px;
         border-bottom: 1px solid #e0e0e0;

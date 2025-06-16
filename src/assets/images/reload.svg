@@ -1,3 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="23.5" height="23.499" viewBox="0 0 23.5 23.499">
-  <path id="reset-reload-refresh-sync-arrow-update-svgrepo-com" d="M35.588,45.759H34a11.75,11.75,0,0,1,20.959-7.3V36.708h1.588v5.557H50.99V40.678h3.56a10.162,10.162,0,0,0-18.962,5.081Zm20.324,0A10.162,10.162,0,0,1,36.95,50.84h3.56V49.252H34.953v5.557h1.588V53.055a11.75,11.75,0,0,0,20.959-7.3Z" transform="translate(-34 -34.009)" fill="#b20000"/>
+<svg height="23.499" viewBox="0 0 23.5 23.499" width="23.5" xmlns="http://www.w3.org/2000/svg">
+  <path d="M35.588,45.759H34a11.75,11.75,0,0,1,20.959-7.3V36.708h1.588v5.557H50.99V40.678h3.56a10.162,10.162,0,0,0-18.962,5.081Zm20.324,0A10.162,10.162,0,0,1,36.95,50.84h3.56V49.252H34.953v5.557h1.588V53.055a11.75,11.75,0,0,0,20.959-7.3Z"
+        fill="#b20000"
+        id="reset-reload-refresh-sync-arrow-update-svgrepo-com" transform="translate(-34 -34.009)" />
 </svg>

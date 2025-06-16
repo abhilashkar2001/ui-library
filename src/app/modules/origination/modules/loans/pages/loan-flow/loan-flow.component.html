@@ -1,39 +1,39 @@
 <div class="loan_flow_container">
-  <div fxFlex="35" class="fdCalculator_parent">
+  <div class="fdCalculator_parent" fxFlex="35">
     <app-commmon-steeper
-      [screenTitle]="screenTitle"
-      [screenList]="screenList"
-      [screenIndex]="selectedStep"
       (customSelectionChange)="stepperSelectionChange($event)"
+      [screenIndex]="selectedStep"
+      [screenList]="screenList"
+      [screenTitle]="screenTitle"
     ></app-commmon-steeper>
   </div>
 
-  <mat-divider vertical class="divider"></mat-divider>
+  <mat-divider class="divider" vertical></mat-divider>
 
   <div
     class="col-div2 screenMargin"
-    fxFlex="65"
-    fxLayout="column"
     data-aos="zoom-in"
     data-aos-delay="200"
     data-aos-duration="500"
+    fxFlex="65"
+    fxLayout="column"
   >
     <div fxLayoutAlign="space-between start">
-      <h2 class="highlight_title" *ngIf="currentComponentInfo?.component">
+      <h2 *ngIf="currentComponentInfo?.component" class="highlight_title">
         {{ cuurrentStep }}
       </h2>
       <ic-button
+        (click)="addDoc()"
+        *ngIf="checkBtnValidity()"
         icButtonType="filled-rounded"
         label="Add"
-        *ngIf="checkBtnValidity()"
-        (click)="addDoc()"
       >
         Add
       </ic-button>
     </div>
 
     <div class="container_dynamic">
-      <ng-template appHost #container></ng-template>
+      <ng-template #container appHost></ng-template>
     </div>
   </div>
 </div>

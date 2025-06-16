@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { SessionStorageEnum } from 'app/enum/session-storage.enum';
 import { ChecklistRouteObjModel } from '../models/checklist-model';
 import { LoanAccounts } from '../models/loan-account.model';
-import { GETCUSTOMERINFO, GETLISTOFACCOUNTS } from '../models/session-storage.model';
+import {
+  GETCUSTOMERINFO,
+  GETLISTOFACCOUNTS,
+} from '../models/session-storage.model';
 import { environment } from 'environments/environment';
 import * as CryptoJS from 'crypto-js';
 
@@ -249,6 +252,7 @@ export class SessionStorageService {
     const currentStage = this.getItem(SessionStorageEnum.CURRENT_STAGE);
     return currentStage;
   }
+
   /**
    * This method will set the current stage id in the session storage
    * @param id
@@ -454,6 +458,7 @@ export class SessionStorageService {
   public removeLoanBasisDetails(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_BASIS_DETAILS);
   }
+
   /**
    *  FETCH: Loan disburese id from session storage whose key is stored in LOAN_DISBURSE_ID in session storage enum
    * @returns
@@ -486,6 +491,7 @@ export class SessionStorageService {
     const loanHolderType = this.getItem(SessionStorageEnum.LOAN_HOLDER_TYPE);
     return loanHolderType;
   }
+
   /**
    * This method will set the loan holder type in the session storage
    * @param id
@@ -500,6 +506,7 @@ export class SessionStorageService {
   public removeLoanHolderType(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_HOLDER_TYPE);
   }
+
   /**  FETCH: Loan Amount from session storage whose key is stored in LOAN_AMOUNT in session storage enum
    * @returns
    */
@@ -522,6 +529,7 @@ export class SessionStorageService {
   public removeLoanAmount(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_AMOUNT);
   }
+
   /**  FETCH: Ownership id from session storage whose key is stored in OWNERSHIP_ID in session storage enum
    * @returns
    */
@@ -544,6 +552,7 @@ export class SessionStorageService {
   public removeOwnershipId(): void {
     this.session.removeItem(SessionStorageEnum.OWNERSHIP_ID);
   }
+
   /**  FETCH: Loan step from session storage whose key is stored in LOAN_STEP in session storage enum
    * @returns
    */
@@ -551,6 +560,7 @@ export class SessionStorageService {
     const loanStep = this.getItem(SessionStorageEnum.LOAN_STEP);
     return loanStep;
   }
+
   /**
    * This method will set the loan step in the session storage
    * @param id
@@ -565,6 +575,7 @@ export class SessionStorageService {
   public removeLoanStep(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_STEP);
   }
+
   /**  FETCH: User customer id step from session storage whose key is stored in USER_CUSTOMER_ID in session storage enum
    * @returns
    */
@@ -587,6 +598,7 @@ export class SessionStorageService {
   public removeUserCustomerId(): void {
     this.session.removeItem(SessionStorageEnum.USER_CUSTOMER_ID);
   }
+
   /**  FETCH: Customer stage id from session storage whose key is stored in CUSTOMER_STAGE_ID in session storage enum
    * @returns
    */
@@ -609,6 +621,7 @@ export class SessionStorageService {
   public removeCustomerStageId(): void {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_STAGE_ID);
   }
+
   /**  FETCH: Other doc screen code from session storage whose key is stored in OTHER_DOC_SCREEN_CODE in session storage enum
    * @returns
    */
@@ -633,6 +646,7 @@ export class SessionStorageService {
   public removeOtherDocScreenCode(): void {
     this.session.removeItem(SessionStorageEnum.OTHER_DOC_SCREEN_CODE);
   }
+
   /**  FETCH: Auth user from session storage whose key is stored in AUTH_USER in session storage enum
    * @returns
    */
@@ -655,6 +669,7 @@ export class SessionStorageService {
   public removeAuthUser(): void {
     this.session.removeItem(SessionStorageEnum.AUTH_USER);
   }
+
   /**  FETCH: Get select acc no from session storage whose key is stored in SELECT_ACC_NO in session storage enum
    * @returns
    */
@@ -677,6 +692,7 @@ export class SessionStorageService {
   public removeSelectAccNo(): void {
     this.session.removeItem(SessionStorageEnum.SELECT_ACC_NO);
   }
+
   /**  FETCH: Upload types from session storage whose key is stored in UPLOAD_TYPES in session storage enum
    * @returns
    */
@@ -699,6 +715,7 @@ export class SessionStorageService {
   public removeUploadType(): void {
     this.session.removeItem(SessionStorageEnum.UPLOAD_TYPES);
   }
+
   /**  FETCH: Corporate id from session storage whose key is stored in CORPORATE_ID in session storage enum
    * @returns
    */
@@ -721,6 +738,7 @@ export class SessionStorageService {
   public removeCorporateId(): void {
     this.session.removeItem(SessionStorageEnum.CORPORATE_ID);
   }
+
   /**  FETCH: Lc master id from session storage whose key is stored in LC_MASTER_ID in session storage enum
    * @returns
    */
@@ -743,6 +761,7 @@ export class SessionStorageService {
   public removeLcMasterId(): void {
     this.session.removeItem(SessionStorageEnum.LC_MASTER_ID);
   }
+
   /**  FETCH: Recurring deposit id from session storage whose key is stored in RECURRING_DEPOSIT_ID in session storage enum
    * @returns
    */
@@ -767,6 +786,7 @@ export class SessionStorageService {
   public removeRecurringDepositId(): void {
     this.session.removeItem(SessionStorageEnum.RECURRING_DEPOSIT_ID);
   }
+
   /**  FETCH: Holder type from session storage whose key is stored in HOLDER_TYPE in session storage enum
    * @returns
    */
@@ -789,6 +809,7 @@ export class SessionStorageService {
   public removeHolderType(): void {
     this.session.removeItem(SessionStorageEnum.HOLDER_TYPE);
   }
+
   /**  FETCH: Deposite origination id from session storage whose key is stored in deposite_origination_id in session storage enum
    * @returns
    */
@@ -813,6 +834,7 @@ export class SessionStorageService {
   public removeDepositOriginationId(): void {
     this.session.removeItem(SessionStorageEnum.DEPOSITE_ORIGINATION_ID);
   }
+
   /**  FETCH: selected step from session storage whose key is stored in SELECTED_STEP in session storage enum
    * @returns
    */
@@ -820,6 +842,7 @@ export class SessionStorageService {
     const selectedStep = this.getItem(SessionStorageEnum.SELECTED_STEP);
     return selectedStep;
   }
+
   /**
    * This method will set the selected step id in the session storage
    * @param id
@@ -835,6 +858,7 @@ export class SessionStorageService {
   public removeSelectedStep(): void {
     this.session.removeItem(SessionStorageEnum.SELECTED_STEP);
   }
+
   /**  FETCH: Payment type from session storage whose key is stored in PAYMENT_TYPE in session storage enum
    * @returns
    */
@@ -857,6 +881,7 @@ export class SessionStorageService {
   public removePaymentType(): void {
     this.session.removeItem(SessionStorageEnum.PAYMENT_TYPE);
   }
+
   /**  FETCH: Fixed deposit id from session storage whose key is stored in FIXED_DEPOSITE_ID in session storage enum
    * @returns
    */
@@ -879,6 +904,7 @@ export class SessionStorageService {
   public removeFixedDepositId(): void {
     this.session.removeItem(SessionStorageEnum.FIXED_DEPOSITE_ID);
   }
+
   /**  FETCH: Rd step from session storage whose key is stored in RD_STEP in session storage enum
    * @returns
    */
@@ -924,6 +950,7 @@ export class SessionStorageService {
   public removeUserInfo(): void {
     this.session.removeItem(SessionStorageEnum.USER_INFO);
   }
+
   /**  FETCH: Customer data from session storage whose key is stored in CUSTOEMR_DATA in session storage enum
    * @returns
    */
@@ -946,6 +973,7 @@ export class SessionStorageService {
   public removeCustomerData(): void {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_DATA);
   }
+
   /**  FETCH: Loan doc from session storage whose key is stored in LOAN_DOC in session storage enum
    * @returns
    */
@@ -968,6 +996,7 @@ export class SessionStorageService {
   public removeLoanDoc(): void {
     this.session.removeItem(SessionStorageEnum.LOAN_DOC);
   }
+
   /**  FETCH: From date from session storage whose key is stored in FROM_DATE in session storage enum
    * @returns
    */
@@ -990,6 +1019,7 @@ export class SessionStorageService {
   public removeFromDate(): void {
     this.session.removeItem(SessionStorageEnum.FROM_DATE);
   }
+
   /**  FETCH: To date from session storage whose key is stored in TO_DATE in session storage enum
    * @returns
    */
@@ -1012,6 +1042,7 @@ export class SessionStorageService {
   public removeToDate(): void {
     this.session.removeItem(SessionStorageEnum.TO_DATE);
   }
+
   /**  FETCH: Corporate cust id from session storage whose key is stored in CORPORATE_CUST_ID in session storage enum
    * @returns
    */
@@ -1034,6 +1065,7 @@ export class SessionStorageService {
   public removeCorporateCustId(): void {
     this.session.removeItem(SessionStorageEnum.CORPORATE_CUST_ID);
   }
+
   /**  FETCH: Miscellaneouse id from session storage whose key is stored in MISCELLANEOUSE_ID in session storage enum
    * @returns
    */
@@ -1056,6 +1088,7 @@ export class SessionStorageService {
   public removeMiscellaneousId(): void {
     this.session.removeItem(SessionStorageEnum.MISCELLANEOUSE_ID);
   }
+
   /**  FETCH: Current screen code from session storage whose key is stored in CURRENT_SCREEN_CODE in session storage enum
    * @returns
    */
@@ -1080,6 +1113,7 @@ export class SessionStorageService {
   public removeCurrentScreenCode(): void {
     this.session.removeItem(SessionStorageEnum.CURRENT_SCREEN_CODE);
   }
+
   /**  FETCH: Back data from session storage whose key is stored in BACK_DATA in session storage enum
    * @returns
    */
@@ -1102,6 +1136,7 @@ export class SessionStorageService {
   public removeBackData(): void {
     this.session.removeItem(SessionStorageEnum.BACK_DATA);
   }
+
   /**  FETCH: Mobile No from session storage whose key is stored in MOBILE_NO in session storage enum
    * @returns
    */
@@ -1124,6 +1159,7 @@ export class SessionStorageService {
   public removeMobileNo(): void {
     this.session.removeItem(SessionStorageEnum.MOBILE_NO);
   }
+
   /**  FETCH:  tracking mobile from session storage whose key is stored in TRACKING_MOBILE in session storage enum
    * @returns
    */
@@ -1146,6 +1182,7 @@ export class SessionStorageService {
   public removeTrackingMobile(): void {
     this.session.removeItem(SessionStorageEnum.TRACKING_MOBILE);
   }
+
   /**  FETCH: User theme lang from session storage whose key is stored in USER_THEME_LANG in session storage enum
    * @returns
    */
@@ -1168,6 +1205,7 @@ export class SessionStorageService {
   public removeUserThemeLang(): void {
     this.session.removeItem(SessionStorageEnum.USER_THEME_LANG);
   }
+
   /**  FETCH: Doc appli name from session storage whose key is stored in DOC_APPLI_NAME in session storage enum
    * @returns
    */
@@ -1185,6 +1223,7 @@ export class SessionStorageService {
   public removeDocAppliName(): void {
     this.session.removeItem(SessionStorageEnum.DOC_APPLI_NAME);
   }
+
   /**  FETCH: Fd step from session storage whose key is stored in FD_STEP in session storage enum
    * @returns
    */
@@ -1229,6 +1268,7 @@ export class SessionStorageService {
   public removeFdRdMasterId(): void {
     this.session.removeItem(SessionStorageEnum.FD_RD_MASTER_ID);
   }
+
   /**  FETCH: Customer staging id from session storage whose key is stored in CUSTOMER_STAGING_ID in session storage enum
    * @returns
    */
@@ -1253,6 +1293,7 @@ export class SessionStorageService {
   public removeCustomerStagingId(): void {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_STAGING_ID);
   }
+
   /**  FETCH: Customer staging id from session storage whose key is stored in CUSTOMER_STAGING_ID in session storage enum
    * @returns
    */
@@ -1275,39 +1316,50 @@ export class SessionStorageService {
   public removeBasisDetails(): void {
     this.session.removeItem(SessionStorageEnum.BASIS_DETAILS);
   }
+
   public getCustomerName(): string[] {
     return this.getItem(SessionStorageEnum.CUSTOMER_NAME);
   }
+
   public setCustomerName(customerName: string): void {
     this.setItem(SessionStorageEnum.CUSTOMER_NAME, customerName);
   }
+
   public removeCustomerName(): void {
     this.session.removeItem(SessionStorageEnum.CUSTOMER_NAME);
   }
+
   public getCategory() {
     return this.getItem(SessionStorageEnum.CATEGORY);
   }
+
   public setCategory(category: string): void {
     this.setItem(SessionStorageEnum.CATEGORY, category);
   }
+
   public removeCategory(): void {
     this.session.removeItem(SessionStorageEnum.CATEGORY);
   }
+
   public getStageIdList(): number[] {
     return this.getItem(SessionStorageEnum.STAGE_ID_LIST);
   }
+
   public setStagingIdList(stagingIdList: number[]): void {
     this.setItem(
       SessionStorageEnum.STAGE_ID_LIST,
       JSON.stringify(stagingIdList),
     );
   }
+
   public removeStagingIdList() {
     this.session.removeItem(SessionStorageEnum.STAGE_ID_LIST);
   }
+
   public getReferenceNo() {
     return this.getItem(SessionStorageEnum.REF_NO);
   }
+
   public setReferenceNo(refNo: any) {
     return this.setItem(SessionStorageEnum.REF_NO, refNo);
   }
@@ -1315,12 +1367,15 @@ export class SessionStorageService {
   public removeReferenceNo() {
     return this.session.removeItem(SessionStorageEnum.REF_NO);
   }
+
   public getPrimaryEmail() {
     return this.getItem(SessionStorageEnum.PRIMARY_EMAIL);
   }
+
   public setPrimaryEmail(primaryEmail: string) {
     return this.setItem(SessionStorageEnum.PRIMARY_EMAIL, primaryEmail);
   }
+
   public removePrimaryEmail() {
     this.session.removeItem(SessionStorageEnum.PRIMARY_EMAIL);
   }
@@ -1328,9 +1383,11 @@ export class SessionStorageService {
   public getEmiData() {
     return this.getItem(SessionStorageEnum.EMI_DATA);
   }
+
   public setEmiData(emiData: string): void {
     this.setItem(SessionStorageEnum.EMI_DATA, emiData);
   }
+
   public removeEmiData(): void {
     this.session.removeItem(SessionStorageEnum.EMI_DATA);
   }

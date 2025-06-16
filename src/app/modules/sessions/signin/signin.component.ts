@@ -2,7 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { NewErrorPopupComponent, selectUser, TokenStorageService, User, UserProfileAction } from '@onerumango/utils';
+import {
+  NewErrorPopupComponent,
+  selectUser,
+  TokenStorageService,
+  User,
+  UserProfileAction,
+} from '@onerumango/utils';
 import { SessionService } from 'app/shared/services/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
@@ -39,6 +45,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   currentUser: any;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -95,6 +102,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   onOtpChange(otp: any) {
     this.otp = otp;
   }
+
   goBack() {
     this.authType = 'signIn';
   }
@@ -113,6 +121,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       );
     });
   }
+
   getProfile() {
     this.sessionService
       .getCorporateProfile()

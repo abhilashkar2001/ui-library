@@ -8,8 +8,8 @@
       <div class="custom_accordin">
         <mat-accordion>
           <mat-expansion-panel
-            (opened)="panelOpenState = true"
             (closed)="panelOpenState = false"
+            (opened)="panelOpenState = true"
             class="panel"
           >
             <mat-expansion-panel-header class="faq_Header">
@@ -28,11 +28,11 @@
 
   <div class="d-flex justify-content-center mb-3">
     <ic-button
-      label="Read {{ isFaqMore ? 'Less' : 'All' }}"
-      icButtonType="filled-rounded"
-      type="submit"
-      size="large"
       (click)="isFaqMore = !isFaqMore"
+      icButtonType="filled-rounded"
+      label="Read {{ isFaqMore ? 'Less' : 'All' }}"
+      size="large"
+      type="submit"
     ></ic-button>
   </div>
 </section>

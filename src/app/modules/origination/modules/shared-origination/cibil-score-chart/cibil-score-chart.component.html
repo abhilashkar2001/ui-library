@@ -30,16 +30,16 @@
             report. The usual range between 300 and 900.
           </div>
           <div
-            fxLayout="row"
-            fxLayoutAlign="space-between center"
             *ngFor="let cibil of cibilScoreList"
             class="mt-6"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
           >
             <div fxLayout="row" fxLayoutAlign="center center">
               <div
-                class="circle"
                 [ngStyle]="{ color: cibil?.colorCode }"
                 [style.background-color]="cibil?.colorCode"
+                class="circle"
               ></div>
               <div class="cibil_score pl-4">{{ cibil?.score }}</div>
             </div>

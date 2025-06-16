@@ -1,4 +1,11 @@
-import { Directive, HostBinding, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Directive,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatchMediaService } from 'app/shared/services/match-media.service';

@@ -62,6 +62,7 @@ const components = [
   WebDocUploadComponent,
   ViewLoanDocComponent,
 ];
+
 @NgModule({
   declarations: components,
   imports: [

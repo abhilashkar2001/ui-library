@@ -7,19 +7,23 @@ import { environment } from 'environments/environment';
 })
 export class DownloadService {
   baseUrl = environment.microServiceURL;
+
   constructor(private http: HttpClient) {}
+
   downloadloanDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/download?originationId=${originationId}`,
       { responseType: 'arraybuffer' },
     );
   }
+
   downloadAccountDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/loan-account-info/Download?originationId=${originationId}`,
       { responseType: 'arraybuffer' },
     );
   }
+
   downloadFdRdDetailDoc(originationId: number) {
     return this.http.get(
       `${this.baseUrl}/webSummary/FdAndRd/Download?originationId=${originationId}`,

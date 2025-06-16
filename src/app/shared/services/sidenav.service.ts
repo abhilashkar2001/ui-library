@@ -16,11 +16,6 @@ export class SidenavService {
     this.vcf = viewContainerRef;
   }
 
-  private createView(template: TemplateRef<any>) {
-    this.vcf.clear();
-    this.vcf.createEmbeddedView(template);
-  }
-
   open(template: TemplateRef<any>) {
     this.createView(template);
     return this.panel.open();
@@ -32,5 +27,10 @@ export class SidenavService {
 
   toggle() {
     return this.panel.toggle();
+  }
+
+  private createView(template: TemplateRef<any>) {
+    this.vcf.clear();
+    this.vcf.createEmbeddedView(template);
   }
 }

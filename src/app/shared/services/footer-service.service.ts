@@ -6,9 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FooterServiceService {
   private isVisible = new BehaviorSubject<any>(false);
+
   isHideFooter() {
     return this.isVisible.asObservable();
   }
+
   updateHideFooter(token: any) {
     this.isVisible.next(token);
   }

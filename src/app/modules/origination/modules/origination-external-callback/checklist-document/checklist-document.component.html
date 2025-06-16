@@ -25,10 +25,10 @@
           </div>
         </div>
         <div
+          class="refNoDiv mt-12 mr-12"
           fxFlex="15"
           fxLayout="column"
           fxLayoutAlign="center start"
-          class="refNoDiv mt-12 mr-12"
         >
           <div class="refNoheading">{{ 'Reference No' }}</div>
           <div class="refNoValue">{{ refNumber }}</div>
@@ -39,34 +39,34 @@
     <!-- END:HEADER -->
   </mat-card>
 
-  <div fxLayout="row wrap" fxLayoutAlign="space-between start" class="p-24">
+  <div class="p-24" fxLayout="row wrap" fxLayoutAlign="space-between start">
     <ng-container *ngFor="let document of documentCtrl.controls; let i = index">
-      <div fxFlex="49" class="custom-expansion-panel mb-8">
+      <div class="custom-expansion-panel mb-8" fxFlex="49">
         <mat-expansion-panel
-          style="border-radius: 8px"
           [ngStyle]="{
             border: document.get('docRequired')?.value
               ? '1px solid #B10000'
               : '',
           }"
+          style="border-radius: 8px"
         >
           <mat-expansion-panel-header
-            >{{ document.get('documentName')?.value | titlecase }} &nbsp;
+          >{{ document.get('documentName')?.value | titlecase }} &nbsp;
             <span style="color: #b10000">
               {{ document.get('docRequired')?.value ? '*' : '' }}
             </span>
           </mat-expansion-panel-header>
           <div fxLayout="row wrap" fxLayoutGap="6px">
             <div
-              class="mb-12"
               *ngFor="
                 let files of documentFilesCtrl(i).controls;
                 let fileIndex = index
               "
               [formGroup]="files | formgroup"
+              class="mb-12"
             >
               <div class="card">
-                <div fxLayout="row" class="doc-header">
+                <div class="doc-header" fxLayout="row">
                   <ng-container *ngIf="files?.get('fileUrl')?.value">
                     <img
                       class="action-icon"
@@ -77,20 +77,20 @@
                   <span fxFlex></span>
 
                   <button
+                    (click)="removeImage(i, fileIndex)"
                     *ngIf="fileIndex != 0"
                     class="btn-box"
                     mat-icon-button
-                    (click)="removeImage(i, fileIndex)"
                   >
                     <mat-icon class="danger1">delete</mat-icon>
                   </button>
                 </div>
                 <div class="document-wrapper">
                   <div
+                    (click)="addAnotherPage(i)"
+                    *ngIf="!files?.get('fileUrl')?.value; else showFile"
                     fxLayout="column"
                     fxLayoutAlign="center center"
-                    *ngIf="!files?.get('fileUrl')?.value; else showFile"
-                    (click)="addAnotherPage(i)"
                   >
                     <mat-icon class="icon">add</mat-icon>
                     <span>Add Other Page</span>
@@ -98,8 +98,8 @@
                   <ng-template #showFile>
                     <div *ngIf="files?.get('fileName')?.value.includes('.pdf')">
                       <app-pdf-viewer
-                        [fileUrl]="files?.get('fileUrl')?.value"
                         [fileName]="files?.get('fileName')?.value"
+                        [fileUrl]="files?.get('fileUrl')?.value"
                       ></app-pdf-viewer>
                     </div>
                     <div
@@ -110,32 +110,32 @@
                   </ng-template>
                 </div>
                 <div
-                  class="document-footer mt-12"
                   *ngIf="!files?.get('documentId')?.value"
+                  class="document-footer mt-12"
                 >
                   <div
-                    fxLayout="row"
-                    fxLayouGap="5"
-                    fxLayoutAlign="space-evenly center"
                     class="mb-4"
+                    fxLayouGap="5"
+                    fxLayout="row"
+                    fxLayoutAlign="space-evenly center"
                   >
                     <button
-                      mat-raised-button
-                      class="sm-btn uploadColor"
                       [disableRipple]="true"
+                      class="sm-btn uploadColor"
+                      mat-raised-button
                     >
                       {{ 'Upload' }}
                       <input
                         #fileInput
-                        type="file"
-                        class="changeInput"
+                        (change)="uploadDocument($event, i, fileIndex)"
                         [accept]="
                           document.get('fileType')?.value ||
                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.pdf'
                         "
-                        title=""
+                        class="changeInput"
                         required
-                        (change)="uploadDocument($event, i, fileIndex)"
+                        title=""
+                        type="file"
                       />
                     </button>
                   </div>
@@ -150,11 +150,11 @@
 
   <div fxFlex></div>
 
-  <div fxLayoutAlign="space-between center" class="w-100 px-24">
-    <button mat-raised-button class="exit-button" (click)="goBack()">
+  <div class="w-100 px-24" fxLayoutAlign="space-between center">
+    <button (click)="goBack()" class="exit-button" mat-raised-button>
       Exit
     </button>
-    <button mat-raised-button class="uploadButton" (click)="saveChecklist()">
+    <button (click)="saveChecklist()" class="uploadButton" mat-raised-button>
       Submit
     </button>
   </div>

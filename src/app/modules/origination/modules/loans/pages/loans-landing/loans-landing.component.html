@@ -1,19 +1,19 @@
 <div class="loan-screen container">
   <app-landing-profile
+    (customApply)="customApply()"
     [imageUrl]="imageUrl"
     [profileHeader]="profileHeader"
     [profileHint]="profileHint"
     [routeUrl]="routeUrl"
-    (customApply)="customApply()"
   >
   </app-landing-profile>
 
   <div class="mar-20">
     <div id="custom-carousel">
       <app-carousel
-        businessSuiteName="Loan Opening Services"
-        [carowselData]="carowselData"
         (customApplyLoan)="customApplyLoan($event)"
+        [carowselData]="carowselData"
+        businessSuiteName="Loan Opening Services"
       >
       </app-carousel>
     </div>

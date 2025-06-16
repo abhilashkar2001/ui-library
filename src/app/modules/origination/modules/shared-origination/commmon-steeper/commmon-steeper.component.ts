@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
@@ -33,6 +41,7 @@ export class CommmonSteeperComponent implements OnChanges {
       }, 200);
     }
   }
+
   next() {
     if (this.screenList?.length > 0) {
       for (let i = 0; i < this.screenIndex; i++) {
@@ -44,6 +53,7 @@ export class CommmonSteeperComponent implements OnChanges {
     // const el = document.querySelector(".mat-step-label-selected");
     // if (el) el.scrollIntoView();
   }
+
   stepperSelectionChange(event: any) {
     this.customSelectionChange.emit(event);
   }

@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="39"
-     height="38" viewBox="0 0 39 38">
+<svg height="38" viewBox="0 0 39 38"
+     width="39" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="Rectangle_2232" x="0" y="0" width="39" height="38" filterUnits="userSpaceOnUse">
+    <filter filterUnits="userSpaceOnUse" height="38" id="Rectangle_2232" width="39" x="0" y="0">
       <feOffset dy="1" input="SourceAlpha" />
-      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feGaussianBlur result="blur" stdDeviation="1.5" />
       <feFlood flood-color="#b9b9b9" flood-opacity="0.451" />
-      <feComposite operator="in" in2="blur" />
+      <feComposite in2="blur" operator="in" />
       <feComposite in="SourceGraphic" />
     </filter>
   </defs>
-  <g id="Group_11698" data-name="Group 11698" transform="translate(-1178.5 -258.5)">
-    <g transform="matrix(1, 0, 0, 1, 1178.5, 258.5)" filter="url(#Rectangle_2232)">
-      <rect id="Rectangle_2232-2" data-name="Rectangle 2232" width="30" height="29" rx="6"
-        transform="translate(4.5 3.5)" fill="#fff" />
+  <g data-name="Group 11698" id="Group_11698" transform="translate(-1178.5 -258.5)">
+    <g filter="url(#Rectangle_2232)" transform="matrix(1, 0, 0, 1, 1178.5, 258.5)">
+      <rect data-name="Rectangle 2232" fill="#fff" height="29" id="Rectangle_2232-2" rx="6"
+            transform="translate(4.5 3.5)" width="30" />
     </g>
-    <g id="Layer_2" data-name="Layer 2" transform="translate(1188.5 267.499)">
-      <path id="Path_11381" data-name="Path 11381"
-        d="M2.027,16.388l3.025,3.025a.945.945,0,1,0,1.337-1.337L4.977,16.665h8.3a.945.945,0,1,0,0-1.89h-8.3l1.411-1.411a.945.945,0,1,0-1.337-1.337L2.027,15.051a.945.945,0,0,0,0,1.337Z"
-        transform="translate(0 -2.439)" fill="#0033a1" />
-      <path id="Path_11382" data-name="Path 11382"
-        d="M14.925,2.027a.945.945,0,1,0-1.337,1.337L15,4.775H6.7a.945.945,0,0,0,0,1.89H15L13.588,8.076a.945.945,0,1,0,1.337,1.337l3.025-3.025a.945.945,0,0,0,0-1.337Z"
-        transform="translate(-0.975 0)" fill="#0033a1" />
+    <g data-name="Layer 2" id="Layer_2" transform="translate(1188.5 267.499)">
+      <path d="M2.027,16.388l3.025,3.025a.945.945,0,1,0,1.337-1.337L4.977,16.665h8.3a.945.945,0,1,0,0-1.89h-8.3l1.411-1.411a.945.945,0,1,0-1.337-1.337L2.027,15.051a.945.945,0,0,0,0,1.337Z" data-name="Path 11381"
+            fill="#0033a1"
+            id="Path_11381" transform="translate(0 -2.439)" />
+      <path d="M14.925,2.027a.945.945,0,1,0-1.337,1.337L15,4.775H6.7a.945.945,0,0,0,0,1.89H15L13.588,8.076a.945.945,0,1,0,1.337,1.337l3.025-3.025a.945.945,0,0,0,0-1.337Z" data-name="Path 11382"
+            fill="#0033a1"
+            id="Path_11382" transform="translate(-0.975 0)" />
     </g>
   </g>
 </svg>

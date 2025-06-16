@@ -1,5 +1,6 @@
 .required-star {
   color: #ff3d3d;
+
   .medium_txt {
     color: inherit;
   }
@@ -81,10 +82,12 @@
       justify-content: center;
       flex-grow: 1;
       padding: 0rem 1rem;
+
       .img_name {
         word-break: break-word;
       }
     }
+
     .cancel-icon {
       cursor: pointer;
       height: 14px !important;
@@ -158,6 +161,7 @@ mat-form-field {
     transition: 0.5s all;
   }
 }
+
 .submit_btn {
   background: linear-gradient(90deg, #00479a 2.59%, #051a4c 97.41%);
   border-radius: 8px !important;
@@ -168,13 +172,16 @@ mat-form-field {
 :host ::ng-deep .custom-doc-field .mat-form-field-wrapper {
   margin: 0 !important;
   padding-bottom: 0px !important;
+
   .mat-form-field-outline {
     box-shadow: none !important;
   }
+
   .mat-form-field-subscript-wrapper {
     margin-top: 0 !important;
   }
 }
+
 .outer-div {
   border: 1px solid #bac0d75c;
   background-color: #f6f9ff;
@@ -187,11 +194,13 @@ mat-form-field {
 
 .uploaded_list {
   padding-left: 10px;
+
   .upload_img {
     background-color: #ffffff;
     padding: 0.5rem 1rem 0.5rem 0.5rem;
     margin: 0.5rem 0;
     border-radius: 10px;
+
     &:hover {
       background-color: #e6eeff;
       cursor: pointer;

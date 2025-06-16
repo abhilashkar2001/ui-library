@@ -6,9 +6,11 @@
     mat-expansion-panel {
       box-shadow: none !important;
       background: white;
+
       mat-expansion-panel-header {
         border-radius: 8px !important;
       }
+
       .mat-expansion-panel-body {
         margin: 0 !important;
         padding-top: 12px;
@@ -18,16 +20,20 @@
       }
     }
   }
+
   .mat-expansion-panel-header {
     height: 70px !important;
   }
+
   .mat-expansion-panel-header-description {
     height: 70px !important;
   }
+
   .header_description {
     font-size: 20px;
     color: #000000;
     font-weight: 600;
+
     span {
       color: #0033a1;
     }
@@ -69,6 +75,7 @@ mat-progress-bar.purple_progress {
   padding: 20px;
   color: #ffffff;
 }
+
 .status_container {
   .level_title {
     color: #0033a1;
@@ -77,6 +84,7 @@ mat-progress-bar.purple_progress {
     margin-bottom: 1em;
     display: flex;
     align-items: center;
+
     span {
       margin-right: 10px;
       width: 15px;
@@ -88,19 +96,23 @@ mat-progress-bar.purple_progress {
     border-radius: 8px;
     height: 11px;
   }
+
   ::ng-deep .mat-progress-bar-buffer {
     background-color: #c4c4c4 !important;
     border-radius: 8px;
   }
+
   ::ng-deep .egret-blue .mat-progress-bar-fill::after {
     background: linear-gradient(90deg, #051a2d, #0033a1);
     border-radius: 28px !important;
   }
 }
+
 .custom_expansion_container {
   background: #f8faff;
   border-radius: 18px;
 }
+
 .detail_container {
   ::ng-deep .mat-expansion-panel-body {
     background-color: #f8faff;

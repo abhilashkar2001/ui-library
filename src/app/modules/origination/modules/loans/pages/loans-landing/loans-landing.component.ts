@@ -16,6 +16,7 @@ export class LoansLandingComponent implements OnInit {
     ' Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.';
   routeUrl = 'loan/loan-type';
   category = 'Lending';
+
   constructor(
     private router: Router,
     // private commonService: CommonService,

@@ -12,6 +12,7 @@ interface IMenuItem {
   sub?: IChildItem[];
   badges?: IBadge[];
 }
+
 interface IChildItem {
   type?: string;
   name: string;

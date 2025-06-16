@@ -1,5 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
@@ -191,9 +204,11 @@ export class WebDocUploadComponent implements OnInit {
   mapEndPoints(url: any) {
     return `${this.baseUrl}${url}`;
   }
+
   fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
+
   browseFiles(i: number) {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
@@ -386,6 +401,7 @@ export class WebDocUploadComponent implements OnInit {
       }
     });
   }
+
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx]?.get('docIds')?.value;
   }

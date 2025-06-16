@@ -14,6 +14,7 @@
   padding: 0px 20px;
   border-radius: 12px;
   box-shadow: 0px 23px 44px 0px #b0b7c32b;
+
   input {
     background: none;
     box-shadow: none;
@@ -24,6 +25,7 @@
     font-weight: 400 !important;
   }
 }
+
 .card-title {
   color: #0033a1;
 }
@@ -62,8 +64,7 @@
 }
 
 .btn-selected {
-  background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box;
   border-radius: 15px !important;
   opacity: 1;
   color: white;
@@ -80,12 +81,14 @@
   border: none;
   padding: 6px;
 }
+
 .label_item {
   font-size: 9px;
   color: #b0b7c3;
   font-weight: bold;
   margin: 0px 5px 5px !important;
 }
+
 .label_value {
   color: #102245;
   font-family: 'Benton Sans', sans-serif;
@@ -96,21 +99,27 @@
 .highlightPending {
   color: #0033a1 !important;
 }
+
 .highlightOngoing {
   color: #eeab2c !important;
 }
+
 .highlightApproved {
   color: rgb(0, 132, 97) !important;
 }
+
 .highlightRejected {
   color: #b20000 !important;
 }
+
 .highlightExpired {
   color: #ff742b !important;
 }
+
 .custom-search {
   ::ng-deep .mat-form-field-prefix {
     margin-right: 2% !important;
+
     .searchIcon {
       opacity: 50%;
     }

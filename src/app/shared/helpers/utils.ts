@@ -85,12 +85,14 @@ export function scrollTo(selector: any) {
   }
   return false;
 }
+
 export const DEFAULT_LOCALE = {
   country: 'United States',
   dateFormat: 'MM-DD-YYYY',
   locale: 'en-US',
   currency: 'USD',
 };
+
 export function pluckOnlyDate(date: any) {
   if (!date) return '';
   return moment(date).format('MM-DD-YYYY');

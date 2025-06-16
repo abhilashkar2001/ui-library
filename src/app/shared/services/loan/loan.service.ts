@@ -64,6 +64,7 @@ export class LoanService {
       `${baseUrl}/generic-value?screenCode=${screenCode}&genericName=${genericName}`,
     );
   }
+
   triggerloanDetailsEmail(formdata: any) {
     return this.http.post(`${'https://192.168.131.206'}/email`, formdata, {
       responseType: 'text',
@@ -157,6 +158,7 @@ export class LoanService {
   saveChecklist(payload: any) {
     return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
   }
+
   getSavedChecklist(
     originationId: number,
     screenCode?: string,

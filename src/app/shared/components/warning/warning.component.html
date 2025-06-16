@@ -1,6 +1,6 @@
-<div fxLayout="column" class="p-12">
+<div class="p-12" fxLayout="column">
   <div fxFlex="row" fxLayoutAlign="center">
-    <img src="assets/images/failed.svg" width="40%" alt="" />
+    <img alt="" src="assets/images/failed.svg" width="40%" />
   </div>
   <h2 class="text-center text-label">{{ data.error }}</h2>
   <p class="text-center text-normal">
@@ -15,15 +15,15 @@
       [label]="'Yes' | translate"
       icButtonType="filled-rounded"
       mat-dialog-close="Ok"
-      type="submit"
       size="medium"
+      type="submit"
     ></ic-button>
     <ic-button
       [label]="'No' | translate"
       icButtonType="ghost-rounded-danger"
       mat-dialog-close="close"
-      type="submit"
       size="medium"
+      type="submit"
     ></ic-button>
   </div>
 </div>

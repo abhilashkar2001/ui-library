@@ -1,31 +1,31 @@
-<div fxLayout="column" class="p-12">
+<div class="p-12" fxLayout="column">
   <div fxLayout="column">
     <div class="alertText">
       {{ errorMessage }}
     </div>
-    <div class="alertText_hint" *ngIf="errorMessageHint && isStageAvilable">
+    <div *ngIf="errorMessageHint && isStageAvilable" class="alertText_hint">
       {{ errorMessageHint }}
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="center center">
-    <img class="summaryIcon" src="assets/images/error-icon.svg" alt="Summary" />
+    <img alt="Summary" class="summaryIcon" src="assets/images/error-icon.svg" />
   </div>
   <div fxLayoutAlign="center center" fxLayoutGap="15">
     <button
-      *ngIf="showOkBtn"
-      type="button"
-      mat-raised-button
-      class="saveButton done_btn"
       (click)="closeDialog()"
+      *ngIf="showOkBtn"
+      class="saveButton done_btn"
+      mat-raised-button
+      type="button"
     >
       {{ isStageAvilable ? 'OK' : 'Next' }}
     </button>
     <button
-      type="button"
-      *ngIf="showCancelBtn"
-      mat-raised-button
-      class="saveButton cancel_btn"
       (click)="cancel()"
+      *ngIf="showCancelBtn"
+      class="saveButton cancel_btn"
+      mat-raised-button
+      type="button"
     >
       {{ 'Cancel' }}
     </button>

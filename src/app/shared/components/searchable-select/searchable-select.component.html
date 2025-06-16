@@ -1,6 +1,7 @@
-<mat-label class="custom-label" *ngIf="!skipLabel && showOutsideLabel">{{
-  inputLabel | translate
-}}</mat-label>
+<mat-label *ngIf="!skipLabel && showOutsideLabel" class="custom-label">{{
+    inputLabel | translate
+  }}
+</mat-label>
 <mat-form-field
   appearance="outline"
   class="full-width fieldinput {{ customInputHeight }} {{
@@ -8,46 +9,47 @@
   }} custom-field"
 >
   <mat-label *ngIf="!skipLabel && !showOutsideLabel">{{
-    inputLabel | translate
-  }}</mat-label>
+      inputLabel | translate
+    }}
+  </mat-label>
   <mat-select
-    [multiple]="multiple"
-    [formControl]="control | formcontrol"
-    [placeholder]="inputLabel"
-    [disabled]="readonly"
-    (selectionChange)="selectionChange.emit($event.value)"
     (focus)="filterFormControl.setValue('')"
-    panelClass="sticky_panel {{ customDocOptionWidth }}"
+    (selectionChange)="selectionChange.emit($event.value)"
+    [disabled]="readonly"
+    [formControl]="control | formcontrol"
+    [multiple]="multiple"
+    [placeholder]="inputLabel"
     disableOptionCentering
+    panelClass="sticky_panel {{ customDocOptionWidth }}"
   >
     <div class="search_container">
       <mat-form-field
         [floatLabel]="$any('never')"
-        fxFill
         appearance="outline"
         class="full-width fieldinput search_field"
+        fxFill
       >
         <input
-          matInput
-          [placeholder]="searchPlaceholder"
-          [formControl]="filterFormControl"
           (keydown.space)="$event.stopPropagation()"
+          [formControl]="filterFormControl"
+          [placeholder]="searchPlaceholder"
+          matInput
           maxlength="30"
         />
         <button
-          matSuffix
-          mat-icon-button
-          aria-label="company"
           (click)="filterFormControl.setValue('')"
+          aria-label="company"
           class="l-16"
+          mat-icon-button
+          matSuffix
         >
           <mat-icon *ngIf="filterFormControl.value">clear</mat-icon>
         </button>
       </mat-form-field>
     </div>
     <mat-select-trigger
-      *ngIf="displayLabel"
       (keydown.space)="$event.stopPropagation()"
+      *ngIf="displayLabel"
     >
       <span class="example-additional-selection">
         {{ control.value }}
@@ -56,13 +58,13 @@
     <mat-option *ngIf="!multiple" [value]="null">None</mat-option>
     <mat-option
       *ngFor="let item of items | searchOptions: filterFormControl.value"
-      [value]="item?.value"
       [disabled]="item?.disabled"
       [ngClass]="{ 'hide-checkbox': item?.label === 'No data found' }"
       [ngStyle]="{
         display:
           item?.label !== 'No data found' && item?.disabled ? 'none' : '',
       }"
+      [value]="item?.value"
     >
       {{ item?.label }}
       <span *ngIf="displayLabel && item?.label !== 'No data found'">
@@ -74,7 +76,7 @@
     <!-- Please Select {{ inputLabel }} -->
     {{ inputLabel }} is Required!
   </mat-error>
-  <mat-hint class="text-red-600" *ngIf="duplicateValue">
+  <mat-hint *ngIf="duplicateValue" class="text-red-600">
     <small>This Combination is already present</small>
   </mat-hint>
 </mat-form-field>

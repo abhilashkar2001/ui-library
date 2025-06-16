@@ -6,6 +6,7 @@
   position: relative;
   top: -5px;
 }
+
 .fieldset-title {
   font: 10px Benton Sans;
   color: #102245;
@@ -15,6 +16,7 @@
   float: none !important;
   padding-left: 10px;
 }
+
 .field-set {
   padding-bottom: 4px;
   height: 52px;
@@ -24,6 +26,7 @@
   border-radius: 8px;
   opacity: 1;
 }
+
 .fieldset-input {
   position: relative;
   top: -4px;
@@ -79,8 +82,9 @@
       margin: 0 0 !important;
       padding-bottom: 1.34375em;
     }
+
     .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-      .mat-form-field-label {
+    .mat-form-field-label {
       transform: translateY(-1.59373em) scale(0.75);
       width: min-content;
       backdrop-filter: blur(10px);
@@ -91,6 +95,7 @@
     }
   }
 }
+
 .legend {
   float: none !important;
   font-size: 12px !important;

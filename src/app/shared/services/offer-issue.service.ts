@@ -9,6 +9,7 @@ const MICROSERVICE_URL = environment.microServiceURL;
 })
 export class OfferIssueService {
   summary: any;
+
   constructor(private http: HttpClient) {}
 
   fetchOfferIssueSummary(originationId: number) {

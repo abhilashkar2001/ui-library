@@ -1,5 +1,5 @@
 <section class="plan_accordion">
-  <div fxLayout="column" class="accordian-section">
+  <div class="accordian-section" fxLayout="column">
     <div
       class="px-3"
       data-aos="fade-top"
@@ -19,23 +19,23 @@
     >
       <mat-accordion>
         <mat-expansion-panel
-          (opened)="panelOpenState = true"
           (closed)="panelOpenState = false"
+          (opened)="panelOpenState = true"
           class="panel"
         >
           <mat-expansion-panel-header>
-            <mat-panel-title fxLayoutAlign="center center" class="panel-header">
+            <mat-panel-title class="panel-header" fxLayoutAlign="center center">
               Money Market
               <span class="text-place">({{ moneyMarket.length }} Found)</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div
-            class="accordian-list"
             *ngFor="
               let market of !isMoneyMarketReadMore
                 ? moneyMarket?.slice(0, 5)
                 : moneyMarket
             "
+            class="accordian-list"
           >
             <div class="accordion-text-list">{{ market?.name }}</div>
             <div class="accordain-list-img">
@@ -50,11 +50,11 @@
             </div>
           </div>
           <div
-            class="read-text"
             (click)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
             (keydown.enter)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
-            tabindex="0"
+            class="read-text"
             fxLayoutAlign="center center"
+            tabindex="0"
           >
             View
             {{ isMoneyMarketReadMore ? 'Less' : 'More' }}
@@ -70,21 +70,21 @@
     >
       <mat-accordion>
         <mat-expansion-panel
-          (opened)="panelOpenState = true"
           (closed)="panelOpenState = false"
+          (opened)="panelOpenState = true"
           class="panel"
         >
           <mat-expansion-panel-header>
-            <mat-panel-title fxLayoutAlign="center center" class="panel-header">
+            <mat-panel-title class="panel-header" fxLayoutAlign="center center">
               Stocks
               <span class="text-place">( {{ stocks.length }} Found)</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div
-            class="accordian-list"
             *ngFor="
               let stock of !isStocksIsReadMore ? stocks?.slice(0, 5) : stocks
             "
+            class="accordian-list"
           >
             <div class="accordion-text-list">{{ stock?.stock }}</div>
             <div class="accordain-list-img">
@@ -99,11 +99,11 @@
             </div>
           </div>
           <div
-            class="read-text"
             (click)="isStocksIsReadMore = !isStocksIsReadMore"
             (keydown.enter)="isStocksIsReadMore = !isStocksIsReadMore"
-            tabindex="1"
+            class="read-text"
             fxLayoutAlign="center center"
+            tabindex="1"
           >
             View
             {{ isStocksIsReadMore ? 'Less' : 'All' }}

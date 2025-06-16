@@ -3,6 +3,7 @@
   background: transparent;
   box-shadow: none;
 }
+
 .imageDisplayDiv {
   padding: 2px;
   background-color: #f3f3f3;
@@ -11,6 +12,7 @@
   opacity: 1;
   height: 100%;
 }
+
 .imgName {
   font-family: Benton Sans;
   font-size: 24px;
@@ -18,23 +20,28 @@
   color: #0033a1;
   opacity: 1;
 }
+
 .imageNameDisplayDiv {
   margin-top: 5px;
   padding: 0% 3%;
+
   img {
     height: 50px !important;
   }
 }
+
 mat-icon {
   background-color: #ffffff;
   color: #0033a1;
   border-radius: 8px;
   cursor: pointer;
 }
+
 ::ng-deep .imageView img {
   border-radius: 18px;
   margin-top: 5px;
 }
+
 .expanded_view {
   width: 100% !important;
   max-width: 100% !important;

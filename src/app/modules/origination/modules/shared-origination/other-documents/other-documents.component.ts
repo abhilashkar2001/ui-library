@@ -8,7 +8,13 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
@@ -65,6 +71,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     },
   };
   ocrProcess = true;
+
   constructor(
     private fb: FormBuilder,
     private snack: MatSnackBar,
@@ -107,6 +114,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
       }
     });
   }
+
   onDocumentToggle(value: any) {
     this.kycToggle = value;
     this.getGenericDetails();
@@ -217,6 +225,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
   mapEndPoints(url: any) {
     return `${this.baseUrl}${url}`;
   }
+
   removeCurrency(i: number) {
     this.otherDocument().removeAt(i);
     this.hideSelect.splice(i, 1);
@@ -225,6 +234,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
   fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
+
   browseFiles(i: any) {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
@@ -247,6 +257,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     inputElement.click();
     this.uploadFilesSimulator(0);
   }
+
   uploadImage(file: any, i: any) {
     const formData = new FormData();
     const data = {
@@ -276,6 +287,7 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
       }
     });
   }
+
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx]?.get('docIds')?.value;
   }

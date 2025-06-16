@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChecklistInfoModel, ChecklistPayloadModel, ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
+import {
+  ChecklistInfoModel,
+  ChecklistPayloadModel,
+  ChecklistRouteObjModel,
+} from 'app/shared/models/checklist-model';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 import { OriginationService } from 'app/shared/services/origination.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -37,6 +41,15 @@ export class ChecklistDocumentComponent implements OnInit {
     private loanService: LoanService,
   ) {}
 
+  /**
+   * this is the control for document form array
+   * @param index
+   * @returns the control of document in customer form array
+   */
+  get documentCtrl(): FormArray {
+    return this.checklistDocumentForm.get('documents') as FormArray;
+  }
+
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.checklistRouteObj = this.sessionStorageService.getCheklistRouteObj();
@@ -50,15 +63,6 @@ export class ChecklistDocumentComponent implements OnInit {
     this.checklistDocumentForm = this.fb.group({
       documents: this.fb.array([]),
     });
-  }
-
-  /**
-   * this is the control for document form array
-   * @param index
-   * @returns the control of document in customer form array
-   */
-  get documentCtrl(): FormArray {
-    return this.checklistDocumentForm.get('documents') as FormArray;
   }
 
   /**

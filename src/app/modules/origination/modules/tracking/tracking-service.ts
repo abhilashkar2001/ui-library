@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 })
 export class TrackingService {
   baseUrl = environment.microServiceURL;
+
   constructor(private http: HttpClient) {}
 
   getOtp(data: { mobile: number }) {
@@ -35,16 +36,19 @@ export class TrackingService {
       `${this.baseUrl}/origination-matser?originationId=${id}`,
     );
   }
+
   applicationDetails(applicationId: any) {
     return this.http.get<any>(
       `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`,
     );
   }
+
   getLoanSummary(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/webSummary?originationId=${originationId}`,
     );
   }
+
   getLoanDocument(originationId: any) {
     return this.http.get(
       `${this.baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,

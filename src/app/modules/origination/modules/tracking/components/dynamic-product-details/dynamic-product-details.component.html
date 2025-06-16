@@ -1,4 +1,4 @@
-<section fxFlex="100" fxLayout="column" class="product_details">
+<section class="product_details" fxFlex="100" fxLayout="column">
   <ng-container
     *ngFor="let product of productInfo; let i = index; trackBy: trackByIndex"
   >
@@ -19,7 +19,7 @@
               style="height: 56px !important"
             >
               <mat-panel-description class="header_description">
-                <div fxLayoutAlign="space-between start" fxFlex="100">
+                <div fxFlex="100" fxLayoutAlign="space-between start">
                   <h3 class="theme_header_md_bold">
                     Applicant {{ personIndx + 1 }}
                   </h3>
@@ -29,9 +29,9 @@
             </mat-expansion-panel-header>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
               <div
-                fxFlex="19"
-                class="mb-24"
                 *ngFor="let item of dynamicKeyHelper[product.key].keyPair"
+                class="mb-24"
+                fxFlex="19"
               >
                 <!-- else showOtherInfo -> 'the else was commented, so i am commenting this part as well; this is used in the below ng-container ' -->
                 <ng-container *ngIf="item.type === 'personal'">
@@ -45,7 +45,7 @@
                     <p class="header_lg">
                       {{
                         personal[item?.valueKey] ??
-                          personal?.contact?.[item?.valueKey]
+                        personal?.contact?.[item?.valueKey]
                       }}
                     </p>
                   </ng-container>
@@ -55,9 +55,9 @@
                 <h3 class="theme_header_md_bold">Address Detail</h3>
               </div>
               <div
-                fxFlex="19"
-                class="mb-24"
                 *ngFor="let item of dynamicKeyHelper[product.key].addressPair"
+                class="mb-24"
+                fxFlex="19"
               >
                 <ng-container>
                   <ng-container
@@ -83,24 +83,25 @@
       <div fxFlex="100" fxLayout="row wrap">
         <ng-template #showOtherThanPersonal>
           <div
+            *ngFor="let item of dynamicKeyHelper[product.key]?.keyPair"
             [fxFlex]="item.type === 'document' ? '100' : '19'"
             class="mb-24"
-            *ngFor="let item of dynamicKeyHelper[product.key]?.keyPair"
           >
             <!-- Document Info Starts-->
             <ng-container *ngIf="item.type === 'document'; else showOther">
               <div
-                fxFlex="19"
                 *ngFor="let docItem of product.values; let docIndex = index"
+                fxFlex="19"
               >
                 <p class="breadcrum_md">{{ item.label }} {{ docIndex + 1 }}</p>
                 <p
-                  class="header_lg document_label_value"
                   (click)="opnDocument(docItem?.fileUrl, docItem)"
                   (keydown.enter)="opnDocument(docItem?.fileUrl, docItem)"
                   [tabindex]="0"
+                  class="header_lg document_label_value"
                 >
-                  {{ docItem[item?.valueKey] ?? docItem?.fileName
+                  {{
+                    docItem[item?.valueKey] ?? docItem?.fileName
                   }}{{ docItem?.documentSide }}
                 </p>
               </div>
@@ -116,20 +117,20 @@
               <div>
                 <p class="breadcrum_md">{{ item.label }}</p>
                 <p
-                  class="header_lg"
                   *ngIf="item.type !== 'currency' && item.type !== 'maskText'"
+                  class="header_lg"
                 >
                   {{ product.values[item?.valueKey] }}
                 </p>
-                <p class="header_lg" *ngIf="item.type === 'currency'">
+                <p *ngIf="item.type === 'currency'" class="header_lg">
                   {{
                     product.values[item?.valueKey] | currency: 'INR' : 'symbol'
                   }}
                 </p>
-                <p class="header_lg" *ngIf="item.type === 'maskText'">
+                <p *ngIf="item.type === 'maskText'" class="header_lg">
                   {{ product.values[item?.valueKey] | textMask: 4 }}
                 </p>
-                <p class="header_lg" *ngIf="item.type === 'document'">
+                <p *ngIf="item.type === 'document'" class="header_lg">
                   {{ product.values[item?.valueKey] ?? 'No Documents Found' }}
                 </p>
               </div>

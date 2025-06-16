@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  Renderer2,
+} from '@angular/core';
 
 @Component({
   selector: 'app-cibil-score-chart',

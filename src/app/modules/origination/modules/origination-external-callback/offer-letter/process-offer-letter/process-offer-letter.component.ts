@@ -20,6 +20,7 @@ export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
   originationId: any;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+
   constructor(
     private fb: FormBuilder,
     private offerIssueService: OfferIssueService,
@@ -96,6 +97,7 @@ export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
   reset() {
     this.revisiteForm.reset();
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach((subscribe) => subscribe.unsubscribe());
   }

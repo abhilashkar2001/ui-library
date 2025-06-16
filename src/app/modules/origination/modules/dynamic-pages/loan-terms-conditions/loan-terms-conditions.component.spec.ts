@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  TermsConditionsComponent,
-} from 'app/modules/origination/modules/shared-origination/terms-conditions/terms-conditions.component';
+import { TermsConditionsComponent } from 'app/modules/origination/modules/shared-origination/terms-conditions/terms-conditions.component';
 
 describe('TermsConditionsComponent', () => {
   let component: TermsConditionsComponent;

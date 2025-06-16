@@ -41,12 +41,14 @@ export interface CardTransactionModel {
   points: number;
   transactionDate: string;
 }
+
 export interface HeaderModel {
   key: string;
   label: string;
   actionItem?: (action?: any) => string;
   actionKey?: string;
 }
+
 export interface AccountList {
   accountNo?: string;
   accountBranch?: string;

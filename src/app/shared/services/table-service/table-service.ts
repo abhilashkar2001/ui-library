@@ -8,9 +8,9 @@ import { environment } from 'environments/environment';
 })
 export class TableService {
   protected basePath = environment.microServiceURL;
-  constructor(private http: HttpClient) {}
-
   private isEditingSubject = new BehaviorSubject<boolean>(false);
+
+  constructor(private http: HttpClient) {}
 
   setEditingStatus(status: boolean) {
     this.isEditingSubject.next(status);
@@ -21,11 +21,13 @@ export class TableService {
       `${this.basePath}/auditLog/createdBy?className=${classname}&module=${module}`,
     );
   }
+
   getApprovalHistory(className: string, id: number) {
     return this.http.get(
       `${this.basePath}/fromToTillVault/approvalHistory?className=${className}&id=${id}`,
     );
   }
+
   downloadRecord(className: any, type: any, payload: any, module: any) {
     return this.http.post(
       `${this.basePath}/downaload?className=${className}&module=${module}&type=${type}`,

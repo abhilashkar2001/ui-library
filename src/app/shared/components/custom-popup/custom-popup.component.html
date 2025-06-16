@@ -1,7 +1,7 @@
 <div class="p-12">
   <div class="popup-header">
     <span class="header_lg_bold_black">Terms & Conditions</span>
-    <button mat-icon-button (click)="close()">
+    <button (click)="close()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -145,14 +145,14 @@
   </div>
 
   <!-- Done Button -->
-  <div fxLayoutAlign="center center" class="mt-4">
+  <div class="mt-4" fxLayoutAlign="center center">
     <ic-button
-      [label]="'Done'"
-      icButtonType="filled-rounded"
-      size="large"
-      [type]="'button'"
-      mat-dialog-close
       (OnClick)="close()"
+      [label]="'Done'"
+      [type]="'button'"
+      icButtonType="filled-rounded"
+      mat-dialog-close
+      size="large"
     ></ic-button>
   </div>
 </div>

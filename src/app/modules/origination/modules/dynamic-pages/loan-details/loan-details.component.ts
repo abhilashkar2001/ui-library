@@ -5,12 +5,25 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Data } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { LocaleData, selectLocaleData, selectUser, User } from '@onerumango/utils';
+import {
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import moment from 'moment';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, Subscription } from 'rxjs';
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  Subscription,
+} from 'rxjs';
 
 @Component({
   selector: 'app-loan-details',
@@ -68,6 +81,22 @@ export class LoanDetailsComponent implements OnInit {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
     this.loadLocaleData();
+  }
+
+  get loanDetails() {
+    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+  }
+
+  get loanDisbursementModel() {
+    return this.loanDetailsForm?.get('loanDisbursementModel') as FormGroup;
+  }
+
+  get loanDisbursementAccount() {
+    return this.loanDisbursementModel?.get('disbursementAccount') as FormGroup;
+  }
+
+  get repaymentModel() {
+    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
   }
 
   ngOnInit(): void {
@@ -311,22 +340,6 @@ export class LoanDetailsComponent implements OnInit {
         });
       }
     });
-  }
-
-  get loanDetails() {
-    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
-  }
-
-  get loanDisbursementModel() {
-    return this.loanDetailsForm?.get('loanDisbursementModel') as FormGroup;
-  }
-
-  get loanDisbursementAccount() {
-    return this.loanDisbursementModel?.get('disbursementAccount') as FormGroup;
-  }
-
-  get repaymentModel() {
-    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
   }
 
   loadUserProfile() {

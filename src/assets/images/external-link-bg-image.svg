@@ -1,14 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="274" height="374.001" viewBox="0 0 274 374.001">
+<svg height="374.001" viewBox="0 0 274 374.001" width="274" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <clipPath id="clip-path">
-      <rect id="Rectangle_5095" data-name="Rectangle 5095" width="274" height="374" rx="12" transform="translate(9375 1677.253)" fill="#fff"/>
+      <rect data-name="Rectangle 5095" fill="#fff" height="374" id="Rectangle_5095" rx="12"
+            transform="translate(9375 1677.253)" width="274" />
     </clipPath>
   </defs>
-  <g id="Group_18726" data-name="Group 18726" transform="translate(-1146 -371.5)">
-    <rect id="Rectangle_5088" data-name="Rectangle 5088" width="274" height="374" rx="12" transform="translate(1146 371.5)" fill="#fff"/>
-    <g id="Mask_Group_4" data-name="Mask Group 4" transform="translate(-8229 -1305.752)" clip-path="url(#clip-path)">
-      <rect id="Rectangle_5093" data-name="Rectangle 5093" width="122.42" height="102.248" rx="15" transform="translate(9627.853 1891.253) rotate(39)" fill="#377dff" opacity="0.1"/>
-      <rect id="Rectangle_5094" data-name="Rectangle 5094" width="225" height="150" rx="15" transform="translate(9614.904 1723.71) rotate(39)" fill="#dde9ff"/>
+  <g data-name="Group 18726" id="Group_18726" transform="translate(-1146 -371.5)">
+    <rect data-name="Rectangle 5088" fill="#fff" height="374" id="Rectangle_5088" rx="12"
+          transform="translate(1146 371.5)" width="274" />
+    <g clip-path="url(#clip-path)" data-name="Mask Group 4" id="Mask_Group_4" transform="translate(-8229 -1305.752)">
+      <rect data-name="Rectangle 5093" fill="#377dff" height="102.248" id="Rectangle_5093" opacity="0.1"
+            rx="15" transform="translate(9627.853 1891.253) rotate(39)" width="122.42" />
+      <rect data-name="Rectangle 5094" fill="#dde9ff" height="150" id="Rectangle_5094" rx="15"
+            transform="translate(9614.904 1723.71) rotate(39)" width="225" />
     </g>
   </g>
 </svg>

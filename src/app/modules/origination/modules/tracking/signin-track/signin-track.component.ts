@@ -62,6 +62,7 @@ export class SigninTrackComponent implements OnInit {
   yourOtp: any;
   otpAvailable = false;
   invalidOtp = false;
+  signForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -69,8 +70,6 @@ export class SigninTrackComponent implements OnInit {
     private route: Router,
     private sessionStorageService: SessionStorageService,
   ) {}
-
-  signForm!: FormGroup;
 
   ngOnInit(): void {
     this.signForm = this.fb.group({
@@ -88,6 +87,7 @@ export class SigninTrackComponent implements OnInit {
     this.otpAvailable =
       this.yourOtp && this.yourOtp?.length >= 6 ? true : false;
   }
+
   getOtp() {
     const mobileNumber = this.signForm.value?.mobile; // Ensure type safety
     if (mobileNumber) {

@@ -2,6 +2,7 @@
 .loan_flow_container {
   margin-top: 3rem;
   min-height: 77vh;
+
   .fdCalculator_parent {
     padding-left: 6%;
     padding-right: 2%;
@@ -10,9 +11,11 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
   .divider {
     border-right: 1px solid #0000003b;
   }
+
   .container_dynamic {
     flex-grow: 1;
     padding: 1%;
@@ -29,6 +32,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .fd_info_stat {
   background: #e6efff;
   border: 1px solid #bac0d7;
@@ -40,6 +44,7 @@
   border-radius: 5px;
   padding: 0 2%;
 }
+
 @media only screen and (min-width: 768px) and (max-width: 910px) {
   .fd_info_stat {
     display: none !important;
@@ -63,23 +68,27 @@
     height: 100% !important;
     padding: 0px !important;
   }
+
   .mat-vertical-content {
     min-height: 30px !important;
     // margin-bottom: 10px !important;
     border-top: 1px dotted !important;
   }
+
   .mat-step-label.mat-step-label-active {
     color: #008461 !important;
     font-size: 24px !important;
     // font-weight: 600;
     padding-left: 33px !important;
   }
+
   .mat-step-label.mat-step-label-active.mat-step-label-selected {
     color: #0033a1 !important;
     // font-weight: 600;
     font-size: 24px !important;
     padding-left: 33px !important;
   }
+
   .mat-step-label {
     color: #0033a1 !important;
     // font-weight: 600;
@@ -92,6 +101,7 @@
   margin-left: 30px !important;
   height: 40px !important;
 }
+
 :host ::ng-deep .mat-step-header {
   overflow: unset !important;
 }
@@ -107,8 +117,8 @@
 }
 
 ::ng-deep
-  .mat-step-header.mat-vertical-stepper-header
-  .mat-step-icon-state-edit {
+.mat-step-header.mat-vertical-stepper-header
+.mat-step-icon-state-edit {
   background-image: url('/src/assets/images/Group_13808.svg') !important;
   width: 60px;
   border-radius: 10px;
@@ -120,6 +130,7 @@
   background-position-x: 15px;
   height: 60px;
   background-repeat: no-repeat;
+
   .mat-step-icon-content {
     display: none !important;
   }
@@ -157,6 +168,7 @@
 .align_fd {
   padding: 20px 33px;
 }
+
 .screenMargin {
   margin: 0% 3% 0% 2% !important;
 }

@@ -50,13 +50,13 @@
                 <div class="social_img_wrapper">
                   <a
                     (click)="opened(social?.path)"
-                    *ngFor="let social of socialMedia"
                     (keydown.enter)="opened(social?.path)"
-                    tabIndex="0"
+                    *ngFor="let social of socialMedia"
                     role="button"
+                    tabIndex="0"
                   >
                     <img [src]="social.imgUrl" alt="Social Media Image"
-                  /></a>
+                    /></a>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
     </div>
 
     <div id="horizontal_line"></div>
-    <div fxLayout="row" fxFlex="100">
+    <div fxFlex="100" fxLayout="row">
       <p class="theme_md mb-0">&copy; 2025 Rumango LTD. All rights reserved.</p>
     </div>
   </div>

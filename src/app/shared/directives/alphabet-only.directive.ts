@@ -5,6 +5,7 @@ import { Directive, HostListener } from '@angular/core';
 })
 export class AlphabetOnlyDirective {
   key: any;
+
   @HostListener('keydown', ['$event']) onKeydown(event: KeyboardEvent) {
     this.key = event.keyCode;
     if (

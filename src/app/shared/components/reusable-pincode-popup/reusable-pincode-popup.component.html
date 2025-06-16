@@ -1,5 +1,5 @@
-<div class="search_pincode_container" *ngIf="pincodeForm">
-  <div fxLayout="row" class="w-100" fxLayoutAlign="space-between center">
+<div *ngIf="pincodeForm" class="search_pincode_container">
+  <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="sub-head">
       <h2>Search</h2>
     </div>
@@ -12,61 +12,61 @@
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxFlex="24.5">
         <ic-select
-          fxFlex="100"
+          (selectionChange)="fetchStateByCountry($event)"
+          [control]="pincodeForm.get('countryId') | formcontrol"
           [options]="countries"
-          label="Country"
           bindLabelKey="countryName"
           bindValueKey="countryId"
-          [control]="pincodeForm.get('countryId') | formcontrol"
-          (selectionChange)="fetchStateByCountry($event)"
+          fxFlex="100"
+          label="Country"
         ></ic-select>
       </div>
 
       <div fxFlex="24.5">
         <ic-form-field
+          [control]="pincodeForm.get('pincode') | formcontrol"
+          [icNumbersOnly]="true"
+          [maxLength]="10"
           fxFlex="100"
           label="Pincode"
           suffixIcon="search"
-          [control]="pincodeForm.get('pincode') | formcontrol"
-          [maxLength]="10"
-          [icNumbersOnly]="true"
         ></ic-form-field>
       </div>
 
       <div fxFlex="24.5">
         <ic-select
-          fxFlex="100"
+          (selectionChange)="fetchCityByState($event)"
+          [control]="pincodeForm.get('stateId') | formcontrol"
           [options]="states"
-          label="State"
           bindLabelKey="stateName"
           bindValueKey="stateId"
-          [control]="pincodeForm.get('stateId') | formcontrol"
-          (selectionChange)="fetchCityByState($event)"
+          fxFlex="100"
+          label="State"
         ></ic-select>
       </div>
 
       <div fxFlex="24.5">
         <ic-select
-          fxFlex="100"
+          (selectionChange)="populateStateCountryByCity($event)"
+          [control]="pincodeForm.get('cityId') | formcontrol"
           [options]="cities"
-          label="City"
           bindLabelKey="cityName"
           bindValueKey="cityId"
-          [control]="pincodeForm.get('cityId') | formcontrol"
-          (selectionChange)="populateStateCountryByCity($event)"
+          fxFlex="100"
+          label="City"
         ></ic-select>
       </div>
     </div>
 
     <div class="d-flex justify-content-between align-items-center">
-      <div fxLayout="row" class="search">
+      <div class="search" fxLayout="row">
         <span *ngIf="dataSource">Search Results</span>
       </div>
       <div></div>
       <button
+        (click)="fetchResultArray()"
         class="submit-button"
         mat-raised-button
-        (click)="fetchResultArray()"
       >
         Fetch
       </button>
@@ -78,13 +78,13 @@
       </div> -->
       <div class="table_container">
         <mat-table
-          class="mat-elevation-z8 data_table pincode_table"
-          matSort
           [dataSource]="
             dataSource?.data?.length > 0 && dataSource?.filteredData?.length > 0
               ? dataSource
               : emptyData
           "
+          class="mat-elevation-z8 data_table pincode_table"
+          matSort
           matSortDisableClear="true"
           matSortDisabled="true"
         >
@@ -93,8 +93,8 @@
             [matColumnDef]="column?.columnDef"
           >
             <mat-header-cell *matHeaderCellDef mat-sort-header
-              ><b>{{ column.header }}</b>
-              <div fxLayout="column" class="arrow-wrapper">
+            ><b>{{ column.header }}</b>
+              <div class="arrow-wrapper" fxLayout="column">
                 <!-- <div
                   [ngClass]="{
                     'higlightSort upArrow':
@@ -114,8 +114,8 @@
               </div>
             </mat-header-cell>
             <mat-cell
-              *matCellDef="let row"
               (click)="i === 0 && populateItem(row)"
+              *matCellDef="let row"
             >
               <div [ngClass]="i === 0 ? 'higlightColumn' : 'tableCell'">
                 <span>
@@ -132,7 +132,8 @@
 
           <ng-container matColumnDef="empty-row">
             <mat-cell *matCellDef="let element" class="no_data"
-              >No Data Found</mat-cell
+            >No Data Found
+            </mat-cell
             >
           </ng-container>
 
@@ -149,9 +150,9 @@
         </mat-table>
       </div>
       <app-custom-pagination
-        [total]="totalLength"
         (customPageEvent)="handlePageEvent($event)"
         [filterValue]="filterValue"
+        [total]="totalLength"
       >
       </app-custom-pagination>
     </ng-container>

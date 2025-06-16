@@ -5,10 +5,10 @@
   <div class="loan-container" fxFlex="100">
     <div fxFlex="100">
       <app-common-product
-        [subAccount]="subAccount"
-        [productIndex]="index"
         (apply)="goForCalculator($event)"
         (customClassApply)="customClassApply($event)"
+        [productIndex]="index"
+        [subAccount]="subAccount"
       >
       </app-common-product>
     </div>

@@ -6,9 +6,7 @@ import { SignLaterComponent } from './digital-sign/sign-later/sign-later.compone
 import { RemarkComponent } from './offer-letter/remark/remark.component';
 import { DobVerificationComponent } from './dob-verification/dob-verification.component';
 import { ChecklistDocumentComponent } from './checklist-document/checklist-document.component';
-import {
-  DigitalSignatureComponent,
-} from 'app/modules/origination/modules/origination-external-callback/offer-letter/digital-signature/digital-signature.component';
+import { DigitalSignatureComponent } from 'app/modules/origination/modules/origination-external-callback/offer-letter/digital-signature/digital-signature.component';
 
 const routes: Routes = [
   {
@@ -66,6 +64,7 @@ const routes: Routes = [
     },
   },
 ];
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

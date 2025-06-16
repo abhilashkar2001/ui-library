@@ -7,6 +7,7 @@
   margin-right: 3%;
   width: 250px;
 }
+
 .image_icon_container {
   position: relative;
   display: flex;
@@ -22,11 +23,13 @@
   border-bottom-left-radius: 10px;
   margin-left: -39px;
   z-index: 10;
+
   .susscess_img {
     height: 20px !important;
     width: 20px !important;
   }
 }
+
 .upload_btn {
   color: #0033a1;
   height: 32px;

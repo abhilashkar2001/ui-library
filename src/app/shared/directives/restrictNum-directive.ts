@@ -7,6 +7,7 @@ import { NgControl } from '@angular/forms';
 export class MinMaxDirective {
   @Input() min: number | any;
   @Input() max: number | any;
+  private debounceTimeout: any;
 
   constructor(
     private ref: ElementRef,
@@ -41,6 +42,4 @@ export class MinMaxDirective {
       func(value);
     }, delay);
   }
-
-  private debounceTimeout: any;
 }

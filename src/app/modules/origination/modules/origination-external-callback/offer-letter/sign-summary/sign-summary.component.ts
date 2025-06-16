@@ -1,5 +1,16 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
@@ -31,11 +42,13 @@ export class SignSummaryComponent implements OnInit {
   ) {
     this.imageUrl = environment.microServiceURL + data?.imageUrl;
   }
+
   ngOnInit(): void {
     this.imageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.imageUrl,
     );
   }
+
   editPage() {
     this.dialogRef2.close('edited');
   }

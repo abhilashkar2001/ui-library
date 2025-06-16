@@ -16,6 +16,7 @@ export class ImageDialogComponent implements OnInit {
   fileUrl = '';
   dataLocalUrl: any;
   filePreview: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogref: MatDialogRef<ImageDialogComponent>,
@@ -50,6 +51,7 @@ export class ImageDialogComponent implements OnInit {
     }
     // console.log(this.data);
   }
+
   pdfFormat() {
     console.log(this.fileUrl);
     this.http.get(this.fileUrl, { responseType: 'blob' }).subscribe(
@@ -65,6 +67,7 @@ export class ImageDialogComponent implements OnInit {
       },
     );
   }
+
   closeDialog() {
     this.dialogref.close();
   }

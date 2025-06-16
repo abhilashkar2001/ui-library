@@ -115,6 +115,7 @@ export interface Document {
   expiryDate: string;
   dob: string;
 }
+
 export interface EmiDetails {
   merchantNameOnCard: string;
   amount: number;

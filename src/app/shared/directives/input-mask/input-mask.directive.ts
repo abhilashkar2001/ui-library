@@ -12,7 +12,13 @@ import {
   Renderer2,
   Self,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NgControl, ValidationErrors, Validator } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NgControl,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 import type Inputmask from 'inputmask';
 import _Inputmask from 'inputmask';
 
@@ -32,31 +38,10 @@ export class InputMaskDirective<T = any>
 {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   static ngAcceptInputType_inputMask: InputmaskOptions<any> | null | undefined;
-
-  /**
-   * Helps you to create input-mask based on https://github.com/RobinHerbots/Inputmask
-   * Supports form-validation out-of-the box.
-   * Visit https://github.com/ngneat/input-mask for more info.
-   */
-  @Input()
-  set inputMask(inputMask: InputmaskOptions<T> | null | undefined) {
-    if (inputMask) {
-      this.inputMaskOptions = inputMask;
-      this.updateInputMask();
-    }
-  }
-
   inputMaskPlugin: Inputmask.Instance | null = null;
   nativeInputElement: HTMLInputElement | null = null;
   defaultInputMaskConfig = new InputMaskConfig();
-
   private inputMaskOptions: InputmaskOptions<T> | null = null;
-
-  /* The original `onChange` function coming from the `setUpControl`. */
-  private onChange: (value: T | null) => void = () => {
-    // Placeholder for onChange callback in custom form control
-  };
-
   private mutationObserver: MutationObserver | null = null;
 
   constructor(
@@ -71,6 +56,23 @@ export class InputMaskDirective<T = any>
       this.ngControl.valueAccessor = this;
     }
     this.setNativeInputElement(config);
+  }
+
+  /**
+   * Helps you to create input-mask based on https://github.com/RobinHerbots/Inputmask
+   * Supports form-validation out-of-the box.
+   * Visit https://github.com/ngneat/input-mask for more info.
+   */
+  @Input()
+  set inputMask(inputMask: InputmaskOptions<T> | null | undefined) {
+    if (inputMask) {
+      this.inputMaskOptions = inputMask;
+      this.updateInputMask();
+    }
+  }
+
+  private get control(): AbstractControl | any {
+    return this.ngControl?.control;
   }
 
   @HostListener('input', ['$event.target.value'])
@@ -127,6 +129,11 @@ export class InputMaskDirective<T = any>
     }
   }
 
+  /* The original `onChange` function coming from the `setUpControl`. */
+  private onChange: (value: T | null) => void = () => {
+    // Placeholder for onChange callback in custom form control
+  };
+
   private updateInputMask(): void {
     this.removeInputMaskPlugin();
     this.createInputMaskPlugin();
@@ -158,10 +165,6 @@ export class InputMaskDirective<T = any>
         this.control!.updateValueAndValidity();
       });
     }
-  }
-
-  private get control(): AbstractControl | any {
-    return this.ngControl?.control;
   }
 
   private setNativeInputElement(config: InputMaskConfig) {

@@ -46,6 +46,7 @@ export class RoutingState {
       }
     }
   }
+
   getHistory() {
     return this.history;
   }

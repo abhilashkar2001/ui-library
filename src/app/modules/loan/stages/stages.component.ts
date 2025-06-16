@@ -23,6 +23,7 @@ export class StagesComponent implements AfterViewInit {
   containerRef: ComponentRef<LoanDetailsComponent> | undefined;
   readonly panelOpenState = signal(false);
   private processCycleCode: string | undefined;
+
   constructor(
     private renderComponentService: RenderComponentService,
     private loanService: LoanService,

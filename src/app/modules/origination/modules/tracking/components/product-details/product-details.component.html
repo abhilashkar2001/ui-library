@@ -1,39 +1,39 @@
 <div fxLayout="column">
   <!-- Product Details and Status -->
-  <div fxLayout="row" fxLayoutGap="1%" class="mb-24">
+  <div class="mb-24" fxLayout="row" fxLayoutGap="1%">
     <!-- Product Information -->
-    <div fxFlex="24" class="productName_container">
+    <div class="productName_container" fxFlex="24">
       <div class="txt_md_white">Product</div>
       <div class="txt_lg_white">{{ productType }}</div>
     </div>
 
     <!-- Status Panels -->
     <div
-      fxFlex="24"
-      fxLayoutAlign="center start"
-      fxLayout="column"
-      class="status_container"
       *ngFor="let item of statusItems"
+      class="status_container"
+      fxFlex="24"
+      fxLayout="column"
+      fxLayoutAlign="center start"
     >
       <div fxLayout="column">
         <div class="level_title">
           <span *ngIf="item.value === 100"
-            ><img
-              src="../../../../../../../assets/images/done_icon.svg"
-              alt="Done"
+          ><img
+            alt="Done"
+            src="../../../../../../../assets/images/done_icon.svg"
           /></span>
           {{ item.title }}
         </div>
       </div>
       <mat-progress-bar
-        mode="determinate"
-        [value]="item.value"
         [ngClass]="{
           green_progress: item.value === 100,
           red_progress: item.status === 'REJECT' || item.status === 'EXPIRED',
           orange_progress: item.status === 'ONGOING',
           purple_progress: item.status === 'PENDING',
         }"
+        [value]="item.value"
+        mode="determinate"
       ></mat-progress-bar>
     </div>
   </div>
@@ -42,13 +42,13 @@
     <mat-expansion-panel class="detail_container">
       <mat-expansion-panel-header class="header">
         <mat-panel-description class="header_description">
-          <div fxLayoutAlign="space-between start" fxFlex="100">
+          <div fxFlex="100" fxLayoutAlign="space-between start">
             <div class="header_lg_bold_black">Application Status</div>
           </div>
           &nbsp;
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div fxFlex="100" class="custom_expansion_container">
+      <div class="custom_expansion_container" fxFlex="100">
         <app-application-status
           [applicationInfo]="applicationStatus"
         ></app-application-status>
@@ -61,7 +61,7 @@
     <mat-expansion-panel class="detail_container">
       <mat-expansion-panel-header class="header">
         <mat-panel-description class="header_description">
-          <div fxLayoutAlign="space-between start" fxFlex="100">
+          <div fxFlex="100" fxLayoutAlign="space-between start">
             <div class="header_lg_bold_black">
               Application Details <span>({{ mobileNumber }})</span>
             </div>
@@ -74,7 +74,9 @@
           [dynamicKeyHelper]="dynamicKeyHelper"
           [productInfo]="dynamicDetails"
         ></app-loan-product-details>
-      </div> </mat-expansion-panel
-    ><br />
+      </div>
+    </mat-expansion-panel
+    >
+    <br />
   </mat-accordion>
 </div>

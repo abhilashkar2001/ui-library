@@ -4,16 +4,16 @@
   </div>
   &nbsp;
   <app-cibil-score-result
-    *ngIf="showCibilScoreResult"
     (backEvent)="onBackCIBILScoreResult()"
     (onCibilConfirmEvent)="onConfirmFromCibilScoreResult()"
+    *ngIf="showCibilScoreResult"
   ></app-cibil-score-result>
 
   <div *ngIf="!showCibilScoreResult">
     <div *ngIf="!isDifferentMobile">
       <div class="mobile-selection-tpl">
         <div class="sheild-icon" fxLayoutAlign="center center">
-          <img src="../../../../../../assets/images/shield.png" alt="shield" />
+          <img alt="shield" src="../../../../../../assets/images/shield.png" />
         </div>
         <div class="card-details">
           <p>Your Phone No</p>
@@ -27,32 +27,32 @@
       </div>
       <div>
         <app-common-mobile-verification
-          [hideInfo]="hideInfo"
-          [showOtpSection]="showOtpSection"
-          [invalidOtp]="invalidOtp"
           (CustomSubmit)="onConfirmFromCibilScoreResult()"
-          verificationName="National Id"
           (enteredOTP)="checkCobilConfim($event)"
           [agree]="agreed"
+          [hideInfo]="hideInfo"
+          [invalidOtp]="invalidOtp"
+          [showOtpSection]="showOtpSection"
+          verificationName="National Id"
         ></app-common-mobile-verification>
       </div>
       <div fxLayout="row" fxLayoutGap="10">
         <ic-checkbox
+          (checkboxChange)="agreed = !agreed"
+          [checked]="agreed"
           class="custom-checkbox"
           class="primary"
           style="margin-right: 10px"
-          [checked]="agreed"
-          (checkboxChange)="agreed = !agreed"
         >
         </ic-checkbox>
         <span class="standard-font-gray mb-4">
           I agree to the use of my National ID for the Bank's
           <span
-            class="link"
             (click)="openDialog()"
             (keydown.enter)="openDialog()"
+            class="link"
             tabindex="1"
-            >internal purposes</span
+          >internal purposes</span
           >
           as described above.
         </span>
@@ -61,18 +61,18 @@
         <ic-button
           (OnClick)="onContinue()"
           [disabled]="!(agreed && otp)"
+          [icButtonType]="'filled-rounded'"
           [label]="'Continue' | translate"
           [type]="'submit'"
           size="large"
-          [icButtonType]="'filled-rounded'"
         >
         </ic-button>
 
         <ic-button
+          (OnClick)="onBack()"
           [label]="'Back'"
           icButtonType="ghost-rounded-danger"
           size="large"
-          (OnClick)="onBack()"
         >
         </ic-button>
       </div>
@@ -84,11 +84,11 @@
   <div class="popup-container">
     <div fxLayoutAlign="end center">
       <ic-button
-        mat-dialog-close
-        icIcon="close"
-        type="button"
-        icButtonType="icon"
         customButtonClass="box-shadow-none"
+        icButtonType="icon"
+        icIcon="close"
+        mat-dialog-close
+        type="button"
       ></ic-button>
     </div>
     <h2 class="popup-title">Consent Content</h2>

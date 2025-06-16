@@ -5,6 +5,7 @@ import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { environment } from 'environments/environment';
 
 const MICROSERVICE_URL = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })

@@ -4,7 +4,13 @@ import { Store } from '@ngrx/store';
 import { QueryParamEnum } from 'app/enum/query-param.enum';
 import { ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { getParameterByName, selectUser, TokenStorageService, User, UserProfileAction } from '@onerumango/utils';
+import {
+  getParameterByName,
+  selectUser,
+  TokenStorageService,
+  User,
+  UserProfileAction,
+} from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

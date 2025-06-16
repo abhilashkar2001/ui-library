@@ -1,18 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="414" height="556" viewBox="0 0 414 556">
+<svg height="556" viewBox="0 0 414 556" width="414" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <clipPath id="clip-path">
-      <rect id="Rectangle_18306" data-name="Rectangle 18306" width="410.34" height="231.001" rx="8" transform="translate(-2370.443 -49)" fill="#fafcff"/>
+      <rect data-name="Rectangle 18306" fill="#fafcff" height="231.001" id="Rectangle_18306" rx="8"
+            transform="translate(-2370.443 -49)" width="410.34" />
     </clipPath>
   </defs>
-  <g id="Group_19582" data-name="Group 19582" transform="translate(-711 -196)">
-    <g id="Rectangle_18304" data-name="Rectangle 18304" transform="translate(711 196)" fill="#f2f7ff" stroke="#fff" stroke-width="3">
-      <rect width="414" height="556" rx="12" stroke="none"/>
-      <rect x="1.5" y="1.5" width="411" height="553" rx="10.5" fill="none"/>
+  <g data-name="Group 19582" id="Group_19582" transform="translate(-711 -196)">
+    <g data-name="Rectangle 18304" fill="#f2f7ff" id="Rectangle_18304" stroke="#fff" stroke-width="3"
+       transform="translate(711 196)">
+      <rect height="556" rx="12" stroke="none" width="414" />
+      <rect fill="none" height="553" rx="10.5" width="411" x="1.5" y="1.5" />
     </g>
-    <g id="Mask_Group_18281" data-name="Mask Group 18281" transform="translate(3081.443 248.402)" opacity="0.666" clip-path="url(#clip-path)">
-      <g id="Group_19402" data-name="Group 19402" transform="translate(-2165.278 -89.86)">
-        <path id="Path_24757" data-name="Path 24757" d="M0,217.7s13.1-29.612,13.266-100.433S76.755,16.076,76.755,16.076,132.625-7.551,182.889,2.482c14.495,54.294,40.232,152.88,40.232,152.88l-27.037-15.632s-70.828-60.8-113.657-35.413S45.859,170.46,45.859,170.46s-.882,28.976-4.847,35.967C34.2,208.494,0,217.7,0,217.7Z" transform="matrix(0.259, -0.966, 0.966, 0.259, 0, 215.518)" fill="#377dff" opacity="0.05"/>
-        <path id="Path_24758" data-name="Path 24758" d="M0,70.851A234.629,234.629,0,0,0,5.042,31.083C5.814,9.7,26.791,1.838,26.791,1.838S49.814-9.224,97.706,22.93c23.976,15.4,24.576,15.932,24.576,15.932L87.173,47.427S58.637,28.668,41.859,37.167,24.691,64.122,24.691,64.122Z" transform="matrix(0.259, -0.966, 0.966, 0.259, 141.969, 179.561)" fill="#377dff" opacity="0.1"/>
+    <g clip-path="url(#clip-path)" data-name="Mask Group 18281" id="Mask_Group_18281" opacity="0.666"
+       transform="translate(3081.443 248.402)">
+      <g data-name="Group 19402" id="Group_19402" transform="translate(-2165.278 -89.86)">
+        <path d="M0,217.7s13.1-29.612,13.266-100.433S76.755,16.076,76.755,16.076,132.625-7.551,182.889,2.482c14.495,54.294,40.232,152.88,40.232,152.88l-27.037-15.632s-70.828-60.8-113.657-35.413S45.859,170.46,45.859,170.46s-.882,28.976-4.847,35.967C34.2,208.494,0,217.7,0,217.7Z" data-name="Path 24757"
+              fill="#377dff"
+              id="Path_24757" opacity="0.05" transform="matrix(0.259, -0.966, 0.966, 0.259, 0, 215.518)" />
+        <path d="M0,70.851A234.629,234.629,0,0,0,5.042,31.083C5.814,9.7,26.791,1.838,26.791,1.838S49.814-9.224,97.706,22.93c23.976,15.4,24.576,15.932,24.576,15.932L87.173,47.427S58.637,28.668,41.859,37.167,24.691,64.122,24.691,64.122Z" data-name="Path 24758"
+              fill="#377dff"
+              id="Path_24758" opacity="0.1" transform="matrix(0.259, -0.966, 0.966, 0.259, 141.969, 179.561)" />
       </g>
     </g>
   </g>

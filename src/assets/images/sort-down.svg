@@ -1,10 +1,10 @@
-<svg fill="#B3BAC8" width="64px" height="64px" viewBox="-100 50 512 512"
-    xmlns="http://www.w3.org/2000/svg" stroke="#B3BAC8">
-    <g id="SVGRepo_iconCarrier">
+<svg fill="#B3BAC8" height="64px" stroke="#B3BAC8" viewBox="-100 50 512 512"
+     width="64px" xmlns="http://www.w3.org/2000/svg">
+  <g id="SVGRepo_iconCarrier">
 
-        <path
-            d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
+    <path
+      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
 
-    </g>
+  </g>
 
 </svg>

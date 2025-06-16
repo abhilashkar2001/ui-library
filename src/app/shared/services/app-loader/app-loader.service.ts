@@ -10,6 +10,7 @@ interface Config {
 @Injectable()
 export class AppLoaderService {
   dialogRef: MatDialogRef<AppLoaderComponent> | any;
+
   constructor(private dialog: MatDialog) {}
 
   public open(
