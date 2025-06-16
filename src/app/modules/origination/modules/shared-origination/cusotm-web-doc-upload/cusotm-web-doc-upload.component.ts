@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -23,8 +14,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
-import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
+import {
+  ImageDialogComponent,
+} from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+
 @Component({
   selector: 'app-cusotm-web-doc-upload',
   templateUrl: './cusotm-web-doc-upload.component.html',

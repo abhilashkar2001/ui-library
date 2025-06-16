@@ -37,37 +37,17 @@ export const rootRouterConfig: Routes = [
       },
     ],
   },
-
-  /** Net Banking Login Route */
-  // {
-  //   path: 'sessions',
-  //   component: AuthLayoutComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () =>
-  //         import('./modules/sessions/sessions.module').then(
-  //           (m) => m.SessionsModule,
-  //         ),
-  //     },
-  //   ],
-  // },
-
-  /** Corporate Banking Module Route */
-  // {
-  //   path: 'user',
-  //   component: UserLayoutComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () =>
-  //         import('./modules/net-banking/net-banking.module').then(
-  //           (m) => m.NetBankingModule,
-  //         ),
-  //     },
-  //   ],
-  // },
+  {
+    path: 'loan',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/loan/loan.module').then((m) => m.LoanModule),
+      },
+    ],
+  },
   {
     path: '**',
     redirectTo: 'home/404',

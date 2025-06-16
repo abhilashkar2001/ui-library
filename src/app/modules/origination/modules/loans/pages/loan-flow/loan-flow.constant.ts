@@ -1,11 +1,25 @@
-import { CommonPersonalDetailsComponent } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/common-personal-details.component';
-import { CommonMobileVerificationComponent } from 'app/modules/origination/modules/dynamic-pages/comon-mobile-verification/common-mobile-verification.component';
-import { CibilScoreContainerComponent } from '../../../dynamic-pages/cibil-score-container/cibil-score-container.component';
-import { LoanTermsConditionsComponent } from '../../../dynamic-pages/loan-terms-conditions/loan-terms-conditions.component';
+import {
+  CommonPersonalDetailsComponent,
+} from 'app/modules/origination/modules/dynamic-pages/common-personal-details/common-personal-details.component';
+import {
+  CommonMobileVerificationComponent,
+} from 'app/modules/origination/modules/dynamic-pages/comon-mobile-verification/common-mobile-verification.component';
+import {
+  CibilScoreContainerComponent,
+} from '../../../dynamic-pages/cibil-score-container/cibil-score-container.component';
+import {
+  LoanTermsConditionsComponent,
+} from '../../../dynamic-pages/loan-terms-conditions/loan-terms-conditions.component';
 import { LoanSummaryComponent } from '../../../dynamic-pages/loan-summary/loan-summary.component';
-import { OtherChecklistDocUploadComponent } from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
-import { CompanyInformationComponent } from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
-import { DigitalSignComponent } from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
+import {
+  OtherChecklistDocUploadComponent,
+} from 'app/modules/origination/modules/dynamic-pages/other-checklist-doc-upload/other-checklist-doc-upload.component';
+import {
+  CompanyInformationComponent,
+} from 'app/modules/origination/modules/dynamic-pages/company-information/company-information.component';
+import {
+  DigitalSignComponent,
+} from 'app/modules/origination/modules/dynamic-pages/digital-sign/digital-sign.component';
 import { LoanDetailsComponent } from '../../../dynamic-pages/loan-details/loan-details.component';
 import { CollateralDetailsComponent } from '../../../dynamic-pages/collateral-details/collateral-details.component';
 import { BusinessDetailsComponent } from '../../../dynamic-pages/business-details/business-details.component';

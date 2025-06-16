@@ -8,13 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';

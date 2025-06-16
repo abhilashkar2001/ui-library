@@ -1,13 +1,13 @@
 import {
   Component,
-  OnInit,
+  ElementRef,
+  HostListener,
   Input,
   OnDestroy,
-  Renderer2,
-  ElementRef,
+  OnInit,
   QueryList,
+  Renderer2,
   ViewChildren,
-  HostListener,
 } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';

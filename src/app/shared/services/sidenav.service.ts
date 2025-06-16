@@ -1,4 +1,4 @@
-import { Injectable, ViewContainerRef, TemplateRef } from '@angular/core';
+import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Injectable({

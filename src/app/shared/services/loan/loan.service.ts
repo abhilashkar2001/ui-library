@@ -208,4 +208,14 @@ export class LoanService {
       `${baseUrl}/origination-doc?originationId=${originationId}`,
     );
   }
+
+  fetchProcessStages(processCycleCode: string) {
+    return this.http.get<any>(
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processCycleCode}&internal=false`,
+    );
+  }
+
+  fetchScreens(id: number) {
+    return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
+  }
 }

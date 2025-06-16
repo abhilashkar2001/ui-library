@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { SessionStorageEnum } from 'app/enum/session-storage.enum';
 import { ChecklistRouteObjModel } from '../models/checklist-model';
 import { LoanAccounts } from '../models/loan-account.model';
-import {
-  GETCUSTOMERINFO,
-  GETLISTOFACCOUNTS,
-} from '../models/session-storage.model';
+import { GETCUSTOMERINFO, GETLISTOFACCOUNTS } from '../models/session-storage.model';
 import { environment } from 'environments/environment';
 import * as CryptoJS from 'crypto-js';
+
 export const RETURN_TO_SUMMARY = 'returnToSummary';
 const SECRET_KEY = environment.SECRET_KEY;
 

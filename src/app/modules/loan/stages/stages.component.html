@@ -1,0 +1,11 @@
+<mat-accordion>
+  <mat-expansion-panel
+    (opened)="panelOpenState.set(true)"
+    (closed)="panelOpenState.set(false)"
+  >
+    <mat-expansion-panel-header>Data</mat-expansion-panel-header>
+    <div>
+      <ng-template #container></ng-template>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

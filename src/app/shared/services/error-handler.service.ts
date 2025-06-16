@@ -1,10 +1,4 @@
-import {
-  ErrorHandler,
-  Injectable,
-  Injector,
-  ApplicationRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, ErrorHandler, Injectable, Injector } from '@angular/core';
 
 @Injectable()
 export class ErrorHandlerService extends ErrorHandler {

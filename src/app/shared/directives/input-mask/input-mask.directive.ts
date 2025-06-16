@@ -12,18 +12,12 @@ import {
   Renderer2,
   Self,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NgControl,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
-import _Inputmask from 'inputmask';
+import { AbstractControl, ControlValueAccessor, NgControl, ValidationErrors, Validator } from '@angular/forms';
 import type Inputmask from 'inputmask';
+import _Inputmask from 'inputmask';
 
 import { InputmaskOptions } from './types';
-import { InputMaskConfig, INPUT_MASK_CONFIG } from './config';
+import { INPUT_MASK_CONFIG, InputMaskConfig } from './config';
 
 const InputmaskConstructor =
   (_Inputmask as unknown as { default?: Inputmask.Static }).default ||

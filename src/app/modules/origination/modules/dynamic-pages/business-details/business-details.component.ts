@@ -3,15 +3,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  IcHttpResponseModel,
-  LocaleData,
-  selectLocaleData,
-} from '@onerumango/utils';
-import {
-  GenericValueData,
-  GenericValueInfoModel,
-} from 'app/shared/models/generic-value.model';
+import { IcHttpResponseModel, LocaleData, selectLocaleData } from '@onerumango/utils';
+import { GenericValueData, GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';

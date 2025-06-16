@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SignNowPopupComponent } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component';
+import {
+  SignNowPopupComponent,
+} from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component';
 import { environment } from 'environments/environment';
-import { BranchService } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
+import {
+  BranchService,
+} from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { IcScreen } from '@onerumango/utils';

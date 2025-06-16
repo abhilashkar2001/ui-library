@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ChecklistInfoModel,
-  ChecklistPayloadModel,
-  ChecklistRouteObjModel,
-} from 'app/shared/models/checklist-model';
+import { ChecklistInfoModel, ChecklistPayloadModel, ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 import { OriginationService } from 'app/shared/services/origination.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';

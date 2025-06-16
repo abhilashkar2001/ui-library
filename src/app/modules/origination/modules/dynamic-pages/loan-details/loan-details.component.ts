@@ -5,25 +5,12 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Data } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  LocaleData,
-  selectLocaleData,
-  selectUser,
-  User,
-} from '@onerumango/utils';
+import { LocaleData, selectLocaleData, selectUser, User } from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import moment from 'moment';
-import {
-  combineLatest,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loan-details',

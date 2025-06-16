@@ -1,16 +1,9 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { catchError, map, of, Subscription } from 'rxjs';
 import { BranchService } from './branch.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SignPadComponent } from '../sign-pad/sign-pad.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-now-popup',

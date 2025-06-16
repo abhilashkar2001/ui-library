@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
-import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper';
+import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
 import { CLIENT_DESCRIPTION } from 'app/config/news-letter.constant';
 
 // Install Swiper modules

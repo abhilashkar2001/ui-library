@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable, of, map } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { GenericValue } from '../data/generic-value';
 import { GenericValueInfoModel } from '../models/generic-value.model';
 import { appendFilterParam, IcHttpResponseModel } from '@onerumango/utils';

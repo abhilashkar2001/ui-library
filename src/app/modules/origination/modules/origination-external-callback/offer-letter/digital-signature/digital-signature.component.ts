@@ -1,27 +1,25 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { AppState, selectUser, TokenStorageService, User } from '@onerumango/utils';
 import {
-  AppState,
-  selectUser,
-  TokenStorageService,
-  User,
-} from '@onerumango/utils';
-import { BranchService } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
-import { SignNowPopupComponent } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component';
-import { SuccessModalComponent } from 'app/modules/origination/modules/origination-external-callback/digital-sign/success-modal/success-modal.component';
-import { SignSummaryComponent } from 'app/modules/origination/modules/origination-external-callback/offer-letter/sign-summary/sign-summary.component';
+  BranchService,
+} from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
+import {
+  SignNowPopupComponent,
+} from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/sign-now-popup.component';
+import {
+  SuccessModalComponent,
+} from 'app/modules/origination/modules/origination-external-callback/digital-sign/success-modal/success-modal.component';
+import {
+  SignSummaryComponent,
+} from 'app/modules/origination/modules/origination-external-callback/offer-letter/sign-summary/sign-summary.component';
 import { DialogService } from 'app/shared/services/dialog.service';
 import { EmailService } from 'app/shared/services/email.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 import moment from 'moment';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-digital-signature',

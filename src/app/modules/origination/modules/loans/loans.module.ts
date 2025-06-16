@@ -1,8 +1,4 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  NgModule,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoansLandingComponent } from './pages/loans-landing/loans-landing.component';
@@ -19,6 +15,7 @@ import { LoansComponent } from './loans/loans.component';
 import { LoansRoutingModule } from './loans-routing.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
+
 @NgModule({
   declarations: [
     LoansComponent,

@@ -12,19 +12,15 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 // import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
-import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
+import {
+  ReusablePincodePopupComponent,
+} from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from './personal-details.constant';
@@ -37,6 +33,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import { CountryService } from 'app/shared/services/country-service';
+
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',

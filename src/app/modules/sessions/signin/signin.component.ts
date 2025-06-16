@@ -2,19 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationData, SessionsConstants } from '../session.constant';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { NewErrorPopupComponent, TokenStorageService } from '@onerumango/utils';
+import { NewErrorPopupComponent, selectUser, TokenStorageService, User, UserProfileAction } from '@onerumango/utils';
 import { SessionService } from 'app/shared/services/session.service';
 import { ThemeChangeService } from 'app/shared/services/theme-change.service';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { Store } from '@ngrx/store';
-import { UserProfileAction } from '@onerumango/utils';
-import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
-import { User } from '@onerumango/utils';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({

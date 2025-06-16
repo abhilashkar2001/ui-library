@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { User } from '@onerumango/utils';
-import { selectUser } from '@onerumango/utils';
+import { selectUser, User } from '@onerumango/utils';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 

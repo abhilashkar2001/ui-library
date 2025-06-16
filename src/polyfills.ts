@@ -17,15 +17,13 @@ import '@angular/localize/init';
  *
  * Learn more in https://angular.io/guide/browser-support
  */
-
 /***************************************************************************************************
  * BROWSER POLYFILLS
- */ // Run `npm install --save classlist.js`.
-
+ */
+// Run `npm install --save classlist.js`.
 /** Evergreen browsers require these. **/
 // import 'core-js/es6/reflect';
 // import 'core-js/es7/reflect';  // Run `npm install --save web-animations-js`.
-
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */

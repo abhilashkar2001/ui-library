@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  Inject,
-  Renderer2,
-  RendererFactory2,
-  EventEmitter,
-} from '@angular/core';
+import { EventEmitter, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 export interface ITheme {
