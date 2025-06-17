@@ -22,7 +22,9 @@
 .text-gray {
   color: #00000f;
   opacity: 70%;
-  font-family: Benton Sans, serif;
+  font-family:
+    Benton Sans,
+    serif;
   font-weight: 600;
 }
 
@@ -212,8 +214,9 @@ mat-expansion-panel.default-expansion-panel {
   overflow-x: hidden;
   overflow-y: scroll;
   border: 4px solid #f3f3f3;
-  box-shadow: 0px 1px 1px rgba(9, 30, 66, 0.25),
-  0px 0px 1px 1px rgba(9, 30, 66, 0.13) !important;
+  box-shadow:
+    0px 1px 1px rgba(9, 30, 66, 0.25),
+    0px 0px 1px 1px rgba(9, 30, 66, 0.13) !important;
 
   &.custom_doc_select {
     min-width: 85% !important;
