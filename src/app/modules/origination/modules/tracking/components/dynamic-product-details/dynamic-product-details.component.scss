@@ -4,6 +4,7 @@
     color: #0033a1;
     font-weight: 600;
     margin-top: 8px;
+
     :first-child {
       margin-top: 0px !important;
     }
@@ -16,12 +17,14 @@
     font-family: 'Benton Sans';
     margin-bottom: 0px;
   }
+
   .label_value {
     font-size: 17px;
     margin-bottom: 0px;
     color: #102245;
     font-weight: bold;
   }
+
   .document_label_value {
     color: #0033a1 !important;
     text-decoration: underline;

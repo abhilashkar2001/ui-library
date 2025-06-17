@@ -5,6 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class NoLeadingSpaceDirective {
   regexStr = '^[a-zA-Z0-9]*$';
+
   constructor(private el: ElementRef) {}
 
   @HostListener('input', ['$event']) onInput(event: InputEvent) {
@@ -16,6 +17,7 @@ export class NoLeadingSpaceDirective {
       event.preventDefault(); // Prevent the space character from being added
     }
   }
+
   @HostListener('keypress', ['$event']) onKeyPress(event: any) {
     return new RegExp(this.regexStr).test(event.key);
   }

@@ -35,7 +35,6 @@ export class CibilScoreContainerComponent {
   invalidOtp = false;
   otp: any;
   agreed = false;
-  isOtpAllowed = false;
 
   constructor(
     private openAccountService: OpenAccountService,
@@ -49,7 +48,8 @@ export class CibilScoreContainerComponent {
   }
 
   onBackCIBILScoreResult() {
-    this.showCibilScoreResult = true;
+    this.showCibilScoreResult = false;
+    this.agreed = true;
   }
 
   onContinue() {
@@ -60,8 +60,21 @@ export class CibilScoreContainerComponent {
           this.showCibilScoreResult = false;
           this.invalidOtp = true;
         } else if (response.status === 200) {
-          this.invalidOtp = false;
-          this.showCibilScoreResult = true;
+          const payload = {
+            originationId: this.sessionStorageService.getOriginationId(),
+            screenCode: this.sessionStorageService.getCurrentScreenCode(),
+            nationalIdNumber: this.phone,
+            creditChecked: true,
+          };
+          this.loanService
+            .saveTermsandCreditFields(payload)
+            .subscribe((res) => {
+              if (res?.statusCode === 200) {
+                // this.updateParentModel({ updateMasterSave: false });
+                this.invalidOtp = false;
+                this.showCibilScoreResult = true;
+              }
+            });
         }
       });
   }

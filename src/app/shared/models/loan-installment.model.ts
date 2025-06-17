@@ -20,6 +20,7 @@ export interface LoanInstallmentModel {
   totalInterest: number;
   components: Component[];
 }
+
 export interface Component {
   componentName: string;
   currentdue: number;

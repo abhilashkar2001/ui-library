@@ -11,20 +11,20 @@
             "
           ></mat-icon>
           <div
-            fxFlex="100%"
-            class="time"
             *ngIf="item?.status?.toUpperCase() === 'SUCCESS'"
+            class="time"
+            fxFlex="100%"
           >
             {{ item?.name }} created {{ item?.status }}FULLY ({{ item?.value }})
           </div>
           <div
             *ngIf="item?.status?.toUpperCase() !== 'SUCCESS'"
-            fxLayout="column"
             class="w-100"
+            fxLayout="column"
             fxLayoutALign="start start"
             style="position: relative; top: 20px"
           >
-            <div fxFlex="100%" class="time">
+            <div class="time" fxFlex="100%">
               {{ item?.name }} creation {{ item?.status }}
             </div>
 
@@ -32,8 +32,6 @@
           </div>
         </div>
         <div
-          fxLayoutAlign="center center"
-          class="progress"
           *ngIf="updatedResult.length - 1 !== i"
           [ngStyle]="{
             background:
@@ -41,6 +39,8 @@
                 ? '#008461'
                 : '#B10000') + ' 0% 0% no-repeat padding-box',
           }"
+          class="progress"
+          fxLayoutAlign="center center"
         ></div>
       </ng-container>
     </div>

@@ -3,7 +3,7 @@
     <mat-icon (click)="cancel()"> cancel_presentation</mat-icon>
   </div>
   <div class="alertImage">
-    <img class="summaryIcon" src="assets/images/error-icon.svg" alt="..." />
+    <img alt="..." class="summaryIcon" src="assets/images/error-icon.svg" />
   </div>
   <div fxLayout="column">
     <div class="alertText">
@@ -14,18 +14,18 @@
   <div
     class="button-section"
     fxLayout="row"
-    fxLayoutGap="50px"
     fxLayoutAlign="center center"
+    fxLayoutGap="50px"
   >
-    <button mat-raised-button class="confirm-button" (click)="done()">
+    <button (click)="done()" class="confirm-button" mat-raised-button>
       {{ isNextButton ? 'Next' : 'Yes' }}
     </button>
 
     <button
-      mat-raised-button
-      class="back-button"
       (click)="cancel()"
       *ngIf="!isNextButton"
+      class="back-button"
+      mat-raised-button
     >
       No
     </button>

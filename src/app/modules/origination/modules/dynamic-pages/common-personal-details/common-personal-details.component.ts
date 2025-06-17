@@ -37,6 +37,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import { CountryService } from 'app/shared/services/country-service';
+
 @Component({
   selector: 'app-common-personal-details',
   templateUrl: './common-personal-details.component.html',
@@ -87,10 +88,13 @@ export class CommonPersonalDetailsComponent
     ['female', 'Mrs'],
   ]);
   subscriptions: Subscription[] = [];
-  private localeData: LocaleData | undefined;
   dateFormat!: string;
   screenCodeValue: number | undefined;
   isMarried = false;
+  dobMinDate: Date | any;
+  dobMaxDate: Date | any;
+  private localeData: LocaleData | undefined;
+
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -105,6 +109,14 @@ export class CommonPersonalDetailsComponent
     private personalData: LoanService,
     private countryService: CountryService,
   ) {}
+
+  get customer(): FormArray {
+    return this.customerDetailsForm.get('customer') as FormArray;
+  }
+
+  get addressArray(): FormArray {
+    return this.customer?.get('contact')?.get('address') as FormArray;
+  }
 
   ngOnInit(): void {
     const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
@@ -707,19 +719,18 @@ export class CommonPersonalDetailsComponent
     });
   }
 
+  getExpDateMin() {
+    const currentDate = new Date(this.todayDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+    return currentDate;
+  }
+
   getDocumentIdArray(index: number): FormArray {
     return this.customer?.at(index)?.get('documentId') as FormArray;
-  }
-  get customer(): FormArray {
-    return this.customerDetailsForm.get('customer') as FormArray;
   }
 
   getCustomerContactDetails(index: number): FormGroup {
     return this.customer.at(index)?.get('contact') as FormGroup;
-  }
-
-  get addressArray(): FormArray {
-    return this.customer?.get('contact')?.get('address') as FormArray;
   }
 
   getDocumentInfoArray(index: number): FormArray {
@@ -774,26 +785,6 @@ export class CommonPersonalDetailsComponent
     while (addressArray.length) {
       addressArray.removeAt(0);
     }
-  }
-
-  private createEmergencyContactAddressGroup(address?: any): FormGroup {
-    const group = this.fb.group({
-      addressId: [address?.addressId ?? null],
-      address1: [address?.address1 ?? '', Validators.required],
-      address2: [address?.address2 ?? '', Validators.required],
-      cityName: [address?.cityName ?? '', Validators.required],
-      stateName: [address?.stateName ?? ''],
-      countryName: [address?.countryName ?? ''],
-      pincode: [address?.pincode ?? '', Validators.required],
-      cityId: [address?.cityId ?? ''],
-      residenceType: [address?.residenceType ?? '', Validators.required],
-      residenceTypeValue: [address?.residenceTypeValue ?? ''],
-    });
-
-    // This ensures validators are processed immediately
-    group.updateValueAndValidity();
-
-    return group;
   }
 
   addAddress(i: any, address?: any) {
@@ -869,6 +860,30 @@ export class CommonPersonalDetailsComponent
       });
   }
 
+  checkMobileValidtiy(i: any) {
+    const mobileControl: any = this.customer
+      .at(i)
+      .get('contact')
+      ?.get('mobile');
+    const mobileNo = parseInt(this.sessionStorageService.getMobileNo());
+    if (mobileNo) {
+      if (i === 0) {
+        mobileControl.markAllAsTouched();
+        mobileControl.patchValue(mobileNo);
+      }
+    }
+    mobileControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((resp: any) => {
+        if (String(resp)?.length != this.maxMobileLength && i != 0) {
+          mobileControl.setErrors({
+            ...mobileControl.errors,
+            invalidLength: true,
+          });
+        }
+      });
+  }
+
   // getCustomerByCif(i: any) {
   //   this.customer.controls[i]
   //     ?.get('customerNo')
@@ -922,28 +937,42 @@ export class CommonPersonalDetailsComponent
   //   this.debounceValue(500, event.target.value, i);
   // }
 
-  checkMobileValidtiy(i: any) {
-    const mobileControl: any = this.customer
-      .at(i)
-      .get('contact')
-      ?.get('mobile');
-    const mobileNo = parseInt(this.sessionStorageService.getMobileNo());
-    if (mobileNo) {
-      if (i === 0) {
-        mobileControl.markAllAsTouched();
-        mobileControl.patchValue(mobileNo);
-      }
-    }
-    mobileControl.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((resp: any) => {
-        if (String(resp)?.length != this.maxMobileLength && i != 0) {
-          mobileControl.setErrors({
-            ...mobileControl.errors,
-            invalidLength: true,
-          });
+  pincodeExpansion(
+    customerIndex: number,
+    addressType: 'customer' | 'emergency' = 'customer',
+  ) {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: '60%',
+      disableClose: true,
+      panelClass: 'dialog-class',
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        if (addressType === 'customer') {
+          // Handle customer address
+          const customerAddress = this.customer
+            .at(customerIndex)
+            .get('contact.address') as FormArray;
+          const addressControl = customerAddress.controls[0];
+          addressControl?.patchValue(res);
+          addressControl?.get('countryName')?.patchValue(res.countryName);
+        } else {
+          // Handle emergency contact address
+          const emergencyAddress =
+            this.getEmergencyContactAddress(customerIndex);
+          if (emergencyAddress.controls[0]) {
+            emergencyAddress.controls[0].patchValue(res);
+            emergencyAddress.controls[0]
+              .get('countryName')
+              ?.patchValue(res.countryName);
+          } else {
+            // If no address exists, add one
+            this.addEmergencyContactAddress(customerIndex, res);
+          }
         }
-      });
+      }
+    });
   }
 
   // allreadyProduct(mobileControl: any) {
@@ -986,44 +1015,6 @@ export class CommonPersonalDetailsComponent
   //     kycStatus: '',
   //   });
   // }
-
-  pincodeExpansion(
-    customerIndex: number,
-    addressType: 'customer' | 'emergency' = 'customer',
-  ) {
-    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
-      width: '60%',
-      disableClose: true,
-      panelClass: 'dialog-class',
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        if (addressType === 'customer') {
-          // Handle customer address
-          const customerAddress = this.customer
-            .at(customerIndex)
-            .get('contact.address') as FormArray;
-          const addressControl = customerAddress.controls[0];
-          addressControl?.patchValue(res);
-          addressControl?.get('countryName')?.patchValue(res.countryName);
-        } else {
-          // Handle emergency contact address
-          const emergencyAddress =
-            this.getEmergencyContactAddress(customerIndex);
-          if (emergencyAddress.controls[0]) {
-            emergencyAddress.controls[0].patchValue(res);
-            emergencyAddress.controls[0]
-              .get('countryName')
-              ?.patchValue(res.countryName);
-          } else {
-            // If no address exists, add one
-            this.addEmergencyContactAddress(customerIndex, res);
-          }
-        }
-      }
-    });
-  }
 
   confirmCustomer() {
     if (
@@ -1091,6 +1082,10 @@ export class CommonPersonalDetailsComponent
     // });
   }
 
+  confirmCustomertoCheck() {
+    console.log(this.customerDetailsForm);
+  }
+
   // onConfirm() {
   //   const payload = {
   //     ...this.loanDetailsForm?.value,
@@ -1103,9 +1098,6 @@ export class CommonPersonalDetailsComponent
   //   });
   // }
 
-  confirmCustomertoCheck() {
-    console.log(this.customerDetailsForm);
-  }
   /**
    * checking any one customer should be primary customer .If not then it will show message and return.
    * @returns is any customer primary or not.
@@ -1134,13 +1126,37 @@ export class CommonPersonalDetailsComponent
   goBack() {
     this.backEvent.emit();
   }
+
   saveCustomer(i: any) {
     this.closePanel(i);
   }
+
   closePanel(index: any) {
     this.panels.forEach((panel, i) => {
       if (i == index) {
         panel.close();
+      }
+    });
+  }
+
+  fetchBoundaries() {
+    this.openApi.fetchBoundariesDetails(this.basisId).subscribe((res) => {
+      if (res?.statusCode === 200 && res?.data) {
+        this.boundaries = res.data[0];
+        const minimumAge = this.boundaries.minimumAge ?? 0;
+        const maximumAge = this.boundaries.maximumAge ?? 0;
+
+        this.dobMaxDate = new Date(
+          this.todayDate.getFullYear() - maximumAge,
+          this.todayDate.getMonth(),
+          this.todayDate.getDate(),
+        );
+
+        this.dobMinDate = new Date(
+          this.todayDate.getFullYear() - minimumAge,
+          this.todayDate.getMonth(),
+          this.todayDate.getDate(),
+        );
       }
     });
   }
@@ -1188,12 +1204,33 @@ export class CommonPersonalDetailsComponent
   //   });
   // }
 
-  fetchBoundaries() {
-    this.openApi.fetchBoundariesDetails(this.basisId).subscribe((res) => {
-      if (res?.statusCode === 200 && res?.data) {
-        this.boundaries = res.data[0];
+  CheckGenderandPrefix(index: number) {
+    const personalInfoGroup = this.customer.at(index);
+    const prefixId = this.prefixArray.filter(
+      (item) => item.id === personalInfoGroup.get('prefixId')?.value,
+    )[0]?.values;
+    const genderId = this.genderArray.filter(
+      (item) => item.id === personalInfoGroup.get('genderId')?.value,
+    )[0]?.values;
+    if (prefixId && genderId) {
+      if (
+        (prefixId.toLowerCase() === 'mr' &&
+          genderId.toLowerCase() === 'male') ||
+        ((prefixId.toLowerCase() === 'ms' ||
+          prefixId.toLowerCase() === 'mrs') &&
+          genderId.toLowerCase() === 'female')
+      ) {
+        console.log('prefixId and genderId match!');
+      } else {
+        personalInfoGroup.get('prefixId')?.patchValue('');
+        personalInfoGroup.get('genderId')?.patchValue('');
+        this.snack.open('prefixId and genderId does not match!', 'OK', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
       }
-    });
+    }
   }
 
   // dateOfBirthSelected(selectedDate: any, i: any) {
@@ -1228,36 +1265,27 @@ export class CommonPersonalDetailsComponent
   //   return moment().diff(dateOfBirth, 'years');
   // }
 
-  CheckGenderandPrefix(index: number) {
-    const personalInfoGroup = this.customer.at(index);
-    const prefixId = this.prefixArray.filter(
-      (item) => item.id === personalInfoGroup.get('prefixId')?.value,
-    )[0]?.values;
-    const genderId = this.genderArray.filter(
-      (item) => item.id === personalInfoGroup.get('genderId')?.value,
-    )[0]?.values;
-    if (prefixId && genderId) {
-      if (
-        (prefixId.toLowerCase() === 'mr' &&
-          genderId.toLowerCase() === 'male') ||
-        ((prefixId.toLowerCase() === 'ms' ||
-          prefixId.toLowerCase() === 'mrs') &&
-          genderId.toLowerCase() === 'female')
-      ) {
-        console.log('prefixId and genderId match!');
-      } else {
-        personalInfoGroup.get('prefixId')?.patchValue('');
-        personalInfoGroup.get('genderId')?.patchValue('');
-        this.snack.open('prefixId and genderId does not match!', 'OK', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-      }
-    }
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  private createEmergencyContactAddressGroup(address?: any): FormGroup {
+    const group = this.fb.group({
+      addressId: [address?.addressId ?? null],
+      address1: [address?.address1 ?? '', Validators.required],
+      address2: [address?.address2 ?? '', Validators.required],
+      cityName: [address?.cityName ?? '', Validators.required],
+      stateName: [address?.stateName ?? ''],
+      countryName: [address?.countryName ?? ''],
+      pincode: [address?.pincode ?? '', Validators.required],
+      cityId: [address?.cityId ?? ''],
+      residenceType: [address?.residenceType ?? '', Validators.required],
+      residenceTypeValue: [address?.residenceTypeValue ?? ''],
+    });
+
+    // This ensures validators are processed immediately
+    group.updateValueAndValidity();
+
+    return group;
   }
 }

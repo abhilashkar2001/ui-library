@@ -4,11 +4,13 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 const baseUrl = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })
 export class OpenAccountService {
   private dataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
   constructor(private http: HttpClient) {}
 
   getOtp(mobile: string): Observable<any> | any {
@@ -65,6 +67,7 @@ export class OpenAccountService {
       `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`,
     );
   }
+
   getProcessStages(id: any) {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
@@ -86,6 +89,7 @@ export class OpenAccountService {
   getData(): Observable<any> {
     return this.dataSubject.asObservable();
   }
+
   fetchBoundariesDetails(productId: number) {
     return this.http.get<any>(`${baseUrl}/boundaries?productId=${productId}`);
   }
@@ -93,11 +97,13 @@ export class OpenAccountService {
   getProductDetails(basisId: any) {
     return this.http.get<any>(`${baseUrl}/basis-detail?id=${basisId}`);
   }
+
   checkMobileAndProduct(productCode: any, mobileNo: any, accountType: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/checkMobileAndProduct?productCode=${productCode}&mobileNo=${mobileNo}&accountType=${accountType}`,
     );
   }
+
   getOriginationMaster(id: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser?originationId=${id}`,

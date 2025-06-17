@@ -1,20 +1,20 @@
 <div class="loan-doc-modal">
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="m-8">
+  <div class="m-8" fxLayout="row" fxLayoutAlign="space-between center">
     <span class="fileName">{{ fileName }}</span>
     <div fxLayout="row">
       <ic-button
+        (OnClick)="downloadExcel()"
         [label]="'Download'"
-        size="large"
+        [type]="'button'"
         icButtonType="filled-rounded"
         icIcon="download"
-        [type]="'button'"
-        (OnClick)="downloadExcel()"
+        size="large"
       >
       </ic-button>
       <mat-card
+        (click)="closeDialog()"
         class="close-card"
         fxLayoutAlign="center center"
-        (click)="closeDialog()"
       >
         <mat-icon style="color: #004c97">close</mat-icon>
       </mat-card>
@@ -23,7 +23,7 @@
 
   <div class="scrollable-content">
     <div class="table-container">
-      <mat-table class="w-full" [dataSource]="dataSource">
+      <mat-table [dataSource]="dataSource" class="w-full">
         <ng-container
           *ngFor="let header of tableHeader"
           [matColumnDef]="header"

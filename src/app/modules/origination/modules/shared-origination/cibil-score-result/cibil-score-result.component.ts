@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CibilScorePoorDialgComponent } from '../cibil-score-poor-dialg/cibil-score-poor-dialg.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-cibil-score-result',
@@ -11,8 +12,8 @@ export class CibilScoreResultComponent implements OnInit {
   dialogsaveRef!: MatDialogRef<CibilScorePoorDialgComponent>;
   @Input() flow: string | any;
   @Input() isDifferentMobile: boolean | any;
-  @Output() backEvent: EventEmitter<any> = new EventEmitter();
-  @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
+  @Output() backEvent = new EventEmitter<Data>();
+  // @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
   @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
   cibilScore = 600;
   dataSource: any;
@@ -107,7 +108,6 @@ export class CibilScoreResultComponent implements OnInit {
   }
 
   onContinue() {
-    console.log(this.cibilScore);
     this.onCibilConfirmEvent.emit({ isNext: true });
   }
 }

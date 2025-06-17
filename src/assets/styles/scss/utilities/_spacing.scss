@@ -1,141 +1,143 @@
 $spaces: (
-  0: 0px,
-  4: 4px,
-  6: 6px,
-  8: 8px,
-  12: 12px,
-  16: 16px,
-  20: 20px,
-  24: 24px,
-  28: 28px,
-  32: 32px,
-  36: 36px,
-  40: 40px,
-  44: 44px,
-  48: 48px,
-  50: 50px,
-  70: 70px,
+        0: 0px,
+        4: 4px,
+        6: 6px,
+        8: 8px,
+        12: 12px,
+        16: 16px,
+        20: 20px,
+        24: 24px,
+        28: 28px,
+        32: 32px,
+        36: 36px,
+        40: 40px,
+        44: 44px,
+        48: 48px,
+        50: 50px,
+        70: 70px,
 );
 
 $utilities: map-merge(
-  (
-    'margin': (
-      property: margin,
-      class: m,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-x': (
-      property: margin-right margin-left,
-      class: mx,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-y': (
-      property: margin-top margin-bottom,
-      class: my,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-top': (
-      property: margin-top,
-      class: mt,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-right': (
-      property: margin-right,
-      class: mr,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-bottom': (
-      property: margin-bottom,
-      class: mb,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    'margin-left': (
-      property: margin-left,
-      class: ml,
-      values: map-merge(
-          $spaces,
-          (
-            auto: auto,
-          )
-        ),
-    ),
-    // Padding utilities
-    'padding': (
-        property: padding,
-        class: p,
-        values: $spaces,
-      ),
-    'padding-x': (
-      property: padding-right padding-left,
-      class: px,
-      values: $spaces,
-    ),
-    'padding-y': (
-      property: padding-top padding-bottom,
-      class: py,
-      values: $spaces,
-    ),
-    'padding-top': (
-      property: padding-top,
-      class: pt,
-      values: $spaces,
-    ),
-    'padding-right': (
-      property: padding-right,
-      class: pr,
-      values: $spaces,
-    ),
-    'padding-bottom': (
-      property: padding-bottom,
-      class: pb,
-      values: $spaces,
-    ),
-    'padding-left': (
-      property: padding-left,
-      class: pl,
-      values: $spaces,
-    ),
-  ),
-  $utilities
+                (
+                        'margin': (
+                                property: margin,
+                                class: m,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-x': (
+                                property: margin-right margin-left,
+                                class: mx,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-y': (
+                                property: margin-top margin-bottom,
+                                class: my,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-top': (
+                                property: margin-top,
+                                class: mt,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-right': (
+                                property: margin-right,
+                                class: mr,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-bottom': (
+                                property: margin-bottom,
+                                class: mb,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                        'margin-left': (
+                                property: margin-left,
+                                class: ml,
+                                values: map-merge(
+                                                $spaces,
+                                                (
+                                                        auto: auto,
+                                                )
+                                ),
+                        ),
+                  // Padding utilities
+                        'padding': (
+                                property: padding,
+                                class: p,
+                                values: $spaces,
+                        ),
+                        'padding-x': (
+                                property: padding-right padding-left,
+                                class: px,
+                                values: $spaces,
+                        ),
+                        'padding-y': (
+                                property: padding-top padding-bottom,
+                                class: py,
+                                values: $spaces,
+                        ),
+                        'padding-top': (
+                                property: padding-top,
+                                class: pt,
+                                values: $spaces,
+                        ),
+                        'padding-right': (
+                                property: padding-right,
+                                class: pr,
+                                values: $spaces,
+                        ),
+                        'padding-bottom': (
+                                property: padding-bottom,
+                                class: pb,
+                                values: $spaces,
+                        ),
+                        'padding-left': (
+                                property: padding-left,
+                                class: pl,
+                                values: $spaces,
+                        ),
+                ),
+                $utilities
 );
 
 // Old Spacing classes
 .m-033 {
   margin: 0.333333rem !important;
 }
+
 .m-333 {
   margin: 0.333333rem !important;
 }
+
 .margin-333 {
   margin: 0.333333rem !important;
 }
@@ -145,6 +147,7 @@ $utilities: map-merge(
     padding-left: 16px;
     padding-right: 0 !important;
   }
+
   .mr-16 {
     margin-right: 0 !important;
     margin-left: 16px;

@@ -1,15 +1,15 @@
 <mat-card
+  [formGroup]="_parentForm"
   class="default-card m-0 mb-12"
   fxLayout="column"
-  [formGroup]="_parentForm"
 >
   <h3 class="sub-heading mt-16">{{ 'Company Information' }}</h3>
-  <div class="mb-12" fxFlex fxLayout="column" [formGroup]="corporateCustomer">
+  <div [formGroup]="corporateCustomer" class="mb-12" fxFlex fxLayout="column">
     <div fxFlex fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'Company Name' }}</mat-label>
-          <input required matInput formControlName="companyName" />
+          <input formControlName="companyName" matInput required />
 
           <mat-error
             *ngIf="
@@ -22,19 +22,19 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <app-searchable-select
+          [control]="corporateCustomer.controls['companyType'] | formcontrol"
           [items]="genericValue?.COMPANYTYPE"
           bindLabelKey="values"
           bindValueKey="id"
           inputLabel="Company Type"
-          [control]="corporateCustomer.controls['companyType'] | formcontrol"
         ></app-searchable-select>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'Number of Director' }}</mat-label>
-          <input required matInput formControlName="numberOfDirectors" />
+          <input formControlName="numberOfDirectors" matInput required />
 
           <mat-error
             *ngIf="
@@ -48,48 +48,48 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <app-searchable-select
+          [control]="corporateCustomer.controls['segment'] | formcontrol"
           [items]="genericValue?.SEGMENT"
-          inputLabel="Segment"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="corporateCustomer.controls['segment'] | formcontrol"
+          inputLabel="Segment"
         ></app-searchable-select>
       </div>
     </div>
     <div fxFlex fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'Nature of the Business' }}</mat-label>
-          <input matInput formControlName="natureOfBusiness" />
+          <input formControlName="natureOfBusiness" matInput />
         </mat-form-field>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <app-searchable-select
-          [items]="countryList"
-          inputLabel="Country of Incorporation"
-          bindLabelKey="countryName"
-          bindValueKey="countryCode"
           [control]="
             corporateCustomer.controls['countryOfIncorporationCode']
               | formcontrol
           "
+          [items]="countryList"
+          bindLabelKey="countryName"
+          bindValueKey="countryCode"
+          inputLabel="Country of Incorporation"
         ></app-searchable-select>
       </div>
       <div fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field appearance="outline">
           <mat-label>{{ 'Date of Incorporation' }}</mat-label>
           <input
-            matInput
-            type="text"
-            readonly
             [matDatepicker]="incorporationDate"
             formControlName="dateOfIncorporation"
+            matInput
+            readonly
             required
+            type="text"
           />
-          <mat-datepicker-toggle matSuffix [for]="incorporationDate">
+          <mat-datepicker-toggle [for]="incorporationDate" matSuffix>
             <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #incorporationDate></mat-datepicker>
@@ -105,10 +105,10 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'Registration Number' }}</mat-label>
-          <input required matInput formControlName="registrationNumber" />
+          <input formControlName="registrationNumber" matInput required />
           <mat-error
             *ngIf="
               corporateCustomer.controls['registrationNumber']?.touched &&
@@ -126,10 +126,10 @@
     </div>
 
     <div fxFlex fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'TIN Number' }}</mat-label>
-          <input required matInput formControlName="tinNumber" />
+          <input formControlName="tinNumber" matInput required />
 
           <mat-error
             *ngIf="
@@ -142,36 +142,36 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <app-searchable-select
+          [control]="corporateCustomer.controls['sourceOfIncome'] | formcontrol"
           [items]="genericValue?.SOURCEOFINCOME"
-          inputLabel="Source of Income"
           bindLabelKey="values"
           bindValueKey="id"
-          [control]="corporateCustomer.controls['sourceOfIncome'] | formcontrol"
+          inputLabel="Source of Income"
         ></app-searchable-select>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <mat-form-field>
           <mat-label>{{ 'Other' }}</mat-label>
-          <input matInput formControlName="others" />
+          <input formControlName="others" matInput />
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-xs="25" class="pr-16">
+      <div class="pr-16" fxFlex="100" fxFlex.gt-xs="25">
         <app-searchable-select
-          [items]="genericValue['PARENTCOMPANY']"
-          inputLabel="Parent Company"
-          bindLabelKey="values"
-          bindValueKey="id"
           [control]="
             corporateCustomer.controls['parentCompanyId'] | formcontrol
           "
+          [items]="genericValue['PARENTCOMPANY']"
+          bindLabelKey="values"
+          bindValueKey="id"
+          inputLabel="Parent Company"
         ></app-searchable-select>
       </div>
     </div>
   </div>
   <div class="button-section">
-    <button class="confirm-button" (click)="onConfirm()">Confirm</button>
-    <button class="back-button" (click)="goBack()">Back</button>
+    <button (click)="onConfirm()" class="confirm-button">Confirm</button>
+    <button (click)="goBack()" class="back-button">Back</button>
   </div>
 </mat-card>

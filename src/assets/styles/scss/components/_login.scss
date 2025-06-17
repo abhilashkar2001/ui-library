@@ -44,17 +44,20 @@
       padding-left: 16px;
       font-family: 'Benton Sans', sans-serif;
     }
+
     .forgot-password-title {
       // margin-top: 50px;
       margin-bottom: 28px;
       // padding-left: 16px;
       font-family: 'Benton Sans', sans-serif;
     }
+
     .forgot-password-subtitle {
       font-size: 13px;
       font-family: 'Benton Sans', sans-serif;
       color: #b1b1b1;
     }
+
     .login_form,
     .forgot_form {
       max-width: 422px;
@@ -68,35 +71,43 @@
         border: 2px solid !important;
         border-radius: 14px;
       }
+
       .mat-form-field-outline-start,
       .mat-form-field-outline-end,
       .mat-form-field-outline-gap {
         border: unset !important;
       }
+
       .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-        .mat-form-field-label {
+      .mat-form-field-label {
         transform: translateY(-1.69373em) translateX(1.30627em) scale(0.85);
         width: auto;
         background-color: white;
       }
+
       .mat-form-field-label {
         line-height: inherit;
       }
+
       .mat-form-field-appearance-outline .mat-form-field-flex {
         height: 60px;
       }
+
       .mat-form-field-appearance-outline .mat-form-field-infix {
         padding: 1em 0 1em 0;
       }
+
       .mat-form-field-subscript-wrapper {
         font-size: 75%;
         margin-top: 0.2666666667em !important;
         top: calc(100% - 1.7916666667em);
         letter-spacing: normal;
       }
+
       .mat-form-field-wrapper {
         padding-bottom: 0;
       }
+
       .alignCred {
         width: 90%;
         transform: translate(1.30627em, -3px);
@@ -106,13 +117,13 @@
         border-radius: 24px !important;
         opacity: 1 !important;
         width: 100%;
-        background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%)
-          0% 0% no-repeat padding-box;
+        background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box;
         color: #ffffff;
         height: 48px;
         font: normal normal 500 15px/23px Benton Sans;
         border: none;
       }
+
       // AUthentication Page
       .login_methods {
         display: flex;
@@ -129,6 +140,7 @@
           box-shadow: 3px 3px 15px #0000000f;
           border-radius: 15px;
           border: none;
+
           .loginMethodCard {
             margin-right: 20px;
             color: #0033a1;
@@ -159,6 +171,7 @@
       font-size: 12px !important;
       color: #b1b1b1 !important;
     }
+
     .forget {
       // color: $primaryTextColor;
       font-size: 13px;
@@ -170,6 +183,7 @@
 
     .button-container {
       display: flex;
+
       button {
         width: 50%;
       }
@@ -179,6 +193,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
+
       p.timer {
         text-align: center;
         color: #b20000;
@@ -208,6 +223,7 @@
     @media screen and (max-width: 520px) {
       display: none;
     }
+
     img {
       width: 75%;
       height: 75%;
@@ -245,6 +261,7 @@
   border-radius: 15px 0 0 15px !important;
   min-width: 10px !important;
 }
+
 :host ::ng-deep .mat-form-field-outline-end {
   border-radius: 0 15px 15px 0 !important;
 }
@@ -256,8 +273,7 @@
 }
 
 .saveButton {
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box;
   border-radius: 24px;
   font: normal normal 500 15px/23px Benton Sans;
   color: #ffffff !important;

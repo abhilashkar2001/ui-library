@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppLoaderComponent } from './app-loader.component';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 interface Config {
   width?: string;
@@ -10,6 +10,7 @@ interface Config {
 @Injectable()
 export class AppLoaderService {
   dialogRef: MatDialogRef<AppLoaderComponent> | any;
+
   constructor(private dialog: MatDialog) {}
 
   public open(

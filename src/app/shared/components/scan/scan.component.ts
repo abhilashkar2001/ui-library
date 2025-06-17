@@ -37,6 +37,7 @@ export class ScanComponent implements OnInit {
   perscentageCheck = true;
   prompt = 'Face forward 🧍';
   randomDirection: string | undefined;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private elRef: ElementRef,
@@ -197,6 +198,7 @@ export class ScanComponent implements OnInit {
       return 'red';
     }
   }
+
   captureImage() {
     const canvas = document.createElement('canvas');
 
@@ -237,10 +239,12 @@ export class ScanComponent implements OnInit {
     this.stopVideo();
     this.closeClick(true);
   }
+
   rescan() {
     this.dialogRef.close('reScan');
     this.rescann = true;
   }
+
   close(remark?: string) {
     this.stopVideo();
     this.dialogRef.close(remark);

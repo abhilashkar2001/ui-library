@@ -19,6 +19,7 @@ import { LoansComponent } from './loans/loans.component';
 import { LoansRoutingModule } from './loans-routing.module';
 import { SharedOriginationModule } from '../shared-origination/shared-origination.module';
 import { DynamicPagesModule } from '../dynamic-pages/dynamic-pages.module';
+
 @NgModule({
   declarations: [
     LoansComponent,

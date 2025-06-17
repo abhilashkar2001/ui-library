@@ -1,78 +1,78 @@
 <div class="sign-now-modal sign-popup">
   <div
-    fxLayout="row"
-    class="mt-12 ml-12"
     *ngIf="title === 'Sign Now'"
+    class="mt-12 ml-12"
+    fxLayout="row"
     fxLayoutAlign="start center"
   >
     <span class="ml-20"
-      ><mat-icon class="heading" (click)="closeDialog()"
-        >arrow_back</mat-icon
-      ></span
+    ><mat-icon (click)="closeDialog()" class="heading"
+    >arrow_back</mat-icon
+    ></span
     >
     <h2 class="ml-12 text-normal">Digital Signing</h2>
   </div>
-  <div fxLayout="row" class="mt-12 ml-12" *ngIf="title === 'Physical Sign'">
+  <div *ngIf="title === 'Physical Sign'" class="mt-12 ml-12" fxLayout="row">
     <span
-      ><mat-icon class="ml-12" (click)="closeDialog()"
-        >arrow_back</mat-icon
-      ></span
+    ><mat-icon (click)="closeDialog()" class="ml-12"
+    >arrow_back</mat-icon
+    ></span
     >
     <h2 class="ml-12 text-normal text-bold">Physical Sign Upload</h2>
   </div>
   <div
+    *ngIf="title === 'Sign Now'"
     fxLayout="row"
     fxLayoutAlign="space-between center"
     fxLayoutGap="12px"
-    *ngIf="title === 'Sign Now'"
   >
     <mat-card
-      fxFlex="50%"
       (click)="radioEvent('digitan-sign')"
-      class="signnow"
       [ngClass]="
         this.radioFlag === 'digitan-sign' ? 'actionSelected' : 'actionIcon'
       "
+      class="signnow"
+      fxFlex="50%"
     >
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
         <mat-icon class="margin-left">
           <span
-            id="iconspan"
             [ngClass]="
               this.radioFlag === 'digitan-sign' ? 'actionTitle' : 'gray-btn'
             "
+            id="iconspan"
           >
             trip_origin
           </span>
         </mat-icon>
         <span
-          class="text-center text-normal text-bold"
           [ngClass]="
             this.radioFlag === 'digitan-sign' ? 'actionTitle' : 'gray-btn'
           "
-          >Digital Sign</span
+          class="text-center text-normal text-bold"
+        >Digital Sign</span
         >
       </div>
     </mat-card>
     <mat-card
-      class="back-white"
-      fxFlex="50%"
       (click)="radioEvent('upload')"
       [ngClass]="this.radioFlag === 'upload' ? 'actionSelected' : 'actionIcon'"
+      class="back-white"
+      fxFlex="50%"
     >
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
         <mat-icon class="margin-left">
           <span
-            id="iconspan"
             [ngClass]="this.radioFlag === 'upload' ? 'actionTitle' : 'gray-btn'"
+            id="iconspan"
           >
             trip_origin
           </span>
         </mat-icon>
         <span
-          class="text-normal"
           [ngClass]="this.radioFlag === 'upload' ? 'actionTitle' : 'gray-btn'"
-          >Upload</span
+          class="text-normal"
+        >Upload</span
         >
       </div>
     </mat-card>
@@ -93,41 +93,41 @@
     <mat-card class="mt-16 uploadcard">
       <mat-card-content>
         <div
-          appDragDrop
           (fileDropped)="onFileDropped($event)"
+          appDragDrop
           fxLayout="column"
           fxLayoutAlign="center center"
         >
           <div>
             <img
+              alt="upload image"
               class="imagedesign"
               src="../../../../../../../assets/images/upload.svg"
-              alt="upload image"
             />
           </div>
           <h5>
             <strong class="text-normal"
-              >Drag and Drop file here or
+            >Drag and Drop file here or
               <span
-                class="textdesign"
                 (click)="fileSelect.click()"
                 (keydown.enter)="fileSelect.click()"
+                class="textdesign"
                 tabindex="0"
-                ><u>Choose file</u></span
+              ><u>Choose file</u></span
               >
             </strong>
           </h5>
           <h6 class="colordesign text-normal">Maximum Size : 25 MB</h6>
           <input
-            type="hidden"
-            accept="image/png, image/jpeg"
             #fileSelect
-            [hidden]="true"
-            type="file"
-            id="file-input"
             (change)="onFileSelect($event)"
+            [hidden]="true"
+            accept="image/png, image/jpeg"
+            id="file-input"
+            type="hidden"
+            type="file"
           />
-          <ng-container> </ng-container>
+          <ng-container></ng-container>
         </div>
       </mat-card-content>
     </mat-card>
@@ -139,19 +139,19 @@
     >
       <ng-container>
         <div
+          class="ic-progress-bar"
           fxFlex="100"
           fxLayout="row"
           fxLayoutAlign="start center"
-          class="ic-progress-bar"
         >
           <div fxFlex="100" fxLayoutAlign="start center">
             <span *ngIf="fileUploadFailed">
               Could not upload File, Try Again!</span
             >
             <div
+              *ngIf="isUploading"
               fxFlex="100"
               fxLayoutAlign="row"
-              *ngIf="isUploading"
               fxLayoutGap="5"
             >
               <img
@@ -165,18 +165,18 @@
               <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between">
                 <span>{{ file?.name }}</span>
                 <mat-progress-bar
-                  class="pd-15"
                   *ngIf="isUploading"
                   [value]="percentDone"
+                  class="pd-15"
                   class="progrees_color"
                   mode="determinate"
                 ></mat-progress-bar>
               </div>
               <div *ngIf="uploadSuccess">
                 <ic-button
-                  [icIcon]="'delete'"
-                  [icButtonType]="'icon'"
                   (OnClick)="deleteFile()"
+                  [icButtonType]="'icon'"
+                  [icIcon]="'delete'"
                 ></ic-button>
               </div>
             </div>
@@ -192,24 +192,24 @@
     fxLayoutGap="20px"
   >
     <ic-button
-      label="Done"
-      *ngIf="radioFlag === 'upload' || title === 'Physical Sign'"
       (OnClick)="saveSignUpload()"
+      *ngIf="radioFlag === 'upload' || title === 'Physical Sign'"
       [disabled]="!signImg && uploadSuccess"
       [icButtonType]="'filled-rounded'"
-    ></ic-button>
-
-    <ic-button
       label="Done"
-      *ngIf="radioFlag === 'digitan-sign' && title === 'Sign Now'"
-      (OnClick)="saveDigitalSign()"
-      [icButtonType]="'filled-rounded'"
     ></ic-button>
 
     <ic-button
-      label="Cancel"
-      [icButtonType]="'ghost-rounded'"
+      (OnClick)="saveDigitalSign()"
+      *ngIf="radioFlag === 'digitan-sign' && title === 'Sign Now'"
+      [icButtonType]="'filled-rounded'"
+      label="Done"
+    ></ic-button>
+
+    <ic-button
       (click)="closeDialog()"
+      [icButtonType]="'ghost-rounded'"
+      label="Cancel"
     ></ic-button>
   </div>
 </div>

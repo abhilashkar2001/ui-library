@@ -1,9 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import moment from 'moment';
 
 @Component({
   selector: 'app-loan-account-type',
@@ -11,7 +9,6 @@ import moment from 'moment';
   styleUrls: ['./loan-account-type.component.scss'],
 })
 export class LoanAccountTypeComponent implements OnInit {
-  loanType = 'Personal';
   basisClass: string | any;
   subLoanList: any = [];
   isShowCalculator = false;
@@ -21,7 +18,6 @@ export class LoanAccountTypeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private commonService: CommonService,
     private loanService: LoanService,
     private activatedRoute: ActivatedRoute,
     private el: ElementRef,
@@ -32,7 +28,6 @@ export class LoanAccountTypeComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.basisClass = params.get('subClass');
     });
-    this.updateCurrentRoute();
     this.getLoanSubTypes();
     setTimeout(() => {
       window.scrollTo(0, 0);
@@ -47,10 +42,6 @@ export class LoanAccountTypeComponent implements OnInit {
           (item: any) => !!item?.productDetails,
         );
       });
-  }
-
-  updateCurrentRoute() {
-    this.commonService.updateData(this.router.url.split('?')[0]);
   }
 
   customApply(event: any) {
@@ -85,18 +76,7 @@ export class LoanAccountTypeComponent implements OnInit {
     this.selectedLoan = event;
     const emiStartDate = new Date();
     emiStartDate.setDate(emiStartDate.getDate() + 1);
-    const payload = {
-      emiAmount: parseInt(this.selectedLoan.emiAmount),
-      interestRate: parseFloat(this.selectedLoan.interestRate),
-      interestPayable: parseFloat(this.selectedLoan.interestPayable),
-      principalAmount: this.selectedLoan.amount,
-      totalPayableAmount: parseFloat(this.selectedLoan.totalPayableAmount),
-      disbursementTypeId: '',
-      accountNumber: null,
-      emiStartDate: moment(emiStartDate).format(),
-    };
     this.sessionStorageService.removeLoanStep();
     this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
-    console.log(payload);
   }
 }

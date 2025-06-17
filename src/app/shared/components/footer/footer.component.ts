@@ -9,8 +9,7 @@ import { FooterConstant } from './footer.constant';
 import { FooterServiceService } from 'app/shared/services/footer-service.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from '@onerumango/utils';
-import { selectUser } from '@onerumango/utils';
+import { selectUser, User } from '@onerumango/utils';
 
 @Component({
   selector: 'app-footer',
@@ -27,6 +26,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   isHideFooter = false;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+
   constructor(
     private footerService: FooterServiceService,
     private store: Store,

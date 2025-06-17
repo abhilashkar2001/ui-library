@@ -1,4 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
+
 @Directive({
   selector: '[appSpecialIsAlphaNumeric]',
 })

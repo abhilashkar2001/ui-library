@@ -6,21 +6,21 @@
     fxLayoutAlign="space-between center"
     fxLayoutGap="10"
   >
-    <img src="assets/images/search_icon.svg" alt="" />
+    <img alt="" src="assets/images/search_icon.svg" />
     <input
-      matInput
-      type="text"
-      placeholder="Search"
       [formControl]="searchControl"
+      matInput
+      placeholder="Search"
+      type="text"
     />
     <ic-select
+      (selectionChange)="onCategoryChange($event)"
+      [options]="categoryList"
+      bindLabelKey="category"
+      customClass="m-0 gray-select"
       fxFlex="15"
       label="Category"
       placeholder="Category*"
-      [options]="categoryList"
-      bindLabelKey="category"
-      (selectionChange)="onCategoryChange($event)"
-      customClass="m-0 gray-select"
     >
     </ic-select>
   </div>
@@ -28,7 +28,7 @@
   <!-- Tracking Product cards -->
   <mat-card class="default-card p-12 mt-8">
     <span class="header_xl_bold_black">Tracking Status</span>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%" class="my-2">
+    <div class="my-2" fxFlex="100" fxLayout="row wrap" fxLayoutGap="1%">
       <ng-container
         *ngFor="
           let product of productList;
@@ -37,15 +37,15 @@
         "
       >
         <mat-card
-          fxFlex="31"
-          class="card-div mb-24 p-4"
           (click)="openProduct(product)"
+          class="card-div mb-24 p-4"
+          fxFlex="31"
         >
           <img
             *ngIf="product.imageUrl; else defaultImage"
             [src]="product.imageUrl"
-            class="card-img"
             alt="Card"
+            class="card-img"
           />
           <ng-template #defaultImage>
             <img
@@ -54,8 +54,8 @@
                   ? 'assets/images/applicationlist.svg'
                   : 'assets/images/apllicationdetails.svg'
               "
-              class="card-img"
               alt="Card"
+              class="card-img"
             />
           </ng-template>
           <div class="p-12" fxLayout="column">
@@ -71,9 +71,9 @@
             </div>
             <mat-divider></mat-divider>
             <div
+              class="pt-12"
               fxLayout="row"
               fxLayoutAlign="space-between center"
-              class="pt-12"
             >
               <div fxLayout="column">
                 <div class="breadcrum_sm">Loan Amount</div>
@@ -82,8 +82,8 @@
               <div fxLayout="column">
                 <div class="breadcrum_sm">Status</div>
                 <p
-                  class="label_value"
                   [ngClass]="getStatusClass(product.status.toLowerCase())"
+                  class="label_value"
                 >
                   {{ product.status }}
                 </p>
@@ -107,17 +107,17 @@
         <div class="apply_card">
           <span class="theme_header_lg_bold">{{ apply }}</span>
           <span class="header_md_bold_black"
-            >A loan moves the present to the future. The debt moves the future
+          >A loan moves the present to the future. The debt moves the future
             to the present.</span
           >
           <ic-button
+            (OnClick)="applyProduct(apply)"
+            [label]="'Apply'"
             class="w-100"
             customButtonClass="w-100"
-            [label]="'Apply'"
             icButtonType="filled-rounded"
-            (OnClick)="applyProduct(apply)"
-            type="submit"
             size="medium"
+            type="submit"
           ></ic-button>
         </div>
       </ng-container>

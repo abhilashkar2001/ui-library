@@ -29,6 +29,7 @@ export class DigitalSignComponent implements OnInit {
   filePreview: any;
   signatures: any[] = [];
   submitted = false;
+
   constructor(
     private dialog: MatDialog,
     private branchService: BranchService,

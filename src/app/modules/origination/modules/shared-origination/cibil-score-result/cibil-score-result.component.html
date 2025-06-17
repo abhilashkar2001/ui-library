@@ -7,19 +7,19 @@
   <div *ngIf="cibilScore > 681">
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../../assets/images/like.png" alt="shield" />
+        <img alt="shield" src="../../../../../assets/images/like.png" />
       </div>
       <div class="label">You are paying your EMIs/Credit card bill on time</div>
     </div>
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../../assets/images/like.png" alt="shield" />
+        <img alt="shield" src="../../../../../assets/images/like.png" />
       </div>
       <div class="label">You are not spending over your credit limit</div>
     </div>
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../../assets/images/like.png" alt="shield" />
+        <img alt="shield" src="../../../../../assets/images/like.png" />
       </div>
       <div class="label">You are not careful with new credit applications</div>
     </div>
@@ -27,7 +27,7 @@
   <div *ngIf="cibilScore < 681">
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../assets/images/dis-like.png" alt="dis-like" />
+        <img alt="dis-like" src="../../../../assets/images/dis-like.png" />
       </div>
       <div class="label">
         You are paying your EMIs/Credit card bill not in on time
@@ -35,7 +35,7 @@
     </div>
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../assets/images/dis-like.png" alt="dis-like" />
+        <img alt="dis-like" src="../../../../assets/images/dis-like.png" />
       </div>
       <div class="label">
         You are spending over your credit limitYou are not spending over your
@@ -44,7 +44,7 @@
     </div>
     <div class="cibil-text-card">
       <div class="like-icon">
-        <img src="../../../../assets/images/dis-like.png" alt="dis-like" />
+        <img alt="dis-like" src="../../../../assets/images/dis-like.png" />
       </div>
       <div class="label">
         You are not Properly maintaining with new credit applications
@@ -52,21 +52,21 @@
     </div>
   </div>
 
-  <div class="button-section" fxLayoutGap="2%" fxLayout="row">
+  <div class="button-section" fxLayout="row" fxLayoutGap="2%">
     <ic-button
       (OnClick)="onContinue()"
+      [icButtonType]="'filled-rounded'"
       [label]="'Continue' | translate"
       [type]="'submit'"
       size="large"
-      [icButtonType]="'filled-rounded'"
     >
     </ic-button>
 
     <ic-button
+      (OnClick)="onBack()"
       [label]="'Back'"
       icButtonType="ghost-rounded-danger"
       size="large"
-      (OnClick)="onBack()"
     >
     </ic-button>
   </div>

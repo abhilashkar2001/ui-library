@@ -55,26 +55,28 @@
       height: 83%;
     }
   }
+
   @mixin styling {
     display: flex;
     justify-content: center;
   }
   margin-top: 25px;
   max-height: 100%;
+
   img:not(.mat-card-image) {
     max-width: 85%;
   }
+
   ::ng-deep .mat-dialog-container {
     border-radius: 12px;
   }
+
   .digsign {
     color: white !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
-      0% no-repeat padding-box !important;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box !important;
     border-radius: 23px !important;
     color: #ffffff !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
-      0% no-repeat padding-box !important;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box !important;
     border-radius: 23px !important;
     font-size: 12px;
     font-family: 'Benton Sans';
@@ -83,6 +85,7 @@
     text-transform: capitalize;
     width: 91px;
   }
+
   .upd {
     background: #ffffff 0% 0% no-repeat padding-box !important;
     box-shadow: 3px 3px 15px #0000000f;
@@ -94,10 +97,12 @@
     letter-spacing: 0px;
     width: 90px;
   }
+
   .button {
     @include styling;
     padding-top: 10px;
   }
+
   .forSignImg {
     position: relative;
     border: 3px solid #ffffff;
@@ -107,6 +112,7 @@
     border-radius: 12px;
     height: 260px;
   }
+
   .signdig {
     width: 219px;
     height: 214px;
@@ -116,6 +122,7 @@
     align-items: center;
     position: relative;
   }
+
   .initial {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -124,6 +131,7 @@
     position: relative;
     top: -6px;
   }
+
   .deletebtn {
     position: absolute;
     top: 0px;
@@ -138,6 +146,7 @@
     display: flex;
     justify-content: center;
   }
+
   .changeInput {
     opacity: 0;
     position: absolute;
@@ -149,9 +158,11 @@
     height: 100%;
     text-align: center;
   }
+
   ::ng-deep .cdk-overlay-backdrop {
     backdrop-filter: blur(3px);
   }
+
   .signiter {
     margin-top: 35px !important;
     color: #102245;
@@ -162,6 +173,7 @@
     letter-spacing: 0px;
     text-transform: capitalize;
   }
+
   .image {
     padding-top: 12px;
   }
@@ -194,6 +206,7 @@
       opacity: 70%;
     }
   }
+
   .fileddown {
     position: relative !important;
     width: 368px !important;
@@ -241,6 +254,7 @@
   margin-left: -11px;
   height: 45px;
   color: var(--current-theme-background);
+
   &.doc_upload_icon {
     margin-left: -2px !important;
   }
@@ -266,9 +280,8 @@
   }
 
   .headings {
-    font-family:
-      Benton Sans,
-      sans-serif;
+    font-family: Benton Sans,
+    sans-serif;
     font-size: 15px;
     color: #0033a1;
     font-weight: 600;
@@ -277,24 +290,25 @@
   .valueData {
     color: #102245;
     font-size: 12px;
-    font-family:
-      Benton Sans,
-      sans-serif;
+    font-family: Benton Sans,
+    sans-serif;
     font-weight: 600;
   }
+
   .customer-button {
     width: 206px;
     height: 40px;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
-      0% no-repeat padding-box;
+    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box;
     border-radius: 23px;
     color: #fff;
     opacity: 1;
     margin-right: 10px;
   }
+
   .cardAlignMargin {
     margin: 0.75rem;
   }
+
   .deleteButton {
     width: 154px;
     height: 49px;
@@ -309,6 +323,7 @@
 
 .biometric-card-expansion-panel {
   border-radius: 12px !important;
+
   .upper-biometric-card {
     .biometric-card {
       margin: 0px;
@@ -412,12 +427,10 @@
 
 .digsign {
   color: white !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box !important;
   border-radius: 23px !important;
   color: #ffffff !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box !important;
   border-radius: 23px !important;
   font-size: 12px;
   font-family: 'Benton Sans';
@@ -426,6 +439,7 @@
   text-transform: capitalize;
   width: 91px;
 }
+
 .upd {
   background: #ffffff 0% 0% no-repeat padding-box !important;
   box-shadow: 3px 3px 15px #0000000f;
@@ -437,6 +451,7 @@
   letter-spacing: 0px;
   width: 90px;
 }
+
 .button {
   @include styling;
   padding-top: 10px;
@@ -451,6 +466,7 @@
   align-items: center;
   position: relative;
 }
+
 .deletebtn {
   position: absolute;
   top: 0px;
@@ -465,6 +481,7 @@
   display: flex;
   justify-content: center;
 }
+
 .changeInput {
   opacity: 0;
   position: absolute;
@@ -476,6 +493,7 @@
   height: 100%;
   text-align: center;
 }
+
 .signiter {
   margin-top: 35px !important;
   color: #102245;
@@ -486,6 +504,7 @@
   letter-spacing: 0px;
   text-transform: capitalize;
 }
+
 .image {
   padding-top: 12px;
 }
@@ -546,6 +565,7 @@
   display: flex !important;
   align-items: center;
   padding-top: 16px !important;
+
   span {
     width: 80%;
     text-align: center;

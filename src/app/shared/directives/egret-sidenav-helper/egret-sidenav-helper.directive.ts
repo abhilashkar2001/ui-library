@@ -1,10 +1,10 @@
 import {
   Directive,
-  OnInit,
-  OnDestroy,
   HostBinding,
-  Input,
   HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

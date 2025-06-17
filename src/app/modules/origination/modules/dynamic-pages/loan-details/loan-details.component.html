@@ -5,11 +5,7 @@
     <div fxLayout="row wrap" fxLayoutGap="1%">
       <div fxFlex="48">
         <ic-form-field
-          label="Loan Amount Requested (GHS)"
           [control]="loanDetails.get('loanAmount') | formcontrol"
-          [icTwoDigitDecimalNumber]="true"
-          [decimalPlaces]="3"
-          [numLength]="18"
           [customError]="
             loanDetails.get('loanAmount')?.hasError('max')
               ? 'Amount cannot exceed ' + max
@@ -17,37 +13,43 @@
                 ? 'Amount should be at least ' + min
                 : ''
           "
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
           [prefixIcon]="loanDetails.value?.loanAmount ? currencySymboll : ''"
+          label="Loan Amount Requested (GHS)"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
-          label="Interest Rate %"
-          [icTwoDigitDecimalNumber]="true"
-          [decimalPlaces]="3"
-          [numLength]="2"
           [control]="loanDetails.get('interestRate') | formcontrol"
+          [decimalPlaces]="3"
+          [disabled]="true"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="2"
+          [readonly]="true"
+          label="Interest Rate %"
         ></ic-form-field>
       </div>
-      <div fxFlex="48" class="MiscellaneousClass">
+      <div class="MiscellaneousClass" fxFlex="48">
         <ic-tenure-field
-          label="Tenure"
-          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
+          [customError]="getTenureError()"
           [fieldLabels]="{
             loanTenureYear: 'Year',
             loanTenureMonth: 'Month',
             loanTenureDay: 'Day',
           }"
-          [parentForm]="loanDetails"
+          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
           [isRequired]="true"
-          [customError]="getTenureError()"
+          [parentForm]="loanDetails"
+          label="Tenure"
         >
         </ic-tenure-field>
       </div>
       <div fxFlex="48">
         <ic-select
-          [options]="genericValue?.REPAYMENTFREQUENCY"
           [control]="repaymentModel.get('repaymentFrequencyId') | formcontrol"
+          [options]="genericValue?.REPAYMENTFREQUENCY"
           bindLabelKey="values"
           bindValueKey="id"
           label="Repayment Frequency"
@@ -55,45 +57,45 @@
       </div>
       <div fxFlex="48">
         <ic-form-field
-          label="EMI Amount"
           [control]="loanDetails.get('emiAmount') | formcontrol"
           [disabled]="true"
-          [readonly]="true"
           [prefixIcon]="currencySymboll"
+          [readonly]="true"
+          label="EMI Amount"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
-          label="EMI Interest Payable"
           [control]="loanDetails.get('emiInterestPayable') | formcontrol"
           [disabled]="true"
           [prefixIcon]="currencySymboll"
           [readonly]="true"
+          label="EMI Interest Payable"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
-          label="Total Interest Amount"
           [control]="loanDetails.get('totalInterestAmount') | formcontrol"
           [disabled]="true"
           [prefixIcon]="currencySymboll"
           [readonly]="true"
+          label="Total Interest Amount"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-form-field
-          label="Total Payable Amount"
           [control]="loanDetails.get('totalPayableAmount') | formcontrol"
           [disabled]="true"
           [prefixIcon]="currencySymboll"
           [readonly]="true"
+          label="Total Payable Amount"
         ></ic-form-field>
       </div>
       <div fxFlex="48">
         <ic-date-picker
-          label="EMI Start Date"
           [control]="repaymentModel.get('firstRepaymentDate') | formcontrol"
           [minDate]="todaysDate"
+          label="EMI Start Date"
         >
         </ic-date-picker>
       </div>
@@ -103,14 +105,14 @@
     <div fxLayout="row wrap" fxLayoutGap="1%">
       <div fxFlex="48">
         <ic-select
-          [options]="genericValue?.DISBURSEMENTTYPE"
+          (selectionChange)="setDisbursement($event)"
           [control]="
             loanDisbursementModel.get('disbursementTypeId') | formcontrol
           "
+          [options]="genericValue?.DISBURSEMENTTYPE"
           bindLabelKey="values"
           bindValueKey="id"
           label="Disbursement Type"
-          (selectionChange)="setDisbursement($event)"
         ></ic-select>
       </div>
       <ng-container
@@ -119,47 +121,48 @@
         "
       >
         <div
-          fxFlex="48"
           class="enabled-mat-form-field p-8"
+          fxFlex="48"
           fxLayout="row wrap"
           fxLayoutAlign="start center"
         >
           <mat-label class="header_md_bold_black" fxFlex="100"
-            >Account</mat-label
+          >Account
+          </mat-label
           >
           <ic-radio-button
-            fxFlex="25"
             *ngFor="let account of accountValue"
             [control]="loanDisbursementModel.get('internal') | formcontrol"
-            [value]="account.value"
             [label]="account.label"
+            [value]="account.value"
+            fxFlex="25"
           >
           </ic-radio-button>
         </div>
         <div
-          fxFlex="48"
           *ngIf="loanDisbursementModel?.get('internal')?.value === false"
+          fxFlex="48"
         >
           <ic-form-field
-            label="Bank Name"
-            [icAlphabetOnly]="true"
             [control]="loanDisbursementAccount.get('bankName') | formcontrol"
+            [icAlphabetOnly]="true"
+            label="Bank Name"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Account Number"
+            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
             [icNumbersOnly]="true"
             [maxLength]="20"
-            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
+            label="Account Number"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-select
-            [options]="genericValue?.ACCOUNTTYPE"
             [control]="
               loanDisbursementAccount.get('accountTypeId') | formcontrol
             "
+            [options]="genericValue?.ACCOUNTTYPE"
             bindLabelKey="values"
             bindValueKey="id"
             label="Account Type"
@@ -167,30 +170,30 @@
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Account Name"
-            [icAlphaNumericWithSpace]="true"
-            [maxLength]="40"
             [control]="
               loanDisbursementAccount.get('customerName') | formcontrol
             "
+            [icAlphaNumericWithSpace]="true"
+            [maxLength]="40"
+            label="Account Name"
           ></ic-form-field>
         </div>
         <div
-          fxFlex="48"
           *ngIf="loanDisbursementModel?.get('internal')?.value === false"
+          fxFlex="48"
         >
           <ic-form-field
-            label="Bank Code"
-            [maxLength]="35"
-            [icAlphanumeric]="true"
             [control]="loanDisbursementAccount.get('bankCode') | formcontrol"
+            [icAlphanumeric]="true"
+            [maxLength]="35"
+            label="Bank Code"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Branch Name"
-            [icAlphabetOnly]="true"
             [control]="loanDisbursementAccount.get('branchName') | formcontrol"
+            [icAlphabetOnly]="true"
+            label="Branch Name"
           ></ic-form-field>
         </div>
       </ng-container>
@@ -201,56 +204,56 @@
       >
         <div fxFlex="48">
           <ic-form-field
-            label="Cheque Number"
+            [control]="loanDisbursementModel.get('chequeNumber') | formcontrol"
             [icNumbersOnly]="true"
             [maxLength]="12"
-            [control]="loanDisbursementModel.get('chequeNumber') | formcontrol"
+            label="Cheque Number"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Account Number"
+            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
             [icNumbersOnly]="true"
             [maxLength]="20"
-            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
+            label="Account Number"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Account Holder Name"
-            [maxLength]="40"
-            [icAlphabetOnly]="true"
             [control]="
               loanDisbursementAccount.get('customerName') | formcontrol
             "
+            [icAlphabetOnly]="true"
+            [maxLength]="40"
+            label="Account Holder Name"
           ></ic-form-field>
         </div>
         <div fxFlex="48">
           <ic-form-field
-            label="Bank Name"
-            [icAlphabetOnly]="true"
             [control]="loanDisbursementAccount.get('bankName') | formcontrol"
+            [icAlphabetOnly]="true"
+            label="Bank Name"
           ></ic-form-field>
         </div>
       </ng-container>
     </div>
 
-    <div fxFlex="100" class="button-section" fxLayout="row">
+    <div class="button-section" fxFlex="100" fxLayout="row">
       <ic-button
+        (click)="onConfirm()"
+        [icButtonType]="'filled-rounded'"
         [label]="'Confirm'"
         [type]="'submit'"
         size="large"
-        [icButtonType]="'filled-rounded'"
-        (click)="onConfirm()"
       >
       </ic-button>
       &nbsp;&nbsp;
       <ic-button
+        (click)="onBack()"
         [label]="'Back'"
+        [type]="'button'"
         icButtonType="ghost-rounded-danger"
         size="large"
-        [type]="'button'"
-        (click)="onBack()"
       >
       </ic-button>
 

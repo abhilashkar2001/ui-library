@@ -22,19 +22,22 @@
         font-weight: 500;
         border-radius: 15px;
       }
+
       .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
         color: white !important;
         border-radius: 7px;
       }
+
       .mat-button-toggle-checked {
         background: linear-gradient(
-          151deg,
-          #0033aa 0%,
-          #0a2240 100%
+                        151deg,
+                        #0033aa 0%,
+                        #0a2240 100%
         ) !important;
       }
     }
   }
+
   .calculator_section {
     display: flex;
     justify-content: center;
@@ -44,12 +47,14 @@
     .return_calculator {
       width: 75%;
     }
+
     .maturity_calculator {
       width: 30%;
       position: relative;
       left: -3rem;
       z-index: 2;
     }
+
     @media screen and (max-width: $laptop) {
       flex-direction: column;
       .return_calculator {
@@ -86,12 +91,14 @@
       font-weight: 800;
       line-height: 1.8;
     }
+
     .maturityTitle {
       font-size: 23px;
       font-family: 'Benton Sans', sans-serif;
       font-weight: 500;
       line-height: 1.8;
     }
+
     .maturityAmount {
       color: #3d3d3d;
       font-size: 40px;
@@ -106,6 +113,7 @@
       font-weight: 500;
       margin-bottom: 1rem;
     }
+
     .maturityValue {
       color: #111;
       font-size: 24px;
@@ -113,17 +121,21 @@
       font-weight: 500;
       margin-bottom: 1.3rem;
     }
+
     .vl {
       border-left: 1px solid;
       margin: 0 2%;
     }
+
     .renew_check {
       margin: 5% 0;
     }
+
     .open_plan_btn_div {
       height: 0;
       overflow: hidden;
       transition: height 0.34s;
+
       .openFDbtn {
         background: linear-gradient(151deg, #0033aa 0%, #0a2240 100%);
         color: white;
@@ -136,13 +148,16 @@
 
     &:hover {
       filter: grayscale(0%);
+
       .renew_check {
         color: #0033a1;
       }
+
       .gd_value {
         color: #0033a1;
         font-weight: 600 !important;
       }
+
       .open_plan_btn_div {
         height: 45px;
       }
@@ -163,6 +178,7 @@
 
     .faq_Header {
       height: 70px;
+
       .faq_Header_description {
         color: #0033a1;
         font-weight: 500;
@@ -170,6 +186,7 @@
         font-family: 'Benton Sans', sans-serif;
       }
     }
+
     p.expansion_desc {
       color: #838384;
       font-size: 14px;

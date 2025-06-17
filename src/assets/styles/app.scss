@@ -7,14 +7,12 @@
 
 @font-face {
   font-family: 'ArialRoundedMT';
-  src: local('ArialRoundedMT')
-    url('/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf')
-    format('truetype');
+  src: local('ArialRoundedMT') url('/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'BellMT';
-  src: local('BellMT') url('/assets/fonts/Bell-MT/Bell MT.ttf')
-    format('truetype');
+  src: local('BellMT') url('/assets/fonts/Bell-MT/Bell MT.ttf') format('truetype');
 }
 
 * {
@@ -41,14 +39,18 @@ body {
   min-height: 100vh;
   font-family: 'M PLUS Rounded 1c', Arial, Helvetica, sans-serif;
   position: relative;
+
   &::-webkit-scrollbar {
     width: 7px;
+
     &-thumb {
       background-color: #ccc;
       border-radius: 30px;
+
       &:hover {
         background-color: #999;
       }
+
       &:active {
         background-color: gray;
       }
@@ -94,6 +96,7 @@ body {
   min-height: 100vh !important;
   background: #fff;
 }
+
 .mat-drawer.panel-end-drawer {
   width: calc(100% - 100px);
 }
@@ -122,6 +125,7 @@ body {
   justify-content: center;
   width: 100%;
 }
+
 .user-account {
   font-size: 16px;
   text-align: left;
@@ -150,6 +154,7 @@ body {
   text-transform: capitalize;
   opacity: 1;
 }
+
 .egret-navy .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: var(--current-theme-background) !important;
 }
@@ -179,6 +184,7 @@ body {
   position: relative;
   padding-right: 10px;
 }
+
 ic-select > .gray-select {
   > .dropdown {
     > .dropdown-header-div {

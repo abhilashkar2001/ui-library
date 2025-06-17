@@ -1,19 +1,19 @@
 <div fxLayout="column">
   <div class="kycToggle" fxFlex="100">
     <button
-      fxFlex="50"
-      class="col-md-6"
-      [ngClass]="kycToggle === 'kyc' ? 'toggled' : ''"
       (click)="onDocumentToggle('kyc')"
+      [ngClass]="kycToggle === 'kyc' ? 'toggled' : ''"
+      class="col-md-6"
+      fxFlex="50"
       mat-raised-button
     >
       Select Kyc
     </button>
     <button
-      fxFlex="50"
-      class="col-md-6"
-      [ngClass]="kycToggle === 'addDoocuent' ? 'toggled' : ''"
       (click)="onDocumentToggle('addDoocuent')"
+      [ngClass]="kycToggle === 'addDoocuent' ? 'toggled' : ''"
+      class="col-md-6"
+      fxFlex="50"
       mat-raised-button
     >
       Use Other Documents
@@ -21,20 +21,20 @@
   </div>
   <!--select start here -->
   <div *ngIf="kycToggle === 'kyc'">
-    <app-select-kyc (customgoBack)="goBack()"> </app-select-kyc>
+    <app-select-kyc (customgoBack)="goBack()"></app-select-kyc>
   </div>
   <!-- select kyc  ends here -->
 
   <!-- other documents start here -->
   <ng-container *ngIf="kycToggle === 'addDoocuent'">
     <app-web-doc-upload
-      [ocrProcess]="ocrProcess"
-      [documentTypeArray]="documentTypeArray"
-      [verificationType]="verificationType"
       (CustomSubmit)="onConfirmEvent($event)"
-      [documentList]="documentList"
-      [genericScreenInfo]="genericScreenInfo"
       (backEvent)="goBack()"
+      [documentList]="documentList"
+      [documentTypeArray]="documentTypeArray"
+      [genericScreenInfo]="genericScreenInfo"
+      [ocrProcess]="ocrProcess"
+      [verificationType]="verificationType"
     ></app-web-doc-upload>
   </ng-container>
   <!-- other documents ends here -->

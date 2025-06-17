@@ -1,26 +1,26 @@
 <form [formGroup]="otpForm">
-  <div class="title-text" *ngIf="!hideInfo">
+  <div *ngIf="!hideInfo" class="title-text">
     Let's begin with some necessary information and get you started
   </div>
   <div class="standard-font-blue">
     Enter {{ verificationName }} for Instant Login
   </div>
-  <div class="mobile-verify" *ngIf="!hideInfo; else showField">
+  <div *ngIf="!hideInfo; else showField" class="mobile-verify">
     <ic-mobile-field
-      fxFlex="70"
-      placeholder="Mobile Number"
-      [isdControl]="otpForm.get('isdCode') | formcontrol"
-      [isdCode]="countriesIsdCodes"
-      (selectionChange)="setMobileLength()"
-      formControlName="phone"
-      [maxLength]="maxMobileLength"
-      suffixButton="Get OTP"
       (onSuffixClick)="onGetOTP()"
+      (selectionChange)="setMobileLength()"
       [customError]="
         otpForm.get('phone')?.hasError('invalidLength')
           ? 'Max mobile length is ' + maxMobileLength
           : ''
       "
+      [isdCode]="countriesIsdCodes"
+      [isdControl]="otpForm.get('isdCode') | formcontrol"
+      [maxLength]="maxMobileLength"
+      formControlName="phone"
+      fxFlex="70"
+      placeholder="Mobile Number"
+      suffixButton="Get OTP"
     >
       >
     </ic-mobile-field>
@@ -28,10 +28,10 @@
   <ng-template #showField>
     <div>
       <ic-form-field
-        fxFlex="70"
-        [control]="otpForm.get('nationalId') | formcontrol"
-        suffixButton="Get OTP"
         (onSuffixClick)="onGetOTP()"
+        [control]="otpForm.get('nationalId') | formcontrol"
+        fxFlex="70"
+        suffixButton="Get OTP"
       >
       </ic-form-field>
     </div>
@@ -42,7 +42,7 @@
     style="margin-top: 10px"
   >
     <div class="standard-font-blue full-width mt-125">Enter OTP to verify</div>
-    <div fxLayout="column" class="standard-otp-container-main">
+    <div class="standard-otp-container-main" fxLayout="column">
       <ng-otp-input
         #ngOtpInput
         (onInputChange)="onOtpChange($event)"
@@ -52,28 +52,28 @@
     </div>
     <div class="standard-font-black">
       <span
-        ><a
-          ><u
-            (click)="onGetOTP()"
-            class="standard-font-blue"
-            [ngClass]="[!resendLink ? 'disableResend' : '']"
-            (keydown.enter)="onGetOTP()"
-            tabindex="3"
-          >
+      ><a
+      ><u
+        (click)="onGetOTP()"
+        (keydown.enter)="onGetOTP()"
+        [ngClass]="[!resendLink ? 'disableResend' : '']"
+        class="standard-font-blue"
+        tabindex="3"
+      >
             Resend OTP</u
-          ></a
-        ></span
+      ></a
+      ></span
       >
       &nbsp;
       <span *ngIf="!resendLink && displaySecond"
-        >({{ displaySecond }} sec)</span
+      >({{ displaySecond }} sec)</span
       >
     </div>
-    <div class="standard-auth-checkbox-container" *ngIf="!hideInfo">
+    <div *ngIf="!hideInfo" class="standard-auth-checkbox-container">
       <ic-checkbox
-        class="custom-checkbox"
-        class="primary"
         (checkboxChange)="onAgreed($event)"
+        class="primary"
+        class="custom-checkbox"
       >
         <span class="standard-font-gray">
           I authorize DemoBank and it's representatives to email, call or SMS
@@ -83,36 +83,32 @@
     </div>
   </div>
 
-  <div *ngIf="!hideInfo">
-    <div fxLayout="column">
-      <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
-        <div
-          fxLayout="row"
-          fxLayoutGap="30px"
-          class="button-section"
+  <!-- <div *ngIf="!hideInfo"> -->
+  <div fxLayout="column">
+    <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
+      <div class="button-section" fxLayout="row" fxLayoutGap="30px">
+        <ic-button
+          (OnClick)="onVerify()"
           *ngIf="showOtpSection"
+          [disabled]="this.agreed === false"
+          [icButtonType]="'filled-rounded'"
+          [isLoading]="isLoading"
+          [label]="'Verify' | translate"
+          [type]="'submit'"
+          size="large"
         >
-          <ic-button
-            [label]="'Verify' | translate"
-            [type]="'submit'"
-            size="large"
-            [disabled]="this.agreed === false"
-            [icButtonType]="'filled-rounded'"
-            [isLoading]="isLoading"
-            (OnClick)="onVerify()"
-          >
-            <!-- [disabled]="!(otpAvailable && !isLoading && agreed)" -->
-          </ic-button>
-          <ic-button
-            [label]="'Exit'"
-            icButtonType="ghost-rounded-danger"
-            size="large"
-            [type]="'button'"
-            (OnClick)="onExit()"
-          >
-          </ic-button>
-        </div>
+          <!-- [disabled]="!(otpAvailable && !isLoading && agreed)" -->
+        </ic-button>
+        <ic-button
+          (OnClick)="onExit()"
+          [label]="'Back'"
+          [type]="'button'"
+          icButtonType="ghost-rounded-danger"
+          size="large"
+        >
+        </ic-button>
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </form>

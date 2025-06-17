@@ -1,15 +1,15 @@
 <div fxFlex="98%" fxLayout="column">
-  <div fxLayout="column" class="outer-div" fxFlex="100">
+  <div class="outer-div" fxFlex="100" fxLayout="column">
     <div fxLayout="column">
       <ng-container>
         <mat-card class="card-subdiv">
           <div fxFlex="100">
             <div
+              #fileInput
               appDragDrop
               class="doc_upload"
               fxFlex="100"
               fxLayoutGap="10"
-              #fileInput
             >
               <div class="drag_drop" fxFlex="100">
                 <h3 class="text-header">
@@ -18,51 +18,51 @@
                     [ngClass]="{
                       'required-star': submitted && signatures.length === 0,
                     }"
-                    >*
+                  >*
                     <span
                       *ngIf="submitted && signatures.length === 0"
                       class="medium_txt"
-                      >(Signature is required)</span
+                    >(Signature is required)</span
                     ></span
                   >
                 </h3>
               </div>
               <ic-button
-                type="button"
-                size="medium"
-                label="Upload"
-                label="Sign"
                 (OnClick)="openDigitalSignDialog('Sign Now')"
+                label="Sign"
+                label="Upload"
+                size="medium"
+                type="button"
               >
               </ic-button>
               <ic-button
-                type="button"
-                size="medium"
-                label="Upload"
-                icButtonType="ghost-neutral"
                 (OnClick)="openDigitalSignDialog('Upload')"
+                icButtonType="ghost-neutral"
+                label="Upload"
+                size="medium"
+                type="button"
               >
                 Upload
               </ic-button>
             </div>
           </div>
 
-          <div fxLayout="row wrap" fxLayoutGap="1%" class="uploaded_list">
+          <div class="uploaded_list" fxLayout="row wrap" fxLayoutGap="1%">
             <div *ngFor="let sig of signatures; let i = index" fxFlex="32">
-              <div class="upload_img" tabindex="0" fxFlex="100">
+              <div class="upload_img" fxFlex="100" tabindex="0">
                 <div class="img_box">
                   <img [src]="sig.filePreview" alt="Signature Image" />
                 </div>
                 <div class="img_container">
                   <span class="breadcrum_sm_bold img_name"
-                    >Signature {{ i + 1 }}</span
+                  >Signature {{ i + 1 }}</span
                   >
                 </div>
                 <ic-icon
-                  class="cancel-icon"
-                  name="close"
                   (click)="deleteSignature(i)"
                   (keydown.enter)="deleteSignature(i)"
+                  class="cancel-icon"
+                  name="close"
                   tabindex="1"
                 ></ic-icon>
               </div>
@@ -72,22 +72,22 @@
       </ng-container>
     </div>
   </div>
-  <div fxLayoutGap="10" fxLayoutAlign="start center" class="pt-12">
+  <div class="pt-12" fxLayoutAlign="start center" fxLayoutGap="10">
     <ic-button
+      (OnClick)="onSubmit()"
+      [disabled]="isLoading && !image"
+      [icButtonType]="'filled-rounded'"
       [label]="'Submit' | translate"
       [type]="'submit'"
       size="large"
-      [icButtonType]="'filled-rounded'"
-      [disabled]="isLoading && !image"
-      (OnClick)="onSubmit()"
     >
     </ic-button>
     <ic-button
+      (OnClick)="onBack()"
       [label]="'Back'"
+      [type]="'button'"
       icButtonType="ghost-rounded-danger"
       size="large"
-      [type]="'button'"
-      (OnClick)="onBack()"
     >
     </ic-button>
   </div>

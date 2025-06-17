@@ -204,9 +204,11 @@ export class WebDocUploadComponent implements OnInit {
   mapEndPoints(url: any) {
     return `${this.baseUrl}${url}`;
   }
+
   fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
+
   browseFiles(i: number) {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
@@ -399,6 +401,7 @@ export class WebDocUploadComponent implements OnInit {
       }
     });
   }
+
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx]?.get('docIds')?.value;
   }

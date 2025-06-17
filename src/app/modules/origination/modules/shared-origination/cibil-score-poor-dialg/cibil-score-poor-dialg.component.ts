@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +13,7 @@ export class CibilScorePoorDialgComponent implements OnInit {
   applicationNo: any;
   @Output() submitClicked = new EventEmitter<any>();
   @Output() goBack = new EventEmitter<any>();
+
   constructor(
     private dialogRef: MatDialogRef<CibilScorePoorDialgComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,

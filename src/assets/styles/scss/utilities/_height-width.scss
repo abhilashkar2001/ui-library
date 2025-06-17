@@ -1,15 +1,15 @@
 $lenghts: (
-  0: 0px,
-  20: 20px,
-  32: 32px,
-  40: 40px,
-  80: 80px,
-  120: 120px,
-  160: 160px,
-  200: 200px,
-  240: 240px,
-  260: 260px,
-  300: 300px,
+        0: 0px,
+        20: 20px,
+        32: 32px,
+        40: 40px,
+        80: 80px,
+        120: 120px,
+        160: 160px,
+        200: 200px,
+        240: 240px,
+        260: 260px,
+        300: 300px,
 );
 
 @each $name, $value in $lenghts {
@@ -24,19 +24,24 @@ $lenghts: (
 .w-full {
   width: 100% !important;
 }
+
 .w-full-screen {
   width: 100vh;
 }
+
 // View height classes
 .h-full {
   height: 100%;
 }
+
 .h-full-screen {
   height: 100vh;
 }
+
 .h-100vh-70px {
   height: calc(100vh - 70px);
 }
+
 .h-100vh-280px {
   height: calc(100vh - 280px);
 }

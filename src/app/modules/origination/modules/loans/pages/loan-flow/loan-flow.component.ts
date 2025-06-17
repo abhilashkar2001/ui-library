@@ -12,7 +12,9 @@ import { OpenAccountService } from 'app/shared/services/open-service/open-accoun
 import {
   LocaleData,
   selectLocaleData,
+  selectUser,
   TokenStorageService,
+  User,
 } from '@onerumango/utils';
 import * as moment from 'moment';
 import { CreateLoanEnum, LoanFlowConstants } from './loan-flow.constant';
@@ -22,8 +24,6 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { selectUser } from '@onerumango/utils';
-import { User } from '@onerumango/utils';
 import { CustomWebDocUploadServiceService } from '../../../shared-origination/cusotm-web-doc-upload/custom-web-doc-upload-service.service';
 import { ReusableAlertPopupComponent } from '../../../shared-origination/reusable-alert-popup/reusable-alert-popup.component';
 import { WebhostDirective } from '../../../../../../shared/directives/appHost.directive';
@@ -160,9 +160,12 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
                 this.next();
               }
             });
-            if (this.componentRef.instance?.onMobileExitEvent)
-              this.componentRef.instance?.onMobileExitEvent.subscribe(() => {
-                this.router.navigate(['/loan/landing']);
+
+            if (this.componentRef.instance?.mobileExitEvent)
+              this.componentRef.instance?.mobileExitEvent.subscribe(() => {
+                this.router.navigate(['/origination/loan/loan-type'], {
+                  queryParams: { subClass: this.productDetails?.basisClass },
+                });
               });
             if (this.componentRef.instance?.backEvent)
               this.componentRef.instance?.backEvent.subscribe(() => {
@@ -471,6 +474,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     );
     if (lastStep != event.selectedIndex) this.showComponent(this.cuurrentStep);
   }
+
   factory() {
     this.cuurrentStep = this.screenList[this.selectedStep]?.screenName;
     this.sessionStorageService.setCurrentScreenCode(
@@ -478,6 +482,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
     );
     this.showComponent(this.cuurrentStep);
   }
+
   next() {
     const num = this.selectedStep + 1;
     if (num === this.screenList?.length && num > 0) {

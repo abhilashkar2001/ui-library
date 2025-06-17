@@ -19,10 +19,12 @@ export interface ILayoutConf {
   matTheme?: string; // material theme
   perfectScrollbar?: boolean;
 }
+
 export interface ILayoutChangeOptions {
   duration?: number;
   transitionClass?: boolean;
 }
+
 interface IAdjustScreenOptions {
   browserEvent?: any;
   route?: string;
@@ -111,6 +113,7 @@ export class LayoutService {
       sidebarStyle,
     });
   }
+
   isSm() {
     return window.matchMedia(`(max-width: 959px)`).matches;
   }

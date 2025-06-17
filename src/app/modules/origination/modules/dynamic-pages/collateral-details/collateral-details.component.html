@@ -1,16 +1,16 @@
 <div
-  class="business-main"
   [formGroup]="collateralDetailsForm"
+  class="business-main"
   fxLayout="column"
 >
-  <mat-card class="default-card p-12" *ngIf="creditGroup">
+  <mat-card *ngIf="creditGroup" class="default-card p-12">
     <span class="theme_gt_md">Credit Card Details</span>
-    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1%">
       <div fxFlex="100">
         <ic-form-field
+          [control]="creditGroup.get('description') | formcontrol"
           [icAlphaNumericWithSpace]="true"
           label="Description of Collateral"
-          [control]="creditGroup.get('description') | formcontrol"
         ></ic-form-field>
       </div>
       <div fxFlex="49">
@@ -21,29 +21,29 @@
           <ic-radio-button
             *ngFor="let status of ownershipStatus"
             [control]="creditGroup.get('ownership') | formcontrol"
-            [value]="status.value"
             [label]="status.label"
+            [value]="status.value"
           ></ic-radio-button>
         </div>
       </div>
       <div fxFlex="49">
         <ic-form-field
+          [control]="creditGroup.get('assetMonetaryWorth') | formcontrol"
           [icNumbersOnly]="true"
           label="Asset Monetary Worth"
-          [control]="creditGroup.get('assetMonetaryWorth') | formcontrol"
         ></ic-form-field>
       </div>
     </div>
   </mat-card>
 
-  <mat-card class="default-card p-12" *ngIf="vafGroup">
+  <mat-card *ngIf="vafGroup" class="default-card p-12">
     <span class="theme_gt_md">VAF Details</span>
-    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="center center">
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1%">
       <div fxFlex="100">
         <ic-form-field
+          [control]="vafGroup.get('description') | formcontrol"
           [icAlphaNumericWithSpace]="true"
           label="Description of Collateral"
-          [control]="vafGroup.get('description') | formcontrol"
         ></ic-form-field>
       </div>
       <div fxFlex="49">
@@ -54,49 +54,49 @@
           <ic-radio-button
             *ngFor="let status of ownershipStatus"
             [control]="vafGroup.get('ownership') | formcontrol"
-            [value]="status.value"
             [label]="status.label"
+            [value]="status.value"
           ></ic-radio-button>
         </div>
       </div>
       <div fxFlex="49">
         <ic-form-field
+          [control]="vafGroup.get('assetMonetaryWorth') | formcontrol"
           [icNumbersOnly]="true"
           label="Asset Monetary Worth"
-          [control]="vafGroup.get('assetMonetaryWorth') | formcontrol"
         ></ic-form-field>
       </div>
     </div>
   </mat-card>
 
-  <div fxLayout="row wrap" class="align-section" fxLayoutGap="1%">
+  <div class="align-section" fxLayout="row wrap" fxLayoutGap="1%">
     <div fxFlex="49">
       <ic-form-field
-        label="(%)of Security Cover"
         [control]="
           collateralDetailsForm.get('percentageOfSecurityCover') | formcontrol
         "
-        [icTwoDigitDecimalNumber]="true"
         [decimalPlaces]="3"
+        [icTwoDigitDecimalNumber]="true"
         [numLength]="2"
+        label="(%)of Security Cover"
       >
       </ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-form-field
+        [control]="collateralDetailsForm.get('totalAssetWorth') | formcontrol"
         [icNumbersOnly]="true"
         label="Total Asset Worth"
-        [control]="collateralDetailsForm.get('totalAssetWorth') | formcontrol"
       >
       </ic-form-field>
     </div>
     <div fxFlex="49">
       <ic-select
-        label="Loan Type"
-        [options]="loanTypeList"
-        bindValueKey="id"
-        bindLabelKey="values"
         [control]="collateralDetailsForm.get('loanTypeId') | formcontrol"
+        [options]="loanTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Loan Type"
       >
       </ic-select>
     </div>
@@ -110,21 +110,21 @@
   >
     <div>
       <ic-button
+        (OnClick)="saveCollateralDetails()"
+        [icButtonType]="'filled-rounded'"
         [label]="'Confirm' | translate"
         [type]="'submit'"
         size="large"
-        (OnClick)="saveCollateralDetails()"
-        [icButtonType]="'filled-rounded'"
       >
       </ic-button>
     </div>
     <div>
       <ic-button
+        (OnClick)="onBack()"
         [label]="'Back'"
+        [type]="'button'"
         icButtonType="ghost-rounded-danger"
         size="large"
-        (OnClick)="onBack()"
-        [type]="'button'"
       >
       </ic-button>
     </div>

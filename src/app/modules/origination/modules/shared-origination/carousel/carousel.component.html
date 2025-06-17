@@ -20,16 +20,16 @@
     <div class="ellipse"></div>
     <swiper [config]="swiperConfig" [navigation]="true">
       <ng-template
-        swiperSlide
         *ngFor="let imagesdata of dynamicList; let i = index"
+        swiperSlide
       >
         <div
-          class="single_card"
           [ngStyle]="
             backgroundStyles[i] || {
               'background-image': 'url(assets/images/default_fallback_img.svg)',
             }
           "
+          class="single_card"
           data-aos="zoom-out"
           data-aos-delay="200"
           data-aos-duration="500"
@@ -43,11 +43,11 @@
             </div>
             <div class="button-container py-16">
               <ic-button
-                label="Apply now"
-                icButtonType="outlined-rounded-transparent"
-                type="submit"
-                size="medium"
                 (click)="moveToSubAccountPage(imagesdata.basisClass)"
+                icButtonType="outlined-rounded-transparent"
+                label="Apply now"
+                size="medium"
+                type="submit"
               ></ic-button>
             </div>
           </div>

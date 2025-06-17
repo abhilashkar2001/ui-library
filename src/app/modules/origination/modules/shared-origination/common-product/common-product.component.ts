@@ -24,16 +24,19 @@ export class CommonProductComponent implements OnChanges, OnInit {
   @Output() apply = new EventEmitter<any>();
   @Output() customClassApply = new EventEmitter<any>();
   filePreview: any;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
   ) {}
+
   ngOnInit(): void {
     this.filePreview = this.filePreview = this.getFileUrl(
       this.subAccount.fileUrl,
     );
   }
+
   goForCalculator(product: any) {
     console.log(product);
     if (product?.productDetails === null) {
@@ -50,9 +53,11 @@ export class CommonProductComponent implements OnChanges, OnInit {
       this.apply.emit(product);
     }
   }
+
   readMoreLess() {
     this.subAccount.isReadMore = !this.subAccount.isReadMore;
   }
+
   getFileUrl(url: any) {
     if (url) {
       if (url.includes('https')) {

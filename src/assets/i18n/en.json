@@ -5,7 +5,6 @@
   "DIALOGS": "Dialogs",
   "CONFIRM": "Confirm",
   "LOADER": "Loader",
-
   "MATERIAL": "Material",
   "BUTTONS": "Buttons",
   "CARDS": "Cards",
@@ -27,23 +26,19 @@
   "SAVE": "Save",
   "SLIDER": "Slider",
   "SNACKBAR": "Snackbar",
-
   "FORMS": "Forms",
   "EDITOR": "Editor",
   "BASIC": "Basic",
   "UPLOAD": "Upload",
   "WIZARD": "Wizard",
-
   "TABLES": "Tables",
   "TOUR": "Tour",
   "FULLSCREEN": "Fullscreen",
   "PAGING": "Paging",
   "FILTER": "Filter",
-
   "MAP": "Map",
   "CHARTS": "Charts",
   "DND": "Drag and Drop",
-
   "PAGES": "Pages",
   "SESSIONS": "Sessions",
   "SIGNIN": "Signin",
@@ -51,7 +46,6 @@
   "SIGNOUT": "Sign out",
   "FORGOT": "Forgot",
   "LOCKSCREEN": "Lockscreen",
-
   "OTHERS": "Others",
   "GALLERY": "Gallery",
   "PRICINGS": "Pricings",

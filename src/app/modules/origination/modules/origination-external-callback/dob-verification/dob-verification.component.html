@@ -10,37 +10,38 @@
     <div class="transparent-form-field">
       <mat-form-field fxFlex="20">
         <mat-label>Enter the DOB</mat-label>
-        <input matInput [(ngModel)]="dateOfBirth" />
+        <input [(ngModel)]="dateOfBirth" matInput />
       </mat-form-field>
-      <div class="forward-arrow-div" (click)="validateDateOfBirth()">
+      <div (click)="validateDateOfBirth()" class="forward-arrow-div">
         <mat-icon class="forward-arrow">arrow_forward</mat-icon>
       </div>
     </div>
-    <mat-hint class="error" *ngIf="incorrectDOB"
-      >Enter correct date of birth</mat-hint
+    <mat-hint *ngIf="incorrectDOB" class="error"
+    >Enter correct date of birth
+    </mat-hint
     >
     <ng-container *ngIf="showOTP">
       <div class="otp-text">
         <span
-          >An OTP has been sent to the Registered Mobile Number (
+        >An OTP has been sent to the Registered Mobile Number (
           <span class="mobile-no">+91 888XX XX123</span>)</span
         >
       </div>
 
       <div>
         <ng-otp-input
-          class="ng_otp_input"
           #ngOtpInput
           (onInputChange)="onOtpChange($event)"
           [config]="config"
+          class="ng_otp_input"
         ></ng-otp-input>
       </div>
       <span class="resend-text"
-        >Not Received?
-        <span class="resend" (click)="verifyOtp()">Resend</span></span
+      >Not Received?
+        <span (click)="verifyOtp()" class="resend">Resend</span></span
       >
       <div class="btn-div">
-        <button class="proceed-btn" mat-raised-button (click)="verifyOtp()">
+        <button (click)="verifyOtp()" class="proceed-btn" mat-raised-button>
           Proceed
         </button>
       </div>

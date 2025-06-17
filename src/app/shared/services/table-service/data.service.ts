@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface ErrorPayload {
   code: number;
@@ -11,22 +10,21 @@ export interface ErrorPayload {
   providedIn: 'root',
 })
 export class DataService {
+  $disbursementDetails: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private subject = new Subject<any>();
+  private auditLogData: any = {};
+  /** Checklist behavioral subject */
+  private $checklistDocument: BehaviorSubject<
+    Map<string, Record<string, any>> | null | any
+  > = new BehaviorSubject<Map<string, Record<string, any>>>(new Map());
 
   getClickEvent(): Observable<any> {
     return this.subject.asObservable();
   }
 
-  private auditLogData: any = {};
-
   getAuditLogData() {
     return this.auditLogData;
   }
-
-  /** Checklist behavioral subject */
-  private $checklistDocument: BehaviorSubject<
-    Map<string, Record<string, any>> | null | any
-  > = new BehaviorSubject<Map<string, Record<string, any>>>(new Map());
 
   /**
    * store uploaded checklist document in behaviour subject for save later
@@ -50,8 +48,6 @@ export class DataService {
   removeChecklistDocument(): void {
     this.$checklistDocument.next(new Map());
   }
-
-  $disbursementDetails: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   /**
    * store uploaded checklist document in behaviour subject for save later

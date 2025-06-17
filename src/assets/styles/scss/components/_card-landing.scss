@@ -13,6 +13,7 @@
     position: relative;
     left: 40px;
     z-index: 2;
+
     &::before {
       content: '';
       position: absolute;
@@ -25,9 +26,11 @@
       border-radius: 2px;
       z-index: 2;
     }
+
     @media screen and (max-width: $laptop) {
       left: 0;
     }
+
     .custom-slider {
       height: 390px;
       width: 400px;
@@ -81,6 +84,7 @@
             letter-spacing: 0.5px;
             position: relative;
             z-index: 1;
+
             &::before {
               content: '';
               position: absolute;
@@ -149,6 +153,7 @@
         text-decoration-line: underline;
       }
     }
+
     .confirm-button {
       // @include custom_round_btn;
       margin-right: 2rem;

@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 })
 export class SelfTransferService {
   protected basePath = environment.microServiceURL;
+
   constructor(private httpClient: HttpClient) {}
 
   saveSelfTranfer(payload: any) {

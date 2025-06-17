@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { FlexBalanceModel } from 'app/shared/models/flex-balance.model';
 import { IcHttpResponseModel } from 'app/shared/models/ic-http-response.model';
 import { environment } from 'environments/environment';
+
 const MICROSERVICE_URL = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })

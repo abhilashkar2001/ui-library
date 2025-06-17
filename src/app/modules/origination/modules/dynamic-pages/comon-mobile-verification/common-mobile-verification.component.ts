@@ -103,10 +103,10 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   loadingBtnText = 'Saving...';
   @Input() mobileVerifyInfo: any = {};
   subscriptions: Subscription[] = [];
-  private localeData: LocaleData | undefined;
   profileInfo: any;
   userProfile$: Observable<User | null>;
   originationId: number | undefined;
+  private localeData: LocaleData | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -310,6 +310,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   onIsdCodeSelected(isdCode: any) {
     this.selectedIsd = isdCode;
   }
+
   setMobileLength() {
     if (this.otpForm.get('isdCode')) {
       const countryRecord = this.countriesIsdCodes.find(
@@ -453,6 +454,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
         }
       });
   }
+
   allreadyProduct(
     errorMessage: any,
     errorMessageHint: any,
@@ -473,6 +475,7 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       if (res == 'cancel') this.backEvent.emit();
     });
   }
+
   cleanCacheInMobileScreen() {
     this.sessionStorageService.removeUserCustomerId();
     this.sessionStorageService.removeCustomerStageId();

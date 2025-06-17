@@ -1,18 +1,18 @@
-<div style="overflow-y: hidden" class="loan-doc-modal">
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-24">
+<div class="loan-doc-modal" style="overflow-y: hidden">
+  <div class="mb-24" fxLayout="row" fxLayoutAlign="space-between center">
     <span class="fileName">
       {{ fileName }}
     </span>
     <mat-card
+      (click)="closeDialog()"
       class="close-card"
       fxLayoutAlign="center center"
-      (click)="closeDialog()"
     >
-      <mat-icon style="color: #0033a1"> close </mat-icon>
+      <mat-icon style="color: #0033a1"> close</mat-icon>
     </mat-card>
   </div>
   <div style="overflow: auto">
-    <mat-table class="w-full" [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" class="w-full">
       <ng-container
         *ngFor="let header of tableHeader"
         [matColumnDef]="header?.headerCell || header"

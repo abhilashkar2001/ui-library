@@ -42,11 +42,13 @@ export class SignSummaryComponent implements OnInit {
   ) {
     this.imageUrl = environment.microServiceURL + data?.imageUrl;
   }
+
   ngOnInit(): void {
     this.imageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.imageUrl,
     );
   }
+
   editPage() {
     this.dialogRef2.close('edited');
   }

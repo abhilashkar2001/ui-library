@@ -1,13 +1,13 @@
 <div class="m-24 container_class" fxFlex="100">
-  <div fxFlex="50" class="fdCalculator_parent tracking_stepper">
-    <div fxFlex fxLayoutAlign="center center" fxLayout="column"></div>
+  <div class="fdCalculator_parent tracking_stepper" fxFlex="50">
+    <div fxFlex fxLayout="column" fxLayoutAlign="center center"></div>
   </div>
   <div fxFlex="50">
-    <section fxLayout="column" class="signIn">
+    <section class="signIn" fxLayout="column">
       <div class="logo">
         <img
-          src="../../../../../../assets/images/stanbic_horizontal_blue.svg"
           alt="logo"
+          src="../../../../../../assets/images/stanbic_horizontal_blue.svg"
         />
         <p class="logo_text">DemoBank</p>
       </div>
@@ -17,8 +17,8 @@
           <p>Whenever you want, you can check the status of your application</p>
           <div class="toggle-group">
             <ic-button-toggle-group
-              [formControl]="signForm.get('status') | formcontrol"
               [buttonList]="statusToggle"
+              [formControl]="signForm.get('status') | formcontrol"
               customClass="toggle_group"
             >
             </ic-button-toggle-group>
@@ -30,28 +30,28 @@
             "
           >
             <ic-form-field
-              label="Mobile No."
               [control]="signForm.get('mobile') | formcontrol"
-              appNumbersOnly
-              type="text"
               [maxLength]="20"
+              appNumbersOnly
+              label="Mobile No."
+              type="text"
             >
             </ic-form-field>
           </ng-container>
 
           <ng-template #customerId>
             <ic-form-field
-              label="Customer ID"
               [control]="signForm.get('customerId') | formcontrol"
-              appNumbersOnly
-              type="text"
               [maxLength]="10"
+              appNumbersOnly
+              label="Customer ID"
+              type="text"
             >
             </ic-form-field>
             <ic-form-field
-              label="Password"
               [control]="signForm.get('password') | formcontrol"
               appNumbersOnly
+              label="Password"
               type="text"
             >
             </ic-form-field>
@@ -60,12 +60,12 @@
 
         <ng-container *ngIf="isShowOtpField">
           <mat-card
-            fxLayout="column"
             class="default otp_custom_card mx-auto d-flex flex-column"
+            fxLayout="column"
           >
             <span class="header_xxl_bold_black">{{
-              'OTP Authentication'
-            }}</span>
+                'OTP Authentication'
+              }}</span>
             <span class="breadcrum_md">
               <ng-container>
                 An authentication code has been sent to
@@ -84,15 +84,15 @@
               ></ng-otp-input>
             </div>
             <mat-error *ngIf="invalidOtp"
-              ><strong>Invalid OTP!</strong></mat-error
+            ><strong>Invalid OTP!</strong></mat-error
             >
             <div class="verify1">
               <span
                 (click)="getOtp()"
-                class="addcolor resend m-2"
                 (keydown.enter)="getOtp()"
+                class="addcolor resend m-2"
                 tabindex="0"
-                >{{ 'Resend' }}</span
+              >{{ 'Resend' }}</span
               >
             </div>
           </mat-card>
@@ -102,37 +102,37 @@
           <div
             class="button_section"
             fxLayout="row"
-            fxLayoutGap="20"
             fxLayoutAlign="center"
+            fxLayoutGap="20"
           >
             <ic-button
+              (click)="getOtp()"
+              *ngIf="!isShowOtpField"
               [label]="
                 this.signForm.get('status')?.value === 'mobile'
                   ? 'Get Otp'
                   : 'Login'
               "
               icButtonType="filled-rounded"
-              type="submit"
               size="large"
-              (click)="getOtp()"
-              *ngIf="!isShowOtpField"
+              type="submit"
             ></ic-button>
 
             <ic-button
-              *ngIf="isShowOtpField"
               (click)="verifyOtp()"
+              *ngIf="isShowOtpField"
               [disabled]="!otpAvailable"
-              label="Submit"
               icButtonType="filled-rounded"
-              type="submit"
+              label="Submit"
               size="large"
+              type="submit"
             ></ic-button>
 
             <ic-button
-              label="Back"
               icButtonType="ghost-rounded-basic"
-              type="submit"
+              label="Back"
               size="large"
+              type="submit"
             ></ic-button>
           </div>
         </div>

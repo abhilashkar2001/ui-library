@@ -6,7 +6,7 @@ import { OfferLetterComponent } from './offer-letter/offer-letter/offer-letter.c
 import { ProcessOfferLetterComponent } from './offer-letter/process-offer-letter/process-offer-letter.component';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SignLaterComponent } from './digital-sign/sign-later/sign-later.component';

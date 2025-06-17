@@ -16,12 +16,11 @@ egret-sidebar {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 
-  transition-property:
-    transform,
-    width,
-    min-width,
-    max-width,
-    -webkit-transform;
+  transition-property: transform,
+  width,
+  min-width,
+  max-width,
+  -webkit-transform;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
 
@@ -30,10 +29,12 @@ egret-sidebar {
     -webkit-transform: translateX(0) !important;
     transform: translateX(0) !important;
   }
+
   &.open {
     -webkit-transform: translateX(0) !important;
     transform: translateX(0) !important;
   }
+
   &.position-right {
     left: auto !important;
     right: 0 !important;
@@ -42,6 +43,7 @@ egret-sidebar {
     transform: translateX(100%);
   }
 }
+
 .egret-sidebar-overlay {
   position: absolute;
   top: 0;

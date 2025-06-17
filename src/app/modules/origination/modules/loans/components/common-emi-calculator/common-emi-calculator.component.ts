@@ -52,6 +52,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   currencySymbol: any;
   currencyInputMask: any;
+
   constructor(
     private fb: FormBuilder,
     private loanApi: LoanService,
@@ -59,6 +60,40 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     private store: Store,
   ) {}
+
+  get checkTenurePresence() {
+    const { loanTenureYear, loanTenureMonth, loanTenureDay } =
+      this.loanForm.value;
+    return !!loanTenureYear || !!loanTenureMonth || !!loanTenureDay;
+  }
+
+  get validateMinimumTenure() {
+    const totalDays = this.calculateTotalDays(
+      this.loanForm.value.loanTenureYear || 0,
+      this.loanForm.value.loanTenureMonth || 0,
+      this.loanForm.value.loanTenureDay || 0,
+    );
+    const MinimumAllowedDays = this.calculateTotalDays(
+      this.productDetails?.minimumTenorYear || 0,
+      this.productDetails?.minimumTenorMonth || 0,
+      this.productDetails?.minimumTenorDay || 0,
+    );
+    return totalDays < MinimumAllowedDays;
+  }
+
+  get validateTenure() {
+    const totalDays = this.calculateTotalDays(
+      this.loanForm.value.loanTenureYear || 0,
+      this.loanForm.value.loanTenureMonth || 0,
+      this.loanForm.value.loanTenureDay || 0,
+    );
+    const totalAllowedDays = this.calculateTotalDays(
+      this.productDetails?.maximumTenorYear || 0,
+      this.productDetails?.maximumTenorMonth || 0,
+      this.productDetails?.maximumTenorDay || 0,
+    );
+    return totalDays >= totalAllowedDays;
+  }
 
   ngOnInit(): void {
     this.loadLocaleData();
@@ -84,6 +119,7 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(localeDataSub);
   }
+
   getProductDetails(basisId: any) {
     this.loanApi.getProductAspectDetails(basisId).subscribe((resp) => {
       if (resp?.statusCode === 200) {
@@ -206,11 +242,6 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
       resolve(totalMonthsIncludingDays);
     });
   }
-  get checkTenurePresence() {
-    const { loanTenureYear, loanTenureMonth, loanTenureDay } =
-      this.loanForm.value;
-    return !!loanTenureYear || !!loanTenureMonth || !!loanTenureDay;
-  }
 
   applyForLoan() {
     this.loanForm.markAllAsTouched();
@@ -239,34 +270,6 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
   ) {
     const d = +loanTenureYear * 365 + +loanTenureMonth * 30 + +loanTenureDay;
     return d;
-  }
-
-  get validateMinimumTenure() {
-    const totalDays = this.calculateTotalDays(
-      this.loanForm.value.loanTenureYear || 0,
-      this.loanForm.value.loanTenureMonth || 0,
-      this.loanForm.value.loanTenureDay || 0,
-    );
-    const MinimumAllowedDays = this.calculateTotalDays(
-      this.productDetails?.minimumTenorYear || 0,
-      this.productDetails?.minimumTenorMonth || 0,
-      this.productDetails?.minimumTenorDay || 0,
-    );
-    return totalDays < MinimumAllowedDays;
-  }
-
-  get validateTenure() {
-    const totalDays = this.calculateTotalDays(
-      this.loanForm.value.loanTenureYear || 0,
-      this.loanForm.value.loanTenureMonth || 0,
-      this.loanForm.value.loanTenureDay || 0,
-    );
-    const totalAllowedDays = this.calculateTotalDays(
-      this.productDetails?.maximumTenorYear || 0,
-      this.productDetails?.maximumTenorMonth || 0,
-      this.productDetails?.maximumTenorDay || 0,
-    );
-    return totalDays >= totalAllowedDays;
   }
 
   cleanCache() {

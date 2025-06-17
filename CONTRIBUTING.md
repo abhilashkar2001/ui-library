@@ -4,7 +4,8 @@ We welcome contributions from everyone! Please follow these guidelines to ensure
 
 ## Commit Message Format
 
-We follow the **Conventional Commits** specification for commit messages to make it easier to write a clear project history and generate changelogs. Please use the following format for your commits:
+We follow the **Conventional Commits** specification for commit messages to make it easier to write a clear project
+history and generate changelogs. Please use the following format for your commits:
 
 ### Types of Commits
 
@@ -24,4 +25,6 @@ Here are some examples of well-formed commit messages:
 
 ### Summary
 
-This expanded section clearly outlines the types of commits, provides specific examples, and ensures contributors understand how to format their commit messages properly. You can include this in your `CONTRIBUTING.md` file to guide contributors effectively.
+This expanded section clearly outlines the types of commits, provides specific examples, and ensures contributors
+understand how to format their commit messages properly. You can include this in your `CONTRIBUTING.md` file to guide
+contributors effectively.

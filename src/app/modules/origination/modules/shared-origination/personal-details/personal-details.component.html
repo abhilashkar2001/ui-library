@@ -1,12 +1,12 @@
 <div class="text-header">Personal Details</div>
 <form *ngIf="personalDetailsForm" [formGroup]="personalDetailsForm">
-  <div class="standard-flex" *ngIf="screen === 'loan-screen'">
+  <div *ngIf="screen === 'loan-screen'" class="standard-flex">
     <div class="field">
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">CIF Number</mat-label>
         <input
-          matInput
           [formControl]="personalDetailsForm.controls['cifNumber']"
+          matInput
         />
         <!-- <mat-error *ngIf="personalDetailsForm.get('cifNumber')?.hasError('required')">
                     CIF Number is <strong>required</strong>
@@ -23,8 +23,8 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">First Name</mat-label>
         <input
-          matInput
           [formControl]="personalDetailsForm.controls['firstName']"
+          matInput
         />
         <mat-error
           *ngIf="personalDetailsForm.get('firstName')?.hasError('required')"
@@ -37,8 +37,8 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">Last Name</mat-label>
         <input
-          matInput
           [formControl]="personalDetailsForm.controls['lastName']"
+          matInput
         />
         <mat-error
           *ngIf="personalDetailsForm.get('lastName')?.hasError('required')"
@@ -53,23 +53,23 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">Date of Birth</mat-label>
         <input
-          matInput
-          [matDatepicker]="picker"
           [formControl]="personalDetailsForm.controls['dateOfBirth']"
+          [matDatepicker]="picker"
           [min]="todayDate"
+          matInput
         />
         <mat-error
           *ngIf="personalDetailsForm.get('dateOfBirth')?.hasError('required')"
         >
           Date Of Birth is <strong>required</strong>
         </mat-error>
-        <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-datepicker-toggle [for]="picker" matSuffix>
           <mat-icon matDatepickerToggleIcon>
             <img
               _ngcontent-vqa-c346=""
-              src="assets/images/calendar.png"
-              class="pb-25"
               alt="calender.png"
+              class="pb-25"
+              src="assets/images/calendar.png"
             />
           </mat-icon>
         </mat-datepicker-toggle>
@@ -79,7 +79,7 @@
     <div class="field">
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">Email</mat-label>
-        <input matInput [formControl]="personalDetailsForm.controls['email']" />
+        <input [formControl]="personalDetailsForm.controls['email']" matInput />
         <mat-error
           *ngIf="
             personalDetailsForm.get('email')?.hasError('email') &&
@@ -120,7 +120,8 @@
           <mat-option
             *ngFor="let country of countries"
             [value]="country?.countryName"
-            >{{ country?.countryName }}</mat-option
+          >{{ country?.countryName }}
+          </mat-option
           >
         </mat-select>
         <mat-error
@@ -138,8 +139,8 @@
       <mat-form-field appearance="outline" class="full-width custom-field-80">
         <mat-label class="custom-mat-label">Address</mat-label>
         <input
-          matInput
           [formControl]="personalDetailsForm.controls['address']"
+          matInput
         />
         <mat-error
           *ngIf="personalDetailsForm.get('address')?.hasError('required')"
@@ -147,10 +148,10 @@
           Address is <strong>required</strong>
         </mat-error>
         <img
+          alt="search.png"
+          class="pb-25 standard-search"
           matSuffix
           src="assets/images/search.png"
-          class="pb-25 standard-search"
-          alt="search.png"
         />
         <div class="vertical-separator"></div>
         <div class="locate-container">
@@ -186,14 +187,15 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">Country</mat-label>
         <mat-select
-          [formControl]="personalDetailsForm.controls['country']"
           (selectionChange)="onCountrySelect()"
+          [formControl]="personalDetailsForm.controls['country']"
         >
           <mat-option [value]="">Select</mat-option>
           <mat-option
             *ngFor="let country of countries"
             [value]="country?.countryName"
-            >{{ country?.countryName }}</mat-option
+          >{{ country?.countryName }}
+          </mat-option
           >
         </mat-select>
         <mat-error
@@ -209,10 +211,10 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">Zip Code</mat-label>
         <input
-          matInput
-          appNumbersOnly
-          [maxlength]="6"
           [formControl]="personalDetailsForm.controls['zipCode']"
+          [maxlength]="6"
+          appNumbersOnly
+          matInput
           readonly
         />
         <mat-error
@@ -226,8 +228,8 @@
       <mat-form-field appearance="outline" class="full-width custom-field">
         <mat-label class="custom-mat-label">State</mat-label>
         <mat-select
-          [formControl]="personalDetailsForm.controls['state']"
           (selectionChange)="onSelectState()"
+          [formControl]="personalDetailsForm.controls['state']"
         >
           <mat-option [value]="">Select</mat-option>
           <mat-option *ngFor="let state of stateList" [value]="state?.stateId">
@@ -249,11 +251,12 @@
         <mat-select [formControl]="personalDetailsForm.controls['city']">
           <mat-option [value]="">Select</mat-option>
           <mat-option
-            [value]="city.cityId"
-            *ngFor="let city of cityList"
             (onSelectionChange)="onSelectCity($event)"
+            *ngFor="let city of cityList"
+            [value]="city.cityId"
           >
-            {{ city?.cityName }}</mat-option
+            {{ city?.cityName }}
+          </mat-option
           >
         </mat-select>
         <mat-error
@@ -265,7 +268,7 @@
     </div>
   </div>
   <div class="button-section">
-    <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+    <button (click)="onConfirm()" class="confirm-button">Confirm</button>
     <button class="back-button">Back</button>
   </div>
   <!-- Once Api will be integrated then need to uncomment -->

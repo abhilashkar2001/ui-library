@@ -1,13 +1,13 @@
 import {
   Component,
-  OnInit,
+  ElementRef,
+  HostListener,
   Input,
   OnDestroy,
-  Renderer2,
-  ElementRef,
+  OnInit,
   QueryList,
+  Renderer2,
   ViewChildren,
-  HostListener,
 } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
@@ -102,17 +102,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isDescendant(child: HTMLElement, parent: HTMLElement | any): boolean {
-    let node = child.parentNode;
-    while (node != null) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  }
-
   // animate the nav link underline
   animateUnderline(elem: any) {
     if (!elem) return;
@@ -141,6 +130,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   goToHomePage() {
     this.router.navigate(['/origination/account/landing']);
   }
+
   openDropdown(i: number) {
     if (this.expand == i) {
       this.expand = 0;
@@ -173,5 +163,16 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       this.externalInternetRoutePort,
     );
     window.open(`${newBaseUrl}`, '_blank');
+  }
+
+  private isDescendant(child: HTMLElement, parent: HTMLElement | any): boolean {
+    let node = child.parentNode;
+    while (node != null) {
+      if (node === parent) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
   }
 }

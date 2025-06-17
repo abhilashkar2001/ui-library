@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from '@onerumango/utils';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+
 @Component({
   selector: 'app-success-popup',
   templateUrl: './success-popup.component.html',
@@ -27,6 +28,7 @@ export class SuccessPopupComponent implements OnInit {
   generatedLink = '';
   appontment: any;
   isComplete: any;
+
   constructor(
     private dialogRef: MatDialogRef<SuccessPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -42,6 +44,7 @@ export class SuccessPopupComponent implements OnInit {
     this.actionType = data.actionType;
     this.referenceNo = data.refrenceNo;
   }
+
   ngOnInit(): void {
     this.depositType = this.data?.type;
     this.originationId = this.data?.originationId;
@@ -149,9 +152,11 @@ export class SuccessPopupComponent implements OnInit {
       window.close();
     }
   }
+
   close() {
     this.dialogRef.close(false);
   }
+
   onClick() {
     this.dialogRef.close('tracking');
     this.router.navigate(['/origination/tracking']);

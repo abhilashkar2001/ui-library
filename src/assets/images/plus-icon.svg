@@ -1,6 +1,9 @@
-<svg id="Group_11952" data-name="Group 11952" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-  <g id="Group_11951" data-name="Group 11951">
-    <circle id="Ellipse_35" data-name="Ellipse 35" cx="10" cy="10" r="10" fill="#fff" opacity="0.3"/>
-    <path id="Path_6158" data-name="Path 6158" d="M353.5,1803a1,1,0,0,0-2,0v4h-4a1,1,0,0,0,0,2h4v4a1,1,0,0,0,2,0v-4h4a1,1,0,0,0,0-2h-4Z" transform="translate(-342.5 -1798)" fill="#fff" fill-rule="evenodd"/>
+<svg data-name="Group 11952" height="20" id="Group_11952" viewBox="0 0 20 20" width="20"
+     xmlns="http://www.w3.org/2000/svg">
+  <g data-name="Group 11951" id="Group_11951">
+    <circle cx="10" cy="10" data-name="Ellipse 35" fill="#fff" id="Ellipse_35" opacity="0.3" r="10" />
+    <path d="M353.5,1803a1,1,0,0,0-2,0v4h-4a1,1,0,0,0,0,2h4v4a1,1,0,0,0,2,0v-4h4a1,1,0,0,0,0-2h-4Z" data-name="Path 6158"
+          fill="#fff"
+          fill-rule="evenodd" id="Path_6158" transform="translate(-342.5 -1798)" />
   </g>
 </svg>

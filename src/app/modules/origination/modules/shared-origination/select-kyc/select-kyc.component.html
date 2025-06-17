@@ -7,30 +7,30 @@
         fxLayoutAlign="space-between center"
       >
         <input
-          matInput
-          type="text"
+          appNumbersOnly
           class="inputText"
           formControlName="verifyNationalID"
-          appNumbersOnly
+          matInput
           maxlength="12"
+          type="text"
         />
         <button
-          class="confirm-button"
-          mat-raised-button
           (click)="getOtp()"
           [disabled]="isvalid()"
+          class="confirm-button"
+          mat-raised-button
         >
           Get OTP
         </button>
       </div>
     </div>
-    <div class="enter_otp" *ngIf="isShowOtp">Enter OTP to verify</div>
+    <div *ngIf="isShowOtp" class="enter_otp">Enter OTP to verify</div>
     <div fxLayout="column">
       <div *ngIf="isShowOtp">
         <ng-otp-input
-          class="otp_field"
-          [config]="config"
           (onInputChange)="onOtpChange($event)"
+          [config]="config"
+          class="otp_field"
         >
         </ng-otp-input>
       </div>
@@ -52,61 +52,61 @@
           <span id="counter"></span>
         </span>
       </div> -->
-      <div class="standard-font-black my-20" *ngIf="isShowOtp">
+      <div *ngIf="isShowOtp" class="standard-font-black my-20">
         <span *ngIf="resendLink"
-          ><div
-            (click)="otpTimer()"
-            (keydown.enter)="otpTimer()"
-            tabindex="0"
-            class="resend-link"
-          >
+        ><div
+          (click)="otpTimer()"
+          (keydown.enter)="otpTimer()"
+          class="resend-link"
+          tabindex="0"
+        >
             Resend
           </div></span
         >
         <span *ngIf="!resendLink"
-          >Resend the OTP
+        >Resend the OTP
           <span class="standard-font-blue"
-            >({{ displaySecond }} min)</span
+          >({{ displaySecond }} min)</span
           ></span
         >
       </div>
       <div fxFlex="100" fxLayout="column" fxLayoutGap="20">
         <div
-          style="margin-top: 27px; width: 100%"
+          *ngIf="isShowOtp"
           class="col-12"
           fxFlex="100"
           fxLayout="row"
-          *ngIf="isShowOtp"
+          style="margin-top: 27px; width: 100%"
         >
           <div fxFlex="5">
             <mat-checkbox (change)="isChecked = !isChecked"></mat-checkbox>
           </div>
           <div fxFlex="95">
             <span class="check_font"
-              >I confirmed that I don't have any other Account opened by using
+            >I confirmed that I don't have any other Account opened by using
               National ID & OTP based KYC with Demobank</span
             >
           </div>
         </div>
 
-        <div fxLayout="row" class="btn_grp" fxLayoutGap="50px">
+        <div class="btn_grp" fxLayout="row" fxLayoutGap="50px">
           <div>
             <button
-              type="button"
-              mat-raised-button
               [disabled]="!isChecked || !yourOtp"
               class="button submit_button"
+              mat-raised-button
               matSuffix
+              type="button"
             >
               Verify
             </button>
           </div>
           <div>
             <button
-              type="button"
-              mat-raised-button
-              class="button back_button"
               (click)="goBack()"
+              class="button back_button"
+              mat-raised-button
+              type="button"
             >
               Back
             </button>

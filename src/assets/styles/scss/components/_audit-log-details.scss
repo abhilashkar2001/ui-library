@@ -7,6 +7,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
 .table {
   width: 100%;
   border: 1px solid $color-form-highlight;
+
   .table-header {
     display: flex;
     width: 100%;
@@ -15,6 +16,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     border-radius: 5px;
   }
 }
+
 .table_container {
   width: 100%; //100.5%
   // max-height: 350px;
@@ -30,6 +32,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
       height: 300px;
     }
   }
+
   .auditTable {
     width: 100%; // 98.5%
     // min-width: 950px;
@@ -51,19 +54,23 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     text-align: center;
     font-family: 'Benton Sans';
   }
+
   .pb-32 {
     font-size: 16px;
     font-weight: 400;
   }
+
   .auditLogCard {
     padding: 0px !important;
     border-radius: 12px !important;
   }
+
   ::ng-deep .tablealign .mat-header-row {
     background: #f3f3f3 0% 0% no-repeat padding-box !important;
     border-radius: 5px;
     border-bottom-color: white !important;
   }
+
   .headerIcon {
     margin-right: 2%;
     width: 33px;
@@ -76,6 +83,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     justify-content: center;
     align-items: center;
     padding-top: 6px;
+
     #iconAchor .mat-icon {
       color: #0033a1;
     }
@@ -103,10 +111,12 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     font-family: 'Benton Sans';
     font-size: 0.8rem;
   }
+
   thead {
     position: sticky;
     top: 0;
   }
+
   tr {
     height: 40px;
   }
@@ -116,6 +126,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     padding: 5px 10px;
     text-align: center;
   }
+
   th {
     color: #6e7582;
   }
@@ -126,6 +137,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     // min-width: 7.35rem;
     font-family: 'Benton Sans';
   }
+
   thead,
   tr,
   th,
@@ -136,6 +148,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     font-family: 'Benton Sans', sans-serif;
     // width: 100%;
   }
+
   th,
   td {
     div.alignStatus {
@@ -143,6 +156,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
       margin: 0 auto;
     }
   }
+
   thead,
   tr,
   td {
@@ -150,18 +164,22 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     font-weight: 600;
     // width: 100%;
   }
+
   .callIcon {
     color: #0033a1;
   }
+
   .callIconButton {
     border: none;
     cursor: pointer;
   }
+
   .alignStatus {
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
   .dialogAuditLogCard {
     padding: 0px !important;
     margin: 0px !important;
@@ -177,6 +195,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
   overflow: visible !important;
   height: fit-content !important;
 }
+
 .audit-divider {
   border-top-color: rgba(0, 0, 0, 0.12);
   border-top-width: 2px;

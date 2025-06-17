@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SuccessModalComponent implements OnInit {
   screenType: string | any;
+
   constructor(@Inject(MAT_DIALOG_DATA) public screenData: any) {}
 
   ngOnInit(): void {

@@ -15,6 +15,7 @@ li {
 .succress {
   background: green;
 }
+
 .wrapper {
   background: #eaf6ff;
   padding: 2rem;
@@ -62,19 +63,24 @@ li {
 
 li.success {
   color: green;
+
   &:before {
     background: green !important;
   }
 }
+
 li.failure {
   color: red;
+
   &:before {
     background: red !important;
   }
 }
+
 .timeSuccess {
   color: green;
 }
+
 .timeFailure {
   color: red;
 }

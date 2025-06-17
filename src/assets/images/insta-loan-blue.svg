@@ -1,10 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16.29" viewBox="0 0 20 16.29">
-  <g id="Insta_Loan_Blue" data-name="Insta Loan Blue" transform="translate(-29 -5.879)">
-    <g id="Group_20264" data-name="Group 20264" transform="translate(232 3115.811)">
-      <path id="Path_29123" data-name="Path 29123" d="M817.3,696.84a.7.7,0,0,0,.7-.7v-.93c0-4.1-1.25-5.35-5.35-5.35h-9.3c-4.1,0-5.35,1.25-5.35,5.35v.47a.7.7,0,0,0,.7.7,1.625,1.625,0,1,1,0,3.25.7.7,0,0,0-.7.7v.47c0,4.1,1.25,5.35,5.35,5.35h9.3c4.1,0,5.35-1.25,5.35-5.35a.7.7,0,0,0-.7-.7,1.63,1.63,0,1,1,0-3.26Z" transform="translate(-1001 -3799.791)" fill="#00205c" opacity="0.3"/>
-      <path id="Path_29124" data-name="Path 29124" d="M811,701.88a1,1,0,1,1,.99-1A.988.988,0,0,1,811,701.88Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
-      <path id="Path_29125" data-name="Path 29125" d="M805,696.88a1,1,0,1,1,.99-1A.988.988,0,0,1,805,696.88Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
-      <path id="Path_29126" data-name="Path 29126" d="M804.63,702.43a.742.742,0,0,1-.53-.22.755.755,0,0,1,0-1.06l6.73-6.73a.75.75,0,0,1,1.06,1.06l-6.73,6.73A.725.725,0,0,1,804.63,702.43Z" transform="translate(-1001 -3799.791)" fill="#00205c"/>
+<svg height="16.29" viewBox="0 0 20 16.29" width="20" xmlns="http://www.w3.org/2000/svg">
+  <g data-name="Insta Loan Blue" id="Insta_Loan_Blue" transform="translate(-29 -5.879)">
+    <g data-name="Group 20264" id="Group_20264" transform="translate(232 3115.811)">
+      <path d="M817.3,696.84a.7.7,0,0,0,.7-.7v-.93c0-4.1-1.25-5.35-5.35-5.35h-9.3c-4.1,0-5.35,1.25-5.35,5.35v.47a.7.7,0,0,0,.7.7,1.625,1.625,0,1,1,0,3.25.7.7,0,0,0-.7.7v.47c0,4.1,1.25,5.35,5.35,5.35h9.3c4.1,0,5.35-1.25,5.35-5.35a.7.7,0,0,0-.7-.7,1.63,1.63,0,1,1,0-3.26Z" data-name="Path 29123"
+            fill="#00205c"
+            id="Path_29123" opacity="0.3" transform="translate(-1001 -3799.791)" />
+      <path d="M811,701.88a1,1,0,1,1,.99-1A.988.988,0,0,1,811,701.88Z" data-name="Path 29124" fill="#00205c"
+            id="Path_29124" transform="translate(-1001 -3799.791)" />
+      <path d="M805,696.88a1,1,0,1,1,.99-1A.988.988,0,0,1,805,696.88Z" data-name="Path 29125" fill="#00205c"
+            id="Path_29125" transform="translate(-1001 -3799.791)" />
+      <path d="M804.63,702.43a.742.742,0,0,1-.53-.22.755.755,0,0,1,0-1.06l6.73-6.73a.75.75,0,0,1,1.06,1.06l-6.73,6.73A.725.725,0,0,1,804.63,702.43Z" data-name="Path 29126"
+            fill="#00205c"
+            id="Path_29126" transform="translate(-1001 -3799.791)" />
     </g>
   </g>
 </svg>

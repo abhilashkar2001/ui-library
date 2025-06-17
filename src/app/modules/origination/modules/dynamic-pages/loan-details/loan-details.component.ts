@@ -83,6 +83,22 @@ export class LoanDetailsComponent implements OnInit {
     this.loadLocaleData();
   }
 
+  get loanDetails() {
+    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+  }
+
+  get loanDisbursementModel() {
+    return this.loanDetailsForm?.get('loanDisbursementModel') as FormGroup;
+  }
+
+  get loanDisbursementAccount() {
+    return this.loanDisbursementModel?.get('disbursementAccount') as FormGroup;
+  }
+
+  get repaymentModel() {
+    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
+  }
+
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
     const basisId: any = this.sessionStorageService.getLoanBasisDetails();
@@ -324,22 +340,6 @@ export class LoanDetailsComponent implements OnInit {
         });
       }
     });
-  }
-
-  get loanDetails() {
-    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
-  }
-
-  get loanDisbursementModel() {
-    return this.loanDetailsForm?.get('loanDisbursementModel') as FormGroup;
-  }
-
-  get loanDisbursementAccount() {
-    return this.loanDisbursementModel?.get('disbursementAccount') as FormGroup;
-  }
-
-  get repaymentModel() {
-    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
   }
 
   loadUserProfile() {

@@ -1,4 +1,4 @@
-<div class="main_page" [formGroup]="revisiteForm" *ngIf="">
+<div *ngIf="" [formGroup]="revisiteForm" class="main_page">
   <div class="head_container bank-title">
     <h1>{{ currentUser?.bankName | titlecase }}</h1>
   </div>
@@ -11,7 +11,7 @@
     <ng-container *ngIf="currentTab === 1; else showNext">
       <div>
         <h3 class="text-label mb-16">Remarks</h3>
-        <ic-textarea [rows]="15"> </ic-textarea>
+        <ic-textarea [rows]="15"></ic-textarea>
       </div>
     </ng-container>
     <ng-template #showNext>
@@ -19,58 +19,58 @@
         <mat-card class="default-card mx-0">
           <h3 class="sub-heading">Revisit Information</h3>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxFlex="49" class="gray-div p-8">
+            <div class="gray-div p-8" fxFlex="49">
               <h3 class="sub-heading">Approved Detail</h3>
               <div fxLayout="row wrap">
                 <div fxFlex="100">
                   <mat-form-field appearance="outline">
                     <mat-label>Amount</mat-label>
-                    <input matInput type="text" formControlName="amount" />
+                    <input formControlName="amount" matInput type="text" />
                   </mat-form-field>
                 </div>
                 <div
-                  fxFlex="100"
-                  fxFlex.sm="32.5"
-                  fxFlex.gt-sm="50"
                   class="pr-12"
+                  fxFlex="100"
+                  fxFlex.gt-sm="50"
+                  fxFlex.sm="32.5"
                 >
                   <mat-form-field appearance="outline">
                     <mat-label>Rate Of Interest</mat-label>
                     <input
+                      formControlName="rateOfInterest"
                       matInput
                       type="text"
-                      formControlName="rateOfInterest"
                     />
                   </mat-form-field>
                 </div>
-                <div fxFlex="100" fxFlex.sm="32.5" fxFlex.gt-sm="50">
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="32.5">
                   <fieldset class="field-set">
                     <legend class="fieldset-title">Loan Tenure</legend>
                     <div fxLayout="row">
                       <input
-                        matInput
+                        appNumbersOnly
+                        class="fieldset-input"
                         formControlName="loanTenureYear"
-                        appNumbersOnly
+                        matInput
                         placeholder="Years"
-                        class="fieldset-input"
                         required
                       />
                       <div class="vertical-separator"></div>
                       <input
-                        matInput
+                        appNumbersOnly
+                        class="fieldset-input"
                         formControlName="loanTenureMonth"
-                        appNumbersOnly
+                        matInput
                         placeholder="Months"
-                        class="fieldset-input"
                         required
                       />
                       <div class="vertical-separator"></div>
                       <input
-                        matInput
-                        formControlName="loanTenureDay"
                         appNumbersOnly
-                        placeholder="Days"
                         class="fieldset-input"
+                        formControlName="loanTenureDay"
+                        matInput
+                        placeholder="Days"
                         required
                       />
                     </div>
@@ -78,62 +78,62 @@
                 </div>
               </div>
             </div>
-            <div fxFlex="49" class="gray-div p-8">
+            <div class="gray-div p-8" fxFlex="49">
               <h3 class="sub-heading">Customer Request</h3>
               <div fxLayout="row wrap">
                 <div fxFlex="100">
                   <mat-form-field appearance="outline">
                     <mat-label>Amount</mat-label>
                     <input
+                      formControlName="requestedAmount"
                       matInput
                       type="text"
-                      formControlName="requestedAmount"
                     />
                   </mat-form-field>
                 </div>
                 <div
-                  fxFlex="100"
-                  fxFlex.sm="32.5"
-                  fxFlex.gt-sm="50"
                   class="pr-12"
+                  fxFlex="100"
+                  fxFlex.gt-sm="50"
+                  fxFlex.sm="32.5"
                 >
                   <mat-form-field appearance="outline">
                     <mat-label>Rate Of Interest</mat-label>
                     <input
+                      formControlName="requestedRateOfInterest"
                       matInput
                       type="text"
-                      formControlName="requestedRateOfInterest"
                     />
                   </mat-form-field>
                 </div>
-                <div fxFlex="100" fxFlex.sm="32.5" fxFlex.gt-sm="50">
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="32.5">
                   <fieldset class="field-set">
                     <legend class="fieldset-title">Loan Tenure</legend>
                     <div fxLayout="row">
                       <input
-                        matInput
+                        appNumbersOnly
+                        class="fieldset-input"
                         formControlName="requestedLoanTenureYear"
-                        appNumbersOnly
+                        matInput
                         placeholder="Years"
-                        class="fieldset-input"
                         required
                       />
                       <div class="vertical-separator"></div>
                       <input
-                        matInput
+                        appNumbersOnly
+                        class="fieldset-input"
                         formControlName="requestedLoanTenureMonth"
-                        appNumbersOnly
+                        matInput
                         placeholder="Months"
-                        class="fieldset-input"
                         required
                       />
                       <div class="vertical-separator"></div>
                       <input
-                        matInput
-                        formControlName="requestedLoanTenureDay"
                         appNumbersOnly
-                        placeholder="Days"
                         class="fieldset-input"
+                        formControlName="requestedLoanTenureDay"
+                        matInput
+                        placeholder="Days"
                         required
                       />
                     </div>
@@ -146,17 +146,17 @@
         <div>
           <h3 class="text-label mb-16 ml-16">Remark</h3>
           <ic-textarea
-            [rows]="3"
             [control]="revisiteForm.get('remark') | formcontrol"
+            [rows]="3"
           >
           </ic-textarea>
         </div>
         <div class="ml-16">
           <span class="text-bold">Note: </span
           ><span class="text-gray"
-            >( Help us providing additional Information for revisiting this
+        >( Help us providing additional Information for revisiting this
             application )</span
-          >
+        >
         </div>
       </div>
     </ng-template>
@@ -167,14 +167,14 @@
       fxLayoutAlign="start center"
       fxLayoutGap="20px"
     >
-      <button mat-raised-button class="reset-btn" fxFlex="40" (click)="reset()">
+      <button (click)="reset()" class="reset-btn" fxFlex="40" mat-raised-button>
         Reset
       </button>
       <button
-        mat-raised-button
+        (click)="saveCustomerRequest()"
         class="submit-btn"
         fxFlex="60"
-        (click)="saveCustomerRequest()"
+        mat-raised-button
       >
         Submit
       </button>

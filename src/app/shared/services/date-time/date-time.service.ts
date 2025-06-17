@@ -7,8 +7,6 @@ import { CustomizerService } from '../customizer.service';
   providedIn: 'root',
 })
 export class DateTimeService {
-  _format: string | any;
-  _locale: string | any;
   currentLocal: any;
 
   public constructor(
@@ -21,10 +19,7 @@ export class DateTimeService {
     // });
   }
 
-  init(opt?: any) {
-    this._format = opt?.dateFormat ?? this.currentLocal?.dateFormat;
-    this._locale = opt?.locale ?? this.currentLocal?.locale;
-  }
+  _format: string | any;
 
   public get format(): string {
     return this._format;
@@ -34,11 +29,18 @@ export class DateTimeService {
     this._format = value;
   }
 
+  _locale: string | any;
+
   public get locale(): string {
     return this._locale;
   }
 
   public set locale(value: string) {
     this._locale = value;
+  }
+
+  init(opt?: any) {
+    this._format = opt?.dateFormat ?? this.currentLocal?.dateFormat;
+    this._locale = opt?.locale ?? this.currentLocal?.locale;
   }
 }

@@ -41,6 +41,7 @@ export class CommmonSteeperComponent implements OnChanges {
       }, 200);
     }
   }
+
   next() {
     if (this.screenList?.length > 0) {
       for (let i = 0; i < this.screenIndex; i++) {
@@ -52,6 +53,7 @@ export class CommmonSteeperComponent implements OnChanges {
     // const el = document.querySelector(".mat-step-label-selected");
     // if (el) el.scrollIntoView();
   }
+
   stepperSelectionChange(event: any) {
     this.customSelectionChange.emit(event);
   }

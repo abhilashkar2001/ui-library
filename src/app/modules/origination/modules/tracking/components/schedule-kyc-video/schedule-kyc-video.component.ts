@@ -22,6 +22,7 @@ export const MATERIAL_DATEPICKER_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 class CustomDateAdapter extends MomentDateAdapter {
   override getDayOfWeekNames(_style: 'long' | 'short' | 'narrow') {
     return ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -49,12 +50,6 @@ export class ScheduleKycVideoComponent implements OnInit {
   formatedSelectedDate: any;
   timeSlots: any[] = [];
   selectedTimeSlot = '';
-  constructor(private dialog: MatDialog) {
-    this.minDate = new Date();
-    this.maxDate = new Date();
-    this.maxDate.setDate(this.maxDate.getDate() + 6);
-  }
-
   kycInfo = {
     name: 'Saanvi',
     mobile: '82919918388',
@@ -62,6 +57,12 @@ export class ScheduleKycVideoComponent implements OnInit {
   };
   description = 'Web Conferencing details provided upon confirmation';
   timeZone = 'India Standard Time (5:41pm)';
+
+  constructor(private dialog: MatDialog) {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate() + 6);
+  }
 
   ngOnInit(): void {
     const startTime = '09:00';
@@ -79,6 +80,7 @@ export class ScheduleKycVideoComponent implements OnInit {
     }
     return '';
   };
+
   onSelect(event: any) {
     this.selectedDate = this.convertDate(event);
     this.formatedSelectedDate = new Date(this.selectedDate).toLocaleDateString(
@@ -87,6 +89,7 @@ export class ScheduleKycVideoComponent implements OnInit {
     );
     this.selectedTimeSlot = '';
   }
+
   convertDate(value: any) {
     const date = moment(value).format('YYYY-MM-DD');
     if (date) return date;

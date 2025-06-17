@@ -1,52 +1,52 @@
 <div
-  class="main_page_container"
   *ngIf="revisiteForm"
   [formGroup]="revisiteForm"
+  class="main_page_container"
   fxFlex="100"
   fxLayout="row wrap"
   fxLayoutGap="10"
 >
-  <span fxFlex="100" class="bank-title">
+  <span class="bank-title" fxFlex="100">
     {{ currentuser?.bankName | titlecase }}
   </span>
   <ng-container *ngIf="type === 'revisit'">
-    <mat-card fxFlex="100" fxLayout="column" class="container p-8">
+    <mat-card class="container p-8" fxFlex="100" fxLayout="column">
       <h2 class="header_md_bold_black mb-16">Revisit Information</h2>
       <div
+        *ngIf="revisiteForm"
+        [formGroup]="revisiteForm"
         fxLayout="row"
         fxLayout.lt-sm="column"
         fxLayoutGap="16px"
-        *ngIf="revisiteForm"
-        [formGroup]="revisiteForm"
       >
         <!-- Approved Detail Section -->
-        <div fxFlex="50" class="info-card" fxFlex="100" fxLayout="row wrap">
-          <h5 fxFlex="100" class="header_md_bold_black mb-16">
+        <div class="info-card" fxFlex="50" fxFlex="100" fxLayout="row wrap">
+          <h5 class="header_md_bold_black mb-16" fxFlex="100">
             Approved Detail
           </h5>
           <mat-card class="container p-8" fxFlex="100">
             <ic-form-field
-              label="Amount"
               [control]="revisiteForm.get('amount') | formcontrol"
               fxFlex="100"
+              label="Amount"
             ></ic-form-field>
 
-            <div fxLayout="row" fxLayoutGap="16px" fxFlex="100">
+            <div fxFlex="100" fxLayout="row" fxLayoutGap="16px">
               <ic-form-field
-                label="Rate of Interest"
                 [control]="revisiteForm.get('rateOfInterest') | formcontrol"
                 fxFlex="50"
+                label="Rate of Interest"
               ></ic-form-field>
               <ic-tenure-field
-                label="Loan Tenure"
-                [fields]="['tenureYear', 'tenureMonth', 'tenureDays']"
                 [fieldLabels]="{
                   tenureYear: 'Years',
                   tenureMonth: 'Months',
                   tenureDays: 'Days',
                 }"
+                [fields]="['tenureYear', 'tenureMonth', 'tenureDays']"
                 [parentForm]="revisiteForm"
                 fxFlex="50"
+                label="Loan Tenure"
               >
               </ic-tenure-field>
             </div>
@@ -54,38 +54,38 @@
         </div>
 
         <!-- Customer Request Section -->
-        <div fxFlex="50" class="info-card" fxFlex="100" fxLayout="row wrap">
+        <div class="info-card" fxFlex="50" fxFlex="100" fxLayout="row wrap">
           <h5 class="header_md_bold_black mb-16" fxFlex="100">
             Customer Request
           </h5>
           <mat-card class="container p-8" fxFlex="100">
             <ic-form-field
-              label="Amount"
               [control]="revisiteForm.get('requestedAmount') | formcontrol"
+              label="Amount"
             ></ic-form-field>
 
             <div fxLayout="row" fxLayoutGap="16px">
               <ic-form-field
-                label="Rate of Interest"
                 [control]="
                   revisiteForm.get('requestedRateOfInterest') | formcontrol
                 "
                 fxFlex="50"
+                label="Rate of Interest"
               ></ic-form-field>
               <ic-tenure-field
-                label="Loan Tenure"
-                [fields]="[
-                  'requestedLoanTenureYear',
-                  'requestedLoanTenureMonth',
-                  'requestedLoanTenureDay',
-                ]"
                 [fieldLabels]="{
                   requestedLoanTenureYear: 'Years',
                   requestedLoanTenureMonth: 'Months',
                   requestedLoanTenureDay: 'Days',
                 }"
+                [fields]="[
+                  'requestedLoanTenureYear',
+                  'requestedLoanTenureMonth',
+                  'requestedLoanTenureDay',
+                ]"
                 [parentForm]="revisiteForm"
                 fxFlex="50"
+                label="Loan Tenure"
               >
               </ic-tenure-field>
             </div>
@@ -97,11 +97,11 @@
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
     <div fxFlex="100" fxLayout="row wrap">
-      <h3 fxFlex="100" class="header_md_bold_black mt-16">Remarks</h3>
+      <h3 class="header_md_bold_black mt-16" fxFlex="100">Remarks</h3>
       <ic-textarea
+        [control]="revisiteForm.get('remark') | formcontrol"
         [rows]="5"
         fxFlex="100"
-        [control]="revisiteForm.get('remark') | formcontrol"
       >
       </ic-textarea>
     </div>
@@ -113,21 +113,21 @@
       </span>
     </h5>
     <div
-      fxLayout="row"
-      fxLayoutGap="2%"
-      fxLayoutAlign="end center"
       class="action-dig-sign-btn"
       fxFlex="100"
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      fxLayoutGap="2%"
     >
       <ic-button
-        label="Reset"
-        [icButtonType]="'ghost-rounded'"
         (OnClick)="resetRemark()"
+        [icButtonType]="'ghost-rounded'"
+        label="Reset"
       ></ic-button>
       <ic-button
-        label="Submit"
-        [icButtonType]="'filled-rounded'"
         (OnClick)="saveCustomerRequest()"
+        [icButtonType]="'filled-rounded'"
+        label="Submit"
       ></ic-button>
     </div>
   </div>

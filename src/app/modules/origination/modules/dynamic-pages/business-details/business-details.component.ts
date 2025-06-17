@@ -46,6 +46,14 @@ export class BusinessDetailsComponent implements OnInit {
     this.loadLocaleData();
   }
 
+  get contact() {
+    return this.businessDetailsForm.get('contact') as FormGroup;
+  }
+
+  get address(): FormArray {
+    return this.contact.get('address') as FormArray;
+  }
+
   ngOnInit() {
     this.originationId = this.sessionStorage.getOriginationId();
     this.screenCode = this.sessionStorage.getCurrentScreenCode();
@@ -104,14 +112,6 @@ export class BusinessDetailsComponent implements OnInit {
         address: this.fb.array([this.buildAddressGroup()]),
       }),
     });
-  }
-
-  get contact() {
-    return this.businessDetailsForm.get('contact') as FormGroup;
-  }
-
-  get address(): FormArray {
-    return this.contact.get('address') as FormArray;
   }
 
   buildAddressGroup(): FormGroup {

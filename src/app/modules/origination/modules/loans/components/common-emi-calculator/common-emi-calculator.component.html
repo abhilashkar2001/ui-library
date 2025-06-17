@@ -1,18 +1,18 @@
 <div
+  class="loanForm"
   fxFlex="100"
   fxLayout="row"
   fxLayout.lt-md="column"
   fxLayoutGap.lt-md="10px"
-  class="loanForm"
 >
   <div
-    fxFlex="70"
-    fxLayout="column"
-    class="calculator_container"
     *ngIf="loanForm"
     [formGroup]="loanForm"
+    class="calculator_container"
+    fxFlex="70"
+    fxLayout="column"
   >
-    <div fxLayout="row wrap" fxFlex="100" fxLayoutAlign="space-between center">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
       <div class="calculator_subTItle">Loan Amount</div>
       <div>
         <div fxFlex="100">
@@ -32,16 +32,16 @@
             </div>
           </mat-form-field> -->
           <ic-form-field
-            label="Amount"
+            (onInputChange)="onInputChange($event)"
             [control]="loanForm.get('amount') | formcontrol"
+            [decimalPlaces]="2"
             [icNoInitialSpace]="true"
             [icNumbersOnly]="true"
-            type="text"
-            [prefixIcon]="currencySymbol"
             [icTwoDigitDecimalNumber]="true"
             [numLength]="6"
-            [decimalPlaces]="2"
-            (onInputChange)="onInputChange($event)"
+            [prefixIcon]="currencySymbol"
+            label="Amount"
+            type="text"
           >
           </ic-form-field>
         </div>
@@ -49,22 +49,22 @@
     </div>
     <div fxFlex="100" fxLayout="row wrap">
       <mat-slider
-        class="custom-slider"
-        [ngModelOptions]="{ standalone: true }"
+        (change)="onSliderChange($event)"
         [max]="max"
         [min]="min"
-        fxFlex="100"
+        [ngModelOptions]="{ standalone: true }"
         [step]="thumbLabel"
-        (change)="onSliderChange($event)"
+        class="custom-slider"
         discrete
+        fxFlex="100"
       >
-        <input [value]="ammountValue" matSliderThumb #slider />
+        <input #slider [value]="ammountValue" matSliderThumb />
       </mat-slider>
       <div
-        fxLayout="row"
-        fxFlex="100"
-        fxLayoutAlign="space-between center"
         class="breadcrum_md"
+        fxFlex="100"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
       >
         <div>{{ currencySymbol }} {{ min }}</div>
         <div>{{ currencySymbol }} {{ max }}</div>
@@ -131,25 +131,25 @@
         </fieldset> -->
 
         <ic-tenure-field
-          label="Loan Period"
-          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
           [fieldLabels]="{
             loanTenureYear: 'Year',
             loanTenureMonth: 'Month',
             loanTenureDay: 'Day',
           }"
-          [parentForm]="loanForm"
+          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
           [isRequired]="true"
+          [parentForm]="loanForm"
+          label="Loan Period"
         >
         </ic-tenure-field>
         <mat-error
-          class="mat-error small-error mt-12"
           *ngIf="
             validateTenure &&
             (loanForm.controls['loanTenureYear'].value ||
               loanForm.controls['loanTenureMonth'].value ||
               loanForm.controls['loanTenureDay'].value)
           "
+          class="mat-error small-error mt-12"
         >
           Loan Period should be Maximum
           {{ productDetails?.maximumTenorYear || 0 }} Years
@@ -157,13 +157,13 @@
           {{ productDetails?.maximumTenorDay || 0 }} Days
         </mat-error>
         <mat-error
-          class="mat-error small-error mt-12"
           *ngIf="
             validateMinimumTenure &&
             (loanForm.controls['loanTenureYear'].value ||
               loanForm.controls['loanTenureMonth'].value ||
               loanForm.controls['loanTenureDay'].value)
           "
+          class="mat-error small-error mt-12"
         >
           Loan Period should be Minimum
           {{ productDetails?.minimumTenorYear || 0 }} Years
@@ -174,9 +174,9 @@
       <div fxFlex="48.5" fxFlex.lt-md="100">
         <label
           class="calculator_subTItle"
-          fxLayoutAlign="space-between center"
           for="interestRate"
-          >Interest Rate <span>{{ interestRate }}%</span></label
+          fxLayoutAlign="space-between center"
+        >Interest Rate <span>{{ interestRate }}%</span></label
         >
         <!-- <mat-form-field
           appearance="outline"
@@ -200,12 +200,12 @@
           </mat-error>
         </mat-form-field> -->
         <ic-form-field
-          label="Percentage"
           [control]="loanForm.get('interestRate') | formcontrol"
+          [decimalPlaces]="2"
           [icNoInitialSpace]="true"
           [icTwoDigitDecimalNumber]="true"
           [numLength]="3"
-          [decimalPlaces]="2"
+          label="Percentage"
           type="text"
         >
         </ic-form-field>
@@ -213,85 +213,85 @@
     </div>
     <div class="downImage">
       <img
-        src="/assets/images/Group%2013767.svg"
-        height="161px"
-        width="100%"
         alt="Group 13767.svg"
+        height="161px"
+        src="/assets/images/Group%2013767.svg"
+        width="100%"
       />
     </div>
   </div>
 
-  <div fxFlex="30" fxLayoutAlign="center center" *ngIf="loanForm">
+  <div *ngIf="loanForm" fxFlex="30" fxLayoutAlign="center center">
     <div
-      fxFlex="100"
-      fxLayoutAlign="center center"
-      fxLayout="column"
       class="fd_container calc-white-bg"
+      fxFlex="100"
+      fxLayout="column"
+      fxLayoutAlign="center center"
     >
-      <div fxFlex="100" fxLayout="column" class="alignCenter">
+      <div class="alignCenter" fxFlex="100" fxLayout="column">
         <div class="maturityTitle">EMI Amount</div>
-        <div class="maturityDesc" [appNumberAnimation]="emiAmount">
+        <div [appNumberAnimation]="emiAmount" class="maturityDesc">
           {{ emiAmount | currency: currency : true : '1.2-2' }}
         </div>
       </div>
-      <div fxLayout="row" fxFlex="100" style="width: 100%">
+      <div fxFlex="100" fxLayout="row" style="width: 100%">
         <div
-          fxLayout="column"
-          fxFlex="48"
           class="alignLeft"
+          fxFlex="48"
+          fxLayout="column"
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Total Interest Payable</div>
-          <div class="maturityVal" [appNumberAnimation]="interestPayble">
+          <div [appNumberAnimation]="interestPayble" class="maturityVal">
             {{ interestPayble | currency: currency : true : '1.2-2' }}
           </div>
         </div>
         <div class="emiVl"></div>
         <div
-          fxLayout="column"
           class="alignLeft"
           fxFlex="48"
+          fxLayout="column"
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Interest Rate</div>
           <div
-            class="maturityVal"
             [appNumberAnimation]="loanForm.value?.interestRate"
+            class="maturityVal"
           >
             {{ loanForm.value?.interestRate }}%*p.a.
           </div>
         </div>
       </div>
-      <div fxLayout="row" fxFlex="100" style="width: 100%">
+      <div fxFlex="100" fxLayout="row" style="width: 100%">
         <div
-          fxLayout="column"
           class="alignLeft"
           fxFlex="48"
+          fxLayout="column"
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Principal Amount</div>
           <div
-            class="maturityVal"
             [appNumberAnimation]="loanForm.value?.amount"
+            class="maturityVal"
           >
             {{ loanForm.value?.amount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
         <div class="emiVl"></div>
         <div
-          fxLayout="column"
           class="alignLeft"
           fxFlex="48"
+          fxLayout="column"
           fxLayoutAlign="start center"
         >
           <div class="maturityLabel">Total Amount Payable</div>
-          <div class="maturityVal" [appNumberAnimation]="totalPayableAmmount">
+          <div [appNumberAnimation]="totalPayableAmmount" class="maturityVal">
             {{ totalPayableAmmount | currency: currency : true : '1.2-2' }}
           </div>
         </div>
       </div>
       <div>
-        <button mat-flat-button class="openFDbtn" (click)="applyForLoan()">
+        <button (click)="applyForLoan()" class="openFDbtn" mat-flat-button>
           Apply
         </button>
       </div>

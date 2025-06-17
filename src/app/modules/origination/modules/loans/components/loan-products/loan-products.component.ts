@@ -69,6 +69,7 @@ export class LoanProductsComponent implements OnInit, OnChanges {
       });
     }
   }
+
   getFileUrl(url: any) {
     if (url.includes('https')) {
       return 'assets/images/normal_loan.svg';

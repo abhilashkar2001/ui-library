@@ -25,6 +25,7 @@ import { ScanComponent } from '../../../../../shared/components/scan/scan.compon
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+
 @Component({
   selector: 'app-cusotm-web-doc-upload',
   templateUrl: './cusotm-web-doc-upload.component.html',
@@ -276,9 +277,11 @@ export class CusotmWebDocUploadComponent
     console.log(url);
     return `${this.baseUrl}${url}`;
   }
+
   fileBrowseHandler(indx: number) {
     this.browseFiles(indx);
   }
+
   removeScannedFace() {
     this.image = '';
     this.sessionStorageService.removeBiometricId();
@@ -616,6 +619,7 @@ export class CusotmWebDocUploadComponent
       this.sessionStorageService.setBiometricId(this.faceId);
     });
   }
+
   openFile(file: any) {
     this.dialog.open(ImageDialogComponent, {
       data: {

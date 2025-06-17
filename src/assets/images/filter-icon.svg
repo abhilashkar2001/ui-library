@@ -1,4 +1,9 @@
-<svg id="Group_12021" data-name="Group 12021" xmlns="http://www.w3.org/2000/svg" width="15.002" height="16.691" viewBox="0 0 15.002 16.691">
-  <path id="Path_5881" data-name="Path 5881" d="M959.6,680.8a.5.5,0,0,1,.4-.8h14a.5.5,0,0,1,.4.8L969,688c.048-.028-4.033-.019-4,0Z" transform="translate(-959.499 -680)" fill="#00205c" fill-rule="evenodd"/>
-  <path id="Path_11705" data-name="Path 11705" d="M959.6,680.8a.5.5,0,0,1,.4-.8h14a.5.5,0,0,1,.4.8L969,688v8.191a.5.5,0,0,1-.724.447L965,695v-7Z" transform="translate(-959.499 -680)" fill="#00205c" fill-rule="evenodd" opacity="0.3"/>
+<svg data-name="Group 12021" height="16.691" id="Group_12021" viewBox="0 0 15.002 16.691" width="15.002"
+     xmlns="http://www.w3.org/2000/svg">
+  <path d="M959.6,680.8a.5.5,0,0,1,.4-.8h14a.5.5,0,0,1,.4.8L969,688c.048-.028-4.033-.019-4,0Z" data-name="Path 5881"
+        fill="#00205c"
+        fill-rule="evenodd" id="Path_5881" transform="translate(-959.499 -680)" />
+  <path d="M959.6,680.8a.5.5,0,0,1,.4-.8h14a.5.5,0,0,1,.4.8L969,688v8.191a.5.5,0,0,1-.724.447L965,695v-7Z" data-name="Path 11705"
+        fill="#00205c"
+        fill-rule="evenodd" id="Path_11705" opacity="0.3" transform="translate(-959.499 -680)" />
 </svg>

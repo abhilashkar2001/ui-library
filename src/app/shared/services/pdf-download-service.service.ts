@@ -92,6 +92,7 @@ export class PdfDownloadServiceService {
     });
     console.log(workbook);
   }
+
   addDataBorder(): any {
     return {
       top: { style: 'thin' },
@@ -100,6 +101,7 @@ export class PdfDownloadServiceService {
       right: { style: 'thin' },
     };
   }
+
   addDataCell(): any {
     return {
       type: 'pattern',
@@ -108,6 +110,7 @@ export class PdfDownloadServiceService {
       bgColor: { argb: 'FF0000FF' },
     };
   }
+
   addTitleColour(): any {
     return {
       type: 'pattern',

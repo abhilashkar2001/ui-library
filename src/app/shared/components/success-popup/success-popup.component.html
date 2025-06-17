@@ -2,10 +2,10 @@
   <div fxLayoutAlign="end center">
     <!-- <mat-icon (click)="close()">close</mat-icon> -->
     <ic-button
+      (OnClick)="close()"
       icButtonType="ghost-neutral"
       icIcon="close"
       type="icon"
-      (OnClick)="close()"
     ></ic-button>
   </div>
   <div class="alertText">
@@ -13,133 +13,134 @@
       {{ message }}
     </div>
     <ng-template #showOtherText
-      >{{ currentStageName }} stage is not avilable. Please move to next
-      screen.</ng-template
+    >{{ currentStageName }} stage is not avilable. Please move to next
+      screen.
+    </ng-template
     >
   </div>
   <div
+    *ngIf="typeOfPopup === 'scheduleCall'"
     fxLayout="row"
     fxLayoutAlign="center center"
-    *ngIf="typeOfPopup === 'scheduleCall'"
   >
     <div fxFlex="90" fxLayout="row" fxLayoutAlign="space-between center">
       <mat-card
-        fxFlex="40"
         class="appointment-card"
+        fxFlex="40"
         fxLayoutAlign="center center"
       >
         Date Selected: <span>{{ appontment.selectedDate }}</span></mat-card
       >
       <mat-card
-        fxFlex="40"
         class="appointment-card"
+        fxFlex="40"
         fxLayoutAlign="center center"
-        >Time Slot: <span>{{ appontment.selectedTime }}</span></mat-card
+      >Time Slot: <span>{{ appontment.selectedTime }}</span></mat-card
       >
     </div>
   </div>
   <div
-    class="alertText"
     *ngIf="isStageAvilable && typeOfPopup !== 'scheduleCall'"
+    class="alertText"
   >
     <div>We will review and get back to you.</div>
   </div>
   <div class="alertImage">
     <img
       *ngIf="originationId; else showerror"
+      alt="Success Sign"
       class="summaryIcon"
       src="assets/images/success-logo.svg"
-      alt="Success Sign"
     />
     <ng-template #showerror
-      ><img
-        class="summaryIcon"
-        src="assets/images/error-icon.svg"
-        alt="Success Sign"
+    ><img
+      alt="Success Sign"
+      class="summaryIcon"
+      src="assets/images/error-icon.svg"
     /></ng-template>
   </div>
 
   <div
+    *ngIf="isStageAvilable"
     fxLayout="column"
     fxLayoutAlign="center center"
     style="display: flex; justify-content: center"
-    *ngIf="isStageAvilable"
   >
     <div class="refrence_no_div">
-      <div class="refrence_no_innerDiv" *ngIf="!generatedLink">
+      <div *ngIf="!generatedLink" class="refrence_no_innerDiv">
         <p>Application No.</p>
         : <span>{{ originationId }}</span>
       </div>
       <div
-        class="refrence_no_innerDiv call_link"
         *ngIf="generatedLink"
+        class="refrence_no_innerDiv call_link"
         fxLayout="column"
       >
         <p>Video Link</p>
-        <a target="_blank" [href]="generatedLink">{{ generatedLink }}</a>
+        <a [href]="generatedLink" target="_blank">{{ generatedLink }}</a>
       </div>
     </div>
-    <div class="originationDiv" *ngIf="!generatedLink && isComplete">
+    <div *ngIf="!generatedLink && isComplete" class="originationDiv">
       <app-staging-success-area
-        [originationId]="originationId"
         [isComplete]="isComplete"
+        [originationId]="originationId"
       ></app-staging-success-area>
     </div>
   </div>
 
   <br />
 </div>
-<div fxLayout="column" *ngIf="isStageAvilable">
+<div *ngIf="isStageAvilable" fxLayout="column">
   <div class="note_background" fxLayoutAlign="center center">
     <span class="higlight_note">Note:</span> Please quote the above reference
     number in all communications with the bank
   </div>
 </div>
-<div fxLayout="column" fxLayoutAlign="center center" class="btnClass">
+<div class="btnClass" fxLayout="column" fxLayoutAlign="center center">
   <div
-    fxLayout="row"
+    *ngIf="isStageAvilable"
     class="button-container"
+    fxLayout="row"
     fxLayoutAlign="space-between center"
     fxLayoutGap="10px"
-    *ngIf="isStageAvilable"
   >
     <ic-button
-      [label]="'Share'"
-      icButtonType="ghost-rounded"
-      size="large"
-      [type]="'button'"
-      icIcon="share"
       (OnClick)="shareEmail()"
+      [label]="'Share'"
+      [type]="'button'"
+      icButtonType="ghost-rounded"
+      icIcon="share"
+      size="large"
     >
     </ic-button>
 
     <ic-button
+      (OnClick)="onClick()"
       [label]="'Tracking'"
+      [type]="'button'"
       icButtonType="ghost-rounded"
       icIcon="search"
       size="large"
-      [type]="'button'"
-      (OnClick)="onClick()"
     >
     </ic-button>
 
     <ic-button
-      [label]="'Download'"
-      icButtonType="ghost-rounded"
-      size="large"
-      icIcon="download"
-      [type]="'button'"
       (OnClick)="onClickAction('Pdf', 'Download')"
+      [label]="'Download'"
+      [type]="'button'"
+      icButtonType="ghost-rounded"
+      icIcon="download"
+      size="large"
     >
     </ic-button>
   </div>
   <div>
     <ic-button
+      (OnClick)="done()"
       [label]="'Done'"
+      [type]="'button'"
       icButtonType="filled-rounded"
       size="large"
-      [type]="'button'"
-      (OnClick)="done()"
     >
     </ic-button>
   </div>

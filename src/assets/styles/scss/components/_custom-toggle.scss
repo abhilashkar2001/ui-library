@@ -5,6 +5,7 @@
     border-radius: 20px;
     background: #d3d3d3 0% 0% no-repeat padding-box !important;
   }
+
   .mat-slide-toggle-thumb-container {
     top: 1.5px;
     left: 2px;
@@ -15,19 +16,24 @@
     width: 14px;
   }
 }
+
 .mat-slide-toggle.mat-checked {
   .mat-slide-toggle-thumb {
     background-color: #fff !important;
   }
+
   .mat-slide-toggle-bar {
     background-color: #004991 !important;
   }
+
   .mat-slide-toggle-thumb-container {
-    transform: translate3d(17 px, 0, 0) !important;
+    transform: translate3d(17px, 0, 0) !important;
   }
+
   .mat-ripple-element {
     background-color: #366fa8 !important;
   }
+
   .mat-slide-toggle-ripple {
     position: absolute;
     top: calc(50% - 22px);

@@ -10,37 +10,37 @@
       <p class="hero_subtitle">{{ profileHint }}</p>
       <div class="apply_div">
         <ic-button
-          label="APPLY"
-          icButtonType="filled-blue"
-          [type]="'submit'"
-          [size]="'large'"
           (click)="onApply($event)"
+          [size]="'large'"
+          [type]="'submit'"
+          icButtonType="filled-blue"
+          label="APPLY"
         ></ic-button>
 
         <span
-          class="theme_md tracking"
           (click)="navigateTracking()"
           (keydown.enter)="navigateTracking()"
+          class="theme_md tracking"
           tabindex="0"
-          >Tracking status/Resume</span
+        >Tracking status/Resume</span
         >
       </div>
       <div class="stacked_imgs_div">
         <div class="img_wrapper">
           <img
+            alt=""
+            class="stacked_images"
             src="assets/images/user-profile-pic-1.svg"
-            alt=""
-            class="stacked_images"
           />
           <img
+            alt=""
+            class="stacked_images"
             src="assets/images/user-profile-pic-2.svg"
-            alt=""
-            class="stacked_images"
           />
           <img
-            src="assets/images/user-profile-pic-3.svg"
             alt=""
             class="stacked_images"
+            src="assets/images/user-profile-pic-3.svg"
           />
         </div>
         <div class="stacked_div_text">

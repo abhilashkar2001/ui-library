@@ -20,42 +20,42 @@
           data-aos-duration="500"
         >
           <input
-            type="text"
-            placeholder="Enter your email address..."
             formControlName="email"
+            placeholder="Enter your email address..."
+            type="text"
           />
           <button type="button">Contact Now</button>
         </div>
         <span
-          class="custom_error_nl ml-24"
           *ngIf="emailForm.get('email')?.hasError('pattern')"
+          class="custom_error_nl ml-24"
         >
           Invalid email address
         </span>
         <span
-          class="custom_error_nl ml-24"
           *ngIf="
             emailForm.get('email')?.touched &&
             emailForm.get('email')?.hasError('required')
           "
+          class="custom_error_nl ml-24"
         >
           Email address is required!
         </span>
       </div>
       <img
+        alt="Rectangle 31.svg"
         class="blue_rect"
         src="assets/images/Rectangle 31.svg"
-        alt="Rectangle 31.svg"
       />
       <img
+        alt="Group 75.svg"
         class="dots_img dots_top"
         src="assets/images/Group 75.svg"
-        alt="Group 75.svg"
       />
       <img
+        alt="Group 73.svg"
         class="dots_img dots_bottom"
         src="assets/images/Group 73.svg"
-        alt="Group 73.svg"
       />
     </div>
   </div>

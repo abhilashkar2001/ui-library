@@ -7,7 +7,9 @@ import { environment } from 'environments/environment';
 })
 export class EmailService {
   baseUrl: string = environment.microServiceURL;
+
   constructor(private http: HttpClient) {}
+
   triggerTransactionEmail(formdata: any) {
     return this.http.post(`${this.baseUrl}/email`, formdata, {
       responseType: 'text',

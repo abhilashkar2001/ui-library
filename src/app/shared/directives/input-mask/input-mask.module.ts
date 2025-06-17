@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { InputMaskConfig, INPUT_MASK_CONFIG } from './config';
+import { INPUT_MASK_CONFIG, InputMaskConfig } from './config';
 import { InputMaskDirective } from './input-mask.directive';
 
 @NgModule({

@@ -1,10 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
-  <g id="Payment_white" data-name="Payment white" transform="translate(-34.661 -0.5)">
-    <g id="Group_20266" data-name="Group 20266" transform="translate(813.661 3430.791)">
-      <path id="Path_28963" data-name="Path 28963" d="M237,386.5H227c-3,0-5-1.5-5-5v-7c0-3.5,2-5,5-5h10c3,0,5,1.5,5,5v7C242,385,240,386.5,237,386.5Z" transform="translate(-1001 -3799.791)" fill="#fff" opacity="0.3"/>
-      <path id="Path_28964" data-name="Path 28964" d="M232,381a3,3,0,1,0-3-3A3,3,0,0,0,232,381Z" transform="translate(-1001 -3799.791)" fill="#fff"/>
-      <path id="Path_28965" data-name="Path 28965" d="M225.5,381.25a.755.755,0,0,1-.75-.75v-5a.75.75,0,0,1,1.5,0v5A.755.755,0,0,1,225.5,381.25Z" transform="translate(-1001 -3799.791)" fill="#fff"/>
-      <path id="Path_28966" data-name="Path 28966" d="M238.5,381.25a.755.755,0,0,1-.75-.75v-5a.75.75,0,0,1,1.5,0v5A.755.755,0,0,1,238.5,381.25Z" transform="translate(-1001 -3799.791)" fill="#fff"/>
+<svg height="17" viewBox="0 0 20 17" width="20" xmlns="http://www.w3.org/2000/svg">
+  <g data-name="Payment white" id="Payment_white" transform="translate(-34.661 -0.5)">
+    <g data-name="Group 20266" id="Group_20266" transform="translate(813.661 3430.791)">
+      <path d="M237,386.5H227c-3,0-5-1.5-5-5v-7c0-3.5,2-5,5-5h10c3,0,5,1.5,5,5v7C242,385,240,386.5,237,386.5Z" data-name="Path 28963"
+            fill="#fff"
+            id="Path_28963" opacity="0.3" transform="translate(-1001 -3799.791)" />
+      <path d="M232,381a3,3,0,1,0-3-3A3,3,0,0,0,232,381Z" data-name="Path 28964" fill="#fff"
+            id="Path_28964" transform="translate(-1001 -3799.791)" />
+      <path d="M225.5,381.25a.755.755,0,0,1-.75-.75v-5a.75.75,0,0,1,1.5,0v5A.755.755,0,0,1,225.5,381.25Z" data-name="Path 28965"
+            fill="#fff"
+            id="Path_28965" transform="translate(-1001 -3799.791)" />
+      <path d="M238.5,381.25a.755.755,0,0,1-.75-.75v-5a.75.75,0,0,1,1.5,0v5A.755.755,0,0,1,238.5,381.25Z" data-name="Path 28966"
+            fill="#fff"
+            id="Path_28966" transform="translate(-1001 -3799.791)" />
     </g>
   </g>
 </svg>

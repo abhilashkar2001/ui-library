@@ -6,12 +6,13 @@ import { ChecklistRouteObjModel } from 'app/shared/models/checklist-model';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import {
   getParameterByName,
+  selectUser,
   TokenStorageService,
+  User,
   UserProfileAction,
 } from '@onerumango/utils';
-import { User } from '@onerumango/utils';
-import { selectUser } from '@onerumango/utils';
 import { Observable, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-callback',
   templateUrl: './callback.component.html',

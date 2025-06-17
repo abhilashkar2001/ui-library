@@ -4,18 +4,15 @@ import { environment } from 'environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
 const baseUrl = environment.microServiceURL;
+
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
-  private urlSource = new BehaviorSubject('initial value');
+  // private urlSource = new BehaviorSubject('initial value');
   private userMobileSource = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) {}
-
-  updateData(value: any) {
-    this.urlSource.next(value);
-  }
 
   isUserUsingDifferentMobile(value: boolean) {
     this.userMobileSource.next(value);
@@ -28,11 +25,13 @@ export class CommonService {
   uploadDocument(formData: any) {
     return this.http.post<any>(`${baseUrl}/upload-document`, formData);
   }
+
   getAllCountries() {
     return this.http.get<any>(
       `${baseUrl}/country?oneTimeAuth=Y&recordStatus=OPEN`,
     );
   }
+
   generateOTP(mobile: any) {
     return this.http.get<any>(`${baseUrl}/auth/generateOTP?mobile=${mobile}`);
   }

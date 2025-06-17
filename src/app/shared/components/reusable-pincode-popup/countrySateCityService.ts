@@ -56,6 +56,7 @@ export class countryStateService {
   getStateById(id: any) {
     return this.httpClient.get(`${this.basePath}/state?stateId=${id}`);
   }
+
   getStateById1(id: any) {
     return this.httpClient.get(
       `${this.basePath}/loginApi/${id}/revisions?fetchChanges=true&classname='icState'`,
@@ -174,6 +175,7 @@ export class countryStateService {
   getCityById(cityId: any) {
     return this.httpClient.get<any>(`${this.basePath}/city?cityId=${cityId}`);
   }
+
   deleteCity(cityId: any) {
     return this.httpClient.delete<any>(`${this.basePath}/city?id=${cityId}`);
   }
@@ -225,6 +227,7 @@ export class countryStateService {
       `${this.basePath}/country?authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
+
   getCityByState(stateId: any) {
     return this.httpClient.get<any>(
       `${this.basePath}/city?stateId=${stateId}&authStatus=AUTHORIZED&recordStatus=OPEN`,

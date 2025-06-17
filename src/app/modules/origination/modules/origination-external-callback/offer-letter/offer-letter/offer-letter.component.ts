@@ -31,6 +31,7 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
   };
   CUSTOMERRESPONSE: any[] = [];
   subscriptions: Subscription[] = [];
+
   constructor(
     private offerIssueService: OfferIssueService,
     private domSanitizer: DomSanitizer,
@@ -72,6 +73,7 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
           '#toolbar=0';
       });
   }
+
   fetchGenericValues() {
     this.sharedService
       .genericValue('Offer Accept / Reject', Object.keys(this.staticData))

@@ -32,6 +32,7 @@ export class CollateralDetailsComponent implements OnInit {
     LOANTYPE: [],
   };
   screenCode: number | undefined;
+
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
@@ -39,6 +40,18 @@ export class CollateralDetailsComponent implements OnInit {
     private genericService: GenericValueService,
     private cdr: ChangeDetectorRef,
   ) {}
+
+  get creditGroup(): FormGroup {
+    return (
+      (this.getCollateralDetails()?.at(0) as FormGroup) || this.fb.group({})
+    );
+  }
+
+  get vafGroup(): FormGroup {
+    return (
+      (this.getCollateralDetails()?.at(1) as FormGroup) || this.fb.group({})
+    );
+  }
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
@@ -96,18 +109,6 @@ export class CollateralDetailsComponent implements OnInit {
   // Get collateral details form array
   getCollateralDetails(): FormArray {
     return this.collateralDetailsForm.get('collateralDetails') as FormArray;
-  }
-
-  get creditGroup(): FormGroup {
-    return (
-      (this.getCollateralDetails()?.at(0) as FormGroup) || this.fb.group({})
-    );
-  }
-
-  get vafGroup(): FormGroup {
-    return (
-      (this.getCollateralDetails()?.at(1) as FormGroup) || this.fb.group({})
-    );
   }
 
   collateralDetailsGroup(typeOfCollateral?: string) {

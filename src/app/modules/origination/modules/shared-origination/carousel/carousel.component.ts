@@ -1,14 +1,14 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  Output,
-  EventEmitter,
-  ViewEncapsulation,
-  Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   ENVIRONMENT,

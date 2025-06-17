@@ -64,6 +64,7 @@ export class LoanService {
       `${baseUrl}/generic-value?screenCode=${screenCode}&genericName=${genericName}`,
     );
   }
+
   triggerloanDetailsEmail(formdata: any) {
     return this.http.post(`${'https://192.168.131.206'}/email`, formdata, {
       responseType: 'text',
@@ -157,6 +158,7 @@ export class LoanService {
   saveChecklist(payload: any) {
     return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
   }
+
   getSavedChecklist(
     originationId: number,
     screenCode?: string,
@@ -207,5 +209,15 @@ export class LoanService {
     return this.http.get<any>(
       `${baseUrl}/origination-doc?originationId=${originationId}`,
     );
+  }
+
+  fetchProcessStages(processCycleCode: string) {
+    return this.http.get<any>(
+      `${baseUrl}/process_cycle/stages?processCycleCode=${processCycleCode}&internal=false`,
+    );
+  }
+
+  fetchScreens(id: number) {
+    return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
 }

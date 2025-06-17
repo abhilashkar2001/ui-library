@@ -3,20 +3,25 @@ import { ClassProvider, FactoryProvider, InjectionToken } from '@angular/core';
 export function _window(): any {
   return window;
 }
+
 export const WINDOW = new InjectionToken('WindowToken');
+
 export abstract class WindowRef {
   get nativeWindow(): Window {
     throw new Error('Not implemented.');
   }
 }
+
 export class BrowserWindowRef extends WindowRef {
   constructor() {
     super();
   }
+
   override get nativeWindow(): Window {
     return _window();
   }
 }
+
 const browserWindowProvider: ClassProvider = {
   provide: WindowRef,
   useClass: BrowserWindowRef,

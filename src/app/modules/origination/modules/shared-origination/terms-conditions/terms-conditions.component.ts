@@ -1,9 +1,9 @@
 import {
   Component,
-  OnInit,
-  Output,
   EventEmitter,
   OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { AppState, selectLocaleData } from '@onerumango/utils';

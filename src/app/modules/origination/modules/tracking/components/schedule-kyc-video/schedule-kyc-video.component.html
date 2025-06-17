@@ -1,29 +1,29 @@
 <section>
-  <mat-card fxLayout="row" class="schedule_container">
+  <mat-card class="schedule_container" fxLayout="row">
     <!-- <p>sjk</p> -->
 
     <div fxFlex="40">
       <div
-        fxLayout="column"
-        fxFlex="100"
         class="full-width schedule_card_info"
+        fxFlex="100"
+        fxLayout="column"
         fxLayoutAlign="space-between start"
       >
         <div fxLayout="column">
           <h2>KYC Video Verification</h2>
-          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+          <div class="label_title" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon>person</mat-icon>
             <div>{{ kycInfo.name }} ({{ kycInfo.mobile }})</div>
           </div>
-          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+          <div class="label_title" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon>timer</mat-icon>
             <div>15-20 min</div>
           </div>
-          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+          <div class="label_title" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon>date_range</mat-icon>
             <div>{{ kycInfo.dateOfSchedule }}</div>
           </div>
-          <div fxLayout="row" fxLayoutAlign="start center" class="label_title">
+          <div class="label_title" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon>video_call</mat-icon>
             <div>{{ description }}</div>
           </div>
@@ -40,14 +40,14 @@
         </div>
       </div>
     </div>
-    <div fxFlex="40" class="sheduleApntmntMain" fxLayout="column">
+    <div class="sheduleApntmntMain" fxFlex="40" fxLayout="column">
       <h2>Select a Date & Time</h2>
-      <mat-card fxFlex="100" class="calender-card">
+      <mat-card class="calender-card" fxFlex="100">
         <mat-calendar
-          [minDate]="minDate"
-          [selected]="selectedDate"
           (selectedChange)="onSelect($event)"
           [maxDate]="maxDate"
+          [minDate]="minDate"
+          [selected]="selectedDate"
         >
         </mat-calendar>
 
@@ -57,25 +57,27 @@
             <mat-select [(ngModel)]="timeZone">
               <mat-option [value]="">Select</mat-option>
               <mat-option value="India Standard Time (5:41pm)"
-                >India Standard Time (5:41pm)</mat-option
+              >India Standard Time (5:41pm)
+              </mat-option
               >
             </mat-select>
           </mat-form-field>
         </div>
         <div class="btn_grp" fxLayout="row">
           <button
-            type="button"
-            mat-raised-button
-            class="button schedule_btn back_button"
-            *ngIf="selectedDate && selectedTimeSlot"
             (click)="scheduleAppointment()"
+            *ngIf="selectedDate && selectedTimeSlot"
+            class="button schedule_btn back_button"
+            mat-raised-button
+            type="button"
           >
-            Schedule</button
+            Schedule
+          </button
           >&nbsp;
           <button
-            type="button"
-            mat-raised-button
             class="button cancel_btn back_button"
+            mat-raised-button
+            type="button"
           >
             Cancel
           </button>
@@ -83,19 +85,19 @@
       </mat-card>
     </div>
 
-    <div fxFlex="15" *ngIf="formatedSelectedDate" class="time_slot_container">
+    <div *ngIf="formatedSelectedDate" class="time_slot_container" fxFlex="15">
       <div fxLayout="column">
         <h2>{{ formatedSelectedDate }}</h2>
         <div class="time_slot_grp">
           <ng-container *ngFor="let timeSlot of timeSlots">
             <div
-              class="time_slot_card"
               (click)="onTimeSelected(timeSlot)"
               (keydown.enter)="onTimeSelected(timeSlot)"
-              tabindex="0"
               [ngClass]="
                 timeSlot?.time === selectedTimeSlot ? 'bg_selectedSlot' : ''
               "
+              class="time_slot_card"
+              tabindex="0"
             >
               <span>
                 {{ timeSlot?.time }}

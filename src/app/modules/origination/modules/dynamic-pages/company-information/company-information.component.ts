@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CityService } from 'app/shared/services/city.service';
 import { CountryService } from 'app/shared/services/country-service';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
@@ -65,6 +65,26 @@ export class CompanyInformationComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
   ) {}
 
+  get corporateCustomer(): FormGroup {
+    return this._parentForm?.get('corporateCustomer') as FormGroup;
+  }
+
+  get miscellaneous(): FormGroup {
+    return this._parentForm?.get('miscellaneous') as FormGroup;
+  }
+
+  get contact(): FormGroup {
+    return this.corporateCustomer.get('contact') as FormGroup;
+  }
+
+  get addressControl(): FormArray {
+    return this.corporateCustomer.get('contact')?.get('address') as FormArray;
+  }
+
+  get financialDetails(): FormArray {
+    return this.corporateCustomer.get('financialDetails') as FormArray;
+  }
+
   ngOnInit(): void {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.buildCompanyForm();
@@ -111,6 +131,7 @@ export class CompanyInformationComponent implements OnInit {
       contact: this.addContact(),
     });
   }
+
   addMiscellaneous() {
     return this.fb.group({
       miscellaneousId: [this.miscellaneous ?? ''],
@@ -120,6 +141,7 @@ export class CompanyInformationComponent implements OnInit {
       swiftCode: [''],
     });
   }
+
   addContact(data?: any) {
     return this.fb.group({
       email: [data?.contact?.email ?? ''],
@@ -147,25 +169,6 @@ export class CompanyInformationComponent implements OnInit {
         }),
       ]),
     });
-  }
-
-  get corporateCustomer(): FormGroup {
-    return this._parentForm?.get('corporateCustomer') as FormGroup;
-  }
-
-  get miscellaneous(): FormGroup {
-    return this._parentForm?.get('miscellaneous') as FormGroup;
-  }
-
-  get contact(): FormGroup {
-    return this.corporateCustomer.get('contact') as FormGroup;
-  }
-  get addressControl(): FormArray {
-    return this.corporateCustomer.get('contact')?.get('address') as FormArray;
-  }
-
-  get financialDetails(): FormArray {
-    return this.corporateCustomer.get('financialDetails') as FormArray;
   }
 
   financeInfo(index: any): FormArray {
@@ -303,6 +306,7 @@ export class CompanyInformationComponent implements OnInit {
       this.clearData(addressCtrl);
     }
   }
+
   fetchCountries() {
     this.countryService.getCountries().subscribe((res: any) => {
       if (res?.statusCode === 200 && res?.data) {
@@ -315,6 +319,7 @@ export class CompanyInformationComponent implements OnInit {
       }
     });
   }
+
   setGenericType(
     value: string,
     control: FormGroup,
@@ -347,6 +352,7 @@ export class CompanyInformationComponent implements OnInit {
     );
     return countryCode;
   }
+
   clearData(addressCtrl: any) {
     addressCtrl.get('cityName').setValue('');
     addressCtrl.get('cityId').setValue('');

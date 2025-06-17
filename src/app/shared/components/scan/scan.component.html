@@ -19,47 +19,47 @@
         [height]="250"
         [width]="200"
         autoplay
-        muted
         class="video"
+        muted
       ></video>
       <div #canvas class="canvasDiv"></div>
     </div>
-    <div class="captured-ima" *ngIf="imageData">
-      <img [width]="370" [height]="270" [src]="imageData" alt="Scanned Image" />
+    <div *ngIf="imageData" class="captured-ima">
+      <img [height]="270" [src]="imageData" [width]="370" alt="Scanned Image" />
     </div>
   </div>
   <div
-    fxLayout="row"
-    fxLayoutGap="15"
-    fxLayoutAlign="center center"
     class="btns"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="15"
   >
     <button
-      mat-stroked-button
-      class="donebtn"
-      *ngIf="scannedImage && !rescann"
       (click)="done()"
+      *ngIf="scannedImage && !rescann"
+      class="donebtn"
+      mat-stroked-button
     >
       {{ 'DONE' }}
     </button>
     <button
-      mat-stoked-button
-      id="btn2"
+      (click)="captureImage()"
       *ngIf="!scannedImage || isScanned || rescann"
       [ngClass]="perscentageCheck ? 'gray_Class' : ''"
-      (click)="captureImage()"
+      id="btn2"
+      mat-stoked-button
     >
       {{ 'Scan' }}
     </button>
     <button
-      mat-stroked-button
-      class="rescanbtn"
-      *ngIf="scannedImage && !rescann"
       (click)="rescan()"
+      *ngIf="scannedImage && !rescann"
+      class="rescanbtn"
+      mat-stroked-button
     >
       {{ 'Re-Scan' }}
     </button>
-    <button mat-stoked-button id="btn3" (click)="close()">
+    <button (click)="close()" id="btn3" mat-stoked-button>
       {{ 'Back' }}
     </button>
   </div>

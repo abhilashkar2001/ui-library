@@ -1,22 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="99" height="99" viewBox="0 0 99 99">
+<svg height="99" viewBox="0 0 99 99" width="99" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="Rectangle_5020" x="0" y="0" width="99" height="99" filterUnits="userSpaceOnUse">
-      <feOffset dx="3" dy="3" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feFlood flood-color="#fff" flood-opacity="0.871"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
+    <filter filterUnits="userSpaceOnUse" height="99" id="Rectangle_5020" width="99" x="0" y="0">
+      <feOffset dx="3" dy="3" input="SourceAlpha" />
+      <feGaussianBlur result="blur" stdDeviation="5" />
+      <feFlood flood-color="#fff" flood-opacity="0.871" />
+      <feComposite in2="blur" operator="in" />
+      <feComposite in="SourceGraphic" />
     </filter>
   </defs>
-  <g id="Group_11705" data-name="Group 11705" transform="translate(-52 -65)">
-    <g transform="matrix(1, 0, 0, 1, 52, 65)" filter="url(#Rectangle_5020)">
-      <rect id="Rectangle_5020-2" data-name="Rectangle 5020" width="69" height="69" rx="10" transform="translate(12 12)" fill="rgba(255,255,255,0.14)"/>
+  <g data-name="Group 11705" id="Group_11705" transform="translate(-52 -65)">
+    <g filter="url(#Rectangle_5020)" transform="matrix(1, 0, 0, 1, 52, 65)">
+      <rect data-name="Rectangle 5020" fill="rgba(255,255,255,0.14)" height="69" id="Rectangle_5020-2" rx="10" transform="translate(12 12)"
+            width="69" />
     </g>
-    <g id="Group_8797" data-name="Group 8797">
-      <g id="Group_8089" data-name="Group 8089" transform="translate(85 88)">
-        <text id="Home" transform="translate(0 44.77)" fill="#fff" font-size="10" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Home</tspan></text>
+    <g data-name="Group 8797" id="Group_8797">
+      <g data-name="Group 8089" id="Group_8089" transform="translate(85 88)">
+        <text fill="#fff" font-family="SegoeUI, Segoe UI" font-size="10" id="Home" transform="translate(0 44.77)">
+          <tspan x="0" y="0">Home</tspan>
+        </text>
         <g id="noun-home-6605324" transform="translate(0 0)">
-          <path id="Path_14391" data-name="Path 14391" d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z" transform="translate(-2.341 -2)" fill="#fff"/>
+          <path d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z" data-name="Path 14391"
+                fill="#fff"
+                id="Path_14391" transform="translate(-2.341 -2)" />
         </g>
       </g>
     </g>

@@ -21,7 +21,7 @@ import { EmailService } from 'app/shared/services/email.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 import moment from 'moment';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-digital-signature',

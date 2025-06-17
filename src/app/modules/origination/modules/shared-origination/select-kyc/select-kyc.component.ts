@@ -39,6 +39,7 @@ export class SelectKycComponent implements OnInit {
   };
   displaySecond: string | any;
   resendLink: boolean | any;
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {

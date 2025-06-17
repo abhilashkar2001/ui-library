@@ -1,17 +1,17 @@
 <div fxLayout="column">
   <form
     *ngIf="createDocumentForm"
-    fxLayout="column"
-    fxFlex="100"
     [formGroup]="createDocumentForm"
+    fxFlex="100"
+    fxLayout="column"
   >
     <div formArrayName="otherDocument">
       <div
         *ngFor="let denomDetai of otherDocument().controls; let i = index"
         class="doc_card"
       >
-        <div fxFlex="98%" fxLayout="column" [formGroupName]="i">
-          <div fxLayout="column" class="outer-div" fxFlex="100">
+        <div [formGroupName]="i" fxFlex="98%" fxLayout="column">
+          <div class="outer-div" fxFlex="100" fxLayout="column">
             <div fxLayout="column">
               <ng-container
                 *ngIf="
@@ -22,9 +22,6 @@
                 <mat-card class="card-subdiv">
                   <div fxFlex="100" fxLayoutGap="5">
                     <div
-                      appDragDrop
-                      class="doc_upload"
-                      fxFlex="90"
                       (fileDropped)="onFileDropped($event, i)"
                       [ngClass]="[
                         denomDetai.value.documentType &&
@@ -32,22 +29,26 @@
                           ? ''
                           : 'drop_list_class',
                       ]"
+                      appDragDrop
+                      class="doc_upload"
+                      fxFlex="90"
                     >
                       <div class="drag_drop" fxFlex="90">
                         <h3
-                          class="text-header"
                           *ngIf="
                             denomDetai.value.documentType &&
                               denomDetai.value.docRequired;
                             else showDropList
                           "
+                          class="text-header"
                         >
-                          {{ denomDetai.value.documentType
+                          {{
+                            denomDetai.value.documentType
                           }}<span
-                            *ngIf="denomDetai?.value?.docRequired"
-                            class="required-star"
-                            >*</span
-                          >
+                          *ngIf="denomDetai?.value?.docRequired"
+                          class="required-star"
+                        >*</span
+                        >
                         </h3>
                         <ng-template #showDropList>
                           <mat-form-field
@@ -61,21 +62,22 @@
                             >
                               <mat-option [value]="">Select</mat-option>
                               <mat-option
-                                [value]="nonReqDoc.document"
                                 *ngFor="
                                   let nonReqDoc of checkListDocList?.nonRequiredDocument
                                 "
-                                >{{ nonReqDoc.document }}</mat-option
+                                [value]="nonReqDoc.document"
+                              >{{ nonReqDoc.document }}
+                              </mat-option
                               >
                             </mat-select>
                           </mat-form-field>
                         </ng-template>
                       </div>
                       <ic-button
-                        type="button"
-                        size="medium"
-                        label="Upload"
                         (OnClick)="fileBrowseHandler(i)"
+                        label="Upload"
+                        size="medium"
+                        type="button"
                       >
                         Upload
                       </ic-button>
@@ -86,52 +88,52 @@
                       fxLayoutAlign="center center"
                     >
                       <ic-button
-                        type="icon"
+                        (OnClick)="deleteDocument(i)"
+                        [disabled]="denomDetai.value.docRequired"
                         [icIcon]="
                           denomDetai.value.docRequired
                             ? 'delete-white'
                             : 'delete'
                         "
                         icButtonType="ghost"
-                        [disabled]="denomDetai.value.docRequired"
-                        (OnClick)="deleteDocument(i)"
+                        type="icon"
                       ></ic-button>
                     </div>
                   </div>
                   <div
-                    fxLayout="row wrap"
-                    fxFlex="100"
-                    fxLayoutGap="1%"
                     class="uploaded_list"
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="1%"
                   >
                     <div
                       *ngFor="let file of getFileInfo(i); let fileIndx = index"
                       fxFlex="32"
                     >
                       <div
-                        class="upload_img"
                         (click)="openFile(file)"
                         (keydown.enter)="openFile(file)"
-                        tabindex="0"
+                        class="upload_img"
                         fxFlex="100"
+                        tabindex="0"
                       >
                         <div
-                          class="img_box"
                           [style.width]="isOtherDocVisible ? '65px' : ''"
+                          class="img_box"
                         >
                           <img [src]="getFileUrl(file)" alt="image" />
                         </div>
                         <div class="img_container">
                           <span class="breadcrum_sm_bold img_name">{{
-                            file?.name
-                          }}</span>
+                              file?.name
+                            }}</span>
                           <div
-                            class="progress-cont"
                             *ngIf="file.progress === '100%'; else showSize"
+                            class="progress-cont"
                           >
                             <div
-                              class="progress"
                               [style.width]="file.progress ?? '0%'"
+                              class="progress"
                             ></div>
                           </div>
                           <ng-template #showSize>
@@ -139,10 +141,10 @@
                           </ng-template>
                         </div>
                         <ic-icon
-                          class="cancel-icon"
-                          name="close"
                           (click)="deleteFile(fileIndx, i, file)"
                           (keydown.enter)="deleteFile(fileIndx, i, file)"
+                          class="cancel-icon"
+                          name="close"
                           tabindex="1"
                         ></ic-icon>
                       </div>
@@ -157,42 +159,43 @@
     </div>
   </form>
   <div
-    class="biometric-card-expansion-panel"
     *ngIf="this.screenNameValue.toLowerCase().includes('national')"
+    class="biometric-card-expansion-panel"
     fxLayout="column"
   >
     <h2 class="highlight_title pt-8">Face Capture</h2>
     <div
       class="upper-biometric-card"
       fxFlex="50"
-      fxLayoutGap="5"
       fxLayout="column"
+      fxLayoutGap="5"
     >
       <div class="forSignImg" fxLayout="column">
         <div class="signdig" fxLayout="column" fxLayoutAlign="center center">
           <div class="biometric-card w-100" fxLayoutAlign="end center">
-            <div class="deleteDiv" fxLayoutAlign="center center" *ngIf="image">
+            <div *ngIf="image" class="deleteDiv" fxLayoutAlign="center center">
               <ic-button
+                (click)="removeScannedFace()"
                 [icButtonType]="'icon'"
                 [icIcon]="image ? 'delete' : ''"
-                (click)="removeScannedFace()"
               ></ic-button>
             </div>
           </div>
           <img
-            class="image"
             [src]="image ? baseUrl + image : 'assets/images/face.svg'"
             alt=""
+            class="image"
           />
-          <mat-hint *ngIf="!image" matSuffix class="signiter">{{
-            'Face Scan'
-          }}</mat-hint>
+          <mat-hint *ngIf="!image" class="signiter" matSuffix>{{
+              'Face Scan'
+            }}
+          </mat-hint>
         </div>
-        <div class="scan-title" fxFlex="20" [fxLayoutAlign]="'center center'">
+        <div [fxLayoutAlign]="'center center'" class="scan-title" fxFlex="20">
           <span
-            class="scan-btn"
             (click)="openDialog()"
             (keydown.enter)="openDialog()"
+            class="scan-btn"
             tabindex="0"
           >
             {{ !image ? 'Scan' : 'Re-Scan' }}
@@ -202,23 +205,23 @@
     </div>
   </div>
 
-  <div fxLayoutGap="20px" fxLayoutAlign="start center" class="pt-12">
+  <div class="pt-12" fxLayoutAlign="start center" fxLayoutGap="20px">
     <ic-button
+      (OnClick)="onSubmit()"
+      [disabled]="isLoading && checkDocValidity()"
+      [icButtonType]="'filled-rounded'"
+      [isLoading]="isLoading"
       [label]="'Submit' | translate"
       [type]="'submit'"
       size="large"
-      [icButtonType]="'filled-rounded'"
-      [isLoading]="isLoading"
-      [disabled]="isLoading && checkDocValidity()"
-      (OnClick)="onSubmit()"
     >
     </ic-button>
     <ic-button
+      (OnClick)="onBack()"
       [label]="'Back'"
+      [type]="'button'"
       icButtonType="ghost-rounded-danger"
       size="large"
-      [type]="'button'"
-      (OnClick)="onBack()"
     >
     </ic-button>
   </div>

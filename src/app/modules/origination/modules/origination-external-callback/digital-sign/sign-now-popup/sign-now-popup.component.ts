@@ -10,7 +10,7 @@ import { catchError, map, of, Subscription } from 'rxjs';
 import { BranchService } from './branch.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SignPadComponent } from '../sign-pad/sign-pad.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-now-popup',
@@ -47,6 +47,7 @@ export class SignNowPopupComponent implements OnInit {
   title: any;
   check: any;
   fileUploadFailed = false;
+
   constructor(
     private dialogRef: MatDialogRef<SignNowPopupComponent>,
     private cdr: ChangeDetectorRef,
@@ -110,6 +111,7 @@ export class SignNowPopupComponent implements OnInit {
       )
       .subscribe();
   }
+
   handleUploadEvent(event: any) {
     this.isUploading = true;
     this.uploadSuccess = true;
@@ -126,11 +128,13 @@ export class SignNowPopupComponent implements OnInit {
       });
     }
   }
+
   closeDialog() {
     if (this.signPadComponent) this.signPadComponent.clearCanvas();
     this.deleteFile();
     this.dialogRef.close(false);
   }
+
   /**
    * Radio Event Method for telling the event is either digit sign or not
    * @param event
@@ -153,6 +157,7 @@ export class SignNowPopupComponent implements OnInit {
   removeimage() {
     document.querySelector('#imgforped')?.classList.add('hidden');
   }
+
   /**
    * Draw Start Method
    */

@@ -1,15 +1,15 @@
-<mat-sidenav-container class="help-container" *ngIf="isOpen">
+<mat-sidenav-container *ngIf="isOpen" class="help-container">
   <mat-sidenav
     #sidenav
+    (backdropClick)="closeHelp()"
+    [(opened)]="isOpen"
+    class="help-sidenav"
     mode="over"
     position="end"
-    class="help-sidenav"
-    [(opened)]="isOpen"
-    (backdropClick)="closeHelp()"
   >
     <div class="help-header">
       <h3 class="theme_header_lg_bold">Help Center</h3>
-      <button mat-icon-button (click)="closeHelp()">
+      <button (click)="closeHelp()" mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
     </div>
