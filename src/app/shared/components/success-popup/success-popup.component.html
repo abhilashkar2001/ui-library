@@ -13,10 +13,8 @@
       {{ message }}
     </div>
     <ng-template #showOtherText
-    >{{ currentStageName }} stage is not avilable. Please move to next
-      screen.
-    </ng-template
-    >
+      >{{ currentStageName }} stage is not avilable. Please move to next screen.
+    </ng-template>
   </div>
   <div
     *ngIf="typeOfPopup === 'scheduleCall'"
@@ -35,7 +33,7 @@
         class="appointment-card"
         fxFlex="40"
         fxLayoutAlign="center center"
-      >Time Slot: <span>{{ appontment.selectedTime }}</span></mat-card
+        >Time Slot: <span>{{ appontment.selectedTime }}</span></mat-card
       >
     </div>
   </div>
@@ -53,10 +51,10 @@
       src="assets/images/success-logo.svg"
     />
     <ng-template #showerror
-    ><img
-      alt="Success Sign"
-      class="summaryIcon"
-      src="assets/images/error-icon.svg"
+      ><img
+        alt="Success Sign"
+        class="summaryIcon"
+        src="assets/images/error-icon.svg"
     /></ng-template>
   </div>
 

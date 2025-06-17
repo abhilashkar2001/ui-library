@@ -1,6 +1,5 @@
-<mat-label *ngIf="!skipLabel && showOutsideLabel" class="custom-label">{{
-    inputLabel | translate
-  }}
+<mat-label *ngIf="!skipLabel && showOutsideLabel" class="custom-label"
+  >{{ inputLabel | translate }}
 </mat-label>
 <mat-form-field
   appearance="outline"
@@ -8,9 +7,8 @@
     customClass
   }} custom-field"
 >
-  <mat-label *ngIf="!skipLabel && !showOutsideLabel">{{
-      inputLabel | translate
-    }}
+  <mat-label *ngIf="!skipLabel && !showOutsideLabel"
+    >{{ inputLabel | translate }}
   </mat-label>
   <mat-select
     (focus)="filterFormControl.setValue('')"

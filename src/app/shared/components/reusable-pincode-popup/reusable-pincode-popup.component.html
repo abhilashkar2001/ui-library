@@ -93,7 +93,7 @@
             [matColumnDef]="column?.columnDef"
           >
             <mat-header-cell *matHeaderCellDef mat-sort-header
-            ><b>{{ column.header }}</b>
+              ><b>{{ column.header }}</b>
               <div class="arrow-wrapper" fxLayout="column">
                 <!-- <div
                   [ngClass]="{
@@ -132,9 +132,8 @@
 
           <ng-container matColumnDef="empty-row">
             <mat-cell *matCellDef="let element" class="no_data"
-            >No Data Found
-            </mat-cell
-            >
+              >No Data Found
+            </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

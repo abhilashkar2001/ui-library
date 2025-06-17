@@ -33,12 +33,12 @@ $chart_inner_size: 300px;
       justify-content: center;
       background: conic-gradient(#7d2ae8 180deg, #fff 0deg);
       background: linear-gradient(
-                      170deg,
-                      #fa2735,
-                      #fd8901,
-                      #fcc101,
-                      #8ad83c,
-                      #229c5a
+        170deg,
+        #fa2735,
+        #fd8901,
+        #fcc101,
+        #8ad83c,
+        #229c5a
       );
 
       &::before {
@@ -155,7 +155,8 @@ $chart_inner_size: 300px;
       align-items: center;
       border-radius: 30px;
       background: #f6faff;
-      box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px rgba(0, 0, 0, 0.09);
+      box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px
+        rgba(0, 0, 0, 0.09);
       border: 4.737px solid #fff;
       font-size: 16px;
       font-family: 'Benton Sans', sans-serif;

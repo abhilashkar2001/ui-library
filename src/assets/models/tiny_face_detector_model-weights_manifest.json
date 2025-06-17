@@ -3,12 +3,7 @@
     "weights": [
       {
         "name": "conv0/filters",
-        "shape": [
-          3,
-          3,
-          3,
-          16
-        ],
+        "shape": [3, 3, 3, 16],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -18,9 +13,7 @@
       },
       {
         "name": "conv0/bias",
-        "shape": [
-          16
-        ],
+        "shape": [16],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -30,12 +23,7 @@
       },
       {
         "name": "conv1/depthwise_filter",
-        "shape": [
-          3,
-          3,
-          16,
-          1
-        ],
+        "shape": [3, 3, 16, 1],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -45,12 +33,7 @@
       },
       {
         "name": "conv1/pointwise_filter",
-        "shape": [
-          1,
-          1,
-          16,
-          32
-        ],
+        "shape": [1, 1, 16, 32],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -60,9 +43,7 @@
       },
       {
         "name": "conv1/bias",
-        "shape": [
-          32
-        ],
+        "shape": [32],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -72,12 +53,7 @@
       },
       {
         "name": "conv2/depthwise_filter",
-        "shape": [
-          3,
-          3,
-          32,
-          1
-        ],
+        "shape": [3, 3, 32, 1],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -87,12 +63,7 @@
       },
       {
         "name": "conv2/pointwise_filter",
-        "shape": [
-          1,
-          1,
-          32,
-          64
-        ],
+        "shape": [1, 1, 32, 64],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -102,9 +73,7 @@
       },
       {
         "name": "conv2/bias",
-        "shape": [
-          64
-        ],
+        "shape": [64],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -114,12 +83,7 @@
       },
       {
         "name": "conv3/depthwise_filter",
-        "shape": [
-          3,
-          3,
-          64,
-          1
-        ],
+        "shape": [3, 3, 64, 1],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -129,12 +93,7 @@
       },
       {
         "name": "conv3/pointwise_filter",
-        "shape": [
-          1,
-          1,
-          64,
-          128
-        ],
+        "shape": [1, 1, 64, 128],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -144,9 +103,7 @@
       },
       {
         "name": "conv3/bias",
-        "shape": [
-          128
-        ],
+        "shape": [128],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -156,12 +113,7 @@
       },
       {
         "name": "conv4/depthwise_filter",
-        "shape": [
-          3,
-          3,
-          128,
-          1
-        ],
+        "shape": [3, 3, 128, 1],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -171,12 +123,7 @@
       },
       {
         "name": "conv4/pointwise_filter",
-        "shape": [
-          1,
-          1,
-          128,
-          256
-        ],
+        "shape": [1, 1, 128, 256],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -186,9 +133,7 @@
       },
       {
         "name": "conv4/bias",
-        "shape": [
-          256
-        ],
+        "shape": [256],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -198,12 +143,7 @@
       },
       {
         "name": "conv5/depthwise_filter",
-        "shape": [
-          3,
-          3,
-          256,
-          1
-        ],
+        "shape": [3, 3, 256, 1],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -213,12 +153,7 @@
       },
       {
         "name": "conv5/pointwise_filter",
-        "shape": [
-          1,
-          1,
-          256,
-          512
-        ],
+        "shape": [1, 1, 256, 512],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -228,9 +163,7 @@
       },
       {
         "name": "conv5/bias",
-        "shape": [
-          512
-        ],
+        "shape": [512],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -240,12 +173,7 @@
       },
       {
         "name": "conv8/filters",
-        "shape": [
-          1,
-          1,
-          512,
-          25
-        ],
+        "shape": [1, 1, 512, 25],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -255,9 +183,7 @@
       },
       {
         "name": "conv8/bias",
-        "shape": [
-          25
-        ],
+        "shape": [25],
         "dtype": "float32",
         "quantization": {
           "dtype": "uint8",
@@ -266,8 +192,6 @@
         }
       }
     ],
-    "paths": [
-      "tiny_face_detector_model-shard1"
-    ]
+    "paths": ["tiny_face_detector_model-shard1"]
   }
 ]

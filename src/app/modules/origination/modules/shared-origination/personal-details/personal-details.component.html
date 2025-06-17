@@ -120,9 +120,8 @@
           <mat-option
             *ngFor="let country of countries"
             [value]="country?.countryName"
-          >{{ country?.countryName }}
-          </mat-option
-          >
+            >{{ country?.countryName }}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="personalDetailsForm.get('nationality')?.hasError('required')"
@@ -194,9 +193,8 @@
           <mat-option
             *ngFor="let country of countries"
             [value]="country?.countryName"
-          >{{ country?.countryName }}
-          </mat-option
-          >
+            >{{ country?.countryName }}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="personalDetailsForm.get('country')?.hasError('required')"
@@ -256,8 +254,7 @@
             [value]="city.cityId"
           >
             {{ city?.cityName }}
-          </mat-option
-          >
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="personalDetailsForm.get('city')?.hasError('required')"

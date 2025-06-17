@@ -52,21 +52,21 @@
     </div>
     <div class="standard-font-black">
       <span
-      ><a
-      ><u
-        (click)="onGetOTP()"
-        (keydown.enter)="onGetOTP()"
-        [ngClass]="[!resendLink ? 'disableResend' : '']"
-        class="standard-font-blue"
-        tabindex="3"
-      >
+        ><a
+          ><u
+            (click)="onGetOTP()"
+            (keydown.enter)="onGetOTP()"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+            class="standard-font-blue"
+            tabindex="3"
+          >
             Resend OTP</u
-      ></a
-      ></span
+          ></a
+        ></span
       >
       &nbsp;
       <span *ngIf="!resendLink && displaySecond"
-      >({{ displaySecond }} sec)</span
+        >({{ displaySecond }} sec)</span
       >
     </div>
     <div *ngIf="!hideInfo" class="standard-auth-checkbox-container">
