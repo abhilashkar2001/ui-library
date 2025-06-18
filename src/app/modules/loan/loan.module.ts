@@ -15,6 +15,11 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { DigitalSignatureComponent } from './components/digital-signature/digital-signature.component';
 import { LoanRoutingModule } from './loan-routing.module';
 import { SharedMaterialModule } from '../../shared/shared-material.module';
+import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+import { IcustLibraryModule } from '@onerumango/icust-element-library';
+import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,15 @@ import { SharedMaterialModule } from '../../shared/shared-material.module';
     SummaryComponent,
     DigitalSignatureComponent,
   ],
-  imports: [CommonModule, LoanRoutingModule, SharedMaterialModule],
+  imports: [
+    CommonModule,
+    LoanRoutingModule,
+    SharedMaterialModule,
+    SharedComponentsModule,
+    SharedModule,
+    FlexLayoutModule,
+    IcustLibraryModule,
+    SharedPipesModule,
+  ],
 })
 export class LoanModule {}

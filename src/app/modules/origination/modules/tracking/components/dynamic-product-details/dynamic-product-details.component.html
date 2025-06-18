@@ -45,7 +45,7 @@
                     <p class="header_lg">
                       {{
                         personal[item?.valueKey] ??
-                        personal?.contact?.[item?.valueKey]
+                          personal?.contact?.[item?.valueKey]
                       }}
                     </p>
                   </ng-container>
@@ -100,8 +100,7 @@
                   [tabindex]="0"
                   class="header_lg document_label_value"
                 >
-                  {{
-                    docItem[item?.valueKey] ?? docItem?.fileName
+                  {{ docItem[item?.valueKey] ?? docItem?.fileName
                   }}{{ docItem?.documentSide }}
                 </p>
               </div>
