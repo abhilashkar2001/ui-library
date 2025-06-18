@@ -7,7 +7,7 @@
     />
   </div>
 
-  <div class="login_section" fxFlex="50" fxFlex.xs="100">
+  <div class="login_section" fxFlex="50" fxFlex.xs="100" [formGroup]="otpForm">
     <div fxLayout="row wrap" fxLayoutAlign="start start" class="login-content">
       <!-- Logo Section -->
       <div
@@ -36,26 +36,119 @@
         </span>
       </div>
 
-      <div class="mobile-verify" *ngIf="otpForm" fxFlex="100"></div>
+      <div fxLayoutAlign="center center" fxFlex="100">
+        <ic-mobile-field
+          formControlName="phone"
+          [isdCode]="countriesIsdCodes"
+          [isdControl]="otpForm.get('isdCode') | formcontrol"
+          [maxLength]="maxMobileLength"
+          fxFlex="60"
+          label="Mobile Number"
+        ></ic-mobile-field>
+      </div>
+      <div fxLayoutAlign="center center" fxFlex="100" *ngIf="otpSent">
+        <ic-form-field
+          [control]="otpForm.get('otpValue') | formcontrol"
+          [icNumbersOnly]="true"
+          [maxLength]="6"
+          label="Enter OTP"
+          fxFlex="60"
+          placeholder="******"
+        ></ic-form-field>
+      </div>
 
-      <div fxFlex="100" fxLayoutAlign="center center" class="top-space">
+      <div fxLayoutAlign="center center" fxFlex="100" *ngIf="otpSent">
+        <span class="header_md"> Didn’t receive the OTP?</span>
+        <span *ngIf="!resendLink && displaySecond"
+          >({{ displaySecond }} sec)</span
+        >
+        <a
+          ><u
+            (click)="getOtp()"
+            (keydown.enter)="getOtp()"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+            class="theme_md"
+            tabindex="3"
+          >
+            Resend OTP</u
+          ></a
+        >
+      </div>
+
+      <div
+        fxFlex="100"
+        fxLayoutAlign="center center"
+        class="top-space"
+        *ngIf="!otpSent"
+      >
         <ic-button
           fxFlex="60"
+          (OnClick)="getOtp()"
           customButtonClass="w-100 justify-content-center"
           [icButtonType]="'filled-rounded'"
           [label]="'Continue'"
           [type]="'submit'"
-          size="large"
+          size="medium"
           class="w-100"
         >
         </ic-button>
       </div>
 
-      <div class="top-space" fxLayoutAlign="center center" fxFlex="100">
+      <div
+        fxFlex="100"
+        fxLayoutAlign="center center"
+        class="btn-spacing"
+        *ngIf="otpSent"
+      >
+        <ic-button
+          fxFlex="60"
+          (OnClick)="onVerify()"
+          customButtonClass="w-100 justify-content-center"
+          [icButtonType]="'filled-rounded'"
+          [label]="'Submit'"
+          [type]="'submit'"
+          size="medium"
+          class="w-100"
+        >
+        </ic-button>
+      </div>
+      <div
+        fxFlex="100"
+        fxLayoutAlign="center center"
+        class="top-space"
+        *ngIf="otpSent"
+      >
+        <ic-button
+          fxFlex="60"
+          (OnClick)="onExit()"
+          customButtonClass="w-100 justify-content-center"
+          icButtonType="outlined-rounded"
+          [label]="'Back'"
+          [type]="'submit'"
+          size="medium"
+          class="w-100"
+        >
+        </ic-button>
+      </div>
+
+      <div
+        class="top-space"
+        fxLayoutAlign="center center"
+        fxFlex="100"
+        *ngIf="!otpSent"
+      >
         <img
           src="assets/images/new-web-images/verifyMobileContinue.png"
           alt="offer"
         />
+      </div>
+      <div
+        class="top-space"
+        fxLayoutAlign="center center"
+        fxFlex="100"
+        *ngIf="otpSent"
+      >
+        <img src="assets/images/new-web-images/verifyMobile.png" alt="offer" />
       </div>
     </div>
   </div>
