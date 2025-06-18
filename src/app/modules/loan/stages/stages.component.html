@@ -1,11 +1,15 @@
+
 <mat-accordion>
   <mat-expansion-panel
+    *ngFor="let panel of Array.from(componentMapping)"
     (closed)="panelOpenState.set(false)"
     (opened)="panelOpenState.set(true)"
   >
     <mat-expansion-panel-header>Data</mat-expansion-panel-header>
     <div>
-      <ng-template #container></ng-template>
+      XYZ
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+
+<ng-template #container></ng-template>

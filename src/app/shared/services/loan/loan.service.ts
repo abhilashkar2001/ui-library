@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IcHttpResponseModel } from '@onerumango/utils';
+import { IcHttpResponseModel, IProducts, IScreenInfo } from '@onerumango/utils';
 import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
 import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { AspectLendings } from '../../models/origination/aspect-lending.model';
+import { IProcessStage } from '@onerumango/utils/lib/models/process-stage.model';
 
 const baseUrl = environment.microServiceURL;
 
@@ -103,12 +104,6 @@ export class LoanService {
   checkAccountNumberAvilable(accountNumber: any) {
     return this.http.get<any>(
       `${baseUrl}/origination-matser/accountNumber?accountNumber=${accountNumber}`,
-    );
-  }
-
-  getProductDetails(basisId: any) {
-    return this.http.get<any>(
-      `${baseUrl}/origination-product-detail?id=${basisId}`,
     );
   }
 
@@ -211,13 +206,21 @@ export class LoanService {
     );
   }
 
+  getProductDetails(basisId: number) {
+    return this.http.get<IcHttpResponseModel<IProducts>>(
+      `${baseUrl}/origination-product-detail?id=${basisId}`,
+    );
+  }
+
   fetchProcessStages(processCycleCode: string) {
-    return this.http.get<any>(
+    return this.http.get<IcHttpResponseModel<IProcessStage>>(
       `${baseUrl}/process_cycle/stages?processCycleCode=${processCycleCode}&internal=false`,
     );
   }
 
-  fetchScreens(id: number) {
-    return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
+  fetchScreens(processStageId: number) {
+    return this.http.get<IcHttpResponseModel<IScreenInfo>>(
+      `${baseUrl}/process_stage/screens?id=${processStageId}`,
+    );
   }
 }

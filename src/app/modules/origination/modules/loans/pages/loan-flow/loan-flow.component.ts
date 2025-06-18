@@ -334,6 +334,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
    * api call for getting product details by basisId
    */
   getProductDetails() {
+    if (!this.basisId) return;
     this.loanApi.getProductDetails(this.basisId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.productDetails = resp.data[0];
@@ -341,9 +342,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         this.mobileVerifyInfo = {
           ...this.mobileVerifyInfo,
           basisName: this.productDetails.basisName,
-          individual: resp?.data[0]?.individual,
+          individual: resp?.data[0]?.individual!,
         };
-        console.log(this.mobileVerifyInfo);
         this.showComponent(this.cuurrentStep);
         this.cdr.detectChanges();
       }
