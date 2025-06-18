@@ -46,6 +46,13 @@ export class StagesComponent implements OnInit {
     this.fetchProductDetails();
   }
 
+  /**
+   * On Opening of panel it will load the cache component ref if already loaded earlier
+   * or else it will load the component from the given screen code for that panel
+   * Component will be fetched from the component mapping and will be loaded in ComponentLoadingService
+   * @param index
+   * @param screenCode
+   */
   onPanelOpened(index: number, screenCode: string) {
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
@@ -58,7 +65,7 @@ export class StagesComponent implements OnInit {
         if (component) {
           const componentRef = this.renderComponentService.loadComponent(
             container,
-            ComponentConstant[screenCode as keyof typeof ComponentConstant],
+            component,
           );
           this.componentCache.set(index, componentRef);
         }
@@ -66,6 +73,12 @@ export class StagesComponent implements OnInit {
     }
   }
 
+  /**
+   * Once panel is closed the remove that panel from the active panel list
+   * If want to clear the container for that particular panel it can be cleaned here
+   * If want to destory the component ref on closing of panel you can clean here
+   * @param index of the panel
+   */
   onPanelClosed(index: number) {
     const currentSet = new Set(this.activePanels());
     if (currentSet.has(index)) {
@@ -79,6 +92,12 @@ export class StagesComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetch the details of the selected product
+   * This will fetch all details of the selected product from origination basis Maintenance
+   * We will get product id  process cycle code and other details using which the accessibility
+   * to the customer will be given
+   */
   fetchProductDetails() {
     this.loanService.getProductDetails(this.basisId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
@@ -91,6 +110,12 @@ export class StagesComponent implements OnInit {
     });
   }
 
+  /**
+   * This will fetch all the process stages from the give process cycle code
+   * Only first stage will be taken as there is only once stage to be mantained
+   * for website customer portal
+   * Using this fetched process stage id all the screens will be fetched
+   */
   fetchProcessStages() {
     this.loanService
       .fetchProcessStages(this.processCycleCode!)
@@ -102,10 +127,16 @@ export class StagesComponent implements OnInit {
       });
   }
 
+  /**
+   * This method will fetch all the screens based of the process stage id
+   * All the screens to be filled by the customer to proceed with loan application
+   * @param processStageId of the selected product
+   */
   fetchScreens(processStageId: number) {
     this.loanService.fetchScreens(processStageId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.screens) {
         resp?.data?.screens
+          ?.splice(0, 1)
           ?.sort((a, b) => a.sequence - b.sequence)
           .forEach((screen) => {
             this.componentMapping.set(screen.screenValue, screen);
