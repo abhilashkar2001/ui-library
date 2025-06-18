@@ -6,7 +6,6 @@ import { debounceTime } from 'rxjs/operators';
 import { ProductListConstant } from './product-list-card.constant';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-import { HomeService } from 'app/shared/services/home-service/home.service';
 
 @Component({
   selector: 'app-product-list-card',
@@ -16,7 +15,6 @@ import { HomeService } from 'app/shared/services/home-service/home.service';
 export class ProductListCardComponent implements OnInit {
   productList: any = [];
   applyNowProducts: any = [];
-  searchFilter = ProductListConstant.DEFAULT_CATEGORIES;
   categoryList = ProductListConstant.CATEGORY_LIST;
   searchControl: FormControl = new FormControl('');
   searchParam = '';
@@ -26,7 +24,6 @@ export class ProductListCardComponent implements OnInit {
     private api: TrackingService,
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
-    private homeService: HomeService,
     private router: Router,
   ) {}
 
@@ -111,7 +108,7 @@ export class ProductListCardComponent implements OnInit {
   }
 
   getAccountTypes() {
-    this.homeService.getAccountTypes('Accounts').subscribe((resp: any) => {
+    this.loanService.getLoanTypes('Accounts').subscribe((resp: any) => {
       const accountBusinessNames = resp.data.map(
         (item: any) => item.businessSuite,
       );

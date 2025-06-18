@@ -17,12 +17,8 @@ import {
 } from '@angular/forms';
 import { SharedService } from 'app/shared/services/shared.service';
 import { environment } from 'environments/environment';
-import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 
 @Component({
   selector: 'app-other-documents',
@@ -31,21 +27,10 @@ import { DocumentUploadService } from 'app/shared/services/document-upload.servi
 })
 export class OtherDocumentsComponent implements OnInit, OnChanges {
   @Input() updateParentModel: ((value: Partial<any> | any) => void | any) | any;
-  denominationArray: any[] | any = [];
   createDocumentForm!: FormGroup;
-  count = 0;
-  isEven = false;
-  selectedImage: File | any;
-  parenIndex: number | any;
-  currencyArr: any;
   imageUrl: any;
   kycToggle = 'kyc';
   files: any[] = [];
-  documentIds = [
-    {
-      docIds: [],
-    },
-  ];
   @Output() customDocumentForm = new EventEmitter<any>();
   @Output() CustomSubmit = new EventEmitter<any>();
   @Output() backEvent = new EventEmitter<any>();
@@ -60,9 +45,6 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
   documentList: any = [];
   documentTypeArray: string[] = [];
   hideSelect: string[] = [];
-  // SAVE BUTTON PROPERTIES
-  isLoading = false;
-  loadingBtnText = 'Saving...';
   screenName = 'Select KYC';
   genericScreenInfo = {
     screenName: 'Select KYC',
@@ -74,14 +56,10 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private snack: MatSnackBar,
     private sharedService: SharedService,
-    private openAccountService: OpenAccountService,
-    private CommonService: CommonService,
     private loanService: LoanService,
     private cdr: ChangeDetectorRef,
     private sessionStorageService: SessionStorageService,
-    private documentUploadService: DocumentUploadService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -94,19 +72,10 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     this.documentList = this.personalDoc;
     const originationId = this.sessionStorageService.getOriginationId();
     if (originationId) this.getDataFromOriginationMaster(originationId);
-    // else if (loanCustomerId) this.getCustomerId(loanCustomerId);
     else this.buildForm();
   }
 
-  getCustomerId(id: any) {
-    this.openAccountService.getCustByStageId(id).subscribe((resp) => {
-      if (resp?.statusCode == 200) {
-        this.documentList = resp?.data[0]?.documnentsInfo?.documents[0]?.docs;
-      }
-    });
-  }
-
-  getDataFromOriginationMaster(id: any) {
+  getDataFromOriginationMaster(id: number) {
     this.loanService.getOriginationMaster(id).subscribe((resp: any) => {
       if (resp?.statusCode == 200 && resp?.data) {
         this.documentList =
@@ -202,22 +171,6 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     return this.otherDocument().controls[indx]?.get('fileInfo')?.value;
   }
 
-  /**
-   * Delete file from files list
-   * @param index (File index)
-   */
-  deleteFile(index: number, i: any) {
-    const documentId =
-      this.createDocumentForm.value.otherDocument[i].docIds[index];
-    this.CommonService.deleteDocument(documentId).subscribe((res) => {
-      if (res) {
-        console.log('Document deleted Successfully..');
-        this.createDocumentForm.value.otherDocument[i].docIds.splice(index, 1);
-      }
-    });
-    this.otherDocument().controls[i]?.get('fileInfo')?.value.splice(index, 1);
-  }
-
   addDocument() {
     this.otherDocument().push(this.newDenom());
   }
@@ -226,82 +179,8 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
     return `${this.baseUrl}${url}`;
   }
 
-  removeCurrency(i: number) {
-    this.otherDocument().removeAt(i);
-    this.hideSelect.splice(i, 1);
-  }
-
-  fileBrowseHandler(indx: number) {
-    this.browseFiles(indx);
-  }
-
-  browseFiles(i: any) {
-    const inputElement = document.createElement('input');
-    inputElement.type = 'file';
-    inputElement.accept = 'image/*';
-    inputElement.addEventListener('change', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      if (target.files && target.files.length > 0) {
-        const file: any = target.files[0];
-        console.log(file, 'file');
-        if (file.type.startsWith('image/')) {
-          this.selectedImage = file;
-          this.displayImage(i, file);
-          this.uploadImage(file, i);
-        }
-        const fReader = new FileReader();
-        fReader.readAsDataURL(file);
-      }
-    });
-
-    inputElement.click();
-    this.uploadFilesSimulator(0);
-  }
-
-  uploadImage(file: any, i: any) {
-    const formData = new FormData();
-    const data = {
-      documentName: this.createDocumentForm.value.otherDocument[i].documentType,
-      documentType: this.createDocumentForm.value.otherDocument[i].documentType,
-      documentNumber:
-        this.createDocumentForm.value.otherDocument[i].documentNumber,
-      documentSide: 1,
-      fileName: file.name,
-      fileType: file.type,
-      verificationType: 'kyc',
-    };
-
-    formData.append('data', JSON.stringify(data));
-    formData.append('file', file);
-    formData.append('module', 'document');
-    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.updateDocId(i).push(resp.data.documentId);
-        this.documentIds.push(this.createDocumentForm.value);
-        this.snack.open(`Document Uploaded Successfully` + ' !', 'OK', {
-          duration: 4000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-          panelClass: 'snackbar-error',
-        });
-      }
-    });
-  }
-
   updateDocId(indx: any): any[] {
     return this.otherDocument().controls[indx]?.get('docIds')?.value;
-  }
-
-  displayImage(indx: any, file: any) {
-    const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader> | any) => {
-      this.imageUrl = event.target.result as string;
-      this.getFileInfo(indx).push({
-        url: this.imageUrl,
-        name: file.name,
-      });
-    };
-    reader.readAsDataURL(this.selectedImage);
   }
 
   fileUrl(file: any) {
@@ -355,55 +234,5 @@ export class OtherDocumentsComponent implements OnInit, OnChanges {
 
   goBack() {
     this.backEvent.emit();
-  }
-
-  onDocumentSelection(event: any, index: any) {
-    if (!Object.prototype.hasOwnProperty.call(this.hideSelect, index)) {
-      if (!this.hideSelect.includes(event)) this.hideSelect.push(event);
-    } else this.hideSelect[index] = event;
-  }
-
-  isDocumentOptionDisabled2(item: any) {
-    return this.hideSelect.includes(item);
-  }
-
-  checkValidity() {
-    return Math.abs(this.documentTypeArray?.length - this?.hideSelect?.length) <
-      1 ||
-      this.documentTypeArray?.length ==
-        this.createDocumentForm.value.otherDocument.length
-      ? true
-      : false;
-  }
-
-  onFileDropped(event: any, i: any) {
-    console.log(event);
-    if (event.files.type.startsWith('image/')) {
-      this.selectedImage = event.files;
-      this.displayImage(i, event.files);
-      this.uploadImage(event.files, i);
-    }
-    const fReader = new FileReader();
-    fReader.readAsDataURL(event.files);
-  }
-
-  /**
-   * checking form is valid or not and insuring for opened card  document  is uploaded.
-   * @returns true false depending upon above codition.
-   */
-  checkDocValidity() {
-    const isDocUploaded = this.createDocumentForm.value.otherDocument.every(
-      (docItem: any) => docItem.fileInfo?.length > 0,
-    );
-    return this.createDocumentForm.invalid || !isDocUploaded ? true : false;
-  }
-
-  /**
-   * trackBy function for Document Type dropdown.
-   * @param documentTypeItem
-   * @returns
-   */
-  documentTypeTrackByFun(documentTypeItem: any) {
-    return documentTypeItem;
   }
 }

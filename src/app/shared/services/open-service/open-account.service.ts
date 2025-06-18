@@ -56,30 +56,12 @@ export class OpenAccountService {
     return this.http.post<any>(`${baseUrl}/origination-matser/save`, payload);
   }
 
-  fetchSubClass(subClass: any) {
-    return this.http.get<any>(
-      `${baseUrl}/details/fetchSubClass?basisClass=${subClass}`,
-    );
-  }
-
-  getProcessCycle(processName: any) {
-    return this.http.get<any>(
-      `${baseUrl}/process_cycle/stages?processCycleCode=${processName}&internal=false`,
-    );
-  }
-
   getProcessStages(id: any) {
     return this.http.get<any>(`${baseUrl}/process_stage/screens?id=${id}`);
   }
 
   getCustomerById(id: number) {
     return this.http.get<any>(`${baseUrl}/customer-api?customerId=${id}`);
-  }
-
-  getCustByStageId(id: any) {
-    return this.http.get<any>(
-      `${baseUrl}/origination-matser/fetchCustomerStaging?customerStageId=${id}`,
-    );
   }
 
   setData(data: any) {

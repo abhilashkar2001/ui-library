@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
+import { LoanService } from '../../../../../shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-cibil-score-container',
@@ -28,8 +28,6 @@ export class CibilScoreContainerComponent {
 
   isDifferentMobile = false;
   showCibilScoreResult = false;
-  selectedOption: 'different' | 'same' = 'same';
-  optionalSteps: any;
   phone: any;
   showOtpSection: boolean | any;
   invalidOtp = false;

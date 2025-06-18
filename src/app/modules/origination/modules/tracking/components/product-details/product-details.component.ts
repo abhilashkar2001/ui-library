@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TrackingService } from '../../tracking-service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { ProductConstant } from './product.store';
 import { catchError } from 'rxjs/operators';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { LoanService } from '../../../../../../shared/services/loan/loan.service';
+import { TrackingService } from '../../tracking-service';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private api: TrackingService,
+    private loanService: LoanService,
     private route: ActivatedRoute,
     private sessionStorageService: SessionStorageService,
   ) {}
@@ -43,17 +45,17 @@ export class ProductDetailsComponent implements OnInit {
 
   getWebSummary(id: any) {
     const observables = {
-      getLoanDocument: this.api
-        .getLoanDocument(id)
+      getLoanDocument: this.loanService
+        .getSavedChecklist(id)
         .pipe(catchError((err) => of({ error: err }))),
       applicationDetails: this.api
         .applicationDetails(id)
         .pipe(catchError((err) => of({ error: err }))),
-      originationDetails: this.api
+      originationDetails: this.loanService
         .getOriginationMaster(id)
         .pipe(catchError((err) => of({ error: err }))),
       webSummary: this.productType.toLowerCase().includes('loan')
-        ? this.api
+        ? this.loanService
             .getLoanSummary(id)
             .pipe(catchError((err) => of({ error: err })))
         : of(null),

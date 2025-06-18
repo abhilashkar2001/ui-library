@@ -52,11 +52,7 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
   productDetails: any;
   processDetails: { processCycleCode: string; processStageId: number } | any;
   personalDetails: any = [];
-  staticData = {
-    OWNERSHIP: [],
-  };
   currentUser: User | undefined;
-  isLoading = false;
   dynamicScreen = LoanFlowConstants.DYNAMIC_SCREEN;
   @ViewChild('container') container: any;
   @ViewChild(WebhostDirective, { static: true }) appAppHost!: WebhostDirective;
@@ -369,8 +365,8 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       const sessionData = this.sessionStorageService.getLoanBasisDetails();
       this.screenTitle = sessionData.basisName;
       this.screenTitle = sessionData.basisName;
-      this.openAccountService
-        .getProcessCycle(sessionData.processCycleCode)
+      this.loanApi
+        .fetchProcessStages(sessionData.processCycleCode)
         .subscribe((resp) => {
           this.processDetails = {
             id: resp?.data?.id,
@@ -378,9 +374,9 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
             processStageId: resp?.data?.processStageList[0]?.id,
           };
           this.sessionStorageService.setCurrentStage(
-            resp.data?.processStageList[0].id,
+            resp.data?.processStageList[0]?.id!,
           );
-          this.getProcessStages(resp.data?.processStageList[0].id);
+          this.getProcessStages(resp.data?.processStageList[0]?.id!);
           resolve('');
         });
     });

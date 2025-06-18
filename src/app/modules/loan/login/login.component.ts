@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { TrackingService } from 'app/modules/origination/modules/tracking/tracking-service';
-
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { Subscription } from 'rxjs';
+import { CountryService } from '../../../shared/services/country-service';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +26,13 @@ export class LoginComponent implements OnInit {
   displaySecond: string | any;
   getOtpBtn = false;
   validNumber = false;
-  isValidMobile = false;
   resendLink = false;
   resendOtp = 0;
   intervalId: any;
   otpAvailable = false;
 
   constructor(
-    private commonService: CommonService,
+    private countryService: CountryService,
     private fb: FormBuilder,
     private store: Store<AppState>,
     private otpService: TrackingService,
@@ -63,7 +61,7 @@ export class LoginComponent implements OnInit {
   }
   // Get All Countrys and Isd code Mthd
   loadCountries() {
-    this.commonService.getAllCountries().subscribe((resp: any) => {
+    this.countryService.getCountries().subscribe((resp: any) => {
       if (resp.data.length > 0) {
         this.countriesIsdCodes = resp?.data;
         this.countryTelIsdCode = resp?.data.map(

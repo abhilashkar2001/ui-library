@@ -17,7 +17,8 @@ export class OriginationService {
    * fetch all the checklist mapped with particular screen and uploaded document for the same
    * for particular origination ID
    * @param originationId id of the particular record
-   * @param screenCode screen code of with which checklist mapped
+   * @param screenId
+   * @param stageId
    * @returns all the checklist document
    */
   fetchChecklistItem(
@@ -45,13 +46,6 @@ export class OriginationService {
   validateDateOfBirth(originationId: number, dateOfBirth: string) {
     return this.http.get<IcHttpResponseModel<PrimaryCustomerInfo>>(
       `${MICROSERVICE_URL}/origination-matser/validateDOB?origniationId=${originationId}&dateOfBirth=${dateOfBirth}`,
-    );
-  }
-
-  verifyWorkflow(properties: any) {
-    return this.http.post<any>(
-      `${MICROSERVICE_URL}/workflow/verify`,
-      properties,
     );
   }
 
