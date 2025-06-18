@@ -31,27 +31,9 @@ export class TrackingService {
     );
   }
 
-  getOriginationMaster(id: any) {
-    return this.http.get<any>(
-      `${this.baseUrl}/origination-matser?originationId=${id}`,
-    );
-  }
-
   applicationDetails(applicationId: any) {
     return this.http.get<any>(
       `${this.baseUrl}/origination-matser/applicationStatus?applicationId=${applicationId}`,
-    );
-  }
-
-  getLoanSummary(originationId: any) {
-    return this.http.get(
-      `${this.baseUrl}/webSummary?originationId=${originationId}`,
-    );
-  }
-
-  getLoanDocument(originationId: any) {
-    return this.http.get(
-      `${this.baseUrl}/origination-matser/fetchCheckListInfo?originationId=${originationId}`,
     );
   }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { Subscription } from 'rxjs';
+import { CountryService } from '../../../shared/services/country-service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +11,12 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   countriesIsdCodes: any[] = [];
   countryTelIsdCode: any;
-  defaultIsdCodeValue: any;
-  maxMobileLength: any;
   subscriptions: Subscription[] = [];
   otpForm!: FormGroup;
 
   constructor(
-    private commonService: CommonService,
     private fb: FormBuilder,
+    private countryService: CountryService,
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +30,9 @@ export class LoginComponent implements OnInit {
       isdCode: [''],
     });
   }
-  // Get All Countrys and Isd code Mthd
+
   loadCountries() {
-    this.commonService.getAllCountries().subscribe((resp: any) => {
+    this.countryService.getCountries().subscribe((resp: any) => {
       if (resp.data.length > 0) {
         this.countriesIsdCodes = resp?.data?.map(
           (country: any) => country.countryTelIsdCode,

@@ -3,16 +3,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { OfferIssueService } from 'app/shared/services/offer-issue.service';
 import { selectUser } from '@onerumango/utils';
-import * as moment from 'moment';
+import moment from 'moment';
 import { SignNowPopupComponent } from '../../digital-sign/sign-now-popup/sign-now-popup.component';
 import { SuccessModalComponent } from '../../digital-sign/success-modal/success-modal.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { BranchService } from '../../digital-sign/sign-now-popup/branch.service';
-import { OriginationService } from 'app/shared/services/origination.service';
 import { SharedService } from 'app/shared/services/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { LoanService } from '../../../../../../shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-offer-letter',
@@ -39,9 +39,9 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private branchService: BranchService,
-    private originationService: OriginationService,
     private sharedService: SharedService,
     private store: Store,
+    private loanService: LoanService,
   ) {}
 
   ngOnInit(): void {
@@ -172,7 +172,7 @@ export class OfferLetterComponent implements OnInit, OnDestroy {
     payload.remarks = remarks;
     payload.transactionType = 'IND_LOAN';
 
-    this.originationService.verifyWorkflow(payload).subscribe((res) => {
+    this.loanService.verifyWorkFlow(payload).subscribe((res) => {
       if (res?.status == 200) {
         const sucessDialog = this.dialog.open(SuccessModalComponent, {
           width: '40%',

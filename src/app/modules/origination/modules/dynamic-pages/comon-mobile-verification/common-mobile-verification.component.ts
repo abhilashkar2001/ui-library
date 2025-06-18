@@ -16,7 +16,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CommonService } from 'app/shared/services/common-service/common.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +33,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import moment from 'moment';
+import { CountryService } from '../../../../../shared/services/country-service';
 
 @Component({
   selector: 'app-common-mobile-verification',
@@ -89,7 +89,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
 
   countriesIsdCodes: any[] = [];
   countryTelIsdCode: any[] = [];
-  selectedIsdCode: any = '';
   selectedIsd: any;
   defaultIsdCodeValue: any;
   resendOtp = 0;
@@ -97,7 +96,6 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   intervalId: any;
   otpAvailable = false;
   yourOtp: any;
-  // SAVE BUTTON PROPERTIES
   @Input() isLoading = false;
   @Input() basisName = '';
   loadingBtnText = 'Saving...';
@@ -110,13 +108,13 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private commonService: CommonService,
     private api: OpenAccountService,
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private otpService: TrackingService,
     private store: Store<AppState>,
     private loanApi: LoanService,
+    private countryService: CountryService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
@@ -202,31 +200,28 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
   }
 
   loadCountries() {
-    this.commonService.getAllCountries().subscribe(
-      (resp: any) => {
-        if (resp?.data) {
-          this.countriesIsdCodes = resp?.data;
-          this.countryTelIsdCode = resp?.data.map(
-            (i: any) => i?.countryTelIsdCode,
-          );
-          const indiaIsdCode = this.countriesIsdCodes.find(
-            (item: any) => item?.countryName == this.localeData?.country,
-          );
-          if (indiaIsdCode) {
-            this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
-            this.maxMobileLength = indiaIsdCode?.mobileLength;
-          } else {
-            this.defaultIsdCodeValue =
-              this.countriesIsdCodes[0].countryTelIsdCode;
-            this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
-          }
-          if (!this.originationId) {
-            this.otpForm.get('isdCode')?.setValue(this.defaultIsdCodeValue);
-          }
+    this.countryService.getCountries().subscribe((resp: any) => {
+      if (resp?.data) {
+        this.countriesIsdCodes = resp?.data;
+        this.countryTelIsdCode = resp?.data.map(
+          (i: any) => i?.countryTelIsdCode,
+        );
+        const indiaIsdCode = this.countriesIsdCodes.find(
+          (item: any) => item?.countryName == this.localeData?.country,
+        );
+        if (indiaIsdCode) {
+          this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
+          this.maxMobileLength = indiaIsdCode?.mobileLength;
+        } else {
+          this.defaultIsdCodeValue =
+            this.countriesIsdCodes[0].countryTelIsdCode;
+          this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
         }
-      },
-      (err) => console.error('Error: ', err),
-    );
+        if (!this.originationId) {
+          this.otpForm.get('isdCode')?.setValue(this.defaultIsdCodeValue);
+        }
+      }
+    });
   }
 
   onOtpChange(otp: any) {

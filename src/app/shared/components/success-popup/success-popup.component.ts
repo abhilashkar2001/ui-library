@@ -5,7 +5,7 @@ import { DownloadService } from 'app/shared/services/download.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { TokenStorageService } from '@onerumango/utils';
-import { LoanService } from 'app/shared/services/loan/loan.service';
+import { EmailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-success-popup',
@@ -38,7 +38,7 @@ export class SuccessPopupComponent implements OnInit {
     private router: Router,
     private sessionStorageService: SessionStorageService,
     private tokenStorageService: TokenStorageService,
-    private loanService: LoanService,
+    private emailService: EmailService,
   ) {
     this.isNetBanking = data.isNetBanking || false;
     this.actionType = data.actionType;
@@ -87,9 +87,7 @@ export class SuccessPopupComponent implements OnInit {
     formData.append('body', 'Email testing got successful');
     // formData.append('file', this.selectedFile);
 
-    this.loanService.triggerloanDetailsEmail(formData).subscribe((res) => {
-      console.log(res, 'response');
-    });
+    this.emailService.triggerTransactionEmail(formData).subscribe();
   }
 
   shareOrDownload(event: any) {

@@ -15,6 +15,6 @@ export class HelpCenterService {
   }
 
   closeHelpCenter() {
-    this.isOpen.next(false); // ✅ Always sets it to closed
+    this.isOpen.next(false);
   }
 }

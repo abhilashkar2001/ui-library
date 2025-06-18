@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IcHttpResponseModel, IProducts, IScreenInfo } from '@onerumango/utils';
-import { FACTORYPOPULATE } from 'app/shared/models/factory-populate.models';
-import { GETGENERICVALUE } from 'app/shared/models/generic-value.model';
 import { BasisSubClassModel } from 'app/shared/models/website-product.model';
 import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
@@ -53,25 +51,6 @@ export class LoanService {
     return this.http.post<any>(`${baseUrl}/workflow/verify`, flowData);
   }
 
-  saveLoanApprovalConfig(approvalDetails: any) {
-    return this.http.post<any>(
-      `${baseUrl}/loan-account/saveLoanApprovalConfig`,
-      approvalDetails,
-    );
-  }
-
-  genericValue(screenCode: number, genericName: string | string[]) {
-    return this.http.get<any>(
-      `${baseUrl}/generic-value?screenCode=${screenCode}&genericName=${genericName}`,
-    );
-  }
-
-  triggerloanDetailsEmail(formdata: any) {
-    return this.http.post(`${'https://192.168.131.206'}/email`, formdata, {
-      responseType: 'text',
-    });
-  }
-
   getAccountList(customerNumber: any) {
     return this.http.get<any>(
       `${baseUrl}/customer/accountInfo?customerNo=${customerNumber}`,
@@ -97,16 +76,6 @@ export class LoanService {
     );
   }
 
-  // getOriginationMaster(_id: any) {
-  //   return this.http.get<any>(`../../../../../../../assets/json/dummay.json`);
-  // }
-
-  checkAccountNumberAvilable(accountNumber: any) {
-    return this.http.get<any>(
-      `${baseUrl}/origination-matser/accountNumber?accountNumber=${accountNumber}`,
-    );
-  }
-
   getProductAspectDetails(productId: number) {
     return this.http.get<IcHttpResponseModel<AspectLendings>>(
       `${baseUrl}/aspects-lending?productId=${productId}`,
@@ -116,16 +85,6 @@ export class LoanService {
   getProductInterestDetails(basisId: number) {
     return this.http.get<any>(
       `${baseUrl}/interestDetail/formulaElement?basisId=${basisId}`,
-    );
-  }
-
-  fetchStateCityByZipcode(pincode: number) {
-    return this.http.get(`${baseUrl}/city/fetchByPinCode?pincode=${pincode}`);
-  }
-
-  getCustomerByCif(id: number) {
-    return this.http.get<GETGENERICVALUE | FACTORYPOPULATE>(
-      `${baseUrl}/customer-api?customerNo=${id}`,
     );
   }
 
@@ -221,6 +180,13 @@ export class LoanService {
   fetchScreens(processStageId: number) {
     return this.http.get<IcHttpResponseModel<IScreenInfo>>(
       `${baseUrl}/process_stage/screens?id=${processStageId}`,
+    );
+  }
+
+  saveTermsandCreditFields(payload: any) {
+    return this.http.put<any>(
+      `${baseUrl}/loan-detail/updateCreditAndTermsField`,
+      payload,
     );
   }
 }

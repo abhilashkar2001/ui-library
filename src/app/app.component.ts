@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UILibIconService } from './shared/services/ui-lib-icon.service';
 import {
   ThemeChangeService,
   ThemeOption,
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private routePartsService: RoutePartsService,
-    private iconService: UILibIconService,
     private themeChangeService: ThemeChangeService,
     private routingState: RoutingState,
     private _loaderService: LoadingService,
@@ -38,7 +36,6 @@ export class AppComponent implements OnInit {
     );
     this.routingState.loadRouting();
     window.addEventListener('storage', this.handleStorageEvent);
-    this.iconService.init();
   }
 
   handleStorageEvent(event: StorageEvent) {

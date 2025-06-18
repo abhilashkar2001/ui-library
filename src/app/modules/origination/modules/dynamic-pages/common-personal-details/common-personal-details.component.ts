@@ -22,7 +22,6 @@ import {
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-// import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { ReusablePincodePopupComponent } from '../../../../../shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { forkJoin, Subscription } from 'rxjs';
@@ -37,6 +36,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { DateTimeService } from 'app/shared/services/date-time/date-time.service';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import { CountryService } from 'app/shared/services/country-service';
+import { CityService } from '../../../../../shared/services/city.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -55,7 +55,6 @@ export class CommonPersonalDetailsComponent
   personalDetails: any;
   @Input() updateParentModel: ((value: Partial<any>) => void) | any;
   @Input() docCustomerDetails: any;
-  selectedStep = 0;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   @Input() customerInfo: any;
@@ -74,14 +73,11 @@ export class CommonPersonalDetailsComponent
   maritalStatusArray: any[] = [{}];
   todayDate: Date = new Date();
   listCity: any = [];
-  primaryCustIndex = 0;
   boundaries: any;
   countriesIsdCodes: any;
   defaultIsdCodeValue: any;
   maxMobileLength: any;
   nationalityArray: any[] = [];
-  debounceTimeout: any;
-  errorDob: any;
   genderPrefixMap = new Map([
     ['male', 'Mr'],
     ['female', 'Ms'],
@@ -108,14 +104,11 @@ export class CommonPersonalDetailsComponent
     private dateService: DateTimeService,
     private personalData: LoanService,
     private countryService: CountryService,
+    private cityService: CityService,
   ) {}
 
   get customer(): FormArray {
     return this.customerDetailsForm.get('customer') as FormArray;
-  }
-
-  get addressArray(): FormArray {
-    return this.customer?.get('contact')?.get('address') as FormArray;
   }
 
   ngOnInit(): void {
@@ -834,8 +827,8 @@ export class CommonPersonalDetailsComponent
         if (value) {
           if (value.toString().length) {
             setTimeout(() => {
-              this.loanApi
-                .fetchStateCityByZipcode(value)
+              this.cityService
+                .fetchZipcodeDetails(value)
                 .subscribe((res: any) => {
                   if (res?.statusCode === 200) {
                     addressControl.patchValue(res?.data?.[0]);

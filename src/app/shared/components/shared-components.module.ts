@@ -8,8 +8,6 @@ import { SharedPipesModule } from '../pipes/shared-pipes.module';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import { HeaderTopComponent } from './header-top/header-top.component';
-import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
-import { AppLoaderComponent } from '../services/app-loader/app-loader.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SwiperModule } from 'swiper/angular';
@@ -30,8 +28,6 @@ import { CustomPopupComponent } from './custom-popup/custom-popup.component';
 
 const components = [
   HeaderTopComponent,
-  AppComfirmComponent,
-  AppLoaderComponent,
   FooterComponent,
   SearchableSelectComponent,
   ReusablePincodePopupComponent,

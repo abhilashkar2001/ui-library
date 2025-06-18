@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { AppState, selectLocaleData } from '@onerumango/utils';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { LoanService } from 'app/shared/services/net-loan-service/loan.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomPopupComponent } from 'app/shared/components/custom-popup/custom-popup.component';
+import { LoanService } from '../../../../../shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -32,9 +32,9 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private sessionStorageService: SessionStorageService,
-    private loanService: LoanService,
     private store: Store<AppState>,
     private dialog: MatDialog,
+    private loanService: LoanService
   ) {}
 
   ngOnInit(): void {
