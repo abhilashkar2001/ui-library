@@ -1,0 +1,24 @@
+.login_section {
+  display: flex;
+  padding: 30px;
+
+  .login-content {
+    width: 100%;
+    padding-top: 20px;
+
+    .top-space {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .bank_txt {
+      position: relative;
+      top: 6px;
+    }
+
+    .top-spacing {
+      margin-top: 45px;
+      margin-bottom: 30px;
+    }
+  }
+}
