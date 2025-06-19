@@ -1,0 +1,41 @@
+.success_modal {
+  padding: 30px;
+  .close {
+    display: flex;
+    align-self: flex-end;
+    color: gray;
+    &:hover {
+      transform: rotate(180);
+    }
+  }
+
+  .details_block {
+    background-color: #f5f6ff;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 12px 0;
+
+    .attr_value {
+      color: #004c97;
+    }
+  }
+
+  .message_block {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .desclimer_block {
+    .note {
+      font-weight: 500;
+    }
+    .note_details {
+      color: #a0a0a0;
+      text-align: center;
+    }
+  }
+
+  .footer_block {
+    margin: 20px 0;
+  }
+}
