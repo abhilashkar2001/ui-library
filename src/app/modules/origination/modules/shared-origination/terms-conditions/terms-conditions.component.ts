@@ -34,7 +34,7 @@ export class TermsConditionsComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     private store: Store<AppState>,
     private dialog: MatDialog,
-    private loanService: LoanService
+    private loanService: LoanService,
   ) {}
 
   ngOnInit(): void {
