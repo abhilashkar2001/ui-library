@@ -1,0 +1,37 @@
+<div class="success_modal" fxLayout="column" fxLayoutAlign="center center">
+  <mat-icon class="close" (click)="onClose()">close</mat-icon>
+
+  <div class="img_container">
+    <img src="assets/images/success_modal.svg" alt="" />
+  </div>
+  <div
+    class="details_block"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="5px"
+  >
+    Application No:
+    <span class="attr_value">{{ data.applicationNo }}</span>
+  </div>
+  <div class="message_block">{{ data.msg }}</div>
+  <div class="desclimer_block" fxLayout="row">
+    <div class="note">Note:</div>
+    <div class="note_details">
+      {{ data.note }}
+    </div>
+  </div>
+  <div
+    class="footer_block"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="10px"
+  >
+    <ic-button label="Share" icButtonType="outlined-rounded"></ic-button>
+    <ic-button label="Download" icButtonType="outlined-rounded"></ic-button>
+    <ic-button
+      label="Done"
+      icButtonType="filled-rounded"
+      (OnClick)="onClose()"
+    ></ic-button>
+  </div>
+</div>

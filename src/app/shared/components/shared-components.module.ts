@@ -25,6 +25,7 @@ import { StagingSuccessAreaComponent } from './staging-success-area/staging-succ
 import { SuccessPopupComponent } from './success-popup/success-popup.component';
 import { HelpCenterComponent } from './help-center/help-center.component';
 import { CustomPopupComponent } from './custom-popup/custom-popup.component';
+import { SuccessModalPopupComponent } from './success-modal-popup/success-modal-popup.component';
 
 const components = [
   HeaderTopComponent,
@@ -39,6 +40,7 @@ const components = [
   SuccessPopupComponent,
   HelpCenterComponent,
   CustomPopupComponent,
+  SuccessModalPopupComponent,
 ];
 
 @NgModule({

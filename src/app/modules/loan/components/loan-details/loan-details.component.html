@@ -1,1 +1,164 @@
-<p>loan-details works!</p>
+<div [formGroup]="loanDetailsForm">
+  <ng-container *ngIf="!isEdit; else inputForm">
+    <div
+      fxLayout="row wrap"
+      fxFlex="100"
+      class="summary_pad"
+      fxLayoutGap="10px"
+    >
+      <div
+        *ngFor="let item of loanDetailsSummaryArr"
+        fxLayoutAlign="start start"
+        class="row"
+        fxLayout="column"
+        fxFlex="28.5"
+      >
+        <span class="header">{{ item.header }}</span>
+        <span class="value">
+          {{
+            item.date
+              ? item.value
+                ? (item.value | date: 'dd-MMM-yyyy')
+                : '-'
+              : item.currency
+                ? item.value !== null && item.value !== undefined
+                  ? (item.value | currency)
+                  : '-'
+                : item.value || '-'
+          }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #inputForm>
+    <mat-card class="default-card m-12 mb-12">
+      <!-- First Row -->
+      <div
+        class="content_row"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="20px"
+      >
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('loanAmount') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="Loan Amount Requested (GHS)"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="25">
+          <ic-tenure-field
+            [fieldLabels]="{
+              loanTenureYear: 'Year',
+              loanTenureMonth: 'Month',
+              loanTenureDay: 'Day',
+            }"
+            [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
+            [isRequired]="true"
+            [parentForm]="loanDetails"
+            label="Tenure"
+          ></ic-tenure-field>
+        </div>
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('interestRate') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="Interest Rate %"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('emiAmount') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="EMI Amount"
+          ></ic-form-field>
+        </div>
+      </div>
+
+      <!-- Second Row -->
+      <div
+        class="content_row mt-2"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="20"
+      >
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('interestPayable') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="Interest Payable"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('totalPrincipalAmount') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="Total Principal Amount"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="25">
+          <ic-form-field
+            [control]="loanDetails.get('totalPayableAmount') | formcontrol"
+            [decimalPlaces]="3"
+            [icTwoDigitDecimalNumber]="true"
+            [numLength]="18"
+            label="Total Payable Amount"
+          ></ic-form-field>
+        </div>
+      </div>
+
+      <!-- Third Row -->
+      <div
+        class="content_row mt-2"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="20"
+      >
+        <div fxFlex="25">
+          <ic-select
+            [control]="
+              loanDetailsForm.get('repaymentFrequencyId') | formcontrol
+            "
+            [options]="genericValue?.REPAYMENTFREQUENCY"
+            bindLabelKey="values"
+            bindValueKey="id"
+            label="Repayment Frequency"
+          ></ic-select>
+        </div>
+        <div fxFlex="25">
+          <ic-date-picker
+            [control]="loanDetailsForm.get('firstRepaymentDate') | formcontrol"
+            [minDate]="todaysDate"
+            label="EMI Start Date"
+          >
+          </ic-date-picker>
+        </div>
+
+        <div fxFlex="25">
+          <div class="header_md_bold_black mb-8">
+            {{ 'Holder Type *' }}
+          </div>
+          <div fxLayout="row" fxLayoutGap="50px">
+            <ic-radio-button
+              *ngFor="let status of holderTypeArr"
+              [control]="loanDetailsForm.get('holderType') | formcontrol"
+              [label]="status.label"
+              [value]="status.value"
+            ></ic-radio-button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-template>
+</div>
