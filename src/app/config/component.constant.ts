@@ -11,15 +11,15 @@ import { SummaryComponent } from '../modules/loan/components/summary/summary.com
 import { DigitalSignatureComponent } from '../modules/loan/components/digital-signature/digital-signature.component';
 
 export const ComponentConstant = {
-  LoanDetailsComponent,
-  DocumentUploadComponent,
-  BusinessDetailsComponent,
+  W1LACC: LoanDetailsComponent,
+  W1DOCU: DocumentUploadComponent,
+  W1BUDE: BusinessDetailsComponent,
   DirectorsDocumentUploadComponent,
   DirectorDetailsComponent,
-  DisbursementDetailsComponent,
-  CreditBureauComponent,
-  CollateralDetailsComponent,
-  TermsConditionComponent,
-  SummaryComponent,
-  DigitalSignatureComponent,
+  W1PERD: DisbursementDetailsComponent,
+  W1CRBU: CreditBureauComponent,
+  W1CODE: CollateralDetailsComponent,
+  W1TECO: TermsConditionComponent,
+  W1SUM: SummaryComponent,
+  W1SIGN: DigitalSignatureComponent,
 };

@@ -7,6 +7,7 @@ import { FormArrayPipe } from './formarray.pipe';
 import { FormControlPipe } from './formcontrol.pipe';
 import { FormGroupPipe } from './formgroup.pipe';
 import { TenureFormatPipe } from './tenure.pipe';
+import { MapPipe } from './map.pipe';
 
 const pipes = [
   SearchOptionsPipe,
@@ -16,6 +17,7 @@ const pipes = [
   FormControlPipe,
   FormGroupPipe,
   TenureFormatPipe,
+  MapPipe,
 ];
 
 @NgModule({
