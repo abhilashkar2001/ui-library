@@ -135,9 +135,11 @@ export class StagesComponent implements OnInit {
   fetchScreens(processStageId: number) {
     this.loanService.fetchScreens(processStageId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.screens) {
-        resp?.data?.screens
-          ?.splice(0, 1)
-          ?.sort((a, b) => a.sequence - b.sequence)
+        const screens = resp.data.screens;
+        const i = screens.findIndex((s) => s.sequence === 1);
+        if (i > -1) screens.splice(i, 1);
+        screens
+          .sort((a, b) => a.sequence - b.sequence)
           .forEach((screen) => {
             this.componentMapping.set(screen.screenValue, screen);
           });

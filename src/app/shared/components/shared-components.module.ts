@@ -26,6 +26,7 @@ import { SuccessPopupComponent } from './success-popup/success-popup.component';
 import { HelpCenterComponent } from './help-center/help-center.component';
 import { CustomPopupComponent } from './custom-popup/custom-popup.component';
 import { SuccessModalPopupComponent } from './success-modal-popup/success-modal-popup.component';
+import { ViewDocSidePanelComponent } from './view-doc-side-panel/view-doc-side-panel.component';
 
 const components = [
   HeaderTopComponent,
@@ -41,6 +42,7 @@ const components = [
   HelpCenterComponent,
   CustomPopupComponent,
   SuccessModalPopupComponent,
+  ViewDocSidePanelComponent,
 ];
 
 @NgModule({

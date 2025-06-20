@@ -1,0 +1,74 @@
+<div class="sidenav" [class.sidenav-open]="isSideNavOpen">
+  <div
+    class="sidenav-content"
+    fxLayout="column"
+    fxLayoutAlign="flex-start flex-start"
+  >
+    <div
+      class="sidenav-title w-100"
+      fxLayout="row"
+      fxLayoutAlign="space-between start"
+    >
+      <div>Document</div>
+      <div class="close_btn" (click)="closeSideNav()">
+        <mat-icon>close</mat-icon>
+      </div>
+    </div>
+    <div class="document_block w-100" fxLayout="column" fxLayoutGap="10px">
+      <div
+        class="document_item"
+        fxLayout="row"
+        fxLayoutAlign="space-between flex=-start"
+        *ngIf="documents.length"
+      >
+        <ng-container>
+          <div class="document_details" fxLayout="column">
+            <div class="document_name">
+              {{ documents[currentDocumentIndex]?.fileName }}
+            </div>
+            <div class="document_size">Size {{ documentSize }}</div>
+          </div>
+          <button
+            mat-icon-button
+            (click)="deleteDocument(documents[currentDocumentIndex]!)"
+          >
+            <img src="assets/images/trash_can.svg" alt="" />
+          </button>
+        </ng-container>
+      </div>
+      <div class="document_viewer" *ngIf="documents.length">
+        <img
+          *ngIf="!imageLoadError"
+          [src]="
+            documents[currentDocumentIndex]?.fileUrl
+              ? documents[currentDocumentIndex]?.fileUrl
+              : 'assets/images/default_fallback_img.svg'
+          "
+          [alt]="documents[currentDocumentIndex]?.fileName"
+          class="document-image"
+          (error)="imageLoadError = true"
+        />
+        <div *ngIf="imageLoadError" class="skeleton-loader"></div>
+      </div>
+      <div *ngIf="!documents.length" class="no-documents">
+        No documents available.
+      </div>
+    </div>
+    <div class="navigator" *ngIf="documents.length > 1">
+      <div
+        class="navigator_button"
+        (click)="previousDocument()"
+        [class.disabled]="currentDocumentIndex === 0"
+      >
+        <img src="assets/images/arrow-front.svg" alt="" />
+      </div>
+      <div
+        class="navigator_button"
+        (click)="nextDocument()"
+        [class.disabled]="currentDocumentIndex === documents.length - 1"
+      >
+        <img src="assets/images/arrow-back.svg" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
