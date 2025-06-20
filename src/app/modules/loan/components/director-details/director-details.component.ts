@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/personal-details.constant';
+import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import {
   GenericValueData,
   GenericValueInfoModel,
 } from 'app/shared/models/generic-value.model';
 import { CountryService } from 'app/shared/services/country-service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
@@ -32,14 +35,22 @@ export class DirectorDetailsComponent implements OnInit {
   private localeData: LocaleData | undefined;
   subscriptions: Subscription[] = [];
   defaultIsdCodeValue: any;
-  maxMobileLength: any;
+  maxMobileLength!: number;
   isMarried = false;
+  dobMinDate: Date | any;
+  dobMaxDate: Date | any;
+  dateFormat!: string;
+  @Input() basisId: any;
+  boundaries: any;
+  todayDate: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
     private countryService: CountryService,
     private genericValueService: GenericValueService,
     private store: Store<AppState>,
+    private dialog: MatDialog,
+    private openApi: OpenAccountService,
   ) {}
 
   ngOnInit() {
@@ -51,6 +62,7 @@ export class DirectorDetailsComponent implements OnInit {
     this.subscriptions.push(localeData$);
     this.getAllRequisite();
     this.getGenericDetails();
+    this.fetchBoundaries();
     this.buildPersonalDetailsForm();
   }
 
@@ -82,6 +94,30 @@ export class DirectorDetailsComponent implements OnInit {
           this.empoymentArray = resp.data['EMPLOYMENTTYPE'];
           this.relationArray = resp.data['RELATIONSHIPTYPE'];
           this.statementOptionArr = resp.data['COMMUNICATIONTYPE'];
+        }
+      });
+  }
+
+  fetchBoundaries() {
+    this.openApi
+      .fetchBoundariesDetails(this.basisId ?? 24878)
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 && res?.data) {
+          this.boundaries = res.data[0];
+          const minimumAge = this.boundaries.minimumAge ?? 0;
+          const maximumAge = this.boundaries.maximumAge ?? 0;
+
+          this.dobMaxDate = new Date(
+            this.todayDate.getFullYear() - maximumAge,
+            this.todayDate.getMonth(),
+            this.todayDate.getDate(),
+          );
+
+          this.dobMinDate = new Date(
+            this.todayDate.getFullYear() - minimumAge,
+            this.todayDate.getMonth(),
+            this.todayDate.getDate(),
+          );
         }
       });
   }
@@ -196,9 +232,9 @@ export class DirectorDetailsComponent implements OnInit {
           whatsappNo: [''],
           alternativeNumber: [''],
           residencePhone: [''],
-          mobtCode: [''],
-          waptCode: [''],
-          altCode: [''],
+          mobtCode: [this.defaultIsdCodeValue],
+          waptCode: [this.defaultIsdCodeValue],
+          altCode: [this.defaultIsdCodeValue],
           statementViaId: [''],
           address: this.fb.array([]),
         }),
@@ -208,10 +244,10 @@ export class DirectorDetailsComponent implements OnInit {
         email: [''],
         mobile: [''],
         mobtCode: [this.defaultIsdCodeValue],
-        alternativeNumber: [''],
-        altCode: [''],
-        whatsappNo: [''],
-        waptCode: [''],
+        alternativeNumber: [this.defaultIsdCodeValue],
+        altCode: [this.defaultIsdCodeValue],
+        whatsappNo: [],
+        waptCode: [this.defaultIsdCodeValue],
         telephone: [''],
         worktelephone: [''],
         fax: [''],
@@ -223,6 +259,8 @@ export class DirectorDetailsComponent implements OnInit {
     const docArray = formGroup.get('documentId') as FormArray;
     docArray.push(this.createDocumentGroup(0));
     return formGroup;
+
+    console.log(this.customerDetailsForm, 'formgroup');
   }
 
   getSpouseInfo(index: number): FormGroup {
@@ -243,6 +281,10 @@ export class DirectorDetailsComponent implements OnInit {
 
   getEmergencyContactAddress(index: number): FormArray {
     return this.getEmergencyContactDetails(index).get('address') as FormArray;
+  }
+
+  getCustomerContactDetails(index: number): FormGroup {
+    return this.customer.at(index)?.get('contact') as FormGroup;
   }
 
   async addCustomer(i: any, data?: any) {
@@ -272,6 +314,12 @@ export class DirectorDetailsComponent implements OnInit {
     );
   }
 
+  addEmergencyContactAddress(index: number, address?: any): void {
+    const addressArray = this.getEmergencyContactAddress(index);
+    addressArray.push(this.createEmergencyContactAddressGroup(address));
+  }
+
+  // Document Form Group
   createDocumentGroup(doc: any): FormGroup {
     return this.fb.group({
       docIds: [doc?.docIds || []],
@@ -280,5 +328,104 @@ export class DirectorDetailsComponent implements OnInit {
       expiryDate: [doc?.expiryDate ?? '', Validators.required],
       countryOfIssue: [doc?.countryOfIssue ?? '', Validators.required],
     });
+  }
+
+  // EmergencyContactAddressGroup
+  private createEmergencyContactAddressGroup(address?: any): FormGroup {
+    const group = this.fb.group({
+      addressId: [address?.addressId ?? null],
+      address1: [address?.address1 ?? '', Validators.required],
+      address2: [address?.address2 ?? '', Validators.required],
+      cityName: [address?.cityName ?? '', Validators.required],
+      stateName: [address?.stateName ?? ''],
+      countryName: [address?.countryName ?? ''],
+      pincode: [address?.pincode ?? '', Validators.required],
+      cityId: [address?.cityId ?? ''],
+      residenceType: [address?.residenceType ?? '', Validators.required],
+      residenceTypeValue: [address?.residenceTypeValue ?? ''],
+    });
+    // This ensures validators are processed immediately
+    group.updateValueAndValidity();
+    return group;
+  }
+
+  // Pincode Search Popup
+  pincodeExpansion(
+    customerIndex: number,
+    addressType: 'customer' | 'emergency' = 'customer',
+  ) {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: '60%',
+      disableClose: true,
+      panelClass: 'dialog-class',
+    });
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res) {
+        if (addressType === 'customer') {
+          // Handle customer address
+          const customerAddress = this.customer
+            .at(customerIndex)
+            .get('contact.address') as FormArray;
+          const addressControl = customerAddress.controls[0];
+          addressControl?.patchValue(res);
+          addressControl?.get('countryName')?.patchValue(res.countryName);
+        } else {
+          // Handle emergency contact address
+
+          const emergencyAddress =
+            this.getEmergencyContactAddress(customerIndex);
+
+          if (emergencyAddress.controls[0]) {
+            emergencyAddress.controls[0].patchValue(res);
+            emergencyAddress.controls[0]
+              .get('countryName')
+              ?.patchValue(res.countryName);
+          } else {
+            // If no address exists, add one
+            this.addEmergencyContactAddress(customerIndex, res);
+          }
+        }
+      }
+    });
+  }
+
+  // To check the Mobilelength according to isdCode
+  checkMobileLength(value: any, contactGroup: FormGroup, controlName: string) {
+    if (!contactGroup) {
+      return;
+    }
+    const countryCode = this.countriesIsdCodes?.find(
+      (resp: any) => resp.countryTelIsdCode === Number(value),
+    );
+    if (countryCode) {
+      this.maxMobileLength = countryCode?.mobileLength;
+      const control = contactGroup.get(controlName);
+      if (control) {
+        const validators = [
+          Validators.maxLength(this.maxMobileLength),
+          Validators.minLength(this.maxMobileLength),
+        ];
+        if (controlName === 'mobile') {
+          validators.unshift(Validators.required);
+        }
+        control.setValidators(validators);
+        control.updateValueAndValidity();
+      }
+    }
+  }
+
+  getExpDateMin() {
+    const currentDate = new Date(this.todayDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+    return currentDate;
+  }
+
+  confirmCustomer() {
+    console.log('confirm button');
+  }
+
+  goBack() {
+    console.log('skjdf');
   }
 }
