@@ -15,6 +15,7 @@ export class DisbursementDetailsComponent implements OnInit {
   staticData = {
     DISBURSEMENTTYPE: [],
     ACCOUNTTYPE: [],
+    CHEQUETYPE: [],
   };
   accountValue = [
     { label: 'Internal', value: true },
@@ -24,6 +25,8 @@ export class DisbursementDetailsComponent implements OnInit {
     { label: 'Yes', value: true },
     { label: 'No', value: false },
   ];
+  chequeValiadtors = ['chequeTypeId', 'customerName', 'collectingBranch'];
+  accountValidators = ['accountTypeId'];
 
   constructor(
     private fb: FormBuilder,
@@ -48,20 +51,19 @@ export class DisbursementDetailsComponent implements OnInit {
         data?.loanDisbursementModel?.disbursementModeValue?.data
           ?.disbursementTypeValue ?? 'Cash',
       ],
-      internal: [data?.internal ?? false],
-      internalAccount: [true],
       loanAmount: [data?.principalAmount ?? ''],
       firstDisbursementDate: [
         data?.loanDisbursementModel?.firstDisbursementDate ?? this.currentDate,
       ],
-      chequeNumber: [
-        data?.loanDisbursementModel?.chequeNumber ?? data?.chequeNumber ?? '',
-      ],
+      chequeTypeId: [data?.chequeTypeId ?? ''],
+      collectingBranch: [data?.collectingBranch ?? ''],
       requiredMultipleDisbursement: false,
       scheduleFrequencyYear: 0,
       scheduleFrequencyMonth: 1,
       scheduleFrequencyDay: 0,
       disbursementAccount: this.fb.group({
+        internal: [data?.internal ?? false],
+        internalAccount: [true],
         accountNo: [
           data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
         ],
@@ -82,8 +84,13 @@ export class DisbursementDetailsComponent implements OnInit {
         branchName: [
           data?.loanDisbursementModel?.disbursementAccount?.branchName ?? '',
         ],
+        newAccount: [false],
       }),
     });
+  }
+
+  get loanDisbursementAccount() {
+    return this.disbursementForm?.get('disbursementAccount') as FormGroup;
   }
 
   fetchGenericValues() {
@@ -105,6 +112,18 @@ export class DisbursementDetailsComponent implements OnInit {
       this.disbursementForm
         ?.get('disbursementTypeValue')
         ?.setValue(disbursement);
+      if (disbursement?.includes('Cheque')) {
+        this.chequeValiadtors.forEach((field) => {
+          this.disbursementForm
+            ?.get(field)
+            ?.setValidators([Validators.required]);
+          this.disbursementForm?.get(field)?.updateValueAndValidity();
+        });
+        this.accountValidators.forEach((field) => {
+          this.disbursementForm?.get(field)?.clearValidators();
+          this.disbursementForm?.get(field)?.updateValueAndValidity();
+        });
+      }
     }
   }
 }
