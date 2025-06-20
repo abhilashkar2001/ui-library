@@ -1,1 +1,121 @@
-<p>disbursement-details works!</p>
+<form *ngIf="disbursementForm" [formGroup]="disbursementForm" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <div fxFlex="24">
+      <ic-select
+        (selectionChange)="setDisbursement($event)"
+        [control]="disbursementForm.get('disbursementTypeId') | formcontrol"
+        [options]="genericValue?.['DISBURSEMENTTYPE'] || []"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Disbursement Type"
+      ></ic-select>
+    </div>
+    <div
+      *ngIf="
+        disbursementForm?.get('disbursementTypeValue')?.value === 'Account'
+      "
+      class="enabled-mat-form-field p-8"
+      fxFlex="24"
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+    >
+      <mat-label class="header_md_bold_black" fxFlex="100">Account </mat-label>
+      <ic-radio-button
+        *ngFor="let account of accountValue"
+        [control]="disbursementForm.get('internal') | formcontrol"
+        [label]="account.label"
+        [value]="account.value"
+        fxFlex="25"
+      >
+      </ic-radio-button>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <ng-container
+      *ngIf="
+        disbursementForm?.get('disbursementTypeValue')?.value === 'Account'
+      "
+    >
+      <div
+        *ngIf="disbursementForm?.get('internal')?.value === true"
+        class="enabled-mat-form-field p-8"
+        fxFlex="24"
+        fxLayout="row wrap"
+        fxLayoutAlign="start center"
+      >
+        <mat-label class="header_md_bold_black" fxFlex="100"
+          >Do you have Internal Account
+        </mat-label>
+        <ic-radio-button
+          *ngFor="let account of internalAccount"
+          [control]="disbursementForm.get('internalAccount') | formcontrol"
+          [label]="account.label"
+          [value]="account.value"
+          fxFlex="25"
+        >
+        </ic-radio-button>
+      </div>
+      <ng-container
+        *ngIf="
+          disbursementForm?.get('internal')?.value === false ||
+          disbursementForm?.get('internalAccount')?.value === true
+        "
+      >
+        <div fxFlex="24">
+          <ic-form-field
+            [control]="disbursementForm.get('accountNo') | formcontrol"
+            [icNumbersOnly]="true"
+            [maxLength]="20"
+            label="Account Number"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="24">
+          <ic-form-field
+            [control]="disbursementForm.get('confirmAccountNo') | formcontrol"
+            [icNumbersOnly]="true"
+            [maxLength]="20"
+            label="Confirm Account Number"
+          ></ic-form-field>
+        </div>
+        <div
+          fxFlex="24"
+          *ngIf="disbursementForm?.get('internal')?.value === false"
+        >
+          <ic-select
+            [control]="disbursementForm.get('accountTypeId') | formcontrol"
+            [options]="genericValue?.['ACCOUNTTYPE'] ?? []"
+            bindLabelKey="values"
+            bindValueKey="id"
+            label="Account Type"
+          ></ic-select>
+        </div>
+        <div fxFlex="24">
+          <ic-form-field
+            [control]="disbursementForm.get('customerName') | formcontrol"
+            [icAlphaNumericWithSpace]="true"
+            [maxLength]="40"
+            label="Account Holder"
+          ></ic-form-field>
+        </div>
+        <div
+          *ngIf="disbursementForm?.get('internal')?.value === false"
+          fxFlex="24"
+        >
+          <ic-form-field
+            [control]="disbursementForm.get('bankCode') | formcontrol"
+            [icAlphanumeric]="true"
+            [maxLength]="35"
+            label="Bank Code"
+          ></ic-form-field>
+        </div>
+        <div fxFlex="24">
+          <ic-form-field
+            [control]="disbursementForm.get('branchName') | formcontrol"
+            [icAlphabetOnly]="true"
+            label="Branch Name"
+          ></ic-form-field>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</form>
