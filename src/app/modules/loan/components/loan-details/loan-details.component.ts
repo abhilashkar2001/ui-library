@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 
-
 @Component({
   selector: 'app-loan-details',
   templateUrl: './loan-details.component.html',
