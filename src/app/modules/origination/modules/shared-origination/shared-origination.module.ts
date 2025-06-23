@@ -36,6 +36,7 @@ import { InputMaskModule } from '../../../../shared/directives/input-mask/input-
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { LibPipesModule } from '@onerumango/utils';
 import { ViewLoanDocComponent } from './view-loan-doc/view-loan-doc.component';
+import { CustomFileUploadComponent } from './custom-file-upload/custom-file-upload.component';
 
 const components = [
   CarouselComponent,
@@ -45,6 +46,7 @@ const components = [
   CommmonSteeperComponent,
   CommonProductComponent,
   CusotmWebDocUploadComponent,
+  CustomFileUploadComponent,
   ErrorNotifierPopupComponent,
   FaqComponent,
   ImageDialogComponent,

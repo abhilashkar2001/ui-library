@@ -15,7 +15,7 @@ export class CibilScoreResultComponent implements OnInit {
   @Output() backEvent = new EventEmitter<Data>();
   // @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
   @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
-  cibilScore = 600;
+  cibilScore = 689;
   dataSource: any;
   cibilScoreList = [
     {

@@ -8,7 +8,7 @@ describe('ViewDocSidePanelComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewDocSidePanelComponent]
+      declarations: [ViewDocSidePanelComponent],
     });
     fixture = TestBed.createComponent(ViewDocSidePanelComponent);
     component = fixture.componentInstance;

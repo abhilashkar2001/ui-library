@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedPipesModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedOriginationModule,
   ],
 })
 export class LoanModule {}

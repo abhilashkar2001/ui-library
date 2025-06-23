@@ -62,6 +62,9 @@
 
                     <ic-date-picker
                       [control]="customer.get('dateOfBirth') | formcontrol"
+                      [maxDate]="dobMinDate"
+                      [minDate]="dobMaxDate"
+                      [placeholder]="dateFormat"
                       fxFlex="24"
                       label="DateOfBirth"
                     >
@@ -104,10 +107,13 @@
                           [control]="docGroup.get('issueDate') | formcontrol"
                           fxFlex="24"
                           label="Date Issued"
+                          [maxDate]="todayDate"
                         ></ic-date-picker>
 
                         <ic-date-picker
                           [control]="docGroup.get('expiryDate') | formcontrol"
+                          [minDate]="getExpDateMin()"
+                          [placeholder]="dateFormat"
                           fxFlex="24"
                           label="Expiry Date"
                         >
@@ -153,6 +159,13 @@
                     fxLayoutAlign="space-between center"
                   >
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'mobile'
+                        )
+                      "
                       [formControl]="
                         customer.get('contact')?.get('mobile') | formcontrol
                       "
@@ -165,6 +178,13 @@
                     ></ic-mobile-field>
 
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'alternativeNumber'
+                        )
+                      "
                       [formControl]="
                         customer.get('contact')?.get('alternativeNumber')
                           | formcontrol
@@ -179,6 +199,13 @@
                     ></ic-mobile-field>
 
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'whatsappNo'
+                        )
+                      "
                       [formControl]="
                         customer.get('contact')?.get('whatsappNo') | formcontrol
                       "
@@ -290,6 +317,7 @@
                           label="Suburb"
                         ></ic-form-field>
                         <ic-form-field
+                          (onSuffixClick)="pincodeExpansion(i, 'customer')"
                           [control]="addressGroup.get('pincode') | formcontrol"
                           [icNumbersOnly]="true"
                           [maxLength]="10"
@@ -314,7 +342,6 @@
                     </ng-container>
                   </div>
 
-                  {{ isMarried }}
                   <ng-container *ngIf="isMarried">
                     <div class="highlight_title">Spouse Details</div>
                     <div
@@ -482,6 +509,13 @@
                     ></ic-select>
 
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'mobile'
+                        )
+                      "
                       [formControl]="
                         getEmergencyContactDetails(i).get('mobile')
                           | formcontrol
@@ -497,6 +531,13 @@
                       label="Mobile Number"
                     ></ic-mobile-field>
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'alternativeNumber'
+                        )
+                      "
                       [formControl]="
                         getEmergencyContactDetails(i).get('alternativeNumber')
                           | formcontrol
@@ -512,6 +553,13 @@
                       label="Alternate Number"
                     ></ic-mobile-field>
                     <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'whatsappNo'
+                        )
+                      "
                       [formControl]="
                         getEmergencyContactDetails(i).get('whatsappNo')
                           | formcontrol
@@ -603,6 +651,7 @@
                       bindLabelKey="values"
                       bindValueKey="id"
                       fxFlex="24"
+                      [options]="residenceTypeArray"
                       label="Residential status"
                     ></ic-select>
                     <ic-form-field
@@ -615,15 +664,7 @@
                       label="Suburb"
                     ></ic-form-field>
                     <ic-form-field
-                      [control]="
-                        getEmergencyContactAddress(i).controls[0]?.get(
-                          'cityName'
-                        ) | formcontrol
-                      "
-                      fxFlex="24"
-                      label="City"
-                    ></ic-form-field>
-                    <ic-form-field
+                      (onSuffixClick)="pincodeExpansion(i, 'emergency')"
                       [control]="
                         getEmergencyContactAddress(i).controls[0]?.get(
                           'pincode'
@@ -633,7 +674,27 @@
                       label="Postal Code"
                       suffixIcon="search"
                     ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'cityName'
+                        ) | formcontrol
+                      "
+                      fxFlex="24"
+                      label="City"
+                    ></ic-form-field>
                   </div>
+                </div>
+
+                <div fxLayoutAlign="end center">
+                  <ic-button
+                    (OnClick)="confirmCustomer()"
+                    [icButtonType]="'filled-rounded'"
+                    [label]="'Save'"
+                    [type]="'submit'"
+                    size="medium"
+                  >
+                  </ic-button>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
@@ -642,4 +703,32 @@
       </div>
     </div>
   </form>
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutGap="1%"
+    style="margin-top: 50px"
+    fxLayoutAlign="end center"
+  >
+    <div>
+      <ic-button
+        (OnClick)="confirmCustomer()"
+        [icButtonType]="'filled-rounded'"
+        [label]="'Next'"
+        [type]="'submit'"
+        size="medium"
+      >
+      </ic-button>
+    </div>
+    <div>
+      <ic-button
+        (OnClick)="goBack()"
+        [label]="'Back'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-danger"
+        size="medium"
+      >
+      </ic-button>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,68 @@
+<div class="file_upload">
+  <form [formGroup]="createDocumentForm" fxFlex="100" fxLayout="column">
+    <ng-container formArrayName="otherDocument">
+      <div
+        *ngFor="let docCtrl of otherDocument().controls; let i = index"
+        [formGroupName]="i"
+        class="document-panel"
+      >
+        <mat-expansion-panel class="styled-panel" [expanded]="true">
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div class="panel-title">
+                <mat-icon color="primary" class="doc-icon"
+                  >check_circle</mat-icon
+                >
+                <span class="header_md">
+                  {{ docCtrl.get('documentType')?.value || 'New Document' }}
+                </span>
+                <span class="required">*</span>
+              </div>
+              <span
+                class="delete_btn"
+                (click)="removeDocument(i)"
+                tabindex="0"
+                (keydown)="removeDocument(i)"
+              >
+                Delete
+              </span>
+            </div>
+          </mat-expansion-panel-header>
+
+          <div class="upload-section">
+            <span class="header_md">Upload files</span>
+            <p class="breadcrum_md">
+              Max file size is 500kb. Supported file types are .jpg and .png.
+            </p>
+            <label class="upload-button">
+              <input
+                type="file"
+                multiple
+                (change)="fileBrowseHandler(i)"
+                accept=".jpg,.png"
+                hidden
+              />
+              Choose
+            </label>
+          </div>
+
+          <div
+            class="uploaded-images"
+            *ngIf="docCtrl.get('fileInfo')?.value?.length"
+          >
+            <div
+              class="image-box"
+              *ngFor="let file of docCtrl.get('fileInfo')?.value; let j = index"
+            >
+              <img [src]="file.url" alt="Preview" />
+              <span class="file-name">{{ file.name }}</span>
+              <button mat-icon-button (click)="removeFile(i, j)">
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </ng-container>
+  </form>
+</div>

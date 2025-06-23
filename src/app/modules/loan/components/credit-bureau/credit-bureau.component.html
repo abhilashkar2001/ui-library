@@ -1,1 +1,100 @@
-<p>credit-bureau works!</p>
+<section fxLayout="column" fxLayoutGap="10">
+  <div class="header_lg">
+    This is the number linked to your existing relationship with us.
+  </div>
+  <div
+    class="info-card"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="24px"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxFlex="45"
+      fxLayoutGap="10"
+    >
+      <div class="icon">
+        <img alt="shield" src="/assets/images/shield.svg" />
+      </div>
+      <div fxLayout="column" fxLayoutGap="10">
+        <div class="header_md">Your Phone No</div>
+        <div class="theme_md">+91 43624531452</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="45">
+      <div fxLayout="column" fxLayoutGap="10">
+        <div class="header_md">Your National ID</div>
+        <div class="theme_md">**IIPS976E</div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="showOtpSection; else cibilChart">
+    <div fxLayout="row" fxFlex="100">
+      <div fxLayout="column" fxLayoutGap="25">
+        <ic-form-field
+          fxFlex="24"
+          label="Enter Verification Code (6-digit)"
+          [icNumbersOnly]="true"
+          [maxLength]="6"
+          [minLength]="6"
+          [control]="otp"
+        >
+        </ic-form-field>
+        <span class="header_sm">
+          Didn’t receive the OTP?
+          <span class="breadcrum_sm">Resend OTP (0:30min)</span>
+        </span>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10">
+      <ic-checkbox
+        class="custom-checkbox"
+        class="primary"
+        style="margin-right: 10px"
+      >
+      </ic-checkbox>
+      <span class="breadcrum_md mb-4">
+        I agree to the use of my National ID for the Bank's
+        <span
+          (click)="openDialog()"
+          (keydown.enter)="openDialog()"
+          class="link"
+          tabindex="1"
+          >internal purposes</span
+        >
+        as described above.
+      </span>
+    </div>
+  </ng-container>
+  <ng-template #cibilChart>
+    <app-cibil-score-result> </app-cibil-score-result>
+  </ng-template>
+</section>
+
+<ng-template #consentDialog>
+  <div class="popup-container">
+    <div fxLayoutAlign="end center">
+      <ic-button
+        customButtonClass="box-shadow-none"
+        icButtonType="ghost-neutral"
+        icIcon="close"
+        mat-dialog-close
+        type="button"
+      ></ic-button>
+    </div>
+    <h2 class="popup-title">Consent Content</h2>
+    <p>
+      <span class="popup-title">Note:</span> By checking this box, I hereby
+      consent to the use of my National ID number by [Bank Name] for internal
+      purposes, including but not limited to identity verification, account
+      management, and compliance with regulatory requirements. I understand that
+      my National ID will be used solely for these purposes and will be handled
+      in accordance with the Bank’s privacy policy and relevant data protection
+      laws in ----.
+    </p>
+  </div>
+</ng-template>

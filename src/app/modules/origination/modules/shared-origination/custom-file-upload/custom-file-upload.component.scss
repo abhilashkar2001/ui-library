@@ -1,0 +1,125 @@
+.file_upload {
+  .document-panel {
+    margin-bottom: 16px;
+
+    .styled-panel {
+      background-color: #f6faff;
+      border-radius: 12px;
+      border: 1px solid #d3e2f3;
+
+      .panel-header {
+        background-color: #f1f6fb;
+        padding: 10px 15px;
+        border-radius: 12px 12px 0 0;
+
+        .panel-header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+
+          .panel-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 16px;
+            color: #123b66;
+
+            .doc-icon {
+              margin-right: 8px;
+              color: #28a745;
+            }
+
+            .required {
+              color: red;
+              margin-left: 6px;
+            }
+          }
+
+          .delete_btn {
+            font-size: 14px;
+            text-decoration: underline;
+            color: #b20000;
+            cursor: pointer;
+            position: relative;
+            right: 30px;
+            &:hover {
+              color: #ff0000;
+            }
+          }
+        }
+      }
+
+      .upload-section {
+        padding: 16px 24px;
+
+        .upload-label {
+          display: block;
+          font-weight: 600;
+          margin-bottom: 4px;
+          color: #1d2b4f;
+        }
+
+        .upload-subtext {
+          font-size: 13px;
+          color: #6c757d;
+          margin-bottom: 16px;
+        }
+
+        .upload-button {
+          display: inline-block;
+          padding: 8px 20px;
+          border: 1px solid #007bff;
+          border-radius: 20px;
+          color: #007bff;
+          font-weight: 500;
+          cursor: pointer;
+          transition: 0.2s ease;
+
+          &:hover {
+            background-color: #e8f1ff;
+          }
+        }
+      }
+
+      .uploaded-images {
+        padding: 0 24px 16px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+
+        .image-box {
+          background-color: white;
+          border: 1px solid #d1e3f0;
+          border-radius: 8px;
+          padding: 10px;
+          width: 160px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          position: relative;
+
+          img {
+            width: 100px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+          }
+
+          .file-name {
+            font-size: 13px;
+            text-align: center;
+            color: #333;
+          }
+
+          button {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
