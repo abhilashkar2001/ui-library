@@ -1,21 +1,73 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-custom-file-upload',
   templateUrl: './custom-file-upload.component.html',
   styleUrls: ['./custom-file-upload.component.scss'],
 })
-export class CustomFileUploadComponent implements OnInit {
+export class CustomFileUploadComponent implements OnInit, OnChanges {
   createDocumentForm!: FormGroup;
   @Input() isOtherDocVisible = true;
-
-  loanDocarr: any[] = [];
-
-  constructor(private fb: FormBuilder) {}
+  @Input() checkListDocList: any;
+  checklistArr: string[] = [];
+  staticData: any = {
+    DOCUMENTNAME: [],
+  };
+  documentOptions = ['Pan Card', 'Voter ID', 'Last 6 months bank statement'];
+  imageUrl: string | undefined;
+  selectedImage: Blob | any;
+  files: any;
+  documentTypeArray: any;
+  nationalIdGeneric: any;
+  ocrPass = false;
+  frontAadhar: any;
+  fileUrls: any;
+  documentIds = [
+    {
+      docIds: [],
+    },
+  ];
+  documentInfo: any;
+  constructor(
+    private fb: FormBuilder,
+    private genericValueService: GenericValueService,
+    private documentUploadService: DocumentUploadService,
+  ) {}
 
   ngOnInit() {
     this.buildForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges | any): void {
+    if (changes?.checkListDocList?.currentValue) {
+      this.checkListDocList = changes.checkListDocList.currentValue;
+      this.buildForm(this.checkListDocList?.requiredDocument ?? []);
+    }
+
+    this.getGenericDetails();
+  }
+
+  getGenericDetails() {
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.staticData = { ...resp.data };
+          this.documentTypeArray = resp.data['DOCUMENTNAME'];
+          this.nationalIdGeneric = this.documentTypeArray.filter((item: any) =>
+            item.values.toLowerCase().includes('aadhar'),
+          )[0].id;
+        }
+      });
   }
 
   buildForm(data?: any) {
@@ -28,7 +80,7 @@ export class CustomFileUploadComponent implements OnInit {
         this.addDocument(item);
       });
     }
-    if (this.isOtherDocVisible) this.addDocument();
+    // if (this.isOtherDocVisible) this.addDocument();
   }
 
   otherDocument(): FormArray {
@@ -53,28 +105,147 @@ export class CustomFileUploadComponent implements OnInit {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     if (!this.isOtherDocVisible) inputElement.accept = 'image/*';
+
     inputElement.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
         const file: any = target.files[0];
+        this.selectedImage = file;
+
         this.displayImage(i, file, file.size);
-        // this.uploadImage(file, i);
-        const fReader = new FileReader();
-        fReader.readAsDataURL(file);
+        this.uploadImage(file, i);
+        setTimeout(() => {
+          const fileInfo = this.otherDocument().at(i).get('fileInfo')?.value;
+          const latestIndex = fileInfo?.length - 1;
+          if (latestIndex >= 0) {
+            this.uploadFilesSimulator(i, latestIndex);
+          }
+        }, 200);
       }
     });
 
     inputElement.click();
   }
 
-  displayImage(indx: number, file: File, size: number): void {
+  uploadFilesSimulator(docIndex: number, fileIndex: number) {
+    const fileInfoControl = this.otherDocument().at(docIndex).get('fileInfo');
+    const files = fileInfoControl?.value;
+
+    if (!files || !files[fileIndex]) return;
+
+    const progressInterval = setInterval(() => {
+      if (files[fileIndex].progress === '100%') {
+        clearInterval(progressInterval);
+        if (fileIndex + 1 < files.length) {
+          this.uploadFilesSimulator(docIndex, fileIndex + 1);
+        }
+      } else {
+        // Increment progress
+        const updatedProgress = parseInt(files[fileIndex].progress) + 10;
+        files[fileIndex].progress = `${Math.min(updatedProgress, 100)}%`;
+        fileInfoControl?.setValue([...files]); // trigger update
+      }
+    }, 200);
+  }
+
+  uploadImage(file: any, i: any) {
+    const formData = new FormData();
+    const data = {
+      ...(this.isOtherDocVisible
+        ? {
+            documentNameForChecklist:
+              this.createDocumentForm.value.otherDocument[i].documentType,
+          }
+        : ''),
+      documentName: !this.isOtherDocVisible ? this.nationalIdGeneric : null,
+      documentType: !this.isOtherDocVisible
+        ? this.nationalIdGeneric
+        : this.createDocumentForm.value.otherDocument[i].documentType,
+      documentNumber:
+        this.createDocumentForm.value.otherDocument[i].documentNumber,
+      documentSide:
+        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1,
+      fileName: file.name,
+      fileType: file.type,
+      verificationType: 'kyc',
+    };
+
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', file);
+    formData.append('module', 'document');
+    this.ocrPass = false;
+
+    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
+      if (resp?.statusCode === 200) {
+        if (
+          data?.documentNameForChecklist?.toLowerCase()?.includes('national') &&
+          i == 0
+        ) {
+          this.frontAadhar = resp.data.fileUrl;
+        }
+        this.updateDocId(i).push(resp.data.documentId);
+        this.fileUrls.push(resp.data.fileUrl);
+        this.documentIds.push(this.createDocumentForm.value);
+        const fileInfoArr =
+          this.otherDocument().controls[i]?.get('fileInfo')?.value;
+        fileInfoArr.forEach((fileInfoObj: any) => {
+          if (resp.data.fileName.includes(fileInfoObj.name)) {
+            fileInfoObj.newFileUrl = resp.data.fileUrl;
+          }
+        });
+        this.otherDocument()
+          .controls[i]?.get('fileInfo')
+          ?.setValue(fileInfoArr);
+
+        const index =
+          this.otherDocument()?.controls[i]?.get('fileInfo')?.value?.length - 1;
+
+        this.updateFileInfo(
+          index,
+          i,
+          this.documentInfo?.name,
+          this.documentInfo?.dateOfBirth,
+          this.documentInfo?.gender,
+        );
+
+        // this.extractDoc(
+        //   this.createDocumentForm.value.otherDocument[i].documentType,
+        //   parseInt(this.sessionStorageService.getOriginationId()),
+        //   file,
+        //   resp.data.documentId,
+        // );
+      }
+    });
+  }
+
+  updateDocId(indx: any): any[] {
+    return this.otherDocument().controls[indx]?.get('docIds')?.value;
+  }
+
+  updateFileInfo(index: any, i: any, name: any, dateOfBirth: any, gender: any) {
+    const fileInfoControl = this.otherDocument()?.controls[i]?.get('fileInfo');
+    if (fileInfoControl && fileInfoControl.value) {
+      fileInfoControl.value[index] = {
+        ...fileInfoControl.value[index],
+        applicantName: name,
+        dateOfBirth: dateOfBirth,
+        gender: gender,
+        documentNumber:
+          this.otherDocument()?.controls[i]?.get('docIds')?.value[index],
+      };
+    }
+  }
+
+  displayImage(indx: any, file: any, size: any) {
     const reader = new FileReader();
     const sizeinKb = (size / 1024).toFixed(2);
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      const result = event.target?.result as string;
-      const fileInfoArray = this.getFileInfo(indx);
-      fileInfoArray.push({
-        url: result,
+    reader.onload = (event: ProgressEvent<FileReader> | any) => {
+      this.imageUrl = event.target.result as string;
+
+      // Read and update the form control
+      const fileArray = this.getFileInfo(indx); // this returns a shallow copy
+      fileArray.push({
+        url: this.imageUrl,
         name: file.name,
         progress: '100%',
         size: `${sizeinKb}kb`,
@@ -83,16 +254,29 @@ export class CustomFileUploadComponent implements OnInit {
         imageUrl: '',
       });
 
+      this.otherDocument().controls[indx]?.get('fileInfo')?.setValue(fileArray);
       setTimeout(() => {
-        fileInfoArray[fileInfoArray.length - 1].progress = '0%';
+        const updatedArray = this.getFileInfo(indx);
+        updatedArray[updatedArray.length - 1].progress = '0%';
+        this.otherDocument()
+          .controls[indx]?.get('fileInfo')
+          ?.setValue(updatedArray);
       }, 1000);
     };
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(this.selectedImage);
+
+    console.log(this.createDocumentForm, 'documentform');
   }
 
   getFileInfo(indx: number) {
-    return this.otherDocument()?.controls[indx]?.get('fileInfo')?.value || [];
+    return this.otherDocument()?.controls[indx]?.get('fileInfo')?.value;
+  }
+
+  getFileUrl(file: any) {
+    if (file.name.endsWith('pdf') || file.name.endsWith('xlsx')) {
+      return 'assets/images/file_icon.svg';
+    } else return file.url;
   }
 
   removeFile(docIndex: number, fileIndex: number) {
@@ -108,5 +292,18 @@ export class CustomFileUploadComponent implements OnInit {
 
   removeDocument(index: number) {
     this.otherDocument().removeAt(index);
+  }
+
+  addDocumentFromDropdown(documentType: string) {
+    this.checklistArr.push(documentType);
+    this.otherDocument().push(
+      this.fb.group({
+        documentNumber: [''],
+        documentType: [documentType],
+        fileInfo: new FormControl([]),
+        docIds: new FormControl([]),
+        docRequired: false,
+      }),
+    );
   }
 }

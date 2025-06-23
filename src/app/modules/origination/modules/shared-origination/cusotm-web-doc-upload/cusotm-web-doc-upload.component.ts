@@ -116,7 +116,6 @@ export class CusotmWebDocUploadComponent
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
-    console.log(changes, 'changes');
     if (changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);

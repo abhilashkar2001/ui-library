@@ -104,6 +104,12 @@ export class LoanService {
     );
   }
 
+  getCheckListDocNoOrigination(stageId: any, screenCode: any) {
+    return this.http.get<any>(
+      `${baseUrl}/process_stage/fetchCheckListForScreen?stageId=${stageId}&screenCode=${screenCode}`,
+    );
+  }
+
   /**
    * This method will save the checklist for particular screen
    * @param payload

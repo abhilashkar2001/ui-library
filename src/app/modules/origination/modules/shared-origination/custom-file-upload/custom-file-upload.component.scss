@@ -1,6 +1,6 @@
 .file_upload {
   .document-panel {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 
     .styled-panel {
       background-color: #f6faff;
@@ -14,7 +14,6 @@
 
         .panel-header-content {
           display: flex;
-          justify-content: space-between;
           align-items: center;
           width: 100%;
 
@@ -24,6 +23,7 @@
             font-weight: 600;
             font-size: 16px;
             color: #123b66;
+            flex-grow: 1;
 
             .doc-icon {
               margin-right: 8px;
@@ -36,13 +36,18 @@
             }
           }
 
-          .delete_btn {
+          .delete_btn,
+          .disabled_delete {
             font-size: 14px;
             text-decoration: underline;
-            color: #b20000;
             cursor: pointer;
-            position: relative;
-            right: 30px;
+            color: #b20000;
+            margin-right: 25px;
+            &.disabled_delete {
+              color: #999;
+              pointer-events: none;
+            }
+
             &:hover {
               color: #ff0000;
             }
@@ -53,73 +58,127 @@
       .upload-section {
         padding: 16px 24px;
 
-        .upload-label {
-          display: block;
+        .medium_txt {
           font-weight: 600;
-          margin-bottom: 4px;
           color: #1d2b4f;
         }
 
-        .upload-subtext {
+        .breadcrum_md {
           font-size: 13px;
           color: #6c757d;
-          margin-bottom: 16px;
-        }
-
-        .upload-button {
-          display: inline-block;
-          padding: 8px 20px;
-          border: 1px solid #007bff;
-          border-radius: 20px;
-          color: #007bff;
-          font-weight: 500;
-          cursor: pointer;
-          transition: 0.2s ease;
-
-          &:hover {
-            background-color: #e8f1ff;
-          }
+          margin: 4px 0 16px 0;
         }
       }
 
-      .uploaded-images {
-        padding: 0 24px 16px;
+      .uploaded_list {
         display: flex;
-        gap: 16px;
         flex-wrap: wrap;
+        gap: 2%;
+        padding: 0 24px 1rem;
+        width: 100%;
 
-        .image-box {
-          background-color: white;
-          border: 1px solid #d1e3f0;
-          border-radius: 8px;
-          padding: 10px;
-          width: 160px;
+        .upload_img {
+          background-color: #fff;
+          border-radius: 10px;
+          padding: 0.75rem 1rem;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          position: relative;
+          gap: 1rem;
+          flex: 0 0 48%;
+          box-sizing: border-box;
 
-          img {
-            width: 100px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 8px;
+          &:hover {
+            background-color: #e6eeff;
+            cursor: pointer;
           }
 
-          .file-name {
-            font-size: 13px;
-            text-align: center;
-            color: #333;
+          .img_box {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
           }
 
-          button {
-            position: absolute;
-            top: 4px;
-            right: 4px;
+          .img_container {
+            flex: 1;
+
+            .img_name {
+              font-weight: 500;
+              font-size: 14px;
+              word-break: break-word;
+            }
+
+            .theme_sm {
+              font-size: 12px;
+              color: #666;
+            }
+
+            .progress-cont {
+              width: 100%;
+              background-color: #d1e3f0;
+              height: 6px;
+              border-radius: 4px;
+              margin-top: 4px;
+
+              .progress {
+                height: 100%;
+                background-color: #004c97;
+                border-radius: 4px;
+              }
+            }
+          }
+
+          .cancel-icon {
+            cursor: pointer;
+            font-size: 16px;
+            color: #ff0000;
           }
         }
       }
     }
+  }
+
+  .add-btn {
+    border: 1px solid #004c97;
+    color: #004c97 !important;
+    border-radius: 20px;
+    width: 100px;
+    padding: 4px 12px;
+    text-transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Mat Menu Overrides
+::ng-deep .mat-mdc-menu-panel {
+  border-radius: 12px !important;
+  background: #f8fbff !important;
+  min-width: 200px !important;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-mdc-menu-item {
+  font-size: 14px;
+  color: #222;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin: 2px 8px;
+
+  &:hover {
+    background: #f5f6ff !important;
   }
 }
