@@ -1,5 +1,21 @@
 <div class="file_upload">
   <form [formGroup]="createDocumentForm" fxFlex="100" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
+      <button mat-button [matMenuTriggerFor]="docMenu" class="add-btn">
+        <span>Add</span>
+      </button>
+    </div>
+
+    <mat-menu #docMenu="matMenu" class="custom-menu">
+      <button
+        mat-menu-item
+        *ngFor="let doc of documentOptions"
+        (click)="addDocumentFromDropdown(doc)"
+      >
+        {{ doc }}
+      </button>
+    </mat-menu>
+
     <ng-container formArrayName="otherDocument">
       <div
         *ngFor="let docCtrl of otherDocument().controls; let i = index"
@@ -19,6 +35,11 @@
                 <span class="required">*</span>
               </div>
               <span
+                [ngClass]="
+                  this.checkListDocList?.requiredDocument
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                "
                 class="delete_btn"
                 (click)="removeDocument(i)"
                 tabindex="0"
@@ -29,36 +50,59 @@
             </div>
           </mat-expansion-panel-header>
 
-          <div class="upload-section">
-            <span class="header_md">Upload files</span>
-            <p class="breadcrum_md">
-              Max file size is 500kb. Supported file types are .jpg and .png.
-            </p>
-            <label class="upload-button">
-              <input
-                type="file"
-                multiple
-                (change)="fileBrowseHandler(i)"
-                accept=".jpg,.png"
-                hidden
-              />
-              Choose
-            </label>
-          </div>
+          <div fxLayout="column">
+            <div class="upload-section">
+              <span class="medium_txt">Upload files</span>
+              <p class="breadcrum_md">
+                Max file size is 500kb. Supported file types are .jpg and .png.
+              </p>
+              <ic-button
+                (OnClick)="fileBrowseHandler(i)"
+                label="Choose"
+                size="medium"
+                type="button"
+                icButtonType="outlined-rounded"
+              >
+              </ic-button>
+            </div>
 
-          <div
-            class="uploaded-images"
-            *ngIf="docCtrl.get('fileInfo')?.value?.length"
-          >
             <div
-              class="image-box"
-              *ngFor="let file of docCtrl.get('fileInfo')?.value; let j = index"
+              class="uploaded_list"
+              fxLayout="row wrap"
+              fxLayoutGap="2%"
+              fxFlex="100"
             >
-              <img [src]="file.url" alt="Preview" />
-              <span class="file-name">{{ file.name }}</span>
-              <button mat-icon-button (click)="removeFile(i, j)">
-                <mat-icon color="warn">delete</mat-icon>
-              </button>
+              <div
+                *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                fxFlex="48"
+                class="upload_img"
+                tabindex="0"
+              >
+                <div class="img_box">
+                  <img [src]="getFileUrl(file)" alt="image" />
+                </div>
+                <div class="img_container">
+                  <span class="header_md img_name">{{ file?.name }}</span>
+                  <div
+                    *ngIf="file.progress === '100%'; else showSize"
+                    class="progress-cont"
+                  >
+                    <div
+                      [style.width]="file.progress ?? '0%'"
+                      class="progress"
+                    ></div>
+                  </div>
+                  <ng-template #showSize>
+                    <div class="theme_sm">{{ file.size }}</div>
+                  </ng-template>
+                </div>
+                <ic-icon
+                  class="cancel-icon"
+                  name="delete"
+                  (click)="removeFile(i, fileIndx)"
+                  tabindex="1"
+                ></ic-icon>
+              </div>
             </div>
           </div>
         </mat-expansion-panel>
