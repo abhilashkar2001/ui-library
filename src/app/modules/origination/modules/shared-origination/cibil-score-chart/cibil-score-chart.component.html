@@ -16,16 +16,16 @@
 
   <!-- Chart Content -->
   <div class="chart_content">
-    <div class="cibil-label">You Credit Score is</div>
-    <div class="result-btn">
+    <div class="header_lg">Your Credit Bureau is</div>
+    <div class="result-btn header_xl">
       {{ cibilScoreText() }}
       <div class="info-button" placement="bottom">
-        <mat-icon>info</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">info_outlined</mat-icon>
       </div>
       <div class="cibil_score_info">
         <div fxLayout="column">
-          <div class="parentCibil">Understnd CIBIL Score</div>
-          <div class="cibilInfo">
+          <div class="txt_lg_bold_white">Understand CIBIL Score</div>
+          <div class="txt_md_white">
             Your CIBIL score is 3 digit number that appers on your credit
             report. The usual range between 300 and 900.
           </div>
@@ -41,9 +41,9 @@
                 [style.background-color]="cibil?.colorCode"
                 class="circle"
               ></div>
-              <div class="cibil_score pl-4">{{ cibil?.score }}</div>
+              <div class="txt_md_white pl-4">{{ cibil?.score }}</div>
             </div>
-            <div class="cibil_score">{{ cibil?.description }}</div>
+            <div class="txt_md_white">{{ cibil?.description }}</div>
           </div>
         </div>
       </div>
