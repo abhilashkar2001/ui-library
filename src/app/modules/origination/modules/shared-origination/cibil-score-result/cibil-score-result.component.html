@@ -52,7 +52,12 @@
     </div>
   </div>
 
-  <div class="button-section" fxLayout="row" fxLayoutGap="2%">
+  <div
+    class="button-section"
+    fxLayout="row"
+    fxLayoutGap="2%"
+    *ngIf="isButtonRequired"
+  >
     <ic-button
       (OnClick)="onContinue()"
       [icButtonType]="'filled-rounded'"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { SidenavService } from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-disbursement-details',
@@ -31,6 +32,7 @@ export class DisbursementDetailsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
+    public sidenavService: SidenavService,
   ) {
     this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -125,5 +127,9 @@ export class DisbursementDetailsComponent implements OnInit {
         });
       }
     }
+  }
+
+  searchBankCode() {
+    console.log('first');
   }
 }

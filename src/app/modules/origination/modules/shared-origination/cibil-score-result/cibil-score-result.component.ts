@@ -12,9 +12,10 @@ export class CibilScoreResultComponent implements OnInit {
   dialogsaveRef!: MatDialogRef<CibilScorePoorDialgComponent>;
   @Input() flow: string | any;
   @Input() isDifferentMobile: boolean | any;
+  @Input() isButtonRequired: boolean | any = true;
   @Output() backEvent = new EventEmitter<Data>();
   // @Output() onBackFromCIBILscoreResult: EventEmitter<any> = new EventEmitter();
-  @Output() onCibilConfirmEvent: EventEmitter<any> = new EventEmitter();
+  @Output() cibilConfirmEvent: EventEmitter<any> = new EventEmitter();
   cibilScore = 689;
   dataSource: any;
   cibilScoreList = [
@@ -108,6 +109,6 @@ export class CibilScoreResultComponent implements OnInit {
   }
 
   onContinue() {
-    this.onCibilConfirmEvent.emit({ isNext: true });
+    this.cibilConfirmEvent.emit({ isNext: true });
   }
 }

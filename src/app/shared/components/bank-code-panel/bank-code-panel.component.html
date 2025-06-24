@@ -1,0 +1,33 @@
+<form *ngIf="bankForm" [formGroup]="bankForm" fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 class="header_lg">Find Bank Code</h3>
+    <mat-icon>close</mat-icon>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <div fxFlex="48">
+      <ic-form-field
+        [control]="bankForm.get('bankCode') | formcontrol"
+        label="Bank Code"
+        [maxLength]="40"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="48">
+      <ic-select
+        [options]="[]"
+        [control]="bankForm.get('bankName') | formcontrol"
+        label="Bank Name"
+      ></ic-select>
+    </div>
+    <div fxFlex="48">
+      <ic-select
+        [options]="[]"
+        [control]="bankForm.get('branchName') | formcontrol"
+        label="Branch Name / City"
+      ></ic-select>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
+    <ic-button label="Back" icButtonType="outlined-rounded"></ic-button>
+    <ic-button label="Fetch" icButtonType="filled-rounded"></ic-button>
+  </div>
+</form>
