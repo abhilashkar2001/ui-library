@@ -1,12 +1,14 @@
-import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Injectable, ViewContainerRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { DrawerContextData } from 'app/modules/loan/drawer-context-data';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SidenavService {
-  private panel!: MatSidenav;
-  private vcf!: ViewContainerRef;
+  private panel: MatSidenav | undefined;
+  private vcf: ViewContainerRef | undefined;
 
   setPanel(sidenav: MatSidenav) {
     this.panel = sidenav;
@@ -16,21 +18,39 @@ export class SidenavService {
     this.vcf = viewContainerRef;
   }
 
-  open(template: TemplateRef<any>) {
-    this.createView(template);
-    return this.panel.open();
+  private createView(data: DrawerContextData) {
+    this.vcf?.clear();
+    console.log(data);
+    const componentRef = this.vcf?.createComponent(data.component);
+    if (componentRef) componentRef.instance.data = data.data;
+  }
+
+  open(data: DrawerContextData, openSlip?: boolean) {
+    this.createView(data);
+    if (openSlip == true) {
+      this.setCustomeClass('panel-half-drawer');
+    } else {
+      this.setCustomeClass('panel-end-drawer');
+    }
+    return this.panel?.open();
+  }
+
+  openCustomWidth(data: DrawerContextData, className?: string) {
+    this.createView(data);
+    if (className) this.setCustomeClass(className);
+    return this.panel?.open();
   }
 
   close() {
-    return this.panel.close();
+    return this.panel?.close();
   }
 
   toggle() {
-    return this.panel.toggle();
+    return this.panel?.toggle();
   }
-
-  private createView(template: TemplateRef<any>) {
-    this.vcf.clear();
-    this.vcf.createEmbeddedView(template);
+  public sidePanelClass = new BehaviorSubject<string>('panel-end-drawer');
+  public panelClass = this.sidePanelClass.asObservable();
+  setCustomeClass(customClass: string) {
+    this.sidePanelClass.next(customClass);
   }
 }

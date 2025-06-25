@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
+import { DrawerContextData } from '../../drawer-context-data';
+import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/bank-code-panel.component';
 
 @Component({
   selector: 'app-disbursement-details',
@@ -130,6 +132,10 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   searchBankCode() {
-    console.log('first');
+    const contextData: DrawerContextData = {
+      component: BankCodePanelComponent,
+      data: 2,
+    };
+    this.sidenavService.open(contextData);
   }
 }

@@ -4,14 +4,10 @@
 
     .styled-panel {
       background-color: #f6faff;
-      border-radius: 12px;
-      border: 1px solid #d3e2f3;
 
       .panel-header {
         background-color: #f1f6fb;
         padding: 10px 15px;
-        border-radius: 12px 12px 0 0;
-
         .panel-header-content {
           display: flex;
           align-items: center;
@@ -31,7 +27,7 @@
             }
 
             .required {
-              color: red;
+              color: #b20000;
               margin-left: 6px;
             }
           }
@@ -56,8 +52,7 @@
       }
 
       .upload-section {
-        padding: 16px 24px;
-
+        padding: 16px 8px;
         .medium_txt {
           font-weight: 600;
           color: #1d2b4f;
@@ -71,22 +66,15 @@
       }
 
       .uploaded_list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2%;
-        padding: 0 24px 1rem;
         width: 100%;
-
         .upload_img {
           background-color: #fff;
           border-radius: 10px;
           padding: 0.75rem 1rem;
           display: flex;
           align-items: center;
-          gap: 1rem;
           flex: 0 0 48%;
           box-sizing: border-box;
-
           &:hover {
             background-color: #e6eeff;
             cursor: pointer;
@@ -97,7 +85,6 @@
             height: 45px;
             border-radius: 8px;
             overflow: hidden;
-
             img {
               width: 100%;
               height: 100%;
@@ -107,13 +94,11 @@
 
           .img_container {
             flex: 1;
-
             .img_name {
               font-weight: 500;
               font-size: 14px;
               word-break: break-word;
             }
-
             .theme_sm {
               font-size: 12px;
               color: #666;
@@ -137,28 +122,37 @@
           .cancel-icon {
             cursor: pointer;
             font-size: 16px;
-            color: #ff0000;
+            color: #b20000;
           }
         }
       }
     }
   }
 
-  .add-btn {
+  .custom-add-btn {
     border: 1px solid #004c97;
-    color: #004c97 !important;
+    color: #004c97;
     border-radius: 20px;
     width: 100px;
-    padding: 4px 12px;
+    padding: 6px 12px;
     text-transform: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 12px;
     font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
 
-    mat-icon {
-      font-size: 18px;
+    .btn-icon img {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+
+    &:hover {
+      background: rgba(0, 76, 151, 0.05);
     }
   }
 }
@@ -181,4 +175,8 @@
   &:hover {
     background: #f5f6ff !important;
   }
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none !important;
 }

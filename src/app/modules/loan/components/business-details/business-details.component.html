@@ -1,1 +1,169 @@
-<p>business-details works!</p>
+<div [formGroup]="businessDetailsForm" class="business-main" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutGap="10">
+    <div fxFlex="48.5">
+      <ic-form-field
+        [control]="businessDetailsForm.get('businessName') | formcontrol"
+        [icAlphabetOnly]="true"
+        [maxLength]="100"
+        label="Registered/Company Name"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="businessDetailsForm.get('companyTypeId') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Company Type"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="businessDetailsForm.get('natureOfBusinessId') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Nature of Business"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="businessDetailsForm.get('segmentId') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Segment"
+      >
+      </ic-select>
+    </div>
+
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('noOfDirectors') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="Number of Directors"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="
+          businessDetailsForm.get('countryOfIncorporation') | formcontrol
+        "
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Country of Incorporation"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-date-picker
+        [control]="businessDetailsForm.get('dateOfIncorporation') | formcontrol"
+        [placeholder]="dateFormat"
+        label="Date of Incorporation"
+      >
+      </ic-date-picker>
+    </div>
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('registrationNumber') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="Registration Number"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('tinNumber') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="TIN Number"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="businessDetailsForm.get('sourceOfIncome') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Source of Income"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <div class="header_md_bold_black mb-8">
+        {{ 'Ownership of the collateral *' }}
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="50px">
+        <ic-radio-button
+          *ngFor="let status of businessIntensityArr"
+          [control]="businessDetailsForm.get('businessIntensity') | formcontrol"
+          [label]="status.label"
+          [value]="status.value"
+        ></ic-radio-button>
+      </div>
+    </div>
+    <div fxFlex="49">
+      <ic-textarea
+        label="Customer Description"
+        [control]="businessDetailsForm.get('customerDescription') | formcontrol"
+        [rows]="8"
+        fxFlex="100"
+      >
+      </ic-textarea>
+    </div>
+    <div fxFlex="49">
+      <ic-textarea
+        label="Description of Business"
+        [control]="
+          businessDetailsForm.get('descriptionofBusiness') | formcontrol
+        "
+        [rows]="8"
+        fxFlex="100"
+      >
+      </ic-textarea>
+    </div>
+
+    <div fxFlex="49">
+      <ic-select
+        [control]="businessDetailsForm.get('parentCompany') | formcontrol"
+        [options]="industryTypeList"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Parent Company"
+      >
+      </ic-select>
+    </div>
+  </div>
+
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutGap="1%"
+    style="margin-top: 50px"
+    fxLayoutAlign="end center"
+  >
+    <div>
+      <ic-button
+        [label]="'Back'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-danger"
+        size="medium"
+      >
+      </ic-button>
+    </div>
+    <div>
+      <ic-button
+        [icButtonType]="'filled-rounded'"
+        [label]="'Next'"
+        [type]="'submit'"
+        size="medium"
+      >
+      </ic-button>
+    </div>
+  </div>
+</div>

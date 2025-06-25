@@ -13,16 +13,20 @@
     </div>
     <div fxFlex="48">
       <ic-select
-        [options]="[]"
+        [options]="branchList ?? []"
         [control]="bankForm.get('bankName') | formcontrol"
         label="Bank Name"
+        bindLabelKey="bankName"
+        bindValueKey="bankName"
       ></ic-select>
     </div>
     <div fxFlex="48">
       <ic-select
-        [options]="[]"
+        [options]="branchList ?? []"
         [control]="bankForm.get('branchName') | formcontrol"
         label="Branch Name / City"
+        bindLabelKey="branchName"
+        bindValueKey="branchName"
       ></ic-select>
     </div>
   </div>
@@ -30,4 +34,17 @@
     <ic-button label="Back" icButtonType="outlined-rounded"></ic-button>
     <ic-button label="Fetch" icButtonType="filled-rounded"></ic-button>
   </div>
+  <h3 class="header_lg">Search Results</h3>
+  <mat-card
+    class="p-8"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    *ngFor="let data of fetchedData"
+  >
+    <div fxLayout="column" fxLayoutGap="1%">
+      <span class="header_md">{{ data?.bankName }}</span>
+      <span class="breadcrum_xs">{{ data?.bankCode }}</span>
+    </div>
+    <span class="theme_md cursor-pointer">Select</span>
+  </mat-card>
 </form>

@@ -1,18 +1,31 @@
 <div class="file_upload">
   <form [formGroup]="createDocumentForm" fxFlex="100" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
-      <button mat-button [matMenuTriggerFor]="docMenu" class="add-btn">
-        <span>Add</span>
-      </button>
+      <div
+        class="custom-add-btn"
+        [matMenuTriggerFor]="docMenu"
+        #trigger="matMenuTrigger"
+      >
+        <span class="btn-text">Add</span>
+        <span class="btn-icon">
+          <img src="assets/images/down_arrow.svg" alt="dropdown" />
+        </span>
+      </div>
+      <button
+        mat-button
+        [matMenuTriggerFor]="docMenu"
+        #trigger
+        style="display: none"
+      ></button>
     </div>
 
     <mat-menu #docMenu="matMenu" class="custom-menu">
       <button
         mat-menu-item
-        *ngFor="let doc of documentOptions"
-        (click)="addDocumentFromDropdown(doc)"
+        *ngFor="let doc of noReqCheckListDocList"
+        (click)="addDocumentFromDropdown(doc?.document)"
       >
-        {{ doc }}
+        {{ doc?.document }}
       </button>
     </mat-menu>
 
@@ -25,22 +38,32 @@
         <mat-expansion-panel class="styled-panel" [expanded]="true">
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
-              <div class="panel-title">
-                <mat-icon color="primary" class="doc-icon"
-                  >check_circle</mat-icon
-                >
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
+                <img
+                  *ngIf="getFileInfo(i)?.length > 0; else unticked"
+                  src="assets/images/tickicon.svg"
+                  alt="Tick"
+                />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
                 <span class="header_md">
                   {{ docCtrl.get('documentType')?.value || 'New Document' }}
                 </span>
-                <span class="required">*</span>
+                <span *ngIf="docCtrl.get('docRequired')?.value" class="required"
+                  >*</span
+                >
               </div>
               <span
                 [ngClass]="
-                  this.checkListDocList?.requiredDocument
+                  docCtrl.get('docRequired')?.value
                     ? 'disabled_delete'
                     : 'delete_btn'
                 "
-                class="delete_btn"
                 (click)="removeDocument(i)"
                 tabindex="0"
                 (keydown)="removeDocument(i)"
@@ -69,14 +92,14 @@
             <div
               class="uploaded_list"
               fxLayout="row wrap"
-              fxLayoutGap="2%"
               fxFlex="100"
+              fxLayoutAlign="space-between center"
             >
               <div
                 *ngFor="let file of getFileInfo(i); let fileIndx = index"
-                fxFlex="48"
+                fxFlex="49"
+                fxLayoutGap="10"
                 class="upload_img"
-                tabindex="0"
               >
                 <div class="img_box">
                   <img [src]="getFileUrl(file)" alt="image" />
@@ -96,17 +119,45 @@
                     <div class="theme_sm">{{ file.size }}</div>
                   </ng-template>
                 </div>
-                <ic-icon
-                  class="cancel-icon"
-                  name="delete"
+                <img
+                  tabindex="0"
+                  (keydown.enter)="removeFile(i, fileIndx)"
+                  src="assets/images/trash_new.svg"
+                  alt="trash"
                   (click)="removeFile(i, fileIndx)"
-                  tabindex="1"
-                ></ic-icon>
+                />
               </div>
             </div>
           </div>
         </mat-expansion-panel>
       </div>
     </ng-container>
+
+    <div
+      fxFlex="100"
+      fxLayout="row"
+      fxLayoutGap="1%"
+      style="margin-top: 50px"
+      fxLayoutAlign="end center"
+    >
+      <div>
+        <ic-button
+          [label]="'Back'"
+          [type]="'button'"
+          icButtonType="ghost-rounded-danger"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+      <div>
+        <ic-button
+          [icButtonType]="'filled-rounded'"
+          [label]="'Next'"
+          [type]="'submit'"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+    </div>
   </form>
 </div>

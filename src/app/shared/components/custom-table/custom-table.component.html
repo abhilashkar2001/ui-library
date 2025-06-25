@@ -1,0 +1,55 @@
+<mat-table mat-table [dataSource]="dataSource">
+  <!-- Dynamic columns -->
+  <ng-container *ngFor="let header of tableHeaders" [matColumnDef]="header.key">
+    <!-- Header cell -->
+    <mat-header-cell class="mat-header-cell" *matHeaderCellDef>{{
+      header.label
+    }}</mat-header-cell>
+
+    <!-- Row cell -->
+    <mat-cell *matCellDef="let element">
+      <!-- Render different cell contents based on key -->
+      <ng-container [ngSwitch]="header.key">
+        <!-- For collateral name -->
+        <ng-container *ngSwitchCase="'collateralName'">
+          <span class="theme_md">{{ element[header.key] }}</span>
+        </ng-container>
+        <!-- For document link -->
+        <ng-container *ngSwitchCase="'document'">
+          <span class="theme_md"><u>View Document</u></span>
+        </ng-container>
+
+        <!-- For action buttons -->
+        <ng-container *ngSwitchCase="'action'">
+          <button mat-icon-button (click)="editRow(element)">
+            <mat-icon fontSet="material-icons-outlined">edit_outlined</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteRow(element)">
+            <mat-icon fontSet="material-icons-outlined"
+              >delete_outlined</mat-icon
+            >
+          </button>
+        </ng-container>
+
+        <!-- Default case for other data -->
+        <ng-container *ngSwitchDefault>
+          <span class="breadcrum_md">{{ element[header.key] }}</span>
+        </ng-container>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Row definitions -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+
+<!-- Paginator -->
+<!-- <mat-paginator
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+></mat-paginator> -->
+
+<div class="paginator-container">
+  <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6, 8]"></mat-paginator>
+</div>

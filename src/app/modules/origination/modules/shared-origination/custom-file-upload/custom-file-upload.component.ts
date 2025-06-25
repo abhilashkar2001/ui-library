@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -22,7 +23,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   staticData: any = {
     DOCUMENTNAME: [],
   };
-  documentOptions = ['Pan Card', 'Voter ID', 'Last 6 months bank statement'];
+
   imageUrl: string | undefined;
   selectedImage: Blob | any;
   files: any;
@@ -30,17 +31,19 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   nationalIdGeneric: any;
   ocrPass = false;
   frontAadhar: any;
-  fileUrls: any;
+  fileUrls: any[] = [];
   documentIds = [
     {
       docIds: [],
     },
   ];
   documentInfo: any;
+  noReqCheckListDocList: any;
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private documentUploadService: DocumentUploadService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -50,6 +53,11 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges | any): void {
     if (changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
+      this.noReqCheckListDocList =
+        changes.checkListDocList.currentValue.nonRequiredDocument;
+
+      console.log(this.noReqCheckListDocList, 'check');
+
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
 
@@ -114,13 +122,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
 
         this.displayImage(i, file, file.size);
         this.uploadImage(file, i);
-        setTimeout(() => {
-          const fileInfo = this.otherDocument().at(i).get('fileInfo')?.value;
-          const latestIndex = fileInfo?.length - 1;
-          if (latestIndex >= 0) {
-            this.uploadFilesSimulator(i, latestIndex);
-          }
-        }, 200);
       }
     });
 
@@ -140,10 +141,9 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           this.uploadFilesSimulator(docIndex, fileIndex + 1);
         }
       } else {
-        // Increment progress
         const updatedProgress = parseInt(files[fileIndex].progress) + 10;
         files[fileIndex].progress = `${Math.min(updatedProgress, 100)}%`;
-        fileInfoControl?.setValue([...files]); // trigger update
+        fileInfoControl?.setValue([...files]);
       }
     }, 200);
   }
@@ -184,7 +184,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           this.frontAadhar = resp.data.fileUrl;
         }
         this.updateDocId(i).push(resp.data.documentId);
-        this.fileUrls.push(resp.data.fileUrl);
+        this.fileUrls?.push(resp.data?.fileUrl);
         this.documentIds.push(this.createDocumentForm.value);
         const fileInfoArr =
           this.otherDocument().controls[i]?.get('fileInfo')?.value;
@@ -239,13 +239,15 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   displayImage(indx: any, file: any, size: any) {
     const reader = new FileReader();
     const sizeinKb = (size / 1024).toFixed(2);
-    reader.onload = (event: ProgressEvent<FileReader> | any) => {
-      this.imageUrl = event.target.result as string;
 
-      // Read and update the form control
-      const fileArray = this.getFileInfo(indx); // this returns a shallow copy
-      fileArray.push({
-        url: this.imageUrl,
+    reader.onload = (event: ProgressEvent<FileReader> | any) => {
+      const imageUrl = event.target.result as string;
+
+      const existing = this.getFileInfo(indx) || [];
+      const updatedFiles = [...existing];
+
+      updatedFiles.push({
+        url: imageUrl,
         name: file.name,
         progress: '100%',
         size: `${sizeinKb}kb`,
@@ -254,19 +256,21 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         imageUrl: '',
       });
 
-      this.otherDocument().controls[indx]?.get('fileInfo')?.setValue(fileArray);
+      this.otherDocument().at(indx).get('fileInfo')?.setValue(updatedFiles);
+
+      this.cdr.detectChanges();
+
       setTimeout(() => {
-        const updatedArray = this.getFileInfo(indx);
-        updatedArray[updatedArray.length - 1].progress = '0%';
-        this.otherDocument()
-          .controls[indx]?.get('fileInfo')
-          ?.setValue(updatedArray);
-      }, 1000);
+        const refreshed = [...updatedFiles];
+        refreshed[refreshed.length - 1].progress = '0%';
+        this.otherDocument().at(indx).get('fileInfo')?.setValue(refreshed);
+        this.cdr.detectChanges();
+      }, 500);
     };
 
-    reader.readAsDataURL(this.selectedImage);
+    console.log(this.createDocumentForm, 'formgroup');
 
-    console.log(this.createDocumentForm, 'documentform');
+    reader.readAsDataURL(file);
   }
 
   getFileInfo(indx: number) {

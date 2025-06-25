@@ -11,7 +11,7 @@ const MICROSERVICE_URL = environment.microServiceURL;
 export class BranchService {
   constructor(private http: HttpClient) {}
 
-  public getCountries(): Observable<any> {
+  public fetchBranch(): Observable<any> {
     return this.http.get<any>(`${MICROSERVICE_URL}/branch`);
   }
 }

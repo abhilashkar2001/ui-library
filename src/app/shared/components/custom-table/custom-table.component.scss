@@ -1,0 +1,15 @@
+.mat-header-cell {
+  color: #161616 !important;
+  font-weight: 500 !important;
+}
+
+.paginator-container {
+  flex-shrink: 0;
+
+  mat-paginator {
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background: #f4f4f4;
+  }
+}

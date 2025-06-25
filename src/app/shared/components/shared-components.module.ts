@@ -28,6 +28,7 @@ import { CustomPopupComponent } from './custom-popup/custom-popup.component';
 import { SuccessModalPopupComponent } from './success-modal-popup/success-modal-popup.component';
 import { ViewDocSidePanelComponent } from './view-doc-side-panel/view-doc-side-panel.component';
 import { BankCodePanelComponent } from './bank-code-panel/bank-code-panel.component';
+import { CustomTableComponent } from './custom-table/custom-table.component';
 
 const components = [
   HeaderTopComponent,
@@ -45,6 +46,7 @@ const components = [
   SuccessModalPopupComponent,
   ViewDocSidePanelComponent,
   BankCodePanelComponent,
+  CustomTableComponent,
 ];
 
 @NgModule({
