@@ -126,17 +126,19 @@
           fxLayout="row wrap"
           fxLayoutAlign="start center"
         >
-          <mat-label class="header_md_bold_black" fxFlex="100"
-            >Account
-          </mat-label>
-          <ic-radio-button
-            *ngFor="let account of accountValue"
-            [control]="loanDisbursementModel.get('internal') | formcontrol"
-            [label]="account.label"
-            [value]="account.value"
-            fxFlex="25"
-          >
-          </ic-radio-button>
+          <div class="header_md_bold_black mb-8">
+            {{ 'Ownership of the collateral *' | translate }}
+          </div>
+          <div fxLayout="row" fxLayoutGap="50px">
+            <ic-radio-button
+              *ngFor="let account of accountValue"
+              [control]="loanDisbursementModel.get('internal') | formcontrol"
+              [label]="account.label"
+              [value]="account.value"
+              fxFlex="25"
+            >
+            </ic-radio-button>
+          </div>
         </div>
         <div
           *ngIf="loanDisbursementModel?.get('internal')?.value === false"

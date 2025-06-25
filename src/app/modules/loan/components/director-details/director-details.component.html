@@ -712,20 +712,20 @@
   >
     <div>
       <ic-button
-        (OnClick)="confirmCustomer()"
-        [icButtonType]="'filled-rounded'"
-        [label]="'Next'"
-        [type]="'submit'"
+        (OnClick)="goBack()"
+        [label]="'Back'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-danger"
         size="medium"
       >
       </ic-button>
     </div>
     <div>
       <ic-button
-        (OnClick)="goBack()"
-        [label]="'Back'"
-        [type]="'button'"
-        icButtonType="ghost-rounded-danger"
+        (OnClick)="confirmCustomer()"
+        [icButtonType]="'filled-rounded'"
+        [label]="'Next'"
+        [type]="'submit'"
         size="medium"
       >
       </ic-button>
