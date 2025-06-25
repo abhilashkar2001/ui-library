@@ -8,7 +8,7 @@ describe('CustomTableComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomTableComponent]
+      declarations: [CustomTableComponent],
     });
     fixture = TestBed.createComponent(CustomTableComponent);
     component = fixture.componentInstance;
