@@ -1,17 +1,19 @@
 <mat-accordion>
   <ng-container *ngIf="componentMapping">
-    <mat-expansion-panel
-      (closed)="onPanelClosed(i)"
-      (opened)="onPanelOpened(i, panel.screenValue)"
-      *ngFor="let panel of componentMapping | map; let i = index"
-    >
-      <mat-expansion-panel-header>{{
+    <div class="document-panel container">
+      <mat-expansion-panel
+        class="styled-panel"
+        *ngFor="let panel of componentMapping | map; let i = index"
+        (closed)="onPanelClosed(i)"
+        (opened)="onPanelOpened(i, panel.screenValue)"
+      >
+        <mat-expansion-panel-header class="panel-header">{{
           panel.screenName
-        }}
-      </mat-expansion-panel-header>
-      <div>
-        <ng-template #container></ng-template>
-      </div>
-    </mat-expansion-panel>
+        }}</mat-expansion-panel-header>
+        <div>
+          <ng-template #container></ng-template>
+        </div>
+      </mat-expansion-panel>
+    </div>
   </ng-container>
 </mat-accordion>

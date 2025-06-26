@@ -1,11 +1,10 @@
-<mat-table [dataSource]="dataSource" mat-table>
+<mat-table mat-table [dataSource]="dataSource">
   <!-- Dynamic columns -->
   <ng-container *ngFor="let header of tableHeaders" [matColumnDef]="header.key">
     <!-- Header cell -->
-    <mat-header-cell *matHeaderCellDef class="mat-header-cell">{{
-        header.label
-      }}
-    </mat-header-cell>
+    <mat-header-cell class="mat-header-cell" *matHeaderCellDef>{{
+      header.label
+    }}</mat-header-cell>
 
     <!-- Row cell -->
     <mat-cell *matCellDef="let element">
@@ -15,6 +14,14 @@
         <ng-container *ngSwitchCase="'collateralName'">
           <span class="theme_md">{{ element[header.key] }}</span>
         </ng-container>
+
+        <ng-container *ngSwitchCase="'description'">
+          <span class="breadcrum_md" [matTooltip]="element[header.key]">{{
+            element[header.key]?.length > 30
+              ? element[header.key].slice(0, 30) + '...'
+              : element[header.key]
+          }}</span>
+        </ng-container>
         <!-- For document link -->
         <ng-container *ngSwitchCase="'document'">
           <span class="theme_md"><u>View Document</u></span>
@@ -22,13 +29,14 @@
 
         <!-- For action buttons -->
         <ng-container *ngSwitchCase="'action'">
-          <button (click)="editRow(element)" mat-icon-button>
-            <mat-icon fontSet="material-icons-outlined">edit_outlined</mat-icon>
+          <button mat-icon-button (click)="editRow(element)">
+            <mat-icon fontSet="material-icons-outlined" color="da"
+              >edit_outlined</mat-icon
+            >
           </button>
-          <button (click)="deleteRow(element)" color="warn" mat-icon-button>
+          <button mat-icon-button color="warn" (click)="deleteRow(element)">
             <mat-icon fontSet="material-icons-outlined"
-            >delete_outlined
-            </mat-icon
+              >delete_outlined</mat-icon
             >
           </button>
         </ng-container>
@@ -47,11 +55,56 @@
 </mat-table>
 
 <!-- Paginator -->
-<!-- <mat-paginator
-  [pageSize]="5"
-  [pageSizeOptions]="[5, 10, 25, 100]"
-></mat-paginator> -->
+<div
+  class="custom-pagination"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
+  <div fxLayoutAlign="center center" fxLayoutGap="10px">
+    <!-- Items per page -->
+    <span>Items per page:</span>
 
-<div class="paginator-container">
-  <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6, 8]"></mat-paginator>
+    <mat-form-field appearance="fill" class="simple-select-field">
+      <mat-select [(ngModel)]="pageSize">
+        <mat-option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="vertical-line"></div>
+    <!-- Range info -->
+    <span>{{ getRangeText() }} of {{ totalItems }} items</span>
+  </div>
+  <div fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div class="vertical-line"></div>
+    <mat-form-field appearance="fill" class="simple-select-field">
+      <mat-select [(ngModel)]="currentPage" (selectionChange)="onPageChange()">
+        <mat-option *ngFor="let page of totalPagesArray()" [value]="page">{{
+          page
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span>of {{ totalPages }} pages</span>
+    <div class="vertical-line"></div>
+
+    <!-- Navigation buttons -->
+    <button
+      mat-icon-button
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div class="vertical-line"></div>
+
+    <button
+      mat-icon-button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  <!-- Page selector -->
 </div>

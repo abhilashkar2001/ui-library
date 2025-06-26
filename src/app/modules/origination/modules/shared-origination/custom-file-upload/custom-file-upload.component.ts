@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 
@@ -17,10 +18,9 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 })
 export class CustomFileUploadComponent implements OnInit, OnChanges {
   createDocumentForm!: FormGroup;
-  @Input() isOtherDocVisible = true;
   @Input() checkListDocList: any;
-  checklistArr: string[] = [];
-  staticData: any = {
+  @Input() isChecklistDoc = false;
+  staticData: GenericValueInfoModel = {
     DOCUMENTNAME: [],
   };
 
@@ -39,7 +39,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   ];
   documentInfo: any;
   noReqCheckListDocList: any;
-
+  screenName = 'customer';
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -52,16 +52,12 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
-    if (changes?.checkListDocList?.currentValue) {
+    if (this.isChecklistDoc && changes?.checkListDocList?.currentValue) {
       this.checkListDocList = changes.checkListDocList.currentValue;
       this.noReqCheckListDocList =
         changes.checkListDocList.currentValue.nonRequiredDocument;
-
-      console.log(this.noReqCheckListDocList, 'check');
-
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
-
     this.getGenericDetails();
   }
 
@@ -82,6 +78,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
       otherDocument: this.fb.array([]),
+      applicants: this.fb.array([]),
     });
 
     if (data?.length > 0) {
@@ -89,11 +86,21 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         this.addDocument(item);
       });
     }
-    // if (this.isOtherDocVisible) this.addDocument();
+    if (!this.isChecklistDoc && this.screenName.includes('customer')) {
+      this.addApplicant();
+    }
+  }
+
+  applicant(): FormArray {
+    return this.createDocumentForm.get('applicants') as FormArray;
   }
 
   otherDocument(): FormArray {
     return this.createDocumentForm?.get('otherDocument') as FormArray;
+  }
+
+  getApplicantDocuments(index: number): FormArray {
+    return this.applicant().at(index).get('otherDocument') as FormArray;
   }
 
   addDocument(data?: any) {
@@ -101,71 +108,92 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   }
 
   newDenom(data?: any): FormGroup {
+    const docType = typeof data === 'string' ? data : data?.document || '';
     return this.fb.group({
       documentNumber: [''],
-      documentType: [data ? data.document : ''],
+      documentType: [docType],
       fileInfo: new FormControl([]),
       docIds: new FormControl([]),
       docRequired: data?.docRequired ?? false,
     });
   }
 
-  fileBrowseHandler(i: number) {
+  fileBrowseHandler(i: number, applicantIndex?: number): void {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
-    if (!this.isOtherDocVisible) inputElement.accept = 'image/*';
+    if (!this.isChecklistDoc) inputElement.accept = 'image/*';
 
     inputElement.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
       if (target.files && target.files.length > 0) {
-        const file: any = target.files[0];
+        const file = target.files[0];
+        if (!file) {
+          return;
+        }
         this.selectedImage = file;
-
-        this.displayImage(i, file, file.size);
-        this.uploadImage(file, i);
+        this.displayImage(i, file, file.size, applicantIndex);
+        this.uploadImage(file, i, applicantIndex);
       }
     });
 
     inputElement.click();
   }
 
-  uploadFilesSimulator(docIndex: number, fileIndex: number) {
-    const fileInfoControl = this.otherDocument().at(docIndex).get('fileInfo');
-    const files = fileInfoControl?.value;
+  uploadFilesSimulator(
+    docIndex: number,
+    fileIndex: number,
+    applicantIndex?: number,
+  ): void {
+    const docArray =
+      applicantIndex != null
+        ? this.getApplicantDocuments(applicantIndex)
+        : this.otherDocument();
 
-    if (!files || !files[fileIndex]) return;
+    const fileInfoControl = docArray
+      .at(docIndex)
+      .get('fileInfo') as FormControl;
+    const files = fileInfoControl?.value || [];
 
-    const progressInterval = setInterval(() => {
-      if (files[fileIndex].progress === '100%') {
-        clearInterval(progressInterval);
-        if (fileIndex + 1 < files.length) {
-          this.uploadFilesSimulator(docIndex, fileIndex + 1);
-        }
-      } else {
-        const updatedProgress = parseInt(files[fileIndex].progress) + 10;
-        files[fileIndex].progress = `${Math.min(updatedProgress, 100)}%`;
-        fileInfoControl?.setValue([...files]);
+    setTimeout(() => {
+      if (fileIndex >= files.length) {
+        return;
       }
-    }, 200);
+
+      const progressInterval = setInterval(() => {
+        const currentProgress = parseInt(files[fileIndex].progress);
+        if (currentProgress >= 100) {
+          clearInterval(progressInterval);
+          this.uploadFilesSimulator(docIndex, fileIndex + 1, applicantIndex);
+        } else {
+          files[fileIndex].progress = `${Math.min(currentProgress + 10, 100)}%`;
+          fileInfoControl.setValue([...files]);
+        }
+      }, 200);
+    }, 1000);
   }
 
-  uploadImage(file: any, i: any) {
+  uploadImage(file: File, docIndex: number, applicantIndex?: number): void {
+    const isApplicantDoc = applicantIndex != null;
+    const docArray = isApplicantDoc
+      ? this.getApplicantDocuments(applicantIndex!)
+      : this.otherDocument();
+
+    const docControl = docArray.at(docIndex);
+    const currentDoc = docControl.value;
+
     const formData = new FormData();
-    const data = {
-      ...(this.isOtherDocVisible
-        ? {
-            documentNameForChecklist:
-              this.createDocumentForm.value.otherDocument[i].documentType,
-          }
-        : ''),
-      documentName: !this.isOtherDocVisible ? this.nationalIdGeneric : null,
-      documentType: !this.isOtherDocVisible
+    const isChecklist = !this.isChecklistDoc;
+
+    const data: any = {
+      ...(this.isChecklistDoc
+        ? { documentNameForChecklist: currentDoc.documentType }
+        : {}),
+      documentName: isChecklist ? this.nationalIdGeneric : null,
+      documentType: isChecklist
         ? this.nationalIdGeneric
-        : this.createDocumentForm.value.otherDocument[i].documentType,
-      documentNumber:
-        this.createDocumentForm.value.otherDocument[i].documentNumber,
-      documentSide:
-        this.createDocumentForm.value.otherDocument[i]?.docIds?.length + 1,
+        : currentDoc.documentType,
+      documentNumber: currentDoc.documentNumber,
+      documentSide: (currentDoc?.docIds?.length ?? 0) + 1,
       fileName: file.name,
       fileType: file.type,
       verificationType: 'kyc',
@@ -174,80 +202,103 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     formData.append('data', JSON.stringify(data));
     formData.append('file', file);
     formData.append('module', 'document');
+
     this.ocrPass = false;
 
     this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.statusCode === 200) {
-        if (
-          data?.documentNameForChecklist?.toLowerCase()?.includes('national') &&
-          i == 0
-        ) {
-          this.frontAadhar = resp.data.fileUrl;
-        }
-        this.updateDocId(i).push(resp.data.documentId);
-        this.fileUrls?.push(resp.data?.fileUrl);
-        this.documentIds.push(this.createDocumentForm.value);
-        const fileInfoArr =
-          this.otherDocument().controls[i]?.get('fileInfo')?.value;
+        const docIdsControl = docControl.get('docIds') as FormControl;
+        const existingDocIds = docIdsControl?.value || [];
+        docIdsControl.setValue([...existingDocIds, resp.data.documentId]);
+
+        const fileInfoArr = docControl.get('fileInfo')?.value || [];
         fileInfoArr.forEach((fileInfoObj: any) => {
           if (resp.data.fileName.includes(fileInfoObj.name)) {
             fileInfoObj.newFileUrl = resp.data.fileUrl;
           }
         });
-        this.otherDocument()
-          .controls[i]?.get('fileInfo')
-          ?.setValue(fileInfoArr);
+        docControl.get('fileInfo')?.setValue([...fileInfoArr]);
 
-        const index =
-          this.otherDocument()?.controls[i]?.get('fileInfo')?.value?.length - 1;
+        this.fileUrls?.push(resp.data?.fileUrl);
+        this.documentIds.push(this.createDocumentForm.value);
 
+        if (
+          data?.documentNameForChecklist?.toLowerCase()?.includes('national') &&
+          docIndex === 0 &&
+          !isApplicantDoc
+        ) {
+          this.frontAadhar = resp.data.fileUrl;
+        }
+
+        const index = fileInfoArr.length - 1;
         this.updateFileInfo(
           index,
-          i,
+          docIndex,
           this.documentInfo?.name,
           this.documentInfo?.dateOfBirth,
           this.documentInfo?.gender,
+          applicantIndex,
         );
-
-        // this.extractDoc(
-        //   this.createDocumentForm.value.otherDocument[i].documentType,
-        //   parseInt(this.sessionStorageService.getOriginationId()),
-        //   file,
-        //   resp.data.documentId,
-        // );
       }
     });
   }
 
-  updateDocId(indx: any): any[] {
-    return this.otherDocument().controls[indx]?.get('docIds')?.value;
+  updateDocId(indx: number, applicantIndex?: number): any[] {
+    return (
+      applicantIndex != null
+        ? this.getApplicantDocuments(applicantIndex)
+        : this.otherDocument()
+    )
+      .at(indx)
+      ?.get('docIds')?.value;
   }
 
-  updateFileInfo(index: any, i: any, name: any, dateOfBirth: any, gender: any) {
-    const fileInfoControl = this.otherDocument()?.controls[i]?.get('fileInfo');
+  updateFileInfo(
+    index: number,
+    i: number,
+    name: string,
+    dateOfBirth: any,
+    gender: string,
+    applicantIndex?: number,
+  ) {
+    const fileInfoControl = (
+      applicantIndex != null
+        ? this.getApplicantDocuments(applicantIndex)
+        : this.otherDocument()
+    )
+      ?.at(i)
+      ?.get('fileInfo');
+
     if (fileInfoControl && fileInfoControl.value) {
       fileInfoControl.value[index] = {
         ...fileInfoControl.value[index],
         applicantName: name,
         dateOfBirth: dateOfBirth,
         gender: gender,
-        documentNumber:
-          this.otherDocument()?.controls[i]?.get('docIds')?.value[index],
+        documentNumber: this.updateDocId(i, applicantIndex)?.[index],
       };
     }
   }
 
-  displayImage(indx: any, file: any, size: any) {
+  // To display the image
+  displayImage(
+    docIndex: number,
+    file: any,
+    size: any,
+    applicantIndex?: number,
+  ) {
     const reader = new FileReader();
     const sizeinKb = (size / 1024).toFixed(2);
-
     reader.onload = (event: ProgressEvent<FileReader> | any) => {
       const imageUrl = event.target.result as string;
+      const control =
+        applicantIndex != null
+          ? this.getApplicantDocuments(applicantIndex).at(docIndex)
+          : this.otherDocument().at(docIndex);
 
-      const existing = this.getFileInfo(indx) || [];
-      const updatedFiles = [...existing];
+      const fileArray = control.get('fileInfo')?.value || [];
 
-      updatedFiles.push({
+      fileArray.push({
         url: imageUrl,
         name: file.name,
         progress: '100%',
@@ -256,26 +307,20 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         pdfUrl: '',
         imageUrl: '',
       });
-
-      this.otherDocument().at(indx).get('fileInfo')?.setValue(updatedFiles);
-
+      control.get('fileInfo')?.setValue([...fileArray]);
       this.cdr.detectChanges();
-
-      setTimeout(() => {
-        const refreshed = [...updatedFiles];
-        refreshed[refreshed.length - 1].progress = '0%';
-        this.otherDocument().at(indx).get('fileInfo')?.setValue(refreshed);
-        this.cdr.detectChanges();
-      }, 500);
     };
-
-    console.log(this.createDocumentForm, 'formgroup');
-
     reader.readAsDataURL(file);
   }
 
-  getFileInfo(indx: number) {
-    return this.otherDocument()?.controls[indx]?.get('fileInfo')?.value;
+  getFileInfo(index: number, applicantIndex?: number) {
+    if (applicantIndex != null) {
+      return this.getApplicantDocuments(applicantIndex)
+        .at(index)
+        .get('fileInfo')?.value;
+    }
+    console.log(this.createDocumentForm, 'checkk');
+    return this.otherDocument().at(index)?.get('fileInfo')?.value;
   }
 
   getFileUrl(file: any) {
@@ -284,14 +329,36 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     } else return file.url;
   }
 
-  removeFile(docIndex: number, fileIndex: number) {
-    const files = this.otherDocument().at(docIndex).get('fileInfo')?.value;
-    if (files && files.length > fileIndex) {
-      files.splice(fileIndex, 1);
-      this.otherDocument()
-        .at(docIndex)
-        .get('fileInfo')
-        ?.setValue([...files]);
+  // Detele the file method and remove the docids and fileinfo from fromgroup
+  removeFile(
+    docIndex: number,
+    fileIndex: number,
+    applicantIndex?: number,
+  ): void {
+    const docArray =
+      applicantIndex != null
+        ? this.getApplicantDocuments(applicantIndex)
+        : this.otherDocument();
+
+    const docGroup = docArray.at(docIndex);
+    const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
+    const docIdsCtrl = docGroup.get('docIds') as FormControl;
+
+    const files: any[] = fileInfoCtrl?.value || [];
+    const docIds: any[] = docIdsCtrl?.value || [];
+
+    if (fileIndex >= 0 && fileIndex < files.length) {
+      fileInfoCtrl.setValue([
+        ...files.slice(0, fileIndex),
+        ...files.slice(fileIndex + 1),
+      ]);
+    }
+
+    if (fileIndex >= 0 && fileIndex < docIds.length) {
+      docIdsCtrl.setValue([
+        ...docIds.slice(0, fileIndex),
+        ...docIds.slice(fileIndex + 1),
+      ]);
     }
   }
 
@@ -300,7 +367,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   }
 
   addDocumentFromDropdown(documentType: string) {
-    this.checklistArr.push(documentType);
     this.otherDocument().push(
       this.fb.group({
         documentNumber: [''],
@@ -310,5 +376,16 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         docRequired: false,
       }),
     );
+  }
+
+  // For Indiviual or Director Add Applicant Method
+  addApplicant() {
+    const applicantGroup = this.fb.group({
+      otherDocument: this.fb.array([]),
+    });
+    const requiredDocs = ['Address Proof', 'ID Proof'];
+    const docArray = applicantGroup.get('otherDocument') as FormArray;
+    requiredDocs.forEach((doc) => docArray.push(this.newDenom(doc)));
+    this.applicant().push(applicantGroup);
   }
 }
