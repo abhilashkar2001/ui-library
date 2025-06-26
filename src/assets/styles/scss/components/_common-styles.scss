@@ -49,6 +49,21 @@ code {
   overflow: visible;
 }
 
+.mdc-text-field--no-label:not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  height: 100% !important;
+}
+
+.mdc-text-field--filled {
+  --mdc-filled-text-field-active-indicator-height: 0 !important;
+}
+.mat-form-field-appearance-fill {
+  .mat-mdc-form-field-subscript-wrapper {
+    position: absolute !important;
+  }
+}
+
 //mat-tree
 .mat-tree {
   font-family: 'Benton Sans', sans-serif !important;

@@ -22,6 +22,7 @@ import { IcustLibraryModule } from '@onerumango/icust-element-library';
 import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { SharedOriginationModule } from '../origination/modules/shared-originati
     FormsModule,
     ReactiveFormsModule,
     SharedOriginationModule,
+    MatFormFieldModule,
   ],
 })
 export class LoanModule {}
