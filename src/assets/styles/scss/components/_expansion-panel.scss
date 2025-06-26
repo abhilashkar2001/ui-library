@@ -1,0 +1,78 @@
+.document-panel {
+  .styled-panel {
+    .fileUpload {
+      background-color: #f6faff;
+    }
+    border-bottom: 1.5px solid #c6c6c6;
+    .panel-header {
+      padding: 10px 15px;
+      .panel-header-content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .panel-title {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
+          font-size: 16px;
+          color: #123b66;
+          flex-grow: 1;
+
+          .doc-icon {
+            margin-right: 8px;
+            color: #28a745;
+          }
+
+          .required {
+            color: #b20000;
+            margin-left: 6px;
+          }
+        }
+
+        .delete_btn,
+        .disabled_delete {
+          font-size: 14px;
+          text-decoration: underline;
+          cursor: pointer;
+          color: #b20000;
+          margin-right: 25px;
+          &.disabled_delete {
+            color: #999;
+            pointer-events: none;
+          }
+
+          &:hover {
+            color: #ff0000;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  border-radius: 0px !important;
+  background: #f8fbff !important;
+  min-width: 200px !important;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-mdc-menu-item {
+  font-size: 14px;
+  color: #222;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin: 2px 8px;
+
+  &:hover {
+    background: #f5f6ff !important;
+  }
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none !important;
+}
+
+.mat-expansion-panel-header {
+  border-radius: 0px !important;
+}

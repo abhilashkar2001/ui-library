@@ -1,41 +1,48 @@
 <div class="file_upload">
   <form [formGroup]="createDocumentForm" fxFlex="100" fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
-      <div
-        class="custom-add-btn"
-        [matMenuTriggerFor]="docMenu"
-        #trigger="matMenuTrigger"
-      >
-        <span class="btn-text">Add</span>
-        <span class="btn-icon">
-          <img src="assets/images/down_arrow.svg" alt="dropdown" />
-        </span>
+    <!-- === Checklist Dropdown or Add Applicant === -->
+    <ng-container *ngIf="isChecklistDoc; else individualAdd">
+      <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
+        <div class="custom-add-btn" [matMenuTriggerFor]="docMenu">
+          <span class="btn-text">Add</span>
+          <span class="btn-icon">
+            <img src="assets/images/down_arrow.svg" alt="dropdown" />
+          </span>
+        </div>
       </div>
-      <button
-        mat-button
-        [matMenuTriggerFor]="docMenu"
-        #trigger
-        style="display: none"
-      ></button>
-    </div>
+      <mat-menu #docMenu="matMenu" class="custom-menu">
+        <button
+          mat-menu-item
+          *ngFor="let doc of noReqCheckListDocList"
+          (click)="addDocumentFromDropdown(doc?.document)"
+        >
+          {{ doc?.document }}
+        </button>
+      </mat-menu>
+    </ng-container>
 
-    <mat-menu #docMenu="matMenu" class="custom-menu">
-      <button
-        mat-menu-item
-        *ngFor="let doc of noReqCheckListDocList"
-        (click)="addDocumentFromDropdown(doc?.document)"
-      >
-        {{ doc?.document }}
-      </button>
-    </mat-menu>
+    <ng-template #individualAdd>
+      <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
+        <div class="custom-add-btn">
+          <span
+            class="btn-text"
+            (click)="addApplicant()"
+            tabindex="0"
+            (keydown.enter)="addApplicant()"
+            >Add
+          </span>
+        </div>
+      </div>
+    </ng-template>
 
+    <!--  Checklist Documents -->
     <ng-container formArrayName="otherDocument">
       <div
         *ngFor="let docCtrl of otherDocument().controls; let i = index"
         [formGroupName]="i"
         class="document-panel"
       >
-        <mat-expansion-panel class="styled-panel" [expanded]="true">
+        <mat-expansion-panel class="styled-panel fileUpload" [expanded]="true">
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
               <div
@@ -51,9 +58,9 @@
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
-                <span class="header_md">
-                  {{ docCtrl.get('documentType')?.value || 'New Document' }}
-                </span>
+                <span class="header_md">{{
+                  docCtrl.get('documentType')?.value || 'New Document'
+                }}</span>
                 <span *ngIf="docCtrl.get('docRequired')?.value" class="required"
                   >*</span
                 >
@@ -64,9 +71,9 @@
                     ? 'disabled_delete'
                     : 'delete_btn'
                 "
-                (click)="removeDocument(i)"
                 tabindex="0"
                 (keydown)="removeDocument(i)"
+                (click)="removeDocument(i)"
               >
                 Delete
               </span>
@@ -107,7 +114,7 @@
                 <div class="img_container">
                   <span class="header_md img_name">{{ file?.name }}</span>
                   <div
-                    *ngIf="file.progress === '100%'; else showSize"
+                    *ngIf="file.progress !== '100%'; else showSize"
                     class="progress-cont"
                   >
                     <div
@@ -133,6 +140,131 @@
       </div>
     </ng-container>
 
+    <!-- Personal Documents of applicants or directors -->
+    <ng-container formArrayName="applicants">
+      <div
+        *ngFor="let applicant of applicant().controls; let aIndex = index"
+        [formGroupName]="aIndex"
+      >
+        <mat-expansion-panel
+          class="styled-panel applicant-panel"
+          [expanded]="true"
+        >
+          <mat-expansion-panel-header class="p-12">
+            <span class="header_md">Applicant {{ aIndex + 1 }}</span>
+          </mat-expansion-panel-header>
+
+          <ng-container formArrayName="otherDocument">
+            <div
+              *ngFor="
+                let docCtrl of getApplicantDocuments(aIndex).controls;
+                let dIndex = index
+              "
+              [formGroupName]="dIndex"
+              class="document-panel"
+            >
+              <mat-expansion-panel
+                class="styled-panel fileUpload"
+                [expanded]="true"
+              >
+                <mat-expansion-panel-header class="panel-header">
+                  <div class="panel-header-content">
+                    <div
+                      class="panel-title"
+                      fxLayoutGap="5"
+                      fxLayoutAlign="start center"
+                    >
+                      <img
+                        *ngIf="
+                          getFileInfo(aIndex)?.length > 0;
+                          else untickedApp
+                        "
+                        src="assets/images/tickicon.svg"
+                        alt="Tick"
+                      />
+                      <ng-template #untickedApp>
+                        <img src="assets/images/untickicon.svg" alt="Untick" />
+                      </ng-template>
+                      <span class="header_md">{{
+                        docCtrl.get('documentType')?.value
+                      }}</span>
+                      <span
+                        *ngIf="docCtrl.get('docRequired')?.value"
+                        class="required"
+                        >*</span
+                      >
+                    </div>
+                    <!-- No delete for required -->
+                  </div>
+                </mat-expansion-panel-header>
+
+                <div fxLayout="column">
+                  <div class="upload-section">
+                    <span class="medium_txt">Upload files</span>
+                    <p class="breadcrum_md">
+                      Max file size is 500kb. Supported file types are .jpg and
+                      .png.
+                    </p>
+                    <ic-button
+                      (OnClick)="fileBrowseHandler(dIndex, aIndex)"
+                      label="Choose"
+                      size="medium"
+                      type="button"
+                      icButtonType="outlined-rounded"
+                    >
+                    </ic-button>
+                  </div>
+
+                  <div
+                    class="uploaded_list"
+                    fxLayout="row wrap"
+                    fxFlex="100"
+                    fxLayoutAlign="space-between center"
+                  >
+                    <div
+                      *ngFor="
+                        let file of getFileInfo(dIndex, aIndex);
+                        let fileIndx = index
+                      "
+                      fxFlex="49"
+                      fxLayoutGap="10"
+                      class="upload_img"
+                    >
+                      <div class="img_box">
+                        <img [src]="getFileUrl(file)" alt="image" />
+                      </div>
+                      <div class="img_container">
+                        <span class="header_md img_name">{{ file?.name }}</span>
+                        <div
+                          *ngIf="file.progress !== '100%'; else showSizeApp"
+                          class="progress-cont"
+                        >
+                          <div
+                            [style.width]="file.progress ?? '0%'"
+                            class="progress"
+                          ></div>
+                        </div>
+                        <ng-template #showSizeApp>
+                          <div class="theme_sm">{{ file.size }}</div>
+                        </ng-template>
+                      </div>
+                      <img
+                        tabindex="0"
+                        (keydown.enter)="removeFile(aIndex, fileIndx)"
+                        src="assets/images/trash_new.svg"
+                        alt="trash"
+                        (click)="removeFile(dIndex, fileIndx, aIndex)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </div>
+          </ng-container>
+        </mat-expansion-panel>
+      </div>
+    </ng-container>
+
     <div
       fxFlex="100"
       fxLayout="row"
@@ -146,8 +278,7 @@
           [type]="'button'"
           icButtonType="ghost-rounded-danger"
           size="medium"
-        >
-        </ic-button>
+        ></ic-button>
       </div>
       <div>
         <ic-button
@@ -155,8 +286,7 @@
           [label]="'Next'"
           [type]="'submit'"
           size="medium"
-        >
-        </ic-button>
+        ></ic-button>
       </div>
     </div>
   </form>

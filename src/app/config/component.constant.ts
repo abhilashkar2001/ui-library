@@ -14,7 +14,7 @@ export const ComponentConstant = {
   W1LACC: LoanDetailsComponent,
   W1DOCU: DocumentUploadComponent,
   W1BUDE: BusinessDetailsComponent,
-  DirectorsDocumentUploadComponent,
+  W1DDOC: DirectorsDocumentUploadComponent,
   W1PERD: DirectorDetailsComponent,
   DisbursementDetailsComponent,
   W1CRBU: CreditBureauComponent,
