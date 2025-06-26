@@ -2,7 +2,8 @@
   <g data-name="Icon feather-info" id="Icon_feather-info" transform="translate(0.5 0.5)">
     <path d="M12.317,7.659A4.659,4.659,0,1,1,7.659,3a4.659,4.659,0,0,1,4.659,4.659Z" data-name="Path 2072"
           fill="none" id="Path_2072"
-          stroke="#d68c00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" transform="translate(-3 -3)" />
+          stroke="#d68c00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+          transform="translate(-3 -3)" />
     <path d="M18,19.863V18" data-name="Path 2073" fill="none" id="Path_2073" stroke="#d68c00"
           stroke-linecap="round" stroke-linejoin="round" stroke-width="1" transform="translate(-13.341 -13.341)" />
     <path d="M18,12h0" data-name="Path 2074" fill="none" id="Path_2074" stroke="#d68c00"

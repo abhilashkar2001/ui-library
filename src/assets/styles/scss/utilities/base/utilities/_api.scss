@@ -10,8 +10,7 @@
       // Only proceed if responsive media queries are enabled or if it's the base media query
       @if type-of($utility) ==
         'map' and
-        (map-get($utility, responsive) or $infix == '')
-      {
+        (map-get($utility, responsive) or $infix == '') {
         @include generate-utility($utility, $infix);
       }
     }

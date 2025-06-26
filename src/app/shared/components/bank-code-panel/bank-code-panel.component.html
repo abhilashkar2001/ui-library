@@ -7,39 +7,39 @@
     <div fxFlex="48">
       <ic-form-field
         [control]="bankForm.get('bankCode') | formcontrol"
-        label="Bank Code"
         [maxLength]="40"
+        label="Bank Code"
       ></ic-form-field>
     </div>
     <div fxFlex="48">
       <ic-select
-        [options]="branchList ?? []"
         [control]="bankForm.get('bankName') | formcontrol"
-        label="Bank Name"
+        [options]="branchList ?? []"
         bindLabelKey="bankName"
         bindValueKey="bankName"
+        label="Bank Name"
       ></ic-select>
     </div>
     <div fxFlex="48">
       <ic-select
-        [options]="branchList ?? []"
         [control]="bankForm.get('branchName') | formcontrol"
-        label="Branch Name / City"
+        [options]="branchList ?? []"
         bindLabelKey="branchName"
         bindValueKey="branchName"
+        label="Branch Name / City"
       ></ic-select>
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
-    <ic-button label="Back" icButtonType="outlined-rounded"></ic-button>
-    <ic-button label="Fetch" icButtonType="filled-rounded"></ic-button>
+    <ic-button icButtonType="outlined-rounded" label="Back"></ic-button>
+    <ic-button icButtonType="filled-rounded" label="Fetch"></ic-button>
   </div>
   <h3 class="header_lg">Search Results</h3>
   <mat-card
+    *ngFor="let data of fetchedData"
     class="p-8"
     fxLayout="row"
     fxLayoutAlign="space-between center"
-    *ngFor="let data of fetchedData"
   >
     <div fxLayout="column" fxLayoutGap="1%">
       <span class="header_md">{{ data?.bankName }}</span>

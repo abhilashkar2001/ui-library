@@ -9,9 +9,9 @@
     fxLayoutGap="24px"
   >
     <div
+      fxFlex="45"
       fxLayout="row"
       fxLayoutAlign="start center"
-      fxFlex="45"
       fxLayoutGap="10"
     >
       <div class="icon">
@@ -25,7 +25,7 @@
 
     <div class="divider"></div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="45">
+    <div fxFlex="45" fxLayout="row" fxLayoutAlign="start center">
       <div fxLayout="column" fxLayoutGap="10">
         <div class="header_md">Your National ID</div>
         <div class="theme_md">**IIPS976E</div>
@@ -33,15 +33,15 @@
     </div>
   </div>
   <ng-container *ngIf="showOtpSection; else cibilChart">
-    <div fxLayout="row" fxFlex="100">
+    <div fxFlex="100" fxLayout="row">
       <div fxLayout="column" fxLayoutGap="25">
         <ic-form-field
-          fxFlex="24"
-          label="Enter Verification Code (6-digit)"
+          [control]="otp"
           [icNumbersOnly]="true"
           [maxLength]="6"
           [minLength]="6"
-          [control]="otp"
+          fxFlex="24"
+          label="Enter Verification Code (6-digit)"
         >
         </ic-form-field>
         <span class="header_sm">
@@ -64,7 +64,7 @@
           (keydown.enter)="openDialog()"
           class="link"
           tabindex="1"
-          >internal purposes</span
+        >internal purposes</span
         >
         as described above.
       </span>

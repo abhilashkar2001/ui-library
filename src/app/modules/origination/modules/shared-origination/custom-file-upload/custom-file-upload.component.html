@@ -2,28 +2,28 @@
   <form [formGroup]="createDocumentForm" fxFlex="100" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="end center" style="margin: 1rem 0">
       <div
-        class="custom-add-btn"
-        [matMenuTriggerFor]="docMenu"
         #trigger="matMenuTrigger"
+        [matMenuTriggerFor]="docMenu"
+        class="custom-add-btn"
       >
         <span class="btn-text">Add</span>
         <span class="btn-icon">
-          <img src="assets/images/down_arrow.svg" alt="dropdown" />
+          <img alt="dropdown" src="assets/images/down_arrow.svg" />
         </span>
       </div>
       <button
-        mat-button
-        [matMenuTriggerFor]="docMenu"
         #trigger
+        [matMenuTriggerFor]="docMenu"
+        mat-button
         style="display: none"
       ></button>
     </div>
 
     <mat-menu #docMenu="matMenu" class="custom-menu">
       <button
-        mat-menu-item
-        *ngFor="let doc of noReqCheckListDocList"
         (click)="addDocumentFromDropdown(doc?.document)"
+        *ngFor="let doc of noReqCheckListDocList"
+        mat-menu-item
       >
         {{ doc?.document }}
       </button>
@@ -35,38 +35,38 @@
         [formGroupName]="i"
         class="document-panel"
       >
-        <mat-expansion-panel class="styled-panel" [expanded]="true">
+        <mat-expansion-panel [expanded]="true" class="styled-panel">
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
               <div
                 class="panel-title"
-                fxLayoutGap="5"
                 fxLayoutAlign="start center"
+                fxLayoutGap="5"
               >
                 <img
                   *ngIf="getFileInfo(i)?.length > 0; else unticked"
-                  src="assets/images/tickicon.svg"
                   alt="Tick"
+                  src="assets/images/tickicon.svg"
                 />
                 <ng-template #unticked>
-                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                  <img alt="Untick" src="assets/images/untickicon.svg" />
                 </ng-template>
                 <span class="header_md">
                   {{ docCtrl.get('documentType')?.value || 'New Document' }}
                 </span>
                 <span *ngIf="docCtrl.get('docRequired')?.value" class="required"
-                  >*</span
+                >*</span
                 >
               </div>
               <span
+                (click)="removeDocument(i)"
+                (keydown)="removeDocument(i)"
                 [ngClass]="
                   docCtrl.get('docRequired')?.value
                     ? 'disabled_delete'
                     : 'delete_btn'
                 "
-                (click)="removeDocument(i)"
                 tabindex="0"
-                (keydown)="removeDocument(i)"
               >
                 Delete
               </span>
@@ -81,25 +81,25 @@
               </p>
               <ic-button
                 (OnClick)="fileBrowseHandler(i)"
+                icButtonType="outlined-rounded"
                 label="Choose"
                 size="medium"
                 type="button"
-                icButtonType="outlined-rounded"
               >
               </ic-button>
             </div>
 
             <div
               class="uploaded_list"
-              fxLayout="row wrap"
               fxFlex="100"
+              fxLayout="row wrap"
               fxLayoutAlign="space-between center"
             >
               <div
                 *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                class="upload_img"
                 fxFlex="49"
                 fxLayoutGap="10"
-                class="upload_img"
               >
                 <div class="img_box">
                   <img [src]="getFileUrl(file)" alt="image" />
@@ -120,11 +120,11 @@
                   </ng-template>
                 </div>
                 <img
-                  tabindex="0"
-                  (keydown.enter)="removeFile(i, fileIndx)"
-                  src="assets/images/trash_new.svg"
-                  alt="trash"
                   (click)="removeFile(i, fileIndx)"
+                  (keydown.enter)="removeFile(i, fileIndx)"
+                  alt="trash"
+                  src="assets/images/trash_new.svg"
+                  tabindex="0"
                 />
               </div>
             </div>
@@ -136,9 +136,9 @@
     <div
       fxFlex="100"
       fxLayout="row"
+      fxLayoutAlign="end center"
       fxLayoutGap="1%"
       style="margin-top: 50px"
-      fxLayoutAlign="end center"
     >
       <div>
         <ic-button

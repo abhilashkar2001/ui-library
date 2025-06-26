@@ -1,4 +1,4 @@
-<div class="sidenav" [class.sidenav-open]="isSideNavOpen">
+<div [class.sidenav-open]="isSideNavOpen" class="sidenav">
   <div
     class="sidenav-content"
     fxLayout="column"
@@ -11,9 +11,9 @@
     >
       <div>Document</div>
       <div
-        class="close_btn"
         (click)="closeSideNav()"
         (keydown.enter)="closeSideNav()"
+        class="close_btn"
         tabindex="0"
       >
         <mat-icon>close</mat-icon>
@@ -21,10 +21,10 @@
     </div>
     <div class="document_block w-100" fxLayout="column" fxLayoutGap="10px">
       <div
+        *ngIf="documents.length"
         class="document_item"
         fxLayout="row"
         fxLayoutAlign="space-between flex=-start"
-        *ngIf="documents.length"
       >
         <ng-container>
           <div class="document_details" fxLayout="column">
@@ -34,24 +34,24 @@
             <div class="document_size">Size {{ documentSize }}</div>
           </div>
           <button
-            mat-icon-button
             (click)="deleteDocument(documents[currentDocumentIndex]!)"
+            mat-icon-button
           >
-            <img src="assets/images/trash_can.svg" alt="" />
+            <img alt="" src="assets/images/trash_can.svg" />
           </button>
         </ng-container>
       </div>
-      <div class="document_viewer" *ngIf="documents.length">
+      <div *ngIf="documents.length" class="document_viewer">
         <img
+          (error)="imageLoadError = true"
           *ngIf="!imageLoadError"
+          [alt]="documents[currentDocumentIndex]?.fileName"
           [src]="
             documents[currentDocumentIndex]?.fileUrl
               ? documents[currentDocumentIndex]?.fileUrl
               : 'assets/images/default_fallback_img.svg'
           "
-          [alt]="documents[currentDocumentIndex]?.fileName"
           class="document-image"
-          (error)="imageLoadError = true"
         />
         <div *ngIf="imageLoadError" class="skeleton-loader"></div>
       </div>
@@ -59,24 +59,24 @@
         No documents available.
       </div>
     </div>
-    <div class="navigator" *ngIf="documents.length > 1">
+    <div *ngIf="documents.length > 1" class="navigator">
       <div
-        class="navigator_button"
         (click)="previousDocument()"
         (keydown.enter)="previousDocument()"
-        tabindex="1"
         [class.disabled]="currentDocumentIndex === 0"
+        class="navigator_button"
+        tabindex="1"
       >
-        <img src="assets/images/arrow-front.svg" alt="" />
+        <img alt="" src="assets/images/arrow-front.svg" />
       </div>
       <div
-        class="navigator_button"
         (click)="nextDocument()"
         (keydown.enter)="nextDocument()"
-        tabindex="2"
         [class.disabled]="currentDocumentIndex === documents.length - 1"
+        class="navigator_button"
+        tabindex="2"
       >
-        <img src="assets/images/arrow-back.svg" alt="" />
+        <img alt="" src="assets/images/arrow-back.svg" />
       </div>
     </div>
   </div>

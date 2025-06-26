@@ -39,6 +39,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   ];
   documentInfo: any;
   noReqCheckListDocList: any;
+
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,

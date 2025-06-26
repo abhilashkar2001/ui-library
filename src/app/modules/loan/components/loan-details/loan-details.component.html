@@ -1,17 +1,17 @@
 <div [formGroup]="loanDetailsForm" fxLayout="column">
   <ng-container *ngIf="!isEdit; else inputForm">
     <div
-      fxLayout="row wrap"
-      fxFlex="100"
       class="summary_pad"
+      fxFlex="100"
+      fxLayout="row wrap"
       fxLayoutGap="10px"
     >
       <div
         *ngFor="let item of loanDetailsSummaryArr"
-        fxLayoutAlign="start start"
         class="row"
-        fxLayout="column"
         fxFlex="28.5"
+        fxLayout="column"
+        fxLayoutAlign="start start"
       >
         <span class="header">{{ item.header }}</span>
         <span class="value">
@@ -158,9 +158,9 @@
   <div
     fxFlex="100"
     fxLayout="row"
+    fxLayoutAlign="end center"
     fxLayoutGap="1%"
     style="margin-top: 50px"
-    fxLayoutAlign="end center"
   >
     <div>
       <ic-button

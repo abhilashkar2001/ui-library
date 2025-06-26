@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   maxMobileLength: any;
   subscriptions: Subscription[] = [];
   otpForm!: FormGroup;
-  private localeData: LocaleData | undefined;
   @Input() showOtpSection: boolean | any;
   @Input() invalidOtp: boolean | any;
   @Input() otpSent: boolean | any;
@@ -30,6 +29,7 @@ export class LoginComponent implements OnInit {
   resendOtp = 0;
   intervalId: any;
   otpAvailable = false;
+  private localeData: LocaleData | undefined;
 
   constructor(
     private countryService: CountryService,
@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
       otpValue: [''],
     });
   }
+
   // Get All Countrys and Isd code Mthd
   loadCountries() {
     this.countryService.getCountries().subscribe((resp: any) => {

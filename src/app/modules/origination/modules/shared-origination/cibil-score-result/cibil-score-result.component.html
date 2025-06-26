@@ -53,10 +53,10 @@
   </div>
 
   <div
+    *ngIf="isButtonRequired"
     class="button-section"
     fxLayout="row"
     fxLayoutGap="2%"
-    *ngIf="isButtonRequired"
   >
     <ic-button
       (OnClick)="onContinue()"

@@ -105,9 +105,9 @@
 
                         <ic-date-picker
                           [control]="docGroup.get('issueDate') | formcontrol"
+                          [maxDate]="todayDate"
                           fxFlex="24"
                           label="Date Issued"
-                          [maxDate]="todayDate"
                         ></ic-date-picker>
 
                         <ic-date-picker
@@ -305,10 +305,10 @@
                           [control]="
                             addressGroup.get('residenceType') | formcontrol
                           "
+                          [options]="residenceTypeArray"
                           bindLabelKey="values"
                           bindValueKey="id"
                           fxFlex="24"
-                          [options]="residenceTypeArray"
                           label="Residential Status"
                         ></ic-select>
                         <ic-form-field
@@ -648,10 +648,10 @@
                           'residenceType'
                         ) | formcontrol
                       "
+                      [options]="residenceTypeArray"
                       bindLabelKey="values"
                       bindValueKey="id"
                       fxFlex="24"
-                      [options]="residenceTypeArray"
                       label="Residential status"
                     ></ic-select>
                     <ic-form-field
@@ -706,9 +706,9 @@
   <div
     fxFlex="100"
     fxLayout="row"
+    fxLayoutAlign="end center"
     fxLayoutGap="1%"
     style="margin-top: 50px"
-    fxLayoutAlign="end center"
   >
     <div>
       <ic-button

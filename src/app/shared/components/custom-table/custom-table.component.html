@@ -1,10 +1,11 @@
-<mat-table mat-table [dataSource]="dataSource">
+<mat-table [dataSource]="dataSource" mat-table>
   <!-- Dynamic columns -->
   <ng-container *ngFor="let header of tableHeaders" [matColumnDef]="header.key">
     <!-- Header cell -->
-    <mat-header-cell class="mat-header-cell" *matHeaderCellDef>{{
-      header.label
-    }}</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef class="mat-header-cell">{{
+        header.label
+      }}
+    </mat-header-cell>
 
     <!-- Row cell -->
     <mat-cell *matCellDef="let element">
@@ -21,12 +22,13 @@
 
         <!-- For action buttons -->
         <ng-container *ngSwitchCase="'action'">
-          <button mat-icon-button (click)="editRow(element)">
+          <button (click)="editRow(element)" mat-icon-button>
             <mat-icon fontSet="material-icons-outlined">edit_outlined</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteRow(element)">
+          <button (click)="deleteRow(element)" color="warn" mat-icon-button>
             <mat-icon fontSet="material-icons-outlined"
-              >delete_outlined</mat-icon
+            >delete_outlined
+            </mat-icon
             >
           </button>
         </ng-container>

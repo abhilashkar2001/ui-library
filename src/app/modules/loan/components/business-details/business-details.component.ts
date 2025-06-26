@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DateTimeService, IcHttpResponseModel } from '@onerumango/utils';
+import { DateTimeService } from '@onerumango/utils';
 import {
   GenericValueData,
   GenericValueInfoModel,
 } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { IcHttpResponseModel } from '@onerumango/utils';
 
 @Component({
   selector: 'app-business-details',
@@ -23,11 +24,20 @@ export class BusinessDetailsComponent implements OnInit {
     { label: 'Captial', value: true },
     { label: 'Labour', value: false },
   ];
+
   constructor(
     private fb: FormBuilder,
     private genericService: GenericValueService,
     private dateService: DateTimeService,
   ) {}
+
+  get contact() {
+    return this.businessDetailsForm.get('contact') as FormGroup;
+  }
+
+  get address(): FormArray {
+    return this.contact.get('address') as FormArray;
+  }
 
   ngOnInit() {
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
@@ -73,13 +83,5 @@ export class BusinessDetailsComponent implements OnInit {
     return this.fb.group({
       address1: ['', Validators.required],
     });
-  }
-
-  get contact() {
-    return this.businessDetailsForm.get('contact') as FormGroup;
-  }
-
-  get address(): FormArray {
-    return this.contact.get('address') as FormArray;
   }
 }

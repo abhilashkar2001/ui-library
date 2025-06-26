@@ -20,10 +20,15 @@ export class LoanDetailsComponent implements OnInit {
     { label: 'Self', value: 'true' },
     { label: 'Others', value: 'false' },
   ];
+
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
   ) {}
+
+  get loanDetails() {
+    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+  }
 
   ngOnInit() {
     this.fetchGenericValues();
@@ -126,9 +131,5 @@ export class LoanDetailsComponent implements OnInit {
       }),
       screenCode: [''],
     });
-  }
-
-  get loanDetails() {
-    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
   }
 }

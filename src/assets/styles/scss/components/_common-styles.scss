@@ -59,11 +59,11 @@ code {
 }
 
 .egret-navy
-  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
-  .mat-ripple-element,
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
+.mat-ripple-element,
 .egret-navy
-  .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
-  .mat-ripple-element {
+.mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
+.mat-ripple-element {
   background: var(--current-theme-background);
 }
 

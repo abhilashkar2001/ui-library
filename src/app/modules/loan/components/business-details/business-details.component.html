@@ -109,21 +109,21 @@
     </div>
     <div fxFlex="49">
       <ic-textarea
-        label="Customer Description"
         [control]="businessDetailsForm.get('customerDescription') | formcontrol"
         [rows]="8"
         fxFlex="100"
+        label="Customer Description"
       >
       </ic-textarea>
     </div>
     <div fxFlex="49">
       <ic-textarea
-        label="Description of Business"
         [control]="
           businessDetailsForm.get('descriptionofBusiness') | formcontrol
         "
         [rows]="8"
         fxFlex="100"
+        label="Description of Business"
       >
       </ic-textarea>
     </div>
@@ -143,9 +143,9 @@
   <div
     fxFlex="100"
     fxLayout="row"
+    fxLayoutAlign="end center"
     fxLayoutGap="1%"
     style="margin-top: 50px"
-    fxLayoutAlign="end center"
   >
     <div>
       <ic-button

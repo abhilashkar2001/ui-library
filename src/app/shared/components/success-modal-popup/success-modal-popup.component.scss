@@ -1,9 +1,11 @@
 .success_modal {
   padding: 30px;
+
   .close {
     display: flex;
     align-self: flex-end;
     color: gray;
+
     &:hover {
       transform: rotate(180);
     }
@@ -29,6 +31,7 @@
     .note {
       font-weight: 500;
     }
+
     .note_details {
       color: #a0a0a0;
       text-align: center;

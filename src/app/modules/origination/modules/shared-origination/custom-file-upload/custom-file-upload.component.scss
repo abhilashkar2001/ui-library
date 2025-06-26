@@ -8,6 +8,7 @@
       .panel-header {
         background-color: #f1f6fb;
         padding: 10px 15px;
+
         .panel-header-content {
           display: flex;
           align-items: center;
@@ -39,6 +40,7 @@
             cursor: pointer;
             color: #b20000;
             margin-right: 25px;
+
             &.disabled_delete {
               color: #999;
               pointer-events: none;
@@ -53,6 +55,7 @@
 
       .upload-section {
         padding: 16px 8px;
+
         .medium_txt {
           font-weight: 600;
           color: #1d2b4f;
@@ -67,6 +70,7 @@
 
       .uploaded_list {
         width: 100%;
+
         .upload_img {
           background-color: #fff;
           border-radius: 10px;
@@ -75,6 +79,7 @@
           align-items: center;
           flex: 0 0 48%;
           box-sizing: border-box;
+
           &:hover {
             background-color: #e6eeff;
             cursor: pointer;
@@ -85,6 +90,7 @@
             height: 45px;
             border-radius: 8px;
             overflow: hidden;
+
             img {
               width: 100%;
               height: 100%;
@@ -94,11 +100,13 @@
 
           .img_container {
             flex: 1;
+
             .img_name {
               font-weight: 500;
               font-size: 14px;
               word-break: break-word;
             }
+
             .theme_sm {
               font-size: 12px;
               color: #666;

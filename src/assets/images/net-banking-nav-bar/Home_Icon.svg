@@ -10,7 +10,8 @@
   </defs>
   <g data-name="Group 11705" id="Group_11705" transform="translate(-52 -65)">
     <g filter="url(#Rectangle_5020)" transform="matrix(1, 0, 0, 1, 52, 65)">
-      <rect data-name="Rectangle 5020" fill="rgba(255,255,255,0.14)" height="69" id="Rectangle_5020-2" rx="10" transform="translate(12 12)"
+      <rect data-name="Rectangle 5020" fill="rgba(255,255,255,0.14)" height="69" id="Rectangle_5020-2" rx="10"
+            transform="translate(12 12)"
             width="69" />
     </g>
     <g data-name="Group 8797" id="Group_8797">
@@ -19,9 +20,11 @@
           <tspan x="0" y="0">Home</tspan>
         </text>
         <g id="noun-home-6605324" transform="translate(0 0)">
-          <path d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z" data-name="Path 14391"
-                fill="#fff"
-                id="Path_14391" transform="translate(-2.341 -2)" />
+          <path
+            d="M3.341,30H28.659a1,1,0,0,0,0-2h0V13.417a1,1,0,0,0-.333-.746L16.667,2.254a1,1,0,0,0-1.333,0L3.678,12.671a1,1,0,0,0-.333.746V28h0a1,1,0,1,0,0,2Zm2-16.136L16,4.341l10.655,9.522V28h-6.2V21.2a1,1,0,0,0-1-1H12.546a1,1,0,0,0-1,1V28h-6.2Zm8.2,8.34h4.907V28H13.546Z"
+            data-name="Path 14391"
+            fill="#fff"
+            id="Path_14391" transform="translate(-2.341 -2)" />
         </g>
       </g>
     </g>

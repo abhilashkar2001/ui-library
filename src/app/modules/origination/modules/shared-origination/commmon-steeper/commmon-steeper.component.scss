@@ -273,8 +273,8 @@
 }
 
 ::ng-deep
-  .mat-step-header.mat-vertical-stepper-header
-  .mat-step-icon-state-edit {
+.mat-step-header.mat-vertical-stepper-header
+.mat-step-icon-state-edit {
   background-image: url(/assets/images/tick_animation.svg) !important;
   background-position: center;
   background-size: 45px 45px;
@@ -321,8 +321,8 @@
   }
 
   ::ng-deep
-    .mat-step-header.mat-vertical-stepper-header
-    .mat-step-icon-selected {
+  .mat-step-header.mat-vertical-stepper-header
+  .mat-step-icon-selected {
     background: #ffffff !important;
   }
 

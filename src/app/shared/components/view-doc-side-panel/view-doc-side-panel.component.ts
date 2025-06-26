@@ -3,9 +3,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   SimpleChanges,
-  OnChanges,
 } from '@angular/core';
 import { FileModel } from '@onerumango/utils/lib/models/file.model';
 

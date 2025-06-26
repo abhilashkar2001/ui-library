@@ -3,12 +3,14 @@
     <rect fill="url(#paint0_linear_1538_3602)" height="203.786" rx="19.8741"
           transform="matrix(1.18811 0.0209616 -0.566328 0.516947 108.41 0.708008)"
           width="330.903" />
-    <rect height="204.78" rx="20.3709" stroke="url(#paint1_linear_1538_3602)" stroke-width="0.993704" transform="matrix(1.18811 0.0209616 -0.566328 0.516947 108.317 0.585382)"
+    <rect height="204.78" rx="20.3709" stroke="url(#paint1_linear_1538_3602)" stroke-width="0.993704"
+          transform="matrix(1.18811 0.0209616 -0.566328 0.516947 108.317 0.585382)"
           width="331.897"
           x="-0.308932" y="-0.267261" />
   </g>
   <defs>
-    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="195.966" id="filter0_b_1538_3602" width="577.238"
+    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="195.966" id="filter0_b_1538_3602"
+            width="577.238"
             x="-41.3396" y="-41.1335">
       <feFlood flood-opacity="0" result="BackgroundImageFix" />
       <feGaussianBlur in="BackgroundImageFix" stdDeviation="20.8678" />
