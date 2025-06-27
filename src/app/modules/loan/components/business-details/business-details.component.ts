@@ -5,7 +5,9 @@ import {
   GenericValueData,
   GenericValueInfoModel,
 } from 'app/shared/models/generic-value.model';
+import { CountryService } from 'app/shared/services/country-service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 import { IcHttpResponseModel } from '@onerumango/utils';
 
 @Component({
@@ -15,20 +17,30 @@ import { IcHttpResponseModel } from '@onerumango/utils';
 })
 export class BusinessDetailsComponent implements OnInit {
   businessDetailsForm!: FormGroup;
-  industryTypeList: GenericValueData[] = [];
   dateFormat!: string;
   staticData = {
-    INDUSTRYTYPE: [],
+    COMPANYTYPE: [],
+    NATUREOFBUSINESS: [],
+    SEGMENT: [],
   };
+
   businessIntensityArr: any[] = [
     { label: 'Captial', value: true },
     { label: 'Labour', value: false },
   ];
+  companyTypeArr: GenericValueData[] = [];
+  natureOfBusinessArr: GenericValueData[] = [];
+  segmentArr: GenericValueData[] = [];
+  countryArr: any[] = [];
+  parentCompanyArr: any[] = [];
+
 
   constructor(
     private fb: FormBuilder,
     private genericService: GenericValueService,
     private dateService: DateTimeService,
+    private loanService: LoanService,
+    private countryService: CountryService,
   ) {}
 
   get contact() {
@@ -42,7 +54,9 @@ export class BusinessDetailsComponent implements OnInit {
   ngOnInit() {
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
     this.fetchGenericValue();
+    this.fetchCountry();
     this.buildBusinessDetailForm();
+    this.getBusinessDetailsById();
   }
 
   fetchGenericValue() {
@@ -50,38 +64,79 @@ export class BusinessDetailsComponent implements OnInit {
       .loadGenericValue(Object.keys(this.staticData))
       .subscribe((res: IcHttpResponseModel<GenericValueInfoModel>) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
-          this.industryTypeList = res?.data?.['INDUSTRYTYPE'] ?? [];
+          this.companyTypeArr = res?.data?.['COMPANYTYPE'] ?? [];
+          this.natureOfBusinessArr = res?.data?.['NATUREOFBUSINESS'] ?? [];
+          this.segmentArr = res?.data?.['SEGMENT'] ?? [];
         }
       });
   }
 
-  // Build form
+  fetchCountry() {
+    this.countryService.getCountries().subscribe((resp) => {
+      if (resp) {
+        this.countryArr = resp?.data;
+      }
+    });
+  }
+
+  getBusinessDetailsById() {
+    this.loanService.getBusinessDetailsById(314).subscribe((res: any) => {
+      if (res?.statusCode == 200 || res?.statusCode == 201) {
+        this.businessDetailsForm.patchValue(res?.data[0]);
+      }
+    });
+  }
+
   buildBusinessDetailForm() {
     this.businessDetailsForm = this.fb.group({
+      businessId: [''],
       businessName: ['', Validators.required],
       companyTypeId: [''],
       natureOfBusinessId: ['', Validators.required],
       segmentId: [''],
       noOfDirectors: ['', Validators.required],
-      countryOfIncorporation: ['', Validators.required],
+      countryOfIncorporationName: ['', Validators.required],
       dateOfIncorporation: ['', Validators.required],
       registrationNumber: ['', Validators.required],
       tinNumber: ['', Validators.required],
-      sourceOfIncome: [''],
-      businessIntensity: [''],
+      sourceOfIncomeId: [''],
+      businessIntencity: [true],
       customerDescription: [''],
-      descriptionofBusiness: [''],
-      parentCompany: [''],
-      contact: this.fb.group({
-        telephone: [''],
-        address: this.fb.array([this.buildAddressGroup()]),
-      }),
+      descriptionOfBusiness: [''],
+      parentCompanyId: [null],
+      //   contact: this.fb.group({
+      //     telephone: [''],
+      //     address: this.fb.array([this.buildAddressGroup()]),
+      //   }),
     });
   }
 
   buildAddressGroup(): FormGroup {
     return this.fb.group({
       address1: ['', Validators.required],
+    });
+  }
+
+  get contact() {
+    return this.businessDetailsForm.get('contact') as FormGroup;
+  }
+
+  get address(): FormArray {
+    return this.contact.get('address') as FormArray;
+  }
+
+  // save business details
+  onSaveBusinessDetails() {
+    const payload = {
+      originationModel: {
+        originationId: 314,
+      },
+      screenCode: 498,
+      businessDetailModel: this.businessDetailsForm.value,
+    };
+
+    this.loanService.saveBusinessDetails(payload).subscribe((resp) => {
+      console.log(resp);
     });
   }
 }
