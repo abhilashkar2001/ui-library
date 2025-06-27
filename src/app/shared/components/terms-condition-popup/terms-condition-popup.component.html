@@ -1,0 +1,93 @@
+<section fxLayout="column" fxLayoutGap="1%" class="p-8">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="header_lg">Terms And Conditions</span>
+    <ic-button
+      type="icon"
+      icButtonType="ghost-basic"
+      icIcon="close"
+      customButtonClass="box-shadow-none"
+    ></ic-button>
+  </div>
+  <div class="container p-12">
+    <span class="header-md">1. Eligibility Criteria</span>
+    <p class="breadcrum_sm">
+      The borrower must be a registered business entity or sole proprietor.
+      Minimum business operation period: 1 year. The borrower must provide valid
+      KYC documents (ID proof, address proof, business registration, etc.).
+    </p>
+    <span class="header-md">2. Loan Amount and Tenure</span>
+    <p class="breadcrum_sm">
+      Loan amount shall be sanctioned based on the borrower’s creditworthiness
+      and business requirements. Tenure of the loan ranges from 6 months to 5
+      years, subject to the bank’s discretion.
+    </p>
+    <span class="header-md">3. Interest Rate</span>
+    <p class="breadcrum_sm">
+      The interest rate applicable will be either fixed or floating as per the
+      bank’s policy. Interest rate is subject to periodic review and changes
+      depending on market conditions.
+    </p>
+    <span class="header-md"> 4.Processing Fees and Other Charges </span>
+    <p class="breadcrum_sm">
+      A non-refundable processing fee will be charged at the time of loan
+      application. Late payment charges, prepayment penalties, and other
+      applicable fees will be as per the bank’s norms.
+    </p>
+    <span class="header-md">5. Repayment Terms</span>
+    <p class="breadcrum_sm">
+      Repayments will be made in equated monthly installments (EMIs) or as
+      mutually agreed. The borrower must maintain timely repayments; defaults
+      may lead to penalties and legal action.
+    </p>
+    <span class="header-md">6. Collateral/Security</span>
+    <p class="breadcrum_sm">
+      The loan may require collateral/security depending on the loan amount and
+      bank policy. The borrower must provide clear title of the security
+      offered.
+    </p>
+    <span class="header-md">7. Documentation</span>
+    <p class="breadcrum_sm">
+      The borrower shall submit all required documents including business
+      financial statements, income tax returns, and any other documents
+      requested by the bank.
+    </p>
+    <span class="header-md">8. Prepayment and Foreclosure </span>
+    <p class="breadcrum_sm">
+      Prepayment or foreclosure of the loan is allowed subject to prior approval
+      from the bank. Prepayment charges, if any, will be applicable as per
+      bank’s terms.
+    </p>
+    <span class="header-md">9. Default and Recovery</span>
+    <p class="breadcrum_sm">
+      In case of default, the bank reserves the right to take legal action to
+      recover dues. The bank may also seize collateral/security to recover
+      outstanding amounts.
+    </p>
+    <span class="header-md">10. Other Terms</span>
+    <p class="breadcrum_sm">
+      The bank reserves the right to amend these terms and conditions at any
+      time with due notice. The borrower agrees to provide accurate and complete
+      information and cooperate with the bank during the loan tenure.
+    </p>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end center">
+    <div>
+      <ic-button
+        [label]="'Back'"
+        [type]="'button'"
+        icButtonType="outlined-rounded"
+        size="medium"
+        mat-dialog-close
+      ></ic-button>
+    </div>
+    <div>
+      <ic-button
+        [icButtonType]="'filled-rounded'"
+        [label]="'Agree'"
+        [type]="'submit'"
+        size="medium"
+        mat-dialog-close="agree"
+      ></ic-button>
+    </div>
+  </div>
+</section>
