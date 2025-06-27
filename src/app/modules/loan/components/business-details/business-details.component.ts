@@ -34,7 +34,6 @@ export class BusinessDetailsComponent implements OnInit {
   countryArr: any[] = [];
   parentCompanyArr: any[] = [];
 
-
   constructor(
     private fb: FormBuilder,
     private genericService: GenericValueService,
@@ -42,14 +41,6 @@ export class BusinessDetailsComponent implements OnInit {
     private loanService: LoanService,
     private countryService: CountryService,
   ) {}
-
-  get contact() {
-    return this.businessDetailsForm.get('contact') as FormGroup;
-  }
-
-  get address(): FormArray {
-    return this.contact.get('address') as FormArray;
-  }
 
   ngOnInit() {
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
