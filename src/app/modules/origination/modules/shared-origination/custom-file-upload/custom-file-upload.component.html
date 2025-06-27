@@ -150,6 +150,34 @@
           class="styled-panel applicant-panel"
           [expanded]="true"
         >
+          <ng-container>
+            <div
+              fxLayout="row"
+              fxLayoutAlign="end center"
+              style="margin: 1rem 0"
+            >
+              <div
+                class="custom-add-btn"
+                [matMenuTriggerFor]="docMenu"
+                tabindex="0"
+              >
+                <span class="btn-text">Add</span>
+                <span class="btn-icon">
+                  <img src="assets/images/down_arrow.svg" alt="dropdown" />
+                </span>
+              </div>
+            </div>
+            <mat-menu #docMenu="matMenu" class="custom-menu">
+              <button
+                mat-menu-item
+                *ngFor="let doc of documentTypeArray"
+                (click)="addApplicantDocument(doc)"
+              >
+                {{ doc?.values }}
+              </button>
+            </mat-menu>
+          </ng-container>
+
           <mat-expansion-panel-header class="p-12">
             <span class="header_md">Applicant {{ aIndex + 1 }}</span>
           </mat-expansion-panel-header>
@@ -194,7 +222,6 @@
                         >*</span
                       >
                     </div>
-                    <!-- No delete for required -->
                   </div>
                 </mat-expansion-panel-header>
 

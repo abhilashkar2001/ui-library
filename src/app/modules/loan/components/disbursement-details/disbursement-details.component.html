@@ -19,7 +19,7 @@
       fxLayout="row wrap"
       fxLayoutAlign="start center"
     >
-      <mat-label class="header_md_bold_black" fxFlex="100">Account </mat-label>
+      <mat-label class="header_md_bold_black" fxFlex="100">Account</mat-label>
       <ic-radio-button
         *ngFor="let account of accountValue"
         [control]="disbursementForm.get('internal') | formcontrol"
@@ -74,7 +74,7 @@
         fxLayoutAlign="start center"
       >
         <mat-label class="header_md_bold_black" fxFlex="100"
-          >Do you have Internal Account
+        >Do you have Internal Account
         </mat-label>
         <ic-radio-button
           *ngFor="let account of internalAccount"
@@ -89,11 +89,11 @@
       </div>
       <div *ngIf="loanDisbursementAccount?.get('internal')?.value === true">
         <ic-slide-toggle
-          labelPosition="before"
+          [checked]="loanDisbursementAccount.get('newAccount')?.value"
           [formControl]="
             loanDisbursementAccount.get('newAccount') | formcontrol
           "
-          [checked]="loanDisbursementAccount.get('newAccount')?.value"
+          labelPosition="before"
         >
           Do you want to create a account? *
         </ic-slide-toggle>
@@ -123,8 +123,8 @@
           ></ic-form-field>
         </div>
         <div
-          fxFlex="24"
           *ngIf="loanDisbursementAccount?.get('internal')?.value === false"
+          fxFlex="24"
         >
           <ic-select
             [control]="disbursementForm.get('accountTypeId') | formcontrol"
@@ -149,12 +149,12 @@
           fxFlex="24"
         >
           <ic-form-field
+            (onSuffixClick)="searchBankCode()"
             [control]="loanDisbursementAccount.get('bankCode') | formcontrol"
             [icAlphanumeric]="true"
             [maxLength]="35"
-            suffixIcon="search"
             label="Bank Code"
-            (onSuffixClick)="searchBankCode()"
+            suffixIcon="search"
           ></ic-form-field>
         </div>
         <div fxFlex="24">

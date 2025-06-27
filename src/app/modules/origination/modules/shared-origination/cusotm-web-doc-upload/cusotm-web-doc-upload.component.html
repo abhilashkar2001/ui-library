@@ -42,12 +42,13 @@
                           "
                           class="text-header"
                         >
-                          {{ denomDetai.value.documentType
+                          {{
+                            denomDetai.value.documentType
                           }}<span
-                            *ngIf="denomDetai?.value?.docRequired"
-                            class="required-star"
-                            >*</span
-                          >
+                          *ngIf="denomDetai?.value?.docRequired"
+                          class="required-star"
+                        >*</span
+                        >
                         </h3>
                         <ng-template #showDropList>
                           <mat-form-field
@@ -65,7 +66,7 @@
                                   let nonReqDoc of checkListDocList?.nonRequiredDocument
                                 "
                                 [value]="nonReqDoc.document"
-                                >{{ nonReqDoc.document }}
+                              >{{ nonReqDoc.document }}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -123,8 +124,8 @@
                         </div>
                         <div class="img_container">
                           <span class="breadcrum_sm_bold img_name">{{
-                            file?.name
-                          }}</span>
+                              file?.name
+                            }}</span>
                           <div
                             *ngIf="file.progress === '100%'; else showSize"
                             class="progress-cont"
@@ -185,7 +186,7 @@
             class="image"
           />
           <mat-hint *ngIf="!image" class="signiter" matSuffix
-            >{{ 'Face Scan' }}
+          >{{ 'Face Scan' }}
           </mat-hint>
         </div>
         <div [fxLayoutAlign]="'center center'" class="scan-title" fxFlex="20">

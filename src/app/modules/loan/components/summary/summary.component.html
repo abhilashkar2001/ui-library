@@ -1,1 +1,20 @@
-<p>summary works!</p>
+<section>
+  <div
+    *ngFor="let details of loanDetailsStore"
+    fxLayout="column"
+    fxLayoutGap="1%"
+    class="mb-4"
+  >
+    <span class="header_md_bold_black">{{ details?.key }}</span>
+    <div fxLayout="row wrap">
+      <div
+        fxFlex="24"
+        fxLayout="column"
+        *ngFor="let data of details?.headerInfo"
+      >
+        <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+        <span class="header_md">{{ summary[data?.headerDef!] }}</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -71,7 +71,8 @@
       <g data-name="Group 1612" id="Group_1612" transform="translate(95.808 182.861)">
         <g data-name="Group 13" id="Group_13" transform="translate(0)">
           <g data-name="Ellipse 99" fill="#fff" id="Ellipse_99"
-             stroke="#707070" stroke-linecap="round" stroke-width="1" transform="matrix(0.235, -0.972, 0.972, 0.235, 0, 189.193)">
+             stroke="#707070" stroke-linecap="round" stroke-width="1"
+             transform="matrix(0.235, -0.972, 0.972, 0.235, 0, 189.193)">
             <circle cx="97.31" cy="97.31" r="97.31" stroke="none" />
             <circle cx="97.31" cy="97.31" fill="none" r="96.81" />
           </g>

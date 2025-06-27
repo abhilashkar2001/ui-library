@@ -1,9 +1,4 @@
-import {
-  ComponentRef,
-  Injectable,
-  Type,
-  ViewContainerRef,
-} from '@angular/core';
+import { ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
 
 /**
  * A service for dynamically loading Angular components into a `ViewContainerRef`.

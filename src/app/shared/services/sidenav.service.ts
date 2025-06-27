@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class SidenavService {
+  public sidePanelClass = new BehaviorSubject<string>('panel-end-drawer');
+  public panelClass = this.sidePanelClass.asObservable();
   private panel: MatSidenav | undefined;
   private vcf: ViewContainerRef | undefined;
 
@@ -16,13 +18,6 @@ export class SidenavService {
 
   setContentVcf(viewContainerRef: ViewContainerRef) {
     this.vcf = viewContainerRef;
-  }
-
-  private createView(data: DrawerContextData) {
-    this.vcf?.clear();
-    console.log(data);
-    const componentRef = this.vcf?.createComponent(data.component);
-    if (componentRef) componentRef.instance.data = data.data;
   }
 
   open(data: DrawerContextData, openSlip?: boolean) {
@@ -48,9 +43,15 @@ export class SidenavService {
   toggle() {
     return this.panel?.toggle();
   }
-  public sidePanelClass = new BehaviorSubject<string>('panel-end-drawer');
-  public panelClass = this.sidePanelClass.asObservable();
+
   setCustomeClass(customClass: string) {
     this.sidePanelClass.next(customClass);
+  }
+
+  private createView(data: DrawerContextData) {
+    this.vcf?.clear();
+    console.log(data);
+    const componentRef = this.vcf?.createComponent(data.component);
+    if (componentRef) componentRef.instance.data = data.data;
   }
 }

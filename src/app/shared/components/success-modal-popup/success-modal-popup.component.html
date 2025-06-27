@@ -1,8 +1,8 @@
 <div class="success_modal" fxLayout="column" fxLayoutAlign="center center">
-  <mat-icon class="close" (click)="onClose()">close</mat-icon>
+  <mat-icon (click)="onClose()" class="close">close</mat-icon>
 
   <div class="img_container">
-    <img src="assets/images/success_modal.svg" alt="" />
+    <img alt="" src="assets/images/success_modal.svg" />
   </div>
   <div
     class="details_block"
@@ -26,12 +26,12 @@
     fxLayoutAlign="space-between center"
     fxLayoutGap="10px"
   >
-    <ic-button label="Share" icButtonType="outlined-rounded"></ic-button>
-    <ic-button label="Download" icButtonType="outlined-rounded"></ic-button>
+    <ic-button icButtonType="outlined-rounded" label="Share"></ic-button>
+    <ic-button icButtonType="outlined-rounded" label="Download"></ic-button>
     <ic-button
-      label="Done"
-      icButtonType="filled-rounded"
       (OnClick)="onClose()"
+      icButtonType="filled-rounded"
+      label="Done"
     ></ic-button>
   </div>
 </div>

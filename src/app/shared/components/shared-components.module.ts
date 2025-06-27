@@ -29,6 +29,7 @@ import { SuccessModalPopupComponent } from './success-modal-popup/success-modal-
 import { ViewDocSidePanelComponent } from './view-doc-side-panel/view-doc-side-panel.component';
 import { BankCodePanelComponent } from './bank-code-panel/bank-code-panel.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
+import { TermsConditionPopupComponent } from './terms-condition-popup/terms-condition-popup.component';
 
 const components = [
   HeaderTopComponent,
@@ -47,6 +48,7 @@ const components = [
   ViewDocSidePanelComponent,
   BankCodePanelComponent,
   CustomTableComponent,
+  TermsConditionPopupComponent,
 ];
 
 @NgModule({

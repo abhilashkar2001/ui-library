@@ -6,17 +6,17 @@
     fxLayoutAlign="start center"
   >
     <span class="ml-20"
-      ><mat-icon (click)="closeDialog()" class="heading"
-        >arrow_back</mat-icon
-      ></span
+    ><mat-icon (click)="closeDialog()" class="heading"
+    >arrow_back</mat-icon
+    ></span
     >
     <h2 class="ml-12 text-normal">Digital Signing</h2>
   </div>
   <div *ngIf="title === 'Physical Sign'" class="mt-12 ml-12" fxLayout="row">
     <span
-      ><mat-icon (click)="closeDialog()" class="ml-12"
-        >arrow_back</mat-icon
-      ></span
+    ><mat-icon (click)="closeDialog()" class="ml-12"
+    >arrow_back</mat-icon
+    ></span
     >
     <h2 class="ml-12 text-normal text-bold">Physical Sign Upload</h2>
   </div>
@@ -50,7 +50,7 @@
             this.radioFlag === 'digitan-sign' ? 'actionTitle' : 'gray-btn'
           "
           class="text-center text-normal text-bold"
-          >Digital Sign</span
+        >Digital Sign</span
         >
       </div>
     </mat-card>
@@ -72,7 +72,7 @@
         <span
           [ngClass]="this.radioFlag === 'upload' ? 'actionTitle' : 'gray-btn'"
           class="text-normal"
-          >Upload</span
+        >Upload</span
         >
       </div>
     </mat-card>
@@ -107,13 +107,13 @@
           </div>
           <h5>
             <strong class="text-normal"
-              >Drag and Drop file here or
+            >Drag and Drop file here or
               <span
                 (click)="fileSelect.click()"
                 (keydown.enter)="fileSelect.click()"
                 class="textdesign"
                 tabindex="0"
-                ><u>Choose file</u></span
+              ><u>Choose file</u></span
               >
             </strong>
           </h5>

@@ -58,7 +58,8 @@
             fill="url(#radial-gradient)"
             id="Path_149" transform="translate(0 51.701) rotate(-45)" />
       <g data-name="Group 38" id="Group_38" transform="translate(12.212 30.047)">
-        <ellipse cx="18.445" cy="18.445" data-name="Ellipse 38" fill="url(#radial-gradient-2)" id="Ellipse_38" rx="18.445"
+        <ellipse cx="18.445" cy="18.445" data-name="Ellipse 38" fill="url(#radial-gradient-2)" id="Ellipse_38"
+                 rx="18.445"
                  ry="18.445" style="mix-blend-mode: multiply;isolation: isolate"
                  transform="translate(0 15.036) rotate(-24.053)" />
         <circle cx="8.035" cy="8.035" data-name="Ellipse 39" fill="url(#radial-gradient-3)" id="Ellipse_39"
@@ -78,10 +79,12 @@
       <path d="M131.364,161.131c2.949,6.883,8.471,11.52,14.8,11.52s11.851-4.637,14.8-11.52Z" data-name="Path 56"
             fill="url(#linear-gradient-2)"
             id="Path_56" transform="translate(-92.463 -104.875)" />
-      <path d="M158.847,158.753c0,.9-8.7,1.631-19.429,1.631s-19.428-.73-19.428-1.631,8.7-1.631,19.428-1.631S158.847,157.852,158.847,158.753Z" data-name="Path 57"
-            fill="url(#radial-gradient-6)"
-            id="Path_57" style="mix-blend-mode: screen;isolation: isolate"
-            transform="translate(-85.717 -102.24)" />
+      <path
+        d="M158.847,158.753c0,.9-8.7,1.631-19.429,1.631s-19.428-.73-19.428-1.631,8.7-1.631,19.428-1.631S158.847,157.852,158.847,158.753Z"
+        data-name="Path 57"
+        fill="url(#radial-gradient-6)"
+        id="Path_57" style="mix-blend-mode: screen;isolation: isolate"
+        transform="translate(-85.717 -102.24)" />
     </g>
   </g>
 </svg>

@@ -9,7 +9,8 @@
         fill="#FFFEFE" stroke="#CBCBCB" />
     </g>
     <g filter="url(#filter1_d_0_1)">
-      <path clip-rule="evenodd" d="M202.928 -2L196 -14L189.072 -2H-80C-84.9706 -2 -89 2.02944 -89 7V155C-89 159.971 -84.9706 164 -80 164H207C211.971 164 216 159.971 216 155V7C216 2.02944 211.971 -2 207 -2H202.928Z"
+      <path clip-rule="evenodd"
+            d="M202.928 -2L196 -14L189.072 -2H-80C-84.9706 -2 -89 2.02944 -89 7V155C-89 159.971 -84.9706 164 -80 164H207C211.971 164 216 159.971 216 155V7C216 2.02944 211.971 -2 207 -2H202.928Z"
             fill="#FFFEFE"
             fill-rule="evenodd" />
     </g>
@@ -19,7 +20,8 @@
     </g>
   </g>
   <defs>
-    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="94.2578" id="filter0_d_0_1" width="335"
+    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="94.2578" id="filter0_d_0_1"
+            width="335"
             x="-99" y="-76.2578">
       <feFlood flood-opacity="0" result="BackgroundImageFix" />
       <feColorMatrix in="SourceAlpha" result="hardAlpha"

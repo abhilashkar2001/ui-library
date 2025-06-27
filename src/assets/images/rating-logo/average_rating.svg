@@ -60,19 +60,23 @@
                 r="7.755" transform="translate(19.037 18.492) rotate(-62.853)" />
         <ellipse cx="4.102" cy="4.102" data-name="Ellipse 47" fill="#fff" id="Ellipse_47" rx="4.102"
                  ry="4.102" transform="translate(25.993 18.307) rotate(-78.216)" />
-        <path d="M17.8,0A17.8,17.8,0,1,1,0,17.8,17.8,17.8,0,0,1,17.8,0Z" data-name="Path 103" fill="url(#radial-gradient-2)"
+        <path d="M17.8,0A17.8,17.8,0,1,1,0,17.8,17.8,17.8,0,0,1,17.8,0Z" data-name="Path 103"
+              fill="url(#radial-gradient-2)"
               id="Path_103" style="mix-blend-mode: multiply;isolation: isolate"
               transform="translate(36.924 25.178) rotate(-45)" />
         <g data-name="Group 41" id="Group_41" transform="translate(48.272 5.597)">
-          <ellipse cx="7.755" cy="7.755" data-name="Ellipse 49" fill="url(#radial-gradient-5)" id="Ellipse_49" rx="7.755"
+          <ellipse cx="7.755" cy="7.755" data-name="Ellipse 49" fill="url(#radial-gradient-5)" id="Ellipse_49"
+                   rx="7.755"
                    ry="7.755" transform="translate(0 14.956) rotate(-74.636)" />
           <circle cx="4.102" cy="4.102" data-name="Ellipse 50" fill="#fff" id="Ellipse_50"
                   r="4.102" transform="translate(2.381 9.993) rotate(-49.546)" />
         </g>
-        <path d="M631.539,158.377c0,.185-2.777.334-6.2.334s-6.2-.15-6.2-.334,2.777-.335,6.2-.335S631.539,158.192,631.539,158.377Z" data-name="Path 58"
-              fill="url(#radial-gradient-6)"
-              id="Path_58" style="mix-blend-mode: screen;isolation: isolate"
-              transform="translate(-580.651 -132.052)" />
+        <path
+          d="M631.539,158.377c0,.185-2.777.334-6.2.334s-6.2-.15-6.2-.334,2.777-.335,6.2-.335S631.539,158.192,631.539,158.377Z"
+          data-name="Path 58"
+          fill="url(#radial-gradient-6)"
+          id="Path_58" style="mix-blend-mode: screen;isolation: isolate"
+          transform="translate(-580.651 -132.052)" />
       </g>
       <path d="M618.209,156.3l0,3.592s.032.163,0,0h20.763c.1-.077-.013.012,0,0l0-3.592Z" data-name="Path 59"
             fill="url(#linear-gradient-2)"

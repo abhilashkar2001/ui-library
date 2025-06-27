@@ -1,1 +1,52 @@
-<p>terms-condition works!</p>
+<section fxLayout="column" fxLayoutGap="1%">
+  <div fxLayout="row">
+    <div
+      fxFlex="24"
+      fxLayout="column"
+      fxLayoutGap="1%"
+      *ngFor="let details of customerDetails"
+    >
+      <span class="breadcrum_sm">{{ details?.headerCell }}</span>
+      <span class="header_md">{{ details?.headerDef }}</span>
+    </div>
+  </div>
+  <div>
+    <span class="header_md">Important Information:</span>
+    <p class="breadcrum_sm">
+      The Credit Information Companies (CICs) is an initiative of the Government
+      of India and the Reserve Bank of India (RBI) to improve the functionality
+      and stability of the Indian financial system. We wish to inform you that
+      we shall now be reporting the data pertaining to your account with us to
+      the concerned Credit Information Company. This data will be updated on a
+      regular basis for all our customers.
+    </p>
+    <span class="header_md">Other Information:</span>
+    <p class="breadcrum_sm">
+      • Part Payment is allowed after initial 3 EMIs. Maximum 40% of current
+      Principal Outstanding is allowed as part payment in a financial year, this
+      can be one bullet payment or maximum of 3 payments totaling up to 40% of
+      Principal Outstanding. In case you wish to avail this option, 2% part
+      payment charges is applicable on partial payment. Part payment to be made
+      from customer’s own fund. This facility is allowed only for customers who
+      have opted for Smart Personal Loan. Part payment is not allowed for
+      customers who have opted for Simple Personal Loan. <br />
+      • Post issuance of the Balance Transfer Demand Draft by Demo Bank , if the
+      Demand Draft.
+    </p>
+  </div>
+  <div fxLayout="row" fxLayoutGap="0.5%">
+    <ic-checkbox class="custom-checkbox" class="primary" [checked]="agreed">
+    </ic-checkbox
+    ><span class="header_md">
+      I have read, understood and agree to abide by
+      <span
+        class="theme_md cursor-pointer"
+        (click)="openDialog()"
+        (keydown.enter)="openDialog()"
+        tabindex="0"
+        ><u>Terms and Conditions*</u></span
+      >
+      of Demobank
+    </span>
+  </div>
+</section>

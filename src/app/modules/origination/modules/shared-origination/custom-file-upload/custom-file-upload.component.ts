@@ -72,9 +72,18 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
             item.values.toLowerCase().includes('aadhar'),
           )[0].id;
         }
+
+        if (
+          !this.isChecklistDoc &&
+          this.screenName.includes('customer') &&
+          this.applicant().length === 0
+        ) {
+          this.addApplicant();
+        }
       });
   }
 
+  // Build form
   buildForm(data?: any) {
     this.createDocumentForm = this.fb.group({
       otherDocument: this.fb.array([]),
@@ -86,7 +95,12 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         this.addDocument(item);
       });
     }
-    if (!this.isChecklistDoc && this.screenName.includes('customer')) {
+
+    if (
+      !this.isChecklistDoc &&
+      this.screenName.includes('customer') &&
+      this.documentTypeArray
+    ) {
       this.addApplicant();
     }
   }
@@ -108,7 +122,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   }
 
   newDenom(data?: any): FormGroup {
-    const docType = typeof data === 'string' ? data : data?.document || '';
+    const docType = data?.values ?? (data?.document || '');
     return this.fb.group({
       documentNumber: [''],
       documentType: [docType],
@@ -383,9 +397,32 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     const applicantGroup = this.fb.group({
       otherDocument: this.fb.array([]),
     });
-    const requiredDocs = ['Address Proof', 'ID Proof'];
+    const requiredDocs = this.documentTypeArray.filter(
+      (doc: any) =>
+        doc.values.toLowerCase().includes('address proof') ||
+        doc.values.toLowerCase().includes('id proof'),
+    );
     const docArray = applicantGroup.get('otherDocument') as FormArray;
-    requiredDocs.forEach((doc) => docArray.push(this.newDenom(doc)));
+    requiredDocs.forEach((doc: any) => docArray.push(this.newDenom(doc)));
     this.applicant().push(applicantGroup);
+  }
+
+  // For Dynamically Pushing the applicant select document to the form
+  addApplicantDocument(data: any) {
+    const applicantArray = this.applicant();
+    if (applicantArray.length === 0) return;
+
+    const latestApplicant = applicantArray.at(
+      applicantArray.length - 1,
+    ) as FormGroup;
+    const otherDocArray = latestApplicant.get('otherDocument') as FormArray;
+    const alreadyExists = otherDocArray.controls.some(
+      (ctrl: any) =>
+        ctrl.get('documentType')?.value?.toLowerCase() ===
+        data.values.toLowerCase(),
+    );
+    if (!alreadyExists) {
+      otherDocArray.push(this.newDenom(data));
+    }
   }
 }

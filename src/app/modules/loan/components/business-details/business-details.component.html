@@ -11,7 +11,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="businessDetailsForm.get('companyTypeId') | formcontrol"
-        [options]="industryTypeList"
+        [options]="companyTypeArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Company Type"
@@ -21,7 +21,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="businessDetailsForm.get('natureOfBusinessId') | formcontrol"
-        [options]="industryTypeList"
+        [options]="natureOfBusinessArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Nature of Business"
@@ -31,7 +31,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="businessDetailsForm.get('segmentId') | formcontrol"
-        [options]="industryTypeList"
+        [options]="segmentArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Segment"
@@ -50,11 +50,11 @@
     <div fxFlex="24">
       <ic-select
         [control]="
-          businessDetailsForm.get('countryOfIncorporation') | formcontrol
+          businessDetailsForm.get('countryOfIncorporationName') | formcontrol
         "
-        [options]="industryTypeList"
-        bindLabelKey="values"
-        bindValueKey="id"
+        [options]="countryArr"
+        bindLabelKey="countryName"
+        bindValueKey="countryName"
         label="Country of Incorporation"
       >
       </ic-select>
@@ -85,8 +85,8 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="businessDetailsForm.get('sourceOfIncome') | formcontrol"
-        [options]="industryTypeList"
+        [control]="businessDetailsForm.get('sourceOfIncomeId') | formcontrol"
+        [options]="segmentArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Source of Income"
@@ -101,7 +101,7 @@
       <div fxLayout="row" fxLayoutGap="50px">
         <ic-radio-button
           *ngFor="let status of businessIntensityArr"
-          [control]="businessDetailsForm.get('businessIntensity') | formcontrol"
+          [control]="businessDetailsForm.get('businessIntencity') | formcontrol"
           [label]="status.label"
           [value]="status.value"
         ></ic-radio-button>
@@ -109,29 +109,29 @@
     </div>
     <div fxFlex="49">
       <ic-textarea
-        label="Customer Description"
         [control]="businessDetailsForm.get('customerDescription') | formcontrol"
         [rows]="8"
         fxFlex="100"
+        label="Customer Description"
       >
       </ic-textarea>
     </div>
     <div fxFlex="49">
       <ic-textarea
-        label="Description of Business"
         [control]="
-          businessDetailsForm.get('descriptionofBusiness') | formcontrol
+          businessDetailsForm.get('descriptionOfBusiness') | formcontrol
         "
         [rows]="8"
         fxFlex="100"
+        label="Description of Business"
       >
       </ic-textarea>
     </div>
 
     <div fxFlex="49">
       <ic-select
-        [control]="businessDetailsForm.get('parentCompany') | formcontrol"
-        [options]="industryTypeList"
+        [control]="businessDetailsForm.get('parentCompanyId') | formcontrol"
+        [options]="parentCompanyArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Parent Company"
@@ -143,9 +143,9 @@
   <div
     fxFlex="100"
     fxLayout="row"
+    fxLayoutAlign="end center"
     fxLayoutGap="1%"
     style="margin-top: 50px"
-    fxLayoutAlign="end center"
   >
     <div>
       <ic-button
@@ -162,6 +162,7 @@
         [label]="'Next'"
         [type]="'submit'"
         size="medium"
+        (OnClick)="onSaveBusinessDetails()"
       >
       </ic-button>
     </div>

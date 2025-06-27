@@ -1,5 +1,7 @@
 <svg height="13.157" viewBox="0 0 7.522 13.157" width="7.522" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.268,6.577,7.246,1.6A.94.94,0,0,0,5.914.275L.274,5.911a.938.938,0,0,0-.027,1.3L5.91,12.883a.94.94,0,1,0,1.332-1.328Z" data-name="Icon ionic-ios-arrow-back"
-        fill="#00205c"
-        id="Icon_ionic-ios-arrow-back" transform="translate(7.522 13.157) rotate(180)" />
+  <path
+    d="M2.268,6.577,7.246,1.6A.94.94,0,0,0,5.914.275L.274,5.911a.938.938,0,0,0-.027,1.3L5.91,12.883a.94.94,0,1,0,1.332-1.328Z"
+    data-name="Icon ionic-ios-arrow-back"
+    fill="#00205c"
+    id="Icon_ionic-ios-arrow-back" transform="translate(7.522 13.157) rotate(180)" />
 </svg>

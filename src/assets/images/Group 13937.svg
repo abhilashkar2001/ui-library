@@ -87,7 +87,8 @@
       fill="url(#pattern0)" shape-rendering="crispEdges" />
   </g>
   <defs>
-    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="489" id="filter0_d_1046_36467" width="489" x="0"
+    <filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="489" id="filter0_d_1046_36467"
+            width="489" x="0"
             y="12">
       <feFlood flood-opacity="0" result="BackgroundImageFix" />
       <feColorMatrix in="SourceAlpha" result="hardAlpha" type="matrix"

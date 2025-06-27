@@ -24,17 +24,16 @@ import { ComponentConstant } from '../../../config/component.constant';
 export class StagesComponent implements OnInit {
   @ViewChildren('container', { read: ViewContainerRef })
   container!: QueryList<ViewContainerRef>;
-  private readonly componentCache = new ComponentLRUCache(3);
-  private processCycleCode: string | undefined;
-  private basisId: number = 132767;
-  private productDetails: IProduct | undefined;
+  readonly activePanels = signal<Set<number>>(new Set());
+  readonly isAnyPanelOpen = computed(() => this.activePanels().size > 0);
   protected componentMapping: Map<string, Record<string, any>> = new Map<
     string,
     Record<string, any>
   >();
-
-  readonly activePanels = signal<Set<number>>(new Set());
-  readonly isAnyPanelOpen = computed(() => this.activePanels().size > 0);
+  private readonly componentCache = new ComponentLRUCache(3);
+  private processCycleCode: string | undefined;
+  private basisId: number = 132767;
+  private productDetails: IProduct | undefined;
 
   constructor(
     private renderComponentService: RenderComponentService,

@@ -3,7 +3,8 @@
         stroke-width="1.5" />
   <path d="M15.5869 0.75V4.174" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
         stroke-width="1.5" />
-  <path d="M1.32104 8.84204H20.721" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+  <path d="M1.32104 8.84204H20.721" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round"
+        stroke-miterlimit="10"
         stroke-width="1.5" />
   <path
     d="M21.294 8.16891V17.8689C21.294 21.2929 19.582 23.5759 15.587 23.5759H6.457C2.462 23.5769 0.75 21.2939 0.75 17.8699V8.16991C0.75 4.74491 2.462 2.46191 6.457 2.46191H15.588C19.582 2.46191 21.294 4.74491 21.294 8.16891Z"

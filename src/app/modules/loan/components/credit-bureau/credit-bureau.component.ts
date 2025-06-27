@@ -12,6 +12,7 @@ export class CreditBureauComponent {
   showOtpSection = false;
 
   @ViewChild('consentDialog') consentDialog!: TemplateRef<any>;
+
   constructor(private dialog: MatDialog) {}
 
   openDialog() {

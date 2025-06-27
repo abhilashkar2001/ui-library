@@ -25,6 +25,7 @@ export class BankCodePanelComponent implements OnInit {
       bankCode: 'Bank Code - DEMO45678',
     },
   ];
+
   constructor(
     private fb: FormBuilder,
     private branchService: BranchService,

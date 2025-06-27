@@ -32,7 +32,6 @@ export class DirectorDetailsComponent implements OnInit {
   countriesIsdCodes: any[] = [];
   countryArray: any;
   nationalityArray: any[] = [];
-  private localeData: LocaleData | undefined;
   subscriptions: Subscription[] = [];
   defaultIsdCodeValue: any;
   maxMobileLength!: number;
@@ -43,6 +42,7 @@ export class DirectorDetailsComponent implements OnInit {
   @Input() basisId: any;
   boundaries: any;
   todayDate: Date = new Date();
+  private localeData: LocaleData | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +52,10 @@ export class DirectorDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private openApi: OpenAccountService,
   ) {}
+
+  get customer(): FormArray {
+    return this.customerDetailsForm.get('customer') as FormArray;
+  }
 
   ngOnInit() {
     const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
@@ -165,10 +169,6 @@ export class DirectorDetailsComponent implements OnInit {
           console.log(status, 'status');
         }
       });
-  }
-
-  get customer(): FormArray {
-    return this.customerDetailsForm.get('customer') as FormArray;
   }
 
   getDocumentIdArray(index: number): FormArray {
@@ -330,25 +330,6 @@ export class DirectorDetailsComponent implements OnInit {
     });
   }
 
-  // EmergencyContactAddressGroup
-  private createEmergencyContactAddressGroup(address?: any): FormGroup {
-    const group = this.fb.group({
-      addressId: [address?.addressId ?? null],
-      address1: [address?.address1 ?? '', Validators.required],
-      address2: [address?.address2 ?? '', Validators.required],
-      cityName: [address?.cityName ?? '', Validators.required],
-      stateName: [address?.stateName ?? ''],
-      countryName: [address?.countryName ?? ''],
-      pincode: [address?.pincode ?? '', Validators.required],
-      cityId: [address?.cityId ?? ''],
-      residenceType: [address?.residenceType ?? '', Validators.required],
-      residenceTypeValue: [address?.residenceTypeValue ?? ''],
-    });
-    // This ensures validators are processed immediately
-    group.updateValueAndValidity();
-    return group;
-  }
-
   // Pincode Search Popup
   pincodeExpansion(
     customerIndex: number,
@@ -427,5 +408,24 @@ export class DirectorDetailsComponent implements OnInit {
 
   goBack() {
     console.log('skjdf');
+  }
+
+  // EmergencyContactAddressGroup
+  private createEmergencyContactAddressGroup(address?: any): FormGroup {
+    const group = this.fb.group({
+      addressId: [address?.addressId ?? null],
+      address1: [address?.address1 ?? '', Validators.required],
+      address2: [address?.address2 ?? '', Validators.required],
+      cityName: [address?.cityName ?? '', Validators.required],
+      stateName: [address?.stateName ?? ''],
+      countryName: [address?.countryName ?? ''],
+      pincode: [address?.pincode ?? '', Validators.required],
+      cityId: [address?.cityId ?? ''],
+      residenceType: [address?.residenceType ?? '', Validators.required],
+      residenceTypeValue: [address?.residenceTypeValue ?? ''],
+    });
+    // This ensures validators are processed immediately
+    group.updateValueAndValidity();
+    return group;
   }
 }

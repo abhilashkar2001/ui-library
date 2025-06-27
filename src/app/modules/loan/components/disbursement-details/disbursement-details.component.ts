@@ -39,6 +39,10 @@ export class DisbursementDetailsComponent implements OnInit {
     this.currentDate?.setDate(new Date().getDate() + 1);
   }
 
+  get loanDisbursementAccount() {
+    return this.disbursementForm?.get('disbursementAccount') as FormGroup;
+  }
+
   ngOnInit(): void {
     this.buildDisbursementForm();
     this.fetchGenericValues();
@@ -91,10 +95,6 @@ export class DisbursementDetailsComponent implements OnInit {
         newAccount: [false],
       }),
     });
-  }
-
-  get loanDisbursementAccount() {
-    return this.disbursementForm?.get('disbursementAccount') as FormGroup;
   }
 
   fetchGenericValues() {
