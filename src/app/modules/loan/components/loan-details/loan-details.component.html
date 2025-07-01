@@ -36,9 +36,9 @@
       class="content_row"
       fxLayout="row"
       fxLayoutAlign="start center"
-      fxLayoutGap="20px"
+      fxLayoutGap="10px"
     >
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('loanAmount') | formcontrol"
           [decimalPlaces]="3"
@@ -47,7 +47,7 @@
           label="Loan Amount Requested (GHS)"
         ></ic-form-field>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-tenure-field
           [fieldLabels]="{
             loanTenureYear: 'Year',
@@ -60,7 +60,7 @@
           label="Tenure"
         ></ic-tenure-field>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('interestRate') | formcontrol"
           [decimalPlaces]="3"
@@ -69,7 +69,7 @@
           label="Interest Rate %"
         ></ic-form-field>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('emiAmount') | formcontrol"
           [decimalPlaces]="3"
@@ -84,9 +84,9 @@
       class="content_row mt-2"
       fxLayout="row"
       fxLayoutAlign="start center"
-      fxLayoutGap="20"
+      fxLayoutGap="10"
     >
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('interestPayable') | formcontrol"
           [decimalPlaces]="3"
@@ -95,7 +95,7 @@
           label="Interest Payable"
         ></ic-form-field>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('totalPrincipalAmount') | formcontrol"
           [decimalPlaces]="3"
@@ -104,7 +104,7 @@
           label="Total Principal Amount"
         ></ic-form-field>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('totalPayableAmount') | formcontrol"
           [decimalPlaces]="3"
@@ -121,25 +121,25 @@
       fxLayoutAlign="start center"
       fxLayoutGap="20"
     >
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-select
-          [control]="loanDetailsForm.get('repaymentFrequencyId') | formcontrol"
+          [control]="repaymentDetails.get('repaymentFrequencyId') | formcontrol"
           [options]="genericValue?.REPAYMENTFREQUENCY"
           bindLabelKey="values"
           bindValueKey="id"
           label="Repayment Frequency"
         ></ic-select>
       </div>
-      <div fxFlex="25">
+      <div fxFlex="24">
         <ic-date-picker
-          [control]="loanDetailsForm.get('firstRepaymentDate') | formcontrol"
+          [control]="repaymentDetails.get('firstRepaymentDate') | formcontrol"
           [minDate]="todaysDate"
           label="EMI Start Date"
         >
         </ic-date-picker>
       </div>
 
-      <div fxFlex="25">
+      <div fxFlex="24">
         <div class="header_md_bold_black mb-8">
           {{ 'Holder Type *' }}
         </div>
@@ -173,6 +173,7 @@
     </div>
     <div>
       <ic-button
+        (OnClick)="saveLoanDetails()"
         [icButtonType]="'filled-rounded'"
         [label]="'Next'"
         [type]="'submit'"

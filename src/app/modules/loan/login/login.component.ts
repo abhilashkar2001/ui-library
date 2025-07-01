@@ -1,10 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
+import {
+  AppState,
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
 import { TrackingService } from 'app/modules/origination/modules/tracking/tracking-service';
-import { Subscription } from 'rxjs';
+import { debounceTime, Observable, Subscription } from 'rxjs';
 import { CountryService } from '../../../shared/services/country-service';
+import moment from 'moment';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,13 +40,21 @@ export class LoginComponent implements OnInit {
   intervalId: any;
   otpAvailable = false;
   private localeData: LocaleData | undefined;
+  profileInfo: any;
+  userProfile$!: Observable<User | null>;
 
   constructor(
     private countryService: CountryService,
     private fb: FormBuilder,
     private store: Store<AppState>,
     private otpService: TrackingService,
-  ) {}
+    private loanService: LoanService,
+    private sessionStorageService: SessionStorageService,
+    private router: Router,
+  ) {
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
+  }
 
   ngOnInit(): void {
     const localeData$ = this.store
@@ -47,9 +65,17 @@ export class LoginComponent implements OnInit {
         }
       });
     this.subscriptions.push(localeData$);
-
     this.loadCountries();
     this.buildForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
   }
 
   buildForm() {
@@ -58,6 +84,19 @@ export class LoginComponent implements OnInit {
       isdCode: [''],
       otpValue: [''],
     });
+
+    this.otpForm
+      .get('phone')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe((resp) => {
+        this.otpForm.get('phone')?.setErrors(null);
+        if (resp?.length == this.maxMobileLength) {
+          this.validNumber = false;
+        } else {
+          this.validNumber = true;
+          this.otpForm.get('phone')?.setErrors({ invalidLength: true });
+        }
+      });
   }
 
   // Get All Countrys and Isd code Mthd
@@ -84,6 +123,17 @@ export class LoginComponent implements OnInit {
         this.otpForm.get('isdCode')?.setValue(this.defaultIsdCodeValue);
       }
     });
+  }
+
+  setMobileLength() {
+    if (this.otpForm.get('isdCode')?.value) {
+      const countryRecord = this.countriesIsdCodes.find(
+        (item: any) =>
+          item.countryTelIsdCode == this.otpForm.get('isdCode')?.value,
+      );
+
+      this.maxMobileLength = countryRecord?.mobileLength;
+    }
   }
 
   // getOtp Method
@@ -125,7 +175,6 @@ export class LoginComponent implements OnInit {
       } else textSec = statSec;
 
       this.displaySecond = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-
       if (seconds == 0) {
         this.resendLink = true;
         // this.ngOtpInput?.otpForm?.disable();
@@ -150,7 +199,59 @@ export class LoginComponent implements OnInit {
   }
 
   onVerify() {
-    console.log('need to start');
+    this.isLoading = true;
+    this.otpService
+      .verifyOtp({
+        mobile: this.otpForm.value.phone,
+        otp: this.otpForm.value?.otpValue,
+      })
+      .subscribe((response: any) => {
+        if (response.status === 401) {
+          this.invalidOtp = true;
+          this.isLoading = false;
+        } else if (response.status === 200) {
+          this.isLoading = false;
+          this.invalidOtp = false;
+          const emiData = this.sessionStorageService.getEmiData();
+          const data = {
+            loanDetails: {
+              loanAmount: Number(emiData?.amount),
+              totalInterestAmount: emiData?.totalInterest,
+              interestRate: emiData?.rateOfIntrest,
+              loanTenureMonth: emiData?.loanTenureMonth,
+              loanTenureDay: emiData?.loanTenureDay,
+              loanTenureYear: emiData?.loanTenureYear,
+              totalPayableAmount: emiData?.totalRepaymentAmount,
+              mobile: this.otpForm.value?.phone,
+              mobtCode: this.otpForm.value?.isdCode ?? null,
+              emiInterestPayable: emiData?.totalInterest,
+              emiAmount: emiData?.monthlyPayment,
+            },
+            originationModel: {
+              applicationDate: moment(new Date()).format('MM-DD-YYYY'),
+              branchId: this.profileInfo?.branchId,
+              source: 'Website',
+              currencyCode: this.profileInfo?.currencyCode,
+              currencyId: this.profileInfo?.currencyId,
+              originationProductId: 2948,
+            },
+            screenCode: 464,
+          };
+          this.loanService.saveLoanDetails(data).subscribe((resp: any) => {
+            if (resp.statusCode === 200) {
+              console.log(resp?.data?.originationModel?.originationId);
+              this.sessionStorageService.setOriginationId(
+                resp?.data?.originationModel?.originationId,
+              );
+              this.router.navigate(['loan/stages']);
+              // if (!this.hideInfo)
+              //   this.onVerifyExistingProduct({
+              //     phone: this.otpForm.value.phone,
+              //   });
+            }
+          });
+        }
+      });
   }
 
   onExit() {

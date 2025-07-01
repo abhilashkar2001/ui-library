@@ -255,6 +255,8 @@ export class CommonMobileVerificationComponent implements OnInit, OnChanges {
       .get('phone')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe((resp) => {
+        console.log(resp, 'response');
+
         this.otpForm.get('phone')?.setErrors(null);
         const regExp = /^[0]+$/;
         if (resp?.length == this.maxMobileLength) {

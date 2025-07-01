@@ -94,11 +94,14 @@ export class BusinessDetailsComponent implements OnInit {
       businessIntencity: [true],
       customerDescription: [''],
       descriptionOfBusiness: [''],
+      yearsOfOperation: [''],
+      monthlyTurnOver: [''],
+      aveStockLevel: [''],
       parentCompanyId: [null],
-      //   contact: this.fb.group({
-      //     telephone: [''],
-      //     address: this.fb.array([this.buildAddressGroup()]),
-      //   }),
+      contact: this.fb.group({
+        telephone: [''],
+        address: this.fb.array([this.buildAddressGroup()]),
+      }),
     });
   }
 

@@ -38,8 +38,14 @@
 
       <div fxFlex="100" fxLayoutAlign="center center">
         <ic-mobile-field
+          (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [isdControl]="otpForm.get('isdCode') | formcontrol"
+          [customError]="
+            otpForm.get('phone')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          "
           [maxLength]="maxMobileLength"
           formControlName="phone"
           fxFlex="60"
@@ -60,18 +66,18 @@
       <div *ngIf="otpSent" fxFlex="100" fxLayoutAlign="center center">
         <span class="header_md"> Didn’t receive the OTP?</span>
         <span *ngIf="!resendLink && displaySecond"
-        >({{ displaySecond }} sec)</span
+          >({{ displaySecond }} sec)</span
         >
         <a
-        ><u
-          (click)="getOtp()"
-          (keydown.enter)="getOtp()"
-          [ngClass]="[!resendLink ? 'disableResend' : '']"
-          class="theme_md"
-          tabindex="3"
-        >
-          Resend OTP</u
-        ></a
+          ><u
+            (click)="getOtp()"
+            (keydown.enter)="getOtp()"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+            class="theme_md"
+            tabindex="3"
+          >
+            Resend OTP</u
+          ></a
         >
       </div>
 

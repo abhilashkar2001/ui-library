@@ -1,6 +1,16 @@
+import { getCurrencySymbol } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import {
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loan-details',
@@ -17,23 +27,56 @@ export class LoanDetailsComponent implements OnInit {
     REPAYMENTFREQUENCY: [],
   };
   holderTypeArr = [
-    { label: 'Self', value: 'true' },
-    { label: 'Others', value: 'false' },
+    { label: 'Self', value: 'self' },
+    { label: 'Joint', value: 'joint' },
   ];
+  profileInfo: any;
+  userProfile$!: Observable<User | null>;
+  currentDate: Date | undefined;
+  subscriptions: Subscription[] = [];
+  otherUserInfo: LocaleData | undefined;
+  currencySymboll = '';
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
-  ) {}
-
-  get loanDetails() {
-    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+    private store: Store,
+    private loanService: LoanService,
+  ) {
+    this.currentDate?.setDate(this.todaysDate.getDate() + 1);
+    this.userProfile$ = this.store.select(selectUser);
+    this.loadUserProfile();
+    this.loadLocaleData();
   }
 
   ngOnInit() {
     this.fetchGenericValues();
     this.initializeLoanDetailsArray();
     this.buildLoanDetailsForm();
+  }
+
+  loadUserProfile() {
+    const loadUserProfileSub = this.userProfile$.subscribe((result) => {
+      if (result) {
+        this.profileInfo = result;
+      }
+    });
+    this.subscriptions.push(loadUserProfileSub);
+  }
+
+  loadLocaleData(): void {
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((localeData) => {
+        if (localeData) {
+          this.otherUserInfo = localeData;
+          this.currencySymboll = getCurrencySymbol(
+            this.otherUserInfo.currency,
+            'wide',
+          );
+        }
+      });
+    this.subscriptions.push(localeDataSub);
   }
 
   initializeLoanDetailsArray(data?: any) {
@@ -109,15 +152,10 @@ export class LoanDetailsComponent implements OnInit {
   buildLoanDetailsForm() {
     this.loanDetailsForm = this.fb.group({
       originationModel: this.fb.group({
-        applicationDate: [''],
-        branchId: [''],
-        source: 'Website',
-        currencyCode: [''],
-        currencyId: [''],
-        originationProductId: [''],
-        firstRepaymentDate: [''],
+        originationId: [''],
       }),
       loanDetails: this.fb.group({
+        loanId: [''],
         loanAmount: [''],
         interestRate: [''],
         loanTenureYear: [''],
@@ -129,7 +167,35 @@ export class LoanDetailsComponent implements OnInit {
         totalPayableAmount: [''],
         holderType: [''],
       }),
+
+      repaymentModel: this.fb.group({
+        id: null,
+        firstRepaymentDate: [''],
+        repaymentFrequencyId: [''],
+      }),
       screenCode: [''],
+    });
+  }
+
+  get loanDetails() {
+    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+  }
+
+  get repaymentDetails() {
+    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
+  }
+
+  saveLoanDetails() {
+    const payload = {
+      ...this.loanDetailsForm?.value,
+    };
+    payload.originationModel.originationId = 554;
+    payload.screenCode = 444;
+
+    console.log(payload, 'payload');
+
+    this.loanService.saveLoanDetails(payload).subscribe((resp) => {
+      console.log(resp);
     });
   }
 }

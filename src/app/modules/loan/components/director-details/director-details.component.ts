@@ -1,25 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/personal-details.constant';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
+import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import {
   GenericValueData,
   GenericValueInfoModel,
 } from 'app/shared/models/generic-value.model';
 import { CountryService } from 'app/shared/services/country-service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { forkJoin, Subscription } from 'rxjs';
+import { finalize, forkJoin, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-director-details',
   templateUrl: './director-details.component.html',
   styleUrls: ['./director-details.component.scss'],
 })
-export class DirectorDetailsComponent implements OnInit {
+export class DirectorDetailsComponent implements OnInit, OnChanges {
+  @Input() docCustomerDetails: any;
   customerDetailsForm!: FormGroup;
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
   genderArray: GenericValueInfoModel[] = [];
@@ -35,14 +44,15 @@ export class DirectorDetailsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   defaultIsdCodeValue: any;
   maxMobileLength!: number;
-  isMarried = false;
   dobMinDate: Date | any;
   dobMaxDate: Date | any;
   dateFormat!: string;
   @Input() basisId: any;
   boundaries: any;
   todayDate: Date = new Date();
+  showSpouseSection: boolean[] = [];
   private localeData: LocaleData | undefined;
+  personalDetails: any;
 
   constructor(
     private fb: FormBuilder,
@@ -51,11 +61,8 @@ export class DirectorDetailsComponent implements OnInit {
     private store: Store<AppState>,
     private dialog: MatDialog,
     private openApi: OpenAccountService,
+    private loanService: LoanService,
   ) {}
-
-  get customer(): FormArray {
-    return this.customerDetailsForm.get('customer') as FormArray;
-  }
 
   ngOnInit() {
     const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
@@ -64,10 +71,39 @@ export class DirectorDetailsComponent implements OnInit {
       }
     });
     this.subscriptions.push(localeData$);
-    this.getAllRequisite();
     this.getGenericDetails();
     this.fetchBoundaries();
-    this.buildPersonalDetailsForm();
+
+    this.getAllRequisite().then(() => {
+      if (!this.personalDetails) {
+        console.log('coming');
+        this.buildPersonalDetailsForm();
+      }
+    });
+
+    this.loanService
+      .getPersonalDetailsData(504)
+      .pipe(
+        finalize(() => {
+          this.buildPersonalDetailsForm(this.personalDetails);
+        }),
+      )
+      .subscribe({
+        next: (resp) => {
+          this.personalDetails = resp?.data?.customerInfo || null;
+          if (this.personalDetails) {
+            this.getGenericDetails();
+          }
+        },
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges | any): void {
+    this.getAllRequisite().then(() => {
+      if (changes?.personalDetails?.currentValue) {
+        this.buildPersonalDetailsForm(changes.personalDetails.currentValue);
+      } else this.buildPersonalDetailsForm();
+    });
   }
 
   async getAllRequisite() {
@@ -149,109 +185,156 @@ export class DirectorDetailsComponent implements OnInit {
     }
   }
 
-  // BuildPersonalDetailsForm
-  buildPersonalDetailsForm() {
+  //  This method is to add the default customer while patching if it have multiple customer
+  renderApplicant(data: any, applicantLength: any) {
+    for (let i = 0; i < applicantLength; i++)
+      this.addCustomer(i, data && data[i]);
+  }
+
+  buildPersonalDetailsForm(data?: any) {
+    console.log(data, 'data');
+
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
-    this.addCustomer(0);
-    this.customer
-      .at(0)
-      .get('maritalStatusId')
-      ?.valueChanges.subscribe((maritalId: number) => {
-        console.log(maritalId);
-        if (maritalId) {
-          const status = this.maritalStatusArray
-            .find((item: GenericValueData) => item.id === maritalId)
-            ?.values.toLocaleLowerCase();
-          const isMarried = status === 'married';
-          this.isMarried = isMarried;
-          console.log(status, 'status');
-        }
+
+    if (data?.length > 0) {
+      setTimeout(() => {
+        this.renderApplicant(
+          data,
+          this.docCustomerDetails?.length || data?.length,
+        );
       });
+    } else {
+      if (this.docCustomerDetails?.length > 0) {
+        for (let i = 0; i < this.docCustomerDetails?.length; i++)
+          this.addCustomer(i);
+      } else {
+        this.addCustomer(0);
+      }
+    }
   }
 
   getDocumentIdArray(index: number): FormArray {
     return this.customer?.at(index)?.get('documentId') as FormArray;
   }
 
-  newCustomer() {
+  newCustomer(data?: any) {
+    console.log(data, 'data');
     const formGroup = this.fb.group({
-      customerId: '',
-      customerNo: [''],
-      custStagingId: null,
-      onboardingStatus: [''],
-      primaryCustomer: [false],
-      prefixId: [''],
-      firstName: [''],
-      lastName: [''],
-      dateOfBirth: [''],
-      genderId: [''],
-      nationality: [''],
-      maritalStatusId: [''],
-      countryOfResidence: [''],
+      customerId: data && data?.customerId,
+      customerNo: [data ? data?.customerNo : ''],
+      custStagingId: data?.custStagingId ?? null,
+      onboardingStatus: [data ? data?.onboardingStatus : ''],
+      primaryCustomer: [data ? data?.primaryCustomer : false],
+      prefixId: [data ? data?.prefixId : ''],
+      firstName: [data ? data?.firstName : ''],
+      lastName: [data ? data?.lastName : ''],
+      dateOfBirth: [data ? data?.dateOfBirth : ''],
+      genderId: [data ? data?.genderId : ''],
+      nationality: [data ? data?.nationality : ''],
+      maritalStatusId: [data ? data?.maritalStatusId : ''],
+      positionId: [data ? data?.positionId : ''],
+      countryOfResidence: [data ? data?.countryOfResidence : ''],
+      sharePercentage: [data ? data?.sharePercentage : ''],
       source: 'Website',
-      kycStatus: '',
+      kycStatus: data?.kycStatus && data?.kycStatus,
       documentId: this.fb.array([]),
       spouseInfo: this.fb.group({
-        spouseDetilsId: [null],
-        prefixId: [''],
-        prefixValue: [''],
-        firstName: [''],
-        middleName: [''],
-        lastName: [''],
-        dateOfBirth: [''],
-        employeeStatusId: [''],
-        employeeStatusValue: [''],
-        netIncome: [''],
+        spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
+        prefixId: [data?.spouseInfo?.prefixId ?? ''],
+        prefixValue: [data?.spouseInfo?.prefixValue ?? ''],
+        firstName: [data?.spouseInfo?.firstName ?? ''],
+        middleName: [data?.spouseInfo?.middleName ?? ''],
+        lastName: [data?.spouseInfo?.lastName ?? ''],
+        dateOfBirth: [data?.spouseInfo?.dateOfBirth ?? ''],
+        employeeStatusId: [data?.spouseInfo?.employeeStatusId ?? ''],
+        employeeStatusValue: [data?.spouseInfo?.employeeStatusValue ?? ''],
+        netIncome: [data?.spouseInfo?.netIncome ?? ''],
+
         contact: this.fb.group({
-          contactId: [null],
-          telephone: [''],
-          worktelephone: [''],
-          mobile: [''],
-          email: [''],
-          mobtCode: [''],
+          contactId: [data?.spouseInfo?.contact?.contactId ?? null],
+          telephone: [data?.spouseInfo?.contact?.telephone ?? ''],
+          workTelephone: [data?.spouseInfo?.contact?.workTelephone ?? ''],
+          mobile: [data?.spouseInfo?.contact?.mobile ?? ''],
+          email: [data?.spouseInfo?.contact?.email ?? ''],
+          mobtCode: [
+            data?.spouseInfo?.contact?.mobtCode ?? this.defaultIsdCodeValue,
+          ],
         }),
       }),
       emergencyContactInfo: this.fb.group({
-        emergencyContactId: [null],
-        prefixId: [''],
-        prefixValue: [''],
-        firstName: [''],
-        middleName: [''],
-        lastName: [''],
-        relationshipId: [''],
-        relationshipValue: [''],
+        emergencyContactId: [
+          data?.emergencyContactInfo?.emergencyContactId ?? null,
+        ],
+        prefixId: [data?.emergencyContactInfo?.prefixId ?? ''],
+        prefixValue: [data?.emergencyContactInfo?.prefixValue ?? ''],
+        firstName: [data?.emergencyContactInfo?.firstName ?? ''],
+        middleName: [data?.emergencyContactInfo?.middleName ?? ''],
+        lastName: [data?.emergencyContactInfo?.lastName ?? ''],
+        relationshipId: [data?.emergencyContactInfo?.relationshipId ?? ''],
+        relationshipValue: [
+          data?.emergencyContactInfo?.relationshipValue ?? '',
+        ],
+
         contact: this.fb.group({
-          contactId: [null],
-          telephone: [''],
-          worktelephone: [''],
-          mobile: [''],
-          email: [''],
-          fax: [''],
-          whatsappNo: [''],
-          alternativeNumber: [''],
-          residencePhone: [''],
-          mobtCode: [this.defaultIsdCodeValue],
-          waptCode: [this.defaultIsdCodeValue],
-          altCode: [this.defaultIsdCodeValue],
-          statementViaId: [''],
-          address: this.fb.array([]),
+          contactId: [data?.emergencyContactInfo?.contact?.contactId ?? null],
+          telephone: [data?.emergencyContactInfo?.contact?.telephone ?? ''],
+          workTelephone: [
+            data?.emergencyContactInfo?.contact?.workTelephone ?? '',
+          ],
+          mobile: [data?.emergencyContactInfo?.contact?.mobile ?? ''],
+          email: [data?.emergencyContactInfo?.contact?.email ?? ''],
+          fax: [data?.emergencyContactInfo?.contact?.fax ?? ''],
+          whatsappNo: [data?.emergencyContactInfo?.contact?.whatsappNo ?? ''],
+          alternativeNumber: [
+            data?.emergencyContactInfo?.contact?.alternativeNumber ?? '',
+          ],
+          residencePhone: [
+            data?.emergencyContactInfo?.contact?.residencePhone ?? '',
+          ],
+          mobtCode: [
+            data?.emergencyContactInfo?.contact?.mobtCode ??
+              this.defaultIsdCodeValue,
+          ],
+          waptCode: [
+            data?.emergencyContactInfo?.contact?.waptCode ??
+              this.defaultIsdCodeValue,
+          ],
+          altCode: [
+            data?.emergencyContactInfo?.contact?.altCode ??
+              this.defaultIsdCodeValue,
+          ],
+          statementViaId: [
+            data?.emergencyContactInfo?.contact?.statementViaId ?? '',
+          ],
+          address: this.fb.array(
+            data?.emergencyContactInfo?.contact?.address?.map((addr: any) =>
+              this.createEmergencyContactAddressGroup(addr),
+            ) || [this.createEmergencyContactAddressGroup()],
+          ),
         }),
       }),
-
       contact: this.fb.group({
-        email: [''],
-        mobile: [''],
-        mobtCode: [this.defaultIsdCodeValue],
-        alternativeNumber: [this.defaultIsdCodeValue],
-        altCode: [this.defaultIsdCodeValue],
-        whatsappNo: [],
-        waptCode: [this.defaultIsdCodeValue],
-        telephone: [''],
-        worktelephone: [''],
-        fax: [''],
-        statementViaId: [''],
+        email: [data?.contact ? data?.contact.email : ''],
+        mobile: [data?.contact ? data?.contact?.mobile : ''],
+        mobtCode: [
+          data ? parseInt(data?.contact?.mobtCode) : this.defaultIsdCodeValue,
+        ],
+        alternativeNumber: [
+          data?.contact ? data?.contact.alternativeNumber : '',
+        ],
+        altCode: [
+          data ? parseInt(data?.contact?.altCode) : this.defaultIsdCodeValue,
+        ],
+        whatsappNo: [data?.contact ? data?.contact?.whatsappNo : ''],
+        waptCode: [
+          data ? parseInt(data?.contact?.waptCode) : this.defaultIsdCodeValue,
+        ],
+        telephone: [data?.contact ? data?.contact?.telephone : ''],
+        workTelephone: [data?.contact ? data?.contact?.workTelephone : ''],
+        fax: [data?.contact ? data?.contact?.fax : ''],
+        statementViaId: [data?.contact ? data?.contact?.statementViaId : ''],
         address: this.fb.array([]),
       }),
     });
@@ -259,8 +342,11 @@ export class DirectorDetailsComponent implements OnInit {
     const docArray = formGroup.get('documentId') as FormArray;
     docArray.push(this.createDocumentGroup(0));
     return formGroup;
-
     console.log(this.customerDetailsForm, 'formgroup');
+  }
+
+  get customer(): FormArray {
+    return this.customerDetailsForm.get('customer') as FormArray;
   }
 
   getSpouseInfo(index: number): FormGroup {
@@ -287,9 +373,30 @@ export class DirectorDetailsComponent implements OnInit {
     return this.customer.at(index)?.get('contact') as FormGroup;
   }
 
-  async addCustomer(i: any, data?: any) {
-    await this.customer.push(this.newCustomer());
-    this.addAddress(i, data ? data.contact?.address[0] : {});
+  async addCustomer(i: number, data?: any) {
+    const customerGroup = this.newCustomer(data);
+    this.customer.push(customerGroup);
+    this.addAddress(i, data?.contact?.address?.[0] ?? {});
+
+    const maritalControl = customerGroup.get('maritalStatusId');
+    const maritalId = maritalControl?.value;
+
+    const isMarried =
+      this.maritalStatusArray
+        .find((item) => item.id === maritalId)
+        ?.values?.toLowerCase() === 'married';
+
+    const hasSpouseInfo =
+      !!data?.spouseInfo?.firstName || !!data?.spouseInfo?.prefixId;
+
+    this.showSpouseSection[i] = isMarried || hasSpouseInfo;
+
+    maritalControl?.valueChanges.subscribe((newId: number) => {
+      const status = this.maritalStatusArray
+        .find((item) => item.id === newId)
+        ?.values?.toLowerCase();
+      this.showSpouseSection[i] = status === 'married';
+    });
   }
 
   addAddress(i: any, address?: any) {
@@ -329,7 +436,6 @@ export class DirectorDetailsComponent implements OnInit {
       countryOfIssue: [doc?.countryOfIssue ?? '', Validators.required],
     });
   }
-
   // Pincode Search Popup
   pincodeExpansion(
     customerIndex: number,
@@ -403,7 +509,46 @@ export class DirectorDetailsComponent implements OnInit {
   }
 
   confirmCustomer() {
-    console.log('confirm button');
+    const customerData = this.customer.controls.map((customerGroup, index) => {
+      const customer = customerGroup.value;
+
+      const maritalStatus = this.maritalStatusArray
+        .find((item: GenericValueData) => item.id === customer.maritalStatusId)
+        ?.values?.toLowerCase();
+
+      const isMarried = maritalStatus === 'married';
+
+      const formattedCustomer = {
+        ...customer,
+        dateOfBirth: pluckOnlyDate(customer.dateOfBirth),
+        primaryCustomer: index === 0,
+        spouseInfo: isMarried
+          ? {
+              ...customer.spouseInfo,
+              dateOfBirth: pluckOnlyDate(customer.spouseInfo?.dateOfBirth),
+            }
+          : undefined,
+      };
+
+      if (!isMarried) {
+        delete formattedCustomer.spouseInfo;
+      }
+
+      return formattedCustomer;
+    });
+
+    const payload = {
+      originationId: 504,
+      screenCode: 460,
+      customerInfo: customerData,
+    };
+
+    console.log(payload, 'Final Payload');
+
+    this.loanService.savePersonalDetails(payload).subscribe((resp: any) => {
+      console.log(resp);
+    });
+    console.log(payload, 'ppayload');
   }
 
   goBack() {

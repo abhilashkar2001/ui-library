@@ -38,7 +38,6 @@
       >
       </ic-select>
     </div>
-
     <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm.get('noOfDirectors') | formcontrol"
@@ -84,14 +83,12 @@
       ></ic-form-field>
     </div>
     <div fxFlex="24">
-      <ic-select
-        [control]="businessDetailsForm.get('sourceOfIncomeId') | formcontrol"
-        [options]="segmentArr"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Source of Income"
-      >
-      </ic-select>
+      <ic-form-field
+        [control]="businessDetailsForm.get('yearsOfOperation') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="No of years in Operation"
+      ></ic-form-field>
     </div>
     <div fxFlex="24">
       <div class="header_md_bold_black mb-8">
@@ -107,6 +104,32 @@
         ></ic-radio-button>
       </div>
     </div>
+
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('monthlyTurnOver') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="Monthly Turnover"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('aveStockLevel') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="AVE stock Level"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm.get('telephone') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="Telephone"
+      ></ic-form-field>
+    </div>
+
     <div fxFlex="49">
       <ic-textarea
         [control]="businessDetailsForm.get('customerDescription') | formcontrol"

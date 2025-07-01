@@ -27,7 +27,8 @@
                   <div
                     fxFlex="100"
                     fxLayout="row wrap"
-                    fxLayoutAlign="space-between center"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
                   >
                     <ic-form-field
                       [control]="customer.get('customerNo') | formcontrol"
@@ -59,6 +60,15 @@
                       fxFlex="24"
                       label="Last Name"
                     ></ic-form-field>
+
+                    <ic-select
+                      [control]="customer.get('positionId') | formcontrol"
+                      [options]="genderArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Position"
+                    ></ic-select>
 
                     <ic-date-picker
                       [control]="customer.get('dateOfBirth') | formcontrol"
@@ -150,13 +160,21 @@
                       fxFlex="24"
                       label="Marital Status"
                     ></ic-select>
+                    <ic-form-field
+                      [control]="customer.get('sharePercentage') | formcontrol"
+                      [icNumbersOnly]="true"
+                      [maxLength]="2"
+                      fxFlex="24"
+                      label="Share Percentage"
+                    ></ic-form-field>
                   </div>
 
                   <div class="highlight_title">Contact Details</div>
                   <div
                     fxFlex="100"
                     fxLayout="row wrap"
-                    fxLayoutAlign="space-between center"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
                   >
                     <ic-mobile-field
                       (onSelectionChangeOutput)="
@@ -246,7 +264,7 @@
                     ></ic-form-field>
                     <ic-form-field
                       [control]="
-                        customer.get('contact')?.get('worktelephone')
+                        customer.get('contact')?.get('workTelephone')
                           | formcontrol
                       "
                       [icNumbersOnly]="true"
@@ -342,13 +360,13 @@
                     </ng-container>
                   </div>
 
-                  <ng-container *ngIf="isMarried">
+                  <ng-container *ngIf="showSpouseSection[i]">
                     <div class="highlight_title">Spouse Details</div>
                     <div
                       fxFlex="100"
                       fxLayout="row wrap"
+                      fxLayoutGap="10"
                       fxLayoutAlign="start center"
-                      fxLayoutGap="14"
                     >
                       <ic-select
                         [control]="
@@ -402,7 +420,7 @@
                       ></ic-form-field>
                       <ic-form-field
                         [control]="
-                          getSpouseContactDetails(i).get('worktelephone')
+                          getSpouseContactDetails(i).get('workTelephone')
                             | formcontrol
                         "
                         [icNumbersOnly]="true"
@@ -466,7 +484,12 @@
                   <div class="highlight_title">
                     Emergency Contact Details / Next of Kin
                   </div>
-                  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="14">
+                  <div
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
+                  >
                     <ic-select
                       [control]="
                         getEmergencyContactInfo(i).get('prefixId') | formcontrol
@@ -613,7 +636,7 @@
                     ></ic-form-field>
                     <ic-form-field
                       [control]="
-                        getEmergencyContactDetails(i).get('worktelephone')
+                        getEmergencyContactDetails(i).get('workTelephone')
                           | formcontrol
                       "
                       [icNumbersOnly]="true"
@@ -702,6 +725,16 @@
         </div>
       </div>
     </div>
+
+    <!-- Add Customer button -->
+    <!-- <ic-button
+      (OnClick)="addCustomer(customer.controls.length)"
+      [icButtonType]="'filled-rounded'"
+      [label]="'Add New Customer'"
+      [type]="'submit'"
+      size="medium"
+    >
+    </ic-button> -->
   </form>
   <div
     fxFlex="100"
