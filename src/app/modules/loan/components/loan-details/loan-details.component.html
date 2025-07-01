@@ -1,5 +1,5 @@
 <div [formGroup]="loanDetailsForm" fxLayout="column">
-  <ng-container *ngIf="!isEdit; else inputForm">
+  <ng-container *ngIf="isEdit; else inputForm">
     <div
       class="summary_pad"
       fxFlex="100"
@@ -8,13 +8,13 @@
     >
       <div
         *ngFor="let item of loanDetailsSummaryArr"
-        class="row"
-        fxFlex="28.5"
+        class="row mt-12"
+        fxFlex="24"
         fxLayout="column"
         fxLayoutAlign="start start"
       >
-        <span class="header">{{ item.header }}</span>
-        <span class="value">
+        <span class="breadcrum_md">{{ item.header }}</span>
+        <span class="header_md">
           {{
             item.date
               ? item.value
@@ -41,10 +41,18 @@
       <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('loanAmount') | formcontrol"
+          [customError]="
+            loanDetails.get('loanAmount')?.hasError('max')
+              ? 'Amount cannot exceed ' + max
+              : loanDetails.get('loanAmount')?.hasError('min')
+                ? 'Amount should be at least ' + min
+                : ''
+          "
           [decimalPlaces]="3"
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="Loan Amount Requested (GHS)"
+          [prefixIcon]="loanDetails.value?.loanAmount ? currencySymbol : ''"
         ></ic-form-field>
       </div>
       <div fxFlex="24">
@@ -67,15 +75,20 @@
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="Interest Rate %"
+          [readonly]="true"
+          [disabled]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="24">
         <ic-form-field
           [control]="loanDetails.get('emiAmount') | formcontrol"
           [decimalPlaces]="3"
+          [prefixIcon]="currencySymbol"
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="EMI Amount"
+          [readonly]="true"
+          [disabled]="true"
         ></ic-form-field>
       </div>
     </div>
@@ -88,11 +101,14 @@
     >
       <div fxFlex="24">
         <ic-form-field
-          [control]="loanDetails.get('interestPayable') | formcontrol"
+          [control]="loanDetails.get('totalInterestAmount') | formcontrol"
           [decimalPlaces]="3"
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="Interest Payable"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="24">
@@ -102,6 +118,9 @@
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="Total Principal Amount"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
         ></ic-form-field>
       </div>
       <div fxFlex="24">
@@ -111,6 +130,9 @@
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
           label="Total Payable Amount"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
         ></ic-form-field>
       </div>
     </div>
@@ -119,7 +141,7 @@
       class="content_row mt-2"
       fxLayout="row"
       fxLayoutAlign="start center"
-      fxLayoutGap="20"
+      fxLayoutGap="10"
     >
       <div fxFlex="24">
         <ic-select
@@ -143,10 +165,10 @@
         <div class="header_md_bold_black mb-8">
           {{ 'Holder Type *' }}
         </div>
-        <div fxLayout="row" fxLayoutGap="50px">
+        <div fxLayout="row" fxLayoutGap="20px">
           <ic-radio-button
             *ngFor="let status of holderTypeArr"
-            [control]="loanDetailsForm.get('holderType') | formcontrol"
+            [control]="loanDetails.get('holderType') | formcontrol"
             [label]="status.label"
             [value]="status.value"
           ></ic-radio-button>
@@ -162,6 +184,16 @@
     fxLayoutGap="1%"
     style="margin-top: 50px"
   >
+    <div *ngIf="isEdit">
+      <ic-button
+        [label]="'Edit'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-neutral"
+        size="medium"
+        (OnClick)="edit()"
+      >
+      </ic-button>
+    </div>
     <div>
       <ic-button
         [label]="'Back'"

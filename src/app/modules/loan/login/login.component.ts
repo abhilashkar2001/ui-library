@@ -233,13 +233,13 @@ export class LoginComponent implements OnInit {
               source: 'Website',
               currencyCode: this.profileInfo?.currencyCode,
               currencyId: this.profileInfo?.currencyId,
-              originationProductId: 2948,
+              originationProductId:
+                this.sessionStorageService.getLoanBasisDetails()?.basisId,
             },
             screenCode: 464,
           };
           this.loanService.saveLoanDetails(data).subscribe((resp: any) => {
             if (resp.statusCode === 200) {
-              console.log(resp?.data?.originationModel?.originationId);
               this.sessionStorageService.setOriginationId(
                 resp?.data?.originationModel?.originationId,
               );

@@ -1,0 +1,39 @@
+.stepper-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: 2rem 4rem;
+}
+
+.stepper-line {
+  height: 1px;
+  background-color: #ccc;
+  margin: 15px 0px;
+}
+
+.step-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 4px;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f2f2f2;
+  }
+}
+
+.step-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
