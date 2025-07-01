@@ -5,16 +5,45 @@
     fxLayoutGap="1%"
     class="mb-4"
   >
-    <span class="header_md_bold_black">{{ details?.key }}</span>
+    <span class="header_md_bold_black">{{ details?.title }}</span>
     <div fxLayout="row wrap">
       <div
         fxFlex="24"
         fxLayout="column"
         *ngFor="let data of details?.headerInfo"
       >
-        <span class="breadcrum_sm">{{ data?.headerCell }}</span>
-        <span class="header_md">{{ summary[data?.headerDef!] }}</span>
+        <ng-container *ngIf="details?.key === 'loanDetail'">
+          <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+          <span class="header_md">{{
+            summary?.loanDetail[data?.headerDef!]
+          }}</span>
+        </ng-container>
+        <ng-container *ngIf="details?.key === 'disbursementDetail'">
+          <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+          <span class="header_md">{{
+            summary?.loanDetail[data?.headerDef!]
+          }}</span>
+        </ng-container>
+        <ng-container *ngIf="details?.key === 'creditBureau'">
+          <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+          <span class="header_md">{{
+            summary?.loanDetail[data?.headerDef!]
+          }}</span>
+        </ng-container>
+        <ng-container *ngIf="details?.key === 'businessDetails'">
+          <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+          <span class="header_md">{{
+            summary?.loanDetail[data?.headerDef!]
+          }}</span>
+        </ng-container>
       </div>
+    </div>
+    <div *ngIf="details?.key === 'collateral'">
+      <app-custom-table
+        [tableHeaders]="collateralHeaders"
+        [tableData]="tableData"
+      >
+      </app-custom-table>
     </div>
   </div>
 </section>

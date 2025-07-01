@@ -22,7 +22,7 @@
       <mat-label class="header_md_bold_black" fxFlex="100">Account</mat-label>
       <ic-radio-button
         *ngFor="let account of accountValue"
-        [control]="disbursementForm.get('internal') | formcontrol"
+        [control]="loanDisbursementAccount.get('internal') | formcontrol"
         [label]="account.label"
         [value]="account.value"
         fxFlex="25"
@@ -53,7 +53,7 @@
       </div>
       <div fxFlex="24">
         <ic-form-field
-          [control]="disbursementForm.get('collectingBranch') | formcontrol"
+          [control]="disbursementForm.get('branchCode') | formcontrol"
           label="Collecting Branch"
           suffixIcon="search"
         ></ic-form-field>
@@ -74,7 +74,7 @@
         fxLayoutAlign="start center"
       >
         <mat-label class="header_md_bold_black" fxFlex="100"
-        >Do you have Internal Account
+          >Do you have Internal Account
         </mat-label>
         <ic-radio-button
           *ngFor="let account of internalAccount"
@@ -87,16 +87,23 @@
         >
         </ic-radio-button>
       </div>
-      <div *ngIf="loanDisbursementAccount?.get('internal')?.value === true">
+      <div
+        *ngIf="
+          loanDisbursementAccount?.get('internalAccount')?.value === false &&
+          loanDisbursementAccount?.get('internal')?.value === true
+        "
+        fxLayoutAlign="center center"
+        fxFlex="24"
+        fxLayoutGap="5"
+      >
         <ic-slide-toggle
           [checked]="loanDisbursementAccount.get('newAccount')?.value"
           [formControl]="
             loanDisbursementAccount.get('newAccount') | formcontrol
           "
-          labelPosition="before"
         >
-          Do you want to create a account? *
         </ic-slide-toggle>
+        Do you want to create a account? *
       </div>
       <ng-container
         *ngIf="
@@ -166,5 +173,20 @@
         </div>
       </ng-container>
     </ng-container>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end center">
+    <ic-button
+      [label]="'Back'"
+      [type]="'button'"
+      icButtonType="outlined-rounded"
+      size="medium"
+    ></ic-button>
+    <ic-button
+      [icButtonType]="'filled-rounded'"
+      [label]="'Next'"
+      [type]="'submit'"
+      size="medium"
+      (OnClick)="saveDisbursementDetails()"
+    ></ic-button>
   </div>
 </form>

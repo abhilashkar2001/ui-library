@@ -195,4 +195,14 @@ export class LoanService {
       payload,
     );
   }
+
+  saveDisbursementDetails(payload: any) {
+    return this.http.post(`${baseUrl}/loan-disbursement`, payload);
+  }
+
+  fetchDisbursementDetails(originationId: number) {
+    return this.http.get(
+      `${originationId}/loan-disbursement?originationId=${originationId}`,
+    );
+  }
 }

@@ -9,6 +9,8 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 })
 export class SummaryComponent implements OnInit {
   loanDetailsStore = SummaryStore.loanDetailsStore;
+  collateralHeaders = SummaryStore.collateralHeaders;
+  tableData = SummaryStore.tableData;
   summary: any;
 
   constructor(private loanService: LoanService) {}

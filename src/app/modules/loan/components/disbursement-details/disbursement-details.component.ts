@@ -5,6 +5,8 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
 import { DrawerContextData } from '../../drawer-context-data';
 import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/bank-code-panel.component';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-disbursement-details',
@@ -28,13 +30,16 @@ export class DisbursementDetailsComponent implements OnInit {
     { label: 'Yes', value: true },
     { label: 'No', value: false },
   ];
-  chequeValiadtors = ['chequeTypeId', 'customerName', 'collectingBranch'];
+  chequeValiadtors = ['chequeTypeId', 'customerName', 'branchCode'];
   accountValidators = ['accountTypeId'];
+  originationId: number | undefined;
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     public sidenavService: SidenavService,
+    private loanService: LoanService,
+    private sessionStorageService: SessionStorageService,
   ) {
     this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -44,12 +49,14 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.buildDisbursementForm();
     this.fetchGenericValues();
   }
 
   buildDisbursementForm(data?: any) {
     this.disbursementForm = this.fb.group({
+      originationId: this.originationId,
       disbursementTypeId: [
         data?.loanDisbursementModel?.disbursementTypeId?.data
           ?.disbursementTypeId ?? '',
@@ -64,7 +71,7 @@ export class DisbursementDetailsComponent implements OnInit {
         data?.loanDisbursementModel?.firstDisbursementDate ?? this.currentDate,
       ],
       chequeTypeId: [data?.chequeTypeId ?? ''],
-      collectingBranch: [data?.collectingBranch ?? ''],
+      branchCode: [data?.branchCode ?? ''],
       requiredMultipleDisbursement: false,
       scheduleFrequencyYear: 0,
       scheduleFrequencyMonth: 1,
@@ -108,7 +115,6 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   setDisbursement(event: number) {
-    console.log(event);
     if (event) {
       const disbursement = this.genericValue?.['DISBURSEMENTTYPE']?.find(
         (value: { id: number; values: string }) => value?.id === event,
@@ -137,5 +143,19 @@ export class DisbursementDetailsComponent implements OnInit {
       data: 2,
     };
     this.sidenavService.open(contextData);
+  }
+
+  fetchDisbursementDetails() {
+    if (this.originationId)
+      this.loanService
+        .fetchDisbursementDetails(this.originationId)
+        .subscribe((res: any) => console.log(res));
+  }
+
+  saveDisbursementDetails() {
+    const payload = { ...this.disbursementForm?.value };
+    this.loanService.saveDisbursementDetails(payload).subscribe((res: any) => {
+      console.log(res);
+    });
   }
 }

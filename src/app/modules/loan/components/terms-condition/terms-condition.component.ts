@@ -31,7 +31,6 @@ export class TermsConditionComponent {
   constructor(private dialog: MatDialog) {}
 
   openDialog() {
-    console.log('first');
     const dialogRef = this.dialog.open(TermsConditionPopupComponent, {
       height: '80%',
       width: '50%',

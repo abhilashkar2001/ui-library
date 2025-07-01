@@ -1,0 +1,44 @@
+<section>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 class="header_lg">Digital Signature</h3>
+    <ic-button
+      type="icon"
+      icButtonType="ghost-basic"
+      icIcon="close"
+      customButtonClass="box-shadow-none"
+    ></ic-button>
+  </div>
+  <div>
+    <mat-dialog-content>
+      <mat-tab-group mat-align-tabs="start" class="custom-tab-group">
+        <mat-tab label="E-sign">
+          <!-- <div class="esign-area">
+            <div class="sign-box">
+              <canvas #signaturePad width="400" height="150"></canvas>
+              <button mat-icon-button color="warn" class="clear-btn">
+                <mat-icon>autorenew</mat-icon>
+              </button>
+            </div>
+          </div> -->
+          <app-sign-pad
+            #signPadRef
+            (signpadImage)="signpadImage($event)"
+          ></app-sign-pad>
+        </mat-tab>
+        <mat-tab label="Upload">
+          <div class="upload-area">
+            <input type="file" />
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-dialog-content>
+    <!-- <nav mat-tab-nav-bar class="px-3">
+      <a
+        mat-tab-link
+        *ngFor="let token of tabs; let i = index"
+        [active]="i + 1 === currentIndex"
+        >{{ token.label }}</a
+      >
+    </nav> -->
+  </div>
+</section>
