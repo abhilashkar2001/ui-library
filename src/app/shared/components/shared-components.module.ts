@@ -30,7 +30,6 @@ import { ViewDocSidePanelComponent } from './view-doc-side-panel/view-doc-side-p
 import { BankCodePanelComponent } from './bank-code-panel/bank-code-panel.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
 import { TermsConditionPopupComponent } from './terms-condition-popup/terms-condition-popup.component';
-import { SignaturePopupComponent } from './signature-popup/signature-popup.component';
 
 const components = [
   HeaderTopComponent,
@@ -50,7 +49,6 @@ const components = [
   BankCodePanelComponent,
   CustomTableComponent,
   TermsConditionPopupComponent,
-  SignaturePopupComponent,
 ];
 
 @NgModule({

@@ -23,6 +23,8 @@ import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { OriginationExternalCallbackModule } from '../origination/modules/origination-external-callback/origination-external-callback.module';
+import { SignaturePopupComponent } from './components/digital-signature/signature-popup/signature-popup.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     TermsConditionComponent,
     SummaryComponent,
     DigitalSignatureComponent,
+    SignaturePopupComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     SharedOriginationModule,
     MatFormFieldModule,
+    OriginationExternalCallbackModule,
   ],
 })
 export class LoanModule {}

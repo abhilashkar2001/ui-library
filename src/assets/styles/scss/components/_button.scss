@@ -32,8 +32,9 @@
     border-top-color: #777676;
   }
   100% {
-    box-shadow: 0 0 0 0.4em darken(#777676, 10%),
-    0 0 0 3.6em transparent;
+    box-shadow:
+      0 0 0 0.4em darken(#777676, 10%),
+      0 0 0 3.6em transparent;
   }
 }
 

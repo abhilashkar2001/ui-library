@@ -29,7 +29,7 @@
               {{
                 loanSummaryDetails?.[section.headerKey]?.disbursementAccount?.[
                   field.headKey
-                  ] ?? loanSummaryDetails?.[section.headerKey]?.[field.headKey]
+                ] ?? loanSummaryDetails?.[section.headerKey]?.[field.headKey]
               }}
             </ng-container>
 
@@ -52,7 +52,7 @@
               {{
                 loanSummaryDetails?.[section.headerKey]?.loanTenureYear
                   | tenureFormat
-                  : loanSummaryDetails?.[section.headerKey]?.loanTenureMonth
+                    : loanSummaryDetails?.[section.headerKey]?.loanTenureMonth
                     : loanSummaryDetails?.[section.headerKey]?.loanTenureDay
               }}
             </ng-container>
@@ -95,10 +95,10 @@
                   {{
                     loanSummaryDetails?.[section.headerKey]?.[0]?.[
                       field.headKey
-                      ] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.documentInfo[0]?.[field.headKey] ??
-                    ''
+                    ] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.documentInfo[0]?.[field.headKey] ??
+                      ''
                   }}
                 </ng-container>
 
@@ -106,10 +106,10 @@
                   {{
                     loanSummaryDetails?.[section.headerKey]?.[0]?.contact?.[
                       field.headKey
-                      ] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]?.contact
-                      ?.address[0]?.[field.headKey] ??
-                    ''
+                    ] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]?.contact
+                        ?.address[0]?.[field.headKey] ??
+                      ''
                   }}
                 </ng-container>
 
@@ -120,9 +120,9 @@
                     {{
                       loanSummaryDetails?.[section.headerKey]?.[0]
                         ?.spouseInfo?.[field.headKey] ??
-                      loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
-                        ?.contact?.[field.headKey] ??
-                      ''
+                        loanSummaryDetails?.[section.headerKey]?.[0]?.spouseInfo
+                          ?.contact?.[field.headKey] ??
+                        ''
                     }}
                   </ng-container>
                 </ng-container>
@@ -130,13 +130,13 @@
                   {{
                     loanSummaryDetails?.[section.headerKey]?.[0]
                       ?.emergencyContactInfo?.[field.headKey] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contact?.[field.headKey] ??
-                    loanSummaryDetails?.[section.headerKey]?.[0]
-                      ?.emergencyContactInfo?.contact?.address[0]?.[
-                      field.headKey
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.emergencyContactInfo?.contact?.[field.headKey] ??
+                      loanSummaryDetails?.[section.headerKey]?.[0]
+                        ?.emergencyContactInfo?.contact?.address[0]?.[
+                        field.headKey
                       ] ??
-                    ''
+                      ''
                   }}
                 </ng-container>
               </ng-container>
@@ -163,12 +163,12 @@
             <ng-container>
               {{
                 loanSummaryDetails?.[section.headerKey]?.[field.headKey] ??
-                loanSummaryDetails?.[section.headerKey]?.contact?.[
-                  field.headKey
+                  loanSummaryDetails?.[section.headerKey]?.contact?.[
+                    field.headKey
                   ] ??
-                loanSummaryDetails?.[section.headerKey]?.contact
-                  ?.address[0]?.[field.headKey] ??
-                '-'
+                  loanSummaryDetails?.[section.headerKey]?.contact
+                    ?.address[0]?.[field.headKey] ??
+                  '-'
               }}
             </ng-container>
           </span>

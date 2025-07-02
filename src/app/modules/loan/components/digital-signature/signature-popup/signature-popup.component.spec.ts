@@ -8,7 +8,7 @@ describe('SignaturePopupComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SignaturePopupComponent]
+      declarations: [SignaturePopupComponent],
     });
     fixture = TestBed.createComponent(SignaturePopupComponent);
     component = fixture.componentInstance;

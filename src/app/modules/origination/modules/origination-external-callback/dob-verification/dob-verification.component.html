@@ -17,12 +17,12 @@
       </div>
     </div>
     <mat-hint *ngIf="incorrectDOB" class="error"
-    >Enter correct date of birth
+      >Enter correct date of birth
     </mat-hint>
     <ng-container *ngIf="showOTP">
       <div class="otp-text">
         <span
-        >An OTP has been sent to the Registered Mobile Number (
+          >An OTP has been sent to the Registered Mobile Number (
           <span class="mobile-no">+91 888XX XX123</span>)</span
         >
       </div>
@@ -36,7 +36,7 @@
         ></ng-otp-input>
       </div>
       <span class="resend-text"
-      >Not Received?
+        >Not Received?
         <span (click)="verifyOtp()" class="resend">Resend</span></span
       >
       <div class="btn-div">

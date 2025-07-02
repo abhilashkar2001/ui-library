@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -15,6 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./sign-pad.component.scss'],
 })
 export class SignPadComponent implements AfterViewInit {
+  @Input() type: string | undefined;
   @Output() public signpadImage = new EventEmitter();
   @ViewChild('canvas', { static: true }) canvas:
     | ElementRef<HTMLCanvasElement>
