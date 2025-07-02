@@ -31,7 +31,8 @@
 .confirm-button {
   width: 200px;
   height: 45px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0% no-repeat padding-box !important;
+  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
+    no-repeat padding-box !important;
   border-radius: 23px !important;
   color: #ffffff !important;
   text-align: center;
@@ -56,6 +57,7 @@
   line-height: normal;
   text-decoration: none;
   margin-left: 2%;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-  rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }

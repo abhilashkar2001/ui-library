@@ -21,7 +21,8 @@
       nth($transition, 1) !=
       null and
       nth($transition, 1) !=
-      none {
+      none
+    {
       @media (prefers-reduced-motion: reduce) {
         transition: none;
       }

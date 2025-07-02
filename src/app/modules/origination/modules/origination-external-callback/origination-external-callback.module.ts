@@ -27,20 +27,21 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LibPipesModule } from '@onerumango/utils';
 import { SharedDirectivesModule } from 'app/shared/directives/shared-directives.module';
 
+const components = [
+  OfferLetterComponent,
+  ProcessOfferLetterComponent,
+  SignLaterComponent,
+  SignNowPopupComponent,
+  SignPadComponent,
+  SuccessModalComponent,
+  RemarkComponent,
+  ChecklistDocumentComponent,
+  DobVerificationComponent,
+  DigitalSignatureComponent,
+  SignSummaryComponent,
+];
 @NgModule({
-  declarations: [
-    OfferLetterComponent,
-    ProcessOfferLetterComponent,
-    SignLaterComponent,
-    SignNowPopupComponent,
-    SignPadComponent,
-    SuccessModalComponent,
-    RemarkComponent,
-    ChecklistDocumentComponent,
-    DobVerificationComponent,
-    DigitalSignatureComponent,
-    SignSummaryComponent,
-  ],
+  declarations: components,
   imports: [
     CommonModule,
     IcustLibraryModule,
@@ -58,5 +59,6 @@ import { SharedDirectivesModule } from 'app/shared/directives/shared-directives.
     LibPipesModule,
     SharedDirectivesModule,
   ],
+  exports: components,
 })
 export class OriginationExternalCallbackModule {}

@@ -1,12 +1,15 @@
-<div class="canvas_container" style="text-align: center; margin-top: 30px">
+<div
+  [ngClass]="type === 'new' ? 'blue_canvas' : 'canvas_container'"
+  style="text-align: center; margin-top: 30px"
+>
   <canvas
     #canvas
     (mousedown)="handleMouseDown($event)"
     (mouseleave)="handleMouseUp()"
     (mousemove)="handleMouseMove($event)"
     (mouseup)="handleMouseUp()"
-    height="150"
-    width="740"
+    height="130"
+    width="640"
   >
   </canvas>
   <button (click)="clearCanvas()" mat-icon-button>

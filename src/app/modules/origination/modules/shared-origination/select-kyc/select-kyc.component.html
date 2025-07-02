@@ -54,19 +54,19 @@
       </div> -->
       <div *ngIf="isShowOtp" class="standard-font-black my-20">
         <span *ngIf="resendLink"
-        ><div
-          (click)="otpTimer()"
-          (keydown.enter)="otpTimer()"
-          class="resend-link"
-          tabindex="0"
-        >
+          ><div
+            (click)="otpTimer()"
+            (keydown.enter)="otpTimer()"
+            class="resend-link"
+            tabindex="0"
+          >
             Resend
           </div></span
         >
         <span *ngIf="!resendLink"
-        >Resend the OTP
+          >Resend the OTP
           <span class="standard-font-blue"
-          >({{ displaySecond }} min)</span
+            >({{ displaySecond }} min)</span
           ></span
         >
       </div>
@@ -83,7 +83,7 @@
           </div>
           <div fxFlex="95">
             <span class="check_font"
-            >I confirmed that I don't have any other Account opened by using
+              >I confirmed that I don't have any other Account opened by using
               National ID & OTP based KYC with Demobank</span
             >
           </div>

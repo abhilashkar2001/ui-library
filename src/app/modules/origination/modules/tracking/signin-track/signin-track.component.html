@@ -64,8 +64,8 @@
             fxLayout="column"
           >
             <span class="header_xxl_bold_black">{{
-                'OTP Authentication'
-              }}</span>
+              'OTP Authentication'
+            }}</span>
             <span class="breadcrum_md">
               <ng-container>
                 An authentication code has been sent to
@@ -84,7 +84,7 @@
               ></ng-otp-input>
             </div>
             <mat-error *ngIf="invalidOtp"
-            ><strong>Invalid OTP!</strong></mat-error
+              ><strong>Invalid OTP!</strong></mat-error
             >
             <div class="verify1">
               <span
@@ -92,7 +92,7 @@
                 (keydown.enter)="getOtp()"
                 class="addcolor resend m-2"
                 tabindex="0"
-              >{{ 'Resend' }}</span
+                >{{ 'Resend' }}</span
               >
             </div>
           </mat-card>

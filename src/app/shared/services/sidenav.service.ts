@@ -27,6 +27,7 @@ export class SidenavService {
     } else {
       this.setCustomeClass('panel-end-drawer');
     }
+    console.log(this.panel);
     return this.panel?.open();
   }
 
@@ -51,7 +52,9 @@ export class SidenavService {
   private createView(data: DrawerContextData) {
     this.vcf?.clear();
     console.log(data);
-    const componentRef = this.vcf?.createComponent(data.component);
-    if (componentRef) componentRef.instance.data = data.data;
+    // const componentRef =
+    this.vcf?.createComponent(data?.component);
+    console.log(data);
+    // if (componentRef) componentRef.instance.data = data.data;
   }
 }

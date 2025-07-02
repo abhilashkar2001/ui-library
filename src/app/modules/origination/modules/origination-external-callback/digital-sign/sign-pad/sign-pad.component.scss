@@ -34,3 +34,34 @@ mat-icon {
   position: relative;
   bottom: 15px;
 }
+
+.blue_canvas {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+  margin-top: 30px;
+  background-color: #f6faff;
+  padding: 7%;
+
+  canvas {
+    display: block;
+    border-bottom: 2px solid #6f6c67;
+    // background-color: #fff;
+    width: 100%;
+  }
+
+  button {
+    height: 30px;
+    width: 30px;
+    background-color: #f6faff;
+    width: 30px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+
+    // &:active {
+    //   background-color: #f4f3f3;
+    // }
+  }
+}

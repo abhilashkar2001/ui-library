@@ -18,9 +18,9 @@
   $end-percent: 100%
 ) {
   background-image: linear-gradient(
-                  to right,
-                  $start-color $start-percent,
-                  $end-color $end-percent
+    to right,
+    $start-color $start-percent,
+    $end-color $end-percent
   );
 }
 
@@ -34,9 +34,9 @@
   $end-percent: null
 ) {
   background-image: linear-gradient(
-                  to bottom,
-                  $start-color $start-percent,
-                  $end-color $end-percent
+    to bottom,
+    $start-color $start-percent,
+    $end-color $end-percent
   );
 }
 
@@ -55,10 +55,10 @@
   $end-color: $red
 ) {
   background-image: linear-gradient(
-                  to right,
-                  $start-color,
-                  $mid-color $color-stop,
-                  $end-color
+    to right,
+    $start-color,
+    $mid-color $color-stop,
+    $end-color
   );
 }
 
@@ -69,9 +69,9 @@
   $end-color: $red
 ) {
   background-image: linear-gradient(
-                  $start-color,
-                  $mid-color $color-stop,
-                  $end-color
+    $start-color,
+    $mid-color $color-stop,
+    $end-color
   );
 }
 
@@ -81,13 +81,13 @@
 
 @mixin gradient-striped($color: rgba($white, 0.15), $angle: 45deg) {
   background-image: linear-gradient(
-                  $angle,
-                  $color 25%,
-                  transparent 25%,
-                  transparent 50%,
-                  $color 50%,
-                  $color 75%,
-                  transparent 75%,
-                  transparent
+    $angle,
+    $color 25%,
+    transparent 25%,
+    transparent 50%,
+    $color 50%,
+    $color 75%,
+    transparent 75%,
+    transparent
   );
 }

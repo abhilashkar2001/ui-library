@@ -7,12 +7,15 @@
 
 @font-face {
   font-family: 'ArialRoundedMT';
-  src: local('ArialRoundedMT') url('/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf') format('truetype');
+  src: local('ArialRoundedMT')
+    url('/assets/fonts/Arial-Rounded-MT-Bold-Font/ARLRDBD.ttf')
+    format('truetype');
 }
 
 @font-face {
   font-family: 'BellMT';
-  src: local('BellMT') url('/assets/fonts/Bell-MT/Bell MT.ttf') format('truetype');
+  src: local('BellMT') url('/assets/fonts/Bell-MT/Bell MT.ttf')
+    format('truetype');
 }
 
 * {
