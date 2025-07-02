@@ -1,10 +1,16 @@
 .document-panel {
   .styled-panel {
+    &.panel-opened {
+      border-left: 3px solid #004c97;
+    }
     .fileUpload {
       background-color: #f6faff;
     }
     border-bottom: 1.5px solid #c6c6c6;
     .panel-header {
+      font-size: 14px;
+      color: #000000;
+      font-weight: 600;
       padding: 10px 15px;
       .panel-header-content {
         display: flex;

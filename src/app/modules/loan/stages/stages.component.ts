@@ -32,8 +32,9 @@ export class StagesComponent implements OnInit {
   >();
   private readonly componentCache = new ComponentLRUCache(3);
   private processCycleCode: string | undefined;
-  private basisId: number = 132767;
+  private basisId = 132767;
   private productDetails: IProduct | undefined;
+  currentStepIndex = 1;
 
   constructor(
     private renderComponentService: RenderComponentService,
@@ -42,6 +43,8 @@ export class StagesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.componentMapping, 'checj');
+
     this.fetchProductDetails();
   }
 

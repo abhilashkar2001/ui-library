@@ -1,8 +1,32 @@
+<div class="stepper-card">
+  <div class="stepper-header">
+    <h3 class="theme_lg">Business Loan</h3>
+    <span class="header_md">"Get your Loan account in just 11 steps"</span>
+  </div>
+
+  <div class="stepper-line"></div>
+
+  <div class="step-scroll">
+    <div class="step-container" fxLayoutGap="60px">
+      <div
+        class="step"
+        fxLayout="row"
+        fxLayoutGap="5px"
+        *ngFor="let step of componentMapping | map; let i = index"
+      >
+        <img src="assets/images/untickicon.svg" alt="Untick" />
+        <div class="header_md">{{ step.screenName }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <mat-accordion>
   <ng-container *ngIf="componentMapping">
     <div class="document-panel container">
       <mat-expansion-panel
         class="styled-panel"
+        [ngClass]="{ 'panel-opened': activePanels()?.has(i) }"
         *ngFor="let panel of componentMapping | map; let i = index"
         (closed)="onPanelClosed(i)"
         (opened)="onPanelOpened(i, panel.screenValue)"
