@@ -7,11 +7,11 @@
   <div class="stepper-line"></div>
 
   <div class="step-scroll">
-    <div class="step-container" fxLayoutGap="60px">
+    <div class="step-container" fxLayoutGap="100px">
       <div
         class="step"
         fxLayout="row"
-        fxLayoutGap="5px"
+        fxLayoutGap="10px"
         *ngFor="let step of componentMapping | map; let i = index"
       >
         <img src="assets/images/untickicon.svg" alt="Untick" />
@@ -34,8 +34,46 @@
         <mat-expansion-panel-header class="panel-header">{{
           panel.screenName
         }}</mat-expansion-panel-header>
-        <div>
+        <div fxLayout="column">
           <ng-template #container></ng-template>
+
+          <div
+            fxFlex="100"
+            fxLayout="row"
+            fxLayoutAlign="end center"
+            fxLayoutGap="1%"
+            style="margin-top: 50px"
+          >
+            <div *ngIf="panel.screenName === 'Create Loan'">
+              <ic-button
+                [label]="'Edit'"
+                [type]="'button'"
+                icButtonType="ghost-rounded-neutral"
+                size="medium"
+                (OnClick)="editComponent(i)"
+              >
+              </ic-button>
+            </div>
+            <div>
+              <ic-button
+                [label]="'Back'"
+                [type]="'button'"
+                icButtonType="ghost-rounded-danger"
+                size="medium"
+              >
+              </ic-button>
+            </div>
+            <div>
+              <ic-button
+                [icButtonType]="'filled-rounded'"
+                [label]="'Next'"
+                [type]="'submit'"
+                size="medium"
+                (click)="saveComponent(i)"
+              >
+              </ic-button>
+            </div>
+          </div>
         </div>
       </mat-expansion-panel>
     </div>

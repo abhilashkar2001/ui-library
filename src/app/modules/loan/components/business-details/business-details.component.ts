@@ -9,6 +9,7 @@ import { CountryService } from 'app/shared/services/country-service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { IcHttpResponseModel } from '@onerumango/utils';
+import { tap, map, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-business-details',
@@ -120,7 +121,7 @@ export class BusinessDetailsComponent implements OnInit {
   }
 
   // save business details
-  onSaveBusinessDetails() {
+  handleSubmit() {
     const payload = {
       originationModel: {
         originationId: 314,
@@ -129,8 +130,23 @@ export class BusinessDetailsComponent implements OnInit {
       businessDetailModel: this.businessDetailsForm.value,
     };
 
-    this.loanService.saveBusinessDetails(payload).subscribe((resp) => {
-      console.log(resp);
-    });
+    return this.loanService.saveBusinessDetails(payload).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      map((res) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
+  }
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
 }

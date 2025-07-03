@@ -1,5 +1,5 @@
 <div [formGroup]="loanDetailsForm" fxLayout="column">
-  <ng-container *ngIf="isEdit; else inputForm">
+  <ng-container *ngIf="!isEdit; else inputForm">
     <div
       class="summary_pad"
       fxFlex="100"
@@ -113,7 +113,7 @@
       </div>
       <div fxFlex="24">
         <ic-form-field
-          [control]="loanDetails.get('totalPrincipalAmount') | formcontrol"
+          [control]="loanDetails.get('loanAmount') | formcontrol"
           [decimalPlaces]="3"
           [icTwoDigitDecimalNumber]="true"
           [numLength]="18"
@@ -176,42 +176,4 @@
       </div>
     </div>
   </ng-template>
-
-  <div
-    fxFlex="100"
-    fxLayout="row"
-    fxLayoutAlign="end center"
-    fxLayoutGap="1%"
-    style="margin-top: 50px"
-  >
-    <div *ngIf="isEdit">
-      <ic-button
-        [label]="'Edit'"
-        [type]="'button'"
-        icButtonType="ghost-rounded-neutral"
-        size="medium"
-        (OnClick)="edit()"
-      >
-      </ic-button>
-    </div>
-    <div>
-      <ic-button
-        [label]="'Back'"
-        [type]="'button'"
-        icButtonType="ghost-rounded-danger"
-        size="medium"
-      >
-      </ic-button>
-    </div>
-    <div>
-      <ic-button
-        (OnClick)="saveLoanDetails()"
-        [icButtonType]="'filled-rounded'"
-        [label]="'Next'"
-        [type]="'submit'"
-        size="medium"
-      >
-      </ic-button>
-    </div>
-  </div>
 </div>
