@@ -100,8 +100,8 @@ body {
   background: #fff;
 }
 
-.mat-drawer.panel-end-drawer {
-  width: calc(100% - 100px);
+.mat-drawer.mat-drawer-end{
+  background: #fff;
 }
 
 .mat-drawer-backdrop {
@@ -195,8 +195,4 @@ ic-select > .gray-select {
       box-shadow: none !important;
     }
   }
-}
-
-.mat-drawer.panel-end-drawer {
-  width: (100% - 20%);
 }

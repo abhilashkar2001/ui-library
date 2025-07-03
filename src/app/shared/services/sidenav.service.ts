@@ -1,60 +1,39 @@
-import { Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable, Type, ViewContainerRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { DrawerContextData } from 'app/modules/loan/drawer-context-data';
-import { BehaviorSubject } from 'rxjs';
+import { BankCodePanelComponent } from '../components/bank-code-panel/bank-code-panel.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SidenavService {
-  public sidePanelClass = new BehaviorSubject<string>('panel-end-drawer');
-  public panelClass = this.sidePanelClass.asObservable();
   private panel: MatSidenav | undefined;
-  private vcf: ViewContainerRef | undefined;
+  private vcr: ViewContainerRef | undefined;
 
   setPanel(sidenav: MatSidenav) {
     this.panel = sidenav;
   }
 
-  setContentVcf(viewContainerRef: ViewContainerRef) {
-    this.vcf = viewContainerRef;
+  setContainer(viewContainerRef: ViewContainerRef) {
+    this.vcr = viewContainerRef;
   }
 
-  open(data: DrawerContextData, openSlip?: boolean) {
-    this.createView(data);
-    if (openSlip == true) {
-      this.setCustomeClass('panel-half-drawer');
-    } else {
-      this.setCustomeClass('panel-end-drawer');
-    }
-    console.log(this.panel);
-    return this.panel?.open();
-  }
-
-  openCustomWidth(data: DrawerContextData, className?: string) {
-    this.createView(data);
-    if (className) this.setCustomeClass(className);
+  open(containerData: ContainerContextData) {
+    this.vcr?.clear();
+    this.vcr?.createComponent(containerData?.component);
     return this.panel?.open();
   }
 
   close() {
+    this.vcr?.clear();
     return this.panel?.close();
   }
 
   toggle() {
     return this.panel?.toggle();
   }
+}
 
-  setCustomeClass(customClass: string) {
-    this.sidePanelClass.next(customClass);
-  }
-
-  private createView(data: DrawerContextData) {
-    this.vcf?.clear();
-    console.log(data);
-    // const componentRef =
-    this.vcf?.createComponent(data?.component);
-    console.log(data);
-    // if (componentRef) componentRef.instance.data = data.data;
-  }
+export interface ContainerContextData {
+  component: Type<BankCodePanelComponent>;
+  data: Record<string, any> | string | number | boolean | undefined | null;
 }
