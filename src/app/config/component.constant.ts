@@ -15,8 +15,9 @@ export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
   W1DOCU: DocumentUploadComponent;
   W1BUDE: BusinessDetailsComponent;
+  W1DDUD: DocumentUploadComponent;
   W1PERD: DirectorDetailsComponent;
-  W1DISB: DisbursementDetailsComponent;
+  W1DISD: DisbursementDetailsComponent;
   W1CRBU: CreditBureauComponent;
   W1CODE: CollateralDetailsComponent;
   W1TECO: TermsConditionComponent;
@@ -30,8 +31,9 @@ export const ComponentConstant: {
   W1LACC: LoanDetailsComponent,
   W1DOCU: DocumentUploadComponent,
   W1BUDE: BusinessDetailsComponent,
+  W1DDUD: DocumentUploadComponent,
   W1PERD: DirectorDetailsComponent,
-  W1DISB: DisbursementDetailsComponent,
+  W1DISD: DisbursementDetailsComponent,
   W1CRBU: CreditBureauComponent,
   W1CODE: CollateralDetailsComponent,
   W1TECO: TermsConditionComponent,

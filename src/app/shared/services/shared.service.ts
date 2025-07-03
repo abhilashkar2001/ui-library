@@ -18,7 +18,6 @@ export class SharedService {
     );
   }
 
-
   public readAadharFrontData(data: FormData) {
     return this.http.post(`${this.baseUrl}/api/scan-adhar-front`, data);
   }

@@ -12,6 +12,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { DmsService } from '@onerumango/utils';
+import { SharedService } from 'app/shared/services/shared.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { of } from 'rxjs';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-custom-file-upload',
@@ -21,8 +25,9 @@ import { DmsService } from '@onerumango/utils';
 export class CustomFileUploadComponent implements OnInit, OnChanges {
   createDocumentForm!: FormGroup;
   @Input() checkListDocList: any;
-  @Input() isChecklistDoc = false;
-  @Output() stepCompleted = new EventEmitter<void>();
+  @Input() getDocumentList: any;
+  @Input() screenNameValue: string | any;
+  @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   staticData: GenericValueInfoModel = {
     DOCUMENTNAME: [],
   };
@@ -42,15 +47,24 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   ];
   documentInfo: any;
   noReqCheckListDocList: any;
-  screenName = 'customer';
+  baseUrl = environment.microServiceURL;
+  isChecklistDoc: any;
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private dmsService: DmsService,
     private cdr: ChangeDetectorRef,
+    private pyScanService: SharedService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit() {
+    if (this.screenNameValue.includes('Loan')) {
+      this.isChecklistDoc = true;
+    } else {
+      this.isChecklistDoc = false;
+    }
+    this.getGenericDetails();
     this.buildForm();
   }
 
@@ -61,7 +75,47 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         changes.checkListDocList.currentValue.nonRequiredDocument;
       this.buildForm(this.checkListDocList?.requiredDocument ?? []);
     }
-    this.getGenericDetails();
+
+    if (changes?.getDocumentList?.currentValue?.length > 0) {
+      this.getDocumentList = changes.getDocumentList.currentValue;
+      this.getDocumentList.forEach((docItem: any) => {
+        const docData = docItem.docInfoModel ?? [];
+        const formIndex = this.otherDocument().controls.findIndex(
+          (ctrl) =>
+            ctrl.get('documentType')?.value?.toLowerCase() ===
+            docItem.document?.toLowerCase(),
+        );
+
+        if (formIndex !== -1) {
+          const fileInfo = this.calculateDoc(docData, formIndex);
+          this.otherDocument()
+            .at(formIndex)
+            ?.get('fileInfo')
+            ?.setValue(fileInfo);
+        }
+      });
+    }
+  }
+
+  calculateDoc(data: any[], i: number) {
+    const docArr: any[] = [];
+    const docIds: number[] = [];
+    data.forEach((item: any) => {
+      docArr.push({
+        docId: item.id,
+        name: item.fileName,
+        progress: 100,
+        url: this.mapEndPoints(item.uuid),
+      });
+      docIds.push(item.id);
+    });
+
+    this.otherDocument().at(i)?.get('docIds')?.setValue(docIds);
+    return docArr;
+  }
+
+  mapEndPoints(uuid: any) {
+    return `${this.baseUrl}/dms/download?uuid=${uuid}`;
   }
 
   getGenericDetails() {
@@ -76,11 +130,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           )[0].id;
         }
 
-        if (
-          !this.isChecklistDoc &&
-          this.screenName.includes('customer') &&
-          this.applicant().length === 0
-        ) {
+        if (!this.isChecklistDoc && this.applicant().length === 0) {
           this.addApplicant();
         }
       });
@@ -99,11 +149,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
       });
     }
 
-    if (
-      !this.isChecklistDoc &&
-      this.screenName.includes('customer') &&
-      this.documentTypeArray
-    ) {
+    if (!this.isChecklistDoc && this.documentTypeArray) {
       this.addApplicant();
     }
   }
@@ -221,12 +267,11 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     formData.append('module', 'document');
 
     this.ocrPass = false;
-
     this.dmsService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.uuid) {
         const docIdsControl = docControl.get('docIds') as FormControl;
         const existingDocIds = docIdsControl?.value || [];
-        docIdsControl.setValue([...existingDocIds, resp.uuid]);
+        docIdsControl.setValue([...existingDocIds, resp.documentId]);
 
         const fileInfoArr = docControl.get('fileInfo')?.value || [];
         fileInfoArr.forEach((fileInfoObj: any) => {
@@ -256,8 +301,42 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           this.documentInfo?.gender,
           applicantIndex,
         );
+
+        const documentType = this.isChecklistDoc
+          ? this.otherDocument().at(docIndex)?.get('documentType')?.value
+          : this.getApplicantDocuments(applicantIndex!)
+              .at(docIndex)
+              ?.get('documentType')?.value;
+
+        this.extractDoc(
+          documentType,
+          parseInt(this.sessionStorageService.getOriginationId()),
+          file,
+          resp.documentId,
+        );
       }
     });
+  }
+
+  extractDoc(docName: any, originationId: any, file: any, documentId: any) {
+    const formData = new FormData();
+    formData.append('fileName', file);
+    this.pyScanService
+      .pyScan(docName, originationId, formData, documentId)
+      .subscribe((resp) => {
+        if (resp) {
+          if (resp?.data?.customerName?.toLowerCase()) {
+            console.log(`National Id name is not matching with this customer.`);
+          } else {
+            console.log(`National Id name matches the customer.`);
+          }
+        }
+
+        this.CustomSubmit.emit({
+          documentDetails: this.createDocumentForm.value,
+        });
+        console.log(this.createDocumentForm, 'documentform');
+      });
   }
 
   updateDocId(indx: number, applicantIndex?: number): any[] {
@@ -336,7 +415,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         .at(index)
         .get('fileInfo')?.value;
     }
-    console.log(this.createDocumentForm, 'checkk');
     return this.otherDocument().at(index)?.get('fileInfo')?.value;
   }
 
@@ -426,6 +504,23 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     );
     if (!alreadyExists) {
       otherDocArray.push(this.newDenom(data));
+    }
+  }
+
+  // Handling next button functionality
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
+  }
+
+  handleSubmit() {
+    if (this.isChecklistDoc) {
+      this.CustomSubmit.emit({
+        documentDetails: this.createDocumentForm.value,
+      });
+      return of('success' as const);
+    } else {
+      return of('success' as const);
     }
   }
 }

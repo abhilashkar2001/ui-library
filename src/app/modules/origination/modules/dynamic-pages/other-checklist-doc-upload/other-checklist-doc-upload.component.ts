@@ -73,14 +73,15 @@ export class OtherChecklistDocUploadComponent implements OnInit {
       .subscribe((resp) => {
         if (resp?.statusCode === 200) {
           this.documentList = resp.data
-            .filter((item: any) => item.docInfoModel)
+            .filter((item: any) => Array.isArray(item.docInfoModel))
             .map((item: any) => {
-              if (Object.prototype.hasOwnProperty.call(item, 'docInfoModel')) {
-                item.docs = item.docInfoModel;
-                delete item.docInfoModel;
-              }
-              return item;
+              return {
+                ...item,
+                docs: item.docInfoModel,
+              };
             });
+
+          console.log(this.documentList, '✅ formatted documentList');
         }
       });
   }
