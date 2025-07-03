@@ -10,7 +10,7 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CityService } from 'app/shared/services/city.service';
 import { CountryService } from 'app/shared/services/country-service';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { DmsService } from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -57,7 +57,7 @@ export class CompanyInformationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private documentUploadService: DocumentUploadService,
+    private dmsService: DmsService,
     private cityService: CityService,
     private countryService: CountryService,
     private genericValueService: GenericValueService,
@@ -235,14 +235,14 @@ export class CompanyInformationComponent implements OnInit {
     formdata.append('file', file);
     formdata.append('data', JSON.stringify(docdata));
     formdata.append('module', 'document');
-    this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
-      if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
+    this.dmsService.uploadDocuments(formdata).subscribe((res) => {
+      if (res?.uuid) {
         if (Form) {
-          Form.get('documentName').setValue(res?.data?.fileName);
-          Form.get('documentId').setValue(res?.data?.documentId);
-          Form.get('doucumentUrl').setValue(res?.data?.fileUrl);
+          Form.get('documentName').setValue(res?.fileName);
+          Form.get('documentId').setValue(res?.uuid);
+          Form.get('doucumentUrl').setValue(res?.fileUrl);
         } else {
-          const updatedData = res?.data;
+          const updatedData = res;
           this.corporateCustomer
             .get('organisationChartFileName')
             ?.patchValue(updatedData?.fileName);
@@ -251,7 +251,7 @@ export class CompanyInformationComponent implements OnInit {
             ?.patchValue(updatedData?.fileUrl);
           this.corporateCustomer
             .get('organisationChartId')
-            ?.patchValue(updatedData?.documentId);
+            ?.patchValue(updatedData?.uuid);
         }
       }
     });

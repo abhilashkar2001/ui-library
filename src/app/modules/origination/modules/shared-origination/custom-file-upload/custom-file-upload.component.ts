@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { DmsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-custom-file-upload',
@@ -46,7 +46,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
-    private documentUploadService: DocumentUploadService,
+    private dmsService: DmsService,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -222,21 +222,21 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
 
     this.ocrPass = false;
 
-    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+    this.dmsService.uploadDocuments(formData).subscribe((resp) => {
+      if (resp?.uuid) {
         const docIdsControl = docControl.get('docIds') as FormControl;
         const existingDocIds = docIdsControl?.value || [];
-        docIdsControl.setValue([...existingDocIds, resp.data.documentId]);
+        docIdsControl.setValue([...existingDocIds, resp.uuid]);
 
         const fileInfoArr = docControl.get('fileInfo')?.value || [];
         fileInfoArr.forEach((fileInfoObj: any) => {
-          if (resp.data.fileName.includes(fileInfoObj.name)) {
-            fileInfoObj.newFileUrl = resp.data.fileUrl;
+          if (resp.fileName.includes(fileInfoObj.name)) {
+            fileInfoObj.newFileUrl = resp.fileUrl;
           }
         });
         docControl.get('fileInfo')?.setValue([...fileInfoArr]);
 
-        this.fileUrls?.push(resp.data?.fileUrl);
+        this.fileUrls?.push(resp?.fileUrl);
         this.documentIds.push(this.createDocumentForm.value);
 
         if (
@@ -244,7 +244,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           docIndex === 0 &&
           !isApplicantDoc
         ) {
-          this.frontAadhar = resp.data.fileUrl;
+          this.frontAadhar = resp.fileUrl;
         }
 
         const index = fileInfoArr.length - 1;

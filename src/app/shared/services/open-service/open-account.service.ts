@@ -21,18 +21,8 @@ export class OpenAccountService {
     return this.http.post(`${baseUrl}/auth/verifyOtp`, otpObject);
   }
 
-  uploadDocument(documentObjects: any): Observable<any> | any {
-    return this.http.post(`${baseUrl}/upload-document`, documentObjects);
-  }
 
-  uploadMultipleDocument(documentObjects: any): Observable<any> | any {
-    return this.http.post(
-      `${baseUrl}/documents?source=web Site`,
-      documentObjects,
-    );
-  }
-
-  getCity(stateId: number) {
+ getCity(stateId: number) {
     return this.http.get(`${baseUrl}/city?stateId=${stateId}`);
   }
 

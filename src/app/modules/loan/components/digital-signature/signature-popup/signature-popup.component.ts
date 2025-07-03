@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BranchService } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
 import { SignPadComponent } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-pad/sign-pad.component';
 import { catchError, map, of } from 'rxjs';
+import { DmsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-signature-popup',
@@ -12,11 +12,6 @@ import { catchError, map, of } from 'rxjs';
 export class SignaturePopupComponent {
   @ViewChild('signPadRef', { static: false })
   signPadComponent!: SignPadComponent;
-  currentIndex = 1;
-  tabs = [
-    { sequence: 1, label: 'E-Sign' },
-    { sequence: 2, label: 'Upload' },
-  ];
   file: any;
   fileName: any;
   signImg: boolean | undefined;
@@ -27,7 +22,7 @@ export class SignaturePopupComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<SignaturePopupComponent>,
-    private branchService: BranchService,
+    private dmsService: DmsService,
   ) {}
 
   signpadImage(event: any) {
@@ -82,8 +77,8 @@ export class SignaturePopupComponent {
     docPayload.append('file', this.file);
     docPayload.append('data', JSON.stringify(data));
     docPayload.append('module', 'signature');
-    this.branchService
-      .saveUploadSignature(docPayload)
+    this.dmsService
+      .uploadDocuments(docPayload)
       .pipe(
         map((event: any) => this.handleUploadEvent(event)),
         catchError((err) => {
