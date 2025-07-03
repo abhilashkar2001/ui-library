@@ -1,6 +1,7 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-credit-bureau',
@@ -21,5 +22,13 @@ export class CreditBureauComponent {
       height: '40%',
       panelClass: 'custom-dialog',
     });
+  }
+
+  handleSubmit() {
+    return of('success' as const);
+  }
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
 }

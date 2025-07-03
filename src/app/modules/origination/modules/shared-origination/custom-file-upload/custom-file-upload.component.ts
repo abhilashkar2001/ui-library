@@ -1,9 +1,11 @@
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -20,6 +22,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   createDocumentForm!: FormGroup;
   @Input() checkListDocList: any;
   @Input() isChecklistDoc = false;
+  @Output() stepCompleted = new EventEmitter<void>();
   staticData: GenericValueInfoModel = {
     DOCUMENTNAME: [],
   };

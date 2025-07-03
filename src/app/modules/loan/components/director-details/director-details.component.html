@@ -711,7 +711,6 @@
 
                 <div fxLayoutAlign="end center">
                   <ic-button
-                    (OnClick)="confirmCustomer()"
                     [icButtonType]="'filled-rounded'"
                     [label]="'Save'"
                     [type]="'submit'"
@@ -736,32 +735,4 @@
     >
     </ic-button> -->
   </form>
-  <div
-    fxFlex="100"
-    fxLayout="row"
-    fxLayoutAlign="end center"
-    fxLayoutGap="1%"
-    style="margin-top: 50px"
-  >
-    <div>
-      <ic-button
-        (OnClick)="goBack()"
-        [label]="'Back'"
-        [type]="'button'"
-        icButtonType="ghost-rounded-danger"
-        size="medium"
-      >
-      </ic-button>
-    </div>
-    <div>
-      <ic-button
-        (OnClick)="confirmCustomer()"
-        [icButtonType]="'filled-rounded'"
-        [label]="'Next'"
-        [type]="'submit'"
-        size="medium"
-      >
-      </ic-button>
-    </div>
-  </div>
 </div>

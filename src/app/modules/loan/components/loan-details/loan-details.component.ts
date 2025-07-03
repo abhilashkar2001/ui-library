@@ -1,5 +1,12 @@
 import { getCurrencySymbol } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
@@ -13,13 +20,16 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import moment from 'moment';
 import {
+  catchError,
   combineLatest,
   debounceTime,
   distinctUntilChanged,
   filter,
   map,
   Observable,
+  of,
   Subscription,
+  tap,
 } from 'rxjs';
 
 @Component({
@@ -27,10 +37,9 @@ import {
   templateUrl: './loan-details.component.html',
   styleUrls: ['./loan-details.component.scss'],
 })
-export class LoanDetailsComponent implements OnInit, OnDestroy {
+export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
   loanDetailsForm!: FormGroup;
   loanDetailsSummaryArr: any[] = [];
-  isEdit = true;
   genericValue: any | undefined;
   todaysDate = new Date();
   staticData = {
@@ -52,6 +61,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
   min: any;
   productDetails: any;
   max: any;
+  @Input() isEdit = false;
 
   constructor(
     private fb: FormBuilder,
@@ -74,6 +84,12 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
       this.fetchLoanDetails();
     }
     this.buildLoanDetailsForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isEdit']) {
+      console.log('Edit mode ON');
+    }
   }
 
   loadUserProfile() {
@@ -104,43 +120,42 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
     this.loanDetailsSummaryArr = [
       {
         header: 'Loan Amount Requested (GHS)*',
-        value: data?.loanAmount,
+        value: data?.loanDetails?.loanAmount,
         formControlName: 'loanAmount',
         currency: true,
       },
       {
         header: 'Tenure',
-        value: `${data?.loanTenureYear || 0}Year ${data?.loanTenureMonth || 0}Month ${data?.loanTenureDay || 0}Days`,
-
+        value: `${data?.loanDetails?.loanTenureYear || 0}Year ${data?.loanDetails?.loanTenureMonth || 0}Month ${data?.loanDetails?.loanTenureDay || 0}Days`,
         formControlName: 'loanTenureYear',
       },
       {
         header: 'Interest Rate %',
-        value: data?.interestRate,
+        value: data?.loanDetails?.interestRate,
         formControlName: 'interestRate',
         currency: true,
       },
       {
         header: 'EMI Amount',
-        value: data?.emiAmount,
+        value: data?.loanDetails?.emiAmount,
         formControlName: 'emiAmount',
         currency: true,
       },
       {
         header: 'Interest Payable',
-        value: data?.totalInterestAmount,
+        value: data?.loanDetails?.totalInterestAmount,
         formControlName: 'interestPayable',
         currency: true,
       },
       {
         header: 'Total Principal Amount',
-        value: data?.totalPrincipalAmount,
+        value: data?.loanDetails?.totalPrincipalAmount,
         formControlName: 'totalPrincipalAmount',
         currency: true,
       },
       {
         header: 'Total Payable Amount',
-        value: data?.totalPayableAmount,
+        value: data?.loanDetails?.totalPayableAmount,
         formControlName: 'totalPayableAmount',
         currency: true,
       },
@@ -156,7 +171,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
       },
       {
         header: 'Holder Type*',
-        value: data?.holderType ?? 'Self',
+        value: data?.loanDetails?.holderType ?? 'Self',
         formControlName: 'holderType',
       },
     ];
@@ -168,7 +183,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
       this.loanService.getLoanDetails(this.originationId).subscribe((resp) => {
         if (resp.statusCode === 200) {
           this.loanDetailsForm?.patchValue(resp?.data);
-          this.initializeLoanDetailsArray(resp?.data?.loanDetails);
+          this.initializeLoanDetailsArray(resp?.data);
         }
       });
   }
@@ -301,24 +316,32 @@ export class LoanDetailsComponent implements OnInit, OnDestroy {
     return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
   }
 
-  saveLoanDetails() {
+  handleSubmit() {
     const payload = {
       ...this.loanDetailsForm?.value,
     };
     payload.originationModel.originationId = 554;
+    delete payload.loanDetails.totalPrincipalAmount;
     payload.screenCode = 444;
-
-    console.log(payload, 'payload');
-
-    this.loanService.saveLoanDetails(payload).subscribe((resp) => {
-      console.log(resp);
-    });
+    return this.loanService.saveLoanDetails(payload).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      map((res) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
   }
 
-  edit() {
-    this.isEdit = false;
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
-
   ngOnDestroy() {
     this.valueChangesSubscription?.unsubscribe();
   }

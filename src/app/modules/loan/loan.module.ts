@@ -5,7 +5,6 @@ import { StagesComponent } from './stages/stages.component';
 import { LoanDetailsComponent } from './components/loan-details/loan-details.component';
 import { DocumentUploadComponent } from './components/document-upload/document-upload.component';
 import { BusinessDetailsComponent } from './components/business-details/business-details.component';
-import { DirectorsDocumentUploadComponent } from './components/directors-document-upload/directors-document-upload.component';
 import { DirectorDetailsComponent } from './components/director-details/director-details.component';
 import { DisbursementDetailsComponent } from './components/disbursement-details/disbursement-details.component';
 import { CreditBureauComponent } from './components/credit-bureau/credit-bureau.component';
@@ -33,7 +32,6 @@ import { SignaturePopupComponent } from './components/digital-signature/signatur
     LoanDetailsComponent,
     DocumentUploadComponent,
     BusinessDetailsComponent,
-    DirectorsDocumentUploadComponent,
     DirectorDetailsComponent,
     DisbursementDetailsComponent,
     CreditBureauComponent,

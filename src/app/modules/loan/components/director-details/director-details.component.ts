@@ -20,7 +20,16 @@ import { CountryService } from 'app/shared/services/country-service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
-import { finalize, forkJoin, Subscription } from 'rxjs';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import {
+  catchError,
+  finalize,
+  forkJoin,
+  map,
+  of,
+  Subscription,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-director-details',
@@ -53,6 +62,7 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
   showSpouseSection: boolean[] = [];
   private localeData: LocaleData | undefined;
   personalDetails: any;
+  originationId: number | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -62,9 +72,12 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private openApi: OpenAccountService,
     private loanService: LoanService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit() {
+    this.originationId = this.sessionStorageService.getOriginationId();
+
     const localeData$ = this.store.select(selectLocaleData).subscribe((res) => {
       if (res) {
         this.localeData = res;
@@ -81,21 +94,23 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
       }
     });
 
-    this.loanService
-      .getPersonalDetailsData(504)
-      .pipe(
-        finalize(() => {
-          this.buildPersonalDetailsForm(this.personalDetails);
-        }),
-      )
-      .subscribe({
-        next: (resp) => {
-          this.personalDetails = resp?.data?.customerInfo || null;
-          if (this.personalDetails) {
-            this.getGenericDetails();
-          }
-        },
-      });
+    if (this.originationId) {
+      this.loanService
+        .getPersonalDetailsData(this.originationId)
+        .pipe(
+          finalize(() => {
+            this.buildPersonalDetailsForm(this.personalDetails);
+          }),
+        )
+        .subscribe({
+          next: (resp) => {
+            this.personalDetails = resp?.data?.customerInfo || null;
+            if (this.personalDetails) {
+              this.getGenericDetails();
+            }
+          },
+        });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges | any): void {
@@ -508,7 +523,7 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
     return currentDate;
   }
 
-  confirmCustomer() {
+  handleSubmit() {
     const customerData = this.customer.controls.map((customerGroup, index) => {
       const customer = customerGroup.value;
 
@@ -538,17 +553,31 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
     });
 
     const payload = {
-      originationId: 504,
+      originationId: this.originationId,
       screenCode: 460,
       customerInfo: customerData,
     };
 
     console.log(payload, 'Final Payload');
 
-    this.loanService.savePersonalDetails(payload).subscribe((resp: any) => {
-      console.log(resp);
-    });
-    console.log(payload, 'ppayload');
+    return this.loanService.savePersonalDetails(payload).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      map((res) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
+  }
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
 
   goBack() {

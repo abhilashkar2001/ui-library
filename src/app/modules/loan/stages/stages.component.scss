@@ -18,20 +18,13 @@
   white-space: nowrap;
   padding-bottom: 4px;
 
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f2f2f2;
-  }
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 }
 
+.step-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
 .step-container {
   display: flex;
   align-items: center;

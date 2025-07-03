@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ComponentRef,
   computed,
   OnInit,
   QueryList,
@@ -13,7 +14,11 @@ import { RenderComponentService } from '../../../shared/services/render-componen
 import { LoanService } from '../../../shared/services/loan/loan.service';
 import { ComponentLRUCache } from './component-lru-cache';
 import { IProduct } from '@onerumango/utils';
-import { ComponentConstant } from '../../../config/component.constant';
+import {
+  ComponentConstant,
+  ComponentMap,
+} from '../../../config/component.constant';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-stages',
@@ -24,17 +29,19 @@ import { ComponentConstant } from '../../../config/component.constant';
 export class StagesComponent implements OnInit {
   @ViewChildren('container', { read: ViewContainerRef })
   container!: QueryList<ViewContainerRef>;
+  @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
   readonly activePanels = signal<Set<number>>(new Set());
   readonly isAnyPanelOpen = computed(() => this.activePanels().size > 0);
   protected componentMapping: Map<string, Record<string, any>> = new Map<
     string,
     Record<string, any>
   >();
-  private readonly componentCache = new ComponentLRUCache(3);
+  private readonly componentCache = new ComponentLRUCache(10);
   private processCycleCode: string | undefined;
   private basisId = 132767;
   private productDetails: IProduct | undefined;
   currentStepIndex = 1;
+  private componentRefs = new Map<number, ComponentRef<any>>();
 
   constructor(
     private renderComponentService: RenderComponentService,
@@ -43,8 +50,6 @@ export class StagesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.componentMapping, 'checj');
-
     this.fetchProductDetails();
   }
 
@@ -55,23 +60,52 @@ export class StagesComponent implements OnInit {
    * @param index
    * @param screenCode
    */
-  onPanelOpened(index: number, screenCode: string) {
+  onPanelOpened<K extends keyof ComponentMap>(index: number, screenCode: K) {
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
       currentSet.add(index);
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component =
-          ComponentConstant[screenCode as keyof typeof ComponentConstant];
-        if (component) {
-          const componentRef = this.renderComponentService.loadComponent(
-            container,
-            component,
-          );
-          this.componentCache.set(index, componentRef);
-        }
+        const component = ComponentConstant[screenCode];
+        const componentRef = this.renderComponentService.loadComponent<
+          ComponentMap[K]
+        >(container, component);
+        this.componentCache.set(index, componentRef);
+        this.componentRefs.set(index, componentRef);
       }
+    }
+  }
+
+  async saveComponent(index: number) {
+    console.log(this.componentRefs, 'componentRefs');
+    const componentRef = this.componentRefs.get(index);
+    if (!componentRef) return;
+    const instance = componentRef.instance as any;
+    if (instance.submitForm) {
+      const result = await instance.submitForm();
+      if (result === 'success') {
+        this.openNextPanel(index);
+      } else {
+        this.openNextPanel(index);
+      }
+    }
+  }
+
+  openNextPanel(currentIndex: number) {
+    const nextIndex = currentIndex + 1;
+    const nextPanel = this.panels.get(nextIndex);
+    if (nextPanel) {
+      nextPanel.open();
+    }
+  }
+
+  // Edit Component Functionality
+  editComponent(index: number) {
+    const componentRef = this.componentRefs.get(index);
+    if (componentRef) {
+      (componentRef.instance as any).isEdit = true;
+      componentRef.changeDetectorRef.detectChanges();
     }
   }
 
@@ -90,6 +124,7 @@ export class StagesComponent implements OnInit {
       const container = this.container.get(index);
       if (container) {
         container.clear();
+        // this.componentRefs.delete(index);
       }
     }
   }
