@@ -5,7 +5,7 @@ import {
   ChecklistPayloadModel,
   ChecklistRouteObjModel,
 } from 'app/shared/models/checklist-model';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { DmsService } from '@onerumango/utils';
 import { OriginationService } from 'app/shared/services/origination.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SuccessModalComponent } from '../digital-sign/success-modal/success-modal.component';
@@ -36,7 +36,7 @@ export class ChecklistDocumentComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private fb: FormBuilder,
     private snack: MatSnackBar,
-    private documentUploadService: DocumentUploadService,
+    private documentUploadService: DmsService,
     private dialog: MatDialog,
     private loanService: LoanService,
   ) {}
@@ -219,8 +219,8 @@ export class ChecklistDocumentComponent implements OnInit {
       }
 
       this.documentUploadService.uploadDocuments(formdata).subscribe((res) => {
-        if ((res?.statusCode === 200 || res?.statusCode === 201) && res?.data) {
-          this.documentFilesCtrl(index).at(fileIndex).patchValue(res?.data);
+        if (res?.uuid) {
+          this.documentFilesCtrl(index).at(fileIndex).patchValue(res);
           this.documentFilesCtrl(index).push(this.documentFileFormArray());
         }
       });

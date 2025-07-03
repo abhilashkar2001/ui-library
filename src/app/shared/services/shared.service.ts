@@ -18,12 +18,6 @@ export class SharedService {
     );
   }
 
-  uploadDocument(formData: FormData) {
-    return this.http.post(`${this.baseUrl}/upload-document`, formData, {
-      reportProgress: true,
-      observe: 'events',
-    });
-  }
 
   public readAadharFrontData(data: FormData) {
     return this.http.post(`${this.baseUrl}/api/scan-adhar-front`, data);
@@ -32,10 +26,6 @@ export class SharedService {
   // Aadhaar Back API
   public readAadhaarBackData(data: FormData) {
     return this.http.post(`${this.baseUrl}/api/scan-adhar-back`, data);
-  }
-
-  deleteDocument(documentId: number) {
-    return this.http.delete(`${this.baseUrl}/upload-document/${documentId}`);
   }
 
   public pyScan(

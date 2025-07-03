@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CUSTOMFILE } from 'app/shared/models/custom-file.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { DmsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-web-doc-upload',
@@ -71,7 +71,7 @@ export class WebDocUploadComponent implements OnInit {
     private snack: MatSnackBar,
     private genericValueService: GenericValueService,
     private dialog: MatDialog,
-    private documentUploadService: DocumentUploadService,
+    private documentUploadService: DmsService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     // this.buildDocumentForm();
@@ -394,8 +394,8 @@ export class WebDocUploadComponent implements OnInit {
     formData.append('file', file);
     formData.append('module', 'document');
     this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
-        this.updateDocId(i).push(resp.data.documentId);
+      if (resp.uuid) {
+        this.updateDocId(i).push(resp.uuid);
         this.documentIds.push(this.createDocumentForm.value);
         if (this.ocrCheck) this.readDocument(file, i);
       }

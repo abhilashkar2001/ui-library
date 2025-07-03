@@ -24,7 +24,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { ScanComponent } from '../../../../../shared/components/scan/scan.component';
 import { WarningComponent } from '../../../../../shared/components/warning/warning.component';
 import { ImageDialogComponent } from 'app/modules/origination/modules/shared-origination/image-dialog/image-dialog.component';
-import { DocumentUploadService } from 'app/shared/services/document-upload.service';
+import { DmsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-cusotm-web-doc-upload',
@@ -95,7 +95,7 @@ export class CusotmWebDocUploadComponent
     private loanApi: LoanService,
     private openApi: OpenAccountService,
     private sessionStorageService: SessionStorageService,
-    private documentUploadService: DocumentUploadService,
+    private dmsService: DmsService,
   ) {
     this.stepperTitle = this.activatedRoute.snapshot['queryParams']['title'];
     this.matIconRegistry.addSvgIcon(
@@ -400,22 +400,22 @@ export class CusotmWebDocUploadComponent
     formData.append('module', 'document');
     this.ocrPass = false;
 
-    this.documentUploadService.uploadDocuments(formData).subscribe((resp) => {
-      if (resp?.statusCode === 200) {
+    this.dmsService.uploadDocuments(formData).subscribe((resp) => {
+      if (resp?.uuid) {
         if (
           data?.documentNameForChecklist?.toLowerCase()?.includes('national') &&
           i == 0
         ) {
-          this.frontAadhar = resp.data.fileUrl;
+          this.frontAadhar = resp.fileUrl;
         }
-        this.updateDocId(i).push(resp.data.documentId);
-        this.fileUrls.push(resp.data.fileUrl);
+        this.updateDocId(i).push(resp.uuid);
+        this.fileUrls.push(resp.fileUrl);
         this.documentIds.push(this.createDocumentForm.value);
         const fileInfoArr =
           this.otherDocument().controls[i]?.get('fileInfo')?.value;
         fileInfoArr.forEach((fileInfoObj: any) => {
-          if (resp.data.fileName.includes(fileInfoObj.name)) {
-            fileInfoObj.newFileUrl = resp.data.fileUrl;
+          if (resp.fileName.includes(fileInfoObj.name)) {
+            fileInfoObj.newFileUrl = resp.fileUrl;
           }
         });
         this.otherDocument()
@@ -437,7 +437,7 @@ export class CusotmWebDocUploadComponent
           this.createDocumentForm.value.otherDocument[i].documentType,
           parseInt(this.sessionStorageService.getOriginationId()),
           file,
-          resp.data.documentId,
+          resp.uuid,
         );
       }
     });

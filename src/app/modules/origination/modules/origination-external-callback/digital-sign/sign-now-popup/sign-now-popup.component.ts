@@ -6,11 +6,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { catchError, map, of, Subscription } from 'rxjs';
-import { BranchService } from './branch.service';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { catchError, map, of } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 import { SignPadComponent } from '../sign-pad/sign-pad.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DmsService } from '@onerumango/utils';
 
 @Component({
   selector: 'app-sign-now-popup',
@@ -22,23 +22,12 @@ export class SignNowPopupComponent implements OnInit {
   signPadComponent!: SignPadComponent;
   @ViewChild('fileSelect', { static: false })
   fileInput!: ElementRef<HTMLInputElement>;
-  signatureImg: any;
   isSign = true;
   radioFlag = 'digitan-sign';
-  signaturePadOptions: any = {
-    minWidth: 2,
-    canvasWidth: 700,
-    canvasHeight: 300,
-    penColor: 'black',
-    backgroundColor: 'white',
-  };
   selectedIndex: number | any;
-  uploadingFile: string | any;
   isUploading = false;
-  diasableDone = true;
   percentDone: number | any;
   uploadSuccess: boolean | any;
-  requestSubscription: Subscription | any;
   signImg: any;
   isStart = false;
   file: any;
@@ -51,7 +40,7 @@ export class SignNowPopupComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SignNowPopupComponent>,
     private cdr: ChangeDetectorRef,
-    private branchService: BranchService,
+    private dmsService: DmsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.title = data?.title;
@@ -99,8 +88,8 @@ export class SignNowPopupComponent implements OnInit {
     docPayload.append('module', 'signature');
     docPayload.append('signatureId', this.sinatureId);
     this.isUploading = true;
-    this.branchService
-      .saveUploadSignature(docPayload)
+    this.dmsService
+      .uploadSignaturewithEvent(docPayload)
       .pipe(
         map((event: any) => this.handleUploadEvent(event)),
         catchError((err) => {
@@ -118,7 +107,6 @@ export class SignNowPopupComponent implements OnInit {
     if (event.type === HttpEventType.UploadProgress) {
       this.percentDone = Math.round((100 * event.loaded) / event.total);
     } else if (event.type === HttpEventType.Response) {
-      // Upload complete
       this.percentDone = 0;
       this.isUploading = false;
       this.uploadSuccess = true;
@@ -151,21 +139,6 @@ export class SignNowPopupComponent implements OnInit {
   }
 
   /**
-   * Method for Removing Image
-   */
-
-  removeimage() {
-    document.querySelector('#imgforped')?.classList.add('hidden');
-  }
-
-  /**
-   * Draw Start Method
-   */
-  drawStart() {
-    document.querySelector('#imgforped')?.classList.add('hidden');
-  }
-
-  /**
    * onFileSelect Method for selecting files
    * @param e
    */
@@ -186,26 +159,6 @@ export class SignNowPopupComponent implements OnInit {
       console.log(error);
     }
     this.cdr.detectChanges();
-  }
-
-  /**
-   * File Upload Method for uplaoding the file
-   * @param file
-   */
-  fileUpload(file: any) {
-    this.isUploading = true;
-    this.requestSubscription = this.branchService
-      .uploadAndProgress(file)
-      .subscribe((event: any) => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.percentDone = Math.round((100 * event.loaded) / event.total);
-        } else if (event instanceof HttpResponse) {
-          this.uploadSuccess = true;
-          this.percentDone = 0;
-          this.isUploading = false;
-          this.cdr.markForCheck();
-        }
-      });
   }
 
   onFileDropped(event: any) {
