@@ -2,13 +2,14 @@
   <div
     *ngFor="let details of loanDetailsStore"
     fxLayout="column"
-    fxLayoutGap="1%"
+    fxLayoutGap="10"
     class="mb-4"
   >
     <span class="header_md_bold_black">{{ details?.title }}</span>
     <div fxLayout="row wrap">
       <div
-        fxFlex="24"
+        [fxFlex]="details?.key === 'documentUpload' ? '100' : '24'"
+        class="mb-4"
         fxLayout="column"
         *ngFor="let data of details?.headerInfo"
       >
@@ -18,11 +19,74 @@
             summary?.loanDetail[data?.headerDef!]
           }}</span>
         </ng-container>
+        <ng-container *ngIf="details?.key === 'documentUpload'">
+          <div class="document-panel" *ngFor="let document of documentData">
+            <mat-expansion-panel
+              *ngIf="document?.docInfoModel?.length > 0"
+              class="styled-panel fileUpload"
+              [expanded]="true"
+            >
+              <mat-expansion-panel-header class="panel-header">
+                <div class="panel-header-content">
+                  <div
+                    class="panel-title"
+                    fxLayoutGap="5"
+                    fxLayoutAlign="start center"
+                  >
+                    <img src="assets/images/tickicon.svg" alt="Tick" />
+                    <span class="header_md">{{ document?.document }}</span>
+                  </div>
+                  <span class="disabled_delete"> Delete </span>
+                </div>
+              </mat-expansion-panel-header>
+
+              <div
+                class="uploaded_list"
+                fxLayout="row wrap"
+                fxFlex="100"
+                fxLayoutAlign="space-between center"
+              >
+                <div
+                  *ngFor="
+                    let file of document?.docInfoModel;
+                    let fileIndx = index
+                  "
+                  fxFlex="49"
+                  fxLayout="row"
+                  fxLayoutGap="10"
+                  class="upload_img"
+                >
+                  <div class="img_box">
+                    <img [src]="" alt="image" />
+                  </div>
+                  <div class="img_container">
+                    <span class="header_md img_name">{{ file?.fileName }}</span>
+                  </div>
+                  <img
+                    tabindex="0"
+                    src="assets/images/trash_new.svg"
+                    alt="trash"
+                  />
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </ng-container>
         <ng-container *ngIf="details?.key === 'disbursementDetail'">
           <span class="breadcrum_sm">{{ data?.headerCell }}</span>
-          <span class="header_md">{{
-            summary?.loanDetail[data?.headerDef!]
-          }}</span>
+          <ng-container [ngSwitch]="data?.headerDef">
+            <span class="header_md" *ngSwitchCase="'internal'">{{
+              summary?.loanDisbursementModel?.internal ? 'Internal' : 'External'
+            }}</span>
+            <span class="header_md" *ngSwitchCase="'disbursementTypeValue'">{{
+              summary?.loanDisbursementModel?.[data?.headerDef!]
+            }}</span>
+            <span class="header_md" *ngSwitchDefault>{{
+              summary?.loanDisbursementModel?.disbursementAccount?.[
+                data?.headerDef!
+              ]
+            }}</span>
+          </ng-container>
         </ng-container>
         <ng-container *ngIf="details?.key === 'creditBureau'">
           <span class="breadcrum_sm">{{ data?.headerCell }}</span>
@@ -32,18 +96,227 @@
         </ng-container>
         <ng-container *ngIf="details?.key === 'businessDetails'">
           <span class="breadcrum_sm">{{ data?.headerCell }}</span>
-          <span class="header_md">{{
-            summary?.loanDetail[data?.headerDef!]
-          }}</span>
+          <span
+            class="header_md"
+            *ngIf="data?.headerDef === 'businessIntencity'; else showOther"
+            >{{
+              summary?.businessModel?.businessIntencity ? 'Capital' : 'Labour'
+            }}</span
+          >
+          <ng-template #showOther>
+            <span class="header_md">{{
+              summary?.businessModel[data?.headerDef!]
+            }}</span>
+          </ng-template>
         </ng-container>
       </div>
     </div>
-    <div *ngIf="details?.key === 'collateral'">
+    <div class="stepper-line"></div>
+  </div>
+
+  <div>
+    <span class="header_md_bold_black">{{ 'Director Details' }}</span>
+    <div class="stepper-line"></div>
+    <div
+      class="custom_accordin"
+      *ngFor="let director of summary?.customerInfo; let i = index"
+    >
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="i === 0">
+          <mat-expansion-panel-header
+            class="customer_Header"
+            style="padding: 0px !important"
+          >
+            <mat-panel-description>
+              <div
+                *ngIf="director"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px"
+              >
+                <ic-button
+                  type="icon"
+                  icButtonType="ghost-basic"
+                  icIcon="green-tick"
+                  customButtonClass="box-shadow-none"
+                ></ic-button>
+                <span class="header_lg">Director {{ i + 1 }}</span>
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div
+            *ngFor="let details of directorData"
+            fxLayout="column"
+            fxLayoutGap="10"
+            class="mb-4"
+          >
+            <span class="header_md_bold_black" *ngIf="details?.title">{{
+              details?.key === 'spouse' &&
+              director?.maritalStatusValue !== 'Married'
+                ? null
+                : details?.title
+            }}</span>
+            <div fxLayout="row wrap">
+              <div
+                *ngFor="let data of details?.headerInfo"
+                [fxFlex]="
+                  data?.headerCell?.includes('Address')
+                    ? '48'
+                    : details?.key === 'documentUpload'
+                      ? '100'
+                      : '24'
+                "
+                class="mb-4"
+                fxLayout="column"
+              >
+                <ng-container *ngIf="details?.key === 'director'">
+                  <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+                  <span
+                    class="header_md"
+                    *ngIf="
+                      data?.headerCell?.includes('Expiry') ||
+                        data?.headerCell?.includes('Issued') ||
+                        data?.headerCell?.includes('Number');
+                      else showOther
+                    "
+                    >{{ director?.documentInfo?.[0]?.[data?.headerDef!] }}</span
+                  >
+                  <ng-template #showOther>
+                    <span class="header_md">{{
+                      director?.[data?.headerDef!]
+                    }}</span>
+                  </ng-template>
+                </ng-container>
+
+                <ng-container>
+                  <div
+                    class="document-panel"
+                    *ngIf="details?.key === 'documentUpload'"
+                  >
+                    <mat-expansion-panel
+                      *ngIf="director?.documentInfo?.length > 0"
+                      class="styled-panel fileUpload"
+                      [expanded]="true"
+                    >
+                      <mat-expansion-panel-header class="panel-header">
+                        <div class="panel-header-content">
+                          <div
+                            class="panel-title"
+                            fxLayoutGap="5"
+                            fxLayoutAlign="start center"
+                          >
+                            <img src="assets/images/tickicon.svg" alt="Tick" />
+                            <span class="header_md">{{
+                              director?.documentInfo?.[0]
+                                ?.documentNameForChecklist
+                            }}</span>
+                          </div>
+                          <span class="disabled_delete"> Delete </span>
+                        </div>
+                      </mat-expansion-panel-header>
+
+                      <div
+                        class="uploaded_list"
+                        fxLayout="row wrap"
+                        fxFlex="100"
+                        fxLayoutAlign="space-between center"
+                      >
+                        <div
+                          *ngFor="
+                            let file of director?.documentInfo;
+                            let fileIndx = index
+                          "
+                          fxFlex="49"
+                          fxLayout="row"
+                          fxLayoutGap="10"
+                          class="upload_img"
+                        >
+                          <div class="img_box">
+                            <img [src]="" alt="image" />
+                          </div>
+                          <div class="img_container">
+                            <span class="header_md img_name">{{
+                              file?.fileName
+                            }}</span>
+                          </div>
+                          <img
+                            tabindex="0"
+                            src="assets/images/trash_new.svg"
+                            alt="trash"
+                          />
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="details?.key === 'contact'">
+                  <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+                  <span class="header_md">{{
+                    data?.isAddress
+                      ? director?.contact?.address?.[0]?.[data?.headerDef!]
+                      : director?.contact?.[data?.headerDef!]
+                  }}</span>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    details?.key === 'spouse' &&
+                    director?.maritalStatusValue === 'Married'
+                  "
+                >
+                  <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+                  <span class="header_md">{{
+                    data.isContact
+                      ? director?.spouseInfo?.contact?.[data?.headerDef!]
+                      : data.isCurrency
+                        ? (director?.spouseInfo?.[data?.headerDef!] | currency)
+                        : (director?.spouseInfo?.[data?.headerDef!] ?? '-')
+                  }}</span>
+                </ng-container>
+                <ng-container *ngIf="details?.key === 'emergency'">
+                  <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+                  <span class="header_md">{{
+                    data.isContact
+                      ? director?.emergencyContactInfo?.contact?.[
+                          data?.headerDef!
+                        ]
+                      : data.isAddress
+                        ? director?.emergencyContactInfo?.contact?.address?.[0][
+                            data?.headerDef!
+                          ]
+                        : (director?.emergencyContactInfo?.[data?.headerDef!] ??
+                          '-')
+                  }}</span>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="stepper-line"></div> -->
+          </div>
+          <div class="stepper-line"></div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="stepper-line"></div>
+    <!-- </ng-container> -->
+  </div>
+  <div fxLayout="column" fxLayoutGap="20">
+    <span class="header_md_bold_black">{{ 'Collateral' }}</span>
+    <div fxLayout="column" fxLayoutGap="0">
+      <mat-form-field appearance="fill" class="full-width fileUpload">
+        <input
+          matInput
+          placeholder="Search input text"
+          formControlName="search"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
       <app-custom-table
         [tableHeaders]="collateralHeaders"
-        [tableData]="tableData"
+        [tableData]="summary?.collateralInfo?.collateralDetails"
+        [totalItems]="summary?.collateralInfo?.collateralDetails?.length"
       >
       </app-custom-table>
     </div>
+    <div class="stepper-line"></div>
   </div>
 </section>

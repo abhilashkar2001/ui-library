@@ -26,6 +26,7 @@ import { OriginationExternalCallbackModule } from '../origination/modules/origin
 import { SignaturePopupComponent } from './components/digital-signature/signature-popup/signature-popup.component';
 import { EmiCalculatorComponent } from './emi-calculator/emi-calculator.component';
 import { CalculatorDialogComponent } from './dialogs/calculator-dialog/calculator-dialog.component';
+import { AddCollateralComponent } from './components/collateral-details/add-collateral/add-collateral.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CalculatorDialogComponent } from './dialogs/calculator-dialog/calculato
     SignaturePopupComponent,
     EmiCalculatorComponent,
     CalculatorDialogComponent,
+    AddCollateralComponent,
   ],
   imports: [
     CommonModule,

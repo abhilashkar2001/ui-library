@@ -22,7 +22,7 @@
       <mat-label class="header_md_bold_black" fxFlex="100">Account</mat-label>
       <ic-radio-button
         *ngFor="let account of accountValue"
-        [control]="loanDisbursementAccount.get('internal') | formcontrol"
+        [control]="disbursementForm.get('internal') | formcontrol"
         [label]="account.label"
         [value]="account.value"
         fxFlex="25"
@@ -67,7 +67,7 @@
       "
     >
       <div
-        *ngIf="loanDisbursementAccount?.get('internal')?.value === true"
+        *ngIf="disbursementForm?.get('internal')?.value === true"
         class="enabled-mat-form-field p-8"
         fxFlex="24"
         fxLayout="row wrap"
@@ -90,7 +90,7 @@
       <div
         *ngIf="
           loanDisbursementAccount?.get('internalAccount')?.value === false &&
-          loanDisbursementAccount?.get('internal')?.value === true
+          disbursementForm?.get('internal')?.value === true
         "
         fxLayoutAlign="center center"
         fxFlex="24"
@@ -107,7 +107,7 @@
       </div>
       <ng-container
         *ngIf="
-          loanDisbursementAccount?.get('internal')?.value === false ||
+          disbursementForm?.get('internal')?.value === false ||
           loanDisbursementAccount?.get('internalAccount')?.value === true
         "
       >
@@ -130,7 +130,7 @@
           ></ic-form-field>
         </div>
         <div
-          *ngIf="loanDisbursementAccount?.get('internal')?.value === false"
+          *ngIf="disbursementForm?.get('internal')?.value === false"
           fxFlex="24"
         >
           <ic-select
@@ -152,7 +152,7 @@
           ></ic-form-field>
         </div>
         <div
-          *ngIf="loanDisbursementAccount?.get('internal')?.value === false"
+          *ngIf="disbursementForm?.get('internal')?.value === false"
           fxFlex="24"
         >
           <ic-form-field

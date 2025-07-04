@@ -6,6 +6,7 @@ import { SidenavService } from 'app/shared/services/sidenav.service';
 import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/bank-code-panel.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-disbursement-details',
@@ -71,12 +72,8 @@ export class DisbursementDetailsComponent implements OnInit {
       ],
       chequeTypeId: [data?.chequeTypeId ?? ''],
       branchCode: [data?.branchCode ?? ''],
-      requiredMultipleDisbursement: false,
-      scheduleFrequencyYear: 0,
-      scheduleFrequencyMonth: 1,
-      scheduleFrequencyDay: 0,
+      internal: [data?.internal ?? false],
       disbursementAccount: this.fb.group({
-        internal: [data?.internal ?? false],
         internalAccount: [true],
         accountNo: [
           data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
@@ -141,6 +138,8 @@ export class DisbursementDetailsComponent implements OnInit {
       component: BankCodePanelComponent,
       data: 2,
     };
+    this.sidenavService;
+    console.log(contextData);
     this.sidenavService.open(contextData);
   }
 
@@ -156,5 +155,30 @@ export class DisbursementDetailsComponent implements OnInit {
     this.loanService.saveDisbursementDetails(payload).subscribe((res: any) => {
       console.log(res);
     });
+  }
+
+  handleSubmit() {
+    const payload = { ...this.disbursementForm?.value };
+    payload.originationModel.originationId = 554;
+    delete payload.loanDetails.totalPrincipalAmount;
+    payload.screenCode = 444;
+    return this.loanService.saveDisbursementDetails(payload).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      map((res: any) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
+  }
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
 }

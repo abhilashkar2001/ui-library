@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SidenavService } from 'app/shared/services/sidenav.service';
+import { DrawerContextData } from '../../drawer-context-data';
+import { AddCollateralComponent } from './add-collateral/add-collateral.component';
 @Component({
   selector: 'app-collateral-details',
   templateUrl: './collateral-details.component.html',
@@ -45,7 +48,10 @@ export class CollateralDetailsComponent implements OnInit {
     },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    public sidenavService: SidenavService,
+  ) {}
 
   ngOnInit() {
     this.buildCollateralForm();
@@ -63,5 +69,13 @@ export class CollateralDetailsComponent implements OnInit {
       totalAssetWorth: [''],
       loanType: ['', Validators.required],
     });
+  }
+
+  openSidePanel() {
+    const contextData: DrawerContextData = {
+      component: AddCollateralComponent,
+      data: { ...this.collateralForm?.value },
+    };
+    this.sidenavService.open(contextData);
   }
 }

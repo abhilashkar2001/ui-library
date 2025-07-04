@@ -1,0 +1,100 @@
+<form fxLayout="column" *ngIf="collateralForm" [formGroup]="collateralForm">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <span>Add New Collateral</span>
+    <ic-button
+      type="icon"
+      icButtonType="ghost-basic"
+      icIcon="close"
+      customButtonClass="box-shadow-none"
+    ></ic-button>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="10">
+    <ic-select
+      [options]="[]"
+      bindLabelKey=""
+      bindValueKey=""
+      [control]="collateralForm.get('collateralName') | formcontrol"
+      label="Collateral Name"
+      fxFlex="49"
+    ></ic-select>
+    <div fxFlex="49" fxLayout="column">
+      <mat-label class="header_md" fxFlex="100"
+        >Ownership of the collateral*</mat-label
+      >
+      <ic-radio-button
+        *ngFor="let owner of ownershipValues"
+        [control]="collateralForm.get('ownership') | formcontrol"
+        [label]="owner.label"
+        [value]="owner.value"
+      >
+      </ic-radio-button>
+    </div>
+    <ic-textarea
+      [control]="collateralForm.get('description') | formcontrol"
+      [rows]="8"
+      fxFlex="100"
+      label="Description"
+    >
+    </ic-textarea>
+  </div>
+  <div fxLayout="column">
+    <span class="header_md_bold_black"> Document Upload </span>
+    <div class="pt-4" fxLayout="column">
+      <span class="breadcrum_md"
+        >Max file size is 500kb. Supported file types are .jpg and .png.</span
+      >
+      <!-- <input type="file" /> -->
+      <div
+        class="theme_md container"
+        appDragDrop
+        (fileDropped)="onFileDropped($event)"
+      >
+        Drag and drop files here or
+        <span
+          (click)="fileSelect.click()"
+          (keydown.enter)="fileSelect.click()"
+          class="textdesign"
+          tabindex="0"
+          >click to upload</span
+        >
+        <input
+          (change)="onFileSelect($event)"
+          #fileSelect
+          [hidden]="true"
+          accept="image/png, image/jpeg"
+          id="file-input"
+          type="hidden"
+          type="file"
+        />
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-8">
+        <!-- Item 1 -->
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10">
+          <!-- Thumbnail -->
+          <img src="assets/images.png" alt="doc" />
+
+          <!-- Text -->
+          <div fxLayout="column" fxLayoutGap="10">
+            <div class="header_md">Document</div>
+            <div class="breadcrum_sm">Power Point 250KB</div>
+          </div>
+        </div>
+        <!-- Status Spinner -->
+        <div fxLayoutAlign="end center">
+          <mat-progress-spinner
+            diameter="24"
+            mode="indeterminate"
+            color="primary"
+          ></mat-progress-spinner>
+          <ic-button
+            type="icon"
+            icButtonType="ghost-basic"
+            icIcon="green-tick"
+            customButtonClass="box-shadow-none"
+          ></ic-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

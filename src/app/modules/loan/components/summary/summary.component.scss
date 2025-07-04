@@ -1,0 +1,28 @@
+.stepper-line {
+  height: 1px;
+  background-color: #ccc;
+  margin: 15px 0px;
+}
+.fileUpload {
+  background-color: #f6faff;
+}
+
+// Mat Menu Overrides
+::ng-deep .mat-mdc-menu-panel {
+  border-radius: 0px !important;
+  background: #f8fbff !important;
+  min-width: 200px !important;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-mdc-menu-item {
+  font-size: 14px;
+  color: #222;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin: 2px 8px;
+
+  &:hover {
+    background: #f5f6ff !important;
+  }
+}

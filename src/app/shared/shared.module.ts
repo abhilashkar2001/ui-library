@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { InputMaskModule } from './directives/input-mask/input-mask.module';
 import { RoutePartsService } from '@onerumango/utils';
+import { SharedMaterialModule } from './shared-material.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { RoutePartsService } from '@onerumango/utils';
     SharedDirectivesModule,
     NgOtpInputModule,
     InputMaskModule,
+    SharedMaterialModule,
   ],
   providers: [
     ThemeService,
