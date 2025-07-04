@@ -87,4 +87,6 @@ export class CustomTableComponent implements OnInit, AfterViewInit {
       `Fetching data for page ${this.currentPage} with pageSize ${this.pageSize}`,
     );
   }
+
+  viewDocument() {}
 }

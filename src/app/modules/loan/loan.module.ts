@@ -24,6 +24,8 @@ import { SharedOriginationModule } from '../origination/modules/shared-originati
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OriginationExternalCallbackModule } from '../origination/modules/origination-external-callback/origination-external-callback.module';
 import { SignaturePopupComponent } from './components/digital-signature/signature-popup/signature-popup.component';
+import { EmiCalculatorComponent } from './emi-calculator/emi-calculator.component';
+import { CalculatorDialogComponent } from './dialogs/calculator-dialog/calculator-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { SignaturePopupComponent } from './components/digital-signature/signatur
     SummaryComponent,
     DigitalSignatureComponent,
     SignaturePopupComponent,
+    EmiCalculatorComponent,
+    CalculatorDialogComponent,
   ],
   imports: [
     CommonModule,
