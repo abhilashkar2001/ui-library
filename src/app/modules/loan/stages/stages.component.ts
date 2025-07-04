@@ -66,6 +66,7 @@ export class StagesComponent implements OnInit {
     index: number,
     screenCode: K,
     screenName?: string,
+    screenCodeNum?: number,
   ) {
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
@@ -77,6 +78,11 @@ export class StagesComponent implements OnInit {
         const componentRef = this.renderComponentService.loadComponent<
           ComponentMap[K]
         >(container, component);
+
+        if ('screenCode' in componentRef.instance) {
+          (componentRef.instance as any).screenCode = screenCodeNum;
+        }
+
         if (screenName && 'screenName' in componentRef.instance) {
           (componentRef.instance as any).screenName = screenName;
         }
