@@ -62,6 +62,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
   productDetails: any;
   max: any;
   @Input() isEdit = false;
+  @Input() screenCode = '';
 
   constructor(
     private fb: FormBuilder,
