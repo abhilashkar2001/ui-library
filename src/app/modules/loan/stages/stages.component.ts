@@ -19,6 +19,7 @@ import {
   ComponentMap,
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-stages',
@@ -38,7 +39,7 @@ export class StagesComponent implements OnInit {
   >();
   private readonly componentCache = new ComponentLRUCache(10);
   private processCycleCode: string | undefined;
-  private basisId = 132767;
+  private basisId = 52;
   private productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
@@ -47,6 +48,7 @@ export class StagesComponent implements OnInit {
     private renderComponentService: RenderComponentService,
     private loanService: LoanService,
     private cdr: ChangeDetectorRef,
+    private sessionStorageSerive: SessionStorageService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,11 @@ export class StagesComponent implements OnInit {
    * @param index
    * @param screenCode
    */
-  onPanelOpened<K extends keyof ComponentMap>(index: number, screenCode: K) {
+  onPanelOpened<K extends keyof ComponentMap>(
+    index: number,
+    screenCode: K,
+    screenName?: string,
+  ) {
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
       currentSet.add(index);
@@ -71,14 +77,18 @@ export class StagesComponent implements OnInit {
         const componentRef = this.renderComponentService.loadComponent<
           ComponentMap[K]
         >(container, component);
+        if (screenName && 'screenName' in componentRef.instance) {
+          (componentRef.instance as any).screenName = screenName;
+        }
+
         this.componentCache.set(index, componentRef);
         this.componentRefs.set(index, componentRef);
+        console.log(this.componentRefs, 'componentrefs');
       }
     }
   }
 
   async saveComponent(index: number) {
-    console.log(this.componentRefs, 'componentRefs');
     const componentRef = this.componentRefs.get(index);
     if (!componentRef) return;
     const instance = componentRef.instance as any;
@@ -159,7 +169,10 @@ export class StagesComponent implements OnInit {
       .subscribe((res) => {
         if (res?.statusCode === 200 && res?.data?.processStageList.length > 0) {
           const data = res?.data?.processStageList[0];
-          if (data?.id) this.fetchScreens(data?.id);
+          if (data && data.id) {
+            this.sessionStorageSerive.setCurrentStage(data.id);
+            this.fetchScreens(data.id);
+          }
         }
       });
   }

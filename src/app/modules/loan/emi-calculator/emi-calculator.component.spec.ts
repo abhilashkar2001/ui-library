@@ -8,7 +8,7 @@ describe('EmiCalculatorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EmiCalculatorComponent]
+      declarations: [EmiCalculatorComponent],
     });
     fixture = TestBed.createComponent(EmiCalculatorComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,7 @@
 <app-custom-file-upload
+  (CustomSubmit)="savedCheckListDoc($event)"
   [checkListDocList]="checkListDocList"
-  [isChecklistDoc]="true"
+  [screenNameValue]="screenName"
+  [getDocumentList]="documentList"
 >
 </app-custom-file-upload>

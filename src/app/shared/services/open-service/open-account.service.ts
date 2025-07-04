@@ -21,8 +21,7 @@ export class OpenAccountService {
     return this.http.post(`${baseUrl}/auth/verifyOtp`, otpObject);
   }
 
-
- getCity(stateId: number) {
+  getCity(stateId: number) {
     return this.http.get(`${baseUrl}/city?stateId=${stateId}`);
   }
 
