@@ -10,6 +10,7 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { IcHttpResponseModel } from '@onerumango/utils';
 import { tap, map, catchError, of } from 'rxjs';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-business-details',
@@ -34,6 +35,7 @@ export class BusinessDetailsComponent implements OnInit {
   segmentArr: GenericValueData[] = [];
   countryArr: any[] = [];
   parentCompanyArr: any[] = [];
+  originationId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -41,9 +43,11 @@ export class BusinessDetailsComponent implements OnInit {
     private dateService: DateTimeService,
     private loanService: LoanService,
     private countryService: CountryService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit() {
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
     this.fetchGenericValue();
     this.fetchCountry();
@@ -72,11 +76,13 @@ export class BusinessDetailsComponent implements OnInit {
   }
 
   getBusinessDetailsById() {
-    this.loanService.getBusinessDetailsById(314).subscribe((res: any) => {
-      if (res?.statusCode == 200 || res?.statusCode == 201) {
-        this.businessDetailsForm.patchValue(res?.data[0]);
-      }
-    });
+    this.loanService
+      .getBusinessDetailsById(this.originationId)
+      .subscribe((res: any) => {
+        if (res?.statusCode == 200 || res?.statusCode == 201) {
+          this.businessDetailsForm.patchValue(res?.data[0]);
+        }
+      });
   }
 
   buildBusinessDetailForm() {
@@ -96,7 +102,7 @@ export class BusinessDetailsComponent implements OnInit {
       customerDescription: [''],
       descriptionOfBusiness: [''],
       yearsOfOperation: [''],
-      monthlyTurnOver: [''],
+      monthlyTurnover: [''],
       aveStockLevel: [''],
       parentCompanyId: [null],
       contact: this.fb.group({

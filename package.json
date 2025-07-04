@@ -12,6 +12,7 @@
     "lint:fix": "ng lint --fix",
     "format": "prettier --write \"src/**/*.{ts,html,css,scss,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css,scss,json,md}\"",
+    "install:lib": "npm install @onerumango/icust-element-library@latest @onerumango/utils@latest",
     "tsc": "tsc"
   },
   "private": true,
@@ -35,8 +36,8 @@
     "@ngrx/store": "^16.3.0",
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
-    "@onerumango/icust-element-library": "^0.0.977",
-    "@onerumango/utils": "^0.0.228",
+    "@onerumango/icust-element-library": "^0.0.1011",
+    "@onerumango/utils": "^0.0.232",
     "crypto-js": "^4.2.0",
     "decimal.js": "^10.4.3",
     "exceljs": "^4.3.0",

@@ -14,7 +14,6 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { DmsService } from '@onerumango/utils';
 import { SharedService } from 'app/shared/services/shared.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { of } from 'rxjs';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -48,7 +47,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   documentInfo: any;
   noReqCheckListDocList: any;
   baseUrl = environment.microServiceURL;
-  isChecklistDoc: any;
+  isChecklistDoc = false;
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -105,7 +104,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         docId: item.id,
         name: item.fileName,
         progress: 100,
-        url: this.mapEndPoints(item.uuid),
+        url: item.uuid,
       });
       docIds.push(item.id);
     });
@@ -114,9 +113,9 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     return docArr;
   }
 
-  mapEndPoints(uuid: any) {
-    return `${this.baseUrl}/dms/download?uuid=${uuid}`;
-  }
+  // mapEndPoints(uuid: any) {
+  //   return `${this.baseUrl}/dms/download?uuid=${uuid}`;
+  // }
 
   getGenericDetails() {
     this.genericValueService
@@ -126,8 +125,8 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           this.staticData = { ...resp.data };
           this.documentTypeArray = resp.data['DOCUMENTNAME'];
           this.nationalIdGeneric = this.documentTypeArray.filter((item: any) =>
-            item.values.toLowerCase().includes('aadhar'),
-          )[0].id;
+            item.values.toLowerCase().includes('national'),
+          )[0].values;
         }
 
         if (!this.isChecklistDoc && this.applicant().length === 0) {
@@ -194,7 +193,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           return;
         }
         this.selectedImage = file;
-        this.displayImage(i, file, file.size, applicantIndex);
+
         this.uploadImage(file, i, applicantIndex);
       }
     });
@@ -235,7 +234,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     }, 1000);
   }
 
-  uploadImage(file: File, docIndex: number, applicantIndex?: number): void {
+  uploadImage(file: File, docIndex: number, applicantIndex?: any): void {
     const isApplicantDoc = applicantIndex != null;
     const docArray = isApplicantDoc
       ? this.getApplicantDocuments(applicantIndex!)
@@ -269,9 +268,10 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     this.ocrPass = false;
     this.dmsService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.uuid) {
+        this.displayImage(docIndex, file, resp.uuid, file.size, applicantIndex);
         const docIdsControl = docControl.get('docIds') as FormControl;
         const existingDocIds = docIdsControl?.value || [];
-        docIdsControl.setValue([...existingDocIds, resp.uuid]);
+        docIdsControl.setValue([...existingDocIds, resp.documentId]);
 
         const fileInfoArr = docControl.get('fileInfo')?.value || [];
         fileInfoArr.forEach((fileInfoObj: any) => {
@@ -308,35 +308,52 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
               .at(docIndex)
               ?.get('documentType')?.value;
 
-        this.extractDoc(
-          documentType,
-          parseInt(this.sessionStorageService.getOriginationId()),
-          file,
-          resp.uuid,
+        const originationId = parseInt(
+          this.sessionStorageService.getOriginationId(),
         );
+
+        // Conditionally pass applicantIndex only for applicant docs
+        if (this.isChecklistDoc) {
+          this.extractDoc(documentType, originationId, file, resp.documentId);
+        } else {
+          this.extractDoc(
+            documentType,
+            originationId,
+            file,
+            resp.documentId,
+            applicantIndex,
+          );
+        }
       }
     });
   }
 
-  extractDoc(docName: any, originationId: any, file: any, documentId: any) {
+  extractDoc(
+    docName: string,
+    originationId: number,
+    file: File,
+    documentId: number,
+    applicantIndex?: number,
+  ) {
     const formData = new FormData();
     formData.append('fileName', file);
-    this.pyScanService
-      .pyScan(docName, originationId, formData, documentId)
-      .subscribe((resp) => {
-        if (resp) {
-          if (resp?.data?.customerName?.toLowerCase()) {
-            console.log(`National Id name is not matching with this customer.`);
-          } else {
-            console.log(`National Id name matches the customer.`);
-          }
-        }
 
+    // Dynamically pass applicantIndex only if it's for applicant document
+    this.pyScanService
+      .pyScan(docName, originationId, formData, documentId, applicantIndex)
+      .subscribe((resp) => {
+        if (resp?.data?.customerName?.toLowerCase()) {
+          console.warn(`National Id name is not matching with this customer.`);
+        } else {
+          console.info(`National Id name matches the customer.`);
+        }
+        // Emit updated form data
         this.CustomSubmit.emit({
           documentDetails: this.createDocumentForm.value,
         });
-        console.log(this.createDocumentForm, 'documentform');
       });
+
+    console.log(this.createDocumentForm, 'formgroup');
   }
 
   updateDocId(indx: number, applicantIndex?: number): any[] {
@@ -380,6 +397,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   displayImage(
     docIndex: number,
     file: any,
+    uuid: string,
     size: any,
     applicantIndex?: number,
   ) {
@@ -398,10 +416,8 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         url: imageUrl,
         name: file.name,
         progress: '100%',
+        uuid: uuid,
         size: `${sizeinKb}kb`,
-        newFileUrl: '',
-        pdfUrl: '',
-        imageUrl: '',
       });
       control.get('fileInfo')?.setValue([...fileArray]);
       this.cdr.detectChanges();
@@ -415,13 +431,8 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         .at(index)
         .get('fileInfo')?.value;
     }
-    return this.otherDocument().at(index)?.get('fileInfo')?.value;
-  }
 
-  getFileUrl(file: any) {
-    if (file.name.endsWith('pdf') || file.name.endsWith('xlsx')) {
-      return 'assets/images/file_icon.svg';
-    } else return file.url;
+    return this.otherDocument().at(index)?.get('fileInfo')?.value;
   }
 
   // Detele the file method and remove the docids and fileinfo from fromgroup
@@ -480,8 +491,8 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     });
     const requiredDocs = this.documentTypeArray.filter(
       (doc: any) =>
-        doc.values.toLowerCase().includes('address proof') ||
-        doc.values.toLowerCase().includes('id proof'),
+        doc.values.toLowerCase().includes('national') ||
+        doc.values.toLowerCase().includes('pan'),
     );
     const docArray = applicantGroup.get('otherDocument') as FormArray;
     requiredDocs.forEach((doc: any) => docArray.push(this.newDenom(doc)));
@@ -504,23 +515,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     );
     if (!alreadyExists) {
       otherDocArray.push(this.newDenom(data));
-    }
-  }
-
-  // Handling next button functionality
-
-  submitForm() {
-    return this.handleSubmit().toPromise();
-  }
-
-  handleSubmit() {
-    if (this.isChecklistDoc) {
-      this.CustomSubmit.emit({
-        documentDetails: this.createDocumentForm.value,
-      });
-      return of('success' as const);
-    } else {
-      return of('success' as const);
     }
   }
 }

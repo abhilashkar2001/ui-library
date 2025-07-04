@@ -8,7 +8,7 @@ describe('AddCollateralComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AddCollateralComponent]
+      declarations: [AddCollateralComponent],
     });
     fixture = TestBed.createComponent(AddCollateralComponent);
     component = fixture.componentInstance;

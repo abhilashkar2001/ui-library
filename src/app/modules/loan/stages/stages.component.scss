@@ -1,32 +1,80 @@
 .stepper-card {
   background: #fff;
   border-radius: 8px;
-  padding: 2rem 1.5rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin: 2rem 4rem;
 }
 
-.stepper-line {
-  height: 1px;
-  background-color: #ccc;
-  margin: 15px 0px;
+.progress-wrapper {
+  position: relative;
+  padding-top: 5px;
+
+  .progress-line {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #e0e0e0;
+    z-index: 1;
+
+    .progress-fill {
+      height: 100%;
+      background-color: #28a745;
+      transition: width 0.4s ease-in-out;
+    }
+  }
+
+  .step-icon-wrapper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    gap: 100px;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; // IE
+    scrollbar-width: none; // Firefox
+  }
+
+  .step-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content; // allow width to fit the text
+    text-align: center;
+
+    .step-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .step-label {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .step-sub-label {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+      text-align: center;
+    }
+  }
 }
 
-.step-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  padding-bottom: 4px;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-.step-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-.step-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
+.spacing-panel {
+  position: relative;
+  left: 6px;
 }

@@ -109,7 +109,10 @@
                 class="upload_img"
               >
                 <div class="img_box">
-                  <img [src]="getFileUrl(file)" alt="image" />
+                  <img
+                    [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec' | safe: 'url'"
+                    alt="image"
+                  />
                 </div>
                 <div class="img_container">
                   <span class="header_md img_name">{{ file?.name }}</span>
@@ -258,7 +261,12 @@
                       class="upload_img"
                     >
                       <div class="img_box">
-                        <img [src]="getFileUrl(file)" alt="image" />
+                        <img
+                          [src]="
+                            '4a82eba7-0fa6-4776-b4ea-18da9cd653ec' | safe: 'url'
+                          "
+                          alt="image"
+                        />
                       </div>
                       <div class="img_container">
                         <span class="header_md img_name">{{ file?.name }}</span>
