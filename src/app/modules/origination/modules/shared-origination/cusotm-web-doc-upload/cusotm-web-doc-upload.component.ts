@@ -437,7 +437,7 @@ export class CusotmWebDocUploadComponent
           this.createDocumentForm.value.otherDocument[i].documentType,
           parseInt(this.sessionStorageService.getOriginationId()),
           file,
-          resp.documentId,
+          resp.uuid,
         );
       }
     });

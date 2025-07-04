@@ -271,7 +271,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
       if (resp?.uuid) {
         const docIdsControl = docControl.get('docIds') as FormControl;
         const existingDocIds = docIdsControl?.value || [];
-        docIdsControl.setValue([...existingDocIds, resp.documentId]);
+        docIdsControl.setValue([...existingDocIds, resp.uuid]);
 
         const fileInfoArr = docControl.get('fileInfo')?.value || [];
         fileInfoArr.forEach((fileInfoObj: any) => {
@@ -312,7 +312,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           documentType,
           parseInt(this.sessionStorageService.getOriginationId()),
           file,
-          resp.documentId,
+          resp.uuid,
         );
       }
     });

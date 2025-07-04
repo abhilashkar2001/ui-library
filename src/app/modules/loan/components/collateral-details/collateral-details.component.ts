@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SidenavService } from 'app/shared/services/sidenav.service';
-import { DrawerContextData } from '../../drawer-context-data';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
 import { AddCollateralComponent } from './add-collateral/add-collateral.component';
 @Component({
   selector: 'app-collateral-details',
@@ -72,7 +74,7 @@ export class CollateralDetailsComponent implements OnInit {
   }
 
   openSidePanel() {
-    const contextData: DrawerContextData = {
+    const contextData: ContainerContextData = {
       component: AddCollateralComponent,
       data: { ...this.collateralForm?.value },
     };

@@ -1,6 +1,7 @@
 import { Injectable, Type, ViewContainerRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BankCodePanelComponent } from '../components/bank-code-panel/bank-code-panel.component';
+import { AddCollateralComponent } from '../../modules/loan/components/collateral-details/add-collateral/add-collateral.component';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,6 @@ export class SidenavService {
 }
 
 export interface ContainerContextData {
-  component: Type<BankCodePanelComponent>;
+  component: Type<BankCodePanelComponent | AddCollateralComponent>;
   data: Record<string, any> | string | number | boolean | undefined | null;
 }
