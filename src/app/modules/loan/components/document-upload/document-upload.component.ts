@@ -75,28 +75,31 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleSubmit() {
-    const documentIds = this.submittedChecklistDocs.flatMap(
-      (doc: any) => doc.docIds,
-    );
-    const payload = {
-      documentIds,
-      originationId: this.sessionStorageService.getOriginationId(),
-      screenCode: this.sessionStorageService.getCurrentScreenCode() ?? 456,
-    };
-
-    return this.loanService.saveChecklist(payload).pipe(
-      tap((res) => {
-        console.log(res);
-      }),
-      map((res) =>
-        res?.statusCode == 200 || res?.statusCode == 201
-          ? ('success' as const)
-          : ('failure' as const),
-      ),
-      catchError((_err) => {
-        console.error(_err);
-        return of('failure' as const);
-      }),
-    );
+    if (this.screenName.includes('loan')) {
+      const documentIds = this.submittedChecklistDocs.flatMap(
+        (doc: any) => doc.docIds,
+      );
+      const payload = {
+        documentIds,
+        originationId: this.sessionStorageService.getOriginationId(),
+        screenCode: this.sessionStorageService.getCurrentScreenCode() ?? 456,
+      };
+      return this.loanService.saveChecklist(payload).pipe(
+        tap((res) => {
+          console.log(res);
+        }),
+        map((res) =>
+          res?.statusCode == 200 || res?.statusCode == 201
+            ? ('success' as const)
+            : ('failure' as const),
+        ),
+        catchError((_err) => {
+          console.error(_err);
+          return of('failure' as const);
+        }),
+      );
+    } else {
+      return of('success' as const);
+    }
   }
 }

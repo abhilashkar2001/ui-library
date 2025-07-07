@@ -8,7 +8,7 @@ describe('CalculatorDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalculatorDialogComponent]
+      declarations: [CalculatorDialogComponent],
     });
     fixture = TestBed.createComponent(CalculatorDialogComponent);
     component = fixture.componentInstance;

@@ -408,7 +408,7 @@ export class CusotmWebDocUploadComponent
         ) {
           this.frontAadhar = resp.fileUrl;
         }
-        this.updateDocId(i).push(resp.uuid);
+        this.updateDocId(i).push(resp.documentId);
         this.fileUrls.push(resp.fileUrl);
         this.documentIds.push(this.createDocumentForm.value);
         const fileInfoArr =
@@ -437,7 +437,7 @@ export class CusotmWebDocUploadComponent
           this.createDocumentForm.value.otherDocument[i].documentType,
           parseInt(this.sessionStorageService.getOriginationId()),
           file,
-          resp.uuid,
+          resp.documentId,
         );
       }
     });

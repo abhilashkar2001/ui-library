@@ -43,6 +43,8 @@ export class StagesComponent implements OnInit {
   private productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
+  allowedPanelIndex = 0;
+  completedSteps = new Set<number>();
 
   constructor(
     private renderComponentService: RenderComponentService,
@@ -52,6 +54,9 @@ export class StagesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    setTimeout(() => {
+      this.panels.get(0)?.open();
+    });
     this.fetchProductDetails();
   }
 
@@ -101,6 +106,7 @@ export class StagesComponent implements OnInit {
     if (instance.submitForm) {
       const result = await instance.submitForm();
       if (result === 'success') {
+        this.completedSteps.add(index);
         this.openNextPanel(index);
       } else {
         this.openNextPanel(index);
@@ -200,6 +206,11 @@ export class StagesComponent implements OnInit {
             this.componentMapping.set(screen.screenValue, screen);
           });
         this.cdr.markForCheck();
+
+        setTimeout(() => {
+          this.allowedPanelIndex = 0;
+          this.panels.get(0)?.open();
+        });
       }
     });
   }

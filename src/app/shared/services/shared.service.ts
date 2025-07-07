@@ -28,14 +28,18 @@ export class SharedService {
   }
 
   public pyScan(
-    docName: any,
-    originationId: any,
+    docName: string,
+    originationId: number,
     fileDesc: any,
-    documentId: any,
+    documentId: number,
+    index?: number,
   ) {
-    return this.http.post<any>(
-      `${this.baseUrl}/pyDocument/savePyDoc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`,
-      fileDesc,
-    );
+    let url = `${this.baseUrl}/pyDocument/savePyDoc?originationId=${originationId}&documnetName=${docName}&documentId=${documentId}`;
+
+    if (index !== undefined && index !== null) {
+      url += `&sequence=${index}`;
+    }
+
+    return this.http.post<any>(url, fileDesc);
   }
 }

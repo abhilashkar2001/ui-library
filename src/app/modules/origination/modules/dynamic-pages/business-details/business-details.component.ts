@@ -1,5 +1,5 @@
 import { getCurrencySymbol } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -31,10 +31,10 @@ export class BusinessDetailsComponent implements OnInit {
     INDUSTRYTYPE: [],
   };
   originationId!: number;
-  screenCode: number | undefined;
   currencySymboll = '';
   otherUserInfo: LocaleData | undefined;
   subscriptions: Subscription[] = [];
+  @Input() screenCode = '';
 
   constructor(
     private fb: FormBuilder,
@@ -56,7 +56,9 @@ export class BusinessDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.originationId = this.sessionStorage.getOriginationId();
-    this.screenCode = this.sessionStorage.getCurrentScreenCode();
+
+    console.log(this.originationId, 'origintaionid');
+
     this.fetchGenericValue();
     this.buildBusinessForm();
     if (this.originationId) {
