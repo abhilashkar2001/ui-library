@@ -15,19 +15,21 @@
       bindValueKey=""
       [control]="collateralForm.get('collateralName') | formcontrol"
       label="Collateral Name"
-      fxFlex="49"
+      fxFlex="48"
     ></ic-select>
-    <div fxFlex="49" fxLayout="column">
-      <mat-label class="header_md" fxFlex="100"
+    <div fxFlex="48" fxLayout="column">
+      <mat-label class="header_md mb-8" fxFlex="100"
         >Ownership of the collateral*</mat-label
       >
-      <ic-radio-button
-        *ngFor="let owner of ownershipValues"
-        [control]="collateralForm.get('ownership') | formcontrol"
-        [label]="owner.label"
-        [value]="owner.value"
-      >
-      </ic-radio-button>
+      <div fxLayout="row" fxLayoutGap="50px">
+        <ic-radio-button
+          *ngFor="let owner of ownershipValues"
+          [control]="collateralForm.get('ownership') | formcontrol"
+          [label]="owner.label"
+          [value]="owner.value"
+        >
+        </ic-radio-button>
+      </div>
     </div>
     <ic-textarea
       [control]="collateralForm.get('description') | formcontrol"
@@ -95,6 +97,34 @@
           ></ic-button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="1%"
+    style="margin-top: 50px"
+  >
+    <div>
+      <ic-button
+        [label]="'Back'"
+        [type]="'button'"
+        icButtonType="outlined-rounded"
+        size="medium"
+      >
+      </ic-button>
+    </div>
+    <div>
+      <ic-button
+        [icButtonType]="'filled-rounded'"
+        [label]="'Next'"
+        [type]="'submit'"
+        size="medium"
+        (click)="addCollateral()"
+      >
+      </ic-button>
     </div>
   </div>
 </form>

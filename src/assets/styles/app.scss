@@ -100,8 +100,11 @@ body {
   background: #fff;
 }
 
-.mat-drawer.mat-drawer-end{
-  background: #fff;
+.mat-drawer.mat-drawer-end {
+  width: calc(50% - 100px);
+  background: #f5f6ff;
+  padding: 2%;
+  margin-top: 84px;
 }
 
 .mat-drawer-backdrop {

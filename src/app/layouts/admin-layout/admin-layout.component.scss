@@ -8,3 +8,8 @@
   flex: 1;
   padding-top: 86px;
 }
+
+.layout-body {
+  margin-top: 84px; /* if your header is 64px tall */
+  height: calc(100vh - 64px);
+}

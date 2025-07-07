@@ -17,7 +17,7 @@
       label="Add New"
       icButtonType="filled-rounded"
       type="submit"
-      (OnClick)="openSidePanel()"
+      (OnClick)="openSidePanel(address.length)"
     ></ic-button>
   </div>
   <app-custom-table
@@ -41,7 +41,7 @@
     ></ic-form-field>
     <ic-select
       fxFlex="24"
-      [control]="collateralForm.get('loanType') | formcontrol"
+      [control]="collateralForm.get('loanTypeId') | formcontrol"
       [options]="[]"
       bindLabelKey="values"
       bindValueKey="id"
