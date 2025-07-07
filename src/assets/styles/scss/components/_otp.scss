@@ -1,13 +1,13 @@
 .OtpHeading {
   text-align: left;
-  font: normal normal normal 24px / 35px Benton Sans;
+  font: normal normal normal 24px / 35px var(--ic-primary-font-family);
   letter-spacing: 0px;
   color: #00000f;
   opacity: 1;
 }
 
 .VerifyOtpText {
-  font: normal normal normal 18px/47px Benton Sans;
+  font: normal normal normal 18px/47px var(--ic-primary-font-family);
   letter-spacing: 0px;
   color: #000000;
   opacity: 0.35;
@@ -15,7 +15,7 @@
 
 .resendBtn {
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .refNoheading {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 12px;
   letter-spacing: 0px;
   color: #000000;
@@ -39,8 +39,8 @@
 }
 
 .refNoValue {
-  // font: normal normal medium 17px/26px Benton Sans;
-  font-family: Benton Sans;
+  // font: normal normal medium 17px/26px var(--ic-primary-font-family);
+  font-family: var(--ic-primary-font-family);
   font-size: 17px;
   letter-spacing: 0px;
   color: #004a99;
@@ -50,5 +50,5 @@
 }
 
 .apply-poppinsfamily {
-  font: normal normal normal 24px / 35px Benton Sans;
+  font: normal normal normal 24px / 35px var(--ic-primary-font-family);
 }

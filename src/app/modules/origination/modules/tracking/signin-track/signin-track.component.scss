@@ -22,7 +22,7 @@
     h1 {
       color: #000000;
       font-size: 2rem;
-      font-family: 'Benton Sans', sans-serif;
+      font-family: var(--ic-primary-font-family);
       font-weight: 400;
     }
 
@@ -30,7 +30,7 @@
       width: 348px;
       color: #707070;
       font-size: 15px;
-      font-family: 'Benton Sans', sans-serif;
+      font-family: var(--ic-primary-font-family);
       font-weight: 400;
     }
   }
@@ -45,7 +45,7 @@
     display: block;
     font-size: 22px;
     font-weight: 700;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     color: #000000;
   }
 
@@ -54,7 +54,7 @@
     margin-bottom: 20px;
     font-size: smaller;
     font-weight: bolder;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
   }
 
   .otp_block {
@@ -83,7 +83,7 @@
     font-size: small;
     color: black;
     opacity: 0.37;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
   }
 
   .verify1 {

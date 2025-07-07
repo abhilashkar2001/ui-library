@@ -9,10 +9,10 @@
 }
 
 .highlight_title {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
   text-align: left;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
 }

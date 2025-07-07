@@ -1,7 +1,11 @@
 $dark_blue: #06113c;
 $text_blue: #0033a1;
 $text_dark_blue: #212353;
-$gradient_bg: linear-gradient(151deg, #0033aa 0%, #0a2240 100%);
+$gradient_bg: linear-gradient(
+  151deg,
+  var(--ic-btn-filled-blue-bg, #0033aa) 0%,
+  var(--current-theme-background-dark, #0a2240) 100%
+);
 
 // Shadows
 $navbar_shadow: 3px 3px 20px #0000000f;
@@ -24,8 +28,8 @@ section.hero_section {
   .hero_title {
     font-size: 60px;
     font-weight: 400;
-    font-family: 'Benton Sans', sans-serif;
-    color: $dark_blue;
+    font-family: var(--ic-primary-font-family);
+    color: var(--ic-text-black, #000000);
     @media screen and (max-width: $mobile) {
       font-size: 2rem;
     }
@@ -34,9 +38,9 @@ section.hero_section {
   .hero_subtitle {
     width: 65%;
     font-size: 17px;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     margin: 1.5rem 0;
-    color: #4c5371;
+    color: var(--ic-text-gray-dark, #4c5371);
     @media screen and (max-width: $laptop) {
       width: 90%;
     }
@@ -79,8 +83,8 @@ section.hero_section {
     .stacked_div_text {
       h2,
       p {
-        color: $dark_blue;
-        font-family: 'Benton Sans', sans-serif;
+        color: var(--ic-text-black, #000000);
+        font-family: var(--ic-primary-font-family);
         margin: 0;
       }
 

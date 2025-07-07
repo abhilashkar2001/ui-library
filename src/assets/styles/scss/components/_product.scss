@@ -10,17 +10,17 @@
 }
 
 .account-type-header {
-  color: #06113c;
+  color: var(--ic-text-black);
   font-size: 48px;
   font-weight: 700;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
 }
 
 .standard-content-title {
   font-size: 18px;
   margin: 0px;
-  color: #06113c;
-  font-family: 'Benton Sans', sans-serif;
+  color: var(--ic-text-theme, #06113c);
+  font-family: var(--ic-primary-font-family);
   text-align: center;
 }
 

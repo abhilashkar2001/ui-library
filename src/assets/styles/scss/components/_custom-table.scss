@@ -97,7 +97,7 @@
         b {
           font-size: 15px;
           font-weight: 500;
-          font-family: 'Benton Sans', sans-serif;
+          font-family: var(--ic-primary-font-family);
           margin-left: 2px;
         }
 
@@ -146,7 +146,7 @@ mat-header-cell,
 mat-cell {
   font-weight: 600 !important;
   word-break: break-word;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   padding: 0 10px;
   cursor: pointer;
 
@@ -275,9 +275,7 @@ mat-cell {
 .Eid {
   color: #b4b4b4 !important;
   font-size: 11px !important;
-  font-family:
-    Benton Sans,
-    'Regular';
+  font-family: var(--ic-primary-font-family), 'Regular';
   letter-spacing: 0px;
   text-transform: capitalize;
 }
@@ -362,15 +360,15 @@ mat-cell {
 }
 
 mat-header-cell {
-  font-family: 'Benton Sans' !important;
+  font-family: var(--ic-primary-font-family) !important;
   font-weight: 500 !important;
 }
 
 mat-paginator {
-  font-family: 'Benton Sans' !important;
+  font-family: var(--ic-primary-font-family) !important;
 }
 
 mat-form-field {
-  font-family: 'Benton Sans' !important;
+  font-family: var(--ic-primary-font-family) !important;
   font-weight: 600;
 }

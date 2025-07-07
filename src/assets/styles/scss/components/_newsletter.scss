@@ -11,13 +11,14 @@
   }
 
   &_container {
-    background-color: #eff7ff;
+    background-color: var(--ic-card-bg-accent, #eff7ff);
     height: 290px;
     border-radius: 76px;
     align-items: center;
     justify-content: center;
     padding: 1rem 5rem;
     position: relative;
+
     @media screen and (max-width: $mobile) {
       padding: 1rem;
     }
@@ -39,7 +40,7 @@
 
       h2 {
         font-size: 2.5rem;
-        font-family: 'Benton Sans', sans-serif;
+        font-family: var(--ic-primary-font-family);
         font-weight: 500;
         margin-bottom: 1rem;
         color: #0064fc;
@@ -48,7 +49,7 @@
       p {
         color: #757575;
         font-size: 1.1rem;
-        font-family: 'Benton Sans', sans-serif;
+        font-family: var(--ic-primary-font-family);
         line-height: 1.5;
         margin: 0;
       }
@@ -66,14 +67,14 @@
     .input_box {
       width: 100%;
       height: 75px;
-      background: #fff;
+      background: var(--ic-text-white, #ffffff);
       border-radius: 12px;
       box-shadow: 0 0 14px rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0.35rem;
-      border: 1px solid #f1f1f1;
+      // border: 1px solid #f1f1f1;
       box-shadow: 10px 20px 50px 0px rgba(0, 0, 0, 0.1490196078);
       position: relative;
       z-index: 2;
@@ -86,6 +87,8 @@
         height: 100%;
         padding: 0 1rem;
         font-size: 1.1rem;
+        background: none;
+        color: var(--ic-text-black);
       }
 
       button {
@@ -97,7 +100,7 @@
         outline: none;
         border-radius: 12px;
         font-size: 1rem;
-        font-family: 'Benton Sans', sans-serif;
+        font-family: var(--ic-primary-font-family);
         letter-spacing: 0.4px;
         font-weight: 600;
       }

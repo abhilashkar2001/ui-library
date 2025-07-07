@@ -26,6 +26,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   isHideFooter = false;
   userProfile$: Observable<User | null>;
   subscriptions: Subscription[] = [];
+  currentYear!: number;
 
   constructor(
     private footerService: FooterServiceService,
@@ -35,6 +36,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
     this.loadUserProfile();
     this.footerService.isHideFooter().subscribe((resp) => {
       this.isHideFooter = resp;

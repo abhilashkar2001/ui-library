@@ -1,6 +1,6 @@
 p {
   color: #b4b4b4;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -40,7 +40,7 @@ p {
 .text-info-1 {
   display: block;
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
@@ -73,7 +73,7 @@ p {
 
 .link {
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 13px;
   font-weight: 500;
   line-height: normal;

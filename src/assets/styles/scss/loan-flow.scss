@@ -14,8 +14,8 @@
   }
 
   .title-text {
-    color: #000;
-    font-family: Benton Sans;
+    color: var(--ic-text-black, #000000);
+    font-family: var(--ic-primary-font-family);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -26,13 +26,13 @@
 
 .standard-font {
   font-weight: 500;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   margin-bottom: 27px;
 }
 
 .standard-font-blue {
   @extend .standard-font;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
   font-size: 18px;
   margin-top: 10px;
   line-height: 24px;
@@ -40,7 +40,7 @@
 
 .standard-font-black {
   @extend .standard-font;
-  color: #000000;
+  color: var(--ic-text-black, #000000);
   font-size: 16px;
   font-weight: 400;
 }
@@ -52,17 +52,17 @@
   white-space: pre-wrap;
   margin-bottom: 0;
 
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 500;
   max-width: 80%;
 }
 
 .text-header {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   margin-bottom: 9px;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
 }

@@ -8,7 +8,7 @@
 }
 
 .fieldset-title {
-  font: 10px Benton Sans;
+  font: 10px var(--ic-primary-font-family);
   color: #102245;
   margin-bottom: 4px;
   font-weight: 600;
@@ -30,7 +30,7 @@
 .fieldset-input {
   position: relative;
   top: -4px;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   color: #102245 !important;
   opacity: 100%;
   letter-spacing: -0.26px;
@@ -101,6 +101,6 @@
   font-size: 12px !important;
   padding-left: 5px !important;
   width: fit-content;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   color: #b4b4b4;
 }

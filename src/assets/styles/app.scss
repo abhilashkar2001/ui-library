@@ -20,17 +20,24 @@
 
 * {
   box-sizing: border-box;
+  // --ic-primary-font-family: 'Poppins', serif !important;
 }
 
-// :root {
-//   // Variables related to theme change
-//   --current-theme-color: #fff;
-//   --current-theme-background: #00205c;
-//   --current-theme-background-light: #eaf1ff;
-//   --current-theme-background-dark: #001131;
-//   --current-theme-filter: hue-rotate(0deg);
-//   --current-theme-border-color: #377dff4e;
-// }
+body {
+  background: var(--ic-app-bg, #f3f3f3);
+}
+
+:root {
+  // Variables related to theme change
+  // --current-theme-color: #fff;
+  // --current-theme-background: #00205c;
+  // --current-theme-background-light: #eaf1ff;
+  // --current-theme-background-dark: #001131;
+  // --current-theme-filter: hue-rotate(0deg);
+  // --current-theme-border-color: #377dff4e;
+
+  --ic-icon-color: var(--ic-text-black);
+}
 
 .current_theme_filter {
   filter: var(--current-theme-filter);
@@ -145,7 +152,7 @@ body {
 .mat-tab-link {
   color: #c0c0c0 !important;
   font-size: 16px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 500;
   user-select: none;
   -webkit-user-select: none;
