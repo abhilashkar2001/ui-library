@@ -20,7 +20,8 @@ export class SidenavService {
 
   open(containerData: ContainerContextData) {
     this.vcr?.clear();
-    this.vcr?.createComponent(containerData?.component);
+    const componentRef = this.vcr?.createComponent(containerData?.component);
+    if (componentRef) componentRef.setInput('data', containerData.data);
     return this.panel?.open();
   }
 

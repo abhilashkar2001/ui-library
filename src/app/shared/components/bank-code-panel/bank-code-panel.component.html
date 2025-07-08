@@ -1,7 +1,7 @@
 <form *ngIf="bankForm" [formGroup]="bankForm" fxLayout="column">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <h3 class="header_lg">Find Bank Code</h3>
-    <mat-icon>close</mat-icon>
+    <mat-icon mat-dialog-close>close</mat-icon>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <div fxFlex="48">
@@ -31,13 +31,17 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
-    <ic-button icButtonType="outlined-rounded" label="Back"></ic-button>
+    <ic-button
+      icButtonType="outlined-rounded"
+      mat-dialog-close
+      label="Back"
+    ></ic-button>
     <ic-button icButtonType="filled-rounded" label="Fetch"></ic-button>
   </div>
   <h3 class="header_lg">Search Results</h3>
   <mat-card
     *ngFor="let data of fetchedData"
-    class="p-8"
+    class="p-8 bg-white card"
     fxLayout="row"
     fxLayoutAlign="space-between center"
   >

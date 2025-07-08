@@ -65,7 +65,7 @@ $chart_inner_size: 300px;
           color: #444;
           font-size: 20px;
           font-weight: 600;
-          font-family: 'Benton Sans', sans-serif;
+          font-family: var(--ic-primary-font-family);
           margin-bottom: 0;
           margin-top: 20px;
           position: relative;
@@ -140,7 +140,7 @@ $chart_inner_size: 300px;
 
     .cibil-label {
       color: rgba(16, 34, 69, 0.43);
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 15px;
       text-align: center;
       font-weight: 500;
@@ -153,7 +153,14 @@ $chart_inner_size: 300px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 23px;
+      border-radius: 30px;
+      background: #f6faff;
+      box-shadow: 0px 4.736842155456543px 23.68421173095703px 0px
+        rgba(0, 0, 0, 0.09);
+      border: 4.737px solid #fff;
+      font-size: 16px;
+      font-family: var(--ic-primary-font-family);
+      font-weight: 600;
       line-height: 1.5;
       margin-top: 10px;
 

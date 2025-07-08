@@ -202,7 +202,19 @@ export class LoanService {
 
   fetchDisbursementDetails(originationId: number) {
     return this.http.get(
-      `${originationId}/loan-disbursement?originationId=${originationId}`,
+      `${baseUrl}/loan-disbursement?originationId=${originationId}`,
     );
+  }
+
+  fetchCreditBureau(originationId: number) {
+    return this.http.get(
+      `${baseUrl}/loan-detail/credit-terms?originationId=${originationId}`,
+    );
+  }
+
+  private collateralData = new Subject<any>();
+  collateral$ = this.collateralData.asObservable();
+  sendCollateralData(data: any) {
+    this.collateralData.next(data);
   }
 }

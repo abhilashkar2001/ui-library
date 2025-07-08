@@ -1,17 +1,18 @@
 .section_heading {
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   text-align: center;
   font-weight: 500;
   font-size: 40px;
+  color: var(--ic-text-black);
   @media screen and (max-width: $mobile) {
     font-size: 26px;
   }
 }
 
 .section_subHeading {
-  color: #4c5371;
+  color: var(--ic-text-theme);
   text-align: center;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   margin: 0.8rem 0 1.2rem 0;
   @media screen and (max-width: $mobile) {
@@ -27,7 +28,7 @@
   opacity: 0.5;
   margin-top: 15px;
   font-size: 14px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
 }
 
 code {
@@ -37,7 +38,7 @@ code {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-flex {
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
 }
 
 .mat-form-field-appearance-outline .mat-form-field-label {
@@ -66,7 +67,7 @@ code {
 
 //mat-tree
 .mat-tree {
-  font-family: 'Benton Sans', sans-serif !important;
+  font-family: var(--ic-primary-font-family), sans-serif !important;
 }
 
 .egret-navy .mat-checkbox-checked.mat-accent .mat-checkbox-background {
@@ -83,7 +84,7 @@ code {
 }
 
 .egret-navy .mat-expansion-indicator::after {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   padding: 4px;
   display: none;
 }
@@ -93,7 +94,7 @@ code {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   opacity: 1;
 }
 
@@ -107,7 +108,7 @@ code {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   opacity: 0.7;
 }
 
@@ -189,7 +190,7 @@ code {
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
   background-color: #0555e5 !important;
   color: aliceblue !important;
-  font-family: 'Benton Sans', sans-serif !important;
+  font-family: var(--ic-primary-font-family), sans-serif !important;
 }
 
 .container {

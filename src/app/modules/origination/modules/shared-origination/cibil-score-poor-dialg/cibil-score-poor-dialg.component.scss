@@ -24,7 +24,7 @@
     flex-direction: row;
     width: 491px;
     text-align: center;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     font-weight: 700;
     font-size: 22px;
     line-height: 20px !important;
@@ -35,7 +35,7 @@
 
     .note-header {
       color: #000;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 18px;
       font-style: normal;
       font-weight: 500;
@@ -44,7 +44,7 @@
 
     .note-text {
       color: #c0c0c0;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 18px;
       font-style: normal;
       font-weight: 500;

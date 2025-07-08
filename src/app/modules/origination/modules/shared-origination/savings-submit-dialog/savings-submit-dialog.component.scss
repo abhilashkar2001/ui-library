@@ -12,7 +12,7 @@
     flex-direction: row;
     width: 491px;
     height: 66px;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     font-weight: 700;
     font-size: 22px;
     line-height: 20px !important;
@@ -27,21 +27,21 @@
   font-weight: 500;
   font-size: 18px;
   color: #000000;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
 }
 
 .standard-font-dark-blue {
   font-weight: 500;
   font-size: 16px;
   color: #102245;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
 }
 
 .standard-font-blue {
   font-weight: 500;
   font-size: 20px;
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
 }
 
 .dialog-reference-container {
@@ -60,7 +60,7 @@
   font-weight: 700;
   font-size: 18px;
   color: #c0c0c0;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   margin-top: 25px;
 }
 

@@ -19,7 +19,9 @@
       </div>
       <div fxLayout="column" fxLayoutGap="10">
         <div class="header_md">Your Phone No</div>
-        <div class="theme_md">+91 43624531452</div>
+        <div class="theme_md">
+          {{ creditBureau?.mobtCode }} {{ creditBureau?.mobile }}
+        </div>
       </div>
     </div>
 
@@ -28,7 +30,9 @@
     <div fxFlex="45" fxLayout="row" fxLayoutAlign="start center">
       <div fxLayout="column" fxLayoutGap="10">
         <div class="header_md">Your National ID</div>
-        <div class="theme_md">**IIPS976E</div>
+        <div class="theme_md" *ngIf="creditBureau?.nationalIdNumber">
+          ***{{ creditBureau?.nationalIdNumber?.slice(4, -1) }}
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +50,12 @@
         </ic-form-field>
         <span class="header_sm">
           Didn’t receive the OTP?
-          <span class="breadcrum_sm">Resend OTP (0:30min)</span>
+          <span class="breadcrum_sm"
+            >Resend OTP
+            <span *ngIf="!resendLink && displaySecond"
+              >({{ displaySecond }} sec)</span
+            ></span
+          >
         </span>
       </div>
     </div>
@@ -68,6 +77,33 @@
         >
         as described above.
       </span>
+    </div>
+    <div
+      fxFlex="100"
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      fxLayoutGap="1%"
+      style="margin-top: 50px"
+    >
+      <div>
+        <ic-button
+          [label]="'Back'"
+          [type]="'button'"
+          icButtonType="ghost-rounded-danger"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+      <div>
+        <ic-button
+          [icButtonType]="'filled-rounded'"
+          [label]="'Verify'"
+          [type]="'submit'"
+          size="medium"
+          (click)="verifyOtp()"
+        >
+        </ic-button>
+      </div>
     </div>
   </ng-container>
   <ng-template #cibilChart>

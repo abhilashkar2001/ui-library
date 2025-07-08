@@ -4,8 +4,8 @@
 }
 
 .title-text {
-  color: #000;
-  font-family: 'Benton Sans', sans-serif;
+  color: var(--ic-text-black);
+  font-family: var(--ic-primary-font-family);
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -25,7 +25,7 @@
 
 .mobileLength-error {
   margin: 3px 0px 0px 20px;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
 }
 
 .standard-txtField-phone-main {

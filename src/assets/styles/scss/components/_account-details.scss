@@ -18,7 +18,7 @@
         padding-bottom: 0px !important;
 
         .label_input {
-          font-family: 'Benton Sans';
+          font-family: var(--ic-primary-font-family);
           font-weight: normal;
           font-size: medium;
           color: #102245 !important;
@@ -31,7 +31,7 @@
           .option_font {
             color: #000000;
             opacity: 100%;
-            font: 'medium', 'Benton Sans';
+            font: 'medium', var(--ic-primary-font-family);
           }
         }
       }
@@ -81,7 +81,7 @@
       0% no-repeat padding-box !important;
     border-radius: 23px !important;
     font-size: 12px;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     // font-weight: 600 !important;
     letter-spacing: 0px;
     text-transform: capitalize;
@@ -94,7 +94,7 @@
     border-radius: 35px !important;
     color: #0033a1 !important;
     font-size: 12px;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     font-weight: 600 !important;
     letter-spacing: 0px;
     width: 90px;
@@ -170,7 +170,7 @@
     color: #102245;
     opacity: 0.5;
     font-size: 14px;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
     letter-spacing: 0px;
     text-transform: capitalize;
@@ -196,13 +196,13 @@
 
     .uploaded_file {
       font-size: medium;
-      font-family: 'Benton Sans';
+      font-family: var(--ic-primary-font-family);
       color: #004a9a;
       opacity: 100%;
     }
 
     .fileUploaded {
-      font: medium Benton Sans;
+      font: medium var(--ic-primary-font-family);
       font-weight: bold;
       color: #0b0b0b;
       opacity: 70%;
@@ -217,7 +217,7 @@
 
   .chooseFile {
     padding: 10px 10px;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     background: var(--current-theme-background);
     position: absolute;
     color: #fff;
@@ -282,9 +282,7 @@
   }
 
   .headings {
-    font-family:
-      Benton Sans,
-      sans-serif;
+    font-family: var(--ic-primary-font-family), sans-serif;
     font-size: 15px;
     color: #0033a1;
     font-weight: 600;
@@ -293,9 +291,7 @@
   .valueData {
     color: #102245;
     font-size: 12px;
-    font-family:
-      Benton Sans,
-      sans-serif;
+    font-family: var(--ic-primary-font-family), sans-serif;
     font-weight: 600;
   }
 
@@ -401,13 +397,13 @@
         display: flex;
         height: 30px;
         padding: 10px;
-        font-family: 'Benton Sans', sans-serif;
+        font-family: var(--ic-primary-font-family);
         font-weight: 600;
       }
 
       .scan-btn {
         display: inline-block;
-        color: #0033a1;
+        color: var(--ic-text-theme, #0033a1);
         opacity: 1;
         cursor: pointer;
       }
@@ -417,10 +413,10 @@
 
 .forSignImg {
   position: relative;
-  border: 3px solid #ffffff;
+  border: 3px solid transparent;
   width: 225px;
-  background: #fffefe 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 15px #00000010;
+  background: var(--ic-card-bg);
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.062745098);
   border-radius: 12px;
   height: 260px;
 }
@@ -440,7 +436,7 @@
     no-repeat padding-box !important;
   border-radius: 23px !important;
   font-size: 12px;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   // font-weight: 600 !important;
   letter-spacing: 0px;
   text-transform: capitalize;
@@ -453,7 +449,7 @@
   border-radius: 35px !important;
   color: #0033a1 !important;
   font-size: 12px;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   font-weight: 600 !important;
   letter-spacing: 0px;
   width: 90px;
@@ -506,7 +502,7 @@
   color: #102245;
   opacity: 0.5;
   font-size: 14px;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
   letter-spacing: 0px;
   text-transform: capitalize;
@@ -527,8 +523,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
   color: #b4b4b4;
   cursor: pointer;
@@ -545,7 +540,7 @@
 .pep-label {
   width: calc(100% - 50px);
   font-size: 14px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
   flex-grow: 1;
   padding-right: 10px;
@@ -561,7 +556,7 @@
 }
 
 .actionIcon {
-  font: medium 'Benton Sans';
+  font: medium var(--ic-primary-font-family);
   color: #b4b4b4;
   height: 50px;
   border-radius: 8px !important;
@@ -576,7 +571,7 @@
   span {
     width: 80%;
     text-align: center;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     font-weight: 500;
   }
 }

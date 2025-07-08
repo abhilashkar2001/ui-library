@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ContainerContextData,
   SidenavService,
 } from 'app/shared/services/sidenav.service';
 import { AddCollateralComponent } from './add-collateral/add-collateral.component';
+import { MatSidenav } from '@angular/material/sidenav';
 @Component({
   selector: 'app-collateral-details',
   templateUrl: './collateral-details.component.html',
   styleUrls: ['./collateral-details.component.scss'],
 })
 export class CollateralDetailsComponent implements OnInit {
+  @ViewChild('sidenavPanel') sidenavPanel!: MatSidenav;
   collateralForm: FormGroup | undefined;
   tableHeaders = [
     { key: 'collateralName', label: 'Collateral Name' },
@@ -62,21 +64,31 @@ export class CollateralDetailsComponent implements OnInit {
   buildCollateralForm() {
     this.collateralForm = this.fb.group({
       search: [''],
-      collateralName: [''],
-      ownership: [''],
-      assetWorth: [''],
-      description: [''],
-      document: [''],
       securityCover: ['', Validators.required],
       totalAssetWorth: [''],
-      loanType: ['', Validators.required],
+      loanTypeId: ['', Validators.required],
+      collateralDetails: this.fb.array([]),
     });
   }
 
-  openSidePanel() {
+  address() {
+    return this.collateralForm?.get('address') as FormArray;
+  }
+
+  addAddress() {
+    return this.address().push({
+      collateralName: [''],
+      ownership: [''],
+      description: [''],
+      document: this.fb.array([]),
+    });
+  }
+
+  openSidePanel(index: number) {
+    console.log(index);
     const contextData: ContainerContextData = {
       component: AddCollateralComponent,
-      data: { ...this.collateralForm?.value },
+      data: 3,
     };
     this.sidenavService.open(contextData);
   }

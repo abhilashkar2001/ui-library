@@ -11,7 +11,7 @@
   }
 
   .title-head {
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
     font-size: 16px;
     color: #00000f;
@@ -20,7 +20,7 @@
   }
 
   mat-label.label_input {
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
     font-size: 13px;
     color: #102245 !important;
@@ -96,7 +96,7 @@
 
   .chooseFile {
     padding: 10px 10px;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     background: var(--current-theme-background);
     position: absolute;
     color: #fff;
@@ -161,7 +161,7 @@
   }
 
   .custCategory mat-label {
-    font: medium Benton Sans;
+    font: medium var(--ic-primary-font-family);
     color: #102245;
     opacity: 50%;
     padding-left: 10px;
@@ -192,12 +192,12 @@
   }
 
   .fileName {
-    font: medium Benton Sans;
+    font: medium var(--ic-primary-font-family);
     opacity: 70%;
   }
 
   :host ::ng-deep .mat-select {
-    font: medium Benton Sans !important;
+    font: medium var(--ic-primary-font-family) !important;
     opacity: 50% !important;
   }
 
@@ -217,7 +217,7 @@
   .option_font {
     color: #000000;
     opacity: 100%;
-    font: 'medium', 'Benton Sans';
+    font: 'medium', var(--ic-primary-font-family);
   }
 
   .egret-navy .mat-select-value {
@@ -251,7 +251,7 @@
 
   .uploaded_file {
     font-size: medium;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     color: #004a9a;
     opacity: 100%;
     flex: none !important;
@@ -283,7 +283,7 @@
   }
 
   .label_input {
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     font-weight: normal;
     font-size: medium;
     color: #102245 !important;
@@ -302,7 +302,7 @@
   }
 
   .fileUploaded {
-    font: medium Benton Sans;
+    font: medium var(--ic-primary-font-family);
     font-weight: bold;
     color: #0b0b0b;
     opacity: 70%;
@@ -310,7 +310,7 @@
   }
 
   .mat-select-value-text {
-    font: medium Benton Sans;
+    font: medium var(--ic-primary-font-family);
     color: #000000;
     opacity: 100%;
     font-weight: bolder;
@@ -329,7 +329,7 @@
 }
 
 .mat-option-text {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
 }
 

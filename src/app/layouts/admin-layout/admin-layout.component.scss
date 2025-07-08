@@ -7,4 +7,10 @@
 .layout-content {
   flex: 1;
   padding-top: 86px;
+  background: var(--ic-app-bg, #ffffff);
+}
+
+.layout-body {
+  margin-top: 84px; /* if your header is 64px tall */
+  height: calc(100vh - 64px);
 }

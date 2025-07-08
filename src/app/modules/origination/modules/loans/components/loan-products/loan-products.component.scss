@@ -58,7 +58,7 @@
 
     .standard-content {
       color: #424545;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 18px;
       font-style: normal;
       font-weight: 400;
@@ -73,7 +73,7 @@
       list-style-type: disc;
       margin: 10px 0px 10px -35px;
       color: #1b3c81;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 16px;
       font-style: normal;
       font-weight: 500;
@@ -89,7 +89,7 @@
     .standard-link-less {
       color: #06113c;
       text-align: center;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 20px;
       font-style: normal;
       font-weight: 500;
@@ -121,7 +121,7 @@
 
 .feature_name {
   color: #051a2d;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 16px;
   margin: 0;
   font-weight: 700;

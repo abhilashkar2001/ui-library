@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
@@ -17,6 +17,7 @@ export class DisbursementDetailsComponent implements OnInit {
   disbursementForm: FormGroup | undefined;
   currentDate: Date | undefined;
   genericValue: GenericValueInfoModel | undefined;
+  @Input() screenCode = '';
   staticData = {
     DISBURSEMENTTYPE: [],
     ACCOUNTTYPE: [],
@@ -52,50 +53,29 @@ export class DisbursementDetailsComponent implements OnInit {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.buildDisbursementForm();
     this.fetchGenericValues();
+    this.fetchDisbursementDetails();
   }
 
   buildDisbursementForm(data?: any) {
     this.disbursementForm = this.fb.group({
       originationId: this.originationId,
-      disbursementTypeId: [
-        data?.loanDisbursementModel?.disbursementTypeId?.data
-          ?.disbursementTypeId ?? '',
-        Validators.required,
-      ],
-      disbursementTypeValue: [
-        data?.loanDisbursementModel?.disbursementModeValue?.data
-          ?.disbursementTypeValue ?? 'Cash',
-      ],
-      loanAmount: [data?.principalAmount ?? ''],
-      firstDisbursementDate: [
-        data?.loanDisbursementModel?.firstDisbursementDate ?? this.currentDate,
-      ],
+      disbursementTypeId: [data?.disbursementTypeId ?? '', Validators.required],
+      disbursementTypeValue: [data?.disbursementTypeValue ?? 'Cash'],
+      loanAmount: [data?.principalAmount ?? '5678'],
+      firstDisbursementDate: [data?.firstDisbursementDate ?? this.currentDate],
       chequeTypeId: [data?.chequeTypeId ?? ''],
       branchCode: [data?.branchCode ?? ''],
       internal: [data?.internal ?? false],
+      customerName: [''],
+      internalAccount: [true],
+      createAccountWithUs: [false],
       disbursementAccount: this.fb.group({
-        internalAccount: [true],
-        accountNo: [
-          data?.loanDisbursementModel?.disbursementAccount?.accountNo ?? '',
-        ],
-        confirmAccountNo: [
-          data?.loanDisbursementModel?.disbursementAccount?.confirmAccountNo ??
-            '',
-        ],
-        accountTypeId: [
-          data?.loanDisbursementModel?.disbursementAccount?.accountTypeId ??
-            null,
-        ],
-        customerName: [
-          data?.loanDisbursementModel?.disbursementAccount?.customerName ?? '',
-        ],
-        bankCode: [
-          data?.loanDisbursementModel?.disbursementAccount?.bankCode ?? '',
-        ],
-        branchName: [
-          data?.loanDisbursementModel?.disbursementAccount?.branchName ?? '',
-        ],
-        newAccount: [false],
+        accountNo: [data?.disbursementAccount?.accountNo ?? ''],
+        confirmAccountNo: [data?.disbursementAccount?.accountNo ?? ''],
+        accountTypeId: [data?.disbursementAccount?.accountTypeId ?? null],
+        customerName: [data?.disbursementAccount?.customerName ?? ''],
+        bankCode: [data?.disbursementAccount?.bankCode ?? ''],
+        branchName: [data?.disbursementAccount?.branchName ?? ''],
       }),
     });
   }
@@ -144,24 +124,17 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   fetchDisbursementDetails() {
-    if (this.originationId)
-      this.loanService
-        .fetchDisbursementDetails(this.originationId)
-        .subscribe((res: any) => console.log(res));
-  }
-
-  saveDisbursementDetails() {
-    const payload = { ...this.disbursementForm?.value };
-    this.loanService.saveDisbursementDetails(payload).subscribe((res: any) => {
-      console.log(res);
+    this.loanService.fetchDisbursementDetails(962).subscribe((res: any) => {
+      if (res?.statusCode === 200 || res?.statusCode === 201)
+        this.buildDisbursementForm(res?.data[0]);
     });
   }
 
   handleSubmit() {
     const payload = { ...this.disbursementForm?.value };
-    payload.originationModel.originationId = 554;
-    delete payload.loanDetails.totalPrincipalAmount;
-    payload.screenCode = 444;
+    payload.originationId = this.originationId;
+    payload.screenCode = this.screenCode;
+    delete payload.disbursementAccount.confirmAccountNo;
     return this.loanService.saveDisbursementDetails(payload).pipe(
       tap((res) => {
         console.log(res);

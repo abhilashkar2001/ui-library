@@ -1,5 +1,5 @@
 .ellipse {
-  background-color: #ffffff;
+  background-color: var(--ic-app-bg, #ffffff);
   height: 100px;
   width: 100%;
   border-radius: 50%;
@@ -9,7 +9,7 @@
 }
 
 .convex {
-  background-color: #ffffff;
+  background-color: var(--ic-app-bg, #ffffff);
   height: 100px;
   width: 100%;
   border-radius: 50%;

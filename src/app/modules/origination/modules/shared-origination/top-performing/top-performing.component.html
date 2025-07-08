@@ -38,15 +38,24 @@
             class="accordian-list"
           >
             <div class="accordion-text-list">{{ market?.name }}</div>
-            <div class="accordain-list-img">
-              <img
-                [src]="
-                  market?.increased
-                    ? '/assets/images/system-uicons_graph-increase.png'
-                    : '/assets/images/system-uicons_graph-increase (1).png'
+            <div class="accordain-list">
+              <div class="graph_img" fxLayout="row">
+                <img
+                  [src]="
+                    market?.increased
+                      ? '/assets/images/system-uicons_graph-increase.svg'
+                      : '/assets/images/system-uicons_graph-decrease.svg'
+                  "
+                  alt="graph image"
+                />
+              </div>
+              <div
+                [class]="
+                  market?.increased ? 'range-text-green' : 'range-text-red'
                 "
-                alt="graph image"
-              /><span class="range-text-green">{{ market?.value }}</span>
+              >
+                {{ market?.value }}
+              </div>
             </div>
           </div>
           <div
@@ -87,15 +96,24 @@
             class="accordian-list"
           >
             <div class="accordion-text-list">{{ stock?.stock }}</div>
-            <div class="accordain-list-img">
-              <img
-                [src]="
-                  stock?.increased
-                    ? '/assets/images/system-uicons_graph-increase.png'
-                    : '/assets/images/system-uicons_graph-increase (1).png'
+            <div class="accordain-list">
+              <div class="graph_img" fxLayout="row">
+                <img
+                  [src]="
+                    stock?.increased
+                      ? '/assets/images/system-uicons_graph-increase.svg'
+                      : '/assets/images/system-uicons_graph-decrease.svg'
+                  "
+                  alt="graph image"
+                />
+              </div>
+              <div
+                [class]="
+                  stock?.increased ? 'range-text-green' : 'range-text-red'
                 "
-                alt="graph image"
-              /><span class="range-text-green">{{ stock?.value }}</span>
+              >
+                {{ stock?.value }}
+              </div>
             </div>
           </div>
           <div

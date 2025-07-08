@@ -10,7 +10,7 @@
     color: #000000;
     opacity: 1;
     font-size: 16px;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
   }
 
@@ -18,7 +18,7 @@
     color: #000000;
     opacity: 1;
     font-size: 16px;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
     margin-top: 5%;
   }
@@ -59,9 +59,7 @@
     color: #b20000 !important;
     background: #fff;
     border-radius: 35px !important;
-    font-family:
-      Benton Sans,
-      sans-serif;
+    font-family: var(--ic-primary-font-family), sans-serif;
     font-size: 13px;
     font-weight: 600 !important;
     letter-spacing: 0.4px;

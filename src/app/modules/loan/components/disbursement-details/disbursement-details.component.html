@@ -25,7 +25,6 @@
         [control]="disbursementForm.get('internal') | formcontrol"
         [label]="account.label"
         [value]="account.value"
-        fxFlex="25"
       >
       </ic-radio-button>
     </div>
@@ -78,9 +77,7 @@
         </mat-label>
         <ic-radio-button
           *ngFor="let account of internalAccount"
-          [control]="
-            loanDisbursementAccount.get('internalAccount') | formcontrol
-          "
+          [control]="disbursementForm.get('internalAccount') | formcontrol"
           [label]="account.label"
           [value]="account.value"
           fxFlex="25"
@@ -89,7 +86,7 @@
       </div>
       <div
         *ngIf="
-          loanDisbursementAccount?.get('internalAccount')?.value === false &&
+          disbursementForm?.get('internalAccount')?.value === false &&
           disbursementForm?.get('internal')?.value === true
         "
         fxLayoutAlign="center center"
@@ -97,9 +94,9 @@
         fxLayoutGap="5"
       >
         <ic-slide-toggle
-          [checked]="loanDisbursementAccount.get('newAccount')?.value"
+          [checked]="disbursementForm.get('createAccountWithUs')?.value"
           [formControl]="
-            loanDisbursementAccount.get('newAccount') | formcontrol
+            disbursementForm.get('createAccountWithUs') | formcontrol
           "
         >
         </ic-slide-toggle>
@@ -108,7 +105,7 @@
       <ng-container
         *ngIf="
           disbursementForm?.get('internal')?.value === false ||
-          loanDisbursementAccount?.get('internalAccount')?.value === true
+          disbursementForm?.get('internalAccount')?.value === true
         "
       >
         <div fxFlex="24">
@@ -127,6 +124,13 @@
             [icNumbersOnly]="true"
             [maxLength]="20"
             label="Confirm Account Number"
+            [customError]="
+              loanDisbursementAccount.get('confirmAccountNo')?.value &&
+              loanDisbursementAccount.get('accountNo')?.value !==
+                loanDisbursementAccount.get('confirmAccountNo')?.value
+                ? 'Confirm Account Number is not same as Account Number'
+                : ''
+            "
           ></ic-form-field>
         </div>
         <div
@@ -134,7 +138,9 @@
           fxFlex="24"
         >
           <ic-select
-            [control]="disbursementForm.get('accountTypeId') | formcontrol"
+            [control]="
+              loanDisbursementAccount.get('accountTypeId') | formcontrol
+            "
             [options]="genericValue?.['ACCOUNTTYPE'] ?? []"
             bindLabelKey="values"
             bindValueKey="id"
@@ -173,20 +179,5 @@
         </div>
       </ng-container>
     </ng-container>
-  </div>
-  <div fxFlex="100" fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end center">
-    <ic-button
-      [label]="'Back'"
-      [type]="'button'"
-      icButtonType="outlined-rounded"
-      size="medium"
-    ></ic-button>
-    <ic-button
-      [icButtonType]="'filled-rounded'"
-      [label]="'Next'"
-      [type]="'submit'"
-      size="medium"
-      (OnClick)="saveDisbursementDetails()"
-    ></ic-button>
   </div>
 </form>

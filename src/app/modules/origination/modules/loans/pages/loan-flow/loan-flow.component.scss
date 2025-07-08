@@ -76,21 +76,21 @@
   }
 
   .mat-step-label.mat-step-label-active {
-    color: #008461 !important;
+    color: var(--ic-text-green, #008461) !important;
     font-size: 24px !important;
     // font-weight: 600;
     padding-left: 33px !important;
   }
 
   .mat-step-label.mat-step-label-active.mat-step-label-selected {
-    color: #0033a1 !important;
+    // color: #0033a1 !important;
     // font-weight: 600;
     font-size: 24px !important;
     padding-left: 33px !important;
   }
 
   .mat-step-label {
-    color: #0033a1 !important;
+    color: var(--ic-text-theme, #0033a1) !important;
     // font-weight: 600;
     padding-left: 33px !important;
     font-size: 24px !important;

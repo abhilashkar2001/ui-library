@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { SidenavService } from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-add-collateral',
@@ -7,6 +8,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./add-collateral.component.scss'],
 })
 export class AddCollateralComponent implements OnInit {
+  @Input() data: any;
   collateralForm: FormGroup | undefined;
   ownershipValues = [
     {
@@ -27,10 +29,12 @@ export class AddCollateralComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
+    private sideNavService: SidenavService,
   ) {}
 
   ngOnInit(): void {
     this.buildCollateral();
+    console.log(this.data);
   }
 
   buildCollateral() {
@@ -116,5 +120,10 @@ export class AddCollateralComponent implements OnInit {
     //     }),
     //   )
     //   .subscribe();
+  }
+
+  addCollateral() {
+    console.log(this.collateralForm?.value);
+    this.sideNavService.close();
   }
 }
