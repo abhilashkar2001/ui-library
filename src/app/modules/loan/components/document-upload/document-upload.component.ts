@@ -13,29 +13,48 @@ export class DocumentUploadComponent implements OnInit {
   submittedChecklistDocs: any;
   documentList: any;
   @Input() screenName = '';
+  customerDocumentList: any;
   constructor(
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit() {
-    this.loanService
-      .getCheckListDoc(
-        this.sessionStorageService.getCurrentStage(),
-        parseInt(this.sessionStorageService.getCurrentScreenCode() ?? 456),
-        this.sessionStorageService.getOriginationId(),
-      )
-      .subscribe((resp) => {
-        if (resp?.statusCode == 200) {
-          this.checkListDocList = this.groupBy(resp.data);
-          const screenCode = parseInt(
-            this.sessionStorageService.getCurrentScreenCode() ?? 456,
-          );
-          if (screenCode) this.getCheckListDoc(screenCode);
-        } else {
-          this.checkListDocList = [];
-        }
-      });
+    const originationId = this.sessionStorageService.getOriginationId();
+    if (this.screenName.toLowerCase().includes('loan'))
+      this.loanService
+        .getCheckListDoc(
+          this.sessionStorageService.getCurrentStage(),
+          parseInt(this.sessionStorageService.getCurrentScreenCode() ?? 456),
+          this.sessionStorageService.getOriginationId(),
+        )
+        .subscribe((resp) => {
+          if (resp?.statusCode == 200) {
+            this.checkListDocList = this.groupBy(resp.data);
+            const screenCode = parseInt(
+              this.sessionStorageService.getCurrentScreenCode() ?? 456,
+            );
+            if (screenCode) this.getCheckListDoc(screenCode);
+          } else {
+            this.checkListDocList = [];
+          }
+        });
+    else {
+      this.loanService
+        .getPersonalDetailsData(originationId)
+        .subscribe((resp) => {
+          if (resp.data.customerInfo.length > 0) {
+            const customerInfo = resp.data.customerInfo ?? [];
+            if (customerInfo.length > 0) {
+              const customerDocUpload: any[][] = customerInfo.map((c: any) =>
+                Array.isArray(c.documentInfo) ? c.documentInfo : [],
+              );
+
+              this.customerDocumentList = customerDocUpload;
+            }
+          }
+        });
+    }
   }
 
   getCheckListDoc(screenCode: any) {
@@ -75,7 +94,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleSubmit() {
-    if (this.screenName.includes('loan')) {
+    if (this.screenName.toLowerCase().includes('loan')) {
       const documentIds = this.submittedChecklistDocs.flatMap(
         (doc: any) => doc.docIds,
       );

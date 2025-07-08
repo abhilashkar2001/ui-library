@@ -53,7 +53,7 @@
         "
         [options]="countryArr"
         bindLabelKey="countryName"
-        bindValueKey="countryName"
+        bindValueKey="countryCode"
         label="Country of Incorporation"
       >
       </ic-select>
@@ -155,8 +155,8 @@
       <ic-select
         [control]="businessDetailsForm.get('parentCompanyId') | formcontrol"
         [options]="parentCompanyArr"
-        bindLabelKey="values"
-        bindValueKey="id"
+        bindLabelKey="companyName"
+        bindValueKey="corporateId"
         label="Parent Company"
       >
       </ic-select>
