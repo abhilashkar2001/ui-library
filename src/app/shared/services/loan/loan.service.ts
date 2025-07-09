@@ -206,6 +206,10 @@ export class LoanService {
     );
   }
 
+  fetchParentScreen() {
+    return this.http.get(`${baseUrl}/loan-detail/fetch-parent-company`);
+  }
+
   fetchCreditBureau(originationId: number) {
     return this.http.get(
       `${baseUrl}/loan-detail/credit-terms?originationId=${originationId}`,

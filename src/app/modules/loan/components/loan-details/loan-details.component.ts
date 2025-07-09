@@ -321,7 +321,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
     const payload = {
       ...this.loanDetailsForm?.value,
     };
-    payload.originationModel.originationId = 554;
+    payload.originationModel.originationId = this.originationId;
     delete payload.loanDetails.totalPrincipalAmount;
     payload.screenCode = 444;
     return this.loanService.saveLoanDetails(payload).pipe(

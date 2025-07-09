@@ -50,6 +50,7 @@ export class BusinessDetailsComponent implements OnInit {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.dateFormat = this.dateService?.format.toLocaleLowerCase();
     this.fetchGenericValue();
+    this.fetchParentCompany();
     this.fetchCountry();
     this.buildBusinessDetailForm();
     this.getBusinessDetailsById();
@@ -83,6 +84,14 @@ export class BusinessDetailsComponent implements OnInit {
           this.businessDetailsForm.patchValue(res?.data[0]);
         }
       });
+  }
+
+  fetchParentCompany() {
+    this.loanService.fetchParentScreen().subscribe((resp: any) => {
+      if (resp.data.length > 0) {
+        this.parentCompanyArr = resp?.data;
+      }
+    });
   }
 
   buildBusinessDetailForm() {
@@ -130,7 +139,7 @@ export class BusinessDetailsComponent implements OnInit {
   handleSubmit() {
     const payload = {
       originationModel: {
-        originationId: 314,
+        originationId: this.originationId,
       },
       screenCode: 498,
       businessDetailModel: this.businessDetailsForm.value,

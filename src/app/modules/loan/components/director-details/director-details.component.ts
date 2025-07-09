@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -36,7 +30,7 @@ import {
   templateUrl: './director-details.component.html',
   styleUrls: ['./director-details.component.scss'],
 })
-export class DirectorDetailsComponent implements OnInit, OnChanges {
+export class DirectorDetailsComponent implements OnInit {
   @Input() docCustomerDetails: any;
   customerDetailsForm!: FormGroup;
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;
@@ -89,7 +83,6 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
 
     this.getAllRequisite().then(() => {
       if (!this.personalDetails) {
-        console.log('coming');
         this.buildPersonalDetailsForm();
       }
     });
@@ -113,13 +106,16 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges | any): void {
-    this.getAllRequisite().then(() => {
-      if (changes?.personalDetails?.currentValue) {
-        this.buildPersonalDetailsForm(changes.personalDetails.currentValue);
-      } else this.buildPersonalDetailsForm();
-    });
-  }
+  // Commenting this code this is not required
+  // ngOnChanges(changes: SimpleChanges | any): void {
+  //   console.log(changes, 'changess');
+
+  //   this.getAllRequisite().then(() => {
+  //     if (changes?.personalDetails?.currentValue) {
+  //       this.buildPersonalDetailsForm(changes.personalDetails.currentValue);
+  //     } else this.buildPersonalDetailsForm();
+  //   });
+  // }
 
   async getAllRequisite() {
     return new Promise((resolve) => {
@@ -207,8 +203,6 @@ export class DirectorDetailsComponent implements OnInit, OnChanges {
   }
 
   buildPersonalDetailsForm(data?: any) {
-    console.log(data, 'data');
-
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
