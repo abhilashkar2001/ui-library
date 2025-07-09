@@ -23,6 +23,10 @@ import { AccountSummaryComponent } from './components/summary/summary.component'
 import { AccountDirectorDetailsComponent } from './components/director-details/director-details.component';
 import { AccountSignaturePopupComponent } from './components/digital-signature/signature-popup/signature-popup.component';
 import { AddAccountCollateralComponent } from './components/collateral-details/add-collateral/add-collateral.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { AccountSelectionComponent } from './components/account-selection/account-selection.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { AddAccountCollateralComponent } from './components/collateral-details/a
     AccountDirectorDetailsComponent,
     AccountSignaturePopupComponent,
     AddAccountCollateralComponent,
+    AccountSelectionComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +57,8 @@ import { AddAccountCollateralComponent } from './components/collateral-details/a
     SharedOriginationModule,
     MatFormFieldModule,
     OriginationExternalCallbackModule,
+    MatDialogModule,
+    MatIconModule, MatButtonModule
   ],
 })
 export class CreateAccountModule {}
