@@ -94,7 +94,7 @@ mat-form-field {
 
 .text-doc {
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -109,7 +109,7 @@ mat-form-field {
 }
 
 .custom-mat-label {
-  font: normal normal medium 13px/20px Benton Sans;
+  font: normal normal medium 13px/20px var(--ic-primary-font-family);
   letter-spacing: -0.26px;
   color: #102245;
   opacity: 0.5;
@@ -126,7 +126,7 @@ mat-form-field {
 
 .text-header {
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -136,7 +136,7 @@ mat-form-field {
 }
 
 .deleteButton {
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   color: #b20000 !important;
   font-size: 14px;
   cursor: pointer;

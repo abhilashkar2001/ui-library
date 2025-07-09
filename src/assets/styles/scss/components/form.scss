@@ -31,7 +31,7 @@ mat-form-field {
   ::placeholder,
   mat-label,
   mat-option {
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     // font-weight: 600;
     color: #102245;
     opacity: 0.8;
@@ -80,7 +80,7 @@ mat-form-field {
 }
 
 .mat-select-value {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   color: #102245 !important;
   opacity: 100%;
   letter-spacing: -0.26px;
@@ -108,8 +108,8 @@ mat-form-field {
 }
 
 input {
-  font-family: 'Benton Sans', sans-serif !important;
-  color: #102245 !important;
+  font-family: var(--ic-primary-font-family), sans-serif !important;
+  // color: #102245 !important;
   letter-spacing: -0.26px;
   font-weight: 500 !important;
   font-size: 15px !important;
@@ -122,14 +122,14 @@ input {
 }
 
 .mat-option {
-  font: 14px 'Benton Sans';
+  font: 14px var(--ic-primary-font-family);
   font-weight: 600;
 }
 
 .mat-error {
   color: #ff3d57;
   font-weight: bold;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   font-size: 10px;
 }
 
@@ -166,7 +166,7 @@ input {
   border-radius: 8px !important;
   color: #102245 !important;
   font-weight: 600;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   font-size: 14px !important;
   display: flex !important;
 }
@@ -181,7 +181,7 @@ input {
     height: 125px;
 
     text-area {
-      font-family: Benton Sans !important;
+      font-family: var(--ic-primary-font-family) !important;
       color: #102245 !important;
       letter-spacing: -0.26px;
       font-weight: 600 !important;
@@ -244,7 +244,7 @@ input {
   font-weight: 500;
   padding-left: 0.5em;
   font-size: 14px;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   opacity: 0.7;
 }
 

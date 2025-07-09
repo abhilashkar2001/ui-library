@@ -8,7 +8,7 @@
 }
 
 ::ng-deep .egret-navy .mat-menu-item {
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
 }
 
@@ -17,11 +17,11 @@
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
 }
 
 ::ng-deep .egret-navy .mat-select-value {
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
 }
 
 .filter_form {
@@ -55,7 +55,7 @@
 
     .searchInput {
       font-size: 17px;
-      font-family: 'Benton Sans', sans-serif;
+      font-family: var(--ic-primary-font-family);
       padding: 0 2% 0 4%;
       text-overflow: ellipsis;
     }

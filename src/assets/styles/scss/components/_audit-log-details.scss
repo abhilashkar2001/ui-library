@@ -52,7 +52,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
   .header__item {
     flex: 1 1 10%;
     text-align: center;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
   }
 
   .pb-32 {
@@ -108,7 +108,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     border-collapse: collapse;
 
     letter-spacing: 1px;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
     font-size: 0.8rem;
   }
 
@@ -135,7 +135,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     background-color: white;
     font-weight: 700;
     // min-width: 7.35rem;
-    font-family: 'Benton Sans';
+    font-family: var(--ic-primary-font-family);
   }
 
   thead,
@@ -145,7 +145,7 @@ $color-form-highlight: rgba(245, 247, 249, 1);
     color: #6e7582;
     font-weight: 400 !important;
     font-size: 14px;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     // width: 100%;
   }
 

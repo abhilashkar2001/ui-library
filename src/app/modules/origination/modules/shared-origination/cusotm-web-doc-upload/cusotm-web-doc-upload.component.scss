@@ -16,7 +16,7 @@
   padding: 5px;
   border-color: transparent;
   color: #0033a1;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -36,14 +36,14 @@
   flex-direction: column;
 
   .doc_upload {
-    box-shadow: -2px 5px 8px 0px #00000012;
+    box-shadow: -2px 5px 8px 0px rgba(0, 0, 0, 0.0705882353);
     border-radius: 8px;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
     position: relative;
     height: 74px;
-    background: #fff;
+    background: var(--ic-app-bg);
 
     #fileDropRef {
       opacity: 0;
@@ -59,8 +59,8 @@
       h3 {
         font-size: 15px;
         padding-left: 12px;
-        font-family: Benton Sans;
-        color: #102245 !important;
+        font-family: var(--ic-primary-font-family);
+        color: var(--ic-text-theme, #102245) !important;
         opacity: 100%;
         letter-spacing: -0.26px;
         font-weight: 600;
@@ -131,7 +131,7 @@ mat-form-field {
 }
 
 .deleteButton {
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
   color: #b20000 !important;
   font-size: 14px;
   cursor: pointer;
@@ -145,7 +145,7 @@ mat-form-field {
 }
 
 .custom-mat-label {
-  font: normal normal medium 13px/20px Benton Sans;
+  font: normal normal medium 13px/20px var(--ic-primary-font-family);
   letter-spacing: -0.26px;
   color: #102245;
   opacity: 0.8;
@@ -205,8 +205,8 @@ mat-form-field {
 }
 
 .outer-div {
-  border: 1px solid #bac0d75c;
-  background-color: #f6f9ff;
+  border: 1px solid rgba(186, 192, 215, 0.3607843137);
+  background-color: var(--ic-card-bg);
   border-radius: 8px;
 }
 
@@ -218,7 +218,7 @@ mat-form-field {
   padding-left: 10px;
 
   .upload_img {
-    background-color: #ffffff;
+    background-color: var(--ic-card-bg-accent);
     padding: 0.5rem 1rem 0.5rem 0.5rem;
     margin: 0.5rem 0;
     border-radius: 10px;
@@ -238,13 +238,13 @@ mat-form-field {
   display: flex;
   height: 30px;
   padding: 10px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
 }
 
 .scan-btn {
   display: inline-block;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
   opacity: 1;
   cursor: pointer;
 }

@@ -1,7 +1,7 @@
 .desc-list {
   margin-left: -25px;
   color: #051a2d;
-  font: 12px Benton Sans;
+  font: 12px var(--ic-primary-font-family);
 
   li {
     padding-bottom: 10px;
@@ -32,7 +32,7 @@
 
 .card-summary {
   color: #051a2d;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 16px;
   margin: 0;
 }
@@ -75,7 +75,7 @@
 
 .btn-hide {
   text-align: left;
-  font: 16px Benton Sans;
+  font: 16px var(--ic-primary-font-family);
   letter-spacing: -0.32px;
   color: #7e7e7e;
   opacity: 1;
@@ -92,7 +92,7 @@
 
 .label_value {
   color: #102245;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-weight: 600;
   font-size: 14px;
 }

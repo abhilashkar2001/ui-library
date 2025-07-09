@@ -13,7 +13,7 @@
 
   .cibil_desc_title {
     color: rgba(16, 34, 69, 0.43);
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     font-size: 16px;
     text-align: center;
     font-weight: 500;
@@ -32,7 +32,7 @@
       flex-direction: column;
       padding: 20px;
       color: #000;
-      font-family: Benton Sans;
+      font-family: var(--ic-primary-font-family);
       font-size: 18px;
       font-style: normal;
       font-weight: 500;

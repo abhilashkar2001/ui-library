@@ -1,9 +1,22 @@
 .read-text {
-  color: #06113c !important;
-  font-family: 'Benton Sans', sans-serif !important;
+  color: var(--ic-text-black);
+  font-family: var(--ic-primary-font-family), sans-serif !important;
   padding: 0 !important;
   font-size: 18px !important;
-  font-weight: 600;
+  font-weight: 400;
   text-decoration: underline;
   margin-top: 5%;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.accordain-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .graph_img {
+    height: 24px;
+    width: 24px;
+  }
 }

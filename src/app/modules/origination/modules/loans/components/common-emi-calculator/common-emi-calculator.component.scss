@@ -3,10 +3,10 @@
 }
 
 .calculator_container {
-  background-color: #f6faff;
+  background-color: var(--ic-card-bg-accent);
   padding: 2%;
   border-radius: 16px;
-  border: 3px solid #fff;
+  border: 3px solid var(--ic-card-bg);
   box-shadow: 0px 6.1189799309px 30.5949001312px 0px rgba(0, 0, 0, 0.0509803922);
 
   .yeardrop.fieldset {
@@ -29,7 +29,7 @@
   opacity: 1;
 
   .fieldset-title {
-    font: 10px Benton Sans;
+    font: 10px var(--ic-primary-font-family);
     color: #102245;
     margin-bottom: 4px;
     font-weight: 600;
@@ -40,7 +40,7 @@
   .tenure-input {
     position: relative;
     width: 100%;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     color: #102245 !important;
     opacity: 100%;
     letter-spacing: -0.26px;
@@ -52,7 +52,7 @@
   .placeholders {
     position: relative;
     right: 8%;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
     font-weight: 600;
   }
 
@@ -101,10 +101,10 @@
 }
 
 .calculator_subTItle {
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Benton Sans';
+  font-family: var(--ic-primary-font-family);
 
   span {
     color: #5a607f;
@@ -123,18 +123,18 @@
   border-radius: 20px;
   min-height: 80%;
   padding: 15px;
+  font-family: var(--ic-primary-font-family);
 
   .maturityTitle {
-    font-family: 'Benton Sans', sans-serif;
     font-size: 20px;
     font-weight: 500;
+    color: var(--ic-text-black, #000);
   }
 
   .maturityDesc {
-    font-family: 'Benton Sans', sans-serif;
     font-size: 33px;
     font-weight: 600;
-    color: #0033a1;
+    color: var(--ic-text-theme, #0033a1);
     display: inline-block;
     animation: fadeInScale 0.8s ease-out;
   }
@@ -151,24 +151,24 @@
   }
 
   .maturityLabel {
-    font-family: 'Benton Sans', sans-serif;
     font-size: 16px;
     font-weight: 500;
+    color: var(--ic-text-black, #000);
   }
 
   .maturityVal {
-    font-family: 'Benton Sans', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    color: #0033a1;
+    color: var(--ic-text-theme, #0033a1);
   }
 }
 
 .calc-white-bg {
-  background-image: url('/assets/images/card-doddle.svg') !important;
+  background-image: url(/assets/images/card-doddle.svg) !important;
   background-position-x: right;
   background-position-y: top !important;
   background-repeat: no-repeat !important;
+  background-color: var(--ic-card-bg);
 }
 
 .emiTitle {
@@ -176,7 +176,7 @@
 }
 
 .emiAmount {
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
   font-size: 50px;
   font-weight: bolder;
 }
@@ -196,7 +196,7 @@
   border: none;
   outline: none;
   font-size: 16px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   letter-spacing: 0.4px;
   color: #fff !important;
   background: linear-gradient(90deg, #0062e1, #03a) !important;

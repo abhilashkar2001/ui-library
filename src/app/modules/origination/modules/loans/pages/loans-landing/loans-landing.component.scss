@@ -30,7 +30,7 @@
 
       .top-desc {
         color: #4c5371;
-        font-family: Benton Sans;
+        font-family: var(--ic-primary-font-family);
         font-size: 18px;
         font-style: normal;
         font-weight: 400;
@@ -68,7 +68,7 @@
   .desc {
     color: #4c5371;
     text-align: center;
-    font-family: Benton Sans;
+    font-family: var(--ic-primary-font-family);
     font-size: 18px;
     font-style: normal;
     font-weight: 400;

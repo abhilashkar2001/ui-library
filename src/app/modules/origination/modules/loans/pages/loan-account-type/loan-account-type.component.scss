@@ -45,7 +45,7 @@
 
       .standard-content {
         color: #424545;
-        font-family: Benton Sans;
+        font-family: var(--ic-primary-font-family);
         font-size: 18px;
         font-style: normal;
         font-weight: 400;
@@ -60,7 +60,7 @@
         list-style-type: disc;
         margin: 10px 0px 10px -35px;
         color: #0033a1;
-        font-family: Benton Sans;
+        font-family: var(--ic-primary-font-family);
         font-size: 16px;
         font-style: normal;
         font-weight: 500;
@@ -75,7 +75,7 @@
         border-radius: 23px !important;
         color: #ffffff !important;
         text-align: center;
-        font-family: Benton Sans;
+        font-family: var(--ic-primary-font-family);
         font-size: 20px;
         font-weight: 500;
         line-height: normal;
@@ -85,7 +85,7 @@
       .standard-link-less {
         color: #06113c;
         text-align: center;
-        font-family: Benton Sans;
+        font-family: var(--ic-primary-font-family);
         font-size: 20px;
         font-style: normal;
         font-weight: 500;

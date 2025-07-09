@@ -22,15 +22,13 @@
 .text-gray {
   color: #00000f;
   opacity: 70%;
-  font-family:
-    Benton Sans,
-    serif;
+  font-family: var(--ic-primary-font-family), serif;
   font-weight: 600;
 }
 
 .text-poppins {
   text-align: left;
-  font: normal normal 600 16px/19px Benton Sans;
+  font: normal normal 600 16px/19px var(--ic-primary-font-family);
   letter-spacing: 0;
   color: #000000;
   opacity: 1;
@@ -54,7 +52,7 @@
 
 .custom-expansion-panel {
   .mat-expansion-panel-header {
-    font: normal normal 18px/27px Benton Sans;
+    font: normal normal 18px/27px var(--ic-primary-font-family);
     color: #102245;
     background: #ebf6ff 0% 0% no-repeat padding-box;
     border-radius: 8px;
@@ -68,7 +66,7 @@ mat-expansion-panel.default-expansion-panel {
   background: #ffffff 0 0 no-repeat padding-box !important;
 
   .mat-expansion-panel-header.mat-expanded {
-    font: 16px Benton Sans;
+    font: 16px var(--ic-primary-font-family);
     font-weight: 600;
     color: #00000f;
   }
@@ -79,13 +77,13 @@ mat-expansion-panel.default-expansion-panel {
     border: 8px solid #f3f3f3;
     border-radius: 12px;
     opacity: 1;
-    font-family: 'Benton Sans', sans-serif;
+    font-family: var(--ic-primary-font-family);
   }
 
   mat-expansion-panel-header:not(.mat-expanded) {
     margin: 0;
     color: #004896;
-    font: 16px Benton Sans;
+    font: 16px var(--ic-primary-font-family);
     font-weight: 600;
     height: 50px;
     transition: all 0.28s;
@@ -108,7 +106,7 @@ mat-expansion-panel.default-expansion-panel {
 
 .text-carbon {
   text-align: center;
-  font: normal normal 18px/47px Benton Sans;
+  font: normal normal 18px/47px var(--ic-primary-font-family);
   letter-spacing: 0;
   color: #b4b4b4;
   opacity: 1;
@@ -116,20 +114,20 @@ mat-expansion-panel.default-expansion-panel {
 
 .text-label {
   color: #102245;
-  font-family: 'Benton Sans', serif;
+  font-family: var(--ic-primary-font-family), serif;
   font-weight: 600;
 }
 
 .text-light {
   color: #000000 !important;
-  font-family: 'Benton Sans', serif;
+  font-family: var(--ic-primary-font-family), serif;
   opacity: 70%;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .sub-heading {
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0px;
@@ -139,19 +137,19 @@ mat-expansion-panel.default-expansion-panel {
 }
 
 .title-text {
-  font-family: 'Benton Sans', serif;
+  font-family: var(--ic-primary-font-family), serif;
   color: #0033a1;
   font-weight: 600;
 }
 
 .text-highlighted {
   color: #0033a1;
-  font-family: 'Benton Sans', serif;
+  font-family: var(--ic-primary-font-family), serif;
 }
 
 .text-normal {
   color: #102245;
-  font-family: 'Benton Sans', serif;
+  font-family: var(--ic-primary-font-family), serif;
   font-size: 20px;
   font-weight: 600;
 }

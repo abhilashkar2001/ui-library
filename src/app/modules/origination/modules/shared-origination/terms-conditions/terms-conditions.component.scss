@@ -23,7 +23,7 @@
 
 .content-header {
   color: rgba(16, 34, 69, 0.43);
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 13.438px;
   font-style: normal;
   display: block;
@@ -33,7 +33,7 @@
 
 .content {
   color: #102245;
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 17.918px;
   display: block;
   font-style: normal;

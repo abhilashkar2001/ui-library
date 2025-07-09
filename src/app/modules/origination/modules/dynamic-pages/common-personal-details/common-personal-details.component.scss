@@ -4,17 +4,17 @@
   .mat-accordion .mat-expansion-panel:last-of-type {
     border-radius: 12px;
     box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.0901960784);
-
+    background: var(--ic-card-bg, #ffffff);
     .customer_Header {
       padding: 2%;
       height: 70px;
 
       .customer_Header_description {
-        color: #0033a1;
+        color: var(--ic-text-theme, #0033a1);
         font-weight: 500;
         font-size: 23px;
         line-height: 39px;
-        font-family: 'Benton Sans', sans-serif;
+        font-family: var(--ic-primary-font-family);
       }
     }
   }
@@ -23,7 +23,7 @@
 .add_applicant {
   box-shadow: 0px 3px 15px 0px #00000017;
   height: 65px;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
   font-size: 18px;
   font-weight: 500;
   display: flex;
@@ -46,17 +46,17 @@
 }
 
 .highlight_title {
-  font-family: Benton Sans;
+  font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
   text-align: left;
-  color: #0033a1;
+  color: var(--ic-text-theme, #0033a1);
 }
 
 .applicat-text {
   padding-right: 10px;
-  font-family: 'Benton Sans', sans-serif;
+  font-family: var(--ic-primary-font-family);
   font-size: 12px;
   font-weight: 500;
 }
