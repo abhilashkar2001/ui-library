@@ -241,7 +241,7 @@
                     ></ic-form-field>
                     <ic-form-field
                       [control]="
-                        customer.get('contact')?.get('worktelephone')
+                        customer.get('contact')?.get('workTelephone')
                           | formcontrol
                       "
                       [icNumbersOnly]="true"
@@ -393,7 +393,7 @@
                       ></ic-form-field>
                       <ic-form-field
                         [control]="
-                          getSpouseContactDetails(i).get('worktelephone')
+                          getSpouseContactDetails(i).get('workTelephone')
                             | formcontrol
                         "
                         [icNumbersOnly]="true"
@@ -524,7 +524,7 @@
                     ></ic-form-field>
                     <ic-form-field
                       [control]="
-                        getEmergencyContactDetails(i).get('worktelephone')
+                        getEmergencyContactDetails(i).get('workTelephone')
                           | formcontrol
                       "
                       [icNumbersOnly]="true"

@@ -111,7 +111,7 @@ export class SignNowPopupComponent implements OnInit {
       this.isUploading = false;
       this.uploadSuccess = true;
       this.dialogRef.close({
-        result: event?.body?.data,
+        result: event?.body,
         title: this.title,
       });
     }

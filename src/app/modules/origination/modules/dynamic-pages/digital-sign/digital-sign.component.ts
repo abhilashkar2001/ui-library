@@ -49,10 +49,11 @@ export class DigitalSignComponent implements OnInit {
       data: { title: 'Sign Now', check: check },
     });
     dialogRef.afterClosed().subscribe((res) => {
-      if (res?.result?.fileUrl && res?.result?.signatureId) {
+      console.log(res);
+      if (res?.result?.uuid) {
         const newSignature = {
           fileUrl: res.result.fileUrl,
-          signatureId: res.result.signatureId,
+          signatureId: res.result.documentId,
           filePreview: this.sanitizer.bypassSecurityTrustResourceUrl(
             this.MICROSERVICE_URL + res.result.fileUrl,
           ),

@@ -136,7 +136,7 @@ export class BusinessDetailsComponent implements OnInit {
       },
     };
     this.loanService.saveBusinessDetails(payload).subscribe((res) => {
-      if (res.statusCode === 200) {
+      if (res.statusCode === 200 || res.statusCode === 201) {
         this.CustomSubmit.emit({ isNext: true });
       }
     });

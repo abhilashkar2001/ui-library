@@ -393,35 +393,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
 
   /**
    *
-   * @param customerInfo is a customerInfo model
-   * @param docIds is a document model
-   * @returns payload of customerInfo.
-   */
-  modelFactoryForCustomer(customerInfo: any, docIds: any) {
-    if (this.personalDetails?.length > 0) {
-      const custResp: any =
-        customerInfo?.length > 1 ? customerInfo : [...customerInfo];
-      custResp.forEach((item: any, i: any) => {
-        custResp[i].documentId = [];
-        custResp[0].primaryCustomer = true; //Need to remove lator while multiple customer
-        if (item.primaryCustomer === true) custResp[i].documentId = docIds;
-        if (this.noOfDirectors)
-          custResp[i].corpDirectorModel = {
-            sharePercentage: 100 / this.noOfDirectors,
-            isManagingDirector: custResp[i]?.primaryCustomer,
-          };
-        delete custResp[i]?.biometricInfo;
-        delete custResp[i]?.documnentsInfo;
-        delete custResp[i]?.documentsInfoModel;
-        delete custResp[i]?.signatureInfo;
-      });
-
-      return custResp;
-    }
-  }
-
-  /**
-   *
    * @returns a payload object for the orgination model.
    */
   factorizedPayload() {
@@ -488,6 +459,11 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
       this.selectedStep = num;
       this.sessionStorageService.setLoanStep(String(this.selectedStep));
       this.sessionStorageService.setCurrentScreenCode(
+        this.screenList[this.selectedStep].screenCode,
+      );
+      console.log(
+        'next',
+        this.selectedStep,
         this.screenList[this.selectedStep].screenCode,
       );
       this.factory();
@@ -736,17 +712,6 @@ export class LoanFlowComponent implements OnInit, OnDestroy {
         );
         resolve(filteredCustomers);
       });
-    });
-  }
-
-  getMasterSave(payload: any) {
-    this.openAccountService.saveCustomerInfo(payload).subscribe((resp) => {
-      if (resp?.statusCode == 200 && resp?.data) {
-        this.sessionStorageService.setOriginationId(
-          resp?.data?.originationModel?.originationId,
-        );
-        this.next();
-      }
     });
   }
 
