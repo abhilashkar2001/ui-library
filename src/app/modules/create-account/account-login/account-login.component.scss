@@ -1,0 +1,21 @@
+.login_section {
+  display: flex;
+  padding: 30px;
+
+  .login-content {
+    width: 100%;
+    .top-space {
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+
+    .top-spacing {
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+
+    .btn-spacing {
+      margin-top: 24px;
+    }
+  }
+}

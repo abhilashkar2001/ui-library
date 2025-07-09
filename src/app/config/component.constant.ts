@@ -10,6 +10,12 @@ import { CreditBureauComponent } from '../modules/loan/components/credit-bureau/
 import { TermsConditionComponent } from '../modules/loan/components/terms-condition/terms-condition.component';
 import { SummaryComponent } from '../modules/loan/components/summary/summary.component';
 import { DigitalSignatureComponent } from '../modules/loan/components/digital-signature/digital-signature.component';
+import { AccountDetailsComponent } from 'app/modules/create-account/components/account-details/account-details.component';
+import { AccountDocumentUploadComponent } from 'app/modules/create-account/components/document-upload/document-upload.component';
+import { AccountDirectorDetailsComponent } from 'app/modules/create-account/components/director-details/director-details.component';
+import { AccountDisbursementDetailsComponent } from 'app/modules/create-account/components/disbursement-details/disbursement-details.component';
+import { AccountSummaryComponent } from 'app/modules/create-account/components/summary/summary.component';
+import { AccountDigitalSignatureComponent } from 'app/modules/create-account/components/digital-signature/digital-signature.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -39,4 +45,23 @@ export const ComponentConstant: {
   W1TECO: TermsConditionComponent,
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,
+};
+export interface AccountComponentMap {
+  'Account Details': AccountDetailsComponent;
+  'Document Upload': AccountDocumentUploadComponent;
+  'Personal Identification': AccountDirectorDetailsComponent;
+  'Personal Details': AccountDisbursementDetailsComponent;
+  Summary: AccountSummaryComponent;
+  'Digital Signature': AccountDigitalSignatureComponent;
+}
+
+export const AccountComponentConstant: {
+  [K in keyof AccountComponentMap]: Type<AccountComponentMap[K]>;
+} = {
+  'Account Details': AccountDetailsComponent,
+  'Document Upload': AccountDocumentUploadComponent,
+  'Personal Identification': AccountDirectorDetailsComponent,
+  'Personal Details': AccountDisbursementDetailsComponent,
+  Summary: AccountSummaryComponent,
+  'Digital Signature': AccountDigitalSignatureComponent,
 };

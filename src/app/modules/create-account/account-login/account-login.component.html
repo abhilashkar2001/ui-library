@@ -1,0 +1,146 @@
+<div class="login m-12" fxLayout="row">
+  <div class="image_section" fxFlex="55">
+    <img
+      alt="Banner"
+      class="banner"
+      src="assets/images/new-web-images/login-banner.png"
+    />
+  </div>
+
+  <div [formGroup]="otpForm" class="login_section" fxFlex="45" fxFlex.xs="100">
+    <div class="login-content" fxLayout="row wrap" fxLayoutAlign="start start">
+      <!-- Logo Section -->
+      <div
+        class="top-spacing"
+        fxFlex="100"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <span class="breadcrum_md">
+          Enter your mobile number to get started.
+        </span>
+      </div>
+
+      <div fxFlex="100" fxLayoutAlign="center center">
+        <ic-mobile-field
+          (onSelectionChangeOutput)="setMobileLength()"
+          [isdCode]="countriesIsdCodes"
+          [isdControl]="otpForm.get('isdCode') | formcontrol"
+          [customError]="
+            otpForm.get('phone')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          "
+          [maxLength]="maxMobileLength"
+          formControlName="phone"
+          fxFlex="60"
+          label="Mobile Number"
+        ></ic-mobile-field>
+      </div>
+      <div *ngIf="otpSent" fxFlex="100" fxLayoutAlign="center center">
+        <ic-form-field
+          [control]="otpForm.get('otpValue') | formcontrol"
+          [icNumbersOnly]="true"
+          [maxLength]="6"
+          fxFlex="60"
+          label="Enter OTP"
+          placeholder="******"
+        ></ic-form-field>
+      </div>
+
+      <div *ngIf="otpSent" fxFlex="100" fxLayoutAlign="center center">
+        <span class="header_md"> Didn’t receive the OTP?</span>
+        <span *ngIf="!resendLink && displaySecond"
+          >({{ displaySecond }} sec)</span
+        >
+        <a
+          ><u
+            (click)="getOtp()"
+            (keydown.enter)="getOtp()"
+            [ngClass]="[!resendLink ? 'disableResend' : '']"
+            class="theme_md"
+            tabindex="3"
+          >
+            Resend OTP</u
+          ></a
+        >
+      </div>
+
+      <div
+        *ngIf="!otpSent"
+        class="top-space"
+        fxFlex="100"
+        fxLayoutAlign="center center"
+      >
+        <ic-button
+          (OnClick)="getOtp()"
+          [icButtonType]="'filled-rounded'"
+          [label]="'Continue'"
+          [type]="'submit'"
+          class="w-100"
+          customButtonClass="w-100 justify-content-center"
+          fxFlex="60"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+
+      <div
+        *ngIf="otpSent"
+        class="btn-spacing"
+        fxFlex="100"
+        fxLayoutAlign="center center"
+      >
+        <ic-button
+          (OnClick)="onVerify()"
+          [icButtonType]="'filled-rounded'"
+          [label]="'Submit'"
+          [type]="'submit'"
+          class="w-100"
+          customButtonClass="w-100 justify-content-center"
+          fxFlex="60"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+      <div
+        *ngIf="otpSent"
+        class="top-space"
+        fxFlex="100"
+        fxLayoutAlign="center center"
+      >
+        <ic-button
+          (OnClick)="onExit()"
+          [label]="'Back'"
+          [type]="'submit'"
+          class="w-100"
+          customButtonClass="w-100 justify-content-center"
+          fxFlex="60"
+          icButtonType="outlined-rounded"
+          size="medium"
+        >
+        </ic-button>
+      </div>
+
+      <div
+        *ngIf="!otpSent"
+        class="top-space"
+        fxFlex="100"
+        fxLayoutAlign="center center"
+      >
+        <img
+          alt="offer"
+          src="assets/images/new-web-images/verifyMobileContinue.png"
+        />
+      </div>
+      <div
+        *ngIf="otpSent"
+        class="top-space"
+        fxFlex="100"
+        fxLayoutAlign="center center"
+      >
+        <img alt="offer" src="assets/images/new-web-images/verifyMobile.png" />
+      </div>
+    </div>
+  </div>
+</div>

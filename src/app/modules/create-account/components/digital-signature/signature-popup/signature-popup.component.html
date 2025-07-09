@@ -1,0 +1,80 @@
+<section fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 class="header_lg">Digital Signature</h3>
+    <ic-button
+      type="icon"
+      icButtonType="ghost-basic"
+      icIcon="close"
+      customButtonClass="box-shadow-none"
+    ></ic-button>
+  </div>
+  <div>
+    <mat-dialog-content>
+      <mat-tab-group mat-align-tabs="start" class="custom-tab-group">
+        <mat-tab label="E-sign">
+          <div class="signcard">
+            <app-sign-pad
+              #signPadRef
+              type="new"
+              (signpadImage)="signpadImage($event)"
+            ></app-sign-pad>
+          </div>
+        </mat-tab>
+        <mat-tab label="Upload">
+          <div class="pt-4">
+            <span class="breadcrum_md"
+              >Max file size is 500kb. Supported file types are .jpg and
+              .png.</span
+            >
+            <!-- <input type="file" /> -->
+            <div
+              class="theme_md container"
+              (fileDropped)="onFileDropped($event)"
+              appDragDrop
+            >
+              Drag and drop files here or
+              <span
+                (click)="fileSelect.click()"
+                (keydown.enter)="fileSelect.click()"
+                class="textdesign"
+                tabindex="0"
+                >click to upload</span
+              >
+              <input
+                #fileSelect
+                (change)="onFileSelect($event)"
+                [hidden]="true"
+                accept="image/png, image/jpeg"
+                id="file-input"
+                type="hidden"
+                type="file"
+              />
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-dialog-content>
+  </div>
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutGap="1%"
+    fxLayoutAlign="end center"
+    class="pr-4"
+  >
+    <ic-button
+      [label]="'Back'"
+      [type]="'button'"
+      icButtonType="outlined-rounded"
+      size="medium"
+      mat-dialog-close
+    ></ic-button>
+    <ic-button
+      [icButtonType]="'filled-rounded'"
+      [label]="'Done'"
+      [type]="'submit'"
+      size="medium"
+      (OnClick)="saveDigitalSign()"
+    ></ic-button>
+  </div>
+</section>

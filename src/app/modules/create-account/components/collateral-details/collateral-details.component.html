@@ -1,0 +1,51 @@
+<form
+  *ngIf="collateralForm"
+  [formGroup]="collateralForm"
+  fxLayout="column"
+  fxLayoutGap="0"
+>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-form-field appearance="fill" class="full-width blue-bg">
+      <input
+        matInput
+        placeholder="Search input text"
+        formControlName="search"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <ic-button
+      label="Add New"
+      icButtonType="filled-rounded"
+      type="submit"
+      (OnClick)="openSidePanel(address.length)"
+    ></ic-button>
+  </div>
+  <app-custom-table
+    [tableHeaders]="tableHeaders"
+    [tableData]="tableData"
+  ></app-custom-table>
+  <div fxLayout="row wrap" fxLayoutGap="1%">
+    <ic-form-field
+      fxFlex="24"
+      [control]="collateralForm.get('securityCover') | formcontrol"
+      [maxLength]="100"
+      label="(%)of Security Cover"
+    ></ic-form-field>
+    <ic-form-field
+      fxFlex="24"
+      [control]="collateralForm.get('totalAssetWorth') | formcontrol"
+      [maxLength]="100"
+      [readonly]="true"
+      [disabled]="true"
+      label="Total Asset Worth"
+    ></ic-form-field>
+    <ic-select
+      fxFlex="24"
+      [control]="collateralForm.get('loanTypeId') | formcontrol"
+      [options]="[]"
+      bindLabelKey="values"
+      bindValueKey="id"
+      label="Loan Type"
+    ></ic-select>
+  </div>
+</form>

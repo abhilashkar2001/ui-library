@@ -49,6 +49,19 @@ export const rootRouterConfig: Routes = [
     ],
   },
   {
+    path: 'create-account',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/create-account/create-account.module').then(
+            (m) => m.CreateAccountModule,
+          ),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: 'home/404',
   },

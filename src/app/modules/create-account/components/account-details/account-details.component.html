@@ -1,0 +1,179 @@
+<div [formGroup]="loanDetailsForm" fxLayout="column">
+  <ng-container *ngIf="!isEdit; else inputForm">
+    <div
+      class="summary_pad"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+    >
+      <div
+        *ngFor="let item of loanDetailsSummaryArr"
+        class="row mt-12"
+        fxFlex="24"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+      >
+        <span class="breadcrum_md">{{ item.header }}</span>
+        <span class="header_md">
+          {{
+            item.date
+              ? item.value
+                ? (item.value | date: 'dd-MMM-yyyy')
+                : '-'
+              : item.currency
+                ? item.value !== null && item.value !== undefined
+                  ? (item.value | currency)
+                  : '-'
+                : item.value || '-'
+          }}
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #inputForm>
+    <div
+      class="content_row"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="10px"
+    >
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('loanAmount') | formcontrol"
+          [customError]="
+            loanDetails.get('loanAmount')?.hasError('max')
+              ? 'Amount cannot exceed ' + max
+              : loanDetails.get('loanAmount')?.hasError('min')
+                ? 'Amount should be at least ' + min
+                : ''
+          "
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="Loan Amount Requested (GHS)"
+          [prefixIcon]="loanDetails.value?.loanAmount ? currencySymbol : ''"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-tenure-field
+          [fieldLabels]="{
+            loanTenureYear: 'Year',
+            loanTenureMonth: 'Month',
+            loanTenureDay: 'Day',
+          }"
+          [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
+          [isRequired]="true"
+          [parentForm]="loanDetails"
+          label="Tenure"
+        ></ic-tenure-field>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('interestRate') | formcontrol"
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="Interest Rate %"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('emiAmount') | formcontrol"
+          [decimalPlaces]="3"
+          [prefixIcon]="currencySymbol"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="EMI Amount"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+    </div>
+
+    <div
+      class="content_row mt-2"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="10"
+    >
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('totalInterestAmount') | formcontrol"
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="Interest Payable"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('loanAmount') | formcontrol"
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="Total Principal Amount"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          [control]="loanDetails.get('totalPayableAmount') | formcontrol"
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [numLength]="18"
+          label="Total Payable Amount"
+          [prefixIcon]="currencySymbol"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+    </div>
+
+    <div
+      class="content_row mt-2"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="10"
+    >
+      <div fxFlex="24">
+        <ic-select
+          [control]="repaymentDetails.get('repaymentFrequencyId') | formcontrol"
+          [options]="genericValue?.REPAYMENTFREQUENCY"
+          bindLabelKey="values"
+          bindValueKey="id"
+          label="Repayment Frequency"
+        ></ic-select>
+      </div>
+      <div fxFlex="24">
+        <ic-date-picker
+          [control]="repaymentDetails.get('firstRepaymentDate') | formcontrol"
+          [minDate]="todaysDate"
+          label="EMI Start Date"
+        >
+        </ic-date-picker>
+      </div>
+
+      <div fxFlex="24">
+        <div class="header_md_bold_black mb-8">
+          {{ 'Holder Type *' }}
+        </div>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <ic-radio-button
+            *ngFor="let status of holderTypeArr"
+            [control]="loanDetails.get('holderType') | formcontrol"
+            [label]="status.label"
+            [value]="status.value"
+          ></ic-radio-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
