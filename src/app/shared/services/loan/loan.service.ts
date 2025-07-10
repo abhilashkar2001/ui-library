@@ -234,4 +234,9 @@ export class LoanService {
       payload,
     );
   }
+  fetchCustomerCategories(productCode: string) {
+    return this.http.get<any>(
+      `${baseUrl}/interestRate/fetchCategoryIdUsingProductCode?productCode=${productCode}`,
+    );
+  }
 }

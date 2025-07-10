@@ -6,6 +6,7 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpEventType } from '@angular/common/http';
+import { tap, map, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-digital-signature',
@@ -115,12 +116,13 @@ export class DigitalSignatureComponent {
   }
   submitForm() {
     console.log('Form submitted');
+    return this.saveSignature().toPromise();
   }
   // Call this on final submit button click
-  saveSignature(): void {
+  saveSignature() {
     if (!this.signatureArray?.length) {
       console.warn('No uploaded signature to save.');
-      return;
+      return of('failure' as const);
     }
 
     const payload = {
@@ -128,8 +130,19 @@ export class DigitalSignatureComponent {
       custStagingId: this.sessionStorageService.getCustomerStagingId(),
     };
 
-    this.loanService.saveSignature(payload).subscribe((res) => {
-      console.log('Signature saved to loan service:', res);
-    });
+    return this.loanService.saveSignature(payload).pipe(
+      tap((res: any) => {
+        console.log(res);
+      }),
+      map((res) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
   }
 }

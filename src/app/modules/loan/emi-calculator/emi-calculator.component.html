@@ -1,30 +1,111 @@
-<div>
-  <div>
-    <ic-button label="Loan EMI Calculator"> </ic-button>
-    <span>
-      Estimated amount displayed. Final loan terms will be customised upon
-      approval.
-    </span>
+<div
+  fxFlex="100"
+  fxLayout="column"
+  class="emi-calculator"
+  [formGroup]="emiFormGroup"
+>
+  <div class="txt_sm_black emi-header">Loan EMI Calculator</div>
+  <div class="header_xxl_bold_black">
+    Estimated amount displayed. Final loan terms will be customised upon
+    approval.
   </div>
+  <div class="emi-calculator-content" fxLayout="row" fxLayoutGap="10">
+    <!-- First section -->
+    <div fxFlex="65">
+      <div fxLayoutAlign="space-between center" fxLayout="row">
+        <div class="header_lg_bold_black">Business Loan EMI Calculator</div>
+        <div class="interest-rate">Interest rate <span>10.53%</span></div>
+      </div>
+      <div class="customer-category">
+        <div class="breadcrum_md">Customer Category</div>
+        <div *ngFor="let category of customerCategoryList">
+          <ic-radio-button
+            [control]="emiFormGroup.get('customerCategory') | formcontrol"
+            [label]="category.values"
+          ></ic-radio-button>
+        </div>
+      </div>
+      <div
+        class="amount-sliders"
+        fxLayout="row"
+        fxLayoutGap="10"
+        fxLayoutAlign="space-between center"
+      >
+        <div class="txt_sm_black">Amount</div>
+        <ic-form-field
+          [control]="emiFormGroup.get('loanAmount') | formcontrol"
+          label="Amount"
+        >
+        </ic-form-field>
+        <div class="txt_sm_black">Tenure</div>
+        <div class="tenure-buttons" fxLayout="row">
+          <input formControlName="tenure" class="tenure-input" />
 
-  <mat-card> </mat-card>
+          <span
+            class="months-btn"
+            [ngClass]="{ active: emiFormGroup.get('isMonths')?.value }"
+            (click)="setTenureUnit(true)"
+            (keydown.enter)="setTenureUnit(true)"
+            tabindex="0"
+            role="button"
+          >
+            Mon
+          </span>
 
-  <div
-    class="w-100"
-    fxLayout="row"
-    fxLayoutGap="10px"
-    fxLayoutAlign="end center"
-  >
-    <span class="theme_md">EMI Calculator</span>
-    <ic-button
-      label="Back"
-      type="button"
-      icButtonType="ghost-rounded"
-    ></ic-button>
-    <ic-button
-      label="Apply Now"
-      type="submit"
-      icButtonType="filled-rounded"
-    ></ic-button>
+          <span
+            class="years-btn"
+            [ngClass]="{ active: !emiFormGroup.get('isMonths')?.value }"
+            (click)="setTenureUnit(false)"
+            tabindex="0"
+            role="button"
+            (keydown.enter)="setTenureUnit(false)"
+          >
+            Yrs
+          </span>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+        <ic-slider
+          fxFlex="45"
+          [control]="emiFormGroup.get('loanAmount') | formcontrol"
+        ></ic-slider>
+        <ic-slider
+          fxFlex="45"
+          [control]="emiFormGroup.get('tenure') | formcontrol"
+        ></ic-slider>
+      </div>
+      <div class="breadcrum_md">
+        <span class="medium_txt">Note:</span> The estimated amount shown is
+        based on your input. The applicable interest rate is fixed and
+        determined by the selected tenure.
+      </div>
+    </div>
+    <div class="emi-calculator-result" fxFlex="40">
+      <div class="top-green-section">
+        <div class="medium_txt">Your Monthly EMI Payment</div>
+        <div class="monthly-emi">
+          {{ currencySymbol }}{{ monthlyEmiPayment }}
+        </div>
+      </div>
+      <div
+        fxLayout="row wrap"
+        class="emi-calculator-table breadcrum_md"
+        fxLayoutAlign="space-between center"
+      >
+        <div fxFlex="45">Principal Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ principalAmount }}
+        </div>
+        <div fxFlex="45">Interest Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ interestAmount }}
+        </div>
+        <div fxFlex="100" class="horizontal-dashed-line"></div>
+        <div class="header_lg_bold_black" fxFlex="45">Total Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ totalAmount }}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
