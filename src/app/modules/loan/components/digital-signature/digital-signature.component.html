@@ -23,14 +23,25 @@
     fxFlex="100"
     fxLayoutAlign="space-between center"
   >
-    <div fxFlex="49" fxLayout="row" fxLayoutGap="10" class="upload_img">
+    <div
+      *ngFor="let sig of signatureArray.controls; let i = index"
+      fxFlex="49"
+      fxLayout="row"
+      fxLayoutGap="10"
+      class="upload_img"
+    >
       <div class="img_box">
         <img [src]="" alt="image" />
       </div>
       <div class="img_container">
-        <span class="header_md img_name">{{ 'image' }}</span>
+        <span class="header_md img_name">{{ sig?.value?.uuid }}</span>
       </div>
-      <img tabindex="0" src="assets/images/trash_new.svg" alt="trash" />
+      <img
+        tabindex="0"
+        (click)="deleteSignatureAt(i)"
+        src="assets/images/trash_new.svg"
+        alt="trash"
+      />
     </div>
   </div>
 </section>
