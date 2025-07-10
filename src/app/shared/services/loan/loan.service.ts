@@ -216,9 +216,22 @@ export class LoanService {
     );
   }
 
+  updateCreditBureau(payload: any) {
+    return this.http.put(
+      `${baseUrl}/loan-detail/updateCreditAndTermsField`,
+      payload,
+    );
+  }
+
   private collateralData = new Subject<any>();
   collateral$ = this.collateralData.asObservable();
   sendCollateralData(data: any) {
     this.collateralData.next(data);
+  }
+  saveSignature(payload: any) {
+    return this.http.post<any>(
+      `${baseUrl}/customer-api/saveCustStageSignature`,
+      payload,
+    );
   }
 }

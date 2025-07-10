@@ -522,8 +522,7 @@ export class CommonPersonalDetailsComponent
   }
 
   newCustomer(data?: any): FormGroup {
-    const documentId =
-      data?.documentInfo?.map((doc: any) => doc?.documentId) ?? [];
+    const documentId = data?.documentInfoId ?? [];
     if (data?.maritalStatusId) {
       const status = this.maritalStatusArray
         .find((item) => item.id === data.maritalStatusId)
@@ -574,7 +573,7 @@ export class CommonPersonalDetailsComponent
         contact: this.fb.group({
           contactId: [data?.spouseInfo?.contact?.contactId ?? null],
           telephone: [data?.spouseInfo?.contact?.telephone ?? ''],
-          worktelephone: [data?.spouseInfo?.contact?.worktelephone ?? ''],
+          workTelephone: [data?.spouseInfo?.contact?.workTelephone ?? ''],
           mobile: [data?.spouseInfo?.contact?.mobile ?? ''],
           email: [data?.spouseInfo?.contact?.email ?? ''],
 
@@ -611,8 +610,8 @@ export class CommonPersonalDetailsComponent
         contact: this.fb.group({
           contactId: [data?.emergencyContactInfo?.contact?.contactId ?? null],
           telephone: [data?.emergencyContactInfo?.contact?.telephone ?? ''],
-          worktelephone: [
-            data?.emergencyContactInfo?.contact?.worktelephone ?? '',
+          workTelephone: [
+            data?.emergencyContactInfo?.contact?.workTelephone ?? '',
           ],
           mobile: [
             data?.emergencyContactInfo?.contact?.mobile ?? '',
@@ -690,7 +689,7 @@ export class CommonPersonalDetailsComponent
           data?.contact ? data?.contact?.telephone : '',
           Validators.required,
         ],
-        worktelephone: [data?.contact ? data?.contact?.worktelephone : ''],
+        workTelephone: [data?.contact ? data?.contact?.workTelephone : ''],
         fax: [data?.contact ? data?.contact?.fax : '', Validators.required],
         statementViaId: [
           data?.contact ? data?.contact?.statementViaId : '',
@@ -803,7 +802,7 @@ export class CommonPersonalDetailsComponent
   }
 
   async addCustomer(i: any, data?: any) {
-    await this.customer.push(this.newCustomer(data));
+    this.customer.push(this.newCustomer(data));
     this.addAddress(i, data ? data.contact?.address[0] : {});
     this.debounceZipCodeAndCif();
   }
@@ -1046,7 +1045,7 @@ export class CommonPersonalDetailsComponent
     }
 
     this.loanApi.savePersonalDetails(payload).subscribe((resp) => {
-      if (resp.statusCode === 200) {
+      if (resp.statusCode === 200 || resp.statusCode === 201) {
         this.sessionStorageService.setCustomerStagingId(
           resp?.data?.customerInfo?.[0]?.custStagingId,
         );

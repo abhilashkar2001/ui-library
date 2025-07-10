@@ -125,7 +125,6 @@
             accept="image/png, image/jpeg"
             id="file-input"
             type="hidden"
-            type="file"
           />
           <ng-container></ng-container>
         </div>
@@ -167,7 +166,6 @@
                 <mat-progress-bar
                   *ngIf="isUploading"
                   [value]="percentDone"
-                  class="pd-15"
                   class="progrees_color"
                   mode="determinate"
                 ></mat-progress-bar>

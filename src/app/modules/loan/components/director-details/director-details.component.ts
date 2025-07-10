@@ -556,7 +556,16 @@ export class DirectorDetailsComponent implements OnInit {
 
     return this.loanService.savePersonalDetails(payload).pipe(
       tap((res) => {
-        console.log(res);
+        const customerInfo = res?.data?.customerInfo;
+        if (
+          customerInfo &&
+          customerInfo.length > 0 &&
+          customerInfo[0]?.custStagingId
+        ) {
+          this.sessionStorageService.setCustomerStagingId(
+            customerInfo[0]?.custStagingId,
+          );
+        }
       }),
       map((res) =>
         res?.statusCode == 200 || res?.statusCode == 201

@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TrackingService } from 'app/modules/origination/modules/tracking/tracking-service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -21,12 +22,16 @@ export class CreditBureauComponent implements OnInit {
   intervalId: any;
   displaySecond: string | any;
   invalidOtp = false;
+  originationId: number;
 
   constructor(
     private dialog: MatDialog,
     private loanService: LoanService,
     private otpService: TrackingService,
-  ) {}
+    private sessionStorageService: SessionStorageService,
+  ) {
+    this.originationId = this.sessionStorageService.getOriginationId();
+  }
 
   ngOnInit() {
     this.fetchCreditBureau();
@@ -41,12 +46,14 @@ export class CreditBureauComponent implements OnInit {
   }
 
   fetchCreditBureau() {
-    this.loanService.fetchCreditBureau(962).subscribe((res: any) => {
-      if (res?.statusCode == 200 || res?.statusCode == 201) {
-        this.creditBureau = res?.data;
-        this.getOtp();
-      }
-    });
+    this.loanService
+      .fetchCreditBureau(this.originationId)
+      .subscribe((res: any) => {
+        if (res?.statusCode == 200 || res?.statusCode == 201) {
+          this.creditBureau = res?.data;
+          this.getOtp();
+        }
+      });
   }
 
   getOtp() {
@@ -98,7 +105,7 @@ export class CreditBureauComponent implements OnInit {
     this.otpService
       .verifyOtp({
         mobile: this.creditBureau?.mobile,
-        otp: this.otp,
+        otp: this.otp?.value,
       })
       .subscribe((response: any) => {
         if (response.status === 401) {
