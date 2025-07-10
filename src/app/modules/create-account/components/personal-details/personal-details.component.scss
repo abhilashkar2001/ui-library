@@ -129,3 +129,8 @@
     background: #f5f6ff !important;
   }
 }
+
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+    box-shadow: none!important;
+}
+
