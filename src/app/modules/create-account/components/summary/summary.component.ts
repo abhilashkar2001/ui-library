@@ -9,7 +9,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   styleUrls: ['./summary.component.scss'],
 })
 export class AccountSummaryComponent implements OnInit {
-  loanDetailsStore = SummaryStore.loanDetailsStore;
+  accountDetailsStore = SummaryStore.AccountDetailsStore;
   collateralHeaders = SummaryStore.collateralHeaders;
   directorData = SummaryStore.directorDetailsStore;
   summary: any;
