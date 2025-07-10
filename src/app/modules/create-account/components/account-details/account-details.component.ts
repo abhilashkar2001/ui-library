@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+// import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { LocaleData, selectUser, User } from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
@@ -15,6 +16,8 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 // import moment from 'moment';
 import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
+// import { AccountSelectionComponent } from '../account-selection/account-selection.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-account-details',
@@ -48,17 +51,25 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   max: any;
   @Input() isEdit = false;
   @Input() screenCode = '';
+  selectedAccountType: string = '';
+  data: any;
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
+    // private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
+    this.data = this.activatedRoute.snapshot['queryParams']['type'];
+    console.log(this.data);
+    console.log(this.activatedRoute);
+
     // this.loadLocaleData();
   }
 
@@ -70,8 +81,14 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       this.fetchLoanDetails();
     }
     this.buildLoanDetailsForm();
-  }
 
+    const validValues = this.holderTypeArr.map((item) => item.value);
+    if (validValues.includes(this.data)) {
+      this.accountDetailsForm
+        ?.get('accountDetails.holderType')
+        ?.setValue(this.data);
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isEdit']) {
       console.log('Edit mode ON');
