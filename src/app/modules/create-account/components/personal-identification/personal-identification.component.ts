@@ -26,11 +26,11 @@ import {
 } from 'rxjs';
 
 @Component({
-  selector: 'app-director-details',
-  templateUrl: './director-details.component.html',
-  styleUrls: ['./director-details.component.scss'],
+  selector: 'app-personal-identification',
+  templateUrl: './personal-identification.component.html',
+  styleUrls: ['./personal-identification.component.scss'],
 })
-export class AccountDirectorDetailsComponent implements OnInit {
+export class PersonalIdentificationComponent implements OnInit {
   @Input() docCustomerDetails: any;
   customerDetailsForm!: FormGroup;
   staticData = PersonalDetailsConstant.GENERIC_SATIC_KEYS;

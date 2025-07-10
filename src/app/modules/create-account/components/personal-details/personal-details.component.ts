@@ -9,11 +9,11 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-disbursement-details',
-  templateUrl: './disbursement-details.component.html',
-  styleUrls: ['./disbursement-details.component.scss'],
+  selector: 'app-personal-details',
+  templateUrl: './personal-details.component.html',
+  styleUrls: ['./personal-details.component.scss'],
 })
-export class AccountDisbursementDetailsComponent implements OnInit {
+export class AccountPersonalDetailsComponent implements OnInit {
   disbursementForm: FormGroup | undefined;
   currentDate: Date | undefined;
   genericValue: GenericValueInfoModel | undefined;

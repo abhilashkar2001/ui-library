@@ -12,10 +12,10 @@ import { SummaryComponent } from '../modules/loan/components/summary/summary.com
 import { DigitalSignatureComponent } from '../modules/loan/components/digital-signature/digital-signature.component';
 import { AccountDetailsComponent } from 'app/modules/create-account/components/account-details/account-details.component';
 import { AccountDocumentUploadComponent } from 'app/modules/create-account/components/document-upload/document-upload.component';
-import { AccountDirectorDetailsComponent } from 'app/modules/create-account/components/director-details/director-details.component';
-import { AccountDisbursementDetailsComponent } from 'app/modules/create-account/components/disbursement-details/disbursement-details.component';
 import { AccountSummaryComponent } from 'app/modules/create-account/components/summary/summary.component';
 import { AccountDigitalSignatureComponent } from 'app/modules/create-account/components/digital-signature/digital-signature.component';
+import { PersonalIdentificationComponent } from 'app/modules/create-account/components/personal-identification/personal-identification.component';
+import { AccountPersonalDetailsComponent } from 'app/modules/create-account/components/personal-details/personal-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -49,8 +49,8 @@ export const ComponentConstant: {
 export interface AccountComponentMap {
   'Account Details': AccountDetailsComponent;
   'Document Upload': AccountDocumentUploadComponent;
-  'Personal Identification': AccountDirectorDetailsComponent;
-  'Personal Details': AccountDisbursementDetailsComponent;
+  'Personal Identification': PersonalIdentificationComponent;
+  'Personal Details': AccountPersonalDetailsComponent;
   Summary: AccountSummaryComponent;
   'Digital Signature': AccountDigitalSignatureComponent;
 }
@@ -60,8 +60,8 @@ export const AccountComponentConstant: {
 } = {
   'Account Details': AccountDetailsComponent,
   'Document Upload': AccountDocumentUploadComponent,
-  'Personal Identification': AccountDirectorDetailsComponent,
-  'Personal Details': AccountDisbursementDetailsComponent,
+  'Personal Identification': PersonalIdentificationComponent,
+  'Personal Details': AccountPersonalDetailsComponent,
   Summary: AccountSummaryComponent,
   'Digital Signature': AccountDigitalSignatureComponent,
 };
