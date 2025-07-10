@@ -242,4 +242,149 @@ export class SummaryStore {
     { key: 'document', label: 'Document Upload' },
     { key: 'action', label: 'Action' },
   ];
+
+  static readonly AccountDetailsStore = [
+    {
+      title: 'Account Details',
+      key: 'accountDetails',
+      headerInfo: [
+        {
+          headerCell: 'Account Type',
+          headerDef: 'accountType',
+        },
+        { headerCell: 'Account Description', headerDef: 'desc' },
+        { headerCell: 'Business Product Name', headerDef: 'interestRate' },
+        { headerCell: 'Product Description', headerDef: 'emiAmount' },
+        { headerCell: 'Account Branch', headerDef: 'emiInterestPayable' },
+        {
+          headerCell: 'Account Currency',
+          headerDef: 'accountCurrency',
+        },
+        { headerCell: 'Custom Category', headerDef: 'totalPayableAmount' },
+        { headerCell: 'Holder Type', headerDef: 'repaymentFrequency' },
+      ],
+    },
+    {
+      title: 'Personal Details',
+      key: 'personalDetails',
+      headerInfo: [
+        {
+          headerCell: 'CIF Number',
+          headerDef: 'cifNumber',
+        },
+        { headerCell: 'Prefix', headerDef: 'prefix' },
+        { headerCell: 'First Name', headerDef: 'interestRate' },
+        { headerCell: 'Last Name', headerDef: 'emiAmount' },
+        { headerCell: 'Date of Birth', headerDef: 'emiInterestPayable' },
+        {
+          headerCell: 'Gender',
+          headerDef: 'accountCurrency',
+        },
+        { headerCell: 'Marital Status', headerDef: 'totalPayableAmount' },
+        { headerCell: 'Nationality', headerDef: 'repaymentFrequency' },
+        { headerCell: 'County Of Residence', headerDef: 'repaymentFrequency' },
+      ],
+    },
+    {
+      title: 'Identification Details',
+      key: 'identificationDetails',
+      headerInfo: [
+        {
+          headerCell: 'Identification Number',
+          headerDef: 'cifNumber',
+        },
+        { headerCell: 'Country of Issuance', headerDef: 'prefix' },
+        { headerCell: 'Date issue', headerDef: 'interestRate' },
+        { headerCell: 'Expiry Date', headerDef: 'emiAmount' },
+      ],
+    },
+    {
+      title: 'Document Upload & Personal Identification',
+      key: 'documentUpload',
+      headerInfo: [
+        {
+          headerCell: 'Last 6 Months Bank Statement *',
+          headerDef: 'parentCompany',
+        },
+      ],
+    },
+    {
+      title: 'Contact Details',
+      key: 'contactDetail',
+      headerInfo: [
+        { headerCell: 'Mobile No', headerDef: 'disbursementTypeValue' },
+        { headerCell: 'Alternate No', headerDef: 'internal' },
+        {
+          headerCell: 'Whatsapp No',
+          headerDef: 'internalAccount',
+        },
+        { headerCell: 'Email ID', headerDef: 'accountNo' },
+        { headerCell: 'Telephone(Home)', headerDef: 'customerName' },
+        { headerCell: 'Telephone(work)', headerDef: 'branchName' },
+        { headerCell: 'Fax', headerDef: 'fax' },
+        { headerCell: 'Statement Via', headerDef: 'branchName' },
+      ],
+    },
+    {
+      title: 'Address',
+      key: 'address',
+      headerInfo: [
+        { headerCell: 'Address Line 1', headerDef: 'nationalId' },
+        { headerCell: 'Address Line 2', headerDef: 'accountNo' },
+        { headerCell: 'Resident Status', headerDef: 'creditStatus' },
+        { headerCell: 'Subrub', headerDef: 'nationalId' },
+        { headerCell: 'City', headerDef: 'accountNo' },
+        { headerCell: 'Postal Code', headerDef: 'creditStatus' },
+        { headerCell: 'Living Address Since', headerDef: 'creditStatus' },
+      ],
+    },
+    {
+      title: 'Spouse Details',
+      key: 'spouseDetails',
+      headerInfo: [
+        { headerCell: 'Prefix', headerDef: 'nationalId' },
+        { headerCell: 'First Name', headerDef: 'accountNo' },
+        { headerCell: 'Last Name', headerDef: 'creditStatus' },
+        { headerCell: 'Date Of Birth', headerDef: 'nationalId' },
+        { headerCell: 'Spouse Telephone(Home)', headerDef: 'accountNo' },
+        { headerCell: 'Spouse Telephone(Work)', headerDef: 'creditStatus' },
+        { headerCell: 'Mobile No', headerDef: 'creditStatus' },
+        { headerCell: 'Email', headerDef: 'creditStatus' },
+        { headerCell: 'Employee Status', headerDef: 'creditStatus' },
+        { headerCell: 'Net Income', headerDef: 'creditStatus' },
+      ],
+    },
+    {
+      title: 'Emergency Contact Details / Next of Kin',
+      key: 'emergencyDetails',
+      headerInfo: [
+        { headerCell: 'Prefix', headerDef: 'businessName' },
+        { headerCell: 'First Name', headerDef: 'companyTypeValue' },
+        {
+          headerCell: 'Last Name',
+          headerDef: 'natureOfBusinessValue',
+        },
+        { headerCell: 'Relationship', headerDef: 'segmentValue' },
+        { headerCell: 'Mobile Number', headerDef: 'noOfDirectors' },
+        {
+          headerCell: 'Alternate Number',
+          headerDef: 'countryOfIncorporationName',
+        },
+        {
+          headerCell: 'Whatsapp Number',
+          headerDef: 'dateOfIncorporation',
+        },
+        { headerCell: 'Email ID', headerDef: 'registrationNumber' },
+        { headerCell: 'Telephone(Home)', headerDef: 'businessIntensity' },
+        { headerCell: 'Telephone(Work)', headerDef: 'sourceOfIncomeValue' },
+        { headerCell: 'Fax', headerDef: 'tinNumber' },
+        { headerCell: 'Address Line 1', headerDef: 'parentCompanyName' },
+        { headerCell: 'Address Line 2', headerDef: 'parentCompanyName' },
+        { headerCell: 'Resident Status', headerDef: 'parentCompanyName' },
+        { headerCell: 'Subrub', headerDef: 'parentCompanyName' },
+        { headerCell: 'City', headerDef: 'parentCompanyName' },
+        { headerCell: 'Postal Code', headerDef: 'parentCompanyName' },
+      ],
+    },
+  ];
 }
