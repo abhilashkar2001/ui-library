@@ -20,4 +20,6 @@ export class AccountDigitalSignatureComponent {
       console.log(res);
     });
   }
+
+  download() {}
 }
