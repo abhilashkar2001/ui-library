@@ -1,4 +1,35 @@
-<form *ngIf="disbursementForm" [formGroup]="disbursementForm" fxLayout="column">
+<!-- <div fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div fxFlex="calc(25%)">Section 1</div>
+  <div fxFlex="calc(25%)">Section 2</div>
+  <div fxFlex="calc(25%)">Section 3</div>
+  <div fxFlex="calc(25%)">Section 3</div>
+</div> -->
+<span *ngFor="let acc of accordionItems">
+<mat-accordion>
+  <mat-expansion-panel class="styled-panel" [expanded]="acc.expanded">
+    <mat-expansion-panel-header class="panel-header">
+      <div class="panel-header-content">
+        <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+          <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
+          <img src="assets/images/tickicon.svg" alt="Tick" />
+          <ng-template #unticked>
+            <img src="assets/images/untickicon.svg" alt="Untick" />
+          </ng-template>
+          <span class="header_md"> {{acc.header}}
+          </span>
+          <!-- <span class="required">*</span> -->
+        </div>
+        <span class="delete_btn">
+          Delete
+        </span>
+      </div>
+    </mat-expansion-panel-header>
+    <app-generic-account-form [detailsForGeneric]="detailsForGeneric"></app-generic-account-form>
+  </mat-expansion-panel>
+</mat-accordion>
+</span>
+
+<!-- <form *ngIf="disbursementForm" [formGroup]="disbursementForm" fxLayout="column">
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <div fxFlex="24">
       <ic-select
@@ -180,4 +211,4 @@
       </ng-container>
     </ng-container>
   </div>
-</form>
+</form> -->

@@ -21,6 +21,7 @@ import { AccountSignaturePopupComponent } from './components/digital-signature/s
 import { AccountSelectionComponent } from './components/account-selection/account-selection.component';
 import { PersonalIdentificationComponent } from './components/personal-identification/personal-identification.component';
 import { AccountPersonalDetailsComponent } from './components/personal-details/personal-details.component';
+import { GenericAccountFormComponent } from './components/personal-details/generic-account-form/generic-account-form.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AccountPersonalDetailsComponent } from './components/personal-details/p
     AccountSignaturePopupComponent,
     AccountSelectionComponent,
     PersonalIdentificationComponent,
+    GenericAccountFormComponent,
   ],
   imports: [
     CommonModule,
