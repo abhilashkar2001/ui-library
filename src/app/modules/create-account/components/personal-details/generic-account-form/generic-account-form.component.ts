@@ -15,11 +15,12 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-personal-details',
-  templateUrl: './personal-details.component.html',
-  styleUrls: ['./personal-details.component.scss'],
+  selector: 'app-generic-account-form',
+  templateUrl: './generic-account-form.component.html',
+  styleUrls: ['./generic-account-form.component.scss']
 })
-export class AccountPersonalDetailsComponent implements OnInit {
+export class GenericAccountFormComponent {
+
   // disbursementForm: FormGroup | undefined;
   // currentDate: Date | undefined;
   // genericValue: GenericValueInfoModel | undefined;
@@ -41,11 +42,23 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // accountValidators = ['accountTypeId'];
   // originationId: number | undefined;
 
-  detailsForGeneric = {
-    accountType: 'minor'
-  }
-  noOfapplicantguardian: any = 2;
-  accordionItems: any = [];
+  @Input() detailsForGeneric: any;
+
+  personalDetails!: FormGroup;
+
+  prefix = [];
+  genders = [];
+  maritalStatus = [];
+  nationality = [];
+  countries = [];
+
+  residentStatus = [];
+  cities = [];
+  relationships = [];
+
+  countriesIsdCodes: any;
+  maxMobileLength: any;
+
 
   constructor(
     //@ts-ignore
@@ -59,7 +72,6 @@ export class AccountPersonalDetailsComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
-    this.createAccordian();
   }
 
   // get loanDisbursementAccount() {
@@ -71,20 +83,75 @@ export class AccountPersonalDetailsComponent implements OnInit {
     // this.buildDisbursementForm();
     // this.fetchGenericValues();
     // this.fetchDisbursementDetails();
-
+    this.createPersonalDetailsForm();
   }
 
-  createAccordian() {
-    if(this.detailsForGeneric.accountType == 'minor'){
-       this.accordionItems.push({ header: 'Minor Details', expanded: false });
-    }
-    for (let i = 0; i < this.noOfapplicantguardian; i++) {
-      if (this.detailsForGeneric.accountType == 'joint') {
-        this.accordionItems.push({ header: 'Applicant ' + (i + 1), expanded: false });
-      } else if (this.detailsForGeneric.accountType == 'minor') {
-        this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false });
-      }
-    }
+  createPersonalDetailsForm() {
+    this.personalDetails = this.fb.group({
+      cifNumber: ['', []],
+      isPrimary: [true, []],
+      prefix: ['', []],
+      firstName: ['', []],
+      LastName: ['', []],
+      dateOfBirth: ['', []],
+      gender: ['', []],
+      maritalStatus: ['', []],
+      nationality: ['', []],
+      countryOfResidence: ['', []],
+
+      identificationNo: ['', []],
+      countryOfIssue: ['', []],
+      dateOfIssue: ['', []],
+      expiryDate: ['', []],
+
+      mobtCode: ['', []],
+      mobileNo: ['', []],
+      alternateNo: ['', []],
+      whatsAppNo: ['', []],
+      emailId: ['', []],
+      telephoneHome: ['', []],
+      telephoneWork: ['', []],
+      fax: ['', []],
+      statementVia: ['', []],
+
+      addressLine1: ['', []],
+      addressLine2: ['', []],
+      residentStatus: ['', []],
+      subRub: ['', []],
+      city: ['', []],
+      postalCode: ['', []],
+      livingAddressSince: ['', []],
+
+      spousePrefix: ['', []],
+      spouseFirstName: ['', []],
+      spouseLastName: ['', []],
+      spouseDateOfBirth: ['', []],
+      spouseTelephoneHome: ['', []],
+      spouseTelephoneWork: ['', []],
+      spouseMobileNo: ['', []],
+      spouseEmail: ['', []],
+      spouseEmployeeStatus: ['', []],
+      spouseNetIncome: ['', []],
+
+      emePrefix: ['', []],
+      emeFirstName: ['', []],
+      emeLastName: ['', []],
+      emeRelationship: ['', []],
+      emeMobileNo: ['', []],
+      emeAlternateNo: ['', []],
+      emeWhatsAppNo: ['', []],
+      emeEmailId: ['', []],
+      emeTelephoneHome: ['', []],
+      emeTelephoneWork: ['', []],
+      emeFax: ['', []],
+      emeAddressLine1: ['', []],
+      emeAddressLine2: ['', []],
+      emeResidentStatus: ['', []],
+      emeSubRub: ['', []],
+      emeCity: ['', []],
+      emePostalCode: ['', []],
+      emeLivingAddressSince: ['', []],
+    });
   }
 
   // buildDisbursementForm(data?: any) {
