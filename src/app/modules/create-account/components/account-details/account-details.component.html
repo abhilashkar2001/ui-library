@@ -115,7 +115,10 @@
       *ngIf="
         accountDetailsForm
           ?.get('accountDetails.holderType')
-          ?.value?.toLowerCase() == !'minor'
+          ?.value?.toLowerCase() === 'joint' ||
+        accountDetailsForm
+          ?.get('accountDetails.holderType')
+          ?.value?.toLowerCase() === 'individual'
       "
     >
       <ic-slide-toggle
