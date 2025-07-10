@@ -1,6 +1,6 @@
 
 //@ts-ignore
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 //@ts-ignore
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //@ts-ignore

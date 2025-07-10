@@ -76,7 +76,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
 
   createAccordian() {
     if(this.detailsForGeneric.accountType == 'minor'){
-       this.accordionItems.push({ header: 'Minor Details', expanded: false });
+       this.accordionItems.push({ header: 'Minor Details', expanded: true });
     }
     for (let i = 0; i < this.noOfapplicantguardian; i++) {
       if (this.detailsForGeneric.accountType == 'joint') {
