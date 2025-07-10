@@ -1,8 +1,8 @@
 <section fxFlex="100" fxLayout="column" fxLayoutGap="2%">
-  <div>
-    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxFlex="49" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="column">
-        <span class="header_md">Signature *</span>
+        <span class="header_md"><b>Sign Now *</b></span>
         <span class="breadcrum_md"
           >Click the e-sign link to sign digitally or upload your signature
           image</span
@@ -14,6 +14,22 @@
         (keydown.enter)="openSignPopup()"
         tabindex="0"
         ><u>E-Sign</u></span
+      >
+    </div>
+    <div fxFlex="49" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="column">
+        <span class="header_md"><b>Physical Signature *</b></span>
+        <span class="breadcrum_md"
+          >Ensure the letter is downloaded & re-uploaded for status tracking
+          purposes.</span
+        >
+      </div>
+      <span
+        class="theme_md cursor-pointer"
+        (click)="download()"
+        (keydown.enter)="openSignPopup()"
+        tabindex="0"
+        ><u>download</u></span
       >
     </div>
   </div>
@@ -28,7 +44,7 @@
         <img [src]="" alt="image" />
       </div>
       <div class="img_container">
-        <span class="header_md img_name">{{ 'image' }}</span>
+        <span class="header_md img_name">{{ 'Document' }}</span>
       </div>
       <img tabindex="0" src="assets/images/trash_new.svg" alt="trash" />
     </div>
