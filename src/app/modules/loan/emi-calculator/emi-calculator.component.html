@@ -102,17 +102,20 @@
         fxLayoutGap="10"
         fxLayoutAlign="space-between center"
       >
-        <ic-slider
-          fxFlex="45"
-          fxFlex.lt-md="100"
-          [control]="emiFormGroup.get('loanAmount') | formcontrol"
-          [min]="minimumAmount"
+        <mat-slider
+          (change)="onSliderChange($event)"
           [max]="maximumAmount"
-        ></ic-slider>
-        <ic-slider
-          fxFlex="45"
-          fxFlex.lt-md="100"
-          [control]="emiFormGroup.get('tenure') | formcontrol"
+          [min]="minimumAmount"
+          [step]="thumbLabel"
+          class="custom-slider"
+          discrete
+          fxFlex="100"
+        >
+          <input #slider [value]="amountValue" matSliderThumb />
+        </mat-slider>
+
+        <mat-slider
+          (change)="onYearSliderChange($event)"
           [min]="
             emiFormGroup.get('isMonths')?.value
               ? minimumTenorMonth
@@ -123,9 +126,41 @@
               ? maximumTenorMonth
               : maximumTenorYear
           "
-        ></ic-slider>
+          [step]="1"
+          class="custom-slider"
+          fxFlex="100"
+        >
+          <input
+            #slider
+            [value]="emiFormGroup.get('tenure')?.value"
+            matSliderThumb
+          />
+        </mat-slider>
       </div>
-
+      <div fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+        <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxFlex="30">{{ currencySymbol }} {{ minimumAmount }}</div>
+          <div fxFlex="29">{{ currencySymbol }} {{ maximumAmount }}</div>
+        </div>
+        <div fxFlex="100" fxLayoutAlign="space-between center">
+          <div fxFlex="56">
+            {{ currencySymbol }}
+            {{
+              emiFormGroup.get('isMonths')?.value
+                ? minimumTenorMonth
+                : minimumTenorYear
+            }}
+          </div>
+          <div fxFlex="9">
+            {{ currencySymbol }}
+            {{
+              emiFormGroup.get('isMonths')?.value
+                ? maximumTenorMonth
+                : maximumTenorYear
+            }}
+          </div>
+        </div>
+      </div>
       <div class="breadcrum_md note-text">
         <span class="medium_txt">Note:</span> The estimated amount shown is
         based on your input. The applicable interest rate is fixed and

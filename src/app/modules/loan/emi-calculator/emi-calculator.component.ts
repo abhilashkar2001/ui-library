@@ -38,7 +38,8 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
   private productId: number;
   private subscriptions: Subscription[] = [];
   currencySymbol = '₹';
-
+  amountValue: any = 0;
+  thumbLabel = this.amountValue;
   constructor(
     private loanService: LoanService,
     private fb: NonNullableFormBuilder,
@@ -136,7 +137,22 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
     };
     this.sidenavService.open(contextData);
   }
-
+  onSliderChange(e: any) {
+    this.amountValue = e.srcElement.ariaValueText;
+    console.log(e.srcElement.ariaValueText);
+    if (
+      Number(this.amountValue) == 0 ||
+      Number(this.amountValue) < this.minimumAmount
+    ) {
+      this.emiFormGroup.get('loanAmount')?.setValue(this.minimumAmount);
+      return;
+    }
+    this.emiFormGroup.get('loanAmount')?.setValue(e.srcElement.ariaValueText);
+  }
+  onYearSliderChange(e: any) {
+    console.log(e.srcElement.ariaValueText);
+    this.emiFormGroup.get('tenure')?.setValue(e.srcElement.ariaValueText);
+  }
   getProductDetails(): void {
     this.loanService
       .getProductAspectDetails(this.productId)
