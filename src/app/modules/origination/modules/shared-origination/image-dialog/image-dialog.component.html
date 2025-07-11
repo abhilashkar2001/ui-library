@@ -14,11 +14,8 @@
   <div class="imageView">
     <ng-container *ngIf="!isPdfType; else showPdfTemplate">
       <img
-        [src]="
-          filePreview?.changingThisBreaksApplicationSecurity
-            | safe: 'url'
-            | async
-        "
+        *ngIf="filePreview | safe: 'url' | async as filePreview"
+        [src]="filePreview"
         alt="Expanded View"
         class="images expanded_view"
         width="100%"
@@ -27,11 +24,11 @@
 
     <ng-template #showPdfTemplate>
       <object
-        [data]="dataLocalUrl"
-        aria-label="Checklist Document"
-        height="500px"
+        *ngIf="filePreview | safe: 'url' | async as filePreview"
+        [data]="filePreview"
         type="application/pdf"
         width="100%"
+        height="500px"
       ></object>
     </ng-template>
   </div>
