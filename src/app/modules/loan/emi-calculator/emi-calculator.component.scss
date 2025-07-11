@@ -2,23 +2,36 @@
   background-image: url('~assets/images/emi-calc-bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-
-  .emi-header {
-    display: inline-block;
-    background-color: #ffffff;
-    width: 100%;
-    height: 100%;
-    padding: 12px;
+  background-color: aliceblue;
+  background-blend-mode: darken;
+  > div {
+    margin: 16px 40px;
   }
-  .emi-calculator-content {
-    margin: 12px;
+  .emi-header {
+    display: inline;
     background-color: #ffffff;
+    height: 100%;
+    border-radius: 12px;
     padding: 12px;
+    width: fit-content;
+  }
+  .description-text {
+    width: 60%;
+  }
+
+  .emi-calculator-content {
+    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 
     .interest-rate {
       background-color: #f5f6ff;
       padding: 6px 12px;
       border-radius: 8px;
+
       span {
         color: #004c97;
       }
@@ -29,6 +42,8 @@
         border: 2px solid #dcdcdc;
         border-radius: 8px;
         overflow: hidden;
+        cursor: pointer;
+
         .tenure-input,
         .months-btn,
         .years-btn,
@@ -42,6 +57,7 @@
           text-align: center;
           outline: none;
         }
+
         .months-btn.active,
         .years-btn.active {
           background-color: #004c97;
@@ -50,9 +66,11 @@
         }
       }
     }
+
     .emi-calculator-result {
-      border-radius: 8px;
+      border-radius: 18px;
       border: 2px #f4f5fe solid;
+      overflow: hidden;
 
       .top-green-section {
         background-image: url('~assets/images/green-bg-loan-emi-result.svg');
@@ -63,6 +81,8 @@
         justify-content: center;
         align-items: center;
         height: 40%;
+        padding: 70px 20px;
+
         .monthly-emi {
           color: #418f46;
           font-family: Inter;
@@ -73,12 +93,51 @@
           letter-spacing: 0%;
         }
       }
+
       .horizontal-dashed-line {
         border-bottom: 1px dashed #dcdcdc;
       }
+
       .emi-calculator-table > div {
-        margin: 10px 8px;
+        margin: 12px 8px;
       }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin: 16px;
+
+    .pointer {
+      cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .emi-calculator {
+    padding: 1rem;
+    .description-text {
+      width: 100%;
+    }
+    .emi-calculator-content {
+      flex-direction: column;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      > div {
+        width: 100%;
+      }
+    }
+
+    .emi-calculator-result {
+      margin-top: 16px;
     }
   }
 }

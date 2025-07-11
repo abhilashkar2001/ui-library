@@ -49,7 +49,10 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      const state: ProductState = { productId: event.selectedLoan.basisId };
+      const state: ProductState = {
+        productId: event.selectedLoan.basisId,
+        selectedLoan: event.selectedLoan,
+      };
       await this.router.navigate(['/loan/emi-calculator'], {
         state,
       });

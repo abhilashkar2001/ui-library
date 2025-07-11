@@ -1,62 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
+import { debounceTime, Subscription } from 'rxjs';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import {
-  FormControl,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
-import { ICalculatorReqeust } from '../../../shared/models/loan/calculator.model';
-import { Location } from '@angular/common';
-import { ProductState } from '../../../shared/models/router-state.model';
+  SidenavService,
+  ContainerContextData,
+} from 'app/shared/services/sidenav.service';
+import { EmiCalculatorDrawerComponent } from './emi-calculator-drawer/emi-calculator-drawer.component';
+import { ProductState } from 'app/shared/models/router-state.model';
+import { getFirstRepaymentDate } from 'app/shared/helpers/utils';
 
 @Component({
   selector: 'app-emi-calculator',
   templateUrl: './emi-calculator.component.html',
   styleUrls: ['./emi-calculator.component.scss'],
 })
-export class EmiCalculatorComponent implements OnInit {
-  // 🟡 From stashed changes
-  customerCategoryList: any[] = [
-    { id: 1, values: 'SME' },
-    { id: 2, values: 'MSME' },
-  ];
-  principalAmount = 0;
-  interestAmount = 0;
-  totalAmount = 0;
+export class EmiCalculatorComponent implements OnInit, OnDestroy {
   emiFormGroup!: FormGroup;
-  productCode: string | undefined;
+
+  customerCategoryList: any[] = [];
+  interestRate = 0;
   monthlyEmiPayment = 0;
+  currentLoanName = '';
+  basisCode = '';
+  minimumTenorYear = 0;
+  maximumTenorYear = 0;
+  minTenorMonth = 0;
+  minimumTenorMonth = 0;
+  maximumTenorMonth = 0;
+  minimumAmount = 0;
+  maximumAmount = 0;
+  // results of calcc
+  principalAmount = 0;
+  totalAmount = 0;
+  interestAmount = 0;
+  private productId: number;
+  private subscriptions: Subscription[] = [];
   currencySymbol = '₹';
 
-  // 🔵 From pulled changes
-  calculatorForm:
-    | FormGroup<{
-        [K in keyof ICalculatorReqeust]: FormControl<ICalculatorReqeust[K]>;
-      }>
-    | undefined;
-
-  private productId: number;
-
   constructor(
-    private fb: FormBuilder,
     private loanService: LoanService,
-    private _location: Location,
-    private nonNullableFb: NonNullableFormBuilder,
+    private fb: NonNullableFormBuilder,
+    private location: Location,
+    public sidenavService: SidenavService,
   ) {
-    // pulled change
-    this.productId = (<ProductState>this._location.getState()).productId;
-    this.initCalculatorForm();
+    const state = this.location.getState() as ProductState;
+    this.productId = state?.productId;
+    this.currentLoanName = state?.selectedLoan?.basisName;
+    this.basisCode = state?.selectedLoan?.basisCode;
   }
 
   ngOnInit(): void {
-    this.getProductDetails(); // from pulled
-    this.fetchCustomerCategories(); // from stashed
-    this.buildEmiForm(); // from stashed
+    this.buildForm();
+    this.getProductDetails();
+    this.fetchCustomerCategories();
+    this.initSubscriptions();
   }
-
-  // 🔁 STASHED
-  buildEmiForm() {
+  buildForm() {
     this.emiFormGroup = this.fb.group({
       loanAmount: [0],
       tenure: [25],
@@ -64,37 +65,99 @@ export class EmiCalculatorComponent implements OnInit {
       isMonths: [true],
     });
   }
+  private initSubscriptions(): void {
+    const form = this.emiFormGroup;
 
-  fetchCustomerCategories() {
-    if (!this.productCode) return;
+    this.subscriptions.push(
+      form.valueChanges.pipe(debounceTime(300)).subscribe((formValue: any) => {
+        const { loanAmount, customerCategory, tenure } = formValue;
+
+        if (loanAmount > 0 && customerCategory) {
+          this.fetchInterestRate(customerCategory, loanAmount);
+        }
+
+        if (loanAmount > 0 && tenure > 0 && this.interestRate > 0) {
+          this.calculateEmi(loanAmount, tenure);
+        }
+      }),
+    );
+  }
+
+  private fetchCustomerCategories(): void {
+    if (!this.basisCode) return;
     this.loanService
-      .fetchCustomerCategories(this.productCode)
+      .fetchCustomerCategories(this.basisCode)
       .subscribe((res) => {
-        this.customerCategoryList = res?.data;
+        this.customerCategoryList = res?.data ?? [];
       });
   }
 
-  setTenureUnit(isMonths: boolean) {
+  private fetchInterestRate(category: string, amount: number): void {
+    if (!category || !amount) return;
+    this.loanService
+      .fetchInterestRateForCustomerCategory(this.basisCode, category, amount)
+      .subscribe((res) => {
+        this.interestRate = res?.data ?? 0;
+        this.calculateEmi(amount, this.emiFormGroup.get('tenure')?.value);
+      });
+  }
+
+  private calculateEmi(loanAmount: number, tenure: number): void {
+    if (this.emiFormGroup.get('isMonths')?.value === false) {
+      tenure = tenure * 12;
+    }
+    this.loanService
+      .getEmiCalculation({
+        principleAmount: loanAmount,
+        interestRate: this.interestRate,
+        numberOfMonths: tenure,
+        firstRepaymentDate: getFirstRepaymentDate(),
+      })
+      .subscribe((res: any) => {
+        console.log('EMI response', res);
+        this.monthlyEmiPayment = res.data?.monthlyPayment;
+        this.principalAmount = res.data?.principal;
+        this.interestAmount = res.data?.totalInterest;
+        this.totalAmount = res.data?.totalRepaymentAmount;
+      });
+  }
+
+  setTenureUnit(isMonths: boolean): void {
     this.emiFormGroup.patchValue({ isMonths });
   }
 
-  // 🔁 PULLED
-  initCalculatorForm() {
-    this.calculatorForm = this.nonNullableFb.group({
-      principleAmount: [0, Validators.required],
-      interestRate: [0, Validators.required],
-      numberOfMonths: [0, Validators.required],
-      firstRepaymentDate: ['', Validators.required],
-    });
+  openEmiCalculatorDrawer(): void {
+    const contextData: ContainerContextData = {
+      component: EmiCalculatorDrawerComponent,
+      data: {
+        loanAmount: this.emiFormGroup.get('loanAmount')?.value,
+        interestRate: this.interestRate,
+      },
+    };
+    this.sidenavService.open(contextData);
   }
 
-  getProductDetails() {
+  getProductDetails(): void {
     this.loanService
       .getProductAspectDetails(this.productId)
       .subscribe((resp) => {
-        if (resp?.statusCode === 200) {
-          // handle response
+        const lending = resp?.data?.[0]?.lendingParameters?.[0];
+        if (resp?.statusCode === 200 && lending) {
+          this.minimumAmount = lending.minimumAmount ?? 0;
+          this.maximumAmount = lending.maximumAmount ?? 0;
+          this.minimumTenorYear = lending.minimumTenorYear ?? 0;
+          this.maximumTenorYear = lending.maximumTenorYear ?? 0;
+          this.minimumTenorMonth = lending.minimumTenorMonth ?? 0;
+          this.maximumTenorMonth = lending.maximumTenorMonth ?? 0;
         }
       });
+  }
+
+  goBack(): void {
+    console.log('GO BACK');
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

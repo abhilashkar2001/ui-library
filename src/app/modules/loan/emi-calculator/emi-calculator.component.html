@@ -2,43 +2,73 @@
   fxFlex="100"
   fxLayout="column"
   class="emi-calculator"
+  fxLayoutGap="10"
   [formGroup]="emiFormGroup"
 >
   <div class="txt_sm_black emi-header">Loan EMI Calculator</div>
-  <div class="header_xxl_bold_black">
+
+  <div class="header_xxl_bold_black description-text">
     Estimated amount displayed. Final loan terms will be customised upon
     approval.
   </div>
-  <div class="emi-calculator-content" fxLayout="row" fxLayoutGap="10">
-    <!-- First section -->
-    <div fxFlex="65">
+
+  <div
+    class="emi-calculator-content"
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="10"
+  >
+    <!-- Left Section -->
+    <div fxLayout="column" fxLayoutGap="10" fxFlex="65" fxFlex.lt-md="100">
       <div fxLayoutAlign="space-between center" fxLayout="row">
-        <div class="header_lg_bold_black">Business Loan EMI Calculator</div>
-        <div class="interest-rate">Interest rate <span>10.53%</span></div>
+        <div class="header_lg_bold_black">
+          {{ currentLoanName }} EMI Calculator
+        </div>
+        <div class="interest-rate">
+          Interest rate
+          <span class="rate-value">{{ interestRate || 0 }} %</span>
+        </div>
       </div>
-      <div class="customer-category">
+
+      <!-- Customer Category -->
+      <div *ngIf="customerCategoryList" class="customer-category">
         <div class="breadcrum_md">Customer Category</div>
-        <div *ngFor="let category of customerCategoryList">
+        <div fxLayout="row wrap" fxLayoutAlign="start center">
           <ic-radio-button
+            *ngFor="let category of customerCategoryList"
             [control]="emiFormGroup.get('customerCategory') | formcontrol"
-            [label]="category.values"
+            [label]="category.categoryName"
+            [fxFlex]="customerCategoryList.length === 1 ? '100' : '20'"
+            fxFlex.lt-md="70"
+            fxLayoutAlign.lt-md="center center"
+            [value]="category.categoryName"
           ></ic-radio-button>
         </div>
       </div>
+
+      <!-- Amount and Tenure -->
       <div
         class="amount-sliders"
         fxLayout="row"
+        fxLayout.lt-md="column"
         fxLayoutGap="10"
         fxLayoutAlign="space-between center"
       >
         <div class="txt_sm_black">Amount</div>
-        <ic-form-field
-          [control]="emiFormGroup.get('loanAmount') | formcontrol"
-          label="Amount"
-        >
-        </ic-form-field>
+        <div fxFlex.lt-md="100">
+          <ic-form-field
+            [control]="emiFormGroup.get('loanAmount') | formcontrol"
+            label="Amount"
+          ></ic-form-field>
+        </div>
+
         <div class="txt_sm_black">Tenure</div>
-        <div class="tenure-buttons" fxLayout="row">
+        <div
+          class="tenure-buttons"
+          fxLayout="row"
+          fxFlex.lt-md="100"
+          fxLayoutGap="5"
+        >
           <input formControlName="tenure" class="tenure-input" />
 
           <span
@@ -64,48 +94,113 @@
           </span>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between center">
+
+      <!-- Sliders -->
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="10"
+        fxLayoutAlign="space-between center"
+      >
         <ic-slider
           fxFlex="45"
+          fxFlex.lt-md="100"
           [control]="emiFormGroup.get('loanAmount') | formcontrol"
+          [min]="minimumAmount"
+          [max]="maximumAmount"
         ></ic-slider>
         <ic-slider
           fxFlex="45"
+          fxFlex.lt-md="100"
           [control]="emiFormGroup.get('tenure') | formcontrol"
+          [min]="
+            emiFormGroup.get('isMonths')?.value
+              ? minimumTenorMonth
+              : minimumTenorYear
+          "
+          [max]="
+            emiFormGroup.get('isMonths')?.value
+              ? maximumTenorMonth
+              : maximumTenorYear
+          "
         ></ic-slider>
       </div>
-      <div class="breadcrum_md">
+
+      <div class="breadcrum_md note-text">
         <span class="medium_txt">Note:</span> The estimated amount shown is
         based on your input. The applicable interest rate is fixed and
         determined by the selected tenure.
       </div>
     </div>
-    <div class="emi-calculator-result" fxFlex="40">
+
+    <!-- Right Section: EMI Result -->
+    <div class="emi-calculator-result" fxFlex="40" fxFlex.lt-md="100">
       <div class="top-green-section">
-        <div class="medium_txt">Your Monthly EMI Payment</div>
+        <div class="large_txt">Your Monthly EMI Payment</div>
         <div class="monthly-emi">
-          {{ currencySymbol }}{{ monthlyEmiPayment }}
+          {{ currencySymbol }}{{ monthlyEmiPayment | number }}
         </div>
       </div>
+
       <div
         fxLayout="row wrap"
         class="emi-calculator-table breadcrum_md"
         fxLayoutAlign="space-between center"
+        fxLayoutGap="10"
       >
         <div fxFlex="45">Principal Amount</div>
         <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
-          {{ currencySymbol }}{{ principalAmount }}
+          {{ currencySymbol }}{{ principalAmount | number }}
         </div>
+
         <div fxFlex="45">Interest Amount</div>
         <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
-          {{ currencySymbol }}{{ interestAmount }}
+          {{ currencySymbol }}{{ interestAmount | number }}
         </div>
+
         <div fxFlex="100" class="horizontal-dashed-line"></div>
+
         <div class="header_lg_bold_black" fxFlex="45">Total Amount</div>
         <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
-          {{ currencySymbol }}{{ totalAmount }}
+          {{ currencySymbol }}{{ totalAmount | number }}
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="end center"
+    fxLayoutAlign.lt-md="center center"
+    fxLayoutGap="10"
+    class="action-buttons"
+  >
+    <div
+      fxFlex="10"
+      (click)="openEmiCalculatorDrawer()"
+      (keydown.enter)="openEmiCalculatorDrawer()"
+      tabindex="0"
+      class="theme_md pointer"
+    >
+      EMI Calculator
+    </div>
+
+    <div fxFlex="13">
+      <ic-button
+        label="Back"
+        [icButtonType]="'outlined-rounded'"
+        (OnClick)="goBack()"
+      ></ic-button>
+    </div>
+
+    <div fxFlex="13" fxFlex.lt-md="100">
+      <ic-button
+        label="Apply Now"
+        [icButtonType]="'filled-rounded'"
+        (OnClick)="goBack()"
+      ></ic-button>
     </div>
   </div>
 </div>

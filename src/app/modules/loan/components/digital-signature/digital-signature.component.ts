@@ -111,6 +111,7 @@ export class DigitalSignatureComponent {
   get signatureArray(): FormArray {
     return this.signatureForm.get('signatureId') as FormArray;
   }
+
   deleteSignatureAt(index: any) {
     this.signatureArray.removeAt(index);
   }
@@ -124,9 +125,11 @@ export class DigitalSignatureComponent {
       console.warn('No uploaded signature to save.');
       return of('failure' as const);
     }
-
+    const signatureIdsOnly = this.signatureArray.value.map(
+      (item: any) => item.signatureId,
+    );
     const payload = {
-      signatureId: this.signatureArray.value,
+      signatureId: signatureIdsOnly,
       custStagingId: this.sessionStorageService.getCustomerStagingId(),
     };
 
