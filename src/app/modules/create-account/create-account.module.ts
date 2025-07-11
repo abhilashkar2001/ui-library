@@ -22,6 +22,7 @@ import { AccountSelectionComponent } from './components/account-selection/accoun
 import { PersonalIdentificationComponent } from './components/personal-identification/personal-identification.component';
 import { AccountPersonalDetailsComponent } from './components/personal-details/personal-details.component';
 import { GenericAccountFormComponent } from './components/personal-details/generic-account-form/generic-account-form.component';
+import { DynamicPagesModule } from '../origination/modules/dynamic-pages/dynamic-pages.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { GenericAccountFormComponent } from './components/personal-details/gener
     ReactiveFormsModule,
     SharedOriginationModule,
     OriginationExternalCallbackModule,
+    DynamicPagesModule,
   ],
 })
 export class CreateAccountModule {}

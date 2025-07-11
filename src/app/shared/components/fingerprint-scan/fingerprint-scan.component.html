@@ -1,0 +1,92 @@
+<section
+  class="fingerprint_popup_container"
+  fxFlex="100"
+  fxLayout="column"
+  fxLayoutAlign="space-between"
+>
+  <!-- HEADER : START -->
+  <section
+    class="fingerprint_header"
+    fxFlex="100"
+    fxLayout="column"
+    fxLayoutAlign="space-between"
+  >
+    <!-- Register a fingerprint -->
+    <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
+      <h1 class="fingerprint_header_title">Scan your Fingerprint</h1>
+      <mat-icon (click)="closeClick()">close</mat-icon>
+    </div>
+    <p class="fingerprint_header_subtitle">
+      Place the finger and scan each one to proceed
+    </p>
+  </section>
+  <!-- HEADER : END -->
+
+  <!-- ICON : START -->
+  <div
+    fxFlex="100"
+    fxLayoutAlign="center center"
+    class="fingerprint_icon_section"
+  >
+    <!-- New Fingerprint - Black Icon -->
+    <div class="fingerprint_icon" *ngIf="!isScanned && !isFailed">
+      <img src="assets/images/fingerprint-recognition2.svg" />
+    </div>
+    <!-- New Fingerprint - Success -->
+    <div class="fingerprint_icon" *ngIf="isScanned">
+      <img src="assets/images/fingerprint-recognition-success.svg" />
+    </div>
+    <!-- Scanned Failed -->
+    <div class="fingerprint_icon" *ngIf="isFailed">
+      <img
+        class="failure-class"
+        src="assets/images/fingerprint-recognition1.svg"
+      />
+    </div>
+  </div>
+  <!-- ICON : END -->
+
+  <!-- FOOTER BTN : START -->
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="5"
+    class="fingerprint_popup_footer"
+  >
+    <!-- New Scan Btn -->
+    <ic-button
+      *ngIf="!isScanned"
+      (OnClick)="closeClick()"
+      label="Cancel"
+      size="medium"
+      type="button"
+      icButtonType="outlined-rounded"
+    ></ic-button>
+    <ic-button
+      *ngIf="!isScanned && !isFailed"
+      (OnClick)="captureFingerprint()"
+      label="Scan"
+      size="medium"
+      type="submit"
+      icButtonType="outlined-rounded"
+    ></ic-button>
+    <ic-button
+      *ngIf="isScanned"
+      (OnClick)="done()"
+      label="Done"
+      size="medium"
+      type="submit"
+      icButtonType="outlined-rounded"
+    ></ic-button>
+    <ic-button
+      *ngIf="isFailed"
+      (OnClick)="captureFingerprint()"
+      label="Re-Scan"
+      size="medium"
+      type="submit"
+      icButtonType="outlined-rounded"
+    ></ic-button>
+  </div>
+  <!-- FOOTER BTN : END -->
+</section>

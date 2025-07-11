@@ -1,0 +1,36 @@
+.fingerprint_popup_container {
+  background-color: #fff;
+
+  .fingerprint_header {
+    padding: 16px;
+    .fingerprint_header_title {
+      font-size: 20px;
+      font-weight: 400;
+      font-family: 'Inter', serif;
+      margin-bottom: 4px;
+    }
+  }
+  .fingerprint_header_subtitle {
+    color: #525252;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Inter', serif;
+  }
+
+  .fingerprint_icon_section {
+    padding: 16px 0;
+    .fingerprint_icon {
+      height: 150px;
+      width: 150px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .fingerprint_popup_footer {
+    margin: 16px;
+  }
+}

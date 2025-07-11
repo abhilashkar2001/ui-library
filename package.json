@@ -50,6 +50,7 @@
     "ng-otp-input": "^1.9.3",
     "ngx-image-cropper": "^6.3.4",
     "ngx-toastr": "^19.0.0",
+    "ngx-webcam": "^0.4.1",
     "perfect-scrollbar": "^1.5.5",
     "rxjs": "^7.8.0",
     "swiper": "^8.4.5",

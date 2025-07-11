@@ -30,6 +30,9 @@ import { ViewDocSidePanelComponent } from './view-doc-side-panel/view-doc-side-p
 import { BankCodePanelComponent } from './bank-code-panel/bank-code-panel.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
 import { TermsConditionPopupComponent } from './terms-condition-popup/terms-condition-popup.component';
+import { WebcamModule } from 'ngx-webcam';
+import { FingerprintScanComponent } from './fingerprint-scan/fingerprint-scan.component';
+import { FaceScanComponent } from './face-scan/face-scan.component';
 
 const components = [
   HeaderTopComponent,
@@ -49,6 +52,8 @@ const components = [
   BankCodePanelComponent,
   CustomTableComponent,
   TermsConditionPopupComponent,
+  FingerprintScanComponent,
+  FaceScanComponent,
 ];
 
 @NgModule({
@@ -66,6 +71,7 @@ const components = [
     SwiperModule,
     InputMaskModule,
     IcustLibraryModule,
+    WebcamModule,
   ],
   declarations: components,
   exports: components,

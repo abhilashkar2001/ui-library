@@ -1,0 +1,92 @@
+<div
+  fxFlex="100"
+  fxLayout="column"
+  fxLayoutAlign="space-between"
+  class="biometric_scan_popup"
+>
+  <!-- HEADER -->
+  <div fxFlex="100" fxLayout="column" class="header">
+    <div
+      fxFlex="100"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      class="title"
+    >
+      <h1 class="header_gt_md_bold_black">
+        Scan your Face to complete the verification
+      </h1>
+      <mat-icon
+        matSuffix
+        class="cursor-pointer"
+        (onClick)="close()"
+        mat-dialog-close
+        >close</mat-icon
+      >
+    </div>
+    <p class="subHeader">Position your face within the frame</p>
+  </div>
+
+  <!--web cam and failed image-->
+  <div fxFlex fxLayout="column" fxGrow="1" class="maniDiv">
+    <div
+      fxFlex="100"
+      fxLayout="column"
+      fxLayoutAlign="space-around center"
+      class="!p-3 full"
+    >
+      <!--webcam-->
+      <ng-container *ngIf="scanning; else displayImage">
+        <div class="follow ovalFace mb-2">
+          <webcam
+            (imageCapture)="captureImg($event)"
+            [height]="250"
+            [width]="200"
+            [trigger]="invokeObservable"
+          >
+          </webcam>
+        </div>
+      </ng-container>
+      <!--failed image-->
+      <ng-template #displayImage>
+        <div class="captured-image" *ngIf="sysImage">
+          <img
+            [width]="350"
+            [height]="250"
+            [src]="sysImage"
+            alt="Scanned Image"
+          />
+        </div>
+      </ng-template>
+      <!--face scan error-->
+      <div class="error_notf">
+        <p *ngIf="face_scan_error">{{ face_scan_error }}</p>
+      </div>
+      <!--face scan Message-->
+      <div class="mesg">Move your head slowly to complete the process</div>
+    </div>
+
+    <!-- Footer buttons -->
+    <div
+      fxFlex
+      fxLayoutAlign="end center"
+      fxLayoutGap="5"
+      class="button_section"
+      *ngIf="!scanning && sysImage"
+    >
+      <ic-button
+        (OnClick)="close()"
+        label="Cancel"
+        size="medium"
+        type="button"
+        icButtonType="outlined-rounded"
+      ></ic-button>
+      <ic-button
+        (OnClick)="retakePic()"
+        label="ReScan"
+        size="medium"
+        type="button"
+        icButtonType="filled-rounded"
+      ></ic-button>
+    </div>
+  </div>
+</div>
