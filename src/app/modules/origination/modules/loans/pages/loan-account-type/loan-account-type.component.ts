@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
@@ -15,6 +17,7 @@ export class LoanAccountTypeComponent implements OnInit {
   selectedLoan: any;
   basisId: any;
   calculatorInfo: any;
+  category: any;
 
   constructor(
     private router: Router,
@@ -22,11 +25,13 @@ export class LoanAccountTypeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private el: ElementRef,
     private sessionStorageService: SessionStorageService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.basisClass = params.get('subClass');
+      this.category = params.get('category');
     });
     this.getLoanSubTypes();
     setTimeout(() => {
@@ -48,16 +53,31 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      this.isShowCalculator = event.isShowCalculator;
-      this.calculatorInfo = {
-        interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
-        productCode: event.selectedLoan.productCode,
-      };
-      this.basisClass = event.subClass;
-      this.basisId = event.selectedLoan.basisId;
-      setTimeout(() => {
-        this.scrollToCalculator();
-      }, 200);
+      if (this.category === 'Account') {
+        this.basisClass = event.subClass;
+        this.basisId = event.selectedLoan.basisId;
+        const dialogRef = this.dialog.open(AccountSelectionComponent, {
+          width: '100%',
+          height: '90%',
+          backdropClass: 'confirmDialogComponent',
+          hasBackdrop: true,
+          disableClose: true,
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          console.log(res);
+        });
+      } else {
+        this.isShowCalculator = event.isShowCalculator;
+        this.calculatorInfo = {
+          interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
+          productCode: event.selectedLoan.productCode,
+        };
+        this.basisClass = event.subClass;
+        this.basisId = event.selectedLoan.basisId;
+        setTimeout(() => {
+          this.scrollToCalculator();
+        }, 200);
+      }
     }
   }
 

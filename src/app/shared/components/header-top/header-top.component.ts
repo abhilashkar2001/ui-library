@@ -43,19 +43,11 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   items = [
     {
       label: 'create Account',
-      route: '/create-account',
-    },
-    {
-      label: 'Card',
-      route: '/card',
-    },
-    {
-      label: 'Deposits',
-      route: '/deposits',
+      route: '/origination/loan',
     },
     {
       label: 'Loan',
-      route: '/loan',
+      route: '/origination/loan',
     },
   ];
 
@@ -141,8 +133,17 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
   }
 
-  onNavTabClick() {
+  onNavTabClick(item: any) {
     this.tokenStorageService.clearSessionExceptLoginInfo();
+    let type = '';
+    if (item.label.toLowerCase().includes('loan')) {
+      type = 'Lending';
+    } else if (item.label.toLowerCase().includes('create account')) {
+      type = 'Account';
+    }
+    this.router.navigate([item.route], {
+      queryParams: { type: type },
+    });
   }
 
   goToHomePage() {

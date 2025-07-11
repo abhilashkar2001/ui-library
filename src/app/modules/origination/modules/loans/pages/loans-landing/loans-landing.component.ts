@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 
@@ -10,24 +10,52 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 })
 export class LoansLandingComponent implements OnInit {
   carowselData = [];
-  imageUrl = 'assets/images/Loan_Gold_img.png';
-  profileHeader = 'Achieve Your Dreams with Our Loan Service.';
-  profileHint =
-    ' Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes. Experience financial empowerment with tailored solutions that meet your needs, exclusively from our bank.';
-  routeUrl = 'loan/loan-type';
-  category = 'Lending';
+  imageUrl: any;
+  profileHeader: any;
+  profileHint: any;
+  routeUrl: any;
+  category: any;
+  type: any;
+  businessSuiteName!: string;
 
   constructor(
     private router: Router,
     // private commonService: CommonService,
     private loanService: LoanService,
     private el: ElementRef,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.type = params['type'] || 'Account';
+      this.updateLandingContent();
+    });
+  }
+
+  updateLandingContent(): void {
+    if (this.type === 'Account') {
+      this.imageUrl = 'assets/images/account_landing.svg';
+      this.profileHeader =
+        'Savings Made Simple: Open Your Account in 3 Easy Steps';
+      this.profileHint =
+        'Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.';
+      this.routeUrl = 'loan/loan-type';
+      this.category = 'Account';
+      this.businessSuiteName = 'Account Opening Services';
+      this.getLoanServices();
+    } else {
+      this.imageUrl = 'assets/images/Loan_Gold_img.png';
+      this.profileHeader = 'Achieve Your Dreams with Our Loan Service.';
+      this.profileHint =
+        'Unlock your dreams with our loan accounts. Enjoy competitive interest rates, flexible repayment options, and quick approval processes.';
+      this.routeUrl = 'loan/loan-type';
+      this.category = 'Lending';
+      this.businessSuiteName = 'Loan Opening Services';
+      this.getLoanServices();
+    }
+
     window.scrollTo(0, 0);
-    // this.updateCurrentRoute();
-    this.getLoanServices();
   }
 
   // updateCurrentRoute() {
@@ -42,7 +70,7 @@ export class LoansLandingComponent implements OnInit {
 
   customApplyLoan(e: any) {
     this.router.navigate(['/origination/loan/loan-type'], {
-      queryParams: { subClass: e },
+      queryParams: { subClass: e, category: this.category },
     });
   }
 
