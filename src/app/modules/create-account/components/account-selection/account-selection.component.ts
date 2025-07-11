@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./account-selection.component.scss'],
 })
 export class AccountSelectionComponent {
+  constructor(
+    private dialogRef: MatDialogRef<AccountSelectionComponent>,
+    private router: Router,
+  ) {}
+
   selectAccountType(type: string) {
     this.dialogRef.close();
     localStorage.setItem('account-type', type);
