@@ -15,6 +15,7 @@ import { DmsService } from '@onerumango/utils';
 import { SharedService } from 'app/shared/services/shared.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-custom-file-upload',
@@ -26,6 +27,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   @Input() checkListDocList: any;
   @Input() getDocumentList: any;
   @Input() screenNameValue: string | any;
+  @Input() noOfDirectors = 1;
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   staticData: GenericValueInfoModel = {
     DOCUMENTNAME: [],
@@ -55,6 +57,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     private cdr: ChangeDetectorRef,
     private pyScanService: SharedService,
     private sessionStorageService: SessionStorageService,
+    private loanService: LoanService,
   ) {}
 
   ngOnInit() {
@@ -105,17 +108,17 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         name: item.fileName,
         progress: 100,
         url: item.uuid,
+        uuid: item.uuid,
       });
       docIds.push(item.id);
     });
 
     this.otherDocument().at(i)?.get('docIds')?.setValue(docIds);
+    this.CustomSubmit.emit({
+      documentDetails: this.createDocumentForm.value,
+    });
     return docArr;
   }
-
-  // mapEndPoints(uuid: any) {
-  //   return `${this.baseUrl}/dms/download?uuid=${uuid}`;
-  // }
 
   getGenericDetails() {
     this.genericValueService
@@ -129,9 +132,12 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           )[0].values;
         }
 
-        if (!this.isChecklistDoc && this.applicant().length === 0) {
-          this.addApplicant();
-        }
+        // if (!this.isChecklistDoc && this.applicant()?.length === 0) {
+        //   const count = this.noOfDirectors ?? 1;
+        //   for (let i = 0; i < count; i++) {
+        //     this.addApplicant();
+        //   }
+        // }
       });
   }
 
@@ -149,12 +155,15 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     }
 
     if (!this.isChecklistDoc && this.documentTypeArray) {
-      this.addApplicant();
+      const count = this.noOfDirectors ?? 1;
+      for (let i = 0; i < count; i++) {
+        this.addApplicant();
+      }
     }
   }
 
   applicant(): FormArray {
-    return this.createDocumentForm.get('applicants') as FormArray;
+    return this.createDocumentForm?.get('applicants') as FormArray;
   }
 
   otherDocument(): FormArray {
@@ -162,7 +171,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   }
 
   getApplicantDocuments(index: number): FormArray {
-    return this.applicant().at(index).get('otherDocument') as FormArray;
+    return this.applicant().at(index)?.get('otherDocument') as FormArray;
   }
 
   addDocument(data?: any) {
@@ -352,8 +361,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
           documentDetails: this.createDocumentForm.value,
         });
       });
-
-    console.log(this.createDocumentForm, 'formgroup');
   }
 
   updateDocId(indx: number, applicantIndex?: number): any[] {
@@ -466,6 +473,20 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         ...docIds.slice(fileIndex + 1),
       ]);
     }
+
+    const originationId = parseInt(
+      this.sessionStorageService.getOriginationId(),
+    );
+
+    const documentIdToDelete = docIds[fileIndex];
+
+    this.loanService
+      .deleteCheckList(documentIdToDelete, originationId)
+      .subscribe();
+
+    this.CustomSubmit.emit({
+      documentDetails: this.createDocumentForm.value,
+    });
   }
 
   removeDocument(index: number) {

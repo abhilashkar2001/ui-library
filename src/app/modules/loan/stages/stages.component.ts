@@ -94,7 +94,6 @@ export class StagesComponent implements OnInit {
 
         this.componentCache.set(index, componentRef);
         this.componentRefs.set(index, componentRef);
-        console.log(this.componentRefs, 'componentrefs');
       }
     }
   }

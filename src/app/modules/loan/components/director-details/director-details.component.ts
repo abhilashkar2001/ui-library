@@ -109,7 +109,6 @@ export class DirectorDetailsComponent implements OnInit {
   // Commenting this code this is not required
   // ngOnChanges(changes: SimpleChanges | any): void {
   //   console.log(changes, 'changess');
-
   //   this.getAllRequisite().then(() => {
   //     if (changes?.personalDetails?.currentValue) {
   //       this.buildPersonalDetailsForm(changes.personalDetails.currentValue);
@@ -229,7 +228,6 @@ export class DirectorDetailsComponent implements OnInit {
   }
 
   newCustomer(data?: any) {
-    console.log(data, 'data');
     const formGroup = this.fb.group({
       customerId: data && data?.customerId,
       customerNo: [data ? data?.customerNo : ''],
@@ -237,12 +235,12 @@ export class DirectorDetailsComponent implements OnInit {
       onboardingStatus: [data ? data?.onboardingStatus : ''],
       primaryCustomer: [data ? data?.primaryCustomer : false],
       prefixId: [data ? data?.prefixId : ''],
-      firstName: [data ? data?.firstName : ''],
+      firstName: [data ? data?.firstName : '', Validators.required],
       lastName: [data ? data?.lastName : ''],
-      dateOfBirth: [data ? data?.dateOfBirth : ''],
+      dateOfBirth: [data ? data?.dateOfBirth : '', Validators.required],
       genderId: [data ? data?.genderId : ''],
       nationality: [data ? data?.nationality : ''],
-      maritalStatusId: [data ? data?.maritalStatusId : ''],
+      maritalStatusId: [data ? data?.maritalStatusId : '', Validators.required],
       positionId: [data ? data?.positionId : ''],
       countryOfResidence: [data ? data?.countryOfResidence : ''],
       sharePercentage: [data ? data?.sharePercentage : ''],
@@ -278,9 +276,15 @@ export class DirectorDetailsComponent implements OnInit {
         ],
         prefixId: [data?.emergencyContactInfo?.prefixId ?? ''],
         prefixValue: [data?.emergencyContactInfo?.prefixValue ?? ''],
-        firstName: [data?.emergencyContactInfo?.firstName ?? ''],
+        firstName: [
+          data?.emergencyContactInfo?.firstName ?? '',
+          Validators.required,
+        ],
         middleName: [data?.emergencyContactInfo?.middleName ?? ''],
-        lastName: [data?.emergencyContactInfo?.lastName ?? ''],
+        lastName: [
+          data?.emergencyContactInfo?.lastName ?? '',
+          Validators.required,
+        ],
         relationshipId: [data?.emergencyContactInfo?.relationshipId ?? ''],
         relationshipValue: [
           data?.emergencyContactInfo?.relationshipValue ?? '',
@@ -348,8 +352,16 @@ export class DirectorDetailsComponent implements OnInit {
       }),
     });
 
-    const docArray = formGroup.get('documentId') as FormArray;
-    docArray.push(this.createDocumentGroup(0));
+    if (data?.documentInfoId?.length) {
+      const docArray = formGroup.get('documentId') as FormArray;
+      const docGroup = this.createDocumentGroup({
+        docIds: data.documentInfoId,
+      });
+      docArray.push(docGroup);
+    } else {
+      const docArray = formGroup.get('documentId') as FormArray;
+      docArray.push(this.createDocumentGroup(0));
+    }
     return formGroup;
     console.log(this.customerDetailsForm, 'formgroup');
   }
@@ -551,8 +563,6 @@ export class DirectorDetailsComponent implements OnInit {
       screenCode: 460,
       customerInfo: customerData,
     };
-
-    console.log(payload, 'Final Payload');
 
     return this.loanService.savePersonalDetails(payload).pipe(
       tap((res) => {

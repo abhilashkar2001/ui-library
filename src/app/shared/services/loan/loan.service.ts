@@ -119,6 +119,14 @@ export class LoanService {
     return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
   }
 
+  // DeleteChecklist
+
+  deleteCheckList(documentId: number, originationId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/origination-doc?documentId=${documentId}&originationId=${originationId}`,
+    );
+  }
+
   getSavedChecklist(
     originationId: number,
     screenCode?: string,

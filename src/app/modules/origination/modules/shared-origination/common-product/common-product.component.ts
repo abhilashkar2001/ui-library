@@ -77,7 +77,6 @@ export class CommonProductComponent implements OnChanges, OnInit {
       });
       console.log(this.subAccount);
     }
-
     this.cdr.detectChanges();
   }
 }
