@@ -234,4 +234,18 @@ export class LoanService {
       payload,
     );
   }
+  fetchCustomerCategories(productCode: string) {
+    return this.http.get<any>(
+      `${baseUrl}/interestRate/fetchCategoryIdUsingProductCode?productCode=${productCode}`,
+    );
+  }
+  fetchInterestRateForCustomerCategory(
+    productName: string,
+    customercategory: string,
+    loanAmount: number,
+  ) {
+    return this.http.get<any>(
+      `${baseUrl}/interestRate/fetchInterest?productName=${productName}&customercategory=${customercategory}&loanAmount=${loanAmount}`,
+    );
+  }
 }

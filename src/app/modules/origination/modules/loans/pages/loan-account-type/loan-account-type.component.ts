@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { ProductState } from '../../../../../../shared/models/router-state.model';
 
 @Component({
   selector: 'app-loan-account-type',
@@ -44,10 +45,18 @@ export class LoanAccountTypeComponent implements OnInit {
       });
   }
 
-  customApply(event: any) {
+  async customApply(event: any) {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
+      const state: ProductState = {
+        productId: event.selectedLoan.basisId,
+        selectedLoan: event.selectedLoan,
+      };
+      await this.router.navigate(['/loan/emi-calculator'], {
+        state,
+      });
+      return;
       this.isShowCalculator = event.isShowCalculator;
       this.calculatorInfo = {
         interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
