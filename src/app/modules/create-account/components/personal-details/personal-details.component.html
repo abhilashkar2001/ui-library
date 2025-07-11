@@ -15,9 +15,9 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <span *ngFor="let acc of accordionItems">
+  <span *ngFor="let acc of accordionItems;let i=index;">
     <mat-accordion>
-      <mat-expansion-panel [expanded]="acc.expanded">
+      <mat-expansion-panel [expanded]="acc.expanded" #panel="matExpansionPanel">
         <mat-expansion-panel-header class="panel-header">
           <div class="panel-header-content">
             <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
@@ -30,9 +30,12 @@
               </span>
               <!-- <span class="required">*</span> -->
             </div>
-            <span class="delete_btn">
+            <span class="delete_btn" (click)="deleteAccordian(i)">
               Delete
             </span>
+            <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
+              expand_more
+            </mat-icon>
           </div>
         </mat-expansion-panel-header>
         <app-generic-account-form [detailsForGeneric]="detailsForGeneric"></app-generic-account-form>
