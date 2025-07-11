@@ -37,7 +37,7 @@
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
     "@onerumango/icust-element-library": "^0.0.1020",
-    "@onerumango/utils": "^0.0.236",
+    "@onerumango/utils": "^0.0.241",
     "crypto-js": "^4.2.0",
     "decimal.js": "^10.4.3",
     "exceljs": "^4.3.0",
