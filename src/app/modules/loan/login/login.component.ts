@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   private localeData: LocaleData | undefined;
   profileInfo: any;
   userProfile$!: Observable<User | null>;
+  category: string | null;
 
   constructor(
     private countryService: CountryService,
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
+    this.category = localStorage.getItem('Category');
   }
 
   ngOnInit(): void {
@@ -206,50 +208,56 @@ export class LoginComponent implements OnInit {
         otp: this.otpForm.value?.otpValue,
       })
       .subscribe((response: any) => {
-        if (response.status === 401) {
-          this.invalidOtp = true;
-          this.isLoading = false;
-        } else if (response.status === 200) {
-          this.isLoading = false;
-          this.invalidOtp = false;
-          const emiData = this.sessionStorageService.getEmiData();
-          const data = {
-            loanDetails: {
-              loanAmount: Number(emiData?.amount),
-              totalInterestAmount: emiData?.totalInterest,
-              interestRate: emiData?.rateOfIntrest,
-              loanTenureMonth: emiData?.loanTenureMonth,
-              loanTenureDay: emiData?.loanTenureDay,
-              loanTenureYear: emiData?.loanTenureYear,
-              totalPayableAmount: emiData?.totalRepaymentAmount,
-              mobile: this.otpForm.value?.phone,
-              mobtCode: this.otpForm.value?.isdCode ?? null,
-              emiInterestPayable: emiData?.totalInterest,
-              emiAmount: emiData?.monthlyPayment,
-            },
-            originationModel: {
-              applicationDate: moment(new Date()).format('MM-DD-YYYY'),
-              branchId: this.profileInfo?.branchId,
-              source: 'Website',
-              currencyCode: this.profileInfo?.currencyCode,
-              currencyId: this.profileInfo?.currencyId,
-              originationProductId:
-                this.sessionStorageService.getLoanBasisDetails()?.basisId,
-            },
-            screenCode: 464,
-          };
-          this.loanService.saveLoanDetails(data).subscribe((resp: any) => {
-            if (resp.statusCode === 200) {
-              this.sessionStorageService.setOriginationId(
-                resp?.data?.originationModel?.originationId,
-              );
-              this.router.navigate(['loan/stages']);
-              // if (!this.hideInfo)
-              //   this.onVerifyExistingProduct({
-              //     phone: this.otpForm.value.phone,
-              //   });
-            }
-          });
+        console.log(this.category);
+
+        if (this.category === 'Account') {
+          this.router.navigate(['create-account/stages']);
+        } else {
+          if (response.status === 401) {
+            this.invalidOtp = true;
+            this.isLoading = false;
+          } else if (response.status === 200) {
+            this.isLoading = false;
+            this.invalidOtp = false;
+            const emiData = this.sessionStorageService.getEmiData();
+            const data = {
+              loanDetails: {
+                loanAmount: Number(emiData?.amount),
+                totalInterestAmount: emiData?.totalInterest,
+                interestRate: emiData?.rateOfIntrest,
+                loanTenureMonth: emiData?.loanTenureMonth,
+                loanTenureDay: emiData?.loanTenureDay,
+                loanTenureYear: emiData?.loanTenureYear,
+                totalPayableAmount: emiData?.totalRepaymentAmount,
+                mobile: this.otpForm.value?.phone,
+                mobtCode: this.otpForm.value?.isdCode ?? null,
+                emiInterestPayable: emiData?.totalInterest,
+                emiAmount: emiData?.monthlyPayment,
+              },
+              originationModel: {
+                applicationDate: moment(new Date()).format('MM-DD-YYYY'),
+                branchId: this.profileInfo?.branchId,
+                source: 'Website',
+                currencyCode: this.profileInfo?.currencyCode,
+                currencyId: this.profileInfo?.currencyId,
+                originationProductId:
+                  this.sessionStorageService.getLoanBasisDetails()?.basisId,
+              },
+              screenCode: 464,
+            };
+            this.loanService.saveLoanDetails(data).subscribe((resp: any) => {
+              if (resp.statusCode === 200) {
+                this.sessionStorageService.setOriginationId(
+                  resp?.data?.originationModel?.originationId,
+                );
+                this.router.navigate(['loan/stages']);
+                // if (!this.hideInfo)
+                //   this.onVerifyExistingProduct({
+                //     phone: this.otpForm.value.phone,
+                //   });
+              }
+            });
+          }
         }
       });
   }
