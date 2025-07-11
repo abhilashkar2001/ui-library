@@ -62,6 +62,7 @@ export class LoanAccountTypeComponent implements OnInit {
           backdropClass: 'confirmDialogComponent',
           hasBackdrop: true,
           disableClose: true,
+          data: this.category,
         });
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);

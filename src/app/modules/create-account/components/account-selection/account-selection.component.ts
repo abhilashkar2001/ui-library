@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,12 +10,14 @@ import { Router } from '@angular/router';
 export class AccountSelectionComponent {
   constructor(
     private dialogRef: MatDialogRef<AccountSelectionComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private router: Router,
   ) {}
 
   selectAccountType(type: string) {
     this.dialogRef.close();
     localStorage.setItem('account-type', type);
-    this.router.navigate(['create-account/login']);
+    localStorage.setItem('Category', this.data);
+    this.router.navigate(['loan/login']);
   }
 }
