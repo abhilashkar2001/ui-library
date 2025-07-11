@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AccountSelectionComponent {
 
+
+  selectAccountType(type: string) {
+    this.dialogRef.close();
+    localStorage.setItem('account-type', type);
+    this.router.navigate(['create-account/login']);
+  }
+
 }

@@ -85,6 +85,13 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       this.fetchLoanDetails();
     }
     this.buildLoanDetailsForm();
+    const validValues = this.holderTypeArr.map((item) => item.value);
+    const accountType = localStorage.getItem('account-type') || '';
+    if (validValues.includes(accountType)) {
+      this.accountDetailsForm
+        ?.get('accountDetails.holderType')
+        ?.setValue(accountType);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -18,6 +18,17 @@
         class="d-flex align-items-md-center justify-content-end"
       >
         <ul [ngClass]="showMobilemenu ? 'show_menu' : 'hide_menu'">
+          <ng-container *ngFor="let item of items">
+            <li (click)="onNavTabClick()">
+              <a
+                [routerLink]="[item.route]"
+                routerLinkActive="highlight_label"
+                #element
+                >{{ item?.label }}</a
+              >
+            </li>
+          </ng-container>
+
           <div
             class="align_top_items dropdown position-relative"
             fxLayout="column"

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountLoginComponent } from './account-login/account-login.component';
 import { AccountStagesComponent } from './account-stages/account-stages.component';
 import { CreateAccountComponent } from './create-account.component';
+import { LoansLandingComponent } from '../origination/modules/loans/pages/loans-landing/loans-landing.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
         path: '',
         redirectTo: '',
         pathMatch: 'full',
+      },
+      {
+        path: 'landing',
+        component: LoansLandingComponent,
       },
       {
         path: 'login',

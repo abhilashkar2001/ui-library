@@ -40,6 +40,24 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   @ViewChildren('element') elReference: QueryList<ElementRef> | any;
   expand = 0;
   openHelp = false;
+  items = [
+    {
+      label: 'create Account',
+      route: '/create-account',
+    },
+    {
+      label: 'Card',
+      route: '/card',
+    },
+    {
+      label: 'Deposits',
+      route: '/deposits',
+    },
+    {
+      label: 'Loan',
+      route: '/loan',
+    },
+  ];
 
   constructor(
     private layout: LayoutService,

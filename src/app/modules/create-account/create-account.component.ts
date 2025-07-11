@@ -6,13 +6,14 @@ import { AccountSelectionComponent } from './components/account-selection/accoun
   selector: 'app-create-account',
   standalone: true,
   imports: [RouterOutlet, MatDialogModule],
-  template: `
-    <button (click)="alertDialog()" class="confirm-button">Create Account</button>
-    <router-outlet></router-outlet>
-  `,
+
+  template: `<router-outlet></router-outlet> `,
 })
 export class CreateAccountComponent {
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {
+    this.alertDialog();
+  }
+
 
   alertDialog() {
     //@ts-ignore
@@ -24,5 +25,9 @@ export class CreateAccountComponent {
         // hasBackdrop: true,
         disableClose: true
       });
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem('account-type');
   }
 }
