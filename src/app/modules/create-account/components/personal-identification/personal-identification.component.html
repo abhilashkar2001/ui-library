@@ -1,198 +1,738 @@
-<div
-  fxFlex="100"
-  fxLayout="column"
-  fxLayoutGap="1rem"
-  [formGroup]="personalIdentificationForm"
->
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div>
-      National ID are mandatory. To upload document, face scan & Fingerprint
-    </div>
-    <ng-container *ngIf="customeSelected !== 'Individual'">
-      <ic-button
-        (OnClick)="addDocument()"
-        icButtonType="outlined-rounded"
-        label="Add"
-        type="submit"
-        class="w-100"
-        customButtonClass="w-100 justify-content-center"
-        fxFlex="10"
-        size="small"
-      >
-      </ic-button>
-    </ng-container>
-  </div>
-  <div formGroupName="otherDocument" class="document-panel">
-    <mat-accordion>
-      <!--national Id expansion -->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        [expanded]="true"
-        (opened)="panelExpanded = true"
-        (closed)="panelExpanded = false"
-      >
-        <mat-expansion-panel-header class="panel-header">
-          <div class="panel-header-content">
-            <div
-              class="panel-title"
-              fxLayoutGap="5"
-              fxLayoutAlign="start center"
-            >
-              <img
-                *ngIf="getFileInfo()?.length > 0; else unticked"
-                src="assets/images/tickicon.svg"
-                alt="Tick"
-              />
-              <ng-template #unticked>
-                <img src="assets/images/untickicon.svg" alt="Untick" />
-              </ng-template>
-              <span class="header_md">{{ 'National ID' }}</span>
-              <span
-                *ngIf="otherDocument.get('docRequired')?.value"
-                class="required"
-                >*</span
-              >
-            </div>
-            <span>
-              <mat-icon>{{
-                panelExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
-            </span>
-          </div>
-        </mat-expansion-panel-header>
+<div *ngIf="customerDetailsForm" fxLayout="column">
+  <form [formGroup]="customerDetailsForm">
+    <div formArrayName="customer">
+      <div *ngFor="let customer of customer.controls; let i = index">
+        <div [formGroup]="customer | formgroup">
+          <div class="custom_accordin">
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="i === 0">
+                <mat-expansion-panel-header class="customer_Header">
+                  <mat-panel-description>
+                    <div
+                      fxLayout="row"
+                      fxLayoutAlign="start center"
+                      fxLayoutGap="10px"
+                    >
+                      <img
+                        *ngIf="customer.valid"
+                        alt="image"
+                        src="../../../../../../assets/images/done_icon.svg"
+                      />
+                      <span class="theme_xl">Applicant</span>
+                    </div>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
 
-        <div fxLayout="column">
-          <div class="upload-section">
-            <span class="medium_txt">Upload files</span>
-            <p class="breadcrum_md">
-              Max file size is 500kb. Supported file types are .jpg and .png.
-            </p>
-            <ic-button
-              (OnClick)="fileBrowseHandler()"
-              label="Choose"
-              size="medium"
-              type="button"
-              icButtonType="outlined-rounded"
-            >
-            </ic-button>
-          </div>
-
-          <div
-            class="uploaded_list"
-            fxLayout="row wrap"
-            fxFlex="100"
-            fxLayoutAlign="space-between center"
-          >
-            <div
-              *ngFor="let file of getFileInfo(); let fileIndx = index"
-              fxFlex="49"
-              fxLayoutGap="10"
-              class="upload_img"
-            >
-              <div class="img_box">
-                <img
-                  [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
-                  alt="image"
-                />
-              </div>
-              <div class="img_container">
-                <span class="header_md img_name">{{ file?.name }}</span>
-                <div
-                  *ngIf="file.progress !== '100%'; else showSize"
-                  class="progress-cont"
-                >
+                <div fxLayout="column">
                   <div
-                    [style.width]="file.progress ?? '0%'"
-                    class="progress"
-                  ></div>
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
+                  >
+                    <ic-form-field
+                      [control]="customer.get('customerNo') | formcontrol"
+                      [icAlphabetOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="CIF Number"
+                    ></ic-form-field>
+                    <ic-select
+                      [control]="customer.get('prefixId') | formcontrol"
+                      [options]="prefixArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Prefix"
+                    ></ic-select>
+                    <ic-form-field
+                      [control]="customer.get('firstName') | formcontrol"
+                      [icAlphabetOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="First Name"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="customer.get('lastName') | formcontrol"
+                      [icAlphabetOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Last Name"
+                    ></ic-form-field>
+
+                    <ic-select
+                      [control]="customer.get('positionId') | formcontrol"
+                      [options]="genderArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Position"
+                    ></ic-select>
+
+                    <ic-date-picker
+                      [control]="customer.get('dateOfBirth') | formcontrol"
+                      [maxDate]="dobMinDate"
+                      [minDate]="dobMaxDate"
+                      [placeholder]="dateFormat"
+                      fxFlex="24"
+                      label="DateOfBirth"
+                    >
+                    </ic-date-picker>
+
+                    <ic-select
+                      [control]="customer.get('genderId') | formcontrol"
+                      [options]="genderArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Gender"
+                    ></ic-select>
+
+                    <ic-select
+                      [control]="customer.get('nationality') | formcontrol"
+                      [options]="nationalityArray"
+                      bindLabelKey="nationality"
+                      bindValueKey="nationality"
+                      fxFlex="24"
+                      label="Nationality"
+                    ></ic-select>
+
+                    <ng-container *ngIf="getDocumentIdArray(i) as docArray">
+                      <ng-container
+                        *ngFor="
+                          let docGroup of docArray.controls;
+                          let j = index
+                        "
+                      >
+                        <ic-form-field
+                          [control]="
+                            docGroup.get('documentNumber') | formcontrol
+                          "
+                          fxFlex="24"
+                          label="Identification Number"
+                        ></ic-form-field>
+
+                        <ic-date-picker
+                          [control]="docGroup.get('issueDate') | formcontrol"
+                          [maxDate]="todayDate"
+                          fxFlex="24"
+                          label="Date Issued"
+                        ></ic-date-picker>
+
+                        <ic-date-picker
+                          [control]="docGroup.get('expiryDate') | formcontrol"
+                          [minDate]="getExpDateMin()"
+                          [placeholder]="dateFormat"
+                          fxFlex="24"
+                          label="Expiry Date"
+                        >
+                        </ic-date-picker>
+                        <ic-select
+                          [control]="
+                            docGroup.get('countryOfIssue') | formcontrol
+                          "
+                          [options]="countryArray"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          fxFlex="24"
+                          label="Country of Issue"
+                        ></ic-select>
+
+                        <ic-select
+                          [control]="
+                            customer.get('countryOfResidence') | formcontrol
+                          "
+                          [options]="countryArray"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          fxFlex="24"
+                          label="Country of residence"
+                        ></ic-select>
+                      </ng-container>
+                    </ng-container>
+
+                    <ic-select
+                      [control]="customer.get('maritalStatusId') | formcontrol"
+                      [options]="maritalStatusArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Marital Status"
+                    ></ic-select>
+                    <ic-form-field
+                      [control]="customer.get('sharePercentage') | formcontrol"
+                      [icNumbersOnly]="true"
+                      [maxLength]="2"
+                      fxFlex="24"
+                      label="Share Percentage"
+                    ></ic-form-field>
+                  </div>
+
+                  <div class="highlight_title">Contact Details</div>
+                  <div
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
+                  >
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'mobile'
+                        )
+                      "
+                      [formControl]="
+                        customer.get('contact')?.get('mobile') | formcontrol
+                      "
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        customer.get('contact')?.get('mobtCode') | formcontrol
+                      "
+                      fxFlex="24"
+                      label="Mobile Number"
+                    ></ic-mobile-field>
+
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'alternativeNumber'
+                        )
+                      "
+                      [formControl]="
+                        customer.get('contact')?.get('alternativeNumber')
+                          | formcontrol
+                      "
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        customer.get('contact')?.get('altCode') | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                      fxFlex="24"
+                      label="Alternate Number"
+                    ></ic-mobile-field>
+
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getCustomerContactDetails(0),
+                          'whatsappNo'
+                        )
+                      "
+                      [formControl]="
+                        customer.get('contact')?.get('whatsappNo') | formcontrol
+                      "
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        customer.get('contact')?.get('waptCode') | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                      fxFlex="24"
+                      label="Whatsapp Number"
+                    ></ic-mobile-field>
+
+                    <ic-form-field
+                      [control]="
+                        customer.get('contact')?.get('email') | formcontrol
+                      "
+                      [customError]="
+                        customer
+                          .get('contact')
+                          ?.get('email')
+                          ?.hasError('pattern')
+                          ? 'Please enter Valid Email'
+                          : ''
+                      "
+                      [maxLength]="250"
+                      fxFlex="24"
+                      label="Email ID"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="
+                        customer.get('contact')?.get('telephone') | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Telephone (Home)"
+                    ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        customer.get('contact')?.get('workTelephone')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Telephone (Work)"
+                    ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        customer.get('contact')?.get('fax') | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="25"
+                      fxFlex="24"
+                      label="Fax"
+                    ></ic-form-field>
+                    <ic-select
+                      [control]="
+                        customer.get('contact')?.get('statementViaId')
+                          | formcontrol
+                      "
+                      [options]="statementOptionArr"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Statement Via"
+                    ></ic-select>
+
+                    <ng-container
+                      *ngIf="
+                        customer.get('contact.address')?.value as addressControl
+                      "
+                    >
+                      <ng-container
+                        *ngFor="
+                          let addressGroup of (
+                            customer?.get('contact')?.get('address') | formarray
+                          ).controls;
+                          let addressIndex = index
+                        "
+                        [formGroup]="addressGroup | formgroup"
+                      >
+                        <ic-form-field
+                          [control]="addressGroup.get('address1') | formcontrol"
+                          [maxLength]="200"
+                          fxFlex="49"
+                          label="Address1"
+                        ></ic-form-field>
+                        <ic-form-field
+                          [control]="addressGroup.get('address2') | formcontrol"
+                          [maxLength]="200"
+                          fxFlex="49"
+                          label="Address2"
+                        ></ic-form-field>
+                        <ic-select
+                          [control]="
+                            addressGroup.get('residenceType') | formcontrol
+                          "
+                          [options]="residenceTypeArray"
+                          bindLabelKey="values"
+                          bindValueKey="id"
+                          fxFlex="24"
+                          label="Residential Status"
+                        ></ic-select>
+                        <ic-form-field
+                          [control]="addressGroup.get('address2') | formcontrol"
+                          fxFlex="24"
+                          label="Suburb"
+                        ></ic-form-field>
+                        <ic-form-field
+                          (onSuffixClick)="pincodeExpansion(i, 'customer')"
+                          [control]="addressGroup.get('pincode') | formcontrol"
+                          [icNumbersOnly]="true"
+                          [maxLength]="10"
+                          fxFlex="24"
+                          label="Postal Code"
+                          suffixIcon="search"
+                        ></ic-form-field>
+                        <ic-form-field
+                          [control]="addressGroup.get('cityName') | formcontrol"
+                          fxFlex="24"
+                          label="City"
+                        ></ic-form-field>
+                        <ic-date-picker
+                          [control]="
+                            addressGroup.get('livingAddressSince') | formcontrol
+                          "
+                          fxFlex="24"
+                          label="Living Address Since"
+                        >
+                        </ic-date-picker>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+
+                  <ng-container *ngIf="showSpouseSection[i]">
+                    <div class="highlight_title">Spouse Details</div>
+                    <div
+                      fxFlex="100"
+                      fxLayout="row wrap"
+                      fxLayoutGap="10"
+                      fxLayoutAlign="start center"
+                    >
+                      <ic-select
+                        [control]="
+                          getSpouseInfo(i).get('prefixId') | formcontrol
+                        "
+                        [options]="prefixArray"
+                        bindLabelKey="values"
+                        bindValueKey="id"
+                        fxFlex="24"
+                        label="Prefix"
+                      ></ic-select>
+
+                      <ic-form-field
+                        [control]="
+                          getSpouseInfo(i).get('firstName') | formcontrol
+                        "
+                        [icAlphabetOnly]="true"
+                        [maxLength]="20"
+                        fxFlex="24"
+                        label="First Name"
+                      ></ic-form-field>
+
+                      <ic-form-field
+                        [control]="
+                          getSpouseInfo(i).get('lastName') | formcontrol
+                        "
+                        [icAlphabetOnly]="true"
+                        [maxLength]="20"
+                        fxFlex="24"
+                        label="Last Name"
+                      ></ic-form-field>
+
+                      <ic-date-picker
+                        [control]="
+                          getSpouseInfo(i).get('dateOfBirth') | formcontrol
+                        "
+                        dateFormat=""
+                        fxFlex="24"
+                        label="DateofBirth"
+                      >
+                      </ic-date-picker>
+                      <ic-form-field
+                        [control]="
+                          getSpouseContactDetails(i).get('telephone')
+                            | formcontrol
+                        "
+                        [icNumbersOnly]="true"
+                        [maxLength]="20"
+                        fxFlex="24"
+                        label="Spouse Telephone (Home)"
+                      ></ic-form-field>
+                      <ic-form-field
+                        [control]="
+                          getSpouseContactDetails(i).get('workTelephone')
+                            | formcontrol
+                        "
+                        [icNumbersOnly]="true"
+                        [maxLength]="20"
+                        fxFlex="24"
+                        label="Spouse Telephone (Work)"
+                      ></ic-form-field>
+                      <ic-mobile-field
+                        [formControl]="
+                          getSpouseContactDetails(i).get('mobile') | formcontrol
+                        "
+                        [isdCode]="countriesIsdCodes"
+                        [isdControl]="
+                          getSpouseContactDetails(i).get('mobtCode')
+                            | formcontrol
+                        "
+                        [maxLength]="maxMobileLength"
+                        fxFlex="24"
+                        label="Mobile Number"
+                      ></ic-mobile-field>
+                      <ic-form-field
+                        [control]="
+                          getSpouseContactDetails(i).get('email') | formcontrol
+                        "
+                        [customError]="
+                          getSpouseContactDetails(i)
+                            .get('email')
+                            ?.hasError('pattern')
+                            ? 'Please enter Valid Email'
+                            : ''
+                        "
+                        [icNoSpace]="true"
+                        [maxLength]="250"
+                        fxFlex="24"
+                        label="Email ID"
+                      ></ic-form-field>
+                      <ic-select
+                        [control]="
+                          getSpouseInfo(i).get('employeeStatusId') | formcontrol
+                        "
+                        [options]="empoymentArray"
+                        bindLabelKey="values"
+                        bindValueKey="id"
+                        fxFlex="24"
+                        label="Employee status"
+                      ></ic-select>
+                      <ic-form-field
+                        [control]="
+                          getSpouseInfo(i).get('netIncome') | formcontrol
+                        "
+                        [decimalPlaces]="3"
+                        [icTwoDigitDecimalNumber]="true"
+                        [maxLength]="22"
+                        [numLength]="22"
+                        fxFlex="24"
+                        label="Net Income"
+                      ></ic-form-field>
+                    </div>
+                  </ng-container>
+
+                  <div class="highlight_title">
+                    Emergency Contact Details / Next of Kin
+                  </div>
+                  <div
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
+                  >
+                    <ic-select
+                      [control]="
+                        getEmergencyContactInfo(i).get('prefixId') | formcontrol
+                      "
+                      [options]="prefixArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Prefix"
+                    ></ic-select>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactInfo(i).get('firstName')
+                          | formcontrol
+                      "
+                      [icAlphabetOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="First Name"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactInfo(i).get('lastName') | formcontrol
+                      "
+                      [icAlphabetOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Last Name"
+                    ></ic-form-field>
+                    <ic-select
+                      [control]="
+                        getEmergencyContactInfo(i).get('relationshipId')
+                          | formcontrol
+                      "
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Relationship"
+                    ></ic-select>
+
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'mobile'
+                        )
+                      "
+                      [formControl]="
+                        getEmergencyContactDetails(i).get('mobile')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        getEmergencyContactDetails(i).get('mobtCode')
+                          | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                      fxFlex="24"
+                      label="Mobile Number"
+                    ></ic-mobile-field>
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'alternativeNumber'
+                        )
+                      "
+                      [formControl]="
+                        getEmergencyContactDetails(i).get('alternativeNumber')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        getEmergencyContactDetails(i).get('altCode')
+                          | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                      fxFlex="24"
+                      label="Alternate Number"
+                    ></ic-mobile-field>
+                    <ic-mobile-field
+                      (onSelectionChangeOutput)="
+                        checkMobileLength(
+                          $event,
+                          getEmergencyContactDetails(i),
+                          'whatsappNo'
+                        )
+                      "
+                      [formControl]="
+                        getEmergencyContactDetails(i).get('whatsappNo')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [isdCode]="countriesIsdCodes"
+                      [isdControl]="
+                        getEmergencyContactDetails(i).get('waptCode')
+                          | formcontrol
+                      "
+                      [maxLength]="maxMobileLength"
+                      fxFlex="24"
+                      label="Whatsapp Number"
+                    ></ic-mobile-field>
+
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactDetails(i).get('email') | formcontrol
+                      "
+                      [customError]="
+                        getEmergencyContactDetails(i)
+                          .get('email')
+                          ?.hasError('pattern')
+                          ? 'Please enter Valid Email'
+                          : ''
+                      "
+                      [maxLength]="250"
+                      fxFlex="24"
+                      label="Email ID"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactInfo(i).get('fax') | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="10"
+                      fxFlex="24"
+                      label="Fax"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactDetails(i).get('telephone')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Telephone Number (Home)"
+                    ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactDetails(i).get('workTelephone')
+                          | formcontrol
+                      "
+                      [icNumbersOnly]="true"
+                      [maxLength]="20"
+                      fxFlex="24"
+                      label="Telephone Number (Work)"
+                    ></ic-form-field>
+
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'address1'
+                        ) | formcontrol
+                      "
+                      [maxLength]="250"
+                      fxFlex="49"
+                      label="Address1"
+                    ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'address1'
+                        ) | formcontrol
+                      "
+                      [maxLength]="250"
+                      fxFlex="49"
+                      label="Address1"
+                    ></ic-form-field>
+                    <ic-select
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'residenceType'
+                        ) | formcontrol
+                      "
+                      [options]="residenceTypeArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Residential status"
+                    ></ic-select>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'address2'
+                        ) | formcontrol
+                      "
+                      fxFlex="24"
+                      label="Suburb"
+                    ></ic-form-field>
+                    <ic-form-field
+                      (onSuffixClick)="pincodeExpansion(i, 'emergency')"
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'pincode'
+                        ) | formcontrol
+                      "
+                      fxFlex="24"
+                      label="Postal Code"
+                      suffixIcon="search"
+                    ></ic-form-field>
+                    <ic-form-field
+                      [control]="
+                        getEmergencyContactAddress(i).controls[0]?.get(
+                          'cityName'
+                        ) | formcontrol
+                      "
+                      fxFlex="24"
+                      label="City"
+                    ></ic-form-field>
+                  </div>
                 </div>
-                <ng-template #showSize>
-                  <div class="theme_sm">{{ file.size }}</div>
-                </ng-template>
-              </div>
-              <img
-                tabindex="0"
-                (keydown.enter)="removeFile(fileIndx)"
-                src="assets/images/trash_new.svg"
-                alt="trash"
-                (click)="removeFile(fileIndx)"
-              />
-            </div>
+
+                <div fxLayoutAlign="end center">
+                  <ic-button
+                    [icButtonType]="'filled-rounded'"
+                    [label]="'Save'"
+                    [type]="'submit'"
+                    size="medium"
+                  >
+                  </ic-button>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
-      </mat-expansion-panel>
-      <!--face Scan-->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        (opened)="faceExpanded = true"
-        (closed)="faceExpanded = false"
-      >
-        <mat-expansion-panel-header class="panel-header">
-          <div class="panel-header-content">
-            <div
-              class="panel-title"
-              fxLayoutGap="5"
-              fxLayoutAlign="start center"
-            >
-              <img
-                *ngIf="getFileInfo()?.length > 0; else unticked"
-                src="assets/images/tickicon.svg"
-                alt="Tick"
-              />
-              <ng-template #unticked>
-                <img src="assets/images/untickicon.svg" alt="Untick" />
-              </ng-template>
-              <span class="header_md">{{ 'Face Scan' }}</span>
-              <span
-                *ngIf="otherDocument.get('docRequired')?.value"
-                class="required"
-                >*</span
-              >
-            </div>
-            <span>
-              <mat-icon>{{
-                faceExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
-            </span>
-          </div>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <!--fingerPrint-->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        (opened)="biometricExpanded = true"
-        (closed)="biometricExpanded = false"
-      >
-        <mat-expansion-panel-header class="panel-header">
-          <div class="panel-header-content">
-            <div
-              class="panel-title"
-              fxLayoutGap="5"
-              fxLayoutAlign="start center"
-            >
-              <img
-                *ngIf="getFileInfo()?.length > 0; else unticked"
-                src="assets/images/tickicon.svg"
-                alt="Tick"
-              />
-              <ng-template #unticked>
-                <img src="assets/images/untickicon.svg" alt="Untick" />
-              </ng-template>
-              <span class="header_md">{{ 'Finger Print' }}</span>
-              <span
-                *ngIf="otherDocument.get('docRequired')?.value"
-                class="required"
-                >*</span
-              >
-            </div>
-            <span>
-              <mat-icon>{{
-                biometricExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
-            </span>
-          </div>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+      </div>
+    </div>
+
+    <!-- Add Customer button -->
+    <!-- <ic-button
+      (OnClick)="addCustomer(customer.controls.length)"
+      [icButtonType]="'filled-rounded'"
+      [label]="'Add New Customer'"
+      [type]="'submit'"
+      size="medium"
+    >
+    </ic-button> -->
+  </form>
 </div>

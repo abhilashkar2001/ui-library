@@ -43,6 +43,7 @@ export class GenericAccountFormComponent {
   // originationId: number | undefined;
 
   @Input() detailsForGeneric: any;
+  @Input() user: any;
 
   personalDetails!: FormGroup;
 
@@ -56,7 +57,7 @@ export class GenericAccountFormComponent {
   cities = [];
   relationships = [];
 
-  countriesIsdCodes: any;
+  countriesIsdCodes: any = [];
   maxMobileLength: any;
 
 
@@ -84,6 +85,7 @@ export class GenericAccountFormComponent {
     // this.fetchGenericValues();
     // this.fetchDisbursementDetails();
     this.createPersonalDetailsForm();
+    console.log(this.user);
   }
 
   createPersonalDetailsForm() {
@@ -103,6 +105,9 @@ export class GenericAccountFormComponent {
       countryOfIssue: ['', []],
       dateOfIssue: ['', []],
       expiryDate: ['', []],
+
+      relationship:['',[]],
+      sharePercentage:['',[]],
 
       mobtCode: ['', []],
       mobileNo: ['', []],

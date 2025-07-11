@@ -7,26 +7,22 @@ import { AccountSelectionComponent } from './components/account-selection/accoun
   standalone: true,
   imports: [RouterOutlet, MatDialogModule],
   template: `
-    <button (click)="alertDialog()" class="confirm-button">
-      Create Account
-    </button>
+    <button (click)="alertDialog()" class="confirm-button">Create Account</button>
     <router-outlet></router-outlet>
   `,
 })
 export class CreateAccountComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   alertDialog() {
     //@ts-ignore
-    const dialogRef = this.dialog.open(AccountSelectionComponent, {
-      // width: '100%',
-      // height: '90%',
-      // backdropClass: 'confirmDialogComponent',
-      // hasBackdrop: true,
-      disableClose: true,
-    });
-    dialogRef.afterClosed().subscribe((res) => {
-      console.log(res);
-    });
+    const dialogRef = this.dialog.open(AccountSelectionComponent,
+      {
+        // width: '100%',
+        // height: '90%',
+        // backdropClass: 'confirmDialogComponent',
+        // hasBackdrop: true,
+        disableClose: true
+      });
   }
 }

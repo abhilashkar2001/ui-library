@@ -15,9 +15,9 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <span *ngFor="let acc of accordionItems;let i=index;">
+  <span *ngFor="let user of accordionItems;let i=index;">
     <mat-accordion>
-      <mat-expansion-panel [expanded]="acc.expanded" #panel="matExpansionPanel">
+      <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
         <mat-expansion-panel-header class="panel-header">
           <div class="panel-header-content">
             <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
@@ -26,11 +26,22 @@
               <ng-template #unticked>
                 <img src="assets/images/untickicon.svg" alt="Untick" />
               </ng-template>
-              <span class="header_md"> {{acc.header}}
+              <span class="header_md"> {{user.header}}
               </span>
               <!-- <span class="required">*</span> -->
             </div>
-            <span class="delete_btn" (click)="deleteAccordian(i)">
+            <span *ngIf="user.accountType == 'joint'" [ngClass]="
+                  accordionItems.length <= 2 
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                " (click)="deleteAccordian(i)">
+              Delete
+            </span>
+            <span *ngIf="user.accountType == 'minor'" [ngClass]="
+                  accordionItems.length <= 2 || user.header == 'Minor Details'
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                " (click)="deleteAccordian(i)">
               Delete
             </span>
             <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
@@ -38,7 +49,7 @@
             </mat-icon>
           </div>
         </mat-expansion-panel-header>
-        <app-generic-account-form [detailsForGeneric]="detailsForGeneric"></app-generic-account-form>
+        <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
       </mat-expansion-panel>
     </mat-accordion>
     <mat-divider></mat-divider>

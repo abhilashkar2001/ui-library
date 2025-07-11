@@ -1,47 +1,44 @@
 <div class="dialog">
-  <div class="header">
-    <h2>{{ 'Choose Account Type' }}</h2>
-    <button mat-icon-button mat-dialog-close class="close-button">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <div mat-dialog-content class="dialog-container">
-    <div class="item" (click)="selectAccountType('individual')">
-      <div>
-        <img src="assets/images/create-account/individual.png" />
-      </div>
-      <div class="title">
-        {{ 'Individual Account' }}
-      </div>
-      <div class="sub-title">
-        {{ 'An account exclusively for one person, giving you full control.' }}
-      </div>
+    <div class="header">
+        <h2>{{'Choose Account Type'}}</h2>
+        <button mat-icon-button mat-dialog-close class="close-button">
+            <mat-icon>close</mat-icon>
+        </button>
+        
     </div>
-    <div class="item" (click)="selectAccountType('joint')">
-      <div>
-        <img src="../../../../../assets/images/create-account/joint.png" />
-      </div>
-      <div class="title">
-        {{ 'Joint Account' }}
-      </div>
-      <div class="sub-title">
-        {{
-          'An account exclusively for one person, giving you full control to manage.'
-        }}
-      </div>
+    <div mat-dialog-content class="dialog-container">
+        <div class="item">
+            <div>
+                <img src="../../../../../assets/images/create-account/individual.png">
+            </div>
+            <div class="title">
+                {{'Individual Account'}}
+            </div>
+            <div class="sub-title">
+                {{'An account exclusively for one person, giving you full control.'}}
+            </div>
+        </div>
+        <div class="item">
+            <div>
+                <img src="../../../../../assets/images/create-account/joint.png">
+            </div>
+            <div class="title">
+                {{'Joint Account'}}
+            </div>
+            <div class="sub-title">
+                {{'An account exclusively for one person, giving you full control to manage.'}}
+            </div>
+        </div>
+        <div class="item">
+            <div>
+                <img src="../../../../../assets/images/create-account/minor.png">
+            </div>
+            <div class="title">
+                {{'Minor Account'}}
+            </div>
+            <div class="sub-title">
+                {{'An account exclusively for one person, giving you full control to manage.'}}
+            </div>
+        </div>
     </div>
-    <div class="item" (click)="selectAccountType('minor')">
-      <div>
-        <img src="../../../../../assets/images/create-account/minor.png" />
-      </div>
-      <div class="title">
-        {{ 'Minor Account' }}
-      </div>
-      <div class="sub-title">
-        {{
-          'An account exclusively for one person, giving you full control to manage.'
-        }}
-      </div>
-    </div>
-  </div>
 </div>

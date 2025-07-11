@@ -41,10 +41,10 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // accountValidators = ['accountTypeId'];
   // originationId: number | undefined;
 
-  detailsForGeneric = {
-    accountType: 'joint'
+  detailsForGeneric:any = {
+    accountType: ''
   }
-  noOfapplicantguardian: any = 2;
+  noOfapplicantguardian: any = 3;
   accordionItems: any = [];
 
   constructor(
@@ -56,10 +56,9 @@ export class AccountPersonalDetailsComponent implements OnInit {
     //@ts-ignore
     private loanService: LoanService,
     //@ts-ignore
-    private sessionStorageService: SessionStorageService,
+    private sessionStorageService: SessionStorageService
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
-    this.createAccordian();
   }
 
   // get loanDisbursementAccount() {
@@ -71,25 +70,29 @@ export class AccountPersonalDetailsComponent implements OnInit {
     // this.buildDisbursementForm();
     // this.fetchGenericValues();
     // this.fetchDisbursementDetails();
-
+    let acc = localStorage.getItem('account-type');
+    this.detailsForGeneric.accountType = acc !== null ? acc : 'individual';
+    this.createAccordian();
   }
 
   createAccordian() {
     if (this.detailsForGeneric.accountType == 'minor') {
-      this.accordionItems.push({ header: 'Minor Details', expanded: true });
+      this.accordionItems.push({ header: 'Minor Details', expanded: true, showIsPrimary: false, accountType: this.detailsForGeneric.accountType });
     }
     for (let i = 0; i < this.noOfapplicantguardian; i++) {
       if (this.detailsForGeneric.accountType == 'joint') {
-        this.accordionItems.push({ header: 'Applicant ' + (i + 1), expanded: false });
+        this.accordionItems.push({ header: 'Applicant ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
       } else if (this.detailsForGeneric.accountType == 'minor') {
-        this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false });
+        this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
       }
     }
   }
 
   deleteAccordian(index: any) {
-    if (index > -1) {
-      this.accordionItems.splice(index, 1);
+    if (this.accordionItems.length > 1) {
+      if (index > -1) {
+        this.accordionItems.splice(index, 1);
+      }
     }
   }
 

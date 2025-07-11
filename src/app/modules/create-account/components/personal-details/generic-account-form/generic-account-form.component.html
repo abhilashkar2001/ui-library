@@ -1,47 +1,47 @@
 <form [formGroup]="personalDetails" class="generic">
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
         <!-- 1 -->
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('cifNumber') | formcontrol" [icNumbersOnly]="true"
                 [maxLength]="20" label="CIF Number"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)"></div>
-        <div fxFlex="calc(25%)"></div>
-        <div fxFlex="calc(25%)">
-            <mat-slide-toggle class="toggle">{{'Is this applicant a primary customer?'}}</mat-slide-toggle>
+        <div fxFlex="25"></div>
+        <div fxFlex="25"></div>
+        <div fxFlex="25">
+            <mat-slide-toggle class="toggle" *ngIf="user?.accountType !== 'individual' && user?.showIsPrimary">{{'Is this applicant a primary ' }} {{user?.accountType == 'joint' ? 'customer?' : 'guardian?'}}</mat-slide-toggle>
         </div>
         <!-- 2 -->
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('prefix') | formcontrol" [options]="prefix" bindLabelKey="values"
                 bindValueKey="id" label="Prefix"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('firstName') | formcontrol" [maxLength]="20"
                 label="First Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('lastName') | formcontrol" [maxLength]="20"
                 label="Last Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-date-picker [control]="personalDetails.get('dateOfBirth') | formcontrol" placeholder="Date of Birth"
                 label="Date of Birth">
             </ic-date-picker>
         </div>
         <!-- 3 -->
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('gender') | formcontrol" [options]="genders" bindLabelKey="values"
                 bindValueKey="id" label="Gender"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
-            <ic-select [control]="personalDetails.get('maritalStatus') | formcontrol" [options]="maritalStatus"
+        <div fxFlex="25" *ngIf="user?.accountType !== 'minor'">
+                <ic-select [control]="personalDetails.get('maritalStatus') | formcontrol" [options]="maritalStatus"
                 bindLabelKey="values" bindValueKey="id" label="Marital Status"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('nationality') | formcontrol" [options]="nationality"
                 bindLabelKey="values" bindValueKey="id" label="Nationality"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('countryOfResidence') | formcontrol" [options]="countries"
                 bindLabelKey="values" bindValueKey="id" label="Country Of Residence"></ic-select>
         </div>
@@ -52,73 +52,98 @@
             </div>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('identificationNo') | formcontrol" [maxLength]="20"
                 label="Identification Number"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('countryOfIssue') | formcontrol" [options]="countries"
                 bindLabelKey="values" bindValueKey="id" label="Country Of Issue"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-date-picker [control]="personalDetails.get('dateOfIssue') | formcontrol" placeholder="Date Of Issue"
                 label="Date Of Issue">
             </ic-date-picker>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-date-picker [control]="personalDetails.get('expiryDate') | formcontrol" placeholder="Expiry Date"
                 label="Expiry Date">
             </ic-date-picker>
         </div>
 
+            <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="detailsForGeneric.accountType !== 'individual'">
+                <div class="title standard-margin">
+                    {{ 'Relationship ' }} {{user?.accountType == 'joint'? '& Applicant’s Share (%)' : ''}}
+                </div>
+            </div>
+
+            <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'individual'">
+                <ic-select [control]="personalDetails.get('relationship') | formcontrol" [options]="relationships"
+                    bindLabelKey="values" bindValueKey="id" label="Relationship"></ic-select>
+            </div>
+
+            <div fxFlex="25" *ngIf="user?.accountType == 'joint'">
+                <ic-form-field [control]="personalDetails.get('sharePercentage') | formcontrol" [maxLength]="20"
+                    label="Share Percentage"></ic-form-field>
+            </div>
+        
         <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
             <div class="title standard-margin">
                 {{ 'Contact Details' }}
             </div>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('mobileNo') | formcontrol" [isdCode]="countriesIsdCodes"
                 [isdControl]="personalDetails.get('mobtCode') | formcontrol" [maxLength]="maxMobileLength"
                 label="Mobile No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('alternateNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Alternate No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('whatsAppNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="WhatsApp No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emailId') | formcontrol" [maxLength]="20"
                 label="Email Id"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('telephoneHome') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Home)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'minor'" >
             <ic-mobile-field [formControl]="personalDetails.get('telephoneWork') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Work)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('fax') | formcontrol" [maxLength]="20"
                 label="Fax"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('statementVia') | formcontrol" [options]="countries"
                 bindLabelKey="values" bindValueKey="id" label="Statement Via"></ic-select>
         </div>
 
         <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-            <div class="title standard-margin">
+            <div fxFlex="calc(50%)" class="title standard-margin">
                 {{ 'Contact Address' }}
+            </div>
+            <div fxFlex="calc(50%)" *ngIf="detailsForGeneric.accountType == 'minor'">
+                <span *ngIf="user?.header == 'Minor Details'">
+                    {{'Same as Guardian Address'}}
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Yes</mat-radio-button>
+                        <mat-radio-button value="2">No</mat-radio-button>
+                    </mat-radio-group>
+                </span>
             </div>
         </div>
 
@@ -131,150 +156,153 @@
                 label="Address Line 2"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('residentStatus') | formcontrol" [options]="residentStatus"
                 bindLabelKey="values" bindValueKey="id" label="Resident Status"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('subRub') | formcontrol" [maxLength]="20"
                 label="Subrub"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('city') | formcontrol" [options]="cities" bindLabelKey="values"
                 bindValueKey="id" label="City"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('postalCode') | formcontrol" [icNumbersOnly]="true"
                 [maxLength]="10" label="Postal Code" suffixIcon="search"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-date-picker [control]="personalDetails.get('livingAddressSince') | formcontrol"
                 placeholder="Living Address Since" label="Living Address Since">
             </ic-date-picker>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
 
-        <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
+        <ng-container *ngIf="user?.header !== 'Minor Details'">
+            <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
             <div class="title standard-margin">
                 {{ 'Spouse Details' }}
             </div>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('spousePrefix') | formcontrol" [options]="prefix"
                 bindLabelKey="values" bindValueKey="id" label="Prefix"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('spouseFirstName') | formcontrol" [maxLength]="20"
                 label="First Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('spouseLastName') | formcontrol" [maxLength]="20"
                 label="Last Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-date-picker [control]="personalDetails.get('spouseDateOfBirth') | formcontrol"
                 placeholder="Date of Birth" label="Date of Birth">
             </ic-date-picker>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('spouseTelephoneHome') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Spouse Telephone (Work)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('spouseTelephoneWork') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Spouse Telephone (Work)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('spouseMobileNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Mobile No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('spouseEmail') | formcontrol" [maxLength]="20"
                 label="Email"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('spouseEmployeeStatus') | formcontrol" [options]="prefix"
                 bindLabelKey="values" bindValueKey="id" label="Employee Status"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('spouseNetIncome') | formcontrol" [maxLength]="20"
                 label="Net Income"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-
+        </ng-container>
+        
+    <ng-container *ngIf="user?.header !== 'Minor Details'">
         <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
             <div class="title standard-margin">
                 {{ 'Emergency Contact Details / Next of Kin' }}
             </div>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('emePrefix') | formcontrol" [options]="prefix"
                 bindLabelKey="values" bindValueKey="id" label="Prefix"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emeFirstName') | formcontrol" [maxLength]="20"
                 label="First Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emeLastName') | formcontrol" [maxLength]="20"
                 label="Last Name"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('emeRelationship') | formcontrol" [options]="relationships"
                 bindLabelKey="values" bindValueKey="id" label="Relationship"></ic-select>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('emeMobileNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Mobile No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('emeAlternateNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Alternate No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('emeWhatsAppNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="WhatsApp No"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emeEmailId') | formcontrol" [maxLength]="20"
                 label="Email Id"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('emeTelephoneHome') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Home)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-mobile-field [formControl]="personalDetails.get('emeTelephoneWork') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Work)"></ic-mobile-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emeFax') | formcontrol" [maxLength]="20"
                 label="Fax"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
 
         <div fxFlex="calc(50%)">
@@ -286,30 +314,30 @@
                 label="Address Line 2"></ic-form-field>
         </div>
 
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('emeResidentStatus') | formcontrol" [options]="residentStatus"
                 bindLabelKey="values" bindValueKey="id" label="Resident Status"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emeSubRub') | formcontrol" [maxLength]="20"
                 label="Subrub"></ic-form-field>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-select [control]="personalDetails.get('emeCity') | formcontrol" [options]="cities" bindLabelKey="values"
                 bindValueKey="id" label="City"></ic-select>
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
             <ic-form-field [control]="personalDetails.get('emePostalCode') | formcontrol" [icNumbersOnly]="true"
                 [maxLength]="10" label="Postal Code" suffixIcon="search"></ic-form-field>
         </div>
-
-        <div fxFlex="calc(25%)">
+    </ng-container>
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)">
+        <div fxFlex="25">
         </div>
-        <div fxFlex="calc(25%)" fxLayoutAlign="end center" (click)="onSave()">
+        <div fxFlex="25" fxLayoutAlign="end center" (click)="onSave()">
             <ic-button [icButtonType]="'ghost-rounded'" [label]="'Save'" [type]="'submit'" size="medium">
             </ic-button>
         </div>

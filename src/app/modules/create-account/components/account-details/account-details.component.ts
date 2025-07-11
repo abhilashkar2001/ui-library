@@ -1,4 +1,4 @@
-// import { getCurrencySymbol } from '@angular/common';
+import { getCurrencySymbol } from '@angular/common';
 import {
   Component,
   Input,
@@ -7,17 +7,30 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-// import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { LocaleData, selectUser, User } from '@onerumango/utils';
+import {
+  LocaleData,
+  selectLocaleData,
+  selectUser,
+  User,
+} from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-// import moment from 'moment';
-import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
-// import { AccountSelectionComponent } from '../account-selection/account-selection.component';
-import { ActivatedRoute } from '@angular/router';
+import moment from 'moment';
+import {
+  catchError,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  of,
+  Subscription,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-account-details',
@@ -25,16 +38,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./account-details.component.scss'],
 })
 export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
-  accountDetailsForm!: FormGroup;
-  createAccountDetailsSummaryArr: any[] = [];
+  loanDetailsForm!: FormGroup;
+  loanDetailsSummaryArr: any[] = [];
   genericValue: any | undefined;
   todaysDate = new Date();
   staticData = {
     REPAYMENTFREQUENCY: [],
   };
   holderTypeArr = [
-    { label: 'Individual', value: 'individual' },
-    { label: 'Minor', value: 'minor' },
+    { label: 'Self', value: 'self' },
     { label: 'Joint', value: 'joint' },
   ];
   profileInfo: any;
@@ -51,44 +63,30 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   max: any;
   @Input() isEdit = false;
   @Input() screenCode = '';
-  selectedAccountType: string = '';
-  data: any;
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
-    // private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
-    private activatedRoute: ActivatedRoute,
   ) {
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
-    this.data = this.activatedRoute.snapshot['queryParams']['type'];
-    console.log(this.data);
-    console.log(this.activatedRoute);
-
-    // this.loadLocaleData();
+    this.loadLocaleData();
   }
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
-    this.initializeCreateAccountDetailsArray();
+    this.initializeLoanDetailsArray();
     if (this.originationId) {
       this.fetchLoanDetails();
     }
     this.buildLoanDetailsForm();
-
-    const validValues = this.holderTypeArr.map((item) => item.value);
-    if (validValues.includes(this.data)) {
-      this.accountDetailsForm
-        ?.get('accountDetails.holderType')
-        ?.setValue(this.data);
-    }
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isEdit']) {
       console.log('Edit mode ON');
@@ -104,32 +102,78 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     this.subscriptions.push(loadUserProfileSub);
   }
 
-  initializeCreateAccountDetailsArray(_data?: any) {
-    this.createAccountDetailsSummaryArr = [
+  loadLocaleData(): void {
+    const localeDataSub = this.store
+      .select(selectLocaleData)
+      .subscribe((localeData) => {
+        if (localeData) {
+          this.otherUserInfo = localeData;
+          this.currencySymbol = getCurrencySymbol(
+            this.otherUserInfo.currency,
+            'wide',
+          );
+        }
+      });
+    this.subscriptions.push(localeDataSub);
+  }
+
+  initializeLoanDetailsArray(data?: any) {
+    this.loanDetailsSummaryArr = [
       {
-        header: 'Account Type',
-        value: `Current`,
-        formControlName: 'accountType',
+        header: 'Loan Amount Requested (GHS)*',
+        value: data?.loanDetails?.loanAmount,
+        formControlName: 'loanAmount',
         currency: true,
       },
       {
-        header: 'Account Description',
-        value: `Allows you to deposit your Money,
-Safe with the bank`,
-        formControlName: 'accountDescription',
+        header: 'Tenure',
+        value: `${data?.loanDetails?.loanTenureYear || 0}Year ${data?.loanDetails?.loanTenureMonth || 0}Month ${data?.loanDetails?.loanTenureDay || 0}Days`,
+        formControlName: 'loanTenureYear',
       },
       {
-        header: 'Business Product Name',
-        value: `Resident Account`,
-        formControlName: 'businessProductName',
+        header: 'Interest Rate %',
+        value: data?.loanDetails?.interestRate,
+        formControlName: 'interestRate',
         currency: true,
       },
       {
-        header: 'Product Description',
-        value: `Safegaurd your money and Pays
-a certain amount of interest`,
-        formControlName: 'productDescription',
+        header: 'EMI Amount',
+        value: data?.loanDetails?.emiAmount,
+        formControlName: 'emiAmount',
         currency: true,
+      },
+      {
+        header: 'Interest Payable',
+        value: data?.loanDetails?.totalInterestAmount,
+        formControlName: 'interestPayable',
+        currency: true,
+      },
+      {
+        header: 'Total Principal Amount',
+        value: data?.loanDetails?.totalPrincipalAmount,
+        formControlName: 'totalPrincipalAmount',
+        currency: true,
+      },
+      {
+        header: 'Total Payable Amount',
+        value: data?.loanDetails?.totalPayableAmount,
+        formControlName: 'totalPayableAmount',
+        currency: true,
+      },
+      {
+        header: 'Repayment Frequency*',
+        value: data?.foreclosureAmount ?? 'Monthly',
+        formControlName: 'foreclosureAmount',
+      },
+      {
+        header: 'EMI Start Date*',
+        value: this.repaymentDetails?.value?.firstRepaymentDate ?? 'null',
+        formControlName: 'foreclosureAmount',
+      },
+      {
+        header: 'Holder Type*',
+        value: data?.loanDetails?.holderType ?? 'Self',
+        formControlName: 'holderType',
       },
     ];
   }
@@ -139,8 +183,8 @@ a certain amount of interest`,
     if (this.originationId)
       this.loanService.getLoanDetails(this.originationId).subscribe((resp) => {
         if (resp.statusCode === 200) {
-          this.accountDetailsForm?.patchValue(resp?.data);
-          this.initializeCreateAccountDetailsArray(resp?.data);
+          this.loanDetailsForm?.patchValue(resp?.data);
+          this.initializeLoanDetailsArray(resp?.data);
         }
       });
   }
@@ -156,40 +200,106 @@ a certain amount of interest`,
       });
   }
 
-  get holderType() {
-    return this.accountDetailsForm?.get('holderType')?.value;
-  }
-
   // Build Form
   buildLoanDetailsForm() {
-    this.accountDetailsForm = this.fb.group({
+    this.loanDetailsForm = this.fb.group({
       originationModel: this.fb.group({
         originationId: [''],
       }),
-      accountDetails: this.fb.group({
-        accountType: [''],
-        businessProductName: [''],
-        accountDescription: [''],
-        productDescription: [''],
-        accountBranch: [''],
-        accountCurrency: [''],
-        noOfApplicant: [''],
-        noOfGuardian: [''],
-        customerCategory: [''],
-        holderType: [''],
-        initialFunding: [''],
-        overdraftRequested: [''],
+      loanDetails: this.fb.group({
+        loanId: [''],
+        loanAmount: [''],
+        interestRate: [''],
+        loanTenureYear: [''],
+        loanTenureMonth: [''],
+        loanTenureDay: [''],
+        emiAmount: [''],
+        totalInterestAmount: [''],
+        totalPrincipalAmount: [''],
+        totalPayableAmount: [''],
+        holderType: ['self'],
       }),
 
+      repaymentModel: this.fb.group({
+        id: null,
+        firstRepaymentDate: [
+          moment(
+            new Date(
+              this.todaysDate.getFullYear(),
+              this.todaysDate.getMonth() + 1,
+              this.todaysDate.getDate(),
+            ),
+          ).format('MM-DD-YYYY'),
+          Validators.required,
+        ],
+        repaymentFrequencyId: [''],
+      }),
       screenCode: [''],
     });
+
+    const loanDetailsGroup = this.loanDetailsForm.get(
+      'loanDetails',
+    ) as FormGroup;
+
+    const loanAmountCtrl = loanDetailsGroup.get('loanAmount');
+    const interestRateCtrl = loanDetailsGroup.get('interestRate');
+    const yearCtrl = loanDetailsGroup.get('loanTenureYear');
+    const monthCtrl = loanDetailsGroup.get('loanTenureMonth');
+    const dayCtrl = loanDetailsGroup.get('loanTenureDay');
+
+    if (
+      loanAmountCtrl &&
+      interestRateCtrl &&
+      yearCtrl &&
+      monthCtrl &&
+      dayCtrl
+    ) {
+      combineLatest([
+        loanAmountCtrl.valueChanges,
+        interestRateCtrl.valueChanges,
+        yearCtrl.valueChanges,
+        monthCtrl.valueChanges,
+        dayCtrl.valueChanges,
+      ])
+        .pipe(
+          debounceTime(300),
+          map(([loanAmount, interestRate, year, month, day]) => ({
+            principleAmount: loanAmount,
+            interestRate: interestRate,
+            numberOfMonths:
+              (+year || 0) * 12 +
+              (+month || 0) +
+              ((+day || 0) < 30 ? 0 : Math.floor(+day / 30)),
+          })),
+          filter(
+            ({ principleAmount, interestRate, numberOfMonths }) =>
+              !!principleAmount && !!interestRate && numberOfMonths > 0,
+          ),
+          distinctUntilChanged(
+            (prev, curr) =>
+              prev.principleAmount === curr.principleAmount &&
+              prev.interestRate === curr.interestRate &&
+              prev.numberOfMonths === curr.numberOfMonths,
+          ),
+        )
+        .subscribe(({ principleAmount, interestRate, numberOfMonths }) => {
+          const firstRepaymentDate =
+            this.repaymentDetails.get('firstRepaymentDate')?.value;
+          this.callEmiCalculationAPI({
+            principleAmount,
+            interestRate,
+            numberOfMonths,
+            firstRepaymentDate,
+          });
+        });
+    }
   }
 
   // This function is used to call the EMI calculation API when the loan data changes
   callEmiCalculationAPI(payload: any) {
     this.loanService.getEmiCalculation(payload).subscribe((res: any) => {
       if (res?.statusCode === 200) {
-        this.accountDetailsForm.get('loanDetails')?.patchValue({
+        this.loanDetailsForm.get('loanDetails')?.patchValue({
           emiAmount: res?.data?.monthlyPayment,
           emiInterestPayable: res?.data?.principal,
           totalInterestAmount: res?.data?.totalInterest,
@@ -199,9 +309,17 @@ a certain amount of interest`,
     });
   }
 
+  get loanDetails() {
+    return this.loanDetailsForm?.get('loanDetails') as FormGroup;
+  }
+
+  get repaymentDetails() {
+    return this.loanDetailsForm?.get('repaymentModel') as FormGroup;
+  }
+
   handleSubmit() {
     const payload = {
-      ...this.accountDetailsForm?.value,
+      ...this.loanDetailsForm?.value,
     };
     payload.originationModel.originationId = this.originationId;
     delete payload.loanDetails.totalPrincipalAmount;
