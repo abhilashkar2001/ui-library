@@ -91,8 +91,8 @@ export class GenericAccountFormComponent {
       cifNumber: ['', []],
       isPrimary: [true, []],
       prefix: ['', []],
-      firstName: ['', []],
-      LastName: ['', []],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       dateOfBirth: ['', []],
       gender: ['', []],
       maritalStatus: ['', []],
@@ -152,6 +152,13 @@ export class GenericAccountFormComponent {
       emePostalCode: ['', []],
       emeLivingAddressSince: ['', []],
     });
+  }
+
+  onSave(){
+    console.log(this.personalDetails);
+    if(this.personalDetails.invalid){
+      this.personalDetails.markAllAsTouched();
+    }
   }
 
   // buildDisbursementForm(data?: any) {

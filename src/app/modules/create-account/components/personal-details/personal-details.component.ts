@@ -42,7 +42,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // originationId: number | undefined;
 
   detailsForGeneric = {
-    accountType: 'minor'
+    accountType: 'joint'
   }
   noOfapplicantguardian: any = 2;
   accordionItems: any = [];
@@ -75,8 +75,8 @@ export class AccountPersonalDetailsComponent implements OnInit {
   }
 
   createAccordian() {
-    if(this.detailsForGeneric.accountType == 'minor'){
-       this.accordionItems.push({ header: 'Minor Details', expanded: true });
+    if (this.detailsForGeneric.accountType == 'minor') {
+      this.accordionItems.push({ header: 'Minor Details', expanded: true });
     }
     for (let i = 0; i < this.noOfapplicantguardian; i++) {
       if (this.detailsForGeneric.accountType == 'joint') {
@@ -84,6 +84,12 @@ export class AccountPersonalDetailsComponent implements OnInit {
       } else if (this.detailsForGeneric.accountType == 'minor') {
         this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false });
       }
+    }
+  }
+
+  deleteAccordian(index: any) {
+    if (index > -1) {
+      this.accordionItems.splice(index, 1);
     }
   }
 
