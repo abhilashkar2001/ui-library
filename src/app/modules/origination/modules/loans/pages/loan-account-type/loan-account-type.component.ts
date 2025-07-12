@@ -86,7 +86,11 @@ export class LoanAccountTypeComponent implements OnInit {
     const emiStartDate = new Date();
     emiStartDate.setDate(emiStartDate.getDate() + 1);
     this.sessionStorageService.removeLoanStep();
-    this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
-    // this.router.navigate([`/loan/login`]);
+
+    if (this.basisClass.toLowerCase().includes('new')) {
+      this.router.navigate([`/loan/login`]);
+    } else {
+      this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
+    }
   }
 }

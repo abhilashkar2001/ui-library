@@ -63,7 +63,7 @@ export class CommonProductComponent implements OnChanges, OnInit {
       if (url.includes('https')) {
         return 'assets/images/normal_loan.svg';
       } else {
-        return this.sanitizer.bypassSecurityTrustUrl(`${this.endPoints}${url}`);
+        return this.sanitizer.bypassSecurityTrustUrl(`${url.split('.')[0]}`);
       }
     } else return 'assets/images/normal_loan.svg';
   }
@@ -77,7 +77,6 @@ export class CommonProductComponent implements OnChanges, OnInit {
       });
       console.log(this.subAccount);
     }
-
     this.cdr.detectChanges();
   }
 }

@@ -52,6 +52,7 @@ export class ShowDocumentComponent implements OnInit {
           imageUrl: this.endPoints + imageName.fileUrl,
           imageName: imageName.fileName,
           fileInfo: imageName,
+          uuid: this.document?.uuid,
         },
         width: '60%',
         height: '560px',

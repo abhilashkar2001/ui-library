@@ -99,6 +99,7 @@
                           "
                           fxFlex="49"
                           label="Identification Number"
+                          [maxLength]="20"
                         ></ic-form-field>
 
                         <ic-date-picker
@@ -172,6 +173,7 @@
                         customer.get('contact')?.get('mobtCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Mobile Number"
                     ></ic-mobile-field>
@@ -192,6 +194,7 @@
                         customer.get('contact')?.get('altCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Alternate Number"
                     ></ic-mobile-field>
@@ -211,6 +214,7 @@
                         customer.get('contact')?.get('waptCode') | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Whatsapp Number"
                     ></ic-mobile-field>
@@ -254,7 +258,7 @@
                         customer.get('contact')?.get('fax') | formcontrol
                       "
                       [icNumbersOnly]="true"
-                      [maxLength]="25"
+                      [maxLength]="10"
                       fxFlex="49"
                       label="Fax"
                     ></ic-form-field>
@@ -551,6 +555,7 @@
                           | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Mobile Number"
                     ></ic-mobile-field>
@@ -573,6 +578,7 @@
                           | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Alternate Number"
                     ></ic-mobile-field>
@@ -595,6 +601,7 @@
                           | formcontrol
                       "
                       [maxLength]="maxMobileLength"
+                      [minLength]="maxMobileLength"
                       fxFlex="49"
                       label="Whatsapp Number"
                     ></ic-mobile-field>

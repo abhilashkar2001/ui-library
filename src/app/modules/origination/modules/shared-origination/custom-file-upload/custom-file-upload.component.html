@@ -110,10 +110,12 @@
               >
                 <div class="img_box">
                   <img
-                    [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec' | safe: 'url'"
+                    *ngIf="file.uuid | safe: 'url' | async as filePreview"
+                    [src]="filePreview"
                     alt="image"
                   />
                 </div>
+
                 <div class="img_container">
                   <span class="header_md img_name">{{ file?.name }}</span>
                   <div
@@ -182,7 +184,7 @@
           </ng-container>
 
           <mat-expansion-panel-header class="p-12">
-            <span class="header_md">Applicant {{ aIndex + 1 }}</span>
+            <span class="header_md">Director {{ aIndex + 1 }}</span>
           </mat-expansion-panel-header>
 
           <ng-container formArrayName="otherDocument">
@@ -262,9 +264,8 @@
                     >
                       <div class="img_box">
                         <img
-                          [src]="
-                            '4a82eba7-0fa6-4776-b4ea-18da9cd653ec' | safe: 'url'
-                          "
+                          *ngIf="file.uuid | safe: 'url' | async as filePreview"
+                          [src]="filePreview"
                           alt="image"
                         />
                       </div>
