@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TermsConditionPopupComponent } from 'app/shared/components/terms-condition-popup/terms-condition-popup.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -10,14 +10,15 @@ import { catchError, map, of, tap } from 'rxjs';
   templateUrl: './terms-condition.component.html',
   styleUrls: ['./terms-condition.component.scss'],
 })
-export class TermsConditionComponent {
+export class TermsConditionComponent implements OnInit {
+  @Input() screenCode = '';
   customerDetails: any = [
     {
-      headerDef: 'customerName',
+      headerDef: 'name',
       headerCell: 'Name',
     },
     {
-      headerDef: 'mobileNo',
+      headerDef: 'mobile',
       headerCell: 'Mobile No',
     },
     {
@@ -30,12 +31,17 @@ export class TermsConditionComponent {
     },
   ];
   agreed = false;
+  data: any;
 
   constructor(
     private dialog: MatDialog,
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
   ) {}
+
+  ngOnInit() {
+    this.fetchDetails();
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(TermsConditionPopupComponent, {
@@ -49,12 +55,23 @@ export class TermsConditionComponent {
     });
   }
 
+  fetchDetails() {
+    this.loanService
+      .fetchCreditBureau(this.sessionStorageService.getOriginationId() ?? 1784)
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 || res?.statusCode === 201) {
+          this.data = res?.data;
+        }
+      });
+  }
+
   handleSubmit() {
-    if (!this.agreed) return;
+    console.log(this.agreed);
+    if (this.agreed) return;
     const payload = {
       creditChecked: this.agreed,
       originationId: this.sessionStorageService.getOriginationId(),
-      screenCode: '444',
+      screenCode: this.screenCode,
     };
 
     return this.loanService.saveTermsandCreditFields(payload).pipe(

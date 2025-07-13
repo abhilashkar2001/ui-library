@@ -27,6 +27,7 @@ import { SignaturePopupComponent } from './components/digital-signature/signatur
 import { EmiCalculatorComponent } from './emi-calculator/emi-calculator.component';
 import { CalculatorDialogComponent } from './dialogs/calculator-dialog/calculator-dialog.component';
 import { AddCollateralComponent } from './components/collateral-details/add-collateral/add-collateral.component';
+import { LibPipesModule } from '@onerumango/utils';
 import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/emi-calculator-drawer/emi-calculator-drawer.component';
 
 @NgModule({
@@ -63,6 +64,7 @@ import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/em
     SharedOriginationModule,
     MatFormFieldModule,
     OriginationExternalCallbackModule,
+    LibPipesModule,
   ],
 })
 export class LoanModule {}

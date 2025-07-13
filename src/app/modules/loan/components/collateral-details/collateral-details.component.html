@@ -17,12 +17,14 @@
       label="Add New"
       icButtonType="filled-rounded"
       type="submit"
-      (OnClick)="openSidePanel(address.length)"
+      (OnClick)="openSidePanel(collateralDetails)"
     ></ic-button>
   </div>
   <app-custom-table
     [tableHeaders]="tableHeaders"
-    [tableData]="tableData"
+    [tableData]="collateralDetails.value"
+    (editRowEvent)="editRow($event)"
+    (deleteRowEvent)="deleteRow($event)"
   ></app-custom-table>
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <ic-form-field
@@ -42,7 +44,7 @@
     <ic-select
       fxFlex="24"
       [control]="collateralForm.get('loanTypeId') | formcontrol"
-      [options]="[]"
+      [options]="genericValue?.['LOANTYPE'] ?? []"
       bindLabelKey="values"
       bindValueKey="id"
       label="Loan Type"

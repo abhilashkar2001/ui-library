@@ -173,6 +173,12 @@ export class LoanService {
     );
   }
 
+  deleteCollateralDetails(collateralId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/loan-detail/delete-collaterals?ids=${collateralId}`,
+    );
+  }
+
   fetchCheckListSummary(originationId: number) {
     return this.http.get<any>(
       `${baseUrl}/origination-doc?originationId=${originationId}`,

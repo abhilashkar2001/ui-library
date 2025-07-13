@@ -7,11 +7,11 @@
     }}</mat-header-cell>
 
     <!-- Row cell -->
-    <mat-cell *matCellDef="let element">
+    <mat-cell *matCellDef="let element; let i = index">
       <!-- Render different cell contents based on key -->
       <ng-container [ngSwitch]="header.key">
         <!-- For collateral name -->
-        <ng-container *ngSwitchCase="'collateralName'">
+        <ng-container *ngSwitchCase="'collateralNameValue'">
           <span class="theme_md">{{ element[header.key] }}</span>
         </ng-container>
 
@@ -24,19 +24,24 @@
         </ng-container>
         <!-- For document link -->
         <ng-container *ngSwitchCase="'document'">
-          <span class="theme_md" (click)="viewDocument()"
+          <span
+            *ngIf="element?.documentId?.length > 0"
+            class="theme_md"
+            (click)="viewDocument()"
+            (keydown.enter)="viewDocument()"
+            tabindex="0"
             ><u>View Document</u></span
           >
         </ng-container>
 
         <!-- For action buttons -->
         <ng-container *ngSwitchCase="'action'">
-          <button mat-icon-button (click)="editRow(element)">
+          <button mat-icon-button (click)="editRow(i)">
             <mat-icon fontSet="material-icons-outlined" color="da"
               >edit_outlined</mat-icon
             >
           </button>
-          <button mat-icon-button color="warn" (click)="deleteRow(element)">
+          <button mat-icon-button color="warn" (click)="deleteRow(i)">
             <img tabindex="0" src="assets/images/trash_new.svg" alt="trash" />
           </button>
         </ng-container>
