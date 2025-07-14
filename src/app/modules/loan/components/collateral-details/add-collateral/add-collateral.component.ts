@@ -1,6 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { DmsService } from '@onerumango/utils';
+import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
+import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-collateral',
@@ -26,49 +31,79 @@ export class AddCollateralComponent implements OnInit {
   isStart: boolean | undefined;
   fileUploadFailed: boolean | undefined;
   percentDone = 0;
+  genericValue: GenericValueInfoModel | undefined;
+  staticData = {
+    COLLATERALNAME: [],
+  };
+
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private sideNavService: SidenavService,
+    private loanService: LoanService,
+    private dmsService: DmsService,
+    private genericValueService: GenericValueService,
   ) {}
 
   ngOnInit(): void {
     this.buildCollateral();
+    this.fetchGenericValues();
     console.log(this.data);
   }
 
   buildCollateral() {
+    const selectedData = this.data[this.data?.selectedDataIndex];
+    console.log(selectedData, this.data?.selectedDataIndex);
     this.collateralForm = this.fb.group({
-      collateralName: [''],
-      ownership: [''],
-      description: [''],
+      collateralNameValue: [selectedData?.collateralNameValue ?? ''],
+      ownership: [selectedData?.ownership ?? ''],
+      description: [selectedData?.description ?? ''],
+      assetMonetaryWorth: [selectedData?.assetMonetaryWorth ?? ''],
       document: this.fb.array([]),
     });
   }
 
-  document(): FormArray {
+  get document(): FormArray {
     return this.collateralForm?.get('document') as FormArray;
   }
 
   addDocument(data?: any) {
-    this.document().push(this.documentUploadArray(data));
+    this.document.push(this.documentUploadArray(data));
   }
 
   documentUploadArray(data?: any): FormGroup {
-    const docType = data?.values ?? (data?.document || '');
     return this.fb.group({
-      documentNumber: [''],
-      documentType: [docType],
-      fileInfo: [''],
-      docIds: [''],
+      documentId: [data?.documentId ?? ''],
+      uuid: [data?.uuid ?? ''],
+      documentName: [data?.fileName ?? ''],
+      fileSize: [data?.fileSize ?? ''],
     });
+  }
+
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.genericValue = resp?.data;
+        }
+      });
+  }
+
+  setCollateralName(event: any) {
+    if (this.genericValue?.['COLLATERALNAME']) {
+      const collateralName = this.genericValue?.['COLLATERALNAME'].find(
+        (item: any) => item.id === event,
+      )?.values;
+      this.collateralForm?.get('collateralNameValue')?.setValue(collateralName);
+    }
   }
 
   onFileDropped(event: any) {
     this.file = event;
     this.fileName = this.file.name;
     this.signImg = true;
-    this.handleUploadEvent(event);
+    this.addDocument(event);
   }
 
   onFileSelect(e: any) {
@@ -82,22 +117,12 @@ export class AddCollateralComponent implements OnInit {
       fReader.onloadend = (_event: any) => {
         this.signImg = _event.target.result;
         console.log(this.signImg, this.file, this.fileName);
-        this.handleUploadEvent(this.signImg);
         this.uploadDocument();
       };
     } catch (error) {
       console.log(error);
     }
     this.cdr.detectChanges();
-  }
-
-  handleUploadEvent(event: any) {
-    this.percentDone = 0;
-    console.log(event);
-    // this.dialogRef.close({
-    //   result: event,
-    //   title: 'Signature',
-    // });
   }
 
   uploadDocument() {
@@ -108,22 +133,29 @@ export class AddCollateralComponent implements OnInit {
     };
     docPayload.append('file', this.file);
     docPayload.append('data', JSON.stringify(data));
-    docPayload.append('module', 'collateral');
-    // docPayload.append('signatureId', this.sinatureId);
-    // this.branchService
-    //   .saveUploadSignature(docPayload)
-    //   .pipe(
-    //     map((event: any) => this.handleUploadEvent(event)),
-    //     catchError((err) => {
-    //       this.fileUploadFailed = true;
-    //       return of(err);
-    //     }),
-    //   )
-    //   .subscribe();
+    docPayload.append('module', 'signature');
+    this.dmsService
+      .uploadDocuments(docPayload)
+      .pipe(
+        map((event: any) => this.addDocument(event)),
+        catchError((err) => {
+          this.fileUploadFailed = true;
+          return of(err);
+        }),
+      )
+      .subscribe();
   }
 
   addCollateral() {
     console.log(this.collateralForm?.value);
+    this.loanService.sendCollateralData({
+      ...this.data,
+      collateral: this.collateralForm?.value,
+    });
+    this.sideNavService.close();
+  }
+
+  close() {
     this.sideNavService.close();
   }
 }

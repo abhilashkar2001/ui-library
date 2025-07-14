@@ -28,6 +28,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   @Input() getDocumentList: any;
   @Input() screenNameValue: string | any;
   @Input() noOfDirectors = 1;
+  @Input() customerDocUpload: any;
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   staticData: GenericValueInfoModel = {
     DOCUMENTNAME: [],
@@ -95,6 +96,43 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
             ?.get('fileInfo')
             ?.setValue(fileInfo);
         }
+      });
+    }
+
+    if (changes?.customerDocUpload?.currentValue?.length > 0) {
+      const uploads = changes.customerDocUpload.currentValue as any[][];
+
+      while (this.applicant().length < uploads.length) {
+        this.addApplicant();
+      }
+
+      uploads.forEach((fileList, applicantIdx) => {
+        const docArray = this.getApplicantDocuments(applicantIdx);
+        const documentType = 'National Id';
+
+        let rowIndex = docArray.controls.findIndex(
+          (ctrl) =>
+            ctrl.get('documentType')?.value?.toLowerCase() ===
+            documentType.toLowerCase(),
+        );
+
+        if (rowIndex === -1) {
+          docArray.push(
+            this.newDenom({ document: documentType, values: documentType }),
+          );
+          rowIndex = docArray.length - 1;
+        }
+
+        const fileInfo = this.calculateDoc(fileList, rowIndex);
+
+        docArray.at(rowIndex).patchValue({
+          fileInfo,
+          docIds: fileList.map((file) => file.id),
+        });
+      });
+
+      this.CustomSubmit.emit({
+        documentDetails: this.createDocumentForm.value,
       });
     }
   }

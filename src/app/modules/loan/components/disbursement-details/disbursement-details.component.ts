@@ -124,10 +124,13 @@ export class DisbursementDetailsComponent implements OnInit {
   }
 
   fetchDisbursementDetails() {
-    this.loanService.fetchDisbursementDetails(962).subscribe((res: any) => {
-      if (res?.statusCode === 200 || res?.statusCode === 201)
-        this.buildDisbursementForm(res?.data[0]);
-    });
+    if (!this.originationId) return;
+    this.loanService
+      .fetchDisbursementDetails(this.originationId)
+      .subscribe((res: any) => {
+        if (res?.statusCode === 200 || res?.statusCode === 201)
+          this.buildDisbursementForm(res?.data[0]);
+      });
   }
 
   handleSubmit() {
