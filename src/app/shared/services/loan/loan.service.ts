@@ -119,6 +119,14 @@ export class LoanService {
     return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
   }
 
+  // DeleteChecklist
+
+  deleteCheckList(documentId: number, originationId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/origination-doc?documentId=${documentId}&originationId=${originationId}`,
+    );
+  }
+
   getSavedChecklist(
     originationId: number,
     screenCode?: string,
@@ -162,6 +170,12 @@ export class LoanService {
   getCollateralDetailsId(originationId: number) {
     return this.http.get<any>(
       `${baseUrl}/loan-detail/fetch-collateralInfo?originationId=${originationId}`,
+    );
+  }
+
+  deleteCollateralDetails(collateralId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/loan-detail/delete-collaterals?ids=${collateralId}`,
     );
   }
 
@@ -232,6 +246,20 @@ export class LoanService {
     return this.http.post<any>(
       `${baseUrl}/customer-api/saveCustStageSignature`,
       payload,
+    );
+  }
+  fetchCustomerCategories(productCode: string) {
+    return this.http.get<any>(
+      `${baseUrl}/interestRate/fetchCategoryIdUsingProductCode?productCode=${productCode}`,
+    );
+  }
+  fetchInterestRateForCustomerCategory(
+    productName: string,
+    customercategory: string,
+    loanAmount: number,
+  ) {
+    return this.http.get<any>(
+      `${baseUrl}/interestRate/fetchInterest?productName=${productName}&customercategory=${customercategory}&loanAmount=${loanAmount}`,
     );
   }
 }

@@ -81,17 +81,22 @@
 </div>
 
 <ng-template #consentDialog>
-  <div class="popup-container">
-    <div fxLayoutAlign="end center">
-      <ic-button
-        customButtonClass="box-shadow-none"
-        icButtonType="icon"
-        icIcon="close"
-        mat-dialog-close
-        type="button"
-      ></ic-button>
+  <div class="popup-container" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-betwen">
+      <h2 class="popup-title" fxLayoutAlign="end center" fxFlex="64">
+        Consent Content
+      </h2>
+      <div fxLayoutAlign="end center" fxFlex="34">
+        <img
+          mat-dialog-close
+          [tabIndex]="1"
+          alt="Cancel Image"
+          role="button"
+          src="assets/images/cancelIcon.svg"
+          tabindex="0"
+        />
+      </div>
     </div>
-    <h2 class="popup-title">Consent Content</h2>
     <p>
       <span class="popup-title">Note:</span> By checking this box, I hereby
       consent to the use of my National ID number by [Bank Name] for internal

@@ -136,3 +136,15 @@ export function handleDownload(data: any, pdfName: string) {
   document.body.removeChild(link);
   window.URL.revokeObjectURL(url);
 }
+export function getFirstRepaymentDate(): string {
+  const today = new Date();
+  const nextMonthDate = new Date(today.setMonth(today.getMonth() + 1));
+
+  // Format as yyyy-MM-dd
+  const year = nextMonthDate.getFullYear();
+  const month = String(nextMonthDate.getMonth() + 1).padStart(2, '0'); // +1 because months are 0-indexed
+  const day = String(nextMonthDate.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+}

@@ -10,12 +10,13 @@
   </div>
   <div fxLayout="row wrap" fxLayoutGap="10">
     <ic-select
-      [options]="[]"
-      bindLabelKey=""
-      bindValueKey=""
-      [control]="collateralForm.get('collateralName') | formcontrol"
+      [options]="genericValue?.['COLLATERALNAME'] ?? []"
+      bindLabelKey="values"
+      bindValueKey="id"
+      [control]="collateralForm.get('collateralNameValue') | formcontrol"
       label="Collateral Name"
       fxFlex="48"
+      (selectionChange)="setCollateralName($event)"
     ></ic-select>
     <div fxFlex="48" fxLayout="column">
       <mat-label class="header_md mb-8" fxFlex="100"
@@ -70,16 +71,27 @@
         />
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-8">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        class="mt-8"
+        *ngFor="let doc of document.controls; let i = index"
+      >
         <!-- Item 1 -->
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10">
           <!-- Thumbnail -->
-          <img src="assets/images.png" alt="doc" />
+          <div class="img_box">
+            <img
+              *ngIf="doc?.value?.uuid | safe: 'url' | async as filePreview"
+              [src]="filePreview"
+              alt="doc"
+            />
+          </div>
 
           <!-- Text -->
           <div fxLayout="column" fxLayoutGap="10">
-            <div class="header_md">Document</div>
-            <div class="breadcrum_sm">Power Point 250KB</div>
+            <div class="header_md">{{ doc?.value?.documentName }}</div>
+            <div class="breadcrum_sm">{{ doc?.value?.filesize }}KB</div>
           </div>
         </div>
         <!-- Status Spinner -->
@@ -113,6 +125,7 @@
         [type]="'button'"
         icButtonType="outlined-rounded"
         size="medium"
+        (OnClick)="close()"
       >
       </ic-button>
     </div>

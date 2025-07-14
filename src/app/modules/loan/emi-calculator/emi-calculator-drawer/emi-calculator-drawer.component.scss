@@ -1,0 +1,40 @@
+.emi-calculator-drawer {
+  .emi-calculator-result {
+    border-radius: 18px;
+    border: 2px #f4f5fe solid;
+    overflow: hidden;
+    background-color: #ffffff;
+    .top-green-section {
+      background-image: url('~assets/images/green-bg-loan-emi-result.svg');
+      display: flex;
+      background-repeat: no-repeat;
+      background-size: cover;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 40%;
+      padding: 20px;
+
+      .monthly-emi {
+        color: #418f46;
+        font-family: Inter;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 32px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+    }
+
+    .horizontal-dashed-line {
+      border-bottom: 1px dashed #dcdcdc;
+    }
+
+    .emi-calculator-table {
+      padding: 12px;
+      > div {
+        margin: 12px 8px;
+      }
+    }
+  }
+}

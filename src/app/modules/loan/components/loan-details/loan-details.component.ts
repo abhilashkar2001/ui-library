@@ -63,6 +63,7 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
   max: any;
   @Input() isEdit = false;
   @Input() screenCode = '';
+  monthlyRepaymentId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -162,13 +163,13 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
       },
       {
         header: 'Repayment Frequency*',
-        value: data?.foreclosureAmount ?? 'Monthly',
-        formControlName: 'foreclosureAmount',
+        value: data?.repaymentModel?.repaymentFrequencyValue ?? 'Monthly',
+        formControlName: 'repaymentFrequencyId',
       },
       {
         header: 'EMI Start Date*',
         value: this.repaymentDetails?.value?.firstRepaymentDate ?? 'null',
-        formControlName: 'foreclosureAmount',
+        formControlName: 'firstRepaymentDate',
       },
       {
         header: 'Holder Type*',
@@ -196,6 +197,10 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genericValue = resp?.data;
+          const monthly = this.genericValue['REPAYMENTFREQUENCY'].find(
+            (item: any) => item.values?.toLowerCase() === 'monthly',
+          );
+          this.monthlyRepaymentId = monthly?.id ?? null;
         }
       });
   }
@@ -321,9 +326,18 @@ export class LoanDetailsComponent implements OnInit, OnDestroy, OnChanges {
     const payload = {
       ...this.loanDetailsForm?.value,
     };
+
+    if (
+      payload.repaymentModel?.repaymentFrequencyId == '' &&
+      payload.loanDetails.holderType == null
+    ) {
+      payload.repaymentModel.repaymentFrequencyId = this.monthlyRepaymentId;
+      payload.loanDetails.holderType = 'self';
+    }
     payload.originationModel.originationId = this.originationId;
     delete payload.loanDetails.totalPrincipalAmount;
     payload.screenCode = 444;
+
     return this.loanService.saveLoanDetails(payload).pipe(
       tap((res) => {
         console.log(res);

@@ -416,6 +416,7 @@ export class CusotmWebDocUploadComponent
         fileInfoArr.forEach((fileInfoObj: any) => {
           if (resp.fileName.includes(fileInfoObj.name)) {
             fileInfoObj.newFileUrl = resp.fileUrl;
+            fileInfoObj.uuid = resp?.uuid;
           }
         });
         this.otherDocument()
@@ -479,6 +480,7 @@ export class CusotmWebDocUploadComponent
         newFileUrl: '',
         pdfUrl: '',
         imageUrl: '',
+        uuid: '',
       });
       setTimeout(() => {
         this.getFileInfo(indx)[this.getFileInfo(indx)?.length - 1].progress =
@@ -625,6 +627,7 @@ export class CusotmWebDocUploadComponent
         imageUrl: this.baseUrl + file.newFileUrl,
         imageName: file.name ?? 'document',
         pdfUrl: this.baseUrl + file.newFileUrl,
+        uuid: file?.uuid,
       },
       width: '900px',
       height: '560px',
