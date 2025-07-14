@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { debounceTime, Subscription } from 'rxjs';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -11,6 +11,11 @@ import { EmiCalculatorDrawerComponent } from './emi-calculator-drawer/emi-calcul
 import { ProductState } from 'app/shared/models/router-state.model';
 import { getFirstRepaymentDate } from 'app/shared/helpers/utils';
 import { Router } from '@angular/router';
+import {
+  CustomerCategoryResponse,
+  InterestRateResponse,
+} from 'app/modules/loan/emi-calculator/emi-calculator-model';
+
 
 @Component({
   selector: 'app-emi-calculator',
@@ -58,13 +63,12 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.getProductDetails();
     this.fetchCustomerCategories();
-    this.initSubscriptions();
   }
   buildForm() {
     this.emiFormGroup = this.fb.group({
-      loanAmount: [0],
-      tenure: [25],
-      customerCategory: [null],
+      loanAmount: [this.minimumAmount ?? 0, [Validators.required]],
+      tenure: [this.minimumTenorYear ?? 0, [Validators.required]],
+      customerCategory: [null, [Validators.required]],
       isMonths: [true],
     });
   }
@@ -73,25 +77,53 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       form.valueChanges.pipe(debounceTime(300)).subscribe((formValue: any) => {
-        const { loanAmount, customerCategory, tenure } = formValue;
-
-        if (loanAmount > 0 && customerCategory) {
-          this.fetchInterestRate(customerCategory, loanAmount);
-        }
+        console.log(this.emiFormGroup);
+        const { loanAmount, tenure } = formValue;
 
         if (loanAmount > 0 && tenure > 0 && this.interestRate > 0) {
           this.calculateEmi(loanAmount, tenure);
         }
       }),
     );
+    const sub = this.emiFormGroup
+      .get('customerCategory')
+      ?.valueChanges.pipe(debounceTime(300))
+      ?.subscribe((customerCategory) => {
+        if (
+          this.emiFormGroup.get('loanAmount')?.value > 0 &&
+          customerCategory
+        ) {
+          this.fetchInterestRate(
+            customerCategory,
+            this.emiFormGroup.get('loanAmount')?.value,
+          );
+        }
+      }) as Subscription;
+    this.subscriptions.push(sub);
+    // form.get('loanAmount')?.valueChanges.subscribe((val) => {
+    //   const num = Number(val);
+    //   if (!isNaN(num) && typeof val === 'string') {
+    //     this.emiFormGroup.get('loanAmount')?.setValue(num, {
+    //       emitEvent: false,
+    //     });
+    //   }
+    // });
   }
 
   private fetchCustomerCategories(): void {
     if (!this.basisCode) return;
     this.loanService
       .fetchCustomerCategories(this.basisCode)
-      .subscribe((res) => {
+      .subscribe((res: CustomerCategoryResponse) => {
         this.customerCategoryList = res?.data ?? [];
+        if (
+          this.emiFormGroup?.get('customerCategory') &&
+          this.customerCategoryList?.length
+        ) {
+          this.emiFormGroup
+            .get('customerCategory')
+            ?.setValue(this.customerCategoryList[0]?.categoryId);
+        }
       });
   }
 
@@ -99,13 +131,20 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
     if (!category || !amount) return;
     this.loanService
       .fetchInterestRateForCustomerCategory(this.basisCode, category, amount)
-      .subscribe((res) => {
+      .subscribe((res: InterestRateResponse) => {
         this.interestRate = res?.data ?? 0;
         this.calculateEmi(amount, this.emiFormGroup.get('tenure')?.value);
       });
   }
 
   private calculateEmi(loanAmount: number, tenure: number): void {
+    if (
+      !loanAmount ||
+      !tenure ||
+      !this.interestRate ||
+      this.emiFormGroup.invalid
+    )
+      return;
     if (this.emiFormGroup.get('isMonths')?.value === false) {
       tenure = tenure * 12;
     }
@@ -127,6 +166,25 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
 
   setTenureUnit(isMonths: boolean): void {
     this.emiFormGroup.patchValue({ isMonths });
+
+    const tenureControl = this.emiFormGroup.get('tenure');
+    if (!tenureControl) return;
+
+    if (isMonths) {
+      tenureControl.setValidators([
+        Validators.required,
+        Validators.min(this.minimumTenorMonth),
+        Validators.max(this.maximumTenorMonth),
+      ]);
+    } else {
+      tenureControl.setValidators([
+        Validators.required,
+        Validators.min(this.minimumTenorYear),
+        Validators.max(this.maximumTenorYear),
+      ]);
+    }
+
+    tenureControl.updateValueAndValidity();
   }
 
   openEmiCalculatorDrawer(): void {
@@ -167,8 +225,31 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
           this.maximumTenorYear = lending.maximumTenorYear ?? 0;
           this.minimumTenorMonth = lending.minimumTenorMonth ?? 0;
           this.maximumTenorMonth = lending.maximumTenorMonth ?? 0;
+          this.setValidatorsAndValues();
+          this.initSubscriptions();
         }
       });
+  }
+  setValidatorsAndValues() {
+    this.emiFormGroup
+      .get('loanAmount')
+      ?.setValidators([
+        Validators.required,
+        Validators.min(this.minimumAmount),
+        Validators.max(this.maximumAmount),
+      ]);
+    this.emiFormGroup.get('loanAmount')?.setValue(this.minimumAmount);
+    this.emiFormGroup.get('loanAmount')?.updateValueAndValidity();
+
+    this.emiFormGroup
+      .get('tenure')
+      ?.setValidators([
+        Validators.required,
+        Validators.min(this.minimumTenorMonth),
+        Validators.max(this.maximumTenorMonth),
+      ]);
+    this.emiFormGroup.get('tenure')?.setValue(this.minimumTenorMonth);
+    this.emiFormGroup.get('tenure')?.updateValueAndValidity();
   }
 
   apply() {
