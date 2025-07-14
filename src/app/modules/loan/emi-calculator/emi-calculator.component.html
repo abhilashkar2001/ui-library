@@ -32,7 +32,7 @@
 
       <!-- Customer Category -->
       <div *ngIf="customerCategoryList" class="customer-category">
-        <div class="breadcrum_md">Customer Category</div>
+        <div class="breadcrum_md required">Customer Category</div>
         <div fxLayout="row wrap" fxLayoutAlign="start center">
           <ic-radio-button
             *ngFor="let category of customerCategoryList"
@@ -54,44 +54,97 @@
         fxLayoutGap="10"
         fxLayoutAlign="space-between center"
       >
-        <div class="txt_sm_black">Amount</div>
+        <div class="txt_sm_black required">Amount</div>
         <div fxFlex.lt-md="100">
           <ic-form-field
             [control]="emiFormGroup.get('loanAmount') | formcontrol"
             label="Amount"
+            [icNumbersOnly]="true"
+            [customError]="
+              emiFormGroup.get('loanAmount')?.hasError('max')
+                ? 'Amount cannot exceed ' + maximumAmount
+                : emiFormGroup.get('loanAmount')?.hasError('min')
+                  ? 'Amount should be at least ' + minimumAmount
+                  : ''
+            "
           ></ic-form-field>
         </div>
 
-        <div class="txt_sm_black">Tenure</div>
-        <div
-          class="tenure-buttons"
-          fxLayout="row"
-          fxFlex.lt-md="100"
-          fxLayoutGap="5"
-        >
-          <input formControlName="tenure" class="tenure-input" />
-
-          <span
-            class="months-btn"
-            [ngClass]="{ active: emiFormGroup.get('isMonths')?.value }"
-            (click)="setTenureUnit(true)"
-            (keydown.enter)="setTenureUnit(true)"
-            tabindex="0"
-            role="button"
+        <div class="txt_sm_black required">Tenure</div>
+        <div fxLayout="column">
+          <div
+            class="tenure-buttons"
+            [ngClass]="{
+              'error-border':
+                emiFormGroup.get('tenure')?.invalid &&
+                (emiFormGroup.get('tenure')?.touched ||
+                  emiFormGroup.get('tenure')?.dirty),
+            }"
+            fxLayout="row"
+            fxFlex.lt-md="100"
+            fxLayoutGap="5"
           >
-            Mon
-          </span>
+            <input
+              appNumbersOnly
+              formControlName="tenure"
+              class="tenure-input"
+            />
 
-          <span
-            class="years-btn"
-            [ngClass]="{ active: !emiFormGroup.get('isMonths')?.value }"
-            (click)="setTenureUnit(false)"
-            tabindex="0"
-            role="button"
-            (keydown.enter)="setTenureUnit(false)"
+            <span
+              class="months-btn"
+              [ngClass]="{ active: emiFormGroup.get('isMonths')?.value }"
+              (click)="setTenureUnit(true)"
+              (keydown.enter)="setTenureUnit(true)"
+              tabindex="0"
+              role="button"
+            >
+              Mon
+            </span>
+
+            <span
+              class="years-btn"
+              [ngClass]="{ active: !emiFormGroup.get('isMonths')?.value }"
+              (click)="setTenureUnit(false)"
+              tabindex="0"
+              role="button"
+              (keydown.enter)="setTenureUnit(false)"
+            >
+              Yrs
+            </span>
+          </div>
+          <div
+            class="error-msg"
+            *ngIf="
+              emiFormGroup.get('tenure')?.invalid &&
+              (emiFormGroup.get('tenure')?.touched ||
+                emiFormGroup.get('tenure')?.dirty)
+            "
           >
-            Yrs
-          </span>
+            <ng-container
+              *ngIf="emiFormGroup.get('tenure')?.hasError('required')"
+            >
+              Tenure is required.
+            </ng-container>
+            <ng-container *ngIf="emiFormGroup.get('tenure')?.hasError('min')">
+              Minimum tenure is
+              {{
+                emiFormGroup.get('isMonths')?.value
+                  ? minimumTenorMonth
+                  : minimumTenorYear
+              }}
+              {{ emiFormGroup.get('isMonths')?.value ? 'months' : 'years' }}.
+            </ng-container>
+
+            <ng-container *ngIf="emiFormGroup.get('tenure')?.hasError('max')">
+              Maximum tenure is
+              {{
+                emiFormGroup.get('isMonths')?.value
+                  ? maximumTenorMonth
+                  : maximumTenorYear
+              }}
+              {{ emiFormGroup.get('isMonths')?.value ? 'months' : 'years' }}.
+            </ng-container>
+          </div>
         </div>
       </div>
 
@@ -137,7 +190,7 @@
           />
         </mat-slider>
       </div>
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+      <div fxFlex="20" fxLayout="row" fxLayoutAlign="center start">
         <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center">
           <div fxFlex="30">{{ currencySymbol }} {{ minimumAmount }}</div>
           <div fxFlex="29">{{ currencySymbol }} {{ maximumAmount }}</div>
@@ -234,7 +287,7 @@
       <ic-button
         label="Apply Now"
         [icButtonType]="'filled-rounded'"
-        (OnClick)="goBack()"
+        (OnClick)="apply()"
       ></ic-button>
     </div>
   </div>

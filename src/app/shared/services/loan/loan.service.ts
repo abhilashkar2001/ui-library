@@ -6,6 +6,11 @@ import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { AspectLendings } from '../../models/origination/aspect-lending.model';
 import { IProcessStage } from '@onerumango/utils/lib/models/process-stage.model';
+import {
+  CustomerCategoryResponse,
+  EmiCalculationPayload,
+  InterestRateResponse,
+} from 'app/modules/loan/emi-calculator/emi-calculator-model';
 
 const baseUrl = environment.microServiceURL;
 
@@ -94,7 +99,7 @@ export class LoanService {
     );
   }
 
-  getEmiCalculation(payload: any) {
+  getEmiCalculation(payload: EmiCalculationPayload) {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 
@@ -249,7 +254,7 @@ export class LoanService {
     );
   }
   fetchCustomerCategories(productCode: string) {
-    return this.http.get<any>(
+    return this.http.get<CustomerCategoryResponse>(
       `${baseUrl}/interestRate/fetchCategoryIdUsingProductCode?productCode=${productCode}`,
     );
   }
@@ -258,7 +263,7 @@ export class LoanService {
     customercategory: string,
     loanAmount: number,
   ) {
-    return this.http.get<any>(
+    return this.http.get<InterestRateResponse>(
       `${baseUrl}/interestRate/fetchInterest?productName=${productName}&customercategory=${customercategory}&loanAmount=${loanAmount}`,
     );
   }
