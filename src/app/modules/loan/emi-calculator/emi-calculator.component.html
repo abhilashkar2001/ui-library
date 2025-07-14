@@ -1,0 +1,294 @@
+<div
+  fxFlex="100"
+  fxLayout="column"
+  class="emi-calculator"
+  fxLayoutGap="10"
+  [formGroup]="emiFormGroup"
+>
+  <div class="txt_sm_black emi-header">Loan EMI Calculator</div>
+
+  <div class="header_xxl_bold_black description-text">
+    Estimated amount displayed. Final loan terms will be customised upon
+    approval.
+  </div>
+
+  <div
+    class="emi-calculator-content"
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="10"
+  >
+    <!-- Left Section -->
+    <div fxLayout="column" fxLayoutGap="10" fxFlex="65" fxFlex.lt-md="100">
+      <div fxLayoutAlign="space-between center" fxLayout="row">
+        <div class="header_lg_bold_black">
+          {{ currentLoanName }} EMI Calculator
+        </div>
+        <div class="interest-rate">
+          Interest rate
+          <span class="rate-value">{{ interestRate || 0 }} %</span>
+        </div>
+      </div>
+
+      <!-- Customer Category -->
+      <div *ngIf="customerCategoryList" class="customer-category">
+        <div class="breadcrum_md required">Customer Category</div>
+        <div fxLayout="row wrap" fxLayoutAlign="start center">
+          <ic-radio-button
+            *ngFor="let category of customerCategoryList"
+            [control]="emiFormGroup.get('customerCategory') | formcontrol"
+            [label]="category.categoryName"
+            [fxFlex]="customerCategoryList.length === 1 ? '100' : '20'"
+            fxFlex.lt-md="70"
+            fxLayoutAlign.lt-md="center center"
+            [value]="category.categoryName"
+          ></ic-radio-button>
+        </div>
+      </div>
+
+      <!-- Amount and Tenure -->
+      <div
+        class="amount-sliders"
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="10"
+        fxLayoutAlign="space-between center"
+      >
+        <div class="txt_sm_black required">Amount</div>
+        <div fxFlex.lt-md="100">
+          <ic-form-field
+            [control]="emiFormGroup.get('loanAmount') | formcontrol"
+            label="Amount"
+            [icNumbersOnly]="true"
+            [customError]="
+              emiFormGroup.get('loanAmount')?.hasError('max')
+                ? 'Amount cannot exceed ' + maximumAmount
+                : emiFormGroup.get('loanAmount')?.hasError('min')
+                  ? 'Amount should be at least ' + minimumAmount
+                  : ''
+            "
+          ></ic-form-field>
+        </div>
+
+        <div class="txt_sm_black required">Tenure</div>
+        <div fxLayout="column">
+          <div
+            class="tenure-buttons"
+            [ngClass]="{
+              'error-border':
+                emiFormGroup.get('tenure')?.invalid &&
+                (emiFormGroup.get('tenure')?.touched ||
+                  emiFormGroup.get('tenure')?.dirty),
+            }"
+            fxLayout="row"
+            fxFlex.lt-md="100"
+            fxLayoutGap="5"
+          >
+            <input
+              appNumbersOnly
+              formControlName="tenure"
+              class="tenure-input"
+            />
+
+            <span
+              class="months-btn"
+              [ngClass]="{ active: emiFormGroup.get('isMonths')?.value }"
+              (click)="setTenureUnit(true)"
+              (keydown.enter)="setTenureUnit(true)"
+              tabindex="0"
+              role="button"
+            >
+              Mon
+            </span>
+
+            <span
+              class="years-btn"
+              [ngClass]="{ active: !emiFormGroup.get('isMonths')?.value }"
+              (click)="setTenureUnit(false)"
+              tabindex="0"
+              role="button"
+              (keydown.enter)="setTenureUnit(false)"
+            >
+              Yrs
+            </span>
+          </div>
+          <div
+            class="error-msg"
+            *ngIf="
+              emiFormGroup.get('tenure')?.invalid &&
+              (emiFormGroup.get('tenure')?.touched ||
+                emiFormGroup.get('tenure')?.dirty)
+            "
+          >
+            <ng-container
+              *ngIf="emiFormGroup.get('tenure')?.hasError('required')"
+            >
+              Tenure is required.
+            </ng-container>
+            <ng-container *ngIf="emiFormGroup.get('tenure')?.hasError('min')">
+              Minimum tenure is
+              {{
+                emiFormGroup.get('isMonths')?.value
+                  ? minimumTenorMonth
+                  : minimumTenorYear
+              }}
+              {{ emiFormGroup.get('isMonths')?.value ? 'months' : 'years' }}.
+            </ng-container>
+
+            <ng-container *ngIf="emiFormGroup.get('tenure')?.hasError('max')">
+              Maximum tenure is
+              {{
+                emiFormGroup.get('isMonths')?.value
+                  ? maximumTenorMonth
+                  : maximumTenorYear
+              }}
+              {{ emiFormGroup.get('isMonths')?.value ? 'months' : 'years' }}.
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sliders -->
+      <div
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="10"
+        fxLayoutAlign="space-between center"
+      >
+        <mat-slider
+          (change)="onSliderChange($event)"
+          [max]="maximumAmount"
+          [min]="minimumAmount"
+          [step]="thumbLabel"
+          class="custom-slider"
+          discrete
+          fxFlex="100"
+        >
+          <input #slider [value]="amountValue" matSliderThumb />
+        </mat-slider>
+
+        <mat-slider
+          (change)="onYearSliderChange($event)"
+          [min]="
+            emiFormGroup.get('isMonths')?.value
+              ? minimumTenorMonth
+              : minimumTenorYear
+          "
+          [max]="
+            emiFormGroup.get('isMonths')?.value
+              ? maximumTenorMonth
+              : maximumTenorYear
+          "
+          [step]="1"
+          class="custom-slider"
+          fxFlex="100"
+        >
+          <input
+            #slider
+            [value]="emiFormGroup.get('tenure')?.value"
+            matSliderThumb
+          />
+        </mat-slider>
+      </div>
+      <div fxFlex="20" fxLayout="row" fxLayoutAlign="center start">
+        <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxFlex="30">{{ currencySymbol }} {{ minimumAmount }}</div>
+          <div fxFlex="29">{{ currencySymbol }} {{ maximumAmount }}</div>
+        </div>
+        <div fxFlex="100" fxLayoutAlign="space-between center">
+          <div fxFlex="56">
+            {{ currencySymbol }}
+            {{
+              emiFormGroup.get('isMonths')?.value
+                ? minimumTenorMonth
+                : minimumTenorYear
+            }}
+          </div>
+          <div fxFlex="9">
+            {{ currencySymbol }}
+            {{
+              emiFormGroup.get('isMonths')?.value
+                ? maximumTenorMonth
+                : maximumTenorYear
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="breadcrum_md note-text">
+        <span class="medium_txt">Note:</span> The estimated amount shown is
+        based on your input. The applicable interest rate is fixed and
+        determined by the selected tenure.
+      </div>
+    </div>
+
+    <!-- Right Section: EMI Result -->
+    <div class="emi-calculator-result" fxFlex="40" fxFlex.lt-md="100">
+      <div class="top-green-section">
+        <div class="large_txt">Your Monthly EMI Payment</div>
+        <div class="monthly-emi">
+          {{ currencySymbol }}{{ monthlyEmiPayment | number }}
+        </div>
+      </div>
+
+      <div
+        fxLayout="row wrap"
+        class="emi-calculator-table breadcrum_md"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10"
+      >
+        <div fxFlex="45">Principal Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ principalAmount | number }}
+        </div>
+
+        <div fxFlex="45">Interest Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ interestAmount | number }}
+        </div>
+
+        <div fxFlex="100" class="horizontal-dashed-line"></div>
+
+        <div class="header_lg_bold_black" fxFlex="45">Total Amount</div>
+        <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+          {{ currencySymbol }}{{ totalAmount | number }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="end center"
+    fxLayoutAlign.lt-md="center center"
+    fxLayoutGap="10"
+    class="action-buttons"
+  >
+    <div
+      fxFlex="10"
+      (click)="openEmiCalculatorDrawer()"
+      (keydown.enter)="openEmiCalculatorDrawer()"
+      tabindex="0"
+      class="theme_md pointer"
+    >
+      EMI Calculator
+    </div>
+
+    <div fxFlex="13">
+      <ic-button
+        label="Back"
+        [icButtonType]="'outlined-rounded'"
+        (OnClick)="goBack()"
+      ></ic-button>
+    </div>
+
+    <div fxFlex="13" fxFlex.lt-md="100">
+      <ic-button
+        label="Apply Now"
+        [icButtonType]="'filled-rounded'"
+        (OnClick)="apply()"
+      ></ic-button>
+    </div>
+  </div>
+</div>

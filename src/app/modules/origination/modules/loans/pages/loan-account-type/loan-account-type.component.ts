@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { ProductState } from '../../../../../../shared/models/router-state.model';
 
 @Component({
   selector: 'app-loan-account-type',
@@ -49,7 +50,7 @@ export class LoanAccountTypeComponent implements OnInit {
       });
   }
 
-  customApply(event: any) {
+  async customApply(event: any) {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
@@ -68,16 +69,28 @@ export class LoanAccountTypeComponent implements OnInit {
           console.log(res);
         });
       } else {
-        this.isShowCalculator = event.isShowCalculator;
-        this.calculatorInfo = {
-          interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
-          productCode: event.selectedLoan.productCode,
+              this.isShowCalculator = event.isShowCalculator;
+      this.calculatorInfo = {
+        interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
+        productCode: event.selectedLoan.productCode,
+      };
+      this.basisClass = event.subClass;
+      this.basisId = event.selectedLoan.basisId;
+
+      if (this.basisClass.toLowerCase().includes('new')) {
+        const state: ProductState = {
+          productId: event.selectedLoan.basisId,
+          selectedLoan: event.selectedLoan,
         };
-        this.basisClass = event.subClass;
-        this.basisId = event.selectedLoan.basisId;
-        setTimeout(() => {
-          this.scrollToCalculator();
-        }, 200);
+        await this.router.navigate(['/loan/emi-calculator'], {
+          state,
+        });
+        return;
+      }
+
+      setTimeout(() => {
+        this.scrollToCalculator();
+      }, 200);
       }
     }
   }
@@ -98,7 +111,11 @@ export class LoanAccountTypeComponent implements OnInit {
     const emiStartDate = new Date();
     emiStartDate.setDate(emiStartDate.getDate() + 1);
     this.sessionStorageService.removeLoanStep();
-    this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
-    // this.router.navigate([`/loan/login`]);
+
+    if (this.basisClass.toLowerCase().includes('new')) {
+      this.router.navigate([`/loan/login`]);
+    } else {
+      this.router.navigate([`/origination/loan/create-loan/${this.basisId}`]);
+    }
   }
 }

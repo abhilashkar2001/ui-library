@@ -1,0 +1,80 @@
+<div class="emi-calculator-drawer" fxLayout="column" fxLayoutGap="5">
+  <div fxLayoutAlign="space-between center">
+    <div class="header_md">EMI Calculator</div>
+    <span
+      class="pointer"
+      tabindex="0"
+      (click)="closeDrawer()"
+      (keydown.enter)="closeDrawer()"
+    >
+      X</span
+    >
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="1%">
+    <div fxFlex="49" fxFlex.lt-md="100">
+      <ic-form-field
+        [control]="calculatorForm.get('loanAmount') | formcontrol"
+        label="Amount"
+        [type]="'number'"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="49" fxFlex.lt-md="100">
+      <ic-tenure-field
+        [fieldLabels]="{
+          loanTenureYear: 'Year',
+          loanTenureMonth: 'Month',
+          loanTenureDay: 'Day',
+        }"
+        [fields]="['loanTenureYear', 'loanTenureMonth', 'loanTenureDay']"
+        [isRequired]="true"
+        [parentForm]="calculatorForm"
+        label="Tenure"
+      ></ic-tenure-field>
+    </div>
+    <div fxFlex="49" fxFlex.lt-md="100">
+      <ic-form-field
+        label="Interest Rate (%)"
+        [control]="calculatorForm.get('interestRate') | formcontrol"
+      ></ic-form-field>
+    </div>
+  </div>
+  <div class="emi-calculator-result" fxFlex="40" fxFlex.lt-md="100">
+    <div class="top-green-section">
+      <div class="large_txt">Your Monthly EMI Payment</div>
+      <div class="monthly-emi">
+        {{ currencySymbol }}{{ monthlyEmiPayment | number }}
+      </div>
+    </div>
+
+    <div
+      fxLayout="row wrap"
+      class="emi-calculator-table breadcrum_md"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="10"
+    >
+      <div fxFlex="45">Principal Amount</div>
+      <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+        {{ currencySymbol }}{{ principalAmount | number }}
+      </div>
+
+      <div fxFlex="45">Interest Amount</div>
+      <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+        {{ currencySymbol }}{{ interestAmount | number }}
+      </div>
+
+      <div fxFlex="100" class="horizontal-dashed-line"></div>
+
+      <div class="header_lg_bold_black" fxFlex="45">Total Amount</div>
+      <div class="header_lg_bold_black" fxFlex="45" fxLayoutAlign="end">
+        {{ currencySymbol }}{{ totalAmount | number }}
+      </div>
+    </div>
+  </div>
+  <div fxLayoutAlign="end center">
+    <ic-button
+      label="Back"
+      [icButtonType]="'outlined-rounded'"
+      (OnClick)="closeDrawer()"
+    ></ic-button>
+  </div>
+</div>

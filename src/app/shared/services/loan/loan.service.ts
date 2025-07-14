@@ -6,6 +6,11 @@ import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { AspectLendings } from '../../models/origination/aspect-lending.model';
 import { IProcessStage } from '@onerumango/utils/lib/models/process-stage.model';
+import {
+  CustomerCategoryResponse,
+  EmiCalculationPayload,
+  InterestRateResponse,
+} from 'app/modules/loan/emi-calculator/emi-calculator-model';
 
 const baseUrl = environment.microServiceURL;
 
@@ -94,7 +99,7 @@ export class LoanService {
     );
   }
 
-  getEmiCalculation(payload: any) {
+  getEmiCalculation(payload: EmiCalculationPayload) {
     return this.http.post(`${baseUrl}/loan-repayment/emi-calculation`, payload);
   }
 
@@ -117,6 +122,14 @@ export class LoanService {
    */
   saveChecklist(payload: any) {
     return this.http.post<any>(`${baseUrl}/origination-doc`, payload);
+  }
+
+  // DeleteChecklist
+
+  deleteCheckList(documentId: number, originationId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/origination-doc?documentId=${documentId}&originationId=${originationId}`,
+    );
   }
 
   getSavedChecklist(
@@ -162,6 +175,12 @@ export class LoanService {
   getCollateralDetailsId(originationId: number) {
     return this.http.get<any>(
       `${baseUrl}/loan-detail/fetch-collateralInfo?originationId=${originationId}`,
+    );
+  }
+
+  deleteCollateralDetails(collateralId: number) {
+    return this.http.delete<any>(
+      `${baseUrl}/loan-detail/delete-collaterals?ids=${collateralId}`,
     );
   }
 
@@ -227,5 +246,25 @@ export class LoanService {
   collateral$ = this.collateralData.asObservable();
   sendCollateralData(data: any) {
     this.collateralData.next(data);
+  }
+  saveSignature(payload: any) {
+    return this.http.post<any>(
+      `${baseUrl}/customer-api/saveCustStageSignature`,
+      payload,
+    );
+  }
+  fetchCustomerCategories(productCode: string) {
+    return this.http.get<CustomerCategoryResponse>(
+      `${baseUrl}/interestRate/fetchCategoryIdUsingProductCode?productCode=${productCode}`,
+    );
+  }
+  fetchInterestRateForCustomerCategory(
+    productName: string,
+    customercategory: string,
+    loanAmount: number,
+  ) {
+    return this.http.get<InterestRateResponse>(
+      `${baseUrl}/interestRate/fetchInterest?productName=${productName}&customercategory=${customercategory}&loanAmount=${loanAmount}`,
+    );
   }
 }

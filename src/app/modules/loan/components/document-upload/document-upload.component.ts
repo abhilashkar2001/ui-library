@@ -14,6 +14,7 @@ export class DocumentUploadComponent implements OnInit {
   documentList: any;
   @Input() screenName = '';
   customerDocumentList: any;
+  noOfDirectors = 1;
   constructor(
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
@@ -43,13 +44,12 @@ export class DocumentUploadComponent implements OnInit {
       this.loanService
         .getPersonalDetailsData(originationId)
         .subscribe((resp) => {
-          if (resp.data.customerInfo.length > 0) {
-            const customerInfo = resp.data.customerInfo ?? [];
-            if (customerInfo.length > 0) {
-              const customerDocUpload: any[][] = customerInfo.map((c: any) =>
+          if (resp.data.customerInfo?.length > 0) {
+            const customerInfo = resp?.data?.customerInfo ?? [];
+            if (customerInfo?.length > 0) {
+              const customerDocUpload: any[][] = customerInfo?.map((c: any) =>
                 Array.isArray(c.documentInfo) ? c.documentInfo : [],
               );
-
               this.customerDocumentList = customerDocUpload;
             }
           }
@@ -95,7 +95,7 @@ export class DocumentUploadComponent implements OnInit {
 
   handleSubmit() {
     if (this.screenName.toLowerCase().includes('loan')) {
-      const documentIds = this.submittedChecklistDocs.flatMap(
+      const documentIds = this.submittedChecklistDocs?.flatMap(
         (doc: any) => doc.docIds,
       );
       const payload = {
