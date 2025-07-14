@@ -19,3 +19,12 @@
 .pointer {
   cursor: pointer;
 }
+.required::after {
+  content: ' *';
+  color: red;
+}
+.error-msg {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

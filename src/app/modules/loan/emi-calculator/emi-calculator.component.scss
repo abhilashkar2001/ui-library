@@ -5,7 +5,7 @@
   background-color: aliceblue;
   background-blend-mode: darken;
   > div {
-    margin: 16px 40px;
+    margin: 8px 40px;
   }
   .emi-header {
     display: inline;
@@ -57,21 +57,40 @@
           text-align: center;
           outline: none;
         }
-
         .months-btn.active,
         .years-btn.active {
           background-color: #004c97;
           color: white;
           border: 2px #004c97 solid;
         }
+        .months-btn,
+        .years-btn {
+          border: 1px solid transparent;
+          border-radius: 4px;
+          padding: 5px 10px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          user-select: none;
+
+          &:focus {
+            outline: none;
+            border: 1px solid #004c97;
+          }
+
+          &.error-border {
+            border: 2px solid red !important;
+          }
+        }
       }
     }
 
     .emi-calculator-result {
-      border-radius: 18px;
+      border-radius: 20px;
       border: 2px #f4f5fe solid;
       overflow: hidden;
-
+      height: fit-content;
       .top-green-section {
         background-image: url('~assets/images/green-bg-loan-emi-result.svg');
         display: flex;
@@ -99,7 +118,7 @@
       }
 
       .emi-calculator-table > div {
-        margin: 12px 8px;
+        margin: 8px 8px;
       }
     }
   }
@@ -130,10 +149,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
-      > div {
-        width: 100%;
-      }
+      gap: 2em;
     }
 
     .emi-calculator-result {
