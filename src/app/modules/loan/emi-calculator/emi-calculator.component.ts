@@ -10,10 +10,12 @@ import {
 import { EmiCalculatorDrawerComponent } from './emi-calculator-drawer/emi-calculator-drawer.component';
 import { ProductState } from 'app/shared/models/router-state.model';
 import { getFirstRepaymentDate } from 'app/shared/helpers/utils';
+import { Router } from '@angular/router';
 import {
   CustomerCategoryResponse,
   InterestRateResponse,
 } from 'app/modules/loan/emi-calculator/emi-calculator-model';
+
 
 @Component({
   selector: 'app-emi-calculator',
@@ -49,6 +51,7 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
     private fb: NonNullableFormBuilder,
     private location: Location,
     public sidenavService: SidenavService,
+    private router: Router,
   ) {
     const state = this.location.getState() as ProductState;
     this.productId = state?.productId;
@@ -247,6 +250,10 @@ export class EmiCalculatorComponent implements OnInit, OnDestroy {
       ]);
     this.emiFormGroup.get('tenure')?.setValue(this.minimumTenorMonth);
     this.emiFormGroup.get('tenure')?.updateValueAndValidity();
+  }
+
+  apply() {
+    this.router.navigate(['/loan/login']);
   }
 
   goBack(): void {

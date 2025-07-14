@@ -49,14 +49,6 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      const state: ProductState = {
-        productId: event.selectedLoan.basisId,
-        selectedLoan: event.selectedLoan,
-      };
-      await this.router.navigate(['/loan/emi-calculator'], {
-        state,
-      });
-      return;
       this.isShowCalculator = event.isShowCalculator;
       this.calculatorInfo = {
         interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
@@ -64,6 +56,18 @@ export class LoanAccountTypeComponent implements OnInit {
       };
       this.basisClass = event.subClass;
       this.basisId = event.selectedLoan.basisId;
+
+      if (this.basisClass.toLowerCase().includes('new')) {
+        const state: ProductState = {
+          productId: event.selectedLoan.basisId,
+          selectedLoan: event.selectedLoan,
+        };
+        await this.router.navigate(['/loan/emi-calculator'], {
+          state,
+        });
+        return;
+      }
+
       setTimeout(() => {
         this.scrollToCalculator();
       }, 200);
