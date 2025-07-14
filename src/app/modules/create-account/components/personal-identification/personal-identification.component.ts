@@ -35,13 +35,10 @@ export class PersonalIdentificationComponent implements OnInit {
   frontAadhar!: string;
   documentInfo: any;
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
-  customeSelected: string = 'Individual';
+  customeSelected: string | null = null;
   panelExpanded: boolean = false;
   faceExpanded: boolean = false;
   biometricExpanded: boolean = false;
-  faceId: any;
-  faceUrl: any;
-  fingerPrintId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -50,22 +47,32 @@ export class PersonalIdentificationComponent implements OnInit {
     private pyScanService: SharedService,
     private sessionStorageService: SessionStorageService,
     private dialog: MatDialog,
-  ) {}
+  ) {
+    const type = localStorage.getItem('account-type');
+    this.customeSelected = type ?? null;
+  }
 
   ngOnInit() {
     this.buildForm();
   }
 
+  /**
+   * Form bulider
+   */
   buildForm() {
-    if (this.customeSelected == 'Individual') {
-      this.personalIdentificationForm = this.identificationForm();
+    if (this.customeSelected == 'individual') {
+      this.personalIdentificationForm = this.fb.group({
+        otherDocument: this.newDenom(),
+      });
     } else {
       this.personalIdentificationForm = this.fb.group({
         applicant: this.fb.array([]),
       });
+      this.addApplicant();
     }
   }
 
+  //Reusable Form Group
   newDenom(data?: any): FormGroup {
     const docType = data?.values ?? (data?.document || '');
     return this.fb.group({
@@ -76,34 +83,51 @@ export class PersonalIdentificationComponent implements OnInit {
       docRequired: data?.docRequired ?? false,
       nationalId: [''],
       biometricIds: [''],
+      faceId: [],
+      fingerPrintId: [],
+      faceUrl: [],
     });
   }
 
-  identificationForm(): FormGroup {
-    return this.fb.group({
-      otherDocument: this.newDenom(),
-    });
-  }
-
+  /**
+   * To get the application form as formArray
+   */
   get applicant(): FormArray {
-    return this.personalIdentificationForm.get('applicants') as FormArray;
+    return this.personalIdentificationForm.get('applicant') as FormArray;
   }
 
+  /**
+   * To get the otherDocument as FormArray
+   */
   get otherDocument(): FormArray {
     return this.personalIdentificationForm?.get('otherDocument') as FormArray;
   }
 
+  /**
+   * To get the application formArray controls
+   * @param index
+   * @returns
+   */
   getApplicantDocuments(index: number): FormArray {
-    return this.applicant.at(index).get('otherDocument') as FormArray;
+    return this.applicant.at(index) as FormArray;
   }
 
-  addDocument(data?: any) {
-    this.otherDocument.push(this.newDenom(data));
+  /**
+   * To Add the applicant form
+   * @param data
+   */
+  addApplicant(data?: any) {
+    this.applicant.push(this.newDenom(data));
   }
 
+  /**
+   * To remove the uploaded image
+   * @param fileIndex
+   * @param applicantIndex
+   */
   removeFile(fileIndex: number, applicantIndex?: number): void {
     const docArray =
-      applicantIndex != null
+      this.customeSelected != 'individual' && applicantIndex != null
         ? this.getApplicantDocuments(applicantIndex)
         : this.otherDocument;
 
@@ -129,10 +153,18 @@ export class PersonalIdentificationComponent implements OnInit {
     }
   }
 
-  removeDocument(index: number) {
-    this.otherDocument.removeAt(index);
+  /**
+   * To remove the applicant for joint and minor
+   * @param index
+   */
+  removeApplicant(index: number) {
+    this.applicant.removeAt(index);
   }
 
+  /**
+   * To browse the file
+   * @param applicantIndex
+   */
   fileBrowseHandler(applicantIndex?: number): void {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
@@ -154,11 +186,17 @@ export class PersonalIdentificationComponent implements OnInit {
     inputElement.click();
   }
 
+  /**
+   * To upload the document
+   * @param file
+   * @param applicantIndex
+   */
   uploadImage(file: File, applicantIndex?: any): void {
     const isApplicantDoc = applicantIndex != null;
-    const docArray = isApplicantDoc
-      ? this.getApplicantDocuments(applicantIndex!)
-      : this.otherDocument;
+    const docArray =
+      this.customeSelected != 'individual' && isApplicantDoc
+        ? this.getApplicantDocuments(applicantIndex!)
+        : this.otherDocument;
 
     const docControl = docArray;
     const currentDoc = docControl.value;
@@ -222,7 +260,7 @@ export class PersonalIdentificationComponent implements OnInit {
 
         const documentType = this.isChecklistDoc
           ? this.otherDocument?.get('documentType')?.value
-          : this.getApplicantDocuments(applicantIndex!)?.get('documentType')
+          : this.getApplicantDocuments(applicantIndex)?.get('documentType')
               ?.value;
 
         const originationId = parseInt(
@@ -245,13 +283,20 @@ export class PersonalIdentificationComponent implements OnInit {
     });
   }
 
+  /**
+   * To display the image
+   * @param file
+   * @param uuid
+   * @param size
+   * @param applicantIndex
+   */
   displayImage(file: any, uuid: string, size: any, applicantIndex?: number) {
     const reader = new FileReader();
     const sizeinKb = (size / 1024).toFixed(2);
     reader.onload = (event: ProgressEvent<FileReader> | any) => {
       const imageUrl = event.target.result as string;
       const control =
-        applicantIndex != null
+        this.customeSelected != 'individual' && applicantIndex != null
           ? this.getApplicantDocuments(applicantIndex)
           : this.otherDocument;
 
@@ -270,6 +315,14 @@ export class PersonalIdentificationComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  /**
+   * To extract the data from document
+   * @param docName
+   * @param originationId
+   * @param file
+   * @param documentId
+   * @param applicantIndex
+   */
   extractDoc(
     docName: string,
     originationId: number,
@@ -294,9 +347,16 @@ export class PersonalIdentificationComponent implements OnInit {
           documentDetails: this.personalIdentificationForm.value,
         });
       });
-
-    console.log(this.personalIdentificationForm, 'formgroup');
   }
+
+  /**
+   * To update file info
+   * @param index
+   * @param name
+   * @param dateOfBirth
+   * @param gender
+   * @param applicantIndex
+   */
   updateFileInfo(
     index: number,
     name: string,
@@ -305,7 +365,7 @@ export class PersonalIdentificationComponent implements OnInit {
     applicantIndex?: number,
   ) {
     const fileInfoControl = (
-      applicantIndex != null
+      this.customeSelected != 'individual' && applicantIndex != null
         ? this.getApplicantDocuments(applicantIndex)
         : this.otherDocument
     )?.get('fileInfo');
@@ -321,14 +381,24 @@ export class PersonalIdentificationComponent implements OnInit {
     }
   }
 
+  /**
+   * To update the docId
+   * @param applicantIndex
+   * @returns
+   */
   updateDocId(applicantIndex?: number): any[] {
     return (
-      applicantIndex != null
+      this.customeSelected != 'individual' && applicantIndex != null
         ? this.getApplicantDocuments(applicantIndex)
         : this.otherDocument
     )?.get('docIds')?.value;
   }
 
+  /**
+   * To get the file Info
+   * @param applicantIndex
+   * @returns
+   */
   getFileInfo(applicantIndex?: number) {
     if (applicantIndex != null) {
       return this.personalIdentificationForm.get('fileInfo')?.value;
@@ -337,39 +407,75 @@ export class PersonalIdentificationComponent implements OnInit {
     return this.otherDocument.get('fileInfo')?.value;
   }
 
-  openDialog(type: string) {
+  /**
+   * To open the face Scan or fingerPrint dialog
+   * @param type
+   * @param index
+   */
+  openDialog(type: string, index?: number) {
     switch (type) {
       case 'face':
+        const faceId =
+          index == null
+            ? this.otherDocument.get('faceId')
+            : this.getApplicantDocuments(index)?.get('faceId');
         const faceDialog = this.dialog.open(FaceScanComponent, {
           panelClass: 'custom_biometric_container',
           width: '45%',
           backdropClass: 'custom_popup_backdrop',
           disableClose: true,
-          data: { hideClick: true, biometricId: this.faceId, popType: 'user' },
+          data: {
+            hideClick: true,
+            biometricId: faceId?.value,
+            popType: 'user',
+          },
         });
         faceDialog.afterClosed().subscribe((res: any) => {
           if (res) {
-            this.faceId = res?.biometricId;
-            this.faceUrl = res?.imageUrl;
-            this.updateBiometricIds(this.faceId);
+            const faceUrl =
+              index == null
+                ? this.otherDocument.get('faceUrl')
+                : this.getApplicantDocuments(index)?.get('faceUrl');
+            faceId?.setValue(res?.biometricId);
+            faceUrl?.setValue(res?.imageUrl);
+            this.updateBiometricIds(faceId?.value, index);
             this.cdr.detectChanges();
           }
         });
         break;
       case 'fingerPrint':
-        this.dialog.open(FingerprintScanComponent, {
+        const fingerPrintDialog = this.dialog.open(FingerprintScanComponent, {
           panelClass: 'custom_biometric_container',
           width: '45%',
           backdropClass: 'custom_popup_backdrop',
           disableClose: true,
+        });
+        fingerPrintDialog.afterClosed().subscribe((res: any) => {
+          if (res) {
+            const fingerPrintId =
+              index == null
+                ? this.otherDocument.get('fingerPrintId')
+                : this.getApplicantDocuments(index)?.get('fingerPrintId');
+            fingerPrintId?.setValue(res?.biometricId);
+            this.updateBiometricIds(fingerPrintId?.value, index);
+          }
         });
         break;
       default:
         break;
     }
   }
-  private updateBiometricIds(newId: any) {
-    const control = this.otherDocument.get('biometricIds');
+
+  /**
+   * To update biometric Id's
+   * @param newId
+   * @param idx
+   */
+  private updateBiometricIds(newId: any, idx?: number) {
+    const control =
+      idx == null
+        ? this.otherDocument.get('biometricIds')
+        : this.getApplicantDocuments(idx)?.get('biometricIds');
     let ids = control?.value || [];
 
     // Ensure it's always an array and avoid duplicates
@@ -379,27 +485,45 @@ export class PersonalIdentificationComponent implements OnInit {
     }
   }
 
-  imageDeleted(imageType: string) {
+  /**
+   * To delete the uploaded face scan or fingerPrint
+   * @param imageType
+   * @param idx
+   */
+  imageDeleted(imageType: string, idx?: number) {
+    const bioIds =
+      idx == null
+        ? this.otherDocument.get('biometricIds')?.value || []
+        : this.getApplicantDocuments(idx).get('biometricIds');
     switch (imageType) {
       case 'face':
-        const bioIds = this.otherDocument.get('biometricIds')?.value || [];
-        if (this.faceId) {
-          const index = bioIds.indexOf(this.faceId);
+        const faceId =
+          idx == null
+            ? this.otherDocument.get('faceId')
+            : this.getApplicantDocuments(idx)?.get('faceId');
+        const faceUrl =
+          idx == null
+            ? this.otherDocument.get('faceUrl')
+            : this.getApplicantDocuments(idx)?.get('faceUrl');
+        if (faceId) {
+          const index = bioIds.indexOf(faceId?.value);
           if (index > -1) {
             bioIds.splice(index, 1);
-            this.faceId = null;
+            faceId.setValue(null);
           }
         }
-        this.faceUrl = undefined;
+        faceUrl?.setValue('');
         break;
       case 'fingerprint':
-        const fingerPrintIds =
-          this.otherDocument.get('biometricIds')?.value || [];
-        if (this.fingerPrintId) {
-          const index = fingerPrintIds.indexOf(this.fingerPrintId);
+        const fingerPrintId =
+          idx == null
+            ? this.otherDocument.get('fingerPrintId')
+            : this.getApplicantDocuments(idx)?.get('fingerPrintId');
+        if (fingerPrintId) {
+          const index = bioIds.indexOf(fingerPrintId?.value);
           if (index > -1) {
-            fingerPrintIds.splice(index, 1);
-            this.fingerPrintId = null;
+            bioIds.splice(index, 1);
+            fingerPrintId.setValue(null);
           }
         }
         break;
