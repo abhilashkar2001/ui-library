@@ -11,14 +11,14 @@
     >
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="1%">
-    <div fxFlex="49">
+    <div fxFlex="49" fxFlex.lt-md="100">
       <ic-form-field
         [control]="calculatorForm.get('loanAmount') | formcontrol"
         label="Amount"
         [type]="'number'"
       ></ic-form-field>
     </div>
-    <div fxFlex="49">
+    <div fxFlex="49" fxFlex.lt-md="100">
       <ic-tenure-field
         [fieldLabels]="{
           loanTenureYear: 'Year',
@@ -31,7 +31,7 @@
         label="Tenure"
       ></ic-tenure-field>
     </div>
-    <div fxFlex="49">
+    <div fxFlex="49" fxFlex.lt-md="100">
       <ic-form-field
         label="Interest Rate (%)"
         [control]="calculatorForm.get('interestRate') | formcontrol"

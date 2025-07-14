@@ -21,6 +21,7 @@ import { DataService } from 'app/shared/services/table-service/data.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Store } from '@ngrx/store';
 import { getCurrencySymbol } from '@angular/common';
+import { EmiCalculationPayload } from 'app/modules/loan/emi-calculator/emi-calculator-model';
 
 @Component({
   selector: 'app-common-emi-calculator',
@@ -204,11 +205,14 @@ export class CommonEmiCalculatorComponent implements OnInit, OnDestroy {
             parseInt(this.loanForm.value.loanTenureMonth) || 0,
             parseInt(this.loanForm.value.loanTenureDay) || 0,
           ).then((result) => {
-            const payload = {
+            if (!result) return;
+            const payload: EmiCalculationPayload = {
               principleAmount: parseInt(this.loanForm.value.amount),
               interestRate: parseFloat(this.loanForm.value.interestRate),
-              numberOfMonths: result,
-              firstRepaymentDate: moment(new Date()).format('YYYY-MM-DD'),
+              numberOfMonths: Number(result),
+              firstRepaymentDate: moment(new Date()).format(
+                'YYYY-MM-DD',
+              ) as string,
             };
             this.loanApi.getEmiCalculation(payload).subscribe((resp: any) => {
               this.interestPayble = Math.round(resp.data.totalInterest);
