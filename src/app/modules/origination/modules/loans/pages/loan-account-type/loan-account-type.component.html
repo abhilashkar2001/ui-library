@@ -15,6 +15,11 @@
       [subLoanList]="subLoanList"
     >
     </app-loan-products>
+    <ic-button
+      label="Cooperate Account"
+      type="button"
+      (OnClick)="goToLogin('Cooperate Account')"
+    ></ic-button>
   </div>
 
   <div *ngIf="isShowCalculator" fxLayout="column" id="loanCalculator">
