@@ -53,7 +53,7 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      if (this.category === 'Account') {
+      if (this.category === 'Accounts') {
         this.basisClass = event.subClass;
         this.basisId = event.selectedLoan.basisId;
         const dialogRef = this.dialog.open(AccountSelectionComponent, {

@@ -210,7 +210,7 @@ export class LoginComponent implements OnInit {
       .subscribe((response: any) => {
         console.log(this.category);
 
-        if (this.category === 'Account') {
+        if (this.category === 'Accounts') {
           this.router.navigate(['create-account/stages']);
         } else {
           if (response.status === 401) {

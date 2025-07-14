@@ -41,7 +41,7 @@ export class LoansLandingComponent implements OnInit {
       this.profileHint =
         'Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.';
       this.routeUrl = 'loan/loan-type';
-      this.category = 'Account';
+      this.category = 'Accounts';
       this.businessSuiteName = 'Account Opening Services';
       this.getLoanServices();
     } else {

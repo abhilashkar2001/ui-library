@@ -131,3 +131,13 @@ header.navbar {
 .cursor-pointer {
   cursor: pointer;
 }
+#underline {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: #ffffff;
+  border-radius: 30px;
+  transition: all 0.34s ease-in-out;
+}
