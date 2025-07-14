@@ -96,6 +96,10 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  holderTypeChange(){
+    localStorage.setItem('account-type',this.accountDetailsForm?.get('accountDetails.holderType')?.value);
+  }
+
   loadUserProfile() {
     const loadUserProfileSub = this.userProfile$.subscribe((result) => {
       if (result) {

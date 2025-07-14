@@ -68,6 +68,7 @@
         bindValueKey="value"
         label="Holder Type"
         [disabled]="!isEdit"
+        (selectionChange)="holderTypeChange()"
       ></ic-select>
     </div>
   </div>
