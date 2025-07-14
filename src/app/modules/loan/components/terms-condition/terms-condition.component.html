@@ -7,7 +7,7 @@
       *ngFor="let details of customerDetails"
     >
       <span class="breadcrum_sm">{{ details?.headerCell }}</span>
-      <span class="header_md">{{ details?.headerDef }}</span>
+      <span class="header_md">{{ data[details?.headerDef] }}</span>
     </div>
   </div>
   <div>

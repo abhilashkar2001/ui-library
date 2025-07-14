@@ -1,8 +1,12 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
+  OnChanges,
   OnInit,
+  Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,10 +17,12 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.scss'],
 })
-export class CustomTableComponent implements OnInit, AfterViewInit {
+export class CustomTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() totalItems: any = 10; // total number of items
   @Input() tableHeaders: any;
   @Input() tableData: any;
+  @Output() editRowEvent: EventEmitter<any> = new EventEmitter();
+  @Output() deleteRowEvent: EventEmitter<any> = new EventEmitter();
   pageSize = 100;
   pageSizeOptions = [5, 10, 25, 50, 100];
   currentPage = 1;
@@ -29,6 +35,15 @@ export class CustomTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tableData'] && changes['tableData'].currentValue) {
+      this.dataSource = new MatTableDataSource<any>(
+        changes['tableData'].currentValue,
+      );
+      this.displayedColumns = this.tableHeaders?.map((col: any) => col.key);
+    }
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -38,12 +53,12 @@ export class CustomTableComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<any>(this.tableData);
   }
 
-  editRow(row: any) {
-    console.log('Editing', row);
+  editRow(index: number) {
+    this.editRowEvent.emit(index);
   }
 
-  deleteRow(row: any) {
-    console.log('Deleting', row);
+  deleteRow(index: number) {
+    this.deleteRowEvent.emit(index);
   }
 
   totalPages = Math.ceil(this.totalItems / this.pageSize);
