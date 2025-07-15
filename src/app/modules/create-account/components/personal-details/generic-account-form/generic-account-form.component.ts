@@ -56,6 +56,7 @@ export class GenericAccountFormComponent {
   residentStatus = [];
   cities = [];
   relationships = [];
+  positions = [];
 
   countriesIsdCodes: any = [];
   maxMobileLength: any;
@@ -156,6 +157,54 @@ export class GenericAccountFormComponent {
       residentStatus: ([Validators.required]),
       city: ([Validators.required]),
       livingAddressSince: ([Validators.required]),
+    },
+    corporate:{
+      prefix: ([Validators.required]),
+      firstName: ([Validators.required]),
+      position: ([Validators.required]),
+      lastName: ([Validators.required]),
+      dateOfBirth: ([Validators.required]),
+      gender: ([Validators.required]),
+      maritalStatus: ([Validators.required]),
+      nationality: ([Validators.required]),
+      countryOfResidence: ([Validators.required]),
+
+      identificationNo: ([Validators.required]),
+      countryOfIssue: ([Validators.required]),
+      dateOfIssue: ([Validators.required]),
+      expiryDate: ([Validators.required]),
+
+      mobileNo: ([Validators.required]),
+      // telephoneHome: ([Validators.required]),
+      // telephoneWork: ([Validators.required]),
+      // fax: ([Validators.required]),
+      statementVia: ([Validators.required]),
+
+      residentStatus: ([Validators.required]),
+      city: ([Validators.required]),
+      livingAddressSince: ([Validators.required]),
+
+      // spousePrefix: ([Validators.required]),
+      // spouseFirstName: ([Validators.required]),
+      // spouseLastName: ([Validators.required]),
+      // spouseDateOfBirth: ([Validators.required]),
+      // spouseMobileNo: ([Validators.required]),
+      // spouseEmail: ([Validators.required]),
+      // spouseEmployeeStatus: ([Validators.required]),
+      // spouseNetIncome: ([Validators.required]),
+
+      // emePrefix: ([Validators.required]),
+      // emeFirstName: ([Validators.required]),
+      // emeLastName: ([Validators.required]),
+      // emeRelationship: ([Validators.required]),
+      // emeMobileNo: ([Validators.required]),
+      // emeTelephoneHome: ([Validators.required]),
+      // emeTelephoneWork: ([Validators.required]),
+      // emeFax: ([Validators.required]),
+      // emeResidentStatus: ([Validators.required]),
+      // emeCity: ([Validators.required]),
+      // emePostalCode: ([Validators.required]),
+      // emeLivingAddressSince: ([Validators.required]),
     }
   }
 
@@ -194,6 +243,9 @@ export class GenericAccountFormComponent {
       prefix: ['', []],
       firstName: ['', []],
       lastName: ['', []],
+
+      position:['',[]],
+
       dateOfBirth: ['', []],
       gender: ['', []],
       maritalStatus: ['', []],

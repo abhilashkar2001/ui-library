@@ -121,7 +121,7 @@ createAccordian(): void {
     this.accordionItems.push({
       header: getHeaderLabel(i),
       expanded: false,
-      showIsPrimary: accountType !== 'minor',
+      showIsPrimary: true,
       accountType
     });
   }
