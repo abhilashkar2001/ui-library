@@ -4,14 +4,259 @@
   fxLayoutGap="1rem"
   [formGroup]="personalIdentificationForm"
 >
-  <!--Header-->
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div>
-      National ID are mandatory. To upload document, face scan & Fingerprint
+  <!--Individual-->
+  <ng-container *ngIf="customeSelected === 'individual'; else otherCustomers">
+    <!--Header-->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        National ID are mandatory. To upload document, face scan & Fingerprint
+      </div>
     </div>
-    <ng-container *ngIf="customeSelected !== 'Individual'">
+    <!--main Div-->
+    <div formGroupName="otherDocument" class="document-panel">
+      <mat-accordion>
+        <!--national Id expansion -->
+        <mat-expansion-panel
+          class="styled-panel fileUpload"
+          [expanded]="true"
+          (opened)="panelExpanded = true"
+          (closed)="panelExpanded = false"
+        >
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
+                <img
+                  *ngIf="getFileInfo()?.length > 0; else unticked"
+                  src="assets/images/tickicon.svg"
+                  alt="Tick"
+                />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md">{{ 'National ID' }}</span>
+                <span
+                  *ngIf="otherDocument.get('docRequired')?.value"
+                  class="required"
+                  >*</span
+                >
+              </div>
+              <span>
+                <mat-icon>{{
+                  panelExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+                }}</mat-icon>
+              </span>
+            </div>
+          </mat-expansion-panel-header>
+
+          <div fxLayout="column">
+            <div class="upload-section">
+              <span class="medium_txt">Upload files</span>
+              <p class="breadcrum_md">
+                Max file size is 500kb. Supported file types are .jpg and .png.
+              </p>
+              <ic-button
+                (OnClick)="fileBrowseHandler()"
+                label="Choose"
+                size="medium"
+                type="button"
+                icButtonType="outlined-rounded"
+              >
+              </ic-button>
+            </div>
+
+            <div
+              class="uploaded_list"
+              fxLayout="row wrap"
+              fxFlex="100"
+              fxLayoutAlign="space-between center"
+            >
+              <div
+                *ngFor="let file of getFileInfo(); let fileIndx = index"
+                fxFlex="49"
+                fxLayoutGap="10"
+                class="upload_img"
+              >
+                <div class="img_box">
+                  <img
+                    [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
+                    alt="image"
+                  />
+                </div>
+                <div class="img_container">
+                  <span class="header_md img_name">{{ file?.name }}</span>
+                  <div
+                    *ngIf="file.progress !== '100%'; else showSize"
+                    class="progress-cont"
+                  >
+                    <div
+                      [style.width]="file.progress ?? '0%'"
+                      class="progress"
+                    ></div>
+                  </div>
+                  <ng-template #showSize>
+                    <div class="theme_sm">{{ file.size }}</div>
+                  </ng-template>
+                </div>
+                <img
+                  tabindex="0"
+                  (keydown.enter)="removeFile(fileIndx)"
+                  src="assets/images/trash_new.svg"
+                  alt="trash"
+                  (click)="removeFile(fileIndx)"
+                />
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <!--face Scan-->
+        <mat-expansion-panel
+          class="styled-panel fileUpload"
+          (opened)="faceExpanded = true"
+          (closed)="faceExpanded = false"
+        >
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
+                <img
+                  *ngIf="otherDocument.get('faceId')?.value; else unticked"
+                  src="assets/images/tickicon.svg"
+                  alt="Tick"
+                />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md">{{ 'Face Scan' }}</span>
+              </div>
+              <span>
+                <mat-icon>{{
+                  faceExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+                }}</mat-icon>
+              </span>
+            </div>
+          </mat-expansion-panel-header>
+          <div
+            fxFlex="100"
+            fxLayout="column"
+            fxLayoutAlign="start"
+            fxLayoutGap="5"
+          >
+            <p>
+              Position your face in front of the camera, Keep steady for
+              accurate scanning.
+            </p>
+            <ic-button
+              (OnClick)="openDialog('face')"
+              label="scan"
+              size="medium"
+              type="button"
+              icButtonType="outlined-rounded"
+            ></ic-button>
+            <ng-container *ngIf="otherDocument.get('faceUrl')?.value">
+              <img
+                [src]="otherDocument.get('faceUrl')?.value"
+                width="165"
+                height="200"
+              />
+              <mat-icon class="faceCard" (click)="imageDeleted('face')"
+                >close</mat-icon
+              >
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+        <!--fingerPrint-->
+        <mat-expansion-panel
+          class="styled-panel fileUpload"
+          (opened)="biometricExpanded = true"
+          (closed)="biometricExpanded = false"
+        >
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
+                <img
+                  *ngIf="
+                    otherDocument.get('fingerPrintId')?.value;
+                    else unticked
+                  "
+                  src="assets/images/tickicon.svg"
+                  alt="Tick"
+                />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md">{{ 'Finger Print' }}</span>
+              </div>
+              <span>
+                <mat-icon>{{
+                  biometricExpanded
+                    ? 'keyboard_arrow_up'
+                    : 'keyboard_arrow_down'
+                }}</mat-icon>
+              </span>
+            </div>
+          </mat-expansion-panel-header>
+          <div
+            fxFlex="100"
+            fxLayout="column"
+            fxLayoutAlign="start"
+            fxLayoutGap="5"
+          >
+            <p>
+              Place your finger on the Scanner, Keep steady for accurate
+              scanning.
+            </p>
+            <ic-button
+              (OnClick)="openDialog('fingerPrint')"
+              label="scan"
+              size="medium"
+              type="button"
+              icButtonType="outlined-rounded"
+            ></ic-button>
+            <div class="mt-4">
+              <img
+                [src]="
+                  otherDocument.get('fingerPrintId')?.value
+                    ? 'images/svg/fingerprint-recognition-success.svg'
+                    : 'images/svg/fingerprint-recognition2.svg'
+                "
+                alt=""
+                width="100px"
+                class="border-[1px]"
+              />
+              <mat-icon
+                *ngIf="otherDocument.get('fingerPrintId')?.value"
+                class="bg-transparent text-red-600 z-10 relative top-[-6.4rem] left-[5.2rem] text-base"
+                (click)="imageDeleted('fingerprint')"
+                >close</mat-icon
+              >
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </ng-container>
+
+  <!-- for Joint && Minor-->
+  <ng-template #otherCustomers>
+    <!--Header && add button-->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <p>
+        Add multiple applicant and upload the required documents for each
+        applicant individually.
+      </p>
       <ic-button
-        (OnClick)="addDocument()"
+        (OnClick)="addApplicant()"
         icButtonType="outlined-rounded"
         label="Add"
         type="submit"
@@ -21,17 +266,11 @@
         size="small"
       >
       </ic-button>
-    </ng-container>
-  </div>
-  <div formGroupName="otherDocument" class="document-panel">
-    <mat-accordion>
-      <!--national Id expansion -->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        [expanded]="true"
-        (opened)="panelExpanded = true"
-        (closed)="panelExpanded = false"
-      >
+    </div>
+    <!--form Array expansion-->
+    <ng-container *ngFor="let app of applicant.controls; let i = index">
+      <mat-expansion-panel>
+        <!--expansion headers-->
         <mat-expansion-panel-header class="panel-header">
           <div class="panel-header-content">
             <div
@@ -40,209 +279,248 @@
               fxLayoutAlign="start center"
             >
               <img
-                *ngIf="getFileInfo()?.length > 0; else unticked"
+                *ngIf="getFileInfo(i)?.length > 0; else unticked"
                 src="assets/images/tickicon.svg"
                 alt="Tick"
               />
               <ng-template #unticked>
                 <img src="assets/images/untickicon.svg" alt="Untick" />
               </ng-template>
-              <span class="header_md">{{ 'National ID' }}</span>
-              <span
-                *ngIf="otherDocument.get('docRequired')?.value"
-                class="required"
+              <ng-container *ngIf="customeSelected === 'joint'; else minor">
+                <span class="header_md">{{ 'Applicant' }} {{ i + 1 }} </span>
+              </ng-container>
+              <ng-template #minor>
+                <span class="header_md" *ngIf="i == 0">{{
+                  'Minor Details'
+                }}</span>
+                <span class="header_md" *ngIf="i > 0"
+                  >{{ 'Guardians' }} {{ i }}
+                </span>
+              </ng-template>
+              <span *ngIf="app.get('docRequired')?.value" class="required"
                 >*</span
               >
             </div>
-            <span>
-              <mat-icon>{{
-                panelExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
+            <span
+              class="cancel-icon"
+              *ngIf="customeSelected == 'minor' ? i > 1 : i > 0"
+            >
+              Delete
             </span>
           </div>
         </mat-expansion-panel-header>
-
-        <div fxLayout="column">
-          <div class="upload-section">
-            <span class="medium_txt">Upload files</span>
-            <p class="breadcrum_md">
-              Max file size is 500kb. Supported file types are .jpg and .png.
-            </p>
-            <ic-button
-              (OnClick)="fileBrowseHandler()"
-              label="Choose"
-              size="medium"
-              type="button"
-              icButtonType="outlined-rounded"
-            >
-            </ic-button>
+        <div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              National ID are mandatory. To upload document, face scan &
+              Fingerprint
+            </div>
           </div>
+          <div class="document-panel">
+            <mat-accordion>
+              <!--national Id expansion -->
+              <mat-expansion-panel
+                class="styled-panel fileUpload"
+                [expanded]="true"
+              >
+                <mat-expansion-panel-header class="panel-header">
+                  <div class="panel-header-content">
+                    <div
+                      class="panel-title"
+                      fxLayoutGap="5"
+                      fxLayoutAlign="start center"
+                    >
+                      <img
+                        *ngIf="getFileInfo(i)?.length > 0; else unticked"
+                        src="assets/images/tickicon.svg"
+                        alt="Tick"
+                      />
+                      <ng-template #unticked>
+                        <img src="assets/images/untickicon.svg" alt="Untick" />
+                      </ng-template>
+                      <span class="header_md">{{ 'National ID' }}</span>
+                      <span
+                        *ngIf="app.get('docRequired')?.value"
+                        class="required"
+                        >*</span
+                      >
+                    </div>
+                  </div>
+                </mat-expansion-panel-header>
 
-          <div
-            class="uploaded_list"
-            fxLayout="row wrap"
-            fxFlex="100"
-            fxLayoutAlign="space-between center"
-          >
-            <div
-              *ngFor="let file of getFileInfo(); let fileIndx = index"
-              fxFlex="49"
-              fxLayoutGap="10"
-              class="upload_img"
-            >
-              <div class="img_box">
-                <img
-                  [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
-                  alt="image"
-                />
-              </div>
-              <div class="img_container">
-                <span class="header_md img_name">{{ file?.name }}</span>
-                <div
-                  *ngIf="file.progress !== '100%'; else showSize"
-                  class="progress-cont"
-                >
+                <div fxLayout="column">
+                  <div class="upload-section">
+                    <span class="medium_txt">Upload files</span>
+                    <p class="breadcrum_md">
+                      Max file size is 500kb. Supported file types are .jpg and
+                      .png.
+                    </p>
+                    <ic-button
+                      (OnClick)="fileBrowseHandler(i)"
+                      label="Choose"
+                      size="medium"
+                      type="button"
+                      icButtonType="outlined-rounded"
+                    >
+                    </ic-button>
+                  </div>
+
                   <div
-                    [style.width]="file.progress ?? '0%'"
-                    class="progress"
-                  ></div>
+                    class="uploaded_list"
+                    fxLayout="row wrap"
+                    fxFlex="100"
+                    fxLayoutAlign="space-between center"
+                  >
+                    <div
+                      *ngFor="let file of getFileInfo(i); let fileIndx = index"
+                      fxFlex="49"
+                      fxLayoutGap="10"
+                      class="upload_img"
+                    >
+                      <div class="img_box">
+                        <img
+                          [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
+                          alt="image"
+                        />
+                      </div>
+                      <div class="img_container">
+                        <span class="header_md img_name">{{ file?.name }}</span>
+                        <div
+                          *ngIf="file.progress !== '100%'; else showSize"
+                          class="progress-cont"
+                        >
+                          <div
+                            [style.width]="file.progress ?? '0%'"
+                            class="progress"
+                          ></div>
+                        </div>
+                        <ng-template #showSize>
+                          <div class="theme_sm">{{ file.size }}</div>
+                        </ng-template>
+                      </div>
+                      <img
+                        tabindex="0"
+                        (keydown.enter)="removeFile(fileIndx, i)"
+                        src="assets/images/trash_new.svg"
+                        alt="trash"
+                        (click)="removeFile(fileIndx, i)"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <ng-template #showSize>
-                  <div class="theme_sm">{{ file.size }}</div>
-                </ng-template>
-              </div>
-              <img
-                tabindex="0"
-                (keydown.enter)="removeFile(fileIndx)"
-                src="assets/images/trash_new.svg"
-                alt="trash"
-                (click)="removeFile(fileIndx)"
-              />
-            </div>
+              </mat-expansion-panel>
+              <!--face Scan-->
+              <mat-expansion-panel class="styled-panel fileUpload">
+                <mat-expansion-panel-header class="panel-header">
+                  <div class="panel-header-content">
+                    <div
+                      class="panel-title"
+                      fxLayoutGap="5"
+                      fxLayoutAlign="start center"
+                    >
+                      <img
+                        *ngIf="app?.get('faceId')?.value; else unticked"
+                        src="assets/images/tickicon.svg"
+                        alt="Tick"
+                      />
+                      <ng-template #unticked>
+                        <img src="assets/images/untickicon.svg" alt="Untick" />
+                      </ng-template>
+                      <span class="header_md">{{ 'Face Scan' }}</span>
+                    </div>
+                  </div>
+                </mat-expansion-panel-header>
+                <div
+                  fxFlex="100"
+                  fxLayout="column"
+                  fxLayoutAlign="start"
+                  fxLayoutGap="5"
+                >
+                  <p>
+                    Position your face in front of the camera, Keep steady for
+                    accurate scanning.
+                  </p>
+                  <ic-button
+                    (OnClick)="openDialog('face', i)"
+                    label="scan"
+                    size="medium"
+                    type="button"
+                    icButtonType="outlined-rounded"
+                  ></ic-button>
+                  <ng-container *ngIf="app?.get('faceUrl')?.value">
+                    <img
+                      [src]="app?.get('faceUrl')?.value"
+                      width="165"
+                      height="200"
+                    />
+                    <mat-icon class="faceCard" (click)="imageDeleted('face', i)"
+                      >close</mat-icon
+                    >
+                  </ng-container>
+                </div>
+              </mat-expansion-panel>
+              <!--fingerPrint-->
+              <mat-expansion-panel class="styled-panel fileUpload">
+                <mat-expansion-panel-header class="panel-header">
+                  <div class="panel-header-content">
+                    <div
+                      class="panel-title"
+                      fxLayoutGap="5"
+                      fxLayoutAlign="start center"
+                    >
+                      <img
+                        *ngIf="app?.get('fingerPrintId')?.value; else unticked"
+                        src="assets/images/tickicon.svg"
+                        alt="Tick"
+                      />
+                      <ng-template #unticked>
+                        <img src="assets/images/untickicon.svg" alt="Untick" />
+                      </ng-template>
+                      <span class="header_md">{{ 'Finger Print' }}</span>
+                    </div>
+                  </div>
+                </mat-expansion-panel-header>
+                <div
+                  fxFlex="100"
+                  fxLayout="column"
+                  fxLayoutAlign="start"
+                  fxLayoutGap="5"
+                >
+                  <p>
+                    Place your finger on the Scanner, Keep steady for accurate
+                    scanning.
+                  </p>
+                  <ic-button
+                    (OnClick)="openDialog('fingerPrint', i)"
+                    label="scan"
+                    size="medium"
+                    type="button"
+                    icButtonType="outlined-rounded"
+                  ></ic-button>
+                  <div class="mt-4">
+                    <img
+                      [src]="
+                        app?.get('fingerPrintId')?.value
+                          ? 'images/svg/fingerprint-recognition-success.svg'
+                          : 'images/svg/fingerprint-recognition2.svg'
+                      "
+                      alt=""
+                      width="100px"
+                      class="border-[1px]"
+                    />
+                    <mat-icon
+                      *ngIf="app?.get('fingerPrintId')?.value"
+                      class="bg-transparent text-red-600 z-10 relative top-[-6.4rem] left-[5.2rem] text-base"
+                      (click)="imageDeleted('fingerprint', i)"
+                      >close</mat-icon
+                    >
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
       </mat-expansion-panel>
-      <!--face Scan-->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        (opened)="faceExpanded = true"
-        (closed)="faceExpanded = false"
-      >
-        <mat-expansion-panel-header class="panel-header">
-          <div class="panel-header-content">
-            <div
-              class="panel-title"
-              fxLayoutGap="5"
-              fxLayoutAlign="start center"
-            >
-              <img
-                *ngIf="faceId; else unticked"
-                src="assets/images/tickicon.svg"
-                alt="Tick"
-              />
-              <ng-template #unticked>
-                <img src="assets/images/untickicon.svg" alt="Untick" />
-              </ng-template>
-              <span class="header_md">{{ 'Face Scan' }}</span>
-            </div>
-            <span>
-              <mat-icon>{{
-                faceExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
-            </span>
-          </div>
-        </mat-expansion-panel-header>
-        <div
-          fxFlex="100"
-          fxLayout="column"
-          fxLayoutAlign="start"
-          fxLayoutGap="5"
-        >
-          <p>
-            Position your face in front of the camera, Keep steady for accurate
-            scanning.
-          </p>
-          <ic-button
-            (OnClick)="openDialog('face')"
-            label="scan"
-            size="medium"
-            type="button"
-            icButtonType="outlined-rounded"
-          ></ic-button>
-          <ng-container *ngIf="faceUrl">
-            <img [src]="faceUrl" width="165" height="200" />
-            <mat-icon class="faceCard" (click)="imageDeleted('face')"
-              >close</mat-icon
-            >
-          </ng-container>
-        </div>
-      </mat-expansion-panel>
-      <!--fingerPrint-->
-      <mat-expansion-panel
-        class="styled-panel fileUpload"
-        (opened)="biometricExpanded = true"
-        (closed)="biometricExpanded = false"
-      >
-        <mat-expansion-panel-header class="panel-header">
-          <div class="panel-header-content">
-            <div
-              class="panel-title"
-              fxLayoutGap="5"
-              fxLayoutAlign="start center"
-            >
-              <img
-                *ngIf="fingerPrintId; else unticked"
-                src="assets/images/tickicon.svg"
-                alt="Tick"
-              />
-              <ng-template #unticked>
-                <img src="assets/images/untickicon.svg" alt="Untick" />
-              </ng-template>
-              <span class="header_md">{{ 'Finger Print' }}</span>
-            </div>
-            <span>
-              <mat-icon>{{
-                biometricExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-              }}</mat-icon>
-            </span>
-          </div>
-        </mat-expansion-panel-header>
-        <div
-          fxFlex="100"
-          fxLayout="column"
-          fxLayoutAlign="start"
-          fxLayoutGap="5"
-        >
-          <p>
-            Place your finger on the Scanner, Keep steady for accurate scanning.
-          </p>
-          <ic-button
-            (OnClick)="openDialog('fingerPrint')"
-            label="scan"
-            size="medium"
-            type="button"
-            icButtonType="outlined-rounded"
-          ></ic-button>
-          <div class="mt-4">
-            <img
-              [src]="
-                fingerPrintId
-                  ? 'images/svg/fingerprint-recognition-success.svg'
-                  : 'images/svg/fingerprint-recognition2.svg'
-              "
-              alt=""
-              width="100px"
-              class="border-[1px]"
-            />
-            <mat-icon
-              *ngIf="fingerPrintId"
-              class="bg-transparent text-red-600 z-10 relative top-[-6.4rem] left-[5.2rem] text-base"
-              (click)="imageDeleted('fingerprint')"
-              >close</mat-icon
-            >
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+    </ng-container>
+  </ng-template>
 </div>

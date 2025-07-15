@@ -69,29 +69,36 @@ export class LoanAccountTypeComponent implements OnInit {
           console.log(res);
         });
       } else {
-              this.isShowCalculator = event.isShowCalculator;
-      this.calculatorInfo = {
-        interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
-        productCode: event.selectedLoan.productCode,
-      };
-      this.basisClass = event.subClass;
-      this.basisId = event.selectedLoan.basisId;
-
-      if (this.basisClass.toLowerCase().includes('new')) {
-        const state: ProductState = {
-          productId: event.selectedLoan.basisId,
-          selectedLoan: event.selectedLoan,
+        this.isShowCalculator = event.isShowCalculator;
+        this.calculatorInfo = {
+          interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
+          productCode: event.selectedLoan.productCode,
         };
-        await this.router.navigate(['/loan/emi-calculator'], {
-          state,
-        });
-        return;
-      }
+        this.basisClass = event.subClass;
+        this.basisId = event.selectedLoan.basisId;
 
-      setTimeout(() => {
-        this.scrollToCalculator();
-      }, 200);
+        if (this.basisClass.toLowerCase().includes('new')) {
+          const state: ProductState = {
+            productId: event.selectedLoan.basisId,
+            selectedLoan: event.selectedLoan,
+          };
+          await this.router.navigate(['/loan/emi-calculator'], {
+            state,
+          });
+          return;
+        }
+
+        setTimeout(() => {
+          this.scrollToCalculator();
+        }, 200);
       }
+    }
+  }
+
+  goToLogin(event: string) {
+    if (event == 'Cooperate Account') {
+      localStorage.setItem('Category', 'Cooperate Account');
+      this.router.navigate(['loan/login']);
     }
   }
 

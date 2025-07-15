@@ -45,13 +45,16 @@ export class AccountStagesComponent implements OnInit {
   private componentRefs = new Map<number, ComponentRef<any>>();
   allowedPanelIndex = 0;
   completedSteps = new Set<number>();
+  category: string | null;
 
   constructor(
     private renderComponentService: RenderComponentService,
     // private loanService: LoanService,
     private cdr: ChangeDetectorRef,
     // private sessionStorageSerive: SessionStorageService,
-  ) {}
+  ) {
+    this.category = localStorage.getItem('Category');
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -196,64 +199,132 @@ export class AccountStagesComponent implements OnInit {
   fetchScreens() {
     // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
     //   if (resp?.statusCode === 200 && resp?.data?.screens) {
-    const screens = [
-      {
-        screenCode: 456,
-        screenName: 'Account Details',
-        route: null,
-        fileUrl: null,
-        sequence: 2,
-        screenValue: 'W1DOCU',
-      },
-      {
-        screenCode: 461,
-        screenName: 'Personal Identification',
-        route: null,
-        fileUrl: null,
-        sequence: 3,
-        screenValue: 'W1SIGN',
-      },
-      {
-        screenCode: 462,
-        screenName: 'Personal Details',
-        route: null,
-        fileUrl: null,
-        sequence: 4,
-        screenValue: 'W1SUM',
-      },
-      {
-        screenCode: 463,
-        screenName: 'Document Upload',
-        route: null,
-        fileUrl: null,
-        sequence: 5,
-        screenValue: 'W1TECO',
-      },
-      {
-        screenCode: 497,
-        screenName: 'Summary',
-        route: null,
-        fileUrl: null,
-        sequence: 6,
-        screenValue: 'W1CODE',
-      },
-      {
-        screenCode: 498,
-        screenName: 'Digital Signature',
-        route: null,
-        fileUrl: null,
-        sequence: 7,
-        screenValue: 'W1BUDE',
-      },
-      {
-        screenCode: 464,
-        screenName: 'Verify Mobile Number',
-        route: null,
-        fileUrl: null,
-        sequence: 1,
-        screenValue: 'W1VEMN',
-      },
-    ];
+    const screens =
+      this.category !== 'Cooperate Account'
+        ? [
+            {
+              screenCode: 456,
+              screenName: 'Account Details',
+              route: null,
+              fileUrl: null,
+              sequence: 2,
+              screenValue: 'W1DOCU',
+            },
+            {
+              screenCode: 461,
+              screenName: 'Personal Identification',
+              route: null,
+              fileUrl: null,
+              sequence: 3,
+              screenValue: 'W1SIGN',
+            },
+            {
+              screenCode: 462,
+              screenName: 'Personal Details',
+              route: null,
+              fileUrl: null,
+              sequence: 4,
+              screenValue: 'W1SUM',
+            },
+            {
+              screenCode: 463,
+              screenName: 'Document Upload',
+              route: null,
+              fileUrl: null,
+              sequence: 5,
+              screenValue: 'W1TECO',
+            },
+            {
+              screenCode: 497,
+              screenName: 'Summary',
+              route: null,
+              fileUrl: null,
+              sequence: 6,
+              screenValue: 'W1CODE',
+            },
+            {
+              screenCode: 498,
+              screenName: 'Digital Signature',
+              route: null,
+              fileUrl: null,
+              sequence: 7,
+              screenValue: 'W1BUDE',
+            },
+            {
+              screenCode: 464,
+              screenName: 'Verify Mobile Number',
+              route: null,
+              fileUrl: null,
+              sequence: 1,
+              screenValue: 'W1VEMN',
+            },
+          ]
+        : [
+            {
+              screenCode: 456,
+              screenName: 'Account Details',
+              route: null,
+              fileUrl: null,
+              sequence: 2,
+              screenValue: 'W1DOCU',
+            },
+            {
+              screenCode: 461,
+              screenName: 'Bussiness Details',
+              route: null,
+              fileUrl: null,
+              sequence: 4,
+              screenValue: 'W1SIGN',
+            },
+            {
+              screenCode: 462,
+              screenName: 'Director Documents Upload',
+              route: null,
+              fileUrl: null,
+              sequence: 5,
+              screenValue: 'W1SUM',
+            },
+            {
+              screenCode: 463,
+              screenName: 'Document Upload',
+              route: null,
+              fileUrl: null,
+              sequence: 3,
+              screenValue: 'W1TECO',
+            },
+            {
+              screenCode: 497,
+              screenName: 'Summary',
+              route: null,
+              fileUrl: null,
+              sequence: 7,
+              screenValue: 'W1CODE',
+            },
+            {
+              screenCode: 498,
+              screenName: 'Digital Signature',
+              route: null,
+              fileUrl: null,
+              sequence: 8,
+              screenValue: 'W1BUDE',
+            },
+            {
+              screenCode: 464,
+              screenName: 'Verify Mobile Number',
+              route: null,
+              fileUrl: null,
+              sequence: 1,
+              screenValue: 'W1VEMN',
+            },
+            {
+              screenCode: 464,
+              screenName: 'Director Details',
+              route: null,
+              fileUrl: null,
+              sequence: 6,
+              screenValue: 'W1VEMN',
+            },
+          ];
     const i = screens.findIndex((s) => s.sequence === 1);
     if (i > -1) screens.splice(i, 1);
     screens
