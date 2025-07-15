@@ -41,7 +41,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // accountValidators = ['accountTypeId'];
   // originationId: number | undefined;
 
-  detailsForGeneric:any = {
+  detailsForGeneric: any = {
     accountType: ''
   }
   noOfapplicantguardian: any = 3;
@@ -75,18 +75,59 @@ export class AccountPersonalDetailsComponent implements OnInit {
     this.createAccordian();
   }
 
-  createAccordian() {
-    if (this.detailsForGeneric.accountType == 'minor') {
-      this.accordionItems.push({ header: 'Minor Details', expanded: true, showIsPrimary: false, accountType: this.detailsForGeneric.accountType });
-    }
-    for (let i = 0; i < this.noOfapplicantguardian; i++) {
-      if (this.detailsForGeneric.accountType == 'joint') {
-        this.accordionItems.push({ header: 'Applicant ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
-      } else if (this.detailsForGeneric.accountType == 'minor') {
-        this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
-      }
-    }
+  // createAccordian() {
+  //   if (this.detailsForGeneric.accountType == 'minor') {
+  //     this.accordionItems.push({ header: 'Minor Details', expanded: true, showIsPrimary: false, accountType: this.detailsForGeneric.accountType });
+  //   }
+  //   for (let i = 0; i < this.noOfapplicantguardian; i++) {
+  //     if (this.detailsForGeneric.accountType == 'joint') {
+  //       this.accordionItems.push({ header: 'Applicant ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
+  //     } else if (this.detailsForGeneric.accountType == 'minor') {
+  //       this.accordionItems.push({ header: 'Guardians ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
+  //     } else if(this.detailsForGeneric.accountType == 'corporate'){
+  //        this.accordionItems.push({ header: 'Managing Director ' + (i + 1), expanded: false, showIsPrimary: true, accountType: this.detailsForGeneric.accountType });
+  //     }
+  //   }
+  // }
+
+createAccordian(): void {
+  const { accountType } = this.detailsForGeneric;
+  // Reset accordion items
+  this.accordionItems = [];
+  // Titles for corporate applicants
+  const corporateTitles = ['Managing Director', 'Vice President', 'CEO', 'CFO', 'CTO'];
+  // Add Minor Details section if account type is 'minor'
+  if (accountType === 'minor') {
+    this.accordionItems.push({
+      header: 'Minor Details',
+      expanded: true,
+      showIsPrimary: false,
+      accountType
+    });
   }
+  // Generate header label based on account type and index
+  const getHeaderLabel = (index: number): string => {
+    if (accountType === 'corporate') {
+      return corporateTitles[index] || `Corporate Member ${index + 1}`;
+    }
+    const labels:any = {
+      joint: 'Applicant',
+      minor: 'Guardians'
+    };
+    return `${labels[accountType] || 'Applicant'} ${index + 1}`;
+  };
+  // Create accordion items
+  for (let i = 0; i < this.noOfapplicantguardian; i++) {
+    this.accordionItems.push({
+      header: getHeaderLabel(i),
+      expanded: false,
+      showIsPrimary: accountType !== 'minor',
+      accountType
+    });
+  }
+}
+
+
 
   deleteAccordian(index: any) {
     if (this.accordionItems.length > 1) {

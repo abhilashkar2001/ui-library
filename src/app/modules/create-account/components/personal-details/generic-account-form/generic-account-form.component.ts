@@ -60,6 +60,105 @@ export class GenericAccountFormComponent {
   countriesIsdCodes: any = [];
   maxMobileLength: any;
 
+  validationConfig = {
+    individual: {
+      prefix: ([Validators.required]),
+      firstName: ([Validators.required]),
+      lastName: ([Validators.required]),
+      dateOfBirth: ([Validators.required]),
+      gender: ([Validators.required]),
+      maritalStatus: ([Validators.required]),
+      nationality: ([Validators.required]),
+      countryOfResidence: ([Validators.required]),
+
+      identificationNo: ([Validators.required]),
+      countryOfIssue: ([Validators.required]),
+      dateOfIssue: ([Validators.required]),
+      expiryDate: ([Validators.required]),
+
+      mobileNo: ([Validators.required]),
+      telephoneHome: ([Validators.required]),
+      telephoneWork: ([Validators.required]),
+      fax: ([Validators.required]),
+      statementVia: ([Validators.required]),
+
+      residentStatus: ([Validators.required]),
+      city: ([Validators.required]),
+      livingAddressSince: ([Validators.required]),
+
+      spousePrefix: ([Validators.required]),
+      spouseFirstName: ([Validators.required]),
+      spouseLastName: ([Validators.required]),
+      spouseDateOfBirth: ([Validators.required]),
+      spouseMobileNo: ([Validators.required]),
+      spouseEmail: ([Validators.required]),
+      spouseEmployeeStatus: ([Validators.required]),
+      spouseNetIncome: ([Validators.required]),
+
+      emePrefix: ([Validators.required]),
+      emeFirstName: ([Validators.required]),
+      emeLastName: ([Validators.required]),
+      emeRelationship: ([Validators.required]),
+      emeMobileNo: ([Validators.required]),
+      emeTelephoneHome: ([Validators.required]),
+      emeTelephoneWork: ([Validators.required]),
+      emeFax: ([Validators.required]),
+      emeResidentStatus: ([Validators.required]),
+      emeCity: ([Validators.required]),
+      emePostalCode: ([Validators.required]),
+      emeLivingAddressSince: ([Validators.required]),
+    },
+    joint: {
+      prefix: ([Validators.required]),
+      firstName: ([Validators.required]),
+      lastName: ([Validators.required]),
+      dateOfBirth: ([Validators.required]),
+      gender: ([Validators.required]),
+      maritalStatus: ([Validators.required]),
+      nationality: ([Validators.required]),
+      countryOfResidence: ([Validators.required]),
+
+      identificationNo: ([Validators.required]),
+      countryOfIssue: ([Validators.required]),
+      dateOfIssue: ([Validators.required]),
+      expiryDate: ([Validators.required]),
+
+      relationship: ([Validators.required]),
+      sharePercentage: ([Validators.required]),
+
+      mobileNo: ([Validators.required]),
+      statementVia: ([Validators.required]),
+
+      residentStatus: ([Validators.required]),
+      city: ([Validators.required]),
+      livingAddressSince: ([Validators.required]),
+    },
+    minor: {
+      prefix: ([Validators.required]),
+      firstName: ([Validators.required]),
+      lastName: ([Validators.required]),
+      dateOfBirth: ([Validators.required]),
+      gender: ([Validators.required]),
+      maritalStatus: ([Validators.required]),
+      nationality: ([Validators.required]),
+      countryOfResidence: ([Validators.required]),
+
+      identificationNo: ([Validators.required]),
+      countryOfIssue: ([Validators.required]),
+      dateOfIssue: ([Validators.required]),
+      expiryDate: ([Validators.required]),
+
+      relationship: ([Validators.required]),
+
+      mobileNo: ([Validators.required]),
+      statementVia: ([Validators.required]),
+
+      residentStatus: ([Validators.required]),
+      city: ([Validators.required]),
+      livingAddressSince: ([Validators.required]),
+    }
+  }
+
 
   constructor(
     //@ts-ignore
@@ -161,190 +260,21 @@ export class GenericAccountFormComponent {
   }
 
   addUpdateValidators() {
-    if (this.detailsForGeneric.accountType == 'individual') {
-      this.addUpdateValidatorsForIndividual();
-    } else if (this.detailsForGeneric.accountType == 'joint') {
-      this.addUpdateValidatorsForJoint();
-    } else {
-      this.addUpdateValidatorsForMinor();
-    }
+    const accountType = this.detailsForGeneric.accountType as keyof typeof this.validationConfig;
+    const configForType = this.validationConfig[accountType] || {};
+    this.applyValidators(configForType);
   }
 
-  addUpdateValidatorsForIndividual() {
-    this.personalDetails.controls['prefix'].setValidators([Validators.required]);
-    this.personalDetails.controls['prefix'].updateValueAndValidity();
-    this.personalDetails.controls['firstName'].setValidators([Validators.required]);
-    this.personalDetails.controls['firstName'].updateValueAndValidity();
-    this.personalDetails.controls['lastName'].setValidators([Validators.required]);
-    this.personalDetails.controls['lastName'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfBirth'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfBirth'].updateValueAndValidity();
-    this.personalDetails.controls['gender'].setValidators([Validators.required]);
-    this.personalDetails.controls['gender'].updateValueAndValidity();
-    this.personalDetails.controls['maritalStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['maritalStatus'].updateValueAndValidity();
-    this.personalDetails.controls['nationality'].setValidators([Validators.required]);
-    this.personalDetails.controls['nationality'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfResidence'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfResidence'].updateValueAndValidity();
 
-    this.personalDetails.controls['identificationNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['identificationNo'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['expiryDate'].setValidators([Validators.required]);
-    this.personalDetails.controls['expiryDate'].updateValueAndValidity();
-
-    this.personalDetails.controls['mobileNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['mobileNo'].updateValueAndValidity();
-    this.personalDetails.controls['telephoneHome'].setValidators([Validators.required]);
-    this.personalDetails.controls['telephoneHome'].updateValueAndValidity();
-    this.personalDetails.controls['telephoneWork'].setValidators([Validators.required]);
-    this.personalDetails.controls['telephoneWork'].updateValueAndValidity();
-    this.personalDetails.controls['fax'].setValidators([Validators.required]);
-    this.personalDetails.controls['fax'].updateValueAndValidity();
-    this.personalDetails.controls['statementVia'].setValidators([Validators.required]);
-    this.personalDetails.controls['statementVia'].updateValueAndValidity();
-
-    this.personalDetails.controls['residentStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['residentStatus'].updateValueAndValidity();
-    this.personalDetails.controls['city'].setValidators([Validators.required]);
-    this.personalDetails.controls['city'].updateValueAndValidity();
-    this.personalDetails.controls['livingAddressSince'].setValidators([Validators.required]);
-    this.personalDetails.controls['livingAddressSince'].updateValueAndValidity();
-
-    this.personalDetails.controls['spousePrefix'].setValidators([Validators.required]);
-    this.personalDetails.controls['spousePrefix'].updateValueAndValidity();
-    this.personalDetails.controls['spouseFirstName'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseFirstName'].updateValueAndValidity();
-    this.personalDetails.controls['spouseLastName'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseLastName'].updateValueAndValidity();
-    this.personalDetails.controls['spouseDateOfBirth'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseDateOfBirth'].updateValueAndValidity();
-    this.personalDetails.controls['spouseMobileNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseMobileNo'].updateValueAndValidity();
-    this.personalDetails.controls['spouseEmail'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseEmail'].updateValueAndValidity();
-    this.personalDetails.controls['spouseEmployeeStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseEmployeeStatus'].updateValueAndValidity();
-    this.personalDetails.controls['spouseNetIncome'].setValidators([Validators.required]);
-    this.personalDetails.controls['spouseNetIncome'].updateValueAndValidity();
-
-    this.personalDetails.controls['emePrefix'].setValidators([Validators.required]);
-    this.personalDetails.controls['emePrefix'].updateValueAndValidity();
-    this.personalDetails.controls['emeFirstName'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeFirstName'].updateValueAndValidity();
-    this.personalDetails.controls['emeLastName'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeLastName'].updateValueAndValidity();
-    this.personalDetails.controls['emeRelationship'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeRelationship'].updateValueAndValidity();
-    this.personalDetails.controls['emeMobileNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeMobileNo'].updateValueAndValidity();
-    this.personalDetails.controls['emeTelephoneHome'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeTelephoneHome'].updateValueAndValidity();
-    this.personalDetails.controls['emeTelephoneWork'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeTelephoneWork'].updateValueAndValidity();
-    this.personalDetails.controls['emeFax'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeFax'].updateValueAndValidity();
-    this.personalDetails.controls['emeResidentStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeResidentStatus'].updateValueAndValidity();
-    this.personalDetails.controls['emeCity'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeCity'].updateValueAndValidity();
-    this.personalDetails.controls['emePostalCode'].setValidators([Validators.required]);
-    this.personalDetails.controls['emePostalCode'].updateValueAndValidity();
-    this.personalDetails.controls['emeLivingAddressSince'].setValidators([Validators.required]);
-    this.personalDetails.controls['emeLivingAddressSince'].updateValueAndValidity();
-  }
-
-  addUpdateValidatorsForJoint() {
-    this.personalDetails.controls['prefix'].setValidators([Validators.required]);
-    this.personalDetails.controls['prefix'].updateValueAndValidity();
-    this.personalDetails.controls['firstName'].setValidators([Validators.required]);
-    this.personalDetails.controls['firstName'].updateValueAndValidity();
-    this.personalDetails.controls['lastName'].setValidators([Validators.required]);
-    this.personalDetails.controls['lastName'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfBirth'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfBirth'].updateValueAndValidity();
-    this.personalDetails.controls['gender'].setValidators([Validators.required]);
-    this.personalDetails.controls['gender'].updateValueAndValidity();
-    this.personalDetails.controls['maritalStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['maritalStatus'].updateValueAndValidity();
-    this.personalDetails.controls['nationality'].setValidators([Validators.required]);
-    this.personalDetails.controls['nationality'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfResidence'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfResidence'].updateValueAndValidity();
-
-    this.personalDetails.controls['identificationNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['identificationNo'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['expiryDate'].setValidators([Validators.required]);
-    this.personalDetails.controls['expiryDate'].updateValueAndValidity();
-
-    this.personalDetails.controls['relationship'].setValidators([Validators.required]);
-    this.personalDetails.controls['relationship'].updateValueAndValidity();
-    this.personalDetails.controls['sharePercentage'].setValidators([Validators.required]);
-    this.personalDetails.controls['sharePercentage'].updateValueAndValidity();
-
-    this.personalDetails.controls['mobileNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['mobileNo'].updateValueAndValidity();
-    this.personalDetails.controls['statementVia'].setValidators([Validators.required]);
-    this.personalDetails.controls['statementVia'].updateValueAndValidity();
-
-    this.personalDetails.controls['residentStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['residentStatus'].updateValueAndValidity();
-    this.personalDetails.controls['city'].setValidators([Validators.required]);
-    this.personalDetails.controls['city'].updateValueAndValidity();
-    this.personalDetails.controls['livingAddressSince'].setValidators([Validators.required]);
-    this.personalDetails.controls['livingAddressSince'].updateValueAndValidity();
-
-  }
-
-  addUpdateValidatorsForMinor() {
-    this.personalDetails.controls['prefix'].setValidators([Validators.required]);
-    this.personalDetails.controls['prefix'].updateValueAndValidity();
-    this.personalDetails.controls['firstName'].setValidators([Validators.required]);
-    this.personalDetails.controls['firstName'].updateValueAndValidity();
-    this.personalDetails.controls['lastName'].setValidators([Validators.required]);
-    this.personalDetails.controls['lastName'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfBirth'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfBirth'].updateValueAndValidity();
-    this.personalDetails.controls['gender'].setValidators([Validators.required]);
-    this.personalDetails.controls['gender'].updateValueAndValidity();
-    this.personalDetails.controls['maritalStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['maritalStatus'].updateValueAndValidity();
-    this.personalDetails.controls['nationality'].setValidators([Validators.required]);
-    this.personalDetails.controls['nationality'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfResidence'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfResidence'].updateValueAndValidity();
-
-    this.personalDetails.controls['identificationNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['identificationNo'].updateValueAndValidity();
-    this.personalDetails.controls['countryOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['countryOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['dateOfIssue'].setValidators([Validators.required]);
-    this.personalDetails.controls['dateOfIssue'].updateValueAndValidity();
-    this.personalDetails.controls['expiryDate'].setValidators([Validators.required]);
-    this.personalDetails.controls['expiryDate'].updateValueAndValidity();
-
-    this.personalDetails.controls['relationship'].setValidators([Validators.required]);
-    this.personalDetails.controls['relationship'].updateValueAndValidity();
-
-    this.personalDetails.controls['mobileNo'].setValidators([Validators.required]);
-    this.personalDetails.controls['mobileNo'].updateValueAndValidity();
-    this.personalDetails.controls['statementVia'].setValidators([Validators.required]);
-    this.personalDetails.controls['statementVia'].updateValueAndValidity();
-
-    this.personalDetails.controls['residentStatus'].setValidators([Validators.required]);
-    this.personalDetails.controls['residentStatus'].updateValueAndValidity();
-    this.personalDetails.controls['city'].setValidators([Validators.required]);
-    this.personalDetails.controls['city'].updateValueAndValidity();
-    this.personalDetails.controls['livingAddressSince'].setValidators([Validators.required]);
-    this.personalDetails.controls['livingAddressSince'].updateValueAndValidity();
+  applyValidators(config: any) {
+    Object.keys(this.personalDetails.controls).forEach(field => {
+      const control = this.personalDetails.get(field);
+      if (control) {
+        const validators = config[field] || [];
+        control.setValidators(validators);
+        control.updateValueAndValidity();
+      }
+    });
   }
 
   onSave() {
